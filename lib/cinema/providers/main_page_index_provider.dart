@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/cinema/providers/session_list_provider.dart';
 
 class MainPageIndexNotifier extends StateNotifier<int> {
-  int startpage = 0;
+  int startPage = 0;
   MainPageIndexNotifier(int i) : super(i);
 
   void setMainPageIndex(int event) {
@@ -10,18 +10,21 @@ class MainPageIndexNotifier extends StateNotifier<int> {
   }
 
   void setStartPage(int page) {
-    startpage = page;
+    startPage = page;
   }
 
   void reset() {
-    state = startpage;
+    state = startPage;
   }
 }
 
 final mainPageIndexProvider =
     StateNotifierProvider<MainPageIndexNotifier, int>((ref) {
   final sessionList = ref.watch(sessionListProvider);
-  return sessionList.when(data: (data) {
+  return sessionList.maybeWhen(data: (data) {
+    if (data.isEmpty) {
+      return MainPageIndexNotifier(0);
+    }
     data.sort((a, b) => a.start.compareTo(b.start));
     final now = DateTime.now();
     final centralElement =
@@ -29,9 +32,7 @@ final mainPageIndexProvider =
     final notifier = MainPageIndexNotifier(centralElement);
     notifier.setStartPage(centralElement);
     return notifier;
-  }, error: (Object error, StackTrace stackTrace) {
-    return MainPageIndexNotifier(0);
-  }, loading: () {
+  }, orElse: () {
     return MainPageIndexNotifier(0);
   });
 });
