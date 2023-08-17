@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/tools/constants.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class CustomDialogBox extends StatefulWidget {
   final String title, descriptions;
@@ -9,6 +10,7 @@ class CustomDialogBox extends StatefulWidget {
   final Color noColor = ColorConstants.background2;
 
   final Function() onYes;
+  final Function()? onNo;
 
   static const double _padding = 20;
   static const double _avatarRadius = 45;
@@ -19,7 +21,8 @@ class CustomDialogBox extends StatefulWidget {
       {Key? key,
       required this.title,
       required this.descriptions,
-      required this.onYes})
+      required this.onYes,
+      this.onNo})
       : super(key: key);
 
   @override
@@ -35,7 +38,7 @@ class CustomDialogBoxState extends State<CustomDialogBox> {
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
-      child: contentBox(context),
+      child: contentBox(QR.context!),
     );
   }
 
@@ -86,7 +89,9 @@ class CustomDialogBoxState extends State<CustomDialogBox> {
                     children: [
                       TextButton(
                           onPressed: () {
-                            Navigator.of(context).pop();
+                            widget.onNo == null
+                                ? Navigator.of(context).pop()
+                                : widget.onNo?.call();
                           },
                           child: Text(
                             "Non",
@@ -97,7 +102,9 @@ class CustomDialogBoxState extends State<CustomDialogBox> {
                           )),
                       TextButton(
                           onPressed: () async {
-                            Navigator.of(context).pop();
+                            if (widget.onNo == null) {
+                              Navigator.of(context).pop();
+                            }
                             await widget.onYes();
                           },
                           child: Text(
