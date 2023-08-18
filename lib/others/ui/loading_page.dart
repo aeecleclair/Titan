@@ -40,10 +40,8 @@ class LoadingPage extends ConsumerWidget {
         },
         loading: () {},
         error: (error, stack) => QR.to(AppRouter.noInternet));
-    return const Scaffold(
-      body: Center(
-        child: CircularProgressIndicator(),
-      ),
+    return const Center(
+      child: CircularProgressIndicator(),
     );
   }
 }

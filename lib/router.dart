@@ -38,7 +38,7 @@ class AppRouter {
       ),
       QRoute(
         path: loading,
-        builder: () => const LoadingPage(),
+        builder: () => const Scaffold(body: LoadingPage()),
       ),
       QRoute(
         path: noInternet,

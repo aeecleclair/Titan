@@ -6,6 +6,7 @@ import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/tools/constants.dart';
 import 'package:myecl/home/providers/scrolled_provider.dart';
 import 'package:myecl/home/router.dart';
+import 'package:myecl/tools/providers/path_forwarding_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class ModuleUI extends HookConsumerWidget {
@@ -16,6 +17,8 @@ class ModuleUI extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final pathForwardingNotifier = ref.read(pathForwardingProvider.notifier);
+    final pathForwarding = ref.watch(pathForwardingProvider);
     final hasScrolled = ref.watch(hasScrolledProvider.notifier);
     final animation = ref.watch(animationProvider);
     return GestureDetector(
@@ -33,7 +36,7 @@ class ModuleUI extends HookConsumerWidget {
                   width: 25,
                 ),
                 Center(
-                    child: module.getIcon(module.root == QR.currentPath
+                    child: module.getIcon(module.root == pathForwarding.path
                         ? DrawerColorConstants.selectedText
                         : DrawerColorConstants.lightText)),
                 Container(
@@ -45,7 +48,7 @@ class ModuleUI extends HookConsumerWidget {
                     child: Text(
                       module.name,
                       style: TextStyle(
-                        color: module.root == QR.currentPath
+                        color: module.root == pathForwarding.path
                             ? DrawerColorConstants.selectedText
                             : DrawerColorConstants.lightText,
                         fontSize: 18,
@@ -60,12 +63,13 @@ class ModuleUI extends HookConsumerWidget {
       ),
       onTap: () {
         QR.to(module.root);
+        pathForwardingNotifier.forward(module.root);
         if (animation != null) {
           final controllerNotifier =
               ref.watch(swipeControllerProvider(animation).notifier);
           controllerNotifier.toggle();
         }
-        if (QR.currentPath != HomeRouter.root) {
+        if (pathForwarding.path != HomeRouter.root) {
           hasScrolled.setHasScrolled(false);
         }
       },

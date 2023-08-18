@@ -9,19 +9,15 @@ class EventTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: Colors.white,
-        child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [const TopBar(
-              title: EventTextConstants.title,
-              root: EventRouter.root,
-            ), Expanded(child: child)],
-          ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        const TopBar(
+          title: EventTextConstants.title,
+          root: EventRouter.root,
         ),
-      ),
+        Expanded(child: child)
+      ],
     );
   }
 }

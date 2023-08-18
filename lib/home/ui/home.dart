@@ -23,8 +23,7 @@ class HomePage extends HookConsumerWidget {
     final ScrollController scrollController = useScrollController();
     final daysEventScrollController = useScrollController();
 
-    return Scaffold(
-        body: Container(
+    return Container(
       color: Colors.white,
       child: SafeArea(
           child: Refresher(
@@ -89,7 +88,7 @@ class HomePage extends HookConsumerWidget {
                           ),
                   ))
             ])),
-      )),
+      ),
     );
   }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/login/router.dart';
@@ -15,7 +17,6 @@ class AuthenticatedMiddleware extends QMiddleware {
 
   @override
   Future<String?> redirectGuard(String path) async {
-    final pathForwarding = ref.read(pathForwardingProvider);
     final pathForwardingNotifier = ref.watch(pathForwardingProvider.notifier);
     final versionVerifier = ref.watch(versionVerifierProvider);
     final titanVersion = ref.watch(titanVersionProvider);
@@ -23,7 +24,7 @@ class AuthenticatedMiddleware extends QMiddleware {
     final modules = ref.read(modulesProvider);
     final check = versionVerifier
         .whenData((value) => value.minimalTitanVersion <= titanVersion);
-    if (!pathForwarding.isLoggedIn && path != LoginRouter.root) {
+    if (!pathForwardingNotifier.state.isLoggedIn && path != LoginRouter.root) {
       pathForwardingNotifier.forward(path);
     }
 
@@ -32,25 +33,24 @@ class AuthenticatedMiddleware extends QMiddleware {
           if (!value) {
             return AppRouter.update;
           }
-          if (pathForwarding.path == "/") {
+          if (pathForwardingNotifier.state.path == "/") {
             pathForwardingNotifier.forward(modules.first.root);
             return modules.first.root;
           }
           if (path == LoginRouter.root &&
-              !pathForwarding.isLoggedIn &&
+              !pathForwardingNotifier.state.isLoggedIn &&
               !isLoggedIn) {
             return null;
           }
           if (!isLoggedIn) {
             return LoginRouter.root;
           }
-          if (!pathForwarding.isLoggedIn) {
+          if (!pathForwardingNotifier.state.isLoggedIn) {
             pathForwardingNotifier.login();
           }
-          if (pathForwarding.path != path) {
-            return pathForwarding.path;
+          if (pathForwardingNotifier.state.path != path) {
+            return pathForwardingNotifier.state.path;
           }
-          pathForwardingNotifier.reset();
           return null;
         },
         loading: () => AppRouter.loading,

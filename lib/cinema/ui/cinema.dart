@@ -15,8 +15,7 @@ class CinemaTemplate extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final initialPageNotifier = ref.watch(mainPageIndexProvider.notifier);
     final scrollNotifier = ref.watch(scrollProvider.notifier);
-    return Scaffold(
-      body: (QR.currentPath != CinemaRouter.root + CinemaRouter.detail)
+    return (QR.currentPath != CinemaRouter.root + CinemaRouter.detail)
           ? SafeArea(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -33,7 +32,6 @@ class CinemaTemplate extends HookConsumerWidget {
                 ],
               ),
             )
-          : child,
-    );
+          : child;
   }
 }
