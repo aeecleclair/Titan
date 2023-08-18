@@ -88,6 +88,7 @@ dependencies {
 
 android {
     defaultConfig {
+        targetSdkVersion 33
         minSdkVersion 19
     }
 }
