@@ -5,47 +5,40 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:async';
 
-class FavoritesNotifier extends StateNotifier<List<Module>> {
+class FavoritesNameNotifier extends StateNotifier<List<String>> {
   final key = 'favorites';
-  FavoritesNotifier() : super([]);
+  FavoritesNameNotifier() : super([]);
 
   Future<void> loadFavorites() async {
     final prefs = await SharedPreferences.getInstance();
-    final favoritesJson = prefs.getString(key);
+    final favoritesJson = prefs.getStringList(key);
 
     if (favoritesJson != null) {
-      final favoritesList = json.decode(favoritesJson) as List<dynamic>;
-      final favorites = favoritesList
-          .map((moduleJson) => Module.fromJson(moduleJson))
-          .toList();
-      state = favorites;
+     state = favoritesJson;
     }
   }
 
-  void toggleFavorite(Module module) {
-    final modulesName = state.map((module) => module.name).toList();
-    if (modulesName.contains(module.name)) {
-      state = state.where((m) => m.name != module.name).toList();
+  void toggleFavorite(String name) {
+    if (state.contains(name)) {
+      state = state.where((m) => m != name).toList();
     } else {
-      state = [...state, module];
+      state = [...state, name];
     }
     saveFavoritesToSharedPreferences(state);
   }
 
   Future<void> saveFavoritesToSharedPreferences(
-      List<Module> favoritesList) async {
+      List<String> favoritesList) async {
     final prefs = await SharedPreferences.getInstance();
-    final favoritesJson =
-        favoritesList.map((module) => module.toJson()).toList();
-    await prefs.setString(key, json.encode(favoritesJson));
+    await prefs.setStringList(key, state);
   }
 }
 
-final favoritesProvider =
-    StateNotifierProvider<FavoritesNotifier, List<Module>>((ref) {
-  final favoritesNotifier = FavoritesNotifier();
+final favoritesNameProvider =
+    StateNotifierProvider<FavoritesNameNotifier, List<String>>((ref) {
+  final favoritesNameNotifier = FavoritesNameNotifier();
   tokenExpireWrapperAuth(ref, () async {
-    favoritesNotifier.loadFavorites();
+    favoritesNameNotifier.loadFavorites();
   });
-  return favoritesNotifier;
+  return favoritesNameNotifier;
 });

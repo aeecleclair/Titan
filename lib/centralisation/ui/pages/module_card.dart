@@ -12,8 +12,8 @@ class ModuleCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final favorites = ref.watch(favoritesProvider);
-    final favoritesProviderNotifier = ref.read(favoritesProvider.notifier);
+    final favorites = ref.watch(favoritesNameProvider);
+    final favoritesProviderNotifier = ref.read(favoritesNameProvider.notifier);
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 7),
@@ -72,11 +72,11 @@ class ModuleCard extends HookConsumerWidget {
               ),
             ),
             IconButton(
-              icon: favorites.map((e) => e.name).contains(module.name)
+              icon: favorites.contains(module.name)
                   ? const Icon(Icons.star, color: Colors.grey)
                   : const Icon(Icons.star_border, color: Colors.grey),
               onPressed: () {
-                favoritesProviderNotifier.toggleFavorite(module);
+                favoritesProviderNotifier.toggleFavorite(module.name);
               },
             ),
           ],
