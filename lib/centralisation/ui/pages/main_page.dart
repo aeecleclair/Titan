@@ -16,7 +16,6 @@ class CentralisationMainPage extends HookConsumerWidget {
     final section = ref.watch(sectionProvider);
     final sections = ref.watch(sectionProvider);
     final favoritesName = ref.watch(favoritesNameProvider);
-    print(favoritesName);
     final favoritesNameNotifier = ref.read(favoritesNameProvider.notifier);
     final favorites = sections.maybeWhen(
       data: (sections) {
@@ -29,7 +28,6 @@ class CentralisationMainPage extends HookConsumerWidget {
       },
       orElse: () => [],
     );
-    print(favorites);
 
     return CentralisationTemplate(
       child: SingleChildScrollView(
@@ -41,6 +39,10 @@ class CentralisationMainPage extends HookConsumerWidget {
             child: ReorderableListView(
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
+              proxyDecorator: (widget, _, animation) => Transform.scale(
+                scale: 1 + .05 * animation.value,
+                child: widget,
+              ),
               header: const SizedBox(
                 width: 15,
               ),
