@@ -41,7 +41,7 @@ class LocalNotificationService {
   Future<NotificationDetails> _notificationDetails() async {
     AndroidNotificationDetails androidNotificationDetails =
         const AndroidNotificationDetails("fr.myecl.titan", "TitanNotification",
-            channelDescription: "Notifications channel forr Titan",
+            channelDescription: "Notifications channel for Titan",
             importance: Importance.max,
             priority: Priority.max,
             playSound: true);
