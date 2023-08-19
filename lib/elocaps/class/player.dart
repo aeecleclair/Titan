@@ -1,45 +1,48 @@
+import 'package:myecl/elocaps/class/caps_mode.dart';
+import 'package:myecl/elocaps/tools/functions.dart';
+
 class Player{
   Player({
-    required this.userid,
-    required this.id,
+    required this.mode,
     required this.elo,
+    required this.id,
   });
-  late final String userid;
-  late final String id;
+  late final CapsMode mode;
   late final int elo;
+  late final String id;
 
   Player.fromJson(Map<String, dynamic> json) {
-    userid = json['userid'];
-    id = json['id'];
+    mode = stringToCapsMode(json['mode']);
     elo = json['elo'];
+    id = json['id'];
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['userid'] = userid;
-    data['id'] = id;
+    data['mode'] = capsModeToString(mode);
     data['elo'] = elo;
+    data['id'] = id;
     return data;
   }
 
   Player copyWith({
-    String? userid,
-    String? id,
+    CapsMode? mode,
     int? elo,
+    String? id,
   }) => Player(
-    userid: userid ?? this.userid,
     id: id ?? this.id,
+    mode: mode ?? this.mode,
     elo: elo ?? this.elo,
   );
 
   Player.empty() {
-    userid = '';
-    id = '';
+    mode = CapsMode.single;
     elo = 0;
+    id = "";
   }
 
   @override
   String toString() {
-    return 'Player(userid: $userid, id: $id, elo: $elo)';
+    return 'elo: $elo,mode: $mode,id: $id';
   }
 }

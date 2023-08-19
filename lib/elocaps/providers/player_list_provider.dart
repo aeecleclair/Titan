@@ -5,6 +5,7 @@ import 'package:myecl/elocaps/repositories/leaderboard_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
+
 class PlayerListNotifier extends ListNotifier<Player> {
   final LeaderBoardRepository _leaderboardrepository = LeaderBoardRepository();
   PlayerListNotifier({required String token})
