@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/elocaps/class/caps_mode.dart';
 import 'package:myecl/elocaps/providers/mode_chosen_provider.dart';
@@ -8,21 +7,14 @@ import 'package:myecl/elocaps/ui/pages/game_page/player_form.dart';
 class ModeDialog extends HookConsumerWidget {
   const ModeDialog({
     Key? key,
-    required this.listForm,
+    required this.players,
   }) : super(key: key);
 
-  final ValueNotifier<List<PlayerForm>> listForm;
+  final List<PlayerForm> players;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     List<CapsMode> capsModeList = CapsMode.values;
-    final players = [
-      PlayerForm(num: 1, queryController: useTextEditingController(text: "")),
-      PlayerForm(num: 2, queryController: useTextEditingController(text: "")),
-      PlayerForm(num: 3, queryController: useTextEditingController(text: "")),
-      PlayerForm(num: 4, queryController: useTextEditingController(text: "")),
-    ];
-    final modeChosen = ref.watch(modeChosenProvider);
     final modeChosenNotifier = ref.watch(modeChosenProvider.notifier);
 
     return Dialog(
@@ -58,9 +50,6 @@ class ModeDialog extends HookConsumerWidget {
                   return GestureDetector(
                     onTap: () {
                       modeChosenNotifier.setMode(capsModeList[index]);
-                      listForm.value = capsModeList[index] == CapsMode.cd
-                          ? players
-                          : players.sublist(0, 2);
                       Navigator.pop(context);
                     },
                     child: Padding(
