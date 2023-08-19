@@ -1,49 +1,51 @@
 
 class GamePlayer{
-  GamePlayer({required this.gameId, required this.playerId, required this.eloGain, required this.hasConfirmed});
+  GamePlayer({required this.playerId, required this.eloGain,required this.team,required this.quarters});
 
-  late final String gameId;
   late final String playerId;
   late final int eloGain;
-  late final bool hasConfirmed;
+  late final int team;
+  late final int quarters;
+
 
   GamePlayer.fromJson(Map<String, dynamic> json) {
-    gameId = json['gameId'];
-    playerId = json['playerId'];
-    eloGain = json['eloGain'];
-    hasConfirmed = json['hasConfirmed'];
+    playerId = json['user_id'];
+    eloGain = json['elo_gain'];
+    team = json['team'];
+    quarters = json['quarters'];
+
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['gameId'] = gameId;
-    data['playerId'] = playerId;
-    data['eloGain'] = eloGain;
-    data['hasConfirmed'] = hasConfirmed;
+    data['user_id'] = playerId;
+    data['elo_gain'] = eloGain;
+    data['team'] = team;
+    data['quarters'] = quarters;
     return data;
   }
 
   GamePlayer copyWith({
-    String? gameId,
     String? playerId,
     int? eloGain,
-    bool? hasConfirmed,
+    int? team,
+    int? quarters,
   }) => GamePlayer(
-    gameId: gameId ?? this.gameId,
     playerId: playerId ?? this.playerId,
     eloGain: eloGain ?? this.eloGain,
-    hasConfirmed: hasConfirmed ?? this.hasConfirmed,
+    team: team ?? this.team,
+    quarters: quarters ?? this.quarters,
   );
 
   GamePlayer.empty() {
-    gameId = '';
     playerId = '';
     eloGain = 0;
-    hasConfirmed = false;
+    team = 1;
+    quarters = 0;
   }
 
   @override
   String toString() {
-    return 'GamePlayer(gameId: $gameId, playerId: $playerId, eloGain: $eloGain, Confirmé ? : $hasConfirmed)';
+    return 'GamePlayer(playerId: $playerId, elo_gain: $eloGain, team: $team, quarters: $quarters)';
   }
 }
