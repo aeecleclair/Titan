@@ -1,8 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/centralisation/class/module.dart';
+import 'package:myecl/centralisation/providers/centralisation_section_provider.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
 import 'dart:async';
 
 class FavoritesNameNotifier extends StateNotifier<List<String>> {
@@ -14,7 +14,7 @@ class FavoritesNameNotifier extends StateNotifier<List<String>> {
     final favoritesJson = prefs.getStringList(key);
 
     if (favoritesJson != null) {
-     state = favoritesJson;
+      state = favoritesJson;
     }
   }
 
@@ -41,4 +41,20 @@ final favoritesNameProvider =
     favoritesNameNotifier.loadFavorites();
   });
   return favoritesNameNotifier;
+});
+
+final favoritesProvider = Provider<List<Module>>((ref) {
+  final favoritesName = ref.watch(favoritesNameProvider);
+  final sections = ref.watch(sectionProvider);
+  return sections.maybeWhen<List<Module>>(
+    data: (sections) {
+      final modules = sections
+          .map((section) => section.moduleList)
+          .expand((element) => element);
+      return modules
+          .where((module) => favoritesName.contains(module.name))
+          .toList();
+    },
+    orElse: () => [],
+  );
 });
