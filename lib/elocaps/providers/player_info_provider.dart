@@ -1,15 +1,14 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/elocaps/class/player.dart';
-import 'package:myecl/elocaps/providers/player_id_provider.dart';
 import 'package:myecl/elocaps/repositories/players_repository.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 
 
-class PlayerInfoNotifier extends SingleNotifier<Player>{
+class PlayerInfoEloNotifier extends SingleNotifier<Map<String, int>>{
   final PlayersRepository _playerDetailRepository = PlayersRepository();
   late String id;
-  PlayerInfoNotifier({required String token}) : super(const AsyncValue.loading()) {
+  PlayerInfoEloNotifier({required String token}) : super(const AsyncValue.loading()) {
     _playerDetailRepository.setToken(token);
   }
 
@@ -17,18 +16,17 @@ class PlayerInfoNotifier extends SingleNotifier<Player>{
     this.id = Id;
   }
 
-   Future<AsyncValue<Player>> loadPlayerInfo({String? given_id}) async {
+   Future<AsyncValue<Map<String, int>>> loadPlayerInfo({String? given_id}) async {
     return await load(() async => _playerDetailRepository.getPlayerInfo(given_id ?? id));
   }
 }
 
-final playerInfoProvider = StateNotifierProvider<PlayerInfoNotifier, AsyncValue<Player>>((ref) {
+final playerInfoProvider = StateNotifierProvider<PlayerInfoEloNotifier, AsyncValue<Map<String, int>>>((ref) {
   final token = ref.watch(tokenProvider);
-  PlayerInfoNotifier notifier = PlayerInfoNotifier(token: token);
-  final raffleId = ref.watch(playerIdProvider);
-    if (raffleId != Player.empty().id) {
-      notifier.setId(raffleId);
-      notifier.loadPlayerInfo();
-    }
+  PlayerInfoEloNotifier notifier = PlayerInfoEloNotifier(token: token);
+  final user = ref.watch(userProvider);
+  notifier.setId(user.id);
+  notifier.loadPlayerInfo();
+    
   return notifier;
 });

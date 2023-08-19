@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/elocaps/providers/player_info_provider.dart';
 import 'package:myecl/elocaps/router.dart';
 import 'package:myecl/elocaps/ui/background_anim.dart';
 import 'package:myecl/elocaps/ui/button.dart';
@@ -14,12 +15,12 @@ class EloCapsMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final playerMe = ref.watch(playerInfoProvider);
     final List<String> ranking = ['Izgû', 'a', 'b', 'c', 'd', 'e'];
 
     final animation = useAnimationController(
         duration: const Duration(milliseconds: 3000), initialValue: 0)
       ..repeat(reverse: true);
-
 
     return ElocapsTemplate(
         child: Stack(
@@ -54,8 +55,10 @@ class EloCapsMainPage extends HookConsumerWidget {
                           begin: Alignment.bottomCenter,
                           end: Alignment.topCenter,
                         ).createShader(bounds),
-                    child: const Text("Classement général",
-                        style: TextStyle(fontSize: 30, color: Colors.black))),
+                    child: const Text(
+                      "Classement général",
+                      style: TextStyle(fontSize: 30, color: Colors.black),
+                    )),
                 const SizedBox(height: 15),
                 SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
@@ -106,7 +109,18 @@ class EloCapsMainPage extends HookConsumerWidget {
                         },
                         child: const MyButton(text: "Lancez une partie"),
                       ),
-                    ])
+                    ]),
+                    const SizedBox(height: 25),
+                    playerMe.when(data: (p) {
+                          return Text(
+                              "Mon Elo ${p.entries.map((entry) => "${entry.key}: ${entry.value.toString()}").join('\n')}",
+                              style: const TextStyle(
+                                  fontSize: 20, color: Colors.black));
+                        }, error: (Object error, StackTrace stackTrace) {
+                          return Text(error.toString());
+                        }, loading: () {
+                          return const Text("");
+                        }),
               ],
             ))),
       ],
