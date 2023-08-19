@@ -111,9 +111,9 @@ class EloCapsMainPage extends HookConsumerWidget {
                       ),
                     ]),
                     const SizedBox(height: 25),
-                    playerMe.when(data: (p) {
+                    playerMe.when(data: (l) {
                           return Text(
-                              "Mon Elo ${p.entries.map((entry) => "${entry.key}: ${entry.value.toString()}").join('\n')}",
+                              "Mon Elo ${l.map((p) => "${p.elo} en mode ${p.mode}").join('\n')}",
                               style: const TextStyle(
                                   fontSize: 20, color: Colors.black));
                         }, error: (Object error, StackTrace stackTrace) {
