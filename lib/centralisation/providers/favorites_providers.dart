@@ -23,8 +23,9 @@ class FavoritesNotifier extends StateNotifier<List<Module>> {
   }
 
   void toggleFavorite(Module module) {
-    if (state.contains(module)) {
-      state = state.where((m) => m != module).toList();
+    final modulesName = state.map((module) => module.name).toList();
+    if (modulesName.contains(module.name)) {
+      state = state.where((m) => m.name != module.name).toList();
     } else {
       state = [...state, module];
     }
