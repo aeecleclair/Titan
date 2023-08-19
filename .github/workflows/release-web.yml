@@ -1,4 +1,4 @@
-name: Build and Deploy Web
+name: Build and deploy web
 
 on:
   workflow_dispatch:
@@ -8,9 +8,6 @@ on:
       - 'alpha'
     tags:
       - 'v*'
-
-permissions:
-  contents: write
 
 jobs:
   build-and-deploy:
