@@ -7,20 +7,20 @@ on:
       - 'main'
       - 'alpha'
     tags:
-      - 'v*'
+      - 'v*.*.*+*'
 
 jobs:
   build:
-    name: Release titan-${{ steps.extract_branch.outputs.branch }} ${{ matrix.name }}
+    name: Release titan-${{ steps.get-ref.outputs.branch }} ${{ matrix.name }}
     runs-on: macos-latest
     strategy:
       fail-fast: false
       matrix:
         include:
-          - target: "appbundle"
+          - target: "appbundle --release"
             name: "AAB"
             path: build/app/outputs/bundle/release/app-signed.aab
-          - target: "web --web-renderer html"
+          - target: "ipa --release"
             name: "IPA"
             path: build/ios/ipa/*.ipa
     
@@ -29,7 +29,14 @@ jobs:
         id: get-ref
         run: |
           branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
+          tag=${GITHUB_REF#refs/*/}
+          versionCode=${tag##*+}
+          versionName=${tag%+*}
+          versionName=${versionName#v}
           echo "branch=$branch" >> $GITHUB_OUTPUT
+          echo "versionCode=$versionCode" >> $GITHUB_OUTPUT
+          echo "versionName=$versionName" >> $GITHUB_OUTPUT
+          
       
       - name: Checkout 🛎️
         uses: actions/checkout@v3
@@ -58,7 +65,7 @@ jobs:
           RELEASE_HOST: ${{ secrets.RELEASE_HOST }}
       
       - name: Build 🔧
-        run: flutter build ${{ matrix.target }}
+        run: flutter build ${{ matrix.target }} --build-name ${{ steps.get-ref.outputs.versionName }} --build-number ${{ steps.get-ref.outputs.versionCode }}
       
       - name: Create the Keystore
         if: matrix.name == "AAB"
