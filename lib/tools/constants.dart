@@ -7,6 +7,6 @@ class ColorConstants {
 }
 
 const String previousEmailRegex =
-    r'^[\w\-.]*@((ecl\d{2})|(alternance\d{4})|(master)).ec-lyon.fr$';
+    r'^[\w\-.]*@((ecl\d{2})|(alternance\d{4})|(master)|(auditeur)).ec-lyon.fr$';
 
 const String studentRegex = r'^[\w\-.]*@etu(-enise)?.ec-lyon.fr$';
