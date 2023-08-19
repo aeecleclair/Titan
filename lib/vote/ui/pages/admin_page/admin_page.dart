@@ -714,10 +714,10 @@ class AdminPage extends HookConsumerWidget {
                                                 builder: (context) =>
                                                     CustomDialogBox(
                                                         title: VoteTextConstants
-                                                            .deleteAll,
+                                                            .deletePipo,
                                                         descriptions:
                                                             VoteTextConstants
-                                                                .deleteAllDescription,
+                                                                .deletePipoDescription,
                                                         onYes: () async {
                                                           await tokenExpireWrapper(
                                                               ref, () async {
@@ -732,7 +732,7 @@ class AdminPage extends HookConsumerWidget {
                                                               displayVoteToastWithContext(
                                                                   TypeMsg.msg,
                                                                   VoteTextConstants
-                                                                      .deletedAll);
+                                                                      .deletedPipo);
                                                             } else {
                                                               displayVoteToastWithContext(
                                                                   TypeMsg.error,
