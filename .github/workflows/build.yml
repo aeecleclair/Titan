@@ -19,7 +19,7 @@ jobs:
           - target: "apk --debug"
             name: "APK"
             path: build/app/outputs/flutter-apk/app-debug.apk
-          - target: "web --debug --web-renderer html"
+          - target: "web --web-renderer html"
             name: "Web"
             path: build/web/
     
