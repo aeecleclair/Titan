@@ -39,10 +39,8 @@ class SessionCard extends HookConsumerWidget {
     final cinemaTopics = ref.watch(cinemaTopicsProvider);
     final cinemaTopicsNotifier = ref.watch(cinemaTopicsProvider.notifier);
     final localNotificationService = LocalNotificationService();
-    final selected = cinemaTopics.when(
-        data: (data) => data.contains(session.id),
-        loading: () => false,
-        error: (e, s) => false);
+    final selected = cinemaTopics.maybeWhen(
+        data: (data) => data.contains(session.id), orElse: () => false);
     final animation = useAnimationController(
         duration: const Duration(milliseconds: 500),
         initialValue: selected ? 1 : 0);
@@ -173,94 +171,98 @@ class SessionCard extends HookConsumerWidget {
                                       ],
                                     ),
                                   ),
-                                  Positioned(
-                                      top: 10,
-                                      right: 10,
-                                      child: AnimatedBuilder(
-                                          animation: animation,
-                                          builder: (context, child) {
-                                            return GestureDetector(
-                                              onTap: () {
-                                                if (animation.isCompleted) {
-                                                  animation.reverse();
-                                                } else {
-                                                  animation.forward();
-                                                }
-                                                cinemaTopicsNotifier
-                                                    .toggleSubscription(
-                                                        session.id);
-                                                if (selected) {
-                                                  localNotificationService
-                                                      .cancelNotificationById(
+                                  if (session.start.isAfter(DateTime.now()))
+                                    Positioned(
+                                        top: 10,
+                                        right: 10,
+                                        child: AnimatedBuilder(
+                                            animation: animation,
+                                            builder: (context, child) {
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  if (animation.isCompleted) {
+                                                    animation.reverse();
+                                                  } else {
+                                                    animation.forward();
+                                                  }
+                                                  cinemaTopicsNotifier
+                                                      .toggleSubscription(
                                                           session.id);
-                                                  displayToast(
-                                                      context,
-                                                      TypeMsg.msg,
-                                                      "Le rappel a été supprimé");
-                                                } else {
-                                                  localNotificationService
-                                                      .showNotification(Message(
-                                                          actionModule: '',
-                                                          actionTable: '',
-                                                          content: 'La séance '
-                                                              '${session.name}'
-                                                              ' commence dans 10 minutes',
-                                                          context: session.id,
-                                                          isVisible: true,
-                                                          title: 'Cinéma',
-                                                          deliveryDateTime: session
-                                                              .start
-                                                              .subtract(
-                                                                  const Duration(
-                                                                      minutes:
-                                                                          10))));
-                                                  displayToast(
-                                                      context,
-                                                      TypeMsg.msg,
-                                                      "Un rappel a été ajouté");
-                                                }
-                                              },
-                                              child: Container(
-                                                height: 50,
-                                                width: 50,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white
-                                                      .withOpacity(0.8),
-                                                  borderRadius:
-                                                      BorderRadius.circular(18),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.white
-                                                          .withOpacity(0.2),
-                                                      spreadRadius: 5,
-                                                      blurRadius: 7,
-                                                      offset:
-                                                          const Offset(0, 3),
-                                                    ),
-                                                  ],
-                                                ),
-                                                child: Center(
-                                                  child: Transform.rotate(
-                                                    origin:
-                                                        const Offset(0, -20),
-                                                    // Bounce
-                                                    angle: sin(curvedAnimation
-                                                                .value *
-                                                            pi *
-                                                            2) *
-                                                        0.2,
-                                                    child: HeroIcon(
-                                                      selected
-                                                          ? HeroIcons.bellSlash
-                                                          : HeroIcons.bell,
-                                                      size: 30,
-                                                      color: Colors.grey,
+                                                  if (selected) {
+                                                    localNotificationService
+                                                        .cancelNotificationById(
+                                                            session.id);
+                                                    displayToast(
+                                                        context,
+                                                        TypeMsg.msg,
+                                                        "Le rappel a été supprimé");
+                                                  } else {
+                                                    localNotificationService.showNotification(
+                                                        Message(
+                                                            actionModule: '',
+                                                            actionTable: '',
+                                                            content:
+                                                                'La séance '
+                                                                '${session.name}'
+                                                                ' commence dans 10 minutes',
+                                                            context: session.id,
+                                                            isVisible: true,
+                                                            title: 'Cinéma',
+                                                            deliveryDateTime: session
+                                                                .start
+                                                                .subtract(
+                                                                    const Duration(
+                                                                        minutes:
+                                                                            10))));
+                                                    displayToast(
+                                                        context,
+                                                        TypeMsg.msg,
+                                                        "Un rappel a été ajouté");
+                                                  }
+                                                },
+                                                child: Container(
+                                                  height: 50,
+                                                  width: 50,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white
+                                                        .withOpacity(0.8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            18),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: Colors.white
+                                                            .withOpacity(0.2),
+                                                        spreadRadius: 5,
+                                                        blurRadius: 7,
+                                                        offset:
+                                                            const Offset(0, 3),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  child: Center(
+                                                    child: Transform.rotate(
+                                                      origin:
+                                                          const Offset(0, -20),
+                                                      // Bounce
+                                                      angle: sin(curvedAnimation
+                                                                  .value *
+                                                              pi *
+                                                              2) *
+                                                          0.2,
+                                                      child: HeroIcon(
+                                                        selected
+                                                            ? HeroIcons
+                                                                .bellSlash
+                                                            : HeroIcons.bell,
+                                                        size: 30,
+                                                        color: Colors.grey,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                            );
-                                          }))
+                                              );
+                                            }))
                                 ],
                               );
                       } else {
