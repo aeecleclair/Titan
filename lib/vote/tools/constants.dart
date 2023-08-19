@@ -16,11 +16,15 @@ class VoteTextConstants {
   static const String closeVote = 'Fermer les votes';
   static const String confirmVote = 'Confirmer le vote';
   static const String countVote = 'Dépouiller les votes';
+  static const String deletedAll = "Tout supprimé";
+  static const String deletedPipo = "Listes pipos supprimées";
+  static const String deletedSection = 'Section supprimée';
   static const String deleteAll = "Supprimer tout";
   static const String deleteAllDescription =
       "Voulez-vous vraiment supprimer tout ?";
-  static const String deletedAll = "Tout supprimé";
-  static const String deletedSection = 'Section supprimée';
+  static const String deletePipo = "Supprimer les listes pipos";
+  static const String deletePipoDescription =
+      "Voulez-vous vraiment supprimer les listes pipos ?";
   static const String deletePretendance = 'Supprimer la liste';
   static const String deletePretendanceDesc =
       'Voulez-vous vraiment supprimer cette liste ?';
