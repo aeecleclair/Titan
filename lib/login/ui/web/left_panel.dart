@@ -38,7 +38,7 @@ class LeftPanel extends HookConsumerWidget {
                         Image.asset('assets/images/logo.png',
                             width: 70, height: 70),
                         const SizedBox(width: 20),
-                        const Text('MyEcl',
+                        const Text('MyECL',
                             style: TextStyle(
                                 fontSize: 30, fontWeight: FontWeight.bold)),
                         const SizedBox(width: 15),
