@@ -30,7 +30,7 @@ jobs:
             path: build/app/outputs/flutter-apk/app-debug.apk
           - target: "web --web-renderer html"
             name: "Web"
-            path: build/web/
+            path: build/web
     
     steps:
       - name: Determine ref
