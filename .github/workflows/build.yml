@@ -30,7 +30,7 @@ jobs:
             path: build/app/outputs/flutter-apk/app-debug.apk
           - target: "web --web-renderer html"
             name: "Web"
-            path: build/web
+            path: build/web/
     
     steps:
       - name: Determine ref
@@ -82,6 +82,6 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: titan-debug
+          name: titan-debug-${{ matrix.name }}
           path: ${{ matrix.path }}
           if-no-files-found: ignore
