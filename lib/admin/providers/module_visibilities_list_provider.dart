@@ -13,6 +13,7 @@ class ModuleVisibilitiesListNotifier extends ListNotifier<ModuleVisibilities> {
   }
 
   Future<AsyncValue<List<ModuleVisibilities>>> loadModuleVisibilities() async {
+    print('load');
     return await loadList(repository.getModuleVisibilitiesList);
   }
 
@@ -41,16 +42,3 @@ final moduleVisibilitiesListProvider = StateNotifierProvider<
   });
   return notifier;
 });
-
-class ModuleListNotifier extends ListNotifier<String> {
-  ModuleVisibilitiesRepository repository = ModuleVisibilitiesRepository();
-  ModuleListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
-    repository.setToken(token);
-  }
-
-  Future<AsyncValue<List<String>>> loadMyModuleRoots() async {
-    return await loadList(repository.getAccessibleModule);
-  }
-}
-
