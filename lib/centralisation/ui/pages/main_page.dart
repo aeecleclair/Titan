@@ -14,7 +14,20 @@ class CentralisationMainPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final section = ref.watch(sectionProvider);
-    final favorites = ref.watch(favoritesProvider);
+    final sections = ref.watch(sectionProvider);
+    final favoritesName = ref.watch(favoritesNameProvider);
+    final favoritesNameNotifier = ref.read(favoritesNameProvider.notifier);
+    final favorites = sections.maybeWhen(
+      data: (sections) {
+        final modules = sections
+            .map((section) => section.moduleList)
+            .expand((element) => element);
+        return favoritesName
+            .map((name) => modules.firstWhere((module) => module.name == name))
+            .toList();
+      },
+      orElse: () => [],
+    );
 
     return CentralisationTemplate(
       child: SingleChildScrollView(
@@ -22,21 +35,25 @@ class CentralisationMainPage extends HookConsumerWidget {
         child: Column(children: [
           Container(
             padding: const EdgeInsets.only(top: 15, bottom: 5),
-            child: SingleChildScrollView(
+            height: 135,
+            child: ReorderableListView(
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  ...favorites.map((module) => LikedCard(module: module)),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                ],
+              proxyDecorator: (widget, _, animation) => Transform.scale(
+                scale: 1 + .05 * animation.value,
+                child: widget,
               ),
+              header: const SizedBox(
+                width: 15,
+              ),
+              footer: const SizedBox(
+                width: 15,
+              ),
+              onReorder: favoritesNameNotifier.reorderFavorites,
+              children: favorites
+                  .map((module) =>
+                      LikedCard(module: module, key: Key(module.name)))
+                  .toList(),
             ),
           ),
           ...section.when(
