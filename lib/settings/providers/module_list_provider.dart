@@ -16,7 +16,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 final modulesProvider =
     StateNotifierProvider<ModulesNotifier, List<Module>>((ref) {
-  final myModulesRoot = ref.watch(allMyModuleRootList);
+  final myModulesRoot =
+      ref.watch(allMyModuleRootList).map((root) => '/$root').toList();
 
   ModulesNotifier modulesNotifier = ModulesNotifier();
   modulesNotifier.loadModules(myModulesRoot);

@@ -4,8 +4,8 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/all_groups_list_provider.dart';
 import 'package:myecl/admin/providers/all_module_visibilities_list_provider.dart';
-import 'package:myecl/admin/ui/admin.dart';
 import 'package:myecl/admin/providers/module_visibilities_list_provider.dart';
+import 'package:myecl/admin/ui/admin.dart';
 
 class EditModulesVisibilityPage extends HookConsumerWidget {
   const EditModulesVisibilityPage({super.key});
