@@ -46,6 +46,14 @@ jobs:
           DEBUG_HOST: ${{ secrets.DEBUG_HOST }}
           RELEASE_HOST: ${{ secrets.RELEASE_HOST }}
       
+      - name: Set alpha properties
+        if: ${{ steps.extract_branch.outputs.branch }} == "alpha"
+        run: |
+          rm assets/images/icon.png
+          mv assets/images/icon_alpha.png assets/images/icon.png
+          rm assets/images/logo.png
+          mv assets/images/logo_alpha.png assets/images/logo.png
+      
       - name: Build 🔧
         run: flutter build web --release --web-renderer html
       

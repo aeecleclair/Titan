@@ -17,10 +17,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - target: "appbundle --release"
+          - target: "appbundle"
             name: "AAB"
             path: build/app/outputs/bundle/release/app-signed.aab
-          - target: "ipa --release"
+          - target: "ipa"
             name: "IPA"
             path: build/ios/ipa/*.ipa
     
@@ -36,8 +36,7 @@ jobs:
           echo "branch=$branch" >> $GITHUB_OUTPUT
           echo "versionCode=$versionCode" >> $GITHUB_OUTPUT
           echo "versionName=$versionName" >> $GITHUB_OUTPUT
-          
-      
+        
       - name: Checkout 🛎️
         uses: actions/checkout@v3
       
@@ -64,18 +63,25 @@ jobs:
           DEBUG_HOST: ${{ secrets.DEBUG_HOST }}
           RELEASE_HOST: ${{ secrets.RELEASE_HOST }}
       
-      - name: Build 🔧
-        run: flutter build ${{ matrix.target }} --build-name ${{ steps.get-ref.outputs.versionName }} --build-number ${{ steps.get-ref.outputs.versionCode }}
-      
       - name: Create the Keystore
         if: matrix.name == "AAB"
-        env:
-          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-        run: echo $KEYSTORE_BASE64 | base64 -d > $RUNNER_TEMP/myecl.keystore
+        run: |
+        echo ${{ secrets.KEYSTORE_BASE64 }} | base64 -d > $RUNNER_TEMP/myecl.keystore
+        echo storePassword=${{ secrets.STORE_PASSWORD }} >> android/key.properties
+        echo keyPassword=${{ secrets.KEY_PASSWORD }} >> android/key.properties
+        echo keyAlias=${{ secrets.KEY_ALIAS }} >> android/key.properties
+        echo storeFile=$RUNNER_TEMP/myecl.keystore >> android/key.properties
       
-      - name: Sign AAB
-        if: matrix.name == "AAB"
-        run: jarsigner -keystore $RUNNER_TEMP/myecl.keystore -storepass ${{ secrets.KEYSTORE_PASSWORD }} -keypass ${{ secrets.KEYSTORE_PASSWORD_ALIAS }} -sigalg SHA256withRSA -digestalg SHA-256 -signedjar build/app/outputs/bundle/release/app-signed.aab build/app/outputs/bundle/release/app.aab MyECL
+      - name: Set alpha properties
+        if: ${{ steps.extract_branch.outputs.branch }} == "alpha"
+        run: |
+          rm assets/images/icon.png
+          mv assets/images/icon_alpha.png assets/images/icon.png
+          rm assets/images/logo.png
+          mv assets/images/logo_alpha.png assets/images/logo.png
+      
+      - name: Build 🔧
+        run: flutter build ${{ matrix.target }} --release --build-name ${{ steps.get-ref.outputs.versionName }} --build-number ${{ steps.get-ref.outputs.versionCode }}
       
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
