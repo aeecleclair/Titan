@@ -15,14 +15,14 @@ class ModuleVisibilitiesRepository extends Repository {
     return List<String>.from(await getList(suffix: "me"));
   }
 
-  Future<bool> addGroupToModule(ModuleVisibility moduleVisibility) async {
-    await create(moduleVisibility.toJson());
+  Future<bool> addGroupToModule(String root, String allowedGroupId) async {
+    await create({'root':root,'allowed_group_id':allowedGroupId});
     return true;
   }
 
   Future<bool> deleteGroupAccessForModule(
-      ModuleVisibility moduleVisibility) async {
+      String root, String allowedGroupId) async {
     return await delete(
-        "${moduleVisibility.root}/${moduleVisibility.allowedGroupId}");
+        "${root}/${allowedGroupId}");
   }
 }

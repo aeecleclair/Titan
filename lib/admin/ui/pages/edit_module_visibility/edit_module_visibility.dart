@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/module_visibility.dart';
 import 'package:myecl/admin/providers/all_groups_list_provider.dart';
 import 'package:myecl/admin/providers/all_module_visibilities_list_provider.dart';
 import 'package:myecl/admin/ui/admin.dart';
@@ -78,16 +77,11 @@ class EditModulesVisibilityPage extends HookConsumerWidget {
                                                     .contains(group.id)
                                                 ? GestureDetector(
                                                     onTap: () async {
-                                                      final newModuleVisibility =
-                                                          ModuleVisibility(
-                                                              root:
-                                                                  moduleVisibilities
-                                                                      .root,
-                                                              allowedGroupId:
-                                                                  group.id);
                                                       await modulesNotifier
                                                           .deleteGroupAccessForModule(
-                                                              newModuleVisibility);
+                                                              moduleVisibilities
+                                                                  .root,
+                                                              group.id);
                                                       await modulesNotifier
                                                           .loadModuleVisibilities();
                                                     },
@@ -97,16 +91,11 @@ class EditModulesVisibilityPage extends HookConsumerWidget {
                                                     ))
                                                 : GestureDetector(
                                                     onTap: () async {
-                                                      final newModuleVisibility =
-                                                          ModuleVisibility(
-                                                              root:
-                                                                  moduleVisibilities
-                                                                      .root,
-                                                              allowedGroupId:
-                                                                  group.id);
                                                       await modulesNotifier
                                                           .addGroupToModule(
-                                                              newModuleVisibility);
+                                                              moduleVisibilities
+                                                                  .root,
+                                                              group.id);
                                                       await modulesNotifier
                                                           .loadModuleVisibilities();
                                                     },
