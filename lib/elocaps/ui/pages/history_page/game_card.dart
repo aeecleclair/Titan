@@ -10,7 +10,7 @@ class GameCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    
+
     return Container(
       width: MediaQuery.of(context).size.width * 0.4,
       padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
@@ -25,7 +25,7 @@ class GameCard extends HookConsumerWidget {
       ),
       child: Center(
           child: Text(
-        "${capsModeToString(game.mode)}\n${game.timestamp.toString()}",
+        "${capsModeToString(game.mode)}\n${game.timestamp.toString()}\n${game.gamePlayers.map((e) => e.user.nickname).join(', ')}",
         style: const TextStyle(
           fontWeight: FontWeight.w700,
           color: Color.fromARGB(255, 255, 252, 251),
