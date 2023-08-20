@@ -24,18 +24,16 @@ class AuthenticatedMiddleware extends QMiddleware {
     final modules = ref.read(modulesProvider);
     final check = versionVerifier
         .whenData((value) => value.minimalTitanVersion <= titanVersion);
-    if (!pathForwardingNotifier.state.isLoggedIn && path != LoginRouter.root) {
+    if (!pathForwardingNotifier.state.isLoggedIn &&
+        path != LoginRouter.root &&
+        path != "/") {
       pathForwardingNotifier.forward(path);
     }
-
+    print(pathForwardingNotifier.state);
     return check.when(
         data: (value) {
           if (!value) {
             return AppRouter.update;
-          }
-          if (pathForwardingNotifier.state.path == "/") {
-            pathForwardingNotifier.forward(modules.first.root);
-            return modules.first.root;
           }
           if (path == LoginRouter.root &&
               !pathForwardingNotifier.state.isLoggedIn &&
@@ -47,6 +45,13 @@ class AuthenticatedMiddleware extends QMiddleware {
           }
           if (!pathForwardingNotifier.state.isLoggedIn) {
             pathForwardingNotifier.login();
+          }
+          if (pathForwardingNotifier.state.path == "/") {
+            if (modules.isEmpty) {
+              return AppRouter.noModule;
+            }
+            pathForwardingNotifier.forward(modules.first.root);
+            return modules.first.root;
           }
           if (pathForwardingNotifier.state.path != path) {
             return pathForwardingNotifier.state.path;
