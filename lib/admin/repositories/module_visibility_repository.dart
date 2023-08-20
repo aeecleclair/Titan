@@ -1,14 +1,14 @@
 import 'package:myecl/admin/class/module_visibility.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
-class ModuleVisibilitiesRepository extends Repository {
+class ModuleVisibilityRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "module_visibility/";
 
-  Future<List<ModuleVisibilities>> getModuleVisibilitiesList() async {
-    return List<ModuleVisibilities>.from(
-        (await getList()).map((x) => ModuleVisibilities.fromJson(x)));
+  Future<List<ModuleVisibility>> getModuleVisibilityList() async {
+    return List<ModuleVisibility>.from(
+        (await getList()).map((x) => ModuleVisibility.fromJson(x)));
   }
 
   Future<List<String>> getAccessibleModule() async {
@@ -16,13 +16,12 @@ class ModuleVisibilitiesRepository extends Repository {
   }
 
   Future<bool> addGroupToModule(String root, String allowedGroupId) async {
-    await create({'root':root,'allowed_group_id':allowedGroupId});
+    await create({'root': root, 'allowed_group_id': allowedGroupId});
     return true;
   }
 
   Future<bool> deleteGroupAccessForModule(
       String root, String allowedGroupId) async {
-    return await delete(
-        "${root}/${allowedGroupId}");
+    return await delete("$root/$allowedGroupId");
   }
 }

@@ -5,7 +5,7 @@ import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class ModuleListNotifier extends ListNotifier<String> {
-  ModuleVisibilitiesRepository repository = ModuleVisibilitiesRepository();
+  ModuleVisibilityRepository repository = ModuleVisibilityRepository();
   ModuleListNotifier({required String token})
       : super(const AsyncValue.loading()) {
     repository.setToken(token);
