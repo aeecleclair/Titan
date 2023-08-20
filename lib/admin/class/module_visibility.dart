@@ -2,9 +2,11 @@ class ModuleVisibility {
   ModuleVisibility({
     required this.root,
     required this.allowedGroupIds,
+    this.isExpanded = false,
   });
   late final String root;
   late final List<dynamic> allowedGroupIds;
+  late bool isExpanded;
 
   ModuleVisibility.fromJson(Map<String, dynamic> json) {
     root = json['root'];
