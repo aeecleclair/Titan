@@ -13,6 +13,7 @@ import 'package:myecl/loan/router.dart';
 import 'package:myecl/login/router.dart';
 import 'package:myecl/others/ui/loading_page.dart';
 import 'package:myecl/others/ui/no_internet_page.dart';
+import 'package:myecl/others/ui/no_module.dart';
 import 'package:myecl/others/ui/update_page.dart';
 import 'package:myecl/settings/router.dart';
 import 'package:myecl/tombola/router.dart';
@@ -29,6 +30,7 @@ class AppRouter {
   static const String loading = '/loading';
   static const String update = '/update';
   static const String noInternet = '/no_internet';
+  static const String noModule = '/no_module';
   AppRouter(this.ref) {
     routes = [
       QRoute(
@@ -47,6 +49,10 @@ class AppRouter {
       QRoute(
         path: update,
         builder: () => const Scaffold(body: UpdatePage()),
+      ),
+      QRoute(
+        path: noModule,
+        builder: () => const Scaffold(body: NoModulePage()),
       ),
       AdminRouter(ref).route(),
       AdvertRouter(ref).route(),

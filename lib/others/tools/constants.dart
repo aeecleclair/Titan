@@ -7,4 +7,6 @@ class OthersTextConstants {
   static const String unableToConnectToServer =
       "Impossible de se connecter au serveur";
   static const String version = "Version";
+  static const String noModule =
+      "Aucun module disponible, veuillez réessayer ultérieurement 😢😢";
 }
