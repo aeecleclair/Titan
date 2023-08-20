@@ -17,8 +17,6 @@ class EditModulesVisibilityPage extends HookConsumerWidget {
     final modules = ref.watch(allModuleVisibilityList);
     final groups = ref.watch(allGroupList);
 
-    final isOpen = useState<List<bool>>([]);
-
     return AdminTemplate(
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -28,90 +26,74 @@ class EditModulesVisibilityPage extends HookConsumerWidget {
                 ? const Text('Pas de module ou de groupe')
                 : ExpansionPanelList(
                     expansionCallback: (i, isExpanded) {
-                      isOpen.value[i] = !isOpen.value[i];
-                      isOpen.value = List.from(isOpen
-                          .value); // we create a copy so that the value update to a new list an rebuild the page
+                      modules[i].isExpanded = !modules[i].isExpanded;
                     },
-                    children: modules
-                        .asMap()
-                        .map((i, moduleVisibility) {
-                          if (isOpen.value.isEmpty) {
-                            isOpen.value = groups.map((e) => false).toList();
-                          }
-                          return MapEntry(
-                            i,
-                            ExpansionPanel(
-                              canTapOnHeader: true,
-                              isExpanded: isOpen.value[i],
-                              headerBuilder: (context, isExpanded) => Container(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                child: Text(
-                                  moduleVisibility.root,
-                                  style: const TextStyle(
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              body: Column(
-                                  children: groups
-                                      .map(
-                                        (group) => Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 10, horizontal: 20),
-                                          child: Row(children: [
-                                            Text(
-                                              group.name,
-                                              style: const TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 0, 0, 0),
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                            const Spacer(),
-                                            moduleVisibility.allowedGroupIds
-                                                    .contains(group.id)
-                                                ? GestureDetector(
-                                                    onTap: () async {
-                                                      await modulesNotifier
-                                                          .deleteGroupAccessForModule(
-                                                              moduleVisibility
-                                                                  .root,
-                                                              group.id);
-                                                      await modulesNotifier
-                                                          .loadModuleVisibility();
-                                                    },
-                                                    child: const HeroIcon(
-                                                      HeroIcons.eye,
-                                                      size: 40,
-                                                    ))
-                                                : GestureDetector(
-                                                    onTap: () async {
-                                                      await modulesNotifier
-                                                          .addGroupToModule(
-                                                              moduleVisibility
-                                                                  .root,
-                                                              group.id);
-                                                      await modulesNotifier
-                                                          .loadModuleVisibility();
-                                                    },
-                                                    child: const HeroIcon(
-                                                      HeroIcons.eyeSlash,
-                                                      size: 40,
-                                                    ))
-                                          ]),
-                                        ),
-                                      )
-                                      .toList()),
+                    children: modules.map((moduleVisibility) {
+                      return ExpansionPanel(
+                        canTapOnHeader: true,
+                        isExpanded: moduleVisibility.isExpanded,
+                        headerBuilder: (context, isExpanded) => Container(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Text(
+                            moduleVisibility.root,
+                            style: const TextStyle(
+                              color: Color.fromARGB(255, 0, 0, 0),
+                              fontSize: 22,
+                              fontWeight: FontWeight.w800,
                             ),
-                          );
-                        })
-                        .values
-                        .toList(),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        body: Column(
+                            children: groups
+                                .map(
+                                  (group) => Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 20),
+                                    child: Row(children: [
+                                      Text(
+                                        group.name,
+                                        style: const TextStyle(
+                                          color: Color.fromARGB(255, 0, 0, 0),
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      const Spacer(),
+                                      moduleVisibility.allowedGroupIds
+                                              .contains(group.id)
+                                          ? GestureDetector(
+                                              onTap: () async {
+                                                await modulesNotifier
+                                                    .deleteGroupAccessForModule(
+                                                        moduleVisibility.root,
+                                                        group.id);
+                                                await modulesNotifier
+                                                    .loadModuleVisibility();
+                                              },
+                                              child: const HeroIcon(
+                                                HeroIcons.eye,
+                                                size: 40,
+                                              ))
+                                          : GestureDetector(
+                                              onTap: () async {
+                                                await modulesNotifier
+                                                    .addGroupToModule(
+                                                        moduleVisibility.root,
+                                                        group.id);
+                                                await modulesNotifier
+                                                    .loadModuleVisibility();
+                                              },
+                                              child: const HeroIcon(
+                                                HeroIcons.eyeSlash,
+                                                size: 40,
+                                              ))
+                                    ]),
+                                  ),
+                                )
+                                .toList()),
+                      );
+                    }).toList(),
                   )),
       ),
     );
