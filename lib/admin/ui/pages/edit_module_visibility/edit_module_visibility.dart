@@ -3,8 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/all_groups_list_provider.dart';
-import 'package:myecl/admin/providers/all_module_visibilities_list_provider.dart';
-import 'package:myecl/admin/providers/module_visibilities_list_provider.dart';
+import 'package:myecl/admin/providers/all_module_visibility_list_provider.dart';
+import 'package:myecl/admin/providers/module_visibility_list_provider.dart';
 import 'package:myecl/admin/ui/admin.dart';
 
 class EditModulesVisibilityPage extends HookConsumerWidget {
@@ -12,9 +12,9 @@ class EditModulesVisibilityPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final modulesNotifier = ref.watch(moduleVisibilitiesListProvider.notifier);
+    final modulesNotifier = ref.watch(moduleVisibilityListProvider.notifier);
 
-    final modules = ref.watch(allModuleVisibilitiesList);
+    final modules = ref.watch(allModuleVisibilityList);
     final groups = ref.watch(allGroupList);
 
     final isOpen = useState<List<bool>>([]);
@@ -34,7 +34,7 @@ class EditModulesVisibilityPage extends HookConsumerWidget {
                     },
                     children: modules
                         .asMap()
-                        .map((i, moduleVisibilities) {
+                        .map((i, moduleVisibility) {
                           if (isOpen.value.isEmpty) {
                             isOpen.value = groups.map((e) => false).toList();
                           }
@@ -47,7 +47,7 @@ class EditModulesVisibilityPage extends HookConsumerWidget {
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 10),
                                 child: Text(
-                                  moduleVisibilities.root,
+                                  moduleVisibility.root,
                                   style: const TextStyle(
                                     color: Color.fromARGB(255, 0, 0, 0),
                                     fontSize: 22,
@@ -73,17 +73,17 @@ class EditModulesVisibilityPage extends HookConsumerWidget {
                                               ),
                                             ),
                                             const Spacer(),
-                                            moduleVisibilities.allowedGroupIds
+                                            moduleVisibility.allowedGroupIds
                                                     .contains(group.id)
                                                 ? GestureDetector(
                                                     onTap: () async {
                                                       await modulesNotifier
                                                           .deleteGroupAccessForModule(
-                                                              moduleVisibilities
+                                                              moduleVisibility
                                                                   .root,
                                                               group.id);
                                                       await modulesNotifier
-                                                          .loadModuleVisibilities();
+                                                          .loadModuleVisibility();
                                                     },
                                                     child: const HeroIcon(
                                                       HeroIcons.eye,
@@ -93,11 +93,11 @@ class EditModulesVisibilityPage extends HookConsumerWidget {
                                                     onTap: () async {
                                                       await modulesNotifier
                                                           .addGroupToModule(
-                                                              moduleVisibilities
+                                                              moduleVisibility
                                                                   .root,
                                                               group.id);
                                                       await modulesNotifier
-                                                          .loadModuleVisibilities();
+                                                          .loadModuleVisibility();
                                                     },
                                                     child: const HeroIcon(
                                                       HeroIcons.eyeSlash,

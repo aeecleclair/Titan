@@ -1,12 +1,12 @@
-class ModuleVisibilities {
-  ModuleVisibilities({
+class ModuleVisibility {
+  ModuleVisibility({
     required this.root,
     required this.allowedGroupIds,
   });
   late final String root;
-  late final List<String> allowedGroupIds;
+  late final List<dynamic> allowedGroupIds;
 
-  ModuleVisibilities.fromJson(Map<String, dynamic> json) {
+  ModuleVisibility.fromJson(Map<String, dynamic> json) {
     root = json['root'];
     allowedGroupIds = json['allowed_group_ids'];
   }
@@ -18,17 +18,17 @@ class ModuleVisibilities {
     return data;
   }
 
-  ModuleVisibilities copyWith({
+  ModuleVisibility copyWith({
     root,
     allowedGroupIds,
   }) =>
-      ModuleVisibilities(
+      ModuleVisibility(
         root: root ?? this.root,
         allowedGroupIds: allowedGroupIds ?? this.allowedGroupIds,
       );
 
   @override
   String toString() {
-    return 'ModuleVisibilities(root: $root, allowed_group_ids: $allowedGroupIds)';
+    return 'ModuleVisibility(root: $root, allowed_group_ids: $allowedGroupIds)';
   }
 }

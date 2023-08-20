@@ -5,16 +5,15 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class ModuleVisibilitiesListNotifier extends ListNotifier<ModuleVisibilities> {
-  ModuleVisibilitiesRepository repository = ModuleVisibilitiesRepository();
-  ModuleVisibilitiesListNotifier({required String token})
+class ModuleVisibilityListNotifier extends ListNotifier<ModuleVisibility> {
+  ModuleVisibilityRepository repository = ModuleVisibilityRepository();
+  ModuleVisibilityListNotifier({required String token})
       : super(const AsyncValue.loading()) {
     repository.setToken(token);
   }
 
-  Future<AsyncValue<List<ModuleVisibilities>>> loadModuleVisibilities() async {
-    print('load');
-    return await loadList(repository.getModuleVisibilitiesList);
+  Future<AsyncValue<List<ModuleVisibility>>> loadModuleVisibility() async {
+    return await loadList(repository.getModuleVisibilityList);
   }
 
 // TODO : Update List with API calls
@@ -31,14 +30,13 @@ class ModuleVisibilitiesListNotifier extends ListNotifier<ModuleVisibilities> {
   }
 }
 
-final moduleVisibilitiesListProvider = StateNotifierProvider<
-    ModuleVisibilitiesListNotifier,
-    AsyncValue<List<ModuleVisibilities>>>((ref) {
+final moduleVisibilityListProvider = StateNotifierProvider<
+    ModuleVisibilityListNotifier, AsyncValue<List<ModuleVisibility>>>((ref) {
   final token = ref.watch(tokenProvider);
-  ModuleVisibilitiesListNotifier notifier =
-      ModuleVisibilitiesListNotifier(token: token);
+  ModuleVisibilityListNotifier notifier =
+      ModuleVisibilityListNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadModuleVisibilities();
+    await notifier.loadModuleVisibility();
   });
   return notifier;
 });
