@@ -158,11 +158,19 @@ DateTime normalizedDate(DateTime date) {
 }
 
 String processDateToAPI(DateTime date) {
-  return date.toIso8601String();
+  return date.toUtc().toIso8601String();
 }
 
 String processDateToAPIWithoutHour(DateTime date) {
-  return date.toIso8601String().split('T')[0];
+  return processDateToAPI(date).split('T')[0];
+}
+
+DateTime processDateFromAPI(String date) {
+  return DateFormat("yyyy-MM-dd HH:mm:ss").parse(date, true).toLocal();
+}
+
+DateTime processDateFromAPIWithoutHour(String date) {
+  return DateFormat("yyyy-MM-dd").parse(date, true).toLocal();
 }
 
 String formatDates(DateTime dateStart, DateTime dateEnd, bool allDay) {
