@@ -70,28 +70,13 @@ class AdminMainPage extends HookConsumerWidget {
                                 spreadRadius: 2)
                           ]),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Spacer(),
-                          Stack(
-                            clipBehavior: Clip.none,
-                            children: [
-                              HeroIcon(
-                                HeroIcons.queueList,
-                                color: Colors.grey.shade700,
-                                size: 35,
-                              ),
-                              Positioned(
-                                right: -2,
-                                top: -2,
-                                child: HeroIcon(
-                                  HeroIcons.eye,
-                                  size: 20,
-                                  color: Colors.grey.shade700,
-                                ),
-                              )
-                            ],
+                          HeroIcon(
+                            HeroIcons.eye,
+                            color: Colors.grey.shade700,
+                            size: 40,
                           ),
-                          const Spacer()
                         ],
                       ),
                     ),
