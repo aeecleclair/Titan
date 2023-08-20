@@ -23,7 +23,9 @@ class EditModulesVisibilityPage extends HookConsumerWidget {
         child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: modules.isEmpty || groups.isEmpty
-                ? const Text('Pas de module ou de groupe')
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
                 : ExpansionPanelList(
                     expansionCallback: (i, isExpanded) {
                       modules[i].isExpanded = !modules[i].isExpanded;
