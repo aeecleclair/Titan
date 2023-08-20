@@ -61,6 +61,7 @@ class WaitingDialog extends HookConsumerWidget {
                           center: Alignment.bottomRight,
                           radius: 1.5)),
                   child: const SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,

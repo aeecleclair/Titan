@@ -15,6 +15,7 @@ class HistoryPage extends HookConsumerWidget {
 
     return ElocapsTemplate(
         child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
       child: Column(
         children: [
           const SizedBox(height: 20),
