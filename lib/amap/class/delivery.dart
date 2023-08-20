@@ -23,7 +23,7 @@ class Delivery {
   late final String id;
 
   Delivery.fromJson(Map<String, dynamic> json) {
-    deliveryDate = DateTime.parse(json['delivery_date']);
+    deliveryDate = processDateFromAPIWithoutHour(json['delivery_date']);
     products =
         List<Product>.from(json['products'].map((x) => Product.fromJson(x)));
     id = json['id'];

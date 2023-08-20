@@ -21,7 +21,7 @@ class Session {
   Session.fromJson(Map<String, dynamic> json) {
     id = json["id"];
     name = json["name"];
-    start = DateTime.parse(json["start"]);
+    start = processDateFromAPI(json["start"]);
     duration = json["duration"];
     overview = json["overview"];
     genre = json["genre"];

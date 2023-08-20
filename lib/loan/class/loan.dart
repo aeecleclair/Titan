@@ -30,8 +30,8 @@ class Loan {
     borrower = SimpleUser.fromJson(json['borrower']);
     loaner = Loaner.fromJson(json['loaner']);
     notes = json['notes'];
-    start = DateTime.parse(json['start']);
-    end = DateTime.parse(json['end']);
+    start = processDateFromAPIWithoutHour(json['start']);
+    end = processDateFromAPIWithoutHour(json['end']);
     caution = json['caution'];
     itemsQuantity = List<ItemQuantity>.from(
         json['items_qty'].map((x) => ItemQuantity.fromJson(x)));
