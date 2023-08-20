@@ -12,7 +12,6 @@ class ElocapsRouter {
   static const String root = '/elocaps';
   static const String history = '/history';
   static const String game = '/game';
-  static const String admin = '/admin';
 
   static final Module module = Module(
       name: "Elocaps",
