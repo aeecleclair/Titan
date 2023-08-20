@@ -1,9 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/admin/class/module_visibility.dart';
+import 'package:myecl/admin/providers/module_root_list_provider.dart';
 import 'package:myecl/admin/providers/module_visibilities_list_provider.dart';
 
 final allModuleVisibilitiesList = Provider<List<ModuleVisibilities>>((ref) {
   return ref
       .watch(moduleVisibilitiesListProvider)
+      .maybeWhen(data: (data) => data, orElse: () => []);
+});
+
+final allMyModuleRootList = Provider<List<String>>((ref) {
+  return ref
+      .watch(moduleRootListProvider)
       .maybeWhen(data: (data) => data, orElse: () => []);
 });

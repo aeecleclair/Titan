@@ -17,15 +17,15 @@ class ModuleVisibilitiesListNotifier extends ListNotifier<ModuleVisibilities> {
   }
 
 // TODO : Update List with API calls
-  Future<bool> addGroupToModule(ModuleVisibility moduleVisibility) async {
-    final isAdded = await repository.addGroupToModule(moduleVisibility);
+  Future<bool> addGroupToModule(String root, String allowedGroupId) async {
+    final isAdded = await repository.addGroupToModule(root, allowedGroupId);
     return isAdded;
   }
 
   Future<bool> deleteGroupAccessForModule(
-      ModuleVisibility moduleVisibility) async {
+      String root, String allowedGroupId) async {
     final isDeleted =
-        await repository.deleteGroupAccessForModule(moduleVisibility);
+        await repository.deleteGroupAccessForModule(root, allowedGroupId);
     return isDeleted;
   }
 }
@@ -54,12 +54,3 @@ class ModuleListNotifier extends ListNotifier<String> {
   }
 }
 
-final moduleListProvider =
-    StateNotifierProvider<ModuleListNotifier, AsyncValue<List<String>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  ModuleListNotifier notifier = ModuleListNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadMyModuleRoots();
-  });
-  return notifier;
-});
