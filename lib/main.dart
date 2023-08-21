@@ -42,6 +42,7 @@ class MyApp extends HookConsumerWidget {
     });
 
     return MaterialApp(
+        initialRoute: '/',
         debugShowCheckedModeBanner: false,
         home: WillPopScope(
             onWillPop: () async {
@@ -54,8 +55,8 @@ class MyApp extends HookConsumerWidget {
                   if (controller.isCompleted) {
                     SystemChannels.platform.invokeMethod('SystemNavigator.pop');
                   } else {
-                  final controllerNotifier =
-                      ref.watch(swipeControllerProvider(animation).notifier);
+                    final controllerNotifier =
+                        ref.watch(swipeControllerProvider(animation).notifier);
                     controllerNotifier.toggle();
                     topBarCallBack.onMenu?.call();
                   }
