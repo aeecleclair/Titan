@@ -15,6 +15,12 @@ class FirebaseTokenExpirationNotifier extends StateNotifier<DateTime?> {
     }
   }
 
+  void reset() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove(dbDate);
+    state = null;
+  }
+
   void saveDate(DateTime expiration) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString(dbDate, expiration.toString());

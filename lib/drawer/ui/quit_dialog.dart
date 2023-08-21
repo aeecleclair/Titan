@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/drawer/providers/display_quit_popup.dart';
 import 'package:myecl/drawer/tools/constants.dart';
+import 'package:myecl/service/providers/firebase_token_expiration_provider.dart';
 import 'package:myecl/service/providers/messages_provider.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/dialog.dart';
@@ -16,6 +17,8 @@ class QuitDialog extends HookConsumerWidget {
     final isCachingNotifier = ref.watch(isCachingProvider.notifier);
     final displayQuitNotifier = ref.watch(displayQuitProvider.notifier);
     final messageNotifier = ref.watch(messagesProvider.notifier);
+    final firebaseTokenExpirationNotifier =
+        ref.watch(firebaseTokenExpirationProvider.notifier);
     return GestureDetector(
         onTap: () {
           displayQuitNotifier.setDisplay(false);
@@ -30,6 +33,7 @@ class QuitDialog extends HookConsumerWidget {
                   onYes: () {
                     auth.deleteToken();
                     messageNotifier.forgetDevice();
+                    firebaseTokenExpirationNotifier.reset();
                     isCachingNotifier.set(false);
                     displayToast(
                         context, TypeMsg.msg, DrawerTextConstants.logOut);
