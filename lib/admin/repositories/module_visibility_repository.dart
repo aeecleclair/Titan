@@ -4,7 +4,7 @@ import 'package:myecl/tools/repository/repository.dart';
 class ModuleVisibilityRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = "module_visibility/";
+  final ext = "module-visibility/";
 
   Future<List<ModuleVisibility>> getModuleVisibilityList() async {
     return List<ModuleVisibility>.from(
