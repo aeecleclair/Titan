@@ -54,12 +54,16 @@ class LocalNotificationService {
 
   Future showNotification(message_class.Message message) async {
     final notificationDetails = await getNotificationDetails();
-    if (message.deliveryDateTime != null) {
+    tz.TZDateTime dateToDisplay =
+        tz.TZDateTime.from(message.deliveryDateTime!, tz.local);
+    final now = tz.TZDateTime.from(DateTime.now(), tz.local);
+    if (message.deliveryDateTime != null && dateToDisplay.isAfter(now)) {
+      print("dateToDisplay: $dateToDisplay");
       _localNotificationService.zonedSchedule(
           generateIntFromString(message.context),
           message.title,
           message.content,
-          tz.TZDateTime.from(message.deliveryDateTime!, tz.local),
+          dateToDisplay,
           notificationDetails,
           uiLocalNotificationDateInterpretation:
               UILocalNotificationDateInterpretation.absoluteTime,
@@ -104,7 +108,8 @@ class LocalNotificationService {
 
   Future<void> groupNotifications() async {
     AndroidNotificationChannelGroup channelGroup =
-        const AndroidNotificationChannelGroup('com.my.app.alert1', 'mychannel1');
+        const AndroidNotificationChannelGroup(
+            'com.my.app.alert1', 'mychannel1');
     await _localNotificationService
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
