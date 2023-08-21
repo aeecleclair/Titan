@@ -1,35 +1,43 @@
+import 'dart:convert';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/service/class/firebase_toke_expiration.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class FirebaseTokenExpirationNotifier extends StateNotifier<DateTime?> {
+class FirebaseTokenExpirationNotifier
+    extends StateNotifier<FirebaseTokenExpiration> {
   final String dbDate = "firebaseTokenExpiration";
-  FirebaseTokenExpirationNotifier() : super(null);
+  FirebaseTokenExpirationNotifier() : super(FirebaseTokenExpiration.empty());
 
   void getSavedDate() async {
     final prefs = await SharedPreferences.getInstance();
     final savedDate = prefs.getString(dbDate);
     if (savedDate != null) {
-      state = DateTime.parse(savedDate);
+      state = FirebaseTokenExpiration.fromJson(json.decode(savedDate));
     } else {
-      state = DateTime.fromMicrosecondsSinceEpoch(0);
+      state = FirebaseTokenExpiration.empty().copyWith(
+        expiration: DateTime.now(),
+      );
     }
   }
 
   void reset() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(dbDate);
-    state = null;
+    state = FirebaseTokenExpiration.empty();
   }
 
-  void saveDate(DateTime expiration) async {
+  void saveDate(String userId, DateTime expiration) async {
+    final newFirebaseTokenExpiration =
+        FirebaseTokenExpiration(userId, expiration);
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString(dbDate, expiration.toString());
-    state = expiration;
+    prefs.setString(dbDate, json.encode(newFirebaseTokenExpiration.toJson()));
+    state = newFirebaseTokenExpiration;
   }
 }
 
-final firebaseTokenExpirationProvider =
-    StateNotifierProvider<FirebaseTokenExpirationNotifier, DateTime?>((ref) {
+final firebaseTokenExpirationProvider = StateNotifierProvider<
+    FirebaseTokenExpirationNotifier, FirebaseTokenExpiration>((ref) {
   FirebaseTokenExpirationNotifier firebaseTokenExpirationNotifier =
       FirebaseTokenExpirationNotifier();
   firebaseTokenExpirationNotifier.getSavedDate();

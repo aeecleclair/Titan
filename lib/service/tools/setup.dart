@@ -11,12 +11,14 @@ import 'package:myecl/service/repositories/notification_repository.dart';
 import 'package:myecl/tools/logs/log.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 
 void setUpNotification(WidgetRef ref) {
   final LocalNotificationService localNotificationService =
       LocalNotificationService();
   localNotificationService.init();
 
+  final user = ref.watch(userProvider);
   final messageNotifier = ref.watch(messagesProvider.notifier);
   final firebaseToken = ref.watch(firebaseTokenProvider);
   final topicsNotifier = ref.watch(topicsProvider.notifier);
@@ -29,13 +31,16 @@ void setUpNotification(WidgetRef ref) {
       final firebaseTokenExpirationNotifier =
           ref.read(firebaseTokenExpirationProvider.notifier);
       final now = DateTime.now();
-      if (firebaseTokenExpiration != null &&
-          firebaseTokenExpiration.isBefore(now)) {
+      if (firebaseTokenExpiration.expiration != null &&
+          firebaseTokenExpiration.expiration!.isBefore(now) &&
+          user.id != "" &&
+          (firebaseTokenExpiration.userId == user.id ||
+              firebaseTokenExpiration.userId == "")) {
         firebaseToken.then((value) {
           messageNotifier.setFirebaseToken(value);
           messageNotifier.registerDevice();
-          firebaseTokenExpirationNotifier
-              .saveDate(now.add(const Duration(days: 30)));
+          firebaseTokenExpirationNotifier.saveDate(
+              user.id, now.add(const Duration(days: 30)));
           logger.writeLog(Log(
               message: "Firebase messaging token registered",
               level: LogLevel.info));
