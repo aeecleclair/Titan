@@ -29,7 +29,6 @@ class AuthenticatedMiddleware extends QMiddleware {
         path != "/") {
       pathForwardingNotifier.forward(path);
     }
-    print(pathForwardingNotifier.state);
     return check.when(
         data: (value) {
           if (!value) {
