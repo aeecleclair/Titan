@@ -6,7 +6,7 @@ class ModuleVisibility {
   });
   late final String root;
   late final List<dynamic> allowedGroupIds;
-  late bool isExpanded;
+  late bool isExpanded = false;
 
   ModuleVisibility.fromJson(Map<String, dynamic> json) {
     root = json['root'];
@@ -21,16 +21,24 @@ class ModuleVisibility {
   }
 
   ModuleVisibility copyWith({
-    root,
-    allowedGroupIds,
+    String? root,
+    List<dynamic>? allowedGroupIds,
+    bool? isExpanded,
   }) =>
       ModuleVisibility(
         root: root ?? this.root,
         allowedGroupIds: allowedGroupIds ?? this.allowedGroupIds,
+        isExpanded: isExpanded ?? this.isExpanded,
       );
+
+  ModuleVisibility.empty() {
+    root = '';
+    allowedGroupIds = [];
+    isExpanded = false;
+  }
 
   @override
   String toString() {
-    return 'ModuleVisibility(root: $root, allowed_group_ids: $allowedGroupIds)';
+    return 'ModuleVisibility(root: $root, allowed_group_ids: $allowedGroupIds, isExpanded: $isExpanded)';
   }
 }
