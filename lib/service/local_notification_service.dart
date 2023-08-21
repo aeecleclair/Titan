@@ -38,7 +38,7 @@ class LocalNotificationService {
             onDidReceiveBackgroundNotificationResponse);
   }
 
-  Future<NotificationDetails> _notificationDetails() async {
+  Future<NotificationDetails> getNotificationDetails() async {
     AndroidNotificationDetails androidNotificationDetails =
         const AndroidNotificationDetails("fr.myecl.titan", "TitanNotification",
             channelDescription: "Notifications channel for Titan",
@@ -53,7 +53,7 @@ class LocalNotificationService {
   }
 
   Future showNotification(message_class.Message message) async {
-    final notificationDetails = await _notificationDetails();
+    final notificationDetails = await getNotificationDetails();
     if (message.deliveryDateTime != null) {
       _localNotificationService.zonedSchedule(
           generateIntFromString(message.context),
@@ -74,7 +74,7 @@ class LocalNotificationService {
   Future<void> showPeriodicNotification(String id, String? title, String? body,
       String? payload, RepeatInterval repeatInterval) async {
     await _localNotificationService.periodicallyShow(generateIntFromString(id),
-        title, body, repeatInterval, await _notificationDetails(),
+        title, body, repeatInterval, await getNotificationDetails(),
         payload: payload, androidAllowWhileIdle: true);
   }
 
@@ -171,8 +171,7 @@ class LocalNotificationService {
     if (information == null) {
       return "";
     }
-    final path = information.item1;
-    return path;
+    return information.item1;
   }
 
   void onDidReceiveNotificationResponse(NotificationResponse response) async {

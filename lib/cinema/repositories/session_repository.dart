@@ -7,9 +7,7 @@ class SessionRepository extends Repository {
   final ext = 'cinema/sessions';
 
   Future<List<Session>> getAllSessions() async {
-    final List<Session> sessionList =
-        (await getList()).map((e) => Session.fromJson(e)).toList();
-    return sessionList;
+    return (await getList()).map((e) => Session.fromJson(e)).toList();
   }
 
   Future<Session> getSession(String id) async {
