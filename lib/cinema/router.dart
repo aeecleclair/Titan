@@ -9,6 +9,7 @@ import 'package:myecl/cinema/ui/pages/session_pages/add_edit_session.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/tools/middlewares/admin_middleware.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
+import 'package:myecl/tools/middlewares/notification_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class CinemaRouter {
@@ -27,8 +28,9 @@ class CinemaRouter {
   QRoute route() => QRoute(
         path: CinemaRouter.root,
         builder: () => const CinemaMainPage(),
-        middleware: [AuthenticatedMiddleware(ref)],
+        middleware: [AuthenticatedMiddleware(ref), NotificationMiddleWare(ref)],
         children: [
+          QRoute(path: detail, builder: () => const DetailPage()),
           QRoute(path: admin, builder: () => const AdminPage(), middleware: [
             AdminMiddleware(ref, isCinemaAdminProvider),
           ], children: [

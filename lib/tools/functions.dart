@@ -18,7 +18,7 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight);
       icon = HeroIcons.check;
-      duration = 1000;
+      duration = 1500;
       break;
     case TypeMsg.error:
       linearGradient = const LinearGradient(
@@ -138,6 +138,13 @@ String processDateToAPI(DateTime date) {
 
 String processDateToAPIWitoutHour(DateTime date) {
   return date.toIso8601String().split('T')[0];
+}
+
+
+int generateIntFromString(String s) {
+  return s.codeUnits.reduce(
+    (value, element) => value + 100 * element,
+  );
 }
 
 bool isEmailInValid(String email) {

@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/providers/display_quit_popup.dart';
 import 'package:myecl/drawer/tools/constants.dart';
-
 class BottomBar extends ConsumerWidget {
   const BottomBar({Key? key})
       : super(key: key);

@@ -7,6 +7,7 @@ import 'package:myecl/drawer/providers/display_quit_popup.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/ui/custom_drawer.dart';
+import 'package:myecl/service/tools/setup.dart';
 import 'package:myecl/drawer/providers/already_displayed_popup.dart';
 import 'package:myecl/drawer/ui/quit_dialog.dart';
 import 'package:myecl/drawer/ui/email_change_popup.dart';
@@ -25,6 +26,8 @@ class DrawerTemplate extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // We are logged in, so we can set up the notification
+    setUpNotification(ref);
     final animationController =
         useAnimationController(duration: duration, initialValue: 1);
     final animationNotifier = ref.read(animationProvider.notifier);
