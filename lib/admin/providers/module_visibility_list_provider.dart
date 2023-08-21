@@ -16,17 +16,30 @@ class ModuleVisibilityListNotifier extends ListNotifier<ModuleVisibility> {
     return await loadList(repository.getModuleVisibilityList);
   }
 
-// TODO : Update List with API calls
-  Future<bool> addGroupToModule(String root, String allowedGroupId) async {
-    final isAdded = await repository.addGroupToModule(root, allowedGroupId);
-    return isAdded;
+  Future<bool> addGroupToModule(
+      ModuleVisibility moduleVisibility, String allowedGroupId) async {
+    return await update(
+        (moduleVisibility) async =>
+            repository.addGroupToModule(moduleVisibility.root, allowedGroupId),
+        (list, moduleVisibility) => list
+          ..[list.indexWhere((m) => m.root == moduleVisibility.root)] =
+              moduleVisibility,
+        moduleVisibility);
   }
 
   Future<bool> deleteGroupAccessForModule(
-      String root, String allowedGroupId) async {
-    final isDeleted =
-        await repository.deleteGroupAccessForModule(root, allowedGroupId);
-    return isDeleted;
+      ModuleVisibility moduleVisibility, String allowedGroupId) async {
+    return await update(
+        (moduleVisibility) async => repository.deleteGroupAccessForModule(
+            moduleVisibility.root, allowedGroupId),
+        (list, moduleVisibility) => list
+          ..[list.indexWhere((m) => m.root == moduleVisibility.root)] =
+              moduleVisibility,
+        moduleVisibility);
+  }
+
+  void setState(List<ModuleVisibility> modules) {
+    state = AsyncValue.data(modules);
   }
 }
 
