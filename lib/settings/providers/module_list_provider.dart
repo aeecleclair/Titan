@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/advert/ui/router.dart';
-import 'package:myecl/admin/providers/all_module_visibility_list_provider.dart';
+import 'package:myecl/admin/providers/all_my_module_roots_list_provider.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/booking/router.dart';
 import 'package:myecl/centralisation/router.dart';
