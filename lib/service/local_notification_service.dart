@@ -58,7 +58,6 @@ class LocalNotificationService {
         tz.TZDateTime.from(message.deliveryDateTime!, tz.local);
     final now = tz.TZDateTime.from(DateTime.now(), tz.local);
     if (message.deliveryDateTime != null && dateToDisplay.isAfter(now)) {
-      print("dateToDisplay: $dateToDisplay");
       _localNotificationService.zonedSchedule(
           generateIntFromString(message.context),
           message.title,
