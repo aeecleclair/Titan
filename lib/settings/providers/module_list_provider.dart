@@ -25,17 +25,17 @@ final modulesProvider =
 });
 
 class ModulesNotifier extends StateNotifier<List<Module>> {
-  String dbModule = "modules";
-  String dbAllModules = "allModules";
+  String dbModuleKey = "modules";
+  String dbAllModulesKey = "allModules";
   final eq = const DeepCollectionEquality.unordered();
   List<Module> allModules = [
+    HomeRouter.module,
     AmapRouter.module,
     AdvertRouter.module,
     BookingRouter.module,
     CinemaRouter.module,
     CentralisationRouter.module,
     EventRouter.module,
-    HomeRouter.module,
     LoanRouter.module,
     RaffleRouter.module,
     VoteRouter.module,
@@ -44,46 +44,49 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
 
   void saveModules() {
     SharedPreferences.getInstance().then((prefs) {
-      prefs.remove(dbModule);
+      prefs.remove(dbModuleKey);
       prefs.setStringList(
-          dbModule, state.map((e) => e.root.toString()).toList());
+          dbModuleKey, state.map((e) => e.root.toString()).toList());
     });
   }
 
   void saveAllModules() {
     SharedPreferences.getInstance().then((prefs) {
-      prefs.remove(dbAllModules);
+      prefs.remove(dbAllModulesKey);
       prefs.setStringList(
-          dbAllModules, allModules.map((e) => e.root.toString()).toList());
+          dbAllModulesKey, allModules.map((e) => e.root.toString()).toList());
     });
   }
 
   Future loadModules(List<String> roots) async {
     final prefs = await SharedPreferences.getInstance();
-    List<String> modulesName = prefs.getStringList(dbModule) ?? [];
-    List<String> allModulesName = prefs.getStringList(dbAllModules) ?? [];
-    final allmodulesName = allModules.map((e) => e.root.toString()).toList();
-    if (modulesName.isEmpty) {
-      modulesName = allmodulesName;
+    List<String> storageModulesName = prefs.getStringList(dbModuleKey) ?? [];
+    List<String> allStorageModulesName =
+        prefs.getStringList(dbAllModulesKey) ?? [];
+    final allModulesName = allModules.map((e) => e.root.toString()).toList();
+    if (storageModulesName.isEmpty) {
+      storageModulesName = allModulesName;
       saveModules();
     }
-    if (allModulesName.isEmpty || !eq.equals(allModulesName, allmodulesName)) {
-      allModulesName = allmodulesName;
-      modulesName = allmodulesName;
+    if (allStorageModulesName.isEmpty ||
+        !eq.equals(allStorageModulesName, allModulesName)) {
+      allStorageModulesName = allModulesName;
+      storageModulesName = allModulesName;
       saveAllModules();
       saveModules();
     } else {
-      allModules.sort((a, b) => allModulesName
+      allModules.sort((a, b) => allStorageModulesName
           .indexOf(a.root.toString())
-          .compareTo(allModulesName.indexOf(b.root.toString())));
-      modulesName.sort((a, b) =>
-          allModulesName.indexOf(a).compareTo(allModulesName.indexOf(b)));
+          .compareTo(allStorageModulesName.indexOf(b.root.toString())));
+      storageModulesName.sort((a, b) => allStorageModulesName
+          .indexOf(a)
+          .compareTo(allStorageModulesName.indexOf(b)));
     }
     List<Module> modules = [];
     List<Module> toDelete = [];
-    for (String name in modulesName) {
-      if (allmodulesName.contains(name)) {
-        Module module = allModules[allModulesName.indexOf(name)];
+    for (String name in storageModulesName) {
+      if (allModulesName.contains(name)) {
+        Module module = allModules[allStorageModulesName.indexOf(name)];
         if (roots.contains(module.root)) {
           modules.add(module);
         } else {
@@ -98,11 +101,11 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
   }
 
   void sortModules() {
-    final allmodulesName = allModules.map((e) => e.root.toString()).toList();
+    final allModulesName = allModules.map((e) => e.root.toString()).toList();
     final sorted = state.sublist(0)
-      ..sort((a, b) => allmodulesName
+      ..sort((a, b) => allModulesName
           .indexOf(a.root.toString())
-          .compareTo(allmodulesName.indexOf(b.root.toString())));
+          .compareTo(allModulesName.indexOf(b.root.toString())));
     state = sorted;
     saveModules();
   }
