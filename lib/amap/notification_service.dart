@@ -15,7 +15,7 @@ final Map<String, Tuple2<String, StateNotifierProvider>> amapProviders = {
       deliveryListProvider
     ),
     "orders": Tuple2(
-      AmapRouter.root,
+      AmapRouter.root + AmapRouter.admin,
       adminDeliveryOrderListProvider
     ),
 };
