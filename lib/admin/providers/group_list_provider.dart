@@ -5,7 +5,6 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/class/user.dart';
-import 'package:myecl/user/providers/user_provider.dart';
 
 class GroupListNotifier extends ListNotifier<SimpleGroup> {
   final GroupRepository _groupRepository = GroupRepository();
