@@ -1,15 +1,24 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/loan/providers/user_loaner_list_provider.dart';
-import 'package:myecl/loan/router.dart';
+import 'package:myecl/vote/providers/pretendance_list_provider.dart';
+import 'package:myecl/vote/providers/status_provider.dart';
+import 'package:myecl/vote/router.dart';
 import 'package:tuple/tuple.dart';
 
-final Map<String, Tuple2<String, StateNotifierProvider>> loanProviders = {
-  "userLoans": Tuple2(
-    LoanRouter.root,
-    userLoanerListProvider,
+final Map<String, Tuple2<String, StateNotifierProvider>> voteProviders = {
+  "contender": Tuple2(
+    VoteRouter.root,
+    pretendanceListProvider,
   ),
-  "delayedLoans": Tuple2(
-    LoanRouter.root,
-    userLoanerListProvider,
+  "status": Tuple2(
+    VoteRouter.root,
+    statusProvider,
+  ),
+  "userResults": Tuple2(
+    VoteRouter.root,
+    statusProvider,
+  ),
+  "results": Tuple2(
+    VoteRouter.root + VoteRouter.admin,
+    statusProvider,
   ),
 };
