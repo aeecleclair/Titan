@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:myecl/service/class/message.dart' as message_class;
 import 'package:myecl/service/provider_list.dart';
@@ -78,7 +79,7 @@ class LocalNotificationService {
       String? payload, RepeatInterval repeatInterval) async {
     await _localNotificationService.periodicallyShow(generateIntFromString(id),
         title, body, repeatInterval, await getNotificationDetails(),
-        payload: payload, androidAllowWhileIdle: true);
+        payload: payload, androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle);
   }
 
   Future<void> showNotificationWithImage(String id, String? title, String? body,
@@ -146,6 +147,14 @@ class LocalNotificationService {
 
   Future<List<PendingNotificationRequest>> pendingNotificationRequests() async {
     return await _localNotificationService.pendingNotificationRequests();
+  }
+
+  Future<PendingNotificationRequest?> getNotificationDetail(String id) async {
+    final notificationId = generateIntFromString(id);
+    final pendingNotificationRequests =
+        await _localNotificationService.pendingNotificationRequests();
+    return pendingNotificationRequests.firstWhereOrNull(
+        (element) => element.id == notificationId);
   }
 
   Future<void> cancelNotificationById(String id) async {
