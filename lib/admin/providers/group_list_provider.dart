@@ -65,13 +65,3 @@ final allGroupListProvider =
   return provider;
 });
 
-final userGroupListNotifier =
-    StateNotifierProvider<GroupListNotifier, AsyncValue<List<SimpleGroup>>>(
-        (ref) {
-  final token = ref.watch(tokenProvider);
-  GroupListNotifier provider = GroupListNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    await provider.loadGroupsFromUser(ref.watch(userProvider));
-  });
-  return provider;
-});
