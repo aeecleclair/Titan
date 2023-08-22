@@ -1,11 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/cinema/providers/session_list_provider.dart';
-import 'package:myecl/cinema/router.dart';
+import 'package:myecl/tombola/providers/raffle_list_provider.dart';
+import 'package:myecl/tombola/providers/user_tickets_provider.dart';
+import 'package:myecl/tombola/router.dart';
 import 'package:tuple/tuple.dart';
 
-final Map<String, Tuple2<String, StateNotifierProvider>> cinemaProviders = {
-    "session": Tuple2(
-      CinemaRouter.root,
-      sessionListProvider,
-    )
+final Map<String, Tuple2<String, StateNotifierProvider>> raffleProviders = {
+    "raffles": Tuple2(
+      RaffleRouter.root,
+      raffleListProvider,
+    ),
+    "tickets": Tuple2(
+      RaffleRouter.root,
+      userTicketListProvider,
+    ),
 };
