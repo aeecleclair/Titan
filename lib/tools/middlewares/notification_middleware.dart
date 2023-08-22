@@ -23,7 +23,9 @@ class NotificationMiddleWare extends QMiddleware {
       return;
     }
     final notifier = information.item2;
-    // ignore: unused_result
-    ref.refresh(notifier);
+    for (final provider in notifier) {
+      // ignore: unused_result
+      ref.refresh(provider);
+    }
   }
 }

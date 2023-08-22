@@ -5,17 +5,17 @@ import 'package:myecl/amap/providers/user_amount_provider.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:tuple/tuple.dart';
 
-final Map<String, Tuple2<String, StateNotifierProvider>> amapProviders = {
-    "cash": Tuple2(
-      AmapRouter.root,
-      userAmountProvider
-    ),
-    "delivery": Tuple2(
-      AmapRouter.root,
-      deliveryListProvider
-    ),
-    "orders": Tuple2(
-      AmapRouter.root + AmapRouter.admin,
-      adminDeliveryOrderListProvider
-    ),
+final Map<String, Tuple2<String, List<StateNotifierProvider>>> amapProviders = {
+  "cash": Tuple2(
+    AmapRouter.root,
+    [userAmountProvider],
+  ),
+  "delivery": Tuple2(
+    AmapRouter.root,
+    [deliveryListProvider],
+  ),
+  "orders": Tuple2(
+    AmapRouter.root + AmapRouter.admin,
+    [adminDeliveryOrderListProvider],
+  ),
 };

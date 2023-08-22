@@ -5,17 +5,18 @@ import 'package:myecl/router.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:tuple/tuple.dart';
 
-final Map<String, Tuple2<String, StateNotifierProvider>> adminProviders = {
+final Map<String, Tuple2<String, List<StateNotifierProvider>>> adminProviders =
+    {
   "user": Tuple2(
     AppRouter.root,
-    asyncUserProvider,
+    [asyncUserProvider],
   ),
   "userGroups": Tuple2(
     AppRouter.root,
-    userGroupListNotifier,
+    [allGroupListProvider, asyncUserProvider],
   ),
   "groups": Tuple2(
     AdminRouter.root,
-    allGroupListProvider,
+    [allGroupListProvider],
   ),
 };
