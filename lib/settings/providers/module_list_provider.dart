@@ -14,7 +14,6 @@ import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 final modulesProvider =
     StateNotifierProvider<ModulesNotifier, List<Module>>((ref) {
   final me = ref.watch(userProvider);
@@ -22,8 +21,7 @@ final modulesProvider =
       .map((e) => e.id)
       .contains("39691052-2ae5-4e12-99d0-7a9f5f2b0136");
   ModulesNotifier modulesNotifier = ModulesNotifier();
-  modulesNotifier.loadModules([VoteRouter.root],
-      [isAEMember]);
+  modulesNotifier.loadModules([VoteRouter.root], [isAEMember]);
   return modulesNotifier;
 });
 
@@ -32,13 +30,13 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
   String dbAllModules = "allModules";
   final eq = const DeepCollectionEquality.unordered();
   List<Module> allModules = [
+    HomeRouter.module,
     AmapRouter.module,
     AdvertRouter.module,
     BookingRouter.module,
     CinemaRouter.module,
     CentralisationRouter.module,
     EventRouter.module,
-    HomeRouter.module,
     LoanRouter.module,
     RaffleRouter.module,
     VoteRouter.module,
