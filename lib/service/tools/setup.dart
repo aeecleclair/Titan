@@ -85,6 +85,7 @@ void setUpNotification(WidgetRef ref) {
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await dotenv.load();
   await Firebase.initializeApp();
+  await LocalNotificationService().init();
   FirebaseMessaging.instance.requestPermission().then((value) async {
     if (value.authorizationStatus == AuthorizationStatus.authorized) {
       final LocalNotificationService localNotificationService =
