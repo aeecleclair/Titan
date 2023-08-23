@@ -99,10 +99,7 @@ class AddLoanerPage extends HookConsumerWidget {
                   }, error: (Object error, StackTrace? stackTrace) {
                     return Text(error.toString());
                   }, loading: () {
-                    return const Center(
-                        child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation(Colors.blue),
-                    ));
+                    return const Center(child: CircularProgressIndicator());
                   })
                 ]))
               ],
