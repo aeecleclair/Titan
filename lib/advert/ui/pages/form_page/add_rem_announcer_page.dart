@@ -11,7 +11,6 @@ import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/dialog.dart';
-import 'package:qlevar_router/qlevar_router.dart';
 
 class AddRemAnnouncerPage extends HookConsumerWidget {
   const AddRemAnnouncerPage({Key? key}) : super(key: key);
@@ -179,10 +178,7 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                   }, error: (Object error, StackTrace? stackTrace) {
                     return Text(error.toString());
                   }, loading: () {
-                    return const Center(
-                        child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation(Colors.blue),
-                    ));
+                    return const Center(child: CircularProgressIndicator());
                   })
                 ]))
               ],

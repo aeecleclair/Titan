@@ -148,9 +148,7 @@ class EventMainPage extends HookConsumerWidget {
               );
             }, loading: () {
               return const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.blue,
-                ),
+                child: CircularProgressIndicator(),
               );
             }, error: (error, stack) {
               return Center(
