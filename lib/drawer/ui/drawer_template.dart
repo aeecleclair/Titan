@@ -84,11 +84,10 @@ class DrawerTemplate extends HookConsumerWidget {
                                   children: [
                                     Container(
                                         color: Colors.white,
-                                        child: SafeArea(
-                                            child: IgnorePointer(
+                                        child: IgnorePointer(
                                           ignoring: controller.isCompleted,
                                           child: child,
-                                        ))),
+                                        )),
                                     MouseRegion(
                                       cursor: SystemMouseCursors.click,
                                       onEnter: (event) {
