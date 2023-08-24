@@ -1,8 +1,6 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/cinema/class/session.dart';
@@ -15,7 +13,6 @@ import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 import 'package:myecl/service/class/message.dart';
 import 'package:myecl/service/local_notification_service.dart';
-import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class SessionCard extends HookConsumerWidget {
@@ -38,19 +35,12 @@ class SessionCard extends HookConsumerWidget {
     final sessionPosterNotifier = ref.watch(sessionPosterProvider.notifier);
     final isWebFormat = ref.watch(isWebFormatProvider);
     final cinemaTopics = ref.watch(cinemaTopicsProvider);
-    final cinemaTopicsNotifier = ref.watch(cinemaTopicsProvider.notifier);
     final localNotificationService = LocalNotificationService();
     final selected = cinemaTopics.maybeWhen(
         data: (data) => data.contains(session.id), orElse: () => false);
-    final animation = useAnimationController(
-        duration: const Duration(milliseconds: 500),
-        initialValue: selected ? 1 : 0);
 
     final sessionNotificationStartTime =
         session.start.subtract(const Duration(minutes: 10));
-
-    final curvedAnimation =
-        CurvedAnimation(parent: animation, curve: Curves.easeInOut);
 
     double minScale = 0.8;
     double scale = 1;
@@ -195,97 +185,48 @@ class SessionCard extends HookConsumerWidget {
                                     height: maxHeigth * scale,
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(30),
-                                      image: DecorationImage(
-                                          image: data.first.image,
-                                          fit: BoxFit.cover),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.2),
-                                          spreadRadius: 5,
-                                          blurRadius: 7,
-                                          offset: const Offset(0, 3),
-                                        ),
-                                      ],
-                                    ),
+                                        borderRadius: BorderRadius.circular(30),
+                                        image: DecorationImage(
+                                            image: data.first.image,
+                                            fit: BoxFit.cover),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.2),
+                                            spreadRadius: 5,
+                                            blurRadius: 7,
+                                            offset: const Offset(0, 3),
+                                          ),
+                                        ],
+                                        border: (selected &&
+                                                session.start
+                                                    .isAfter(DateTime.now()))
+                                            ? Border.all(
+                                                color: Colors.black, width: 3)
+                                            : null),
                                   ),
-                                  if (session.start.isAfter(DateTime.now()))
+                                  if (selected &&
+                                      session.start.isAfter(DateTime.now()))
                                     Positioned(
-                                        top: 10,
-                                        right: 10,
-                                        child: AnimatedBuilder(
-                                            animation: animation,
-                                            builder: (context, child) {
-                                              return GestureDetector(
-                                                onTap: () {
-                                                  if (animation.isCompleted) {
-                                                    animation.reverse();
-                                                  } else {
-                                                    animation.forward();
-                                                  }
-                                                  cinemaTopicsNotifier
-                                                      .toggleSubscription(
-                                                          session.id);
-                                                  if (selected) {
-                                                    localNotificationService
-                                                        .cancelNotificationById(
-                                                            session.id);
-                                                    displayToast(
-                                                        context,
-                                                        TypeMsg.msg,
-                                                        "Le rappel a été supprimé");
-                                                  } else {
-                                                    createSessionNotification(
-                                                        session);
-                                                    displayToast(
-                                                        context,
-                                                        TypeMsg.msg,
-                                                        "Un rappel a été ajouté");
-                                                  }
-                                                },
-                                                child: Container(
-                                                  height: 50,
-                                                  width: 50,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.white
-                                                        .withOpacity(0.8),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            18),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: Colors.white
-                                                            .withOpacity(0.2),
-                                                        spreadRadius: 5,
-                                                        blurRadius: 7,
-                                                        offset:
-                                                            const Offset(0, 3),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  child: Center(
-                                                    child: Transform.rotate(
-                                                      origin:
-                                                          const Offset(0, -20),
-                                                      // Bounce
-                                                      angle: sin(curvedAnimation
-                                                                  .value *
-                                                              pi *
-                                                              2) *
-                                                          0.2,
-                                                      child: HeroIcon(
-                                                        selected
-                                                            ? HeroIcons
-                                                                .bellSlash
-                                                            : HeroIcons.bell,
-                                                        size: 30,
-                                                        color: Colors.grey,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            }))
+                                      top: 0,
+                                      right: 0,
+                                      child: Container(
+                                        width: 80,
+                                        height: 60,
+                                        decoration: const BoxDecoration(
+                                            color: Colors.black,
+                                            borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(30),
+                                              bottomLeft: Radius.circular(30),
+                                            )),
+                                        child: const Center(
+                                          child: HeroIcon(
+                                            HeroIcons.bell,
+                                            size: 30,
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                 ],
                               );
                       } else {
