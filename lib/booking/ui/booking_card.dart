@@ -27,13 +27,29 @@ class BookingCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final showButton = booking.start.isAfter(DateTime.now());
+    final Color cardColor;
+    final Color textColor;
+    switch (booking.decision) {
+      case Decision.pending:
+        cardColor = Colors.white;
+        textColor = Colors.grey.shade400;
+        break;
+      case Decision.approved:
+        cardColor = Colors.green;
+        textColor = Colors.white;
+        break;
+      case Decision.declined:
+        cardColor = Colors.red;
+        textColor = Colors.white;
+        break;
+    }
     return Container(
       padding: const EdgeInsets.all(15.0),
       height: ((showButton || isAdmin) && !isDetail) ? 210 : 200,
       child: Container(
         width: 250,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: cardColor,
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
             BoxShadow(
@@ -76,7 +92,7 @@ class BookingCard extends HookConsumerWidget {
                   style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
-                      color: Colors.grey.shade400)),
+                      color: textColor)),
               const SizedBox(height: 4),
               AutoSizeText(booking.reason,
                   maxLines: 1,
@@ -98,13 +114,13 @@ class BookingCard extends HookConsumerWidget {
                       style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
-                          color: Colors.grey.shade400)),
+                          color: textColor)),
                   Text(
                       '${BookingTextConstants.keys}: ${booking.key ? BookingTextConstants.yes : BookingTextConstants.no}',
                       style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
-                          color: Colors.grey.shade400)),
+                          color: textColor)),
                 ],
               ),
               const Spacer(),
