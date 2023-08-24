@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/advert/ui/router.dart';
+import 'package:myecl/admin/providers/all_my_module_roots_list_provider.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/booking/router.dart';
 import 'package:myecl/centralisation/router.dart';
@@ -10,18 +11,16 @@ import 'package:myecl/event/router.dart';
 import 'package:myecl/home/router.dart';
 import 'package:myecl/loan/router.dart';
 import 'package:myecl/tombola/router.dart';
-import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final modulesProvider =
     StateNotifierProvider<ModulesNotifier, List<Module>>((ref) {
-  final me = ref.watch(userProvider);
-  final isAEMember = me.groups
-      .map((e) => e.id)
-      .contains("39691052-2ae5-4e12-99d0-7a9f5f2b0136");
+  final myModulesRoot =
+      ref.watch(allMyModuleRootList).map((root) => '/$root').toList();
+
   ModulesNotifier modulesNotifier = ModulesNotifier();
-  modulesNotifier.loadModules([VoteRouter.root], [isAEMember]);
+  modulesNotifier.loadModules(myModulesRoot);
   return modulesNotifier;
 });
 
@@ -59,7 +58,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     });
   }
 
-  Future loadModules(List<String> roots, List<bool> canSee) async {
+  Future loadModules(List<String> roots) async {
     final prefs = await SharedPreferences.getInstance();
     List<String> modulesName = prefs.getStringList(dbModule) ?? [];
     List<String> allModulesName = prefs.getStringList(dbAllModules) ?? [];
@@ -86,13 +85,9 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
       if (allmodulesName.contains(name)) {
         Module module = allModules[allModulesName.indexOf(name)];
         if (roots.contains(module.root)) {
-          if (canSee[roots.indexOf(module.root)]) {
-            modules.add(module);
-          } else {
-            toDelete.add(module);
-          }
-        } else {
           modules.add(module);
+        } else {
+          toDelete.add(module);
         }
       }
     }

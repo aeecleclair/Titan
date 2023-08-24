@@ -50,9 +50,11 @@ class AdminMainPage extends HookConsumerWidget {
             return Column(children: [
               Column(
                 children: [
+                  const SizedBox(height: 20),
                   GestureDetector(
                     onTap: () {
-                      QR.to(AdminRouter.root + AdminRouter.addAsso);
+                      QR.to(
+                          AdminRouter.root + AdminRouter.editModuleVisibility);
                     },
                     child: Container(
                       margin: const EdgeInsets.symmetric(vertical: 10),
@@ -68,18 +70,18 @@ class AdminMainPage extends HookConsumerWidget {
                                 spreadRadius: 2)
                           ]),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Spacer(),
                           HeroIcon(
-                            HeroIcons.plus,
+                            HeroIcons.eye,
                             color: Colors.grey.shade700,
                             size: 40,
                           ),
-                          const Spacer(),
                         ],
                       ),
                     ),
                   ),
+                  const SizedBox(height: 20),
                   GestureDetector(
                     onTap: () {
                       QR.to(AdminRouter.root + AdminRouter.addLoaner);
@@ -120,6 +122,37 @@ class AdminMainPage extends HookConsumerWidget {
                             ],
                           ),
                           const Spacer()
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: () {
+                      QR.to(AdminRouter.root + AdminRouter.addAsso);
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                blurRadius: 5,
+                                spreadRadius: 2)
+                          ]),
+                      child: Row(
+                        children: [
+                          const Spacer(),
+                          HeroIcon(
+                            HeroIcons.plus,
+                            color: Colors.grey.shade700,
+                            size: 40,
+                          ),
+                          const Spacer(),
                         ],
                       ),
                     ),
