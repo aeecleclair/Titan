@@ -42,6 +42,7 @@ class MyApp extends HookConsumerWidget {
     });
 
     return MaterialApp(
+        initialRoute: '/',
         debugShowCheckedModeBanner: false,
         home: WillPopScope(
             onWillPop: () async {
@@ -49,10 +50,16 @@ class MyApp extends HookConsumerWidget {
               if (QR.currentPath.split('/').length <= 2) {
                 final animation = ref.watch(animationProvider);
                 if (animation != null) {
-                  final controllerNotifier =
-                      ref.watch(swipeControllerProvider(animation).notifier);
-                  controllerNotifier.toggle();
-                  topBarCallBack.onMenu?.call();
+                  final controller =
+                      ref.watch(swipeControllerProvider(animation));
+                  if (controller.isCompleted) {
+                    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                  } else {
+                    final controllerNotifier =
+                        ref.watch(swipeControllerProvider(animation).notifier);
+                    controllerNotifier.toggle();
+                    topBarCallBack.onMenu?.call();
+                  }
                 }
                 return false;
               }
