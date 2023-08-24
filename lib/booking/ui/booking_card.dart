@@ -27,19 +27,28 @@ class BookingCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final showButton = booking.start.isAfter(DateTime.now());
-    final Color cardColor;
+    final List<Color> cardColor;
     final Color textColor;
     switch (booking.decision) {
       case Decision.pending:
-        cardColor = Colors.white;
+        cardColor = [
+          Colors.white,
+          Colors.grey.shade50,
+        ];
         textColor = Colors.grey.shade400;
         break;
       case Decision.approved:
-        cardColor = Colors.green;
+        cardColor = [
+          Colors.green,
+          Colors.lightGreen,
+        ];
         textColor = Colors.white;
         break;
       case Decision.declined:
-        cardColor = Colors.red;
+        cardColor = [
+          const Color.fromARGB(255, 250, 66, 38),
+          const Color.fromARGB(255, 172, 32, 10),
+        ];
         textColor = Colors.white;
         break;
     }
@@ -49,7 +58,11 @@ class BookingCard extends HookConsumerWidget {
       child: Container(
         width: 250,
         decoration: BoxDecoration(
-          color: cardColor,
+          gradient: RadialGradient(
+            colors: cardColor,
+            center: Alignment.topLeft,
+            radius: 1.5,
+          ),
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
             BoxShadow(
