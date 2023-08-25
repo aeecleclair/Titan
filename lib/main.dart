@@ -20,6 +20,11 @@ import 'package:qlevar_router/qlevar_router.dart';
 void main() async {
   await dotenv.load();
   QR.setUrlStrategy();
+  // We set the default page type to QMaterialPage
+  // See https://pub.dev/packages/qlevar_router#page-transition
+  // We should not use a combination of QMaterialPage and QCupertinoPage
+  QR.settings.pagesType = const QMaterialPage();
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
