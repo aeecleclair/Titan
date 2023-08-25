@@ -39,8 +39,8 @@ class BookingCard extends HookConsumerWidget {
         break;
       case Decision.approved:
         cardColor = [
-          Colors.green,
-          Colors.lightGreen,
+          const Color(0xff79a400),
+          const Color(0xff387200),
         ];
         textColor = Colors.white;
         break;
@@ -66,7 +66,7 @@ class BookingCard extends HookConsumerWidget {
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.shade200.withOpacity(0.5),
+              color: cardColor[1].withOpacity(0.5),
               spreadRadius: 5,
               blurRadius: 10,
               offset: const Offset(3, 3),
