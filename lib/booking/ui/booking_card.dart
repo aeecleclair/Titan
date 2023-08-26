@@ -27,17 +27,71 @@ class BookingCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final showButton = booking.start.isAfter(DateTime.now());
+    final List<Color> cardColor;
+    final Color smallTextColor;
+    final Color bigTextColor;
+    final Color darkIconBackgroundColor;
+    final Color lightIconBackgroundColor;
+    final Color lightIconColor;
+    final Color cardBoxShadow;
+    final Color informationCircleColor;
+
+    switch (booking.decision) {
+      case Decision.pending:
+        cardColor = [
+          Colors.white,
+          Colors.grey.shade50,
+        ];
+        darkIconBackgroundColor = Colors.black;
+
+        break;
+      case Decision.approved:
+        cardColor = [
+          const Color(0xff79a400),
+          const Color(0xff387200),
+        ];
+
+        darkIconBackgroundColor = const Color.fromARGB(255, 26, 53, 0);
+        break;
+      case Decision.declined:
+        cardColor = [
+          const Color.fromARGB(255, 250, 66, 38),
+          const Color.fromARGB(255, 172, 32, 10),
+        ];
+        darkIconBackgroundColor = const Color.fromARGB(255, 99, 13, 0);
+        break;
+    }
+
+    lightIconColor = darkIconBackgroundColor;
+
+    if (booking.decision == Decision.pending) {
+      smallTextColor = Colors.grey.shade400;
+      cardBoxShadow = Colors.grey.shade200.withOpacity(0.5);
+      lightIconBackgroundColor = Colors.white.withOpacity(0.7);
+      bigTextColor = Colors.black;
+    } else {
+      smallTextColor = Colors.white.withOpacity(0.8);
+      cardBoxShadow = darkIconBackgroundColor;
+      lightIconBackgroundColor = Colors.grey.shade200;
+      bigTextColor = Colors.white;
+    }
+    informationCircleColor = bigTextColor;
+
     return Container(
       padding: const EdgeInsets.all(15.0),
       height: ((showButton || isAdmin) && !isDetail) ? 210 : 200,
       child: Container(
         width: 250,
         decoration: BoxDecoration(
-          color: Colors.white,
+          gradient: RadialGradient(
+            colors: cardColor,
+            center: Alignment.topLeft,
+            radius: 1.5,
+          ),
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.shade200.withOpacity(0.5),
+              color: cardBoxShadow.withOpacity(0.5),
               spreadRadius: 5,
               blurRadius: 10,
               offset: const Offset(3, 3),
@@ -54,16 +108,22 @@ class BookingCard extends HookConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(booking.room.name,
-                      style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black)),
+                  Text(
+                    booking.room.name,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: bigTextColor,
+                    ),
+                  ),
                   if (!isDetail)
                     GestureDetector(
                       onTap: onInfo,
-                      child: const HeroIcon(HeroIcons.informationCircle,
-                          color: Colors.black, size: 25),
+                      child: HeroIcon(
+                        HeroIcons.informationCircle,
+                        color: informationCircleColor,
+                        size: 25,
+                      ),
                     )
                 ],
               ),
@@ -76,15 +136,18 @@ class BookingCard extends HookConsumerWidget {
                   style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
-                      color: Colors.grey.shade400)),
+                      color: smallTextColor)),
               const SizedBox(height: 4),
-              AutoSizeText(booking.reason,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black)),
+              AutoSizeText(
+                booking.reason,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: bigTextColor,
+                ),
+              ),
               const SizedBox(height: 4),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -98,13 +161,13 @@ class BookingCard extends HookConsumerWidget {
                       style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
-                          color: Colors.grey.shade400)),
+                          color: smallTextColor)),
                   Text(
                       '${BookingTextConstants.keys}: ${booking.key ? BookingTextConstants.yes : BookingTextConstants.no}',
                       style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
-                          color: Colors.grey.shade400)),
+                          color: smallTextColor)),
                 ],
               ),
               const Spacer(),
@@ -120,7 +183,7 @@ class BookingCard extends HookConsumerWidget {
                           height: 40,
                           padding: const EdgeInsets.all(7),
                           decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
+                            color: lightIconBackgroundColor,
                             borderRadius: BorderRadius.circular(30),
                             boxShadow: [
                               BoxShadow(
@@ -129,8 +192,10 @@ class BookingCard extends HookConsumerWidget {
                                   offset: const Offset(2, 3))
                             ],
                           ),
-                          child: const HeroIcon(HeroIcons.pencil,
-                              color: Colors.black),
+                          child: HeroIcon(
+                            HeroIcons.pencil,
+                            color: lightIconColor,
+                          ),
                         ),
                       ),
                     if (showButton || isAdmin) const Spacer(),
@@ -141,7 +206,7 @@ class BookingCard extends HookConsumerWidget {
                         height: 40,
                         padding: const EdgeInsets.all(7),
                         decoration: BoxDecoration(
-                          color: Colors.black,
+                          color: lightIconBackgroundColor,
                           borderRadius: BorderRadius.circular(30),
                           boxShadow: [
                             BoxShadow(
@@ -150,8 +215,10 @@ class BookingCard extends HookConsumerWidget {
                                 offset: const Offset(2, 3))
                           ],
                         ),
-                        child: const HeroIcon(HeroIcons.documentDuplicate,
-                            color: Colors.white),
+                        child: HeroIcon(
+                          HeroIcons.documentDuplicate,
+                          color: lightIconColor,
+                        ),
                       ),
                     ),
                     if (showButton && isAdmin) const Spacer(),
@@ -240,7 +307,7 @@ class BookingCard extends HookConsumerWidget {
                           height: 40,
                           padding: const EdgeInsets.all(7),
                           decoration: BoxDecoration(
-                            color: Colors.black,
+                            color: darkIconBackgroundColor,
                             borderRadius: BorderRadius.circular(30),
                             boxShadow: [
                               BoxShadow(
