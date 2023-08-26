@@ -9,14 +9,16 @@ class LoanTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const TopBar(
-          title: LoanTextConstants.loan,
-          root: LoanRouter.root,
-        ),
-        Expanded(child: child)
-      ],
+    return SafeArea(
+      child: Column(
+        children: [
+          const TopBar(
+            title: LoanTextConstants.loan,
+            root: LoanRouter.root,
+          ),
+          Expanded(child: child)
+        ],
+      ),
     );
   }
 }

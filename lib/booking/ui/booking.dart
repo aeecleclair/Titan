@@ -9,15 +9,17 @@ class BookingTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        const TopBar(
-          title: BookingTextConstants.booking,
-          root: BookingRouter.root,
-        ),
-        Expanded(child: child)
-      ],
+    return SafeArea(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const TopBar(
+            title: BookingTextConstants.booking,
+            root: BookingRouter.root,
+          ),
+          Expanded(child: child)
+        ],
+      ),
     );
   }
 }

@@ -9,14 +9,16 @@ class TombolaTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const TopBar(
-          title: TombolaTextConstants.raffle,
-          root: RaffleRouter.root,
-        ),
-        Expanded(child: child)
-      ],
+    return SafeArea(
+      child: Column(
+        children: [
+          const TopBar(
+            title: TombolaTextConstants.raffle,
+            root: RaffleRouter.root,
+          ),
+          Expanded(child: child)
+        ],
+      ),
     );
   }
 }

@@ -62,9 +62,9 @@ void setUpNotification(WidgetRef ref) {
                 actionModule != null &&
                 actionTable != null) {
               localNotificationService.handleAction(actionModule, actionTable);
-              continue;
+            } else {
+              localNotificationService.showNotification(message);
             }
-            localNotificationService.showNotification(message);
           }
         },
         orElse: () {},
@@ -85,6 +85,7 @@ void setUpNotification(WidgetRef ref) {
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await dotenv.load();
   await Firebase.initializeApp();
+  await FirebaseMessaging.instance.getToken();
   await LocalNotificationService().init();
   FirebaseMessaging.instance.requestPermission().then((value) async {
     if (value.authorizationStatus == AuthorizationStatus.authorized) {
