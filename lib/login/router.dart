@@ -18,26 +18,20 @@ class LoginRouter {
   static const String mailReceived = '/mail_received';
   LoginRouter(this.ref);
 
-  QRoute accountRoute() => QRoute(
-          path: createAccount,
-          builder: () => const Register(),
-          pageType: const QMaterialPage(),
-          children: [
-            QRoute(
-              path: mailReceived,
-              pageType: const QMaterialPage(),
-              builder: () => const CreateAccountPage(),
-            ),
-          ]);
+  QRoute accountRoute() =>
+      QRoute(path: createAccount, builder: () => const Register(), children: [
+        QRoute(
+          path: mailReceived,
+          builder: () => const CreateAccountPage(),
+        ),
+      ]);
 
   QRoute passwordRoute() => QRoute(
           path: forgotPassword,
           builder: () => const ForgetPassword(),
-          pageType: const QMaterialPage(),
           children: [
             QRoute(
               path: mailReceived,
-              pageType: const QMaterialPage(),
               builder: () => const RecoverPasswordPage(),
             ),
           ]);
@@ -47,7 +41,6 @@ class LoginRouter {
         builder: () => (kIsWeb && ref.watch(isWebFormatProvider))
             ? const WebSignIn()
             : const AppSignIn(),
-        pageType: const QMaterialPage(),
         middleware: [AuthenticatedMiddleware(ref)],
       );
 }
