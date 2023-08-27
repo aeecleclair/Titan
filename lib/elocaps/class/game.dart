@@ -30,6 +30,12 @@ class Game {
 
     return data;
   }
+  Map<String, dynamic> toJsonForCreate() {
+    final data = <String, dynamic>{};
+    data['mode'] = capsModeToString(mode);
+    data['players'] = gamePlayers.map((e) => e.toJsonForCreate()).toList();
+    return data;
+  }
 
   Game copyWith({DateTime? timestamp, CapsMode? mode, String? id, List<GamePlayer>? gamePlayers, bool? isConfirmed}) 
   => Game(timestamp: timestamp ?? this.timestamp,

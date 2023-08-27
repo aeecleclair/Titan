@@ -1,15 +1,20 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/elocaps/class/caps_mode.dart';
+import 'package:myecl/elocaps/class/game.dart';
+import 'package:myecl/elocaps/class/game_player.dart';
+import 'package:myecl/elocaps/providers/game_provider.dart';
 import 'package:myecl/elocaps/providers/mode_chosen_provider.dart';
+import 'package:myecl/elocaps/router.dart';
 import 'package:myecl/elocaps/ui/button.dart';
 import 'package:myecl/elocaps/ui/elocaps.dart';
 import 'package:myecl/elocaps/ui/pages/game_page/mode_dialog.dart';
 import 'package:myecl/elocaps/ui/pages/game_page/player_form.dart';
+import 'package:myecl/user/class/list_users.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class GamePage extends HookConsumerWidget {
   const GamePage({Key? key}) : super(key: key);
@@ -21,14 +26,27 @@ class GamePage extends HookConsumerWidget {
       ..repeat(reverse: true);
 
     final isGameCreated = useState(false);
-
     final modeChosen = ref.watch(modeChosenProvider);
-    final players = [
-      PlayerForm(num: 1, queryController: useTextEditingController(text: "")),
-      PlayerForm(num: 2, queryController: useTextEditingController(text: "")),
-      PlayerForm(num: 3, queryController: useTextEditingController(text: "")),
-      PlayerForm(num: 4, queryController: useTextEditingController(text: "")),
+    final gameNotifier = ref.watch(gameProvider.notifier);
+    final playersForm = [
+      PlayerForm(
+          num: 1,
+          queryController: useTextEditingController(text: ""),
+          user: useState(SimpleUser.empty())),
+      PlayerForm(
+          num: 2,
+          queryController: useTextEditingController(text: ""),
+          user: useState(SimpleUser.empty())),
+      PlayerForm(
+          num: 3,
+          queryController: useTextEditingController(text: ""),
+          user: useState(SimpleUser.empty())),
+      PlayerForm(
+          num: 4,
+          queryController: useTextEditingController(text: ""),
+          user: useState(SimpleUser.empty())),
     ];
+    final players = useState(<SimpleUser>[]);
 
     return ElocapsTemplate(
         child: Container(
@@ -45,7 +63,7 @@ class GamePage extends HookConsumerWidget {
                       context: context,
                       builder: (BuildContext context) {
                         return ModeDialog(
-                          players: players,
+                          players: playersForm,
                         );
                       },
                     );
@@ -95,14 +113,25 @@ class GamePage extends HookConsumerWidget {
                 key: key,
                 child: Column(
                   children: modeChosen == CapsMode.cd
-                      ? players
-                      : players.sublist(0, 2),
+                      ? playersForm
+                      : playersForm.sublist(0, 2),
                 ),
               ),
               const SizedBox(height: 30),
               GestureDetector(
                   onTap: () {
-                    isGameCreated.value = true;
+                    players.value = playersForm
+                        .map<SimpleUser>((e) => e.user.value)
+                        .where((user) => user.id != "")
+                        .toList();
+
+                    if (modeChosen == CapsMode.cd &&
+                        players.value.length == 4) {
+                      isGameCreated.value = true;
+                    } else if (modeChosen != CapsMode.cd &&
+                        players.value.length == 2) {
+                      isGameCreated.value = true;
+                    }
                   },
                   child: const MyButton(text: "Lancer la partie"))
             ],
@@ -128,7 +157,7 @@ class GamePage extends HookConsumerWidget {
               Form(
                   key: key,
                   child: Column(
-                      children: players
+                      children: playersForm
                           .map((e) => e.queryController.text != ""
                               ? Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -141,7 +170,7 @@ class GamePage extends HookConsumerWidget {
                                                 Color.fromARGB(255, 7, 8, 14))),
                                     Container(
                                         child: Text(
-                                            "ceci est le score") //bug textformField à voir
+                                            "ici on met le score //bug textformField à voir") 
                                         )
                                   ],
                                 )
@@ -149,7 +178,27 @@ class GamePage extends HookConsumerWidget {
                           .where((element) => element != Container())
                           .toList())),
               const SizedBox(height: 20),
-              const MyButton(text: "Enregistrer la partie")
+              GestureDetector(
+                  onTap: () {
+                    gameNotifier.createGame(Game(
+                        timestamp: DateTime.now(),
+                        gamePlayers: players.value.asMap().entries.map((entry) {
+                          int index = entry.key;
+                          SimpleUser e = entry.value;
+                          return GamePlayer(
+                            user: e,
+                            eloGain: 0,
+                            playerId: e.id,
+                            quarters: index == 1 ? 4 : 2,
+                            team: index < players.value.length / 2 ? 1 : 2,
+                          );
+                        }).toList(),
+                        id: '',
+                        isConfirmed: false,
+                        mode: modeChosen));
+                    QR.to(ElocapsRouter.root); // Peut être mettre une verif que la partie est bien créee avant de retourner à la page d'accueil
+                  },
+                  child: const MyButton(text: "Enregistrer la partie"))
             ]
           ],
         ),

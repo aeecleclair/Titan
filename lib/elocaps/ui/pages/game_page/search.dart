@@ -4,10 +4,10 @@ import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class SearchResult extends HookConsumerWidget {
-  final ValueNotifier<SimpleUser> borrower;
+  final ValueNotifier<SimpleUser> user;
   final TextEditingController queryController;
   const SearchResult(
-      {super.key, required this.borrower, required this.queryController});
+      {super.key, required this.user, required this.queryController});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,7 +33,7 @@ class SearchResult extends HookConsumerWidget {
                                       e.getName(),
                                       style: TextStyle(
                                         fontSize: 13,
-                                        fontWeight: (borrower.value.id == e.id)
+                                        fontWeight: (user.value.id == e.id)
                                             ? FontWeight.bold
                                             : FontWeight.w400,
                                       ),
@@ -43,7 +43,7 @@ class SearchResult extends HookConsumerWidget {
                                 ]),
                           ),
                           onTap: () {
-                            borrower.value = e;
+                            user.value = e;
                             queryController.text = e.getName();
                             usersNotifier.clear();
                           }))
