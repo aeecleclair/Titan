@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/elocaps/ui/search.dart';
+import 'package:myecl/elocaps/ui/pages/game_page/search.dart';
+import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
-import 'package:myecl/user/providers/user_provider.dart';
 
 class PlayerForm extends HookConsumerWidget {
-  const PlayerForm({Key? key, required this.num,required this.queryController}) : super(key: key);
+  const PlayerForm({Key? key, required this.num,required this.queryController,required this.user}) : super(key: key);
 
   final int num;
   final TextEditingController queryController;
+  final ValueNotifier<SimpleUser> user;
   
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final usersNotifier = ref.watch(userList.notifier);
-    final user = ref.watch(userProvider);
+
     
     return Column(
       children: [
@@ -46,7 +46,7 @@ class PlayerForm extends HookConsumerWidget {
           height: 10,
         ),
         SearchResult(
-            borrower: useState(user.toSimpleUser()),
+            user: user,
             queryController: queryController)
       ],
     );

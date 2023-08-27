@@ -15,7 +15,8 @@ class GameRepository extends Repository {
   }
 
    Future<Game> createGame(Game game) async {
-    return Game.fromJson(await create(game.toJson()));
+    print(game.toJsonForCreate());
+    return Game.fromJson(await create(game.toJsonForCreate()));
   }
 
    Future<List<Game>> getLatestGame() async {

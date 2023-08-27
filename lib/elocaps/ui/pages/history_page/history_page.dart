@@ -23,7 +23,7 @@ class HistoryPage extends HookConsumerWidget {
               "Bonjour bienvenue dans ton historique de partie ${user.nickname}"),
           const SizedBox(height: 20),
           ...myHisto.when(
-            data: (data) => data.map((e) => GameCard(game: e)),
+            data: (data) => data.reversed.map((e) => GameCard(game: e)),
             error: (error, stackTrace) {
               return [Text("erreur : ${error.toString()}")];
             },

@@ -28,6 +28,13 @@ class GamePlayer{
     data['user'] = user.toJson();
     return data;
   }
+  Map<String, dynamic> toJsonForCreate() {
+    final data = <String, dynamic>{};
+    data['user_id'] = playerId;
+    data['team'] = team;
+    data['quarters'] = quarters;
+    return data;
+  }
 
   GamePlayer copyWith({
     String? playerId,

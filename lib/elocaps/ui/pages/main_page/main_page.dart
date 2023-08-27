@@ -106,6 +106,7 @@ class EloCapsMainPage extends HookConsumerWidget {
                       GestureDetector(
                         onTap: () {
                           QR.to(ElocapsRouter.root + ElocapsRouter.game);
+                          
                         },
                         child: const MyButton(text: "Lancez une partie"),
                       ),
