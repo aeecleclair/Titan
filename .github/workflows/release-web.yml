@@ -3,9 +3,6 @@ name: Build and deploy web
 on:
   workflow_dispatch:
   push:
-    branches:
-      - 'main'
-      - 'alpha'
     tags:
       - 'v*.*.*+*'
 
