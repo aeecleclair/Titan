@@ -3,9 +3,6 @@ name: Release mobile bundles
 on:
   workflow_dispatch:
   push:
-    branches:
-      - 'main'
-      - 'alpha'
     tags:
       - 'v*.*.*+*'
 
@@ -66,11 +63,11 @@ jobs:
       - name: Create the Keystore
         if: matrix.name == "AAB"
         run: |
-        echo ${{ secrets.KEYSTORE_BASE64 }} | base64 -d > $RUNNER_TEMP/myecl.keystore
-        echo storePassword=${{ secrets.STORE_PASSWORD }} >> android/key.properties
-        echo keyPassword=${{ secrets.KEY_PASSWORD }} >> android/key.properties
-        echo keyAlias=${{ secrets.KEY_ALIAS }} >> android/key.properties
-        echo storeFile=$RUNNER_TEMP/myecl.keystore >> android/key.properties
+          echo ${{ secrets.KEYSTORE_BASE64 }} | base64 -d > $RUNNER_TEMP/myecl.keystore
+          echo storePassword=${{ secrets.STORE_PASSWORD }} >> android/key.properties
+          echo keyPassword=${{ secrets.KEY_PASSWORD }} >> android/key.properties
+          echo keyAlias=${{ secrets.KEY_ALIAS }} >> android/key.properties
+          echo storeFile=$RUNNER_TEMP/myecl.keystore >> android/key.properties
       
       - name: Set alpha properties
         if: ${{ steps.extract_branch.outputs.branch }} == "alpha"
