@@ -144,11 +144,23 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                                 fit: BoxFit.cover,
                                               ),
                                             ),
-                                            child: const Center(
-                                              child: HeroIcon(
-                                                HeroIcons.photo,
-                                                size: 40,
-                                                color: Colors.black,
+                                            child: Center(
+                                              child: Container(
+                                                width: 50,
+                                                height: 50,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      const BorderRadius.all(
+                                                          Radius.circular(5)),
+                                                  color: Colors.white
+                                                      .withOpacity(0.4),
+                                                ),
+                                                child: HeroIcon(
+                                                  HeroIcons.photo,
+                                                  size: 40,
+                                                  color: Colors.black
+                                                      .withOpacity(0.5),
+                                                ),
                                               ),
                                             ),
                                           ),
