@@ -38,7 +38,6 @@ class AnnouncerBar extends HookConsumerWidget {
                     return;
                   }
                   if (multipleSelect) {
-                    print('test');
                     selectedId.contains(e.id)
                         ? selectedNotifier.removeAnnouncer(e)
                         : selectedNotifier.addAnnouncer(e);
