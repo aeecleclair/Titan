@@ -36,6 +36,34 @@ class TopicsProvider extends ListNotifier<Topic> {
         },
         orElse: () => false);
   }
+
+  Future<bool> fakeSubscribeTopic(Topic topic) async {
+    return await update((_) async => true, (listT, t) => listT..add(t), topic);
+  }
+
+  Future<bool> fakeUnsubscribeTopic(Topic topic) async {
+    return await update(
+        (_) async => true, (listT, t) => listT..remove(t), topic);
+  }
+
+  Future<bool> fakeToggleSubscription(Topic topic) async {
+    return state.maybeWhen(
+        data: (data) {
+          if (data.contains(topic)) {
+            return fakeUnsubscribeTopic(topic);
+          }
+          return fakeSubscribeTopic(topic);
+        },
+        orElse: () => false);
+  }
+
+  Future subscribeAll() async {
+    return await state.maybeWhen(
+        data: (value) => value.forEach((element) async {
+              await subscribeTopic(element);
+            }),
+        orElse: () {});
+  }
 }
 
 final topicsProvider =

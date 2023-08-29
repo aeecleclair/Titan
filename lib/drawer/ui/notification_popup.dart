@@ -50,7 +50,8 @@ class NotificationPopup extends HookConsumerWidget {
             onTap: () {},
             child: Dialog(
                 shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(Consts.padding))),
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(Consts.padding))),
                 elevation: 0.0,
                 insetPadding: const EdgeInsets.all(Consts.padding),
                 backgroundColor: Colors.transparent,
@@ -87,33 +88,19 @@ class NotificationPopup extends HookConsumerWidget {
                           ),
                         ),
                         const SizedBox(height: 15.0),
-                        const Text(Consts.description, textAlign: TextAlign.justify),
+                        const Text(Consts.description,
+                            textAlign: TextAlign.justify),
                         const SizedBox(height: 20.0),
                         Wrap(
                             spacing: 10.0,
                             runSpacing: 10.0,
                             children: Topic.values
-                                .map((e) => ShrinkButton(
+                                .map((e) => GestureDetector(
                                       onTap: () async {
                                         animation.forward(from: 0);
                                         await topicsNotifier
-                                            .toggleSubscription(e);
+                                            .fakeToggleSubscription(e);
                                       },
-                                      waitChild: Container(
-                                          width: 130,
-                                          padding: const EdgeInsets.all(10.0),
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            border: Border.all(
-                                                color: Colors.black,
-                                                width: 2.0),
-                                          ),
-                                          alignment: Alignment.center,
-                                          child: const Center(
-                                            child: CircularProgressIndicator(
-                                                color: Colors.black),
-                                          )),
                                       child: Container(
                                         width: 130,
                                         height: 60,
@@ -146,7 +133,24 @@ class NotificationPopup extends HookConsumerWidget {
                         ShrinkButton(
                           onTap: () async {
                             displayNotificationPopupNotifier.setDisplay();
+                            await topicsNotifier.subscribeAll();
                           },
+                          waitChild: Container(
+                              width: 130,
+                              height: 60,
+                              padding: const EdgeInsets.all(10.0),
+                              decoration: BoxDecoration(
+                                color: ColorConstants.gradient1,
+                                borderRadius: BorderRadius.circular(10.0),
+                                border: Border.all(
+                                    color: ColorConstants.gradient1,
+                                    width: 2.0),
+                              ),
+                              alignment: Alignment.center,
+                              child: const Center(
+                                child: CircularProgressIndicator(
+                                    color: Colors.white),
+                              )),
                           child: Container(
                             width: 130,
                             height: 60,
