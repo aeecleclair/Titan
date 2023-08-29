@@ -50,9 +50,9 @@ class NotificationPopup extends HookConsumerWidget {
             onTap: () {},
             child: Dialog(
                 shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                    borderRadius: BorderRadius.all(Radius.circular(Consts.padding))),
                 elevation: 0.0,
-                insetPadding: const EdgeInsets.all(20.0),
+                insetPadding: const EdgeInsets.all(Consts.padding),
                 backgroundColor: Colors.transparent,
                 child: Stack(clipBehavior: Clip.none, children: [
                   Container(
