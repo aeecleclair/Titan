@@ -9,6 +9,7 @@ class TextWithHyperLink extends StatelessWidget {
     this.text, {
     Key? key,
     this.style,
+    this.linkStyle,
     this.strutStyle,
     this.textAlign,
     this.textDirection,
@@ -30,6 +31,7 @@ class TextWithHyperLink extends StatelessWidget {
 
   final String text;
   final TextStyle? style;
+  final TextStyle? linkStyle;
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
   final TextDirection? textDirection;
@@ -49,8 +51,9 @@ class TextWithHyperLink extends StatelessWidget {
   final Widget? overflowReplacement;
 
   void openLink(String url) async {
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url));
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
     } else {
       throw '$unableToOpen $url';
     }
@@ -59,7 +62,7 @@ class TextWithHyperLink extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final linkStyle = theme.textTheme.bodyMedium?.copyWith(
+    final hyperLinkStyle = linkStyle ?? theme.textTheme.bodyMedium?.copyWith(
       color: ColorConstants.gradient1,
       decoration: TextDecoration.underline,
     );
@@ -94,7 +97,7 @@ class TextWithHyperLink extends StatelessWidget {
             };
           return TextSpan(
             text: '$e ',
-            style: isLink ? linkStyle : style,
+            style: isLink ? hyperLinkStyle : style,
             recognizer: isLink ? recognizer : null,
           );
         }).toList(),
