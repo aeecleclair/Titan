@@ -95,7 +95,7 @@ class AdvertMainPage extends HookConsumerWidget {
                                     AdvertRouter.addRemAnnoucer);
                               },
                               child: Container(
-                                width: 120,
+                                width: 130,
                                 margin: const EdgeInsets.symmetric(vertical: 5),
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 12, vertical: 8),

@@ -5,7 +5,7 @@ import 'package:tuple/tuple.dart';
 
 final Map<String, Tuple2<String, List<StateNotifierProvider>>> advertProviders =
     {
-  "session": Tuple2(
+  "advert": Tuple2(
     AdvertRouter.root,
     [advertListProvider],
   )

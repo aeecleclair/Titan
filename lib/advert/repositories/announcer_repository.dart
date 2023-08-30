@@ -7,11 +7,13 @@ class AnnouncerRepository extends Repository {
   final ext = "advert/";
 
   Future<List<Announcer>> getAllAnnouncer() async {
-    return List<Announcer>.from((await getList(suffix: "advertisers/")).map((x) => Announcer.fromJson(x)));
+    return List<Announcer>.from((await getList(suffix: "advertisers"))
+        .map((x) => Announcer.fromJson(x)));
   }
 
   Future<List<Announcer>> getMyAnnouncer() async {
-    return List<Announcer>.from((await getList(suffix: "me/advertisers")).map((x) => Announcer.fromJson(x)));
+    return List<Announcer>.from((await getList(suffix: "me/advertisers"))
+        .map((x) => Announcer.fromJson(x)));
   }
 
   Future<Announcer> getAnnouncer(String id) async {
@@ -19,7 +21,8 @@ class AnnouncerRepository extends Repository {
   }
 
   Future<Announcer> createAnnouncer(Announcer announcer) async {
-    return Announcer.fromJson(await create(announcer.toJson(), suffix: "advertisers/"));
+    return Announcer.fromJson(
+        await create(announcer.toJson(), suffix: "advertisers"));
   }
 
   Future<bool> updateAnnouncer(Announcer announcer) async {
