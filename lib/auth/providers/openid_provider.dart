@@ -118,6 +118,7 @@ class OpenIdTokenProvider
   final String tokenKey = "token";
   final String refreshTokenKey = "refresh_token";
   final String redirectUrl = "fr.myecl.titan://authorized";
+  final String redirectUrlHost = "myecl.fr";
   final String discoveryUrl =
       "${Repository.displayHost}.well-known/openid-configuration";
   final List<String> scopes = ["API"];
@@ -137,12 +138,9 @@ class OpenIdTokenProvider
   Future getTokenFromRequest() async {
     html.WindowBase? popupWin;
 
-    final currentUri = Uri.base;
-
     final redirectUri = Uri(
-      host: currentUri.host,
-      scheme: currentUri.scheme,
-      port: currentUri.port,
+      host: redirectUrlHost,  
+      scheme: "https",
       path: '/static.html',
     );
     final codeVerifier = generateRandomString(128);
