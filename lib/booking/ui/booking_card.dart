@@ -79,7 +79,7 @@ class BookingCard extends HookConsumerWidget {
 
     return Container(
       padding: const EdgeInsets.all(15.0),
-      height: ((showButton || isAdmin) && !isDetail) ? 210 : 200,
+      height: !isDetail ? 210 : 160,
       child: Container(
         width: 250,
         decoration: BoxDecoration(
