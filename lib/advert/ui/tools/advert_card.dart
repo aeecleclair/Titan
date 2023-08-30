@@ -8,6 +8,7 @@ import 'package:myecl/advert/providers/advert_poster_provider.dart';
 import 'package:myecl/advert/providers/advert_posters_provider.dart';
 import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/text_with_hyper_link.dart';
 
 class AdvertCard extends HookConsumerWidget {
   final VoidCallback onTap;
@@ -132,9 +133,9 @@ class AdvertCard extends HookConsumerWidget {
                           ),
                         ],
                       ),
-                      AutoSizeText(
-                        overflow: TextOverflow.ellipsis,
+                      TextWithHyperLink(
                         advert.content.trim(),
+                        overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.justify,
                         maxLines: 3,
                         minFontSize: 13,

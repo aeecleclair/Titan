@@ -9,6 +9,7 @@ import 'package:myecl/advert/providers/advert_provider.dart';
 import 'package:myecl/advert/ui/tools/tag_chip.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/text_with_hyper_link.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdvertDetailPage extends HookConsumerWidget {
@@ -168,7 +169,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                    child: Text(
+                    child: TextWithHyperLink(
                       advert.content,
                       textAlign: TextAlign.left,
                       style: const TextStyle(
