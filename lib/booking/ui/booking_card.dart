@@ -26,7 +26,7 @@ class BookingCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final showButton = booking.start.isAfter(DateTime.now());
+    final showButton = booking.end.isAfter(DateTime.now());
     final List<Color> cardColor;
     final Color smallTextColor;
     final Color bigTextColor;
