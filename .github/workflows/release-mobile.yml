@@ -60,6 +60,12 @@ jobs:
           DEBUG_HOST: ${{ secrets.DEBUG_HOST }}
           RELEASE_HOST: ${{ secrets.RELEASE_HOST }}
       
+      - name: Add Firebase configuration
+        run: |
+          echo "$BASE64_GOOGLE_SERVICES_JSON" | base64 -d > android/app/google-services.json
+        env:
+          BASE64_GOOGLE_SERVICES_JSON: ${{ secrets.BASE64_GOOGLE_SERVICES_JSON }}
+      
       - name: Create the Keystore
         if: matrix.name == "AAB"
         run: |
