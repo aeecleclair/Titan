@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/drawer/providers/display_quit_popup.dart';
@@ -16,9 +17,6 @@ class QuitDialog extends HookConsumerWidget {
     final auth = ref.watch(authTokenProvider.notifier);
     final isCachingNotifier = ref.watch(isCachingProvider.notifier);
     final displayQuitNotifier = ref.watch(displayQuitProvider.notifier);
-    final messageNotifier = ref.watch(messagesProvider.notifier);
-    final firebaseTokenExpirationNotifier =
-        ref.watch(firebaseTokenExpirationProvider.notifier);
     return GestureDetector(
         onTap: () {
           displayQuitNotifier.setDisplay(false);
@@ -32,8 +30,10 @@ class QuitDialog extends HookConsumerWidget {
                   title: DrawerTextConstants.logOut,
                   onYes: () {
                     auth.deleteToken();
-                    messageNotifier.forgetDevice();
-                    firebaseTokenExpirationNotifier.reset();
+                    if (!kIsWeb) {
+                      ref.watch(messagesProvider.notifier).forgetDevice();
+                      ref.watch(firebaseTokenExpirationProvider.notifier).reset();
+                    }
                     isCachingNotifier.set(false);
                     displayToast(
                         context, TypeMsg.msg, DrawerTextConstants.logOut);
