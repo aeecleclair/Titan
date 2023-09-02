@@ -85,7 +85,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                     ),
                     FormField<File>(
                       validator: (e) {
-                        if (poster.value == null) {
+                        if (poster.value == null && !isEdit) {
                           return AdvertTextConstants.choosingPoster;
                         }
                         return null;
@@ -273,7 +273,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                           }
                           if (key.currentState!.validate() &&
                               selectedAnnoncers.isNotEmpty &&
-                              poster.value != null) {
+                              (poster.value != null || isEdit)) {
                             await tokenExpireWrapper(ref, () async {
                               final advertList = ref.watch(advertListProvider);
                               Advert newAdvert = Advert(
