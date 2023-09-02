@@ -44,63 +44,74 @@ class MyApp extends HookConsumerWidget {
     final animationController =
         useAnimationController(duration: const Duration(seconds: 2));
     final animationNotifier = ref.read(backgroundAnimationProvider.notifier);
+    final _navigatorKey = GlobalKey<NavigatorState>();
 
     Future(() {
       animationNotifier.setController(animationController);
     });
 
-    return MaterialApp(
+    final myWillPopScope = WillPopScope(
+        onWillPop: () async {
+          final topBarCallBack = ref.watch(topBarCallBackProvider);
+          if (QR.currentPath.split('/').length <= 2) {
+            final animation = ref.watch(animationProvider);
+            if (animation != null) {
+              final controller =
+                      ref.watch(swipeControllerProvider(animation));
+              if (controller.isCompleted) {
+                SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+              } else {
+                final controllerNotifier =
+                    ref.watch(swipeControllerProvider(animation).notifier);
+                controllerNotifier.toggle();
+                topBarCallBack.onMenu?.call();
+              }
+            }
+            return false;
+          }
+          topBarCallBack.onBack?.call();
+          return true;
+        },
+        child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          title: 'MyECL',
+          scrollBehavior: MyCustomScrollBehavior(),
+          supportedLocales: const [Locale('en', 'US'), Locale('fr', 'FR')],
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          theme: ThemeData(
+              primarySwatch: Colors.orange,
+              textTheme:
+                      GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
+              brightness: Brightness.light),
+          routeInformationParser: const QRouteInformationParser(),
+          builder: (context, child) {
+            if (child == null) {
+              return const SizedBox();
+            }
+            return AppTemplate(
+              child: child,
+            );
+          },
+          routerDelegate: QRouterDelegate(
+            appRouter.routes,
+            initPath: AppRouter.root,
+            navKey: _navigatorKey,
+          ),
+        ));
+
+    if (kIsWeb) {
+      return myWillPopScope;
+    } else {
+      return MaterialApp(
         initialRoute: '/',
         debugShowCheckedModeBanner: false,
-        home: WillPopScope(
-            onWillPop: () async {
-              final topBarCallBack = ref.watch(topBarCallBackProvider);
-              if (QR.currentPath.split('/').length <= 2) {
-                final animation = ref.watch(animationProvider);
-                if (animation != null) {
-                  final controller =
-                      ref.watch(swipeControllerProvider(animation));
-                  if (controller.isCompleted) {
-                    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-                  } else {
-                    final controllerNotifier =
-                        ref.watch(swipeControllerProvider(animation).notifier);
-                    controllerNotifier.toggle();
-                    topBarCallBack.onMenu?.call();
-                  }
-                }
-                return false;
-              }
-              topBarCallBack.onBack?.call();
-              return true;
-            },
-            child: MaterialApp.router(
-              debugShowCheckedModeBanner: false,
-              title: 'MyECL',
-              scrollBehavior: MyCustomScrollBehavior(),
-              supportedLocales: const [Locale('en', 'US'), Locale('fr', 'FR')],
-              localizationsDelegates: const [
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              theme: ThemeData(
-                  primarySwatch: Colors.orange,
-                  textTheme:
-                      GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
-                  brightness: Brightness.light),
-              routeInformationParser: const QRouteInformationParser(),
-              builder: (context, child) {
-                if (child == null) {
-                  return const SizedBox();
-                }
-                return AppTemplate(
-                  child: child,
-                );
-              },
-              routerDelegate:
-                  QRouterDelegate(appRouter.routes, initPath: AppRouter.root),
-            )));
+        home: myWillPopScope
+      );
+    }
   }
 }
 
