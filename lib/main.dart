@@ -44,7 +44,7 @@ class MyApp extends HookConsumerWidget {
     final animationController =
         useAnimationController(duration: const Duration(seconds: 2));
     final animationNotifier = ref.read(backgroundAnimationProvider.notifier);
-    final _navigatorKey = GlobalKey<NavigatorState>();
+    final navigatorKey = GlobalKey<NavigatorState>();
 
     Future(() {
       animationNotifier.setController(animationController);
@@ -56,8 +56,7 @@ class MyApp extends HookConsumerWidget {
           if (QR.currentPath.split('/').length <= 2) {
             final animation = ref.watch(animationProvider);
             if (animation != null) {
-              final controller =
-                      ref.watch(swipeControllerProvider(animation));
+              final controller = ref.watch(swipeControllerProvider(animation));
               if (controller.isCompleted) {
                 SystemChannels.platform.invokeMethod('SystemNavigator.pop');
               } else {
@@ -84,8 +83,7 @@ class MyApp extends HookConsumerWidget {
           ],
           theme: ThemeData(
               primarySwatch: Colors.orange,
-              textTheme:
-                      GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
+              textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
               brightness: Brightness.light),
           routeInformationParser: const QRouteInformationParser(),
           builder: (context, child) {
@@ -99,19 +97,17 @@ class MyApp extends HookConsumerWidget {
           routerDelegate: QRouterDelegate(
             appRouter.routes,
             initPath: AppRouter.root,
-            navKey: _navigatorKey,
+            navKey: navigatorKey,
           ),
         ));
 
     if (kIsWeb) {
       return myWillPopScope;
-    } else {
-      return MaterialApp(
+    }
+    return MaterialApp(
         initialRoute: '/',
         debugShowCheckedModeBanner: false,
-        home: myWillPopScope
-      );
-    }
+        home: myWillPopScope);
   }
 }
 
