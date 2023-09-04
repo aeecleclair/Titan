@@ -9,7 +9,7 @@ import 'package:myecl/drawer/providers/display_notification_popup.dart';
 import 'package:myecl/service/class/topic.dart';
 import 'package:myecl/service/providers/topic_provider.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:myecl/service/tools/functions.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
 class Consts {
@@ -118,7 +118,7 @@ class NotificationPopup extends HookConsumerWidget {
                                               width: 2.0),
                                         ),
                                         alignment: Alignment.center,
-                                        child: AutoSizeText(capitalize(e.name),
+                                        child: AutoSizeText(topicToFrenchString(e),
                                             maxLines: 1,
                                             style: TextStyle(
                                                 fontSize: 20,
