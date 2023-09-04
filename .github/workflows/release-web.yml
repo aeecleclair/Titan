@@ -52,7 +52,7 @@ jobs:
           mv assets/images/logo_alpha.png assets/images/logo.png
       
       - name: Build 🔧
-        run: flutter build web --release --web-renderer html
+        run: flutter build web --release
       
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
