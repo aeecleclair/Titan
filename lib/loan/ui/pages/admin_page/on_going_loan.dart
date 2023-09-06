@@ -165,7 +165,7 @@ class OnGoingLoan extends HookConsumerWidget {
                                   endNotifier.setEnd(processDate(e.end));
                                   QR.to(LoanRouter.root +
                                       LoanRouter.admin +
-                                      LoanRouter.addEditItem);
+                                      LoanRouter.addEditLoan);
                                 },
                                 onCalendar: () async {
                                   await showDialog<int>(
