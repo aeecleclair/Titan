@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/cinema/providers/cinema_topic_provider.dart';
 import 'package:myecl/cinema/providers/is_cinema_admin.dart';
 import 'package:myecl/cinema/providers/main_page_index_provider.dart';
 import 'package:myecl/cinema/providers/scroll_provider.dart';
@@ -41,6 +42,7 @@ class CinemaMainPage extends HookConsumerWidget {
           onRefresh: () async {
             await sessionListNotifier.loadSessions();
             ref.watch(mainPageIndexProvider.notifier).reset();
+            ref.read(cinemaTopicsProvider.notifier).getTopics();
           },
           child: SizedBox(
             height: MediaQuery.of(context).size.height - 85,
