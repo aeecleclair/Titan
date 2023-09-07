@@ -55,10 +55,15 @@ class LocalNotificationService {
 
   Future showNotification(message_class.Message message) async {
     final notificationDetails = await getNotificationDetails();
+    if (message.deliveryDateTime == null) {
+      _localNotificationService.show(generateIntFromString(message.context),
+          message.title, message.content, notificationDetails,
+          payload: json.encode(message.toJson()));
+    }
     tz.TZDateTime dateToDisplay =
         tz.TZDateTime.from(message.deliveryDateTime!, tz.local);
     final now = tz.TZDateTime.from(DateTime.now(), tz.local);
-    if (message.deliveryDateTime != null && dateToDisplay.isAfter(now)) {
+    if (dateToDisplay.isAfter(now)) {
       _localNotificationService.zonedSchedule(
           generateIntFromString(message.context),
           message.title,
@@ -79,7 +84,8 @@ class LocalNotificationService {
       String? payload, RepeatInterval repeatInterval) async {
     await _localNotificationService.periodicallyShow(generateIntFromString(id),
         title, body, repeatInterval, await getNotificationDetails(),
-        payload: payload, androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle);
+        payload: payload,
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle);
   }
 
   Future<void> showNotificationWithImage(String id, String? title, String? body,
@@ -153,8 +159,8 @@ class LocalNotificationService {
     final notificationId = generateIntFromString(id);
     final pendingNotificationRequests =
         await _localNotificationService.pendingNotificationRequests();
-    return pendingNotificationRequests.firstWhereOrNull(
-        (element) => element.id == notificationId);
+    return pendingNotificationRequests
+        .firstWhereOrNull((element) => element.id == notificationId);
   }
 
   Future<void> cancelNotificationById(String id) async {
