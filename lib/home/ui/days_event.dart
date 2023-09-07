@@ -4,8 +4,8 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_provider.dart';
-import 'package:myecl/event/router.dart';
 import 'package:myecl/event/tools/functions.dart';
+import 'package:myecl/home/router.dart';
 import 'package:myecl/home/tools/constants.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -107,7 +107,7 @@ class DaysEvent extends HookConsumerWidget {
                           GestureDetector(
                             onTap: () {
                               eventNotifier.setEvent(event);
-                              QR.to(EventRouter.root + EventRouter.detail);
+                              QR.to(HomeRouter.root + HomeRouter.detail);
                             },
                             child: HeroIcon(
                               HeroIcons.informationCircle,
