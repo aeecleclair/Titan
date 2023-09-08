@@ -41,7 +41,7 @@ class LoginTextConstants {
   static const String passwordStrengthStrong = 'Fort';
   static const String passwordStrengthVeryStrong = 'Très fort';
   static const String phone = 'Téléphone';
-  static const String promo = 'Promo entrante (ex: 2023)';
+  static const String promo = 'Promo entrante (ex : 2023)';
   static const String sendedMail = 'Mail de confirmation envoyé';
   static const String sendedResetMail = 'Mail de réinitialisation envoyé';
   static const String signIn = 'Se connecter';
