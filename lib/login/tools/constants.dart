@@ -33,14 +33,15 @@ class LoginTextConstants {
   static const String password = 'Mot de passe';
   static const String passwordLengthError =
       'Le mot de passe doit faire au moins 6 caractères';
-  static const String passwordMustMatch = 'Les mots de passe doivent correspondre';
+  static const String passwordMustMatch =
+      'Les mots de passe doivent correspondre';
   static const String passwordStrengthVeryWeak = 'Très faible';
   static const String passwordStrengthWeak = 'Faible';
   static const String passwordStrengthMedium = 'Moyen';
   static const String passwordStrengthStrong = 'Fort';
   static const String passwordStrengthVeryStrong = 'Très fort';
   static const String phone = 'Téléphone';
-  static const String promo = 'Promo entrante (ex : 2023)';
+  static const String promo = 'Promo entrante (ex: 2023)';
   static const String sendedMail = 'Mail de confirmation envoyé';
   static const String sendedResetMail = 'Mail de réinitialisation envoyé';
   static const String signIn = 'Se connecter';
