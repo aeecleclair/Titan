@@ -33,29 +33,30 @@ class CentralisationMainPage extends HookConsumerWidget {
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(children: [
-          Container(
-            padding: const EdgeInsets.only(top: 15, bottom: 5),
-            height: 135,
-            child: ReorderableListView(
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              proxyDecorator: (widget, _, animation) => Transform.scale(
-                scale: 1 + .05 * animation.value,
-                child: widget,
+          if (favorites.isNotEmpty)
+            Container(
+              padding: const EdgeInsets.only(top: 15, bottom: 5),
+              height: 135,
+              child: ReorderableListView(
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                proxyDecorator: (widget, _, animation) => Transform.scale(
+                  scale: 1 + .05 * animation.value,
+                  child: widget,
+                ),
+                header: const SizedBox(
+                  width: 15,
+                ),
+                footer: const SizedBox(
+                  width: 15,
+                ),
+                onReorder: favoritesNameNotifier.reorderFavorites,
+                children: favorites
+                    .map((module) =>
+                        LikedCard(module: module, key: Key(module.name)))
+                    .toList(),
               ),
-              header: const SizedBox(
-                width: 15,
-              ),
-              footer: const SizedBox(
-                width: 15,
-              ),
-              onReorder: favoritesNameNotifier.reorderFavorites,
-              children: favorites
-                  .map((module) =>
-                      LikedCard(module: module, key: Key(module.name)))
-                  .toList(),
             ),
-          ),
           ...section.when(
             data: (sections) => sections
                 .map<Widget>((section) => SectionList(section: section))

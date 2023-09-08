@@ -53,7 +53,7 @@ class TextWithHyperLink extends StatelessWidget {
   void openLink(String url) async {
     final uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
       throw '$unableToOpen $url';
     }
@@ -62,10 +62,11 @@ class TextWithHyperLink extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final hyperLinkStyle = linkStyle ?? theme.textTheme.bodyMedium?.copyWith(
-      color: ColorConstants.gradient1,
-      decoration: TextDecoration.underline,
-    );
+    final hyperLinkStyle = linkStyle ??
+        theme.textTheme.bodyMedium?.copyWith(
+          color: ColorConstants.gradient1,
+          decoration: TextDecoration.underline,
+        );
 
     final words = text.split(' ');
 

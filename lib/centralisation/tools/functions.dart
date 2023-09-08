@@ -31,7 +31,7 @@ void showLinkDetails(BuildContext context, Module module) {
 
 void openLink(String url) async {
   if (await canLaunchUrl(Uri.parse(url))) {
-    await launchUrl(Uri.parse(url));
+    await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
   } else {
     throw '${CentralisationTextConstants.unableToOpen} $url';
   }

@@ -52,7 +52,8 @@ class PresentationPage extends HookConsumerWidget {
                         recognizer: TapGestureRecognizer()
                           ..onTap = () async {
                             try {
-                              await launchUrl(Uri.parse(info.link));
+                              await launchUrl(Uri.parse(info.link),
+                                  mode: LaunchMode.externalApplication);
                             } catch (e) {
                               displayToast(context, TypeMsg.msg,
                                   AMAPTextConstants.errorLink);
