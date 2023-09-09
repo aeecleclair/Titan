@@ -103,7 +103,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
               passwordConfirmation.text.isNotEmpty &&
               password.text == passwordConfirmation.text) {
             RecoverRequest recoverRequest = RecoverRequest(
-              resetToken: activationCode.text,
+              resetToken: activationCode.text.trim(),
               newPassword: password.text,
             );
             final value = await signUpNotifier.resetPassword(recoverRequest);
