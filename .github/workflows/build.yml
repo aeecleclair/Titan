@@ -67,11 +67,13 @@ jobs:
           DEBUG_HOST: ${{ secrets.DEBUG_HOST }}
           RELEASE_HOST: ${{ secrets.RELEASE_HOST }}
       
-      - name: Add Firebase configuration
+      - name: Add Firebase configuration for Alpha
         run: |
-          echo "$BASE64_GOOGLE_SERVICES_JSON" | base64 -d > android/app/google-services.json
+          echo "$GOOGLE_SERVICES_ALPHA_JSON" | base64 -d > android/app/google-services.json
+          echo "$GOOGLE_SERVICE_INFO_ALPHA_PLIST" | base64 -d > ios/Runner/GoogleService-Info.plist
         env:
-          BASE64_GOOGLE_SERVICES_JSON: ${{ secrets.BASE64_GOOGLE_SERVICES_JSON }}
+          GOOGLE_SERVICES_ALPHA_JSON: ${{ secrets.GOOGLE_SERVICES_ALPHA_JSON }}
+          GOOGLE_SERVICE_INFO_ALPHA_PLIST: ${{ secrets.GOOGLE_SERVICE_INFO_ALPHA_PLIST }}
       
       - name: Build 🔧
         run: flutter build ${{ matrix.target }}
