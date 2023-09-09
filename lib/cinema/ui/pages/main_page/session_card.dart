@@ -177,10 +177,18 @@ class SessionCard extends HookConsumerWidget {
                         : Stack(
                             children: [
                               Container(
-                                  decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: data.first.image, fit: BoxFit.cover),
-                              )),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    image: DecorationImage(
+                                        image: data.first.image,
+                                        fit: BoxFit.cover),
+                                    border: (selected &&
+                                            session.start
+                                                .isAfter(DateTime.now()))
+                                        ? Border.all(
+                                            color: Colors.black, width: 3)
+                                        : null),
+                              ),
                               if (selected &&
                                   session.start.isAfter(DateTime.now()))
                                 Positioned(

@@ -26,7 +26,7 @@ class AddEditButtonLayout extends StatelessWidget {
         color: useColors ? null : color,
         boxShadow: [
           BoxShadow(
-            color: (useColors ? colors!.last : color).withOpacity(0.5),
+            color: (useColors ? colors!.last : color).withOpacity(0.3),
             spreadRadius: 5,
             blurRadius: 10,
             offset: const Offset(3, 3), // changes position of shadow
