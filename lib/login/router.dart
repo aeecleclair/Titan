@@ -3,6 +3,7 @@ import 'package:myecl/login/ui/pages/create_account_page/create_account_page.dar
 import 'package:myecl/login/ui/pages/forget_page/forget_page.dart';
 import 'package:myecl/login/ui/pages/recover_password/recover_password_page.dart';
 import 'package:myecl/login/ui/pages/register_page/register_page.dart';
+import 'package:myecl/login/ui/pages/sign_in_page/sign_in_page.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
