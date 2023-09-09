@@ -170,6 +170,7 @@ class AddEditContenderPage extends HookConsumerWidget {
               ),
               const SizedBox(height: 50),
               HorizontalListView.builder(
+                height: 40,
                 items:
                     ListType.values.where((e) => e != ListType.blank).toList(),
                 itemBuilder: (context, e, i) => SectionChip(
@@ -191,6 +192,7 @@ class AddEditContenderPage extends HookConsumerWidget {
               ),
               const SizedBox(height: 30),
               HorizontalListView.builder(
+                height: 155,
                 items: members,
                 itemBuilder: (context, e, i) => MemberCard(
                   member: e,

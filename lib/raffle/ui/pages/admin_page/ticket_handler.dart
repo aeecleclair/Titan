@@ -39,6 +39,7 @@ class TicketHandler extends HookConsumerWidget {
             color: RaffleColorConstants.textDark),
         const SizedBox(height: 10),
         HorizontalListView(
+          height: 135,
           children: [
             const SizedBox(width: 15, height: 125),
             if (raffle.raffleStatusType == RaffleStatusType.creation)

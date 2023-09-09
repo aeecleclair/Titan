@@ -19,6 +19,7 @@ class LoanersBar extends HookConsumerWidget {
     return AsyncChild(
       value: adminLoanList,
       builder: (context, loans) => HorizontalListView.builder(
+        height: 40,
         items: loans.keys.toList(),
         itemBuilder: (context, key, i) {
           final selected = loaner.id == key.id;

@@ -28,6 +28,7 @@ class WinningTicketHandler extends HookConsumerWidget {
                     return const Text(RaffleTextConstants.noWinningTicketYet);
                   }
                   return HorizontalListView.builder(
+                      height: 135,
                       items: data,
                       itemBuilder: (context, item, i) =>
                           WinningTicketUI(ticket: item));
