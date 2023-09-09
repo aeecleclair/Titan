@@ -48,15 +48,9 @@ class AdminSessionCard extends HookConsumerWidget {
           borderRadius: BorderRadius.circular(18),
           child: Column(
             children: [
-              Container(
-                  decoration: const BoxDecoration(boxShadow: [
-                    BoxShadow(
-                      color: Colors.black26,
-                      blurRadius: 10,
-                      spreadRadius: 7,
-                      offset: Offset(0, 5),
-                    ),
-                  ]),
+              SizedBox(
+                  height: 205,
+                  width: double.infinity,
                   child: AutoLoaderChild(
                     value: sessionPosterMap,
                     notifier: sessionPosterMapNotifier,
@@ -74,7 +68,7 @@ class AdminSessionCard extends HookConsumerWidget {
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-                height: 90,
+                height: 95,
                 child: Column(
                   children: [
                     AutoSizeText(
