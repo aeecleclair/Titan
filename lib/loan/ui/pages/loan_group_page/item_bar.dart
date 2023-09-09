@@ -30,9 +30,10 @@ class ItemBar extends HookConsumerWidget {
     final itemListForSelected = ref.watch(itemListProvider);
     final cautionNotifier = ref.watch(cautionProvider.notifier);
     return SizedBox(
-        height: 160,
+        height: 180,
         child: AsyncChild(
             value: itemListForSelected,
+            loaderColor: ColorConstants.background2,
             builder: (context, data) {
               final sortedAvailableData = data
                   .where((element) =>
@@ -47,10 +48,11 @@ class ItemBar extends HookConsumerWidget {
               data = sortedAvailableData + sortedUnavailableData;
               return AsyncChild(
                   value: loanersItems,
+                  loaderColor: ColorConstants.background2,
                   builder: (context, items) {
                     if (items[loaner] == null) {
                       return const SizedBox(
-                        height: 160,
+                        height: 180,
                         child: Center(
                             child: Text(LoanTextConstants.noItems,
                                 style: TextStyle(
@@ -60,10 +62,11 @@ class ItemBar extends HookConsumerWidget {
                     }
                     return AsyncChild(
                         value: items[loaner]!,
+                        loaderColor: ColorConstants.background2,
                         builder: (context, itemList) {
                           if (itemList.isEmpty) {
                             return const SizedBox(
-                              height: 198,
+                              height: 180,
                               child: Center(
                                   child: Text(LoanTextConstants.noItems,
                                       style: TextStyle(
@@ -85,7 +88,7 @@ class ItemBar extends HookConsumerWidget {
                             ..sort((a, b) => a.name.compareTo(b.name));
                           itemList = sortedAvailable + sortedUnavailable;
                           return HorizontalListView.builder(
-                              height: 280,
+                              height: 180,
                               items: itemList,
                               itemBuilder: (context, e, i) {
                                 var currentValue =
@@ -95,6 +98,9 @@ class ItemBar extends HookConsumerWidget {
                                     CheckItemCard(
                                       item: e,
                                       isSelected: currentValue != 0,
+                                    ),
+                                    SizedBox(
+                                      height: 10,
                                     ),
                                     SizedBox(
                                       width: 120,
@@ -223,11 +229,8 @@ class ItemBar extends HookConsumerWidget {
                                   ],
                                 );
                               });
-                        },
-                        loaderColor: ColorConstants.background2);
-                  },
-                  loaderColor: ColorConstants.background2);
-            },
-            loaderColor: ColorConstants.background2));
+                        });
+                  });
+            }));
   }
 }

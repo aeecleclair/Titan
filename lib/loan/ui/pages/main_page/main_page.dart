@@ -30,24 +30,24 @@ class LoanMainPage extends HookConsumerWidget {
     ref.watch(adminLoanListProvider);
     ref.watch(itemListProvider);
     ref.watch(loanerLoanListProvider);
-    List<List<Loan>> dictCateListWidget = [[], []];
+    List<Loan> onGoingLoan = [];
+    List<Loan> returnedLoan = [];
 
-    loanList.when(
+    loanList.maybeWhen(
       data: (data) {
         if (data.isNotEmpty) {
           for (Loan l in data) {
             if (l.returned) {
-              dictCateListWidget[1].add(l);
+              returnedLoan.add(l);
             } else {
-              dictCateListWidget[0].add(l);
+              onGoingLoan.add(l);
             }
           }
-          dictCateListWidget[0].sort((a, b) => b.end.compareTo(a.end));
-          dictCateListWidget[1].sort((a, b) => b.end.compareTo(a.end));
+          onGoingLoan.sort((a, b) => b.end.compareTo(a.end));
+          returnedLoan.sort((a, b) => b.end.compareTo(a.end));
         }
       },
-      loading: () {},
-      error: (error, s) {},
+      orElse: () {},
     );
 
     return LoanTemplate(
@@ -59,17 +59,17 @@ class LoanMainPage extends HookConsumerWidget {
               },
               child: Column(children: [
                 const SizedBox(height: 40),
-                (dictCateListWidget[0].isNotEmpty)
+                (onGoingLoan.isNotEmpty)
                     ? Column(children: [
                         AlignLeftText(
-                          '${dictCateListWidget[0].length} ${LoanTextConstants.loan.toLowerCase()}${dictCateListWidget[0].length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
+                          '${onGoingLoan.length} ${LoanTextConstants.loan.toLowerCase()}${onGoingLoan.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
                           padding: const EdgeInsets.symmetric(horizontal: 30.0),
                           color: Colors.grey,
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 30),
                         HorizontalListView.builder(
-                            height: 190,
-                            items: dictCateListWidget[0],
+                            height: 170,
+                            items: onGoingLoan,
                             itemBuilder: (context, e, i) => LoanCard(
                                   loan: e,
                                   onInfo: () {
@@ -78,7 +78,7 @@ class LoanMainPage extends HookConsumerWidget {
                                   },
                                 ))
                       ])
-                    : (dictCateListWidget[1].isEmpty)
+                    : (returnedLoan.isEmpty)
                         ? SizedBox(
                             height: MediaQuery.of(context).size.height * 0.7,
                             width: MediaQuery.of(context).size.width,
@@ -97,18 +97,18 @@ class LoanMainPage extends HookConsumerWidget {
                             ),
                           )
                         : Container(),
-                if (dictCateListWidget[1].isNotEmpty)
+                if (returnedLoan.isNotEmpty)
                   Column(children: [
                     const SizedBox(height: 30),
                     AlignLeftText(
-                      '${dictCateListWidget[1].length} ${LoanTextConstants.loan.toLowerCase()}${dictCateListWidget[1].length > 1 ? 's' : ''} ${LoanTextConstants.returned.toLowerCase()}${dictCateListWidget[1].length > 1 ? 's' : ''}',
+                      '${returnedLoan.length} ${LoanTextConstants.loan.toLowerCase()}${returnedLoan.length > 1 ? 's' : ''} ${LoanTextConstants.returned.toLowerCase()}${returnedLoan.length > 1 ? 's' : ''}',
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       color: Colors.grey,
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 30),
                     HorizontalListView.builder(
                         height: 190,
-                        items: dictCateListWidget[1],
+                        items: returnedLoan,
                         itemBuilder: (context, e, i) => LoanCard(
                               loan: e,
                               onInfo: () {
