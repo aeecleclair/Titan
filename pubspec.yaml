@@ -81,23 +81,4 @@ flutter:
     - assets/web/Tombola.webp
     - assets/web/Vote.webp
 
-
   uses-material-design: true
-
-flutter_icons:
-  android: "launcher_icon"
-  ios:
-    generate: true
-    image_path: "assets/images/icon.jpg"
-  image_path: "assets/images/icon.png"
-  min_sdk_android: 21 # android min sdk min:16, default 21
-  web:
-    generate: true
-    image_path: "assets/images/icon.png"
-  windows:
-    generate: true
-    image_path: "assets/images/icon.png"
-    icon_size: 48 # min:48, max:256, default: 48
-  macos:
-    generate: true
-    image_path: "assets/images/icon.png"
