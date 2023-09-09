@@ -73,11 +73,13 @@ class AdminMainPage extends HookConsumerWidget {
                           QR.to(AdminRouter.root + AdminRouter.addAssociation);
                         },
                         child: CardUi(children: [
+                          const Spacer(),
                           HeroIcon(
                             HeroIcons.plus,
                             color: Colors.grey.shade700,
                             size: 40,
                           ),
+                          const Spacer(),
                         ]),
                       ),
                       GestureDetector(
@@ -86,6 +88,7 @@ class AdminMainPage extends HookConsumerWidget {
                         },
                         child: CardUi(
                           children: [
+                            const Spacer(),
                             Stack(
                               clipBehavior: Clip.none,
                               children: [
@@ -105,6 +108,7 @@ class AdminMainPage extends HookConsumerWidget {
                                 )
                               ],
                             ),
+                            const Spacer(),
                           ],
                         ),
                       ),

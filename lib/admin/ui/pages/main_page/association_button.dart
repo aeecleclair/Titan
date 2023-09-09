@@ -33,6 +33,6 @@ class AssociationButton extends StatelessWidget {
           ],
           borderRadius: BorderRadius.circular(10),
         ),
-        child: child);
+        child: Center(child: child));
   }
 }
