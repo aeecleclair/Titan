@@ -38,7 +38,6 @@ class DetailOrderUI extends HookConsumerWidget {
     }
 
     return CardLayout(
-      id: order.id,
       width: 250,
       height: 145 + (20.0 * order.products.length),
       colors: const [
@@ -63,22 +62,28 @@ class DetailOrderUI extends HookConsumerWidget {
           ...order.products.map(
             (product) => Row(
               children: [
-                AutoSizeText(
-                  product.name,
-                  minFontSize: 10,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white),
+                Expanded(
+                  child: AutoSizeText(
+                    product.name,
+                    maxLines: 1,
+                    minFontSize: 10,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white),
+                  ),
                 ),
-                const Spacer(),
-                Text(
-                  "${product.quantity} (${(product.quantity * product.price).toStringAsFixed(2)}€)",
-                  style: const TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white),
+                SizedBox(
+                  width: 90,
+                  child: Text(
+                    "${product.quantity} (${(product.quantity * product.price).toStringAsFixed(2)}€)",
+                    textAlign: TextAlign.right,
+                    style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white),
+                  ),
                 ),
               ],
             ),
