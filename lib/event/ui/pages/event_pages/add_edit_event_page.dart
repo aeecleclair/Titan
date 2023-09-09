@@ -94,6 +94,7 @@ class AddEditEventPage extends HookConsumerWidget {
           child: Form(
               key: key,
               child: Column(children: [
+                const SizedBox(height: 40),
                 AlignLeftText(
                   isEdit
                       ? EventTextConstants.editEvent
@@ -103,6 +104,7 @@ class AddEditEventPage extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 30),
                 HorizontalListView.builder(
+                    height: 40,
                     items: CalendarEventType.values,
                     itemBuilder: (context, value, index) {
                       final selected = eventType.value == value;

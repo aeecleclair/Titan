@@ -245,12 +245,14 @@ class EventUi extends ConsumerWidget {
                                               ? ColorConstants.gradient1
                                               : Colors.grey.shade300,
                                       child: child),
-                                  child: Text(
-                                    EventTextConstants.delete,
-                                    style: TextStyle(
-                                        color: textColor,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold),
+                                  child: Center(
+                                    child: Text(
+                                      EventTextConstants.delete,
+                                      style: TextStyle(
+                                          color: textColor,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
                                 ),
                               ),

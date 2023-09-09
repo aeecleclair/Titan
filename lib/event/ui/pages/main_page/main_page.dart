@@ -35,7 +35,7 @@ class EventMainPage extends HookConsumerWidget {
             eventList.sort((a, b) => b.start.compareTo(a.start));
             return Column(
               children: [
-                      const SizedBox(height: 40),
+                const SizedBox(height: 40),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Align(
