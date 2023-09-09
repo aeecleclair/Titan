@@ -46,6 +46,14 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
       
+      - name: Setup Java
+        if: ${{ matrix.name }} == "AAB"
+        uses: actions/setup-java@v3
+        with:
+          distribution: "zulu"
+          java-version: "17.x"
+          cache: "gradle"
+      
       - name: Setup Flutter SDK
         uses: subosito/flutter-action@v2
         with:

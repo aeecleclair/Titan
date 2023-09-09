@@ -38,6 +38,7 @@ jobs:
           ref: ${{ steps.get-ref.outputs.ref }}
       
       - name: Setup Java
+        if: ${{ matrix.name }} == "APK"
         uses: actions/setup-java@v3
         with:
           distribution: "zulu"
