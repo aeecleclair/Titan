@@ -87,21 +87,17 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
   await FirebaseMessaging.instance.getToken();
   await LocalNotificationService().init();
-  FirebaseMessaging.instance.requestPermission().then((value) async {
-    if (value.authorizationStatus == AuthorizationStatus.authorized) {
-      final LocalNotificationService localNotificationService =
-          LocalNotificationService();
-      localNotificationService.init();
-      final firebaseToken = await FirebaseMessaging.instance
-          .getToken(vapidKey: "")
-          .then((value) => value.toString());
-      NotificationRepository notificationRepository = NotificationRepository();
-      final messages = await notificationRepository.getMessages(firebaseToken);
-      for (final message in messages) {
-        if (message.isVisible) {
-          localNotificationService.showNotification(message);
-        }
-      }
+  final LocalNotificationService localNotificationService =
+      LocalNotificationService();
+  localNotificationService.init();
+  final firebaseToken = await FirebaseMessaging.instance
+      .getToken(vapidKey: "")
+      .then((value) => value.toString());
+  NotificationRepository notificationRepository = NotificationRepository();
+  final messages = await notificationRepository.getMessages(firebaseToken);
+  for (final message in messages) {
+    if (message.isVisible) {
+      localNotificationService.showNotification(message);
     }
-  });
+  }
 }
