@@ -59,9 +59,11 @@ class TopicsProvider extends ListNotifier<Topic> {
 
   Future subscribeAll() async {
     return await state.maybeWhen(
-        data: (value) => value.forEach((element) async {
-              await subscribeTopic(element);
-            }),
+        data: (value) {
+          for (var i = 0; i < value.length; i++) {
+            subscribeTopic(value[i]);
+          }
+        },
         orElse: () {});
   }
 }
