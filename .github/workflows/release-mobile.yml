@@ -4,8 +4,7 @@ on:
   workflow_dispatch:
   push:
     tags:
-      - 'v*.*.*\+*-alpha'
-      - 'v*.*.*\+*-alpha'
+      - 'v*.*.*\+*'
 
 jobs:
   extract-version:
