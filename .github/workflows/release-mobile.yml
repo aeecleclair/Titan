@@ -88,7 +88,7 @@ jobs:
           GOOGLE_SERVICE_INFO_ALPHA_PLIST: ${{ secrets.GOOGLE_SERVICE_INFO_ALPHA_PLIST }}
       
       - name: Create the Keystore
-        if: matrix.name == "AAB"
+        if: ${{ matrix.name }} == "AAB"
         run: |
           echo ${{ secrets.KEYSTORE_BASE64 }} | base64 -d > $RUNNER_TEMP/myecl.keystore
           echo storePassword=${{ secrets.STORE_PASSWORD }} >> android/key.properties
