@@ -24,6 +24,7 @@ class CardButton extends StatelessWidget {
       padding: const EdgeInsets.all(7),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
+        color: color,
         gradient: useColors
             ? RadialGradient(
                 colors: colors!,

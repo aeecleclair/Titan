@@ -135,6 +135,7 @@ class AdminPage extends HookConsumerWidget {
             AsyncChild(
               value: roomList,
               builder: (context, rooms) => HorizontalListView.builder(
+                height: 40,
                 items: rooms,
                 firstChild: ItemChip(
                   onTap: () {

@@ -133,13 +133,13 @@ class BookingMainPage extends HookConsumerWidget {
                 ),
               ),
             ),
-            SizedBox(height: (isAdmin) ? 0 : 10),
+            SizedBox(height: (isAdmin) ? 15 : 25),
             AsyncChild(
                 value: bookings,
                 builder: (context, data) {
                   data.sort((a, b) => b.start.compareTo(a.start));
                   return HorizontalListView.builder(
-                      height: 210,
+                      height: 180,
                       firstChild: GestureDetector(
                         onTap: () {
                           bookingNotifier.setBooking(Booking.empty());
@@ -208,6 +208,7 @@ class BookingMainPage extends HookConsumerWidget {
                           ));
                 },
                 loaderColor: ColorConstants.background2),
+                SizedBox(height: 20,)
           ]),
         ),
       ),
