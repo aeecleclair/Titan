@@ -125,14 +125,14 @@ class AdvertMainPage extends HookConsumerWidget {
                   data: (advertData) {
                     final sortedAdvertData =
                         advertData.sortedBy((element) => element.date).reversed;
-                    final filteredSortedadvertData = sortedAdvertData.where(
+                    final filteredSortedAdvertData = sortedAdvertData.where(
                         (advert) =>
                             selected
                                 .where((e) => advert.announcer.name == e.name)
                                 .isNotEmpty ||
                             selected.isEmpty);
                     return Column(children: [
-                      ...filteredSortedadvertData.map(
+                      ...filteredSortedAdvertData.map(
                         (advert) => AdvertCard(
                             onTap: () {
                               advertNotifier.setAdvert(advert);
