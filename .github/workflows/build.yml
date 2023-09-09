@@ -76,6 +76,9 @@ jobs:
           GOOGLE_SERVICES_ALPHA_JSON: ${{ secrets.GOOGLE_SERVICES_ALPHA_JSON }}
           GOOGLE_SERVICE_INFO_ALPHA_PLIST: ${{ secrets.GOOGLE_SERVICE_INFO_ALPHA_PLIST }}
       
+      - name: Flutter clean
+        run: flutter clean
+      
       - name: Build 🔧
         run: flutter build ${{ matrix.target }}
       

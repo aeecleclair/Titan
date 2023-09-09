@@ -69,6 +69,9 @@ jobs:
           rm assets/images/logo.png
           mv assets/images/logo_alpha.png assets/images/logo.png
       
+      - name: Flutter clean
+        run: flutter clean
+      
       - name: Build 🔧
         run: flutter build web --release
       
