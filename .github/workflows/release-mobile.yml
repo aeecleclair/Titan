@@ -4,31 +4,35 @@ on:
   workflow_dispatch:
   push:
     tags:
-      - 'v*.*.*\+*'
+      - 'v*.*.*\+*-alpha'
+      - 'v*.*.*\+*-alpha'
 
 jobs:
   extract-refs:
     name: Determine refs
     runs-on: ubuntu-latest
     outputs:
-      branch: ${{ steps.get-ref.outputs.branch }}
-      versionCode: ${{ steps.get-ref.outputs.branch }}
-      versionName: ${{ steps.get-ref.outputs.branch }}
+      tag: ${{ steps.get-ref.outputs.tag }}
+      isAlpha: ${{ steps.get-ref.outputs.isAlpha }}
+      versionCode: ${{ steps.get-ref.outputs.versionCode }}
+      versionName: ${{ steps.get-ref.outputs.versionName }}
     steps:
       - name: Determine ref
         id: get-ref
         run: |
-          branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
           tag=${GITHUB_REF#refs/*/}
+          [[ $tag == *"-alpha" ]] && isAlpha=1 || isAlpha=0;
           versionCode=${tag##*+}
+          versionCode=${versionCode%-*}
           versionName=${tag%+*}
           versionName=${versionName#v}
-          echo 'branch=$branch' >> $GITHUB_OUTPUT
+          echo 'tag=$tag' >> $GITHUB_OUTPUT
+          echo 'isAlpha=$isAlpha' >> $GITHUB_OUTPUT
           echo 'versionCode=$versionCode' >> $GITHUB_OUTPUT
           echo 'versionName=$versionName' >> $GITHUB_OUTPUT
   
   build:
-    name: Release titan-${{ needs.extract-refs.outputs.branch }} ${{ matrix.name }}
+    name: Release Titan ${{ needs.extract-refs.outputs.tag }} ${{ matrix.name }}
     runs-on: macos-latest
     needs: [extract-refs]
     strategy:
@@ -78,7 +82,7 @@ jobs:
           RELEASE_HOST: ${{ secrets.RELEASE_HOST }}
       
       - name: Add Firebase configuration for production
-        if: steps.extract_branch.outputs.branch == 'main'
+        if: ${{ !steps.extract_branch.outputs.isAlpha }}
         run: |
           echo '$GOOGLE_SERVICES_JSON' > android/app/google-services.json
           echo '$GOOGLE_SERVICE_INFO_PLIST' > ios/Runner/GoogleService-Info.plist
@@ -87,7 +91,7 @@ jobs:
           GOOGLE_SERVICE_INFO_PLIST: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
       
       - name: Add Firebase configuration for Alpha
-        if: steps.extract_branch.outputs.branch == 'alpha'
+        if: ${{ steps.extract_branch.outputs.isAlpha }}
         run: |
           echo '$GOOGLE_SERVICES_ALPHA_JSON' > android/app/google-services.json
           echo '$GOOGLE_SERVICE_INFO_ALPHA_PLIST' > ios/Runner/GoogleService-Info.plist
@@ -105,7 +109,7 @@ jobs:
           echo storeFile=$RUNNER_TEMP/myecl.keystore >> android/key.properties
       
       - name: Set alpha properties
-        if: steps.extract_branch.outputs.branch == 'alpha'
+        if: ${{ steps.extract_branch.outputs.isAlpha }}
         run: |
           rm assets/images/icon.png
           mv assets/images/icon_alpha.png assets/images/icon.png
