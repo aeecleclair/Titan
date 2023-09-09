@@ -52,7 +52,8 @@ pubspec.lock
 .env
 
 # Firebase
-/android/app/google-services.json
+android/app/src/alpha/google-services.json
+android/app/src/prod/google-services.json
 ios/config/Alpha/GoogleService-Info.plist
 ios/config/Prod/GoogleService-Info.plist
 
