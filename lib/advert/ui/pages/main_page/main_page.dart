@@ -38,7 +38,7 @@ class AdvertMainPage extends HookConsumerWidget {
               data: (advertData) {
                 final sortedAdvertData =
                     advertData.sortedBy((element) => element.date).reversed;
-                final filteredSortedadvertData = sortedAdvertData.where(
+                final filteredSortedAdvertData = sortedAdvertData.where(
                     (advert) =>
                         selected
                             .where((e) => advert.announcer.name == e.name)
@@ -92,7 +92,7 @@ class AdvertMainPage extends HookConsumerWidget {
                             GestureDetector(
                               onTap: () {
                                 QR.to(AdvertRouter.root +
-                                    AdvertRouter.addRemAnnoucer);
+                                    AdvertRouter.addRemAnnouncer);
                               },
                               child: Container(
                                 width: 130,
@@ -139,7 +139,7 @@ class AdvertMainPage extends HookConsumerWidget {
                     Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 30),
                         child: Column(children: [
-                          ...filteredSortedadvertData.map(
+                          ...filteredSortedAdvertData.map(
                             (advert) => AdvertCard(
                                 onTap: () {
                                   advertNotifier.setAdvert(advert);

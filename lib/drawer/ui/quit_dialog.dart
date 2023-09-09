@@ -26,7 +26,7 @@ class QuitDialog extends HookConsumerWidget {
             child: GestureDetector(
               onTap: () {},
               child: CustomDialogBox(
-                  descriptions: DrawerTextConstants.logingOut,
+                  descriptions: DrawerTextConstants.loginOut,
                   title: DrawerTextConstants.logOut,
                   onYes: () {
                     auth.deleteToken();

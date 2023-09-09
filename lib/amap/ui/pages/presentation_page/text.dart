@@ -14,6 +14,11 @@ class PresentationPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final information = ref.watch(informationProvider);
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
+
     return AmapTemplate(
       child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -54,8 +59,8 @@ class PresentationPage extends HookConsumerWidget {
                               await launchUrl(Uri.parse(info.link),
                                   mode: LaunchMode.externalApplication);
                             } catch (e) {
-                              displayToast(context, TypeMsg.msg,
-                                  AMAPTextConstants.errorLink);
+                              displayToastWithContext(
+                                  TypeMsg.msg, AMAPTextConstants.errorLink);
                             }
                           }),
                     error: (Object error, StackTrace stackTrace) =>

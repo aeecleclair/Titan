@@ -18,7 +18,7 @@ class DrawerTextConstants {
       "Ce site est la version Web de l'application MyECL. Nous vous invitons à télécharger l'application. N'utilisez ce site qu'en cas de problème avec l'application.\n";
   static const String iosAppLink =
       "https://apps.apple.com/fr/app/myecl/id6444443430";
-  static const String logingOut = "Voulez-vous vous déconnecter ?";
+  static const String loginOut = "Voulez-vous vous déconnecter ?";
   static const String logOut = "Déconnexion";
   static const String or = " ou ";
   static const String settings = "Paramètres";
