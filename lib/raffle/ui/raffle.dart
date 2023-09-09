@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/drawer/providers/animation_provider.dart';
-import 'package:myecl/raffle/ui/top_bar.dart';
-import 'package:myecl/drawer/providers/swipe_provider.dart';
+import 'package:myecl/raffle/router.dart';
+import 'package:myecl/raffle/tools/constants.dart';
+import 'package:myecl/tools/ui/top_bar.dart';
 
 class RaffleTemplate extends HookConsumerWidget {
   final Widget child;
@@ -10,27 +10,15 @@ class RaffleTemplate extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final animationNotifier = ref.watch(animationProvider.notifier);
-    final controller =
-        ref.watch(swipeControllerProvider(animationNotifier.animation!));
-    final controllerNotifier = ref
-        .watch(swipeControllerProvider(animationNotifier.animation!).notifier);
-    return Scaffold(
-      body: Container(
-        color: Colors.white,
-        child: SafeArea(
-          child: IgnorePointer(
-            ignoring: controller.isCompleted,
-            child: Column(
-              children: [
-                TopBar(
-                  controllerNotifier: controllerNotifier,
-                ),
-                Expanded(child: child),
-              ],
-            ),
+    return SafeArea(
+      child: Column(
+        children: [
+          const TopBar(
+            title: RaffleTextConstants.raffle,
+            root: RaffleRouter.root,
           ),
-        ),
+          Expanded(child: child)
+        ],
       ),
     );
   }
