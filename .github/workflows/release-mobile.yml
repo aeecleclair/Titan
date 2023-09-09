@@ -7,20 +7,13 @@ on:
       - 'v*.*.*\+*'
 
 jobs:
-  build:
-    name: Release titan-${{ steps.get-ref.outputs.branch }} ${{ matrix.name }}
-    runs-on: macos-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - target: "appbundle"
-            name: "AAB"
-            path: build/app/outputs/bundle/release/app-signed.aab
-          - target: "ipa"
-            name: "IPA"
-            path: build/ios/ipa/*.ipa
-    
+  extract-refs:
+    name: Determine refs
+    runs-on: ubuntu-latest
+    outputs:
+      branch: ${{ steps.get-ref.outputs.branch }}
+      versionCode: ${{ steps.get-ref.outputs.branch }}
+      versionName: ${{ steps.get-ref.outputs.branch }}
     steps:
       - name: Determine ref
         id: get-ref
@@ -33,7 +26,23 @@ jobs:
           echo "branch=$branch" >> $GITHUB_OUTPUT
           echo "versionCode=$versionCode" >> $GITHUB_OUTPUT
           echo "versionName=$versionName" >> $GITHUB_OUTPUT
-        
+  
+  build:
+    name: Release titan-${{ needs.extract-refs.outputs.branch }} ${{ matrix.name }}
+    runs-on: macos-latest
+    needs: [extract-refs]
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: "appbundle"
+            name: "AAB"
+            path: build/app/outputs/bundle/release/app-signed.aab
+          - target: "ipa"
+            name: "IPA"
+            path: build/ios/ipa/*.ipa
+    
+    steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
       

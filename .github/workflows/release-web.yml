@@ -7,16 +7,23 @@ on:
       - 'v*.*.*\+*'
 
 jobs:
-  build-and-deploy:
-    name: Release titan-${{ steps.extract_branch.outputs.branch }} Web
+  extract-refs:
+    name: Determine refs
     runs-on: ubuntu-latest
+    outputs:
+      branch: ${{ steps.get-ref.outputs.branch }}
     steps:
-      - name: Determine ref
+      - name: Determine refs
         id: get-ref
         run: |
           branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
           echo "branch=$branch" >> $GITHUB_OUTPUT
-      
+
+  build-and-deploy:
+    name: Release titan-${{ needs.extract-refs.outputs.branch }} Web
+    runs-on: ubuntu-latest
+    needs: [extract-refs]
+    steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
       
@@ -44,7 +51,7 @@ jobs:
           RELEASE_HOST: ${{ secrets.RELEASE_HOST }}
       
       - name: Set alpha properties
-        if: ${{ steps.extract_branch.outputs.branch }} == "alpha"
+        if: ${{ steps.get-ref.outputs.branch }} == "alpha"
         run: |
           rm assets/images/icon.png
           mv assets/images/icon_alpha.png assets/images/icon.png
