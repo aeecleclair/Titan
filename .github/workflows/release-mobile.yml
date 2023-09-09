@@ -8,17 +8,17 @@ on:
       - 'v*.*.*\+*-alpha'
 
 jobs:
-  extract-refs:
-    name: Determine refs
+  extract-version:
+    name: Determine version
     runs-on: ubuntu-latest
     outputs:
-      tag: ${{ steps.get-ref.outputs.tag }}
-      isAlpha: ${{ steps.get-ref.outputs.isAlpha }}
-      versionCode: ${{ steps.get-ref.outputs.versionCode }}
-      versionName: ${{ steps.get-ref.outputs.versionName }}
+      tag: ${{ steps.get-version.outputs.tag }}
+      isAlpha: ${{ steps.get-version.outputs.isAlpha }}
+      versionCode: ${{ steps.get-version.outputs.versionCode }}
+      versionName: ${{ steps.get-version.outputs.versionName }}
     steps:
-      - name: Determine ref
-        id: get-ref
+      - name: Determine version
+        id: get-version
         run: |
           tag=${GITHUB_REF#refs/*/}
           [[ $tag == *'-alpha' ]] && isAlpha=1 || isAlpha=0;
@@ -32,9 +32,9 @@ jobs:
           echo versionName=$versionName >> $GITHUB_OUTPUT
   
   build:
-    name: Release Titan ${{ needs.extract-refs.outputs.tag }} ${{ matrix.name }}
+    name: Release Titan ${{ needs.extract-version.outputs.tag }} ${{ matrix.name }}
     runs-on: macos-latest
-    needs: [extract-refs]
+    needs: [extract-version]
     strategy:
       fail-fast: false
       matrix:
@@ -82,7 +82,7 @@ jobs:
           RELEASE_HOST: ${{ secrets.RELEASE_HOST }}
       
       - name: Add Firebase configuration for production
-        if: ${{ !steps.extract_branch.outputs.isAlpha }}
+        if: ${{ !needs.extract-version.outputs.isAlpha }}
         run: |
           echo '$GOOGLE_SERVICES_JSON' > android/app/google-services.json
           echo '$GOOGLE_SERVICE_INFO_PLIST' > ios/Runner/GoogleService-Info.plist
@@ -91,7 +91,7 @@ jobs:
           GOOGLE_SERVICE_INFO_PLIST: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
       
       - name: Add Firebase configuration for Alpha
-        if: ${{ steps.extract_branch.outputs.isAlpha }}
+        if: ${{ needs.extract-version.outputs.isAlpha }}
         run: |
           echo '$GOOGLE_SERVICES_ALPHA_JSON' > android/app/google-services.json
           echo '$GOOGLE_SERVICE_INFO_ALPHA_PLIST' > ios/Runner/GoogleService-Info.plist
@@ -109,7 +109,7 @@ jobs:
           echo storeFile=$RUNNER_TEMP/myecl.keystore >> android/key.properties
       
       - name: Set alpha properties
-        if: ${{ steps.extract_branch.outputs.isAlpha }}
+        if: ${{ needs.extract-version.outputs.isAlpha }}
         run: |
           rm assets/images/icon.png
           mv assets/images/icon_alpha.png assets/images/icon.png
@@ -117,7 +117,7 @@ jobs:
           mv assets/images/logo_alpha.png assets/images/logo.png
       
       - name: Build 🔧
-        run: flutter build ${{ matrix.target }} --release --build-name ${{ steps.get-ref.outputs.versionName }} --build-number ${{ steps.get-ref.outputs.versionCode }}
+        run: flutter build ${{ matrix.target }} --release --build-name ${{ needs.extract-version.outputs.versionName }} --build-number ${{ needs.extract-version.outputs.versionCode }}
       
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3

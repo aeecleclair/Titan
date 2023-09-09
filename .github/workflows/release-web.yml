@@ -7,17 +7,17 @@ on:
       - 'v*.*.*\+*'
 
 jobs:
-  extract-refs:
-    name: Determine refs
+  extract-version:
+    name: Determine version
     runs-on: ubuntu-latest
     outputs:
-      tag: ${{ steps.get-ref.outputs.tag }}
-      isAlpha: ${{ steps.get-ref.outputs.isAlpha }}
-      versionCode: ${{ steps.get-ref.outputs.versionCode }}
-      versionName: ${{ steps.get-ref.outputs.versionName }}
+      tag: ${{ steps.extract-version.outputs.tag }}
+      isAlpha: ${{ steps.extract-version.outputs.isAlpha }}
+      versionCode: ${{ steps.extract-version.outputs.versionCode }}
+      versionName: ${{ steps.extract-version.outputs.versionName }}
     steps:
-      - name: Determine ref
-        id: get-ref
+      - name: Determine version
+        id: extract-version
         run: |
           tag=${GITHUB_REF#refs/*/}
           [[ $tag == *'-alpha' ]] && isAlpha=1 || isAlpha=0;
@@ -31,9 +31,9 @@ jobs:
           echo versionName=$versionName >> $GITHUB_OUTPUT
 
   build-and-deploy:
-    name: Release Titan ${{ needs.extract-refs.outputs.tag }} Web
+    name: Release Titan ${{ needs.extract-version.outputs.tag }} Web
     runs-on: ubuntu-latest
-    needs: [extract-refs]
+    needs: [extract-version]
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
@@ -62,7 +62,7 @@ jobs:
           RELEASE_HOST: ${{ secrets.RELEASE_HOST }}
       
       - name: Set alpha properties
-        if: ${{ steps.get-ref.outputs.isAlpha }}
+        if: ${{ needs.extract-version.outputs.isAlpha }}
         run: |
           rm assets/images/icon.png
           mv assets/images/icon_alpha.png assets/images/icon.png
@@ -89,4 +89,4 @@ jobs:
       #    platforms: linux/amd64
       #    push: true
       #    tags: |
-      #      ${{ secrets.DOCKER_REGISTRY_IDENTIFER }}/titan:${{ steps.extract_branch.outputs.tag }}
+      #      ${{ secrets.DOCKER_REGISTRY_IDENTIFER }}/titan:${{ needs.extract-version.outputs.tag }}
