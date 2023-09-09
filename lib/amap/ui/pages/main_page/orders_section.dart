@@ -69,7 +69,7 @@ class OrderSection extends HookConsumerWidget {
               value: orders,
               builder: (context, data) {
                 data.sort((a, b) => a.deliveryDate.compareTo(b.deliveryDate));
-                return Column(
+                return Row(
                     children: data.map((e) {
                   final canEdit = availableDeliveries
                       .any((element) => element.id == e.deliveryId);

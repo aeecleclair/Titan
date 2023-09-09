@@ -122,6 +122,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
               margin: const EdgeInsets.symmetric(horizontal: 10),
               child: AsyncChild(
                   value: deliveryOrders,
+                  loaderColor: AMAPColorConstants.greenGradient2,
                   builder: (context, data) {
                     final orders = data[delivery.id];
                     if (orders == null) {
@@ -130,6 +131,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
                     }
                     return AsyncChild(
                         value: orders,
+                        loaderColor: AMAPColorConstants.greenGradient2,
                         builder: (context, data) {
                           if (data.isEmpty) {
                             return Container(
@@ -139,8 +141,11 @@ class DetailDeliveryPage extends HookConsumerWidget {
                           }
                           return AsyncChild(
                               value: cash,
+                              loaderColor: AMAPColorConstants.greenGradient2,
                               builder: (context, cash) {
                                 return Wrap(
+                                  spacing: 20,
+                                  runSpacing: 20,
                                   children: data.map((e) {
                                     final userCash = cash.firstWhere(
                                         (element) =>
@@ -152,13 +157,11 @@ class DetailDeliveryPage extends HookConsumerWidget {
                                     );
                                   }).toList(),
                                 );
-                              },
-                              loaderColor: AMAPColorConstants.greenGradient2);
-                        },
-                        loaderColor: AMAPColorConstants.greenGradient2);
-                  },
-                  loaderColor: AMAPColorConstants.greenGradient2),
+                              });
+                        });
+                  }),
             ),
+            const SizedBox(height: 20)
           ],
         ),
       ),
