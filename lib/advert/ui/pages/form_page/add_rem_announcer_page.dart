@@ -10,7 +10,7 @@ import 'package:myecl/advert/ui/pages/advert.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/dialog.dart';
+import 'package:myecl/tools/ui/widgets/dialog.dart';
 
 class AddRemAnnouncerPage extends HookConsumerWidget {
   const AddRemAnnouncerPage({Key? key}) : super(key: key);

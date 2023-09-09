@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/advert/class/advert.dart';
 import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/advert/ui/tools/advert_card.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class AdminAdvertCard extends HookConsumerWidget {
   final VoidCallback onTap, onEdit;
@@ -60,59 +60,32 @@ class AdminAdvertCard extends HookConsumerWidget {
                 const SizedBox(
                   width: 20,
                 ),
-                ShrinkButton(
+                WaitingButton(
                   onTap: onDelete,
-                  waitChild: Container(
-                    width: 40,
-                    height: 40,
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          AdvertColorConstants.redGradient1,
-                          AdvertColorConstants.redGradient2,
+                  builder: (child) => Container(
+                      width: 40,
+                      height: 40,
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            AdvertColorConstants.redGradient1,
+                            AdvertColorConstants.redGradient2,
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                              color: AdvertColorConstants.redGradient2
+                                  .withOpacity(0.2),
+                              blurRadius: 10,
+                              offset: const Offset(2, 3))
                         ],
                       ),
-                      borderRadius: BorderRadius.circular(30),
-                      boxShadow: [
-                        BoxShadow(
-                            color: AdvertColorConstants.redGradient2
-                                .withOpacity(0.2),
-                            blurRadius: 10,
-                            offset: const Offset(2, 3))
-                      ],
-                    ),
-                    child: const Center(
-                        child: CircularProgressIndicator(
-                      color: Colors.white,
-                    )),
-                  ),
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          AdvertColorConstants.redGradient1,
-                          AdvertColorConstants.redGradient2,
-                        ],
-                      ),
-                      borderRadius: BorderRadius.circular(30),
-                      boxShadow: [
-                        BoxShadow(
-                            color: AdvertColorConstants.redGradient2
-                                .withOpacity(0.2),
-                            blurRadius: 10,
-                            offset: const Offset(2, 3))
-                      ],
-                    ),
-                    child: const HeroIcon(HeroIcons.trash, color: Colors.white),
-                  ),
+                      child: child),
+                  child: const HeroIcon(HeroIcons.trash, color: Colors.white),
                 ),
               ],
             ),

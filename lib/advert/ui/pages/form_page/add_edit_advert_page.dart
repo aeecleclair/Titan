@@ -19,7 +19,7 @@ import 'package:myecl/advert/ui/tools/announcer_bar.dart';
 import 'package:myecl/advert/ui/pages/form_page/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdvertAddEditAdvertPage extends HookConsumerWidget {
@@ -240,33 +240,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                       const SizedBox(
                         height: 50,
                       ),
-                      ShrinkButton(
-                        waitChild: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.only(top: 8, bottom: 12),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 5,
-                                blurRadius: 10,
-                                offset: const Offset(3, 3),
-                              ),
-                            ],
-                          ),
-                          child: const Center(
-                            child: SizedBox(
-                              height: 30,
-                              width: 30,
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
+                      WaitingButton(
                         onTap: () async {
                           if (key.currentState == null) {
                             return;
@@ -339,7 +313,15 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                 AdvertTextConstants.incorrectOrMissingFields);
                           }
                         },
-                        child: Container(
+                        child: Text(
+                            isEdit
+                                ? AdvertTextConstants.edit
+                                : AdvertTextConstants.add,
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold)),
+                        builder: (child) => Container(
                             width: double.infinity,
                             padding: const EdgeInsets.only(top: 8, bottom: 12),
                             alignment: Alignment.center,
@@ -355,14 +337,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                 ),
                               ],
                             ),
-                            child: Text(
-                                isEdit
-                                    ? AdvertTextConstants.edit
-                                    : AdvertTextConstants.add,
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold))),
+                            child: child),
                       ),
                     ],
                   )),
