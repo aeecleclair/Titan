@@ -8,7 +8,7 @@ import 'package:myecl/login/router.dart';
 import 'package:myecl/login/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/providers/path_forwarding_provider.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class LeftPanel extends HookConsumerWidget {
@@ -20,7 +20,7 @@ class LeftPanel extends HookConsumerWidget {
     final pathForwarding = ref.read(pathForwardingProvider);
     final controller = ref.watch(backgroundAnimationProvider);
     final isLoading = ref
-        .watch(loadingrovider)
+        .watch(loadingProvider)
         .maybeWhen(data: (data) => data, orElse: () => false);
 
     return Column(
@@ -68,7 +68,7 @@ class LeftPanel extends HookConsumerWidget {
                   child: SvgPicture.asset('assets/images/login.svg',
                       width: 350, height: double.infinity)),
               const SizedBox(height: 70),
-              ShrinkButton(
+              WaitingButton(
                 onTap: () async {
                   await authNotifier.getTokenFromRequest();
                   ref.watch(authTokenProvider).when(
@@ -81,54 +81,54 @@ class LeftPanel extends HookConsumerWidget {
                       },
                       loading: () {});
                 },
-                child: Container(
-                  width: 400,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [
-                        Color(0xFFFF8A14),
-                        Color.fromARGB(255, 255, 114, 0)
+                builder: (child) => Container(
+                    width: 400,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [
+                          Color(0xFFFF8A14),
+                          Color.fromARGB(255, 255, 114, 0)
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color.fromARGB(255, 255, 114, 0)
+                              .withOpacity(0.2),
+                          spreadRadius: 3,
+                          blurRadius: 7,
+                          offset: const Offset(0, 3),
+                        ),
                       ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
                     ),
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color.fromARGB(255, 255, 114, 0)
-                            .withOpacity(0.2),
-                        spreadRadius: 3,
-                        blurRadius: 7,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(LoginTextConstants.signIn,
-                          style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white)),
-                      Container(
-                        margin: const EdgeInsets.only(left: 20),
-                        child: isLoading
-                            ? const Padding(
-                                padding: EdgeInsets.all(12.0),
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                ),
-                              )
-                            : const HeroIcon(
-                                HeroIcons.arrowRight,
+                    child: child),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(LoginTextConstants.signIn,
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white)),
+                    Container(
+                      margin: const EdgeInsets.only(left: 20),
+                      child: isLoading
+                          ? const Padding(
+                              padding: EdgeInsets.all(12.0),
+                              child: CircularProgressIndicator(
                                 color: Colors.white,
-                                size: 35.0,
                               ),
-                      ),
-                    ],
-                  ),
+                            )
+                          : const HeroIcon(
+                              HeroIcons.arrowRight,
+                              color: Colors.white,
+                              size: 35.0,
+                            ),
+                    ),
+                  ],
                 ),
               ),
               const Spacer(flex: 3),
