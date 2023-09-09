@@ -16,21 +16,21 @@ jobs:
     strategy:
       matrix:
         include:
-          - target: "apk --debug"
-            name: "APK"
+          - target: 'apk --debug'
+            name: 'APK'
             path: build/app/outputs/flutter-apk/app-debug.apk
-          - target: "web"
-            name: "Web"
+          - target: 'web'
+            name: 'Web'
             path: build/web/
     
     steps:
       - name: Determine ref
         id: get-ref
         run: |
-          input_ref="${{ inputs.ref }}"
-          github_ref="${{ github.sha }}"
-          ref="${input_ref:-$github_ref}"
-          echo "ref=$ref" >> $GITHUB_OUTPUT
+          input_ref='${{ inputs.ref }}'
+          github_ref='${{ github.sha }}'
+          ref='${input_ref:-$github_ref}'
+          echo 'ref=$ref' >> $GITHUB_OUTPUT
       
       - name: Checkout 🛎️
         uses: actions/checkout@v3
@@ -38,18 +38,18 @@ jobs:
           ref: ${{ steps.get-ref.outputs.ref }}
       
       - name: Setup Java
-        if: ${{ matrix.name }} == "APK"
+        if: matrix.name == 'APK'
         uses: actions/setup-java@v3
         with:
-          distribution: "zulu"
-          java-version: "17.x"
-          cache: "gradle"
+          distribution: 'zulu'
+          java-version: '17.x'
+          cache: 'gradle'
       
       - name: Setup Flutter SDK
         uses: subosito/flutter-action@v2
         with:
-          channel: "stable"
-          flutter-version: "3.13"
+          channel: 'stable'
+          flutter-version: '3.13'
           cache: true
       
       - name: Get Packages
@@ -60,9 +60,9 @@ jobs:
       
       - name: Configure env
         run: |
-          echo "THE_MOVIE_DB_API=$THE_MOVIE_DB_API" >> .env
-          echo "DEBUG_HOST=$DEBUG_HOST" >> .env
-          echo "RELEASE_HOST=$RELEASE_HOST" >> .env
+          echo 'THE_MOVIE_DB_API=$THE_MOVIE_DB_API' >> .env
+          echo 'DEBUG_HOST=$DEBUG_HOST' >> .env
+          echo 'RELEASE_HOST=$RELEASE_HOST' >> .env
         env:
           THE_MOVIE_DB_API: ${{ secrets.THE_MOVIE_DB_API }}
           DEBUG_HOST: ${{ secrets.DEBUG_HOST }}
@@ -70,8 +70,8 @@ jobs:
       
       - name: Add Firebase configuration for Alpha
         run: |
-          echo "$GOOGLE_SERVICES_ALPHA_JSON" > android/app/google-services.json
-          echo "$GOOGLE_SERVICE_INFO_ALPHA_PLIST" > ios/Runner/GoogleService-Info.plist
+          echo '$GOOGLE_SERVICES_ALPHA_JSON' > android/app/google-services.json
+          echo '$GOOGLE_SERVICE_INFO_ALPHA_PLIST' > ios/Runner/GoogleService-Info.plist
         env:
           GOOGLE_SERVICES_ALPHA_JSON: ${{ secrets.GOOGLE_SERVICES_ALPHA_JSON }}
           GOOGLE_SERVICE_INFO_ALPHA_PLIST: ${{ secrets.GOOGLE_SERVICE_INFO_ALPHA_PLIST }}

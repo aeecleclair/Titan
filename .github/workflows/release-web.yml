@@ -17,7 +17,7 @@ jobs:
         id: get-ref
         run: |
           branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
-          echo "branch=$branch" >> $GITHUB_OUTPUT
+          echo 'branch=$branch' >> $GITHUB_OUTPUT
 
   build-and-deploy:
     name: Release titan-${{ needs.extract-refs.outputs.branch }} Web
@@ -30,8 +30,8 @@ jobs:
       - name: Setup Flutter SDK
         uses: subosito/flutter-action@v2
         with:
-          channel: "stable"
-          flutter-version: "3.13"
+          channel: 'stable'
+          flutter-version: '3.13'
           cache: true
       
       - name: Get Packages
@@ -42,16 +42,16 @@ jobs:
       
       - name: Configure env
         run: |
-          echo "THE_MOVIE_DB_API=$THE_MOVIE_DB_API" >> .env
-          echo "DEBUG_HOST=$DEBUG_HOST" >> .env
-          echo "RELEASE_HOST=$RELEASE_HOST" >> .env
+          echo 'THE_MOVIE_DB_API=$THE_MOVIE_DB_API' >> .env
+          echo 'DEBUG_HOST=$DEBUG_HOST' >> .env
+          echo 'RELEASE_HOST=$RELEASE_HOST' >> .env
         env:
           THE_MOVIE_DB_API: ${{ secrets.THE_MOVIE_DB_API }}
           DEBUG_HOST: ${{ secrets.DEBUG_HOST }}
           RELEASE_HOST: ${{ secrets.RELEASE_HOST }}
       
       - name: Set alpha properties
-        if: ${{ steps.get-ref.outputs.branch }} == "alpha"
+        if: steps.get-ref.outputs.branch == 'alpha'
         run: |
           rm assets/images/icon.png
           mv assets/images/icon_alpha.png assets/images/icon.png

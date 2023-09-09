@@ -23,9 +23,9 @@ jobs:
           versionCode=${tag##*+}
           versionName=${tag%+*}
           versionName=${versionName#v}
-          echo "branch=$branch" >> $GITHUB_OUTPUT
-          echo "versionCode=$versionCode" >> $GITHUB_OUTPUT
-          echo "versionName=$versionName" >> $GITHUB_OUTPUT
+          echo 'branch=$branch' >> $GITHUB_OUTPUT
+          echo 'versionCode=$versionCode' >> $GITHUB_OUTPUT
+          echo 'versionName=$versionName' >> $GITHUB_OUTPUT
   
   build:
     name: Release titan-${{ needs.extract-refs.outputs.branch }} ${{ matrix.name }}
@@ -35,11 +35,11 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - target: "appbundle"
-            name: "AAB"
+          - target: 'appbundle'
+            name: 'AAB'
             path: build/app/outputs/bundle/release/app-signed.aab
-          - target: "ipa"
-            name: "IPA"
+          - target: 'ipa'
+            name: 'IPA'
             path: build/ios/ipa/*.ipa
     
     steps:
@@ -47,18 +47,18 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Setup Java
-        if: ${{ matrix.name }} == "AAB"
+        if: matrix.name == 'AAB'
         uses: actions/setup-java@v3
         with:
-          distribution: "zulu"
-          java-version: "17.x"
-          cache: "gradle"
+          distribution: 'zulu'
+          java-version: '17.x'
+          cache: 'gradle'
       
       - name: Setup Flutter SDK
         uses: subosito/flutter-action@v2
         with:
-          channel: "stable"
-          flutter-version: "3.13"
+          channel: 'stable'
+          flutter-version: '3.13'
           cache: true
       
       - name: Get Packages
@@ -69,34 +69,34 @@ jobs:
       
       - name: Configure env
         run: |
-          echo "THE_MOVIE_DB_API=$THE_MOVIE_DB_API" >> .env
-          echo "DEBUG_HOST=$DEBUG_HOST" >> .env
-          echo "RELEASE_HOST=$RELEASE_HOST" >> .env
+          echo 'THE_MOVIE_DB_API=$THE_MOVIE_DB_API' >> .env
+          echo 'DEBUG_HOST=$DEBUG_HOST' >> .env
+          echo 'RELEASE_HOST=$RELEASE_HOST' >> .env
         env:
           THE_MOVIE_DB_API: ${{ secrets.THE_MOVIE_DB_API }}
           DEBUG_HOST: ${{ secrets.DEBUG_HOST }}
           RELEASE_HOST: ${{ secrets.RELEASE_HOST }}
       
       - name: Add Firebase configuration for production
-        if: ${{ steps.extract_branch.outputs.branch }} == "main"
+        if: steps.extract_branch.outputs.branch == 'main'
         run: |
-          echo "$GOOGLE_SERVICES_JSON" > android/app/google-services.json
-          echo "$GOOGLE_SERVICE_INFO_PLIST" > ios/Runner/GoogleService-Info.plist
+          echo '$GOOGLE_SERVICES_JSON' > android/app/google-services.json
+          echo '$GOOGLE_SERVICE_INFO_PLIST' > ios/Runner/GoogleService-Info.plist
         env:
           GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
           GOOGLE_SERVICE_INFO_PLIST: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
       
       - name: Add Firebase configuration for Alpha
-        if: ${{ steps.extract_branch.outputs.branch }} == "alpha"
+        if: steps.extract_branch.outputs.branch == 'alpha'
         run: |
-          echo "$GOOGLE_SERVICES_ALPHA_JSON" > android/app/google-services.json
-          echo "$GOOGLE_SERVICE_INFO_ALPHA_PLIST" > ios/Runner/GoogleService-Info.plist
+          echo '$GOOGLE_SERVICES_ALPHA_JSON' > android/app/google-services.json
+          echo '$GOOGLE_SERVICE_INFO_ALPHA_PLIST' > ios/Runner/GoogleService-Info.plist
         env:
           GOOGLE_SERVICES_ALPHA_JSON: ${{ secrets.GOOGLE_SERVICES_ALPHA_JSON }}
           GOOGLE_SERVICE_INFO_ALPHA_PLIST: ${{ secrets.GOOGLE_SERVICE_INFO_ALPHA_PLIST }}
       
       - name: Create the Keystore
-        if: ${{ matrix.name }} == "AAB"
+        if: matrix.name == 'AAB'
         run: |
           echo ${{ secrets.KEYSTORE_BASE64 }} | base64 -d > $RUNNER_TEMP/myecl.keystore
           echo storePassword=${{ secrets.STORE_PASSWORD }} >> android/key.properties
@@ -105,7 +105,7 @@ jobs:
           echo storeFile=$RUNNER_TEMP/myecl.keystore >> android/key.properties
       
       - name: Set alpha properties
-        if: ${{ steps.extract_branch.outputs.branch }} == "alpha"
+        if: steps.extract_branch.outputs.branch == 'alpha'
         run: |
           rm assets/images/icon.png
           mv assets/images/icon_alpha.png assets/images/icon.png
