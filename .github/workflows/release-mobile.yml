@@ -72,8 +72,8 @@ jobs:
       - name: Add Firebase configuration for production
         if: ${{ steps.extract_branch.outputs.branch }} == "main"
         run: |
-          echo "$GOOGLE_SERVICES_JSON" | base64 -d > android/app/google-services.json
-          echo "$GOOGLE_SERVICE_INFO_PLIST" | base64 -d > ios/Runner/GoogleService-Info.plist
+          echo "$GOOGLE_SERVICES_JSON" > android/app/google-services.json
+          echo "$GOOGLE_SERVICE_INFO_PLIST" > ios/Runner/GoogleService-Info.plist
         env:
           GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
           GOOGLE_SERVICE_INFO_PLIST: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
@@ -81,8 +81,8 @@ jobs:
       - name: Add Firebase configuration for Alpha
         if: ${{ steps.extract_branch.outputs.branch }} == "alpha"
         run: |
-          echo "$GOOGLE_SERVICES_ALPHA_JSON" | base64 -d > android/app/google-services.json
-          echo "$GOOGLE_SERVICE_INFO_ALPHA_PLIST" | base64 -d > ios/Runner/GoogleService-Info.plist
+          echo "$GOOGLE_SERVICES_ALPHA_JSON" > android/app/google-services.json
+          echo "$GOOGLE_SERVICE_INFO_ALPHA_PLIST" > ios/Runner/GoogleService-Info.plist
         env:
           GOOGLE_SERVICES_ALPHA_JSON: ${{ secrets.GOOGLE_SERVICES_ALPHA_JSON }}
           GOOGLE_SERVICE_INFO_ALPHA_PLIST: ${{ secrets.GOOGLE_SERVICE_INFO_ALPHA_PLIST }}
