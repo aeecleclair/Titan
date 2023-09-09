@@ -20,15 +20,15 @@ jobs:
         id: get-ref
         run: |
           tag=${GITHUB_REF#refs/*/}
-          [[ $tag == *"-alpha" ]] && isAlpha=1 || isAlpha=0;
+          [[ $tag == *'-alpha' ]] && isAlpha=1 || isAlpha=0;
           versionCode=${tag##*+}
           versionCode=${versionCode%-*}
           versionName=${tag%+*}
           versionName=${versionName#v}
-          echo 'tag=$tag' >> $GITHUB_OUTPUT
-          echo 'isAlpha=$isAlpha' >> $GITHUB_OUTPUT
-          echo 'versionCode=$versionCode' >> $GITHUB_OUTPUT
-          echo 'versionName=$versionName' >> $GITHUB_OUTPUT
+          echo tag=$tag >> $GITHUB_OUTPUT
+          echo isAlpha=$isAlpha >> $GITHUB_OUTPUT
+          echo versionCode=$versionCode >> $GITHUB_OUTPUT
+          echo versionName=$versionName >> $GITHUB_OUTPUT
 
   build-and-deploy:
     name: Release Titan ${{ needs.extract-refs.outputs.tag }} Web

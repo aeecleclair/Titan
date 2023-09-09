@@ -27,10 +27,10 @@ jobs:
       - name: Determine ref
         id: get-ref
         run: |
-          input_ref='${{ inputs.ref }}'
-          github_ref='${{ github.sha }}'
-          ref='${input_ref:-$github_ref}'
-          echo 'ref=$ref' >> $GITHUB_OUTPUT
+          input_ref=${{ inputs.ref }}
+          github_ref=${{ github.sha }}
+          ref=${input_ref:-$github_ref}
+          echo ref=$ref >> $GITHUB_OUTPUT
       
       - name: Checkout 🛎️
         uses: actions/checkout@v3
