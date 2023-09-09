@@ -126,6 +126,7 @@ class SettingsMainPage extends HookConsumerWidget {
                     const HeroIcon(HeroIcons.userCircle, size: 140)),
             const SizedBox(height: 100),
             HorizontalListView.builder(
+                height: 40,
                 items: me.groups,
                 itemBuilder: (context, item, i) => ItemChip(
                       selected: true,

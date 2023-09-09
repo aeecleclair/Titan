@@ -84,7 +84,9 @@ class PrizeHandler extends HookConsumerWidget {
             padding: EdgeInsets.symmetric(horizontal: 30),
             color: RaffleColorConstants.textDark),
         const SizedBox(height: 10),
-        HorizontalListView(children: [
+        HorizontalListView(
+          height: 135,
+          children: [
           const SizedBox(width: 10),
           if (raffle.raffleStatusType == RaffleStatusType.creation)
             GestureDetector(

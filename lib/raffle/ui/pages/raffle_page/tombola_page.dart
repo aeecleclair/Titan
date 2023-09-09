@@ -78,6 +78,7 @@ class RaffleInfoPage extends HookConsumerWidget {
                       child: const Text(RaffleTextConstants.noTicketBuyable),
                     )
                   : HorizontalListView.builder(
+                      height: 160,
                       items: typeTickets,
                       itemBuilder: (context, typeTicket, index) => Container(
                           margin: const EdgeInsets.all(10),

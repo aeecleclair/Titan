@@ -5,12 +5,12 @@ class HorizontalListView<T> extends StatelessWidget {
   final Widget Function(BuildContext context, T item, int i)? itemBuilder;
   final List<Widget>? children;
   final double? horizontalSpace;
-  final double? height;
+  final double height;
   final int? length;
   final Widget childDelegate;
   final Widget? firstChild;
 
-  HorizontalListView({super.key, this.height, this.children})
+  HorizontalListView({super.key, required this.height, this.children})
       : assert(children != null),
         items = null,
         itemBuilder = null,
@@ -29,7 +29,7 @@ class HorizontalListView<T> extends StatelessWidget {
       {super.key,
       required this.items,
       required this.itemBuilder,
-      this.height,
+      required this.height,
       this.length,
       this.firstChild,
       this.horizontalSpace = 15})

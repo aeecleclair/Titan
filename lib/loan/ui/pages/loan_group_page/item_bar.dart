@@ -85,6 +85,7 @@ class ItemBar extends HookConsumerWidget {
                             ..sort((a, b) => a.name.compareTo(b.name));
                           itemList = sortedAvailable + sortedUnavailable;
                           return HorizontalListView.builder(
+                              height: 280,
                               items: itemList,
                               itemBuilder: (context, e, i) {
                                 var currentValue =

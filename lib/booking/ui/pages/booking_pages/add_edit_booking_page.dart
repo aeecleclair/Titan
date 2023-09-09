@@ -102,6 +102,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                 AsyncChild(
                     value: rooms,
                     builder: (context, data) => HorizontalListView.builder(
+                          height: 40,
                           items: data,
                           itemBuilder: (context, e, i) {
                             final selected = room.value.id == e.id;

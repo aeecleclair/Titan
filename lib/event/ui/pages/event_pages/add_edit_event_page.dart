@@ -309,6 +309,7 @@ class AddEditEventPage extends HookConsumerWidget {
                             value: rooms,
                             builder: (context, rooms) =>
                                 HorizontalListView.builder(
+                                    height: 40,
                                     items: rooms,
                                     itemBuilder: (context, room, index) {
                                       final selected = room.id == roomId;

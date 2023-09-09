@@ -101,6 +101,7 @@ class RaffleMainPage extends HookConsumerWidget {
                   return ticketSum.isEmpty
                       ? const Center(child: Text(RaffleTextConstants.noTicket))
                       : HorizontalListView.builder(
+                          height: 135,
                           items: ticketSum.keys.toList(),
                           itemBuilder: (context, key, index) => Container(
                               margin: const EdgeInsets.symmetric(

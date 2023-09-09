@@ -38,6 +38,7 @@ class SectionBar extends HookConsumerWidget {
     return AsyncChild(
         value: sectionContender,
         builder: (context, sections) => HorizontalListView.builder(
+              height: 40,
               items: sections.keys.toList(),
               firstChild: (status == Status.waiting)
                   ? ItemChip(
