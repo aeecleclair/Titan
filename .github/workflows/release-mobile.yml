@@ -41,7 +41,7 @@ jobs:
           - target: 'appbundle'
             name: 'AAB'
             path: build/app/outputs/bundle/release/app-release.aab
-          - target: 'ipa'
+          - target: 'ipa --no-codesign'
             name: 'IPA'
             path: build/ios/ipa/*.ipa
     
