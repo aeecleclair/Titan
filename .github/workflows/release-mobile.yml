@@ -40,7 +40,7 @@ jobs:
         include:
           - target: 'appbundle'
             name: 'AAB'
-            path: build/app/outputs/bundle/release/app-*-release.aab
+            path: build/app/outputs/bundle/*Release/app-*-release.aab
           - target: 'ipa --no-codesign'
             name: 'IPA'
             path: build/ios/ipa/*.ipa
