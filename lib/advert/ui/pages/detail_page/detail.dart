@@ -9,7 +9,7 @@ import 'package:myecl/advert/providers/advert_provider.dart';
 import 'package:myecl/advert/ui/components/tag_chip.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/text_with_hyper_link.dart';
+import 'package:myecl/tools/ui/widgets/text_with_hyper_link.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdvertDetailPage extends HookConsumerWidget {
