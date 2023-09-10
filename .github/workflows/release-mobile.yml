@@ -83,7 +83,7 @@ jobs:
       - name: Add Firebase configuration for production
         if: ${{ !needs.extract-version.outputs.isAlpha }}
         run: |
-          echo $GOOGLE_SERVICES_JSON_BASE64 | base64 -D -o android/app/prod/google-services.json
+          echo $GOOGLE_SERVICES_JSON_BASE64 | base64 -D -o android/app/src/prod/google-services.json
           echo $GOOGLE_SERVICE_INFO_PLIST_BASE64 | base64 -D -o ios/config/Prod/GoogleService-Info.plist
         env:
           GOOGLE_SERVICES_JSON_BASE64: ${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}
@@ -92,7 +92,7 @@ jobs:
       - name: Add Firebase configuration for Alpha
         if: ${{ needs.extract-version.outputs.isAlpha }}
         run: |
-          echo $GOOGLE_SERVICES_ALPHA_JSON_BASE64 | base64 -D -o android/app/alpha/google-services.json
+          echo $GOOGLE_SERVICES_ALPHA_JSON_BASE64 | base64 -D -o android/app/src/alpha/google-services.json
           echo $GOOGLE_SERVICE_INFO_ALPHA_PLIST_BASE64 | base64 -D -o ios/config/Alpha/GoogleService-Info.plist
         env:
           GOOGLE_SERVICES_ALPHA_JSON_BASE64: ${{ secrets.GOOGLE_SERVICES_ALPHA_JSON_BASE64 }}
