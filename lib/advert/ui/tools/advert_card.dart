@@ -24,7 +24,7 @@ class AdvertCard extends HookConsumerWidget {
     double width = 300;
     double height = 300;
     double imageHeight = 175;
-    double maxHeigth = MediaQuery.of(context).size.height - 344;
+    double maxHeight = MediaQuery.of(context).size.height - 344;
     final advertPosters = ref.watch(advertPostersProvider);
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final logoNotifier = ref.watch(advertPosterProvider.notifier);
@@ -49,7 +49,7 @@ class AdvertCard extends HookConsumerWidget {
           ),
           dataBuilder: (context, value) => isWebFormat
               ? Container(
-                  height: maxHeigth,
+                  height: maxHeight,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),

@@ -147,10 +147,10 @@ class LocalNotificationService {
         groupKey: channelGroup.id,
         // onlyAlertOnce: true,
       );
-      NotificationDetails groupNotificationDetailsPlatformSpefics =
+      NotificationDetails groupNotificationDetailsPlatformSpecifics =
           NotificationDetails(android: groupNotificationDetails);
       await _localNotificationService.show(
-          0, '', '', groupNotificationDetailsPlatformSpefics);
+          0, '', '', groupNotificationDetailsPlatformSpecifics);
     }
   }
 
