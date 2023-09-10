@@ -53,8 +53,10 @@ pubspec.lock
 
 # Firebase
 android/app/src/alpha/google-services.json
+android/app/src/dev/google-services.json
 android/app/src/prod/google-services.json
 ios/config/Alpha/GoogleService-Info.plist
+ios/config/Dev/GoogleService-Info.plist
 ios/config/Prod/GoogleService-Info.plist
 
 # Todo
