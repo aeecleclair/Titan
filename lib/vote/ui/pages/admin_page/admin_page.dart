@@ -57,11 +57,9 @@ class AdminPage extends HookConsumerWidget {
           final sections = await sectionsNotifier.loadSectionList();
           sections.whenData((value) async {
             List<Contender> list = [];
-            contenderList.when(data: (contenders) {
+            contenderList.maybeWhen(data: (contenders) {
               list = contenders;
-            }, error: (error, stackTrace) {
-              list = [];
-            }, loading: () {
+            }, orElse: () {
               list = [];
             });
             sectionContenderListNotifier.loadTList(value);

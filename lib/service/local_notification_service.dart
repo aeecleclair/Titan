@@ -86,7 +86,7 @@ class LocalNotificationService {
   Future<void> showPeriodicNotification(String id, String? title, String? body,
       String? payload, RepeatInterval repeatInterval) async {
     await _localNotificationService.periodicallyShow(generateIntFromString(id),
-        title, body, repeatInterval, await getNotificationDetails(),
+        title, body, repeatInterval, getNotificationDetails(),
         payload: payload,
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle);
   }

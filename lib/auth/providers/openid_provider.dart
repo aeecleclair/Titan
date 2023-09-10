@@ -139,7 +139,7 @@ class OpenIdTokenProvider
     html.WindowBase? popupWin;
 
     final redirectUri = Uri(
-      host: redirectUrlHost,  
+      host: redirectUrlHost,
       scheme: "https",
       path: '/static.html',
     );

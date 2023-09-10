@@ -8,10 +8,9 @@ final selectedListProvider =
     StateNotifierProvider<SelectedListProvider, List<int>>((ref) {
   final itemsList = ref.watch(itemListProvider);
   final items = [];
-  itemsList.when(
+  itemsList.maybeWhen(
     data: (list) => items.addAll(list),
-    error: (e, s) {},
-    loading: () {},
+    orElse: () {},
   );
   return SelectedListProvider(items);
 });
@@ -21,10 +20,9 @@ final editSelectedListProvider =
   final loan = ref.watch(loanProvider);
   final itemsList = ref.watch(itemListProvider);
   final List<Item> items = [];
-  itemsList.when(
+  itemsList.maybeWhen(
     data: (list) => items.addAll(list),
-    error: (e, s) {},
-    loading: () {},
+    orElse: () {},
   );
   SelectedListProvider selectedListProvider = SelectedListProvider(items);
   selectedListProvider.initWithLoan(items, loan);

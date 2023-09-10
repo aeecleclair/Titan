@@ -58,7 +58,7 @@ class ContenderListNotifier extends ListNotifier<Contender> {
   }
 
   void shuffle() {
-    state.when(
+    state.maybeWhen(
       data: (contenders) {
         final serious = [];
         final fakes = [];
@@ -77,8 +77,7 @@ class ContenderListNotifier extends ListNotifier<Contender> {
         blank.shuffle();
         state = AsyncValue.data([...fakes, ...serious, ...blank]);
       },
-      loading: () {},
-      error: (error, stackTrace) {},
+      orElse: () {},
     );
   }
 }

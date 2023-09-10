@@ -1,9 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/drawer/providers/is_web_format_provider.dart';
+import 'package:myecl/login/ui/app_sign_in.dart';
 import 'package:myecl/login/ui/pages/create_account_page/create_account_page.dart';
 import 'package:myecl/login/ui/pages/forget_page/forget_page.dart';
 import 'package:myecl/login/ui/pages/recover_password/recover_password_page.dart';
 import 'package:myecl/login/ui/pages/register_page/register_page.dart';
-import 'package:myecl/login/ui/pages/sign_in_page/sign_in_page.dart';
+import 'package:myecl/login/ui/web/web_sign_in.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -41,7 +44,9 @@ class LoginRouter {
 
   QRoute route() => QRoute(
         path: LoginRouter.root,
-        builder: () => const SignIn(),
+        builder: () => (kIsWeb && ref.watch(isWebFormatProvider))
+            ? const WebSignIn()
+            : const AppSignIn(),
         pageType: const QMaterialPage(),
         middleware: [AuthenticatedMiddleware(ref)],
       );

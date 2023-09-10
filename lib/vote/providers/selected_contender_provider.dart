@@ -6,10 +6,9 @@ final selectedContenderProvider =
     StateNotifierProvider<SelectedContenderProvider, Contender>((ref) {
   final contenderList = ref.watch(sectionsProvider);
   final contenders = [];
-  contenderList.when(
+  contenderList.maybeWhen(
     data: (list) => contenders.addAll(list),
-    error: (e, s) {},
-    loading: () {},
+    orElse: () {},
   );
   return SelectedContenderProvider(contenders);
 });

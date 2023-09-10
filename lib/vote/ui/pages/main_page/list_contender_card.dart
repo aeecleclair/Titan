@@ -64,12 +64,11 @@ class ListContenderCard extends HookConsumerWidget {
     final scrollController = ref.watch(scrollControllerProvider(hideAnimation));
     final votedSection = ref.watch(votedSectionProvider);
     List<String> alreadyVotedSection = [];
-    votedSection.when(
+    votedSection.maybeWhen(
         data: (voted) {
           alreadyVotedSection = voted;
         },
-        error: (error, stackTrace) {},
-        loading: () {});
+        orElse: () {});
 
     final pageOpened = useState(false);
 

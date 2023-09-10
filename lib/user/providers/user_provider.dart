@@ -64,14 +64,11 @@ final asyncUserProvider =
 });
 
 final userProvider = Provider((ref) {
-  return ref.watch(asyncUserProvider).when(
+  return ref.watch(asyncUserProvider).maybeWhen(
     data: (user) {
       return user;
     },
-    error: (e, s) {
-      return User.empty();
-    },
-    loading: () {
+    orElse: () {
       return User.empty();
     },
   );
