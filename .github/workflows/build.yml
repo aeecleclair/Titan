@@ -52,6 +52,9 @@ jobs:
           flutter-version: '3.13'
           cache: true
       
+      - name: Cleanup 🧹
+        run: flutter clean
+      
       - name: Get Packages
         run: flutter pub get
       
@@ -70,9 +73,6 @@ jobs:
           echo $GOOGLE_SERVICES_ALPHA_JSON_BASE64 | base64 -D -o android/app/google-services.json
         env:
           GOOGLE_SERVICES_ALPHA_JSON_BASE64: ${{ secrets.GOOGLE_SERVICES_ALPHA_JSON_BASE64 }}
-      
-      - name: Cleanup 🧹
-        run: flutter clean
       
       - name: Build 🔧
         run: flutter build ${{ matrix.target }}
