@@ -106,6 +106,7 @@ jobs:
           echo keyPassword=${{ secrets.KEY_PASSWORD }} >> android/key.properties
           echo keyAlias=${{ secrets.KEY_ALIAS }} >> android/key.properties
           echo storeFile=$RUNNER_TEMP/myecl.keystore >> android/key.properties
+          shasum $RUNNER_TEMP/myecl.keystore
       
       - name: Set alpha properties
         if: ${{ needs.extract-version.outputs.isAlpha }}
