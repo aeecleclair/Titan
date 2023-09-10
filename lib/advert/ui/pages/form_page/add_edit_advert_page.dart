@@ -16,10 +16,10 @@ import 'package:myecl/advert/providers/announcer_provider.dart';
 import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/advert/ui/pages/advert.dart';
 import 'package:myecl/advert/ui/components/announcer_bar.dart';
-import 'package:myecl/advert/ui/pages/form_page/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdvertAddEditAdvertPage extends HookConsumerWidget {
@@ -71,14 +71,9 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                 child: Column(
                   children: [
                     TextEntry(
-                      minLines: 1,
                       maxLines: 1,
-                      keyboardType: TextInputType.text,
                       label: AdvertTextConstants.title,
-                      suffix: '',
-                      isInt: false,
                       controller: title,
-                      onChanged: (value) {},
                     ),
                     const SizedBox(
                       height: 20,
@@ -182,17 +177,12 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                       maxLines: 50,
                       keyboardType: TextInputType.multiline,
                       label: AdvertTextConstants.content,
-                      suffix: '',
-                      isInt: false,
                       controller: content,
-                      onChanged: (value) {},
                     ),
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 50,
-              ),
+              const SizedBox(height: 50),
               FormField<List<Announcer>>(
                 validator: (e) {
                   if (selectedAnnouncers.isEmpty) {
@@ -227,15 +217,10 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                   child: Column(
                     children: [
                       TextEntry(
-                        minLines: 1,
                         maxLines: 1,
-                        keyboardType: TextInputType.text,
                         label: AdvertTextConstants.tags,
-                        suffix: '',
-                        isInt: false,
                         canBeEmpty: true,
                         controller: textTagsController,
-                        onChanged: (value) {},
                       ),
                       const SizedBox(
                         height: 50,
@@ -341,9 +326,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                       ),
                     ],
                   )),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
             ],
           ),
         ),

@@ -116,9 +116,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                       },
                     ),
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  const SizedBox(height: 15),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 30.0),
                     child: TextWithHyperLink(
@@ -129,9 +127,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 140,
-                  ),
+                  const SizedBox(height: 140),
                 ],
               ),
             ),
@@ -139,13 +135,9 @@ class AdvertDetailPage extends HookConsumerWidget {
         ),
       ),
       Column(children: [
-        const SizedBox(
-          height: 45,
-        ),
+        const SizedBox(height: 45),
         Row(children: [
-          const SizedBox(
-            width: 20,
-          ),
+          const SizedBox(width: 20),
           GestureDetector(
             onTap: QR.back,
             child: Container(
@@ -184,13 +176,8 @@ class AdvertDetailPage extends HookConsumerWidget {
               ),
               child: Row(
                 children: [
-                  const HeroIcon(
-                    HeroIcons.calendar,
-                    size: 20,
-                  ),
-                  const SizedBox(
-                    width: 7,
-                  ),
+                  const HeroIcon(HeroIcons.calendar, size: 20),
+                  const SizedBox(width: 7),
                   Text(
                     DateFormat('dd/MM/yyyy - HH:mm').format(advert.date),
                     style: const TextStyle(fontSize: 16),
@@ -198,9 +185,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                   ),
                 ],
               )),
-          const SizedBox(
-            width: 20,
-          ),
+          const SizedBox(width: 20),
         ])
       ]),
     ]);

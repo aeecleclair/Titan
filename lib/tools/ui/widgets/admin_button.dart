@@ -7,11 +7,13 @@ class AdminButton extends StatelessWidget {
   final Color textColor;
   final Color? color;
   final List<Color>? colors;
+  final String text;
   const AdminButton(
       {super.key,
       required this.onTap,
       this.textColor = Colors.white,
       this.color = Colors.black,
+      this.text = TextConstants.admin,
       this.colors});
 
   @override
@@ -41,7 +43,7 @@ class AdminButton extends StatelessWidget {
           children: [
             HeroIcon(HeroIcons.userGroup, color: textColor),
             const SizedBox(width: 10),
-            Text(TextConstants.admin,
+            Text(text,
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

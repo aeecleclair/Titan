@@ -12,6 +12,7 @@ class TextEntry extends StatelessWidget {
   final Widget? suffixIcon;
   final Function(String)? onChanged;
   final String? Function(String)? validator;
+  final int? minLines, maxLines;
 
   const TextEntry(
       {super.key,
@@ -19,6 +20,8 @@ class TextEntry extends StatelessWidget {
       required this.controller,
       this.onChanged,
       this.validator,
+      this.minLines,
+      this.maxLines,
       this.prefix = '',
       this.suffix = '',
       this.enabled = true,
@@ -35,6 +38,8 @@ class TextEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      minLines: minLines,
+      maxLines: maxLines,
       controller: controller,
       keyboardType: keyboardType,
       cursorColor: color,

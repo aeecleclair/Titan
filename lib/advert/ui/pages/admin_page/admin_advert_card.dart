@@ -5,6 +5,7 @@ import 'package:myecl/advert/class/advert.dart';
 import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/advert/ui/components/advert_card.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myecl/tools/ui/layouts/card_button.dart';
 
 class AdminAdvertCard extends HookConsumerWidget {
   final VoidCallback onTap, onEdit;
@@ -32,58 +33,26 @@ class AdminAdvertCard extends HookConsumerWidget {
               children: [
                 GestureDetector(
                   onTap: onEdit,
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Colors.grey.shade100,
-                          Colors.grey.shade400,
-                        ],
-                      ),
-                      borderRadius: BorderRadius.circular(30),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.grey.shade300.withOpacity(0.2),
-                            blurRadius: 10,
-                            offset: const Offset(2, 3))
-                      ],
-                    ),
+                  child: CardButton(
+                    colors: [
+                      Colors.grey.shade100,
+                      Colors.grey.shade400,
+                    ],
+                    shadowColor: Colors.grey.shade300.withOpacity(0.2),
                     child:
                         const HeroIcon(HeroIcons.pencil, color: Colors.black),
                   ),
                 ),
-                const SizedBox(
-                  width: 20,
-                ),
+                const SizedBox(width: 20),
                 WaitingButton(
                   onTap: onDelete,
-                  builder: (child) => Container(
-                      width: 40,
-                      height: 40,
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            AdvertColorConstants.redGradient1,
-                            AdvertColorConstants.redGradient2,
-                          ],
-                        ),
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                              color: AdvertColorConstants.redGradient2
-                                  .withOpacity(0.2),
-                              blurRadius: 10,
-                              offset: const Offset(2, 3))
-                        ],
-                      ),
+                  builder: (child) => CardButton(
+                      colors: const [
+                        AdvertColorConstants.redGradient1,
+                        AdvertColorConstants.redGradient2,
+                      ],
+                      shadowColor:
+                          AdvertColorConstants.redGradient2.withOpacity(0.2),
                       child: child),
                   child: const HeroIcon(HeroIcons.trash, color: Colors.white),
                 ),
