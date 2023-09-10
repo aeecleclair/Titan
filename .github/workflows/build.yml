@@ -81,7 +81,7 @@ jobs:
           rm assets/images/logo.png
           mv assets/images/logo_dev.png assets/images/logo.png
       
-      - name: Build dev 🔧
+      - name: Build Dev 🔧
         run: flutter build ${{ matrix.target }} --flavor=dev
       
       - name: Upload Artifacts
