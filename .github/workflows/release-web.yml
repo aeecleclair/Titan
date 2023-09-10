@@ -79,6 +79,8 @@ jobs:
           mv assets/images/icon_alpha.png assets/images/icon.png
           rm assets/images/logo.png
           mv assets/images/logo_alpha.png assets/images/logo.png
+          cp web/Alpha/favicon.ico web/favicon.ico
+          cp web/Alpha/icons/* web/icons/
       
       - name: Set production icons
         if: (!needs.extract-version.outputs.isAlpha)
