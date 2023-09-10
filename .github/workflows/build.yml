@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - target: 'apk --debug'
+          - target: 'apk --debug --flavor=dev'
             name: 'APK'
             path: build/app/outputs/flutter-apk/app-debug.apk
           - target: 'web'
@@ -82,7 +82,7 @@ jobs:
           mv assets/images/logo_dev.png assets/images/logo.png
       
       - name: Build Dev 🔧
-        run: flutter build ${{ matrix.target }} --flavor=dev
+        run: flutter build ${{ matrix.target }}
       
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
