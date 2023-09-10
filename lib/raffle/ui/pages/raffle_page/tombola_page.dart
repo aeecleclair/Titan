@@ -120,24 +120,13 @@ class RaffleInfoPage extends HookConsumerWidget {
                           fontSize: 25,
                           color: RaffleColorConstants.gradient2,
                         ),
-                        SizedBox(
+                        HorizontalListView.builder(
                             height: 120,
-                            child: ListView.builder(
-                                physics: const BouncingScrollPhysics(),
-                                scrollDirection: Axis.horizontal,
-                                itemCount: prizes.length + 2,
-                                itemBuilder: (context, index) {
-                                  if (index == 0 ||
-                                      index == prizes.length + 1) {
-                                    return const SizedBox(width: 20);
-                                  }
-                                  return Container(
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 5, vertical: 10),
-                                      child: PrizeCard(
-                                        prize: prizes[index - 1],
-                                      ));
-                                }))
+                            items: prizes,
+                            itemBuilder: (context, item, index) => Container(
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 5, vertical: 10),
+                                child: PrizeCard(prize: item)))
                       ]);
               },
               orElseBuilder: (context, child) => Container(

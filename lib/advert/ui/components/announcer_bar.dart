@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/advert/providers/announcer_provider.dart';
 import 'package:myecl/advert/providers/announcer_list_provider.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 
 class AnnouncerBar extends HookConsumerWidget {
   final bool useUserAnnouncers;
@@ -26,52 +27,47 @@ class AnnouncerBar extends HookConsumerWidget {
     final darkerColor = (isNotClickable) ? Colors.grey[800] : Colors.black;
 
     return AsyncChild(
-        value: announcerList,
-        builder: (context, userAnnouncers) => SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              physics: const BouncingScrollPhysics(),
-              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                const SizedBox(width: 15),
-                ...userAnnouncers.map(
-                  (e) => GestureDetector(
-                    onTap: () {
-                      if (isNotClickable) {
-                        return;
-                      }
-                      if (multipleSelect) {
-                        selectedId.contains(e.id)
-                            ? selectedNotifier.removeAnnouncer(e)
-                            : selectedNotifier.addAnnouncer(e);
-                      } else {
-                        bool contain = selectedId.contains(e.id);
-                        selectedNotifier.clearAnnouncer();
-                        if (!contain) {
-                          selectedNotifier.addAnnouncer(e);
-                        }
-                      }
-                    },
-                    child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Chip(
-                          label: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              e.name,
-                              style: TextStyle(
-                                  color: selectedId.contains(e.id)
-                                      ? Colors.white
-                                      : darkerColor,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          backgroundColor: selectedId.contains(e.id)
-                              ? darkerColor
-                              : Colors.grey.shade200,
-                        )),
+      value: announcerList,
+      builder: (context, userAnnouncers) => HorizontalListView.builder(
+        height: 40,
+        items: userAnnouncers,
+        itemBuilder: (context, e, i) => GestureDetector(
+          onTap: () {
+            if (isNotClickable) {
+              return;
+            }
+            if (multipleSelect) {
+              selectedId.contains(e.id)
+                  ? selectedNotifier.removeAnnouncer(e)
+                  : selectedNotifier.addAnnouncer(e);
+            } else {
+              bool contain = selectedId.contains(e.id);
+              selectedNotifier.clearAnnouncer();
+              if (!contain) {
+                selectedNotifier.addAnnouncer(e);
+              }
+            }
+          },
+          child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Chip(
+                label: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    e.name,
+                    style: TextStyle(
+                        color: selectedId.contains(e.id)
+                            ? Colors.white
+                            : darkerColor,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
-                const SizedBox(width: 15),
-              ]),
-            ));
+                backgroundColor: selectedId.contains(e.id)
+                    ? darkerColor
+                    : Colors.grey.shade200,
+              )),
+        ),
+      ),
+    );
   }
 }

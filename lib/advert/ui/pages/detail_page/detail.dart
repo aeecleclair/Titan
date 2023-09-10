@@ -9,6 +9,7 @@ import 'package:myecl/advert/providers/advert_provider.dart';
 import 'package:myecl/advert/ui/pages/detail_page/tag_chip.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/widgets/text_with_hyper_link.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -105,17 +106,13 @@ class AdvertDetailPage extends HookConsumerWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    height: 35,
-                    margin: const EdgeInsets.symmetric(horizontal: 30),
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: inTagChipsList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return TagChip(tagname: inTagChipsList[index]);
-                      },
-                    ),
-                  ),
+                  HorizontalListView.builder(
+                      height: 35,
+                      horizontalSpace: 30,
+                      items: inTagChipsList,
+                      itemBuilder:
+                          (BuildContext context, String item, int index) =>
+                              TagChip(tagname: item)),
                   const SizedBox(height: 15),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 30.0),
