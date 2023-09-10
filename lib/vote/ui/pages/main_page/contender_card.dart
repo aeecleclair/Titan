@@ -209,13 +209,12 @@ class ContenderCard extends HookConsumerWidget {
                           selectedContender.id != contender.id
                               ? GestureDetector(
                                   onTap: () {
-                                    sections.when(
+                                    sections.maybeWhen(
                                         data: (data) {
                                           selectedContenderNotifier
                                               .changeSelection(contender);
                                         },
-                                        error: (e, s) {},
-                                        loading: () {});
+                                        orElse: () {});
                                   },
                                   child: const CardButton(
                                     color: Colors.black,

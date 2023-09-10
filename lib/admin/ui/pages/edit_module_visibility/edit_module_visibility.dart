@@ -6,6 +6,8 @@ import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/ui/admin.dart';
 import 'package:myecl/admin/ui/pages/edit_module_visibility/modules_expansion_panel.dart';
 import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/widgets/loader.dart';
 
 class EditModulesVisibilityPage extends HookConsumerWidget {
   const EditModulesVisibilityPage({super.key});
@@ -35,14 +37,12 @@ class EditModulesVisibilityPage extends HookConsumerWidget {
                     const SizedBox(
                       height: 30,
                     ),
-                    modulesProvider.when(
-                      data: (modules) => modules.isEmpty || groups.isEmpty
-                          ? const Center(
-                              child: CircularProgressIndicator(),
-                            )
+                    AsyncChild(
+                      value: modulesProvider,
+                      builder: (context, modules) =>
+                          modules.isEmpty || groups.isEmpty
+                          ? const Loader()
                           : ModulesExpansionPanel(modules: modules),
-                      loading: () => const CircularProgressIndicator(),
-                      error: (error, stackTrace) => Text(error.toString()),
                     ),
                   ],
                 ),

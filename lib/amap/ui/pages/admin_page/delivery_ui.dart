@@ -132,7 +132,7 @@ class DeliveryUi extends HookConsumerWidget {
                       final products = ref.watch(productListProvider);
                       final selectedNotifier =
                           ref.watch(selectedListProvider.notifier);
-                      products.when(
+                      products.maybeWhen(
                         data: (data) {
                           for (int i = 0; i < data.length; i++) {
                             if (!deliveryProductsIds.contains(data[i].id)) {
@@ -140,8 +140,7 @@ class DeliveryUi extends HookConsumerWidget {
                             }
                           }
                         },
-                        loading: () {},
-                        error: (error, stack) {},
+                        orElse: () {}
                       );
                     },
                     child: const CardButton(

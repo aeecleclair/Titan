@@ -99,9 +99,7 @@ class ItemBar extends HookConsumerWidget {
                                       item: e,
                                       isSelected: currentValue != 0,
                                     ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
+                                    const SizedBox(height: 10),
                                     SizedBox(
                                       width: 120,
                                       child: Row(

@@ -8,7 +8,7 @@ import 'package:myecl/advert/providers/advert_posters_provider.dart';
 import 'package:myecl/advert/providers/advert_provider.dart';
 import 'package:myecl/advert/ui/components/tag_chip.dart';
 import 'package:myecl/cinema/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:myecl/tools/ui/widgets/text_with_hyper_link.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -26,74 +26,26 @@ class AdvertDetailPage extends HookConsumerWidget {
     final inTagChipsList = [advert.announcer.name] + filteredTagList;
 
     return Stack(children: [
-      Stack(
-        children: [
-          advertPosters.when(
-              data: (data) {
-                if (data[advert] != null) {
-                  return data[advert]!.when(data: (data) {
-                    if (data.isNotEmpty) {
-                      return Container(
-                        width: double.infinity,
-                        decoration: const BoxDecoration(boxShadow: [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 10,
-                            spreadRadius: 7,
-                            offset: Offset(0, 5),
-                          ),
-                        ]),
-                        child: Image(
-                          image: data.first.image,
-                          fit: BoxFit.fill,
-                        ),
-                      );
-                    } else {
-                      Future.delayed(const Duration(milliseconds: 1), () {
-                        advertPostersNotifier.setTData(
-                            advert, const AsyncLoading());
-                      });
-                      tokenExpireWrapper(ref, () async {
-                        logoNotifier.getAdvertPoster(advert.id).then((value) {
-                          advertPostersNotifier.setTData(
-                              advert, AsyncData([value]));
-                        });
-                      });
-                      return Container(
-                        width: double.infinity,
-                        decoration: const BoxDecoration(boxShadow: [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 10,
-                            spreadRadius: 7,
-                            offset: Offset(0, 5),
-                          ),
-                        ]),
-                      );
-                    }
-                  }, loading: () {
-                    return const SizedBox(
-                      width: double.infinity,
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  }, error: (error, stack) {
-                    return const SizedBox(
-                      width: double.infinity,
-                      child: Center(
-                        child: HeroIcon(HeroIcons.exclamationCircle),
-                      ),
-                    );
-                  });
-                } else {
-                  return const SizedBox.shrink();
-                }
-              },
-              loading: () => const CircularProgressIndicator(),
-              error: (error, stack) => Text('Error $error')),
-        ],
-      ),
+      Container(
+          width: double.infinity,
+          decoration: const BoxDecoration(boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 10,
+              spreadRadius: 7,
+              offset: Offset(0, 5),
+            ),
+          ]),
+          child: AutoLoaderChild(
+            value: advertPosters,
+            notifier: advertPostersNotifier,
+            mapKey: advert,
+            loader: (ref) => logoNotifier.getAdvertPoster(advert.id),
+            dataBuilder: (context, value) => Image(
+              image: value.first.image,
+              fit: BoxFit.fill,
+            ),
+          )),
       SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(

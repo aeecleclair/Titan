@@ -24,12 +24,11 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
     final userTicketListNotifier = ref.watch(userTicketListProvider.notifier);
 
     double b = 0;
-    userAmount.when(
+    userAmount.maybeWhen(
         data: (u) {
           b = u.balance;
         },
-        error: (e, s) {},
-        loading: () {});
+        orElse: () {});
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);

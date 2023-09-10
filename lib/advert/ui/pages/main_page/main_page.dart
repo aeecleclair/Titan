@@ -11,6 +11,7 @@ import 'package:myecl/advert/ui/pages/advert.dart';
 import 'package:myecl/advert/router.dart';
 import 'package:myecl/advert/ui/components/announcer_bar.dart';
 import 'package:myecl/advert/ui/components/advert_card.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:myecl/advert/tools/constants.dart';
@@ -121,8 +122,9 @@ class AdvertMainPage extends HookConsumerWidget {
             ),
             Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: advertList.when(
-                  data: (advertData) {
+                child: AsyncChild(
+                  value: advertList,
+                  builder: (context, advertData) {
                     final sortedAdvertData =
                         advertData.sortedBy((element) => element.date).reversed;
                     final filteredSortedAdvertData = sortedAdvertData.where(
@@ -141,16 +143,6 @@ class AdvertMainPage extends HookConsumerWidget {
                             advert: advert),
                       ),
                     ]);
-                  },
-                  loading: () {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  },
-                  error: (error, stackTrace) {
-                    return Center(
-                      child: Text(error.toString()),
-                    );
                   },
                 )),
             const SizedBox(

@@ -4,6 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
@@ -262,8 +263,9 @@ class EmailChangeDialog extends HookConsumerWidget {
           Positioned(
               left: Consts.padding,
               right: Consts.padding,
-              child: currentState.value.when(
-                data: (data) => AnimatedBuilder(
+              child: AsyncChild(
+                value: currentState.value,
+                builder: (context, data) => AnimatedBuilder(
                     animation: checkAnimationController,
                     builder: (context, child) {
                       return Container(
@@ -295,7 +297,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                             ),
                           ));
                     }),
-                loading: () => Container(
+                orElseBuilder: (context, child) => Container(
                     width: Consts.avatarRadius * 2,
                     height: Consts.avatarRadius * 2,
                     decoration: BoxDecoration(
@@ -316,40 +318,14 @@ class EmailChangeDialog extends HookConsumerWidget {
                         ),
                       ],
                     ),
-                    child: const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
-                      ),
+                    child: Center(
+                      child: child
                     )),
-                error: (error, stack) => Container(
-                    width: Consts.avatarRadius * 2,
-                    height: Consts.avatarRadius * 2,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: const LinearGradient(
-                        colors: [
-                          Consts.redGradient1,
-                          Consts.redGradient2,
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Consts.redGradient2.withOpacity(0.3),
-                          blurRadius: 10.0,
-                          offset: const Offset(0.0, 10.0),
-                        ),
-                      ],
-                    ),
-                    child: const Center(
-                      child: HeroIcon(
+                errorBuilder: (error, stack) => const HeroIcon(
                         HeroIcons.exclamationCircle,
                         size: 60,
                         color: Colors.white,
-                      ),
-                    )),
-              )),
+              ))),
         ]));
   }
 }
