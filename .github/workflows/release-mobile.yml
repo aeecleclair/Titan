@@ -83,8 +83,8 @@ jobs:
       - name: Add Firebase configuration for production
         if: ${{ !needs.extract-version.outputs.isAlpha }}
         run: |
-          echo $GOOGLE_SERVICES_JSON_BASE64 | base64 -D > android/app/google-services.json
-          echo $GOOGLE_SERVICE_INFO_PLIST_BASE64 | base64 -D > ios/Runner/GoogleService-Info.plist
+          echo $GOOGLE_SERVICES_JSON_BASE64 | base64 -D -o android/app/google-services.json
+          echo $GOOGLE_SERVICE_INFO_PLIST_BASE64 | base64 -D -o ios/Runner/GoogleService-Info.plist
         env:
           GOOGLE_SERVICES_JSON_BASE64: ${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}
           GOOGLE_SERVICE_INFO_PLIST_BASE64: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_BASE64 }}
@@ -92,8 +92,8 @@ jobs:
       - name: Add Firebase configuration for Alpha
         if: ${{ needs.extract-version.outputs.isAlpha }}
         run: |
-          echo $GOOGLE_SERVICES_ALPHA_JSON_BASE64 | base64 -D > android/app/google-services.json
-          echo $GOOGLE_SERVICE_INFO_ALPHA_PLIST_BASE64 | base64 -D > ios/Runner/GoogleService-Info.plist
+          echo $GOOGLE_SERVICES_ALPHA_JSON_BASE64 | base64 -D -o android/app/google-services.json
+          echo $GOOGLE_SERVICE_INFO_ALPHA_PLIST_BASE64 | base64 -D -o ios/Runner/GoogleService-Info.plist
         env:
           GOOGLE_SERVICES_ALPHA_JSON_BASE64: ${{ secrets.GOOGLE_SERVICES_ALPHA_JSON_BASE64 }}
           GOOGLE_SERVICE_INFO_ALPHA_PLIST_BASE64: ${{ secrets.GOOGLE_SERVICE_INFO_ALPHA_PLIST_BASE64 }}
@@ -101,7 +101,7 @@ jobs:
       - name: Create the Keystore
         if: matrix.name == 'AAB'
         run: |
-          echo ${{ secrets.KEYSTORE_BASE64 }} | base64 -D > $RUNNER_TEMP/myecl.keystore
+          echo ${{ secrets.KEYSTORE_BASE64 }} | base64 -D -o $RUNNER_TEMP/myecl.keystore
           echo storePassword=${{ secrets.STORE_PASSWORD }} >> android/key.properties
           echo keyPassword=${{ secrets.KEY_PASSWORD }} >> android/key.properties
           echo keyAlias=${{ secrets.KEY_ALIAS }} >> android/key.properties
