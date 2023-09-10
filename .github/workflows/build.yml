@@ -55,9 +55,6 @@ jobs:
       - name: Get Packages
         run: flutter pub get
       
-      - name: Cleanup 🧹
-        run: flutter clean
-      
       - name: Configure env
         run: |
           echo THE_MOVIE_DB_API=$THE_MOVIE_DB_API >> .env
@@ -76,7 +73,7 @@ jobs:
           GOOGLE_SERVICES_ALPHA_JSON: ${{ secrets.GOOGLE_SERVICES_ALPHA_JSON }}
           GOOGLE_SERVICE_INFO_ALPHA_PLIST: ${{ secrets.GOOGLE_SERVICE_INFO_ALPHA_PLIST }}
       
-      - name: Flutter clean
+      - name: Cleanup 🧹
         run: flutter clean
       
       - name: Build 🔧

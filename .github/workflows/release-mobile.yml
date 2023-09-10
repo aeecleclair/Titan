@@ -67,9 +67,6 @@ jobs:
       - name: Get Packages
         run: flutter pub get
       
-      - name: Cleanup 🧹
-        run: flutter clean
-      
       - name: Configure env
         run: |
           echo THE_MOVIE_DB_API=$THE_MOVIE_DB_API >> .env
@@ -116,7 +113,7 @@ jobs:
           rm assets/images/logo.png
           mv assets/images/logo_alpha.png assets/images/logo.png
       
-      - name: Flutter clean
+      - name: Cleanup 🧹
         run: flutter clean
       
       - name: Build 🔧
