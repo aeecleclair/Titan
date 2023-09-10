@@ -10,7 +10,7 @@ import 'package:myecl/home/ui/days_event.dart';
 import 'package:myecl/home/ui/month_bar.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/ui/top_bar.dart';
+import 'package:myecl/tools/ui/widgets/top_bar.dart';
 
 class HomePage extends HookConsumerWidget {
   const HomePage({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/tools/ui/top_bar.dart';
+import 'package:myecl/tools/ui/widgets/top_bar.dart';
 
 class BookingTemplate extends StatelessWidget {
   final Widget child;

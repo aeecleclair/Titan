@@ -10,7 +10,7 @@ import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/text_with_hyper_link.dart';
+import 'package:myecl/tools/ui/widgets/text_with_hyper_link.dart';
 
 class AdvertCard extends HookConsumerWidget {
   final VoidCallback onTap;
