@@ -58,7 +58,7 @@ jobs:
       - name: Get Packages
         run: flutter pub get
       
-      - name: Configure env
+      - name: Configure Dev env
         run: |
           echo THE_MOVIE_DB_API=$THE_MOVIE_DB_API >> .env
           echo DEBUG_HOST=$DEBUG_HOST >> .env
@@ -66,16 +66,23 @@ jobs:
         env:
           THE_MOVIE_DB_API: ${{ secrets.THE_MOVIE_DB_API }}
           DEBUG_HOST: ${{ secrets.DEBUG_HOST }}
-          RELEASE_HOST: ${{ secrets.RELEASE_HOST }}
+          RELEASE_HOST: ${{ secrets.DEBUG_HOST }}
       
-      - name: Add Firebase configuration for Alpha
+      - name: Add Firebase configuration for Dev
         run: |
-          echo $GOOGLE_SERVICES_ALPHA_JSON_BASE64 | base64 -D -o android/app/google-services.json
+          echo $GOOGLE_SERVICES_DEV_JSON_BASE64 | base64 -D -o android/app/dev/google-services.json
         env:
-          GOOGLE_SERVICES_ALPHA_JSON_BASE64: ${{ secrets.GOOGLE_SERVICES_ALPHA_JSON_BASE64 }}
+          GOOGLE_SERVICES_DEV_JSON_BASE64: ${{ secrets.GOOGLE_SERVICES_DEV_JSON_BASE64 }}
       
-      - name: Build 🔧
-        run: flutter build ${{ matrix.target }}
+      - name: Set Dev icons
+        run: |
+          rm assets/images/icon.png
+          mv assets/images/icon_dev.png assets/images/icon.png
+          rm assets/images/logo.png
+          mv assets/images/logo_dev.png assets/images/logo.png
+      
+      - name: Build dev 🔧
+        run: flutter build ${{ matrix.target }} --favor=dev
       
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
