@@ -76,23 +76,23 @@ class SessionCard extends HookConsumerWidget {
     /* Setting the notification if the session is selected but no notification is pending,
      * this situation exists when the enable the notification from another device
      * */
-    if (selected) {
-      localNotificationService
-          .getNotificationDetail(session.id)
-          .then((scheduledNotification) {
-        if (scheduledNotification == null) {
-          createSessionNotification(session);
-        } else {
-          final message =
-              Message.fromJson(jsonDecode(scheduledNotification.payload!));
-          if (!message.deliveryDateTime!
-              .isAtSameMomentAs(sessionNotificationStartTime)) {
-            localNotificationService.cancelNotificationById(session.id);
-            createSessionNotification(session);
-          }
-        }
-      });
-    }
+    // if (selected) {
+    //   localNotificationService
+    //       .getNotificationDetail(session.id)
+    //       .then((scheduledNotification) {
+    //     if (scheduledNotification == null) {
+    //       createSessionNotification(session);
+    //     } else {
+    //       final message =
+    //           Message.fromJson(jsonDecode(scheduledNotification.payload!));
+    //       if (!message.deliveryDateTime!
+    //           .isAtSameMomentAs(sessionNotificationStartTime)) {
+    //         localNotificationService.cancelNotificationById(session.id);
+    //         createSessionNotification(session);
+    //       }
+    //     }
+    //   });
+    // }
 
     return GestureDetector(
       onTap: onTap,

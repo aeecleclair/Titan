@@ -21,6 +21,7 @@ class LocalNotificationService {
 
   Future<void> init() async {
     tz.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation("Europe/Paris"));
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/launcher_icon');
     final DarwinInitializationSettings initializationSettingsDarwin =
@@ -39,7 +40,7 @@ class LocalNotificationService {
             onDidReceiveBackgroundNotificationResponse);
   }
 
-  Future<NotificationDetails> getNotificationDetails() async {
+  NotificationDetails getNotificationDetails() {
     AndroidNotificationDetails androidNotificationDetails =
         const AndroidNotificationDetails("fr.myecl.titan", "TitanNotification",
             channelDescription: "Notifications channel for Titan",
@@ -54,22 +55,23 @@ class LocalNotificationService {
   }
 
   Future showNotification(message_class.Message message) async {
-    final notificationDetails = await getNotificationDetails();
+    final notificationDetails = getNotificationDetails();
     if (message.deliveryDateTime == null) {
       _localNotificationService.show(generateIntFromString(message.context),
           message.title, message.content, notificationDetails,
           payload: json.encode(message.toJson()));
     }
-    tz.TZDateTime dateToDisplay =
-        tz.TZDateTime.from(message.deliveryDateTime!, tz.local);
-    final now = tz.TZDateTime.from(DateTime.now(), tz.local);
+    tz.TZDateTime dateToDisplay = tz.TZDateTime.from(message.deliveryDateTime!,
+        tz.local); // TODO: The -2h is a fix that need to be deleted once UTC dates will be used
+    final now = tz.TZDateTime.now(tz.local);
     if (dateToDisplay.isAfter(now)) {
       _localNotificationService.zonedSchedule(
           generateIntFromString(message.context),
           message.title,
           message.content,
-          dateToDisplay,
+          dateToDisplay.subtract(const Duration(hours: 2)),
           notificationDetails,
+          androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
           uiLocalNotificationDateInterpretation:
               UILocalNotificationDateInterpretation.absoluteTime,
           payload: json.encode(message.toJson()));
