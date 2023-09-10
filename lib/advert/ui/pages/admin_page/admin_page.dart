@@ -10,9 +10,10 @@ import 'package:myecl/advert/providers/announcer_provider.dart';
 import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/advert/ui/pages/admin_page/admin_advert_card.dart';
 import 'package:myecl/advert/ui/pages/advert.dart';
-import 'package:myecl/advert/ui/router.dart';
-import 'package:myecl/advert/ui/tools/announcer_bar.dart';
+import 'package:myecl/advert/router.dart';
+import 'package:myecl/advert/ui/components/announcer_bar.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -71,29 +72,16 @@ class AdvertAdminPage extends HookConsumerWidget {
                                   AdvertRouter.admin +
                                   AdvertRouter.addEditAdvert);
                             },
-                            child: Container(
+                            child: CardLayout(
                                 margin: const EdgeInsets.only(
                                     bottom: 10, top: 20, left: 30, right: 30),
                                 width: 300,
                                 height: 100,
-                                decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        Colors.white,
-                                        Colors.grey.shade100,
-                                      ],
-                                    ),
-                                    borderRadius: BorderRadius.circular(20),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.2),
-                                        spreadRadius: 5,
-                                        blurRadius: 10,
-                                        offset: const Offset(3, 3),
-                                      )
-                                    ]),
+                                colors: [
+                                  Colors.white,
+                                  Colors.grey.shade100,
+                                ],
+                                shadowColor: Colors.grey.withOpacity(0.2),
                                 child: Center(
                                     child: HeroIcon(
                                   HeroIcons.plus,

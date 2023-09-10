@@ -7,6 +7,7 @@ import 'package:myecl/advert/providers/all_announcer_list_provider.dart';
 import 'package:myecl/advert/providers/announcer_list_provider.dart';
 import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/advert/ui/pages/advert.dart';
+import 'package:myecl/advert/ui/pages/form_page/announcer_card.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -89,28 +90,9 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                                       .loadAllAnnouncerList();
                                                 });
                                               },
-                                              child: Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 20),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      e.name,
-                                                      style: const TextStyle(
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w500),
-                                                    ),
-                                                    const HeroIcon(
-                                                        HeroIcons.plus,
-                                                        size: 25,
-                                                        color: Colors.black)
-                                                  ],
-                                                ),
+                                              child: AnnouncerCard(
+                                                e: e,
+                                                icon: HeroIcons.plus,
                                               ),
                                             ))
                                         .toList() +
@@ -157,28 +139,9 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                                       );
                                                     });
                                               },
-                                              child: Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 20),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      e.name,
-                                                      style: const TextStyle(
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w500),
-                                                    ),
-                                                    const HeroIcon(
-                                                        HeroIcons.minus,
-                                                        size: 25,
-                                                        color: Colors.black)
-                                                  ],
-                                                ),
+                                              child: AnnouncerCard(
+                                                e: e,
+                                                icon: HeroIcons.minus,
                                               ),
                                             ))
                                         .toList())
