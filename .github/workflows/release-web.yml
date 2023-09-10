@@ -79,14 +79,14 @@ jobs:
           mv assets/images/icon_alpha.png assets/images/icon.png
           rm assets/images/logo.png
           mv assets/images/logo_alpha.png assets/images/logo.png
-          cp web/Alpha/favicon.ico web/favicon.ico
-          cp web/Alpha/icons/* web/icons/
+          cp -f web/Alpha/favicon.ico web/favicon.ico
+          cp -f web/Alpha/icons/* web/icons/
       
       - name: Set production icons
         if: needs.extract-version.outputs.isAlpha == 'false'
         run: |
-          cp web/Prod/favicon.ico web/favicon.ico
-          cp web/Prod/icons/* web/icons/
+          cp -f web/Prod/favicon.ico web/favicon.ico
+          cp -f web/Prod/icons/* web/icons/
       
       - name: Build 🔧
         run: flutter build web --release
