@@ -20,7 +20,7 @@ jobs:
         id: extract-version
         run: |
           tag=${GITHUB_REF#refs/*/}
-          [[ $tag == *'-alpha' ]] && isAlpha=1 || isAlpha=0;
+          [[ $tag == *'-alpha' ]] && isAlpha=true || isAlpha=false;
           versionCode=${tag##*+}
           versionCode=${versionCode%-*}
           versionName=${tag%+*}
