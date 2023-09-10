@@ -121,10 +121,10 @@ jobs:
           mv assets/images/logo_alpha.png assets/images/logo.png
       
       - name: Build Alpha 🔧
-        run: flutter build ${{ matrix.target }} --favor=alpha --release --build-name ${{ needs.extract-version.outputs.versionName }} --build-number ${{ needs.extract-version.outputs.versionCode }}
+        run: flutter build ${{ matrix.target }} --flavor=alpha --release --build-name ${{ needs.extract-version.outputs.versionName }} --build-number ${{ needs.extract-version.outputs.versionCode }}
       
       - name: Build production 🔧
-        run: flutter build ${{ matrix.target }} --favor=prod --release --build-name ${{ needs.extract-version.outputs.versionName }} --build-number ${{ needs.extract-version.outputs.versionCode }}
+        run: flutter build ${{ matrix.target }} --flavor=prod --release --build-name ${{ needs.extract-version.outputs.versionName }} --build-number ${{ needs.extract-version.outputs.versionCode }}
       
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3

@@ -82,7 +82,7 @@ jobs:
           mv assets/images/logo_dev.png assets/images/logo.png
       
       - name: Build dev 🔧
-        run: flutter build ${{ matrix.target }} --favor=dev
+        run: flutter build ${{ matrix.target }} --flavor=dev
       
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
