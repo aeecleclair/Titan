@@ -361,7 +361,7 @@ class DetailPage extends HookConsumerWidget {
                                             ' commence dans 10 minutes',
                                         context: session.id,
                                         isVisible: true,
-                                        title: '🎬 Cinéma - ',
+                                        title: '🎬 Cinéma',
                                         deliveryDateTime: session.start
                                             .subtract(
                                                 const Duration(minutes: 10))));
