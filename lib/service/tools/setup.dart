@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/drawer/providers/should_setup_provider.dart';
 import 'package:myecl/service/local_notification_service.dart';
 import 'package:myecl/service/providers/firebase_token_expiration_provider.dart';
 import 'package:myecl/service/providers/firebase_token_provider.dart';
@@ -31,11 +32,12 @@ void setUpNotification(WidgetRef ref) {
       final firebaseTokenExpirationNotifier =
           ref.read(firebaseTokenExpirationProvider.notifier);
       final now = DateTime.now();
-      if (firebaseTokenExpiration.expiration != null &&
-          firebaseTokenExpiration.expiration!.isBefore(now) &&
-          user.id != "" &&
-          (firebaseTokenExpiration.userId == user.id ||
-              firebaseTokenExpiration.userId == "")) {
+      if (firebaseTokenExpiration.userId != user.id ||
+              firebaseTokenExpiration.expiration != null ||
+              firebaseTokenExpiration.expiration!.isBefore(now) ||
+              firebaseTokenExpiration.expiration!.isBefore(DateTime(
+                  2023, 10, 13)) // TODO: remove it after the october update
+          ) {
         firebaseToken.then((value) {
           messageNotifier.setFirebaseToken(value);
           messageNotifier.registerDevice();
