@@ -60,6 +60,7 @@ class LocalNotificationService {
       _localNotificationService.show(generateIntFromString(message.context),
           message.title, message.content, notificationDetails,
           payload: json.encode(message.toJson()));
+      return;
     }
     tz.TZDateTime dateToDisplay = tz.TZDateTime.from(message.deliveryDateTime!,
         tz.local); // TODO: The -2h is a fix that need to be deleted once UTC dates will be used
