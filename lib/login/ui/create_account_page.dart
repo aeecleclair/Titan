@@ -295,7 +295,7 @@ class CreateAccountPage extends HookConsumerWidget {
               phone: phone.text.isEmpty ? null : phone.text,
               promo: promo.text.isEmpty ? null : int.parse(promo.text),
               floor: floor.text,
-              activationToken: activationCode.text,
+              activationToken: activationCode.text.trim(),
               password: password.text,
             );
             try {
