@@ -220,7 +220,7 @@ String formatDelayToToday(DateTime date, DateTime now) {
     return "Il y a ${now.month - date.month} mois";
   } else if (diff == -1) {
     return "Hier";
-  } else if (now.month > date.month && now.day - date.day > 1) {
+  } else if (now.month > date.month && diff < 31) {
     return "Il y a ${now.day - date.day} jours";
   } else if (diff == 0) {
     return "Aujourd'hui";
