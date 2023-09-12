@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -212,16 +214,14 @@ int dayDifference(DateTime start, DateTime end) {
 
 String formatDelayToToday(DateTime date, DateTime now) {
   final diff = dayDifference(now, date);
-  if (diff < 31) {
-    return "Dans $diff jours";
-  } else if (now.year < date.year) {
-    return "Dans ${date.year - now.year} ans";
-  } else if (now.month < date.month && now.year == date.year) {
-    return "Dans ${date.month - now.month} mois";
-  } else if (diff == 0) {
+  if (diff == 0) {
     return "Aujourd'hui";
   } else if (diff == 1) {
     return "Demain";
+  } else if (diff < 31) {
+    return "Dans $diff jours";
+  } else if (12 * max(0, date.year - now.year) + date.month - now.month < 12) {
+    return "Dans ${(date.month - now.month) % 12} mois";
   }
-  return "Dans $diff jours";
+  return "Dans ${date.year - now.year} ans";
 }
