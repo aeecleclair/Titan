@@ -1,4 +1,4 @@
-import  'dart:async';
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -21,4 +21,4 @@ class AdvertPosterRepository extends LogoRepository {
     final uint8List = await addLogo(bytes, "", suffix: "adverts/$id/picture");
     return Image.memory(uint8List);
   }
-} 
+}
