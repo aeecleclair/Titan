@@ -211,28 +211,17 @@ int dayDifference(DateTime start, DateTime end) {
 }
 
 String formatDelayToToday(DateTime date, DateTime now) {
-  final strNow = processDateToAPIWitoutHour(now);
-  final strDate = processDateToAPIWitoutHour(date);
   final diff = dayDifference(now, date);
-  if (now.year > date.year) {
-    return "Il y a ${now.year - date.year} ans";
-  } else if (now.month > date.month && now.year == date.year) {
-    return "Il y a ${now.month - date.month} mois";
-  } else if (diff == -1) {
-    return "Hier";
-  } else if (now.month > date.month && diff < 31) {
-    return "Il y a ${now.day - date.day} jours";
+  if (diff < 31) {
+    return "Dans $diff jours";
+  } else if (now.year < date.year) {
+    return "Dans ${date.year - now.year} ans";
+  } else if (now.month < date.month && now.year == date.year) {
+    return "Dans ${date.month - now.month} mois";
   } else if (diff == 0) {
     return "Aujourd'hui";
   } else if (diff == 1) {
     return "Demain";
-  } else if (((now.month < date.month ||
-          (strDate.compareTo(strNow) > 0 && now.month >= date.month)) &&
-      diff < 14)) {
-    return "Dans $diff jours";
-  } else if (date.year == now.year + 1 && date.month < now.month) {
-    return "Dans ${(date.month - now.month) % 12} mois";
-  } else {
-    return "En ${getMonth(date.month)} ${date.year}";
   }
+  return "Dans $diff jours";
 }
