@@ -112,7 +112,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                       items: inTagChipsList,
                       itemBuilder:
                           (BuildContext context, String item, int index) =>
-                              TagChip(tagname: item)),
+                              TagChip(tagName: item)),
                   const SizedBox(height: 15),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 30.0),

@@ -4,5 +4,6 @@ import 'package:myecl/advert/providers/announcer_list_provider.dart';
 
 final allAnnouncerList = Provider<List<Announcer>>((ref) {
   final announcersProvider = ref.watch(announcerListProvider);
-  return announcersProvider.maybeWhen(data: (announcers) => announcers, orElse: () => []);
+  return announcersProvider.maybeWhen(
+      data: (announcers) => announcers, orElse: () => []);
 });

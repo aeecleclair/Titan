@@ -9,8 +9,8 @@ class AnnouncerListNotifier extends ListNotifier<Announcer> {
   final AnnouncerRepository _announcerRepository = AnnouncerRepository();
   AnnouncerListNotifier({required String token})
       : super(const AsyncValue.loading()) {
-        _announcerRepository.setToken(token);
-      }
+    _announcerRepository.setToken(token);
+  }
 
   Future<AsyncValue<List<Announcer>>> loadAllAnnouncerList() async {
     return await loadList(_announcerRepository.getAllAnnouncer);
@@ -27,8 +27,8 @@ class AnnouncerListNotifier extends ListNotifier<Announcer> {
   Future<bool> updateAnnouncer(Announcer announcer) async {
     return await update(
         _announcerRepository.updateAnnouncer,
-        (announcers, announcer) =>
-            announcers..[announcers.indexWhere((i) => i.id == announcer.id)] = announcer,
+        (announcers, announcer) => announcers
+          ..[announcers.indexWhere((i) => i.id == announcer.id)] = announcer,
         announcer);
   }
 
@@ -66,4 +66,3 @@ final userAnnouncerListProvider =
     return announcerListNotifier;
   },
 );
-

@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:myecl/advert/tools/functions.dart';
 
 class TagChip extends StatelessWidget {
-  final String tagname;
+  final String tagName;
 
-  const TagChip({super.key, required this.tagname});
+  const TagChip({super.key, required this.tagName});
 
   @override
   Widget build(BuildContext context) {
-    Color bgColor = generateColor(tagname);
+    Color bgColor = generateColor(tagName);
     Color borderColor =
         bgColor.computeLuminance() > 0.1 ? bgColor : Colors.white;
-    Color darkerbgColor = Color.fromARGB(
+    Color darkerBgColor = Color.fromARGB(
         bgColor.alpha,
         max(bgColor.red - 30, 0),
         max(bgColor.green - 30, 0),
@@ -29,7 +29,7 @@ class TagChip extends StatelessWidget {
           end: Alignment.bottomLeft,
           colors: [
             bgColor,
-            darkerbgColor,
+            darkerBgColor,
           ],
           stops: const [0.7, 1.0],
         ),
@@ -39,7 +39,7 @@ class TagChip extends StatelessWidget {
       child: Align(
         alignment: Alignment.center,
         child: Text(
-          tagname,
+          tagName,
           textAlign: TextAlign.center,
           maxLines: 1,
           style: const TextStyle(

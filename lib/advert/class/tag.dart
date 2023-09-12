@@ -2,10 +2,7 @@ class Tag {
   late final String id;
   late final String name;
 
-  Tag({
-    required this.id,
-    required this.name
-  });
+  Tag({required this.id, required this.name});
 
   Tag.fromJson(Map<String, dynamic> json) {
     id = json["id"];
@@ -14,23 +11,17 @@ class Tag {
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data["id"]= id;
-    data["name"]=name;
+    data["id"] = id;
+    data["name"] = name;
     return data;
   }
 
-  Tag copyWith(
-    {id,name}) {
-      return Tag(
-        id: id ?? this.id,
-        name: name ?? this.name);
-    }
+  Tag copyWith({id, name}) {
+    return Tag(id: id ?? this.id, name: name ?? this.name);
+  }
 
   static Tag empty() {
-    return Tag(
-      id: "",
-      name: ""
-    );
+    return Tag(id: "", name: "");
   }
 
   @override
