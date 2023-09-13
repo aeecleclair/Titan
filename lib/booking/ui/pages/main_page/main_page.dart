@@ -5,7 +5,7 @@ import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
-import 'package:myecl/booking/providers/is_booking_admin_provider.dart';
+import 'package:myecl/booking/providers/is_admin_or_manager_provider.dart';
 import 'package:myecl/booking/providers/selected_days_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/router.dart';
@@ -26,7 +26,7 @@ class BookingMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isAdmin = ref.watch(isBookingAdminProvider);
+    final isManagerOrAdmin = ref.watch(isManagerOrAdminProvider);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
     final confirmedbookingsNotifier =
         ref.watch(confirmedBookingListProvider.notifier);
@@ -50,9 +50,7 @@ class BookingMainPage extends HookConsumerWidget {
           child: Column(children: [
             const SizedBox(height: 20),
             const Expanded(child: Calendar()),
-            SizedBox(
-              height: (isAdmin) ? 25 : 30,
-            ),
+            const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: Align(
@@ -65,7 +63,7 @@ class BookingMainPage extends HookConsumerWidget {
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Color.fromARGB(255, 149, 149, 149))),
-                    if (isAdmin)
+                    if (isManagerOrAdmin)
                       GestureDetector(
                         onTap: () {
                           QR.to(BookingRouter.root + BookingRouter.admin);
@@ -101,7 +99,7 @@ class BookingMainPage extends HookConsumerWidget {
               ),
             ),
             SizedBox(
-              height: (isAdmin) ? 0 : 10,
+              height: (isManagerOrAdmin) ? 0 : 10,
             ),
             bookings.when(data: (List<Booking> data) {
               data.sort((a, b) => b.start.compareTo(a.start));

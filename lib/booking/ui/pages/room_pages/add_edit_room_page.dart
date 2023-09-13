@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:myecl/booking/class/manager.dart';
 import 'package:myecl/booking/class/room.dart';
+import 'package:myecl/booking/providers/manager_list_provider.dart';
+import 'package:myecl/booking/providers/manager_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/room_provider.dart';
 import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
+import 'package:myecl/booking/ui/pages/room_pages/manager_chip.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -18,6 +22,10 @@ class AddEditRoomPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final managerList = ref.watch(managerListProvider);
+    final managerId = ref.watch(managerIdProvider);
+    print(managerId);
+    final managerIdNotifier = ref.watch(managerIdProvider.notifier);
     final roomListNotifier = ref.watch(roomListProvider.notifier);
     final key = GlobalKey<FormState>();
     final room = ref.watch(roomProvider);
@@ -71,6 +79,37 @@ class AddEditRoomPage extends HookConsumerWidget {
                   const SizedBox(
                     height: 50,
                   ),
+                  managerList.when(
+                    data: (List<Manager> data) => SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      physics: const BouncingScrollPhysics(),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const SizedBox(width: 15),
+                          ...data.map(
+                            (e) => ManagerChip(
+                              label: e.name,
+                              selected: managerId == e.id,
+                              onTap: () {
+                                managerIdNotifier.setId(e.id);
+                              },
+                            ),
+                          ),
+                          const SizedBox(width: 15),
+                        ],
+                      ),
+                    ),
+                    error: (Object error, StackTrace? stackTrace) {
+                      return Center(child: Text('Error $error'));
+                    },
+                    loading: () {
+                      return const Center(child: CircularProgressIndicator());
+                    },
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
                   ShrinkButton(
                     waitChild: Container(
                         width: double.infinity,
@@ -93,8 +132,10 @@ class AddEditRoomPage extends HookConsumerWidget {
                         )),
                     onTap: () async {
                       await tokenExpireWrapper(ref, () async {
-                        Room newRoom =
-                            Room(id: isEdit ? room.id : '', name: name.text);
+                        Room newRoom = Room(
+                            id: isEdit ? room.id : '',
+                            name: name.text,
+                            managerId: managerId);
                         final value = isEdit
                             ? await roomListNotifier.updateRoom(newRoom)
                             : await roomListNotifier.addRoom(newRoom);

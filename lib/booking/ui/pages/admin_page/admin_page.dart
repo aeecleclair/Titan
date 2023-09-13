@@ -5,6 +5,9 @@ import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
+import 'package:myecl/booking/providers/is_admin_provider.dart';
+import 'package:myecl/booking/providers/is_manager_provider.dart';
+import 'package:myecl/booking/providers/manager_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/room_provider.dart';
 import 'package:myecl/booking/router.dart';
@@ -22,9 +25,12 @@ class AdminPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isAdmin = ref.watch(isAdminProvider);
+    final isManager = ref.watch(isManagerProvider);
     final roomList = ref.watch(roomListProvider);
     final room = ref.watch(roomProvider);
     final roomNotifier = ref.watch(roomProvider.notifier);
+    final managerIdNotifier = ref.watch(managerIdProvider.notifier);
     final bookings = ref.watch(bookingListProvider);
     final List<Booking> pendingBookings = [],
         confirmedBookings = [],
@@ -68,94 +74,101 @@ class AdminPage extends HookConsumerWidget {
                 height: MediaQuery.of(context).size.height - 380,
                 child: const Calendar()),
             const SizedBox(height: 30),
-            if (pendingBookings.isEmpty &&
-                confirmedBookings.isEmpty &&
-                canceledBookings.isEmpty)
-              const Center(
-                child: Text(BookingTextConstants.noCurrentBooking,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold)),
+            if (isManager) ...[
+              if (pendingBookings.isEmpty &&
+                  confirmedBookings.isEmpty &&
+                  canceledBookings.isEmpty)
+                const Center(
+                  child: Text(BookingTextConstants.noCurrentBooking,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold)),
+                ),
+              ListBooking(
+                title: BookingTextConstants.pending,
+                bookings: pendingBookings,
+                canToggle: false,
               ),
-            ListBooking(
-              title: BookingTextConstants.pending,
-              bookings: pendingBookings,
-              canToggle: false,
-            ),
-            ListBooking(
-              title: BookingTextConstants.confirmed,
-              bookings: confirmedBookings,
-            ),
-            ListBooking(
-              title: BookingTextConstants.declined,
-              bookings: canceledBookings,
-            ),
-            const SizedBox(height: 10),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(BookingTextConstants.room,
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 149, 149, 149))),
+              ListBooking(
+                title: BookingTextConstants.confirmed,
+                bookings: confirmedBookings,
               ),
-            ),
-            const SizedBox(height: 30),
-            roomList.when(
-              data: (List<Room> data) => SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(width: 15),
-                    GestureDetector(
-                      onTap: () {
-                        roomNotifier.setRoom(Room.empty());
-                        QR.to(BookingRouter.root +
-                            BookingRouter.admin +
-                            BookingRouter.room);
-                      },
-                      child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Chip(
-                            label: const Padding(
-                              padding: EdgeInsets.all(6.0),
-                              child: HeroIcon(
-                                HeroIcons.plus,
-                                color: Colors.black,
-                                size: 20,
-                              ),
-                            ),
-                            backgroundColor: Colors.grey.shade200,
-                          )),
-                    ),
-                    ...data.map(
-                      (e) => RoomChip(
-                        label: capitalize(e.name),
-                        selected: room.id == e.id,
+              ListBooking(
+                title: BookingTextConstants.declined,
+                bookings: canceledBookings,
+              ),
+            ],
+            if (isAdmin) ...[
+              const SizedBox(height: 10),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30.0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(BookingTextConstants.room,
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 149, 149, 149))),
+                ),
+              ),
+              const SizedBox(height: 30),
+              roomList.when(
+                data: (List<Room> data) => SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const SizedBox(width: 15),
+                      GestureDetector(
                         onTap: () {
-                          roomNotifier.setRoom(e);
+                          roomNotifier.setRoom(Room.empty());
+                          managerIdNotifier.setId("");
                           QR.to(BookingRouter.root +
                               BookingRouter.admin +
                               BookingRouter.room);
                         },
+                        child: Container(
+                            margin:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Chip(
+                              label: const Padding(
+                                padding: EdgeInsets.all(6.0),
+                                child: HeroIcon(
+                                  HeroIcons.plus,
+                                  color: Colors.black,
+                                  size: 20,
+                                ),
+                              ),
+                              backgroundColor: Colors.grey.shade200,
+                            )),
                       ),
-                    ),
-                    const SizedBox(width: 15),
-                  ],
+                      ...data.map(
+                        (e) => RoomChip(
+                          label: capitalize(e.name),
+                          selected: room.id == e.id,
+                          onTap: () {
+                            roomNotifier.setRoom(e);
+                            managerIdNotifier.setId(e.managerId);
+                            QR.to(BookingRouter.root +
+                                BookingRouter.admin +
+                                BookingRouter.room);
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 15),
+                    ],
+                  ),
                 ),
+                error: (Object error, StackTrace? stackTrace) {
+                  return Center(child: Text('Error $error'));
+                },
+                loading: () {
+                  return const Center(child: CircularProgressIndicator());
+                },
               ),
-              error: (Object error, StackTrace? stackTrace) {
-                return Center(child: Text('Error $error'));
-              },
-              loading: () {
-                return const Center(child: CircularProgressIndicator());
-              },
-            ),
+            ],
             const SizedBox(height: 30),
           ],
         ),
