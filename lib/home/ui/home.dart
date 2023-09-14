@@ -26,7 +26,7 @@ class HomePage extends HookConsumerWidget {
     return Container(
       color: Colors.white,
       child: SafeArea(
-          child: Refresher(
+        child: Refresher(
             onRefresh: () async {
               await confimedEventListNotifier.loadConfirmedEvent();
               now = DateTime.now();
@@ -36,6 +36,7 @@ class HomePage extends HookConsumerWidget {
                 title: HomeTextConstants.calendar,
                 root: HomeRouter.root,
               ),
+              const SizedBox(height: 20),
               MonthBar(
                   scrollController: scrollController,
                   width: MediaQuery.of(context).size.width),
@@ -44,7 +45,7 @@ class HomePage extends HookConsumerWidget {
               ),
               DayList(scrollController, daysEventScrollController),
               const SizedBox(
-                height: 20,
+                height: 15,
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30.0),
@@ -58,10 +59,10 @@ class HomePage extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               SizedBox(
-                  height: MediaQuery.of(context).size.height - 345,
+                  height: MediaQuery.of(context).size.height - 320,
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
                     controller: daysEventScrollController,
