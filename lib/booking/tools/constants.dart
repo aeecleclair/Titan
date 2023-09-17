@@ -50,6 +50,7 @@ class BookingTextConstants {
   static const String invalidDates = "Dates invalides";
   static const String invalidRoom = "Salle invalide";
   static const String keys = "Clés";
+  static const String managers = "Choisir un manager";
   static const String multipleDay = "Plusieurs jours";
   static const String myBookings = "Mes réservations";
   static const String necessaryKey = "Clé nécessaire";

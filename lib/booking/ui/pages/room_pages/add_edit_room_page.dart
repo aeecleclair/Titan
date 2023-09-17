@@ -24,7 +24,6 @@ class AddEditRoomPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final managerList = ref.watch(managerListProvider);
     final managerId = ref.watch(managerIdProvider);
-    print(managerId);
     final managerIdNotifier = ref.watch(managerIdProvider.notifier);
     final roomListNotifier = ref.watch(roomListProvider.notifier);
     final key = GlobalKey<FormState>();
@@ -73,6 +72,20 @@ class AddEditRoomPage extends HookConsumerWidget {
                       ),
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.black, width: 2.0),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      BookingTextConstants.managers,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 149, 149, 149),
                       ),
                     ),
                   ),
