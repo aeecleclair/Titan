@@ -2,6 +2,8 @@ import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/booking/providers/is_admin_or_manager_provider.dart';
+import 'package:myecl/booking/providers/is_admin_provider.dart';
+import 'package:myecl/booking/providers/is_manager_provider.dart';
 import 'package:myecl/booking/ui/pages/detail_pages/detail_booking.dart';
 import 'package:myecl/booking/ui/pages/admin_page/admin_page.dart';
 import 'package:myecl/booking/ui/pages/booking_pages/add_edit_booking_page.dart';
@@ -36,11 +38,22 @@ class BookingRouter {
           ], children: [
             QRoute(
                 path: detail,
-                builder: () => const DetailBookingPage(isAdmin: true)),
+                builder: () => const DetailBookingPage(isAdmin: true),
+                middleware: [
+                  AdminMiddleware(ref, isManagerProvider),
+                ]),
             QRoute(
                 path: addEdit,
-                builder: () => const AddEditBookingPage(isAdmin: true)),
-            QRoute(path: room, builder: () => const AddEditRoomPage()),
+                builder: () => const AddEditBookingPage(isAdmin: true),
+                middleware: [
+                  AdminMiddleware(ref, isManagerProvider),
+                ]),
+            QRoute(
+                path: room,
+                builder: () => const AddEditRoomPage(),
+                middleware: [
+                  AdminMiddleware(ref, isAdminProvider),
+                ]),
           ]),
           QRoute(
               path: addEdit,
