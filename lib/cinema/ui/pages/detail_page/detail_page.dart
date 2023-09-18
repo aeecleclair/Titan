@@ -162,73 +162,71 @@ class DetailPage extends HookConsumerWidget {
             ],
           ),
         ),
-        Column(
+        Column(children: [
+          const SizedBox(
+            height: 45,
+          ),
+          Row(
             children: [
               const SizedBox(
-                height: 45,
+                width: 20,
               ),
-              Row(
-                children: [
-                  const SizedBox(
-                    width: 20,
+              GestureDetector(
+                onTap: QR.back,
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.9),
+                      borderRadius: BorderRadius.circular(18),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.white.withOpacity(0.3),
+                          blurRadius: 7,
+                          spreadRadius: 2,
+                          offset: const Offset(2, 3),
+                        ),
+                      ]),
+                  child: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
                   ),
-                  GestureDetector(
-                    onTap: QR.back,
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.9),
-                          borderRadius: BorderRadius.circular(18),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.white.withOpacity(0.3),
-                              blurRadius: 7,
-                              spreadRadius: 2,
-                              offset: const Offset(2, 3),
-                            ),
-                          ]),
-                      child: const Icon(
-                        Icons.arrow_back,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  const Spacer(),
-                  Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 12),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.9),
-                        borderRadius: BorderRadius.circular(18),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.white.withOpacity(0.3),
-                              blurRadius: 7,
-                              spreadRadius: 2,
-                              offset: const Offset(2, 3),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          const HeroIcon(
-                            HeroIcons.clock,
-                            size: 20,
-                          ),
-                          const SizedBox(
-                            width: 7,
-                          ),
-                          Text(formatDuration(session.duration),
-                              style: const TextStyle(fontSize: 16)),
-                        ],
-                      )),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                ],
+                ),
               ),
-            ]
-        ),
+              const Spacer(),
+              Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.9),
+                    borderRadius: BorderRadius.circular(18),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.white.withOpacity(0.3),
+                        blurRadius: 7,
+                        spreadRadius: 2,
+                        offset: const Offset(2, 3),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      const HeroIcon(
+                        HeroIcons.clock,
+                        size: 20,
+                      ),
+                      const SizedBox(
+                        width: 7,
+                      ),
+                      Text(formatDuration(session.duration),
+                          style: const TextStyle(fontSize: 16)),
+                    ],
+                  )),
+              const SizedBox(
+                width: 20,
+              ),
+            ],
+          ),
+        ]),
         if (session.start.isAfter(DateTime.now()))
           Positioned(
             bottom: 0,
@@ -265,9 +263,9 @@ class DetailPage extends HookConsumerWidget {
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withOpacity(0.2),
-                              blurRadius: 7,
-                              spreadRadius: 2,
-                              offset: const Offset(2, 3),
+                                blurRadius: 7,
+                                spreadRadius: 2,
+                                offset: const Offset(2, 3),
                               ),
                             ],
                           ),

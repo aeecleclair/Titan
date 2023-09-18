@@ -38,7 +38,8 @@ class CinemaTopicsProvider extends ListNotifier<String> {
 }
 
 final cinemaTopicsProvider =
-    StateNotifierProvider<CinemaTopicsProvider, AsyncValue<List<String>>>((ref) {
+    StateNotifierProvider<CinemaTopicsProvider, AsyncValue<List<String>>>(
+        (ref) {
   final token = ref.watch(tokenProvider);
   CinemaTopicsProvider notifier = CinemaTopicsProvider(token: token);
   tokenExpireWrapperAuth(ref, () async {

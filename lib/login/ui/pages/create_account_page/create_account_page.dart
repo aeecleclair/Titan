@@ -67,14 +67,14 @@ class CreateAccountPage extends HookConsumerWidget {
     ];
 
     List<Widget> steps = [
-        CreateAccountField(
-          controller: activationCode,
-          label: LoginTextConstants.activationCode,
-          index: 1,
-          pageController: pageController,
-          currentPage: currentPage,
-          formKey: formKeys[0],
-        ),
+      CreateAccountField(
+        controller: activationCode,
+        label: LoginTextConstants.activationCode,
+        index: 1,
+        pageController: pageController,
+        currentPage: currentPage,
+        formKey: formKeys[0],
+      ),
       Column(
         children: [
           CreateAccountField(

@@ -32,7 +32,9 @@ class QuitDialog extends HookConsumerWidget {
                     auth.deleteToken();
                     if (!kIsWeb) {
                       ref.watch(messagesProvider.notifier).forgetDevice();
-                      ref.watch(firebaseTokenExpirationProvider.notifier).reset();
+                      ref
+                          .watch(firebaseTokenExpirationProvider.notifier)
+                          .reset();
                     }
                     isCachingNotifier.set(false);
                     displayToast(

@@ -54,18 +54,18 @@ class SessionCard extends HookConsumerWidget {
     }
     height = maxHeight * (1 - scale) / 2;
 
-    void createSessionNotification(Session session) {
-      localNotificationService.showNotification(Message(
-          actionModule: '',
-          actionTable: '',
-          content: 'La séance '
-              '${session.name}'
-              ' commence dans 10 minutes',
-          context: session.id,
-          isVisible: true,
-          title: 'Cinéma',
-          deliveryDateTime: sessionNotificationStartTime));
-    }
+    // void createSessionNotification(Session session) {
+    //   localNotificationService.showNotification(Message(
+    //       actionModule: '',
+    //       actionTable: '',
+    //       content: 'La séance '
+    //           '${session.name}'
+    //           ' commence dans 10 minutes',
+    //       context: session.id,
+    //       isVisible: true,
+    //       title: 'Cinéma',
+    //       deliveryDateTime: sessionNotificationStartTime));
+    // }
 
     /* Setting the notification if the session is selected but no notification is pending,
      * this situation exists when the enable the notification from another device

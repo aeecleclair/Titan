@@ -208,7 +208,9 @@ class BookingMainPage extends HookConsumerWidget {
                           ));
                 },
                 loaderColor: ColorConstants.background2),
-                const SizedBox(height: 20,)
+            const SizedBox(
+              height: 20,
+            )
           ]),
         ),
       ),

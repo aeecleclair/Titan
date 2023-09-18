@@ -133,15 +133,14 @@ class DeliveryUi extends HookConsumerWidget {
                       final selectedNotifier =
                           ref.watch(selectedListProvider.notifier);
                       products.maybeWhen(
-                        data: (data) {
-                          for (int i = 0; i < data.length; i++) {
-                            if (!deliveryProductsIds.contains(data[i].id)) {
-                              selectedNotifier.toggle(i);
+                          data: (data) {
+                            for (int i = 0; i < data.length; i++) {
+                              if (!deliveryProductsIds.contains(data[i].id)) {
+                                selectedNotifier.toggle(i);
+                              }
                             }
-                          }
-                        },
-                        orElse: () {}
-                      );
+                          },
+                          orElse: () {});
                     },
                     child: const CardButton(
                       colors: [

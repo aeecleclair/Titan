@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:myecl/event/class/event.dart';
-import 'package:myecl/tools/functions.dart';
 
 String calendarEventTypeToString(CalendarEventType type) {
   switch (type) {

@@ -264,68 +264,66 @@ class EmailChangeDialog extends HookConsumerWidget {
               left: Consts.padding,
               right: Consts.padding,
               child: AsyncChild(
-                value: currentState.value,
-                builder: (context, data) => AnimatedBuilder(
-                    animation: checkAnimationController,
-                    builder: (context, child) {
-                      return Container(
-                          width: Consts.avatarRadius * 2,
-                          height: Consts.avatarRadius * 2,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            gradient: const LinearGradient(
-                              colors: [
-                                Consts.greenGradient1,
-                                Consts.greenGradient2,
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Consts.greenGradient2.withOpacity(0.3),
-                                blurRadius: 10.0,
-                                offset: const Offset(0.0, 10.0),
+                  value: currentState.value,
+                  builder: (context, data) => AnimatedBuilder(
+                      animation: checkAnimationController,
+                      builder: (context, child) {
+                        return Container(
+                            width: Consts.avatarRadius * 2,
+                            height: Consts.avatarRadius * 2,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: const LinearGradient(
+                                colors: [
+                                  Consts.greenGradient1,
+                                  Consts.greenGradient2,
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
                               ),
-                            ],
-                          ),
-                          child: Center(
-                            child: Icon(
-                              Icons.check,
-                              color: Colors.white,
-                              size: 60 * checkAnimation.value,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Consts.greenGradient2.withOpacity(0.3),
+                                  blurRadius: 10.0,
+                                  offset: const Offset(0.0, 10.0),
+                                ),
+                              ],
                             ),
-                          ));
-                    }),
-                orElseBuilder: (context, child) => Container(
-                    width: Consts.avatarRadius * 2,
-                    height: Consts.avatarRadius * 2,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: const LinearGradient(
-                        colors: [
-                          Consts.redGradient1,
-                          Consts.redGradient2,
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Consts.redGradient2.withOpacity(0.3),
-                          blurRadius: 10.0,
-                          offset: const Offset(0.0, 10.0),
+                            child: Center(
+                              child: Icon(
+                                Icons.check,
+                                color: Colors.white,
+                                size: 60 * checkAnimation.value,
+                              ),
+                            ));
+                      }),
+                  orElseBuilder: (context, child) => Container(
+                      width: Consts.avatarRadius * 2,
+                      height: Consts.avatarRadius * 2,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: const LinearGradient(
+                          colors: [
+                            Consts.redGradient1,
+                            Consts.redGradient2,
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
                         ),
-                      ],
-                    ),
-                    child: Center(
-                      child: child
-                    )),
-                errorBuilder: (error, stack) => const HeroIcon(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Consts.redGradient2.withOpacity(0.3),
+                            blurRadius: 10.0,
+                            offset: const Offset(0.0, 10.0),
+                          ),
+                        ],
+                      ),
+                      child: Center(child: child)),
+                  errorBuilder: (error, stack) => const HeroIcon(
                         HeroIcons.exclamationCircle,
                         size: 60,
                         color: Colors.white,
-              ))),
+                      ))),
         ]));
   }
 }
