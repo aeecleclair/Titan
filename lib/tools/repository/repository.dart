@@ -98,7 +98,8 @@ abstract class Repository {
   }
 
   /// Get ext/id/suffix
-  Future<dynamic> getOne(String id, {String suffix = "", bool decode = false}) async {
+  Future<dynamic> getOne(String id,
+      {String suffix = "", bool decode = false}) async {
     try {
       final response =
           await http.get(Uri.parse(host + ext + id + suffix), headers: headers);

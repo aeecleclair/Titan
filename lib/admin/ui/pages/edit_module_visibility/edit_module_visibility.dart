@@ -41,8 +41,8 @@ class EditModulesVisibilityPage extends HookConsumerWidget {
                       value: modulesProvider,
                       builder: (context, modules) =>
                           modules.isEmpty || groups.isEmpty
-                          ? const Loader()
-                          : ModulesExpansionPanel(modules: modules),
+                              ? const Loader()
+                              : ModulesExpansionPanel(modules: modules),
                     ),
                   ],
                 ),

@@ -33,8 +33,8 @@ class CardButton extends StatelessWidget {
               )
             : null,
         border: borderColor != null
-              ? Border.all(color: borderColor!, width: 2)
-              : null,
+            ? Border.all(color: borderColor!, width: 2)
+            : null,
         boxShadow: [
           BoxShadow(
               color: (useShadow || !useColors)

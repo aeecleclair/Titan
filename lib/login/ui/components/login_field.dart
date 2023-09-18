@@ -109,7 +109,7 @@ class CreateAccountField extends HookConsumerWidget {
                 return LoginTextConstants.emptyFieldError;
               } else if (isPassword && value.length < 6) {
                 return LoginTextConstants.passwordLengthError;
-              } 
+              }
               if (mustBeInt && int.tryParse(value) == null) {
                 return LoginTextConstants.mustBeIntError;
               }

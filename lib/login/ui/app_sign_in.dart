@@ -59,8 +59,7 @@ class AppSignIn extends HookConsumerWidget {
                           ),
                           SignInUpBar(
                             isLoading: ref.watch(loadingProvider).maybeWhen(
-                                data: (data) => data,
-                                orElse: () => false),
+                                data: (data) => data, orElse: () => false),
                             label: LoginTextConstants.signIn,
                             onPressed: () async {
                               await authNotifier.getTokenFromRequest();
