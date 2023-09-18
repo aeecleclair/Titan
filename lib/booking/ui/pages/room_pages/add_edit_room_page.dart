@@ -14,6 +14,7 @@ import 'package:myecl/booking/ui/pages/room_pages/manager_chip.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -36,8 +37,9 @@ class AddEditRoomPage extends HookConsumerWidget {
 
     return BookingTemplate(
       child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Column(children: [
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        child: Column(
+          children: [
             const SizedBox(
               height: 50,
             ),
@@ -169,6 +171,38 @@ class AddEditRoomPage extends HookConsumerWidget {
                       });
                     },
                     child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.only(top: 8, bottom: 12),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 10,
+                            offset: const Offset(3, 3),
+                          ),
+                        ],
+                      ),
+                      child: Text(
+                        isEdit
+                            ? BookingTextConstants.edit
+                            : BookingTextConstants.add,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  if (isEdit) ...[
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    ShrinkButton(
+                      waitChild: Container(
                         width: double.infinity,
                         padding: const EdgeInsets.only(top: 8, bottom: 12),
                         alignment: Alignment.center,
@@ -184,20 +218,67 @@ class AddEditRoomPage extends HookConsumerWidget {
                             ),
                           ],
                         ),
-                        child: Text(
-                            isEdit
-                                ? BookingTextConstants.edit
-                                : BookingTextConstants.add,
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold))),
-                  ),
+                        child: const CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
+                      ),
+                      onTap: () async {
+                        await tokenExpireWrapper(ref, () async {
+                          await showDialog(
+                              context: context,
+                              builder: (context) => CustomDialogBox(
+                                    descriptions: BookingTextConstants
+                                        .deleteRoomConfirmation,
+                                    onYes: () async {
+                                      final value = await roomListNotifier
+                                          .deleteRoom(room);
+                                      if (value) {
+                                        QR.to(BookingRouter.root +
+                                            BookingRouter.admin);
+                                        displayToastWithContext(TypeMsg.msg,
+                                            BookingTextConstants.deletedRoom);
+                                      } else {
+                                        displayToastWithContext(TypeMsg.error,
+                                            BookingTextConstants.deletingError);
+                                      }
+                                    },
+                                    title: BookingTextConstants.deleteBooking,
+                                  ));
+                        });
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.only(top: 8, bottom: 12),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 10,
+                              offset: const Offset(3, 3),
+                            ),
+                          ],
+                        ),
+                        child: const Text(
+                          BookingTextConstants.delete,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ],
                   const SizedBox(height: 30),
                 ],
               ),
             )
-          ])),
+          ],
+        ),
+      ),
     );
   }
 }

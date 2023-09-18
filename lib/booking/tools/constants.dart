@@ -23,12 +23,15 @@ class BookingTextConstants {
   static const String decline = "Refuser";
   static const String declineBooking = "Refuser la réservation ?";
   static const String declined = "Refusée";
+  static const String delete = "Supprimer";
   static const String deleting = "Suppression";
   static const String deleteBooking = "Suppression";
   static const String deleteBookingConfirmation =
       "Êtes-vous sûr de vouloir supprimer cette réservation ?";
   static const String deletedBooking = "Réservation supprimée";
   static const String deletedRoom = "Salle supprimée";
+  static const String deleteRoomConfirmation =
+      "Êtes-vous sûr de vouloir supprimer cette salle ?\n\nToutes les réservations associées à cette salle seront aussi supprimées";
   static const String deletingBooking = "Supprimer la réservation ?";
   static const String deletingError = "Erreur lors de la suppression";
   static const String deletingRoom = "Supprimer la salle ?";
