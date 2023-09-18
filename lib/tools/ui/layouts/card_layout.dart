@@ -27,7 +27,7 @@ class CardLayout extends StatelessWidget {
     final useColors = colors != null && colors!.length > 1;
     final useShadow = !useColors || (useColors && colors!.last == Colors.white);
     return Hero(
-      tag: id ?? key.toString(),
+      tag: id ?? UniqueKey(),
       child: Container(
           margin: margin,
           padding: padding,
