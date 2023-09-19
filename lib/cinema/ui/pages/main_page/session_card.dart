@@ -9,8 +9,6 @@ import 'package:myecl/cinema/providers/session_poster_provider.dart';
 import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
-import 'package:myecl/service/class/message.dart';
-import 'package:myecl/service/local_notification_service.dart';
 import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 
 class SessionCard extends HookConsumerWidget {
@@ -29,12 +27,8 @@ class SessionCard extends HookConsumerWidget {
     final sessionPosterNotifier = ref.watch(sessionPosterProvider.notifier);
     final isWebFormat = ref.watch(isWebFormatProvider);
     final cinemaTopics = ref.watch(cinemaTopicsProvider);
-    final localNotificationService = LocalNotificationService();
     final selected = cinemaTopics.maybeWhen(
         data: (data) => data.contains(session.id), orElse: () => false);
-
-    final sessionNotificationStartTime =
-        session.start.subtract(const Duration(minutes: 10));
 
     double minScale = 0.8;
     double scale = 1;
