@@ -7,7 +7,6 @@ import 'package:myecl/booking/providers/manager_list_provider.dart';
 import 'package:myecl/booking/providers/manager_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/room_provider.dart';
-import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/pages/room_pages/manager_chip.dart';
@@ -155,7 +154,7 @@ class AddEditRoomPage extends HookConsumerWidget {
                             ? await roomListNotifier.updateRoom(newRoom)
                             : await roomListNotifier.addRoom(newRoom);
                         if (value) {
-                          QR.to(BookingRouter.root + BookingRouter.admin);
+                          QR.back();
                           isEdit
                               ? displayToastWithContext(
                                   TypeMsg.msg, BookingTextConstants.editedRoom)
@@ -233,8 +232,7 @@ class AddEditRoomPage extends HookConsumerWidget {
                                       final value = await roomListNotifier
                                           .deleteRoom(room);
                                       if (value) {
-                                        QR.to(BookingRouter.root +
-                                            BookingRouter.admin);
+                                        QR.back();
                                         displayToastWithContext(TypeMsg.msg,
                                             BookingTextConstants.deletedRoom);
                                       } else {
