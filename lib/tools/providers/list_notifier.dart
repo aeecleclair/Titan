@@ -108,6 +108,36 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
     });
   }
 
+  Future<bool> updateWithItem(Future<T> Function() f,
+      List<T> Function(List<T> listT, T t) replace) async {
+    return state.when(data: (d) async {
+      try {
+        final newItem = await f();
+        d = replace(d, newItem);
+        state = AsyncValue.data(d);
+        return true;
+      } catch (error) {
+        state = AsyncValue.data(d);
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          rethrow;
+        } else {
+          return false;
+        }
+      }
+    }, error: (error, s) {
+      if (error is AppException && error.type == ErrorType.tokenExpire) {
+        throw error;
+      } else {
+        state = AsyncValue.error(error, s);
+        return false;
+      }
+    }, loading: () {
+      state = const AsyncValue.error(
+          "Cannot update while loading", StackTrace.empty);
+      return false;
+    });
+  }
+
   Future<bool> delete(Future<bool> Function(String id) f,
       List<T> Function(List<T> listT, T t) replace, String id, T t) async {
     return state.when(data: (d) async {
