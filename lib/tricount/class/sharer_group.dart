@@ -1,4 +1,4 @@
-import 'package:myecl/tricount/class/eqquilibrium_transaction.dart';
+import 'package:myecl/tricount/class/equilibrium_transaction.dart';
 import 'package:myecl/tricount/class/transaction.dart';
 import 'package:myecl/user/class/list_users.dart';
 
