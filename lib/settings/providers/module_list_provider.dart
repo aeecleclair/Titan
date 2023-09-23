@@ -46,20 +46,17 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
   ];
   ModulesNotifier() : super([]);
 
-  void saveModules() {
-    SharedPreferences.getInstance().then((prefs) {
-      prefs.remove(dbModule);
-      prefs.setStringList(
-          dbModule, state.map((e) => e.root.toString()).toList());
-    });
+  void saveModules() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(dbModule);
+    prefs.setStringList(dbModule, state.map((e) => e.root.toString()).toList());
   }
 
-  void saveAllModules() {
-    SharedPreferences.getInstance().then((prefs) {
-      prefs.remove(dbAllModules);
-      prefs.setStringList(
-          dbAllModules, allModules.map((e) => e.root.toString()).toList());
-    });
+  void saveAllModules() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(dbAllModules);
+    prefs.setStringList(
+        dbAllModules, allModules.map((e) => e.root.toString()).toList());
   }
 
   Future loadModules(List<String> roots) async {
@@ -67,19 +64,14 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     List<String> modulesName = prefs.getStringList(dbModule) ?? [];
     List<String> allSavedModulesName = prefs.getStringList(dbAllModules) ?? [];
     final allModulesName = allModules.map((e) => e.root.toString()).toList();
-    print(allModulesName.map((e) => e,).toList());
     if (modulesName.isEmpty) {
       modulesName = allModulesName;
-      saveModules();
     }
-    print(allSavedModulesName.isEmpty);
-    print(!eq.equals(allSavedModulesName, allModulesName));
     if (allSavedModulesName.isEmpty ||
         !eq.equals(allSavedModulesName, allModulesName)) {
       allSavedModulesName = allModulesName;
       modulesName = allModulesName;
       saveAllModules();
-      saveModules();
     } else {
       allModules.sort((a, b) => allSavedModulesName
           .indexOf(a.root.toString())
@@ -95,16 +87,16 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
         Module module = allModules[allSavedModulesName.indexOf(name)];
         if (roots.contains(module.root)) {
           modules.add(module);
-        } else if (!kDebugMode) {
+        } else if (!kDebugMode) { // Disabling visibility check in debug mode
           toDelete.add(module);
         }
       }
     }
-    print(modules.map((e) => e.name,).toList());
     for (Module module in toDelete) {
       allModules.remove(module);
     }
     state = modules;
+    saveModules();
   }
 
   void sortModules() {
