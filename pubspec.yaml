@@ -14,8 +14,8 @@ dependencies:
   crypto: ^3.0.2
   datetime_picker_formfield: ^2.0.1
   dotenv: ^4.0.1
-  firebase_core: ^2.15.1
   either_dart: ^1.0.0
+  firebase_core: ^2.15.1
   firebase_messaging: ^14.4.1
   fl_chart: ^0.63.0
   flash: ^3.0.5+1
@@ -29,6 +29,7 @@ dependencies:
     sdk: flutter
   flutter_riverpod: ^2.1.1
   flutter_secure_storage: ^9.0.0
+  flutter_staggered_animations: ^1.1.1
   flutter_svg: ^2.0.7
   google_fonts: ^6.0.0
   heroicons: ^0.9.0
@@ -45,8 +46,8 @@ dependencies:
   package_info_plus: ^4.0.2
   path: ^1.8.2
   path_provider: ^2.0.11
-  rxdart: ^0.27.7
   qlevar_router: ^1.9.0
+  rxdart: ^0.27.7
   shared_preferences: ^2.1.1
   smooth_page_indicator: ^1.0.0+2
   syncfusion_flutter_calendar: ^23.1.36
