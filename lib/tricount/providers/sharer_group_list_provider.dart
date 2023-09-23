@@ -113,5 +113,7 @@ class SharerGroupListNotifier extends ListNotifier<SharerGroup> {
 final sharerGroupListProvider = StateNotifierProvider<SharerGroupListNotifier,
     AsyncValue<List<SharerGroup>>>((ref) {
   final token = ref.watch(tokenProvider);
-  return SharerGroupListNotifier(token: token);
+  final sharerGroupListNotifier = SharerGroupListNotifier(token: token);
+  sharerGroupListNotifier.loadSharerGroupList();
+  return sharerGroupListNotifier;
 });
