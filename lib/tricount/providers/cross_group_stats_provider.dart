@@ -8,7 +8,7 @@ final crossGroupStatsProvider = Provider<List<EquilibriumTransaction>>((ref) {
   final sharerGroups = ref.watch(sharerGroupListProvider);
   final me = ref.watch(userProvider);
   final crossGroupStats = <SimpleUser, double>{};
-  sharerGroups.whenData((sharerGroups) {
+  return sharerGroups.maybeWhen(data: (sharerGroups) {
     for (final sharerGroup in sharerGroups) {
       for (final equilibriumTransaction
           in sharerGroup.equilibriumTransactions) {
@@ -34,11 +34,13 @@ final crossGroupStatsProvider = Provider<List<EquilibriumTransaction>>((ref) {
         }
       }
     }
+    return crossGroupStats.entries
+        .map((e) => EquilibriumTransaction(
+            from: e.value > 0 ? me.toSimpleUser() : e.key,
+            to: e.value > 0 ? e.key : me.toSimpleUser(),
+            amount: e.value))
+        .toList();
+  }, orElse: () {
+    return [];
   });
-  return crossGroupStats.entries
-      .map((e) => EquilibriumTransaction(
-          from: e.value > 0 ? me.toSimpleUser() : e.key,
-          to: e.value > 0 ? e.key : me.toSimpleUser(),
-          amount: e.value))
-      .toList();
 });
