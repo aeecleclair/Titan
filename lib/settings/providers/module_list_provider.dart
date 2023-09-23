@@ -84,9 +84,10 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     for (String name in modulesName) {
       if (allModulesName.contains(name)) {
         Module module = allModules[allSavedModulesName.indexOf(name)];
-        if (roots.contains(module.root)) {
+        if (roots.contains(module.root) || kDebugMode) {
           modules.add(module);
-        } else if (!kDebugMode) { // Disabling visibility check in debug mode
+        } else if (!kDebugMode) {
+          // Disabling visibility check in debug mode
           toDelete.add(module);
         }
       }
