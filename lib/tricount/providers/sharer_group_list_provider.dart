@@ -22,7 +22,7 @@ class SharerGroupListNotifier extends ListNotifier<SharerGroup> {
     reimbursementRepository.setToken(token);
   }
 
-  Future<AsyncValue<List<SharerGroup>>> loadSharerGroupList(String id) async {
+  Future<AsyncValue<List<SharerGroup>>> loadSharerGroupList() async {
     return await loadList(sharerGroupRepository.getSharerGroupList);
   }
 
