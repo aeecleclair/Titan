@@ -18,6 +18,7 @@ import 'package:myecl/others/ui/update_page.dart';
 import 'package:myecl/settings/router.dart';
 import 'package:myecl/raffle/router.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
+import 'package:myecl/tricount/ui/router.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -68,6 +69,7 @@ class AppRouter {
       LoginRouter(ref).passwordRoute(),
       RaffleRouter(ref).route(),
       SettingsRouter(ref).route(),
+      TricountRouter(ref).route(),
       VoteRouter(ref).route(),
     ];
   }
