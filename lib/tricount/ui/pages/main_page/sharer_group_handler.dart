@@ -10,7 +10,7 @@ class SharerGroupHandler extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    const viewPortFraction = 0.5;
+    const viewPortFraction = 0.85;
     final pageController = usePageController(
         viewportFraction: viewPortFraction,
         initialPage: sharerGroups.length - 1);
