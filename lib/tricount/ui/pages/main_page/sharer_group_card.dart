@@ -81,10 +81,11 @@ class SharerGroupCard extends HookConsumerWidget {
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.bold),
                                             overflow: TextOverflow.ellipsis)),
-                                    Container(
+                                    const SizedBox(width: 5),
+                                    SizedBox(
                                       width: 60,
                                       child: Text(
-                                          "1${sharerGroup.transactions[i].amount.toStringAsFixed(2)}€"),
+                                          "${sharerGroup.transactions[i].amount.toStringAsFixed(2)}€"),
                                     )
                                   ],
                                 )),
