@@ -9,6 +9,7 @@ class EquilibriumCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 65,
       width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Column(
@@ -18,7 +19,7 @@ class EquilibriumCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 30,
-                backgroundColor: Colors.red,
+                backgroundColor: const Color(0xff09263D),
                 child: Text(
                   equilibriumTransaction.from.nickname != null
                       ? equilibriumTransaction.from.nickname!.substring(0, 3)
@@ -37,7 +38,7 @@ class EquilibriumCard extends StatelessWidget {
               const SizedBox(width: 10),
               CircleAvatar(
                 radius: 30,
-                backgroundColor: Colors.red,
+                backgroundColor: const Color(0xff1C4668),
                 child: Text(
                   equilibriumTransaction.to.nickname != null
                       ? equilibriumTransaction.to.nickname!.substring(0, 3)
