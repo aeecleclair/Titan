@@ -25,6 +25,7 @@ class SharerGroupHandler extends HookConsumerWidget {
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 45),
           child: PageView.builder(
+            physics: const BouncingScrollPhysics(),
             clipBehavior: Clip.none,
             controller: pageController,
             itemCount: sharerGroups.length,
