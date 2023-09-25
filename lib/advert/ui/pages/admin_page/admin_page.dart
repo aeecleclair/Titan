@@ -11,7 +11,7 @@ import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/advert/ui/pages/admin_page/admin_advert_card.dart';
 import 'package:myecl/advert/ui/pages/advert.dart';
 import 'package:myecl/advert/router.dart';
-import 'package:myecl/advert/ui/tools/announcer_bar.dart';
+import 'package:myecl/advert/ui/components/announcer_bar.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';

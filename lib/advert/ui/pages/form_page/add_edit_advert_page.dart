@@ -15,7 +15,7 @@ import 'package:myecl/advert/providers/advert_provider.dart';
 import 'package:myecl/advert/providers/announcer_provider.dart';
 import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/advert/ui/pages/advert.dart';
-import 'package:myecl/advert/ui/tools/announcer_bar.dart';
+import 'package:myecl/advert/ui/components/announcer_bar.dart';
 import 'package:myecl/advert/ui/pages/form_page/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
