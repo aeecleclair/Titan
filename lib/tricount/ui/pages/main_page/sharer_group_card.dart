@@ -31,19 +31,22 @@ class SharerGroupCard extends HookConsumerWidget {
         ..scale(1 - 0.15 * x.abs())
         ..translate(translation, 0, 0),
       child: CardLayout(
+          margin: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
           color: Colors.white,
           child: Column(children: [
             Text(sharerGroup.name,
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             Expanded(
               child: Row(
                 children: [
-                  const SizedBox(width: 5),
                   Container(
                     width: 110,
                     height: 110,
                     decoration: BoxDecoration(
-                        border: Border.all(color: const Color(0xff1C4668), width: 15),
+                        border: Border.all(
+                            color: const Color(0xff1C4668), width: 15),
                         borderRadius: BorderRadius.circular(100)),
                     child: Center(
                       child: Text(
@@ -53,7 +56,7 @@ class SharerGroupCard extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 15),
+                  const SizedBox(width: 20),
                   Expanded(
                     child: Column(
                       children: [
@@ -63,19 +66,26 @@ class SharerGroupCard extends HookConsumerWidget {
                             i++)
                           if (i < 3)
                             SizedBox(
-                                height: 40,
+                                height: 32,
                                 child: Row(
                                   children: [
                                     Expanded(
-                                        child: Text(sharerGroup.transactions[i]
-                                                    .payer.nickname !=
-                                                null
-                                            ? sharerGroup
-                                                .transactions[i].payer.nickname!
-                                            : sharerGroup
-                                                .transactions[i].payer.name)),
-                                    Text(
-                                        "${sharerGroup.transactions[i].amount.toStringAsFixed(2)}€")
+                                        child: Text(
+                                            sharerGroup.transactions[i].payer
+                                                        .nickname !=
+                                                    null
+                                                ? sharerGroup.transactions[i]
+                                                    .payer.nickname!
+                                                : sharerGroup
+                                                    .transactions[i].payer.name,
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                            overflow: TextOverflow.ellipsis)),
+                                    Container(
+                                      width: 60,
+                                      child: Text(
+                                          "1${sharerGroup.transactions[i].amount.toStringAsFixed(2)}€"),
+                                    )
                                   ],
                                 )),
                         const Spacer(),
