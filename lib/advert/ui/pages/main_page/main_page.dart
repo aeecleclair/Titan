@@ -78,7 +78,7 @@ class AdvertMainPage extends HookConsumerWidget {
                   if (isAdmin)
                     GestureDetector(
                       onTap: () {
-                        QR.to(AdvertRouter.root + AdvertRouter.addRemAnnoucer);
+                        QR.to(AdvertRouter.root + AdvertRouter.addRemAnnouncer);
                       },
                       child: Container(
                         width: 130,
