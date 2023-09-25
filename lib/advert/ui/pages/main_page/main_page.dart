@@ -28,147 +28,137 @@ class AdvertMainPage extends HookConsumerWidget {
     final isAdmin = ref.watch(isAdminProvider);
     final isAdvertAdmin = ref.watch(isAdvertAdminProvider);
     return AdvertTemplate(
-      child: Stack(
-        children: [
-          Refresher(
-            onRefresh: () async {
-              await advertListNotifier.loadAdverts();
-            },
-            child: advertList.when(
-              data: (advertData) {
-                final sortedAdvertData =
-                    advertData.sortedBy((element) => element.date).reversed;
-                final filteredSortedadvertData = sortedAdvertData.where(
-                    (advert) =>
-                        selected
-                            .where((e) => advert.announcer.name == e.name)
-                            .isNotEmpty ||
-                        selected.isEmpty);
-                return Column(
-                  children: [
-                    SizedBox(
-                      width: 300,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          if (isAdvertAdmin)
-                            GestureDetector(
-                              onTap: () {
-                                selectedNotifier.clearAnnouncer();
-                                QR.to(AdvertRouter.root + AdvertRouter.admin);
-                              },
-                              child: Container(
-                                width: 120,
-                                margin: const EdgeInsets.symmetric(vertical: 5),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12, vertical: 8),
-                                decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                        color: Colors.white, width: 1),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.grey.shade200
-                                              .withOpacity(0.2),
-                                          blurRadius: 10,
-                                          offset: const Offset(0, 5))
-                                    ]),
-                                child: const Row(
-                                  children: [
-                                    HeroIcon(HeroIcons.userGroup,
-                                        color: Colors.white, size: 20),
-                                    SizedBox(width: 10),
-                                    Text(AdvertTextConstants.admin,
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white)),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          if (isAdmin)
-                            GestureDetector(
-                              onTap: () {
-                                QR.to(AdvertRouter.root +
-                                    AdvertRouter.addRemAnnoucer);
-                              },
-                              child: Container(
-                                width: 130,
-                                margin: const EdgeInsets.symmetric(vertical: 5),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12, vertical: 8),
-                                decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                        color: Colors.white, width: 1),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.grey.shade200
-                                              .withOpacity(0.2),
-                                          blurRadius: 10,
-                                          offset: const Offset(0, 5))
-                                    ]),
-                                child: const Row(
-                                  children: [
-                                    HeroIcon(HeroIcons.userGroup,
-                                        color: Colors.white, size: 20),
-                                    SizedBox(width: 10),
-                                    Text(AdvertTextConstants.management,
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white)),
-                                  ],
-                                ),
-                              ),
-                            ),
-                        ],
+        child: Stack(children: [
+      Refresher(
+        onRefresh: () async {
+          await advertListNotifier.loadAdverts();
+        },
+        child: Column(
+          children: [
+            SizedBox(
+              width: 300,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  if (isAdvertAdmin)
+                    GestureDetector(
+                      onTap: () {
+                        selectedNotifier.clearAnnouncer();
+                        QR.to(AdvertRouter.root + AdvertRouter.admin);
+                      },
+                      child: Container(
+                        width: 120,
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 8),
+                        decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Colors.white, width: 1),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.grey.shade200.withOpacity(0.2),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 5))
+                            ]),
+                        child: const Row(
+                          children: [
+                            HeroIcon(HeroIcons.userGroup,
+                                color: Colors.white, size: 20),
+                            SizedBox(width: 10),
+                            Text(AdvertTextConstants.admin,
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white)),
+                          ],
+                        ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
+                  if (isAdmin)
+                    GestureDetector(
+                      onTap: () {
+                        QR.to(AdvertRouter.root + AdvertRouter.addRemAnnoucer);
+                      },
+                      child: Container(
+                        width: 130,
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 8),
+                        decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Colors.white, width: 1),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.grey.shade200.withOpacity(0.2),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 5))
+                            ]),
+                        child: const Row(
+                          children: [
+                            HeroIcon(HeroIcons.userGroup,
+                                color: Colors.white, size: 20),
+                            SizedBox(width: 10),
+                            Text(AdvertTextConstants.management,
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white)),
+                          ],
+                        ),
+                      ),
                     ),
-                    const AnnouncerBar(
-                        useUserAnnouncers: false, multipleSelect: true),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30),
-                        child: Column(children: [
-                          ...filteredSortedadvertData.map(
-                            (advert) => AdvertCard(
-                                onTap: () {
-                                  advertNotifier.setAdvert(advert);
-                                  QR.to(
-                                      AdvertRouter.root + AdvertRouter.detail);
-                                },
-                                advert: advert),
-                          ),
-                        ])),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                );
-              },
-              loading: () {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
-              error: (error, stackTrace) {
-                return Center(
-                  child: Text(error.toString()),
-                );
-              },
+                ],
+              ),
             ),
-          ),
-        ],
+            const SizedBox(
+              height: 20,
+            ),
+            const AnnouncerBar(useUserAnnouncers: false, multipleSelect: true),
+            const SizedBox(
+              height: 20,
+            ),
+            Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: advertList.when(
+                  data: (advertData) {
+                    final sortedAdvertData =
+                        advertData.sortedBy((element) => element.date).reversed;
+                    final filteredSortedadvertData = sortedAdvertData.where(
+                        (advert) =>
+                            selected
+                                .where((e) => advert.announcer.name == e.name)
+                                .isNotEmpty ||
+                            selected.isEmpty);
+                    return Column(children: [
+                      ...filteredSortedadvertData.map(
+                        (advert) => AdvertCard(
+                            onTap: () {
+                              advertNotifier.setAdvert(advert);
+                              QR.to(AdvertRouter.root + AdvertRouter.detail);
+                            },
+                            advert: advert),
+                      ),
+                    ]);
+                  },
+                  loading: () {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                  error: (error, stackTrace) {
+                    return Center(
+                      child: Text(error.toString()),
+                    );
+                  },
+                )),
+            const SizedBox(
+              height: 20,
+            ),
+          ],
+        ),
       ),
-    );
+    ]));
   }
 }
