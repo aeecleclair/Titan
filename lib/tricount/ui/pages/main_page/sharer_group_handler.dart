@@ -6,14 +6,16 @@ import 'package:myecl/tricount/ui/pages/main_page/sharer_group_card.dart';
 
 class SharerGroupHandler extends HookConsumerWidget {
   final List<SharerGroup> sharerGroups;
-  const SharerGroupHandler({super.key, required this.sharerGroups});
+  final PageController pageController;
+  final double viewPortFraction;
+  const SharerGroupHandler(
+      {super.key,
+      required this.sharerGroups,
+      required this.pageController,
+      required this.viewPortFraction});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    const viewPortFraction = 0.85;
-    final pageController = usePageController(
-        viewportFraction: viewPortFraction,
-        initialPage: sharerGroups.length - 1);
     final offset = useState<double>(sharerGroups.length - 1);
     pageController.addListener(() {
       offset.value = pageController.offset / (360 * viewPortFraction);

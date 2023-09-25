@@ -19,6 +19,7 @@ class TricountMainPage extends HookConsumerWidget {
     final sharerGroupListNotifier = ref.watch(sharerGroupListProvider.notifier);
     final scrollController = useScrollController();
     final scrollValue = useState<double>(0);
+    const viewPortFraction = 0.85;
     scrollController.addListener(() {
       scrollValue.value = scrollController.offset;
     });
@@ -29,29 +30,45 @@ class TricountMainPage extends HookConsumerWidget {
               }),
           child: AsyncChild(
             value: sharerGroupList,
-            builder: (context, sharerGroupList) => SizedBox(
-              width: double.infinity,
-              height: double.infinity,
-              child: Stack(
-                children: [
-                  Positioned.fill(
-                    child: GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onVerticalDragUpdate: (details) {
-                        scrollController
-                            .jumpTo(scrollController.offset - details.delta.dy);
-                      },
+            builder: (context, sharerGroupList) {
+              final pageController = usePageController(
+                  viewportFraction: viewPortFraction,
+                  initialPage: sharerGroupList.length - 1);
+              final fakePageController = usePageController(
+                  viewportFraction: viewPortFraction,
+                  initialPage: sharerGroupList.length - 1);
+              pageController.addListener(() {
+                fakePageController.jumpTo(pageController.offset);
+              });
+              return SizedBox(
+                width: double.infinity,
+                height: double.infinity,
+                child: Stack(
+                  children: [
+                    Positioned.fill(
                       child: Column(children: [
                         Transform(
-                          alignment: Alignment.topCenter,
+                          alignment: AlignmentGeometry.lerp(
+                              AlignmentGeometry.lerp(
+                                  Alignment.topLeft,
+                                  Alignment.bottomLeft,
+                                  0.5 - scrollValue.value / 500 * 0.8),
+                              AlignmentGeometry.lerp(
+                                  Alignment.topRight,
+                                  Alignment.bottomRight,
+                                  0.5 - scrollValue.value / 500 * 0.8),
+                              0.5)!,
                           transform: Matrix4.identity()
                             ..setEntry(3, 2, 0.001)
-                            ..scale(max(1 - scrollValue.value / 500, 0.5)),
+                            ..scale(min(
+                                1.0, max(1 - scrollValue.value / 500, 0.5))),
                           child: Opacity(
                               opacity:
-                                  min(1, max(1 - scrollValue.value / 500, 0)),
+                                  min(1.0, max(1 - scrollValue.value / 500, 0)),
                               child: SharerGroupHandler(
-                                  sharerGroups: sharerGroupList)),
+                                  sharerGroups: sharerGroupList,
+                                  pageController: fakePageController,
+                                  viewPortFraction: viewPortFraction)),
                         ),
                         SizedBox(height: max(0, 350 - scrollValue.value)),
                         Expanded(
@@ -61,26 +78,36 @@ class TricountMainPage extends HookConsumerWidget {
                         ),
                       ]),
                     ),
-                  ),
-                  Positioned.fill(
-                    child: IgnorePointer(
-                        ignoring: true,
-                        child: SingleChildScrollView(
-                            physics: const BouncingScrollPhysics(),
-                            controller: scrollController,
-                            child: Column(
-                              children: [
-                                const SizedBox(height: 300),
-                                SharerGroupStats(
-                                  equilibriumTransactions: sharerGroupList[0]
-                                      .equilibriumTransactions,
+                    Positioned.fill(
+                      child: SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          controller: scrollController,
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 300,
+                                width: double.infinity,
+                                child: PageView(
+                                  physics: const BouncingScrollPhysics(),
+                                  clipBehavior: Clip.none,
+                                  controller: pageController,
+                                  reverse: true,
+                                  children: sharerGroupList
+                                      .map((e) => const SizedBox())
+                                      .toList(),
                                 ),
-                              ],
-                            ))),
-                  ),
-                ],
-              ),
-            ),
+                              ),
+                              SharerGroupStats(
+                                equilibriumTransactions:
+                                    sharerGroupList[0].equilibriumTransactions,
+                              ),
+                            ],
+                          )),
+                    ),
+                  ],
+                ),
+              );
+            },
           )),
     );
   }
