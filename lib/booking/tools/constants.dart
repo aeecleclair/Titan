@@ -5,7 +5,9 @@ class BookingTextConstants {
   static const String addBooking = "Ajouter une réservation";
   static const String addedBooking = "Demande ajoutée";
   static const String addedRoom = "Salle ajoutée";
+  static const String addedManager = "Gestionnaire ajouté";
   static const String addingError = "Erreur lors de l'ajout";
+  static const String addManager = "Ajouter un gestionnaire";
   static const String adminPage = "Administrateur";
   static const String allDay = "Toute la journée";
   static const String bookedfor = "Réservé pour";
@@ -30,8 +32,11 @@ class BookingTextConstants {
       "Êtes-vous sûr de vouloir supprimer cette réservation ?";
   static const String deletedBooking = "Réservation supprimée";
   static const String deletedRoom = "Salle supprimée";
+  static const String deletedManager = "Gestionnaire supprimé";
   static const String deleteRoomConfirmation =
       "Êtes-vous sûr de vouloir supprimer cette salle ?\n\nToutes les réservations associées à cette salle seront aussi supprimées";
+  static const String deleteManagerConfirmation =
+      "Êtes-vous sûr de vouloir supprimer ce gestionnaire ?\n\nToutes les salles et réservations associées à ce gestionnaire seront aussi supprimées";
   static const String deletingBooking = "Supprimer la réservation ?";
   static const String deletingError = "Erreur lors de la suppression";
   static const String deletingRoom = "Supprimer la salle ?";
@@ -40,7 +45,9 @@ class BookingTextConstants {
   static const String editionError = "Erreur lors de la modification";
   static const String editedBooking = "Réservation modifiée";
   static const String editedRoom = "Salle modifiée";
-  static const String editRoom = "Modifier une salle";
+  static const String editedManager = "Gestionnaire modifié";
+  static const String editManager = "Modifier ou supprimer un gestionnaire";
+  static const String editRoom = "Modifier ou supprimer une salle";
   static const String endDate = "Date de fin";
   static const String endHour = "Heure de fin";
   static const String entity = "Pour qui ?";
@@ -53,7 +60,8 @@ class BookingTextConstants {
   static const String invalidDates = "Dates invalides";
   static const String invalidRoom = "Salle invalide";
   static const String keys = "Clés";
-  static const String managers = "Choisir un manager";
+  static const String manager = "Gestionnaire";
+  static const String managerName = "Nom du gestionnaire";
   static const String multipleDay = "Plusieurs jours";
   static const String myBookings = "Mes réservations";
   static const String necessaryKey = "Clé nécessaire";

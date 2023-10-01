@@ -1,14 +1,14 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/booking/class/manager.dart';
 
-class ManagerIdNotifier extends StateNotifier<String> {
-  ManagerIdNotifier() : super("");
+class ManagerNotifier extends StateNotifier<Manager> {
+  ManagerNotifier() : super(Manager.empty());
 
-  void setId(String managerId) {
-    state = managerId;
+  void setManager(Manager manager) {
+    state = manager;
   }
 }
 
-final managerIdProvider =
-    StateNotifierProvider<ManagerIdNotifier, String>((ref) {
-  return ManagerIdNotifier();
+final managerProvider = StateNotifierProvider<ManagerNotifier, Manager>((ref) {
+  return ManagerNotifier();
 });

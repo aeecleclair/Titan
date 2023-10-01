@@ -5,7 +5,8 @@ import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
-import 'package:myecl/booking/providers/is_admin_or_manager_provider.dart';
+import 'package:myecl/booking/providers/is_admin_provider.dart';
+import 'package:myecl/booking/providers/is_manager_provider.dart';
 import 'package:myecl/booking/providers/selected_days_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/router.dart';
@@ -26,7 +27,8 @@ class BookingMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isManagerOrAdmin = ref.watch(isManagerOrAdminProvider);
+    final isManager = ref.watch(isManagerProvider);
+    final isAdmin = ref.watch(isAdminProvider);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
     final confirmedbookingsNotifier =
         ref.watch(confirmedBookingListProvider.notifier);
@@ -48,58 +50,102 @@ class BookingMainPage extends HookConsumerWidget {
         child: SizedBox(
           height: MediaQuery.of(context).size.height - 85,
           child: Column(children: [
-            const SizedBox(height: 20),
+            if (isAdmin | isManager) const SizedBox(height: 10),
+            SizedBox(
+              width: 300,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  if (isAdmin)
+                    GestureDetector(
+                      onTap: () {
+                        QR.to(BookingRouter.root + BookingRouter.admin);
+                      },
+                      child: Container(
+                        width: 120,
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 8),
+                        decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Colors.white, width: 1),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.grey.shade200.withOpacity(0.2),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 5))
+                            ]),
+                        child: const Row(
+                          children: [
+                            HeroIcon(HeroIcons.userGroup,
+                                color: Colors.white, size: 20),
+                            SizedBox(width: 10),
+                            Text("Admin",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white)),
+                          ],
+                        ),
+                      ),
+                    ),
+                  if (isManager)
+                    GestureDetector(
+                      onTap: () {
+                        QR.to(BookingRouter.root + BookingRouter.manager);
+                      },
+                      child: Container(
+                        width: 130,
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 8),
+                        decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Colors.white, width: 1),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.grey.shade200.withOpacity(0.2),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 5))
+                            ]),
+                        child: const Row(
+                          children: [
+                            HeroIcon(HeroIcons.userGroup,
+                                color: Colors.white, size: 20),
+                            SizedBox(width: 10),
+                            Text("Gestion",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white)),
+                          ],
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
             const Expanded(child: Calendar()),
             const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30.0),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(BookingTextConstants.myBookings,
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 149, 149, 149))),
-                    if (isManagerOrAdmin)
-                      GestureDetector(
-                        onTap: () {
-                          QR.to(BookingRouter.root + BookingRouter.admin);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 8),
-                          decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    blurRadius: 10,
-                                    offset: const Offset(0, 5))
-                              ]),
-                          child: const Row(
-                            children: [
-                              HeroIcon(HeroIcons.userGroup,
-                                  color: Colors.white, size: 20),
-                              SizedBox(width: 10),
-                              Text("Admin",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white)),
-                            ],
-                          ),
-                        ),
-                      )
-                  ],
+                child: Text(
+                  BookingTextConstants.myBookings,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 149, 149, 149),
+                  ),
                 ),
               ),
             ),
-            SizedBox(
-              height: (isManagerOrAdmin) ? 0 : 10,
+            const SizedBox(
+              height: 10,
             ),
             bookings.when(data: (List<Booking> data) {
               data.sort((a, b) => b.start.compareTo(a.start));

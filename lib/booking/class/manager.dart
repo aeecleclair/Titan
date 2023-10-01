@@ -33,4 +33,8 @@ class Manager {
   String toString() {
     return 'Manager{name: $name, group_id: $groupId, id: $id}';
   }
+
+  isEmpty() {
+    return name == '' && groupId == '' && id == '';
+  }
 }

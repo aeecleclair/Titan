@@ -1,35 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:myecl/admin/class/simple_group.dart';
+import 'package:myecl/admin/providers/group_id_provider.dart';
 import 'package:myecl/booking/class/manager.dart';
-import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/providers/manager_list_provider.dart';
 import 'package:myecl/booking/providers/manager_provider.dart';
-import 'package:myecl/booking/providers/room_list_provider.dart';
-import 'package:myecl/booking/providers/room_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
-import 'package:myecl/booking/ui/pages/room_pages/manager_chip.dart';
+import 'package:myecl/booking/ui/pages/admin_pages/admin_chip.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:myecl/admin/providers/group_list_provider.dart';
 
-class AddEditRoomPage extends HookConsumerWidget {
-  const AddEditRoomPage({Key? key}) : super(key: key);
+class AddEditManagerPage extends HookConsumerWidget {
+  const AddEditManagerPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final managerList = ref.watch(managerListProvider);
-    final managerId = ref.watch(managerIdProvider);
-    final managerIdNotifier = ref.watch(managerIdProvider.notifier);
-    final roomListNotifier = ref.watch(roomListProvider.notifier);
+    final groupList = ref.watch(allGroupListProvider);
+    final groupId = ref.watch(groupIdProvider);
+    final groupIdNotifier = ref.watch(groupIdProvider.notifier);
+    final managerListNotifier = ref.watch(managerListProvider.notifier);
+    final manager = ref.watch(managerProvider);
     final key = GlobalKey<FormState>();
-    final room = ref.watch(roomProvider);
-    final isEdit = room.id != Room.empty().id;
-    final name = useTextEditingController(text: room.name);
+    final isEdit = !manager.isEmpty();
+    final name = useTextEditingController(text: manager.name);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -46,8 +46,8 @@ class AddEditRoomPage extends HookConsumerWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                     isEdit
-                        ? BookingTextConstants.editRoom
-                        : BookingTextConstants.addRoom,
+                        ? BookingTextConstants.editManager
+                        : BookingTextConstants.addManager,
                     style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -66,7 +66,7 @@ class AddEditRoomPage extends HookConsumerWidget {
                     controller: name,
                     cursorColor: Colors.black,
                     decoration: const InputDecoration(
-                      labelText: BookingTextConstants.roomName,
+                      labelText: BookingTextConstants.managerName,
                       floatingLabelStyle: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -79,22 +79,8 @@ class AddEditRoomPage extends HookConsumerWidget {
                   const SizedBox(
                     height: 50,
                   ),
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      BookingTextConstants.managers,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 149, 149, 149),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  managerList.when(
-                    data: (List<Manager> data) => SingleChildScrollView(
+                  groupList.when(
+                    data: (List<SimpleGroup> data) => SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       physics: const BouncingScrollPhysics(),
                       child: Row(
@@ -102,11 +88,11 @@ class AddEditRoomPage extends HookConsumerWidget {
                         children: [
                           const SizedBox(width: 15),
                           ...data.map(
-                            (e) => ManagerChip(
+                            (e) => AdminChip(
                               label: e.name,
-                              selected: managerId == e.id,
+                              selected: groupId == e.id,
                               onTap: () {
-                                managerIdNotifier.setId(e.id);
+                                groupIdNotifier.setId(e.id);
                               },
                             ),
                           ),
@@ -146,20 +132,21 @@ class AddEditRoomPage extends HookConsumerWidget {
                         )),
                     onTap: () async {
                       await tokenExpireWrapper(ref, () async {
-                        Room newRoom = Room(
-                            id: isEdit ? room.id : '',
+                        Manager newManager = Manager(
+                            id: isEdit ? manager.id : '',
                             name: name.text,
-                            managerId: managerId);
+                            groupId: groupId);
                         final value = isEdit
-                            ? await roomListNotifier.updateRoom(newRoom)
-                            : await roomListNotifier.addRoom(newRoom);
+                            ? await managerListNotifier
+                                .updateManager(newManager)
+                            : await managerListNotifier.addManager(newManager);
                         if (value) {
                           QR.back();
                           isEdit
-                              ? displayToastWithContext(
-                                  TypeMsg.msg, BookingTextConstants.editedRoom)
-                              : displayToastWithContext(
-                                  TypeMsg.msg, BookingTextConstants.addedRoom);
+                              ? displayToastWithContext(TypeMsg.msg,
+                                  BookingTextConstants.editedManager)
+                              : displayToastWithContext(TypeMsg.msg,
+                                  BookingTextConstants.addedManager);
                         } else {
                           isEdit
                               ? displayToastWithContext(TypeMsg.error,
@@ -227,20 +214,22 @@ class AddEditRoomPage extends HookConsumerWidget {
                               context: context,
                               builder: (context) => CustomDialogBox(
                                     descriptions: BookingTextConstants
-                                        .deleteRoomConfirmation,
+                                        .deleteManagerConfirmation,
                                     onYes: () async {
-                                      final value = await roomListNotifier
-                                          .deleteRoom(room);
+                                      final value = await managerListNotifier
+                                          .deleteManager(manager);
                                       if (value) {
                                         QR.back();
-                                        displayToastWithContext(TypeMsg.msg,
-                                            BookingTextConstants.deletedRoom);
+                                        displayToastWithContext(
+                                            TypeMsg.msg,
+                                            BookingTextConstants
+                                                .deletedManager);
                                       } else {
                                         displayToastWithContext(TypeMsg.error,
                                             BookingTextConstants.deletingError);
                                       }
                                     },
-                                    title: BookingTextConstants.deleteBooking,
+                                    title: BookingTextConstants.deleting,
                                   ));
                         });
                       },
