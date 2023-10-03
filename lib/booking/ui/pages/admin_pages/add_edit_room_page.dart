@@ -18,7 +18,7 @@ import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditRoomPage extends HookConsumerWidget {
-  const AddEditRoomPage({Key? key}) : super(key: key);
+  const AddEditRoomPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -80,25 +80,10 @@ class AddEditRoomPage extends HookConsumerWidget {
                     height: 50,
                   ),
                   managerList.when(
-                    data: (List<Manager> data) => SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      physics: const BouncingScrollPhysics(),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const SizedBox(width: 15),
-                          ...data.map(
-                            (e) => AdminChip(
-                              label: e.name,
-                              selected: managerId == e.id,
-                              onTap: () {
-                                managerIdNotifier.setId(e.id);
-                              },
-                            ),
-                          ),
-                          const SizedBox(width: 15),
-                        ],
-                      ),
+                    data: (List<Manager> data) => ScrollManagerChips(
+                      data: data,
+                      managerId: managerId,
+                      managerIdNotifier: managerIdNotifier,
                     ),
                     error: (Object error, StackTrace? stackTrace) {
                       return Center(child: Text('Error $error'));
@@ -262,6 +247,53 @@ class AddEditRoomPage extends HookConsumerWidget {
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ScrollManagerChips extends SingleChildScrollView {
+  final String managerId;
+  final ManagerIdNotifier managerIdNotifier;
+  final List<Manager> data;
+  final dataKey = GlobalKey();
+  ScrollManagerChips({
+    super.key,
+    required this.data,
+    required this.managerId,
+    required this.managerIdNotifier,
+  }) {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => Scrollable.ensureVisible(
+        dataKey.currentContext!,
+        duration: const Duration(milliseconds: 500),
+        alignment: 0.5,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      key: const PageStorageKey("manager_list"),
+      scrollDirection: Axis.horizontal,
+      physics: const BouncingScrollPhysics(),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const SizedBox(width: 15),
+          ...data.map(
+            (e) => AdminChip(
+              key: managerId == e.id ? dataKey : null,
+              label: e.name,
+              selected: managerId == e.id,
+              onTap: () {
+                managerIdNotifier.setId(e.id);
+              },
+            ),
+          ),
+          const SizedBox(width: 15),
+        ],
       ),
     );
   }
