@@ -6,18 +6,18 @@ import 'package:myecl/user/class/applicant.dart';
 enum Decision { approved, declined, pending }
 
 class Booking {
-  late final String id;
-  late final String reason;
-  late final DateTime start;
-  late final DateTime end;
-  late final String note;
-  late final Room room;
-  late final bool key;
-  late final Decision decision;
-  late final String recurrenceRule;
-  late final String entity;
-  late final Applicant applicant;
-  late final String applicantId;
+  final String id;
+  final String reason;
+  final DateTime start;
+  final DateTime end;
+  final String note;
+  final Room room;
+  final bool key;
+  final Decision decision;
+  final String recurrenceRule;
+  final String entity;
+  final Applicant applicant;
+  final String applicantId;
 
   Booking(
       {required this.id,

@@ -1,15 +1,14 @@
 class Room {
-  late final String name;
-  late final String managerId;
-  late final String id;
+  final String name;
+  final String managerId;
+  final String id;
 
   Room({required this.name, required this.managerId, required this.id});
 
-  Room.fromJson(Map<String, dynamic> json) {
-    name = json["name"];
-    managerId = json["manager_id"];
-    id = json["id"];
-  }
+  Room.fromJson(Map<String, dynamic> json)
+      : name = json["name"],
+        managerId = json["manager_id"],
+        id = json["id"];
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};

@@ -1,15 +1,14 @@
 class Manager {
-  late final String name;
-  late final String groupId;
-  late final String id;
+  final String name;
+  final String groupId;
+  final String id;
 
   Manager({required this.name, required this.groupId, required this.id});
 
-  Manager.fromJson(Map<String, dynamic> json) {
-    name = json["name"];
-    groupId = json["group_id"];
-    id = json["id"];
-  }
+  Manager.fromJson(Map<String, dynamic> json)
+      : name = json["name"],
+        groupId = json["group_id"],
+        id = json["id"];
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
