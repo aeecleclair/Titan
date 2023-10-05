@@ -70,18 +70,17 @@ class AddEditRoomPage extends HookConsumerWidget {
                   ),
                   managerList.when(
                     data: (List<Manager> data) => AdminScrollChips(
+                      data: data,
                       isEdit: isEdit,
                       dataKey: dataKey,
                       pageStorageKeyName: "manager_list",
-                      builder: () => data.map(
-                        (e) => AdminChip(
-                          key: managerId == e.id ? dataKey : null,
-                          label: e.name,
-                          selected: managerId == e.id,
-                          onTap: () {
-                            managerIdNotifier.setId(e.id);
-                          },
-                        ),
+                      builder: (Manager e) => AdminChip(
+                        key: managerId == e.id ? dataKey : null,
+                        label: e.name,
+                        selected: managerId == e.id,
+                        onTap: () {
+                          managerIdNotifier.setId(e.id);
+                        },
                       ),
                     ),
                     error: (Object error, StackTrace? stackTrace) {

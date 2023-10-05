@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
-class AdminScrollChips extends StatelessWidget {
+class AdminScrollChips<T> extends StatelessWidget {
   final bool isEdit;
+  final List<T> data;
   final GlobalKey dataKey;
   final String pageStorageKeyName;
-  final Iterable<Widget> Function() builder;
+  final Widget Function(T) builder;
 
   AdminScrollChips({
     super.key,
     required this.isEdit,
     required this.dataKey,
+    required this.data,
     required this.pageStorageKeyName,
     required this.builder,
   }) {
@@ -34,7 +36,7 @@ class AdminScrollChips extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const SizedBox(width: 15),
-          ...builder(),
+          ...data.map((e) => builder(e)),
           const SizedBox(width: 15),
         ],
       ),

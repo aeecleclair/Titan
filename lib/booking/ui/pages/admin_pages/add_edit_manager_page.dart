@@ -71,18 +71,15 @@ class AddEditManagerPage extends HookConsumerWidget {
                   groupList.when(
                     data: (List<SimpleGroup> data) => AdminScrollChips(
                       isEdit: isEdit,
+                      data: data,
                       dataKey: dataKey,
                       pageStorageKeyName: "group_list",
-                      builder: () => data.map(
-                        (e) {
-                          return AdminChip(
-                            key: groupId == e.id ? dataKey : null,
-                            label: e.name,
-                            selected: groupId == e.id,
-                            onTap: () {
-                              groupIdNotifier.setId(e.id);
-                            },
-                          );
+                      builder: (SimpleGroup e) => AdminChip(
+                        key: groupId == e.id ? dataKey : null,
+                        label: e.name,
+                        selected: groupId == e.id,
+                        onTap: () {
+                          groupIdNotifier.setId(e.id);
                         },
                       ),
                     ),
