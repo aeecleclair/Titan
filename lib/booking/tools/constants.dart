@@ -34,9 +34,9 @@ class BookingTextConstants {
   static const String deletedRoom = "Salle supprimée";
   static const String deletedManager = "Gestionnaire supprimé";
   static const String deleteRoomConfirmation =
-      "Êtes-vous sûr de vouloir supprimer cette salle ?\n\nToutes les réservations associées à cette salle seront aussi supprimées";
+      "Êtes-vous sûr de vouloir supprimer cette salle ?\n\nLa salle ne doit avoir aucune réservation en cours ou à venir pour être supprimée";
   static const String deleteManagerConfirmation =
-      "Êtes-vous sûr de vouloir supprimer ce gestionnaire ?\n\nToutes les salles et réservations associées à ce gestionnaire seront aussi supprimées";
+      "Êtes-vous sûr de vouloir supprimer ce gestionnaire ?\n\nLe gestionnaire ne doit être associé à aucune salle pour pouvoir être supprimé";
   static const String deletingBooking = "Supprimer la réservation ?";
   static const String deletingError = "Erreur lors de la suppression";
   static const String deletingRoom = "Supprimer la salle ?";
