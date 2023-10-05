@@ -10,6 +10,7 @@ import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/pages/admin_pages/admin_chip.dart';
 import 'package:myecl/booking/ui/pages/admin_pages/admin_entry.dart';
+import 'package:myecl/booking/ui/pages/admin_pages/admin_scroll_chips.dart';
 import 'package:myecl/booking/ui/pages/admin_pages/admin_shrink_button.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -18,7 +19,8 @@ import 'package:qlevar_router/qlevar_router.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 
 class AddEditManagerPage extends HookConsumerWidget {
-  const AddEditManagerPage({super.key});
+  final GlobalKey dataKey = GlobalKey();
+  AddEditManagerPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -67,13 +69,23 @@ class AddEditManagerPage extends HookConsumerWidget {
                     height: 50,
                   ),
                   groupList.when(
-                    data: (List<SimpleGroup> data) {
-                      return ScrollManagerChips(
-                        data: data,
-                        groupId: groupId,
-                        groupIdNotifier: groupIdNotifier,
-                      );
-                    },
+                    data: (List<SimpleGroup> data) => AdminScrollChips(
+                      isEdit: isEdit,
+                      dataKey: dataKey,
+                      pageStorageKeyName: "group_list",
+                      builder: () => data.map(
+                        (e) {
+                          return AdminChip(
+                            key: groupId == e.id ? dataKey : null,
+                            label: e.name,
+                            selected: groupId == e.id,
+                            onTap: () {
+                              groupIdNotifier.setId(e.id);
+                            },
+                          );
+                        },
+                      ),
+                    ),
                     error: (Object error, StackTrace? stackTrace) {
                       return Center(child: Text('Error $error'));
                     },
@@ -154,53 +166,6 @@ class AddEditManagerPage extends HookConsumerWidget {
             )
           ],
         ),
-      ),
-    );
-  }
-}
-
-class ScrollManagerChips extends SingleChildScrollView {
-  final String groupId;
-  final GroupIdNotifier groupIdNotifier;
-  final List<SimpleGroup> data;
-  final dataKey = GlobalKey();
-  ScrollManagerChips({
-    super.key,
-    required this.data,
-    required this.groupId,
-    required this.groupIdNotifier,
-  }) {
-    Future(
-      () => Scrollable.ensureVisible(
-        dataKey.currentContext!,
-        duration: const Duration(milliseconds: 500),
-        alignment: 0.5,
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      key: const PageStorageKey("group_list"),
-      scrollDirection: Axis.horizontal,
-      physics: const BouncingScrollPhysics(),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const SizedBox(width: 15),
-          ...data.map(
-            (e) => AdminChip(
-              key: groupId == e.id ? dataKey : null,
-              label: e.name,
-              selected: groupId == e.id,
-              onTap: () {
-                groupIdNotifier.setId(e.id);
-              },
-            ),
-          ),
-          const SizedBox(width: 15),
-        ],
       ),
     );
   }

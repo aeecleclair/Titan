@@ -11,6 +11,7 @@ import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/pages/admin_pages/admin_chip.dart';
 import 'package:myecl/booking/ui/pages/admin_pages/admin_entry.dart';
+import 'package:myecl/booking/ui/pages/admin_pages/admin_scroll_chips.dart';
 import 'package:myecl/booking/ui/pages/admin_pages/admin_shrink_button.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -18,7 +19,8 @@ import 'package:myecl/tools/ui/dialog.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditRoomPage extends HookConsumerWidget {
-  const AddEditRoomPage({super.key});
+  final dataKey = GlobalKey();
+  AddEditRoomPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -67,10 +69,20 @@ class AddEditRoomPage extends HookConsumerWidget {
                     height: 50,
                   ),
                   managerList.when(
-                    data: (List<Manager> data) => ScrollManagerChips(
-                      data: data,
-                      managerId: managerId,
-                      managerIdNotifier: managerIdNotifier,
+                    data: (List<Manager> data) => AdminScrollChips(
+                      isEdit: isEdit,
+                      dataKey: dataKey,
+                      pageStorageKeyName: "manager_list",
+                      builder: () => data.map(
+                        (e) => AdminChip(
+                          key: managerId == e.id ? dataKey : null,
+                          label: e.name,
+                          selected: managerId == e.id,
+                          onTap: () {
+                            managerIdNotifier.setId(e.id);
+                          },
+                        ),
+                      ),
                     ),
                     error: (Object error, StackTrace? stackTrace) {
                       return Center(child: Text('Error $error'));
@@ -152,53 +164,6 @@ class AddEditRoomPage extends HookConsumerWidget {
             )
           ],
         ),
-      ),
-    );
-  }
-}
-
-class ScrollManagerChips extends SingleChildScrollView {
-  final String managerId;
-  final ManagerIdNotifier managerIdNotifier;
-  final List<Manager> data;
-  final dataKey = GlobalKey();
-  ScrollManagerChips({
-    super.key,
-    required this.data,
-    required this.managerId,
-    required this.managerIdNotifier,
-  }) {
-    Future(
-      () => Scrollable.ensureVisible(
-        dataKey.currentContext!,
-        duration: const Duration(milliseconds: 500),
-        alignment: 0.5,
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      key: const PageStorageKey("manager_list"),
-      scrollDirection: Axis.horizontal,
-      physics: const BouncingScrollPhysics(),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const SizedBox(width: 15),
-          ...data.map(
-            (e) => AdminChip(
-              key: managerId == e.id ? dataKey : null,
-              label: e.name,
-              selected: managerId == e.id,
-              onTap: () {
-                managerIdNotifier.setId(e.id);
-              },
-            ),
-          ),
-          const SizedBox(width: 15),
-        ],
       ),
     );
   }

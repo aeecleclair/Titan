@@ -42,12 +42,12 @@ class BookingRouter {
             children: [
               QRoute(
                 path: room,
-                builder: () => const AddEditRoomPage(),
+                builder: () => AddEditRoomPage(),
                 middleware: [AdminMiddleware(ref, isAdminProvider)],
               ),
               QRoute(
                 path: manager,
-                builder: () => const AddEditManagerPage(),
+                builder: () => AddEditManagerPage(),
                 middleware: [AdminMiddleware(ref, isAdminProvider)],
               )
             ],
