@@ -19,7 +19,7 @@ class ManagerPage extends HookConsumerWidget {
     final List<Booking> pendingBookings = [],
         confirmedBookings = [],
         canceledBookings = [];
-    bookings.when(
+    bookings.maybeWhen(
         data: (
           bookings,
         ) {
@@ -40,8 +40,7 @@ class ManagerPage extends HookConsumerWidget {
           canceledBookings.sort((a, b) => b.start.compareTo(a.start));
           pendingBookings.sort((a, b) => b.start.compareTo(a.start));
         },
-        error: (e, s) {},
-        loading: () {});
+        orElse: () {});
     return BookingTemplate(
       child: Refresher(
         onRefresh: () async {
