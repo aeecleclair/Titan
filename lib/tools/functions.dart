@@ -97,6 +97,12 @@ String capitaliseAll(String s) {
       .trim();
 }
 
+bool isDateBefore(String date1, String date2) {
+  final d1 = DateTime.parse(date1);
+  final d2 = DateTime.parse(date2);
+  return d1.isBefore(d2);
+}
+
 String processDate(DateTime date) {
   return "${date.day.toString().padLeft(2, "0")}/${date.month.toString().padLeft(2, "0")}/${date.year}";
 }
