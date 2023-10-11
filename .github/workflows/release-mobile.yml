@@ -71,6 +71,7 @@ jobs:
         run: flutter pub get
       
       - name: Configure Alpha env
+        if: needs.extract-version.outputs.isAlpha == 'true'
         run: |
           echo THE_MOVIE_DB_API=$THE_MOVIE_DB_API >> .env
           echo DEBUG_HOST=$DEBUG_HOST >> .env
@@ -78,9 +79,9 @@ jobs:
         env:
           THE_MOVIE_DB_API: ${{ secrets.THE_MOVIE_DB_API }}
           DEBUG_HOST: ${{ secrets.DEBUG_HOST }}
-          RELEASE_HOST: ${{ secrets.RELEASE_HOST }}
       
       - name: Configure production env
+        if: needs.extract-version.outputs.isAlpha == 'false'
         run: |
           echo THE_MOVIE_DB_API=$THE_MOVIE_DB_API >> .env
           echo DEBUG_HOST=$DEBUG_HOST >> .env
