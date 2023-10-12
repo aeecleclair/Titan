@@ -9,14 +9,16 @@ class VoteTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const TopBar(
-          title: VoteTextConstants.vote,
-          root: VoteRouter.root,
-        ),
-        Expanded(child: child),
-      ],
+    return SafeArea(
+      child: Column(
+        children: [
+          const TopBar(
+            title: VoteTextConstants.vote,
+            root: VoteRouter.root,
+          ),
+          Expanded(child: child),
+        ],
+      ),
     );
   }
 }
