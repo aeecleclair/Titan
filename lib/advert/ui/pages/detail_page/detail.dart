@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:myecl/advert/providers/advert_poster_provider.dart';
 import 'package:myecl/advert/providers/advert_posters_provider.dart';
 import 'package:myecl/advert/providers/advert_provider.dart';
-import 'package:myecl/advert/ui/tools/tag_chip.dart';
+import 'package:myecl/advert/ui/components/tag_chip.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/text_with_hyper_link.dart';

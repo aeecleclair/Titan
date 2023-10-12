@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/advert/providers/announcer_provider.dart';
-import 'package:myecl/advert/ui/router.dart';
+import 'package:myecl/advert/router.dart';
 import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/tools/ui/top_bar.dart';
 

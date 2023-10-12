@@ -15,7 +15,7 @@ import 'package:myecl/advert/providers/advert_provider.dart';
 import 'package:myecl/advert/providers/announcer_provider.dart';
 import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/advert/ui/pages/advert.dart';
-import 'package:myecl/advert/ui/tools/announcer_bar.dart';
+import 'package:myecl/advert/ui/components/announcer_bar.dart';
 import 'package:myecl/advert/ui/pages/form_page/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -32,7 +32,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
     final isEdit = advert.id != Advert.empty().id;
     final title = useTextEditingController(text: advert.title);
     final content = useTextEditingController(text: advert.content);
-    final selectedAnnoncers = ref.watch(announcerProvider);
+    final selectedAnnouncers = ref.watch(announcerProvider);
 
     final tags = advert.tags;
     var textTags = tags.join(', ');
@@ -195,7 +195,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
               ),
               FormField<List<Announcer>>(
                 validator: (e) {
-                  if (selectedAnnoncers.isEmpty) {
+                  if (selectedAnnouncers.isEmpty) {
                     return AdvertTextConstants.choosingAnnouncer;
                   }
                   return null;
@@ -272,13 +272,13 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                             return;
                           }
                           if (key.currentState!.validate() &&
-                              selectedAnnoncers.isNotEmpty &&
+                              selectedAnnouncers.isNotEmpty &&
                               (poster.value != null || isEdit)) {
                             await tokenExpireWrapper(ref, () async {
                               final advertList = ref.watch(advertListProvider);
                               Advert newAdvert = Advert(
                                   id: isEdit ? advert.id : '',
-                                  announcer: selectedAnnoncers[0],
+                                  announcer: selectedAnnouncers[0],
                                   content: content.text,
                                   date: DateTime.now(),
                                   tags: textTagsController.text.split(', '),

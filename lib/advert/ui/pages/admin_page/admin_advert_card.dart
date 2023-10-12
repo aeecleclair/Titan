@@ -3,7 +3,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/advert/class/advert.dart';
 import 'package:myecl/advert/tools/constants.dart';
-import 'package:myecl/advert/ui/tools/advert_card.dart';
+import 'package:myecl/advert/ui/components/advert_card.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
 class AdminAdvertCard extends HookConsumerWidget {
