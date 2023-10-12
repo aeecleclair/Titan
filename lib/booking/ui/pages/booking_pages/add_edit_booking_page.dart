@@ -531,11 +531,9 @@ class AddEditBookingPage extends HookConsumerWidget {
                             start.text = "${start.text} 00:00";
                             end.text = "${end.text} 23:59";
                           }
-                          if ((end.text.contains("/") &&
-                                  processDateBack(start.text).compareTo(
-                                          processDateBack(end.text)) >
-                                      0) ||
-                              (start.text.compareTo(end.text) > 0)) {
+                          if (end.text.contains("/") &&
+                                      isDateBefore(processDateBack(end.text),
+                                          processDateBack(start.text))) {
                             displayToast(context, TypeMsg.error,
                                 BookingTextConstants.invalidDates);
                           } else if (room.value.id.isEmpty) {
