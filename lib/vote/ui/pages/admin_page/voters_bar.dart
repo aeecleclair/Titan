@@ -37,9 +37,15 @@ class VotersBar extends HookConsumerWidget {
                         selected: votersGroupId.contains(e.id),
                         onTap: () async {
                           if (status == Status.waiting) {
-                            votersNotifier.addVoter(Voter(
-                              groupId: e.id,
-                            ));
+                            if (votersGroupId.contains(e.id)) {
+                              await votersNotifier.deleteVoter(Voter(
+                                groupId: e.id,
+                              ));
+                            } else {
+                              await votersNotifier.addVoter(Voter(
+                                groupId: e.id,
+                              ));
+                            }
                           }
                         },
                       ),
