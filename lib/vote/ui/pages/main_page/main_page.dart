@@ -110,17 +110,20 @@ class VoteMainPage extends HookConsumerWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               ListSideItem(
-                                  sectionList: sectionList, animation: animation),
+                                  sectionList: sectionList,
+                                  animation: animation),
                               Expanded(
                                 child: SizedBox(
                                   width: double.infinity,
                                   child: sectionsPretendances.when(
-                                    data: (pretendanceList) => Column(children: [
+                                    data: (pretendanceList) =>
+                                        Column(children: [
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          SectionTitle(sectionList: sectionList),
+                                          SectionTitle(
+                                              sectionList: sectionList),
                                           if (isAdmin)
                                             Container(
                                               margin: const EdgeInsets.only(
@@ -131,10 +134,10 @@ class VoteMainPage extends HookConsumerWidget {
                                                       VoteRouter.admin);
                                                 },
                                                 child: Container(
-                                                  padding:
-                                                      const EdgeInsets.symmetric(
-                                                          horizontal: 12,
-                                                          vertical: 8),
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 12,
+                                                      vertical: 8),
                                                   decoration: BoxDecoration(
                                                       color: Colors.black,
                                                       borderRadius:
@@ -143,10 +146,12 @@ class VoteMainPage extends HookConsumerWidget {
                                                       boxShadow: [
                                                         BoxShadow(
                                                             color: Colors.black
-                                                                .withOpacity(0.2),
+                                                                .withOpacity(
+                                                                    0.2),
                                                             blurRadius: 10,
-                                                            offset: const Offset(
-                                                                0, 5))
+                                                            offset:
+                                                                const Offset(
+                                                                    0, 5))
                                                       ]),
                                                   child: const Row(
                                                     children: [
@@ -158,9 +163,10 @@ class VoteMainPage extends HookConsumerWidget {
                                                           style: TextStyle(
                                                               fontSize: 20,
                                                               fontWeight:
-                                                                  FontWeight.bold,
-                                                              color:
-                                                                  Colors.white)),
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: Colors
+                                                                  .white)),
                                                     ],
                                                   ),
                                                 ),
@@ -210,13 +216,65 @@ class VoteMainPage extends HookConsumerWidget {
       return VoteTemplate(
         child: SizedBox(
             height: MediaQuery.of(context).size.height - 100,
-            child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.0),
-                child: Center(
-                  child: Text(
-                    VoteTextConstants.canNotVote,
-                    style: TextStyle(fontSize: 20),
-                  ),
+            child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: isAdmin ? 10 : 15,
+                    ),
+                    if (isAdmin)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Spacer(),
+                          Container(
+                            margin: const EdgeInsets.only(right: 20),
+                            child: GestureDetector(
+                              onTap: () {
+                                QR.to(VoteRouter.root + VoteRouter.admin);
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 8),
+                                decoration: BoxDecoration(
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.circular(10),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.black.withOpacity(0.2),
+                                          blurRadius: 10,
+                                          offset: const Offset(0, 5))
+                                    ]),
+                                child: const Row(
+                                  children: [
+                                    HeroIcon(HeroIcons.userGroup,
+                                        color: Colors.white),
+                                    SizedBox(width: 10),
+                                    Text("Admin",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    const Expanded(
+                      child: Center(
+                        child: Text(
+                          VoteTextConstants.canNotVote,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
+                    ),
+                  ],
                 ))),
       );
     }
