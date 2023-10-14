@@ -10,10 +10,6 @@ class VoterRepository extends Repository {
     return await delete("/$voterId");
   }
 
-  Future<bool> updateVoter(Voter voter) async {
-    return await update(voter.toJson(), "/${voter.id}");
-  }
-
   Future<Voter> createVoter(Voter voter) async {
     return Voter.fromJson(await create(voter.toJson()));
   }

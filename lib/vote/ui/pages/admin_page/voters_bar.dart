@@ -38,7 +38,6 @@ class VotersBar extends HookConsumerWidget {
                         onTap: () async {
                           if (status == Status.waiting) {
                             votersNotifier.addVoter(Voter(
-                              id: "",
                               groupId: e.id,
                             ));
                           }

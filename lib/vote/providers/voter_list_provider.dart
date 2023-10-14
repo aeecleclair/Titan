@@ -20,21 +20,12 @@ class VoterListNotifier extends ListNotifier<Voter> {
     return await add(_voterRepository.createVoter, voter);
   }
 
-  Future<bool> updateVoter(Voter voter) async {
-    return await update(
-        _voterRepository.updateVoter,
-        (voters, voter) => voters
-          ..[voters.indexWhere((p) => p.id == voter.id)] =
-              voter,
-        voter);
-  }
-
   Future<bool> deleteVoter(Voter voter) async {
     return await delete(
         _voterRepository.deleteVoter,
         (voters, voter) =>
-            voters..removeWhere((p) => p.id == voter.id),
-        voter.id,
+            voters..removeWhere((p) => p.groupId == voter.groupId),
+        voter.groupId,
         voter);
   }
 }
