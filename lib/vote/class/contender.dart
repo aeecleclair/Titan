@@ -1,4 +1,3 @@
-import 'package:myecl/tools/functions.dart';
 import 'package:myecl/vote/class/members.dart';
 import 'package:myecl/vote/class/section.dart';
 import 'package:myecl/vote/tools/functions.dart';
@@ -49,7 +48,7 @@ class Contender {
       'id': id,
       'name': name,
       'description': description,
-      'type': capitalize(listType.toString().split('.').last),
+      'type': listTypeToString(listType),
       'members': members.map((x) => x.toJson()).toList(),
       'section_id': section.id,
       'program': program,
