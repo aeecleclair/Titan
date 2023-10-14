@@ -78,6 +78,7 @@ class VoteTextConstants {
   static const String voteError = 'Erreur lors de l\'enregistrement du vote';
   static const String voteFor = 'Voter pour ';
   static const String voteNotStarted = 'Vote non ouvert';
+  static const String voters = 'Groupes votants';
   static const String voteSuccess = 'Vote enregistré';
   static const String votes = 'Voix';
   static const String votesClosed = 'Votes clos';
