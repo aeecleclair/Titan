@@ -51,7 +51,7 @@ class VoteTextConstants {
   static const String name = 'Nom';
   static const String noPretendanceList = 'Aucune liste de prétendance';
   static const String noSection = 'Aucune section';
-  static const String notAEMember = 'Vous n\'êtes pas membre de l\'AE';
+  static const String canNotVote = 'Vous ne pouvez pas voter';
   static const String noSectionList = 'Aucune section';
   static const String notOpenedVote = 'Vote non ouvert';
   static const String onGoingCount = 'Dépouillement en cours';

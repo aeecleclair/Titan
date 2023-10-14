@@ -4,7 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:myecl/vote/class/pretendance.dart';
-import 'package:myecl/vote/providers/is_ae_member_provider.dart';
+import 'package:myecl/vote/providers/can_vote_provider.dart';
 import 'package:myecl/vote/providers/is_vote_admin_provider.dart';
 import 'package:myecl/vote/providers/pretendance_list_provider.dart';
 import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
@@ -53,9 +53,9 @@ class VoteMainPage extends HookConsumerWidget {
     final pretendanceLogosNotifier =
         ref.watch(pretendanceLogosProvider.notifier);
 
-    final isAEMember = ref.watch(isAEMemberProvider);
+    final canVote = ref.watch(canVoteProvider);
 
-    if (isAEMember) {
+    if (canVote) {
       return VoteTemplate(
         child: Refresher(
           onRefresh: () async {
@@ -214,7 +214,7 @@ class VoteMainPage extends HookConsumerWidget {
                 padding: EdgeInsets.symmetric(horizontal: 30.0),
                 child: Center(
                   child: Text(
-                    VoteTextConstants.notAEMember,
+                    VoteTextConstants.canNotVote,
                     style: TextStyle(fontSize: 20),
                   ),
                 ))),
