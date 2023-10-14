@@ -6,15 +6,13 @@ import 'package:myecl/vote/providers/voter_list_provider.dart';
 final votingGroupListProvider = Provider<List<SimpleGroup>>((ref) {
   final votingGroupList = ref.watch(voterListProvider);
   final groups = ref.watch(allGroupListProvider);
-  return votingGroupList.when(
-    data: (voters) => groups.when(
+  return votingGroupList.maybeWhen(
+    data: (voters) => groups.maybeWhen(
       data: (groups) => groups
           .where((g) => voters.any((v) => v.groupId == g.id))
           .toList(),
-      error: (Object error, StackTrace? stackTrace) => [],
-      loading: () => [],
+      orElse: () => [],
     ),
-    error: (Object error, StackTrace? stackTrace) => [],
-    loading: () => [],
+    orElse: () => [],
   );
 });
