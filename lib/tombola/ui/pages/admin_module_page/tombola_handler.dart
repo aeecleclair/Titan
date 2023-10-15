@@ -17,7 +17,6 @@ class TombolaHandler extends HookConsumerWidget {
     final groupList = ref.watch(allGroupListProvider);
     final raffleList = ref.watch(raffleListProvider);
     final groupChoosen = useState(SimpleGroup.empty());
-    ValueNotifier<String> dropdownValue = useState('');
 
     void displayWinningsDialog(List<SimpleGroup> groups, Function callback) {
       showDialog(
@@ -161,33 +160,6 @@ class TombolaHandler extends HookConsumerWidget {
                   },
                   error: (e, s) => [Text("Error: $e")],
                   loading: () => const [CircularProgressIndicator()],
-                ),
-                groupList.when(
-                  data: (data) {
-                    final List<String> listGroupName =
-                        data.map((e) => e.name).toList();
-                    dropdownValue = useState(
-                        listGroupName.isNotEmpty ? listGroupName.first : '');
-                    return listGroupName.isNotEmpty
-                        ? Container(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 12.0),
-                            child: DropdownButton<String>(
-                              value: dropdownValue.value,
-                              onChanged: (String? newValue) {
-                                dropdownValue.value = newValue!;
-                              },
-                              items: listGroupName
-                                  .map<DropdownMenuItem<String>>(
-                                      (String value) {
-                                return DropdownMenuItem<String>(
-                                    value: value, child: Text(value));
-                              }).toList(),
-                            ))
-                        : const Text("No group found");
-                  },
-                  error: (e, s) => Text('Error: $e'),
-                  loading: () => const CircularProgressIndicator(),
                 ),
                 const SizedBox(
                   width: 10,
