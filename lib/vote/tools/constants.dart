@@ -51,7 +51,7 @@ class VoteTextConstants {
   static const String name = 'Nom';
   static const String noPretendanceList = 'Aucune liste de prétendance';
   static const String noSection = 'Aucune section';
-  static const String notAEMember = 'Vous n\'êtes pas membre de l\'AE';
+  static const String canNotVote = 'Vous ne pouvez pas voter';
   static const String noSectionList = 'Aucune section';
   static const String notOpenedVote = 'Vote non ouvert';
   static const String onGoingCount = 'Dépouillement en cours';
@@ -78,6 +78,7 @@ class VoteTextConstants {
   static const String voteError = 'Erreur lors de l\'enregistrement du vote';
   static const String voteFor = 'Voter pour ';
   static const String voteNotStarted = 'Vote non ouvert';
+  static const String voters = 'Groupes votants';
   static const String voteSuccess = 'Vote enregistré';
   static const String votes = 'Voix';
   static const String votesClosed = 'Votes clos';
