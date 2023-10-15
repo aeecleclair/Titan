@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -47,7 +48,7 @@ class CreationPage extends HookConsumerWidget {
     final prizeListNotifier = ref.read(prizeListProvider.notifier);
     final prizeList = ref.watch(prizeListProvider);
     final winningTicketListNotifier =
-    ref.watch(winningTicketListProvider.notifier);
+        ref.watch(winningTicketListProvider.notifier);
 
     final name = useTextEditingController(text: raffle.name);
     final ImagePicker picker = ImagePicker();
@@ -107,26 +108,26 @@ class CreationPage extends HookConsumerWidget {
                     ),
                     child: logoFile.value != null
                         ? Container(
-                      width: 160,
-                      height: 160,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: logo.value != null
-                              ? Image.memory(
-                            logo.value!,
-                            fit: BoxFit.cover,
-                          ).image
-                              : logoFile.value!.image,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    )
+                            width: 160,
+                            height: 160,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: logo.value != null
+                                    ? Image.memory(
+                                        logo.value!,
+                                        fit: BoxFit.cover,
+                                      ).image
+                                    : logoFile.value!.image,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          )
                         : const HeroIcon(
-                      HeroIcons.userCircle,
-                      size: 160,
-                      color: Colors.grey,
-                    ),
+                            HeroIcons.userCircle,
+                            size: 160,
+                            color: Colors.grey,
+                          ),
                   ),
                   Positioned(
                     bottom: 0,
@@ -194,7 +195,8 @@ class CreationPage extends HookConsumerWidget {
             Container(
                 margin: const EdgeInsets.only(left: 30, right: 30, top: 15),
                 child: ShrinkButton(
-                    waitChild: const BlueBtn(text: TombolaTextConstants.waiting),
+                    waitChild:
+                        const BlueBtn(text: TombolaTextConstants.waiting),
                     onTap: () async {
                       if (formKey.currentState!.validate()) {
                         await tokenExpireWrapper(ref, () async {
@@ -227,8 +229,8 @@ class CreationPage extends HookConsumerWidget {
                     child: raffle.raffleStatusType == RaffleStatusType.creation
                         ? const BlueBtn(text: TombolaTextConstants.edit)
                         : const SizedBox(
-                      height: 20,
-                    ))),
+                            height: 20,
+                          ))),
             const SizedBox(
               height: 40,
             ),
@@ -243,7 +245,7 @@ class CreationPage extends HookConsumerWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 alignment: Alignment.centerLeft,
-                child: Text(TombolaTextConstants.editRaffle,
+                child: const Text(TombolaTextConstants.editRaffle,
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -254,9 +256,16 @@ class CreationPage extends HookConsumerWidget {
                   final XFile? image =
                       await picker.pickImage(source: ImageSource.gallery);
                   if (image != null) {
-                    logo.value = image.path;
+                    if (kIsWeb) {
+                      logo.value = await image.readAsBytes();
+                      logoFile.value = Image.network(image.path);
+                    } else {
+                      final file = File(image.path);
+                      logo.value = await file.readAsBytes();
+                      logoFile.value = Image.file(file);
+                    }
                     tombolaLogoNotifier.updateLogo(
-                        raffle.id, await image.readAsBytes());
+                        raffle.id, logo.value!);
                   }
                 },
                 child: Container(
@@ -291,123 +300,126 @@ class CreationPage extends HookConsumerWidget {
             ]),
             raffle.raffleStatusType != RaffleStatusType.lock
                 ? Padding(
-              padding:
-              const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
-              child: ShrinkButton(
-                  waitChild:
-                  const BlueBtn(text: TombolaTextConstants.waiting),
-                  onTap: () async {
-                    await tokenExpireWrapper(ref, () async {
-                      await showDialog(
-                          context: context,
-                          builder: (context) => CustomDialogBox(
-                            title: raffle.raffleStatusType ==
-                                RaffleStatusType.creation
-                                ? TombolaTextConstants.openRaffle
-                                : TombolaTextConstants.closeRaffle,
-                            descriptions: raffle.raffleStatusType ==
-                                RaffleStatusType.creation
-                                ? TombolaTextConstants
-                                .openRaffleDescription
-                                : TombolaTextConstants
-                                .closeRaffleDescription,
-                            onYes: () async {
-                              switch (raffle.raffleStatusType) {
-                                case RaffleStatusType.creation:
-                                  await raffleListNotifier.openRaffle(
-                                      raffle.copyWith(
-                                          description:
-                                          raffle.description,
-                                          raffleStatusType:
-                                          RaffleStatusType.open));
-                                  QR.back();
-                                  break;
-                                case RaffleStatusType.open:
-                                  await raffleListNotifier.lockRaffle(
-                                    raffle.copyWith(
-                                        description: raffle.description,
-                                        raffleStatusType:
-                                        RaffleStatusType.lock),
-                                  );
-                                  prizeList.whenData((prizes) {
-                                    for (var prize in prizes) {
-                                      if (prize.raffleId == raffle.id) {
-                                        winningTicketListNotifier
-                                            .drawLot(prize);
-                                      }
-                                    }
-                                  });
-                                  QR.back();
-                                  break;
-                                default:
-                              }
-                            },
-                          ));
-                    });
-                  },
-                  child: BlueBtn(
-                      text: raffle.raffleStatusType == RaffleStatusType.open
-                          ? TombolaTextConstants.close
-                          : TombolaTextConstants.open)),
-            )
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30, vertical: 12),
+                    child: ShrinkButton(
+                        waitChild:
+                            const BlueBtn(text: TombolaTextConstants.waiting),
+                        onTap: () async {
+                          await tokenExpireWrapper(ref, () async {
+                            await showDialog(
+                                context: context,
+                                builder: (context) => CustomDialogBox(
+                                      title: raffle.raffleStatusType ==
+                                              RaffleStatusType.creation
+                                          ? TombolaTextConstants.openRaffle
+                                          : TombolaTextConstants.closeRaffle,
+                                      descriptions: raffle.raffleStatusType ==
+                                              RaffleStatusType.creation
+                                          ? TombolaTextConstants
+                                              .openRaffleDescription
+                                          : TombolaTextConstants
+                                              .closeRaffleDescription,
+                                      onYes: () async {
+                                        switch (raffle.raffleStatusType) {
+                                          case RaffleStatusType.creation:
+                                            await raffleListNotifier.openRaffle(
+                                                raffle.copyWith(
+                                                    description:
+                                                        raffle.description,
+                                                    raffleStatusType:
+                                                        RaffleStatusType.open));
+                                            QR.back();
+                                            break;
+                                          case RaffleStatusType.open:
+                                            await raffleListNotifier.lockRaffle(
+                                              raffle.copyWith(
+                                                  description:
+                                                      raffle.description,
+                                                  raffleStatusType:
+                                                      RaffleStatusType.lock),
+                                            );
+                                            prizeList.whenData((prizes) {
+                                              for (var prize in prizes) {
+                                                if (prize.raffleId ==
+                                                    raffle.id) {
+                                                  winningTicketListNotifier
+                                                      .drawLot(prize);
+                                                }
+                                              }
+                                            });
+                                            QR.back();
+                                            break;
+                                          default:
+                                        }
+                                      },
+                                    ));
+                          });
+                        },
+                        child: BlueBtn(
+                            text:
+                                raffle.raffleStatusType == RaffleStatusType.open
+                                    ? TombolaTextConstants.close
+                                    : TombolaTextConstants.open)),
+                  )
                 : Container(
-              margin: const EdgeInsets.only(bottom: 30),
-              child: Row(
-                children: [
-                  const Spacer(),
-                  raffleStats.when(
-                      data: (stats) => Column(
-                        children: [
-                          Text(
-                            stats.ticketsSold.toString(),
-                            style: const TextStyle(
-                                color: TombolaColorConstants.textDark,
-                                fontSize: 30),
-                          ),
-                          const Text(
-                            "Tickets",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: TombolaColorConstants.textDark,
-                                fontSize: 20),
-                          ),
-                        ],
-                      ),
-                      error: (e, s) => const Text("Error"),
-                      loading: () => const Center(
-                        child: CircularProgressIndicator(
-                          color: TombolaColorConstants.textDark,
-                        ),
-                      )),
-                  const Spacer(),
-                  raffleStats.when(
-                      data: (stats) => Column(
-                        children: [
-                          Text(
-                            "${stats.amountRaised.toStringAsFixed(2)} €",
-                            style: const TextStyle(
-                                color: TombolaColorConstants.textDark,
-                                fontSize: 30),
-                          ),
-                          const Text(
-                            "Récoltés",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: TombolaColorConstants.textDark,
-                                fontSize: 20),
-                          ),
-                        ],
-                      ),
-                      error: (e, s) => const Text("Error"),
-                      loading: () => const Center(
-                        child: CircularProgressIndicator(
-                          color: TombolaColorConstants.textDark,
-                        ),
-                      )),
-                  const Spacer(),
-                ],
-              ),
-            ),
+                    margin: const EdgeInsets.only(bottom: 30),
+                    child: Row(
+                      children: [
+                        const Spacer(),
+                        raffleStats.when(
+                            data: (stats) => Column(
+                                  children: [
+                                    Text(
+                                      stats.ticketsSold.toString(),
+                                      style: const TextStyle(
+                                          color: TombolaColorConstants.textDark,
+                                          fontSize: 30),
+                                    ),
+                                    const Text(
+                                      "Tickets",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: TombolaColorConstants.textDark,
+                                          fontSize: 20),
+                                    ),
+                                  ],
+                                ),
+                            error: (e, s) => const Text("Error"),
+                            loading: () => const Center(
+                                  child: CircularProgressIndicator(
+                                    color: TombolaColorConstants.textDark,
+                                  ),
+                                )),
+                        const Spacer(),
+                        raffleStats.when(
+                            data: (stats) => Column(
+                                  children: [
+                                    Text(
+                                      "${stats.amountRaised.toStringAsFixed(2)} €",
+                                      style: const TextStyle(
+                                          color: TombolaColorConstants.textDark,
+                                          fontSize: 30),
+                                    ),
+                                    const Text(
+                                      "Récoltés",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: TombolaColorConstants.textDark,
+                                          fontSize: 20),
+                                    ),
+                                  ],
+                                ),
+                            error: (e, s) => const Text("Error"),
+                            loading: () => const Center(
+                                  child: CircularProgressIndicator(
+                                    color: TombolaColorConstants.textDark,
+                                  ),
+                                )),
+                        const Spacer(),
+                      ],
+                    ),
+                  ),
             const SizedBox(
               height: 30,
             )

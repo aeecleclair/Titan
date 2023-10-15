@@ -188,7 +188,7 @@ class TombolaHandler extends HookConsumerWidget {
                   },
                   error: (e, s) => Text('Error: $e'),
                   loading: () => const CircularProgressIndicator(),
-                ),*/
+                ),
                 const SizedBox(
                   width: 10,
                 ),

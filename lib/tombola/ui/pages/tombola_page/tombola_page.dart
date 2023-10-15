@@ -349,7 +349,7 @@ class TombolaInfoPage extends HookConsumerWidget {
                       RaffleRouter.detail +
                       RaffleRouter.creation);
                     },
-                    child: const CreationButton())),
+                    child: const CustomButton(text: 'Admin',))),
         ],
       ),
     );
