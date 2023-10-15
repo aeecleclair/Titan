@@ -83,13 +83,13 @@ class ListBooking extends HookConsumerWidget {
                           onEdit: () {
                             bookingNotifier.setBooking(e);
                             QR.to(BookingRouter.root +
-                                BookingRouter.admin +
+                                BookingRouter.manager +
                                 BookingRouter.addEdit);
                           },
                           onInfo: () {
                             bookingNotifier.setBooking(e);
                             QR.to(BookingRouter.root +
-                                BookingRouter.admin +
+                                BookingRouter.manager +
                                 BookingRouter.detail);
                           },
                           onConfirm: () async {
@@ -145,7 +145,7 @@ class ListBooking extends HookConsumerWidget {
                           onCopy: () {
                             bookingNotifier.setBooking(e.copyWith(id: ""));
                             QR.to(BookingRouter.root +
-                                BookingRouter.admin +
+                                BookingRouter.manager +
                                 BookingRouter.addEdit);
                           },
                           onDelete: () async {},

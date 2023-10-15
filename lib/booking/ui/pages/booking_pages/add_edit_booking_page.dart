@@ -12,7 +12,7 @@ import 'package:myecl/booking/providers/selected_days_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
-import 'package:myecl/booking/ui/pages/admin_page/room_chip.dart';
+import 'package:myecl/booking/ui/pages/admin_pages/admin_chip.dart';
 import 'package:myecl/booking/ui/pages/booking_pages/checkbox_entry.dart';
 import 'package:myecl/booking/ui/pages/booking_pages/text_entry.dart';
 import 'package:myecl/event/tools/functions.dart';
@@ -110,7 +110,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                             children: [
                               const SizedBox(width: 15),
                               ...data.map(
-                                (e) => RoomChip(
+                                (e) => AdminChip(
                                   label: capitalize(e.name),
                                   selected: room.value.id == e.id,
                                   onTap: () async {

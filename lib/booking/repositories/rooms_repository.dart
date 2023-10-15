@@ -4,7 +4,7 @@ import 'package:myecl/tools/repository/repository.dart';
 class RoomRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = 'bdebooking/rooms';
+  final ext = 'booking/rooms';
 
   Future<List<Room>> getRoomList() async {
     return List<Room>.from((await getList()).map((x) => Room.fromJson(x)));
@@ -20,9 +20,5 @@ class RoomRepository extends Repository {
 
   Future<bool> deleteRoom(String roomId) async {
     return await delete("/$roomId");
-  }
-
-  Future<Room> getRoom(String roomId) async {
-    return Room.fromJson(await getOne("/$roomId"));
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/providers/is_booking_admin_provider.dart';
+import 'package:myecl/booking/providers/is_manager_provider.dart';
 import 'package:myecl/booking/repositories/booking_repository.dart';
 import 'package:myecl/booking/repositories/user_booking_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
@@ -49,8 +49,7 @@ class BookingListProvider extends ListNotifier<Booking> {
     return await update(
         (booking) => _repository.confirmBooking(booking, decision),
         (bookings, booking) => bookings
-          ..[bookings.indexWhere((b) => b.id == booking.id)] =
-              booking,
+          ..[bookings.indexWhere((b) => b.id == booking.id)] = booking,
         booking.copyWith(decision: decision));
   }
 }
@@ -60,9 +59,9 @@ final bookingListProvider =
         (ref) {
   final token = ref.watch(tokenProvider);
   final provider = BookingListProvider(token: token);
-  final isBookingAdmin = ref.watch(isBookingAdminProvider);
+  final isManager = ref.watch(isManagerProvider);
   tokenExpireWrapperAuth(ref, () async {
-    if (isBookingAdmin) {
+    if (isManager) {
       await provider.loadBookings();
     } else {
       final userId = ref.watch(userProvider);

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class RoomChip extends StatelessWidget {
+class AdminChip extends StatelessWidget {
   final bool selected;
   final String label;
   final Function() onTap;
-  const RoomChip(
+  const AdminChip(
       {super.key,
       required this.label,
       required this.selected,
