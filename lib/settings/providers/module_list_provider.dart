@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/advert/router.dart';
 import 'package:myecl/admin/providers/all_my_module_roots_list_provider.dart';
@@ -86,7 +87,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
         Module module = allModules[allModulesName.indexOf(name)];
         if (roots.contains(module.root)) {
           modules.add(module);
-        } else {
+        } else if (!kDebugMode) {
           toDelete.add(module);
         }
       }
