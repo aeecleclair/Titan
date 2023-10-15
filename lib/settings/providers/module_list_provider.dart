@@ -31,6 +31,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
   List<Module> allModules = [
     HomeRouter.module,
     AdvertRouter.module,
+    VoteRouter.module,
     CentralisationRouter.module,
     AmapRouter.module,
     CinemaRouter.module,
@@ -38,7 +39,6 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     LoanRouter.module,
     EventRouter.module,
     RaffleRouter.module,
-    VoteRouter.module,
   ];
   ModulesNotifier() : super([]);
 
