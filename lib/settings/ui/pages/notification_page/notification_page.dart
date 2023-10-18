@@ -57,7 +57,7 @@ class NotificationPage extends HookConsumerWidget {
                                       curveOut: Curves.easeOutBack,
                                       animationDuration:
                                           const Duration(milliseconds: 500),
-                                      switchDecoration: (value) =>
+                                      switchDecoration: (value, _) =>
                                           BoxDecoration(
                                         color: value
                                             ? ColorConstants.gradient1
@@ -81,7 +81,7 @@ class NotificationPage extends HookConsumerWidget {
                                           ? ColorConstants.gradient1
                                           : Colors.grey,
                                       spinStrokeWidth: 2,
-                                      thumbDecoration: (value) => BoxDecoration(
+                                      thumbDecoration: (value, _) => BoxDecoration(
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(30),
                                         shape: BoxShape.rectangle,
