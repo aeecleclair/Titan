@@ -40,6 +40,7 @@ class SharerGroupStats extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           AnimationLimiter(
+              key: UniqueKey(),
               child: ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
