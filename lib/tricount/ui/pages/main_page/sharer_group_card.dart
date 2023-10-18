@@ -65,31 +65,30 @@ class SharerGroupCard extends HookConsumerWidget {
                         for (var i = 0;
                             i < min(sharerGroup.transactions.length, 3);
                             i++)
-                          if (i < 3)
-                            SizedBox(
-                                height: 32,
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                        child: AutoSizeText(
-                                            sharerGroup.transactions[i].payer
-                                                        .nickname !=
-                                                    null
-                                                ? sharerGroup.transactions[i]
-                                                    .payer.nickname!
-                                                : sharerGroup
-                                                    .transactions[i].payer.firstname,
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                            overflow: TextOverflow.ellipsis)),
-                                    const SizedBox(width: 5),
-                                    SizedBox(
-                                      width: 60,
-                                      child: Text(
-                                          "${sharerGroup.transactions[i].amount.toStringAsFixed(2)}€"),
-                                    )
-                                  ],
-                                )),
+                          SizedBox(
+                              height: 32,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      child: AutoSizeText(
+                                          sharerGroup.transactions[i].payer
+                                                      .nickname !=
+                                                  null
+                                              ? sharerGroup.transactions[i]
+                                                  .payer.nickname!
+                                              : sharerGroup.transactions[i]
+                                                  .payer.firstname,
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                          overflow: TextOverflow.ellipsis)),
+                                  const SizedBox(width: 5),
+                                  SizedBox(
+                                    width: 60,
+                                    child: Text(
+                                        "${sharerGroup.transactions[i].amount.toStringAsFixed(2)}€"),
+                                  )
+                                ],
+                              )),
                         const Spacer(),
                         SizedBox(
                             height: 40,
