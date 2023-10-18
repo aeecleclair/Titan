@@ -14,7 +14,7 @@ class SharerGroupStats extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: max(MediaQuery.of(context).size.height - 380,
-          equilibriumTransactions.length * 65 + 100),
+          equilibriumTransactions.length * 85 + 80),
       width: double.infinity,
       decoration: BoxDecoration(
           gradient: const LinearGradient(
@@ -40,7 +40,7 @@ class SharerGroupStats extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           AnimationLimiter(
-              key: UniqueKey(),
+              key: ValueKey(equilibriumTransactions),
               child: ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
