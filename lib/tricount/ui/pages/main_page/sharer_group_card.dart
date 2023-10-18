@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
@@ -70,14 +71,14 @@ class SharerGroupCard extends HookConsumerWidget {
                                 child: Row(
                                   children: [
                                     Expanded(
-                                        child: Text(
+                                        child: AutoSizeText(
                                             sharerGroup.transactions[i].payer
                                                         .nickname !=
                                                     null
                                                 ? sharerGroup.transactions[i]
                                                     .payer.nickname!
                                                 : sharerGroup
-                                                    .transactions[i].payer.name,
+                                                    .transactions[i].payer.firstname,
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.bold),
                                             overflow: TextOverflow.ellipsis)),
