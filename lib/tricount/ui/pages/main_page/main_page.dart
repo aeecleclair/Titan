@@ -98,7 +98,15 @@ class TricountMainPage extends HookConsumerWidget {
                                         sharerGroupList.length - 1 - index;
                                   },
                                   children: sharerGroupList
-                                      .map((e) => const SizedBox())
+                                      .map((e) => Padding(
+                                        padding: const EdgeInsets.symmetric(vertical: 45, horizontal: 10),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            final index = sharerGroupList.indexOf(e);
+                                            print(index);
+                                          }
+                                        )
+                                      ))
                                       .toList(),
                                 ),
                               ),
