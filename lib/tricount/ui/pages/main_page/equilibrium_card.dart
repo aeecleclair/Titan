@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/tricount/class/equilibrium_transaction.dart';
@@ -8,6 +10,16 @@ class EquilibriumCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fromName = equilibriumTransaction.from.nickname != null
+        ? equilibriumTransaction.from.nickname!
+            .substring(0, min(equilibriumTransaction.from.nickname!.length, 3))
+        : equilibriumTransaction.from.firstname
+            .substring(0, min(equilibriumTransaction.from.firstname.length, 3));
+    final toName = equilibriumTransaction.to.nickname != null
+        ? equilibriumTransaction.to.nickname!
+            .substring(0, min(equilibriumTransaction.to.nickname!.length, 3))
+        : equilibriumTransaction.to.firstname
+            .substring(0, min(equilibriumTransaction.to.firstname.length, 3));
     return Container(
       height: 65,
       width: double.infinity,
@@ -21,9 +33,7 @@ class EquilibriumCard extends StatelessWidget {
                 radius: 30,
                 backgroundColor: const Color(0xff09263D),
                 child: Text(
-                  equilibriumTransaction.from.nickname != null
-                      ? equilibriumTransaction.from.nickname!.substring(0, 3)
-                      : equilibriumTransaction.from.firstname.substring(0, 3),
+                  fromName,
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -40,9 +50,7 @@ class EquilibriumCard extends StatelessWidget {
                 radius: 30,
                 backgroundColor: const Color(0xff1C4668),
                 child: Text(
-                  equilibriumTransaction.to.nickname != null
-                      ? equilibriumTransaction.to.nickname!.substring(0, 3)
-                      : equilibriumTransaction.to.firstname.substring(0, 3),
+                  toName,
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,

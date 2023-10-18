@@ -17,14 +17,14 @@ dependencies:
   either_dart: ^1.0.0
   firebase_core: ^2.15.1
   firebase_messaging: ^14.4.1
-  fl_chart: ^0.63.0
+  fl_chart: ^0.64.0
   flash: ^3.0.5+1
   flutter:
     sdk: flutter
   flutter_appauth: ^6.0.0
   flutter_dotenv: ^5.0.2
   flutter_hooks: ^0.20.0
-  flutter_local_notifications: ^15.0.0
+  flutter_local_notifications: ^16.1.0
   flutter_localizations:
     sdk: flutter
   flutter_riverpod: ^2.1.1
