@@ -7,38 +7,43 @@ import 'package:myecl/user/providers/user_provider.dart';
 final crossGroupStatsProvider = Provider<List<EquilibriumTransaction>>((ref) {
   final sharerGroups = ref.watch(sharerGroupListProvider);
   final me = ref.watch(userProvider);
-  final crossGroupStats = <SimpleUser, double>{};
+  final crossGroupStats = <String, double>{};
+  final crossGroupUser = <String, SimpleUser>{};
   return sharerGroups.maybeWhen(data: (sharerGroups) {
     for (final sharerGroup in sharerGroups) {
       for (final equilibriumTransaction
           in sharerGroup.equilibriumTransactions) {
-        if (me.id != equilibriumTransaction.from.id) {
-          if (crossGroupStats.containsKey(equilibriumTransaction.from)) {
-            crossGroupStats[equilibriumTransaction.from] =
-                crossGroupStats[equilibriumTransaction.from]! +
+        if (me.id == equilibriumTransaction.from.id) {
+          if (crossGroupStats.containsKey(equilibriumTransaction.to.id)) {
+            crossGroupStats[equilibriumTransaction.to.id] =
+                crossGroupStats[equilibriumTransaction.to.id]! -
                     equilibriumTransaction.amount;
           } else {
-            crossGroupStats[equilibriumTransaction.from] =
-                equilibriumTransaction.amount;
+            crossGroupUser[equilibriumTransaction.to.id] =
+                equilibriumTransaction.to;
+            crossGroupStats[equilibriumTransaction.to.id] =
+                -equilibriumTransaction.amount;
           }
         }
-        if (me.id != equilibriumTransaction.to.id) {
-          if (crossGroupStats.containsKey(equilibriumTransaction.to)) {
-            crossGroupStats[equilibriumTransaction.to] =
-                crossGroupStats[equilibriumTransaction.to]! -
+        if (me.id == equilibriumTransaction.to.id) {
+          if (crossGroupStats.containsKey(equilibriumTransaction.from.id)) {
+            crossGroupStats[equilibriumTransaction.from.id] =
+                crossGroupStats[equilibriumTransaction.from.id]! +
                     equilibriumTransaction.amount;
           } else {
-            crossGroupStats[equilibriumTransaction.to] =
-                -equilibriumTransaction.amount;
+            crossGroupUser[equilibriumTransaction.from.id] =
+                equilibriumTransaction.from;
+            crossGroupStats[equilibriumTransaction.from.id] =
+                equilibriumTransaction.amount;
           }
         }
       }
     }
     return crossGroupStats.entries
         .map((e) => EquilibriumTransaction(
-            from: e.value > 0 ? me.toSimpleUser() : e.key,
-            to: e.value > 0 ? e.key : me.toSimpleUser(),
-            amount: e.value))
+            from: e.value > 0 ? me.toSimpleUser() : crossGroupUser[e.key]!,
+            to: e.value > 0 ? crossGroupUser[e.key]! : me.toSimpleUser(),
+            amount: e.value.abs()))
         .toList();
   }, orElse: () {
     return [];
