@@ -35,7 +35,7 @@ class SharerGroupStats extends StatelessWidget {
           const SizedBox(height: 20),
           const AlignLeftText(
             "Pour équilibrer",
-            color: Color(0xff09263d),
+            color: Colors.white,
             padding: EdgeInsets.only(left: 30),
           ),
           const SizedBox(height: 20),

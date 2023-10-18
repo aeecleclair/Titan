@@ -31,28 +31,28 @@ class EquilibriumCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 30,
-                backgroundColor: const Color(0xff09263D),
+                backgroundColor: Colors.white,
                 child: Text(
                   fromName,
                   style: const TextStyle(
-                      color: Colors.white,
+                      color: Color(0xff09263D),
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
                 ),
               ),
               const SizedBox(width: 10),
-              const HeroIcon(
+              HeroIcon(
                 HeroIcons.arrowRight,
-                color: Colors.grey,
+                color: Colors.grey.shade200,
               ),
               const SizedBox(width: 10),
               CircleAvatar(
                 radius: 30,
-                backgroundColor: const Color(0xff1C4668),
+                backgroundColor: Colors.white,
                 child: Text(
                   toName,
                   style: const TextStyle(
-                      color: Colors.white,
+                      color: Color(0xff1C4668),
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
                 ),
@@ -61,7 +61,7 @@ class EquilibriumCard extends StatelessWidget {
               Text(
                 "${equilibriumTransaction.amount.toStringAsFixed(2)}€",
                 style: const TextStyle(
-                    color: Color(0xff1C4668),
+                    color: Colors.white,
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),
