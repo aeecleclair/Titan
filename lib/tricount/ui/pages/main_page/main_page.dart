@@ -25,6 +25,7 @@ class TricountMainPage extends HookConsumerWidget {
       scrollValue.value = scrollController.offset;
     });
     return TricountTemplate(
+      // We don't use Refresher because it doesn't work with the stacked PageView and SingleChildScrollView
       child: RefreshIndicator(
           onRefresh: () => tokenExpireWrapper(ref, () async {
                 sharerGroupListNotifier.loadSharerGroupList();
