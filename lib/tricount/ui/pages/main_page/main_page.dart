@@ -19,6 +19,7 @@ class TricountMainPage extends HookConsumerWidget {
     final sharerGroupListNotifier = ref.watch(sharerGroupListProvider.notifier);
     final scrollController = useScrollController();
     final scrollValue = useState<double>(0);
+    final currentPage = useState(0);
     const viewPortFraction = 0.85;
     scrollController.addListener(() {
       scrollValue.value = scrollController.offset;
@@ -92,6 +93,10 @@ class TricountMainPage extends HookConsumerWidget {
                                   clipBehavior: Clip.none,
                                   controller: pageController,
                                   reverse: true,
+                                  onPageChanged: (index) {
+                                    currentPage.value =
+                                        sharerGroupList.length - 1 - index;
+                                  },
                                   children: sharerGroupList
                                       .map((e) => const SizedBox())
                                       .toList(),
@@ -99,7 +104,8 @@ class TricountMainPage extends HookConsumerWidget {
                               ),
                               SharerGroupStats(
                                 equilibriumTransactions:
-                                    sharerGroupList[0].equilibriumTransactions,
+                                    sharerGroupList[currentPage.value]
+                                        .equilibriumTransactions,
                               ),
                             ],
                           )),
