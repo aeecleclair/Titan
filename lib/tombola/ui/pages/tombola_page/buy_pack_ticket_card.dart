@@ -5,8 +5,10 @@ import 'package:myecl/tombola/class/pack_ticket.dart';
 import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/providers/tombola_logo_provider.dart';
+import 'package:myecl/tombola/providers/tombola_logos_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/tombola_page/confirm_payment.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class BuyPackTicket extends HookConsumerWidget {
   final PackTicket packTicket;
@@ -17,7 +19,9 @@ class BuyPackTicket extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final tombolaLogo = ref.watch(tombolaLogoProvider);
+    final tombolaLogos = ref.watch(tombolaLogosProvider);
+    final tombolaLogosNotifier = ref.watch(tombolaLogosProvider.notifier);
+    final tombolaLogoNotifier = ref.watch(tombolaLogoProvider.notifier);
     return GestureDetector(
         onTap: () {
           if (raffle.raffleStatusType == RaffleStatusType.open) {
@@ -72,10 +76,46 @@ class BuyPackTicket extends HookConsumerWidget {
                           borderRadius:
                               const BorderRadius.all(Radius.circular(15))),
                       child: Container(
-                        child: tombolaLogo.when(
-                            data: (value) => ClipRRect(
-                                borderRadius: BorderRadius.circular(15.0),
-                                child: value),
+                        child: tombolaLogos.when(
+                            data: (data) {
+                              if (data[raffle] != null) {
+                                return data[raffle]!.when(
+                                    data: (data) {
+                                      if (data.isNotEmpty) {
+                                        return ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(15.0),
+                                            child: data.first);
+                                      } else {
+                                        Future.delayed(
+                                            const Duration(milliseconds: 1),
+                                            () {
+                                          tombolaLogosNotifier.setTData(
+                                              raffle, const AsyncLoading());
+                                        });
+                                        tokenExpireWrapper(ref, () async {
+                                          tombolaLogoNotifier
+                                              .getLogo(raffle.id)
+                                              .then((value) {
+                                            tombolaLogosNotifier.setTData(
+                                                raffle, AsyncData([value]));
+                                          });
+                                        });
+                                        return const HeroIcon(
+                                            HeroIcons.cubeTransparent);
+                                      }
+                                    },
+                                    loading: () =>
+                                        const CircularProgressIndicator(),
+                                    error: (Object error,
+                                            StackTrace? stackTrace) =>
+                                        const HeroIcon(
+                                            HeroIcons.cubeTransparent));
+                              } else {
+                                return const HeroIcon(
+                                    HeroIcons.cubeTransparent);
+                              }
+                            },
                             loading: () => const CircularProgressIndicator(),
                             error: (Object error, StackTrace? stackTrace) =>
                                 const HeroIcon(HeroIcons.cubeTransparent)),
