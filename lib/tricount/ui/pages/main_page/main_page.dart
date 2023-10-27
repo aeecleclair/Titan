@@ -5,17 +5,22 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tricount/class/sharer_group.dart';
 import 'package:myecl/tricount/providers/cross_group_stats_provider.dart';
 import 'package:myecl/tricount/providers/sharer_group_list_provider.dart';
+import 'package:myecl/tricount/providers/sharer_group_provider.dart';
+import 'package:myecl/tricount/router.dart';
 import 'package:myecl/tricount/ui/pages/main_page/sharer_group_handler.dart';
 import 'package:myecl/tricount/ui/pages/main_page/sharer_group_stats.dart';
 import 'package:myecl/tricount/ui/pages/tricount.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class TricountMainPage extends HookConsumerWidget {
   const TricountMainPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final sharerGroupNotifier = ref.watch(sharerGroupProvider.notifier);
     final sharerGroupList = ref.watch(sharerGroupListProvider);
     final sharerGroupListNotifier = ref.watch(sharerGroupListProvider.notifier);
     final myEquilibriumTransactions = ref.watch(crossGroupStatsProvider);
@@ -106,14 +111,26 @@ class TricountMainPage extends HookConsumerWidget {
                                         return Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 45, horizontal: 10),
-                                            child:
-                                                GestureDetector(onTap: () {}));
+                                            child: GestureDetector(onTap: () {
+                                              sharerGroupNotifier
+                                                  .setSharerGroup(
+                                                      SharerGroup.empty());
+                                              QR.to(TricountRouter.root +
+                                                  TricountRouter.addEdit);
+                                            }));
                                       }
                                       return Padding(
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 45, horizontal: 10),
                                           child: GestureDetector(onTap: () {
-                                            print(index);
+                                            final sharerGroup = sharerGroupList[
+                                                sharerGroupList.length -
+                                                    1 -
+                                                    index];
+                                            sharerGroupNotifier
+                                                .setSharerGroup(sharerGroup);
+                                            QR.to(TricountRouter.root +
+                                                TricountRouter.detail);
                                           }));
                                     }),
                               ),
