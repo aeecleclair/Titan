@@ -91,29 +91,31 @@ class TricountMainPage extends HookConsumerWidget {
                               SizedBox(
                                 height: 300,
                                 width: double.infinity,
-                                child: PageView(
+                                child: PageView.builder(
                                     physics: const BouncingScrollPhysics(),
                                     clipBehavior: Clip.none,
                                     controller: pageController,
+                                    itemCount: sharerGroupList.length + 1,
                                     reverse: true,
                                     onPageChanged: (index) {
                                       currentPage.value =
                                           sharerGroupList.length - 1 - index;
                                     },
-                                    children: [
-                                      Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 45, horizontal: 10),
-                                          child: GestureDetector(onTap: () {})),
-                                      ...sharerGroupList.map((e) => Padding(
+                                    itemBuilder: (context, index) {
+                                      if (index == sharerGroupList.length) {
+                                        return Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 45, horizontal: 10),
+                                            child:
+                                                GestureDetector(onTap: () {}));
+                                      }
+                                      return Padding(
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 45, horizontal: 10),
                                           child: GestureDetector(onTap: () {
-                                            final index =
-                                                sharerGroupList.indexOf(e);
                                             print(index);
-                                          })))
-                                    ]),
+                                          }));
+                                    }),
                               ),
                               SharerGroupStats(
                                 equilibriumTransactions: currentPage.value >= 0
