@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -129,57 +128,58 @@ class CreationPage extends HookConsumerWidget {
                             color: Colors.grey,
                           ),
                   ),
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    child: GestureDetector(
-                      onTap: () async {
-                        final XFile? image = await picker.pickImage(
-                            source: ImageSource.gallery, imageQuality: 20);
-                        if (image != null) {
-                          if (kIsWeb) {
-                            logo.value = await image.readAsBytes();
-                            logoFile.value = Image.network(image.path);
-                          } else {
-                            final file = File(image.path);
-                            logo.value = await file.readAsBytes();
-                            logoFile.value = Image.file(file);
+                  if (raffle.raffleStatusType == RaffleStatusType.creation)
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      child: GestureDetector(
+                        onTap: () async {
+                          final XFile? image = await picker.pickImage(
+                              source: ImageSource.gallery, imageQuality: 20);
+                          if (image != null) {
+                            if (kIsWeb) {
+                              logo.value = await image.readAsBytes();
+                              logoFile.value = Image.network(image.path);
+                            } else {
+                              final file = File(image.path);
+                              logo.value = await file.readAsBytes();
+                              logoFile.value = Image.file(file);
+                            }
+                            tombolaLogoNotifier.updateLogo(
+                                raffle.id, logo.value!);
                           }
-                          tombolaLogoNotifier.updateLogo(
-                              raffle.id, logo.value!);
-                        }
-                      },
-                      child: Container(
-                        height: 40,
-                        width: 40,
-                        padding: const EdgeInsets.all(7),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          gradient: const LinearGradient(
-                            colors: [
-                              TombolaColorConstants.gradient1,
-                              TombolaColorConstants.gradient2,
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: TombolaColorConstants.gradient2
-                                  .withOpacity(0.3),
-                              spreadRadius: 2,
-                              blurRadius: 4,
-                              offset: const Offset(2, 3),
+                        },
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          padding: const EdgeInsets.all(7),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: const LinearGradient(
+                              colors: [
+                                TombolaColorConstants.gradient1,
+                                TombolaColorConstants.gradient2,
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
                             ),
-                          ],
-                        ),
-                        child: const HeroIcon(
-                          HeroIcons.photo,
-                          color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: TombolaColorConstants.gradient2
+                                    .withOpacity(0.3),
+                                spreadRadius: 2,
+                                blurRadius: 4,
+                                offset: const Offset(2, 3),
+                              ),
+                            ],
+                          ),
+                          child: const HeroIcon(
+                            HeroIcons.photo,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
-                  ),
                 ],
               ),
             ),
@@ -196,6 +196,8 @@ class CreationPage extends HookConsumerWidget {
                             }
                             return null;
                           },
+                          disabled: raffle.raffleStatusType !=
+                              RaffleStatusType.creation,
                           textEditingController: name,
                           keyboardType: TextInputType.text))),
             ),
@@ -206,7 +208,9 @@ class CreationPage extends HookConsumerWidget {
                     waitChild:
                         const BlueBtn(text: TombolaTextConstants.waiting),
                     onTap: () async {
-                      if (formKey.currentState!.validate()) {
+                      if (raffle.raffleStatusType ==
+                              RaffleStatusType.creation &&
+                          formKey.currentState!.validate()) {
                         await tokenExpireWrapper(ref, () async {
                           Raffle newRaffle = raffle.copyWith(
                               name: name.text,
