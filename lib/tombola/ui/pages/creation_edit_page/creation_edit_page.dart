@@ -11,7 +11,6 @@ import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/providers/cash_provider.dart';
 import 'package:myecl/tombola/providers/prize_list_provider.dart';
-import 'package:myecl/tombola/providers/raffle_id_provider.dart';
 import 'package:myecl/tombola/providers/raffle_list_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/raffle_stats_provider.dart';
@@ -41,7 +40,6 @@ class CreationPage extends HookConsumerWidget {
     final formKey = GlobalKey<FormState>();
 
     final raffle = ref.watch(raffleProvider);
-    final raffleIdNotifier = ref.watch(raffleIdProvider.notifier);
     final raffleList = ref.watch(raffleListProvider);
     final raffleListNotifier = ref.read(raffleListProvider.notifier);
     final raffleStats = ref.watch(raffleStatsProvider);
@@ -291,7 +289,6 @@ class CreationPage extends HookConsumerWidget {
                                                         raffle.description,
                                                     raffleStatusType:
                                                         RaffleStatusType.open));
-                                            raffleIdNotifier.setId(raffle.id);
                                             QR.back();
                                             break;
                                           case RaffleStatusType.open:
@@ -311,7 +308,6 @@ class CreationPage extends HookConsumerWidget {
                                                 }
                                               }
                                             });
-                                            raffleIdNotifier.setId(raffle.id);
                                             QR.back();
                                             break;
                                           default:
