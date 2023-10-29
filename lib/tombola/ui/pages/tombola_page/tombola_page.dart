@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/providers/raffle_list_provider.dart';
 import 'package:myecl/tombola/providers/user_amount_provider.dart';
@@ -29,7 +28,6 @@ class TombolaInfoPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userId = ref.watch(idProvider);
     final raffle = ref.watch(raffleProvider);
     final solde = ref.watch(userAmountProvider);
     final soldeNotifier = ref.read(userAmountProvider.notifier);
@@ -48,8 +46,7 @@ class TombolaInfoPage extends HookConsumerWidget {
     return TombolaTemplate(
       child: Refresher(
         onRefresh: () async {
-          userId.whenData(
-              (value) async => await soldeNotifier.loadCashByUser(value));
+          await soldeNotifier.loadCashByUser(me.id);
           await packTicketListNotifier.loadPackTicketList();
           await prizesListNotifier.loadPrizeList();
         },
