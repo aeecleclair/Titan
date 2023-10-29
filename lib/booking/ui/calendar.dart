@@ -4,6 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
+import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 import 'package:myecl/tools/constants.dart';
@@ -21,74 +22,13 @@ class Calendar extends HookConsumerWidget {
     void calendarTapped(CalendarTapDetails details, BuildContext context) {
       if (details.targetElement == CalendarElement.appointment ||
           details.targetElement == CalendarElement.agenda) {
-        final Appointment appointmentDetails = details.appointments![0];
+        final _CustomAppointment appointmentDetails = details.appointments![0];
         showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return Dialog(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Container(
-                        height: 220 +
-                            (appointmentDetails.notes!.length / 30 - 5) * 15,
-                        padding: const EdgeInsets.all(20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AutoSizeText(appointmentDetails.subject,
-                                maxLines: 2,
-                                style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black)),
-                            const SizedBox(height: 10),
-                            Text(
-                              formatDates(
-                                  appointmentDetails.startTime,
-                                  appointmentDetails.endTime,
-                                  appointmentDetails.isAllDay),
-                              style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                color: Colors.grey.shade400,
-                                fontSize: 15,
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Text(appointmentDetails.notes ?? "",
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w400, fontSize: 15)),
-                          ],
-                        ),
-                      ),
-                      Positioned(
-                          top: -10,
-                          right: -10,
-                          child: GestureDetector(
-                              onTap: () => Navigator.pop(context),
-                              child: Container(
-                                  height: 40,
-                                  width: 40,
-                                  padding: const EdgeInsets.all(7),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.grey.shade500
-                                                .withOpacity(0.3),
-                                            blurRadius: 5,
-                                            spreadRadius: 1)
-                                      ],
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: const HeroIcon(
-                                    HeroIcons.xMark,
-                                    size: 20,
-                                  ))))
-                    ],
-                  ));
-            });
+          context: context,
+          builder: (BuildContext context) {
+            return _CalendarDialog(appointmentDetails: appointmentDetails);
+          },
+        );
       }
     }
 
@@ -209,12 +149,12 @@ class Calendar extends HookConsumerWidget {
 }
 
 _AppointmentDataSource _getCalendarDataSource(List<Booking> res) {
-  List<Appointment> appointments = <Appointment>[];
+  List<_CustomAppointment> appointments = <_CustomAppointment>[];
   res.map((e) {
     if (e.recurrenceRule != "") {
       final dates = getDateInRecurrence(e.recurrenceRule, e.start);
       dates.map((data) {
-        appointments.add(Appointment(
+        appointments.add(_CustomAppointment(
           startTime: combineDate(data, e.start),
           endTime: combineDate(data, e.end),
           subject: '${e.room.name} - ${e.reason}',
@@ -223,10 +163,11 @@ _AppointmentDataSource _getCalendarDataSource(List<Booking> res) {
           endTimeZone: "Europe/Paris",
           notes: e.note,
           color: generateColor(e.room.name),
+          forWho: e.entity,
         ));
       }).toList();
     } else {
-      appointments.add(Appointment(
+      appointments.add(_CustomAppointment(
         startTime: e.start,
         endTime: e.end,
         subject: '${e.room.name} - ${e.reason}',
@@ -235,14 +176,110 @@ _AppointmentDataSource _getCalendarDataSource(List<Booking> res) {
         endTimeZone: "Europe/Paris",
         notes: e.note,
         color: generateColor(e.room.name),
+        forWho: e.entity,
       ));
     }
   }).toList();
   return _AppointmentDataSource(appointments);
 }
 
-class _AppointmentDataSource extends CalendarDataSource {
-  _AppointmentDataSource(List<Appointment> source) {
+class _AppointmentDataSource extends CalendarDataSource<_CustomAppointment> {
+  _AppointmentDataSource(List<_CustomAppointment> source) {
     appointments = source;
+  }
+}
+
+class _CustomAppointment extends Appointment {
+  String forWho;
+
+  _CustomAppointment({
+    super.startTimeZone,
+    super.endTimeZone,
+    required super.startTime,
+    required super.endTime,
+    super.subject,
+    super.isAllDay,
+    super.notes,
+    super.color,
+    required this.forWho,
+  });
+}
+
+class _CalendarDialog extends StatelessWidget {
+  final _CustomAppointment appointmentDetails;
+
+  const _CalendarDialog({required this.appointmentDetails});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Container(
+            height: 220 + (appointmentDetails.notes!.length / 30 - 5) * 15,
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AutoSizeText(
+                  appointmentDetails.subject,
+                  maxLines: 2,
+                  style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  formatDates(
+                    appointmentDetails.startTime,
+                    appointmentDetails.endTime,
+                    appointmentDetails.isAllDay,
+                  ),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    color: Colors.grey.shade400,
+                    fontSize: 15,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  "${BookingTextConstants.bookedfor} ${appointmentDetails.forWho}",
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w400, fontSize: 15),
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            top: -10,
+            right: -10,
+            child: GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: Container(
+                height: 40,
+                width: 40,
+                padding: const EdgeInsets.all(7),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.grey.shade500.withOpacity(0.3),
+                          blurRadius: 5,
+                          spreadRadius: 1)
+                    ],
+                    borderRadius: BorderRadius.circular(15)),
+                child: const HeroIcon(
+                  HeroIcons.xMark,
+                  size: 20,
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
