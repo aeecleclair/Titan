@@ -27,7 +27,7 @@ class RaffleMainPage extends HookConsumerWidget {
 
     final rafflesStatus = {};
     raffleList.whenData(
-          (raffles) {
+      (raffles) {
         for (var raffle in raffles) {
           rafflesStatus[raffle.id] = raffle.raffleStatusType;
         }
@@ -62,7 +62,7 @@ class RaffleMainPage extends HookConsumerWidget {
                       onTap: () {
                         QR.to(RaffleRouter.root + RaffleRouter.admin);
                       },
-                      child: const CustomButton(text:"Admin"),
+                      child: const CustomButton(text: "Admin"),
                     ),
                 ],
               ),
@@ -74,11 +74,16 @@ class RaffleMainPage extends HookConsumerWidget {
               data: (tickets) {
                 tickets = tickets
                     .where((t) =>
-                t.prize != null ||
-                    (rafflesStatus.containsKey(t.packTicket.raffleId) &&
-                        rafflesStatus[t.packTicket.raffleId] !=
-                            RaffleStatusType.lock))
+                        t.prize != null ||
+                        (rafflesStatus.containsKey(t.packTicket.raffleId) &&
+                            rafflesStatus[t.packTicket.raffleId] !=
+                                RaffleStatusType.lock))
                     .toList();
+                if (tickets.isEmpty) {
+                  return const Center(
+                    child: Text(TombolaTextConstants.noTicket),
+                  );
+                }
                 final ticketSum = <String, List<Ticket>>{};
                 final ticketPrice = <String, double>{};
                 for (final ticket in tickets) {
@@ -102,29 +107,29 @@ class RaffleMainPage extends HookConsumerWidget {
                 }
                 return ticketSum.isEmpty
                     ? const Center(
-                  child: Text(TombolaTextConstants.noTicket),
-                )
+                        child: Text(TombolaTextConstants.noTicket),
+                      )
                     : SizedBox(
-                    height: 210,
-                    child: ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: ticketSum.length + 2,
-                        itemBuilder: (context, index) {
-                          if (index == 0 || index == ticketSum.length + 1) {
-                            return const SizedBox(
-                              width: 15,
-                            );
-                          }
-                          final key = ticketSum.keys.toList()[index - 1];
-                          return Container(
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 10),
-                              child: TicketWidget(
-                                ticket: ticketSum[key]!,
-                                price: ticketPrice[key]!,
-                              ));
-                        }));
+                        height: 210,
+                        child: ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: ticketSum.length + 2,
+                            itemBuilder: (context, index) {
+                              if (index == 0 || index == ticketSum.length + 1) {
+                                return const SizedBox(
+                                  width: 15,
+                                );
+                              }
+                              final key = ticketSum.keys.toList()[index - 1];
+                              return Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 10),
+                                  child: TicketWidget(
+                                    ticket: ticketSum[key]!,
+                                    price: ticketPrice[key]!,
+                                  ));
+                            }));
               },
               loading: () => const SizedBox(
                 height: 120,
@@ -168,7 +173,8 @@ class RaffleMainPage extends HookConsumerWidget {
                                   bottom: 10, top: 20, left: 5),
                               child: const Align(
                                   alignment: Alignment.centerLeft,
-                                  child: Text(TombolaTextConstants.actualTombolas,
+                                  child: Text(
+                                      TombolaTextConstants.actualTombolas,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           fontSize: 20,
@@ -228,7 +234,7 @@ class RaffleMainPage extends HookConsumerWidget {
                           child: Text("Error $error",
                               style: const TextStyle(fontSize: 20)))),
                   loading: () => const Center(
-                      child: SizedBox(
+                          child: SizedBox(
                         child: CircularProgressIndicator(
                           color: Colors.black,
                         ),
