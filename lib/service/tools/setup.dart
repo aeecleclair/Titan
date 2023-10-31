@@ -33,9 +33,7 @@ void setUpNotification(WidgetRef ref) {
       final now = DateTime.now();
       if (firebaseTokenExpiration.userId != user.id ||
               firebaseTokenExpiration.expiration != null ||
-              firebaseTokenExpiration.expiration!.isBefore(now) ||
-              firebaseTokenExpiration.expiration!.isBefore(DateTime(
-                  2023, 10, 13)) // TODO: remove it after the october update
+              firebaseTokenExpiration.expiration!.isBefore(now)
           ) {
         firebaseToken.then((value) {
           messageNotifier.setFirebaseToken(value);
