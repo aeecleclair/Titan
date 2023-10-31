@@ -17,31 +17,38 @@ class SearchResult extends HookConsumerWidget {
     return AsyncChild(
         value: users,
         builder: (context, user) => Column(
-            children: user
-                .map((simpleUser) => GestureDetector(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(width: 20),
-                            Expanded(
-                              child: Text(
-                                simpleUser.getName(),
-                                style: const TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                overflow: TextOverflow.ellipsis,
+                children: user.map((simpleUser) {
+              final selected = sharerGroupMemberList
+                  .map((e) => e.id)
+                  .contains(simpleUser.id);
+              return GestureDetector(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(width: 20),
+                          Expanded(
+                            child: Text(
+                              simpleUser.getName(),
+                              style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: selected
+                                    ? FontWeight.bold
+                                    : FontWeight.w400,
                               ),
+                              overflow: TextOverflow.ellipsis,
                             ),
-                          ]),
-                    ),
-                    onTap: () {
-                      if (!sharerGroupMemberList.map((e) => e.id).contains(simpleUser.id)) {
-                        sharerGroupMemberListNotifier.removeMember(simpleUser);
-                      }
-                    }))
-                .toList()));
+                          ),
+                        ]),
+                  ),
+                  onTap: () {
+                    if (selected) {
+                      sharerGroupMemberListNotifier.removeMember(simpleUser);
+                    } else {
+                      sharerGroupMemberListNotifier.addMember(simpleUser);
+                    }
+                  });
+            }).toList()));
   }
 }
