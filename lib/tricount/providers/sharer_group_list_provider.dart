@@ -26,8 +26,7 @@ class SharerGroupListNotifier extends ListNotifier<SharerGroup> {
     return await loadList(sharerGroupRepository.getSharerGroupList);
   }
 
-  Future<bool> addSharerGroup(
-      SharerGroup sharerGroup, String tricountId) async {
+  Future<bool> addSharerGroup(SharerGroup sharerGroup) async {
     return await add(sharerGroupRepository.createSharerGroup, sharerGroup);
   }
 
