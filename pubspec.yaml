@@ -2,7 +2,7 @@ name: myecl
 description: MyECL est l'application des Centraliens de Lyon, conçue par ÉCLAIR
 
 publish_to: "none"
-version: 0.6.1+82
+version: 0.6.2+90
 
 environment:
   sdk: ">=2.18.0 <3.0.0"
