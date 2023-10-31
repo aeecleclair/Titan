@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/providers/cash_provider.dart';
-import 'package:myecl/tombola/ui/pages/admin_page/user_cash_ui.dart';
+import 'package:myecl/tombola/ui/pages/creation_edit_page/user_cash_ui.dart';
 
 class CashContainer extends HookConsumerWidget {
   const CashContainer({Key? key}) : super(key: key);

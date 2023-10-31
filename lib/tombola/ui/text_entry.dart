@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 
 class TextEntry extends StatelessWidget {
-  final Function validator;
+  final String? Function(String?)? validator;
   final TextEditingController textEditingController;
   final TextInputType keyboardType;
   final String? suffixText;
+  final bool disabled;
 
   const TextEntry(
       {Key? key,
       required this.validator,
       required this.textEditingController,
       required this.keyboardType,
-      this.suffixText
+      this.suffixText,
+      this.disabled = false
       })
       : super(key: key);
 
@@ -22,9 +24,7 @@ class TextEntry extends StatelessWidget {
       alignment: Alignment.center,
       height: 50,
       child: TextFormField(
-        validator: ((value) {
-          return validator(value);
-        }),
+        validator: validator,
         textInputAction: TextInputAction.next,
         keyboardType: keyboardType,
         controller: textEditingController,
@@ -42,6 +42,7 @@ class TextEntry extends StatelessWidget {
             color: TombolaColorConstants.textDark,
           )),
         ),
+        readOnly: disabled,
       ),
     );
   }

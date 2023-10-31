@@ -1,16 +1,17 @@
-class TypeTicketSimple {
-  TypeTicketSimple({
+
+class PackTicket {
+  PackTicket({
     required this.raffleId,
     required this.price,
-    required this.packSize,
     required this.id,
+    required this.packSize,
   });
   late final String raffleId;
   late final double price;
-  late final int packSize;
   late final String id;
+  late final int packSize;
 
-  TypeTicketSimple.fromJson(Map<String, dynamic> json) {
+  PackTicket.fromJson(Map<String, dynamic> json) {
     raffleId = json['raffle_id'];
     price = json['price'];
     packSize = json['pack_size'];
@@ -21,32 +22,33 @@ class TypeTicketSimple {
     final data = <String, dynamic>{};
     data['raffle_id'] = raffleId;
     data['price'] = price;
-    data['pack_size'] = packSize;
     data['id'] = id;
+    data['pack_size'] = packSize;
     return data;
   }
 
-  TypeTicketSimple copyWith({
+  PackTicket copyWith({
     String? raffleId,
     double? price,
-    int? packSize,
     String? id,
+    int? packSize,
   }) =>
-      TypeTicketSimple(
+      PackTicket(
           raffleId: raffleId ?? this.raffleId,
           price: price ?? this.price,
+          id: id ?? this.id,
           packSize: packSize ?? this.packSize,
-          id: id ?? this.id);
+          );
 
-  TypeTicketSimple.empty() {
-    raffleId = '';
-    price = 0;
-    packSize = 0;
+  PackTicket.empty() {
+    raffleId = "";
+    price = 0.0;
     id = '';
+    packSize = 0;
   }
 
   @override
   String toString() {
-    return 'TypeTicketSimpleSimple(raffleId: $raffleId, price: $price, packSize: $packSize, id: $id)';
+    return 'PackTicket(raffleId: $raffleId, price: $price, id: $id, packSize: $packSize)';
   }
 }

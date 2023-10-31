@@ -23,7 +23,7 @@ class ModulesExpansionPanel extends HookConsumerWidget {
     return ExpansionPanelList(
       expansionCallback: (i, isOpen) {
         final copy = isExpanded.value.sublist(0);
-        copy[i] = isOpen;
+        copy[i] = !isOpen;
         isExpanded.value = copy;
       },
       children: modules

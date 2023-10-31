@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tombola/class/lot.dart';
+import 'package:myecl/tombola/class/prize.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
 import 'package:myecl/tombola/class/tickets.dart';
-import 'package:myecl/tombola/providers/lot_list_provider.dart';
-import 'package:myecl/tombola/providers/lot_provider.dart';
+import 'package:myecl/tombola/providers/prize_list_provider.dart';
+import 'package:myecl/tombola/providers/prize_provider.dart';
 import 'package:myecl/tombola/providers/raffle_provider.dart';
 import 'package:myecl/tombola/providers/winning_ticket_list_provider.dart';
 import 'package:myecl/tombola/router.dart';
 import 'package:myecl/tombola/tools/constants.dart';
-import 'package:myecl/tombola/ui/pages/admin_page/lot_card.dart';
+import 'package:myecl/tombola/ui/pages/creation_edit_page/prize_card.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class LotHandler extends HookConsumerWidget {
-  const LotHandler({super.key});
+class PrizeHandler extends HookConsumerWidget {
+  const PrizeHandler({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final raffle = ref.watch(raffleProvider);
-    final lotNotifier = ref.watch(lotProvider.notifier);
-    final lotsNotifier = ref.watch(lotListProvider.notifier);
-    final lotList = ref.watch(lotListProvider);
+    final prizeNotifier = ref.watch(prizeProvider.notifier);
+    final prizesNotifier = ref.watch(prizeListProvider.notifier);
+    final prizeList = ref.watch(prizeListProvider);
     final winningTicketListNotifier =
         ref.watch(winningTicketListProvider.notifier);
 
@@ -100,9 +100,10 @@ class LotHandler extends HookConsumerWidget {
             if (raffle.raffleStatusType == RaffleStatusType.creation)
               GestureDetector(
                 onTap: () {
-                  lotNotifier.setLot(Lot.empty());
+                  prizeNotifier.setLot(Prize.empty());
                   QR.to(RaffleRouter.root +
-                      RaffleRouter.admin +
+                      RaffleRouter.detail +
+                      RaffleRouter.creation +
                       RaffleRouter.addEditLot);
                 },
                 child: Container(
@@ -140,7 +141,7 @@ class LotHandler extends HookConsumerWidget {
                       ),
                     )),
               ),
-            lotList.when(data: (lots) {
+            prizeList.when(data: (lots) {
               lots = lots
                   .where((element) => element.raffleId == raffle.id)
                   .toList();
@@ -154,19 +155,19 @@ class LotHandler extends HookConsumerWidget {
                   : Row(
                       children: lots
                           .map(
-                            (e) => LotCard(
+                            (e) => PrizeCard(
                               lot: e,
                               onDelete: () async {
                                 await showDialog(
                                     context: context,
                                     builder: (context) => CustomDialogBox(
-                                          title: "Supprimer le produit",
+                                          title: "Supprimer le lot",
                                           descriptions:
-                                              "Voulez-vous vraiment supprimer ce produit?",
+                                              "Voulez-vous vraiment supprimer ce lot?",
                                           onYes: () {
                                             tokenExpireWrapper(ref, () async {
-                                              final value = await lotsNotifier
-                                                  .deleteLot(e);
+                                              final value = await prizesNotifier
+                                                  .deletePrize(e);
                                               if (value) {
                                                 displayToastWithContext(
                                                     TypeMsg.msg,
@@ -183,9 +184,10 @@ class LotHandler extends HookConsumerWidget {
                                         ));
                               },
                               onEdit: () {
-                                lotNotifier.setLot(e);
+                                prizeNotifier.setLot(e);
                                 QR.to(RaffleRouter.root +
-                                    RaffleRouter.admin +
+                                    RaffleRouter.detail +
+                                    RaffleRouter.creation +
                                     RaffleRouter.addEditLot);
                               },
                               status: raffle.raffleStatusType,
@@ -203,7 +205,7 @@ class LotHandler extends HookConsumerWidget {
                                                       .drawLot(e);
                                               value.when(
                                                   data: (winningTicketList) {
-                                                    lotsNotifier
+                                                    prizesNotifier
                                                         .setLotToZeroQuantity(
                                                             e.copyWith(
                                                                 quantity: 0));

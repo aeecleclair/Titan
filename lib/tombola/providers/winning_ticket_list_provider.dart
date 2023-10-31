@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tombola/class/lot.dart';
+import 'package:myecl/tombola/class/prize.dart';
 import 'package:myecl/tombola/class/tickets.dart';
 import 'package:myecl/tombola/providers/ticket_list_provider.dart';
-import 'package:myecl/tombola/repositories/lots_repository.dart';
+import 'package:myecl/tombola/repositories/prizes_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 
 class WinningTicketNotifier extends ListNotifier<Ticket> {
@@ -17,8 +17,8 @@ class WinningTicketNotifier extends ListNotifier<Ticket> {
     state = AsyncValue.data(tickets);
   }
 
-  Future<AsyncValue<List<Ticket>>> drawLot(Lot lot) async {
-    final drawnList = await _lotRepository.drawLot(lot);
+  Future<AsyncValue<List<Ticket>>> drawLot(Prize lot) async {
+    final drawnList = await _lotRepository.drawPrize(lot);
     state.when(
         data: (list) {
           state = AsyncValue.data(list + drawnList);
@@ -27,7 +27,7 @@ class WinningTicketNotifier extends ListNotifier<Ticket> {
         loading: () {
           state = AsyncValue.data(drawnList);
         });
-    return AsyncData(drawnList);
+    return state;
   }
 }
 
@@ -38,7 +38,7 @@ final winningTicketListProvider =
   WinningTicketNotifier notifier = WinningTicketNotifier(token: token);
   final ticketFromRaffle = ref.watch(ticketsListProvider);
   final winningTickets = ticketFromRaffle.when<List<Ticket>>(
-      data: (data) => data.where((element) => element.lot != null).toList(),
+      data: (data) => data.where((element) => element.prize != null).toList(),
       loading: () => [],
       error: (Object e, StackTrace? s) => []);
   notifier.setData(winningTickets);

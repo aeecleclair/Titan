@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/tombola/class/pack_ticket.dart';
 import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
-import 'package:myecl/tombola/class/type_ticket_simple.dart';
+import 'package:myecl/tombola/providers/tombola_logo_provider.dart';
+import 'package:myecl/tombola/providers/tombola_logos_provider.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/tombola_page/confirm_payment.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class BuyTypeTicketSimple extends HookConsumerWidget {
-  final TypeTicketSimple typeTicket;
+class BuyPackTicket extends HookConsumerWidget {
+  final PackTicket packTicket;
   final Raffle raffle;
-  const BuyTypeTicketSimple(
-      {Key? key, required this.typeTicket, required this.raffle})
+  const BuyPackTicket(
+      {Key? key, required this.packTicket, required this.raffle})
       : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final tombolaLogos = ref.watch(tombolaLogosProvider);
+    final tombolaLogosNotifier = ref.watch(tombolaLogosProvider.notifier);
+    final tombolaLogoNotifier = ref.watch(tombolaLogoProvider.notifier);
     return GestureDetector(
         onTap: () {
           if (raffle.raffleStatusType == RaffleStatusType.open) {
@@ -22,7 +29,7 @@ class BuyTypeTicketSimple extends HookConsumerWidget {
               context: context,
               builder: (BuildContext context) {
                 return ConfirmPaymentDialog(
-                  typeTicket: typeTicket,
+                  packTicket: packTicket,
                   raffle: raffle,
                 );
               },
@@ -68,13 +75,54 @@ class BuyTypeTicketSimple extends HookConsumerWidget {
                           ],
                           borderRadius:
                               const BorderRadius.all(Radius.circular(15))),
-                      child: Center(
-                        child:
-                            Image.asset("assets/images/soli.png", height: 40),
+                      child: Container(
+                        child: tombolaLogos.when(
+                            data: (data) {
+                              if (data[raffle] != null) {
+                                return data[raffle]!.when(
+                                    data: (data) {
+                                      if (data.isNotEmpty) {
+                                        return ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(15.0),
+                                            child: data.first);
+                                      } else {
+                                        Future.delayed(
+                                            const Duration(milliseconds: 1),
+                                            () {
+                                          tombolaLogosNotifier.setTData(
+                                              raffle, const AsyncLoading());
+                                        });
+                                        tokenExpireWrapper(ref, () async {
+                                          tombolaLogoNotifier
+                                              .getLogo(raffle.id)
+                                              .then((value) {
+                                            tombolaLogosNotifier.setTData(
+                                                raffle, AsyncData([value]));
+                                          });
+                                        });
+                                        return const HeroIcon(
+                                            HeroIcons.cubeTransparent);
+                                      }
+                                    },
+                                    loading: () =>
+                                        const CircularProgressIndicator(),
+                                    error: (Object error,
+                                            StackTrace? stackTrace) =>
+                                        const HeroIcon(
+                                            HeroIcons.cubeTransparent));
+                              } else {
+                                return const HeroIcon(
+                                    HeroIcons.cubeTransparent);
+                              }
+                            },
+                            loading: () => const CircularProgressIndicator(),
+                            error: (Object error, StackTrace? stackTrace) =>
+                                const HeroIcon(HeroIcons.cubeTransparent)),
                       ),
                     ),
                     Text(
-                      "${typeTicket.price.toStringAsFixed(2)}€",
+                      "${packTicket.price.toStringAsFixed(2)}€",
                       style: const TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -85,7 +133,7 @@ class BuyTypeTicketSimple extends HookConsumerWidget {
               ),
               const SizedBox(height: 10),
               Text(
-                "${typeTicket.packSize} tickets",
+                "${packTicket.packSize} tickets",
                 style: TextStyle(
                     color: Colors.white.withOpacity(0.8),
                     fontSize: 18,
@@ -115,8 +163,7 @@ class BuyTypeTicketSimple extends HookConsumerWidget {
                       child: Text(
                           raffle.raffleStatusType == RaffleStatusType.open
                               ? "Acheter ce ticket"
-                              : raffle.raffleStatusType ==
-                                      RaffleStatusType.locked
+                              : raffle.raffleStatusType == RaffleStatusType.lock
                                   ? "Tombola fermée"
                                   : "Pas encore disponible",
                           style: TextStyle(

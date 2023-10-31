@@ -1,15 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/tombola/class/type_ticket_simple.dart';
+import 'package:myecl/tombola/class/pack_ticket.dart';
 
-class TypeTicketSimpleNotifier extends StateNotifier<TypeTicketSimple> {
-  TypeTicketSimpleNotifier() : super(TypeTicketSimple.empty());
+class PackTicketNotifier extends StateNotifier<PackTicket> {
+  PackTicketNotifier() : super(PackTicket.empty());
 
-  void setLot(TypeTicketSimple type) {
+  void setPrize(PackTicket type) {
     state = type;
   }
 }
 
-final typeTicketProvider =
-    StateNotifierProvider<TypeTicketSimpleNotifier, TypeTicketSimple>((ref) {
-  return TypeTicketSimpleNotifier();
+final packTicketProvider =
+    StateNotifierProvider<PackTicketNotifier, PackTicket>((ref) {
+  return PackTicketNotifier();
 });

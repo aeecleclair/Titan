@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:heroicons/heroicons.dart';
-
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tombola/class/raffle.dart';
 import 'package:myecl/tombola/class/raffle_status_type.dart';
@@ -12,20 +10,20 @@ import 'package:myecl/tombola/router.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tombola/ui/pages/main_page/card_tombolas.dart';
 import 'package:myecl/tombola/ui/pages/main_page/carte_ticket.dart';
+import 'package:myecl/tombola/ui/creation_button_anim.dart';
 import 'package:myecl/tombola/ui/tombola.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RaffleMainPage extends HookConsumerWidget {
   const RaffleMainPage({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final raffleList = ref.watch(raffleListProvider);
     final raffleListNotifier = ref.watch(raffleListProvider.notifier);
     final userTicketList = ref.watch(userTicketListProvider);
     final userTicketListNotifier = ref.watch(userTicketListProvider.notifier);
-    final isAdmin = ref.watch(isTombolaAdminProvider);
+    final isAdminModule = ref.watch(isTombolaAdminProvider);
 
     final rafflesStatus = {};
     raffleList.whenData(
@@ -35,7 +33,6 @@ class RaffleMainPage extends HookConsumerWidget {
         }
       },
     );
-
     return TombolaTemplate(
       child: Refresher(
         onRefresh: () async {
@@ -60,36 +57,12 @@ class RaffleMainPage extends HookConsumerWidget {
                               fontSize: 20,
                               color: Colors.black,
                               fontWeight: FontWeight.bold))),
-                  if (isAdmin)
+                  if (isAdminModule)
                     GestureDetector(
                       onTap: () {
                         QR.to(RaffleRouter.root + RaffleRouter.admin);
                       },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 8),
-                        decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  blurRadius: 10,
-                                  offset: const Offset(0, 5))
-                            ]),
-                        child: const Row(
-                          children: [
-                            HeroIcon(HeroIcons.userGroup,
-                                color: Colors.white, size: 20),
-                            SizedBox(width: 10),
-                            Text("Admin",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white)),
-                          ],
-                        ),
-                      ),
+                      child: const CustomButton(text: "Admin"),
                     ),
                 ],
               ),
@@ -101,30 +74,35 @@ class RaffleMainPage extends HookConsumerWidget {
               data: (tickets) {
                 tickets = tickets
                     .where((t) =>
-                        t.lot != null ||
-                        (rafflesStatus.containsKey(t.typeTicket.raffleId) &&
-                            rafflesStatus[t.typeTicket.raffleId] !=
-                                RaffleStatusType.locked))
+                        t.prize != null ||
+                        (rafflesStatus.containsKey(t.packTicket.raffleId) &&
+                            rafflesStatus[t.packTicket.raffleId] !=
+                                RaffleStatusType.lock))
                     .toList();
+                if (tickets.isEmpty) {
+                  return const Center(
+                    child: Text(TombolaTextConstants.noTicket),
+                  );
+                }
                 final ticketSum = <String, List<Ticket>>{};
                 final ticketPrice = <String, double>{};
                 for (final ticket in tickets) {
-                  if (ticket.lot == null) {
-                    final id = ticket.typeTicket.raffleId;
+                  if (ticket.prize == null) {
+                    final id = ticket.packTicket.raffleId;
                     if (ticketSum.containsKey(id)) {
                       ticketSum[id]!.add(ticket);
                       ticketPrice[id] = ticketPrice[id]! +
-                          ticket.typeTicket.price / ticket.typeTicket.packSize;
+                          ticket.packTicket.price / ticket.packTicket.packSize;
                     } else {
                       ticketSum[id] = [ticket];
                       ticketPrice[id] =
-                          ticket.typeTicket.price / ticket.typeTicket.packSize;
+                          ticket.packTicket.price / ticket.packTicket.packSize;
                     }
                   } else {
                     final id = ticketSum.length.toString();
                     ticketSum[id] = [ticket];
                     ticketPrice[id] =
-                        ticket.typeTicket.price / ticket.typeTicket.packSize;
+                        ticket.packTicket.price / ticket.packTicket.packSize;
                   }
                 }
                 return ticketSum.isEmpty
@@ -181,7 +159,7 @@ class RaffleMainPage extends HookConsumerWidget {
                         case RaffleStatusType.open:
                           onGoingRaffles.add(tombola);
                           break;
-                        case RaffleStatusType.locked:
+                        case RaffleStatusType.lock:
                           pastRaffles.add(tombola);
                           break;
                       }
@@ -195,7 +173,8 @@ class RaffleMainPage extends HookConsumerWidget {
                                   bottom: 10, top: 20, left: 5),
                               child: const Align(
                                   alignment: Alignment.centerLeft,
-                                  child: Text(TombolaTextConstants.actualTombolas,
+                                  child: Text(
+                                      TombolaTextConstants.actualTombolas,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           fontSize: 20,
@@ -256,7 +235,6 @@ class RaffleMainPage extends HookConsumerWidget {
                               style: const TextStyle(fontSize: 20)))),
                   loading: () => const Center(
                           child: SizedBox(
-                        height: 120,
                         child: CircularProgressIndicator(
                           color: Colors.black,
                         ),

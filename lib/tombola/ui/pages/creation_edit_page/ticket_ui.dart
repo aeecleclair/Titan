@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tombola/class/type_ticket_simple.dart';
+import 'package:myecl/tombola/class/pack_ticket.dart';
 import 'package:myecl/tombola/tools/constants.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 
 class TicketUI extends HookConsumerWidget {
-  final TypeTicketSimple typeTicket;
+  final PackTicket packTicket;
   final VoidCallback onEdit;
   final Future Function() onDelete;
   final bool showButton;
   const TicketUI(
       {Key? key,
-      required this.typeTicket,
+      required this.packTicket,
       required this.onEdit,
       required this.onDelete,
       required this.showButton})
@@ -42,7 +42,7 @@ class TicketUI extends HookConsumerWidget {
             Column(
               children: [
                 Text(
-                  "${typeTicket.price} €",
+                  "${packTicket.price} €",
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -52,7 +52,7 @@ class TicketUI extends HookConsumerWidget {
                   height: showButton ? 5 : 10,
                 ),
                 Text(
-                  "${typeTicket.packSize} tickets",
+                  "${packTicket.packSize} tickets",
                   style: TextStyle(
                       color: Colors.white.withOpacity(0.8),
                       fontSize: 18,

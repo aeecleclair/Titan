@@ -19,16 +19,16 @@ class WinningTicketUI extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Stack(children: [
       Container(
-        width: 130,
-        height: 125,
-        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        width: 120,
+        height: 120,
+        margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 10),
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 17),
         decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
                 color: TombolaColorConstants.ticketback.withOpacity(0.3),
-                blurRadius: 8,
-                offset: const Offset(2, 3),
+                blurRadius: 6,
+                offset: const Offset(1, 2),
               ),
             ],
             color: TombolaColorConstants.ticketback,
@@ -37,7 +37,7 @@ class WinningTicketUI extends HookConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             AutoSizeText(
-              ticket.lot == null ? "Lot" : ticket.lot!.name,
+              ticket.prize == null ? "Lot" : ticket.prize!.name,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
@@ -52,7 +52,7 @@ class WinningTicketUI extends HookConsumerWidget {
                   maxLines: 2,
                   style: TextStyle(
                       color: Colors.white.withOpacity(0.8),
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
@@ -67,7 +67,7 @@ class WinningTicketUI extends HookConsumerWidget {
                   minFontSize: 10,
                   style: TextStyle(
                       color: Colors.white.withOpacity(0.8),
-                      fontSize: 15,
+                      fontSize: 12,
                       fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(

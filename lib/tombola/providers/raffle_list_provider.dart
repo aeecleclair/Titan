@@ -6,36 +6,32 @@ import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class RaffleListNotifier extends ListNotifier<Raffle> {
-  final RaffleRepository _rafflerepository = RaffleRepository();
+  final RaffleRepository raffleRepository = RaffleRepository();
   RaffleListNotifier({required String token})
       : super(const AsyncValue.loading()) {
-    _rafflerepository.setToken(token);
+    raffleRepository.setToken(token);
   }
 
   Future<AsyncValue<List<Raffle>>> loadRaffleList() async {
-    return await loadList(
-        () async => _rafflerepository.getRaffleList());
+    return await loadList(raffleRepository.getRaffleList);
   }
 
   Future<bool> createRaffle(Raffle raffle) async {
     return await add(
-      // _rafflerepository.createRaffle,
-      (raffle) async => raffle,
+      raffleRepository.createRaffle,
       raffle);
   }
 
   Future<bool> updateRaffle(Raffle raffle) async {
     return await update(
-        // _rafflerepository.updateRaffle,
-        (raffle) async => false,
+        raffleRepository.updateRaffle,
         (raffles, r) => raffles..[raffles.indexWhere((e) => e.id == r.id)] = r,
         raffle);
   }
 
   Future<bool> deleteRaffle(Raffle raffle) async {
     return await delete(
-        // _rafflerepository.deleteRaffle,
-        (raffle) async => false,
+        raffleRepository.deleteRaffle,
         (raffles, r) => raffles..removeWhere((e) => e.id == r.id),
         raffle.id,
         raffle);
@@ -43,17 +39,18 @@ class RaffleListNotifier extends ListNotifier<Raffle> {
 
   Future<bool> openRaffle(Raffle opennedRaffle) async {
     return await update(
-        _rafflerepository.updateRaffle,
+        raffleRepository.openRaffle,
         (raffles, r) => raffles..[raffles.indexWhere((e) => e.id == r.id)] = r,
         opennedRaffle);
   }
 
-  Future<bool> lockRaffle(Raffle lockedRaffle) async {
+  Future<bool> lockRaffle(Raffle lockRaffle) async {
     return await update(
-        _rafflerepository.updateRaffle,
+        raffleRepository.lockRaffle,
         (raffles, r) => raffles..[raffles.indexWhere((e) => e.id == r.id)] = r,
-        lockedRaffle);
+        lockRaffle);
   }
+  
 }
 
 final raffleListProvider =

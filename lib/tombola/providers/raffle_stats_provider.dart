@@ -6,10 +6,12 @@ import 'package:myecl/tombola/providers/raffle_id_provider.dart';
 import 'package:myecl/tombola/repositories/raffle_detail_repository.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
 
-class RaffleStatsNotifier extends SingleNotifier<RaffleStats>{
-  final RaffleDetailRepository _raffleDetailRepository = RaffleDetailRepository();
+class RaffleStatsNotifier extends SingleNotifier<RaffleStats> {
+  final RaffleDetailRepository _raffleDetailRepository =
+      RaffleDetailRepository();
   late String raffleId;
-  RaffleStatsNotifier({required String token}) : super(const AsyncValue.loading()) {
+  RaffleStatsNotifier({required String token})
+      : super(const AsyncValue.loading()) {
     _raffleDetailRepository.setToken(token);
   }
 
@@ -17,18 +19,21 @@ class RaffleStatsNotifier extends SingleNotifier<RaffleStats>{
     this.raffleId = raffleId;
   }
 
-  Future<AsyncValue<RaffleStats>> loadRaffleStats({String? customRaffleId}) async {
-    return await load(() async => _raffleDetailRepository.getRaffleStats(customRaffleId ?? raffleId));
+  Future<AsyncValue<RaffleStats>> loadRaffleStats(
+      {String? customRaffleId}) async {
+    return await load(() async =>
+        _raffleDetailRepository.getRaffleStats(customRaffleId ?? raffleId));
   }
 }
 
-final raffleStatsProvider = StateNotifierProvider<RaffleStatsNotifier, AsyncValue<RaffleStats>>((ref) {
+final raffleStatsProvider =
+    StateNotifierProvider<RaffleStatsNotifier, AsyncValue<RaffleStats>>((ref) {
   final token = ref.watch(tokenProvider);
   RaffleStatsNotifier notifier = RaffleStatsNotifier(token: token);
   final raffleId = ref.watch(raffleIdProvider);
-    if (raffleId != Raffle.empty().id) {
-      notifier.setRaffleId(raffleId);
-      notifier.loadRaffleStats();
-    }
+  if (raffleId != Raffle.empty().id) {
+    notifier.setRaffleId(raffleId);
+    notifier.loadRaffleStats();
+  }
   return notifier;
 });

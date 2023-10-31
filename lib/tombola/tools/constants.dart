@@ -16,8 +16,8 @@ class TombolaColorConstants extends ColorConstants {
 
 class TombolaTextConstants {
   //general
-  static const String raffle = "Tombola";
-  static const String prize = "Lot";
+  static const String raffle = "Tombolas";
+  static const String prize = "Lots";
   //Home page
   static const String actualTombolas = "Tombola en cours";
   static const String pastTombolas = "Tombola passés";
@@ -58,7 +58,7 @@ class TombolaTextConstants {
 
   static const String quantity = "Quantité";
 
-  static const String close = "Fermer";
+  static const String close = "Lancer le tirage de la tombola";
 
   static const String open = "Ouvrir";
 
@@ -109,4 +109,10 @@ class TombolaTextConstants {
 
   static const String mustBePositive =
       "Le nombre doit être strictement positif";
+
+  static const String notEnoughPrize = "Tous les lots n'ont pas été tirés";
+
+  static const String editRaffle = "Modifier la tombola";
+
+  static const String edit = "Modifier";
 }

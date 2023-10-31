@@ -227,7 +227,7 @@ class VoteMainPage extends HookConsumerWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Spacer(),
+                          const Spacer(),
                           Container(
                             margin: const EdgeInsets.only(right: 20),
                             child: GestureDetector(

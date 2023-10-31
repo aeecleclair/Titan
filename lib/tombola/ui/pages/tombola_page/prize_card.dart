@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tombola/class/lot.dart';
+import 'package:myecl/tombola/class/prize.dart';
 import 'package:myecl/tombola/ui/pages/tombola_page/prize_dialog.dart';
 
 class PrizeCard extends HookConsumerWidget {
@@ -9,7 +9,7 @@ class PrizeCard extends HookConsumerWidget {
     Key? key,
     required this.prize,
   }) : super(key: key);
-  final Lot prize;
+  final Prize prize;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
