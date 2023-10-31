@@ -29,6 +29,7 @@ class AddEditSharerGroupPage extends HookConsumerWidget {
     final isEdit = sharerGroup.id != SharerGroup.empty().id;
     final name = useTextEditingController();
     final queryController = useTextEditingController();
+    final key = GlobalKey<FormState>();
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -84,8 +85,15 @@ class AddEditSharerGroupPage extends HookConsumerWidget {
                         SearchResult(queryController: queryController),
                         const SizedBox(height: 50),
                         WaitingButton(
-                          builder: (child) => AddEditButtonLayout(child: child),
+                          builder: (child) => AddEditButtonLayout(
+                              color: const Color(0xff09263D), child: child),
                           onTap: () async {
+                            if (key.currentState == null) {
+                              return;
+                            }
+                            if (!key.currentState!.validate()) {
+                              return;
+                            }
                             await tokenExpireWrapper(ref, () async {
                               SharerGroup newSharerGroup = SharerGroup(
                                   equilibriumTransactions: [],
