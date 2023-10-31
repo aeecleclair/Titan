@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/providers/borrower_provider.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tricount/providers/sharer_group_member_list_provider.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class SearchResult extends HookConsumerWidget {
@@ -12,8 +12,8 @@ class SearchResult extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final users = ref.watch(userList);
     final usersNotifier = ref.watch(userList.notifier);
-    final borrower = ref.watch(borrowerProvider);
-    final borrowerNotifier = ref.watch(borrowerProvider.notifier);
+    final sharerGroupMemberListNotifier =
+        ref.watch(sharerGroupMemberListProvider.notifier);
     return AsyncChild(
         value: users,
         builder: (context, user) => Column(
@@ -28,11 +28,9 @@ class SearchResult extends HookConsumerWidget {
                             Expanded(
                               child: Text(
                                 simpleUser.getName(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 13,
-                                  fontWeight: (borrower.id == simpleUser.id)
-                                      ? FontWeight.bold
-                                      : FontWeight.w400,
+                                  fontWeight: FontWeight.w400,
                                 ),
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -40,7 +38,7 @@ class SearchResult extends HookConsumerWidget {
                           ]),
                     ),
                     onTap: () {
-                      borrowerNotifier.setBorrower(simpleUser);
+                      sharerGroupMemberListNotifier.addMember(simpleUser);
                       queryController.text = simpleUser.getName();
                       usersNotifier.clear();
                     }))
