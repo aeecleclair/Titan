@@ -38,7 +38,7 @@ class SearchResult extends HookConsumerWidget {
                           ]),
                     ),
                     onTap: () {
-                      if (sharerGroupMemberList.map((e) => e.id).contains(simpleUser.id)) {
+                      if (!sharerGroupMemberList.map((e) => e.id).contains(simpleUser.id)) {
                         sharerGroupMemberListNotifier.removeMember(simpleUser);
                       }
                     }))
