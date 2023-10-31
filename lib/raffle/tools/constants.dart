@@ -114,4 +114,10 @@ class RaffleTextConstants {
   static const String loading = "Chargement";
   static const String ticketNumber = "Nombre de ticket";
   static const String price = "Prix";
+
+  static const String edit = "Modifier";
+
+  static const String updatedSharerGroup = "Groupe de partage mis à jour";
+
+  static const String addedSharerGroup = "Groupe de partage ajouté";
 }
