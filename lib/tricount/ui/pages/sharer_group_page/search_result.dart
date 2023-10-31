@@ -11,7 +11,7 @@ class SearchResult extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final users = ref.watch(userList);
-    final usersNotifier = ref.watch(userList.notifier);
+    final sharerGroupMemberList = ref.watch(sharerGroupMemberListProvider);
     final sharerGroupMemberListNotifier =
         ref.watch(sharerGroupMemberListProvider.notifier);
     return AsyncChild(
@@ -38,9 +38,9 @@ class SearchResult extends HookConsumerWidget {
                           ]),
                     ),
                     onTap: () {
-                      sharerGroupMemberListNotifier.addMember(simpleUser);
-                      queryController.text = simpleUser.getName();
-                      usersNotifier.clear();
+                      if (sharerGroupMemberList.map((e) => e.id).contains(simpleUser.id)) {
+                        sharerGroupMemberListNotifier.removeMember(simpleUser);
+                      }
                     }))
                 .toList()));
   }
