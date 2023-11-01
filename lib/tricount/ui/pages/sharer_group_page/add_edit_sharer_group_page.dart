@@ -27,7 +27,7 @@ class AddEditSharerGroupPage extends HookConsumerWidget {
     final sharerGroupListNotifier = ref.watch(sharerGroupListProvider.notifier);
     final usersNotifier = ref.watch(userList.notifier);
     final isEdit = sharerGroup.id != SharerGroup.empty().id;
-    final name = useTextEditingController();
+    final name = useTextEditingController(text: isEdit ? sharerGroup.name : "");
     final queryController = useTextEditingController();
     final key = GlobalKey<FormState>();
 
