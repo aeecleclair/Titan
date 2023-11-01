@@ -15,6 +15,10 @@ class SharerGroupMemberListProvider extends StateNotifier<List<SimpleUser>> {
   void reset() {
     state = [];
   }
+
+  void set(List<SimpleUser> i) {
+    state = i;
+  }
 }
 
 final sharerGroupMemberListProvider =

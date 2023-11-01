@@ -8,6 +8,7 @@ import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tricount/class/sharer_group.dart';
 import 'package:myecl/tricount/providers/cross_group_stats_provider.dart';
 import 'package:myecl/tricount/providers/sharer_group_list_provider.dart';
+import 'package:myecl/tricount/providers/sharer_group_member_list_provider.dart';
 import 'package:myecl/tricount/providers/sharer_group_provider.dart';
 import 'package:myecl/tricount/router.dart';
 import 'package:myecl/tricount/ui/pages/main_page/sharer_group_handler.dart';
@@ -23,6 +24,8 @@ class TricountMainPage extends HookConsumerWidget {
     final sharerGroupNotifier = ref.watch(sharerGroupProvider.notifier);
     final sharerGroupList = ref.watch(sharerGroupListProvider);
     final sharerGroupListNotifier = ref.watch(sharerGroupListProvider.notifier);
+    final sharerGroupMemberListNotifier =
+        ref.watch(sharerGroupMemberListProvider.notifier);
     final myEquilibriumTransactions = ref.watch(crossGroupStatsProvider);
     final scrollController = useScrollController();
     final scrollValue = useState<double>(0);
@@ -115,6 +118,8 @@ class TricountMainPage extends HookConsumerWidget {
                                               sharerGroupNotifier
                                                   .setSharerGroup(
                                                       SharerGroup.empty());
+                                              sharerGroupMemberListNotifier
+                                                  .reset();
                                               QR.to(TricountRouter.root +
                                                   TricountRouter.addEdit);
                                             }));
@@ -129,6 +134,8 @@ class TricountMainPage extends HookConsumerWidget {
                                                     index];
                                             sharerGroupNotifier
                                                 .setSharerGroup(sharerGroup);
+                                            sharerGroupMemberListNotifier
+                                                .set(sharerGroup.sharers);
                                             QR.to(TricountRouter.root +
                                                 TricountRouter.detail);
                                           }));
