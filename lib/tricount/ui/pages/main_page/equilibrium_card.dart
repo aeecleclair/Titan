@@ -1,8 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/tricount/class/equilibrium_transaction.dart';
+import 'package:myecl/tricount/tools/functions.dart';
 
 class EquilibriumCard extends StatelessWidget {
   final EquilibriumTransaction equilibriumTransaction;
@@ -10,16 +9,6 @@ class EquilibriumCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fromName = equilibriumTransaction.from.nickname != null
-        ? equilibriumTransaction.from.nickname!
-            .substring(0, min(equilibriumTransaction.from.nickname!.length, 3))
-        : equilibriumTransaction.from.firstname
-            .substring(0, min(equilibriumTransaction.from.firstname.length, 3));
-    final toName = equilibriumTransaction.to.nickname != null
-        ? equilibriumTransaction.to.nickname!
-            .substring(0, min(equilibriumTransaction.to.nickname!.length, 3))
-        : equilibriumTransaction.to.firstname
-            .substring(0, min(equilibriumTransaction.to.firstname.length, 3));
     return Container(
       height: 65,
       width: double.infinity,
@@ -33,7 +22,7 @@ class EquilibriumCard extends StatelessWidget {
                 radius: 30,
                 backgroundColor: Colors.white,
                 child: Text(
-                  fromName,
+                  getAvatarName(equilibriumTransaction.from),
                   style: const TextStyle(
                       color: Color(0xff09263D),
                       fontSize: 20,
@@ -50,7 +39,7 @@ class EquilibriumCard extends StatelessWidget {
                 radius: 30,
                 backgroundColor: Colors.white,
                 child: Text(
-                  toName,
+                  getAvatarName(equilibriumTransaction.to),
                   style: const TextStyle(
                       color: Color(0xff1C4668),
                       fontSize: 20,
