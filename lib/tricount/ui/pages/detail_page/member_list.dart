@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/tricount/ui/pages/detail_page/member_card.dart';
 import 'package:myecl/user/class/list_users.dart';
 
 class MemberList extends StatelessWidget {
@@ -7,6 +8,6 @@ class MemberList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: members.map((e) => Text(e.name)).toList());
+    return Column(children: members.map((e) => MemberCard(member: e)).toList());
   }
 }
