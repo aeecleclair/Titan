@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tricount/providers/sharer_group_provider.dart';
+import 'package:myecl/tricount/ui/pages/detail_page/member_list.dart';
 import 'package:myecl/tricount/ui/pages/tricount.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -68,9 +69,7 @@ class SharerGroupDetailPage extends HookConsumerWidget {
                   SizedBox(
                     height: 700,
                     child: PageView(children: [
-                      Container(
-                        color: Colors.red,
-                      )
+                      MemberList(members: sharerGroup.sharers),
                     ]),
                   ),
                 ],
