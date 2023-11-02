@@ -14,14 +14,13 @@ class MemberCard extends StatelessWidget {
     final name = member.nickname != null
         ? member.nickname!.substring(0, min(member.nickname!.length, 3))
         : member.firstname.substring(0, min(member.firstname.length, 3));
-    return Container(
+    return SizedBox(
       height: 80,
-      padding: EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
           CircleAvatar(
             radius: 30,
-            backgroundColor: Color(0xff1C4668),
+            backgroundColor: const Color(0xff1C4668),
             child: Text(
               name,
               style: const TextStyle(
