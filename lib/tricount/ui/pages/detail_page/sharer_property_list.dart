@@ -30,14 +30,14 @@ class SharerPropertyList<T> extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            GestureDetector(
+            onTap != null ? GestureDetector(
               onTap: onTap,
               child: const HeroIcon(
                 HeroIcons.plus,
                 color: Color(0xff09263D),
                 size: 30,
               ),
-            )
+            ): Container()
           ],
         ),
         const SizedBox(height: 10),
