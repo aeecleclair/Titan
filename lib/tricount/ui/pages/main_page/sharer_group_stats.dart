@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tricount/class/equilibrium_transaction.dart';
-import 'package:myecl/tricount/ui/pages/main_page/equilibrium_card.dart';
+import 'package:myecl/tricount/ui/pages/components/equilibrium_card.dart';
 
 class SharerGroupStats extends StatelessWidget {
   final List<EquilibriumTransaction> equilibriumTransactions;
@@ -30,33 +30,35 @@ class SharerGroupStats extends StatelessWidget {
           ],
           borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(30), topRight: Radius.circular(30))),
-      child: Column(
-        children: [
-          const SizedBox(height: 20),
-          const AlignLeftText(
-            "Pour équilibrer",
-            color: Colors.white,
-            padding: EdgeInsets.only(left: 30),
-          ),
-          const SizedBox(height: 20),
-          AnimationLimiter(
-              key: ValueKey(equilibriumTransactions),
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: equilibriumTransactions.length,
-                  itemBuilder: (context, index) {
-                    return AnimationConfiguration.staggeredList(
-                        position: index,
-                        duration: const Duration(milliseconds: 375),
-                        child: SlideAnimation(
-                            horizontalOffset: 50.0,
-                            child: FadeInAnimation(
-                                child: EquilibriumCard(
-                                    equilibriumTransaction:
-                                        equilibriumTransactions[index]))));
-                  }))
-        ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+            const AlignLeftText(
+              "Pour équilibrer",
+              color: Colors.white,
+            ),
+            const SizedBox(height: 20),
+            AnimationLimiter(
+                key: ValueKey(equilibriumTransactions),
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: equilibriumTransactions.length,
+                    itemBuilder: (context, index) {
+                      return AnimationConfiguration.staggeredList(
+                          position: index,
+                          duration: const Duration(milliseconds: 375),
+                          child: SlideAnimation(
+                              horizontalOffset: 50.0,
+                              child: FadeInAnimation(
+                                  child: EquilibriumCard(
+                                      equilibriumTransaction:
+                                          equilibriumTransactions[index]))));
+                    }))
+          ],
+        ),
       ),
     );
   }
