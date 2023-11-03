@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tricount/providers/sharer_group_provider.dart';
+import 'package:myecl/tricount/ui/pages/components/equilibrium_card.dart';
 import 'package:myecl/tricount/ui/pages/detail_page/member_card.dart';
 import 'package:myecl/tricount/ui/pages/detail_page/sharer_property_list.dart';
 import 'package:myecl/tricount/ui/pages/detail_page/transaction_card.dart';
@@ -18,15 +21,26 @@ class SharerGroupDetailPage extends HookConsumerWidget {
     final pageController = usePageController();
 
     final pages = [
-      SharerPropertyList(
-          propertyList: sharerGroup.sharers,
-          title: 'Participants',
-          builder: (e) => MemberCard(member: e),
-          onTap: () {}),
+      // SharerPropertyList(
+      //     propertyList: sharerGroup.equilibriumTransactions,
+      //     title: 'Résumé',
+      //     builder: (e) => TransactionCard(transaction: e),
+      //     onTap: null),
       SharerPropertyList(
           propertyList: sharerGroup.transactions,
           title: 'Transactions',
           builder: (e) => TransactionCard(transaction: e),
+          onTap: () {}),
+      SharerPropertyList(
+          propertyList: sharerGroup.equilibriumTransactions,
+          title: 'Remboursement',
+          builder: (e) =>
+              EquilibriumCard(equilibriumTransaction: e, isLightTheme: true),
+          onTap: null),
+      SharerPropertyList(
+          propertyList: sharerGroup.sharers,
+          title: 'Participants',
+          builder: (e) => MemberCard(member: e),
           onTap: () {}),
     ];
 
@@ -76,8 +90,20 @@ class SharerGroupDetailPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 20),
                   SizedBox(
-                    height: 700,
-                    child: PageView(controller: pageController, children: pages),
+                    height: max(
+                        MediaQuery.of(context).size.height - 380,
+                        max(
+                                    max(
+                                        sharerGroup
+                                            .equilibriumTransactions.length,
+                                        sharerGroup.sharers.length),
+                                    sharerGroup.transactions.length) *
+                                80 +
+                            80),
+                    child: PageView(
+                        physics: const BouncingScrollPhysics(),
+                        controller: pageController,
+                        children: pages),
                   ),
                 ],
               ),
