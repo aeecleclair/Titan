@@ -14,17 +14,22 @@ class SharerGroupDetailPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final sharerGroup = ref.watch(sharerGroupProvider);
     final pageController = usePageController();
+
+    final pages = [
+      MemberList(members: sharerGroup.sharers),
+    ];
+
     return TricountTemplate(
         child: Refresher(
       onRefresh: () async {},
       child: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 250),
+            const SizedBox(height: 250),
             Container(
               decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(30),
                       topRight: Radius.circular(30)),
                   boxShadow: [
@@ -46,31 +51,22 @@ class SharerGroupDetailPage extends HookConsumerWidget {
                   const SizedBox(height: 20),
                   SmoothPageIndicator(
                     controller: pageController,
-                    count: 2,
+                    count: pages.length,
                     effect: WormEffect(
                         dotColor: Colors.grey.shade300,
-                        activeDotColor: Color(0xff09263D),
+                        activeDotColor: const Color(0xff09263D),
                         dotWidth: 12,
                         dotHeight: 12),
                     onDotClicked: (index) {
-                      // if (index < lastIndex.value ||
-                      //     currentPage.value >= steps.length - 2 ||
-                      //     formKeys[lastIndex.value].currentState!.validate()) {
-                      //   FocusScope.of(context).requestFocus(FocusNode());
-                      //   currentPage.value = index;
-                      //   lastIndex.value = index;
-                      //   pageController.animateToPage(index,
-                      //       duration: const Duration(milliseconds: 500),
-                      //       curve: Curves.decelerate);
-                      // }
+                      pageController.animateToPage(index,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.decelerate);
                     },
                   ),
                   const SizedBox(height: 20),
                   SizedBox(
                     height: 700,
-                    child: PageView(children: [
-                      MemberList(members: sharerGroup.sharers),
-                    ]),
+                    child: PageView(children: pages),
                   ),
                 ],
               ),
