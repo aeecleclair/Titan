@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/tricount/ui/pages/detail_page/member_card.dart';
-import 'package:myecl/user/class/list_users.dart';
 
-class MemberList extends StatelessWidget {
-  final List<SimpleUser> members;
-  const MemberList({super.key, required this.members});
+class SharerPropertyList<T> extends StatelessWidget {
+  final List<T> propertyList;
+  final String title;
+  final Widget Function(T) builder;
+  final void Function()? onTap;
+  const SharerPropertyList(
+      {super.key,
+      required this.propertyList,
+      required this.builder,
+      required this.title,
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -14,18 +20,18 @@ class MemberList extends StatelessWidget {
       child: Column(children: [
         Row(
           children: [
-            const SizedBox(
+            SizedBox(
               height: 30,
               child: Center(
                 child: Text(
-                  'Participants',
-                  style: TextStyle(color: Color(0xff09263D), fontSize: 20),
+                  title,
+                  style: const TextStyle(color: Color(0xff09263D), fontSize: 20),
                 ),
               ),
             ),
             const Spacer(),
             GestureDetector(
-              onTap: () {},
+              onTap: onTap,
               child: const HeroIcon(
                 HeroIcons.plus,
                 color: Color(0xff09263D),
@@ -35,7 +41,7 @@ class MemberList extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 10),
-        ...members.map((e) => MemberCard(member: e))
+        ...propertyList.map((e) => builder(e))
       ]),
     );
   }

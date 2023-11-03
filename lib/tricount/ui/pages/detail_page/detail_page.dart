@@ -3,7 +3,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tricount/providers/sharer_group_provider.dart';
-import 'package:myecl/tricount/ui/pages/detail_page/member_list.dart';
+import 'package:myecl/tricount/ui/pages/detail_page/member_card.dart';
+import 'package:myecl/tricount/ui/pages/detail_page/sharer_property_list.dart';
+import 'package:myecl/tricount/ui/pages/detail_page/transaction_card.dart';
 import 'package:myecl/tricount/ui/pages/tricount.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -16,7 +18,16 @@ class SharerGroupDetailPage extends HookConsumerWidget {
     final pageController = usePageController();
 
     final pages = [
-      MemberList(members: sharerGroup.sharers),
+      SharerPropertyList(
+          propertyList: sharerGroup.sharers,
+          title: 'Participants',
+          builder: (e) => MemberCard(member: e),
+          onTap: () {}),
+      SharerPropertyList(
+          propertyList: sharerGroup.transactions,
+          title: 'Transactions',
+          builder: (e) => TransactionCard(transaction: e),
+          onTap: () {}),
     ];
 
     return TricountTemplate(
