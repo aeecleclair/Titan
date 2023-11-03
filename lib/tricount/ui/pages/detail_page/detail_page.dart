@@ -77,7 +77,7 @@ class SharerGroupDetailPage extends HookConsumerWidget {
                   const SizedBox(height: 20),
                   SizedBox(
                     height: 700,
-                    child: PageView(children: pages),
+                    child: PageView(controller: pageController, children: pages),
                   ),
                 ],
               ),
