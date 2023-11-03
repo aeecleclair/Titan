@@ -28,7 +28,7 @@ class SharerGroupDetailPage extends HookConsumerWidget {
       //     onTap: null),
       SharerPropertyList(
           propertyList: sharerGroup.transactions,
-          title: 'Transactions',
+          title: 'Dépenses',
           builder: (e) => TransactionCard(transaction: e),
           onTap: () {}),
       SharerPropertyList(
