@@ -6,7 +6,7 @@ import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
-import 'package:myecl/booking/ui/calendar.dart';
+import 'package:myecl/booking/ui/calendar/calendar.dart';
 import 'package:myecl/booking/ui/pages/manager_page/list_booking.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 
