@@ -4,11 +4,14 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
+import 'package:myecl/booking/providers/is_manager_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Calendar extends HookConsumerWidget {
   const Calendar({Key? key}) : super(key: key);
@@ -17,16 +20,20 @@ class Calendar extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final bookings = ref.watch(confirmedBookingListProvider);
     final isWebFormat = ref.watch(isWebFormatProvider);
+    final isManager = ref.watch(isManagerProvider);
     final CalendarController calendarController = CalendarController();
 
     void calendarTapped(CalendarTapDetails details, BuildContext context) {
       if (details.targetElement == CalendarElement.appointment ||
           details.targetElement == CalendarElement.agenda) {
-        final _CustomAppointment appointmentDetails = details.appointments![0];
+        final Booking booking = details.appointments![0];
         showDialog(
           context: context,
           builder: (BuildContext context) {
-            return _CalendarDialog(appointmentDetails: appointmentDetails);
+            return _CalendarDialog(
+              booking: booking,
+              isManager: isManager,
+            );
           },
         );
       }
@@ -39,7 +46,7 @@ class Calendar extends HookConsumerWidget {
           children: [
             SfCalendar(
               onTap: (details) => calendarTapped(details, context),
-              dataSource: _getCalendarDataSource(res),
+              dataSource: _AppointmentDataSource(res),
               controller: calendarController,
               view: CalendarView.week,
               selectionDecoration: BoxDecoration(
@@ -148,67 +155,50 @@ class Calendar extends HookConsumerWidget {
   }
 }
 
-_AppointmentDataSource _getCalendarDataSource(List<Booking> res) {
-  List<_CustomAppointment> appointments = <_CustomAppointment>[];
-  res.map((e) {
-    if (e.recurrenceRule != "") {
-      final dates = getDateInRecurrence(e.recurrenceRule, e.start);
-      dates.map((data) {
-        appointments.add(_CustomAppointment(
-          startTime: combineDate(data, e.start),
-          endTime: combineDate(data, e.end),
-          subject: '${e.room.name} - ${e.reason}',
-          isAllDay: false,
-          startTimeZone: "Europe/Paris",
-          endTimeZone: "Europe/Paris",
-          notes: e.note,
-          color: generateColor(e.room.name),
-          forWho: e.entity,
-        ));
-      }).toList();
-    } else {
-      appointments.add(_CustomAppointment(
-        startTime: e.start,
-        endTime: e.end,
-        subject: '${e.room.name} - ${e.reason}',
-        isAllDay: false,
-        startTimeZone: "Europe/Paris",
-        endTimeZone: "Europe/Paris",
-        notes: e.note,
-        color: generateColor(e.room.name),
-        forWho: e.entity,
-      ));
-    }
-  }).toList();
-  return _AppointmentDataSource(appointments);
-}
-
-class _AppointmentDataSource extends CalendarDataSource<_CustomAppointment> {
-  _AppointmentDataSource(List<_CustomAppointment> source) {
+class _AppointmentDataSource extends CalendarDataSource<Booking> {
+  _AppointmentDataSource(List<Booking> source) {
     appointments = source;
+  }
+
+  @override
+  DateTime getStartTime(int index) => appointments![index].start;
+
+  @override
+  DateTime getEndTime(int index) => appointments![index].end;
+
+  @override
+  Color getColor(int index) => generateColor(appointments![index].room.name);
+
+  @override
+  String getSubject(int index) {
+    Booking booking = appointments![index];
+    return '${booking.room.name} - ${booking.reason}';
+  }
+
+  @override
+  bool isAllDay(int index) => false;
+
+  @override
+  String? getNotes(int index) => appointments![index].note;
+
+  @override
+  String? getStartTimeZone(int index) => "Europe/Paris";
+
+  @override
+  String? getEndTimeZone(int index) => "Europe/Paris";
+
+  @override
+  String? getRecurrenceRule(int index) {
+    Booking booking = appointments![index];
+    return booking.recurrenceRule.isNotEmpty ? booking.recurrenceRule : null;
   }
 }
 
-class _CustomAppointment extends Appointment {
-  String forWho;
-
-  _CustomAppointment({
-    super.startTimeZone,
-    super.endTimeZone,
-    required super.startTime,
-    required super.endTime,
-    super.subject,
-    super.isAllDay,
-    super.notes,
-    super.color,
-    required this.forWho,
-  });
-}
-
 class _CalendarDialog extends StatelessWidget {
-  final _CustomAppointment appointmentDetails;
+  final Booking booking;
+  final bool isManager;
 
-  const _CalendarDialog({required this.appointmentDetails});
+  const _CalendarDialog({required this.booking, required this.isManager});
 
   @override
   Widget build(BuildContext context) {
@@ -217,42 +207,44 @@ class _CalendarDialog extends StatelessWidget {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          Container(
-            height: 220 + (appointmentDetails.notes!.length / 30 - 5) * 15,
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AutoSizeText(
-                  appointmentDetails.subject,
-                  maxLines: 2,
-                  style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  formatDates(
-                    appointmentDetails.startTime,
-                    appointmentDetails.endTime,
-                    appointmentDetails.isAllDay,
+          !isManager
+              ? Container(
+                  height: 220 + (booking.note.length / 30 - 5) * 15,
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AutoSizeText(
+                        '${booking.room.name} - ${booking.reason}',
+                        maxLines: 2,
+                        style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        formatDates(
+                          booking.start,
+                          booking.end,
+                          false,
+                        ),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.grey.shade400,
+                          fontSize: 15,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        "${BookingTextConstants.bookedfor} ${booking.entity}",
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w400, fontSize: 15),
+                      ),
+                    ],
                   ),
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    color: Colors.grey.shade400,
-                    fontSize: 15,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  "${BookingTextConstants.bookedfor} ${appointmentDetails.forWho}",
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w400, fontSize: 15),
-                ),
-              ],
-            ),
-          ),
+                )
+              : AdminDetails(booking: booking),
           Positioned(
             top: -10,
             right: -10,
@@ -280,6 +272,155 @@ class _CalendarDialog extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class AdminDetails extends StatelessWidget {
+  final Booking booking;
+
+  const AdminDetails({super.key, required this.booking});
+
+  @override
+  Widget build(BuildContext context) {
+    void displayToastWithoutContext(TypeMsg type, String message) {
+      displayToast(context, type, message);
+    }
+
+    return Container(
+      margin: const EdgeInsets.all(30.0),
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AutoSizeText(
+              booking.applicant.getName(),
+              style: const TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            GestureDetector(
+              onTap: () async {
+                try {
+                  await launchUrl(
+                      Uri.parse('mailto:${booking.applicant.email}'));
+                } catch (e) {
+                  displayToastWithoutContext(TypeMsg.error, e.toString());
+                }
+              },
+              child: Text(
+                booking.applicant.email,
+                style: const TextStyle(
+                  fontSize: 16,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            if (booking.entity.isNotEmpty)
+              AutoSizeText(
+                "${BookingTextConstants.bookedfor} ${booking.entity}",
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            const SizedBox(
+              height: 50,
+            ),
+            Text(
+              booking.applicant.phone ?? BookingTextConstants.noPhoneRegistered,
+              style: const TextStyle(fontSize: 25),
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                GestureDetector(
+                  onTap: () async {
+                    if (booking.applicant.phone != null) {
+                      try {
+                        await launchUrl(
+                            Uri.parse('tel:${booking.applicant.phone}'));
+                      } catch (e) {
+                        displayToastWithoutContext(TypeMsg.error, e.toString());
+                      }
+                    }
+                  },
+                  child: Container(
+                    width: 80,
+                    height: 80,
+                    padding: const EdgeInsets.all(15.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      border: Border.all(
+                        color: Colors.black,
+                        width: 2,
+                      ),
+                      color: Colors.grey.shade50,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          blurRadius: 10,
+                          offset: const Offset(0, 10),
+                        ),
+                      ],
+                    ),
+                    child: const HeroIcon(
+                      HeroIcons.phone,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 100),
+                GestureDetector(
+                  onTap: () async {
+                    if (booking.applicant.phone != null) {
+                      try {
+                        await launchUrl(
+                            Uri.parse('sms:${booking.applicant.phone}'));
+                      } catch (e) {
+                        displayToastWithoutContext(TypeMsg.error, e.toString());
+                      }
+                    }
+                  },
+                  child: Container(
+                    width: 80,
+                    height: 80,
+                    padding: const EdgeInsets.all(15.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      border: Border.all(
+                        color: Colors.black,
+                        width: 2,
+                      ),
+                      color: Colors.grey.shade50,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          blurRadius: 10,
+                          offset: const Offset(0, 10),
+                        ),
+                      ],
+                    ),
+                    child: const HeroIcon(
+                      HeroIcons.chatBubbleBottomCenterText,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
     );
   }
 }
