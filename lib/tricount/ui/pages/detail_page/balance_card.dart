@@ -5,8 +5,9 @@ import 'package:myecl/tricount/tools/functions.dart';
 class BalanceCard extends StatelessWidget {
   final Transaction transaction;
   final double maxAbsBalance;
+  final bool isMe; 
   const BalanceCard(
-      {super.key, required this.transaction, required this.maxAbsBalance});
+      {super.key, required this.transaction, required this.maxAbsBalance, required this.isMe});
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +26,10 @@ class BalanceCard extends StatelessWidget {
                       child: Text(
                         transaction.payer.nickname ??
                             transaction.payer.firstname,
-                        style: const TextStyle(
+                        style: TextStyle(
                             color: Color(0xff09263D),
                             fontSize: 20,
-                            fontWeight: FontWeight.bold),
+                            fontWeight: isMe ? FontWeight.bold : FontWeight.normal),
                       ))
                   : LayoutBuilder(builder: (context, constraints) {
                       final textOverflowing = hasTextOverflow(
@@ -150,10 +151,10 @@ class BalanceCard extends StatelessWidget {
                       child: Text(
                         transaction.payer.nickname ??
                             transaction.payer.firstname,
-                        style: const TextStyle(
+                        style: TextStyle(
                             color: Color(0xff09263D),
                             fontSize: 20,
-                            fontWeight: FontWeight.bold),
+                            fontWeight: isMe ? FontWeight.bold : FontWeight.normal),
                       )),
             ))
           ],

@@ -12,6 +12,7 @@ import 'package:myecl/tricount/ui/pages/detail_page/member_card.dart';
 import 'package:myecl/tricount/ui/pages/detail_page/sharer_property_list.dart';
 import 'package:myecl/tricount/ui/pages/detail_page/transaction_card.dart';
 import 'package:myecl/tricount/ui/pages/tricount.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class SharerGroupDetailPage extends HookConsumerWidget {
@@ -21,6 +22,7 @@ class SharerGroupDetailPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final sharerGroup = ref.watch(sharerGroupProvider);
     final pageController = usePageController();
+    final me = ref.watch(userProvider);
 
     final allUsersBalance = getAllUserBalanceTransactions(
         sharerGroup.equilibriumTransactions, sharerGroup.sharers);
@@ -32,7 +34,10 @@ class SharerGroupDetailPage extends HookConsumerWidget {
       SharerPropertyList(
           propertyList: allUsersBalance,
           title: 'Résumé',
-          builder: (e) => BalanceCard(transaction: e, maxAbsBalance: maxAbsBalance),
+          builder: (e) => BalanceCard(
+              transaction: e,
+              maxAbsBalance: maxAbsBalance,
+              isMe: e.payer.id == me.id),
           onTap: null),
       SharerPropertyList(
           propertyList: sharerGroup.transactions,
