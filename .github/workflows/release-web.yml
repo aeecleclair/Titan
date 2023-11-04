@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       tag: ${{ steps.extract-version.outputs.tag }}
+      dockertag: ${{ steps.extract-version.outputs.dockertag }} # "+" in the tag is misinterpreted by the docker registry
       isAlpha: ${{ steps.extract-version.outputs.isAlpha }}
       versionCode: ${{ steps.extract-version.outputs.versionCode }}
       versionName: ${{ steps.extract-version.outputs.versionName }}
@@ -25,10 +26,12 @@ jobs:
           versionCode=${versionCode%-*}
           versionName=${tag%+*}
           versionName=${versionName#v}
+          dockertag= ${tag/+/-}
           echo tag=$tag >> $GITHUB_OUTPUT
           echo isAlpha=$isAlpha >> $GITHUB_OUTPUT
           echo versionCode=$versionCode >> $GITHUB_OUTPUT
           echo versionName=$versionName >> $GITHUB_OUTPUT
+          echo dockertag=$dockertag >> $GITHUB_OUTPUT
 
   build-and-deploy:
     name: Release Titan ${{ needs.extract-version.outputs.tag }} Web
@@ -108,4 +111,4 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            ${{ secrets.DOCKER_REGISTRY_IDENTIFER }}/titan:${{ needs.extract-version.outputs.tag }}
+            ${{ secrets.DOCKER_REGISTRY_IDENTIFER }}/titan:${{ needs.extract-version.outputs.dockertag }}
