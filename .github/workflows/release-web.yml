@@ -26,7 +26,7 @@ jobs:
           versionCode=${versionCode%-*}
           versionName=${tag%+*}
           versionName=${versionName#v}
-          dockertag= ${tag/+/-}
+          dockertag=${tag/+/-}
           echo tag=$tag >> $GITHUB_OUTPUT
           echo isAlpha=$isAlpha >> $GITHUB_OUTPUT
           echo versionCode=$versionCode >> $GITHUB_OUTPUT
