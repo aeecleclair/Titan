@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tricount/providers/sharer_group_provider.dart';
+import 'package:myecl/tricount/tools/functions.dart';
 import 'package:myecl/tricount/ui/pages/components/equilibrium_card.dart';
 import 'package:myecl/tricount/ui/pages/detail_page/member_card.dart';
 import 'package:myecl/tricount/ui/pages/detail_page/sharer_property_list.dart';
@@ -20,12 +21,15 @@ class SharerGroupDetailPage extends HookConsumerWidget {
     final sharerGroup = ref.watch(sharerGroupProvider);
     final pageController = usePageController();
 
+    final allUsersBalance = getAllUserBalanceTransactions(
+        sharerGroup.equilibriumTransactions, sharerGroup.sharers);
+
     final pages = [
-      // SharerPropertyList(
-      //     propertyList: sharerGroup.equilibriumTransactions,
-      //     title: 'Résumé',
-      //     builder: (e) => TransactionCard(transaction: e),
-      //     onTap: null),
+      SharerPropertyList(
+          propertyList: allUsersBalance,
+          title: 'Résumé',
+          builder: (e) => TransactionCard(transaction: e),
+          onTap: null),
       SharerPropertyList(
           propertyList: sharerGroup.transactions,
           title: 'Dépenses',
