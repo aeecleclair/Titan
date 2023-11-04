@@ -4,7 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
-import 'package:myecl/booking/providers/is_manager_provider.dart';
+import 'package:myecl/booking/providers/user_manager_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
@@ -20,7 +20,7 @@ class Calendar extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final bookings = ref.watch(confirmedBookingListProvider);
     final isWebFormat = ref.watch(isWebFormatProvider);
-    final isManager = ref.watch(isManagerProvider);
+    final userManagers = ref.watch(userManagerListProvider);
     final CalendarController calendarController = CalendarController();
 
     void calendarTapped(CalendarTapDetails details, BuildContext context) {
@@ -29,12 +29,23 @@ class Calendar extends HookConsumerWidget {
         final Booking booking = details.appointments![0];
         showDialog(
           context: context,
-          builder: (BuildContext context) {
-            return _CalendarDialog(
-              booking: booking,
-              isManager: isManager,
-            );
-          },
+          builder: (context) => userManagers.when(
+            data: (managers) => managers
+                    .map((manager) => manager.id)
+                    .contains(booking.room.managerId)
+                ? _CalendarDialog(booking: booking, isManager: true)
+                : _CalendarDialog(booking: booking, isManager: false),
+            loading: () => const Center(
+              child: CircularProgressIndicator(
+                color: ColorConstants.background2,
+              ),
+            ),
+            error: (Object error, StackTrace stackTrace) {
+              return Center(
+                child: Text(error.toString()),
+              );
+            },
+          ),
         );
       }
     }
@@ -290,137 +301,136 @@ class AdminDetails extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(30.0),
       child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            AutoSizeText(
-              booking.applicant.getName(),
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AutoSizeText(
+            booking.applicant.getName(),
+            style: const TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          GestureDetector(
+            onTap: () async {
+              try {
+                await launchUrl(Uri.parse('mailto:${booking.applicant.email}'));
+              } catch (e) {
+                displayToastWithoutContext(TypeMsg.error, e.toString());
+              }
+            },
+            child: Text(
+              booking.applicant.email,
               style: const TextStyle(
-                fontSize: 25,
+                fontSize: 16,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          if (booking.entity.isNotEmpty)
+            AutoSizeText(
+              "${BookingTextConstants.bookedfor} ${booking.entity}",
+              style: const TextStyle(
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(
-              height: 15,
-            ),
-            GestureDetector(
-              onTap: () async {
-                try {
-                  await launchUrl(
-                      Uri.parse('mailto:${booking.applicant.email}'));
-                } catch (e) {
-                  displayToastWithoutContext(TypeMsg.error, e.toString());
-                }
-              },
-              child: Text(
-                booking.applicant.email,
-                style: const TextStyle(
-                  fontSize: 16,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            if (booking.entity.isNotEmpty)
-              AutoSizeText(
-                "${BookingTextConstants.bookedfor} ${booking.entity}",
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            const SizedBox(
-              height: 50,
-            ),
-            Text(
-              booking.applicant.phone ?? BookingTextConstants.noPhoneRegistered,
-              style: const TextStyle(fontSize: 25),
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                GestureDetector(
-                  onTap: () async {
-                    if (booking.applicant.phone != null) {
-                      try {
-                        await launchUrl(
-                            Uri.parse('tel:${booking.applicant.phone}'));
-                      } catch (e) {
-                        displayToastWithoutContext(TypeMsg.error, e.toString());
-                      }
+          const SizedBox(
+            height: 50,
+          ),
+          Text(
+            booking.applicant.phone ?? BookingTextConstants.noPhoneRegistered,
+            style: const TextStyle(fontSize: 25),
+          ),
+          const SizedBox(
+            height: 50,
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              GestureDetector(
+                onTap: () async {
+                  if (booking.applicant.phone != null) {
+                    try {
+                      await launchUrl(
+                          Uri.parse('tel:${booking.applicant.phone}'));
+                    } catch (e) {
+                      displayToastWithoutContext(TypeMsg.error, e.toString());
                     }
-                  },
-                  child: Container(
-                    width: 80,
-                    height: 80,
-                    padding: const EdgeInsets.all(15.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      border: Border.all(
-                        color: Colors.black,
-                        width: 2,
-                      ),
-                      color: Colors.grey.shade50,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          blurRadius: 10,
-                          offset: const Offset(0, 10),
-                        ),
-                      ],
-                    ),
-                    child: const HeroIcon(
-                      HeroIcons.phone,
+                  }
+                },
+                child: Container(
+                  width: 80,
+                  height: 80,
+                  padding: const EdgeInsets.all(15.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(
                       color: Colors.black,
+                      width: 2,
                     ),
+                    color: Colors.grey.shade50,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        blurRadius: 10,
+                        offset: const Offset(0, 10),
+                      ),
+                    ],
+                  ),
+                  child: const HeroIcon(
+                    HeroIcons.phone,
+                    color: Colors.black,
                   ),
                 ),
-                const SizedBox(width: 100),
-                GestureDetector(
-                  onTap: () async {
-                    if (booking.applicant.phone != null) {
-                      try {
-                        await launchUrl(
-                            Uri.parse('sms:${booking.applicant.phone}'));
-                      } catch (e) {
-                        displayToastWithoutContext(TypeMsg.error, e.toString());
-                      }
+              ),
+              const SizedBox(width: 100),
+              GestureDetector(
+                onTap: () async {
+                  if (booking.applicant.phone != null) {
+                    try {
+                      await launchUrl(
+                          Uri.parse('sms:${booking.applicant.phone}'));
+                    } catch (e) {
+                      displayToastWithoutContext(TypeMsg.error, e.toString());
                     }
-                  },
-                  child: Container(
-                    width: 80,
-                    height: 80,
-                    padding: const EdgeInsets.all(15.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      border: Border.all(
-                        color: Colors.black,
-                        width: 2,
-                      ),
-                      color: Colors.grey.shade50,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          blurRadius: 10,
-                          offset: const Offset(0, 10),
-                        ),
-                      ],
-                    ),
-                    child: const HeroIcon(
-                      HeroIcons.chatBubbleBottomCenterText,
+                  }
+                },
+                child: Container(
+                  width: 80,
+                  height: 80,
+                  padding: const EdgeInsets.all(15.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(
                       color: Colors.black,
+                      width: 2,
                     ),
+                    color: Colors.grey.shade50,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        blurRadius: 10,
+                        offset: const Offset(0, 10),
+                      ),
+                    ],
+                  ),
+                  child: const HeroIcon(
+                    HeroIcons.chatBubbleBottomCenterText,
+                    color: Colors.black,
                   ),
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
