@@ -26,9 +26,8 @@ class SharerGroupDetailPage extends HookConsumerWidget {
 
     final allUsersBalance = getAllUserBalanceTransactions(
         sharerGroup.equilibriumTransactions, sharerGroup.sharers);
-    final maxAbsBalance = allUsersBalance
-        .map((e) => e.amount.abs())
-        .reduce((value, element) => max(value, element));
+    final maxAbsBalance = allUsersBalance.fold(
+        0.0, (value, element) => max(value, element.amount.abs()));
 
     final pages = [
       SharerPropertyList(
@@ -46,7 +45,7 @@ class SharerGroupDetailPage extends HookConsumerWidget {
           onTap: () {}),
       SharerPropertyList(
           propertyList: sharerGroup.equilibriumTransactions,
-          title: 'Remboursement',
+          title: 'Remboursements',
           builder: (e) =>
               EquilibriumCard(equilibriumTransaction: e, isLightTheme: true),
           onTap: null),
