@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tombola/class/pack_ticket.dart';
-import 'package:myecl/tombola/class/raffle.dart';
-import 'package:myecl/tombola/class/raffle_status_type.dart';
-import 'package:myecl/tombola/providers/tombola_logo_provider.dart';
-import 'package:myecl/tombola/providers/tombola_logos_provider.dart';
-import 'package:myecl/tombola/tools/constants.dart';
-import 'package:myecl/tombola/ui/pages/tombola_page/confirm_payment.dart';
+import 'package:myecl/raffle/class/pack_ticket.dart';
+import 'package:myecl/raffle/class/raffle.dart';
+import 'package:myecl/raffle/class/raffle_status_type.dart';
+import 'package:myecl/raffle/providers/tombola_logo_provider.dart';
+import 'package:myecl/raffle/providers/tombola_logos_provider.dart';
+import 'package:myecl/raffle/tools/constants.dart';
+import 'package:myecl/raffle/ui/pages/raffle_page/confirm_payment.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class BuyPackTicket extends HookConsumerWidget {
@@ -49,8 +49,8 @@ class BuyPackTicket extends HookConsumerWidget {
                 ),
               ],
               gradient: const RadialGradient(colors: [
-                TombolaColorConstants.gradient1,
-                TombolaColorConstants.gradient2,
+                RaffleColorConstants.gradient1,
+                RaffleColorConstants.gradient2,
               ], center: Alignment.topLeft, radius: 1.5),
               borderRadius: const BorderRadius.all(Radius.circular(20))),
           child: Column(
@@ -150,8 +150,8 @@ class BuyPackTicket extends HookConsumerWidget {
                           colors:
                               raffle.raffleStatusType != RaffleStatusType.open
                                   ? [
-                                      TombolaColorConstants.redGradient1,
-                                      TombolaColorConstants.redGradient2,
+                                      RaffleColorConstants.redGradient1,
+                                      RaffleColorConstants.redGradient2,
                                     ]
                                   : [Colors.white, Colors.white],
                           begin: Alignment.topLeft,
@@ -170,7 +170,7 @@ class BuyPackTicket extends HookConsumerWidget {
                               color: raffle.raffleStatusType !=
                                       RaffleStatusType.open
                                   ? Colors.white
-                                  : TombolaColorConstants.gradient2,
+                                  : RaffleColorConstants.gradient2,
                               fontWeight: FontWeight.bold)))),
             ],
           ),

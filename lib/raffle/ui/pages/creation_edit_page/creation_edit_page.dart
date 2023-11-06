@@ -19,10 +19,10 @@ import 'package:myecl/raffle/providers/tombola_logos_provider.dart';
 import 'package:myecl/raffle/providers/winning_ticket_list_provider.dart';
 import 'package:myecl/raffle/router.dart';
 import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/raffle/ui/pages/admin_page/blue_btn.dart';
-import 'package:myecl/raffle/ui/pages/admin_page/prize_handler.dart';
-import 'package:myecl/raffle/ui/pages/admin_page/ticket_handler.dart';
-import 'package:myecl/raffle/ui/pages/admin_page/winning_ticket_handler.dart';
+import 'package:myecl/raffle/ui/components/blue_btn.dart';
+import 'package:myecl/raffle/ui/pages/creation_edit_page/prize_handler.dart';
+import 'package:myecl/raffle/ui/pages/creation_edit_page/ticket_handler.dart';
+import 'package:myecl/raffle/ui/pages/creation_edit_page/winning_ticket_handler.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
@@ -225,7 +225,7 @@ class CreationPage extends HookConsumerWidget {
                                         fit: BoxFit.cover,
                                       ),
                                     ]));
-                                QR.to(RaffleRouter.root + RaffleRouter.raffle);
+                                QR.to(RaffleRouter.root + RaffleRouter.detail);
                               }
                             },
                             error: (error, s) {},

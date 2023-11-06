@@ -1,10 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/tombola/class/prize.dart';
-import 'package:myecl/tombola/class/raffle_status_type.dart';
-import 'package:myecl/tombola/tools/constants.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/raffle/class/prize.dart';
+import 'package:myecl/raffle/class/raffle_status_type.dart';
+import 'package:myecl/raffle/tools/constants.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class PrizeCard extends StatelessWidget {
   final Prize lot;
@@ -39,7 +39,7 @@ class PrizeCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
             BoxShadow(
-              color: TombolaColorConstants.textDark.withOpacity(0.2),
+              color: RaffleColorConstants.textDark.withOpacity(0.2),
               spreadRadius: 5,
               blurRadius: 10,
               offset: const Offset(3, 3),
@@ -58,11 +58,11 @@ class PrizeCard extends StatelessWidget {
                   style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: TombolaColorConstants.textDark)),
+                      color: RaffleColorConstants.textDark)),
               const SizedBox(height: 4),
               AutoSizeText(
                   lot.quantity > 0
-                      ? "${TombolaTextConstants.quantity} : ${lot.quantity}"
+                      ? "${RaffleTextConstants.quantity} : ${lot.quantity}"
                       : "",
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -84,8 +84,8 @@ class PrizeCard extends StatelessWidget {
                             decoration: BoxDecoration(
                               gradient: const LinearGradient(
                                 colors: [
-                                  TombolaColorConstants.gradient2,
-                                  TombolaColorConstants.textDark,
+                                  RaffleColorConstants.gradient2,
+                                  RaffleColorConstants.textDark,
                                 ],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
@@ -93,7 +93,7 @@ class PrizeCard extends StatelessWidget {
                               borderRadius: BorderRadius.circular(15),
                               boxShadow: [
                                 BoxShadow(
-                                    color: TombolaColorConstants.textDark
+                                    color: RaffleColorConstants.textDark
                                         .withOpacity(0.5),
                                     blurRadius: 10,
                                     offset: const Offset(2, 3))
@@ -103,44 +103,16 @@ class PrizeCard extends StatelessWidget {
                                 color: Colors.white),
                           ),
                         ),
-                        ShrinkButton(
-                            waitChild: Container(
-                                width: 40,
-                                height: 40,
-                                padding: const EdgeInsets.all(7),
-                                decoration: BoxDecoration(
-                                  gradient: const LinearGradient(
-                                    colors: [
-                                      TombolaColorConstants.redGradient1,
-                                      TombolaColorConstants.redGradient2,
-                                    ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                  ),
-                                  borderRadius: BorderRadius.circular(15),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: TombolaColorConstants
-                                            .redGradient2
-                                            .withOpacity(0.5),
-                                        blurRadius: 10,
-                                        offset: const Offset(2, 3))
-                                  ],
-                                ),
-                                child: const Center(
-                                  child: CircularProgressIndicator(
-                                      color: Colors.white),
-                                )),
-                            onTap: onDelete,
-                            child: Container(
+                        WaitingButton(
+                          builder: (child) => Container(
                               width: 40,
                               height: 40,
                               padding: const EdgeInsets.all(7),
                               decoration: BoxDecoration(
                                 gradient: const LinearGradient(
                                   colors: [
-                                    TombolaColorConstants.redGradient1,
-                                    TombolaColorConstants.redGradient2,
+                                    RaffleColorConstants.redGradient1,
+                                    RaffleColorConstants.redGradient2,
                                   ],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
@@ -148,58 +120,32 @@ class PrizeCard extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(15),
                                 boxShadow: [
                                   BoxShadow(
-                                      color: TombolaColorConstants.redGradient2
+                                      color: RaffleColorConstants.redGradient2
                                           .withOpacity(0.5),
                                       blurRadius: 10,
                                       offset: const Offset(2, 3))
                                 ],
                               ),
-                              child: const HeroIcon(HeroIcons.trash,
-                                  color: Colors.white),
-                            ))
+                              child: child),
+                          onTap: onDelete,
+                          child: const HeroIcon(HeroIcons.trash,
+                              color: Colors.white),
+                        )
                       ],
                     )
                   : status == RaffleStatusType.lock
                       ? lot.quantity > 0
                           ? Center(
-                              child: ShrinkButton(
-                                  waitChild: Container(
-                                      width: 40,
-                                      height: 40,
-                                      padding: const EdgeInsets.all(7),
-                                      decoration: BoxDecoration(
-                                        gradient: const LinearGradient(
-                                          colors: [
-                                            TombolaColorConstants.gradient2,
-                                            TombolaColorConstants.textDark,
-                                          ],
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                        ),
-                                        borderRadius: BorderRadius.circular(15),
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color: TombolaColorConstants
-                                                  .textDark
-                                                  .withOpacity(0.5),
-                                              blurRadius: 10,
-                                              offset: const Offset(2, 3))
-                                        ],
-                                      ),
-                                      child: const Center(
-                                        child: CircularProgressIndicator(
-                                            color: Colors.white),
-                                      )),
-                                  onTap: onDraw,
-                                  child: Container(
+                              child: WaitingButton(
+                                builder: (child) => Container(
+                                    width: 40,
                                     height: 40,
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 7, horizontal: 12),
+                                    padding: const EdgeInsets.all(7),
                                     decoration: BoxDecoration(
                                       gradient: const LinearGradient(
                                         colors: [
-                                          TombolaColorConstants.gradient2,
-                                          TombolaColorConstants.textDark,
+                                          RaffleColorConstants.gradient2,
+                                          RaffleColorConstants.textDark,
                                         ],
                                         begin: Alignment.topLeft,
                                         end: Alignment.bottomRight,
@@ -207,25 +153,26 @@ class PrizeCard extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(15),
                                       boxShadow: [
                                         BoxShadow(
-                                            color: TombolaColorConstants
-                                                .textDark
+                                            color: RaffleColorConstants.textDark
                                                 .withOpacity(0.5),
                                             blurRadius: 10,
                                             offset: const Offset(2, 3))
                                       ],
                                     ),
-                                    child: const Row(
-                                      children: [
-                                        HeroIcon(HeroIcons.envelopeOpen,
-                                            color: Colors.white),
-                                        SizedBox(width: 15),
-                                        Text("Tirer",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold)),
-                                      ],
-                                    ),
-                                  )),
+                                    child: child),
+                                onTap: onDraw,
+                                child: const Row(
+                                  children: [
+                                    HeroIcon(HeroIcons.envelopeOpen,
+                                        color: Colors.white),
+                                    SizedBox(width: 15),
+                                    Text("Tirer",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold)),
+                                  ],
+                                ),
+                              ),
                             )
                           : Container(
                               height: 40,

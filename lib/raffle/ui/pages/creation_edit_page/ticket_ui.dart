@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tombola/class/pack_ticket.dart';
-import 'package:myecl/tombola/tools/constants.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/raffle/class/pack_ticket.dart';
+import 'package:myecl/raffle/tools/constants.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class TicketUI extends HookConsumerWidget {
   final PackTicket packTicket;
@@ -29,12 +29,12 @@ class TicketUI extends HookConsumerWidget {
         decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: TombolaColorConstants.ticketback.withOpacity(0.3),
+                color: RaffleColorConstants.ticketBack.withOpacity(0.3),
                 blurRadius: 8,
                 offset: const Offset(2, 3),
               ),
             ],
-            color: TombolaColorConstants.ticketback,
+            color: RaffleColorConstants.ticketBack,
             borderRadius: const BorderRadius.all(Radius.circular(30))),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -87,45 +87,19 @@ class TicketUI extends HookConsumerWidget {
                       ],
                     ),
                     child: const HeroIcon(HeroIcons.pencil,
-                        color: TombolaColorConstants.textDark),
+                        color: RaffleColorConstants.textDark),
                   ),
                 ),
-                ShrinkButton(
-                    waitChild: Container(
-                        width: 40,
-                        height: 40,
-                        padding: const EdgeInsets.all(7),
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [
-                              TombolaColorConstants.redGradient1,
-                              TombolaColorConstants.redGradient2,
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          borderRadius: BorderRadius.circular(15),
-                          boxShadow: [
-                            BoxShadow(
-                                color: TombolaColorConstants.redGradient2
-                                    .withOpacity(0.5),
-                                blurRadius: 10,
-                                offset: const Offset(2, 3))
-                          ],
-                        ),
-                        child: const Center(
-                          child: CircularProgressIndicator(color: Colors.white),
-                        )),
-                    onTap: onDelete,
-                    child: Container(
+                WaitingButton(
+                  builder: (child) => Container(
                       width: 40,
                       height: 40,
                       padding: const EdgeInsets.all(7),
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
                           colors: [
-                            TombolaColorConstants.redGradient1,
-                            TombolaColorConstants.redGradient2,
+                            RaffleColorConstants.redGradient1,
+                            RaffleColorConstants.redGradient2,
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -133,15 +107,16 @@ class TicketUI extends HookConsumerWidget {
                         borderRadius: BorderRadius.circular(15),
                         boxShadow: [
                           BoxShadow(
-                              color: TombolaColorConstants.redGradient2
+                              color: RaffleColorConstants.redGradient2
                                   .withOpacity(0.5),
                               blurRadius: 10,
                               offset: const Offset(2, 3))
                         ],
                       ),
-                      child:
-                          const HeroIcon(HeroIcons.trash, color: Colors.white),
-                    ))
+                      child: child),
+                  onTap: onDelete,
+                  child: const HeroIcon(HeroIcons.trash, color: Colors.white),
+                )
               ])
           ],
         ),

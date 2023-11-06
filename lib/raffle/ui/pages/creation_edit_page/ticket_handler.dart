@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tombola/class/pack_ticket.dart';
-import 'package:myecl/tombola/class/raffle_status_type.dart';
-import 'package:myecl/tombola/providers/pack_ticket_provider.dart';
-import 'package:myecl/tombola/providers/raffle_provider.dart';
-import 'package:myecl/tombola/providers/ticket_type_provider.dart';
-import 'package:myecl/tombola/router.dart';
-import 'package:myecl/tombola/tools/constants.dart';
-import 'package:myecl/tombola/ui/pages/creation_edit_page/ticket_ui.dart';
+import 'package:myecl/raffle/class/pack_ticket.dart';
+import 'package:myecl/raffle/class/raffle_status_type.dart';
+import 'package:myecl/raffle/providers/pack_ticket_list_provider.dart';
+import 'package:myecl/raffle/providers/pack_ticket_provider.dart';
+import 'package:myecl/raffle/providers/raffle_provider.dart';
+import 'package:myecl/raffle/router.dart';
+import 'package:myecl/raffle/tools/constants.dart';
+import 'package:myecl/raffle/ui/pages/creation_edit_page/ticket_ui.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/dialog.dart';
+import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 class TicketHandler extends HookConsumerWidget {
   const TicketHandler({super.key});
@@ -34,7 +34,7 @@ class TicketHandler extends HookConsumerWidget {
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: TombolaColorConstants.textDark)),
+                  color: RaffleColorConstants.textDark)),
         ),
         const SizedBox(
           height: 10,
@@ -51,7 +51,7 @@ class TicketHandler extends HookConsumerWidget {
               if (raffle.raffleStatusType == RaffleStatusType.creation)
                 GestureDetector(
                     onTap: () {
-                      packTicketNotifier.setPrize(PackTicket.empty());
+                      packTicketNotifier.setPackTicket(PackTicket.empty());
                       QR.to(RaffleRouter.root + RaffleRouter.detail + RaffleRouter.creation + RaffleRouter.addEditPackTicket);
                     },
                     child: Container(
@@ -62,10 +62,10 @@ class TicketHandler extends HookConsumerWidget {
                       width: 100,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        color: TombolaColorConstants.ticketback,
+                        color: RaffleColorConstants.ticketBack,
                         boxShadow: [
                           BoxShadow(
-                            color: TombolaColorConstants.ticketback
+                            color: RaffleColorConstants.ticketBack
                                 .withOpacity(0.3),
                             blurRadius: 8,
                             offset: const Offset(2, 3),
@@ -87,7 +87,7 @@ class TicketHandler extends HookConsumerWidget {
                           .map((e) => TicketUI(
                         packTicket: e,
                         onEdit: () {
-                          packTicketNotifier.setPrize(e);
+                          packTicketNotifier.setPackTicket(e);
                           QR.to(RaffleRouter.root + RaffleRouter.detail + RaffleRouter.creation + RaffleRouter.addEditPackTicket);
                         },
                         showButton: raffle.raffleStatusType ==
@@ -107,12 +107,12 @@ class TicketHandler extends HookConsumerWidget {
                                     if (value) {
                                       displayToastWithContext(
                                           TypeMsg.msg,
-                                          TombolaTextConstants
+                                          RaffleTextConstants
                                               .deletedTicket);
                                     } else {
                                       displayToastWithContext(
                                           TypeMsg.error,
-                                          TombolaTextConstants
+                                          RaffleTextConstants
                                               .deletingError);
                                     }
                                   });
@@ -125,7 +125,7 @@ class TicketHandler extends HookConsumerWidget {
                 error: (Object e, StackTrace? s) =>
                     Text("Error: ${e.toString()}"),
                 loading: () => const CircularProgressIndicator(
-                  color: TombolaColorConstants.gradient2,
+                  color: RaffleColorConstants.gradient2,
                 ),
               ),
               const SizedBox(

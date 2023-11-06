@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tombola/providers/cash_provider.dart';
-import 'package:myecl/tombola/providers/focus_provider.dart';
-import 'package:myecl/tombola/providers/searching_raffle_user_provider.dart';
-import 'package:myecl/tombola/tools/constants.dart';
-import 'package:myecl/tombola/ui/pages/admin_module_page/adding_user_container.dart';
-import 'package:myecl/tombola/ui/pages/admin_module_page/cash_container.dart';
+import 'package:myecl/raffle/providers/cash_provider.dart';
+import 'package:myecl/raffle/providers/focus_provider.dart';
+import 'package:myecl/raffle/providers/searching_raffle_user_provider.dart';
+import 'package:myecl/raffle/tools/constants.dart';
+import 'package:myecl/raffle/ui/pages/admin_module_page/adding_user_container.dart';
+import 'package:myecl/raffle/ui/pages/admin_module_page/cash_container.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
@@ -53,16 +53,16 @@ class AccountHandler extends HookConsumerWidget {
             },
             focusNode: focusNode,
             controller: editingController,
-            cursorColor: TombolaColorConstants.textDark,
+            cursorColor: RaffleColorConstants.textDark,
             decoration: const InputDecoration(
-                labelText: TombolaTextConstants.accounts,
+                labelText: RaffleTextConstants.accounts,
                 labelStyle: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: TombolaColorConstants.textDark),
+                    color: RaffleColorConstants.textDark),
                 suffixIcon: Icon(
                   Icons.search,
-                  color: TombolaColorConstants.textDark,
+                  color: RaffleColorConstants.textDark,
                   size: 30,
                 ),
                 enabledBorder: UnderlineInputBorder(
@@ -72,7 +72,7 @@ class AccountHandler extends HookConsumerWidget {
                 ),
                 focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
-                    color: TombolaColorConstants.textDark,
+                    color: RaffleColorConstants.textDark,
                   ),
                 )),
           ),
@@ -94,8 +94,8 @@ class AccountHandler extends HookConsumerWidget {
                         decoration: BoxDecoration(
                           gradient: const RadialGradient(
                             colors: [
-                              TombolaColorConstants.gradient1,
-                              TombolaColorConstants.gradient2,
+                              RaffleColorConstants.gradient1,
+                              RaffleColorConstants.gradient2,
                             ],
                             center: Alignment.topLeft,
                             radius: 1.8,
@@ -103,7 +103,7 @@ class AccountHandler extends HookConsumerWidget {
                           borderRadius: BorderRadius.circular(30),
                           boxShadow: [
                             BoxShadow(
-                              color: TombolaColorConstants.textDark
+                              color: RaffleColorConstants.textDark
                                   .withOpacity(0.2),
                               spreadRadius: 5,
                               blurRadius: 10,

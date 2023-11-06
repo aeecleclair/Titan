@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tombola/class/prize.dart';
-import 'package:myecl/tombola/class/raffle_status_type.dart';
-import 'package:myecl/tombola/class/tickets.dart';
-import 'package:myecl/tombola/providers/prize_list_provider.dart';
-import 'package:myecl/tombola/providers/prize_provider.dart';
-import 'package:myecl/tombola/providers/raffle_provider.dart';
-import 'package:myecl/tombola/providers/winning_ticket_list_provider.dart';
-import 'package:myecl/tombola/router.dart';
-import 'package:myecl/tombola/tools/constants.dart';
-import 'package:myecl/tombola/ui/pages/creation_edit_page/prize_card.dart';
+import 'package:myecl/raffle/class/prize.dart';
+import 'package:myecl/raffle/class/raffle_status_type.dart';
+import 'package:myecl/raffle/class/tickets.dart';
+import 'package:myecl/raffle/providers/prize_list_provider.dart';
+import 'package:myecl/raffle/providers/prize_provider.dart';
+import 'package:myecl/raffle/providers/raffle_provider.dart';
+import 'package:myecl/raffle/providers/winning_ticket_list_provider.dart';
+import 'package:myecl/raffle/router.dart';
+import 'package:myecl/raffle/tools/constants.dart';
+import 'package:myecl/raffle/ui/pages/creation_edit_page/prize_card.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/dialog.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class PrizeHandler extends HookConsumerWidget {
@@ -47,7 +47,7 @@ class PrizeHandler extends HookConsumerWidget {
                       style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: TombolaColorConstants.textDark),
+                          color: RaffleColorConstants.textDark),
                     ),
                     const SizedBox(
                       height: 10,
@@ -64,7 +64,7 @@ class PrizeHandler extends HookConsumerWidget {
                                 style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
-                                    color: TombolaColorConstants.textDark),
+                                    color: RaffleColorConstants.textDark),
                               ),
                             ),
                           );
@@ -85,7 +85,7 @@ class PrizeHandler extends HookConsumerWidget {
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: TombolaColorConstants.textDark)),
+                  color: RaffleColorConstants.textDark)),
         ),
         const SizedBox(
           height: 10,
@@ -100,11 +100,11 @@ class PrizeHandler extends HookConsumerWidget {
             if (raffle.raffleStatusType == RaffleStatusType.creation)
               GestureDetector(
                 onTap: () {
-                  prizeNotifier.setLot(Prize.empty());
+                  prizeNotifier.setPrize(Prize.empty());
                   QR.to(RaffleRouter.root +
                       RaffleRouter.detail +
                       RaffleRouter.creation +
-                      RaffleRouter.addEditLot);
+                      RaffleRouter.addEditPrize);
                 },
                 child: Container(
                     margin: const EdgeInsets.only(left: 5.0, bottom: 10),
@@ -125,7 +125,7 @@ class PrizeHandler extends HookConsumerWidget {
                         boxShadow: [
                           BoxShadow(
                             color:
-                                TombolaColorConstants.textDark.withOpacity(0.2),
+                                RaffleColorConstants.textDark.withOpacity(0.2),
                             spreadRadius: 5,
                             blurRadius: 10,
                             offset: const Offset(3, 3),
@@ -171,12 +171,12 @@ class PrizeHandler extends HookConsumerWidget {
                                               if (value) {
                                                 displayToastWithContext(
                                                     TypeMsg.msg,
-                                                    TombolaTextConstants
-                                                        .deletedlot);
+                                                    RaffleTextConstants
+                                                        .deletePrize);
                                               } else {
                                                 displayToastWithContext(
                                                     TypeMsg.error,
-                                                    TombolaTextConstants
+                                                    RaffleTextConstants
                                                         .deletingError);
                                               }
                                             });
@@ -184,11 +184,11 @@ class PrizeHandler extends HookConsumerWidget {
                                         ));
                               },
                               onEdit: () {
-                                prizeNotifier.setLot(e);
+                                prizeNotifier.setPrize(e);
                                 QR.to(RaffleRouter.root +
                                     RaffleRouter.detail +
                                     RaffleRouter.creation +
-                                    RaffleRouter.addEditLot);
+                                    RaffleRouter.addEditPrize);
                               },
                               status: raffle.raffleStatusType,
                               onDraw: () async {
@@ -202,11 +202,11 @@ class PrizeHandler extends HookConsumerWidget {
                                             tokenExpireWrapper(ref, () async {
                                               final value =
                                                   await winningTicketListNotifier
-                                                      .drawLot(e);
+                                                      .drawPrize(e);
                                               value.when(
                                                   data: (winningTicketList) {
                                                     prizesNotifier
-                                                        .setLotToZeroQuantity(
+                                                        .setPrizeQuantityToZero(
                                                             e.copyWith(
                                                                 quantity: 0));
                                                     displayWinningsDialog(
@@ -215,7 +215,7 @@ class PrizeHandler extends HookConsumerWidget {
                                                   error: (e, s) {
                                                     displayToastWithContext(
                                                         TypeMsg.error,
-                                                        TombolaTextConstants
+                                                        RaffleTextConstants
                                                             .drawingError);
                                                   },
                                                   loading: () {});

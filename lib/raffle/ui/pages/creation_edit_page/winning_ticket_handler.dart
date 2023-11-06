@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tombola/providers/winning_ticket_list_provider.dart';
-import 'package:myecl/tombola/tools/constants.dart';
-import 'package:myecl/tombola/ui/pages/creation_edit_page/winning_ticket_card.dart';
+import 'package:myecl/raffle/providers/winning_ticket_list_provider.dart';
+import 'package:myecl/raffle/tools/constants.dart';
+import 'package:myecl/raffle/ui/pages/creation_edit_page/winning_ticket_card.dart';
 
 class WinningTicketHandler extends HookConsumerWidget {
   const WinningTicketHandler({super.key});
@@ -19,7 +19,7 @@ class WinningTicketHandler extends HookConsumerWidget {
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: TombolaColorConstants.textDark)),
+                  color: RaffleColorConstants.textDark)),
         ),
         const SizedBox(
           height: 10,
@@ -55,7 +55,7 @@ class WinningTicketHandler extends HookConsumerWidget {
                 loading: () => const SizedBox(
                   height: 150,
                   child: CircularProgressIndicator(
-                    color: TombolaColorConstants.gradient2,
+                    color: RaffleColorConstants.gradient2,
                   ),
                 ),
               ),

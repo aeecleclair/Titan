@@ -6,168 +6,134 @@ import 'package:myecl/raffle/providers/prize_list_provider.dart';
 import 'package:myecl/raffle/providers/prize_provider.dart';
 import 'package:myecl/raffle/providers/raffle_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/raffle/ui/pages/admin_page/blue_btn.dart';
+import 'package:myecl/raffle/ui/components/blue_btn.dart';
+import 'package:myecl/raffle/ui/components/section_title.dart';
+import 'package:myecl/raffle/ui/raffle.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class AddEditLotPage extends HookConsumerWidget {
-  const AddEditLotPage({Key? key}) : super(key: key);
+class AddEditPrizePage extends HookConsumerWidget {
+  const AddEditPrizePage({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = GlobalKey<FormState>();
     final raffle = ref.watch(raffleProvider);
-    final lot = ref.watch(prizeProvider);
-    final isEdit = lot.id != Prize.empty().id;
-    final quantity =
-        useTextEditingController(text: isEdit ? lot.quantity.toString() : "1");
-    final name = useTextEditingController(text: lot.name);
-    final description = useTextEditingController(text: lot.description);
+    final prize = ref.watch(prizeProvider);
+    final isEdit = prize.id != Prize.empty().id;
+    final quantity = useTextEditingController(
+        text: isEdit ? prize.quantity.toString() : "1");
+    final name = useTextEditingController(text: prize.name);
+    final description = useTextEditingController(text: prize.description);
+
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
 
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 30),
-      child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Form(
-              key: formKey,
-              child: Container(
-                  alignment: Alignment.center,
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            isEdit
-                                ? RaffleTextConstants.editPrize
-                                : RaffleTextConstants.addPrize,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w800,
-                              fontSize: 25,
-                              color: RaffleColorConstants.gradient1,
-                            ),
+    return RaffleTemplate(
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 30),
+        child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Form(
+                key: formKey,
+                child: Container(
+                    alignment: Alignment.center,
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 20),
+                          const AlignLeftText(
+                            RaffleTextConstants.addPrize,
+                            fontSize: 25,
+                            color: RaffleColorConstants.gradient1,
                           ),
-                        ),
-                        const SizedBox(
-                          height: 35,
-                        ),
-                        const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text("Quantité",
-                                style: TextStyle(
-                                    color: RaffleColorConstants.gradient2,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20))),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        TextEntry(
-                            label: "Quantité",
-                            isInt: true,
-                            validator: (value) {
-                              if (int.parse(value) < 1) {
-                                return RaffleTextConstants.mustBePositive;
-                              }
-                              return null;
-                            },
-                            controller: quantity,
-                            keyboardType: TextInputType.number),
-                        const SizedBox(
-                          height: 50,
-                        ),
-                        const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text("Nom",
-                                style: TextStyle(
-                                    color: RaffleColorConstants.gradient2,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20))),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        TextEntry(
-                            label: "Nom",
-                            controller: name,
-                            keyboardType: TextInputType.text),
-                        const SizedBox(
-                          height: 50,
-                        ),
-                        const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text("Description",
-                                style: TextStyle(
-                                    color: RaffleColorConstants.gradient2,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20))),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        TextEntry(
-                            label: "Description",
+                          const SizedBox(height: 35),
+                          const SectionTitle(
+                              text: RaffleTextConstants.quantity),
+                          const SizedBox(height: 5),
+                          TextEntry(
+                              label: RaffleTextConstants.quantity,
+                              isInt: true,
+                              controller: quantity,
+                              keyboardType: TextInputType.number),
+                          const SizedBox(height: 50),
+                          const SectionTitle(text: RaffleTextConstants.name),
+                          const SizedBox(height: 5),
+                          TextEntry(
+                              label: RaffleTextConstants.name,
+                              controller: name),
+                          const SizedBox(height: 50),
+                          const SectionTitle(
+                              text: RaffleTextConstants.description),
+                          const SizedBox(height: 5),
+                          TextEntry(
+                            label: RaffleTextConstants.description,
                             canBeEmpty: true,
                             controller: description,
-                            keyboardType: TextInputType.text),
-                        const SizedBox(
-                          height: 50,
-                        ),
-                        WaitingButton(
-                            builder: (child) => BlueBtn(child: child),
-                            onTap: () async {
-                              if (formKey.currentState!.validate()) {
-                                await tokenExpireWrapper(ref, () async {
-                                  final newlot = lot.copyWith(
-                                      name: name.text,
-                                      description: description.text,
-                                      raffleId:
-                                          isEdit ? lot.raffleId : raffle.id,
-                                      quantity: int.parse(quantity.text));
-                                  final lotNotifier =
-                                      ref.watch(prizeListProvider.notifier);
-                                  final value = isEdit
-                                      ? await lotNotifier.updatePrize(newlot)
-                                      : await lotNotifier.addPrize(newlot);
-                                  if (value) {
-                                    QR.back();
-                                    if (isEdit) {
-                                      displayToastWithContext(
-                                          TypeMsg.msg, "Lot modifié");
+                          ),
+                          const SizedBox(height: 50),
+                          WaitingButton(
+                              builder: (child) => BlueBtn(child: child),
+                              onTap: () async {
+                                if (formKey.currentState!.validate()) {
+                                  await tokenExpireWrapper(ref, () async {
+                                    final newPrize = prize.copyWith(
+                                        name: name.text,
+                                        description: description.text,
+                                        raffleId:
+                                            isEdit ? prize.raffleId : raffle.id,
+                                        quantity: int.parse(quantity.text));
+                                    final prizeNotifier =
+                                        ref.watch(prizeListProvider.notifier);
+                                    final value = isEdit
+                                        ? await prizeNotifier
+                                            .updatePrize(newPrize)
+                                        : await prizeNotifier
+                                            .addPrize(newPrize);
+                                    if (value) {
+                                      QR.back();
+                                      if (isEdit) {
+                                        displayToastWithContext(TypeMsg.msg,
+                                            RaffleTextConstants.editedTicket);
+                                      } else {
+                                        displayToastWithContext(TypeMsg.msg,
+                                            RaffleTextConstants.addedTicket);
+                                      }
                                     } else {
-                                      displayToastWithContext(
-                                          TypeMsg.msg, "Lot ajouté");
+                                      if (isEdit) {
+                                        displayToastWithContext(TypeMsg.error,
+                                            RaffleTextConstants.editingError);
+                                      } else {
+                                        displayToastWithContext(TypeMsg.error,
+                                            RaffleTextConstants.addingError);
+                                      }
                                     }
-                                  } else {
-                                    if (isEdit) {
-                                      displayToastWithContext(TypeMsg.error,
-                                          RaffleTextConstants.editingError);
-                                    } else {
-                                      displayToastWithContext(TypeMsg.error,
-                                          RaffleTextConstants.addingError);
-                                    }
-                                  }
-                                });
-                              } else {
-                                displayToast(context, TypeMsg.error,
-                                    RaffleTextConstants.addingError);
-                              }
-                            },
-                            child: Text(isEdit
-                                ? RaffleTextConstants.edit
-                                : RaffleTextConstants.add)),
-                        const SizedBox(
-                          height: 40,
-                        ),
-                      ],
-                    ),
-                  )))),
+                                  });
+                                } else {
+                                  displayToast(context, TypeMsg.error,
+                                      RaffleTextConstants.addingError);
+                                }
+                              },
+                              child: Text(
+                                isEdit
+                                    ? RaffleTextConstants.editPrize
+                                    : RaffleTextConstants.addPrize,
+                                style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                    color: RaffleColorConstants.gradient2),
+                              )),
+                          const SizedBox(height: 40),
+                        ],
+                      ),
+                    )))),
+      ),
     );
   }
 }

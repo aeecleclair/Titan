@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tombola/class/cash.dart';
-import 'package:myecl/tombola/providers/cash_provider.dart';
-import 'package:myecl/tombola/tools/constants.dart';
+import 'package:myecl/raffle/class/cash.dart';
+import 'package:myecl/raffle/providers/cash_provider.dart';
+import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class UserCashUi extends HookConsumerWidget {
   final Cash cash;
@@ -72,8 +72,8 @@ class UserCashUi extends HookConsumerWidget {
                         decoration: BoxDecoration(
                           gradient: const RadialGradient(
                             colors: [
-                              TombolaColorConstants.gradient1,
-                              TombolaColorConstants.gradient2,
+                              RaffleColorConstants.gradient1,
+                              RaffleColorConstants.gradient2,
                             ],
                             center: Alignment.topLeft,
                             radius: 1.5,
@@ -82,7 +82,7 @@ class UserCashUi extends HookConsumerWidget {
                           boxShadow: [
                             BoxShadow(
                               color:
-                                  TombolaColorConstants.textDark.withOpacity(0.2),
+                                  RaffleColorConstants.textDark.withOpacity(0.2),
                               spreadRadius: 5,
                               blurRadius: 10,
                               offset: const Offset(3, 3),
@@ -117,7 +117,7 @@ class UserCashUi extends HookConsumerWidget {
                                     style: const TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.bold,
-                                        color: TombolaColorConstants.textDark)),
+                                        color: RaffleColorConstants.textDark)),
                                 const SizedBox(height: 5),
                                 Row(
                                   mainAxisAlignment:
@@ -154,8 +154,8 @@ class UserCashUi extends HookConsumerWidget {
                         decoration: BoxDecoration(
                           gradient: const RadialGradient(
                             colors: [
-                              TombolaColorConstants.gradient1,
-                              TombolaColorConstants.gradient2,
+                              RaffleColorConstants.gradient1,
+                              RaffleColorConstants.gradient2,
                             ],
                             center: Alignment.topLeft,
                             radius: 1.5,
@@ -164,7 +164,7 @@ class UserCashUi extends HookConsumerWidget {
                           boxShadow: [
                             BoxShadow(
                               color:
-                                  TombolaColorConstants.textDark.withOpacity(0.2),
+                                  RaffleColorConstants.textDark.withOpacity(0.2),
                               spreadRadius: 5,
                               blurRadius: 10,
                               offset: const Offset(3, 3),
@@ -185,20 +185,20 @@ class UserCashUi extends HookConsumerWidget {
                                     controller: amount,
                                     keyboardType: TextInputType.number,
                                     validator: (value) => value!.isEmpty
-                                        ? TombolaTextConstants.add
+                                        ? RaffleTextConstants.add
                                         : null,
-                                    cursorColor: TombolaColorConstants.textDark,
+                                    cursorColor: RaffleColorConstants.textDark,
                                     decoration: const InputDecoration(
                                       suffixText: '€',
                                       suffixStyle: TextStyle(
-                                        color: TombolaColorConstants.textDark,
+                                        color: RaffleColorConstants.textDark,
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
                                       ),
                                       contentPadding: EdgeInsets.all(0),
                                       focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
-                                          color: TombolaColorConstants.textDark,
+                                          color: RaffleColorConstants.textDark,
                                           width: 2,
                                         ),
                                       ),
@@ -214,10 +214,8 @@ class UserCashUi extends HookConsumerWidget {
                                 const SizedBox(
                                   width: 20,
                                 ),
-                                ShrinkButton(
-                                  waitChild: const CircularProgressIndicator(
-                                    color: Colors.white,
-                                  ),
+                                WaitingButton(
+                                  builder: (child) => child,
                                   onTap: () async {
                                     if (key.currentState == null) {
                                       return;
@@ -236,12 +234,12 @@ class UserCashUi extends HookConsumerWidget {
                                             toggle();
                                             displayVoteWithContext(
                                                 TypeMsg.msg,
-                                                TombolaTextConstants
+                                                RaffleTextConstants
                                                     .updatedAmount);
                                           } else {
                                             displayVoteWithContext(
                                                 TypeMsg.error,
-                                                TombolaTextConstants
+                                                RaffleTextConstants
                                                     .updatingError);
                                           }
                                         });

@@ -6,7 +6,7 @@ import 'package:myecl/raffle/providers/pack_ticket_provider.dart';
 import 'package:myecl/raffle/providers/raffle_provider.dart';
 import 'package:myecl/raffle/providers/pack_ticket_list_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/raffle/ui/pages/admin_page/blue_btn.dart';
+import 'package:myecl/raffle/ui/components/blue_btn.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
