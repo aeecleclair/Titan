@@ -55,6 +55,6 @@ class Prize {
 
   @override
   String toString() {
-    return 'Lot{id: $id, name: $name, raffleId: $raffleId, description: $description, quantity: $quantity}';
+    return 'Prize{id: $id, name: $name, raffleId: $raffleId, description: $description, quantity: $quantity}';
   }
 }

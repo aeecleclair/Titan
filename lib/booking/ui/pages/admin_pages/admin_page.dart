@@ -195,6 +195,73 @@ class AdminPage extends HookConsumerWidget {
               ),
             ),
             const SizedBox(height: 20),
+            roomList.when(
+              data: (List<Room> data) => SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(width: 15),
+                    GestureDetector(
+                      onTap: () {
+                        roomNotifier.setRoom(Room.empty());
+                        managerIdNotifier.setId("");
+                        QR.to(BookingRouter.root +
+                            BookingRouter.admin +
+                            BookingRouter.manager);
+                      },
+                      child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Chip(
+                            label: const Padding(
+                              padding: EdgeInsets.all(6.0),
+                              child: HeroIcon(
+                                HeroIcons.plus,
+                                color: Colors.black,
+                                size: 20,
+                              ),
+                            ),
+                            backgroundColor: Colors.grey.shade200,
+                          )),
+                    ),
+                    ...data.map(
+                      (e) => AdminChip(
+                        label: capitalize(e.name),
+                        selected: false,
+                        onTap: () {
+                          roomNotifier.setRoom(e);
+                          managerIdNotifier.setId(e.managerId);
+                          QR.to(BookingRouter.root +
+                              BookingRouter.admin +
+                              BookingRouter.manager);
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 15),
+                  ],
+                ),
+              ),
+              error: (Object error, StackTrace? stackTrace) {
+                return Center(child: Text('Error $error'));
+              },
+              loading: () {
+                return const Center(child: CircularProgressIndicator());
+              },
+            ),
+            const SizedBox(height: 20),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(BookingTextConstants.manager,
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 149, 149, 149))),
+              ),
+            ),
+            const SizedBox(height: 20),
             managerList.when(
               data: (List<Manager> data) => SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
