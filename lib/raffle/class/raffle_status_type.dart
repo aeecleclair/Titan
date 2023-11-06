@@ -1,1 +1,1 @@
-enum RaffleStatusType { creation, open, locked }
+enum RaffleStatusType { creation, open, lock }

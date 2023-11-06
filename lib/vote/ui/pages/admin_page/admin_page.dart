@@ -25,6 +25,7 @@ import 'package:myecl/vote/ui/pages/admin_page/section_bar.dart';
 import 'package:myecl/vote/ui/pages/admin_page/section_contender_items.dart';
 import 'package:myecl/vote/ui/pages/admin_page/vote_bars.dart';
 import 'package:myecl/vote/ui/pages/admin_page/vote_count.dart';
+import 'package:myecl/vote/ui/pages/admin_page/voters_bar.dart';
 import 'package:myecl/vote/ui/vote.dart';
 
 class AdminPage extends HookConsumerWidget {
@@ -78,6 +79,14 @@ class AdminPage extends HookConsumerWidget {
             children: [
               const SizedBox(height: 20),
               const SectionBar(),
+              const SizedBox(height: 30),
+              const AlignLeftText(
+                VoteTextConstants.voters,
+                padding: EdgeInsets.symmetric(horizontal: 30.0),
+                color: Color.fromARGB(255, 149, 149, 149),
+              ),
+              const SizedBox(height: 30),
+              const VotersBar(),
               const SizedBox(height: 30),
               const AlignLeftText(
                 VoteTextConstants.pretendance,

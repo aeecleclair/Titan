@@ -72,30 +72,30 @@ class RaffleMainPage extends HookConsumerWidget {
                   tickets = tickets
                       .where((t) =>
                           t.prize != null ||
-                          (rafflesStatus.containsKey(t.typeTicket.raffleId) &&
-                              rafflesStatus[t.typeTicket.raffleId] !=
-                                  RaffleStatusType.locked))
+                          (rafflesStatus.containsKey(t.packTicket.raffleId) &&
+                              rafflesStatus[t.packTicket.raffleId] !=
+                                  RaffleStatusType.lock))
                       .toList();
                   final ticketSum = <String, List<Ticket>>{};
                   final ticketPrice = <String, double>{};
                   for (final ticket in tickets) {
                     if (ticket.prize == null) {
-                      final id = ticket.typeTicket.raffleId;
+                      final id = ticket.packTicket.raffleId;
                       if (ticketSum.containsKey(id)) {
                         ticketSum[id]!.add(ticket);
                         ticketPrice[id] = ticketPrice[id]! +
-                            ticket.typeTicket.price /
-                                ticket.typeTicket.packSize;
+                            ticket.packTicket.price /
+                                ticket.packTicket.packSize;
                       } else {
                         ticketSum[id] = [ticket];
-                        ticketPrice[id] = ticket.typeTicket.price /
-                            ticket.typeTicket.packSize;
+                        ticketPrice[id] = ticket.packTicket.price /
+                            ticket.packTicket.packSize;
                       }
                     } else {
                       final id = ticketSum.length.toString();
                       ticketSum[id] = [ticket];
                       ticketPrice[id] =
-                          ticket.typeTicket.price / ticket.typeTicket.packSize;
+                          ticket.packTicket.price / ticket.packTicket.packSize;
                     }
                   }
                   return ticketSum.isEmpty
@@ -129,7 +129,7 @@ class RaffleMainPage extends HookConsumerWidget {
                           case RaffleStatusType.open:
                             onGoingRaffles.add(raffle);
                             break;
-                          case RaffleStatusType.locked:
+                          case RaffleStatusType.lock:
                             pastRaffles.add(raffle);
                             break;
                         }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/raffle/class/pack_ticket.dart';
 import 'package:myecl/raffle/class/raffle_status_type.dart';
-import 'package:myecl/raffle/class/type_ticket_simple.dart';
+import 'package:myecl/raffle/providers/pack_ticket_list_provider.dart';
 import 'package:myecl/raffle/providers/raffle_provider.dart';
-import 'package:myecl/raffle/providers/ticket_type_provider.dart';
-import 'package:myecl/raffle/providers/type_ticket_provider.dart';
+import 'package:myecl/raffle/providers/pack_ticket_provider.dart';
 import 'package:myecl/raffle/router.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/admin_page/ticket_ui.dart';
@@ -24,9 +24,9 @@ class TicketHandler extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final raffle = ref.watch(raffleProvider);
-    final typeTickets = ref.watch(typeTicketsListProvider);
-    final typeTicketsNotifier = ref.watch(typeTicketsListProvider.notifier);
-    final typeTicketNotifier = ref.watch(typeTicketProvider.notifier);
+    final packTicket = ref.watch(packTicketListProvider);
+    final packTicketListNotifier = ref.watch(packTicketListProvider.notifier);
+    final packTicketNotifier = ref.watch(packTicketProvider.notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -45,7 +45,7 @@ class TicketHandler extends HookConsumerWidget {
             if (raffle.raffleStatusType == RaffleStatusType.creation)
               GestureDetector(
                   onTap: () {
-                    typeTicketNotifier.setPrize(TypeTicketSimple.empty());
+                    packTicketNotifier.setPackTicket(PackTicket.empty());
                     QR.to(RaffleRouter.root +
                         RaffleRouter.admin +
                         RaffleRouter.addEditTypeTicket);
@@ -65,13 +65,13 @@ class TicketHandler extends HookConsumerWidget {
                     ),
                   )),
             AsyncChild(
-                value: typeTickets,
+                value: packTicket,
                 builder: (context, data) => Row(
                     children: data
                         .map((e) => TicketUI(
-                              typeTicket: e,
+                              packTicket: e,
                               onEdit: () {
-                                typeTicketNotifier.setPrize(e);
+                                packTicketNotifier.setPackTicket(e);
                                 QR.to(RaffleRouter.root +
                                     RaffleRouter.admin +
                                     RaffleRouter.addEditTypeTicket);
@@ -89,9 +89,8 @@ class TicketHandler extends HookConsumerWidget {
                                           onYes: () {
                                             tokenExpireWrapper(ref, () async {
                                               final value =
-                                                  await typeTicketsNotifier
-                                                      .deleteTypeTicketSimple(
-                                                          e);
+                                                  await packTicketListNotifier
+                                                      .deletePackTicket(e);
                                               if (value) {
                                                 displayToastWithContext(
                                                     TypeMsg.msg,

@@ -82,7 +82,7 @@ class PrizeCard extends StatelessWidget {
                     )
                   ],
                 )
-              : status == RaffleStatusType.locked
+              : status == RaffleStatusType.lock
                   ? prize.quantity > 0
                       ? Center(
                           child: WaitingButton(

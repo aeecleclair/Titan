@@ -10,6 +10,7 @@ import 'package:myecl/booking/providers/selected_days_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
+import 'package:myecl/booking/ui/pages/admin_pages/admin_chip.dart';
 import 'package:myecl/booking/ui/pages/booking_pages/checkbox_entry.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
@@ -19,7 +20,6 @@ import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/date_entry.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:myecl/user/providers/user_provider.dart';
@@ -102,25 +102,15 @@ class AddEditBookingPage extends HookConsumerWidget {
                 AsyncChild(
                     value: rooms,
                     builder: (context, data) => HorizontalListView.builder(
-                          height: 40,
-                          items: data,
-                          itemBuilder: (context, e, i) {
-                            final selected = room.value.id == e.id;
-                            return ItemChip(
-                              selected: selected,
+                        height: 40,
+                        items: data,
+                        itemBuilder: (context, e, i) => AdminChip(
+                              label: capitalize(e.name),
+                              selected: room.value.id == e.id,
                               onTap: () async {
                                 room.value = e;
                               },
-                              child: Text(
-                                capitalize(e.name),
-                                style: TextStyle(
-                                    color:
-                                        selected ? Colors.white : Colors.black,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            );
-                          },
-                        )),
+                            ))),
                 const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -279,8 +269,8 @@ class AddEditBookingPage extends HookConsumerWidget {
                             end.text = "${end.text} 23:59";
                           }
                           if (end.text.contains("/") &&
-                                      isDateBefore(processDateBack(end.text),
-                                          processDateBack(start.text))) {
+                              isDateBefore(processDateBack(end.text),
+                                  processDateBack(start.text))) {
                             displayToast(context, TypeMsg.error,
                                 BookingTextConstants.invalidDates);
                           } else if (room.value.id.isEmpty) {

@@ -11,10 +11,6 @@ class ProfilePictureRepository extends LogoRepository {
   }
 
   Future<Uint8List> addProfilePicture(Uint8List bytes) async {
-    /*if (path.startsWith("http")) {
-      final image = await saveLogoToTemp(path);
-      path = image.path;
-    }*/
     return await addLogo(bytes, "me", suffix: "/profile-picture");
   }
 }

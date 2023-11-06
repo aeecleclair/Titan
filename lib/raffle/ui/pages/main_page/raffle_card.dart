@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/raffle/class/raffle.dart';
 import 'package:myecl/raffle/class/stats.dart';
+import 'package:myecl/raffle/providers/pack_ticket_list_provider.dart';
 import 'package:myecl/raffle/providers/prize_list_provider.dart';
 import 'package:myecl/raffle/providers/raffle_id_provider.dart';
 import 'package:myecl/raffle/providers/raffle_stats_map_provider.dart';
 import 'package:myecl/raffle/providers/raffle_stats_provider.dart';
 import 'package:myecl/raffle/providers/ticket_list_provider.dart';
-import 'package:myecl/raffle/providers/type_ticket_provider.dart';
 import 'package:myecl/raffle/router.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
@@ -24,7 +24,7 @@ class RaffleWidget extends HookConsumerWidget {
     final raffleIdNotifier = ref.watch(raffleIdProvider.notifier);
     final prizeListNotifier = ref.read(prizeListProvider.notifier);
     final ticketListNotifier = ref.watch(ticketsListProvider.notifier);
-    final typeTicketListNotifier = ref.watch(typeTicketsListProvider.notifier);
+    final packTicketListNotifier = ref.watch(packTicketListProvider.notifier);
     final singleRaffleStats = ref.watch(raffleStatsProvider.notifier);
     final raffleStats = ref.watch(raffleStatsMapProvider);
     final rafflesStatsNotifier = ref.watch(raffleStatsMapProvider.notifier);
@@ -34,7 +34,7 @@ class RaffleWidget extends HookConsumerWidget {
             raffleIdNotifier.setId(raffle.id);
             prizeListNotifier.loadPrizeList();
             ticketListNotifier.loadTicketList();
-            typeTicketListNotifier.loadTypeTicketSimpleList();
+            packTicketListNotifier.loadPackTicketList();
             QR.to(RaffleRouter.root + RaffleRouter.raffle);
           },
           behavior: HitTestBehavior.opaque,

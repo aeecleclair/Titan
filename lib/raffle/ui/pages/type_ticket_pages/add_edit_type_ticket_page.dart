@@ -1,10 +1,10 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/raffle/class/type_ticket_simple.dart';
+import 'package:myecl/raffle/class/pack_ticket.dart';
+import 'package:myecl/raffle/providers/pack_ticket_list_provider.dart';
 import 'package:myecl/raffle/providers/raffle_provider.dart';
-import 'package:myecl/raffle/providers/ticket_type_provider.dart';
-import 'package:myecl/raffle/providers/type_ticket_provider.dart';
+import 'package:myecl/raffle/providers/pack_ticket_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/components/section_title.dart';
 import 'package:myecl/raffle/ui/pages/admin_page/blue_btn.dart';
@@ -16,19 +16,19 @@ import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class AddEditTypeTicketSimplePage extends HookConsumerWidget {
-  const AddEditTypeTicketSimplePage({super.key});
+class AddEditPackTicketSimplePage extends HookConsumerWidget {
+  const AddEditPackTicketSimplePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = GlobalKey<FormState>();
     final raffle = ref.watch(raffleProvider);
-    final typeTicket = ref.watch(typeTicketProvider);
-    final isEdit = typeTicket.id != TypeTicketSimple.empty().id;
+    final packTicket = ref.watch(packTicketProvider);
+    final isEdit = packTicket.id != PackTicket.empty().id;
     final packSize = useTextEditingController(
-        text: isEdit ? typeTicket.packSize.toString() : "");
+        text: isEdit ? packTicket.packSize.toString() : "");
     final price = useTextEditingController(
-        text: isEdit ? typeTicket.price.toString() : "");
+        text: isEdit ? packTicket.price.toString() : "");
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -49,7 +49,7 @@ class AddEditTypeTicketSimplePage extends HookConsumerWidget {
                         children: [
                           const SizedBox(height: 20),
                           const AlignLeftText(
-                            RaffleTextConstants.addTypeTicketSimple,
+                            RaffleTextConstants.addPackTicket,
                             fontSize: 25,
                             color: RaffleColorConstants.gradient1,
                           ),
@@ -80,24 +80,24 @@ class AddEditTypeTicketSimplePage extends HookConsumerWidget {
                                       price.text.replaceAll(',', '.'));
                                   if (ticketPrice != null && ticketPrice > 0) {
                                     await tokenExpireWrapper(ref, () async {
-                                      final newTypeTicketSimple =
-                                          typeTicket.copyWith(
+                                      final newPackTicketSimple =
+                                          packTicket.copyWith(
                                               price: double.parse(price.text),
                                               packSize:
                                                   int.parse(packSize.text),
                                               raffleId: isEdit
-                                                  ? typeTicket.raffleId
+                                                  ? packTicket.raffleId
                                                   : raffle.id,
-                                              id: isEdit ? typeTicket.id : "");
-                                      final typeTicketNotifier = ref.watch(
-                                          typeTicketsListProvider.notifier);
+                                              id: isEdit ? packTicket.id : "");
+                                      final packTicketNotifier = ref.watch(
+                                          packTicketListProvider.notifier);
                                       final value = isEdit
-                                          ? await typeTicketNotifier
-                                              .updateTypeTicketSimple(
-                                                  newTypeTicketSimple)
-                                          : await typeTicketNotifier
-                                              .addTypeTicketSimple(
-                                                  newTypeTicketSimple);
+                                          ? await packTicketNotifier
+                                              .updatePackTicket(
+                                                  newPackTicketSimple)
+                                          : await packTicketNotifier
+                                              .addPackTicket(
+                                                  newPackTicketSimple);
                                       if (value) {
                                         QR.back();
                                         if (isEdit) {
@@ -130,8 +130,8 @@ class AddEditTypeTicketSimplePage extends HookConsumerWidget {
                               },
                               child: Text(
                                 isEdit
-                                    ? RaffleTextConstants.editTypeTicketSimple
-                                    : RaffleTextConstants.addTypeTicketSimple,
+                                    ? RaffleTextConstants.edit
+                                    : RaffleTextConstants.add,
                                 style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.w700,

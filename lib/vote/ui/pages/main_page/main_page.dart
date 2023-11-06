@@ -5,7 +5,7 @@ import 'package:myecl/tools/ui/widgets/admin_button.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/vote/class/contender.dart';
-import 'package:myecl/vote/providers/is_ae_member_provider.dart';
+import 'package:myecl/vote/providers/can_vote_provider.dart';
 import 'package:myecl/vote/providers/is_vote_admin_provider.dart';
 import 'package:myecl/vote/providers/contender_list_provider.dart';
 import 'package:myecl/vote/providers/contender_logo_provider.dart';
@@ -50,9 +50,9 @@ class VoteMainPage extends HookConsumerWidget {
     final logosNotifier = ref.watch(contenderLogoProvider.notifier);
     final contenderLogosNotifier = ref.watch(contenderLogosProvider.notifier);
 
-    final isAEMember = ref.watch(isAEMemberProvider);
+    final canVote = ref.watch(canVoteProvider);
 
-    if (!isAEMember) {
+    if (!canVote) {
       return VoteTemplate(
         child: SizedBox(
             height: MediaQuery.of(context).size.height - 100,
@@ -60,7 +60,7 @@ class VoteMainPage extends HookConsumerWidget {
                 padding: EdgeInsets.symmetric(horizontal: 30.0),
                 child: Center(
                   child: Text(
-                    VoteTextConstants.notAEMember,
+                    VoteTextConstants.canNotVote,
                     style: TextStyle(fontSize: 20),
                   ),
                 ))),

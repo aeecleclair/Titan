@@ -1,10 +1,10 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/raffle/providers/pack_ticket_list_provider.dart';
 import 'package:myecl/raffle/providers/user_amount_provider.dart';
 import 'package:myecl/raffle/providers/prize_list_provider.dart';
 import 'package:myecl/raffle/providers/raffle_provider.dart';
-import 'package:myecl/raffle/providers/type_ticket_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/raffle_page/buy_type_ticket_card.dart';
 import 'package:myecl/raffle/ui/pages/raffle_page/prize_card.dart';
@@ -23,8 +23,8 @@ class RaffleInfoPage extends HookConsumerWidget {
     final raffle = ref.watch(raffleProvider);
     final balance = ref.watch(userAmountProvider);
     final balanceNotifier = ref.read(userAmountProvider.notifier);
-    final typeTicketList = ref.watch(typeTicketsListProvider);
-    final typeTicketListNotifier = ref.read(typeTicketsListProvider.notifier);
+    final packTicketList = ref.watch(packTicketListProvider);
+    final packTicketListNotifier = ref.read(packTicketListProvider.notifier);
     final prizeList = ref.watch(prizeListProvider);
     final prizeListNotifier = ref.read(prizeListProvider.notifier);
 
@@ -33,7 +33,7 @@ class RaffleInfoPage extends HookConsumerWidget {
         onRefresh: () async {
           userId.whenData(
               (value) async => await balanceNotifier.loadCashByUser(value));
-          await typeTicketListNotifier.loadTypeTicketSimpleList();
+          await packTicketListNotifier.loadPackTicketList();
           await prizeListNotifier.loadPrizeList();
         },
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -69,8 +69,8 @@ class RaffleInfoPage extends HookConsumerWidget {
                 loaderColor: RaffleColorConstants.gradient2,
               )),
           AsyncChild(
-              value: typeTicketList,
-              builder: (context, typeTickets) => typeTickets.isEmpty
+              value: packTicketList,
+              builder: (context, packTickets) => packTickets.isEmpty
                   ? Container(
                       height: 190,
                       alignment: Alignment.centerLeft,
@@ -79,11 +79,11 @@ class RaffleInfoPage extends HookConsumerWidget {
                     )
                   : HorizontalListView.builder(
                       height: 160,
-                      items: typeTickets,
-                      itemBuilder: (context, typeTicket, index) => Container(
+                      items: packTickets,
+                      itemBuilder: (context, packTicket, index) => Container(
                           margin: const EdgeInsets.all(10),
-                          child: BuyTypeTicketSimple(
-                              typeTicket: typeTicket, raffle: raffle))),
+                          child: BuyPackTicket(
+                              packTicket: packTicket, raffle: raffle))),
               orElseBuilder: (context, child) => Container(
                   height: 190,
                   padding: const EdgeInsets.symmetric(horizontal: 30),

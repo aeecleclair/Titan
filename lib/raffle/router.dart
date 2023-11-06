@@ -6,8 +6,8 @@ import 'package:myecl/raffle/providers/is_raffle_admin.dart';
 import 'package:myecl/raffle/ui/pages/admin_page/admin_page.dart';
 import 'package:myecl/raffle/ui/pages/lots_pages/add_edit_prize_page.dart';
 import 'package:myecl/raffle/ui/pages/main_page/main_page.dart';
+import 'package:myecl/raffle/ui/pages/pack_ticket_page/add_edit_pack_ticket_page.dart';
 import 'package:myecl/raffle/ui/pages/raffle_page/tombola_page.dart';
-import 'package:myecl/raffle/ui/pages/type_ticket_pages/add_edit_type_ticket_page.dart';
 import 'package:myecl/tools/middlewares/admin_middleware.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -37,7 +37,7 @@ class RaffleRouter {
             QRoute(path: addEditPrize, builder: () => const AddEditPrizePage()),
             QRoute(
                 path: addEditTypeTicket,
-                builder: () => const AddEditTypeTicketSimplePage()),
+                builder: () => const AddEditPackTicketPage()),
           ]),
           QRoute(path: raffle, builder: () => const RaffleInfoPage()),
         ],

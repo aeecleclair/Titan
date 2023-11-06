@@ -1,11 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/raffle/class/raffle.dart';
 import 'package:myecl/raffle/class/tickets.dart';
 import 'package:myecl/raffle/providers/raffle_list_provider.dart';
+import 'package:myecl/raffle/providers/tombola_logo_provider.dart';
+import 'package:myecl/raffle/providers/tombola_logos_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/main_page/ticket_card_background.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class TicketWidget extends HookConsumerWidget {
   final List<Ticket> ticket;
@@ -18,8 +22,11 @@ class TicketWidget extends HookConsumerWidget {
     final raffleList = ref.watch(raffleListProvider);
     final raffle = raffleList.maybeWhen(
         data: (data) => data.firstWhere(
-            (element) => element.id == ticket[0].typeTicket.raffleId),
+            (element) => element.id == ticket[0].packTicket.raffleId),
         orElse: () => Raffle.empty());
+    final tombolaLogos = ref.watch(tombolaLogosProvider);
+    final tombolaLogosNotifier = ref.watch(tombolaLogosProvider.notifier);
+    final tombolaLogoNotifier = ref.watch(tombolaLogoProvider.notifier);
     return Stack(children: [
       TicketCardBackground(
           isWinningTicket: isWinningTicket,
@@ -48,8 +55,46 @@ class TicketWidget extends HookConsumerWidget {
                           borderRadius:
                               const BorderRadius.all(Radius.circular(15))),
                       child: Center(
-                        child:
-                            Image.asset("assets/images/soli.png", height: 40),
+                        child:tombolaLogos.when(
+                            data: (data) {
+                              if (data[raffle] != null) {
+                                return data[raffle]!.when(
+                                    data: (data) {
+                                      if (data.isNotEmpty) {
+                                        return data.first;
+                                      } else {
+                                        Future.delayed(
+                                            const Duration(milliseconds: 1),
+                                            () {
+                                          tombolaLogosNotifier.setTData(
+                                              raffle, const AsyncLoading());
+                                        });
+                                        tokenExpireWrapper(ref, () async {
+                                          tombolaLogoNotifier
+                                              .getLogo(raffle.id)
+                                              .then((value) {
+                                            tombolaLogosNotifier.setTData(
+                                                raffle, AsyncData([value]));
+                                          });
+                                        });
+                                        return const HeroIcon(
+                                            HeroIcons.cubeTransparent);
+                                      }
+                                    },
+                                    loading: () =>
+                                        const CircularProgressIndicator(),
+                                    error: (Object error,
+                                            StackTrace? stackTrace) =>
+                                        const HeroIcon(
+                                            HeroIcons.cubeTransparent));
+                              } else {
+                                return const HeroIcon(
+                                    HeroIcons.cubeTransparent);
+                              }
+                            },
+                            loading: () => const CircularProgressIndicator(),
+                            error: (Object error, StackTrace? stackTrace) =>
+                                const HeroIcon(HeroIcons.cubeTransparent)),
                       ),
                     ),
                     Expanded(

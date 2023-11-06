@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/raffle/class/pack_ticket.dart';
 import 'package:myecl/raffle/class/tickets.dart';
-import 'package:myecl/raffle/class/type_ticket_simple.dart';
 import 'package:myecl/raffle/repositories/tickets_repository.dart';
 import 'package:myecl/raffle/repositories/user_tickets_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
@@ -26,9 +26,9 @@ class UserTicketListNotifier extends ListNotifier<Ticket> {
         () async => _userDetailRepository.getTicketsListByUserId(userId));
   }
 
-  Future<bool> buyTicket(TypeTicketSimple typeTicketSimple) async {
+  Future<bool> buyTicket(PackTicket packTicket) async {
     return addAll(
-        (_) async => _ticketsRepository.buyTicket(typeTicketSimple.id, userId),
+        (_) async => _ticketsRepository.buyTicket(packTicket.id, userId),
         []);
   }
 }

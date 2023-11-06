@@ -1,21 +1,21 @@
+import 'package:myecl/raffle/class/pack_ticket.dart';
 import 'package:myecl/raffle/class/prize.dart';
-import 'package:myecl/raffle/class/type_ticket_simple.dart';
 import 'package:myecl/user/class/list_users.dart';
 
 class Ticket {
   Ticket({
-    required this.typeTicket,
+    required this.packTicket,
     required this.user,
     required this.prize,
     required this.id,
   });
-  late final TypeTicketSimple typeTicket;
+  late final PackTicket packTicket;
   late final SimpleUser user;
   late final Prize? prize;
   late final String id;
 
   Ticket.fromJson(Map<String, dynamic> json) {
-    typeTicket = TypeTicketSimple.fromJson(json['type_ticket']);
+    packTicket = PackTicket.fromJson(json['type_ticket']);
     user = SimpleUser.fromJson(json['user']);
     prize = json['lot'] != null ? Prize.fromJson(json['lot']) : null;
     id = json['id'];
@@ -23,7 +23,7 @@ class Ticket {
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['type_id'] = typeTicket.id;
+    data['type_id'] = packTicket.id;
     data['user_id'] = user.id;
     data['lot'] = prize != null ? prize!.id : null;
     data['id'] = id;
@@ -31,20 +31,20 @@ class Ticket {
   }
 
   Ticket copyWith({
-    TypeTicketSimple? typeTicket,
+    PackTicket? packTicket,
     SimpleUser? user,
     Prize? lot,
     String? id,
   }) =>
       Ticket(
-        typeTicket: typeTicket ?? this.typeTicket,
+        packTicket: packTicket ?? this.packTicket,
         user: user ?? this.user,
         prize: lot,
         id: id ?? this.id,
       );
 
   Ticket.empty() {
-    typeTicket = TypeTicketSimple.empty();
+    packTicket = PackTicket.empty();
     user = SimpleUser.empty();
     prize = null;
     id = '';
@@ -52,6 +52,6 @@ class Ticket {
 
   @override
   String toString() {
-    return 'Ticket(typeTicket: $typeTicket, user: $user, lot: $prize, id: $id)';
+    return 'Ticket(packTicket: $packTicket, user: $user, lot: $prize, id: $id)';
   }
 }

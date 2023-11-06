@@ -1,0 +1,24 @@
+name: Check labels
+
+on:
+  pull_request:
+    types:
+      - opened
+      - labeled
+      - unlabeled
+
+jobs:
+  check-labels:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail if PR is labeled Waiting Backend
+        if: contains(github.event.pull_request.labels.*.name, 'waiting backend')
+        run: |
+          echo "This PR is currently labeled Waiting Backend."
+          exit 1
+
+      - name: Fail if PR is labeled Dont Merge
+        if: contains(github.event.pull_request.labels.*.name, 'do not merge')
+        run: |
+          echo "This PR is currently labeled Don't Merge."
+          exit 1

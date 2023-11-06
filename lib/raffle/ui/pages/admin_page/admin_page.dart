@@ -2,11 +2,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/raffle/class/raffle_status_type.dart';
 import 'package:myecl/raffle/providers/cash_provider.dart';
+import 'package:myecl/raffle/providers/pack_ticket_list_provider.dart';
 import 'package:myecl/raffle/providers/prize_list_provider.dart';
 import 'package:myecl/raffle/providers/raffle_list_provider.dart';
 import 'package:myecl/raffle/providers/raffle_provider.dart';
 import 'package:myecl/raffle/providers/raffle_stats_provider.dart';
-import 'package:myecl/raffle/providers/type_ticket_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/admin_page/blue_btn.dart';
 import 'package:myecl/raffle/ui/pages/admin_page/account_handler.dart';
@@ -29,26 +29,26 @@ class AdminPage extends HookConsumerWidget {
     final raffleListNotifier = ref.read(raffleListProvider.notifier);
     final raffleStats = ref.watch(raffleStatsProvider);
     final cashNotifier = ref.read(cashProvider.notifier);
-    final typeTicketsListNotifier = ref.read(typeTicketsListProvider.notifier);
+    final packTicketListNotifier = ref.read(packTicketListProvider.notifier);
     final prizeListNotifier = ref.read(prizeListProvider.notifier);
 
     return RaffleTemplate(
       child: Refresher(
           onRefresh: () async {
             await cashNotifier.loadCashList();
-            await typeTicketsListNotifier.loadTypeTicketSimpleList();
+            await packTicketListNotifier.loadPackTicketList();
             await prizeListNotifier.loadPrizeList();
           },
           child: Column(
             children: [
               const AccountHandler(),
               const SizedBox(height: 12),
-              raffle.raffleStatusType != RaffleStatusType.locked
+              raffle.raffleStatusType != RaffleStatusType.lock
                   ? const TicketHandler()
                   : const WinningTicketHandler(),
               const SizedBox(height: 12),
               const PrizeHandler(),
-              raffle.raffleStatusType != RaffleStatusType.locked
+              raffle.raffleStatusType != RaffleStatusType.lock
                   ? Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 30, vertical: 12),
@@ -86,7 +86,7 @@ class AdminPage extends HookConsumerWidget {
                                                   description:
                                                       raffle.description,
                                                   raffleStatusType:
-                                                      RaffleStatusType.locked),
+                                                      RaffleStatusType.lock),
                                             );
                                             break;
                                           default:

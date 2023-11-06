@@ -5,7 +5,8 @@ import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
-import 'package:myecl/booking/providers/is_booking_admin_provider.dart';
+import 'package:myecl/booking/providers/is_admin_provider.dart';
+import 'package:myecl/booking/providers/is_manager_provider.dart';
 import 'package:myecl/booking/providers/selected_days_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/router.dart';
@@ -30,7 +31,8 @@ class BookingMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isAdmin = ref.watch(isBookingAdminProvider);
+    final isManager = ref.watch(isManagerProvider);
+    final isAdmin = ref.watch(isAdminProvider);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
     final confirmedBookingsNotifier =
         ref.watch(confirmedBookingListProvider.notifier);
@@ -128,6 +130,41 @@ class BookingMainPage extends HookConsumerWidget {
                         onTap: () {
                           QR.to(BookingRouter.root + BookingRouter.admin);
                         },
+                      ),
+                    if (isManager)
+                      GestureDetector(
+                        onTap: () {
+                          QR.to(BookingRouter.root + BookingRouter.manager);
+                        },
+                        child: Container(
+                          width: 130,
+                          margin: const EdgeInsets.symmetric(vertical: 5),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 8),
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: Colors.white, width: 1),
+                              boxShadow: [
+                                BoxShadow(
+                                    color:
+                                        Colors.grey.shade200.withOpacity(0.2),
+                                    blurRadius: 10,
+                                    offset: const Offset(0, 5))
+                              ]),
+                          child: const Row(
+                            children: [
+                              HeroIcon(HeroIcons.userGroup,
+                                  color: Colors.white, size: 20),
+                              SizedBox(width: 10),
+                              Text("Gestion",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white)),
+                            ],
+                          ),
+                        ),
                       ),
                   ],
                 ),
