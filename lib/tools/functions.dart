@@ -396,3 +396,39 @@ Plausible? getPlausible() {
 
   return null;
 }
+
+String get_titan_flavor() {
+  const String flavor = String.fromEnvironment('app.flavor');
+  if (flavor == "") {
+    throw StateError("App flavor is not set");
+  }
+
+  return flavor;
+}
+
+String get_titan_host() {
+  var host = dotenv.env[get_titan_flavor().toUpperCase() + "_HOST"];
+
+  if (host == null || host == "") {
+    throw StateError("Could not find host corresponding to flavor");
+  }
+
+  return host;
+}
+
+String get_titan_url_scheme() {
+  switch (get_titan_flavor()) {
+    case "dev":
+      return "fr.myecl.titan.dev";
+    case "alpha":
+      return "fr.myecl.titan.alpha";
+    case "prod":
+      return "fr.myecl.titan";
+    default:
+      throw StateError("Invalid app flavor");
+  }
+}
+
+String get_titan_logo() {
+  return "assets/images/logo_" + get_titan_flavor() + ".png";
+}
