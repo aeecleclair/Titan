@@ -90,6 +90,7 @@ class DrawerTopBar extends HookConsumerWidget {
                             child: CircleAvatar(
                               radius: 25,
                               backgroundImage: file.isEmpty
+                                  // TODO: use get_titan_logo()
                                   ? const AssetImage("assets/images/logo.png")
                                   : Image.memory(file).image,
                             ),

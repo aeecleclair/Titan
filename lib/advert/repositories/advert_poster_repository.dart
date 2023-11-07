@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/repository/logo_repository.dart';
 
 class AdvertPosterRepository extends LogoRepository {
@@ -12,7 +13,7 @@ class AdvertPosterRepository extends LogoRepository {
   Future<Image> getAdvertPoster(String id) async {
     final uint8List = await getLogo("", suffix: "adverts/$id/picture");
     if (uint8List.isEmpty) {
-      return Image.asset("assets/images/logo.png");
+      return Image.asset(get_titan_logo());
     }
     return Image.memory(uint8List);
   }

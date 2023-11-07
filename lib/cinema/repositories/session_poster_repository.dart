@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/repository/logo_repository.dart';
 
 class SessionPosterRepository extends LogoRepository {
@@ -14,7 +15,7 @@ class SessionPosterRepository extends LogoRepository {
   Future<Image> getSessionLogo(String id) async {
     final bytes = await getLogo(id, suffix: "/poster");
     if (bytes.isEmpty) {
-      return Image.asset("assets/images/logo.png");
+      return Image.asset(get_titan_logo());
     }
     return Image.memory(bytes);
   }

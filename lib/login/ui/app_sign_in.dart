@@ -54,6 +54,7 @@ class AppSignIn extends HookConsumerWidget {
                         children: [
                           const Expanded(
                             child: Image(
+                              // TODO: get_titan_logo()
                               image: AssetImage('assets/images/logo.png'),
                             ),
                           ),

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/admin/repositories/group_logo_repository.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
 
 class GroupLogoNotifier extends SingleNotifier<Image> {
@@ -13,7 +14,7 @@ class GroupLogoNotifier extends SingleNotifier<Image> {
   Future<Image> getLogo(String id) async {
     final bytes = await groupLogoRepository.getLogo(id, suffix: "/logo");
     if (bytes.isEmpty) {
-      return Image.asset("assets/images/logo.png");
+      return Image.asset(get_titan_logo());
     }
     return Image.memory(bytes);
   }
