@@ -1,17 +1,17 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:myecl/tools/cache/cache_manager.dart';
 import 'package:myecl/tools/exception.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/logs/log.dart';
 import 'package:myecl/tools/logs/logger.dart';
 
 abstract class Repository {
-  final String host = dotenv.env[kDebugMode ? "DEBUG_HOST" : "RELEASE_HOST"]!;
-  static final String displayHost =
-      dotenv.env[kDebugMode ? "DEBUG_HOST" : "RELEASE_HOST"]!;
+  final String host = get_titan_host();
+
+  static final String displayHost = get_titan_host();
   static const String expiredTokenDetail = "Could not validate credentials";
   final String ext = "";
   final Map<String, String> headers = {
