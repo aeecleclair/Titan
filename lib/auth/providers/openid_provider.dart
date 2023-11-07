@@ -10,6 +10,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:myecl/auth/providers/is_connected_provider.dart';
 import 'package:myecl/auth/repository/openid_repository.dart';
 import 'package:myecl/tools/cache/cache_manager.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'dart:convert';
 import 'package:universal_html/html.dart' as html;
@@ -117,7 +118,7 @@ class OpenIdTokenProvider
   final String clientId = "Titan";
   final String tokenKey = "token";
   final String refreshTokenKey = "refresh_token";
-  final String redirectUrl = "fr.myecl.titan://authorized";
+  final String redirectUrl = "${get_titan_url_scheme()}://authorized";
   final String redirectUrlHost = "myecl.fr";
   final String discoveryUrl =
       "${Repository.displayHost}.well-known/openid-configuration";

@@ -41,6 +41,7 @@ class LocalNotificationService {
   }
 
   NotificationDetails getNotificationDetails() {
+    // TODO: use get_titan_url_scheme()
     AndroidNotificationDetails androidNotificationDetails =
         const AndroidNotificationDetails("fr.myecl.titan", "TitanNotification",
             channelDescription: "Notifications channel for Titan",
@@ -102,7 +103,7 @@ class LocalNotificationService {
             summaryText: body,
             htmlFormatSummaryText: true);
     final AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails("fr.myecl.titan", "TitanNotification",
+        AndroidNotificationDetails(get_titan_url_scheme(), "TitanNotification",
             channelDescription: "Notifications channel for Titan",
             importance: Importance.max,
             priority: Priority.max,
@@ -209,8 +210,8 @@ class LocalNotificationService {
     if (message.actionModule != null && message.actionTable != null) {
       final path =
           await handleAction(message.actionModule!, message.actionTable!);
-      QR.to(
-          "fr.myecl.titan://$path?actionModule=${message.actionModule!}&actionTable=${message.actionTable!}");
+      QR.to(get_titan_url_scheme() +
+          "://$path?actionModule=${message.actionModule!}&actionTable=${message.actionTable!}");
     }
   }
 }
@@ -233,7 +234,7 @@ void onDidReceiveBackgroundNotificationResponse(
       return;
     }
     final path = information.item1;
-    QR.to(
-        "fr.myecl.titan://$path?actionModule=${message.actionModule!}&actionTable=${message.actionTable!}");
+    QR.to(get_titan_url_scheme() +
+        "://$path?actionModule=${message.actionModule!}&actionTable=${message.actionTable!}");
   }
 }
