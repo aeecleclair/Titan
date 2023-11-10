@@ -116,20 +116,6 @@ List<DateTime> getDateInRecurrence(String recurrenceRule, DateTime start) {
   return SfCalendar.getRecurrenceDateTimeCollection(recurrenceRule, start);
 }
 
-DateTime getTrueEnd(Booking b) {
-  if (b.recurrenceRule.isEmpty) {
-    return b.end;
-  } else {
-    final days = b.recurrenceRule.split("BYDAY=")[1].split(";")[0].split(",");
-    if (days.length > 1) {
-      final date = getDateInRecurrence(b.recurrenceRule, b.start).last;
-      return DateTime(
-          date.year, date.month, date.day, b.end.hour, b.end.minute);
-    }
-    return b.end;
-  }
-}
-
 DateTime combineDate(DateTime date, DateTime time) {
   return DateTime(date.year, date.month, date.day, time.hour, time.minute);
 }
