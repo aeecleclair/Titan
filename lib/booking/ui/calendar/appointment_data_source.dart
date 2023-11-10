@@ -41,4 +41,10 @@ class AppointmentDataSource extends CalendarDataSource<Booking> {
     Booking booking = appointments![index];
     return booking.recurrenceRule.isNotEmpty ? booking.recurrenceRule : null;
   }
+
+  @override
+  Booking? convertAppointmentToObject(
+      Booking customData, Appointment appointment) {
+    return customData;
+  }
 }
