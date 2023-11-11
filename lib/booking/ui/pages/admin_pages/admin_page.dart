@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/group_id_provider.dart';
 import 'package:myecl/booking/class/manager.dart';
 import 'package:myecl/booking/class/room.dart';
-import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/manager_list_provider.dart';
 import 'package:myecl/booking/providers/manager_id_provider.dart';
@@ -34,7 +33,6 @@ class AdminPage extends HookConsumerWidget {
     return BookingTemplate(
       child: Refresher(
         onRefresh: () async {
-          await ref.watch(bookingListProvider.notifier).loadBookings();
           await ref.watch(roomListProvider.notifier).loadRooms();
           await ref
               .watch(confirmedBookingListProvider.notifier)
