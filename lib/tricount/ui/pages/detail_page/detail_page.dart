@@ -39,24 +39,20 @@ class SharerGroupDetailPage extends HookConsumerWidget {
           builder: (e) => BalanceCard(
               transaction: e,
               maxAbsBalance: maxAbsBalance,
-              isMe: e.payer.id == me.id),
-          onTap: null),
+              isMe: e.payer.id == me.id)),
       SharerPropertyList(
           propertyList: sharerGroup.transactions,
           title: 'Dépenses',
-          builder: (e) => TransactionCard(transaction: e),
-          onTap: () {}),
+          builder: (e) => TransactionCard(transaction: e)),
       SharerPropertyList(
           propertyList: sharerGroup.equilibriumTransactions,
           title: 'Remboursements',
           builder: (e) =>
-              EquilibriumCard(equilibriumTransaction: e, isLightTheme: true),
-          onTap: null),
+              EquilibriumCard(equilibriumTransaction: e, isLightTheme: true)),
       SharerPropertyList(
           propertyList: sharerGroup.sharers,
           title: 'Participants',
-          builder: (e) => MemberCard(member: e),
-          onTap: () {}),
+          builder: (e) => MemberCard(member: e)),
     ];
 
     final buttonStates = [
