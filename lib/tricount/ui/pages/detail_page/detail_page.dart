@@ -7,6 +7,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tricount/providers/sharer_group_list_provider.dart';
 import 'package:myecl/tricount/providers/sharer_group_provider.dart';
+import 'package:myecl/tricount/router.dart';
 import 'package:myecl/tricount/tools/functions.dart';
 import 'package:myecl/tricount/ui/pages/components/equilibrium_card.dart';
 import 'package:myecl/tricount/ui/pages/detail_page/balance_card.dart';
@@ -16,6 +17,7 @@ import 'package:myecl/tricount/ui/pages/detail_page/sharer_property_list.dart';
 import 'package:myecl/tricount/ui/pages/detail_page/transaction_card.dart';
 import 'package:myecl/tricount/ui/pages/tricount.dart';
 import 'package:myecl/user/providers/user_provider.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class SharerGroupDetailPage extends HookConsumerWidget {
@@ -70,7 +72,9 @@ class SharerGroupDetailPage extends HookConsumerWidget {
     ];
 
     final buttonStates = [
-      ButtonState(text: 'Modifier le groupe', onTap: () {}),
+      ButtonState(text: 'Modifier le groupe', onTap: () {
+        QR.to(TricountRouter.root + TricountRouter.addEdit);
+      }),
       ButtonState(text: 'Ajouter une dépense', onTap: () {}),
       ButtonState(text: 'Rembourser', onTap: () {}),
       ButtonState(text: 'Ajouter un participant', onTap: () {}),
