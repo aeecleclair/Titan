@@ -63,80 +63,80 @@ class AddEditSharerGroupPage extends HookConsumerWidget {
                     child: SharerGroupMemberChipList(),
                   ),
                   const SizedBox(height: 20),
-                  Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
-                      child: Column(children: [
-                        TextEntry(
-                          label: TricountTextConstants.member,
-                          onChanged: (value) {
-                            tokenExpireWrapper(ref, () async {
-                              if (queryController.text.isNotEmpty) {
-                                await usersNotifier
-                                    .filterUsers(queryController.text);
-                              } else {
-                                usersNotifier.clear();
-                              }
-                            });
-                          },
-                          canBeEmpty: true,
-                          controller: queryController,
-                        ),
-                        const SizedBox(height: 20),
-                        SearchResult(queryController: queryController),
-                        const SizedBox(height: 50),
-                        WaitingButton(
-                          builder: (child) => AddEditButtonLayout(
-                              color: const Color(0xff09263D), child: child),
-                          onTap: () async {
-                            if (key.currentState == null) {
-                              return;
-                            }
-                            if (!key.currentState!.validate()) {
-                              return;
-                            }
-                            await tokenExpireWrapper(ref, () async {
-                              SharerGroup newSharerGroup = SharerGroup(
-                                  equilibriumTransactions: [],
-                                  id: '',
-                                  name: name.text,
-                                  sharers: sharerGroup.sharers,
-                                  totalAmount: 0.0,
-                                  transactions: []);
-                              final value = isEdit
-                                  ? await sharerGroupListNotifier
-                                      .updateSharerGroup(newSharerGroup)
-                                  : await sharerGroupListNotifier
-                                      .addSharerGroup(newSharerGroup);
-                              if (value) {
-                                QR.back();
-                                if (isEdit) {
-                                  displayToastWithContext(TypeMsg.msg,
-                                      RaffleTextConstants.updatedSharerGroup);
+                    Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: Column(children: [
+                          TextEntry(
+                            label: TricountTextConstants.member,
+                            onChanged: (value) {
+                              tokenExpireWrapper(ref, () async {
+                                if (queryController.text.isNotEmpty) {
+                                  await usersNotifier
+                                      .filterUsers(queryController.text);
                                 } else {
-                                  displayToastWithContext(TypeMsg.msg,
-                                      RaffleTextConstants.addedSharerGroup);
+                                  usersNotifier.clear();
                                 }
-                              } else {
-                                if (isEdit) {
-                                  displayToastWithContext(TypeMsg.error,
-                                      RaffleTextConstants.updatingError);
-                                } else {
-                                  displayToastWithContext(TypeMsg.error,
-                                      RaffleTextConstants.addingError);
-                                }
+                              });
+                            },
+                            canBeEmpty: true,
+                            controller: queryController,
+                          ),
+                          const SizedBox(height: 20),
+                          SearchResult(queryController: queryController),
+                          const SizedBox(height: 50),
+                          WaitingButton(
+                            builder: (child) => AddEditButtonLayout(
+                                color: const Color(0xff09263D), child: child),
+                            onTap: () async {
+                              if (key.currentState == null) {
+                                return;
                               }
-                            });
-                          },
-                          child: Text(
-                              isEdit
-                                  ? RaffleTextConstants.edit
-                                  : RaffleTextConstants.add,
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold)),
-                        )
-                      ]))
+                              if (!key.currentState!.validate()) {
+                                return;
+                              }
+                              await tokenExpireWrapper(ref, () async {
+                                SharerGroup newSharerGroup = SharerGroup(
+                                    equilibriumTransactions: [],
+                                    id: '',
+                                    name: name.text,
+                                    sharers: sharerGroup.sharers,
+                                    totalAmount: 0.0,
+                                    transactions: []);
+                                final value = isEdit
+                                    ? await sharerGroupListNotifier
+                                        .updateSharerGroup(newSharerGroup)
+                                    : await sharerGroupListNotifier
+                                        .addSharerGroup(newSharerGroup);
+                                if (value) {
+                                  QR.back();
+                                  if (isEdit) {
+                                    displayToastWithContext(TypeMsg.msg,
+                                        RaffleTextConstants.updatedSharerGroup);
+                                  } else {
+                                    displayToastWithContext(TypeMsg.msg,
+                                        RaffleTextConstants.addedSharerGroup);
+                                  }
+                                } else {
+                                  if (isEdit) {
+                                    displayToastWithContext(TypeMsg.error,
+                                        RaffleTextConstants.updatingError);
+                                  } else {
+                                    displayToastWithContext(TypeMsg.error,
+                                        RaffleTextConstants.addingError);
+                                  }
+                                }
+                              });
+                            },
+                            child: Text(
+                                isEdit
+                                    ? RaffleTextConstants.edit
+                                    : RaffleTextConstants.add,
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold)),
+                          )
+                        ]))
                 ]))));
   }
 }
