@@ -50,7 +50,7 @@ class Booking {
           ? Applicant.fromJson(json["applicant"])
           : Applicant.empty().copyWith(id: json["applicant_id"]),
     );
-    return booking.copyWith();
+    return booking;
   }
 
   Map<String, dynamic> toJson() {
