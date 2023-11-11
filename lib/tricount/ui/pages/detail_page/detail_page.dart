@@ -8,6 +8,7 @@ import 'package:myecl/tricount/providers/sharer_group_provider.dart';
 import 'package:myecl/tricount/tools/functions.dart';
 import 'package:myecl/tricount/ui/pages/components/equilibrium_card.dart';
 import 'package:myecl/tricount/ui/pages/detail_page/balance_card.dart';
+import 'package:myecl/tricount/ui/pages/detail_page/bottom_button.dart';
 import 'package:myecl/tricount/ui/pages/detail_page/member_card.dart';
 import 'package:myecl/tricount/ui/pages/detail_page/sharer_property_list.dart';
 import 'package:myecl/tricount/ui/pages/detail_page/transaction_card.dart';
@@ -28,6 +29,8 @@ class SharerGroupDetailPage extends HookConsumerWidget {
         sharerGroup.equilibriumTransactions, sharerGroup.sharers);
     final maxAbsBalance = allUsersBalance.fold(
         0.0, (value, element) => max(value, element.amount.abs()));
+    final currentPage = useState(0);
+
 
     final pages = [
       SharerPropertyList(
@@ -56,50 +59,79 @@ class SharerGroupDetailPage extends HookConsumerWidget {
           onTap: () {}),
     ];
 
+    final buttonStates = [
+      ButtonState(text: 'Modifier le groupe', onTap: () {}),
+      ButtonState(text: 'Ajouter une dépense', onTap: () {}),
+      ButtonState(text: 'Rembourser', onTap: () {}),
+      ButtonState(text: 'Ajouter un participant', onTap: () {}),
+    ];
+
+    pageController.addListener(
+        () => currentPage.value = pageController.page!.round()
+    );
+
     return TricountTemplate(
         child: Refresher(
       onRefresh: () async {},
-      child: SingleChildScrollView(
-        child: Column(
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height - 80,
+        child: Stack(
           children: [
-            const SizedBox(height: 20),
-            Text(
-              sharerGroup.name,
-              style: const TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff09263D)),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  Text(
+                    sharerGroup.name,
+                    style: const TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff09263D)),
+                  ),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    height: max(
+                        MediaQuery.of(context).size.height - 380,
+                        max(
+                                    max(
+                                        sharerGroup
+                                            .equilibriumTransactions.length,
+                                        sharerGroup.sharers.length),
+                                    sharerGroup.transactions.length) *
+                                80 +
+                            80),
+                    child: PageView(
+                        physics: const BouncingScrollPhysics(),
+                        controller: pageController,
+                        children: pages),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 20),
-            SmoothPageIndicator(
-              controller: pageController,
-              count: pages.length,
-              effect: WormEffect(
-                  dotColor: Colors.grey.shade300,
-                  activeDotColor: const Color(0xff09263D),
-                  dotWidth: 12,
-                  dotHeight: 12),
-              onDotClicked: (index) {
-                pageController.animateToPage(index,
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.decelerate);
-              },
-            ),
-            const SizedBox(height: 20),
-            SizedBox(
-              height: max(
-                  MediaQuery.of(context).size.height - 380,
-                  max(
-                              max(sharerGroup.equilibriumTransactions.length,
-                                  sharerGroup.sharers.length),
-                              sharerGroup.transactions.length) *
-                          80 +
-                      80),
-              child: PageView(
-                  physics: const BouncingScrollPhysics(),
+            Positioned(
+              bottom: 0,
+              right: 0,
+              left: 0,
+              child: Column(children: [
+                SmoothPageIndicator(
                   controller: pageController,
-                  children: pages),
-            ),
+                  count: pages.length,
+                  effect: WormEffect(
+                      dotColor: Colors.grey.shade300,
+                      activeDotColor: const Color(0xff09263D),
+                      dotWidth: 12,
+                      dotHeight: 12),
+                  onDotClicked: (index) {
+                    pageController.animateToPage(index,
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.decelerate);
+                  },
+                ),
+                const SizedBox(height: 20),
+                BottomButton(
+                    buttonState: buttonStates[currentPage.value])
+              ]),
+            )
           ],
         ),
       ),
