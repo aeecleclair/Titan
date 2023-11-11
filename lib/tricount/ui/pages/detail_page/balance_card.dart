@@ -27,7 +27,7 @@ class BalanceCard extends StatelessWidget {
                         transaction.payer.nickname ??
                             transaction.payer.firstname,
                         style: TextStyle(
-                            color: Color(0xff09263D),
+                            color: const Color(0xff09263D),
                             fontSize: 20,
                             fontWeight: isMe ? FontWeight.bold : FontWeight.normal),
                       ))
@@ -60,15 +60,15 @@ class BalanceCard extends StatelessWidget {
                                   maxAbsBalance *
                                   constraints.maxWidth,
                               height: 50,
-                              decoration: const BoxDecoration(
+                              decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                       colors: [
-                                        Color.fromARGB(255, 223, 2, 68),
-                                        Color.fromARGB(255, 255, 255, 255)
+                                        const Color.fromARGB(255, 223, 2, 68),
+                                        Colors.grey.shade50
                                       ],
                                       begin: Alignment.centerLeft,
                                       end: Alignment.centerRight),
-                                  borderRadius: BorderRadius.only(
+                                  borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(10),
                                       bottomLeft: Radius.circular(10))),
                               child: textOverflowing
@@ -108,15 +108,15 @@ class BalanceCard extends StatelessWidget {
                                   maxAbsBalance *
                                   constraints.maxWidth,
                               height: 60,
-                              decoration: const BoxDecoration(
+                              decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                       colors: [
-                                        Color.fromARGB(255, 255, 255, 255),
-                                        Color.fromARGB(255, 1, 165, 1)
+                                        Colors.grey.shade50,
+                                        const Color.fromARGB(255, 1, 165, 1)
                                       ],
                                       begin: Alignment.centerLeft,
                                       end: Alignment.centerRight),
-                                  borderRadius: BorderRadius.only(
+                                  borderRadius: const BorderRadius.only(
                                       topRight: Radius.circular(10),
                                       bottomRight: Radius.circular(10))),
                               child: textOverflowing
@@ -152,7 +152,7 @@ class BalanceCard extends StatelessWidget {
                         transaction.payer.nickname ??
                             transaction.payer.firstname,
                         style: TextStyle(
-                            color: Color(0xff09263D),
+                            color: const Color(0xff09263D),
                             fontSize: 20,
                             fontWeight: isMe ? FontWeight.bold : FontWeight.normal),
                       )),
