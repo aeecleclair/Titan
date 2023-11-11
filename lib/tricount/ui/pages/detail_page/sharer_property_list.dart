@@ -4,11 +4,13 @@ class SharerPropertyList<T> extends StatelessWidget {
   final List<T> propertyList;
   final String title;
   final Widget Function(T) builder;
+  final Widget? firstChild;
   const SharerPropertyList(
       {super.key,
       required this.propertyList,
       required this.builder,
-      required this.title});
+      required this.title,
+      this.firstChild});
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,11 @@ class SharerPropertyList<T> extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10),
+        if (firstChild != null)
+          Container(
+            margin: const EdgeInsets.only(bottom: 10),
+            child: firstChild!,
+          ),
         ...propertyList.map((e) => builder(e))
       ]),
     );
