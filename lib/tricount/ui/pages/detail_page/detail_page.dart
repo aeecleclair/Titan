@@ -3,7 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:myecl/tricount/providers/sharer_group_list_provider.dart';
 import 'package:myecl/tricount/providers/sharer_group_provider.dart';
 import 'package:myecl/tricount/tools/functions.dart';
 import 'package:myecl/tricount/ui/pages/components/equilibrium_card.dart';
@@ -22,6 +24,7 @@ class SharerGroupDetailPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sharerGroup = ref.watch(sharerGroupProvider);
+    final sharerGroupListNotifier = ref.watch(sharerGroupListProvider.notifier);
     final pageController = usePageController();
     final me = ref.watch(userProvider);
 
@@ -53,6 +56,12 @@ class SharerGroupDetailPage extends HookConsumerWidget {
           title: 'Participants',
           builder: (e) => MemberCard(
               member: e,
+              onDelete: () async {
+                tokenExpireWrapper(ref, () async {
+                  sharerGroupListNotifier.deleteSharerFromSharerGroup(
+                      sharerGroup, e.id);
+                });
+              },
               canBeRemoved: allUsersBalance
                       .where((element) => element.payer.id == e.id)
                       .first

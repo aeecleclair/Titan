@@ -7,7 +7,8 @@ import 'package:myecl/user/class/list_users.dart';
 class MemberCard extends StatelessWidget {
   final SimpleUser member;
   final bool canBeRemoved;
-  const MemberCard({super.key, required this.member, required this.canBeRemoved});
+  final VoidCallback onDelete;
+  const MemberCard({super.key, required this.member, required this.canBeRemoved, required this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +36,13 @@ class MemberCard extends StatelessWidget {
                 fontWeight: FontWeight.bold),
           ),
           const Spacer(),
-          HeroIcon(
-            HeroIcons.trash,
-            color: canBeRemoved ? Colors.red.shade800 : Colors.red.shade100,
-            size: 30,
+          GestureDetector(
+            onTap: canBeRemoved ? onDelete : null,
+            child: HeroIcon(
+              HeroIcons.trash,
+              color: canBeRemoved ? Colors.red.shade800 : Colors.red.shade100,
+              size: 30,
+            ),
           )
         ],
       ),
