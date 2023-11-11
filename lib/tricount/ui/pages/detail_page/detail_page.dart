@@ -31,7 +31,6 @@ class SharerGroupDetailPage extends HookConsumerWidget {
         0.0, (value, element) => max(value, element.amount.abs()));
     final currentPage = useState(0);
 
-
     final pages = [
       SharerPropertyList(
           propertyList: allUsersBalance,
@@ -52,7 +51,13 @@ class SharerGroupDetailPage extends HookConsumerWidget {
       SharerPropertyList(
           propertyList: sharerGroup.sharers,
           title: 'Participants',
-          builder: (e) => MemberCard(member: e)),
+          builder: (e) => MemberCard(
+              member: e,
+              canBeRemoved: allUsersBalance
+                      .where((element) => element.payer.id == e.id)
+                      .first
+                      .amount ==
+                  0)),
     ];
 
     final buttonStates = [
@@ -62,9 +67,8 @@ class SharerGroupDetailPage extends HookConsumerWidget {
       ButtonState(text: 'Ajouter un participant', onTap: () {}),
     ];
 
-    pageController.addListener(
-        () => currentPage.value = pageController.page!.round()
-    );
+    pageController
+        .addListener(() => currentPage.value = pageController.page!.round());
 
     return TricountTemplate(
         child: Refresher(
@@ -124,8 +128,7 @@ class SharerGroupDetailPage extends HookConsumerWidget {
                   },
                 ),
                 const SizedBox(height: 20),
-                BottomButton(
-                    buttonState: buttonStates[currentPage.value])
+                BottomButton(buttonState: buttonStates[currentPage.value])
               ]),
             )
           ],

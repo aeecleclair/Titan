@@ -6,7 +6,8 @@ import 'package:myecl/user/class/list_users.dart';
 
 class MemberCard extends StatelessWidget {
   final SimpleUser member;
-  const MemberCard({super.key, required this.member});
+  final bool canBeRemoved;
+  const MemberCard({super.key, required this.member, required this.canBeRemoved});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class MemberCard extends StatelessWidget {
           const Spacer(),
           HeroIcon(
             HeroIcons.trash,
-            color: Colors.red.shade800,
+            color: canBeRemoved ? Colors.red.shade800 : Colors.red.shade100,
             size: 30,
           )
         ],
