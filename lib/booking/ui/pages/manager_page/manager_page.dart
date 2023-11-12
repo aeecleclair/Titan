@@ -55,7 +55,7 @@ class ManagerPage extends HookConsumerWidget {
             const SizedBox(height: 20),
             SizedBox(
                 height: MediaQuery.of(context).size.height - 380,
-                child: const Calendar()),
+                child: const Calendar(isManagerPage: true)),
             const SizedBox(height: 30),
             if (pendingBookings.isEmpty &&
                 confirmedBookings.isEmpty &&

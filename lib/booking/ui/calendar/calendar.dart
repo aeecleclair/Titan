@@ -3,7 +3,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
-import 'package:myecl/booking/providers/user_manager_list_provider.dart';
 import 'package:myecl/booking/ui/calendar/appointment_data_source.dart';
 import 'package:myecl/booking/ui/calendar/calendar_dialog.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
@@ -11,13 +10,13 @@ import 'package:myecl/tools/constants.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class Calendar extends HookConsumerWidget {
-  const Calendar({Key? key}) : super(key: key);
+  final bool isManagerPage;
+  const Calendar({Key? key, required this.isManagerPage}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bookings = ref.watch(confirmedBookingListProvider);
     final isWebFormat = ref.watch(isWebFormatProvider);
-    final userManagers = ref.watch(userManagerListProvider);
     final CalendarController calendarController = CalendarController();
 
     void calendarTapped(CalendarTapDetails details, BuildContext context) {
@@ -26,23 +25,9 @@ class Calendar extends HookConsumerWidget {
         final Booking booking = details.appointments![0];
         showDialog(
           context: context,
-          builder: (context) => userManagers.when(
-            data: (managers) => managers
-                    .map((manager) => manager.id)
-                    .contains(booking.room.managerId)
-                ? CalendarDialog(booking: booking, isManager: true)
-                : CalendarDialog(booking: booking, isManager: false),
-            loading: () => const Center(
-              child: CircularProgressIndicator(
-                color: ColorConstants.background2,
-              ),
-            ),
-            error: (Object error, StackTrace stackTrace) {
-              return Center(
-                child: Text(error.toString()),
-              );
-            },
-          ),
+          builder: (context) => isManagerPage
+              ? CalendarDialog(booking: booking, isManager: true)
+              : CalendarDialog(booking: booking, isManager: false),
         );
       }
     }
