@@ -6,7 +6,7 @@ class BookingRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'booking/bookings';
 
-  Future<List<Booking>> getBookingList() async {
+  Future<List<Booking>> getUserManageBookingList() async {
     return List<Booking>.from((await getList(suffix: "/users/me/manage"))
         .map((x) => Booking.fromJson(x)));
   }
@@ -33,7 +33,7 @@ class BookingRepository extends Repository {
         (await getList(suffix: "/confirmed")).map((x) => Booking.fromJson(x)));
   }
 
-  Future<List<Booking>> getConfirmedBookingForManagerList() async {
+  Future<List<Booking>> getUserManageConfirmedBookingList() async {
     return List<Booking>.from(
         (await getList(suffix: "/confirmed/users/me/manage"))
             .map((x) => Booking.fromJson(x)));

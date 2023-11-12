@@ -44,7 +44,9 @@ class ManagerPage extends HookConsumerWidget {
     return BookingTemplate(
       child: Refresher(
         onRefresh: () async {
-          await ref.watch(bookingListProvider.notifier).loadBookings();
+          await ref
+              .watch(bookingListProvider.notifier)
+              .loadUserManageBookings();
           await ref.watch(roomListProvider.notifier).loadRooms();
           await ref
               .watch(confirmedBookingListProvider(true).notifier)

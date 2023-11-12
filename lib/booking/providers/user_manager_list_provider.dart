@@ -13,7 +13,7 @@ class UserManagerListNotifier extends ListNotifier<Manager> {
   }
 
   Future<AsyncValue<List<Manager>>> loadManagers() async {
-    return await loadList(_repository.getMyManager);
+    return await loadList(_repository.getUserManagerList);
   }
 }
 

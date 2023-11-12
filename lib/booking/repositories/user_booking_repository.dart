@@ -4,10 +4,10 @@ import 'package:myecl/tools/repository/repository.dart';
 class UserBookingRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = 'booking/bookings/users/';
+  final ext = 'booking/bookings/users/me';
 
-  Future<List<Booking>> getMyBookingList(String userId) async {
+  Future<List<Booking>> getUserBookingList() async {
     return List<Booking>.from(
-        (await getList(suffix: userId)).map((x) => Booking.fromJson(x)));
+        (await getList()).map((x) => Booking.fromJson(x)));
   }
 }

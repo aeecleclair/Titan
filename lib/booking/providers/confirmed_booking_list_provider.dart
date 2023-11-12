@@ -19,7 +19,7 @@ class ConfirmedBookingListProvider extends ListNotifier<Booking> {
 
   Future<AsyncValue<List<Booking>>> loadConfirmedBookingForManager() async {
     return await loadList(
-        () async => _bookingRepository.getConfirmedBookingForManagerList());
+        () async => _bookingRepository.getUserManageConfirmedBookingList());
   }
 
   Future<bool> addBooking(Booking booking) async {
