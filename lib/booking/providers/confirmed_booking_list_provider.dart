@@ -17,6 +17,11 @@ class ConfirmedBookingListProvider extends ListNotifier<Booking> {
         () async => _bookingRepository.getConfirmedBookingList());
   }
 
+  Future<AsyncValue<List<Booking>>> loadConfirmedBookingForManager() async {
+    return await loadList(
+        () async => _bookingRepository.getConfirmedBookingForManagerList());
+  }
+
   Future<bool> addBooking(Booking booking) async {
     return await add((b) async => b, booking);
   }
@@ -39,12 +44,19 @@ class ConfirmedBookingListProvider extends ListNotifier<Booking> {
   }
 }
 
-final confirmedBookingListProvider = StateNotifierProvider<
-    ConfirmedBookingListProvider, AsyncValue<List<Booking>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  final provider = ConfirmedBookingListProvider(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    await provider.loadConfirmedBooking();
-  });
-  return provider;
-});
+final confirmedBookingListProvider = StateNotifierProvider.family<
+    ConfirmedBookingListProvider, AsyncValue<List<Booking>>, bool>(
+  (ref, isManagerPage) {
+    final token = ref.watch(tokenProvider);
+    final provider = ConfirmedBookingListProvider(token: token);
+    tokenExpireWrapperAuth(
+      ref,
+      () async {
+        isManagerPage
+            ? await provider.loadConfirmedBookingForManager()
+            : await provider.loadConfirmedBooking();
+      },
+    );
+    return provider;
+  },
+);

@@ -31,7 +31,7 @@ class BookingMainPage extends HookConsumerWidget {
     final isAdmin = ref.watch(isAdminProvider);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
     final confirmedbookingsNotifier =
-        ref.watch(confirmedBookingListProvider.notifier);
+        ref.watch(confirmedBookingListProvider(false).notifier);
     final bookings = ref.watch(userBookingListProvider);
     final allBookingsNotifier = ref.watch(bookingListProvider.notifier);
     final bookingNotifier = ref.watch(bookingProvider.notifier);

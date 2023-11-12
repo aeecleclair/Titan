@@ -9,7 +9,7 @@ final Map<String, Tuple2<String, List<StateNotifierProvider>>>
     bookingProviders = {
   "userBooking": Tuple2(
     BookingRouter.root,
-    [userBookingListProvider, confirmedBookingListProvider],
+    [userBookingListProvider, confirmedBookingListProvider(false)],
   ),
   "bookings": Tuple2(
     BookingRouter.root + BookingRouter.admin,

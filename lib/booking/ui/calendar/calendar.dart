@@ -15,7 +15,7 @@ class Calendar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bookings = ref.watch(confirmedBookingListProvider);
+    final bookings = ref.watch(confirmedBookingListProvider(isManagerPage));
     final isWebFormat = ref.watch(isWebFormatProvider);
     final CalendarController calendarController = CalendarController();
 

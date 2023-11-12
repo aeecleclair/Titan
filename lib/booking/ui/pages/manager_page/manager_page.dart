@@ -47,7 +47,7 @@ class ManagerPage extends HookConsumerWidget {
           await ref.watch(bookingListProvider.notifier).loadBookings();
           await ref.watch(roomListProvider.notifier).loadRooms();
           await ref
-              .watch(confirmedBookingListProvider.notifier)
+              .watch(confirmedBookingListProvider(true).notifier)
               .loadConfirmedBooking();
         },
         child: Column(

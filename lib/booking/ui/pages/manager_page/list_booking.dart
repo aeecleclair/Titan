@@ -30,7 +30,7 @@ class ListBooking extends HookConsumerWidget {
     final bookingNotifier = ref.watch(bookingProvider.notifier);
     final bookingListNotifier = ref.watch(bookingListProvider.notifier);
     final confirmedBookingListNotifier =
-        ref.watch(confirmedBookingListProvider.notifier);
+        ref.watch(confirmedBookingListProvider(true).notifier);
 
     final toggle = useState(!canToggle);
     if (bookings.isNotEmpty) {

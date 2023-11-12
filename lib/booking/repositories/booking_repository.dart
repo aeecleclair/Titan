@@ -32,4 +32,10 @@ class BookingRepository extends Repository {
     return List<Booking>.from(
         (await getList(suffix: "/confirmed")).map((x) => Booking.fromJson(x)));
   }
+
+  Future<List<Booking>> getConfirmedBookingForManagerList() async {
+    return List<Booking>.from(
+        (await getList(suffix: "/confirmed/users/me/manage"))
+            .map((x) => Booking.fromJson(x)));
+  }
 }

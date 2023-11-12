@@ -36,7 +36,7 @@ class AddEditBookingPage extends HookConsumerWidget {
     final rooms = ref.watch(roomListProvider);
     final usersBookingsNotifier = ref.watch(userBookingListProvider.notifier);
     final confirmedBookingListNotifier =
-        ref.watch(confirmedBookingListProvider.notifier);
+        ref.watch(confirmedBookingListProvider(isAdmin).notifier);
     final bookingsNotifier = ref.watch(bookingListProvider.notifier);
     final bookings = ref.watch(bookingListProvider);
     final booking = ref.watch(bookingProvider);
@@ -532,8 +532,8 @@ class AddEditBookingPage extends HookConsumerWidget {
                             end.text = "${end.text} 23:59";
                           }
                           if (end.text.contains("/") &&
-                                      isDateBefore(processDateBack(end.text),
-                                          processDateBack(start.text))) {
+                              isDateBefore(processDateBack(end.text),
+                                  processDateBack(start.text))) {
                             displayToast(context, TypeMsg.error,
                                 BookingTextConstants.invalidDates);
                           } else if (room.value.id.isEmpty) {
