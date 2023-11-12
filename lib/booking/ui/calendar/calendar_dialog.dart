@@ -10,7 +10,8 @@ class CalendarDialog extends StatelessWidget {
   final Booking booking;
   final bool isManager;
 
-  const CalendarDialog({required this.booking, required this.isManager});
+  const CalendarDialog(
+      {super.key, required this.booking, required this.isManager});
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +20,9 @@ class CalendarDialog extends StatelessWidget {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          !isManager
-              ? Container(
+          isManager
+              ? AdminDetails(booking: booking)
+              : Container(
                   height: 220 + (booking.note.length / 30 - 5) * 15,
                   padding: const EdgeInsets.all(20),
                   child: Column(
@@ -55,8 +57,7 @@ class CalendarDialog extends StatelessWidget {
                       ),
                     ],
                   ),
-                )
-              : AdminDetails(booking: booking),
+                ),
           Positioned(
             top: -10,
             right: -10,
