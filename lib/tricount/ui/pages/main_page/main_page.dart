@@ -26,7 +26,7 @@ class TricountMainPage extends HookConsumerWidget {
     final sharerGroupListNotifier = ref.watch(sharerGroupListProvider.notifier);
     final sharerGroupMemberListNotifier =
         ref.watch(sharerGroupMemberListProvider.notifier);
-    final myEquilibriumTransactions = ref.watch(crossGroupStatsProvider);
+    final myBalances = ref.watch(crossGroupStatsProvider);
     final scrollController = useScrollController();
     final scrollValue = useState<double>(0);
     final currentPage = useState(0);
@@ -135,17 +135,20 @@ class TricountMainPage extends HookConsumerWidget {
                                             sharerGroupNotifier
                                                 .setSharerGroup(sharerGroup);
                                             sharerGroupMemberListNotifier
-                                                .set(sharerGroup.sharers);
+                                                .set(sharerGroup.members);
                                             QR.to(TricountRouter.root +
                                                 TricountRouter.detail);
                                           }));
                                     }),
                               ),
                               SharerGroupStats(
-                                equilibriumTransactions: currentPage.value >= 0
+                                balances: currentPage.value >= 0
                                     ? sharerGroupList[currentPage.value]
-                                        .equilibriumTransactions
-                                    : myEquilibriumTransactions,
+                                        .balances
+                                    : myBalances,
+                                members: currentPage.value >= 0
+                                    ? sharerGroupList[currentPage.value].members
+                                    : [],
                               ),
                             ],
                           )),

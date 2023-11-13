@@ -2,13 +2,16 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/tricount/class/transaction.dart';
 import 'package:myecl/tricount/tools/functions.dart';
+import 'package:myecl/user/class/list_users.dart';
 
 class TransactionCard extends StatelessWidget {
   final Transaction transaction;
-  const TransactionCard({super.key, required this.transaction});
+  final List<SimpleUser> members;
+  const TransactionCard({super.key, required this.transaction, required this.members});
 
   @override
   Widget build(BuildContext context) {
+    final payer = getMember(members, transaction.payer);
     return SizedBox(
       height: 80,
       child: Row(
@@ -18,7 +21,7 @@ class TransactionCard extends StatelessWidget {
             radius: 30,
             backgroundColor: const Color(0xff09263D),
             child: Text(
-              getAvatarName(transaction.payer),
+              getAvatarName(payer),
               style: const TextStyle(
                   color: Colors.white,
                   fontSize: 20,

@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/tricount/class/equilibrium_transaction.dart';
+import 'package:myecl/tricount/class/balance.dart';
+import 'package:myecl/tricount/class/sharer_group.dart';
 import 'package:myecl/tricount/tools/functions.dart';
+import 'package:myecl/user/class/list_users.dart';
 
 class EquilibriumCard extends StatelessWidget {
-  final EquilibriumTransaction equilibriumTransaction;
+  final Balance balance;
+  final List<SimpleUser> members;
   final bool isLightTheme;
   const EquilibriumCard(
       {super.key,
-      required this.equilibriumTransaction,
+      required this.balance,
+      required this.members,
       this.isLightTheme = false});
 
   @override
   Widget build(BuildContext context) {
+    final from = getMember(members, balance.userId);
+    final to = getMember(members, balance.reimbursementId);
     return SizedBox(
       height: 80,
       child: Row(
@@ -23,7 +29,7 @@ class EquilibriumCard extends StatelessWidget {
             backgroundColor:
                 isLightTheme ? const Color(0xff09263D) : Colors.white,
             child: Text(
-              getAvatarName(equilibriumTransaction.from),
+              getAvatarName(from),
               style: TextStyle(
                   color: isLightTheme ? Colors.white : const Color(0xff09263D),
                   fontSize: 20,
@@ -41,7 +47,7 @@ class EquilibriumCard extends StatelessWidget {
             backgroundColor:
                 isLightTheme ? const Color(0xff1C4668) : Colors.white,
             child: Text(
-              getAvatarName(equilibriumTransaction.to),
+              getAvatarName(to),
               style: TextStyle(
                   color: isLightTheme ? Colors.white : const Color(0xff1C4668),
                   fontSize: 20,
@@ -50,7 +56,7 @@ class EquilibriumCard extends StatelessWidget {
           ),
           const Spacer(),
           Text(
-            "${equilibriumTransaction.amount.toStringAsFixed(2)}€",
+            "${balance.amount.toStringAsFixed(2)}€",
             style: TextStyle(
                 color: isLightTheme ? const Color(0xff09263D) : Colors.white,
                 fontSize: 20,
