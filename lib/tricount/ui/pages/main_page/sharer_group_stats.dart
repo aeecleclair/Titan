@@ -3,18 +3,22 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tricount/class/equilibrium_transaction.dart';
+import 'package:myecl/tricount/class/balance.dart';
+import 'package:myecl/tricount/class/sharer_group.dart';
 import 'package:myecl/tricount/ui/pages/components/equilibrium_card.dart';
+import 'package:myecl/user/class/list_users.dart';
 
 class SharerGroupStats extends StatelessWidget {
-  final List<EquilibriumTransaction> equilibriumTransactions;
-  const SharerGroupStats({super.key, required this.equilibriumTransactions});
+  final List<Balance> balances;
+  final List<SimpleUser> members;
+  const SharerGroupStats(
+      {super.key, required this.balances, required this.members});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: max(MediaQuery.of(context).size.height - 380,
-          equilibriumTransactions.length * 85 + 80),
+      height: max(
+          MediaQuery.of(context).size.height - 380, balances.length * 85 + 80),
       width: double.infinity,
       decoration: BoxDecoration(
           gradient: const LinearGradient(
@@ -41,11 +45,11 @@ class SharerGroupStats extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             AnimationLimiter(
-                key: ValueKey(equilibriumTransactions),
+                key: ValueKey(balances),
                 child: ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: equilibriumTransactions.length,
+                    itemCount: balances.length,
                     itemBuilder: (context, index) {
                       return AnimationConfiguration.staggeredList(
                           position: index,
@@ -54,8 +58,9 @@ class SharerGroupStats extends StatelessWidget {
                               horizontalOffset: 50.0,
                               child: FadeInAnimation(
                                   child: EquilibriumCard(
-                                      equilibriumTransaction:
-                                          equilibriumTransactions[index]))));
+                                balance: balances[index],
+                                members: members,
+                              ))));
                     }))
           ],
         ),

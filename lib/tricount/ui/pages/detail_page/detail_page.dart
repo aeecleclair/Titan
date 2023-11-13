@@ -31,13 +31,13 @@ class SharerGroupDetailPage extends HookConsumerWidget {
     final me = ref.watch(userProvider);
 
     final allUsersBalance = getAllUserBalanceTransactions(
-        sharerGroup.equilibriumTransactions, sharerGroup.sharers);
+        sharerGroup.balances, sharerGroup.members);
     final maxAbsBalance = allUsersBalance.fold(
         0.0, (value, element) => max(value, element.amount.abs()));
     final currentPage = useState(0);
 
-    final myBalance = allUsersBalance
-        .firstWhereOrNull((element) => element.payer.id == me.id);
+    final myBalance =
+        allUsersBalance.firstWhereOrNull((element) => element.payer == me.id);
 
     final pages = [
       SharerPropertyList(
@@ -45,19 +45,23 @@ class SharerGroupDetailPage extends HookConsumerWidget {
           title: 'Résumé',
           builder: (e) => BalanceCard(
               transaction: e,
+              members:  sharerGroup.members,
               maxAbsBalance: maxAbsBalance,
-              isMe: e.payer.id == me.id)),
+              isMe: e.payer == me.id)),
       SharerPropertyList(
           propertyList: sharerGroup.transactions,
           title: 'Dépenses',
-          builder: (e) => TransactionCard(transaction: e)),
+          builder: (e) => TransactionCard(
+                transaction: e,
+                members: sharerGroup.members,
+              )),
       SharerPropertyList(
-          propertyList: sharerGroup.equilibriumTransactions,
+          propertyList: sharerGroup.balances,
           title: 'Remboursements',
-          builder: (e) =>
-              EquilibriumCard(equilibriumTransaction: e, isLightTheme: true)),
+          builder: (e) => EquilibriumCard(
+              balance: e, members: sharerGroup.members, isLightTheme: true)),
       SharerPropertyList(
-          propertyList: sharerGroup.sharers,
+          propertyList: sharerGroup.members,
           title: 'Participants',
           builder: (e) => MemberCard(member: e))
     ];
@@ -102,10 +106,8 @@ class SharerGroupDetailPage extends HookConsumerWidget {
                     height: max(
                         MediaQuery.of(context).size.height - 380,
                         max(
-                                    max(
-                                        sharerGroup
-                                            .equilibriumTransactions.length,
-                                        sharerGroup.sharers.length),
+                                    max(sharerGroup.balances.length,
+                                        sharerGroup.members.length),
                                     sharerGroup.transactions.length) *
                                 80 +
                             80),

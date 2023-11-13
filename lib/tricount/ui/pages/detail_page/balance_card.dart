@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/tricount/class/sharer_group.dart';
 import 'package:myecl/tricount/class/transaction.dart';
 import 'package:myecl/tricount/tools/functions.dart';
+import 'package:myecl/user/class/list_users.dart';
 
 class BalanceCard extends StatelessWidget {
   final Transaction transaction;
+  final List<SimpleUser> members;
   final double maxAbsBalance;
-  final bool isMe; 
+  final bool isMe;
   const BalanceCard(
-      {super.key, required this.transaction, required this.maxAbsBalance, required this.isMe});
+      {super.key,
+      required this.transaction,
+      required this.members,
+      required this.maxAbsBalance,
+      required this.isMe});
 
   @override
   Widget build(BuildContext context) {
     final isPositive = transaction.amount >= 0;
+    final payer = getMember(members, transaction.payer);
     return SizedBox(
         height: 80,
         child: Row(
@@ -24,17 +32,16 @@ class BalanceCard extends StatelessWidget {
                       margin: const EdgeInsets.only(right: 20),
                       alignment: Alignment.centerRight,
                       child: Text(
-                        transaction.payer.nickname ??
-                            transaction.payer.firstname,
+                        payer.nickname ?? payer.firstname,
                         style: TextStyle(
                             color: const Color(0xff09263D),
                             fontSize: 20,
-                            fontWeight: isMe ? FontWeight.bold : FontWeight.normal),
+                            fontWeight:
+                                isMe ? FontWeight.bold : FontWeight.normal),
                       ))
                   : LayoutBuilder(builder: (context, constraints) {
                       final textOverflowing = hasTextOverflow(
-                          transaction.payer.nickname ??
-                              transaction.payer.firstname,
+                          payer.nickname ?? payer.firstname,
                           const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                           maxWidth: transaction.amount.abs() /
@@ -51,8 +58,7 @@ class BalanceCard extends StatelessWidget {
                               child: Text(
                                 '${transaction.amount}€',
                                 style: const TextStyle(
-                                    color: Color(0xff09263D),
-                                    fontSize: 18),
+                                    color: Color(0xff09263D), fontSize: 18),
                               ),
                             ),
                           Container(
@@ -79,8 +85,7 @@ class BalanceCard extends StatelessWidget {
                                       child: Text(
                                         '${transaction.amount}€',
                                         style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18),
+                                            color: Colors.white, fontSize: 18),
                                       ),
                                     )),
                         ],
@@ -93,8 +98,7 @@ class BalanceCard extends StatelessWidget {
               child: isPositive
                   ? LayoutBuilder(builder: (context, constraints) {
                       final textOverflowing = hasTextOverflow(
-                          transaction.payer.nickname ??
-                              transaction.payer.firstname,
+                          payer.nickname ?? payer.firstname,
                           const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                           maxWidth: transaction.amount.abs() /
@@ -122,15 +126,14 @@ class BalanceCard extends StatelessWidget {
                               child: textOverflowing
                                   ? null
                                   : Container(
-                                margin: const EdgeInsets.only(right: 10),
-                                alignment: Alignment.centerRight,
-                                child: Text(
-                                  '${transaction.amount}€',
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18),
-                                ),
-                              )),
+                                      margin: const EdgeInsets.only(right: 10),
+                                      alignment: Alignment.centerRight,
+                                      child: Text(
+                                        '${transaction.amount}€',
+                                        style: const TextStyle(
+                                            color: Colors.white, fontSize: 18),
+                                      ),
+                                    )),
                           if (textOverflowing)
                             Container(
                               margin: const EdgeInsets.only(left: 10),
@@ -138,8 +141,7 @@ class BalanceCard extends StatelessWidget {
                               child: Text(
                                 '${transaction.amount}€',
                                 style: const TextStyle(
-                                    color: Color(0xff09263D),
-                                    fontSize: 18),
+                                    color: Color(0xff09263D), fontSize: 18),
                               ),
                             ),
                         ],
@@ -149,12 +151,12 @@ class BalanceCard extends StatelessWidget {
                       margin: const EdgeInsets.only(left: 20),
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        transaction.payer.nickname ??
-                            transaction.payer.firstname,
+                        payer.nickname ?? payer.firstname,
                         style: TextStyle(
                             color: const Color(0xff09263D),
                             fontSize: 20,
-                            fontWeight: isMe ? FontWeight.bold : FontWeight.normal),
+                            fontWeight:
+                                isMe ? FontWeight.bold : FontWeight.normal),
                       )),
             ))
           ],

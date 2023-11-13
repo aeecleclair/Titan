@@ -96,11 +96,11 @@ class AddEditSharerGroupPage extends HookConsumerWidget {
                               }
                               await tokenExpireWrapper(ref, () async {
                                 SharerGroup newSharerGroup = SharerGroup(
-                                    equilibriumTransactions: [],
+                                    balances: [],
                                     id: '',
                                     name: name.text,
-                                    sharers: sharerGroup.sharers,
-                                    totalAmount: 0.0,
+                                    members: sharerGroup.members,
+                                    total: 0.0,
                                     transactions: []);
                                 final value = isEdit
                                     ? await sharerGroupListNotifier
