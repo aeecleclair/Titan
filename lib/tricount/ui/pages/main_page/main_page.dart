@@ -34,6 +34,7 @@ class TricountMainPage extends HookConsumerWidget {
     scrollController.addListener(() {
       scrollValue.value = scrollController.offset;
     });
+
     return TricountTemplate(
       // We don't use Refresher because it doesn't work with the stacked PageView and SingleChildScrollView
       child: RefreshIndicator(
@@ -43,6 +44,16 @@ class TricountMainPage extends HookConsumerWidget {
           child: AsyncChild(
             value: sharerGroupList,
             builder: (context, sharerGroupList) {
+              final ids = <String>{};
+              final allMembersList = sharerGroupList
+                  .expand((sharerGroup) => sharerGroup.members)
+                  .where((member) {
+                if (!ids.contains(member.id)) {
+                  ids.add(member.id);
+                  return true;
+                }
+                return false;
+              }).toList();
               final pageController = usePageController(
                   viewportFraction: viewPortFraction,
                   initialPage: sharerGroupList.length - 1);
@@ -148,7 +159,7 @@ class TricountMainPage extends HookConsumerWidget {
                                     : myBalances,
                                 members: currentPage.value >= 0
                                     ? sharerGroupList[currentPage.value].members
-                                    : [],
+                                    : allMembersList,
                               ),
                             ],
                           )),
