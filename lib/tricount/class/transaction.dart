@@ -1,5 +1,4 @@
 import 'package:myecl/tricount/class/transaction_type.dart';
-import 'package:myecl/user/class/list_users.dart';
 
 class Transaction {
   late final double amount;
@@ -7,8 +6,8 @@ class Transaction {
   late final String title;
   late final String? description;
   late final DateTime creationDate;
-  late final SimpleUser payer;
-  late final List<SimpleUser> beneficiaries;
+  late final String payer;
+  late final List<String> beneficiaries;
 
   Transaction({
     required this.amount,
@@ -26,11 +25,11 @@ class Transaction {
     title = json['title'];
     description = json['description'];
     creationDate = DateTime.parse(json['creationDate']);
-    payer = SimpleUser.fromJson(json['payer']);
+    payer = json['payer'];
+    beneficiaries = <String>[];
     if (json['beneficiaries'] != null) {
-      beneficiaries = <SimpleUser>[];
       json['beneficiaries'].forEach((v) {
-        beneficiaries.add(SimpleUser.fromJson(v));
+        beneficiaries.add(v);
       });
     }
   }
@@ -42,8 +41,8 @@ class Transaction {
     data['title'] = title;
     data['description'] = description;
     data['creationDate'] = creationDate.toIso8601String();
-    data['payer'] = payer.toJson();
-    data['beneficiaries'] = beneficiaries.map((v) => v.toJson()).toList();
+    data['payer'] = payer;
+    data['beneficiaries'] = beneficiaries;
     return data;
   }
 
@@ -58,8 +57,8 @@ class Transaction {
     String? title,
     String? description,
     DateTime? creationDate,
-    SimpleUser? payer,
-    List<SimpleUser>? beneficiaries,
+    String? payer,
+    List<String>? beneficiaries,
   }) {
     return Transaction(
       amount: amount ?? this.amount,
@@ -78,7 +77,7 @@ class Transaction {
     title = '';
     description = '';
     creationDate = DateTime.now();
-    payer = SimpleUser.empty();
-    beneficiaries = <SimpleUser>[];
+    payer = '';
+    beneficiaries = <String>[];
   }
 }
