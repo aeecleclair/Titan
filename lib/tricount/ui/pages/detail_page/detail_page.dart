@@ -1,9 +1,9 @@
 import 'dart:math';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tricount/providers/sharer_group_list_provider.dart';
 import 'package:myecl/tricount/providers/sharer_group_provider.dart';
@@ -36,6 +36,9 @@ class SharerGroupDetailPage extends HookConsumerWidget {
         0.0, (value, element) => max(value, element.amount.abs()));
     final currentPage = useState(0);
 
+    final myBalance = allUsersBalance
+        .firstWhereOrNull((element) => element.payer.id == me.id);
+
     final pages = [
       SharerPropertyList(
           propertyList: allUsersBalance,
@@ -56,28 +59,21 @@ class SharerGroupDetailPage extends HookConsumerWidget {
       SharerPropertyList(
           propertyList: sharerGroup.sharers,
           title: 'Participants',
-          builder: (e) => MemberCard(
-              member: e,
-              onDelete: () async {
-                tokenExpireWrapper(ref, () async {
-                  sharerGroupListNotifier.deleteSharerFromSharerGroup(
-                      sharerGroup, e.id);
-                });
-              },
-              canBeRemoved: allUsersBalance
-                      .where((element) => element.payer.id == e.id)
-                      .first
-                      .amount ==
-                  0)),
+          builder: (e) => MemberCard(member: e))
     ];
 
     final buttonStates = [
-      ButtonState(text: 'Modifier le groupe', onTap: () {
-        QR.to(TricountRouter.root + TricountRouter.addEdit);
-      }),
+      ButtonState(
+          text: 'Modifier le groupe',
+          onTap: () {
+            QR.to(TricountRouter.root + TricountRouter.addEdit);
+          }),
       ButtonState(text: 'Ajouter une dépense', onTap: () {}),
       ButtonState(text: 'Rembourser', onTap: () {}),
-      ButtonState(text: 'Ajouter un participant', onTap: () {}),
+      ButtonState(
+          text: 'Quitter le groupe',
+          onTap: () {},
+          disabled: myBalance == null || myBalance.amount != 0),
     ];
 
     pageController

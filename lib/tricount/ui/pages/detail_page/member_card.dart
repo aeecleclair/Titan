@@ -1,14 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:myecl/tricount/tools/functions.dart';
 import 'package:myecl/user/class/list_users.dart';
 
 class MemberCard extends StatelessWidget {
   final SimpleUser member;
-  final bool canBeRemoved;
-  final VoidCallback onDelete;
-  const MemberCard({super.key, required this.member, required this.canBeRemoved, required this.onDelete});
+  const MemberCard({super.key, required this.member});
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +33,6 @@ class MemberCard extends StatelessWidget {
                 fontWeight: FontWeight.bold),
           ),
           const Spacer(),
-          GestureDetector(
-            onTap: canBeRemoved ? onDelete : null,
-            child: HeroIcon(
-              HeroIcons.trash,
-              color: canBeRemoved ? Colors.red.shade800 : Colors.red.shade100,
-              size: 30,
-            ),
-          )
         ],
       ),
     );
