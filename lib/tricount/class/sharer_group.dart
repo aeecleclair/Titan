@@ -1,37 +1,31 @@
-import 'package:myecl/tricount/class/equilibrium_transaction.dart';
+import 'package:myecl/tricount/class/balance.dart';
 import 'package:myecl/tricount/class/transaction.dart';
 import 'package:myecl/user/class/list_users.dart';
 
 class SharerGroup {
   late final String id;
   late final String name;
-  late final List<SimpleUser> sharers;
-  late final List<EquilibriumTransaction> equilibriumTransactions;
+  late final List<SimpleUser> members;
   late final List<Transaction> transactions;
-  late final double totalAmount;
+  late final double total;
+  late final List<Balance> balances;
 
   SharerGroup({
     required this.id,
     required this.name,
-    required this.sharers,
-    required this.equilibriumTransactions,
+    required this.members,
     required this.transactions,
-    required this.totalAmount,
+    required this.total,
+    required this.balances,
   });
 
   SharerGroup.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    if (json['sharers'] != null) {
-      sharers = <SimpleUser>[];
-      json['sharers'].forEach((v) {
-        sharers.add(SimpleUser.fromJson(v));
-      });
-    }
-    if (json['equilibriumTransactions'] != null) {
-      equilibriumTransactions = <EquilibriumTransaction>[];
-      json['equilibriumTransactions'].forEach((v) {
-        equilibriumTransactions.add(EquilibriumTransaction.fromJson(v));
+    if (json['members'] != null) {
+      members = <SimpleUser>[];
+      json['members'].forEach((v) {
+        members.add(SimpleUser.fromJson(v));
       });
     }
     if (json['transactions'] != null) {
@@ -40,51 +34,55 @@ class SharerGroup {
         transactions.add(Transaction.fromJson(v));
       });
     }
-    totalAmount = json['totalAmount'];
+    total = json['total'];
+    if (json['balances'] != null) {
+      balances = <Balance>[];
+      json['balances'].forEach((v) {
+        balances.add(Balance.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['name'] = name;
-    data['sharers'] = sharers.map((v) => v.toJson()).toList();
-    data['equilibriumTransactions'] =
-        equilibriumTransactions.map((v) => v.toJson()).toList();
+    data['members'] = members.map((v) => v.toJson()).toList();
     data['transactions'] = transactions.map((v) => v.toJson()).toList();
-    data['totalAmount'] = totalAmount;
+    data['total'] = total;
+    data['balances'] = balances.map((v) => v.toJson()).toList();
     return data;
   }
 
   @override
   String toString() {
-    return 'SharerGroup{id: $id, name: $name, sharers: $sharers, equilibriumTransactions: $equilibriumTransactions, transactions: $transactions, totalAmount: $totalAmount}';
+    return 'SharerGroup{id: $id, name: $name, members: $members, transactions: $transactions, total: $total, balances: $balances}';
   }
 
   SharerGroup copyWith({
     String? id,
     String? name,
-    List<SimpleUser>? sharers,
-    List<EquilibriumTransaction>? equilibriumTransactions,
+    List<SimpleUser>? members,
     List<Transaction>? transactions,
-    double? totalAmount,
+    double? total,
+    List<Balance>? balances,
   }) {
     return SharerGroup(
       id: id ?? this.id,
       name: name ?? this.name,
-      sharers: sharers ?? this.sharers,
-      equilibriumTransactions:
-          equilibriumTransactions ?? this.equilibriumTransactions,
+      members: members ?? this.members,
       transactions: transactions ?? this.transactions,
-      totalAmount: totalAmount ?? this.totalAmount,
+      total: total ?? this.total,
+      balances: balances ?? this.balances,
     );
   }
 
   SharerGroup.empty() {
     id = '';
     name = '';
-    sharers = <SimpleUser>[];
-    equilibriumTransactions = <EquilibriumTransaction>[];
+    members = <SimpleUser>[];
     transactions = <Transaction>[];
-    totalAmount = 0;
+    total = 0;
+    balances = <Balance>[];
   }
 }
