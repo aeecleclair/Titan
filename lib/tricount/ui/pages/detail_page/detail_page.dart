@@ -30,24 +30,22 @@ class SharerGroupDetailPage extends HookConsumerWidget {
     final pageController = usePageController();
     final me = ref.watch(userProvider);
 
-    final allUsersBalance = getAllUserBalanceTransactions(
-        sharerGroup.balances, sharerGroup.members);
-    final maxAbsBalance = allUsersBalance.fold(
+    final maxAbsBalance = sharerGroup.balances.fold(
         0.0, (value, element) => max(value, element.amount.abs()));
     final currentPage = useState(0);
 
     final myBalance =
-        allUsersBalance.firstWhereOrNull((element) => element.payer == me.id);
+        sharerGroup.balances.firstWhereOrNull((element) => element.userId == me.id);
 
     final pages = [
       SharerPropertyList(
-          propertyList: allUsersBalance,
+          propertyList: sharerGroup.balances,
           title: 'Résumé',
           builder: (e) => BalanceCard(
-              transaction: e,
-              members:  sharerGroup.members,
+              balance: e,
+              members: sharerGroup.members,
               maxAbsBalance: maxAbsBalance,
-              isMe: e.payer == me.id)),
+              isMe: e.userId == me.id)),
       SharerPropertyList(
           propertyList: sharerGroup.transactions,
           title: 'Dépenses',

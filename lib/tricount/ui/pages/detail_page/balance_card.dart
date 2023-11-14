@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/tricount/class/sharer_group.dart';
-import 'package:myecl/tricount/class/transaction.dart';
+import 'package:myecl/tricount/class/balance.dart';
 import 'package:myecl/tricount/tools/functions.dart';
 import 'package:myecl/user/class/list_users.dart';
 
 class BalanceCard extends StatelessWidget {
-  final Transaction transaction;
+  final Balance balance;
   final List<SimpleUser> members;
   final double maxAbsBalance;
   final bool isMe;
   const BalanceCard(
       {super.key,
-      required this.transaction,
+      required this.balance,
       required this.members,
       required this.maxAbsBalance,
       required this.isMe});
 
   @override
   Widget build(BuildContext context) {
-    final isPositive = transaction.amount >= 0;
-    final payer = getMember(members, transaction.payer);
+    final isPositive = balance.amount >= 0;
+    final payer = getMember(members, balance.userId);
     return SizedBox(
         height: 80,
         child: Row(
@@ -44,7 +44,7 @@ class BalanceCard extends StatelessWidget {
                           payer.nickname ?? payer.firstname,
                           const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
-                          maxWidth: transaction.amount.abs() /
+                          maxWidth: balance.amount.abs() /
                                   maxAbsBalance *
                                   constraints.maxWidth -
                               30);
@@ -56,13 +56,13 @@ class BalanceCard extends StatelessWidget {
                               margin: const EdgeInsets.only(right: 10),
                               alignment: Alignment.centerRight,
                               child: Text(
-                                '${transaction.amount}€',
+                                '${balance.amount}€',
                                 style: const TextStyle(
                                     color: Color(0xff09263D), fontSize: 18),
                               ),
                             ),
                           Container(
-                              width: transaction.amount.abs() /
+                              width: balance.amount.abs() /
                                   maxAbsBalance *
                                   constraints.maxWidth,
                               height: 50,
@@ -83,7 +83,7 @@ class BalanceCard extends StatelessWidget {
                                       margin: const EdgeInsets.only(left: 10),
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        '${transaction.amount}€',
+                                        '${balance.amount}€',
                                         style: const TextStyle(
                                             color: Colors.white, fontSize: 18),
                                       ),
@@ -101,14 +101,14 @@ class BalanceCard extends StatelessWidget {
                           payer.nickname ?? payer.firstname,
                           const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
-                          maxWidth: transaction.amount.abs() /
+                          maxWidth: balance.amount.abs() /
                                   maxAbsBalance *
                                   constraints.maxWidth -
                               30);
                       return Row(
                         children: [
                           Container(
-                              width: transaction.amount.abs() /
+                              width: balance.amount.abs() /
                                   maxAbsBalance *
                                   constraints.maxWidth,
                               height: 60,
@@ -129,7 +129,7 @@ class BalanceCard extends StatelessWidget {
                                       margin: const EdgeInsets.only(right: 10),
                                       alignment: Alignment.centerRight,
                                       child: Text(
-                                        '${transaction.amount}€',
+                                        '${balance.amount}€',
                                         style: const TextStyle(
                                             color: Colors.white, fontSize: 18),
                                       ),
@@ -139,7 +139,7 @@ class BalanceCard extends StatelessWidget {
                               margin: const EdgeInsets.only(left: 10),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                '${transaction.amount}€',
+                                '${balance.amount}€',
                                 style: const TextStyle(
                                     color: Color(0xff09263D), fontSize: 18),
                               ),

@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/tricount/class/balance.dart';
-import 'package:myecl/tricount/class/sharer_group.dart';
-import 'package:myecl/tricount/class/transaction.dart';
-import 'package:myecl/tricount/class/transaction_type.dart';
 import 'package:myecl/user/class/list_users.dart';
 
 String getAvatarName(SimpleUser user) {
@@ -13,34 +9,6 @@ String getAvatarName(SimpleUser user) {
           .substring(0, user.firstname.length > 3 ? 3 : user.firstname.length);
   return name;
 }
-
-List<Transaction> getAllUserBalanceTransactions(
-    List<Balance> balances,
-    List<SimpleUser> members) {
-  final allUsersBalance = {for (var e in members) e.id: 0.0};
-  for (final equilibriumTransaction in balances) {
-    allUsersBalance[equilibriumTransaction.reimbursementId] =
-        allUsersBalance[equilibriumTransaction.reimbursementId]! +
-            equilibriumTransaction.amount;
-    allUsersBalance[equilibriumTransaction.userId] =
-        allUsersBalance[equilibriumTransaction.userId]! -
-            equilibriumTransaction.amount;
-  }
-  final allUserBalanceTransactions = <Transaction>[];
-  for (final userBalance in allUsersBalance.entries) {
-    allUserBalanceTransactions.add(Transaction(
-      payer: userBalance.key,
-      title: '',
-      description: null,
-      beneficiaries: [],
-      amount: userBalance.value,
-      type: TransactionType.reimbursement,
-      creationDate: DateTime.now(),
-    ));
-  }
-  return allUserBalanceTransactions;
-}
-
 
 bool hasTextOverflow(
   String text, 
