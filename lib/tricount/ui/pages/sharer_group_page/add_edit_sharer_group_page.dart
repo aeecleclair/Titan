@@ -13,6 +13,7 @@ import 'package:myecl/tricount/providers/sharer_group_list_provider.dart';
 import 'package:myecl/tricount/providers/sharer_group_member_list_provider.dart';
 import 'package:myecl/tricount/providers/sharer_group_provider.dart';
 import 'package:myecl/tricount/tools/constants.dart';
+import 'package:myecl/tricount/ui/pages/sharer_group_page/add_members_to_sharer_group_card.dart';
 import 'package:myecl/tricount/ui/pages/sharer_group_page/search_result.dart';
 import 'package:myecl/tricount/ui/pages/sharer_group_page/sharer_group_member_chip_list.dart';
 import 'package:myecl/tricount/ui/pages/tricount.dart';
@@ -27,7 +28,8 @@ class AddEditSharerGroupPage extends HookConsumerWidget {
     final sharerGroup = ref.watch(sharerGroupProvider);
     final sharerGroupListNotifier = ref.watch(sharerGroupListProvider.notifier);
     final sharerGroupMemberList = ref.watch(sharerGroupMemberListProvider);
-    final sharerGroupMemberListNotifier = ref.watch(sharerGroupMemberListProvider.notifier);
+    final sharerGroupMemberListNotifier =
+        ref.watch(sharerGroupMemberListProvider.notifier);
     final usersNotifier = ref.watch(userList.notifier);
     final isEdit = sharerGroup.id != SharerGroup.empty().id;
     final name = useTextEditingController(text: isEdit ? sharerGroup.name : "");
@@ -64,88 +66,93 @@ class AddEditSharerGroupPage extends HookConsumerWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     child: SharerGroupMemberChipList(
-                      members: isEdit ? sharerGroupMemberList : sharerGroup.members,
+                      members:
+                          isEdit ? sharerGroup.members : sharerGroupMemberList,
                       canDelete: !isEdit,
                       onDeleted: (member) {
                         sharerGroupMemberListNotifier.removeMember(member);
                       },
                     ),
                   ),
+                  if (isEdit)
+                    Container(
+                        margin: EdgeInsets.only(top: 20),
+                        child: AddMembersToSharerGroupCard()),
                   const SizedBox(height: 20),
-                    Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30),
-                        child: Column(children: [
-                          TextEntry(
-                            label: TricountTextConstants.member,
-                            onChanged: (value) {
-                              tokenExpireWrapper(ref, () async {
-                                if (queryController.text.isNotEmpty) {
-                                  await usersNotifier
-                                      .filterUsers(queryController.text);
-                                } else {
-                                  usersNotifier.clear();
-                                }
-                              });
-                            },
-                            canBeEmpty: true,
-                            controller: queryController,
-                          ),
-                          const SizedBox(height: 20),
-                          SearchResult(queryController: queryController),
-                          const SizedBox(height: 50),
-                          WaitingButton(
-                            builder: (child) => AddEditButtonLayout(
-                                color: const Color(0xff09263D), child: child),
-                            onTap: () async {
-                              if (key.currentState == null) {
-                                return;
+                  Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Column(children: [
+                        TextEntry(
+                          label: TricountTextConstants.member,
+                          onChanged: (value) {
+                            tokenExpireWrapper(ref, () async {
+                              if (queryController.text.isNotEmpty) {
+                                await usersNotifier
+                                    .filterUsers(queryController.text);
+                              } else {
+                                usersNotifier.clear();
                               }
-                              if (!key.currentState!.validate()) {
-                                return;
-                              }
-                              await tokenExpireWrapper(ref, () async {
-                                SharerGroup newSharerGroup = SharerGroup(
-                                    balances: [],
-                                    id: '',
-                                    name: name.text,
-                                    members: sharerGroupMemberList,
-                                    total: 0.0,
-                                    transactions: []);
-                                final value = isEdit
-                                    ? await sharerGroupListNotifier
-                                        .updateSharerGroup(newSharerGroup)
-                                    : await sharerGroupListNotifier
-                                        .addSharerGroup(newSharerGroup);
-                                if (value) {
-                                  QR.back();
-                                  if (isEdit) {
-                                    displayToastWithContext(TypeMsg.msg,
-                                        RaffleTextConstants.updatedSharerGroup);
-                                  } else {
-                                    displayToastWithContext(TypeMsg.msg,
-                                        RaffleTextConstants.addedSharerGroup);
-                                  }
+                            });
+                          },
+                          canBeEmpty: true,
+                          controller: queryController,
+                        ),
+                        const SizedBox(height: 20),
+                        SearchResult(queryController: queryController),
+                        const SizedBox(height: 50),
+                        WaitingButton(
+                          builder: (child) => AddEditButtonLayout(
+                              color: const Color(0xff09263D), child: child),
+                          onTap: () async {
+                            if (key.currentState == null) {
+                              return;
+                            }
+                            if (!key.currentState!.validate()) {
+                              return;
+                            }
+                            await tokenExpireWrapper(ref, () async {
+                              SharerGroup newSharerGroup = SharerGroup(
+                                  balances: [],
+                                  id: '',
+                                  name: name.text,
+                                  members: sharerGroupMemberList,
+                                  total: 0.0,
+                                  transactions: []);
+                              final value = isEdit
+                                  ? await sharerGroupListNotifier
+                                      .updateSharerGroup(newSharerGroup)
+                                  : await sharerGroupListNotifier
+                                      .addSharerGroup(newSharerGroup);
+                              if (value) {
+                                QR.back();
+                                if (isEdit) {
+                                  displayToastWithContext(TypeMsg.msg,
+                                      RaffleTextConstants.updatedSharerGroup);
                                 } else {
-                                  if (isEdit) {
-                                    displayToastWithContext(TypeMsg.error,
-                                        RaffleTextConstants.updatingError);
-                                  } else {
-                                    displayToastWithContext(TypeMsg.error,
-                                        RaffleTextConstants.addingError);
-                                  }
+                                  displayToastWithContext(TypeMsg.msg,
+                                      RaffleTextConstants.addedSharerGroup);
                                 }
-                              });
-                            },
-                            child: Text(
-                                isEdit
-                                    ? RaffleTextConstants.edit
-                                    : RaffleTextConstants.add,
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold)),
-                          )
-                        ]))
+                              } else {
+                                if (isEdit) {
+                                  displayToastWithContext(TypeMsg.error,
+                                      RaffleTextConstants.updatingError);
+                                } else {
+                                  displayToastWithContext(TypeMsg.error,
+                                      RaffleTextConstants.addingError);
+                                }
+                              }
+                            });
+                          },
+                          child: Text(
+                              isEdit
+                                  ? RaffleTextConstants.edit
+                                  : RaffleTextConstants.add,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold)),
+                        )
+                      ]))
                 ]))));
   }
 }
