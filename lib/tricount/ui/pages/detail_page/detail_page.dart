@@ -16,6 +16,7 @@ import 'package:myecl/tricount/ui/pages/detail_page/member_card.dart';
 import 'package:myecl/tricount/ui/pages/detail_page/sharer_property_list.dart';
 import 'package:myecl/tricount/ui/pages/detail_page/transaction_card.dart';
 import 'package:myecl/tricount/ui/pages/tricount.dart';
+import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -25,17 +26,18 @@ class SharerGroupDetailPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final usersNotifier = ref.watch(userList.notifier);
     final sharerGroup = ref.watch(sharerGroupProvider);
     final sharerGroupListNotifier = ref.watch(sharerGroupListProvider.notifier);
     final pageController = usePageController();
     final me = ref.watch(userProvider);
 
-    final maxAbsBalance = sharerGroup.balances.fold(
-        0.0, (value, element) => max(value, element.amount.abs()));
+    final maxAbsBalance = sharerGroup.balances
+        .fold(0.0, (value, element) => max(value, element.amount.abs()));
     final currentPage = useState(0);
 
-    final myBalance =
-        sharerGroup.balances.firstWhereOrNull((element) => element.userId == me.id);
+    final myBalance = sharerGroup.balances
+        .firstWhereOrNull((element) => element.userId == me.id);
 
     final pages = [
       SharerPropertyList(
@@ -54,7 +56,9 @@ class SharerGroupDetailPage extends HookConsumerWidget {
                 members: sharerGroup.members,
               )),
       SharerPropertyList(
-          propertyList: sharerGroup.balances.where((element) => element.amount < 0).toList(),
+          propertyList: sharerGroup.balances
+              .where((element) => element.amount < 0)
+              .toList(),
           title: 'Remboursements',
           builder: (e) => EquilibriumCard(
               balance: e, members: sharerGroup.members, isLightTheme: true)),
@@ -68,6 +72,7 @@ class SharerGroupDetailPage extends HookConsumerWidget {
       ButtonState(
           text: 'Modifier le groupe',
           onTap: () {
+            usersNotifier.clear();
             QR.to(TricountRouter.root + TricountRouter.addEdit);
           }),
       ButtonState(text: 'Ajouter une dépense', onTap: () {}),
