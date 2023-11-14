@@ -56,7 +56,7 @@ class EquilibriumCard extends StatelessWidget {
           ),
           const Spacer(),
           Text(
-            "${balance.amount.toStringAsFixed(2)}€",
+            "${balance.amount.abs().toStringAsFixed(2)}€",
             style: TextStyle(
                 color: isLightTheme ? const Color(0xff09263D) : Colors.white,
                 fontSize: 20,

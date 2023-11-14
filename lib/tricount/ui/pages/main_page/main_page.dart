@@ -156,6 +156,8 @@ class TricountMainPage extends HookConsumerWidget {
                                 balances: currentPage.value >= 0
                                     ? sharerGroupList[currentPage.value]
                                         .balances
+                                        .where((element) => element.amount < 0)
+                                        .toList()
                                     : myBalances,
                                 members: currentPage.value >= 0
                                     ? sharerGroupList[currentPage.value].members
