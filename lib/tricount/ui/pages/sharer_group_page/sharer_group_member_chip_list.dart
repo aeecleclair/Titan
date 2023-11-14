@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tricount/providers/sharer_group_member_list_provider.dart';
+import 'package:myecl/user/class/list_users.dart';
 
 class SharerGroupMemberChipList extends HookConsumerWidget {
-  const SharerGroupMemberChipList({super.key});
+  final void Function(SimpleUser)? onDeleted;
+  final bool canDelete;
+  const SharerGroupMemberChipList({super.key, required this.onDeleted, this.canDelete = true});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sharerGroupMemberList = ref.watch(sharerGroupMemberListProvider);
-    final sharerGroupMemberListNotifier =
-        ref.watch(sharerGroupMemberListProvider.notifier);
     return Wrap(
         children: sharerGroupMemberList
             .map((sharerGroupMember) => Container(
@@ -23,11 +24,8 @@ class SharerGroupMemberChipList extends HookConsumerWidget {
                         fontSize: 12,
                         fontWeight: FontWeight.bold),
                     backgroundColor: const Color(0xff1C4668),
-                    deleteIconColor: Colors.white,
-                    onDeleted: () {
-                      sharerGroupMemberListNotifier
-                          .removeMember(sharerGroupMember);
-                    },
+                    deleteIconColor: canDelete ? Colors.white : null,
+                    onDeleted: canDelete ? () => onDeleted?.call(sharerGroupMember) : null,
                   ),
             ))
             .toList());

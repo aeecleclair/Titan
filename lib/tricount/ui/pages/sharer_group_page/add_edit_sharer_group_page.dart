@@ -10,6 +10,7 @@ import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:myecl/tricount/class/sharer_group.dart';
 import 'package:myecl/tricount/providers/sharer_group_list_provider.dart';
+import 'package:myecl/tricount/providers/sharer_group_member_list_provider.dart';
 import 'package:myecl/tricount/providers/sharer_group_provider.dart';
 import 'package:myecl/tricount/tools/constants.dart';
 import 'package:myecl/tricount/ui/pages/sharer_group_page/search_result.dart';
@@ -25,6 +26,8 @@ class AddEditSharerGroupPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final sharerGroup = ref.watch(sharerGroupProvider);
     final sharerGroupListNotifier = ref.watch(sharerGroupListProvider.notifier);
+    final sharerGroupMemberList = ref.watch(sharerGroupMemberListProvider);
+    final sharerGroupMemberListNotifier = ref.watch(sharerGroupMemberListProvider.notifier);
     final usersNotifier = ref.watch(userList.notifier);
     final isEdit = sharerGroup.id != SharerGroup.empty().id;
     final name = useTextEditingController(text: isEdit ? sharerGroup.name : "");
@@ -58,9 +61,14 @@ class AddEditSharerGroupPage extends HookConsumerWidget {
                         ),
                       ])),
                   const SizedBox(height: 20),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: SharerGroupMemberChipList(),
+                    child: SharerGroupMemberChipList(
+                      canDelete: !isEdit,
+                      onDeleted: (member) {
+                        sharerGroupMemberListNotifier.removeMember(member);
+                      },
+                    ),
                   ),
                   const SizedBox(height: 20),
                     Padding(
@@ -99,7 +107,7 @@ class AddEditSharerGroupPage extends HookConsumerWidget {
                                     balances: [],
                                     id: '',
                                     name: name.text,
-                                    members: sharerGroup.members,
+                                    members: sharerGroupMemberList,
                                     total: 0.0,
                                     transactions: []);
                                 final value = isEdit
