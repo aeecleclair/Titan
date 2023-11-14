@@ -11,6 +11,7 @@ class BookingTextConstants {
   static const String adminPage = "Administrateur";
   static const String allDay = "Toute la journée";
   static const String bookedfor = "Réservé pour";
+  static const String bookedBy = "Réservée par";
   static const String booking = "Réservation";
   static const String bookingCreated = "Réservation créée";
   static const String bookingDemand = "Demande de réservation";
