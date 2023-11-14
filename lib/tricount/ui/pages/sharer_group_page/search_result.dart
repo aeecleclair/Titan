@@ -43,9 +43,7 @@ class SearchResult extends HookConsumerWidget {
                         ]),
                   ),
                   onTap: () {
-                    if (selected) {
-                      sharerGroupMemberListNotifier.removeMember(simpleUser);
-                    } else {
+                    if (!selected) {
                       sharerGroupMemberListNotifier.addMember(simpleUser);
                     }
                   });
