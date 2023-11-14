@@ -145,8 +145,6 @@ class TricountMainPage extends HookConsumerWidget {
                                                     index];
                                             sharerGroupNotifier
                                                 .setSharerGroup(sharerGroup);
-                                            sharerGroupMemberListNotifier
-                                                .set(sharerGroup.members);
                                             QR.to(TricountRouter.root +
                                                 TricountRouter.detail);
                                           }));
