@@ -54,7 +54,7 @@ class SharerGroupDetailPage extends HookConsumerWidget {
                 members: sharerGroup.members,
               )),
       SharerPropertyList(
-          propertyList: sharerGroup.balances,
+          propertyList: sharerGroup.balances.where((element) => element.amount < 0).toList(),
           title: 'Remboursements',
           builder: (e) => EquilibriumCard(
               balance: e, members: sharerGroup.members, isLightTheme: true)),
