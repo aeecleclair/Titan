@@ -64,6 +64,7 @@ class AddEditSharerGroupPage extends HookConsumerWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     child: SharerGroupMemberChipList(
+                      members: isEdit ? sharerGroupMemberList : sharerGroup.members,
                       canDelete: !isEdit,
                       onDeleted: (member) {
                         sharerGroupMemberListNotifier.removeMember(member);
