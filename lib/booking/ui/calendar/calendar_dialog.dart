@@ -41,11 +41,8 @@ class CalendarDialog extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    formatDates(
-                      booking.start,
-                      booking.end,
-                      false,
-                    ),
+                    formatRecurrenceRule(booking.start, booking.end,
+                        booking.recurrenceRule, false),
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                       color: Colors.grey.shade400,

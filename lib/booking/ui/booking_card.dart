@@ -6,6 +6,7 @@ import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class BookingCard extends HookConsumerWidget {
   final Booking booking;
@@ -26,7 +27,11 @@ class BookingCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final showButton = booking.end.isAfter(DateTime.now());
+    final showButton = booking.recurrenceRule.isNotEmpty
+        ? SfCalendar.parseRRule(booking.recurrenceRule, booking.start)
+            .endDate!
+            .isAfter(DateTime.now())
+        : booking.end.isAfter(DateTime.now());
     final List<Color> cardColor;
     final Color smallTextColor;
     final Color bigTextColor;
@@ -175,7 +180,8 @@ class BookingCard extends HookConsumerWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if (showButton || isAdmin)
+                    if ((showButton && booking.decision == Decision.pending) ||
+                        isAdmin)
                       GestureDetector(
                         onTap: onEdit,
                         child: Container(
@@ -198,7 +204,9 @@ class BookingCard extends HookConsumerWidget {
                           ),
                         ),
                       ),
-                    if (showButton || isAdmin) const Spacer(),
+                    if ((showButton && booking.decision == Decision.pending) ||
+                        isAdmin)
+                      const Spacer(),
                     GestureDetector(
                       onTap: onCopy,
                       child: Container(
