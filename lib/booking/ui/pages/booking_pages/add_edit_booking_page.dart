@@ -154,6 +154,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                       suffix: '',
                       isInt: false,
                       controller: note,
+                      required: false,
                     ),
                     const SizedBox(height: 20),
                     CheckBoxEntry(
@@ -586,7 +587,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                                       processDateBackWithHour(startString)),
                                   end: DateTime.parse(
                                       processDateBackWithHour(endString)),
-                                  note: note.text,
+                                  note: note.text.isEmpty ? null : note.text,
                                   room: room.value,
                                   key: keyRequired.value,
                                   decision: booking.decision,

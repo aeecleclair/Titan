@@ -61,15 +61,16 @@ class CalendarDialog extends StatelessWidget {
                     const Divider(
                       thickness: 3,
                     ),
-                    Text(
-                      booking.note,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w400,
-                        color: Colors.grey,
-                        fontSize: 15,
+                    if (booking.note != null)
+                      Text(
+                        booking.note!,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.grey,
+                          fontSize: 15,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 10),
+                    if (booking.note != null) const SizedBox(height: 10),
                     Text(
                       "${BookingTextConstants.bookedBy} ${booking.applicant.getName()}",
                       style: const TextStyle(

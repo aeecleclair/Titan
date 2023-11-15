@@ -6,14 +6,16 @@ class TextEntry extends StatelessWidget {
   final bool isInt;
   final TextEditingController controller;
   final TextInputType keyboardType;
-  const TextEntry(
-      {Key? key,
-      required this.label,
-      required this.suffix,
-      required this.isInt,
-      required this.controller,
-      required this.keyboardType})
-      : super(key: key);
+  final bool required;
+  const TextEntry({
+    Key? key,
+    required this.label,
+    required this.suffix,
+    required this.isInt,
+    required this.controller,
+    required this.keyboardType,
+    this.required = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +38,17 @@ class TextEntry extends StatelessWidget {
         ),
       ),
       validator: (value) {
-        if (value == null) {
-          return LoanTextConstants.noValue;
-        } else if (value.isEmpty) {
-          return LoanTextConstants.noValue;
-        } else if (isInt) {
-          if (int.tryParse(value) == null) {
-            return LoanTextConstants.invalidNumber;
-          } else if (int.parse(value) < 0) {
-            return LoanTextConstants.positiveNumber;
+        if (required) {
+          if (value == null) {
+            return LoanTextConstants.noValue;
+          } else if (value.isEmpty) {
+            return LoanTextConstants.noValue;
+          } else if (isInt) {
+            if (int.tryParse(value) == null) {
+              return LoanTextConstants.invalidNumber;
+            } else if (int.parse(value) < 0) {
+              return LoanTextConstants.positiveNumber;
+            }
           }
         }
         return null;

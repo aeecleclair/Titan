@@ -10,7 +10,7 @@ class Booking {
   final String reason;
   final DateTime start;
   final DateTime end;
-  final String note;
+  final String? note;
   final Room room;
   final bool key;
   final Decision decision;
@@ -24,7 +24,7 @@ class Booking {
       required this.reason,
       required this.start,
       required this.end,
-      required this.note,
+      this.note,
       required this.room,
       required this.key,
       required this.decision,
