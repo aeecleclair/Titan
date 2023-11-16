@@ -9,8 +9,9 @@ class HorizontalListView<T> extends StatelessWidget {
   final int? length;
   final Widget childDelegate;
   final Widget? firstChild;
+  final ScrollController? scrollController;
 
-  HorizontalListView({super.key, required this.height, this.children})
+  HorizontalListView({super.key, required this.height, this.children, this.scrollController})
       : assert(children != null),
         items = null,
         itemBuilder = null,
@@ -20,6 +21,7 @@ class HorizontalListView<T> extends StatelessWidget {
         childDelegate = SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             clipBehavior: Clip.none,
+            controller: scrollController,
             physics: const BouncingScrollPhysics(),
             child: Row(
               children: children!,
@@ -32,6 +34,7 @@ class HorizontalListView<T> extends StatelessWidget {
       required this.height,
       this.length,
       this.firstChild,
+      this.scrollController,
       this.horizontalSpace = 15})
       : assert(itemBuilder != null),
         assert(items != null),
@@ -39,6 +42,7 @@ class HorizontalListView<T> extends StatelessWidget {
         childDelegate = ListView.builder(
             scrollDirection: Axis.horizontal,
             clipBehavior: Clip.none,
+            controller: scrollController,
             physics: const BouncingScrollPhysics(),
             itemCount:
                 (length ?? items!.length) + 2 + (firstChild != null ? 1 : 0),
