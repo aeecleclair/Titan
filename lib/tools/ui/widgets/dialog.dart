@@ -3,8 +3,8 @@ import 'package:myecl/tools/constants.dart';
 
 class CustomDialogBox extends StatelessWidget {
   final String title, descriptions;
-  static const  Color titleColor = ColorConstants.gradient1;
-  static const  Color descriptionColor = Colors.black;
+  static const Color titleColor = ColorConstants.gradient1;
+  static const Color descriptionColor = Colors.black;
   static const Color yesColor = ColorConstants.gradient2;
   static const Color noColor = ColorConstants.background2;
 
