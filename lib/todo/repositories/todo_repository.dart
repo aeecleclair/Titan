@@ -15,6 +15,6 @@ class TodoRepository extends Repository {
   }
 
   Future<bool> checkTodo(Todo todo) async {
-    return await create({}, suffix: "${todo.id}/check");
+    return await update({}, todo.id, suffix: "/check");
   }
 }

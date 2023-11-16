@@ -23,7 +23,7 @@ class TodoNotifier extends ListNotifier<Todo> {
         repository.checkTodo,
         (todos, todo) =>
             todos..[todos.indexWhere((i) => i.id == todo.id)] = todo,
-        todo);
+        todo.copyWith(done: !todo.done));
   }
 }
 
