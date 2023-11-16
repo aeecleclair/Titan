@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/todo/tools/constants.dart';
+import 'package:myecl/todo/ui/pages/add_edit_todo_page/date_entry.dart';
 import 'package:myecl/todo/ui/pages/add_edit_todo_page/text_entry.dart';
 import 'package:myecl/todo/ui/pages/todo.dart';
 
@@ -13,6 +14,7 @@ class AddEditTodoPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = GlobalKey<FormState>();
     final name = useTextEditingController();
+    final deadline = useTextEditingController();
     return TodoTemplate(
         child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
@@ -39,6 +41,11 @@ class AddEditTodoPage extends HookConsumerWidget {
                         keyboardType: TextInputType.text,
                         label: "Name",
                         suffix: "",
+                      ),
+                      const SizedBox(height: 30),
+                      DateEntry(
+                        controller: deadline,
+                        title: "Deadline",
                       )
                     ],
                   ),
