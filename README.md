@@ -18,7 +18,7 @@ RELEASE_HOST = "<<Your Production Server Host>>"
 
 You can also specify a debug url :
 
-DEBUG_HOST = "<<Your Debbuging Server Host>>" 
+DEBUG_HOST = "<<Your Debbuging Server Host>>"
 
 ## Web dev
 
@@ -114,4 +114,11 @@ On utilise le module [flutter_launcher_icons](https://pub.dev/packages/flutter_l
 ```bash
 flutter pub get
 flutter pub run flutter_launcher_icons
+```
+
+## Use the linter
+
+```
+dart format .
+flutter analyze
 ```
