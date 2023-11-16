@@ -52,7 +52,15 @@ class TodoMainPage extends HookConsumerWidget {
                 child: const HeroIcon(HeroIcons.plus, size: 30)),
           ),
           ...todos.when(
-              data: (todos) => todos.map((todo) => TodoCard(todo: todo)),
+              data: (todos) {
+                if (todos.isEmpty) {
+                  return const [
+                    SizedBox(height: 20),
+                    Text(TodoTextConstants.noTodo)
+                  ];
+                }
+                return todos.map((todo) => TodoCard(todo: todo));
+              },
               loading: () => [const CircularProgressIndicator()],
               error: (error, stack) => [Text(error.toString())])
         ],
