@@ -62,7 +62,7 @@ class Booking {
     data["reason"] = reason;
     data["start"] = processDateToAPI(start);
     data["end"] = processDateToAPI(end);
-    data["creation"] = processDateToAPI(end);
+    data["creation"] = processDateToAPI(creation);
     data["note"] = note;
     data["room_id"] = room.id;
     data["key"] = key;
