@@ -21,6 +21,9 @@ jobs:
       - name: Install Pub Dependencies
         run: flutter pub get
 
+      - name: Copy .env file
+        run: cp .env.template .env
+
       - name: Verify Formatting
         run: dart format --set-exit-if-changed --output show .
 
