@@ -146,7 +146,7 @@ class BookingMainPage extends HookConsumerWidget {
             height: 10,
           ),
           bookings.when(data: (List<Booking> data) {
-            data.sort((a, b) => b.start.compareTo(a.start));
+            data.sort((a, b) => a.creation.compareTo(b.creation));
             return SizedBox(
                 height: 210,
                 child: HorizontalListView(
