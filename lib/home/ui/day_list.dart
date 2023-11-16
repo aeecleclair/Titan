@@ -48,6 +48,7 @@ class DayList extends HookConsumerWidget {
       height: 125,
       items: days,
       length: numberDay,
+      scrollController: scrollController,
       itemBuilder: (context, day, i) => DayCard(
           isToday: i == 0,
           day: day,
