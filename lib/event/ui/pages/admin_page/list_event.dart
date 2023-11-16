@@ -66,72 +66,75 @@ class ListEvent extends HookConsumerWidget {
             ),
           )),
       if (toggle.value)
-        HorizontalListView.builder(
-            height: 235,
-            items: incomingEvents,
-            itemBuilder: (context, e, i) => EventUi(
-                  event: e,
-                  isDetailPage: true,
-                  isAdmin: true,
-                  onEdit: () {
-                    eventNotifier.setEvent(e);
-                    QR.to(EventRouter.root +
-                        EventRouter.admin +
-                        EventRouter.addEdit);
-                  },
-                  onInfo: () {
-                    eventNotifier.setEvent(e);
-                    QR.to(EventRouter.root +
-                        EventRouter.admin +
-                        EventRouter.detail);
-                  },
-                  onConfirm: () async {
-                    await showDialog(
-                        context: context,
-                        builder: (context) {
-                          return CustomDialogBox(
-                              title: BookingTextConstants.confirm,
-                              descriptions: BookingTextConstants.confirmBooking,
-                              onYes: () async {
-                                await tokenExpireWrapper(ref, () async {
-                                  eventListNotifier
-                                      .toggleConfirmed(e, Decision.approved)
-                                      .then((value) {
-                                    if (value) {
-                                      confirmedEventListNotifier.addEvent(e);
-                                    }
+        Container(
+          margin: const EdgeInsets.only(top: 10),
+          child: HorizontalListView.builder(
+              height: 235,
+              items: incomingEvents,
+              itemBuilder: (context, e, i) => EventUi(
+                    event: e,
+                    isDetailPage: true,
+                    isAdmin: true,
+                    onEdit: () {
+                      eventNotifier.setEvent(e);
+                      QR.to(EventRouter.root +
+                          EventRouter.admin +
+                          EventRouter.addEdit);
+                    },
+                    onInfo: () {
+                      eventNotifier.setEvent(e);
+                      QR.to(EventRouter.root +
+                          EventRouter.admin +
+                          EventRouter.detail);
+                    },
+                    onConfirm: () async {
+                      await showDialog(
+                          context: context,
+                          builder: (context) {
+                            return CustomDialogBox(
+                                title: BookingTextConstants.confirm,
+                                descriptions: BookingTextConstants.confirmBooking,
+                                onYes: () async {
+                                  await tokenExpireWrapper(ref, () async {
+                                    eventListNotifier
+                                        .toggleConfirmed(e, Decision.approved)
+                                        .then((value) {
+                                      if (value) {
+                                        confirmedEventListNotifier.addEvent(e);
+                                      }
+                                    });
                                   });
                                 });
-                              });
-                        });
-                  },
-                  onDecline: () async {
-                    await showDialog(
-                        context: context,
-                        builder: (context) {
-                          return CustomDialogBox(
-                              title: BookingTextConstants.decline,
-                              descriptions: BookingTextConstants.declineBooking,
-                              onYes: () async {
-                                await tokenExpireWrapper(ref, () async {
-                                  eventListNotifier
-                                      .toggleConfirmed(e, Decision.declined)
-                                      .then((value) {
-                                    if (value) {
-                                      confirmedEventListNotifier.deleteEvent(e);
-                                    }
+                          });
+                    },
+                    onDecline: () async {
+                      await showDialog(
+                          context: context,
+                          builder: (context) {
+                            return CustomDialogBox(
+                                title: BookingTextConstants.decline,
+                                descriptions: BookingTextConstants.declineBooking,
+                                onYes: () async {
+                                  await tokenExpireWrapper(ref, () async {
+                                    eventListNotifier
+                                        .toggleConfirmed(e, Decision.declined)
+                                        .then((value) {
+                                      if (value) {
+                                        confirmedEventListNotifier.deleteEvent(e);
+                                      }
+                                    });
                                   });
                                 });
-                              });
-                        });
-                  },
-                  onCopy: () {
-                    eventNotifier.setEvent(e.copyWith(id: ""));
-                    QR.to(EventRouter.root +
-                        EventRouter.admin +
-                        EventRouter.addEdit);
-                  },
-                )),
+                          });
+                    },
+                    onCopy: () {
+                      eventNotifier.setEvent(e.copyWith(id: ""));
+                      QR.to(EventRouter.root +
+                          EventRouter.admin +
+                          EventRouter.addEdit);
+                    },
+                  )),
+        ),
     ]);
   }
 }
