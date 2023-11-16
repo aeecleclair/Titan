@@ -162,8 +162,7 @@ class BuyPackTicket extends HookConsumerWidget {
                       child: Text(
                           raffle.raffleStatusType == RaffleStatusType.open
                               ? RaffleTextConstants.buyThisTicket
-                              : raffle.raffleStatusType ==
-                                      RaffleStatusType.lock
+                              : raffle.raffleStatusType == RaffleStatusType.lock
                                   ? RaffleTextConstants.lockedRaffle
                                   : RaffleTextConstants.unavailableRaffle,
                           style: TextStyle(

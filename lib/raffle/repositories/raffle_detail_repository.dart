@@ -9,8 +9,7 @@ class RaffleDetailRepository extends Repository {
   // ignore: overridden_fields
   final ext = "tombola/raffle/";
 
-  Future<List<PackTicket>> getPackTicketListFromRaffle(
-      String raffleId) async {
+  Future<List<PackTicket>> getPackTicketListFromRaffle(String raffleId) async {
     return List<PackTicket>.from(
         (await getList(suffix: "$raffleId/type_tickets"))
             .map((x) => PackTicket.fromJson(x)));

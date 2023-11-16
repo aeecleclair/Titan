@@ -1,4 +1,3 @@
-
 class PackTicket {
   PackTicket({
     required this.raffleId,
@@ -34,11 +33,11 @@ class PackTicket {
     int? packSize,
   }) =>
       PackTicket(
-          raffleId: raffleId ?? this.raffleId,
-          price: price ?? this.price,
-          id: id ?? this.id,
-          packSize: packSize ?? this.packSize,
-          );
+        raffleId: raffleId ?? this.raffleId,
+        price: price ?? this.price,
+        id: id ?? this.id,
+        packSize: packSize ?? this.packSize,
+      );
 
   PackTicket.empty() {
     raffleId = "";

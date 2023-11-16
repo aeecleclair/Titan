@@ -55,7 +55,7 @@ class TicketWidget extends HookConsumerWidget {
                           borderRadius:
                               const BorderRadius.all(Radius.circular(15))),
                       child: Center(
-                        child:tombolaLogos.when(
+                        child: tombolaLogos.when(
                             data: (data) {
                               if (data[raffle] != null) {
                                 return data[raffle]!.when(

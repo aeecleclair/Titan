@@ -9,13 +9,15 @@ class TombolaLogoRepository extends LogoRepository {
   final ext = 'tombola/raffles/';
 
   Future<Image> getTombolaLogo(String id) async {
-    final uint8List =  await getLogo(id, suffix: "/logo");
-    if (uint8List.isEmpty) {return Image.asset("assets/images/logo.png");}
+    final uint8List = await getLogo(id, suffix: "/logo");
+    if (uint8List.isEmpty) {
+      return Image.asset("assets/images/logo.png");
+    }
     return Image.memory(uint8List);
   }
 
   Future<Image> addTombolaLogo(Uint8List bytes, String id) async {
-    final uint8List =  await addLogo(bytes, id, suffix: "/logo");
+    final uint8List = await addLogo(bytes, id, suffix: "/logo");
     return Image.memory(uint8List);
   }
 }

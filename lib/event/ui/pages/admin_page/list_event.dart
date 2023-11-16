@@ -93,7 +93,8 @@ class ListEvent extends HookConsumerWidget {
                           builder: (context) {
                             return CustomDialogBox(
                                 title: BookingTextConstants.confirm,
-                                descriptions: BookingTextConstants.confirmBooking,
+                                descriptions:
+                                    BookingTextConstants.confirmBooking,
                                 onYes: () async {
                                   await tokenExpireWrapper(ref, () async {
                                     eventListNotifier
@@ -113,14 +114,16 @@ class ListEvent extends HookConsumerWidget {
                           builder: (context) {
                             return CustomDialogBox(
                                 title: BookingTextConstants.decline,
-                                descriptions: BookingTextConstants.declineBooking,
+                                descriptions:
+                                    BookingTextConstants.declineBooking,
                                 onYes: () async {
                                   await tokenExpireWrapper(ref, () async {
                                     eventListNotifier
                                         .toggleConfirmed(e, Decision.declined)
                                         .then((value) {
                                       if (value) {
-                                        confirmedEventListNotifier.deleteEvent(e);
+                                        confirmedEventListNotifier
+                                            .deleteEvent(e);
                                       }
                                     });
                                   });
