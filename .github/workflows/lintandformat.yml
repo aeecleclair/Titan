@@ -25,7 +25,7 @@ jobs:
         run: cp .env.template .env
 
       - name: Verify Formatting
-        run: dart format --set-exit-if-changed --output show .
+        run: dart format --set-exit-if-changed --output none .
 
       - name: Analyze project source
         run: flutter analyze
