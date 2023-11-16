@@ -10,6 +10,7 @@ class Booking {
   final String reason;
   final DateTime start;
   final DateTime end;
+  final DateTime creation;
   final String? note;
   final Room room;
   final bool key;
@@ -24,6 +25,7 @@ class Booking {
       required this.reason,
       required this.start,
       required this.end,
+      required this.creation,
       this.note,
       required this.room,
       required this.key,
@@ -39,6 +41,7 @@ class Booking {
       reason: json["reason"],
       start: DateTime.parse(json["start"]),
       end: DateTime.parse(json["end"]),
+      creation: DateTime.parse(json["creation"]),
       note: json["note"],
       room: Room.fromJson(json["room"]),
       key: json["key"],
@@ -59,6 +62,7 @@ class Booking {
     data["reason"] = reason;
     data["start"] = processDateToAPI(start);
     data["end"] = processDateToAPI(end);
+    data["creation"] = processDateToAPI(end);
     data["note"] = note;
     data["room_id"] = room.id;
     data["key"] = key;
@@ -74,6 +78,7 @@ class Booking {
       reason,
       start,
       end,
+      creation,
       note,
       room,
       key,
@@ -87,6 +92,7 @@ class Booking {
         reason: reason ?? this.reason,
         start: start ?? this.start,
         end: end ?? this.end,
+        creation: creation ?? this.creation,
         note: note ?? this.note,
         room: room ?? this.room,
         key: key ?? this.key,
@@ -103,6 +109,7 @@ class Booking {
         reason: "",
         start: DateTime.now(),
         end: DateTime.now(),
+        creation: DateTime.now(),
         note: "",
         room: Room.empty(),
         key: false,
@@ -115,6 +122,6 @@ class Booking {
 
   @override
   String toString() {
-    return 'Booking{id: $id, reason: $reason, start: $start, end: $end, note: $note, room: $room, key: $key, decision: $decision, recurrenceRule: $recurrenceRule, entity: $entity, applicant: $applicant, applicantId: $applicantId}';
+    return 'Booking{id: $id, reason: $reason, start: $start, end: $end, creation: $creation, note: $note, room: $room, key: $key, decision: $decision, recurrenceRule: $recurrenceRule, entity: $entity, applicant: $applicant, applicantId: $applicantId}';
   }
 }

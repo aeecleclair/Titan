@@ -36,9 +36,9 @@ class ManagerPage extends HookConsumerWidget {
                 break;
             }
           }
-          confirmedBookings.sort((a, b) => b.start.compareTo(a.start));
-          canceledBookings.sort((a, b) => b.start.compareTo(a.start));
-          pendingBookings.sort((a, b) => b.start.compareTo(a.start));
+          confirmedBookings.sort((a, b) => a.creation.compareTo(b.creation));
+          canceledBookings.sort((a, b) => a.creation.compareTo(b.creation));
+          pendingBookings.sort((a, b) => a.creation.compareTo(b.creation));
         },
         orElse: () {});
     return BookingTemplate(
