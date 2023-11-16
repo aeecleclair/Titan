@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/todo/class/todo.dart';
 import 'package:myecl/todo/tools/constants.dart';
 import 'package:myecl/todo/ui/pages/add_edit_todo_page/date_entry.dart';
 import 'package:myecl/todo/ui/pages/add_edit_todo_page/text_entry.dart';
@@ -46,6 +47,38 @@ class AddEditTodoPage extends HookConsumerWidget {
                       DateEntry(
                         controller: deadline,
                         title: "Deadline",
+                      ),
+                      const SizedBox(height: 50),
+                      GestureDetector(
+                        onTap: () {
+                          if (formKey.currentState!.validate()) {
+                          }
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.only(top: 10),
+                          width: double.infinity,
+                          height: 70,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.black12,
+                                blurRadius: 5,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: const Center(
+                            child: Text(
+                              "Save",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
                       )
                     ],
                   ),
