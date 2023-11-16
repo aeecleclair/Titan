@@ -16,6 +16,7 @@ import 'package:myecl/others/ui/no_internet_page.dart';
 import 'package:myecl/others/ui/no_module.dart';
 import 'package:myecl/others/ui/update_page.dart';
 import 'package:myecl/settings/router.dart';
+import 'package:myecl/todo/ui/router.dart';
 import 'package:myecl/raffle/router.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:myecl/vote/router.dart';
@@ -68,6 +69,7 @@ class AppRouter {
       LoginRouter(ref).passwordRoute(),
       RaffleRouter(ref).route(),
       SettingsRouter(ref).route(),
+      TodoRouter(ref).route(),
       VoteRouter(ref).route(),
     ];
   }
