@@ -8,6 +8,7 @@ import 'package:myecl/todo/tools/constants.dart';
 import 'package:myecl/todo/ui/pages/add_edit_todo_page/date_entry.dart';
 import 'package:myecl/todo/ui/pages/add_edit_todo_page/text_entry.dart';
 import 'package:myecl/todo/ui/pages/todo.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -20,6 +21,11 @@ class AddEditTodoPage extends HookConsumerWidget {
     final formKey = GlobalKey<FormState>();
     final name = useTextEditingController();
     final deadline = useTextEditingController();
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
+
     return TodoTemplate(
         child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
@@ -65,9 +71,15 @@ class AddEditTodoPage extends HookConsumerWidget {
                                 done: false,
                                 creation: DateTime.now());
                             tokenExpireWrapper(ref, () async {
-                              final value = await todoListNotifier.addTodo(newTodo);
+                              final value =
+                                  await todoListNotifier.addTodo(newTodo);
                               if (value) {
                                 QR.back();
+                                displayToastWithContext(
+                                    TypeMsg.msg, TodoTextConstants.addedTodo);
+                              } else {
+                                displayToastWithContext(
+                                    TypeMsg.error, TodoTextConstants.error);
                               }
                             });
                           }
