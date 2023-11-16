@@ -15,7 +15,7 @@ class TodoMainPage extends HookConsumerWidget {
       padding: const EdgeInsets.only(right: 30, top: 30, left: 30),
       child: Column(
         children: [
-          Align(
+          const Align(
             alignment: Alignment.centerLeft,
             child: Text(
               TodoTextConstants.todoList,
@@ -25,6 +25,12 @@ class TodoMainPage extends HookConsumerWidget {
               ),
             ),
           ),
+          ...todos.when(
+              data: (todos) => todos
+                  .map((todo) => Text(todo.name))
+                  .toList(),
+              loading: () => [const CircularProgressIndicator()],
+              error: (error, stack) => [Text(error.toString())])
         ],
       ),
     ));
