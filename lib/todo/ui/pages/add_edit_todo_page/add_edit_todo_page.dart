@@ -66,7 +66,7 @@ class AddEditTodoPage extends HookConsumerWidget {
                                 id: "",
                                 name: name.text,
                                 deadline: deadline.text.isNotEmpty
-                                    ? DateTime.parse(deadline.text)
+                                    ? DateTime.parse(processDateBack(deadline.text))
                                     : null,
                                 done: false,
                                 creation: DateTime.now());
