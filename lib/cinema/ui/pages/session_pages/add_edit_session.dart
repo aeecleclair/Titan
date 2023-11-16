@@ -1,12 +1,10 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:myecl/cinema/class/session.dart';
 import 'package:myecl/cinema/providers/session_list_provider.dart';
 import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
@@ -16,11 +14,14 @@ import 'package:myecl/cinema/providers/the_movie_db_genre_provider.dart';
 import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/cinema/ui/cinema.dart';
-import 'package:myecl/cinema/ui/text_entry.dart';
-import 'package:myecl/tools/constants.dart';
+import 'package:myecl/cinema/ui/pages/session_pages/imdb_button.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/widgets/date_entry.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditSessionPage extends HookConsumerWidget {
@@ -71,16 +72,11 @@ class AddEditSessionPage extends HookConsumerWidget {
             child: Form(
               key: key,
               child: Column(children: [
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                        isEdit
-                            ? CinemaTextConstants.editSession
-                            : CinemaTextConstants.addSession,
-                        style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 149, 149, 149)))),
+                AlignLeftText(
+                    isEdit
+                        ? CinemaTextConstants.editSession
+                        : CinemaTextConstants.addSession,
+                    color: Colors.grey),
                 const SizedBox(height: 30),
                 TextField(
                   controller: imdbUrl,
@@ -91,7 +87,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                         const TextStyle(color: Colors.black, fontSize: 20),
                     suffixIcon: Container(
                       padding: const EdgeInsets.all(10),
-                      child: ShrinkButton(
+                      child: WaitingButton(
                         onTap: () async {
                           if (imdbUrl.text.isEmpty) {
                             displayToastWithContext(
@@ -132,27 +128,11 @@ class AddEditSessionPage extends HookConsumerWidget {
                             });
                           });
                         },
-                        waitChild: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color(0xffe2b616),
-                          ),
-                          child: const CircularProgressIndicator(
-                            color: Colors.black,
-                          ),
-                        ),
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color(0xffe2b616),
-                          ),
-                          child: const HeroIcon(
-                            HeroIcons.arrowRight,
-                            size: 22,
-                            color: Colors.black,
-                          ),
+                        builder: (child) => ImdbButton(child: child),
+                        child: const HeroIcon(
+                          HeroIcons.arrowRight,
+                          size: 22,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -186,19 +166,12 @@ class AddEditSessionPage extends HookConsumerWidget {
                     : Image.memory(logo.value!, fit: BoxFit.cover),
                 const SizedBox(height: 30),
                 TextEntry(
-                  keyboardType: TextInputType.text,
                   label: CinemaTextConstants.name,
-                  suffix: '',
-                  isInt: false,
                   controller: name,
-                  onChanged: (value) {},
                 ),
                 const SizedBox(height: 30),
                 TextEntry(
-                  keyboardType: TextInputType.text,
                   label: CinemaTextConstants.posterUrl,
-                  suffix: '',
-                  isInt: false,
                   controller: posterUrl,
                   onChanged: (value) async {
                     logo.value = await File(posterUrl.text).readAsBytes();
@@ -206,130 +179,37 @@ class AddEditSessionPage extends HookConsumerWidget {
                   canBeEmpty: true,
                 ),
                 const SizedBox(height: 30),
-                GestureDetector(
-                  onTap: () => _selectDate(context, start),
-                  child: SizedBox(
-                    child: AbsorbPointer(
-                      child: TextFormField(
-                        controller: start,
-                        decoration: const InputDecoration(
-                          labelText: CinemaTextConstants.sessionDate,
-                          floatingLabelStyle: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.black, width: 2.0),
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return CinemaTextConstants.noDateError;
-                          }
-                          return null;
-                        },
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
+                DateEntry(
+                  onTap: () => getFullDate(context, start),
+                  label: CinemaTextConstants.sessionDate,
+                  controller: start,
                 ),
                 const SizedBox(height: 30),
-                GestureDetector(
-                  onTap: () => _selectOnlyHour(context, duration),
-                  child: SizedBox(
-                    child: AbsorbPointer(
-                      child: TextFormField(
-                        controller: duration,
-                        decoration: const InputDecoration(
-                          labelText: CinemaTextConstants.duration,
-                          floatingLabelStyle: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.black, width: 2.0),
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return CinemaTextConstants.noDuration;
-                          }
-                          return null;
-                        },
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                DateEntry(
+                    onTap: () => getOnlyHourDate(context, duration),
+                    label: CinemaTextConstants.duration,
+                    controller: duration),
                 const SizedBox(height: 30),
                 TextEntry(
-                  keyboardType: TextInputType.text,
                   label: CinemaTextConstants.genre,
-                  suffix: '',
-                  isInt: false,
                   controller: genre,
                   canBeEmpty: true,
-                  onChanged: (value) {},
                 ),
                 const SizedBox(height: 30),
                 TextEntry(
-                  keyboardType: TextInputType.text,
                   label: CinemaTextConstants.overview,
-                  suffix: '',
-                  isInt: false,
                   controller: overview,
                   canBeEmpty: true,
-                  onChanged: (value) {},
                 ),
                 const SizedBox(height: 30),
                 TextEntry(
-                  keyboardType: TextInputType.text,
                   label: CinemaTextConstants.tagline,
-                  suffix: '',
-                  isInt: false,
                   controller: tagline,
                   canBeEmpty: true,
-                  onChanged: (value) {},
                 ),
                 const SizedBox(height: 50),
-                ShrinkButton(
-                  waitChild: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.only(top: 8, bottom: 12),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 5,
-                          blurRadius: 10,
-                          offset:
-                              const Offset(3, 3), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    child: const Center(
-                      child: SizedBox(
-                        height: 30,
-                        width: 30,
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
+                WaitingButton(
+                  builder: (child) => AddEditButtonLayout(child: child),
                   onTap: () async {
                     if (key.currentState == null) {
                       return;
@@ -359,59 +239,38 @@ class AddEditSessionPage extends HookConsumerWidget {
                         if (value) {
                           QR.back();
                           if (isEdit) {
-                            sessionList.when(
+                            sessionList.maybeWhen(
                                 data: (list) async {
-                                  if (logo.value != null) {
+                                  final logoBytes = logo.value;
+                                  if (logoBytes != null) {
                                     final sessionPosterMapNotifier = ref.read(
                                         sessionPosterMapProvider.notifier);
-                                    Future.delayed(
-                                        const Duration(milliseconds: 1), () {
-                                      sessionPosterMapNotifier.setTData(
-                                          session, const AsyncLoading());
-                                    });
-                                    Image image = await sessionPosterNotifier
-                                        .updateLogo(session.id, logo.value!);
-                                    sessionPosterMapNotifier.setTData(
+                                    sessionPosterMapNotifier.autoLoad(
+                                        ref,
                                         session,
-                                        AsyncData([
-                                          Image(
-                                            image: image.image,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ]));
+                                        (session) => sessionPosterNotifier
+                                            .updateLogo(session.id, logoBytes));
                                   }
                                 },
-                                error: (error, s) {},
-                                loading: () {});
+                                orElse: () {});
                             displayToastWithContext(
                                 TypeMsg.msg, CinemaTextConstants.editedSession);
                           } else {
-                            sessionList.when(
+                            sessionList.maybeWhen(
                                 data: (list) async {
-                                  final newPretendance = list.last;
-                                  if (logo.value != null) {
+                                  final newSession = list.last;
+                                  final logoBytes = logo.value;
+                                  if (logoBytes != null) {
                                     final sessionPosterMapNotifier = ref.read(
                                         sessionPosterMapProvider.notifier);
-                                    Future.delayed(
-                                        const Duration(milliseconds: 1), () {
-                                      sessionPosterMapNotifier.setTData(
-                                          session, const AsyncLoading());
-                                    });
-                                    Image image =
-                                        await sessionPosterNotifier.updateLogo(
-                                            newPretendance.id, logo.value!);
-                                    sessionPosterMapNotifier.setTData(
-                                        newPretendance,
-                                        AsyncData([
-                                          Image(
-                                            image: image.image,
-                                            fit: BoxFit.cover,
-                                          )
-                                        ]));
+                                    sessionPosterMapNotifier.autoLoad(
+                                        ref,
+                                        newSession,
+                                        (session) => sessionPosterNotifier
+                                            .updateLogo(session.id, logoBytes));
                                   }
                                 },
-                                error: (error, s) {},
-                                loading: () {});
+                                orElse: () {});
                             displayToastWithContext(
                                 TypeMsg.msg, CinemaTextConstants.addedSession);
                           }
@@ -430,31 +289,14 @@ class AddEditSessionPage extends HookConsumerWidget {
                           CinemaTextConstants.incorrectOrMissingFields);
                     }
                   },
-                  child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.only(top: 8, bottom: 12),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 10,
-                            offset: const Offset(
-                                3, 3), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: Text(
-                          isEdit
-                              ? CinemaTextConstants.edit
-                              : CinemaTextConstants.add,
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold))),
+                  child: Text(
+                      isEdit
+                          ? CinemaTextConstants.edit
+                          : CinemaTextConstants.add,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold)),
                 ),
                 const SizedBox(height: 20),
               ]),
@@ -462,77 +304,4 @@ class AddEditSessionPage extends HookConsumerWidget {
       ),
     );
   }
-}
-
-_selectDate(BuildContext context, TextEditingController dateController) async {
-  final DateTime now = DateTime.now();
-  showDatePicker(
-      locale: const Locale("fr", "FR"),
-      context: context,
-      initialDate: now,
-      firstDate: now,
-      lastDate: DateTime(now.year + 1, now.month, now.day),
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: ThemeData.light().copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: Color.fromARGB(255, 10, 153, 172),
-              onPrimary: Colors.white,
-              surface: Colors.white,
-              onSurface: Colors.black,
-            ),
-            dialogBackgroundColor: Colors.white,
-          ),
-          child: child!,
-        );
-      }).then((picked) {
-    if (picked != null) {
-      showTimePicker(
-          context: context,
-          initialTime: TimeOfDay.now(),
-          builder: (BuildContext context, Widget? child) {
-            return Theme(
-              data: ThemeData.light().copyWith(
-                colorScheme: const ColorScheme.light(
-                  primary: Color.fromARGB(255, 10, 153, 172),
-                  onPrimary: Colors.white,
-                  surface: Colors.white,
-                  onSurface: Colors.black,
-                ),
-                dialogBackgroundColor: Colors.white,
-              ),
-              child: child!,
-            );
-          }).then((value) {
-        dateController.text = DateFormat('dd/MM/yyyy HH:mm')
-            .format(DateTimeField.combine(picked, value));
-      });
-    } else {
-      dateController.text = DateFormat('dd/MM/yyyy HH:mm').format(now);
-    }
-  });
-}
-
-_selectOnlyHour(
-    BuildContext context, TextEditingController dateController) async {
-  const TimeOfDay now = TimeOfDay(hour: 0, minute: 0);
-  final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: now,
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: ThemeData.light().copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: ColorConstants.gradient1,
-              onPrimary: Colors.white,
-              surface: Colors.white,
-              onSurface: Colors.black,
-            ),
-            dialogBackgroundColor: Colors.white,
-          ),
-          child: child!,
-        );
-      });
-  dateController.text =
-      DateFormat('HH:mm').format(DateTimeField.combine(DateTime.now(), picked));
 }

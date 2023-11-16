@@ -5,8 +5,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/cinema/class/session.dart';
 import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
 import 'package:myecl/cinema/providers/session_poster_provider.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
+import 'package:myecl/tools/ui/layouts/card_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class AdminSessionCard extends HookConsumerWidget {
   final Session session;
@@ -23,8 +24,8 @@ class AdminSessionCard extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final sessionPosterMap = ref.watch(sessionPosterMapProvider);
     final sessionPosterMapNotifier =
-        ref.watch(sessionPosterMapProvider.notifier);
-    final sessionPosterNotifier = ref.watch(sessionPosterProvider.notifier);
+        ref.read(sessionPosterMapProvider.notifier);
+    final sessionPosterNotifier = ref.read(sessionPosterProvider.notifier);
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -47,70 +48,27 @@ class AdminSessionCard extends HookConsumerWidget {
           borderRadius: BorderRadius.circular(18),
           child: Column(
             children: [
-              sessionPosterMap.when(
-                  data: (data) {
-                    if (data[session] != null) {
-                      return data[session]!.when(data: (data) {
-                        if (data.isNotEmpty) {
-                          return Image(
-                            image: data.first.image,
-                            height: 200,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          );
-                        } else {
-                          Future.delayed(
-                              const Duration(milliseconds: 1), () {
-                            sessionPosterMapNotifier.setTData(
-                                session, const AsyncLoading());
-                          });
-                          tokenExpireWrapper(ref, () async {
-                            sessionPosterNotifier
-                                .getLogo(session.id)
-                                .then((value) {
-                              sessionPosterMapNotifier.setTData(
-                                  session, AsyncData([value]));
-                            });
-                          });
-                          return Container(
-                            width: double.infinity,
-                            decoration: const BoxDecoration(boxShadow: [
-                              BoxShadow(
-                                color: Colors.black26,
-                                blurRadius: 10,
-                                spreadRadius: 7,
-                                offset: Offset(0, 5),
-                              ),
-                            ]),
-                          );
-                        }
-                      }, loading: () {
-                        return const SizedBox(
-                          width: double.infinity,
-                          height: 200,
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        );
-                      }, error: (error, stack) {
-                        return const SizedBox(
-                          width: double.infinity,
-                          height: 200,
-                          child: Center(
-                            child: HeroIcon(HeroIcons.exclamationCircle),
-                          ),
-                        );
-                      });
-                    } else {
-                      return const SizedBox.shrink();
-                    }
-                  },
-                  loading: () => const CircularProgressIndicator(),
-                  error: (error, stack) => Text('Error $error')),
+              SizedBox(
+                  height: 205,
+                  width: double.infinity,
+                  child: AutoLoaderChild(
+                    value: sessionPosterMap,
+                    notifier: sessionPosterMapNotifier,
+                    mapKey: session,
+                    loader: (session) =>
+                        sessionPosterNotifier.getLogo(session.id),
+                    dataBuilder: (context, data) => Image(
+                      image: data.first.image,
+                      fit: BoxFit.cover,
+                    ),
+                    errorBuilder: (error, stack) => const Center(
+                      child: HeroIcon(HeroIcons.exclamationCircle),
+                    ),
+                  )),
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-                height: 90,
+                height: 95,
                 child: Column(
                   children: [
                     AutoSizeText(
@@ -129,62 +87,19 @@ class AdminSessionCard extends HookConsumerWidget {
                       children: [
                         GestureDetector(
                           onTap: onEdit,
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.grey.withOpacity(0.2),
-                                    blurRadius: 10,
-                                    offset: const Offset(2, 3))
-                              ],
-                            ),
+                          child: CardButton(
+                            color: Colors.grey.shade200,
+                            shadowColor: Colors.grey.withOpacity(0.2),
                             child: const HeroIcon(HeroIcons.pencil,
                                 color: Colors.black),
                           ),
                         ),
-                        ShrinkButton(
+                        WaitingButton(
                           onTap: onDelete,
-                          waitChild: Container(
-                            width: 40,
-                            height: 40,
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    blurRadius: 10,
-                                    offset: const Offset(2, 3))
-                              ],
-                            ),
-                            child: const Center(
-                                child: CircularProgressIndicator(
-                              color: Colors.white,
-                            )),
-                          ),
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    blurRadius: 10,
-                                    offset: const Offset(2, 3))
-                              ],
-                            ),
-                            child: const HeroIcon(HeroIcons.trash,
-                                color: Colors.white),
-                          ),
+                          builder: (child) =>
+                              CardButton(color: Colors.black, child: child),
+                          child: const HeroIcon(HeroIcons.trash,
+                              color: Colors.white),
                         ),
                       ],
                     ),

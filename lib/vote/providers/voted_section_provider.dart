@@ -15,12 +15,11 @@ class VotedSectionProvider extends ListNotifier<String> {
   }
 
   void addVote(String id) {
-    state.when(
+    state.maybeWhen(
         data: (value) {
           state = AsyncData(value..add(id));
         },
-        error: (error, s) {},
-        loading: () {});
+        orElse: () {});
   }
 }
 

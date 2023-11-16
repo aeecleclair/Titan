@@ -1,9 +1,12 @@
 import 'package:myecl/amap/providers/delivery_provider.dart';
-import 'package:myecl/amap/providers/orderable_deliveries.dart';
+import 'package:myecl/amap/providers/available_deliveries.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/widgets/admin_button.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
@@ -19,7 +22,7 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/main_page/collection_slot_selector.dart';
 import 'package:myecl/amap/ui/pages/main_page/delivery_section.dart';
 import 'package:myecl/amap/ui/pages/main_page/orders_section.dart';
-import 'package:myecl/tools/ui/refresher.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -30,13 +33,13 @@ class AmapMainPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final order = ref.watch(orderProvider);
-    final orderNotifier = ref.watch(orderProvider.notifier);
+    final orderNotifier = ref.read(orderProvider.notifier);
     final isAdmin = ref.watch(isAmapAdminProvider);
     final delivery = ref.watch(deliveryProvider);
-    final deliveriesNotifier = ref.watch(deliveryListProvider.notifier);
-    final ordersNotifier = ref.watch(userOrderListProvider.notifier);
-    final soldeNotifier = ref.watch(userAmountProvider.notifier);
-    final solde = ref.watch(userAmountProvider);
+    final deliveriesNotifier = ref.read(deliveryListProvider.notifier);
+    final ordersNotifier = ref.read(userOrderListProvider.notifier);
+    final balanceNotifier = ref.read(userAmountProvider.notifier);
+    final balance = ref.watch(userAmountProvider);
     final showPanel = useState(false);
     final me = ref.watch(userProvider);
     final deliveryProductListNotifier =
@@ -48,8 +51,8 @@ class AmapMainPage extends HookConsumerWidget {
       end: 1.0,
     ).animate(CurvedAnimation(parent: animation, curve: Curves.easeInOutCubic));
 
-    final orderableDeliveries = ref.watch(orderableDeliveriesProvider);
-    final orderableDeliveriesIds = orderableDeliveries
+    final availableDeliveries = ref.watch(availableDeliveriesProvider);
+    final availableDeliveriesIds = availableDeliveries
         .map((delivery) => delivery.id)
         .toList(growable: false);
 
@@ -61,75 +64,44 @@ class AmapMainPage extends HookConsumerWidget {
       child: Refresher(
           onRefresh: () async {
             await ordersNotifier.loadOrderList(me.id);
-            await soldeNotifier.loadCashByUser(me.id);
+            await balanceNotifier.loadCashByUser(me.id);
             await deliveriesNotifier.loadDeliveriesList();
           },
           child: Column(
             children: [
-              const SizedBox(
-                height: 15,
-              ),
+              const SizedBox(height: 15),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: Text(
-                              solde.when(
-                                  data: (s) =>
-                                      "${AMAPTextConstants.amount} : ${s.balance.toStringAsFixed(2)}€",
-                                  error: (e, s) => "Erreur",
-                                  loading: () => AMAPTextConstants.loading),
-                              style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: AMAPColorConstants.greenGradient1))),
-                      if (isAdmin)
-                        GestureDetector(
-                          onTap: () {
-                            QR.to(AmapRouter.root + AmapRouter.admin);
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 8),
-                            decoration: BoxDecoration(
-                                gradient: const RadialGradient(
-                                  colors: [
-                                    AMAPColorConstants.greenGradient1,
-                                    AMAPColorConstants.greenGradient2
-                                  ],
-                                  center: Alignment.topLeft,
-                                  radius: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: AMAPColorConstants.textDark
-                                          .withOpacity(0.2),
-                                      blurRadius: 10,
-                                      offset: const Offset(0, 5))
-                                ]),
-                            child: const Row(
-                              children: [
-                                HeroIcon(HeroIcons.userGroup,
-                                    color: Colors.white),
-                                SizedBox(width: 10),
-                                Text("Admin",
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white)),
-                              ],
-                            ),
-                          ),
-                        ),
-                    ]),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: AsyncChild(
+                        value: balance,
+                        builder: (context, s) => Text(
+                            "${AMAPTextConstants.amount} : ${s.balance.toStringAsFixed(2)}€",
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: AMAPColorConstants.greenGradient1)),
+                        loaderColor: AMAPColorConstants.greenGradient1,
+                      ),
+                    ),
+                    if (isAdmin)
+                      AdminButton(
+                        onTap: () {
+                          QR.to(AmapRouter.root + AmapRouter.admin);
+                        },
+                        colors: const [
+                          AMAPColorConstants.greenGradient1,
+                          AMAPColorConstants.greenGradient2
+                        ],
+                      ),
+                  ],
+                ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               Stack(
                 children: [
                   Column(
@@ -143,7 +115,7 @@ class AmapMainPage extends HookConsumerWidget {
                           QR.to(AmapRouter.root + AmapRouter.detailOrder);
                         },
                         addOrder: () {
-                          solde.whenData(
+                          balance.whenData(
                             (s) {
                               orderNotifier.setOrder(Order.empty());
                               animation.forward();
@@ -152,12 +124,8 @@ class AmapMainPage extends HookConsumerWidget {
                           );
                         },
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const DeliverySection(
-                        showSelected: false,
-                      ),
+                      const SizedBox(height: 20),
+                      const DeliverySection(showSelected: false),
                     ],
                   ),
                   AnimatedBuilder(
@@ -198,24 +166,14 @@ class AmapMainPage extends HookConsumerWidget {
                       ),
                       child: Column(
                         children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          const SizedBox(height: 20),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 30),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    'Ajouter une commande',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),
-                                  ),
-                                ),
+                                const AlignLeftText(AMAPTextConstants.addOrder,
+                                    color: Colors.white),
                                 IconButton(
                                   icon: const HeroIcon(
                                     HeroIcons.xMark,
@@ -230,9 +188,7 @@ class AmapMainPage extends HookConsumerWidget {
                               ],
                             ),
                           ),
-                          const SizedBox(
-                            height: 30,
-                          ),
+                          const SizedBox(height: 30),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 50),
                             child: Container(
@@ -245,22 +201,17 @@ class AmapMainPage extends HookConsumerWidget {
                                 ),
                                 child: Row(
                                     children: CollectionSlot.values
-                                        .map((e) => CollectionSLotelector(
+                                        .map((e) => CollectionSlotSelector(
                                             collectionSlot: e))
                                         .toList())),
                           ),
-                          const SizedBox(
-                            height: 30,
-                          ),
+                          const SizedBox(height: 30),
                           DeliverySection(
-                            editable: order.id == Order.empty().id,
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          ShrinkButton(
+                              editable: order.id == Order.empty().id),
+                          const SizedBox(height: 20),
+                          WaitingButton(
                               onTap: () async {
-                                if (orderableDeliveriesIds
+                                if (availableDeliveriesIds
                                     .contains(delivery.id)) {
                                   await tokenExpireWrapper(ref, () async {
                                     await deliveryProductListNotifier
@@ -273,73 +224,40 @@ class AmapMainPage extends HookConsumerWidget {
                                       AMAPTextConstants.noSelectedDelivery);
                                 }
                               },
-                              waitChild: Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 30),
-                                height: 70,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  gradient: const LinearGradient(
-                                    colors: [
-                                      AMAPColorConstants.greenGradient2,
-                                      AMAPColorConstants.textDark,
-                                    ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: AMAPColorConstants.textDark
-                                          .withOpacity(0.3),
-                                      spreadRadius: 2,
-                                      blurRadius: 10,
-                                      offset: const Offset(2, 5),
+                              builder: (child) => Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 30),
+                                  height: 70,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(25),
+                                    gradient: const LinearGradient(
+                                      colors: [
+                                        AMAPColorConstants.greenGradient2,
+                                        AMAPColorConstants.textDark,
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
                                     ),
-                                  ],
-                                ),
-                                child: Container(
-                                  padding: const EdgeInsets.only(bottom: 5),
-                                  width: double.infinity,
-                                  child: const Center(
-                                      child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                  )),
-                                ),
-                              ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: AMAPColorConstants.textDark
+                                            .withOpacity(0.3),
+                                        spreadRadius: 2,
+                                        blurRadius: 10,
+                                        offset: const Offset(2, 5),
+                                      ),
+                                    ],
+                                  ),
+                                  child: child),
                               child: Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 30),
-                                height: 70,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  gradient: const LinearGradient(
-                                    colors: [
-                                      AMAPColorConstants.greenGradient2,
-                                      AMAPColorConstants.textDark,
-                                    ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: AMAPColorConstants.textDark
-                                          .withOpacity(0.3),
-                                      spreadRadius: 2,
-                                      blurRadius: 10,
-                                      offset: const Offset(2, 5),
-                                    ),
-                                  ],
-                                ),
-                                child: Container(
-                                  padding: const EdgeInsets.only(bottom: 5),
-                                  width: double.infinity,
-                                  child: const Center(
-                                    child: Text("Étape suivante",
-                                        style: TextStyle(
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.w900,
-                                            color: Colors.white)),
-                                  ),
+                                padding: const EdgeInsets.only(bottom: 5),
+                                width: double.infinity,
+                                child: const Center(
+                                  child: Text(AMAPTextConstants.nextStep,
+                                      style: TextStyle(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.w900,
+                                          color: Colors.white)),
                                 ),
                               ))
                         ],

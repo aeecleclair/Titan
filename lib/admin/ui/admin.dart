@@ -3,12 +3,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/router.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/top_bar.dart';
+import 'package:myecl/tools/ui/widgets/top_bar.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 class AdminTemplate extends HookConsumerWidget {
   final Widget child;
-  const AdminTemplate({Key? key, required this.child}) : super(key: key);
+  const AdminTemplate({super.key, required this.child});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

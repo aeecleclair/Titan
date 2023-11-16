@@ -52,4 +52,6 @@ class LoginTextConstants {
   static const String resetPasswordTitle = 'Réinitialiser\nle mot de \npasse';
   static const String nickname = 'Surnom';
   static const String welcomeBack = 'Bienvenue';
+
+  static const String appName = "MyECL";
 }

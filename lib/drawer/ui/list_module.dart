@@ -5,7 +5,7 @@ import 'package:myecl/drawer/providers/modules_provider.dart';
 import 'package:myecl/drawer/ui/module.dart';
 
 class ListModule extends ConsumerWidget {
-  const ListModule({Key? key}) : super(key: key);
+  const ListModule({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

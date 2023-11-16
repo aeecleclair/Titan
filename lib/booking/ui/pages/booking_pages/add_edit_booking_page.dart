@@ -1,8 +1,6 @@
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
@@ -14,19 +12,24 @@ import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/pages/admin_pages/admin_chip.dart';
 import 'package:myecl/booking/ui/pages/booking_pages/checkbox_entry.dart';
-import 'package:myecl/booking/ui/pages/booking_pages/text_entry.dart';
 import 'package:myecl/event/tools/functions.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/widgets/date_entry.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class AddEditBookingPage extends HookConsumerWidget {
   final bool isAdmin;
-  const AddEditBookingPage({Key? key, required this.isAdmin}) : super(key: key);
+
+  const AddEditBookingPage({super.key, required this.isAdmin});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -89,77 +92,47 @@ class AddEditBookingPage extends HookConsumerWidget {
                 const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                          isEdit
-                              ? BookingTextConstants.editBooking
-                              : BookingTextConstants.addBooking,
-                          style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 149, 149, 149)))),
+                  child: AlignLeftText(
+                      isEdit
+                          ? BookingTextConstants.editBooking
+                          : BookingTextConstants.addBooking,
+                      color: Colors.grey),
                 ),
                 const SizedBox(height: 20),
-                rooms.when(
-                    data: (data) => SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          physics: const BouncingScrollPhysics(),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const SizedBox(width: 15),
-                              ...data.map(
-                                (e) => AdminChip(
-                                  label: capitalize(e.name),
-                                  selected: room.value.id == e.id,
-                                  onTap: () async {
-                                    room.value = e;
-                                  },
-                                ),
-                              ),
-                              const SizedBox(width: 15),
-                            ],
-                          ),
-                        ),
-                    error: (Object error, StackTrace? stackTrace) => Center(
-                          child: Text("Error : $error"),
-                        ),
-                    loading: () => const Center(
-                          child: CircularProgressIndicator(),
-                        )),
+                AsyncChild(
+                    value: rooms,
+                    builder: (context, data) => HorizontalListView.builder(
+                        height: 40,
+                        items: data,
+                        itemBuilder: (context, e, i) => AdminChip(
+                              label: capitalize(e.name),
+                              selected: room.value.id == e.id,
+                              onTap: () async {
+                                room.value = e;
+                              },
+                            ))),
                 const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Column(children: [
                     TextEntry(
-                      keyboardType: TextInputType.text,
                       controller: entity,
-                      isInt: false,
                       label: BookingTextConstants.entity,
-                      suffix: '',
                     ),
                     const SizedBox(height: 30),
                     TextEntry(
-                      keyboardType: TextInputType.text,
                       controller: motif,
-                      isInt: false,
                       label: BookingTextConstants.reason,
-                      suffix: '',
                     ),
                     const SizedBox(height: 30),
                     TextEntry(
-                      keyboardType: TextInputType.text,
                       label: BookingTextConstants.note,
-                      suffix: '',
-                      isInt: false,
                       controller: note,
                     ),
                     const SizedBox(height: 20),
                     CheckBoxEntry(
                       title: BookingTextConstants.necessaryKey,
                       valueNotifier: keyRequired,
-                      onChanged: () {},
                     ),
                     const SizedBox(height: 20),
                     CheckBoxEntry(
@@ -185,343 +158,107 @@ class AddEditBookingPage extends HookConsumerWidget {
                     recurrent.value
                         ? Column(
                             children: [
+                              const Text(BookingTextConstants.recurrenceDays,
+                                  style: TextStyle(color: Colors.black)),
+                              const SizedBox(height: 10),
                               Column(
-                                children: [
-                                  const Text(
-                                      BookingTextConstants.recurrenceDays,
-                                      style: TextStyle(color: Colors.black)),
-                                  const SizedBox(height: 10),
-                                  Column(
-                                      children: BookingTextConstants.dayList
-                                          .map((e) => GestureDetector(
-                                                onTap: () {
-                                                  selectedDaysNotifier.toggle(
+                                  children: BookingTextConstants.dayList
+                                      .map((e) => GestureDetector(
+                                            onTap: () {
+                                              selectedDaysNotifier.toggle(
+                                                  BookingTextConstants.dayList
+                                                      .indexOf(e));
+                                            },
+                                            behavior: HitTestBehavior.opaque,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  e,
+                                                  style: TextStyle(
+                                                    color: Colors.grey.shade700,
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                                Checkbox(
+                                                  checkColor: Colors.white,
+                                                  activeColor: Colors.black,
+                                                  value: selectedDays[
                                                       BookingTextConstants
                                                           .dayList
-                                                          .indexOf(e));
-                                                },
-                                                behavior:
-                                                    HitTestBehavior.opaque,
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      e,
-                                                      style: TextStyle(
-                                                        color: Colors
-                                                            .grey.shade700,
-                                                        fontSize: 16,
-                                                      ),
-                                                    ),
-                                                    Checkbox(
-                                                      checkColor: Colors.white,
-                                                      activeColor: Colors.black,
-                                                      value: selectedDays[
-                                                          BookingTextConstants
-                                                              .dayList
-                                                              .indexOf(e)],
-                                                      onChanged: (value) {
-                                                        selectedDaysNotifier.toggle(
-                                                            BookingTextConstants
-                                                                .dayList
-                                                                .indexOf(e));
-                                                      },
-                                                    ),
-                                                  ],
+                                                          .indexOf(e)],
+                                                  onChanged: (value) {
+                                                    selectedDaysNotifier.toggle(
+                                                        BookingTextConstants
+                                                            .dayList
+                                                            .indexOf(e));
+                                                  },
                                                 ),
-                                              ))
-                                          .toList()),
-                                  const SizedBox(height: 20),
-                                  const Text(BookingTextConstants.interval,
-                                      style: TextStyle(color: Colors.black)),
-                                  const SizedBox(height: 10),
-                                  TextFormField(
-                                    decoration: InputDecoration(
-                                      prefix: Container(
-                                        margin:
-                                            const EdgeInsets.only(right: 10),
-                                        child: const Text(
-                                            BookingTextConstants.eventEvery,
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400,
-                                                color: Colors.black)),
-                                      ),
-                                      suffix: const Text(
-                                          BookingTextConstants.weeks,
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors.black)),
-                                      labelText: BookingTextConstants.interval,
-                                      labelStyle: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black,
-                                      ),
-                                      floatingLabelStyle: const TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      focusedBorder: const UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Colors.black, width: 2.0),
-                                      ),
-                                    ),
-                                    controller: interval,
-                                    validator: (value) {
-                                      if (value == null) {
-                                        return BookingTextConstants
-                                            .noDescriptionError;
-                                      } else if (int.tryParse(value) == null) {
-                                        return BookingTextConstants
-                                            .invalidIntervalError;
-                                      } else if (int.parse(value) < 1) {
-                                        return BookingTextConstants
-                                            .invalidIntervalError;
-                                      }
-                                      return null;
-                                    },
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 30,
-                                  ),
-                                  if (!allDay.value)
-                                    Column(
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () =>
-                                              _selectOnlyHour(context, start),
-                                          child: SizedBox(
-                                            child: AbsorbPointer(
-                                              child: TextFormField(
-                                                controller: start,
-                                                decoration:
-                                                    const InputDecoration(
-                                                  labelText:
-                                                      BookingTextConstants
-                                                          .startHour,
-                                                  floatingLabelStyle: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                  focusedBorder:
-                                                      UnderlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                        color: Colors.black,
-                                                        width: 2.0),
-                                                  ),
-                                                ),
-                                                validator: (value) {
-                                                  if (value!.isEmpty) {
-                                                    return BookingTextConstants
-                                                        .noDateError;
-                                                  }
-                                                  return null;
-                                                },
-                                                style: const TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
+                                              ],
                                             ),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 30,
-                                        ),
-                                        GestureDetector(
-                                          onTap: () =>
-                                              _selectOnlyHour(context, end),
-                                          child: SizedBox(
-                                            child: AbsorbPointer(
-                                              child: TextFormField(
-                                                controller: end,
-                                                decoration:
-                                                    const InputDecoration(
-                                                  labelText:
-                                                      BookingTextConstants
-                                                          .endHour,
-                                                  floatingLabelStyle: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                  focusedBorder:
-                                                      UnderlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                        color: Colors.black,
-                                                        width: 2.0),
-                                                  ),
-                                                ),
-                                                validator: (value) {
-                                                  if (value!.isEmpty) {
-                                                    return BookingTextConstants
-                                                        .noDateError;
-                                                  }
-                                                  return null;
-                                                },
-                                                style: const TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 30,
-                                        ),
-                                      ],
+                                          ))
+                                      .toList()),
+                              const SizedBox(height: 20),
+                              const Text(BookingTextConstants.interval,
+                                  style: TextStyle(color: Colors.black)),
+                              const SizedBox(height: 10),
+                              TextEntry(
+                                label: BookingTextConstants.interval,
+                                prefix: BookingTextConstants.eventEvery,
+                                suffix: BookingTextConstants.weeks,
+                                controller: interval,
+                                isInt: true,
+                              ),
+                              const SizedBox(height: 30),
+                              if (!allDay.value)
+                                Column(
+                                  children: [
+                                    DateEntry(
+                                        onTap: () =>
+                                            getOnlyHourDate(context, start),
+                                        controller: start,
+                                        label: BookingTextConstants.startHour),
+                                    const SizedBox(height: 30),
+                                    DateEntry(
+                                      onTap: () =>
+                                          getOnlyHourDate(context, end),
+                                      controller: end,
+                                      label: BookingTextConstants.endHour,
                                     ),
-                                  GestureDetector(
-                                    onTap: () => _selectOnlyDayDate(
-                                        context, recurrenceEndDate),
-                                    child: SizedBox(
-                                      child: AbsorbPointer(
-                                        child: TextFormField(
-                                          controller: recurrenceEndDate,
-                                          decoration: const InputDecoration(
-                                            labelText: BookingTextConstants
-                                                .recurrenceEndDate,
-                                            floatingLabelStyle: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                            focusedBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.black,
-                                                  width: 2.0),
-                                            ),
-                                          ),
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return BookingTextConstants
-                                                  .noDateError;
-                                            }
-                                            return null;
-                                          },
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                    const SizedBox(height: 30),
+                                  ],
+                                ),
+                              DateEntry(
+                                onTap: () =>
+                                    getOnlyDayDate(context, recurrenceEndDate),
+                                controller: recurrenceEndDate,
+                                label: BookingTextConstants.recurrenceEndDate,
                               ),
                             ],
                           )
                         : Column(
                             children: [
-                              GestureDetector(
+                              DateEntry(
+                                  onTap: () => allDay.value
+                                      ? getOnlyDayDate(context, start)
+                                      : getFullDate(context, start),
+                                  controller: start,
+                                  label: BookingTextConstants.startDate),
+                              const SizedBox(height: 30),
+                              DateEntry(
                                 onTap: () => allDay.value
-                                    ? _selectOnlyDayDate(context, start)
-                                    : _selectDate(context, start),
-                                child: SizedBox(
-                                  child: AbsorbPointer(
-                                    child: TextFormField(
-                                      controller: start,
-                                      decoration: const InputDecoration(
-                                        labelText:
-                                            BookingTextConstants.startDate,
-                                        floatingLabelStyle: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Colors.black, width: 2.0),
-                                        ),
-                                      ),
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return BookingTextConstants
-                                              .noDateError;
-                                        }
-                                        return null;
-                                      },
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 30,
-                              ),
-                              GestureDetector(
-                                onTap: () => allDay.value
-                                    ? _selectOnlyDayDate(context, end)
-                                    : _selectDate(context, end),
-                                child: SizedBox(
-                                  child: AbsorbPointer(
-                                    child: TextFormField(
-                                      controller: end,
-                                      decoration: const InputDecoration(
-                                        labelText: BookingTextConstants.endDate,
-                                        floatingLabelStyle: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Colors.black, width: 2.0),
-                                        ),
-                                      ),
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return BookingTextConstants
-                                              .noDateError;
-                                        }
-                                        return null;
-                                      },
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                    ? getOnlyDayDate(context, end)
+                                    : getFullDate(context, end),
+                                controller: end,
+                                label: BookingTextConstants.endDate,
                               ),
                             ],
                           ),
                     const SizedBox(height: 50),
-                    ShrinkButton(
-                      waitChild: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.only(top: 8, bottom: 12),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 5,
-                                blurRadius: 10,
-                                offset: const Offset(3, 3),
-                              ),
-                            ],
-                          ),
-                          child: const Center(
-                              child: CircularProgressIndicator(
-                            color: Colors.white,
-                          ))),
+                    WaitingButton(
+                      builder: (child) => AddEditButtonLayout(child: child),
                       onTap: () async {
                         if (key.currentState == null) {
                           return;
@@ -532,8 +269,8 @@ class AddEditBookingPage extends HookConsumerWidget {
                             end.text = "${end.text} 23:59";
                           }
                           if (end.text.contains("/") &&
-                                      isDateBefore(processDateBack(end.text),
-                                          processDateBack(start.text))) {
+                              isDateBefore(processDateBack(end.text),
+                                  processDateBack(start.text))) {
                             displayToast(context, TypeMsg.error,
                                 BookingTextConstants.invalidDates);
                           } else if (room.value.id.isEmpty) {
@@ -614,10 +351,9 @@ class AddEditBookingPage extends HookConsumerWidget {
                                       BookingTextConstants.editedBooking);
                                 } else {
                                   if (!isAdmin) {
-                                    newBooking = bookings.when(
+                                    newBooking = bookings.maybeWhen(
                                         data: (value) => value.last,
-                                        error: (e, s) => Booking.empty(),
-                                        loading: () => Booking.empty());
+                                        orElse: () => Booking.empty());
                                     if (newBooking.id != Booking.empty().id) {
                                       await usersBookingsNotifier
                                           .addBooking(newBooking);
@@ -642,137 +378,19 @@ class AddEditBookingPage extends HookConsumerWidget {
                               BookingTextConstants.incorrectOrMissingFields);
                         }
                       },
-                      child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.only(top: 8, bottom: 12),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 5,
-                                blurRadius: 10,
-                                offset: const Offset(
-                                    3, 3), // changes position of shadow
-                              ),
-                            ],
-                          ),
-                          child: Text(
-                              isEdit
-                                  ? BookingTextConstants.edit
-                                  : BookingTextConstants.add,
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold))),
+                      child: Text(
+                          isEdit
+                              ? BookingTextConstants.edit
+                              : BookingTextConstants.add,
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold)),
                     ),
                     const SizedBox(height: 30),
                   ]),
                 )
               ]))),
     );
-  }
-
-  _selectOnlyDayDate(
-      BuildContext context, TextEditingController dateController) async {
-    final DateTime now = DateTime.now();
-    final DateTime? picked = await showDatePicker(
-        locale: const Locale("fr", "FR"),
-        context: context,
-        initialDate: now,
-        firstDate: now,
-        lastDate: DateTime(now.year + 1, now.month, now.day),
-        builder: (BuildContext context, Widget? child) {
-          return Theme(
-            data: ThemeData.light().copyWith(
-              colorScheme: const ColorScheme.light(
-                primary: Color.fromARGB(255, 172, 32, 10),
-                onPrimary: Colors.white,
-                surface: Colors.white,
-                onSurface: Colors.black,
-              ),
-              dialogBackgroundColor: Colors.white,
-            ),
-            child: child!,
-          );
-        });
-    dateController.text = DateFormat('dd/MM/yyyy')
-        .format(picked ?? now.add(const Duration(hours: 1)));
-  }
-
-  _selectOnlyHour(
-      BuildContext context, TextEditingController dateController) async {
-    final TimeOfDay now = TimeOfDay.now();
-    final TimeOfDay? picked = await showTimePicker(
-        context: context,
-        initialTime: now,
-        builder: (BuildContext context, Widget? child) {
-          return Theme(
-            data: ThemeData.light().copyWith(
-              colorScheme: const ColorScheme.light(
-                primary: ColorConstants.gradient1,
-                onPrimary: Colors.white,
-                surface: Colors.white,
-                onSurface: Colors.black,
-              ),
-              dialogBackgroundColor: Colors.white,
-            ),
-            child: child!,
-          );
-        });
-    dateController.text = DateFormat('HH:mm')
-        .format(DateTimeField.combine(DateTime.now(), picked));
-  }
-
-  _selectDate(
-      BuildContext context, TextEditingController dateController) async {
-    final DateTime now = DateTime.now();
-    showDatePicker(
-        locale: const Locale("fr", "FR"),
-        context: context,
-        initialDate: now,
-        firstDate: now,
-        lastDate: DateTime(now.year + 1, now.month, now.day),
-        builder: (BuildContext context, Widget? child) {
-          return Theme(
-            data: ThemeData.light().copyWith(
-              colorScheme: const ColorScheme.light(
-                primary: Color.fromARGB(255, 10, 153, 172),
-                onPrimary: Colors.white,
-                surface: Colors.white,
-                onSurface: Colors.black,
-              ),
-              dialogBackgroundColor: Colors.white,
-            ),
-            child: child!,
-          );
-        }).then((picked) {
-      if (picked != null) {
-        showTimePicker(
-            context: context,
-            initialTime: TimeOfDay.now(),
-            builder: (BuildContext context, Widget? child) {
-              return Theme(
-                data: ThemeData.light().copyWith(
-                  colorScheme: const ColorScheme.light(
-                    primary: Color.fromARGB(255, 10, 153, 172),
-                    onPrimary: Colors.white,
-                    surface: Colors.white,
-                    onSurface: Colors.black,
-                  ),
-                  dialogBackgroundColor: Colors.white,
-                ),
-                child: child!,
-              );
-            }).then((value) {
-          dateController.text = DateFormat('dd/MM/yyyy HH:mm')
-              .format(DateTimeField.combine(picked, value));
-        });
-      } else {
-        dateController.text = DateFormat('dd/MM/yyyy HH:mm').format(now);
-      }
-    });
   }
 }

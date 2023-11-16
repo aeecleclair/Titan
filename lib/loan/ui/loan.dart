@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/loan/router.dart';
 import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/tools/ui/top_bar.dart';
+import 'package:myecl/tools/ui/widgets/top_bar.dart';
 
 class LoanTemplate extends StatelessWidget {
   final Widget child;
-  const LoanTemplate({Key? key, required this.child}) : super(key: key);
+  const LoanTemplate({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

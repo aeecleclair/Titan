@@ -7,8 +7,8 @@ class Information {
   late final String manager;
   late final String link;
   late final String description;
-  
-  Information.fromJson(Map<String, dynamic> json){
+
+  Information.fromJson(Map<String, dynamic> json) {
     manager = json['manager'];
     link = json['link'];
     description = json['description'];

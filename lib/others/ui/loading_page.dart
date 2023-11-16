@@ -4,13 +4,14 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/login/router.dart';
 import 'package:myecl/router.dart';
 import 'package:myecl/tools/providers/path_forwarding_provider.dart';
+import 'package:myecl/tools/ui/widgets/loader.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/version/providers/titan_version_provider.dart';
 import 'package:myecl/version/providers/version_verifier_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class LoadingPage extends ConsumerWidget {
-  const LoadingPage({Key? key}) : super(key: key);
+  const LoadingPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,8 +41,6 @@ class LoadingPage extends ConsumerWidget {
         },
         loading: () {},
         error: (error, stack) => QR.to(AppRouter.noInternet));
-    return const Center(
-      child: CircularProgressIndicator(),
-    );
+    return const Scaffold(body: Loader());
   }
 }

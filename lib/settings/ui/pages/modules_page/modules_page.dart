@@ -49,13 +49,11 @@ class ModulesPage extends HookConsumerWidget {
                 child: Row(
                   children: [
                     module.getIcon(Colors.grey.shade700),
-                    const SizedBox(
-                      width: 20,
-                    ),
+                    const SizedBox(width: 20),
                     Text(
                       module.name,
                       style: const TextStyle(
-                        color: Color.fromARGB(255, 0, 0, 0),
+                        color: Colors.black,
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
                       ),

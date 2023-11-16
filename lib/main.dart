@@ -6,16 +6,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:myecl/login/providers/animation_provider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:myecl/drawer/providers/animation_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/providers/top_bar_callback_provider.dart';
-import 'package:myecl/login/providers/animation_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/router.dart';
 import 'package:myecl/service/tools/setup.dart';
-import 'package:myecl/tools/ui/app_template.dart';
+import 'package:myecl/tools/ui/layouts/app_template.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 void main() async {
@@ -36,7 +36,7 @@ void main() async {
 }
 
 class MyApp extends HookConsumerWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -46,9 +46,7 @@ class MyApp extends HookConsumerWidget {
     final animationNotifier = ref.read(backgroundAnimationProvider.notifier);
     final navigatorKey = GlobalKey<NavigatorState>();
 
-    Future(() {
-      animationNotifier.setController(animationController);
-    });
+    Future(() => animationNotifier.setController(animationController));
 
     final myWillPopScope = WillPopScope(
         onWillPop: () async {
@@ -90,9 +88,7 @@ class MyApp extends HookConsumerWidget {
             if (child == null) {
               return const SizedBox();
             }
-            return AppTemplate(
-              child: child,
-            );
+            return AppTemplate(child: child);
           },
           routerDelegate: QRouterDelegate(
             appRouter.routes,

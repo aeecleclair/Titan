@@ -3,23 +3,26 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/dialog.dart';
+import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/refresher.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
-import 'package:myecl/vote/class/pretendance.dart';
-import 'package:myecl/vote/providers/pretendance_list_provider.dart';
+import 'package:myecl/vote/class/contender.dart';
+import 'package:myecl/vote/providers/contender_list_provider.dart';
 import 'package:myecl/vote/providers/result_provider.dart';
-import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
+import 'package:myecl/vote/providers/sections_contender_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/show_graph_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/tools/constants.dart';
+import 'package:myecl/vote/ui/pages/admin_page/admin_button.dart';
 import 'package:myecl/vote/ui/pages/admin_page/section_bar.dart';
-import 'package:myecl/vote/ui/pages/admin_page/section_pretendence_items.dart';
+import 'package:myecl/vote/ui/pages/admin_page/section_contender_items.dart';
 import 'package:myecl/vote/ui/pages/admin_page/vote_bars.dart';
 import 'package:myecl/vote/ui/pages/admin_page/vote_count.dart';
 import 'package:myecl/vote/ui/pages/admin_page/voters_bar.dart';
@@ -30,10 +33,10 @@ class AdminPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sectionPretendanceListNotifier =
-        ref.watch(sectionPretendanceProvider.notifier);
+    final sectionContenderListNotifier =
+        ref.watch(sectionContenderProvider.notifier);
     final sectionsNotifier = ref.watch(sectionsProvider.notifier);
-    final pretendances = ref.watch(pretendanceListProvider);
+    final contenderList = ref.watch(contenderListProvider);
     final asyncStatus = ref.watch(statusProvider);
     final statusNotifier = ref.watch(statusProvider.notifier);
     final showVotes = ref.watch(showGraphProvider);
@@ -54,17 +57,15 @@ class AdminPage extends HookConsumerWidget {
           }
           final sections = await sectionsNotifier.loadSectionList();
           sections.whenData((value) async {
-            List<Pretendance> list = [];
-            pretendances.when(data: (pretendance) {
-              list = pretendance;
-            }, error: (error, stackTrace) {
-              list = [];
-            }, loading: () {
+            List<Contender> list = [];
+            contenderList.maybeWhen(data: (contenders) {
+              list = contenders;
+            }, orElse: () {
               list = [];
             });
-            sectionPretendanceListNotifier.loadTList(value);
+            sectionContenderListNotifier.loadTList(value);
             for (final l in value) {
-              sectionPretendanceListNotifier.setTData(
+              sectionContenderListNotifier.setTData(
                   l,
                   AsyncValue.data(list
                       .where((element) => element.section.id == l.id)
@@ -79,33 +80,21 @@ class AdminPage extends HookConsumerWidget {
               const SizedBox(height: 20),
               const SectionBar(),
               const SizedBox(height: 30),
-              const Padding(
+              const AlignLeftText(
+                VoteTextConstants.voters,
                 padding: EdgeInsets.symmetric(horizontal: 30.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(VoteTextConstants.voters,
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 149, 149, 149))),
-                ),
+                color: Color.fromARGB(255, 149, 149, 149),
               ),
               const SizedBox(height: 30),
               const VotersBar(),
               const SizedBox(height: 30),
-              const Padding(
+              const AlignLeftText(
+                VoteTextConstants.pretendance,
                 padding: EdgeInsets.symmetric(horizontal: 30.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(VoteTextConstants.pretendance,
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 149, 149, 149))),
-                ),
+                color: Colors.grey,
               ),
               const SizedBox(height: 10),
-              const SectionPretendenceItems(),
+              const SectionContenderItems(),
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -118,7 +107,7 @@ class AdminPage extends HookConsumerWidget {
                           style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 149, 149, 149))),
+                              color: Colors.grey)),
                       if (showVotes && status == Status.counting)
                         Expanded(
                           child: Row(
@@ -134,22 +123,8 @@ class AdminPage extends HookConsumerWidget {
                                   color: Colors.black,
                                 ),
                               ),
-                              ShrinkButton(
-                                waitChild: Container(
-                                  padding: const EdgeInsets.all(8.0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: Colors.black,
-                                  ),
-                                  child: const SizedBox(
-                                    height: 15,
-                                    width: 15,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
+                              WaitingButton(
+                                builder: (child) => AdminButton(child: child),
                                 onTap: () async {
                                   await showDialog(
                                       context: context,
@@ -164,42 +139,19 @@ class AdminPage extends HookConsumerWidget {
                                                 .loadResult();
                                           }));
                                 },
-                                child: Container(
-                                  padding: const EdgeInsets.all(8.0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: Colors.black,
-                                  ),
-                                  child: const Text(VoteTextConstants.publish,
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white)),
-                                ),
+                                child: const Text(VoteTextConstants.publish,
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white)),
                               ),
                             ],
                           ),
                         ),
                       if (status == Status.counting ||
                           status == Status.published)
-                        ShrinkButton(
-                          waitChild: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.black,
-                            ),
-                            child: const Center(
-                              child: SizedBox(
-                                height: 15,
-                                width: 15,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
+                        WaitingButton(
+                          builder: (child) => AdminButton(child: child),
                           onTap: () async {
                             await showDialog(
                                 context: context,
@@ -213,9 +165,9 @@ class AdminPage extends HookConsumerWidget {
                                         final value =
                                             await statusNotifier.resetVote();
                                         ref
-                                            .watch(pretendanceListProvider
-                                                .notifier)
-                                            .loadPretendanceList();
+                                            .watch(
+                                                contenderListProvider.notifier)
+                                            .loadContenderList();
                                         if (value) {
                                           showVotesNotifier.toggle(false);
                                           displayVoteToastWithContext(
@@ -232,18 +184,11 @@ class AdminPage extends HookConsumerWidget {
                                   );
                                 });
                           },
-                          child: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.black,
-                            ),
-                            child: const Text(VoteTextConstants.clear,
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white)),
-                          ),
+                          child: const Text(VoteTextConstants.clear,
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white)),
                         ),
                     ],
                   ),
@@ -293,39 +238,13 @@ class AdminPage extends HookConsumerWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 30.0, vertical: 50),
-                          child: ShrinkButton(
-                            waitChild: Container(
-                              padding:
-                                  const EdgeInsets.only(top: 10, bottom: 12),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        Colors.grey.shade900,
-                                        Colors.black
-                                      ]),
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.2),
-                                      spreadRadius: 5,
-                                      blurRadius: 10,
-                                      offset: const Offset(3, 3),
-                                    )
-                                  ]),
-                              child: const Center(
-                                child: SizedBox(
-                                  height: 15,
-                                  width: 15,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
+                          child: WaitingButton(
+                            builder: (child) => CardLayout(
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 12),
+                                width: double.infinity,
+                                colors: [Colors.grey.shade900, Colors.black],
+                                child: child),
                             onTap: () async {
                               await tokenExpireWrapper(ref, () async {
                                 final value = await statusNotifier.countVote();
@@ -338,35 +257,13 @@ class AdminPage extends HookConsumerWidget {
                                 }
                               });
                             },
-                            child: Container(
-                              padding:
-                                  const EdgeInsets.only(top: 10, bottom: 12),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        Colors.grey.shade900,
-                                        Colors.black
-                                      ]),
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.2),
-                                      spreadRadius: 5,
-                                      blurRadius: 10,
-                                      offset: const Offset(3, 3),
-                                    )
-                                  ]),
-                              child: const Center(
-                                child: Text(
-                                  VoteTextConstants.countVote,
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w700),
-                                ),
+                            child: const Center(
+                              child: Text(
+                                VoteTextConstants.countVote,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700),
                               ),
                             ),
                           ),
@@ -375,37 +272,16 @@ class AdminPage extends HookConsumerWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 30.0, vertical: 50),
-                          child: ShrinkButton(
-                            waitChild: Container(
-                              padding:
-                                  const EdgeInsets.only(top: 10, bottom: 12),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  gradient: const LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: [
-                                      ColorConstants.gradient1,
-                                      ColorConstants.gradient2,
-                                    ],
-                                  ),
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: ColorConstants.gradient2
-                                          .withOpacity(0.2),
-                                      spreadRadius: 5,
-                                      blurRadius: 10,
-                                      offset: const Offset(3, 3),
-                                    )
-                                  ]),
-                              child: const Center(
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
+                          child: WaitingButton(
+                            builder: (child) => CardLayout(
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 12),
+                                width: double.infinity,
+                                colors: const [
+                                  ColorConstants.gradient1,
+                                  ColorConstants.gradient2,
+                                ],
+                                child: child),
                             onTap: () async {
                               await tokenExpireWrapper(ref, () async {
                                 final value = await statusNotifier.closeVote();
@@ -418,37 +294,13 @@ class AdminPage extends HookConsumerWidget {
                                 }
                               });
                             },
-                            child: Container(
-                              padding:
-                                  const EdgeInsets.only(top: 10, bottom: 12),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  gradient: const LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: [
-                                      ColorConstants.gradient1,
-                                      ColorConstants.gradient2,
-                                    ],
-                                  ),
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: ColorConstants.gradient2
-                                          .withOpacity(0.2),
-                                      spreadRadius: 5,
-                                      blurRadius: 10,
-                                      offset: const Offset(3, 3),
-                                    )
-                                  ]),
-                              child: const Center(
-                                child: Text(
-                                  VoteTextConstants.closeVote,
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w700),
-                                ),
+                            child: const Center(
+                              child: Text(
+                                VoteTextConstants.closeVote,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700),
                               ),
                             ),
                           ),
@@ -460,46 +312,22 @@ class AdminPage extends HookConsumerWidget {
                                 horizontal: 30.0, vertical: 50),
                             child: Column(
                               children: [
-                                ShrinkButton(
-                                  waitChild: Container(
-                                    padding: const EdgeInsets.only(
-                                        top: 10, bottom: 12),
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                          colors: [
-                                            Colors.white,
-                                            Colors.grey.shade50,
-                                          ],
-                                        ),
-                                        borderRadius: BorderRadius.circular(20),
-                                        border: Border.all(
-                                            color: Colors.black, width: 2),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.2),
-                                            spreadRadius: 5,
-                                            blurRadius: 10,
-                                            offset: const Offset(3, 3),
-                                          )
-                                        ]),
-                                    child: const Center(
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
+                                WaitingButton(
+                                  waitingColor: Colors.black,
+                                  builder: (child) => CardLayout(
+                                      padding: const EdgeInsets.only(
+                                          top: 10, bottom: 12),
+                                      margin: const EdgeInsets.all(0),
+                                      color: Colors.white,
+                                      borderColor: Colors.black,
+                                      child: child),
                                   onTap: () async {
                                     await tokenExpireWrapper(ref, () async {
                                       final value =
                                           await statusNotifier.openVote();
                                       ref
-                                          .watch(
-                                              pretendanceListProvider.notifier)
-                                          .loadPretendanceList();
+                                          .watch(contenderListProvider.notifier)
+                                          .loadContenderList();
                                       if (value) {
                                         displayVoteToastWithContext(TypeMsg.msg,
                                             VoteTextConstants.votesOpened);
@@ -511,44 +339,17 @@ class AdminPage extends HookConsumerWidget {
                                       }
                                     });
                                   },
-                                  child: Container(
-                                    padding: const EdgeInsets.only(
-                                        top: 10, bottom: 12),
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                          colors: [
-                                            Colors.white,
-                                            Colors.grey.shade50,
-                                          ],
-                                        ),
-                                        borderRadius: BorderRadius.circular(20),
-                                        border: Border.all(
-                                            color: Colors.black, width: 2),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.2),
-                                            spreadRadius: 5,
-                                            blurRadius: 10,
-                                            offset: const Offset(3, 3),
-                                          )
-                                        ]),
-                                    child: const Center(
-                                      child: Text(
-                                        VoteTextConstants.openVote,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w700),
-                                      ),
+                                  child: const Center(
+                                    child: Text(
+                                      VoteTextConstants.openVote,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700),
                                     ),
                                   ),
                                 ),
-                                const SizedBox(
-                                  height: 50,
-                                ),
+                                const SizedBox(height: 50),
                                 SizedBox(
                                   width: double.infinity,
                                   child: Row(
@@ -556,46 +357,19 @@ class AdminPage extends HookConsumerWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Expanded(
-                                        child: ShrinkButton(
-                                            waitChild: Container(
-                                              padding: const EdgeInsets.only(
-                                                  top: 10, bottom: 12),
-                                              decoration: BoxDecoration(
-                                                  gradient:
-                                                      const LinearGradient(
-                                                    begin: Alignment.topLeft,
-                                                    end: Alignment.bottomRight,
-                                                    colors: [
-                                                      AMAPColorConstants
-                                                          .redGradient1,
-                                                      AMAPColorConstants
-                                                          .redGradient2,
-                                                    ],
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                  border: Border.all(
-                                                      color: Colors.white,
-                                                      width: 2),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: AMAPColorConstants
-                                                          .redGradient2
-                                                          .withOpacity(0.2),
-                                                      spreadRadius: 5,
-                                                      blurRadius: 10,
-                                                      offset:
-                                                          const Offset(3, 3),
-                                                    )
-                                                  ]),
-                                              child: const Center(
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  strokeWidth: 2,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                            ),
+                                        child: WaitingButton(
+                                            builder: (child) => CardLayout(
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, bottom: 12),
+                                                margin: const EdgeInsets.all(0),
+                                                colors: const [
+                                                  AMAPColorConstants
+                                                      .redGradient1,
+                                                  AMAPColorConstants
+                                                      .redGradient2,
+                                                ],
+                                                borderColor: Colors.white,
+                                                child: child),
                                             onTap: () async {
                                               await showDialog(
                                                   context: context,
@@ -611,9 +385,9 @@ class AdminPage extends HookConsumerWidget {
                                                             await tokenExpireWrapper(
                                                                 ref, () async {
                                                               final value = await ref
-                                                                  .watch(pretendanceListProvider
+                                                                  .watch(contenderListProvider
                                                                       .notifier)
-                                                                  .deletePretendances();
+                                                                  .deleteContenders();
                                                               if (value) {
                                                                 displayVoteToastWithContext(
                                                                     TypeMsg.msg,
@@ -629,100 +403,40 @@ class AdminPage extends HookConsumerWidget {
                                                             });
                                                           }));
                                             },
-                                            child: Container(
-                                              padding: const EdgeInsets.only(
-                                                  top: 10, bottom: 12),
-                                              decoration: BoxDecoration(
-                                                  gradient:
-                                                      const LinearGradient(
-                                                    begin: Alignment.topLeft,
-                                                    end: Alignment.bottomRight,
-                                                    colors: [
-                                                      AMAPColorConstants
-                                                          .redGradient1,
-                                                      AMAPColorConstants
-                                                          .redGradient2,
-                                                    ],
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                  border: Border.all(
-                                                      color: Colors.white,
-                                                      width: 2),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: AMAPColorConstants
-                                                          .redGradient2
-                                                          .withOpacity(0.2),
-                                                      spreadRadius: 5,
-                                                      blurRadius: 10,
-                                                      offset:
-                                                          const Offset(3, 3),
-                                                    )
-                                                  ]),
-                                              child: const Center(
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      VoteTextConstants.all,
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 20,
-                                                          fontWeight:
-                                                              FontWeight.w700),
-                                                    ),
-                                                    SizedBox(width: 10),
-                                                    HeroIcon(HeroIcons.trash,
+                                            child: const Center(
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    VoteTextConstants.all,
+                                                    style: TextStyle(
                                                         color: Colors.white,
-                                                        size: 20)
-                                                  ],
-                                                ),
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                                  ),
+                                                  SizedBox(width: 10),
+                                                  HeroIcon(HeroIcons.trash,
+                                                      color: Colors.white,
+                                                      size: 20)
+                                                ],
                                               ),
                                             )),
                                       ),
-                                      const SizedBox(
-                                        width: 20,
-                                      ),
+                                      const SizedBox(width: 20),
                                       Expanded(
-                                        child: ShrinkButton(
-                                          waitChild: Container(
-                                            padding: const EdgeInsets.only(
-                                                top: 10, bottom: 12),
-                                            decoration: BoxDecoration(
-                                                gradient: const LinearGradient(
-                                                  begin: Alignment.topLeft,
-                                                  end: Alignment.bottomRight,
-                                                  colors: [
-                                                    AMAPColorConstants
-                                                        .redGradient1,
-                                                    AMAPColorConstants
-                                                        .redGradient2,
-                                                  ],
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                                border: Border.all(
-                                                    color: Colors.white,
-                                                    width: 2),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: AMAPColorConstants
-                                                        .redGradient2
-                                                        .withOpacity(0.2),
-                                                    spreadRadius: 5,
-                                                    blurRadius: 10,
-                                                    offset: const Offset(3, 3),
-                                                  )
-                                                ]),
-                                            child: const Center(
-                                              child: CircularProgressIndicator(
-                                                strokeWidth: 2,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
+                                        child: WaitingButton(
+                                          builder: (child) => CardLayout(
+                                              padding: const EdgeInsets.only(
+                                                  top: 10, bottom: 12),
+                                              margin: const EdgeInsets.all(0),
+                                              colors: const [
+                                                AMAPColorConstants.redGradient1,
+                                                AMAPColorConstants.redGradient2,
+                                              ],
+                                              borderColor: Colors.white,
+                                              child: child),
                                           onTap: () async {
                                             await showDialog(
                                                 context: context,
@@ -738,11 +452,11 @@ class AdminPage extends HookConsumerWidget {
                                                               ref, () async {
                                                             final value = await ref
                                                                 .watch(
-                                                                    pretendanceListProvider
+                                                                    contenderListProvider
                                                                         .notifier)
-                                                                .deletePretendances(
+                                                                .deleteContenders(
                                                                     type: ListType
-                                                                        .pipo);
+                                                                        .fake);
                                                             if (value) {
                                                               displayVoteToastWithContext(
                                                                   TypeMsg.msg,
@@ -757,54 +471,24 @@ class AdminPage extends HookConsumerWidget {
                                                           });
                                                         }));
                                           },
-                                          child: Container(
-                                            padding: const EdgeInsets.only(
-                                                top: 10, bottom: 12),
-                                            decoration: BoxDecoration(
-                                                gradient: const LinearGradient(
-                                                  begin: Alignment.topLeft,
-                                                  end: Alignment.bottomRight,
-                                                  colors: [
-                                                    AMAPColorConstants
-                                                        .redGradient1,
-                                                    AMAPColorConstants
-                                                        .redGradient2,
-                                                  ],
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                                border: Border.all(
-                                                    color: Colors.white,
-                                                    width: 2),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: AMAPColorConstants
-                                                        .redGradient2
-                                                        .withOpacity(0.2),
-                                                    spreadRadius: 5,
-                                                    blurRadius: 10,
-                                                    offset: const Offset(3, 3),
-                                                  )
-                                                ]),
-                                            child: const Center(
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    VoteTextConstants.pipo,
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 20,
-                                                        fontWeight:
-                                                            FontWeight.w700),
-                                                  ),
-                                                  SizedBox(width: 10),
-                                                  HeroIcon(HeroIcons.trash,
+                                          child: const Center(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  VoteTextConstants.pipo,
+                                                  style: TextStyle(
                                                       color: Colors.white,
-                                                      size: 20)
-                                                ],
-                                              ),
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.w700),
+                                                ),
+                                                SizedBox(width: 10),
+                                                HeroIcon(HeroIcons.trash,
+                                                    color: Colors.white,
+                                                    size: 20)
+                                              ],
                                             ),
                                           ),
                                         ),

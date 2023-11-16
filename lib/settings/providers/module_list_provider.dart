@@ -11,7 +11,7 @@ import 'package:collection/collection.dart';
 import 'package:myecl/event/router.dart';
 import 'package:myecl/home/router.dart';
 import 'package:myecl/loan/router.dart';
-import 'package:myecl/tombola/router.dart';
+import 'package:myecl/raffle/router.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -62,29 +62,31 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
   Future loadModules(List<String> roots) async {
     final prefs = await SharedPreferences.getInstance();
     List<String> modulesName = prefs.getStringList(dbModule) ?? [];
-    List<String> allModulesName = prefs.getStringList(dbAllModules) ?? [];
-    final allmodulesName = allModules.map((e) => e.root.toString()).toList();
+    List<String> allSavedModulesName = prefs.getStringList(dbAllModules) ?? [];
+    final allModulesName = allModules.map((e) => e.root.toString()).toList();
     if (modulesName.isEmpty) {
-      modulesName = allmodulesName;
+      modulesName = allModulesName;
       saveModules();
     }
-    if (allModulesName.isEmpty || !eq.equals(allModulesName, allmodulesName)) {
-      allModulesName = allmodulesName;
-      modulesName = allmodulesName;
+    if (allSavedModulesName.isEmpty ||
+        !eq.equals(allSavedModulesName, allModulesName)) {
+      allSavedModulesName = allModulesName;
+      modulesName = allModulesName;
       saveAllModules();
       saveModules();
     } else {
-      allModules.sort((a, b) => allModulesName
+      allModules.sort((a, b) => allSavedModulesName
           .indexOf(a.root.toString())
-          .compareTo(allModulesName.indexOf(b.root.toString())));
-      modulesName.sort((a, b) =>
-          allModulesName.indexOf(a).compareTo(allModulesName.indexOf(b)));
+          .compareTo(allSavedModulesName.indexOf(b.root.toString())));
+      modulesName.sort((a, b) => allSavedModulesName
+          .indexOf(a)
+          .compareTo(allSavedModulesName.indexOf(b)));
     }
     List<Module> modules = [];
     List<Module> toDelete = [];
     for (String name in modulesName) {
-      if (allmodulesName.contains(name)) {
-        Module module = allModules[allModulesName.indexOf(name)];
+      if (allModulesName.contains(name)) {
+        Module module = allModules[allSavedModulesName.indexOf(name)];
         if (roots.contains(module.root)) {
           modules.add(module);
         } else if (!kDebugMode) {
@@ -99,11 +101,11 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
   }
 
   void sortModules() {
-    final allmodulesName = allModules.map((e) => e.root.toString()).toList();
+    final allModulesName = allModules.map((e) => e.root.toString()).toList();
     final sorted = state.sublist(0)
-      ..sort((a, b) => allmodulesName
+      ..sort((a, b) => allModulesName
           .indexOf(a.root.toString())
-          .compareTo(allmodulesName.indexOf(b.root.toString())));
+          .compareTo(allModulesName.indexOf(b.root.toString())));
     state = sorted;
     saveModules();
   }
@@ -113,9 +115,10 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
       newIndex -= 1;
     }
     allModules.insert(newIndex, allModules.removeAt(oldIndex));
-    final moduesIds = state.map((e) => e.root.toString()).toList();
-    state =
-        allModules.where((e) => moduesIds.contains(e.root.toString())).toList();
+    final modulesIds = state.map((e) => e.root.toString()).toList();
+    state = allModules
+        .where((e) => modulesIds.contains(e.root.toString()))
+        .toList();
     saveAllModules();
   }
 

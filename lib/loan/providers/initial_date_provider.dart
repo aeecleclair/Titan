@@ -8,6 +8,7 @@ class InitialDateNotifier extends StateNotifier<DateTime> {
   }
 }
 
-final initialDateProvider = StateNotifierProvider<InitialDateNotifier, DateTime>((ref) {
+final initialDateProvider =
+    StateNotifierProvider<InitialDateNotifier, DateTime>((ref) {
   return InitialDateNotifier();
 });

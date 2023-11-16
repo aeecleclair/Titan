@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/ui/dialog.dart';
+import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/vote/class/votes.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
-import 'package:myecl/vote/providers/selected_pretendance_provider.dart';
+import 'package:myecl/vote/providers/selected_contender_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/providers/voted_section_provider.dart';
 import 'package:myecl/vote/providers/votes_provider.dart';
@@ -19,24 +19,21 @@ class VoteButton extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final section = ref.watch(sectionProvider);
     final votesNotifier = ref.watch(votesProvider.notifier);
-    final selectedPretendance = ref.watch(selectedPretendanceProvider);
-    final selectedPretendanceNotifier =
-        ref.watch(selectedPretendanceProvider.notifier);
+    final selectedContender = ref.watch(selectedContenderProvider);
+    final selectedContenderNotifier =
+        ref.watch(selectedContenderProvider.notifier);
     final votedSectionNotifier = ref.watch(votedSectionProvider.notifier);
     final votedSection = ref.watch(votedSectionProvider);
     List<String> alreadyVotedSection = [];
-    votedSection.when(
+    votedSection.maybeWhen(
         data: (voted) {
           alreadyVotedSection = voted;
         },
-        error: (error, stackTrace) {},
-        loading: () {});
+        orElse: () {});
 
     final status = ref.watch(statusProvider);
-    final s = status.when(
-        data: (value) => value,
-        loading: () => Status.closed,
-        error: (error, stack) => Status.closed);
+    final s =
+        status.maybeWhen(data: (value) => value, orElse: () => Status.closed);
 
     void displayVoteToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -46,7 +43,7 @@ class VoteButton extends HookConsumerWidget {
       padding: const EdgeInsets.only(right: 30.0),
       child: GestureDetector(
         onTap: () {
-          if (selectedPretendance.id != "" &&
+          if (selectedContender.id != "" &&
               s == Status.open &&
               !alreadyVotedSection.contains(section.id)) {
             showDialog(
@@ -58,10 +55,10 @@ class VoteButton extends HookConsumerWidget {
                     onYes: () {
                       tokenExpireWrapper(ref, () async {
                         final result = await votesNotifier
-                            .addVote(Votes(id: selectedPretendance.id));
+                            .addVote(Votes(id: selectedContender.id));
                         if (result) {
                           votedSectionNotifier.addVote(section.id);
-                          selectedPretendanceNotifier.clear();
+                          selectedContenderNotifier.clear();
                           displayVoteToastWithContext(
                               TypeMsg.msg, VoteTextConstants.voteSuccess);
                         } else {
@@ -81,7 +78,7 @@ class VoteButton extends HookConsumerWidget {
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: (selectedPretendance.id == "" && s != Status.open) ||
+                colors: (selectedContender.id == "" && s != Status.open) ||
                         alreadyVotedSection.contains(section.id)
                     ? [
                         Colors.white,
@@ -100,8 +97,8 @@ class VoteButton extends HookConsumerWidget {
               ]),
           child: Center(
             child: Text(
-              selectedPretendance.id != ""
-                  ? VoteTextConstants.voteFor + selectedPretendance.name
+              selectedContender.id != ""
+                  ? VoteTextConstants.voteFor + selectedContender.name
                   : alreadyVotedSection.contains(section.id)
                       ? VoteTextConstants.alreadyVoted
                       : s == Status.open
@@ -112,7 +109,7 @@ class VoteButton extends HookConsumerWidget {
                                   ? VoteTextConstants.closedVote
                                   : VoteTextConstants.onGoingCount,
               style: TextStyle(
-                  color: (selectedPretendance.id == "" && s != Status.open) ||
+                  color: (selectedContender.id == "" && s != Status.open) ||
                           alreadyVotedSection.contains(section.id)
                       ? Colors.black
                       : Colors.white,

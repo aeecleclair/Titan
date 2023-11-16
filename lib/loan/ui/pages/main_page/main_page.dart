@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
@@ -11,13 +10,15 @@ import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/router.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan.dart';
-import 'package:myecl/loan/ui/loan_card.dart';
-import 'package:myecl/tools/ui/refresher.dart';
-import 'package:myecl/tools/ui/web_list_view.dart';
+import 'package:myecl/loan/ui/pages/admin_page/loan_card.dart';
+import 'package:myecl/tools/ui/widgets/admin_button.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class LoanMainPage extends HookConsumerWidget {
-  const LoanMainPage({Key? key}) : super(key: key);
+  const LoanMainPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,24 +30,24 @@ class LoanMainPage extends HookConsumerWidget {
     ref.watch(adminLoanListProvider);
     ref.watch(itemListProvider);
     ref.watch(loanerLoanListProvider);
-    List<List<Loan>> dictCateListWidget = [[], []];
+    List<Loan> onGoingLoan = [];
+    List<Loan> returnedLoan = [];
 
-    loanList.when(
+    loanList.maybeWhen(
       data: (data) {
         if (data.isNotEmpty) {
           for (Loan l in data) {
             if (l.returned) {
-              dictCateListWidget[1].add(l);
+              returnedLoan.add(l);
             } else {
-              dictCateListWidget[0].add(l);
+              onGoingLoan.add(l);
             }
           }
-          dictCateListWidget[0].sort((a, b) => b.end.compareTo(a.end));
-          dictCateListWidget[1].sort((a, b) => b.end.compareTo(a.end));
+          onGoingLoan.sort((a, b) => b.end.compareTo(a.end));
+          returnedLoan.sort((a, b) => b.end.compareTo(a.end));
         }
       },
-      loading: () {},
-      error: (error, s) {},
+      orElse: () {},
     );
 
     return LoanTemplate(
@@ -58,50 +59,30 @@ class LoanMainPage extends HookConsumerWidget {
               },
               child: Column(children: [
                 const SizedBox(height: 40),
-                (dictCateListWidget[0].isNotEmpty)
+                (onGoingLoan.isNotEmpty)
                     ? Column(children: [
-                        Padding(
+                        AlignLeftText(
+                          '${onGoingLoan.length} ${LoanTextConstants.loan.toLowerCase()}${onGoingLoan.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
                           padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                                '${dictCateListWidget[0].length} ${LoanTextConstants.loan.toLowerCase()}${dictCateListWidget[0].length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
-                                style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(255, 149, 149, 149))),
-                          ),
+                          color: Colors.grey,
                         ),
-                        const SizedBox(height: 10),
-                        SizedBox(
-                            height: 190,
-                            child: HorizontalListView(
-                              child: Row(
-                                children: [
-                                  const SizedBox(width: 10),
-                                  ...dictCateListWidget[0].map((e) => LoanCard(
-                                        loan: e,
-                                        isAdmin: false,
-                                        isDetail: false,
-                                        onEdit: () {},
-                                        onCalendar: () async {},
-                                        onReturn: () async {},
-                                        onInfo: () {
-                                          loanNotifier.setLoan(e);
-                                          QR.to(LoanRouter.root +
-                                              LoanRouter.detail);
-                                        },
-                                      )),
-                                  const SizedBox(width: 10),
-                                ],
-                              ),
-                            ))
+                        const SizedBox(height: 30),
+                        HorizontalListView.builder(
+                            height: 170,
+                            items: onGoingLoan,
+                            itemBuilder: (context, e, i) => LoanCard(
+                                  loan: e,
+                                  onInfo: () {
+                                    loanNotifier.setLoan(e);
+                                    QR.to(LoanRouter.root + LoanRouter.detail);
+                                  },
+                                ))
                       ])
-                    : (dictCateListWidget[1].isEmpty)
+                    : (returnedLoan.isEmpty)
                         ? SizedBox(
                             height: MediaQuery.of(context).size.height * 0.7,
                             width: MediaQuery.of(context).size.width,
-                            child: const Column(
+                            child: Column(
                               children: [
                                 Expanded(
                                   child: Center(
@@ -109,89 +90,42 @@ class LoanMainPage extends HookConsumerWidget {
                                           style: TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold,
-                                              color: Color.fromARGB(
-                                                  255, 205, 205, 205)))),
+                                              color: Colors.grey.shade300))),
                                 ),
-                                Spacer()
+                                const Spacer()
                               ],
                             ),
                           )
                         : Container(),
-                if (dictCateListWidget[1].isNotEmpty)
+                if (returnedLoan.isNotEmpty)
                   Column(children: [
                     const SizedBox(height: 30),
-                    Padding(
+                    AlignLeftText(
+                      '${returnedLoan.length} ${LoanTextConstants.loan.toLowerCase()}${returnedLoan.length > 1 ? 's' : ''} ${LoanTextConstants.returned.toLowerCase()}${returnedLoan.length > 1 ? 's' : ''}',
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                            '${dictCateListWidget[1].length} ${LoanTextConstants.loan.toLowerCase()}${dictCateListWidget[1].length > 1 ? 's' : ''} ${LoanTextConstants.returned.toLowerCase()}${dictCateListWidget[1].length > 1 ? 's' : ''}',
-                            style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 149, 149, 149))),
-                      ),
+                      color: Colors.grey,
                     ),
-                    const SizedBox(height: 10),
-                    SizedBox(
+                    const SizedBox(height: 30),
+                    HorizontalListView.builder(
                         height: 190,
-                        child: HorizontalListView(
-                          child: Row(
-                            children: [
-                              const SizedBox(width: 10),
-                              ...dictCateListWidget[1]
-                                  .map((e) => LoanCard(
-                                        loan: e,
-                                        isAdmin: false,
-                                        isDetail: false,
-                                        onEdit: () {},
-                                        onCalendar: () async {},
-                                        onReturn: () async {},
-                                        onInfo: () {
-                                          loanNotifier.setLoan(e);
-                                          QR.to(LoanRouter.root +
-                                              LoanRouter.detail);
-                                        },
-                                      ))
-                                  .toList(),
-                              const SizedBox(width: 10),
-                            ],
-                          ),
-                        ))
+                        items: returnedLoan,
+                        itemBuilder: (context, e, i) => LoanCard(
+                              loan: e,
+                              onInfo: () {
+                                loanNotifier.setLoan(e);
+                                QR.to(LoanRouter.root + LoanRouter.detail);
+                              },
+                            ))
                   ])
               ])),
           if (isAdmin)
             Positioned(
               top: 30,
               right: 30,
-              child: GestureDetector(
+              child: AdminButton(
                 onTap: () {
                   QR.to(LoanRouter.root + LoanRouter.admin);
                 },
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
-                            blurRadius: 10,
-                            offset: const Offset(0, 5))
-                      ]),
-                  child: const Row(
-                    children: [
-                      HeroIcon(HeroIcons.userGroup, color: Colors.white),
-                      SizedBox(width: 10),
-                      Text("Admin",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white)),
-                    ],
-                  ),
-                ),
               ),
             )
         ],

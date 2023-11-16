@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/already_displayed_popup.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 class Consts {
@@ -168,7 +168,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                                               )),
                                             ),
                                           ),
-                                          ShrinkButton(
+                                          WaitingButton(
                                             onTap: () async {
                                               if (formKey.currentState!
                                                   .validate()) {
@@ -192,56 +192,32 @@ class EmailChangeDialog extends HookConsumerWidget {
                                                 }
                                               }
                                             },
-                                            waitChild: Container(
-                                              width: 100,
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 16),
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                color: Colors.grey.shade300,
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Colors.grey
-                                                        .withOpacity(0.3),
-                                                    blurRadius: 2.0,
-                                                    offset:
-                                                        const Offset(1.0, 2.0),
-                                                  ),
-                                                ],
-                                              ),
-                                              child: const Center(
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                color: Colors.black,
-                                              )),
-                                            ),
-                                            child: Container(
-                                              width: 100,
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 16),
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                color: Colors.grey.shade300,
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Colors.grey
-                                                        .withOpacity(0.3),
-                                                    blurRadius: 2.0,
-                                                    offset:
-                                                        const Offset(1.0, 2.0),
-                                                  ),
-                                                ],
-                                              ),
-                                              child: const Center(
-                                                  child: Text("Confirmer",
-                                                      style: TextStyle(
-                                                          fontWeight: FontWeight
-                                                              .bold))),
-                                            ),
+                                            waitingColor: Colors.black,
+                                            builder: (child) => Container(
+                                                width: 100,
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 16),
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  color: Colors.grey.shade300,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey
+                                                          .withOpacity(0.3),
+                                                      blurRadius: 2.0,
+                                                      offset: const Offset(
+                                                          1.0, 2.0),
+                                                    ),
+                                                  ],
+                                                ),
+                                                child: child),
+                                            child: const Center(
+                                                child: Text("Confirmer",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold))),
                                           ),
                                         ]),
                                   ],

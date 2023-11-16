@@ -5,15 +5,18 @@ import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/change_pass/password_strength.dart';
 import 'package:myecl/settings/ui/pages/change_pass/test_entry_style.dart';
 import 'package:myecl/settings/ui/settings.dart';
-import 'package:myecl/tools/ui/dialog.dart';
+import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class ChangePassPage extends HookConsumerWidget {
-  const ChangePassPage({Key? key}) : super(key: key);
+  const ChangePassPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -39,24 +42,14 @@ class ChangePassPage extends HookConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: Column(
               children: [
-                const SizedBox(
-                  height: 30,
-                ),
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(SettingsTextConstants.changePassword,
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black)),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
+                const SizedBox(height: 30),
+                const AlignLeftText(SettingsTextConstants.changePassword,
+                    fontSize: 20),
+                const SizedBox(height: 30),
                 Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: TextFormField(
-                      cursorColor: const Color(0xFFfb6d10),
+                      cursorColor: ColorConstants.gradient1,
                       decoration: changePassInputDecoration(
                           hintText: SettingsTextConstants.oldPassword,
                           notifier: hideOldPass),
@@ -69,13 +62,11 @@ class ChangePassPage extends HookConsumerWidget {
                         return null;
                       },
                     )),
-                const SizedBox(
-                  height: 30,
-                ),
+                const SizedBox(height: 30),
                 Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: TextFormField(
-                      cursorColor: const Color(0xFFfb6d10),
+                      cursorColor: ColorConstants.gradient1,
                       decoration: changePassInputDecoration(
                           hintText: SettingsTextConstants.newPassword,
                           notifier: hideNewPass),
@@ -88,13 +79,11 @@ class ChangePassPage extends HookConsumerWidget {
                         return null;
                       },
                     )),
-                const SizedBox(
-                  height: 30,
-                ),
+                const SizedBox(height: 30),
                 Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: TextFormField(
-                      cursorColor: const Color(0xFFfb6d10),
+                      cursorColor: ColorConstants.gradient1,
                       decoration: changePassInputDecoration(
                           hintText: SettingsTextConstants.confirmPassword,
                           notifier: hideConfirmPass),
@@ -109,37 +98,16 @@ class ChangePassPage extends HookConsumerWidget {
                         return null;
                       },
                     )),
-                const SizedBox(
-                  height: 40,
-                ),
+                const SizedBox(height: 40),
                 PasswordStrength(newPassword: newPassword),
-                const SizedBox(
-                  height: 60,
-                ),
-                ShrinkButton(
-                  waitChild: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.only(bottom: 16, top: 12),
-                    decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFFfb6d10), Color(0xffeb3e1b)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xffeb3e1b).withOpacity(0.5),
-                            spreadRadius: 1,
-                            blurRadius: 7,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(10)),
-                    child: const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
-                      ),
-                    ),
+                const SizedBox(height: 60),
+                WaitingButton(
+                  builder: (child) => AddEditButtonLayout(
+                    colors: const [
+                      ColorConstants.gradient1,
+                      ColorConstants.gradient2
+                    ],
+                    child: child,
                   ),
                   onTap: () async {
                     if (key.currentState!.validate()) {
@@ -157,8 +125,10 @@ class ChangePassPage extends HookConsumerWidget {
                                             user);
                                     if (value) {
                                       QR.back();
-                                      displayToastWithContext(TypeMsg.msg,
-                                          SettingsTextConstants.passwordChanged);
+                                      displayToastWithContext(
+                                          TypeMsg.msg,
+                                          SettingsTextConstants
+                                              .passwordChanged);
                                     } else {
                                       displayToastWithContext(TypeMsg.error,
                                           SettingsTextConstants.updatingError);
@@ -169,32 +139,13 @@ class ChangePassPage extends HookConsumerWidget {
                               ));
                     }
                   },
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.only(bottom: 16, top: 12),
-                    decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFFfb6d10), Color(0xffeb3e1b)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xffeb3e1b).withOpacity(0.5),
-                            spreadRadius: 1,
-                            blurRadius: 7,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(10)),
-                    child: const Center(
-                      child: Text(
-                        SettingsTextConstants.save,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+                  child: const Center(
+                    child: Text(
+                      SettingsTextConstants.save,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
                   ),

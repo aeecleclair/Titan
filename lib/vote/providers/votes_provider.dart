@@ -25,11 +25,7 @@ class VotesProvider extends ListNotifier<Votes> {
   }
 
   Future<AsyncValue<List<Votes>>> copy() async {
-    return state.when(
-      data: (listVotes) => AsyncValue.data(listVotes),
-      loading: () => const AsyncValue.loading(),
-      error: (error, stackTrace) => AsyncValue.error(error, stackTrace),
-    );
+    return state.whenData((listVotes) => listVotes);
   }
 }
 

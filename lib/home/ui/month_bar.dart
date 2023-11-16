@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/home/providers/days_provider.dart';
 import 'package:myecl/home/providers/number_day_provider.dart';
-import 'package:myecl/home/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 
 class MonthBar extends HookConsumerWidget {
   final ScrollController scrollController;
@@ -34,9 +34,7 @@ class MonthBar extends HookConsumerWidget {
       children: [
         Row(
           children: [
-            const SizedBox(
-              width: 30,
-            ),
+            const SizedBox(width: 30),
             GestureDetector(
               onTap: () {
                 final deltaDay = DateTime(currentDay.value.year,
@@ -54,7 +52,7 @@ class MonthBar extends HookConsumerWidget {
                   style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 149, 149, 149))),
+                      color: Colors.grey)),
             ),
           ],
         ),
@@ -83,11 +81,9 @@ class MonthBar extends HookConsumerWidget {
                   style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 149, 149, 149))),
+                      color: Colors.grey)),
             ),
-            const SizedBox(
-              width: 30,
-            ),
+            const SizedBox(width: 30),
           ],
         )
       ],

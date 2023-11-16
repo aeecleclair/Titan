@@ -48,7 +48,8 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
     });
   }
 
-  Future<bool> addAll(Future<List<T>> Function(List<T> listT) f, List<T> listT) async {
+  Future<bool> addAll(
+      Future<List<T>> Function(List<T> listT) f, List<T> listT) async {
     return state.when(data: (d) async {
       try {
         final newT = await f(listT);

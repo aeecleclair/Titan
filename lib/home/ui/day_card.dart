@@ -65,9 +65,7 @@ class DayCard extends HookConsumerWidget {
         width: 70,
         child: Column(
           children: [
-            Container(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             SizedBox(
               height: 35,
               child: Text(

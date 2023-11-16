@@ -4,7 +4,7 @@ import 'package:myecl/tools/functions.dart';
 
 enum DeliveryStatus {
   creation,
-  orderable,
+  available,
   locked,
   delivered,
 }
@@ -33,7 +33,7 @@ class Delivery {
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['delivery_date'] = processDateToAPIWitoutHour(deliveryDate);
+    data['delivery_date'] = processDateToAPIWithoutHour(deliveryDate);
     data['products_ids'] = products.map((e) => e.id).toList();
     data['status'] = deliveryStatusToString(status);
     data['id'] = id;

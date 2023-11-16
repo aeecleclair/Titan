@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/ui/widgets/text_entry.dart';
 
 class UserFieldModifier extends StatelessWidget {
   final String label;
   final TextInputType keyboardType;
   final TextEditingController controller;
   const UserFieldModifier(
-      {Key? key,
+      {super.key,
       required this.label,
       required this.keyboardType,
-      required this.controller})
-      : super(key: key);
+      required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -26,16 +27,12 @@ class UserFieldModifier extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: TextFormField(
+          child: TextEntry(
+            label: label,
             keyboardType: keyboardType,
             controller: controller,
-            cursorColor: const Color(0xFFfb6d10),
-            decoration: const InputDecoration(
-                contentPadding: EdgeInsets.all(10),
-                isDense: true,
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFFfb6d10)))),
-            style: const TextStyle(fontSize: 20),
+            color: ColorConstants.gradient1,
+            isInt: keyboardType == TextInputType.number,
           ),
         ),
       ],

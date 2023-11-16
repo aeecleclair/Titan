@@ -6,8 +6,7 @@ final selectedDaysProvider =
 });
 
 class SelectedDaysProvider extends StateNotifier<List<bool>> {
-  SelectedDaysProvider()
-      : super(List.generate(7, (index) => false));
+  SelectedDaysProvider() : super(List.generate(7, (index) => false));
 
   void toggle(int i) {
     var copy = state.toList();

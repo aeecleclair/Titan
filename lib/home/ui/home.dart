@@ -8,15 +8,16 @@ import 'package:myecl/home/tools/constants.dart';
 import 'package:myecl/home/ui/day_list.dart';
 import 'package:myecl/home/ui/days_event.dart';
 import 'package:myecl/home/ui/month_bar.dart';
-import 'package:myecl/tools/ui/refresher.dart';
-import 'package:myecl/tools/ui/top_bar.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:myecl/tools/ui/widgets/top_bar.dart';
 
 class HomePage extends HookConsumerWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final confimedEventListNotifier =
+    final confirmedEventListNotifier =
         ref.watch(confirmedEventListProvider.notifier);
     final sortedEventList = ref.watch(sortedEventListProvider);
     DateTime now = DateTime.now();
@@ -28,7 +29,7 @@ class HomePage extends HookConsumerWidget {
       child: SafeArea(
         child: Refresher(
             onRefresh: () async {
-              await confimedEventListNotifier.loadConfirmedEvent();
+              await confirmedEventListNotifier.loadConfirmedEvent();
               now = DateTime.now();
             },
             child: Column(children: [
@@ -40,27 +41,13 @@ class HomePage extends HookConsumerWidget {
               MonthBar(
                   scrollController: scrollController,
                   width: MediaQuery.of(context).size.width),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               DayList(scrollController, daysEventScrollController),
-              const SizedBox(
-                height: 15,
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(HomeTextConstants.incomingEvents,
-                      style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black)),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 15),
+              const AlignLeftText(HomeTextConstants.incomingEvents,
+                  padding: EdgeInsets.symmetric(horizontal: 30.0),
+                  fontSize: 25),
+              const SizedBox(height: 10),
               SizedBox(
                   height: MediaQuery.of(context).size.height - 320,
                   child: SingleChildScrollView(
@@ -72,10 +59,7 @@ class HomePage extends HookConsumerWidget {
                                 .map((key, value) => MapEntry(
                                     key,
                                     DaysEvent(
-                                      day: key,
-                                      now: now,
-                                      events: value,
-                                    )))
+                                        day: key, now: now, events: value)))
                                 .values
                                 .toList())
                         : const Center(
@@ -84,7 +68,7 @@ class HomePage extends HookConsumerWidget {
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 149, 149, 149)),
+                                  color: Colors.grey),
                             ),
                           ),
                   ))

@@ -5,8 +5,10 @@ class CheckBoxEntry extends StatelessWidget {
   final ValueNotifier<bool> valueNotifier;
   final VoidCallback onChanged;
   const CheckBoxEntry(
-      {Key? key, required this.title, required this.valueNotifier, required this.onChanged})
-      : super(key: key);
+      {super.key,
+      required this.title,
+      required this.valueNotifier,
+      required this.onChanged});
 
   @override
   Widget build(BuildContext context) {

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/tools/ui/top_bar.dart';
+import 'package:myecl/tools/ui/widgets/top_bar.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:myecl/vote/tools/constants.dart';
 
 class VoteTemplate extends StatelessWidget {
   final Widget child;
-  const VoteTemplate({Key? key, required this.child}) : super(key: key);
+  const VoteTemplate({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/admin_page/adding_user_card.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class AddingUserContainer extends HookConsumerWidget {
@@ -10,13 +12,12 @@ class AddingUserContainer extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final users = ref.watch(userList);
-    return Row(
-        children: users.when(
-      data: (users) {
-        return users.map((e) => AddingUserCard(user: e, onAdd: onAdd)).toList();
-      },
-      error: (error, stack) => [Text('$error')],
-      loading: () => [const Text('Loading')],
-    ));
+    return AsyncChild(
+        value: users,
+        builder: (context, users) => Row(
+            children: users
+                .map((e) => AddingUserCard(user: e, onAdd: onAdd))
+                .toList()),
+        loaderColor: AMAPColorConstants.greenGradient2);
   }
 }

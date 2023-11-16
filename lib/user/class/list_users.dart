@@ -37,11 +37,10 @@ class SimpleUser {
         id = '';
 
   String getName() {
-    if (nickname != null) {
-      return '$nickname ($firstname $name)';
-    } else {
+    if (nickname == null) {
       return '$firstname $name';
     }
+    return '$nickname ($firstname $name)';
   }
 
   @override

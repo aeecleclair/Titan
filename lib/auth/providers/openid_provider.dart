@@ -73,7 +73,7 @@ final isLoggedInProvider =
   return isLoggedInProvider;
 });
 
-final loadingrovider = FutureProvider<bool>((ref) {
+final loadingProvider = FutureProvider<bool>((ref) {
   final isCaching = ref.watch(isCachingProvider);
   return isCaching ||
       ref.watch(authTokenProvider).when(
@@ -139,7 +139,7 @@ class OpenIdTokenProvider
     html.WindowBase? popupWin;
 
     final redirectUri = Uri(
-      host: redirectUrlHost,  
+      host: redirectUrlHost,
       scheme: "https",
       path: '/static.html',
     );
@@ -310,21 +310,19 @@ class OpenIdTokenProvider
               refreshToken: token[refreshTokenKey] as String,
             ),
           );
-          if (resp != null) {
-            state = AsyncValue.data({
-              tokenKey: resp.accessToken!,
-              refreshTokenKey: resp.refreshToken!,
-            });
-            storeToken();
-            return true;
-          } else {
+          if (resp == null) {
             state = const AsyncValue.error("Error", StackTrace.empty);
             return false;
           }
-        } else {
-          state = const AsyncValue.error(e, StackTrace.empty);
-          return false;
+          state = AsyncValue.data({
+            tokenKey: resp.accessToken!,
+            refreshTokenKey: resp.refreshToken!,
+          });
+          storeToken();
+          return true;
         }
+        state = const AsyncValue.error(e, StackTrace.empty);
+        return false;
       },
       error: (error, stackTrace) {
         state = AsyncValue.error(error, stackTrace);

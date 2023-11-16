@@ -28,7 +28,7 @@ class FlutterPasswordStrength extends StatefulWidget {
   final void Function(double strength)? strengthCallback;
 
   const FlutterPasswordStrength(
-      {Key? key,
+      {super.key,
       required this.password,
       this.width,
       this.height = 5,
@@ -36,8 +36,7 @@ class FlutterPasswordStrength extends StatefulWidget {
       this.backgroundColor = Colors.grey,
       this.radius = 0,
       this.duration,
-      this.strengthCallback})
-      : super(key: key);
+      this.strengthCallback});
 
   /*
     default strength bar colors
@@ -182,14 +181,14 @@ class StrengthBarContainer extends AnimatedWidget {
   final double radius;
 
   const StrengthBarContainer(
-      {Key? key,
+      {super.key,
       required this.barColor,
       required this.backgroundColor,
       this.width,
       required this.height,
       required this.radius,
       required Animation animation})
-      : super(key: key, listenable: animation);
+      : super(listenable: animation);
 
   Animation<double> get _percent {
     return listenable as Animation<double>;

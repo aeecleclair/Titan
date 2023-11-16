@@ -6,11 +6,10 @@ import 'package:myecl/amap/providers/delivery_list_provider.dart';
 final deliveryProvider = Provider<Delivery>((ref) {
   final deliveryId = ref.watch(deliveryIdProvider);
   final deliveryList = ref.watch(deliveryListProvider);
-  return deliveryList.when(
+  return deliveryList.maybeWhen(
     data: (deliveryList) => deliveryList.firstWhere(
         (delivery) => delivery.id == deliveryId,
         orElse: () => Delivery.empty()),
-    error: (error, stackTrace) => Delivery.empty(),
-    loading: () => Delivery.empty(),
+    orElse: () => Delivery.empty(),
   );
 });

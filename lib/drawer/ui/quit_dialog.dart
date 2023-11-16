@@ -7,7 +7,7 @@ import 'package:myecl/drawer/tools/constants.dart';
 import 'package:myecl/service/providers/firebase_token_expiration_provider.dart';
 import 'package:myecl/service/providers/messages_provider.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/dialog.dart';
+import 'package:myecl/tools/ui/widgets/dialog.dart';
 
 class QuitDialog extends HookConsumerWidget {
   const QuitDialog({Key? key}) : super(key: key);
@@ -26,13 +26,15 @@ class QuitDialog extends HookConsumerWidget {
             child: GestureDetector(
               onTap: () {},
               child: CustomDialogBox(
-                  descriptions: DrawerTextConstants.logingOut,
+                  descriptions: DrawerTextConstants.loginOut,
                   title: DrawerTextConstants.logOut,
                   onYes: () {
                     auth.deleteToken();
                     if (!kIsWeb) {
                       ref.watch(messagesProvider.notifier).forgetDevice();
-                      ref.watch(firebaseTokenExpirationProvider.notifier).reset();
+                      ref
+                          .watch(firebaseTokenExpirationProvider.notifier)
+                          .reset();
                     }
                     isCachingNotifier.set(false);
                     displayToast(

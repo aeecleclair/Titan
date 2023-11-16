@@ -65,14 +65,17 @@ class RightPanel extends HookConsumerWidget {
             controller: pageController,
             itemBuilder: ((context, index) {
               final screenShot = screenShots[screenShots.length -
-                  (initialPage - index - 1) % screenShots.length - 1];
+                  (initialPage - index - 1) % screenShots.length -
+                  1];
               return Column(
                 children: [
                   const SizedBox(height: 50),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const SizedBox(width: 20,),
+                      const SizedBox(
+                        width: 20,
+                      ),
                       if (screenShot.title.isNotEmpty)
                         Text(
                           screenShot.title,

@@ -5,11 +5,11 @@ import 'package:myecl/auth/providers/is_connected_provider.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/others/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/refresher.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/version/providers/version_verifier_provider.dart';
 
 class NoInternetPage extends HookConsumerWidget {
-  const NoInternetPage({Key? key}) : super(key: key);
+  const NoInternetPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

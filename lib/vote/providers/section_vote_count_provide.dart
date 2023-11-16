@@ -9,7 +9,7 @@ class SectionVoteCountNotifier extends SingleNotifier<int> {
     _repository.setToken(token);
   }
 
-  Future<AsyncValue<int>> loadCout(String id) async {
+  Future<AsyncValue<int>> loadCount(String id) async {
     return await load(() => _repository.getSectionVoteCount(id));
   }
 }

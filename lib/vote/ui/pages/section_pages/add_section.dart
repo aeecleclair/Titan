@@ -3,23 +3,25 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:myecl/vote/class/section.dart';
-import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
+import 'package:myecl/vote/providers/sections_contender_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/ui/text_entry.dart';
 import 'package:myecl/vote/ui/vote.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddSectionPage extends HookConsumerWidget {
-  const AddSectionPage({Key? key}) : super(key: key);
+  const AddSectionPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sectionPretendanceNotifier =
-        ref.watch(sectionPretendanceProvider.notifier);
-    final sectionListNotifier = ref.watch(sectionsProvider.notifier);
+    final sectionContenderNotifier =
+        ref.read(sectionContenderProvider.notifier);
+    final sectionListNotifier = ref.read(sectionsProvider.notifier);
     final sections = ref.watch(sectionsProvider);
     final key = GlobalKey<FormState>();
     final name = useTextEditingController();
@@ -32,65 +34,26 @@ class AddSectionPage extends HookConsumerWidget {
       child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(children: [
-            const SizedBox(
-              height: 50,
-            ),
-            const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(VoteTextConstants.addSection,
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 149, 149, 149)))),
+            const SizedBox(height: 50),
+            const AlignLeftText(VoteTextConstants.addSection,
+                color: Colors.grey),
             Form(
               key: key,
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 30,
-                  ),
+                  const SizedBox(height: 30),
                   TextEntry(
                     controller: name,
-                    isInt: false,
-                    keyboardType: TextInputType.text,
                     label: VoteTextConstants.sectionName,
-                    suffix: '',
                   ),
-                  const SizedBox(
-                    height: 30,
-                  ),
+                  const SizedBox(height: 30),
                   TextEntry(
                     controller: description,
-                    isInt: false,
-                    keyboardType: TextInputType.text,
                     label: VoteTextConstants.sectionDescription,
-                    suffix: '',
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  ShrinkButton(
-                    waitChild: Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.only(top: 8, bottom: 12),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 5,
-                              blurRadius: 10,
-                              offset: const Offset(
-                                  3, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        child: const Center(
-                            child: CircularProgressIndicator(
-                          color: Colors.white,
-                        ))),
+                  const SizedBox(height: 50),
+                  WaitingButton(
+                    builder: (child) => AddEditButtonLayout(child: child),
                     onTap: () async {
                       await tokenExpireWrapper(ref, () async {
                         final value = await sectionListNotifier.addSection(
@@ -101,7 +64,7 @@ class AddSectionPage extends HookConsumerWidget {
                         if (value) {
                           QR.back();
                           sections.whenData((value) {
-                            sectionPretendanceNotifier.addT(value.last);
+                            sectionContenderNotifier.addT(value.last);
                           });
                           displayVoteToastWithContext(
                               TypeMsg.msg, VoteTextConstants.addedSection);
@@ -111,28 +74,11 @@ class AddSectionPage extends HookConsumerWidget {
                         }
                       });
                     },
-                    child: Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.only(top: 8, bottom: 12),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 5,
-                              blurRadius: 10,
-                              offset: const Offset(
-                                  3, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        child: const Text(VoteTextConstants.add,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold))),
+                    child: const Text(VoteTextConstants.add,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold)),
                   ),
                   const SizedBox(height: 30),
                 ],

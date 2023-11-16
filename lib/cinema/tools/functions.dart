@@ -1,12 +1,6 @@
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 
-import 'package:myecl/cinema/tools/constants.dart';
-
-String formatSessionDateAndDuration(DateTime date, int duration) {
-  return "${CinemaTextConstants.the} ${formatDate(date)} - ${formatDuration(duration)}";
-}
-
 String formatDuration(int duration) {
   final hours = duration ~/ 60;
   final minutes = duration % 60;

@@ -6,10 +6,9 @@ import 'package:myecl/loan/providers/user_loaner_list_provider.dart';
 final loanerProvider = Provider((ref) {
   final loanerId = ref.watch(loanerIdProvider);
   final loanerList = ref.watch(userLoanerListProvider);
-  return loanerList.when(
+  return loanerList.maybeWhen(
     data: (loanerList) =>
         loanerList.firstWhere((loaner) => loaner.id == loanerId),
-    error: (error, stackTrace) => Loaner.empty(),
-    loading: () => Loaner.empty(),
+    orElse: () => Loaner.empty(),
   );
 });

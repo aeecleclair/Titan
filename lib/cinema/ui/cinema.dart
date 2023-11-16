@@ -4,11 +4,11 @@ import 'package:myecl/cinema/providers/main_page_index_provider.dart';
 import 'package:myecl/cinema/providers/scroll_provider.dart';
 import 'package:myecl/cinema/router.dart';
 import 'package:myecl/cinema/tools/constants.dart';
-import 'package:myecl/tools/ui/top_bar.dart';
+import 'package:myecl/tools/ui/widgets/top_bar.dart';
 
 class CinemaTemplate extends HookConsumerWidget {
   final Widget child;
-  const CinemaTemplate({Key? key, required this.child}) : super(key: key);
+  const CinemaTemplate({super.key, required this.child});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -3,7 +3,7 @@ import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/class/list_users.dart';
 
-enum CollectionSlot { midi, soir }
+enum CollectionSlot { midDay, evening }
 
 class Order {
   Order(
@@ -54,8 +54,8 @@ class Order {
     data['order_id'] = id;
     data['delivery_id'] = deliveryId;
     data['amount'] = amount;
-    data['ordering_date'] = processDateToAPIWitoutHour(orderingDate);
-    data['delivery_date'] = processDateToAPIWitoutHour(deliveryDate);
+    data['ordering_date'] = processDateToAPIWithoutHour(orderingDate);
+    data['delivery_date'] = processDateToAPIWithoutHour(deliveryDate);
     data['products_ids'] = productsDetail;
     data['collection_slot'] = collectionSlotToString(collectionSlot);
     data['products_quantity'] = products.map((e) => e.quantity).toList();
@@ -112,7 +112,7 @@ class Order {
         products: [],
         amount: 0,
         lastAmount: 0,
-        collectionSlot: CollectionSlot.midi,
+        collectionSlot: CollectionSlot.midDay,
         expanded: false,
         user: SimpleUser.empty());
   }

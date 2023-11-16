@@ -13,7 +13,10 @@ import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/amap/ui/pages/detail_delivery_page/order_detail_ui.dart';
 import 'package:myecl/amap/ui/pages/detail_delivery_page/product_detail_ui.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/refresher.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/widgets/loader.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
 
 class DetailDeliveryPage extends HookConsumerWidget {
   const DetailDeliveryPage({super.key});
@@ -41,22 +44,14 @@ class DetailDeliveryPage extends HookConsumerWidget {
               child: Column(
                 children: [
                   Text(
-                    "Date de livraison : ${processDate(delivery.deliveryDate)}",
+                    "${AMAPTextConstants.deliveryDate} : ${processDate(delivery.deliveryDate)}",
                     style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                        fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text("Produits :",
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: AMAPColorConstants.textDark)),
+                  const SizedBox(height: 20),
+                  const AlignLeftText(
+                    "${AMAPTextConstants.products} :",
+                    color: AMAPColorConstants.textDark,
                   ),
                 ],
               ),
@@ -64,11 +59,11 @@ class DetailDeliveryPage extends HookConsumerWidget {
             ...sortedByCategoryDeliveryProducts
                 .map((key, value) {
                   Map<String, int> productsQuantity = {};
-                  deliveryOrders.when(
+                  deliveryOrders.maybeWhen(
                       data: (orderMap) {
                         final deliveryOrderList = orderMap[delivery.id];
                         if (deliveryOrderList != null) {
-                          deliveryOrderList.item1.when(
+                          deliveryOrderList.maybeWhen(
                               data: (listOrders) {
                                 for (Order o in listOrders) {
                                   for (Product p in o.products) {
@@ -81,12 +76,10 @@ class DetailDeliveryPage extends HookConsumerWidget {
                                   }
                                 }
                               },
-                              error: (e, s) {},
-                              loading: () {});
+                              orElse: () {});
                         }
                       },
-                      error: (Object error, StackTrace stackTrace) {},
-                      loading: () {});
+                      orElse: () {});
                   return MapEntry(
                     key,
                     Column(
@@ -98,9 +91,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(
-                          height: 5,
-                        ),
+                        const SizedBox(height: 5),
                         Wrap(
                           children: value
                               .map((e) => Container(
@@ -113,84 +104,64 @@ class DetailDeliveryPage extends HookConsumerWidget {
                                   ))
                               .toList(),
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                       ],
                     ),
                   );
                 })
                 .values
                 .toList(),
-            const SizedBox(
-              height: 20,
+            const SizedBox(height: 20),
+            const AlignLeftText(
+              "${AMAPTextConstants.orders} :",
+              padding: EdgeInsets.only(left: 30),
+              color: AMAPColorConstants.textDark,
             ),
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(left: 30),
-              child: const Text("Commandes :",
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: AMAPColorConstants.textDark)),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 10),
-              child: deliveryOrders.when(
-                data: (data) {
-                  final orders = data[delivery.id];
-                  if (orders == null) {
-                    return const Center(
-                        child: CircularProgressIndicator(
-                      color: AMAPColorConstants.greenGradient2,
-                    ));
-                  }
-                  return orders.item1.when(
-                    data: (data) {
-                      if (data.isEmpty) {
-                        return Container(
-                            margin: const EdgeInsets.only(bottom: 50),
-                            child: const Center(child: Text("Aucune commande")));
-                      } else {
-                        return cash.when(
-                          data: (cash) {
-                            return Wrap(
-                              children: data.map((e) {
-                                final userCash = cash.firstWhere(
-                                    (element) => element.user.id == e.user.id);
-                                return DetailOrderUI(
-                                  order: e,
-                                  userCash: userCash,
-                                  deliveryId: delivery.id,
+              child: AsyncChild(
+                  value: deliveryOrders,
+                  loaderColor: AMAPColorConstants.greenGradient2,
+                  builder: (context, data) {
+                    final orders = data[delivery.id];
+                    if (orders == null) {
+                      return const Loader(
+                          color: AMAPColorConstants.greenGradient2);
+                    }
+                    return AsyncChild(
+                        value: orders,
+                        loaderColor: AMAPColorConstants.greenGradient2,
+                        builder: (context, data) {
+                          if (data.isEmpty) {
+                            return Container(
+                                margin: const EdgeInsets.only(bottom: 50),
+                                child: const Center(
+                                    child: Text(AMAPTextConstants.noOrder)));
+                          }
+                          return AsyncChild(
+                              value: cash,
+                              loaderColor: AMAPColorConstants.greenGradient2,
+                              builder: (context, cash) {
+                                return Wrap(
+                                  spacing: 20,
+                                  runSpacing: 20,
+                                  children: data.map((e) {
+                                    final userCash = cash.firstWhere(
+                                        (element) =>
+                                            element.user.id == e.user.id);
+                                    return DetailOrderUI(
+                                      order: e,
+                                      userCash: userCash,
+                                      deliveryId: delivery.id,
+                                    );
+                                  }).toList(),
                                 );
-                              }).toList(),
-                            );
-                          },
-                          loading: () => const Center(
-                              child: CircularProgressIndicator(
-                            color: AMAPColorConstants.greenGradient2,
-                          )),
-                          error: (error, stack) => Text(error.toString()),
-                        );
-                      }
-                    },
-                    loading: () => const Center(
-                        child: CircularProgressIndicator(
-                      color: AMAPColorConstants.greenGradient2,
-                    )),
-                    error: (error, stack) => Text(error.toString()),
-                  );
-                },
-                loading: () => const Center(
-                    child: CircularProgressIndicator(
-                  color: AMAPColorConstants.greenGradient2,
-                )),
-                error: (error, stack) => Text(error.toString()),
-              ),
+                              });
+                        });
+                  }),
             ),
+            const SizedBox(height: 20)
           ],
         ),
       ),

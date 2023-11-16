@@ -29,6 +29,7 @@ class SettingsRouter {
             QRoute(path: changePassword, builder: () => const ChangePassPage()),
             QRoute(path: logs, builder: () => const LogPage()),
             QRoute(path: modules, builder: () => const ModulesPage()),
-            QRoute(path: notifications, builder: () => const NotificationPage()),
+            QRoute(
+                path: notifications, builder: () => const NotificationPage()),
           ]);
 }

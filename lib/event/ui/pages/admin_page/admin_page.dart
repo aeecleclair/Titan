@@ -2,23 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/event/ui/event.dart';
-import 'package:myecl/event/ui/pages/admin_page/calendar.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/ui/pages/admin_page/list_event.dart';
-import 'package:myecl/tools/ui/refresher.dart';
+import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:myecl/tools/ui/widgets/calendar.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class AdminPage extends HookConsumerWidget {
-  const AdminPage({Key? key}) : super(key: key);
+  const AdminPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final events = ref.watch(eventListProvider);
+
     final List<Event> pendingEvents = [],
         confirmedEvents = [],
         canceledEvents = [];
-    events.when(
+    events.maybeWhen(
         data: (events) {
           for (Event b in events) {
             switch (b.decision) {
@@ -34,8 +37,36 @@ class AdminPage extends HookConsumerWidget {
             }
           }
         },
-        error: (e, s) {},
-        loading: () {});
+        orElse: () {});
+    List<Appointment> appointments = <Appointment>[];
+    confirmedEvents.map((e) {
+      if (e.recurrenceRule != "") {
+        final dates = getDateInRecurrence(e.recurrenceRule, e.start);
+        dates.map((data) {
+          appointments.add(Appointment(
+            startTime: combineDate(data, e.start),
+            endTime: combineDate(data, e.end),
+            subject: '${e.name} - ${e.organizer}',
+            isAllDay: e.allDay,
+            startTimeZone: "Europe/Paris",
+            endTimeZone: "Europe/Paris",
+            notes: e.description,
+            color: generateColor(e.location),
+          ));
+        }).toList();
+      } else {
+        appointments.add(Appointment(
+          startTime: e.start,
+          endTime: e.end,
+          subject: '${e.name} - ${e.organizer}',
+          isAllDay: e.allDay,
+          startTimeZone: "Europe/Paris",
+          endTimeZone: "Europe/Paris",
+          notes: e.description,
+          color: generateColor(e.location),
+        ));
+      }
+    }).toList();
     return EventTemplate(
       child: Refresher(
         onRefresh: () async {
@@ -46,7 +77,9 @@ class AdminPage extends HookConsumerWidget {
             const SizedBox(height: 10),
             SizedBox(
                 height: MediaQuery.of(context).size.height - 415,
-                child: const Calendar()),
+                child: Calendar(
+                    items: events,
+                    dataSource: AppointmentDataSource(appointments))),
             const SizedBox(height: 30),
             if (pendingEvents.isEmpty &&
                 confirmedEvents.isEmpty &&

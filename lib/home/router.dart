@@ -19,11 +19,13 @@ class HomeRouter {
   HomeRouter(this.ref);
 
   QRoute route() => QRoute(
-        path: HomeRouter.root,
-        builder: () => const HomePage(),
-        middleware: [AuthenticatedMiddleware(ref)],
-        children: [
-          QRoute(path: detail, builder: () => const DetailPage(isAdmin: false)),
-        ]
-      );
+          path: HomeRouter.root,
+          builder: () => const HomePage(),
+          middleware: [
+            AuthenticatedMiddleware(ref)
+          ],
+          children: [
+            QRoute(
+                path: detail, builder: () => const DetailPage(isAdmin: false)),
+          ]);
 }

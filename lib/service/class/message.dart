@@ -37,7 +37,8 @@ class Message {
     data['action_table'] = actionTable;
     data['context'] = context;
     data['is_visible'] = isVisible;
-    data['delivery_datetime'] = deliveryDateTime?.toIso8601String().split('T')[0];
+    data['delivery_datetime'] =
+        deliveryDateTime?.toIso8601String().split('T')[0];
     return data;
   }
 

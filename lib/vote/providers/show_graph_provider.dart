@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final showGraphProvider =
-    StateNotifierProvider<ShowGraphNotifier, bool>((ref) {
+final showGraphProvider = StateNotifierProvider<ShowGraphNotifier, bool>((ref) {
   return ShowGraphNotifier();
 });
 

@@ -7,19 +7,19 @@ import 'package:myecl/amap/providers/scroll_controller_provider.dart';
 import 'package:myecl/amap/providers/scroll_provider.dart';
 import 'package:myecl/amap/providers/sorted_delivery_product.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/pages/list_products_page/produit_ui_list.dart';
+import 'package:myecl/amap/ui/pages/list_products_page/product_ui_list.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 
 class CategoryPage extends HookConsumerWidget {
   final String category;
   final int index;
   final AnimationController hideAnimation;
   const CategoryPage(
-      {Key? key,
+      {super.key,
       required this.index,
       required this.hideAnimation,
-      required this.category})
-      : super(key: key);
+      required this.category});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,21 +31,21 @@ class CategoryPage extends HookConsumerWidget {
 
     double minScale = 0.8;
     double scale = 1;
-    double maxHeigth = MediaQuery.of(context).size.height - 295;
+    double maxHeight = MediaQuery.of(context).size.height - 295;
     double height = 0;
 
     if (index == scroll.floor()) {
       scale = 1 - (scroll - index) * (1 - minScale);
-      height = maxHeigth * (1 - scale) / 2;
+      height = maxHeight * (1 - scale) / 2;
     } else if (index == scroll.floor() + 1) {
       scale = minScale + (scroll - index + 1) * (1 - minScale);
-      height = maxHeigth * (1 - scale) / 2;
+      height = maxHeight * (1 - scale) / 2;
     } else if (index == scroll.floor() - 1) {
       scale = minScale + (scroll - index - 1) * (1 - minScale);
-      height = maxHeigth * (1 - scale) / 2;
+      height = maxHeight * (1 - scale) / 2;
     } else {
       scale = minScale;
-      height = maxHeigth * (1 - minScale) / 2;
+      height = maxHeight * (1 - minScale) / 2;
     }
 
     double h = MediaQuery.of(context).size.height -
@@ -59,22 +59,18 @@ class CategoryPage extends HookConsumerWidget {
               height: height,
             ),
             SizedBox(
-              height: maxHeigth * scale,
+              height: maxHeight * scale,
               child: Builder(
                 builder: (BuildContext context) {
                   List<Widget> listWidgetProduct = [
-                    Container(
+                    SizedBox(
                       height: 50,
-                      alignment: Alignment.centerLeft,
-                      padding:
-                          const EdgeInsets.only(left: 20, top: 20, right: 20),
-                      child: Text(
+                      child: AlignLeftText(
                         capitalize(category),
-                        style: const TextStyle(
-                          fontSize: 25,
-                          color: AMAPColorConstants.textDark,
-                          fontWeight: FontWeight.w700,
-                        ),
+                        padding:
+                            const EdgeInsets.only(left: 20, top: 20, right: 20),
+                        color: AMAPColorConstants.textDark,
+                        fontSize: 25,
                       ),
                     )
                   ];

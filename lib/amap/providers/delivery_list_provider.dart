@@ -34,7 +34,7 @@ class DeliveryListNotifier extends ListNotifier<Delivery> {
         _deliveriesListRepository.openDelivery,
         (deliveries, delivery) => deliveries
           ..[deliveries.indexWhere((d) => d.id == delivery.id)] =
-              delivery.copyWith(status: DeliveryStatus.orderable),
+              delivery.copyWith(status: DeliveryStatus.available),
         delivery);
   }
 
@@ -93,16 +93,9 @@ class DeliveryListNotifier extends ListNotifier<Delivery> {
   }
 
   Future<List<Delivery>> copy() async {
-    return state.when(
-      data: (deliveries) async {
-        return List.from(deliveries);
-      },
-      error: (error, stackTrace) async {
-        return [];
-      },
-      loading: () async {
-        return [];
-      },
+    return state.maybeWhen(
+      data: (deliveries) => List.from(deliveries),
+      orElse: () => [],
     );
   }
 }
@@ -120,9 +113,8 @@ final deliveryListProvider =
 
 final deliveryList = Provider<List<Delivery>>((ref) {
   final state = ref.watch(deliveryListProvider);
-  return state.when(
+  return state.maybeWhen(
     data: (deliveries) => deliveries,
-    loading: () => [],
-    error: (error, stackTrace) => [],
+    orElse: () => [],
   );
 });

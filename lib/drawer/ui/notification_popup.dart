@@ -10,7 +10,7 @@ import 'package:myecl/service/class/topic.dart';
 import 'package:myecl/service/providers/topic_provider.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/service/tools/functions.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class Consts {
   Consts._();
@@ -118,7 +118,8 @@ class NotificationPopup extends HookConsumerWidget {
                                               width: 2.0),
                                         ),
                                         alignment: Alignment.center,
-                                        child: AutoSizeText(topicToFrenchString(e),
+                                        child: AutoSizeText(
+                                            topicToFrenchString(e),
                                             maxLines: 1,
                                             style: TextStyle(
                                                 fontSize: 20,
@@ -130,12 +131,12 @@ class NotificationPopup extends HookConsumerWidget {
                                     ))
                                 .toList()),
                         const SizedBox(height: 40.0),
-                        ShrinkButton(
+                        WaitingButton(
                           onTap: () async {
                             displayNotificationPopupNotifier.setDisplay();
                             await topicsNotifier.subscribeAll();
                           },
-                          waitChild: Container(
+                          builder: (child) => Container(
                               width: 130,
                               height: 60,
                               padding: const EdgeInsets.all(10.0),
@@ -147,28 +148,13 @@ class NotificationPopup extends HookConsumerWidget {
                                     width: 2.0),
                               ),
                               alignment: Alignment.center,
-                              child: const Center(
-                                child: CircularProgressIndicator(
-                                    color: Colors.white),
-                              )),
-                          child: Container(
-                            width: 130,
-                            height: 60,
-                            padding: const EdgeInsets.all(10.0),
-                            decoration: BoxDecoration(
-                              color: ColorConstants.gradient1,
-                              borderRadius: BorderRadius.circular(10.0),
-                              border: Border.all(
-                                  color: ColorConstants.gradient1, width: 2.0),
-                            ),
-                            alignment: Alignment.center,
-                            child: const AutoSizeText(Consts.button,
-                                maxLines: 1,
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.white)),
-                          ),
+                              child: child),
+                          child: const AutoSizeText(Consts.button,
+                              maxLines: 1,
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white)),
                         ),
                       ],
                     ),

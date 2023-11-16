@@ -49,11 +49,9 @@ final sectionsProvider =
 
 final sectionList = Provider<List<Section>>((ref) {
   final sections = ref.watch(sectionsProvider);
-  return sections.when(data: (section) {
+  return sections.maybeWhen(data: (section) {
     return section;
-  }, error: (error, stackTrace) {
-    return [];
-  }, loading: () {
+  }, orElse: () {
     return [];
   });
 });

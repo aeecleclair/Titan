@@ -33,7 +33,7 @@ jobs:
           echo ref=$ref >> $GITHUB_OUTPUT
       
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
         with:
           ref: ${{ steps.get-ref.outputs.ref }}
       

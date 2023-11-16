@@ -53,11 +53,9 @@ final asyncUserProvider =
   UserNotifier userNotifier = UserNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {
     final isLoggedIn = ref.watch(isLoggedInProvider);
-    final id = ref.watch(idProvider).when(
-          data: (value) => value,
-          loading: () => "",
-          error: (e, s) => "",
-        );
+    final id = ref
+        .watch(idProvider)
+        .maybeWhen(data: (value) => value, orElse: () => "");
     if (isLoggedIn && id != "") {
       return userNotifier..loadMe();
     }
@@ -66,14 +64,11 @@ final asyncUserProvider =
 });
 
 final userProvider = Provider((ref) {
-  return ref.watch(asyncUserProvider).when(
+  return ref.watch(asyncUserProvider).maybeWhen(
     data: (user) {
       return user;
     },
-    error: (e, s) {
-      return User.empty();
-    },
-    loading: () {
+    orElse: () {
       return User.empty();
     },
   );

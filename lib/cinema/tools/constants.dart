@@ -1,3 +1,9 @@
+import 'package:flutter/material.dart';
+
+class CinemaColorConstants {
+  static const Color imdbColor = Color(0xffe2b616);
+}
+
 class CinemaTextConstants {
   static const String add = "Ajouter";
   static const String addedSession = "Séance ajoutée";

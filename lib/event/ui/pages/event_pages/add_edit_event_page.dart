@@ -1,8 +1,6 @@
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/event/providers/is_room_provider.dart';
@@ -15,17 +13,22 @@ import 'package:myecl/event/providers/selected_days_provider.dart';
 import 'package:myecl/event/providers/user_event_list_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
-import 'package:myecl/event/ui/pages/event_pages/event_type_chip.dart';
-import 'package:myecl/event/ui/pages/event_pages/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/widgets/date_entry.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/layouts/item_chip.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class AddEditEventPage extends HookConsumerWidget {
-  const AddEditEventPage({Key? key}) : super(key: key);
+  const AddEditEventPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -91,40 +94,32 @@ class AddEditEventPage extends HookConsumerWidget {
           child: Form(
               key: key,
               child: Column(children: [
-                Padding(
+                const SizedBox(height: 40),
+                AlignLeftText(
+                  isEdit
+                      ? EventTextConstants.editEvent
+                      : EventTextConstants.addEvent,
                   padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                          isEdit
-                              ? EventTextConstants.editEvent
-                              : EventTextConstants.addEvent,
-                          style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 149, 149, 149)))),
+                  color: Colors.grey,
                 ),
                 const SizedBox(height: 30),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const SizedBox(width: 15),
-                      ...CalendarEventType.values.map(
-                        (e) => EventTypeChip(
-                          label: calendarEventTypeToString(e),
-                          selected: eventType.value == e,
+                HorizontalListView.builder(
+                    height: 40,
+                    items: CalendarEventType.values,
+                    itemBuilder: (context, value, index) {
+                      final selected = eventType.value == value;
+                      return ItemChip(
+                          selected: selected,
                           onTap: () async {
-                            eventType.value = e;
+                            eventType.value = value;
                           },
-                        ),
-                      ),
-                      const SizedBox(width: 15),
-                    ],
-                  ),
-                ),
+                          child: Text(
+                            calendarEventTypeToString(value),
+                            style: TextStyle(
+                                color: selected ? Colors.white : Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ));
+                    }),
                 Column(children: [
                   const SizedBox(height: 20),
                   Padding(
@@ -132,19 +127,13 @@ class AddEditEventPage extends HookConsumerWidget {
                     child: Column(
                       children: [
                         TextEntry(
-                          keyboardType: TextInputType.text,
                           controller: name,
-                          isInt: false,
                           label: EventTextConstants.name,
-                          suffix: '',
                         ),
                         const SizedBox(height: 30),
                         TextEntry(
-                          keyboardType: TextInputType.text,
                           controller: organizer,
-                          isInt: false,
                           label: EventTextConstants.organizer,
-                          suffix: '',
                         ),
                         const SizedBox(height: 30),
                         CheckBoxEntry(
@@ -227,281 +216,59 @@ class AddEditEventPage extends HookConsumerWidget {
                                           style:
                                               TextStyle(color: Colors.black)),
                                       const SizedBox(height: 10),
-                                      TextFormField(
-                                        decoration: InputDecoration(
-                                          prefix: Container(
-                                            margin: const EdgeInsets.only(
-                                                right: 10),
-                                            child: const Text(
-                                                EventTextConstants.eventEvery,
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: Colors.black)),
-                                          ),
-                                          suffix: const Text(
-                                              EventTextConstants.weeks,
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Colors.black)),
-                                          labelText:
-                                              EventTextConstants.interval,
-                                          labelStyle: const TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black,
-                                          ),
-                                          floatingLabelStyle: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          focusedBorder:
-                                              const UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.black,
-                                                width: 2.0),
-                                          ),
-                                        ),
+                                      TextEntry(
+                                        label: EventTextConstants.interval,
                                         controller: interval,
-                                        validator: (value) {
-                                          if (value == null) {
-                                            return EventTextConstants
-                                                .noDescriptionError;
-                                          } else if (int.tryParse(value) ==
-                                              null) {
-                                            return EventTextConstants
-                                                .invalidIntervalError;
-                                          } else if (int.parse(value) < 1) {
-                                            return EventTextConstants
-                                                .invalidIntervalError;
-                                          }
-                                          return null;
-                                        },
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.black,
-                                        ),
+                                        prefix: EventTextConstants.eventEvery,
+                                        suffix: EventTextConstants.weeks,
+                                        isInt: true,
+                                        keyboardType: TextInputType.number,
                                       ),
-                                      const SizedBox(
-                                        height: 30,
-                                      ),
+                                      const SizedBox(height: 30),
                                       if (!allDay.value)
                                         Column(
                                           children: [
-                                            GestureDetector(
-                                              onTap: () => _selectOnlyHour(
-                                                  context, start),
-                                              child: SizedBox(
-                                                child: AbsorbPointer(
-                                                  child: TextFormField(
-                                                    controller: start,
-                                                    decoration:
-                                                        const InputDecoration(
-                                                      labelText:
-                                                          EventTextConstants
-                                                              .startHour,
-                                                      floatingLabelStyle:
-                                                          TextStyle(
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                      focusedBorder:
-                                                          UnderlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                            color: Colors.black,
-                                                            width: 2.0),
-                                                      ),
-                                                    ),
-                                                    validator: (value) {
-                                                      if (value!.isEmpty) {
-                                                        return EventTextConstants
-                                                            .noDateError;
-                                                      }
-                                                      return null;
-                                                    },
-                                                    style: const TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Colors.black,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 30,
-                                            ),
-                                            GestureDetector(
-                                              onTap: () =>
-                                                  _selectOnlyHour(context, end),
-                                              child: SizedBox(
-                                                child: AbsorbPointer(
-                                                  child: TextFormField(
-                                                    controller: end,
-                                                    decoration:
-                                                        const InputDecoration(
-                                                      labelText:
-                                                          EventTextConstants
-                                                              .endHour,
-                                                      floatingLabelStyle:
-                                                          TextStyle(
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                      focusedBorder:
-                                                          UnderlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                            color: Colors.black,
-                                                            width: 2.0),
-                                                      ),
-                                                    ),
-                                                    validator: (value) {
-                                                      if (value!.isEmpty) {
-                                                        return EventTextConstants
-                                                            .noDateError;
-                                                      }
-                                                      return null;
-                                                    },
-                                                    style: const TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Colors.black,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 30,
-                                            ),
+                                            DateEntry(
+                                                onTap: () => getOnlyHourDate(
+                                                    context, start),
+                                                controller: start,
+                                                label: EventTextConstants
+                                                    .startHour),
+                                            const SizedBox(height: 30),
+                                            DateEntry(
+                                                onTap: () => getOnlyHourDate(
+                                                    context, end),
+                                                controller: end,
+                                                label:
+                                                    EventTextConstants.endHour),
+                                            const SizedBox(height: 30),
                                           ],
                                         ),
-                                      GestureDetector(
-                                        onTap: () => _selectOnlyDayDate(
-                                            context, recurrenceEndDate),
-                                        child: SizedBox(
-                                          child: AbsorbPointer(
-                                            child: TextFormField(
-                                              controller: recurrenceEndDate,
-                                              decoration: const InputDecoration(
-                                                labelText: EventTextConstants
-                                                    .recurrenceEndDate,
-                                                floatingLabelStyle: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                                focusedBorder:
-                                                    UnderlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors.black,
-                                                      width: 2.0),
-                                                ),
-                                              ),
-                                              validator: (value) {
-                                                if (value!.isEmpty) {
-                                                  return EventTextConstants
-                                                      .noDateError;
-                                                }
-                                                return null;
-                                              },
-                                              style: const TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                      DateEntry(
+                                          onTap: () => getOnlyDayDate(
+                                              context, recurrenceEndDate),
+                                          controller: recurrenceEndDate,
+                                          label: EventTextConstants
+                                              .recurrenceEndDate),
                                     ],
                                   ),
                                 ],
                               )
                             : Column(
                                 children: [
-                                  GestureDetector(
-                                    onTap: () => allDay.value
-                                        ? _selectOnlyDayDate(context, start)
-                                        : _selectDate(context, start),
-                                    child: SizedBox(
-                                      child: AbsorbPointer(
-                                        child: TextFormField(
-                                          controller: start,
-                                          decoration: const InputDecoration(
-                                            labelText:
-                                                EventTextConstants.startDate,
-                                            floatingLabelStyle: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                            focusedBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.black,
-                                                  width: 2.0),
-                                            ),
-                                          ),
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return EventTextConstants
-                                                  .noDateError;
-                                            }
-                                            return null;
-                                          },
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 30,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () => allDay.value
-                                        ? _selectOnlyDayDate(context, end)
-                                        : _selectDate(context, end),
-                                    child: SizedBox(
-                                      child: AbsorbPointer(
-                                        child: TextFormField(
-                                          controller: end,
-                                          decoration: const InputDecoration(
-                                            labelText:
-                                                EventTextConstants.endDate,
-                                            floatingLabelStyle: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                            focusedBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.black,
-                                                  width: 2.0),
-                                            ),
-                                          ),
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return EventTextConstants
-                                                  .noDateError;
-                                            }
-                                            return null;
-                                          },
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  DateEntry(
+                                      onTap: () => allDay.value
+                                          ? getOnlyDayDate(context, start)
+                                          : getFullDate(context, start),
+                                      controller: start,
+                                      label: EventTextConstants.startDate),
+                                  const SizedBox(height: 30),
+                                  DateEntry(
+                                      onTap: () => allDay.value
+                                          ? getOnlyDayDate(context, end)
+                                          : getFullDate(context, end),
+                                      controller: end,
+                                      label: EventTextConstants.endDate),
                                 ],
                               ),
                       ],
@@ -511,102 +278,62 @@ class AddEditEventPage extends HookConsumerWidget {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        GestureDetector(
+                        ItemChip(
                             onTap: () {
-                              isRoomNotifier.setbool(true);
+                              isRoomNotifier.setIsRoom(true);
                             },
-                            child: Container(
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 10.0),
-                                child: Chip(
-                                  label: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text("Salle",
-                                          style: TextStyle(
-                                            color: isRoom
-                                                ? Colors.white
-                                                : Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                          ))),
-                                  backgroundColor: isRoom
-                                      ? Colors.black
-                                      : Colors.grey.shade200,
+                            selected: isRoom,
+                            child: Text(EventTextConstants.room,
+                                style: TextStyle(
+                                  color: isRoom ? Colors.white : Colors.black,
+                                  fontWeight: FontWeight.bold,
                                 ))),
-                        GestureDetector(
+                        ItemChip(
                           onTap: () {
-                            isRoomNotifier.setbool(false);
+                            isRoomNotifier.setIsRoom(false);
                             roomIdNotifier.setRoomId("");
                           },
-                          child: Container(
-                            margin:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Chip(
-                                label: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("Autre",
-                                      style: TextStyle(
-                                        color: isRoom
-                                            ? Colors.black
-                                            : Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      )),
-                                ),
-                                backgroundColor: isRoom
-                                    ? Colors.grey.shade200
-                                    : Colors.black),
-                          ),
+                          selected: !isRoom,
+                          child: Text(EventTextConstants.other,
+                              style: TextStyle(
+                                color: isRoom ? Colors.black : Colors.white,
+                                fontWeight: FontWeight.bold,
+                              )),
                         )
                       ]),
                   const SizedBox(height: 20),
                   isRoom
                       ? SizedBox(
                           height: 59,
-                          child: rooms.when(
-                              data: (rooms) => ListView.builder(
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  physics: const BouncingScrollPhysics(),
-                                  itemCount: rooms.length,
-                                  itemBuilder: (context, index) {
-                                    final selected = rooms[index].id == roomId;
-                                    return GestureDetector(
-                                      child: Container(
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 10.0),
-                                        child: Chip(
-                                            label: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Text(rooms[index].name,
-                                                  style: TextStyle(
-                                                    color: selected
-                                                        ? Colors.white
-                                                        : Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                  )),
-                                            ),
-                                            backgroundColor: selected
-                                                ? Colors.black
-                                                : Colors.grey.shade200),
-                                      ),
-                                      onTap: () {
-                                        location.text = rooms[index].name;
-                                        roomIdNotifier
-                                            .setRoomId(rooms[index].id);
-                                      },
-                                    );
-                                  }),
-                              error: (e, s) => Text(e.toString()),
-                              loading: () => const SizedBox()),
-                        )
+                          child: AsyncChild(
+                            value: rooms,
+                            builder: (context, rooms) =>
+                                HorizontalListView.builder(
+                                    height: 40,
+                                    items: rooms,
+                                    itemBuilder: (context, room, index) {
+                                      final selected = room.id == roomId;
+                                      return ItemChip(
+                                        onTap: () {
+                                          location.text = room.name;
+                                          roomIdNotifier.setRoomId(room.id);
+                                        },
+                                        selected: selected,
+                                        child: Text(room.name,
+                                            style: TextStyle(
+                                              color: selected
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                            )),
+                                      );
+                                    }),
+                          ))
                       : Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 30),
                           child: TextEntry(
-                            keyboardType: TextInputType.text,
                             controller: location,
-                            isInt: false,
                             label: EventTextConstants.location,
-                            suffix: '',
                           ),
                         ),
                   const SizedBox(height: 30),
@@ -615,41 +342,12 @@ class AddEditEventPage extends HookConsumerWidget {
                     child: Column(
                       children: [
                         TextEntry(
-                          keyboardType: TextInputType.text,
                           controller: description,
-                          isInt: false,
                           label: EventTextConstants.description,
-                          suffix: '',
                         ),
                         const SizedBox(height: 50),
-                        ShrinkButton(
-                          waitChild: Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.only(top: 8, bottom: 12),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 5,
-                                  blurRadius: 10,
-                                  offset: const Offset(
-                                      3, 3), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            child: const Center(
-                              child: SizedBox(
-                                height: 25,
-                                width: 25,
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
+                        WaitingButton(
+                          builder: (child) => AddEditButtonLayout(child: child),
                           onTap: () async {
                             if (key.currentState == null) {
                               return;
@@ -752,32 +450,14 @@ class AddEditEventPage extends HookConsumerWidget {
                               }
                             }
                           },
-                          child: Container(
-                              width: double.infinity,
-                              padding:
-                                  const EdgeInsets.only(top: 8, bottom: 12),
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 10,
-                                    offset: const Offset(
-                                        3, 3), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              child: Text(
-                                  isEdit
-                                      ? EventTextConstants.edit
-                                      : EventTextConstants.add,
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold))),
+                          child: Text(
+                              isEdit
+                                  ? EventTextConstants.edit
+                                  : EventTextConstants.add,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold)),
                         ),
                       ],
                     ),
@@ -786,107 +466,5 @@ class AddEditEventPage extends HookConsumerWidget {
                 ]),
               ]))),
     );
-  }
-
-  _selectOnlyDayDate(
-      BuildContext context, TextEditingController dateController) async {
-    final DateTime now = DateTime.now();
-    final DateTime? picked = await showDatePicker(
-        locale: const Locale("fr", "FR"),
-        context: context,
-        initialDate: now,
-        firstDate: now,
-        lastDate: DateTime(now.year + 1, now.month, now.day),
-        builder: (BuildContext context, Widget? child) {
-          return Theme(
-            data: ThemeData.light().copyWith(
-              colorScheme: const ColorScheme.light(
-                primary: Color.fromARGB(255, 10, 153, 172),
-                onPrimary: Colors.white,
-                surface: Colors.white,
-                onSurface: Colors.black,
-              ),
-              dialogBackgroundColor: Colors.white,
-            ),
-            child: child!,
-          );
-        });
-
-    dateController.text = DateFormat('dd/MM/yyyy')
-        .format(picked ?? now.add(const Duration(hours: 1)));
-  }
-
-  _selectOnlyHour(
-      BuildContext context, TextEditingController dateController) async {
-    final TimeOfDay now = TimeOfDay.now();
-    final TimeOfDay? picked = await showTimePicker(
-        context: context,
-        initialTime: now,
-        builder: (BuildContext context, Widget? child) {
-          return Theme(
-            data: ThemeData.light().copyWith(
-              colorScheme: const ColorScheme.light(
-                primary: Color.fromARGB(255, 10, 153, 172),
-                onPrimary: Colors.white,
-                surface: Colors.white,
-                onSurface: Colors.black,
-              ),
-              dialogBackgroundColor: Colors.white,
-            ),
-            child: child!,
-          );
-        });
-    dateController.text = DateFormat('HH:mm')
-        .format(DateTimeField.combine(DateTime.now(), picked));
-  }
-
-  _selectDate(
-      BuildContext context, TextEditingController dateController) async {
-    final DateTime now = DateTime.now();
-    showDatePicker(
-        locale: const Locale("fr", "FR"),
-        context: context,
-        initialDate: now,
-        firstDate: now,
-        lastDate: DateTime(now.year + 1, now.month, now.day),
-        builder: (BuildContext context, Widget? child) {
-          return Theme(
-            data: ThemeData.light().copyWith(
-              colorScheme: const ColorScheme.light(
-                primary: Color.fromARGB(255, 10, 153, 172),
-                onPrimary: Colors.white,
-                surface: Colors.white,
-                onSurface: Colors.black,
-              ),
-              dialogBackgroundColor: Colors.white,
-            ),
-            child: child!,
-          );
-        }).then((picked) {
-      if (picked != null) {
-        showTimePicker(
-            context: context,
-            initialTime: TimeOfDay.now(),
-            builder: (BuildContext context, Widget? child) {
-              return Theme(
-                data: ThemeData.light().copyWith(
-                  colorScheme: const ColorScheme.light(
-                    primary: Color.fromARGB(255, 10, 153, 172),
-                    onPrimary: Colors.white,
-                    surface: Colors.white,
-                    onSurface: Colors.black,
-                  ),
-                  dialogBackgroundColor: Colors.white,
-                ),
-                child: child!,
-              );
-            }).then((value) {
-          dateController.text = DateFormat('dd/MM/yyyy HH:mm')
-              .format(DateTimeField.combine(picked, value));
-        });
-      } else {
-        dateController.text = DateFormat('dd/MM/yyyy HH:mm').format(now);
-      }
-    });
   }
 }

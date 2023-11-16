@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/tools/exception.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class MapNotifier<T, E>
     extends StateNotifier<AsyncValue<Map<T, AsyncValue<List<E>>>>> {
@@ -14,13 +15,12 @@ class MapNotifier<T, E>
   }
 
   Future addT(T t) async {
-    state.when(
+    state.maybeWhen(
       data: (loanersItems) async {
         loanersItems[t] = const AsyncValue.data([]);
         state = AsyncValue.data(loanersItems);
       },
-      loading: () {},
-      error: (e, s) {},
+      orElse: () {},
     );
   }
 
@@ -28,7 +28,7 @@ class MapNotifier<T, E>
     state.when(data: (d) async {
       try {
         List<E> currentLoans =
-            d[t]!.when(data: (d) => d, error: (e, s) => [], loading: () => []);
+            d[t]!.maybeWhen(data: (d) => d, orElse: () => []);
         d[t] = AsyncValue.data(currentLoans + [e]);
         state = AsyncValue.data(d);
         return true;
@@ -107,6 +107,60 @@ class MapNotifier<T, E>
       state =
           const AsyncValue.error("Cannot add while loading", StackTrace.empty);
       return false;
+    });
+  }
+
+  Future<bool> deleteE(T t, int index) {
+    return state.when(data: (d) async {
+      try {
+        List<E> eList = d[t]!.maybeWhen(data: (d) => d, orElse: () => []);
+        eList.removeAt(index);
+        d[t] = AsyncValue.data(eList);
+        state = AsyncValue.data(d);
+        return true;
+      } catch (error) {
+        state = AsyncValue.data(d);
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          rethrow;
+        } else {
+          return false;
+        }
+      }
+    }, error: (error, s) async {
+      if (error is AppException && error.type == ErrorType.tokenExpire) {
+        throw error;
+      } else {
+        state = AsyncValue.error(error, s);
+        return false;
+      }
+    }, loading: () async {
+      state =
+          const AsyncValue.error("Cannot add while loading", StackTrace.empty);
+      return false;
+    });
+  }
+
+  Future<void> autoLoad(
+      WidgetRef ref, T t, Future<E> Function(T t) loader) async {
+    Future.delayed(const Duration(milliseconds: 1), () {
+      setTData(t, const AsyncLoading());
+    });
+    tokenExpireWrapper(ref, () async {
+      loader(t).then((value) {
+        setTData(t, AsyncData([value]));
+      });
+    });
+  }
+
+  Future<void> autoLoadList(WidgetRef ref, T t,
+      Future<AsyncValue<List<E>>> Function(T t) loader) async {
+    Future.delayed(const Duration(milliseconds: 1), () {
+      setTData(t, const AsyncLoading());
+    });
+    tokenExpireWrapper(ref, () async {
+      loader(t).then((value) {
+        setTData(t, value);
+      });
     });
   }
 }

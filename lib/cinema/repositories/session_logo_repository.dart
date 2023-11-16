@@ -10,15 +10,15 @@ class SessionPosterRepository extends LogoRepository {
   final ext = 'cinema/sessions/';
 
   Future<Image> getSessionLogo(String id) async {
-    final uint8List = await getLogo(id, suffix: "/poster");
-    if (uint8List.isEmpty) {
+    final bytes = await getLogo(id, suffix: "/poster");
+    if (bytes.isEmpty) {
       return Image.asset("assets/images/logo.png");
     }
-    return Image.memory(uint8List);
+    return Image.memory(bytes);
   }
 
   Future<Image> addSessionLogo(Uint8List bytes, String id) async {
-    final uint8List = await addLogo(bytes, id, suffix: "/poster");
-    return Image.memory(uint8List);
+    return Image.memory(await addLogo(bytes, id, suffix: "/poster"),
+        fit: BoxFit.cover);
   }
 }

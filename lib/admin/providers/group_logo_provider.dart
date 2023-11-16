@@ -14,21 +14,20 @@ class GroupLogoNotifier extends SingleNotifier<Image> {
   }
 
   Future<Image> getLogo(String id) async {
-    final uint8List = await repository.getLogo(id, suffix: "/logo");
-    if (uint8List.isEmpty) {
+    final bytes = await repository.getLogo(id, suffix: "/logo");
+    if (bytes.isEmpty) {
       return Image.asset("assets/images/logo.png");
     }
-    return Image.memory(uint8List);
+    return Image.memory(bytes);
   }
 
   Future<Image> updateLogo(String id, Uint8List bytes) async {
-    final uint8List = await repository.addLogo(bytes, id, suffix: "/logo");
-    return Image.memory(uint8List);
+    return Image.memory(await repository.addLogo(bytes, id, suffix: "/logo"));
   }
 }
 
 final groupLogoProvider =
-StateNotifierProvider<GroupLogoNotifier, AsyncValue<Image>>((ref) {
+    StateNotifierProvider<GroupLogoNotifier, AsyncValue<Image>>((ref) {
   final token = ref.watch(tokenProvider);
   return GroupLogoNotifier(token: token);
 });
