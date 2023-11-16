@@ -5,6 +5,8 @@ import 'package:myecl/todo/providers/todo_list_provider.dart';
 import 'package:myecl/todo/tools/constants.dart';
 import 'package:myecl/todo/ui/pages/main_page/todo_card.dart';
 import 'package:myecl/todo/ui/pages/todo.dart';
+import 'package:myecl/todo/ui/router.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class TodoMainPage extends HookConsumerWidget {
   const TodoMainPage({super.key});
@@ -28,22 +30,27 @@ class TodoMainPage extends HookConsumerWidget {
             ),
           ),
           const SizedBox(height: 10),
-          Container(
-              margin: const EdgeInsets.only(top: 10),
-              width: double.infinity,
-              height: 70,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 5,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: const HeroIcon(HeroIcons.plus, size: 30)),
+          GestureDetector(
+            onTap: () {
+              QR.to(TodoRouter.root + TodoRouter.addEdit);
+            },
+            child: Container(
+                margin: const EdgeInsets.only(top: 10),
+                width: double.infinity,
+                height: 70,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 5,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: const HeroIcon(HeroIcons.plus, size: 30)),
+          ),
           ...todos.when(
               data: (todos) => todos.map((todo) => TodoCard(todo: todo)),
               loading: () => [const CircularProgressIndicator()],
