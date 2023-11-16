@@ -82,13 +82,13 @@ jobs:
           mv assets/images/icon_alpha.png assets/images/icon.png
           rm assets/images/logo.png
           mv assets/images/logo_alpha.png assets/images/logo.png
-          cp -f web/Alpha/favicon.png web/favicon.ico
+          cp -f web/Alpha/favicon.png web/favicon.png
           cp -f web/Alpha/icons/* web/icons/
       
       - name: Set production icons
         if: needs.extract-version.outputs.isAlpha == 'false'
         run: |
-          cp -f web/Prod/favicon.png web/favicon.ico
+          cp -f web/Prod/favicon.png web/favicon.png
           cp -f web/Prod/icons/* web/icons/
       
       - name: Build 🔧
