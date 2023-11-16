@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/todo/providers/todo_list_provider.dart';
 import 'package:myecl/todo/tools/constants.dart';
+import 'package:myecl/todo/ui/pages/main_page/todo_card.dart';
 import 'package:myecl/todo/ui/pages/todo.dart';
 
 class TodoMainPage extends HookConsumerWidget {
@@ -27,8 +28,7 @@ class TodoMainPage extends HookConsumerWidget {
           ),
           ...todos.when(
               data: (todos) => todos
-                  .map((todo) => Text(todo.name))
-                  .toList(),
+                  .map((todo) => TodoCard(todo: todo)),
               loading: () => [const CircularProgressIndicator()],
               error: (error, stack) => [Text(error.toString())])
         ],
