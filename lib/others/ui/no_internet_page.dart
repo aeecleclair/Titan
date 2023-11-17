@@ -74,10 +74,13 @@ class NoInternetPage extends HookConsumerWidget {
                     padding: const EdgeInsets.only(top: 12, bottom: 15),
                     width: double.infinity,
                     decoration: BoxDecoration(
-                        gradient: const LinearGradient(colors: [
-                          ColorConstants.gradient1,
-                          ColorConstants.gradient2
-                        ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                        gradient: const LinearGradient(
+                            colors: [
+                              ColorConstants.gradient1,
+                              ColorConstants.gradient2
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight),
                         boxShadow: [
                           BoxShadow(
                               color: ColorConstants.gradient1.withOpacity(0.2),
