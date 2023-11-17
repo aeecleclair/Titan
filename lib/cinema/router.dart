@@ -2,13 +2,18 @@ import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/cinema/providers/is_cinema_admin.dart';
-import 'package:myecl/cinema/ui/pages/admin_page/admin_page.dart';
-import 'package:myecl/cinema/ui/pages/detail_page/detail_page.dart';
-import 'package:myecl/cinema/ui/pages/main_page/main_page.dart';
-import 'package:myecl/cinema/ui/pages/session_pages/add_edit_session.dart';
+import 'package:myecl/cinema/ui/pages/admin_page/admin_page.dart'
+    deferred as admin_page;
+import 'package:myecl/cinema/ui/pages/detail_page/detail_page.dart'
+    deferred as detail_page;
+import 'package:myecl/cinema/ui/pages/main_page/main_page.dart'
+    deferred as main_page;
+import 'package:myecl/cinema/ui/pages/session_pages/add_edit_session.dart'
+    deferred as add_edit_session_page;
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/tools/middlewares/admin_middleware.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
+import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:myecl/tools/middlewares/notification_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -27,16 +32,39 @@ class CinemaRouter {
 
   QRoute route() => QRoute(
         path: CinemaRouter.root,
-        builder: () => const CinemaMainPage(),
-        middleware: [AuthenticatedMiddleware(ref), NotificationMiddleWare(ref)],
+        builder: () => main_page.CinemaMainPage(),
+        middleware: [
+          AuthenticatedMiddleware(ref),
+          NotificationMiddleWare(ref),
+          DeferredLoadingMiddleware(main_page.loadLibrary)
+        ],
         children: [
-          QRoute(path: detail, builder: () => const DetailPage()),
-          QRoute(path: admin, builder: () => const AdminPage(), middleware: [
-            AdminMiddleware(ref, isCinemaAdminProvider),
-          ], children: [
-            QRoute(path: detail, builder: () => const DetailPage()),
-            QRoute(path: addEdit, builder: () => const AddEditSessionPage()),
-          ]),
+          QRoute(
+              path: detail,
+              builder: () => detail_page.DetailPage(),
+              middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)]),
+          QRoute(
+              path: admin,
+              builder: () => admin_page.AdminPage(),
+              middleware: [
+                AdminMiddleware(ref, isCinemaAdminProvider),
+                DeferredLoadingMiddleware(admin_page.loadLibrary)
+              ],
+              children: [
+                QRoute(
+                    path: detail,
+                    builder: () => detail_page.DetailPage(),
+                    middleware: [
+                      DeferredLoadingMiddleware(detail_page.loadLibrary)
+                    ]),
+                QRoute(
+                    path: addEdit,
+                    builder: () => add_edit_session_page.AddEditSessionPage(),
+                    middleware: [
+                      DeferredLoadingMiddleware(
+                          add_edit_session_page.loadLibrary)
+                    ]),
+              ]),
         ],
       );
 }
