@@ -45,25 +45,25 @@ class AppRouter {
       ),
       QRoute(
           path: loading,
-          builder: () => Scaffold(body: loading_page.LoadingPage()),
+          builder: () => loading_page.LoadingPage(),
           middleware: [
             DeferredLoadingMiddleware(loading_page.loadLibrary),
           ]),
       QRoute(
           path: noInternet,
-          builder: () => Scaffold(body: no_internet_page.NoInternetPage()),
+          builder: () => no_internet_page.NoInternetPage(),
           middleware: [
             DeferredLoadingMiddleware(no_internet_page.loadLibrary),
           ]),
       QRoute(
           path: update,
-          builder: () => Scaffold(body: update_page.UpdatePage()),
+          builder: () => update_page.UpdatePage(),
           middleware: [
             DeferredLoadingMiddleware(update_page.loadLibrary),
           ]),
       QRoute(
           path: noModule,
-          builder: () => Scaffold(body: no_module_page.NoModulePage()),
+          builder: () => no_module_page.NoModulePage(),
           middleware: [
             DeferredLoadingMiddleware(no_module_page.loadLibrary),
           ]),
