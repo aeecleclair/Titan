@@ -8,16 +8,18 @@ import 'package:myecl/centralisation/router.dart';
 import 'package:myecl/cinema/router.dart';
 import 'package:myecl/event/router.dart';
 import 'package:myecl/home/router.dart';
-import 'package:myecl/home/ui/home.dart';
+import 'package:myecl/home/ui/home.dart' deferred as home_page;
 import 'package:myecl/loan/router.dart';
 import 'package:myecl/login/router.dart';
-import 'package:myecl/others/ui/loading_page.dart';
-import 'package:myecl/others/ui/no_internet_page.dart';
-import 'package:myecl/others/ui/no_module.dart';
-import 'package:myecl/others/ui/update_page.dart';
+import 'package:myecl/others/ui/loading_page.dart' deferred as loading_page;
+import 'package:myecl/others/ui/no_internet_page.dart'
+    deferred as no_internet_page;
+import 'package:myecl/others/ui/no_module.dart' deferred as no_module_page;
+import 'package:myecl/others/ui/update_page.dart' deferred as update_page;
 import 'package:myecl/settings/router.dart';
 import 'package:myecl/raffle/router.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
+import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -35,25 +37,36 @@ class AppRouter {
     routes = [
       QRoute(
         path: root,
-        builder: () => const HomePage(),
-        middleware: [AuthenticatedMiddleware(ref)],
+        builder: () => home_page.HomePage(),
+        middleware: [
+          AuthenticatedMiddleware(ref),
+          DeferredLoadingMiddleware(home_page.loadLibrary)
+        ],
       ),
       QRoute(
-        path: loading,
-        builder: () => const Scaffold(body: LoadingPage()),
-      ),
+          path: loading,
+          builder: () => Scaffold(body: loading_page.LoadingPage()),
+          middleware: [
+            DeferredLoadingMiddleware(loading_page.loadLibrary),
+          ]),
       QRoute(
-        path: noInternet,
-        builder: () => const Scaffold(body: NoInternetPage()),
-      ),
+          path: noInternet,
+          builder: () => Scaffold(body: no_internet_page.NoInternetPage()),
+          middleware: [
+            DeferredLoadingMiddleware(no_internet_page.loadLibrary),
+          ]),
       QRoute(
-        path: update,
-        builder: () => const Scaffold(body: UpdatePage()),
-      ),
+          path: update,
+          builder: () => Scaffold(body: update_page.UpdatePage()),
+          middleware: [
+            DeferredLoadingMiddleware(update_page.loadLibrary),
+          ]),
       QRoute(
-        path: noModule,
-        builder: () => const Scaffold(body: NoModulePage()),
-      ),
+          path: noModule,
+          builder: () => Scaffold(body: no_module_page.NoModulePage()),
+          middleware: [
+            DeferredLoadingMiddleware(no_module_page.loadLibrary),
+          ]),
       AdminRouter(ref).route(),
       AdvertRouter(ref).route(),
       AmapRouter(ref).route(),
