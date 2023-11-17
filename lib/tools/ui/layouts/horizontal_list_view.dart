@@ -11,7 +11,8 @@ class HorizontalListView<T> extends StatelessWidget {
   final Widget? firstChild;
   final ScrollController? scrollController;
 
-  HorizontalListView({super.key, required this.height, this.children, this.scrollController})
+  HorizontalListView(
+      {super.key, required this.height, this.children, this.scrollController})
       : assert(children != null),
         items = null,
         itemBuilder = null,

@@ -32,9 +32,8 @@ void setUpNotification(WidgetRef ref) {
           ref.read(firebaseTokenExpirationProvider.notifier);
       final now = DateTime.now();
       if (firebaseTokenExpiration.userId != user.id ||
-              firebaseTokenExpiration.expiration != null ||
-              firebaseTokenExpiration.expiration!.isBefore(now)
-          ) {
+          firebaseTokenExpiration.expiration != null ||
+          firebaseTokenExpiration.expiration!.isBefore(now)) {
         firebaseToken.then((value) {
           messageNotifier.setFirebaseToken(value);
           messageNotifier.registerDevice();

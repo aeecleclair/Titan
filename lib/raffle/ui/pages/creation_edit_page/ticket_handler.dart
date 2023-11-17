@@ -13,6 +13,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+
 class TicketHandler extends HookConsumerWidget {
   const TicketHandler({super.key});
   @override
@@ -25,6 +26,7 @@ class TicketHandler extends HookConsumerWidget {
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
+
     return Column(
       children: [
         Container(
@@ -52,7 +54,10 @@ class TicketHandler extends HookConsumerWidget {
                 GestureDetector(
                     onTap: () {
                       packTicketNotifier.setPackTicket(PackTicket.empty());
-                      QR.to(RaffleRouter.root + RaffleRouter.detail + RaffleRouter.creation + RaffleRouter.addEditPackTicket);
+                      QR.to(RaffleRouter.root +
+                          RaffleRouter.detail +
+                          RaffleRouter.creation +
+                          RaffleRouter.addEditPackTicket);
                     },
                     child: Container(
                       margin: const EdgeInsets.only(
@@ -85,41 +90,44 @@ class TicketHandler extends HookConsumerWidget {
                   return Row(
                       children: data
                           .map((e) => TicketUI(
-                        packTicket: e,
-                        onEdit: () {
-                          packTicketNotifier.setPackTicket(e);
-                          QR.to(RaffleRouter.root + RaffleRouter.detail + RaffleRouter.creation + RaffleRouter.addEditPackTicket);
-                        },
-                        showButton: raffle.raffleStatusType ==
-                            RaffleStatusType.creation,
-                        onDelete: () async {
-                          await showDialog(
-                              context: context,
-                              builder: (context) => CustomDialogBox(
-                                title: "Supprimer le ticket",
-                                descriptions:
-                                "Voulez-vous vraiment supprimer ce ticket?",
-                                onYes: () {
-                                  tokenExpireWrapper(ref, () async {
-                                    final value =
-                                    await packTicketsNotifier
-                                        .deletePackTicket(e);
-                                    if (value) {
-                                      displayToastWithContext(
-                                          TypeMsg.msg,
-                                          RaffleTextConstants
-                                              .deletedTicket);
-                                    } else {
-                                      displayToastWithContext(
-                                          TypeMsg.error,
-                                          RaffleTextConstants
-                                              .deletingError);
-                                    }
-                                  });
+                                packTicket: e,
+                                onEdit: () {
+                                  packTicketNotifier.setPackTicket(e);
+                                  QR.to(RaffleRouter.root +
+                                      RaffleRouter.detail +
+                                      RaffleRouter.creation +
+                                      RaffleRouter.addEditPackTicket);
                                 },
-                              ));
-                        },
-                      ))
+                                showButton: raffle.raffleStatusType ==
+                                    RaffleStatusType.creation,
+                                onDelete: () async {
+                                  await showDialog(
+                                      context: context,
+                                      builder: (context) => CustomDialogBox(
+                                            title: "Supprimer le ticket",
+                                            descriptions:
+                                                "Voulez-vous vraiment supprimer ce ticket?",
+                                            onYes: () {
+                                              tokenExpireWrapper(ref, () async {
+                                                final value =
+                                                    await packTicketsNotifier
+                                                        .deletePackTicket(e);
+                                                if (value) {
+                                                  displayToastWithContext(
+                                                      TypeMsg.msg,
+                                                      RaffleTextConstants
+                                                          .deletedTicket);
+                                                } else {
+                                                  displayToastWithContext(
+                                                      TypeMsg.error,
+                                                      RaffleTextConstants
+                                                          .deletingError);
+                                                }
+                                              });
+                                            },
+                                          ));
+                                },
+                              ))
                           .toList());
                 },
                 error: (Object e, StackTrace? s) =>

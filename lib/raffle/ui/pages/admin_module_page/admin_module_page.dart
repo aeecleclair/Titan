@@ -10,7 +10,6 @@ class AdminModulePage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     return RaffleTemplate(
       child: Refresher(
           onRefresh: () async {
@@ -18,9 +17,9 @@ class AdminModulePage extends HookConsumerWidget {
           },
           child: const Column(
             children: [
-               AccountHandler(),
-               SizedBox(height: 12),
-               TombolaHandler()
+              AccountHandler(),
+              SizedBox(height: 12),
+              TombolaHandler()
             ],
           )),
     );

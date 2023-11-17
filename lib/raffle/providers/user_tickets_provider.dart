@@ -28,8 +28,7 @@ class UserTicketListNotifier extends ListNotifier<Ticket> {
 
   Future<bool> buyTicket(PackTicket packTicket) async {
     return addAll(
-        (_) async => _ticketsRepository.buyTicket(packTicket.id, userId),
-        []);
+        (_) async => _ticketsRepository.buyTicket(packTicket.id, userId), []);
   }
 }
 

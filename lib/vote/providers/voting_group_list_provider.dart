@@ -8,9 +8,8 @@ final votingGroupListProvider = Provider<List<SimpleGroup>>((ref) {
   final groups = ref.watch(allGroupListProvider);
   return votingGroupList.maybeWhen(
     data: (voters) => groups.maybeWhen(
-      data: (groups) => groups
-          .where((g) => voters.any((v) => v.groupId == g.id))
-          .toList(),
+      data: (groups) =>
+          groups.where((g) => voters.any((v) => v.groupId == g.id)).toList(),
       orElse: () => [],
     ),
     orElse: () => [],

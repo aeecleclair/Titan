@@ -3,10 +3,10 @@ import 'package:myecl/tools/constants.dart';
 
 class CustomDialogBox extends StatelessWidget {
   final String title, descriptions;
-  final Color titleColor = ColorConstants.gradient1;
-  final Color descriptionColor = Colors.black;
-  final Color yesColor = ColorConstants.gradient2;
-  final Color noColor = ColorConstants.background2;
+  static const Color titleColor = ColorConstants.gradient1;
+  static const Color descriptionColor = Colors.black;
+  static const Color yesColor = ColorConstants.gradient2;
+  static const Color noColor = ColorConstants.background2;
 
   final Function() onYes;
   final Function()? onNo;
@@ -50,7 +50,7 @@ class CustomDialogBox extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     title,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.w800,
                         color: titleColor),
@@ -60,7 +60,7 @@ class CustomDialogBox extends StatelessWidget {
                   ),
                   Text(
                     descriptions,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                       color: descriptionColor,
                     ),
@@ -80,7 +80,7 @@ class CustomDialogBox extends StatelessWidget {
                                     ? Navigator.of(context).pop()
                                     : onNo?.call();
                               },
-                              child: Text(
+                              child: const Text(
                                 "Non",
                                 style: TextStyle(
                                     fontSize: 18,
@@ -94,7 +94,7 @@ class CustomDialogBox extends StatelessWidget {
                                 }
                                 await onYes();
                               },
-                              child: Text(
+                              child: const Text(
                                 "Oui",
                                 style: TextStyle(
                                     fontSize: 18,

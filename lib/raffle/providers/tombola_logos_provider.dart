@@ -11,8 +11,7 @@ class RaffleLogoNotifier extends MapNotifier<Raffle, Image> {
 
 final tombolaLogosProvider = StateNotifierProvider<RaffleLogoNotifier,
     AsyncValue<Map<Raffle, AsyncValue<List<Image>>>>>((ref) {
-  RaffleLogoNotifier raffleLogoNotifier =
-  RaffleLogoNotifier();
+  RaffleLogoNotifier raffleLogoNotifier = RaffleLogoNotifier();
   tokenExpireWrapperAuth(ref, () async {
     ref.watch(raffleListProvider).when(data: (raffle) {
       raffleLogoNotifier.loadTList(raffle);

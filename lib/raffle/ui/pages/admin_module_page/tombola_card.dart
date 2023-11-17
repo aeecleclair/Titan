@@ -11,7 +11,6 @@ class TombolaCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     return Container(
         padding: const EdgeInsets.all(12.0),
         child: Container(

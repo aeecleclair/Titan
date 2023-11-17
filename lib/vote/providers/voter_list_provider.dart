@@ -30,8 +30,8 @@ class VoterListNotifier extends ListNotifier<Voter> {
   }
 }
 
-final voterListProvider = StateNotifierProvider<VoterListNotifier,
-    AsyncValue<List<Voter>>>((ref) {
+final voterListProvider =
+    StateNotifierProvider<VoterListNotifier, AsyncValue<List<Voter>>>((ref) {
   final token = ref.watch(tokenProvider);
   final voterListNotifier = VoterListNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {

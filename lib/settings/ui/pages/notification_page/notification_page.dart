@@ -81,7 +81,8 @@ class NotificationPage extends HookConsumerWidget {
                                           ? ColorConstants.gradient1
                                           : Colors.grey,
                                       spinStrokeWidth: 2,
-                                      thumbDecoration: (value, _) => BoxDecoration(
+                                      thumbDecoration: (value, _) =>
+                                          BoxDecoration(
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(30),
                                         shape: BoxShape.rectangle,
