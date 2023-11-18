@@ -68,7 +68,7 @@ final isLoggedInProvider =
   if (isConnected) {
     isLoggedInProvider.refresh(authToken);
   } else if (isCaching) {
-    return IsLoggedInProvider(true);
+    return IsLoggedInProvider(false);
   }
   return isLoggedInProvider;
 });

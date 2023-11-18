@@ -12,8 +12,8 @@ import 'package:myecl/home/providers/scrolled_provider.dart';
 import 'package:myecl/settings/router.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/providers/path_forwarding_provider.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/user/providers/user_provider.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/user/providers/profile_picture_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 

@@ -5,6 +5,8 @@ import 'package:myecl/vote/providers/voting_group_list_provider.dart';
 final canVoteProvider = StateProvider<bool>((ref) {
   final me = ref.watch(userProvider);
   final votingGroupList = ref.watch(votingGroupListProvider);
-  final myGroupIds = me.groups.map((e) => e.id).toList();
+  final myGroupIds = me.groups!
+      .map((e) => e.id)
+      .toList();
   return votingGroupList.any((e) => myGroupIds.contains(e.id));
 });

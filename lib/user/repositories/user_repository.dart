@@ -1,68 +1,36 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/user/class/user.dart';
+import 'package:chopper/chopper.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 
 class UserRepository extends Repository {
-  @override
-  // ignore: overridden_fields
-  final ext = "users/";
+  UserRepository({required String token}) : super(token: token);
 
-  Future<User> getUser(String userId) async {
-    return User.fromJson(await getOne(userId));
-  }
+  Future<Response<CoreUser>> getUser(String userId) =>
+      repository.usersUserIdGet(userId: userId);
 
-  Future<User> getMe() async {
-    return User.fromJson(await getOne("me"));
-  }
+  Future<Response<CoreUser>> getMe() => repository.usersMeGet();
 
-  Future<bool> deleteUser(String userId) async {
-    return await delete(userId);
-  }
+  Future<Response<AppUtilsTypesStandardResponsesResult>> createUser(
+          CoreUserCreateRequest user) =>
+      repository.usersCreatePost(body: user);
 
-  Future<bool> updateUser(User user) async {
-    return await update(user, user.id);
-  }
+  Future<Response<dynamic>> updateUser(
+          CoreUserUpdateAdmin user, String userId) =>
+      repository.usersUserIdPatch(userId: userId, body: user);
 
-  Future<bool> updateMe(User user) async {
-    return await update(user, "me");
-  }
+  Future<Response<dynamic>> updateMe(CoreUserUpdate user) =>
+      repository.usersMePatch(body: user);
 
-  Future<User> createUser(User user) async {
-    return User.fromJson(await create(user));
-  }
+  Future<Response<AppUtilsTypesStandardResponsesResult>> changePassword(
+          String oldPassword, String newPassword, String mail) =>
+      repository.usersChangePasswordPost(
+          body: ChangePasswordRequest(
+              email: mail, newPassword: newPassword, oldPassword: oldPassword));
 
-  Future<bool> changePassword(
-      String oldPassword, String newPassword, String mail) async {
-    try {
-      return (await create({
-        "old_password": oldPassword,
-        "new_password": newPassword,
-        "email": mail
-      }, suffix: "change-password"))["success"];
-    } catch (e) {
-      return false;
-    }
-  }
+  Future<Response<dynamic>> deletePersonalData() =>
+      repository.usersMeAskDeletionPost();
 
-  Future<bool> deletePersonalData() async {
-    try {
-      return await create({}, suffix: "me/ask-deletion");
-    } catch (e) {
-      return false;
-    }
-  }
-
-  Future<bool> askMailMigration(String mail) async {
-    try {
-      return await create({"new_email": mail}, suffix: "migrate-mail");
-    } catch (e) {
-      return false;
-    }
-  }
+  Future<Response<dynamic>> askMailMigration(String mail) =>
+      repository.usersMigrateMailPost(body: MailMigrationRequest(newEmail: mail));
 }
-
-final userRepositoryProvider = Provider((ref) {
-  final token = ref.watch(tokenProvider);
-  return UserRepository()..setToken(token);
-});
