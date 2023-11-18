@@ -18,34 +18,36 @@ class NoModulePage extends HookConsumerWidget {
           QR.to(pathForwarding.path);
         },
         orElse: () {});
-    return const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30),
-        child: Column(
-          children: [
-            Spacer(
-              flex: 2,
-            ),
-            HeroIcon(
-              HeroIcons.cubeTransparent,
-              size: 100,
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            Center(
-              child: Text(
-                OthersTextConstants.noModule,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20),
+    return const Scaffold(
+      body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 30),
+          child: Column(
+            children: [
+              Spacer(
+                flex: 2,
               ),
-            ),
-            Spacer(
-              flex: 3,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-          ],
-        ));
+              HeroIcon(
+                HeroIcons.cubeTransparent,
+                size: 100,
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              Center(
+                child: Text(
+                  OthersTextConstants.noModule,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+              Spacer(
+                flex: 3,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+            ],
+          )),
+    );
   }
 }

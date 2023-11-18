@@ -3,12 +3,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/event/providers/is_admin.dart';
-import 'package:myecl/event/ui/pages/detail_page/detail_page.dart';
-import 'package:myecl/event/ui/pages/admin_page/admin_page.dart';
-import 'package:myecl/event/ui/pages/event_pages/add_edit_event_page.dart';
-import 'package:myecl/event/ui/pages/main_page/main_page.dart';
+import 'package:myecl/event/ui/pages/detail_page/detail_page.dart'
+    deferred as detail_page;
+import 'package:myecl/event/ui/pages/admin_page/admin_page.dart'
+    deferred as admin_page;
+import 'package:myecl/event/ui/pages/event_pages/add_edit_event_page.dart'
+    deferred as add_edit_event_page;
+import 'package:myecl/event/ui/pages/main_page/main_page.dart'
+    deferred as main_page;
 import 'package:myecl/tools/middlewares/admin_middleware.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
+import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class EventRouter {
@@ -26,18 +31,43 @@ class EventRouter {
 
   QRoute route() => QRoute(
         path: EventRouter.root,
-        builder: () => const EventMainPage(),
-        middleware: [AuthenticatedMiddleware(ref)],
+        builder: () => main_page.EventMainPage(),
+        middleware: [
+          AuthenticatedMiddleware(ref),
+          DeferredLoadingMiddleware(main_page.loadLibrary)
+        ],
         children: [
-          QRoute(path: admin, builder: () => const AdminPage(), middleware: [
-            AdminMiddleware(ref, isEventAdminProvider),
-          ], children: [
-            QRoute(
-                path: detail, builder: () => const DetailPage(isAdmin: true)),
-            QRoute(path: addEdit, builder: () => const AddEditEventPage()),
-          ]),
-          QRoute(path: addEdit, builder: () => const AddEditEventPage()),
-          QRoute(path: detail, builder: () => const DetailPage(isAdmin: false)),
+          QRoute(
+              path: admin,
+              builder: () => admin_page.AdminPage(),
+              middleware: [
+                AdminMiddleware(ref, isEventAdminProvider),
+                DeferredLoadingMiddleware(admin_page.loadLibrary)
+              ],
+              children: [
+                QRoute(
+                    path: detail,
+                    builder: () => detail_page.DetailPage(isAdmin: true),
+                    middleware: [
+                      DeferredLoadingMiddleware(detail_page.loadLibrary)
+                    ]),
+                QRoute(
+                    path: addEdit,
+                    builder: () => add_edit_event_page.AddEditEventPage(),
+                    middleware: [
+                      DeferredLoadingMiddleware(add_edit_event_page.loadLibrary)
+                    ]),
+              ]),
+          QRoute(
+              path: addEdit,
+              builder: () => add_edit_event_page.AddEditEventPage(),
+              middleware: [
+                DeferredLoadingMiddleware(add_edit_event_page.loadLibrary)
+              ]),
+          QRoute(
+              path: detail,
+              builder: () => detail_page.DetailPage(isAdmin: false),
+              middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)]),
         ],
       );
 }
