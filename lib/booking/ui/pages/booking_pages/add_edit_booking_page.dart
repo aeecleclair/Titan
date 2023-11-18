@@ -26,6 +26,7 @@ import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/date_entry.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
+import 'package:myecl/user/class/applicant.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -395,7 +396,15 @@ class AddEditBookingPage extends HookConsumerWidget {
                                   entity: entity.text,
                                   applicant: isManagerPage
                                       ? booking.applicant
-                                      : user.toApplicant(),
+                                      : Applicant(
+                                    name: user.name,
+                                    nickname: user.nickname,
+                                    firstname: user.firstname,
+                                    id: user.id,
+                                    email: user.email,
+                                    phone: user.phone,
+                                    promo: user.promo,
+                                  ),
                                   applicantId: isManagerPage
                                       ? booking.applicantId
                                       : user.id,

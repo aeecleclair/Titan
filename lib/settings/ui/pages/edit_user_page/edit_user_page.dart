@@ -4,6 +4,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/settings/router.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/edit_user_page/picture_button.dart';
@@ -364,7 +366,9 @@ class EditUserPage extends HookConsumerWidget {
                           phone: phoneController.value.text.isEmpty
                               ? null
                               : phoneController.value.text,
-                          floor: floorController.value.text,
+                          floor: FloorsType.values.firstWhere((e) =>
+                              e.toString().split('.').last ==
+                              floorController.value.text),
                         ),
                       );
                       if (value) {

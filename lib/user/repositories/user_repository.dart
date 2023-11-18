@@ -1,24 +1,19 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/user/class/user.dart';
+import 'package:chopper/chopper.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 
 class UserRepository extends Repository {
-  @override
-  // ignore: overridden_fields
-  final ext = "users/";
+  UserRepository({required String token}) : super(token: token);
 
-  Future<User> getUser(String userId) async {
-    return User.fromJson(await getOne(userId));
-  }
+  Future<Response<CoreUser>> getUser(String userId) =>
+      repository.usersUserIdGet(userId: userId);
 
-  Future<User> getMe() async {
-    return User.fromJson(await getOne("me"));
-  }
+  Future<Response<CoreUser>> getMe() => repository.usersMeGet();
 
-  Future<bool> deleteUser(String userId) async {
-    return await delete(userId);
-  }
+  Future<Response<AppUtilsTypesStandardResponsesResult>> createUser(
+          CoreUserCreateRequest user) =>
+      repository.usersCreatePost(body: user);
 
   Future<bool> updateUser(User user) async {
     final body = user.toJson();
@@ -42,9 +37,8 @@ class UserRepository extends Repository {
     return await update(nullTrimmedBody, "me");
   }
 
-  Future<User> createUser(User user) async {
-    return User.fromJson(await create(user));
-  }
+  Future<Response<dynamic>> updateMe(CoreUserUpdate user) =>
+      repository.usersMePatch(body: user);
 
   Future<bool> changePassword(
     String oldPassword,

@@ -1,61 +1,66 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/adapters/users.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/providers/single_notifier%20copy.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/repositories/user_repository.dart';
 
-class UserNotifier extends SingleNotifier<User> {
-  final UserRepository userRepository;
-  UserNotifier({required this.userRepository})
-      : super(const AsyncValue.loading());
+class UserNotifier extends SingleNotifier2<CoreUser> {
+  UserNotifier({required String token})
+      : _userRepository = UserRepository(token: token),
+        super(const AsyncLoading());
 
-  Future<bool> setUser(User user) async {
-    return await add((u) async => u, user);
+  final UserRepository _userRepository;
+
+  Future<AsyncValue<CoreUser>> loadUser(String userId) async {
+    return await load(() async => _userRepository.getUser(userId));
   }
 
-  Future<AsyncValue<User>> loadUser(String userId) async {
-    return await load(() async => userRepository.getUser(userId));
+  Future<AsyncValue<CoreUser>> loadMe() async {
+    return await load(_userRepository.getMe);
   }
 
-  Future<AsyncValue<User>> loadMe() async {
-    return await load(userRepository.getMe);
+  Future<bool> updateUser(CoreUser user) async {
+    return await update(
+        (user) => _userRepository.updateUser(
+            coreUserUpdateAdminAdapter(user), user.id),
+        user);
   }
 
-  Future<bool> updateUser(User user) async {
-    return await update(userRepository.updateUser, user);
-  }
-
-  Future<bool> updateMe(User user) async {
-    return await update(userRepository.updateMe, user);
+  Future<bool> updateMe(CoreUser user) async {
+    return await update(
+        (user) async => _userRepository.updateMe(coreUserUpdateAdapter(user)),
+        user);
   }
 
   Future<bool> changePassword(
     String oldPassword,
     String newPassword,
-    User user,
+    CoreUser user,
   ) async {
-    return await userRepository.changePassword(
-      oldPassword,
+    return (await _userRepository.changePassword(
+          oldPassword,
       newPassword,
       user.email,
-    );
+    ))
+        .isSuccessful;
   }
 
   Future<bool> deletePersonal() async {
-    return await userRepository.deletePersonalData();
+    return (await _userRepository.deletePersonalData()).isSuccessful;
   }
 
   Future<bool> askMailMigration(String mail) async {
-    return await userRepository.askMailMigration(mail);
+    return (await _userRepository.askMailMigration(mail)).isSuccessful;
   }
 }
 
 final asyncUserProvider =
-    StateNotifierProvider<UserNotifier, AsyncValue<User>>((ref) {
-  final UserRepository userRepository = ref.watch(userRepositoryProvider);
-  UserNotifier userNotifier = UserNotifier(userRepository: userRepository);
+    StateNotifierProvider<UserNotifier, AsyncValue<CoreUser>>((ref) {
+  final token = ref.watch(tokenProvider);
+  UserNotifier userNotifier = UserNotifier(token: token);
   final token = ref.watch(tokenProvider);
   tokenExpireWrapperAuth(ref, () async {
     final isLoggedIn = ref.watch(isLoggedInProvider);

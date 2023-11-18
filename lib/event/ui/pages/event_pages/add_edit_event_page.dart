@@ -21,6 +21,7 @@ import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
+import 'package:myecl/user/class/applicant.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -483,7 +484,15 @@ class AddEditEventPage extends HookConsumerWidget {
                                     type: eventType.value,
                                     recurrenceRule: recurrenceRule,
                                     applicantId: user.id,
-                                    applicant: user.toApplicant(),
+                                    applicant: Applicant(
+                                        name: user.name,
+                                        nickname: user.nickname,
+                                        firstname: user.firstname,
+                                        id: user.id,
+                                        email: user.email,
+                                        phone: user.phone,
+                                        promo: user.promo,
+                                      ),
                                     decision: Decision.pending,
                                   );
                                   final value = isEdit
