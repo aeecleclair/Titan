@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/amap/providers/cash_provider.dart';
+import 'package:myecl/amap/providers/cash_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/ui/amap.dart';
@@ -14,7 +14,7 @@ class AdminPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cashNotifier = ref.read(cashProvider.notifier);
+    final cashNotifier = ref.read(cashListProvider.notifier);
     final deliveryListNotifier = ref.read(deliveryListProvider.notifier);
     final productListNotifier = ref.read(productListProvider.notifier);
     return AmapTemplate(

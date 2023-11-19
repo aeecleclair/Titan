@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/providers/cash_provider.dart';
+import 'package:myecl/amap/providers/cash_list_provider.dart';
 import 'package:myecl/amap/providers/focus_provider.dart';
 import 'package:myecl/amap/providers/searching_amap_user_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
@@ -18,7 +18,7 @@ class AccountHandler extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cashNotifier = ref.read(cashProvider.notifier);
+    final cashNotifier = ref.read(cashListProvider.notifier);
     final usersNotifier = ref.read(userList.notifier);
     final editingController = useTextEditingController();
     final searchingAmapUser = ref.watch(searchingAmapUserProvider);
