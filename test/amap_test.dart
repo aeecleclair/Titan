@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:myecl/amap/class/cash.dart';
@@ -5,6 +6,13 @@ import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/class/information.dart';
 import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/class/product.dart';
+import 'package:myecl/amap/providers/delivery_list_provider.dart';
+import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
+import 'package:myecl/amap/providers/information_provider.dart';
+import 'package:myecl/amap/providers/orders_by_delivery_provider.dart';
+import 'package:myecl/amap/providers/product_list_provider.dart';
+import 'package:myecl/amap/providers/user_amount_provider.dart';
+import 'package:myecl/amap/providers/user_order_list_provider.dart';
 import 'package:myecl/amap/repositories/amap_user_repository.dart';
 import 'package:myecl/amap/repositories/cash_repository.dart';
 import 'package:myecl/amap/repositories/delivery_list_repository.dart';
@@ -203,7 +211,7 @@ void main() {
 
   group('Testing Information class', () {
     test('Should return a information', () async {
-      final information = Information.empty();
+      final information = Information.empty().copyWith(manager: "Manager");
       expect(information, isA<Information>());
     });
 
@@ -265,4 +273,1055 @@ void main() {
     });
   });
 
+  group('Testing DeliveryListNotifier : loadDeliveriesList', () {
+    test('Should return a list of deliveries', () async {
+      final mockDeliveryListRepository = MockDeliveryListRepository();
+      when(() => mockDeliveryListRepository.getDeliveryList())
+          .thenAnswer((_) async => [Delivery.empty()]);
+      final deliveryListNotifier = DeliveryListNotifier(
+          deliveriesListRepository: mockDeliveryListRepository);
+      final deliveryList = await deliveryListNotifier.loadDeliveriesList();
+      expect(deliveryList, isA<AsyncData<List<Delivery>>>());
+      expect(
+          deliveryList.when(
+              data: (data) => data.length,
+              loading: () => 0,
+              error: (error, stackTrace) => 0),
+          1);
+    });
+
+    test('Should return an error', () async {
+      final mockDeliveryListRepository = MockDeliveryListRepository();
+      when(() => mockDeliveryListRepository.getDeliveryList())
+          .thenThrow(Exception());
+      final deliveryListNotifier = DeliveryListNotifier(
+          deliveriesListRepository: mockDeliveryListRepository);
+      final deliveryList = await deliveryListNotifier.loadDeliveriesList();
+      expect(deliveryList, isA<AsyncError<List<Delivery>>>());
+      expect(
+          deliveryList.when(
+              data: (data) => data,
+              loading: () => [],
+              error: (error, stackTrace) => []),
+          []);
+    });
+  });
+
+  group('Testing DeliveryListNotifier : addDelivery', () {
+    test('Should create a deivery', () async {
+      final mockDeliveryListRepository = MockDeliveryListRepository();
+      final newDelivery = Delivery.empty();
+      when(() => mockDeliveryListRepository.getDeliveryList())
+          .thenAnswer((_) async => [Delivery.empty()]);
+      when(() => mockDeliveryListRepository.createDelivery(newDelivery))
+          .thenAnswer((_) async => newDelivery);
+      final deliveryListNotifier = DeliveryListNotifier(
+          deliveriesListRepository: mockDeliveryListRepository);
+      await deliveryListNotifier.loadDeliveriesList();
+      final deliveryList = await deliveryListNotifier.addDelivery(newDelivery);
+      expect(deliveryList, true);
+    });
+
+    test('Should return an error if delivery list is not loaded', () async {
+      final mockDeliveryListRepository = MockDeliveryListRepository();
+      final newDelivery = Delivery.empty();
+      when(() => mockDeliveryListRepository.getDeliveryList())
+          .thenAnswer((_) async => [Delivery.empty()]);
+      when(() => mockDeliveryListRepository.createDelivery(newDelivery))
+          .thenThrow(Exception());
+      final deliveryListNotifier = DeliveryListNotifier(
+          deliveriesListRepository: mockDeliveryListRepository);
+      final deliveryList = await deliveryListNotifier.addDelivery(newDelivery);
+      expect(deliveryList, false);
+    });
+
+    test('Should return an error if delivery is not created', () async {
+      final mockDeliveryListRepository = MockDeliveryListRepository();
+      final newDelivery = Delivery.empty();
+      when(() => mockDeliveryListRepository.getDeliveryList())
+          .thenThrow(Exception());
+      when(() => mockDeliveryListRepository.createDelivery(newDelivery))
+          .thenAnswer((_) async => newDelivery);
+      final deliveryListNotifier = DeliveryListNotifier(
+          deliveriesListRepository: mockDeliveryListRepository);
+      await deliveryListNotifier.loadDeliveriesList();
+      final deliveryList = await deliveryListNotifier.addDelivery(newDelivery);
+      expect(deliveryList, false);
+    });
+  });
+
+  group('Testing DeliveryListNotifier : updateDelivery', () {
+    test('Should update a deivery', () async {
+      final mockDeliveryListRepository = MockDeliveryListRepository();
+      final newDelivery = Delivery.empty();
+      when(() => mockDeliveryListRepository.getDeliveryList())
+          .thenAnswer((_) async => [Delivery.empty()]);
+      when(() => mockDeliveryListRepository.updateDelivery(newDelivery))
+          .thenAnswer((_) async => true);
+      final deliveryListNotifier = DeliveryListNotifier(
+          deliveriesListRepository: mockDeliveryListRepository);
+      await deliveryListNotifier.loadDeliveriesList();
+      final deliveryList =
+          await deliveryListNotifier.updateDelivery(newDelivery);
+      expect(deliveryList, true);
+    });
+
+    test('Should return an error if delivery list is not loaded', () async {
+      final mockDeliveryListRepository = MockDeliveryListRepository();
+      final newDelivery = Delivery.empty();
+      when(() => mockDeliveryListRepository.getDeliveryList())
+          .thenAnswer((_) async => [Delivery.empty()]);
+      when(() => mockDeliveryListRepository.updateDelivery(newDelivery))
+          .thenThrow(Exception());
+      final deliveryListNotifier = DeliveryListNotifier(
+          deliveriesListRepository: mockDeliveryListRepository);
+      final deliveryList =
+          await deliveryListNotifier.updateDelivery(newDelivery);
+      expect(deliveryList, false);
+    });
+
+    test('Should return an error if delivery is not updated', () async {
+      final mockDeliveryListRepository = MockDeliveryListRepository();
+      final newDelivery = Delivery.empty();
+      when(() => mockDeliveryListRepository.getDeliveryList())
+          .thenThrow(Exception());
+      when(() => mockDeliveryListRepository.updateDelivery(newDelivery))
+          .thenAnswer((_) async => true);
+      final deliveryListNotifier = DeliveryListNotifier(
+          deliveriesListRepository: mockDeliveryListRepository);
+      await deliveryListNotifier.loadDeliveriesList();
+      final deliveryList =
+          await deliveryListNotifier.updateDelivery(newDelivery);
+      expect(deliveryList, false);
+    });
+
+    test('Should return an error if delivery is not found', () async {
+      final mockDeliveryListRepository = MockDeliveryListRepository();
+      final newDelivery = Delivery.empty();
+      when(() => mockDeliveryListRepository.getDeliveryList())
+          .thenAnswer((_) async => [Delivery.empty()]);
+      when(() => mockDeliveryListRepository.updateDelivery(newDelivery))
+          .thenThrow(Exception());
+      final deliveryListNotifier = DeliveryListNotifier(
+          deliveriesListRepository: mockDeliveryListRepository);
+      await deliveryListNotifier.loadDeliveriesList();
+      final deliveryList =
+          await deliveryListNotifier.updateDelivery(newDelivery);
+      expect(deliveryList, false);
+    });
+  });
+
+  group('Testing DeliveryListNotifier : deleteDelivery', () {
+    test('Should delete a deivery', () async {
+      final mockDeliveryListRepository = MockDeliveryListRepository();
+      final newDelivery = Delivery.empty();
+      when(() => mockDeliveryListRepository.getDeliveryList())
+          .thenAnswer((_) async => [Delivery.empty()]);
+      when(() => mockDeliveryListRepository.deleteDelivery(newDelivery.id))
+          .thenAnswer((_) async => true);
+      final deliveryListNotifier = DeliveryListNotifier(
+          deliveriesListRepository: mockDeliveryListRepository);
+      await deliveryListNotifier.loadDeliveriesList();
+      final deliveryList =
+          await deliveryListNotifier.deleteDelivery(newDelivery);
+      expect(deliveryList, true);
+    });
+
+    test('Should return an error if delivery list is not loaded', () async {
+      final mockDeliveryListRepository = MockDeliveryListRepository();
+      final newDelivery = Delivery.empty();
+      when(() => mockDeliveryListRepository.getDeliveryList())
+          .thenAnswer((_) async => [Delivery.empty()]);
+      when(() => mockDeliveryListRepository.deleteDelivery(newDelivery.id))
+          .thenThrow(Exception());
+      final deliveryListNotifier = DeliveryListNotifier(
+          deliveriesListRepository: mockDeliveryListRepository);
+      final deliveryList =
+          await deliveryListNotifier.deleteDelivery(newDelivery);
+      expect(deliveryList, false);
+    });
+
+    test('Should return an error if delivery is not deleted', () async {
+      final mockDeliveryListRepository = MockDeliveryListRepository();
+      final newDelivery = Delivery.empty();
+      when(() => mockDeliveryListRepository.getDeliveryList())
+          .thenThrow(Exception());
+      when(() => mockDeliveryListRepository.deleteDelivery(newDelivery.id))
+          .thenAnswer((_) async => true);
+      final deliveryListNotifier = DeliveryListNotifier(
+          deliveriesListRepository: mockDeliveryListRepository);
+      await deliveryListNotifier.loadDeliveriesList();
+      final deliveryList =
+          await deliveryListNotifier.deleteDelivery(newDelivery);
+      expect(deliveryList, false);
+    });
+
+    test('Should return an error if delivery is not found', () async {
+      final mockDeliveryListRepository = MockDeliveryListRepository();
+      final newDelivery = Delivery.empty();
+      when(() => mockDeliveryListRepository.getDeliveryList())
+          .thenAnswer((_) async => [Delivery.empty()]);
+      when(() => mockDeliveryListRepository.deleteDelivery(newDelivery.id))
+          .thenThrow(Exception());
+      final deliveryListNotifier = DeliveryListNotifier(
+          deliveriesListRepository: mockDeliveryListRepository);
+      await deliveryListNotifier.loadDeliveriesList();
+      final deliveryList =
+          await deliveryListNotifier.deleteDelivery(newDelivery);
+      expect(deliveryList, false);
+    });
+  });
+
+  group('Testing DeliveryProductListNotifier : loadProductsList', () {
+    test('Should load a list of products', () async {
+      final mockProductListRepository = MockDeliveryProductListRepository();
+      final productListNotifier = DeliveryProductListNotifier(
+          productListRepository: mockProductListRepository);
+      final productsList = await productListNotifier
+          .loadProductList([Product.empty(), Product.empty(), Product.empty()]);
+      expect(productsList, isA<AsyncData<List<Product>>>());
+      expect(
+          productsList.when(
+              data: (data) => data.length,
+              loading: () => 0,
+              error: (error, stackTrace) => 0),
+          3);
+    });
+  });
+
+  group('Testing DeliveryProductListNotifier : addProduct', () {
+    test('Should add a product', () async {
+      final mockProductListRepository = MockDeliveryProductListRepository();
+      final newProduct = Product.empty();
+      when(() => mockProductListRepository.createProduct(
+          "delivery_id", newProduct)).thenAnswer((_) async => newProduct);
+      final productListNotifier = DeliveryProductListNotifier(
+          productListRepository: mockProductListRepository);
+      await productListNotifier
+          .loadProductList([Product.empty(), Product.empty(), Product.empty()]);
+      final productList =
+          await productListNotifier.addProduct(newProduct, "delivery_id");
+      expect(productList, true);
+    });
+
+    test('Should return an error if product list is not loaded', () async {
+      final mockProductListRepository = MockDeliveryProductListRepository();
+      final newProduct = Product.empty();
+      when(() => mockProductListRepository.createProduct(
+          "delivery_id", newProduct)).thenThrow(Exception());
+      final productListNotifier = DeliveryProductListNotifier(
+          productListRepository: mockProductListRepository);
+      final productList =
+          await productListNotifier.addProduct(newProduct, "delivery_id");
+      expect(productList, false);
+    });
+
+    test('Should return an error if product is not added', () async {
+      final mockProductListRepository = MockDeliveryProductListRepository();
+      final newProduct = Product.empty();
+      when(() => mockProductListRepository.createProduct(
+          "delivery_id", newProduct)).thenAnswer((_) async => newProduct);
+      final productListNotifier = DeliveryProductListNotifier(
+          productListRepository: mockProductListRepository);
+      final productList =
+          await productListNotifier.addProduct(newProduct, "delivery_id");
+      expect(productList, false);
+    });
+  });
+
+  group('Testing DeliveryProductListNotifier : updateProduct', () {
+    test('Should update a product', () async {
+      final mockProductListRepository = MockDeliveryProductListRepository();
+      final newProduct = Product.empty();
+      when(() => mockProductListRepository.updateProduct(
+          "delivery_id", newProduct)).thenAnswer((_) async => true);
+      final productListNotifier = DeliveryProductListNotifier(
+          productListRepository: mockProductListRepository);
+      await productListNotifier
+          .loadProductList([Product.empty(), Product.empty(), Product.empty()]);
+      final productList =
+          await productListNotifier.updateProduct(newProduct, "delivery_id");
+      expect(productList, true);
+    });
+
+    test('Should return an error if product list is not loaded', () async {
+      final mockProductListRepository = MockDeliveryProductListRepository();
+      final newProduct = Product.empty();
+      when(() => mockProductListRepository.updateProduct(
+          "delivery_id", newProduct)).thenThrow(Exception());
+      final productListNotifier = DeliveryProductListNotifier(
+          productListRepository: mockProductListRepository);
+      final productList =
+          await productListNotifier.updateProduct(newProduct, "delivery_id");
+      expect(productList, false);
+    });
+
+    test('Should return an error if product is not updated', () async {
+      final mockProductListRepository = MockDeliveryProductListRepository();
+      final newProduct = Product.empty();
+      when(() => mockProductListRepository.updateProduct(
+          "delivery_id", newProduct)).thenAnswer((_) async => false);
+      final productListNotifier = DeliveryProductListNotifier(
+          productListRepository: mockProductListRepository);
+      final productList =
+          await productListNotifier.updateProduct(newProduct, "delivery_id");
+      expect(productList, false);
+    });
+
+    test('Should return an error if product is not found', () async {
+      final mockProductListRepository = MockDeliveryProductListRepository();
+      final newProduct = Product.empty();
+      when(() => mockProductListRepository.updateProduct(
+          "delivery_id", newProduct)).thenThrow(Exception());
+      final productListNotifier = DeliveryProductListNotifier(
+          productListRepository: mockProductListRepository);
+      final productList =
+          await productListNotifier.updateProduct(newProduct, "delivery_id");
+      expect(productList, false);
+    });
+  });
+
+  group('Testing DeliveryProductListNotifier : deleteProduct', () {
+    test('Should delete a product', () async {
+      final mockProductListRepository = MockDeliveryProductListRepository();
+      final newProduct = Product.empty();
+      when(() => mockProductListRepository.deleteProduct(
+          "delivery_id", newProduct.id)).thenAnswer((_) async => true);
+      final productListNotifier = DeliveryProductListNotifier(
+          productListRepository: mockProductListRepository);
+      await productListNotifier
+          .loadProductList([Product.empty(), Product.empty(), Product.empty()]);
+      final productList =
+          await productListNotifier.deleteProduct(newProduct, "delivery_id");
+      expect(productList, true);
+    });
+
+    test('Should return an error if product list is not loaded', () async {
+      final mockProductListRepository = MockDeliveryProductListRepository();
+      final newProduct = Product.empty();
+      when(() => mockProductListRepository.deleteProduct(
+          "delivery_id", newProduct.id)).thenThrow(Exception());
+      final productListNotifier = DeliveryProductListNotifier(
+          productListRepository: mockProductListRepository);
+      final productList =
+          await productListNotifier.deleteProduct(newProduct, "delivery_id");
+      expect(productList, false);
+    });
+
+    test('Should return an error if product is not deleted', () async {
+      final mockProductListRepository = MockDeliveryProductListRepository();
+      final newProduct = Product.empty().copyWith(id: "id");
+      when(() => mockProductListRepository.deleteProduct(
+          "delivery_id", newProduct.id)).thenAnswer((_) async => false);
+      final productListNotifier = DeliveryProductListNotifier(
+          productListRepository: mockProductListRepository);
+      await productListNotifier
+          .loadProductList([Product.empty(), Product.empty(), Product.empty()]);
+      final productList =
+          await productListNotifier.deleteProduct(newProduct, "delivery_id");
+      expect(productList, false);
+    });
+
+    test('Should return an error if product is not found', () async {
+      final mockProductListRepository = MockDeliveryProductListRepository();
+      final newProduct = Product.empty();
+      when(() => mockProductListRepository.deleteProduct(
+          "delivery_id", newProduct.id)).thenThrow(Exception());
+      final productListNotifier = DeliveryProductListNotifier(
+          productListRepository: mockProductListRepository);
+      await productListNotifier
+          .loadProductList([Product.empty(), Product.empty(), Product.empty()]);
+      final productList =
+          await productListNotifier.deleteProduct(newProduct, "delivery_id");
+      expect(productList, false);
+    });
+  });
+
+  group('Testing InformationNotifier : loadInformation', () {
+    test('Should load information', () async {
+      final mockInformationRepository = MockInformationRepository();
+      final information = Information.empty().copyWith(manager: "Manager");
+      when(() => mockInformationRepository.getInformation())
+          .thenAnswer((_) async => information);
+      final informationNotifier =
+          InformationNotifier(informationRepository: mockInformationRepository);
+      final informationLoaded = await informationNotifier.loadInformation();
+      expect(informationLoaded, isA<AsyncData<Information>>());
+      expect(
+          informationLoaded.when(
+              data: (Information data) => data,
+              error: (Object error, StackTrace stackTrace) => null,
+              loading: () => null),
+          information);
+    });
+
+    test('Should return an error if information is not loaded', () async {
+      final mockInformationRepository = MockInformationRepository();
+      when(() => mockInformationRepository.getInformation())
+          .thenThrow(Exception());
+      final informationNotifier =
+          InformationNotifier(informationRepository: mockInformationRepository);
+      final informationLoaded = await informationNotifier.loadInformation();
+      expect(informationLoaded, isA<AsyncError>());
+    });
+  });
+
+  group('Testing InformationNotifier : updateInformation', () {
+    test('Should update information', () async {
+      final mockInformationRepository = MockInformationRepository();
+      final information = Information.empty().copyWith(manager: "Manager");
+      when(() => mockInformationRepository.getInformation())
+          .thenAnswer((_) async => information);
+      when(() => mockInformationRepository.updateInformation(information))
+          .thenAnswer((_) async => true);
+      final informationNotifier =
+          InformationNotifier(informationRepository: mockInformationRepository);
+      await informationNotifier.loadInformation();
+      final informationUpdated =
+          await informationNotifier.updateInformation(information);
+      expect(informationUpdated, true);
+    });
+
+    test('Should return an error if information is not updated', () async {
+      final mockInformationRepository = MockInformationRepository();
+      final information = Information.empty().copyWith(manager: "Manager");
+      when(() => mockInformationRepository.getInformation())
+          .thenAnswer((_) async => information);
+      when(() => mockInformationRepository.updateInformation(information))
+          .thenAnswer((_) async => false);
+      final informationNotifier =
+          InformationNotifier(informationRepository: mockInformationRepository);
+      await informationNotifier.loadInformation();
+      final informationUpdated =
+          await informationNotifier.updateInformation(information);
+      expect(informationUpdated, false);
+    });
+
+    test('Should return an error if information is not loaded', () async {
+      final mockInformationRepository = MockInformationRepository();
+      final information = Information.empty().copyWith(manager: "Manager");
+      when(() => mockInformationRepository.getInformation())
+          .thenAnswer((_) async => information);
+      when(() => mockInformationRepository.updateInformation(information))
+          .thenThrow(Exception());
+      final informationNotifier =
+          InformationNotifier(informationRepository: mockInformationRepository);
+      final informationUpdated =
+          await informationNotifier.updateInformation(information);
+      expect(informationUpdated, false);
+    });
+
+    test('Should return an error if information is not found', () async {
+      final mockInformationRepository = MockInformationRepository();
+      final information = Information.empty().copyWith(manager: "Manager");
+      when(() => mockInformationRepository.getInformation())
+          .thenAnswer((_) async => information);
+      when(() => mockInformationRepository.updateInformation(information))
+          .thenThrow(Exception());
+      final informationNotifier =
+          InformationNotifier(informationRepository: mockInformationRepository);
+      await informationNotifier.loadInformation();
+      final informationUpdated =
+          await informationNotifier.updateInformation(information);
+      expect(informationUpdated, false);
+    });
+  });
+
+  group('Testing InformationNotifier : deleteInformation', () {
+    test('Should delete information', () async {
+      final mockInformationRepository = MockInformationRepository();
+      final information = Information.empty().copyWith(manager: "Manager");
+      when(() => mockInformationRepository.getInformation())
+          .thenAnswer((_) async => information);
+      when(() => mockInformationRepository.deleteInformation(""))
+          .thenAnswer((_) async => true);
+      final informationNotifier =
+          InformationNotifier(informationRepository: mockInformationRepository);
+      await informationNotifier.loadInformation();
+      final informationDeleted =
+          await informationNotifier.deleteInformation(information);
+      expect(informationDeleted, true);
+    });
+
+    test('Should return an error if information is not deleted', () async {
+      final mockInformationRepository = MockInformationRepository();
+      final information = Information.empty().copyWith(manager: "Manager");
+      when(() => mockInformationRepository.getInformation())
+          .thenAnswer((_) async => information);
+      when(() => mockInformationRepository.deleteInformation(""))
+          .thenAnswer((_) async => false);
+      final informationNotifier =
+          InformationNotifier(informationRepository: mockInformationRepository);
+      await informationNotifier.loadInformation();
+      final informationDeleted =
+          await informationNotifier.deleteInformation(information);
+      expect(informationDeleted, false);
+    });
+
+    test('Should return an error if information is not loaded', () async {
+      final mockInformationRepository = MockInformationRepository();
+      final information = Information.empty().copyWith(manager: "Manager");
+      when(() => mockInformationRepository.getInformation())
+          .thenAnswer((_) async => information);
+      when(() => mockInformationRepository.deleteInformation(""))
+          .thenThrow(Exception());
+      final informationNotifier =
+          InformationNotifier(informationRepository: mockInformationRepository);
+      final informationDeleted =
+          await informationNotifier.deleteInformation(information);
+      expect(informationDeleted, false);
+    });
+
+    test('Should return an error if information is not found', () async {
+      final mockInformationRepository = MockInformationRepository();
+      final information = Information.empty().copyWith(manager: "Manager");
+      when(() => mockInformationRepository.getInformation())
+          .thenAnswer((_) async => information);
+      when(() => mockInformationRepository.deleteInformation(""))
+          .thenThrow(Exception());
+      final informationNotifier =
+          InformationNotifier(informationRepository: mockInformationRepository);
+      await informationNotifier.loadInformation();
+      final informationDeleted =
+          await informationNotifier.deleteInformation(information);
+      expect(informationDeleted, false);
+    });
+  });
+
+  group('Testing InformationNotifier : createInformation', () {
+    test('Should add information', () async {
+      final mockInformationRepository = MockInformationRepository();
+      final information = Information.empty().copyWith(manager: "Manager");
+      when(() => mockInformationRepository.getInformation())
+          .thenAnswer((_) async => information);
+      when(() => mockInformationRepository.createInformation(information))
+          .thenAnswer((_) async => information);
+      final informationNotifier =
+          InformationNotifier(informationRepository: mockInformationRepository);
+      await informationNotifier.loadInformation();
+      final informationAdded =
+          await informationNotifier.createInformation(information);
+      expect(informationAdded, true);
+    });
+
+    test('Should return an error if information is not added', () async {
+      final mockInformationRepository = MockInformationRepository();
+      final information = Information.empty().copyWith(manager: "Manager");
+      when(() => mockInformationRepository.getInformation())
+          .thenAnswer((_) async => information);
+      when(() => mockInformationRepository.createInformation(information))
+          .thenAnswer((_) async => information);
+      final informationNotifier =
+          InformationNotifier(informationRepository: mockInformationRepository);
+      await informationNotifier.loadInformation();
+      final informationAdded =
+          await informationNotifier.createInformation(information);
+      expect(informationAdded, false);
+    });
+
+    test('Should return an error if information is not loaded', () async {
+      final mockInformationRepository = MockInformationRepository();
+      final information = Information.empty().copyWith(manager: "Manager");
+      when(() => mockInformationRepository.getInformation())
+          .thenAnswer((_) async => information);
+      when(() => mockInformationRepository.createInformation(information))
+          .thenThrow(Exception());
+      final informationNotifier =
+          InformationNotifier(informationRepository: mockInformationRepository);
+      final informationAdded =
+          await informationNotifier.createInformation(information);
+      expect(informationAdded, false);
+    });
+
+    test('Should return an error if information is not found', () async {
+      final mockInformationRepository = MockInformationRepository();
+      final information = Information.empty().copyWith(manager: "Manager");
+      when(() => mockInformationRepository.getInformation())
+          .thenAnswer((_) async => information);
+      when(() => mockInformationRepository.createInformation(information))
+          .thenThrow(Exception());
+      final informationNotifier =
+          InformationNotifier(informationRepository: mockInformationRepository);
+      await informationNotifier.loadInformation();
+      final informationAdded =
+          await informationNotifier.createInformation(information);
+      expect(informationAdded, false);
+    });
+  });
+
+  group('Testing OrderByDeliveryListNotifier : loadDeliveryOrderList', () {
+    test('Should load delivery order list', () async {
+      final mockOrderByDeliveryListRepository = MockOrderListRepository();
+      final orderByDeliveryList = [
+        Order.empty().copyWith(id: "1"),
+      ];
+      when(() => mockOrderByDeliveryListRepository.getDeliveryOrderList(""))
+          .thenAnswer((_) async => orderByDeliveryList);
+      final orderByDeliveryListNotifier = OrderByDeliveryListNotifier(
+          orderListRepository: mockOrderByDeliveryListRepository);
+      final deliveryOrderList =
+          await orderByDeliveryListNotifier.loadDeliveryOrderList("");
+      expect(deliveryOrderList, isA<AsyncData<List<Order>>>());
+      expect(
+          deliveryOrderList.when(
+              data: (data) => data.length,
+              loading: () => 0,
+              error: (error, stackTrace) => 0),
+          1);
+    });
+
+    test('Should return an error if delivery order list is not loaded',
+        () async {
+      final mockOrderByDeliveryListRepository = MockOrderListRepository();
+      when(() => mockOrderByDeliveryListRepository.getDeliveryOrderList(""))
+          .thenThrow(Exception());
+      final orderByDeliveryListNotifier = OrderByDeliveryListNotifier(
+          orderListRepository: mockOrderByDeliveryListRepository);
+      final deliveryOrderList =
+          await orderByDeliveryListNotifier.loadDeliveryOrderList("");
+      expect(deliveryOrderList, isA<AsyncError<List<Order>>>());
+    });
+  });
+
+  group('Testing ProductListNotifier : loadProductList', () {
+    test('Should load product list', () async {
+      final mockProductListRepository = MockProductListRepository();
+      final productList = [
+        Product.empty().copyWith(id: "1"),
+      ];
+      when(() => mockProductListRepository.getProductList())
+          .thenAnswer((_) async => productList);
+      final productListNotifier =
+          ProductListNotifier(productListRepository: mockProductListRepository);
+      final productListLoaded = await productListNotifier.loadProductList();
+      expect(productListLoaded, isA<AsyncData<List<Product>>>());
+      expect(
+          productListLoaded.when(
+              data: (data) => data.length,
+              loading: () => 0,
+              error: (error, stackTrace) => 0),
+          1);
+    });
+
+    test('Should return an error if product list is not loaded', () async {
+      final mockProductListRepository = MockProductListRepository();
+      final productList = [
+        Product.empty().copyWith(id: "1"),
+      ];
+      when(() => mockProductListRepository.getProductList())
+          .thenAnswer((_) async => productList);
+      when(() => mockProductListRepository.getProductList())
+          .thenThrow(Exception());
+      final productListNotifier =
+          ProductListNotifier(productListRepository: mockProductListRepository);
+      final productListLoaded = await productListNotifier.loadProductList();
+      expect(productListLoaded, isA<AsyncError<List<Product>>>());
+    });
+  });
+
+  group('Testing ProductListNotifier : createProduct', () {
+    test('Should add product', () async {
+      final mockProductListRepository = MockProductListRepository();
+      final product = Product.empty().copyWith(id: "1");
+      when(() => mockProductListRepository.getProductList())
+          .thenAnswer((_) async => [product]);
+      when(() => mockProductListRepository.createProduct(product))
+          .thenAnswer((_) async => product);
+      final productListNotifier =
+          ProductListNotifier(productListRepository: mockProductListRepository);
+      await productListNotifier.loadProductList();
+      final productAdded = await productListNotifier.addProduct(product);
+      expect(productAdded, true);
+    });
+
+    test('Should return an error if product is not added', () async {
+      final mockProductListRepository = MockProductListRepository();
+      final product = Product.empty().copyWith(id: "1");
+      when(() => mockProductListRepository.getProductList())
+          .thenAnswer((_) async => [product]);
+      when(() => mockProductListRepository.createProduct(product))
+          .thenThrow(Exception());
+      final productListNotifier =
+          ProductListNotifier(productListRepository: mockProductListRepository);
+      await productListNotifier.loadProductList();
+      final productAdded = await productListNotifier.addProduct(product);
+      expect(productAdded, false);
+    });
+
+    test('Should return an error if product is not loaded', () async {
+      final mockProductListRepository = MockProductListRepository();
+      final product = Product.empty().copyWith(id: "1");
+      when(() => mockProductListRepository.createProduct(product))
+          .thenThrow(Exception());
+      final productListNotifier =
+          ProductListNotifier(productListRepository: mockProductListRepository);
+      final productAdded = await productListNotifier.addProduct(product);
+      expect(productAdded, false);
+    });
+  });
+
+  group('Testing ProductListNotifier : updateProduct', () {
+    test('Should update product', () async {
+      final mockProductListRepository = MockProductListRepository();
+      final product = Product.empty().copyWith(id: "1");
+      when(() => mockProductListRepository.getProductList())
+          .thenAnswer((_) async => [product]);
+      when(() => mockProductListRepository.updateProduct(product))
+          .thenAnswer((_) async => true);
+      final productListNotifier =
+          ProductListNotifier(productListRepository: mockProductListRepository);
+      await productListNotifier.loadProductList();
+      final productUpdated = await productListNotifier.updateProduct(product);
+      expect(productUpdated, true);
+    });
+
+    test('Should return an error if product is not updated', () async {
+      final mockProductListRepository = MockProductListRepository();
+      final product = Product.empty().copyWith(id: "1");
+      when(() => mockProductListRepository.getProductList())
+          .thenAnswer((_) async => [product]);
+      when(() => mockProductListRepository.updateProduct(product))
+          .thenThrow(Exception());
+      final productListNotifier =
+          ProductListNotifier(productListRepository: mockProductListRepository);
+      await productListNotifier.loadProductList();
+      final productUpdated = await productListNotifier.updateProduct(product);
+      expect(productUpdated, false);
+    });
+
+    test('Should return an error if product is not loaded', () async {
+      final mockProductListRepository = MockProductListRepository();
+      final product = Product.empty().copyWith(id: "1");
+      when(() => mockProductListRepository.updateProduct(product))
+          .thenThrow(Exception());
+      when(() => mockProductListRepository.updateProduct(product))
+          .thenAnswer((_) async => true);
+      final productListNotifier =
+          ProductListNotifier(productListRepository: mockProductListRepository);
+      final productUpdated = await productListNotifier.updateProduct(product);
+      expect(productUpdated, false);
+    });
+
+    test('Should return an error if product is not found', () async {
+      final mockProductListRepository = MockProductListRepository();
+      final product = Product.empty().copyWith(id: "1");
+      when(() => mockProductListRepository.updateProduct(product))
+          .thenAnswer((_) async => true);
+      when(() => mockProductListRepository.getProductList())
+          .thenAnswer((_) async => []);
+      final productListNotifier =
+          ProductListNotifier(productListRepository: mockProductListRepository);
+      await productListNotifier.loadProductList();
+      final productUpdated = await productListNotifier.updateProduct(product);
+      expect(productUpdated, false);
+    });
+  });
+
+  group('Testing ProductListNotifier : deleteProduct', () {
+    test('Should delete product', () async {
+      final mockProductListRepository = MockProductListRepository();
+      final product = Product.empty().copyWith(id: "1");
+      when(() => mockProductListRepository.getProductList())
+          .thenAnswer((_) async => [product]);
+      when(() => mockProductListRepository.deleteProduct(product.id))
+          .thenAnswer((_) async => true);
+      final productListNotifier =
+          ProductListNotifier(productListRepository: mockProductListRepository);
+      await productListNotifier.loadProductList();
+      final productDeleted = await productListNotifier.deleteProduct(product);
+      expect(productDeleted, true);
+    });
+
+    test('Should return an error if product is not deleted', () async {
+      final mockProductListRepository = MockProductListRepository();
+      final product = Product.empty().copyWith(id: "1");
+      when(() => mockProductListRepository.getProductList())
+          .thenAnswer((_) async => [product]);
+      when(() => mockProductListRepository.deleteProduct(product.id))
+          .thenThrow(Exception());
+      final productListNotifier =
+          ProductListNotifier(productListRepository: mockProductListRepository);
+      await productListNotifier.loadProductList();
+      final productDeleted = await productListNotifier.deleteProduct(product);
+      expect(productDeleted, false);
+    });
+
+    test('Should return an error if product is not loaded', () async {
+      final mockProductListRepository = MockProductListRepository();
+      final product = Product.empty().copyWith(id: "1");
+      when(() => mockProductListRepository.deleteProduct(product.id))
+          .thenThrow(Exception());
+      when(() => mockProductListRepository.deleteProduct(product.id))
+          .thenAnswer((_) async => true);
+      final productListNotifier =
+          ProductListNotifier(productListRepository: mockProductListRepository);
+      final productDeleted = await productListNotifier.deleteProduct(product);
+      expect(productDeleted, false);
+    });
+
+    test('Should return an error if product is not found', () async {
+      final mockProductListRepository = MockProductListRepository();
+      final product = Product.empty().copyWith(id: "1");
+      when(() => mockProductListRepository.deleteProduct(product.id))
+          .thenAnswer((_) async => false);
+      when(() => mockProductListRepository.getProductList())
+          .thenAnswer((_) async => []);
+      final productListNotifier =
+          ProductListNotifier(productListRepository: mockProductListRepository);
+      await productListNotifier.loadProductList();
+      final productDeleted = await productListNotifier.deleteProduct(product);
+      expect(productDeleted, false);
+    });
+  });
+
+  group('Testing UserCashNotifier : loadCashByUser', () {
+    test('Should load cash by user', () async {
+      final mockUserCashRepository = MockAmapUserRespository();
+      final userCash =
+          Cash.empty().copyWith(user: SimpleUser.empty().copyWith(id: "1"));
+      when(() => mockUserCashRepository.getCashByUser(userCash.user.id))
+          .thenAnswer((_) async => userCash);
+      final userCashNotifier =
+          UserCashNotifier(amapUserRepository: mockUserCashRepository);
+      final userCashLoaded =
+          await userCashNotifier.loadCashByUser(userCash.user.id);
+      expect(userCashLoaded, isA<AsyncData<Cash>>());
+      expect(
+          userCashLoaded.when(
+            data: (cash) => cash,
+            loading: () => null,
+            error: (error, stackTrace) => null,
+          ),
+          userCash);
+    });
+
+    test('Should return an error if cash is not loaded', () async {
+      final mockUserCashRepository = MockAmapUserRespository();
+      final userCash =
+          Cash.empty().copyWith(user: SimpleUser.empty().copyWith(id: "1"));
+      when(() => mockUserCashRepository.getCashByUser(userCash.user.id))
+          .thenThrow(Exception());
+      final userCashNotifier =
+          UserCashNotifier(amapUserRepository: mockUserCashRepository);
+      final userCashLoaded =
+          await userCashNotifier.loadCashByUser(userCash.user.id);
+      expect(userCashLoaded, isA<AsyncError<Cash>>());
+    });
+  });
+
+  group('Testing UserOrderListNotifier : loadOrderList', () {
+    test('Should load order list', () async {
+      final mockUserOrderListRepository = MockAmapUserRespository();
+      final mockOrderListRepository = MockOrderListRepository();
+      final orderList = [
+        Order.empty().copyWith(id: "1"),
+        Order.empty().copyWith(id: "2"),
+      ];
+      when(() => mockUserOrderListRepository.getOrderList(""))
+          .thenAnswer((_) async => orderList);
+      final userOrderListNotifier = UserOrderListNotifier(
+          orderListRepository: mockOrderListRepository,
+          userRepository: mockUserOrderListRepository);
+      final userOrderListLoaded = await userOrderListNotifier.loadOrderList("");
+      expect(userOrderListLoaded, isA<AsyncData<List<Order>>>());
+      expect(
+          userOrderListLoaded.when(
+            data: (orderList) => orderList,
+            loading: () => null,
+            error: (error, stackTrace) => null,
+          ),
+          orderList);
+    });
+
+    test('Should return an error if order list is not loaded', () async {
+      final mockUserOrderListRepository = MockAmapUserRespository();
+      final mockOrderListRepository = MockOrderListRepository();
+      when(() => mockUserOrderListRepository.getOrderList(""))
+          .thenThrow(Exception());
+      final userOrderListNotifier = UserOrderListNotifier(
+          orderListRepository: mockOrderListRepository,
+          userRepository: mockUserOrderListRepository);
+      final userOrderListLoaded = await userOrderListNotifier.loadOrderList("");
+      expect(userOrderListLoaded, isA<AsyncError<List<Order>>>());
+    });
+  });
+
+  group('Testing UserOrderListNotifier : addOrder', () {
+    test('Should add order', () async {
+      final mockUserOrderListRepository = MockAmapUserRespository();
+      final mockOrderListRepository = MockOrderListRepository();
+      final order = Order.empty().copyWith(id: "1");
+      when(() => mockUserOrderListRepository.getOrderList(""))
+          .thenAnswer((_) async => []);
+      when(() => mockOrderListRepository.createOrder(order))
+          .thenAnswer((_) async => order);
+      final userOrderListNotifier = UserOrderListNotifier(
+          orderListRepository: mockOrderListRepository,
+          userRepository: mockUserOrderListRepository);
+      await userOrderListNotifier.loadOrderList("");
+      final orderAdded = await userOrderListNotifier.addOrder(order);
+      expect(orderAdded, true);
+    });
+
+    test('Should return an error if order is not added', () async {
+      final mockUserOrderListRepository = MockAmapUserRespository();
+      final mockOrderListRepository = MockOrderListRepository();
+      final order = Order.empty().copyWith(id: "1");
+      when(() => mockUserOrderListRepository.getOrderList(""))
+          .thenAnswer((_) async => []);
+      when(() => mockOrderListRepository.createOrder(order))
+          .thenThrow(Exception());
+      final userOrderListNotifier = UserOrderListNotifier(
+          orderListRepository: mockOrderListRepository,
+          userRepository: mockUserOrderListRepository);
+      await userOrderListNotifier.loadOrderList("");
+      final orderAdded = await userOrderListNotifier.addOrder(order);
+      expect(orderAdded, false);
+    });
+
+    test('Should return an error if order is not loaded', () async {
+      final mockUserOrderListRepository = MockAmapUserRespository();
+      final mockOrderListRepository = MockOrderListRepository();
+      final order = Order.empty().copyWith(id: "1");
+      when(() => mockOrderListRepository.createOrder(order))
+          .thenAnswer((_) async => order);
+      when(() => mockUserOrderListRepository.getOrderList(""))
+          .thenAnswer((_) async => []);
+      final userOrderListNotifier = UserOrderListNotifier(
+          orderListRepository: mockOrderListRepository,
+          userRepository: mockUserOrderListRepository);
+      final orderAdded = await userOrderListNotifier.addOrder(order);
+      expect(orderAdded, false);
+    });
+  });
+
+  group('Testing UserOrderListNotifier : deleteOrder', () {
+    test('Should delete order', () async {
+      final mockUserOrderListRepository = MockAmapUserRespository();
+      final mockOrderListRepository = MockOrderListRepository();
+      final order = Order.empty().copyWith(id: "1");
+      when(() => mockUserOrderListRepository.getOrderList(""))
+          .thenAnswer((_) async => []);
+      when(() => mockOrderListRepository.deleteOrder(order.id))
+          .thenAnswer((_) async => true);
+      final userOrderListNotifier = UserOrderListNotifier(
+          orderListRepository: mockOrderListRepository,
+          userRepository: mockUserOrderListRepository);
+      await userOrderListNotifier.loadOrderList("");
+      final orderDeleted = await userOrderListNotifier.deleteOrder(order);
+      expect(orderDeleted, true);
+    });
+
+    test('Should return an error if order is not deleted', () async {
+      final mockUserOrderListRepository = MockAmapUserRespository();
+      final mockOrderListRepository = MockOrderListRepository();
+      final order = Order.empty().copyWith(id: "1");
+      when(() => mockUserOrderListRepository.getOrderList(""))
+          .thenAnswer((_) async => []);
+      when(() => mockOrderListRepository.deleteOrder(order.id))
+          .thenThrow(Exception());
+      final userOrderListNotifier = UserOrderListNotifier(
+          orderListRepository: mockOrderListRepository,
+          userRepository: mockUserOrderListRepository);
+      await userOrderListNotifier.loadOrderList("");
+      final orderDeleted = await userOrderListNotifier.deleteOrder(order);
+      expect(orderDeleted, false);
+    });
+
+    test('Should return an error if order is not loaded', () async {
+      final mockUserOrderListRepository = MockAmapUserRespository();
+      final mockOrderListRepository = MockOrderListRepository();
+      final order = Order.empty().copyWith(id: "1");
+      when(() => mockOrderListRepository.deleteOrder(order.id))
+          .thenAnswer((_) async => true);
+      when(() => mockUserOrderListRepository.getOrderList(""))
+          .thenAnswer((_) async => []);
+      final userOrderListNotifier = UserOrderListNotifier(
+          orderListRepository: mockOrderListRepository,
+          userRepository: mockUserOrderListRepository);
+      final orderDeleted = await userOrderListNotifier.deleteOrder(order);
+      expect(orderDeleted, false);
+    });
+
+    test('Should return an error if order is not found', () async {
+      final mockUserOrderListRepository = MockAmapUserRespository();
+      final mockOrderListRepository = MockOrderListRepository();
+      final order = Order.empty().copyWith(id: "1");
+      when(() => mockOrderListRepository.deleteOrder(order.id))
+          .thenAnswer((_) async => true);
+      when(() => mockUserOrderListRepository.getOrderList(""))
+          .thenAnswer((_) async => [order]);
+      final userOrderListNotifier = UserOrderListNotifier(
+          orderListRepository: mockOrderListRepository,
+          userRepository: mockUserOrderListRepository);
+      await userOrderListNotifier.loadOrderList("");
+      final orderDeleted = await userOrderListNotifier.deleteOrder(order);
+      expect(orderDeleted, true);
+    });
+  });
+
+  group('Testing UserOrderListNotifier : updateOrder', () {
+    test('Should update order', () async {
+      final mockUserOrderListRepository = MockAmapUserRespository();
+      final mockOrderListRepository = MockOrderListRepository();
+      final order = Order.empty().copyWith(id: "1");
+      when(() => mockUserOrderListRepository.getOrderList(""))
+          .thenAnswer((_) async => [order]);
+      when(() => mockOrderListRepository.updateOrder(order))
+          .thenAnswer((_) async => true);
+      final userOrderListNotifier = UserOrderListNotifier(
+          orderListRepository: mockOrderListRepository,
+          userRepository: mockUserOrderListRepository);
+      await userOrderListNotifier.loadOrderList("");
+      final orderUpdated = await userOrderListNotifier.updateOrder(order);
+      expect(orderUpdated, true);
+    });
+
+    test('Should return an error if order is not updated', () async {
+      final mockUserOrderListRepository = MockAmapUserRespository();
+      final mockOrderListRepository = MockOrderListRepository();
+      final order = Order.empty().copyWith(id: "1");
+      when(() => mockUserOrderListRepository.getOrderList(""))
+          .thenAnswer((_) async => [order]);
+      when(() => mockOrderListRepository.updateOrder(order))
+          .thenThrow(Exception());
+      final userOrderListNotifier = UserOrderListNotifier(
+          orderListRepository: mockOrderListRepository,
+          userRepository: mockUserOrderListRepository);
+      await userOrderListNotifier.loadOrderList("");
+      final orderUpdated = await userOrderListNotifier.updateOrder(order);
+      expect(orderUpdated, false);
+    });
+
+    test('Should return an error if order is not loaded', () async {
+      final mockUserOrderListRepository = MockAmapUserRespository();
+      final mockOrderListRepository = MockOrderListRepository();
+      final order = Order.empty().copyWith(id: "1");
+      when(() => mockOrderListRepository.updateOrder(order))
+          .thenAnswer((_) async => true);
+      when(() => mockUserOrderListRepository.getOrderList(""))
+          .thenAnswer((_) async => [order]);
+      final userOrderListNotifier = UserOrderListNotifier(
+          orderListRepository: mockOrderListRepository,
+          userRepository: mockUserOrderListRepository);
+      final orderUpdated = await userOrderListNotifier.updateOrder(order);
+      expect(orderUpdated, false);
+    });
+
+    test('Should return an error if order is not found', () async {
+      final mockUserOrderListRepository = MockAmapUserRespository();
+      final mockOrderListRepository = MockOrderListRepository();
+      final order = Order.empty().copyWith(id: "1");
+      when(() => mockOrderListRepository.updateOrder(order))
+          .thenAnswer((_) async => true);
+      when(() => mockUserOrderListRepository.getOrderList(""))
+          .thenAnswer((_) async => []);
+      final userOrderListNotifier = UserOrderListNotifier(
+          orderListRepository: mockOrderListRepository,
+          userRepository: mockUserOrderListRepository);
+      await userOrderListNotifier.loadOrderList("");
+      final orderUpdated = await userOrderListNotifier.updateOrder(order);
+      expect(orderUpdated, true);
+    });
+  });
 }

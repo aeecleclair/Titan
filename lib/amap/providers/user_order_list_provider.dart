@@ -26,12 +26,12 @@ class UserOrderListNotifier extends ListNotifier<Order> {
   }
 
   Future<bool> addOrder(Order order) async {
-    return await add((o) async => orderListRepository.createOrder(o), order);
+    return await add(orderListRepository.createOrder, order);
   }
 
   Future<bool> updateOrder(Order order) async {
     return await update(
-        (o) async => orderListRepository.updateOrder(order),
+        orderListRepository.updateOrder,
         (orders, order) =>
             orders..[orders.indexWhere((o) => o.id == order.id)] = order,
         order);
@@ -39,7 +39,7 @@ class UserOrderListNotifier extends ListNotifier<Order> {
 
   Future<bool> deleteOrder(Order order) async {
     return await delete(
-        (id) async => orderListRepository.deleteOrder(order.id),
+        orderListRepository.deleteOrder,
         (orders, order) => orders..removeWhere((i) => i.id == order.id),
         order.id,
         order);

@@ -29,6 +29,7 @@ class Applicant extends SimpleUser {
     return data;
   }
 
+  @override
   Applicant copyWith(
       {String? name,
       String? firstname,

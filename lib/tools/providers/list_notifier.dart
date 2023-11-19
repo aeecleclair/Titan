@@ -82,7 +82,10 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
       List<T> Function(List<T> listT, T t) replace, T t) async {
     return state.when(data: (d) async {
       try {
-        await f(t);
+        final value = await f(t);
+        if (!value) {
+          return false;
+        }
         d = replace(d, t);
         state = AsyncValue.data(d);
         return true;
@@ -112,7 +115,10 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
       List<T> Function(List<T> listT, T t) replace, String id, T t) async {
     return state.when(data: (d) async {
       try {
-        await f(id);
+        final value = await f(id);
+        if (!value) {
+          return false;
+        }
         d = replace(d, t);
         state = AsyncValue.data(d);
         return true;

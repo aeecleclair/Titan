@@ -47,4 +47,18 @@ class SimpleUser {
   String toString() {
     return "SimpleUser {name: $name, firstname: $firstname, nickname: $nickname, id: $id}";
   }
+
+  SimpleUser copyWith({
+    String? name,
+    String? firstname,
+    String? nickname,
+    String? id,
+  }) {
+    return SimpleUser(
+      name: name ?? this.name,
+      firstname: firstname ?? this.firstname,
+      nickname: nickname ?? this.nickname,
+      id: id ?? this.id,
+    );
+  }
 }

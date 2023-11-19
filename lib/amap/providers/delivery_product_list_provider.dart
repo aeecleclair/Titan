@@ -3,9 +3,9 @@ import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/repositories/delivery_product_list_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 
-class ProductListNotifier extends ListNotifier<Product> {
+class DeliveryProductListNotifier extends ListNotifier<Product> {
   final DeliveryProductListRepository productListRepository;
-  ProductListNotifier({required this.productListRepository})
+  DeliveryProductListNotifier({required this.productListRepository})
       : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Product>>> loadProductList(
@@ -46,8 +46,8 @@ class ProductListNotifier extends ListNotifier<Product> {
 }
 
 final deliveryProductListProvider =
-    StateNotifierProvider<ProductListNotifier, AsyncValue<List<Product>>>(
+    StateNotifierProvider<DeliveryProductListNotifier, AsyncValue<List<Product>>>(
         (ref) {
   final deliveryProductListRepository = ref.watch(deliveryProductListRepositoryProvider);
-  return ProductListNotifier(productListRepository: deliveryProductListRepository);
+  return DeliveryProductListNotifier(productListRepository: deliveryProductListRepository);
 });
