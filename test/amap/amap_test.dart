@@ -211,9 +211,9 @@ void main() {
       expect(newOrder.productsDetail, ['id']);
       expect(newOrder.productsQuantity, [1]);
       newOrder = order.copyWith(
-        collectionSlot: CollectionSlot.midi,
+        collectionSlot: CollectionSlot.midDay,
       );
-      expect(newOrder.collectionSlot, CollectionSlot.midi);
+      expect(newOrder.collectionSlot, CollectionSlot.midDay);
       newOrder = order.copyWith(
         user: SimpleUser.empty().copyWith(name: 'Name'),
       );
@@ -237,7 +237,7 @@ void main() {
           Product.empty()
               .copyWith(id: 'id', name: 'name', price: 0, quantity: 0),
         ],
-        collectionSlot: CollectionSlot.midi,
+        collectionSlot: CollectionSlot.midDay,
         user: SimpleUser.empty().copyWith(name: 'Name'),
         orderingDate: DateTime.parse('2021-01-01'),
         deliveryDate: DateTime.parse('2021-01-01'),
@@ -451,25 +451,25 @@ void main() {
 
   group('Testing functions', () {
     test('Should return a string', () async {
-      expect(collectionSlotToString(CollectionSlot.midi), "midi");
-      expect(collectionSlotToString(CollectionSlot.soir), "soir");
+      expect(collectionSlotToString(CollectionSlot.midDay), "midi");
+      expect(collectionSlotToString(CollectionSlot.evening), "soir");
     });
     test('Should return a CollectionSlot', () async {
-      expect(stringToCollectionSlot("midi"), CollectionSlot.midi);
-      expect(stringToCollectionSlot("soir"), CollectionSlot.soir);
-      expect(stringToCollectionSlot("test"), CollectionSlot.midi);
+      expect(stringToCollectionSlot("midi"), CollectionSlot.midDay);
+      expect(stringToCollectionSlot("soir"), CollectionSlot.evening);
+      expect(stringToCollectionSlot("test"), CollectionSlot.midDay);
     });
 
     test('Should return a string', () async {
       expect(deliveryStatusToString(DeliveryStatus.creation), "creation");
-      expect(deliveryStatusToString(DeliveryStatus.orderable), "orderable");
+      expect(deliveryStatusToString(DeliveryStatus.available), "orderable");
       expect(deliveryStatusToString(DeliveryStatus.locked), "locked");
       expect(deliveryStatusToString(DeliveryStatus.delivered), "delivered");
     });
 
     test('Should return a DeliveryStatus', () async {
       expect(stringToDeliveryStatus("creation"), DeliveryStatus.creation);
-      expect(stringToDeliveryStatus("orderable"), DeliveryStatus.orderable);
+      expect(stringToDeliveryStatus("orderable"), DeliveryStatus.available);
       expect(stringToDeliveryStatus("locked"), DeliveryStatus.locked);
       expect(stringToDeliveryStatus("delivered"), DeliveryStatus.delivered);
       expect(stringToDeliveryStatus("test"), DeliveryStatus.creation);

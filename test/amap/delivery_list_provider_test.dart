@@ -98,7 +98,7 @@ void main() {
                   data: (data) => data, error: (e, s) => [], loading: () => [])
               .first
               .status,
-          DeliveryStatus.orderable);
+          DeliveryStatus.available);
     });
 
     test('lockDelivery should update the status of a delivery to locked',
