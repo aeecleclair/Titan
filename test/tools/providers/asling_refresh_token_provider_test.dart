@@ -8,20 +8,20 @@ void main() {
   test('AskingRefreshTokenNotifier sets state correctly', () {
     final askingRefreshTokenNotifier = AskingRefreshTokenNotifier();
 
-    askingRefreshTokenNotifier.setbool(true);
+    askingRefreshTokenNotifier.setAskingRefresh(true);
     expect(askingRefreshTokenNotifier.state, true);
 
-    askingRefreshTokenNotifier.setbool(false);
+    askingRefreshTokenNotifier.setAskingRefresh(false);
     expect(askingRefreshTokenNotifier.state, false);
   });
 
   test('askingRefreshTokenProvider returns correct value', () {
     final container = ProviderContainer();
 
-    container.read(askingRefreshTokenProvider.notifier).setbool(true);
+    container.read(askingRefreshTokenProvider.notifier).setAskingRefresh(true);
     expect(container.read(askingRefreshTokenProvider), true);
 
-    container.read(askingRefreshTokenProvider.notifier).setbool(false);
+    container.read(askingRefreshTokenProvider.notifier).setAskingRefresh(false);
     expect(container.read(askingRefreshTokenProvider), false);
   });
 }

@@ -25,7 +25,7 @@ class MapNotifier<T, E>
     );
   }
 
-  void addE(T t, E e) {
+  Future<bool> addE(T t, E e) {
     state.when(data: (d) async {
       try {
         List<E> eList = d[t]!.maybeWhen(data: (d) => d, orElse: () => []);

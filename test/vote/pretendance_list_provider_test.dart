@@ -3,173 +3,173 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/vote/class/pretendance.dart';
-import 'package:myecl/vote/providers/pretendance_list_provider.dart';
-import 'package:myecl/vote/repositories/pretendance_repository.dart';
+import 'package:myecl/vote/class/contender.dart';
+import 'package:myecl/vote/providers/contender_list_provider.dart';
+import 'package:myecl/vote/repositories/contender_repository.dart';
 
-class MockPretendanceRepository extends Mock implements PretendanceRepository {}
+class MockContenderRepository extends Mock implements ContenderRepository {}
 
 void main() {
-  group('PretendanceListNotifier', () {
-    late PretendanceListNotifier pretendanceListNotifier;
+  group('ContenderListNotifier', () {
+    late ContenderListNotifier contenderListNotifier;
 
     setUp(() {
-      pretendanceListNotifier = PretendanceListNotifier(
-        pretendanceRepository: MockPretendanceRepository(),
+      contenderListNotifier = ContenderListNotifier(
+        contenderRepository: MockContenderRepository(),
       );
     });
 
-    test('loadPretendanceList', () async {
-      final pretendances = [
-        Pretendance.empty()
-            .copyWith(id: '1', name: 'Pretendance 1', listType: ListType.pipo),
-        Pretendance.empty()
-            .copyWith(id: '2', name: 'Pretendance 2', listType: ListType.serio),
-        Pretendance.empty()
-            .copyWith(id: '3', name: 'Pretendance 3', listType: ListType.blank),
+    test('loadContenderList', () async {
+      final contenders = [
+        Contender.empty()
+            .copyWith(id: '1', name: 'Contender 1', listType: ListType.pipo),
+        Contender.empty()
+            .copyWith(id: '2', name: 'Contender 2', listType: ListType.serio),
+        Contender.empty()
+            .copyWith(id: '3', name: 'Contender 3', listType: ListType.blank),
       ];
       when(() =>
-              pretendanceListNotifier.pretendanceRepository.getPretendances())
-          .thenAnswer((_) async => pretendances);
-      await pretendanceListNotifier.loadPretendanceList();
+              contenderListNotifier.contenderRepository.getContenders())
+          .thenAnswer((_) async => contenders);
+      await contenderListNotifier.loadContenderList();
       expect(
-        pretendanceListNotifier.state.when(
-          data: (pretendances) => pretendances,
+        contenderListNotifier.state.when(
+          data: (contenders) => contenders,
           loading: () => [],
           error: (error, stackTrace) => [],
         ),
-        pretendances,
+        contenders,
       );
     });
 
-    test('addPretendance', () async {
-      final pretendances = [
-        Pretendance.empty()
-            .copyWith(id: '1', name: 'Pretendance 1', listType: ListType.pipo),
-        Pretendance.empty()
-            .copyWith(id: '2', name: 'Pretendance 2', listType: ListType.serio),
-        Pretendance.empty()
-            .copyWith(id: '3', name: 'Pretendance 3', listType: ListType.blank),
+    test('addContender', () async {
+      final contenders = [
+        Contender.empty()
+            .copyWith(id: '1', name: 'Contender 1', listType: ListType.pipo),
+        Contender.empty()
+            .copyWith(id: '2', name: 'Contender 2', listType: ListType.serio),
+        Contender.empty()
+            .copyWith(id: '3', name: 'Contender 3', listType: ListType.blank),
       ];
-      final newPretendance = Pretendance.empty()
-          .copyWith(id: '4', name: 'Pretendance 4', listType: ListType.serio);
-      when(() => pretendanceListNotifier.pretendanceRepository
-              .createPretendance(newPretendance))
-          .thenAnswer((_) async => newPretendance);
-      pretendanceListNotifier.state = AsyncValue.data(pretendances.sublist(0));
-      await pretendanceListNotifier.addPretendance(newPretendance);
+      final newContender = Contender.empty()
+          .copyWith(id: '4', name: 'Contender 4', listType: ListType.serio);
+      when(() => contenderListNotifier.contenderRepository
+              .createContender(newContender))
+          .thenAnswer((_) async => newContender);
+      contenderListNotifier.state = AsyncValue.data(contenders.sublist(0));
+      await contenderListNotifier.addContender(newContender);
 
       expect(
-        pretendanceListNotifier.state.when(
-          data: (pretendances) => pretendances,
+        contenderListNotifier.state.when(
+          data: (contenders) => contenders,
           loading: () => [],
           error: (error, stackTrace) => [],
         ),
-        pretendances + [newPretendance],
+        contenders + [newContender],
       );
     });
 
-    test('updatePretendance', () async {
-      final pretendances = [
-        Pretendance.empty()
-            .copyWith(id: '1', name: 'Pretendance 1', listType: ListType.serio),
-        Pretendance.empty()
-            .copyWith(id: '2', name: 'Pretendance 2', listType: ListType.pipo),
-        Pretendance.empty()
-            .copyWith(id: '3', name: 'Pretendance 3', listType: ListType.blank),
+    test('updateContender', () async {
+      final contenders = [
+        Contender.empty()
+            .copyWith(id: '1', name: 'Contender 1', listType: ListType.serio),
+        Contender.empty()
+            .copyWith(id: '2', name: 'Contender 2', listType: ListType.pipo),
+        Contender.empty()
+            .copyWith(id: '3', name: 'Contender 3', listType: ListType.blank),
       ];
-      final updatedPretendance = Pretendance.empty().copyWith(
-          id: '2', name: 'Pretendance 2 updated', listType: ListType.pipo);
-      when(() => pretendanceListNotifier.pretendanceRepository
-          .updatePretendance(updatedPretendance)).thenAnswer((_) async => true);
-      pretendanceListNotifier.state = AsyncValue.data(pretendances);
-      await pretendanceListNotifier.updatePretendance(updatedPretendance);
+      final updatedContender = Contender.empty().copyWith(
+          id: '2', name: 'Contender 2 updated', listType: ListType.pipo);
+      when(() => contenderListNotifier.contenderRepository
+          .updateContender(updatedContender)).thenAnswer((_) async => true);
+      contenderListNotifier.state = AsyncValue.data(contenders);
+      await contenderListNotifier.updateContender(updatedContender);
 
       expect(
-        pretendanceListNotifier.state.when(
-          data: (pretendances) => pretendances,
+        contenderListNotifier.state.when(
+          data: (contenders) => contenders,
           loading: () => [],
           error: (error, stackTrace) => [],
         ),
-        pretendances
-            .map((pretendance) => pretendance.id == updatedPretendance.id
-                ? updatedPretendance
-                : pretendance)
+        contenders
+            .map((contender) => contender.id == updatedContender.id
+                ? updatedContender
+                : contender)
             .toList(),
       );
     });
 
-    test('deletePretendance', () async {
-      final pretendances = [
-        Pretendance.empty()
-            .copyWith(id: '1', name: 'Pretendance 1', listType: ListType.serio),
-        Pretendance.empty()
-            .copyWith(id: '2', name: 'Pretendance 2', listType: ListType.pipo),
-        Pretendance.empty()
-            .copyWith(id: '3', name: 'Pretendance 3', listType: ListType.blank),
+    test('deleteContender', () async {
+      final contenders = [
+        Contender.empty()
+            .copyWith(id: '1', name: 'Contender 1', listType: ListType.serio),
+        Contender.empty()
+            .copyWith(id: '2', name: 'Contender 2', listType: ListType.pipo),
+        Contender.empty()
+            .copyWith(id: '3', name: 'Contender 3', listType: ListType.blank),
       ];
-      final deletedPretendance = Pretendance.empty()
-          .copyWith(id: '2', name: 'Pretendance 2', listType: ListType.pipo);
-      when(() => pretendanceListNotifier.pretendanceRepository
-              .deletePretendance(deletedPretendance.id))
+      final deletedContender = Contender.empty()
+          .copyWith(id: '2', name: 'Contender 2', listType: ListType.pipo);
+      when(() => contenderListNotifier.contenderRepository
+              .deleteContender(deletedContender.id))
           .thenAnswer((_) async => true);
-      pretendanceListNotifier.state = AsyncValue.data(pretendances);
-      await pretendanceListNotifier.deletePretendance(deletedPretendance);
+      contenderListNotifier.state = AsyncValue.data(contenders);
+      await contenderListNotifier.deleteContender(deletedContender);
 
       expect(
-        pretendanceListNotifier.state.when(
-          data: (pretendances) => pretendances,
+        contenderListNotifier.state.when(
+          data: (contenders) => contenders,
           loading: () => [],
           error: (error, stackTrace) => [],
         ),
-        pretendances
-            .where((pretendance) => pretendance.id != deletedPretendance.id)
+        contenders
+            .where((contender) => contender.id != deletedContender.id)
             .toList(),
       );
     });
 
     test('copy', () async {
-      final pretendances = [
-        Pretendance.empty()
-            .copyWith(id: '1', name: 'Pretendance 1', listType: ListType.serio),
-        Pretendance.empty()
-            .copyWith(id: '2', name: 'Pretendance 2', listType: ListType.pipo),
-        Pretendance.empty()
-            .copyWith(id: '3', name: 'Pretendance 3', listType: ListType.blank),
+      final contenders = [
+        Contender.empty()
+            .copyWith(id: '1', name: 'Contender 1', listType: ListType.serio),
+        Contender.empty()
+            .copyWith(id: '2', name: 'Contender 2', listType: ListType.pipo),
+        Contender.empty()
+            .copyWith(id: '3', name: 'Contender 3', listType: ListType.blank),
       ];
-      pretendanceListNotifier.state = AsyncValue.data(pretendances);
-      final result = await pretendanceListNotifier.copy();
+      contenderListNotifier.state = AsyncValue.data(contenders);
+      final result = await contenderListNotifier.copy();
 
       expect(
         result.when(
-          data: (pretendances) => pretendances,
+          data: (contenders) => contenders,
           loading: () => [],
           error: (error, stackTrace) => [],
         ),
-        pretendances,
+        contenders,
       );
     });
 
     test('should shuffle serio, pipo, and blank lists', () {
-      final pretendances = [
-        Pretendance.empty()
-            .copyWith(id: '1', name: 'Pretendance 1', listType: ListType.serio),
-        Pretendance.empty()
-            .copyWith(id: '2', name: 'Pretendance 2', listType: ListType.pipo),
-        Pretendance.empty()
-            .copyWith(id: '3', name: 'Pretendance 3', listType: ListType.blank),
+      final contenders = [
+        Contender.empty()
+            .copyWith(id: '1', name: 'Contender 1', listType: ListType.serio),
+        Contender.empty()
+            .copyWith(id: '2', name: 'Contender 2', listType: ListType.pipo),
+        Contender.empty()
+            .copyWith(id: '3', name: 'Contender 3', listType: ListType.blank),
       ];
 
-      pretendanceListNotifier.state = AsyncValue.data(pretendances);
-      pretendanceListNotifier.shuffle();
+      contenderListNotifier.state = AsyncValue.data(contenders);
+      contenderListNotifier.shuffle();
 
       expect(
-        pretendanceListNotifier.state.when(
-          data: (pretendances) => pretendances,
+        contenderListNotifier.state.when(
+          data: (contenders) => contenders,
           loading: () => [],
           error: (error, stackTrace) => [],
         ),
-        isNot(pretendances),
+        isNot(contenders),
       );
     });
   });

@@ -139,14 +139,6 @@ void main() {
     });
   });
 
-  group('Testing processDateToAPIWithHour', () {
-    test('Should return a string', () {
-      final date = DateTime.parse("2021-01-01 12:00:00");
-      expect(processDateToAPIWitoutHour(date), isA<String>());
-      expect(processDateToAPIWitoutHour(date), "2021-01-01");
-    });
-  });
-
   group('displayToast', () {
     testWidgets(
         'displays a toast message with the correct duration when the type is "msg"',

@@ -4,22 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
-import 'package:myecl/vote/repositories/pretendance_logo_repository.dart';
+import 'package:myecl/vote/providers/contender_logo_provider.dart';
+import 'package:myecl/vote/repositories/contender_logo_repository.dart';
 
-class MockPretendanceLogoRepository extends Mock
-    implements PretendanceLogoRepository {}
+class MockContenderLogoRepository extends Mock
+    implements ContenderLogoRepository {}
 
 void main() {
-  late PretendanceLogoRepository repository;
-  late PretendenceLogoProovider provider;
+  late ContenderLogoRepository repository;
+  late ContenderLogoProvider provider;
 
   setUp(() {
-    repository = MockPretendanceLogoRepository();
-    provider = PretendenceLogoProovider(repository: repository);
+    repository = MockContenderLogoRepository();
+    provider = ContenderLogoProvider(repository: repository);
   });
 
-  group('PretendenceLogoProovider', () {
+  group('ContenderLogoProvider', () {
     test('initial state is loading', () {
       expect(provider.state, isA<AsyncLoading>());
     });

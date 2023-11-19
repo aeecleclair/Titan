@@ -29,7 +29,7 @@ void main() {
       when(() => repository.getSectionVoteCount(id))
           .thenAnswer((_) async => count);
 
-      final result = await notifier.loadCout(id);
+      final result = await notifier.loadCount(id);
 
       expect(result, isA<AsyncValue<int>>());
     });
@@ -39,7 +39,7 @@ void main() {
       final error = Exception('oops');
       when(() => repository.getSectionVoteCount(id)).thenThrow(error);
 
-      final result = await notifier.loadCout(id);
+      final result = await notifier.loadCount(id);
 
       expect(result, isA<AsyncError>());
     });
