@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:myecl/user/class/applicant.dart';
+import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/user/repositories/user_repository.dart';
@@ -78,6 +80,22 @@ void main() {
       final user = await mockUser.getMe();
       final newUser = user.copyWith(name: 'New Name');
       expect(newUser.name, 'New Name');
+    });
+  });
+
+  group('Testing User conversion', () {
+    test('Should convert user to SimpleUser', () async {
+      final mockUser = MockUserRepository();
+      when(() => mockUser.getMe()).thenAnswer((_) async => User.empty());
+      final user = await mockUser.getMe();
+      expect(user.toSimpleUser(), isA<SimpleUser>());
+    });
+
+    test('Should convert user to Applicant', () async {
+      final mockUser = MockUserRepository();
+      when(() => mockUser.getMe()).thenAnswer((_) async => User.empty());
+      final user = await mockUser.getMe();
+      expect(user.toApplicant(), isA<Applicant>());
     });
   });
 
@@ -179,15 +197,4 @@ void main() {
       expect(await userNotifier.changePassword('old', 'new', user), false);
     });
   });
-
-  // group('Testing UserProvider', () {
-  //   test('Should return a user', () async {
-  //     final mockUser = MockUserRepository();
-  //     when(() => mockUser.getMe()).thenAnswer((_) async => User.empty());
-  //     final container = ProviderContainer(
-  //         overrides: [userRepositoryProvider.overrideWithValue(mockUser)]);
-  //     final user = container.read(userProvider);
-  //     expect(user, isA<User>());
-  //   });
-  // });
 }
