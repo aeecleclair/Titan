@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/booking/providers/is_booking_admin_provider.dart';
+import 'package:myecl/booking/providers/is_admin_provider.dart';
 import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
@@ -19,7 +19,7 @@ void main() {
         )),
       ]);
 
-      final result = container.read(isBookingAdminProvider);
+      final result = container.read(isAdminProvider);
 
       expect(result, true);
     });
@@ -33,7 +33,7 @@ void main() {
         )),
       ]);
 
-      final result = container.read(isBookingAdminProvider);
+      final result = container.read(isAdminProvider);
 
       expect(result, false);
     });

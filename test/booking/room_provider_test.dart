@@ -12,12 +12,14 @@ void main() {
       final room = Room(
         id: '1',
         name: 'Test Room',
+        managerId: '123',
       );
 
       notifier.setRoom(room);
 
       expect(container.read(roomProvider).id, equals('1'));
       expect(container.read(roomProvider).name, equals('Test Room'));
+      expect(container.read(roomProvider).managerId, equals('123'));
     });
   });
 }

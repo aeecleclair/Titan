@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:myecl/advert/tools/functions.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/class/applicant.dart';
 import 'package:myecl/user/class/list_users.dart';
 
@@ -24,20 +26,24 @@ void main() {
       expect(newRoom.id, "1");
       newRoom = room.copyWith(name: "name");
       expect(newRoom.name, "name");
+      newRoom = room.copyWith(managerId: "1");
+      expect(newRoom.managerId, "1");
     });
 
     test('Should print a room', () {
       final room = Room(
         id: "1",
+        managerId: "1",
         name: "name",
       );
-      expect(room.toString(), 'Room{name: name, id: 1}');
+      expect(room.toString(), 'Room{name: name, manager_id: 1, id: 1}');
     });
 
     test('Should parse a room from json', () {
       final room = Room.fromJson({
         "name": "name",
         "id": "1",
+        "manager_id": "1",
       });
       expect(room, isA<Room>());
     });
@@ -46,10 +52,12 @@ void main() {
       final room = Room.fromJson({
         "name": "name",
         "id": "1",
+        "manager_id": "1",
       });
       expect(room.toJson(), {
         "name": "name",
         "id": "1",
+        "manager_id": "1",
       });
     });
   });
@@ -137,7 +145,7 @@ void main() {
         applicantId: "1",
       );
       expect(booking.toString(),
-          "Booking{id: 1, reason: reason, start: 2021-01-01 00:00:00.000Z, end: 2021-01-01 00:00:00.000Z, note: note, room: Room{name: , id: 1}, key: true, decision: Decision.approved, recurrenceRule: , entity: entity, applicant: Applicant{name: Nom, firstname: Prénom, nickname: null, id: 1, email: empty@ecl.ec-lyon.fr, promo: null, phone: null}, applicantId: 1}");
+          "Booking{id: 1, reason: reason, start: 2021-01-01 00:00:00.000Z, end: 2021-01-01 00:00:00.000Z, note: note, room: Room{name: , manager_id: , id: 1}, key: true, decision: Decision.approved, recurrenceRule: , entity: entity, applicant: Applicant{name: Nom, firstname: Prénom, nickname: null, id: 1, email: empty@ecl.ec-lyon.fr, promo: null, phone: null}, applicantId: 1}");
     });
 
     test('Should parse a booking from json', () {
@@ -150,6 +158,7 @@ void main() {
         "room": {
           "id": "1",
           "name": "name",
+          "manager_id": "1",
         },
         "key": true,
         "decision": "approved",
@@ -191,6 +200,7 @@ void main() {
         "room": {
           "id": "1",
           "name": "name",
+          "manager_id": "1",
         },
         "key": true,
         "decision": "approved",
@@ -223,6 +233,7 @@ void main() {
         "room": {
           "id": "1",
           "name": "name",
+          "manager_id": "1",
         },
         "key": true,
         "decision": "approved",
