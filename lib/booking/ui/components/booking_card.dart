@@ -224,7 +224,7 @@ class BookingCard extends StatelessWidget {
                     ),
                   ),
                 if (!isAdmin) const Spacer(),
-                if (!isAdmin)
+                if (!isAdmin && booking.decision == Decision.pending)
                   WaitingButton(
                     onTap: onDelete,
                     builder: (child) => CardButton(
