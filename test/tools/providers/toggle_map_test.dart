@@ -69,8 +69,8 @@ void main() {
     test('Should updates state on success', () async {
       final notifier = MockToggleMapNotifier();
       final data = <MockT, Tuple2<AsyncValue<List<MockE>>, bool>>{
-        MockT(): Tuple2(AsyncValue.data(<MockE>[]), false),
-        MockT(): Tuple2(AsyncValue.data(<MockE>[]), false),
+        MockT(): const Tuple2(AsyncValue.data(<MockE>[]), false),
+        MockT(): const Tuple2(AsyncValue.data(<MockE>[]), false),
       };
       notifier.state = AsyncValue.data(data);
       final newData = MockT();
@@ -119,8 +119,8 @@ void main() {
       final notifier = MockToggleMapNotifier();
       final key = MockT();
       final data = <MockT, Tuple2<AsyncValue<List<MockE>>, bool>>{
-        MockT(): Tuple2(AsyncValue.loading(), false),
-        key: Tuple2(AsyncValue.data(<MockE>[]), false),
+        MockT(): const Tuple2(AsyncValue.loading(), false),
+        key: const Tuple2(AsyncValue.data(<MockE>[]), false),
       };
       notifier.state = AsyncValue.data(data);
       final newData = MockE();
@@ -154,8 +154,8 @@ void main() {
       final notifier = MockToggleMapNotifier();
       final key = MockT();
       final data = <MockT, Tuple2<AsyncValue<List<MockE>>, bool>>{
-        MockT(): Tuple2(AsyncValue.loading(), false),
-        key: Tuple2(AsyncValue.loading(), true),
+        MockT(): const Tuple2(AsyncValue.loading(), false),
+        key: const Tuple2(AsyncValue.loading(), true),
       };
       notifier.state = AsyncValue.data(data);
       final newData = MockE();
@@ -189,7 +189,7 @@ void main() {
       final notifier = MockToggleMapNotifier();
       final key = MockT();
       final data = <MockT, Tuple2<AsyncValue<List<MockE>>, bool>>{
-        MockT(): Tuple2(AsyncValue.loading(), false),
+        MockT(): const Tuple2(AsyncValue.loading(), false),
         key: Tuple2(AsyncValue.error("test", StackTrace.current), false),
       };
       notifier.state = AsyncValue.data(data);
@@ -245,7 +245,7 @@ void main() {
       final mockDataList = <MockE>[MockE(), MockE()];
       final endDataList = mockDataList.sublist(0, 1);
       final data = <MockT, Tuple2<AsyncValue<List<MockE>>, bool>>{
-        MockT(): Tuple2(AsyncValue.loading(), false),
+        MockT(): const Tuple2(AsyncValue.loading(), false),
         key: Tuple2(AsyncValue.data(mockDataList), false),
       };
       notifier.state = AsyncValue.data(data);
@@ -273,7 +273,7 @@ void main() {
       final key = MockT();
       final mockDataList = <MockE>[MockE()];
       final data = <MockT, Tuple2<AsyncValue<List<MockE>>, bool>>{
-        MockT(): Tuple2(AsyncValue.loading(), false),
+        MockT(): const Tuple2(AsyncValue.loading(), false),
         key: Tuple2(AsyncValue.data(mockDataList), false),
       };
       notifier.state = AsyncValue.data(data);
@@ -323,8 +323,8 @@ void main() {
       final notifier = MockToggleMapNotifier();
       final key = MockT();
       final data = <MockT, Tuple2<AsyncValue<List<MockE>>, bool>>{
-        MockT(): Tuple2(AsyncValue.loading(), false),
-        key: Tuple2(AsyncValue.data(<MockE>[]), false),
+        MockT(): const Tuple2(AsyncValue.loading(), false),
+        key: const Tuple2(AsyncValue.data(<MockE>[]), false),
       };
       final newData = AsyncValue.data([MockE()]);
       notifier.state = AsyncValue.data(data);
@@ -345,7 +345,7 @@ void main() {
       final notifier = MockToggleMapNotifier();
       final key = MockT();
       final data = <MockT, Tuple2<AsyncValue<List<MockE>>, bool>>{
-        MockT(): Tuple2(AsyncValue.loading(), false),
+        MockT(): const Tuple2(AsyncValue.loading(), false),
       };
       final newData = AsyncValue.data([MockE()]);
       notifier.state = AsyncValue.data(data);
@@ -399,7 +399,7 @@ void main() {
       final key = MockT();
       final newData = AsyncValue.data([MockE()]);
       final data = <MockT, Tuple2<AsyncValue<List<MockE>>, bool>>{
-        MockT(): Tuple2(AsyncValue.loading(), false),
+        MockT(): const Tuple2(AsyncValue.loading(), false),
         key: Tuple2(newData, false),
       };
       notifier.state = AsyncValue.data(data);
@@ -426,8 +426,8 @@ void main() {
       final notifier = MockToggleMapNotifier();
       final key = MockT();
       final data = <MockT, Tuple2<AsyncValue<List<MockE>>, bool>>{
-        MockT(): Tuple2(AsyncValue.loading(), false),
-        key: Tuple2(AsyncValue.loading(), true),
+        MockT(): const Tuple2(AsyncValue.loading(), false),
+        key: const Tuple2(AsyncValue.loading(), true),
       };
       notifier.state = AsyncValue.data(data);
       final result = await notifier.testToggleExpanded(key);
@@ -452,7 +452,7 @@ void main() {
       final notifier = MockToggleMapNotifier();
       final key = MockT();
       final data = <MockT, Tuple2<AsyncValue<List<MockE>>, bool>>{
-        MockT(): Tuple2(AsyncValue.loading(), false),
+        MockT(): const Tuple2(AsyncValue.loading(), false),
         key: Tuple2(AsyncValue.error("test", StackTrace.current), true),
       };
       notifier.state = AsyncValue.data(data);
@@ -479,7 +479,7 @@ void main() {
       final notifier = MockToggleMapNotifier();
       final key = MockT();
       final data = <MockT, Tuple2<AsyncValue<List<MockE>>, bool>>{
-        MockT(): Tuple2(AsyncValue.loading(), false),
+        MockT(): const Tuple2(AsyncValue.loading(), false),
       };
       notifier.state = AsyncValue.data(data);
       final result = await notifier.testToggleExpanded(key);
