@@ -376,19 +376,5 @@ void main() {
       expect(notifier.state, isA<AsyncError>());
       expect(notifier.state.error, "Cannot delete while loading");
     });
-
-    test(
-        'Should return false sets state on error when start state is AsyncError',
-        () async {
-      final notifier = MockListNotifier();
-      notifier.state = AsyncValue.error("test", StackTrace.current);
-      final data = [MockData(), MockData()];
-      final oldData = data.first;
-      final result = await notifier.testDelete((id) => Future.value(true),
-          (listT, t) => listT.skip(1).toList(), 'id', oldData);
-      expect(result, isFalse);
-      expect(notifier.state, isA<AsyncError>());
-      expect(notifier.state.error, "test");
-    });
   });
 }

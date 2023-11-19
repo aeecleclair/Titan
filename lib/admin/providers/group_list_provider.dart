@@ -42,6 +42,7 @@ class GroupListNotifier extends ListNotifier<SimpleGroup> {
   void setGroup(SimpleGroup group) {
     state.whenData(
       (d) {
+        if (d.indexWhere((g) => g.id == group.id) == -1) return;
         state =
             AsyncValue.data(d..[d.indexWhere((g) => g.id == group.id)] = group);
       },

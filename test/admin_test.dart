@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -9,6 +11,8 @@ import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/class/user.dart';
 
 class MockGroupRepository extends Mock implements GroupRepository {}
+
+class MockUserNotifier extends Mock implements StateNotifier<User> {}
 
 void main() {
   group('Testing SimpleGroup', () {
@@ -399,6 +403,100 @@ void main() {
           GroupListNotifier(groupRepository: mockGroup);
       await groupNotifier.loadGroups();
       expect(await groupNotifier.updateGroup(newGroup), false);
+    });
+  });
+
+  group('Testing setGroup', () {
+    test('setGroup should modify an existing SimpleGroup object in the list',
+        () {
+      final mockGroup = MockGroupRepository();
+      final groupListNotifier = GroupListNotifier(groupRepository: mockGroup);
+      final existingGroup = SimpleGroup(
+          id: '1', name: 'Existing Group', description: 'Existing Description');
+      groupListNotifier.state = AsyncValue.data([existingGroup]);
+      final modifiedGroup = SimpleGroup(
+          id: '1', name: 'Modified Group', description: 'Modified Description');
+      groupListNotifier.setGroup(modifiedGroup);
+      expect(
+          groupListNotifier.state.when(
+              data: (data) => data, error: (e, s) => [], loading: () => []),
+          contains(modifiedGroup));
+      expect(
+          groupListNotifier.state.when(
+              data: (data) => data, error: (e, s) => [], loading: () => []),
+          isNot(contains(existingGroup)));
+    });
+
+    test('setGroup should keep the list unchanged if the group is not found',
+        () {
+      final mockGroup = MockGroupRepository();
+      final groupListNotifier = GroupListNotifier(groupRepository: mockGroup);
+      final existingGroup = SimpleGroup(
+          id: '1', name: 'Existing Group', description: 'Existing Description');
+      groupListNotifier.state = AsyncValue.data([existingGroup]);
+      final modifiedGroup = SimpleGroup(
+          id: '2', name: 'Modified Group', description: 'Modified Description');
+      groupListNotifier.setGroup(modifiedGroup);
+      expect(
+          groupListNotifier.state.when(
+              data: (data) => data, error: (e, s) => [], loading: () => []),
+          contains(existingGroup));
+      expect(
+          groupListNotifier.state.when(
+              data: (data) => data, error: (e, s) => [], loading: () => []),
+          isNot(contains(modifiedGroup)));
+    });
+  });
+
+  group('allGroupListProvider', () {
+    test('should load groups successfully', () async {
+      final mockGroupRepository = MockGroupRepository();
+      final mockAsyncValue = [
+        SimpleGroup(id: '1', name: 'Group 1', description: '')
+      ];
+      when(() => mockGroupRepository.getGroupList())
+          .thenAnswer((_) async => mockAsyncValue);
+
+      final provider = GroupListNotifier(groupRepository: mockGroupRepository);
+      await provider.loadGroups();
+
+      expect(
+          provider.state.when(
+              data: (data) => data, error: (e, s) => [], loading: () => []),
+          mockAsyncValue);
+    });
+
+    test('should handle error when loading groups', () async {
+      final mockGroupRepository = MockGroupRepository();
+      const mockAsyncValue =
+          AsyncValue.error('Error loading groups', StackTrace.empty);
+      when(() => mockGroupRepository.getGroupList())
+          .thenThrow((_) async => mockAsyncValue);
+
+      final provider = GroupListNotifier(groupRepository: mockGroupRepository);
+      await provider.loadGroups();
+
+      expect(provider.state, isA<AsyncError>());
+    });
+  });
+
+  group('userGroupListNotifier', () {
+    test('should load user groups successfully', () async {
+      final mockGroupRepository = MockGroupRepository();
+      final groups = [
+        SimpleGroup(id: '1', name: 'Group 1', description: ''),
+        SimpleGroup(id: '2', name: 'Group 2', description: ''),
+      ];
+      final mockUserProvider = User.empty().copyWith(
+        groups: groups,
+      );
+      final provider = GroupListNotifier(groupRepository: mockGroupRepository);
+      await provider.loadGroupsFromUser(mockUserProvider);
+
+      expect(
+          provider.state.when(
+              data: (data) => data, error: (e, s) => [], loading: () => []),
+          groups);
     });
   });
 }
