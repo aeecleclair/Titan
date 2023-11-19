@@ -1,19 +1,25 @@
-import 'dart:convert';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/tools/exception.dart';
+import 'package:myecl/tools/cache/cache_manager.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class MockClient extends Mock implements http.Client {}
 
-class MockRepository extends Mock implements Repository {}
+class MockRepository extends Repository {}
 
-void main() {
+class MockCacheManager extends Mock implements CacheManager {}
+
+void main() async {
+
+  TestWidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load();
   group('Testing getList', () {
     final client = MockClient();
     final repository = MockRepository();
+    repository.initLogger();
+    repository.cacheManager = MockCacheManager();
 
     test('getList returns a list of objects', () async {
       // Arrange
@@ -30,6 +36,7 @@ void main() {
 
       // Act
       final result = await repository.getList();
+      print(result);
 
       // Assert
       expect(result, expectedList);

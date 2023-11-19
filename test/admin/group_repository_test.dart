@@ -20,7 +20,6 @@ void main() {
     WidgetsFlutterBinding.ensureInitialized();
     final mockHttpClient = MockHttpClient();
     final groupRepository = GroupRepository();
-    groupRepository.host = "http://localhost:8000/";
 
     test('getGroupList returns a list of SimpleGroup', () async {
       final expectedList = [
