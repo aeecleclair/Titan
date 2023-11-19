@@ -44,6 +44,4 @@ class Information {
   String toString() {
     return 'Information{manager: $manager, link: $link, description: $description}';
   }
-
-  when({required bool Function() empty, required bool Function(dynamic manager, dynamic address, dynamic phone, dynamic email) loaded}) {}
 }

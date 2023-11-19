@@ -59,6 +59,6 @@ class Group {
 
   @override
   String toString() {
-    return 'Group(name: $name, description: $description, id: $id, members: $members)';
+    return 'Group(id: $id, name: $name, description: $description, members: $members)';
   }
 }

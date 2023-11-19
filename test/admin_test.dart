@@ -21,6 +21,21 @@ void main() {
       expect(group.name, 'Nom');
     });
 
+    test('Should update a group', () async {
+      final group = SimpleGroup.empty();
+      SimpleGroup newGroup = group.copyWith(name: 'name');
+      expect(newGroup.name, 'name');
+      newGroup = group.copyWith(description: 'description');
+      expect(newGroup.description, 'description');
+      newGroup = group.copyWith(id: 'id');
+      expect(newGroup.id, 'id');
+    });
+
+    test('Should return correct toString', () async {
+      final group = SimpleGroup.empty();
+      expect(group.toString(), 'SimpleGroup(name: Nom, description: Description, id: )');
+    });
+
     test('Should parse a group from json', () async {
       final group = SimpleGroup.fromJson({
         "id": "1",
@@ -53,6 +68,33 @@ void main() {
     test('Should return a group with a name', () async {
       final group = Group.empty();
       expect(group.name, 'Nom');
+    });
+
+    test('Should update a group', () async {
+      final group = Group.empty();
+      Group newGroup = group.copyWith(name: 'name');
+      expect(newGroup.name, 'name');
+      newGroup = group.copyWith(description: 'description');
+      expect(newGroup.description, 'description');
+      newGroup = group.copyWith(id: 'id');
+      expect(newGroup.id, 'id');
+      newGroup = group.copyWith(members: [SimpleUser.empty()]);
+      expect(newGroup.members, isA<List<SimpleUser>>());
+      expect(newGroup.members.length, 1);
+    });
+
+    test('Should return a simple group', () async {
+      final group = Group.empty();
+      final simpleGroup = group.toSimpleGroup();
+      expect(simpleGroup, isA<SimpleGroup>());
+      expect(simpleGroup.name, 'Nom');
+      expect(simpleGroup.description, 'Description');
+      expect(simpleGroup.id, '');
+    });
+
+    test('Should print a group', () async {
+      final group = Group.empty();
+      expect(group.toString(), 'Group(id: , name: Nom, description: Description, members: [])');
     });
 
     test('Should parse a group from json', () async {

@@ -14,6 +14,19 @@ void main() {
       expect(session, isA<Session>());
     });
 
+    test('Should print properly with toString()', () {
+      final session = Session(
+          id: "1",
+          name: "Session 1",
+          start: DateTime.parse("2021-01-01T00:00:00.000Z"),
+          duration: 120,
+          overview: "Overview",
+          genre: "Genre",
+          tagline: "Tagline");
+      expect(session.toString(),
+          "Session{id: 1, name: Session 1, start: 2021-01-01 00:00:00.000Z, duration: 120, overview: Overview, genre: Genre, tagline: Tagline}");
+    });
+
     test('Should return a Session with the correct values', () {
       final session = Session.empty();
       expect(session.id, equals(''));
@@ -23,6 +36,33 @@ void main() {
       expect(session.overview, equals(""));
       expect(session.genre, equals(""));
       expect(session.tagline, equals(""));
+    });
+
+    test('Should update with new information', () {
+      final session = Session.empty();
+      Session newSession = session.copyWith(
+          id: "1",);
+      expect(newSession, isA<Session>());
+      expect(newSession.id, equals("1"));
+      newSession = session.copyWith(
+          name: "Session 1",);
+      expect(newSession.name, equals("Session 1"));
+      newSession = session.copyWith(
+          start: DateTime.parse("2021-01-01T00:00:00.000Z"),);
+      expect(
+          newSession.start, equals(DateTime.parse("2021-01-01T00:00:00.000Z")));
+      newSession = session.copyWith(
+          duration: 120,);
+      expect(newSession.duration, equals(120));
+      newSession = session.copyWith(
+          overview: "Overview",);
+      expect(newSession.overview, equals("Overview"));
+      newSession = session.copyWith(
+          genre: "Genre",);
+      expect(newSession.genre, equals("Genre"));
+      newSession = session.copyWith(
+          tagline: "Tagline",);
+      expect(newSession.tagline, equals("Tagline"));
     });
 
     test('Should parse a Session from json', () {
@@ -117,7 +157,7 @@ void main() {
       final session = await sessionListNotifier.addSession(newSession);
       expect(session, true);
     });
-    
+
     test('Should return an error if session is not added', () async {
       final sessionRepository = MockSessionRepository();
       final newSession = Session.empty();
@@ -160,7 +200,7 @@ void main() {
       final session = await sessionListNotifier.updateSession(newSession);
       expect(session, true);
     });
-    
+
     test('Should return an error if session is not updated', () async {
       final sessionRepository = MockSessionRepository();
       final newSession = Session.empty();
@@ -217,7 +257,7 @@ void main() {
       final session = await sessionListNotifier.deleteSession(newSession);
       expect(session, true);
     });
-    
+
     test('Should return an error if session is not deleted', () async {
       final sessionRepository = MockSessionRepository();
       final newSession = Session.empty();

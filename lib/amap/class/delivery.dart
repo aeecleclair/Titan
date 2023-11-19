@@ -60,4 +60,9 @@ class Delivery {
       expanded: false,
       status: DeliveryStatus.creation,
       id: '');
+
+  @override
+  String toString() {
+    return 'Delivery{deliveryDate: $deliveryDate, products: $products, id: $id, status: $status, expanded: $expanded}';
+  }
 }
