@@ -1,28 +1,25 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/cinema/class/session.dart';
 import 'package:myecl/cinema/repositories/session_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class SessionListNotifier extends ListNotifier<Session> {
-  SessionRepository repository = SessionRepository();
-  SessionListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
-    repository.setToken(token);
-  }
+  final SessionRepository sessionRepository;
+  SessionListNotifier({required this.sessionRepository})
+      : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Session>>> loadSessions() async {
-    return await loadList(repository.getAllSessions);
+    return await loadList(sessionRepository.getAllSessions);
   }
 
   Future<bool> addSession(Session session) async {
-    return await add(repository.addSession, session);
+    return await add(sessionRepository.addSession, session);
   }
 
   Future<bool> updateSession(Session session) async {
     return await update(
-        repository.updateSession,
+        sessionRepository.updateSession,
         (sessions, session) => sessions
           ..[sessions.indexWhere((b) => b.id == session.id)] = session,
         session);
@@ -30,7 +27,7 @@ class SessionListNotifier extends ListNotifier<Session> {
 
   Future<bool> deleteSession(Session session) async {
     return await delete(
-        repository.deleteSession,
+        sessionRepository.deleteSession,
         (sessions, session) => sessions..removeWhere((b) => b.id == session.id),
         session.id,
         session);
@@ -40,8 +37,9 @@ class SessionListNotifier extends ListNotifier<Session> {
 final sessionListProvider =
     StateNotifierProvider<SessionListNotifier, AsyncValue<List<Session>>>(
         (ref) {
-  final token = ref.watch(tokenProvider);
-  SessionListNotifier notifier = SessionListNotifier(token: token);
+  final sessionRepository = ref.watch(sessionRepositoryProvider);
+  SessionListNotifier notifier = SessionListNotifier(
+    sessionRepository: sessionRepository,);
   tokenExpireWrapperAuth(ref, () async {
     await notifier.loadSessions();
   });

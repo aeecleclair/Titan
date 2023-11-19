@@ -51,7 +51,7 @@ void main() {
       expect(cash.user, isA<SimpleUser>());
     });
 
-    test('Should parse an Cash from json', () async {
+    test('Should parse a Cash from json', () async {
       final cash = Cash.fromJson({
         "balance": 0.0,
         "user": {
