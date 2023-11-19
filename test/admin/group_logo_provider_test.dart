@@ -36,11 +36,12 @@ void main() {
 
     test('updateLogo returns logo image', () async {
       final repository = MockGroupLogoRepository();
-      when(() => repository.addLogo('path', '123', suffix: '/logo'))
+      final Uint8List bytes = Uint8List(1);
+      when(() => repository.addLogo(bytes, '123', suffix: '/logo'))
           .thenAnswer((_) async => Uint8List(1));
       final notifier = GroupLogoNotifier(groupLogoRepository: repository);
 
-      final image = await notifier.updateLogo('123', 'path');
+      final image = await notifier.updateLogo('123', bytes);
 
       expect(image, isA<Image>());
     });
