@@ -1,3 +1,4 @@
+import 'package:either_dart/either.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
@@ -9,32 +10,22 @@ void main() {
         () {
       final module = Module(
         name: 'Calendar',
-        icon: HeroIcons.calendar,
-        page: ModuleType.calendar,
+        icon: const Left(HeroIcons.calendar),
         selected: true,
+        root: '',
       );
 
       final copiedModule = module.copy(
         name: 'Settings',
-        icon: HeroIcons.cog,
-        page: ModuleType.settings,
+        icon: const Left(HeroIcons.cog),
         selected: false,
+        root: '/test'
       );
 
       expect(copiedModule.name, 'Settings');
-      expect(copiedModule.icon, HeroIcons.cog);
-      expect(copiedModule.page, ModuleType.settings);
+      expect(copiedModule.icon, const Left(HeroIcons.cog));
+      expect(copiedModule.root, '/test');
       expect(copiedModule.selected, false);
-    });
-
-    test('empty constructor should create a Module object with default values',
-        () {
-      final emptyModule = Module.empty();
-
-      expect(emptyModule.name, '');
-      expect(emptyModule.icon, HeroIcons.academicCap);
-      expect(emptyModule.page, ModuleType.calendar);
-      expect(emptyModule.selected, false);
     });
   });
 }
