@@ -20,6 +20,7 @@ abstract class SingleNotifier<T> extends StateNotifier<AsyncValue<T>> {
   }
 
   Future<bool> add(Future<T> Function(T t) f, T t) async {
+
     return state.when(data: (d) async {
       try {
         final newT = await f(t);

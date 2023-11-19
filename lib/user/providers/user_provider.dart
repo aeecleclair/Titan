@@ -7,39 +7,38 @@ import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/repositories/user_repository.dart';
 
 class UserNotifier extends SingleNotifier<User> {
-  final UserRepository _userRepository = UserRepository();
-  UserNotifier({required String token}) : super(const AsyncValue.loading()) {
-    _userRepository.setToken(token);
-  }
+  final UserRepository userRepository;
+  UserNotifier({required this.userRepository})
+      : super(const AsyncValue.loading());
 
   Future<bool> setUser(User user) async {
     return await add((u) async => u, user);
   }
 
   Future<AsyncValue<User>> loadUser(String userId) async {
-    return await load(() async => _userRepository.getUser(userId));
+    return await load(() async => userRepository.getUser(userId));
   }
 
   Future<AsyncValue<User>> loadMe() async {
-    return await load(_userRepository.getMe);
+    return await load(userRepository.getMe);
   }
 
   Future<bool> updateUser(User user) async {
-    return await update(_userRepository.updateUser, user);
+    return await update(userRepository.updateUser, user);
   }
 
   Future<bool> updateMe(User user) async {
-    return await update(_userRepository.updateMe, user);
+    return await update(userRepository.updateMe, user);
   }
 
   Future<bool> changePassword(
       String oldPassword, String newPassword, User user) async {
-    return await _userRepository.changePassword(
+    return await userRepository.changePassword(
         oldPassword, newPassword, user.email);
   }
 
   Future<bool> deletePersonal() async {
-    return await _userRepository.deletePersonalData();
+    return await userRepository.deletePersonalData();
   }
 
   Future<bool> askMailMigration(String mail) async {
@@ -49,8 +48,8 @@ class UserNotifier extends SingleNotifier<User> {
 
 final asyncUserProvider =
     StateNotifierProvider<UserNotifier, AsyncValue<User>>((ref) {
-  final token = ref.watch(tokenProvider);
-  UserNotifier userNotifier = UserNotifier(token: token);
+  final UserRepository userRepository = ref.watch(userRepositoryProvider);
+  UserNotifier userNotifier = UserNotifier(userRepository: userRepository);
   tokenExpireWrapperAuth(ref, () async {
     final isLoggedIn = ref.watch(isLoggedInProvider);
     final id = ref

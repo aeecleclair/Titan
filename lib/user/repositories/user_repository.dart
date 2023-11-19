@@ -1,3 +1,5 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/user/class/user.dart';
 
@@ -50,12 +52,12 @@ class UserRepository extends Repository {
       return false;
     }
   }
-
-  Future<bool> askMailMigration(String mail) async {
-    try {
-      return await create({"new_email": mail}, suffix: "migrate-mail");
-    } catch (e) {
-      return false;
-    }
-  }
 }
+
+
+final userRepositoryProvider = Provider((ref) {
+  final token = ref.watch(tokenProvider);
+  final UserRepository userRepository = UserRepository();
+  userRepository.setToken(token);
+  return userRepository;
+});
