@@ -12,14 +12,14 @@ class ItemChip extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Chip(
-            label: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: child,
-            ),
-            backgroundColor: selected ? Colors.black : Colors.grey.shade200,
-          )),
+        margin: const EdgeInsets.symmetric(horizontal: 10.0),
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30.0),
+          color: selected ? Colors.black : Colors.grey.shade200,
+        ),
+        child: child,
+      ),
     );
   }
 }
