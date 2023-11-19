@@ -191,8 +191,8 @@ class BookingCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                if (showButton && isAdmin) const Spacer(),
-                if (showButton && isAdmin)
+                if (isAdmin) const Spacer(),
+                if (isAdmin)
                   GestureDetector(
                     onTap: onConfirm,
                     child: CardButton(
@@ -207,8 +207,8 @@ class BookingCard extends StatelessWidget {
                           color: darkIconBackgroundColor),
                     ),
                   ),
-                if (showButton && isAdmin) const Spacer(),
-                if (showButton && isAdmin)
+                if (isAdmin) const Spacer(),
+                if (isAdmin)
                   GestureDetector(
                     onTap: onDecline,
                     child: CardButton(
