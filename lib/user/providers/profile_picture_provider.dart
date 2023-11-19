@@ -5,7 +5,6 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -13,21 +12,19 @@ import 'package:myecl/user/repositories/profile_picture_repository.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ProfilePictureNotifier extends SingleNotifier<Uint8List> {
-  final ProfilePictureRepository _profilePictureRepository =
-      ProfilePictureRepository();
+  final ProfilePictureRepository profilePictureRepository;
   final ImagePicker _picker = ImagePicker();
-  ProfilePictureNotifier(String token) : super(const AsyncLoading()) {
-    _profilePictureRepository.setToken(token);
-  }
+  ProfilePictureNotifier({required this.profilePictureRepository})
+      : super(const AsyncLoading());
 
   Future<AsyncValue<Uint8List>> getProfilePicture(String userId) async {
     return await load(
-        () async => _profilePictureRepository.getProfilePicture(userId));
+        () async => profilePictureRepository.getProfilePicture(userId));
   }
 
   Future<AsyncValue<Uint8List>> getMyProfilePicture() async {
     return await load(
-        () async => _profilePictureRepository.getProfilePicture("me"));
+        () async => profilePictureRepository.getProfilePicture("me"));
   }
 
   Future<bool?> setProfilePicture(ImageSource source) async {
@@ -37,7 +34,7 @@ class ProfilePictureNotifier extends SingleNotifier<Uint8List> {
         await _picker.pickImage(source: source, imageQuality: 20);
     if (image != null) {
       try {
-        final i = await _profilePictureRepository
+        final i = await profilePictureRepository
             .addProfilePicture(await image.readAsBytes());
         state = AsyncValue.data(i);
         return true;
@@ -81,7 +78,7 @@ class ProfilePictureNotifier extends SingleNotifier<Uint8List> {
       );
       if (croppedFile != null) {
         try {
-          final i = await _profilePictureRepository
+          final i = await profilePictureRepository
               .addProfilePicture(await croppedFile.readAsBytes());
           state = AsyncValue.data(i);
           return true;
@@ -101,8 +98,9 @@ class ProfilePictureNotifier extends SingleNotifier<Uint8List> {
 
 final profilePictureProvider =
     StateNotifierProvider<ProfilePictureNotifier, AsyncValue<Uint8List>>((ref) {
-  final token = ref.watch(tokenProvider);
-  ProfilePictureNotifier notifier = ProfilePictureNotifier(token);
+  final profilePictureRepository = ref.watch(profilePictureRepositoryProvider);
+  ProfilePictureNotifier notifier = ProfilePictureNotifier(
+      profilePictureRepository: profilePictureRepository);
   tokenExpireWrapperAuth(ref, () async {
     notifier.getMyProfilePicture();
   });

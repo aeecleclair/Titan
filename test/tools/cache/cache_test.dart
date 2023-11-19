@@ -1,5 +1,5 @@
-import 'dart:convert';
 import 'dart:typed_data';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -17,32 +17,39 @@ void main() {
       cacheManager = CacheManager(storage: mockStorage);
     });
 
-    test('readCache returns empty string if key not found', () async {
-      when(() => mockStorage.read(key: 'test'))
-          .thenAnswer((_) => Future.value(null));
-      final result = await cacheManager.readCache('test');
+    test('readCache returns empty string if key does not exist', () async {
+      when(() => mockStorage.read(key: 'non-existent-key'))
+          .thenAnswer((_) async => null);
+
+      final result = await cacheManager.readCache('non-existent-key');
+
       expect(result, '');
     });
 
-    test('readCache returns value if key found', () async {
-      when(() => mockStorage.read(key: 'test'))
-          .thenAnswer((_) => Future.value('value'));
-      final result = await cacheManager.readCache('test');
-      expect(result, 'value');
+    test('readCache returns value if key exists', () async {
+      when(() => mockStorage.read(key: 'existing-key'))
+          .thenAnswer((_) async => 'existing-value');
+
+      final result = await cacheManager.readCache('existing-key');
+
+      expect(result, 'existing-value');
     });
-    
-    test('readImage returns empty Uint8List if key not found', () async {
-      when(() => mockStorage.read(key: 'test'))
-          .thenAnswer((_) => Future.value(null));
-      final result = await cacheManager.readImage('test');
+    test('readImage returns empty Uint8List if key does not exist', () async {
+      when(() => mockStorage.read(key: 'non-existent-image-key'))
+          .thenAnswer((_) async => null);
+
+      final result = await cacheManager.readImage('non-existent-image-key');
+
       expect(result, Uint8List(0));
     });
 
-    test('readImage returns Uint8List if key found', () async {
+    test('readImage returns Uint8List if key exists', () async {
       final bytes = Uint8List.fromList([1, 2, 3]);
-      when(() => mockStorage.read(key: 'test'))
-          .thenAnswer((_) => Future.value(json.encode(bytes)));
-      final result = await cacheManager.readImage('test');
+      when(() => mockStorage.read(key: 'existing-image-key'))
+          .thenAnswer((_) async => bytes.toString());
+
+      final result = await cacheManager.readImage('existing-image-key');
+
       expect(result, bytes);
     });
   });
