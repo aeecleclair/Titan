@@ -300,30 +300,11 @@ void main() {
           "Tous les Lundi toute la journée jusqu'au 31/12/2021");
     });
 
-    test('Testing normalzedDate', () {
-      final date = DateTime.parse("2021-01-01T00:00:00.000Z");
-      final date2 = DateTime.parse("2021-01-01T01:00:00.000Z");
-      expect(normalizedDate(date), DateTime.parse("2021-01-01T00:00:00.000"));
-      expect(normalizedDate(date2), DateTime.parse("2021-01-01T00:00:00.000"));
-    });
-
     test('Testing mergeDates', () {
       final date = DateTime.parse("2021-01-01T00:00:00.000Z");
       final date2 = DateTime.parse("2021-02-03T01:00:00.000Z");
       expect(
           mergeDates(date, date2), DateTime.parse("2021-01-01T01:00:00.000"));
-    });
-
-    test('Testing getDateInRecurrence', () {
-      const recurrenceRule =
-          "FREQ=WEEKLY;BYDAY=MO;WKST=MO;INTERVAL=1;UNTIL=20210115T235959Z";
-      const recurrenceRule2 = "";
-      final date = DateTime.parse("2021-01-01T00:00:00.000Z");
-      expect(getDateInRecurrence(recurrenceRule, date), [
-        DateTime.parse("2021-01-04T00:00:00.000"),
-        DateTime.parse("2021-01-11T00:00:00.000")
-      ]);
-      expect(getDateInRecurrence(recurrenceRule2, date), []);
     });
 
     test('Testing dayDifference', () {

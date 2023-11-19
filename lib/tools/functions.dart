@@ -142,6 +142,17 @@ String processDateBackWithHour(String d) {
   return "${processDateBack(e[0])} ${e[1]}";
 }
 
+List<DateTime> getDateInRecurrence(String recurrenceRule, DateTime start) {
+    if (recurrenceRule.isEmpty) {
+    return [];
+  }
+  return SfCalendar.getRecurrenceDateTimeCollection(recurrenceRule, start);
+}
+
+DateTime normalizedDate(DateTime date) {
+  return DateTime(date.year, date.month, date.day, 0, 0, 0, 0, 0);
+}
+
 String processDateToAPI(DateTime date) {
   return date.toIso8601String();
 }
