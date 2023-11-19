@@ -30,10 +30,10 @@ class Group {
   }
 
   Group copyWith({
-    name,
-    description,
-    id,
-    members,
+    String? name,
+    String? description,
+    String? id,
+    List<SimpleUser>? members,
   }) =>
       Group(
         name: name ?? this.name,
@@ -55,5 +55,10 @@ class Group {
       description: description,
       id: id,
     );
+  }
+
+  @override
+  String toString() {
+    return 'Group(name: $name, description: $description, id: $id, members: $members)';
   }
 }

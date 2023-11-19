@@ -23,9 +23,9 @@ class SimpleGroup {
   }
 
   SimpleGroup copyWith({
-    name,
-    description,
-    id,
+    String? name,
+    String? description,
+    String? id,
   }) =>
       SimpleGroup(
         name: name ?? this.name,

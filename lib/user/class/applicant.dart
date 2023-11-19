@@ -53,4 +53,9 @@ class Applicant extends SimpleUser {
     promo = 0;
     phone = null;
   }
+
+  @override
+  String toString() {
+    return 'Applicant{name: $name, firstname: $firstname, nickname: $nickname, id: $id, email: $email, promo: $promo, phone: $phone}';
+  }
 }

@@ -135,7 +135,7 @@ void main() {
           User.empty().toString());
     });
 
-    test('Should throw error when getMe fail', () async {
+    test('Should catch error when getMe fail', () async {
       final mockUser = MockUserRepository();
       when(() => mockUser.getMe()).thenThrow(Exception('Error'));
       final UserNotifier userNotifier = UserNotifier(userRepository: mockUser);
@@ -154,7 +154,7 @@ void main() {
       expect(await userNotifier.updateMe(newUser), true);
     });
 
-    test('Should throw error when updateMe fail', () async {
+    test('Should catch error when updateMe fail', () async {
       final mockUser = MockUserRepository();
       final newUser = User.empty().copyWith(name: 'New Name');
       when(() => mockUser.getMe()).thenAnswer((_) async => User.empty());
@@ -164,7 +164,7 @@ void main() {
       expect(await userNotifier.updateMe(newUser), false);
     });
 
-    test('Should throw error if user is not loaded', () async {
+    test('Should catch error if user is not loaded', () async {
       final mockUser = MockUserRepository();
       final newUser = User.empty().copyWith(name: 'New Name');
       when(() => mockUser.getMe()).thenAnswer((_) async => User.empty());
@@ -186,7 +186,7 @@ void main() {
       expect(await userNotifier.changePassword('old', 'new', user), true);
     });
 
-    test('Should throw error when changePassword fail', () async {
+    test('Should catch error when changePassword fail', () async {
       final mockUser = MockUserRepository();
       final User user = User.empty();
       when(() => mockUser.getMe()).thenAnswer((_) async => User.empty());
