@@ -143,7 +143,7 @@ String processDateBackWithHour(String d) {
 }
 
 List<DateTime> getDateInRecurrence(String recurrenceRule, DateTime start) {
-    if (recurrenceRule.isEmpty) {
+  if (recurrenceRule.isEmpty) {
     return [];
   }
   return SfCalendar.getRecurrenceDateTimeCollection(recurrenceRule, start);
@@ -244,10 +244,6 @@ Color generateColor(String uuid) {
   return color;
 }
 
-List<DateTime> getDateInRecurrence(String recurrenceRule, DateTime start) {
-  return SfCalendar.getRecurrenceDateTimeCollection(recurrenceRule, start);
-}
-
 DateTime combineDate(DateTime date, DateTime time) {
   return DateTime(date.year, date.month, date.day, time.hour, time.minute);
 }
@@ -268,10 +264,6 @@ String getMonth(int m) {
     "Novembre"
   ];
   return months[m % 12];
-}
-
-DateTime normalizedDate(DateTime date) {
-  return DateTime(date.year, date.month, date.day, 0, 0, 0, 0, 0);
 }
 
 Future<TimeOfDay?> _getTime(BuildContext context) async {
