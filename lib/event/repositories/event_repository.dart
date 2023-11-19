@@ -1,3 +1,5 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/tools/repository/repository.dart';
@@ -42,3 +44,8 @@ class EventRepository extends Repository {
     return await delete(id);
   }
 }
+
+final eventRepositoryProvider = Provider<EventRepository>((ref) {
+  final token = ref.watch(tokenProvider);
+  return EventRepository()..setToken(token);
+});

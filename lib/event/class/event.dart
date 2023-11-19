@@ -79,7 +79,7 @@ class Event {
     data['description'] = description;
     data['recurrence_rule'] = recurrenceRule;
     data['applicant_id'] = applicant.id;
-    data['decision'] = decisionToString(decision);
+    data['decision'] = decision.toString().split('.')[1];
     data['room_id'] = roomId;
     return data;
   }
