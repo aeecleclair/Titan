@@ -4,6 +4,7 @@ import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/repositories/event_repository.dart';
 import 'package:myecl/event/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/class/applicant.dart';
 
 class MockEventRepository extends Mock implements EventRepository {}
@@ -229,20 +230,6 @@ void main() {
       expect(format2, "Du 01/01 à 00:00 au 02/01 à 00:00");
       expect(format3, "Le 01/01 toute la journée");
       expect(format4, "Du 01/01 à 00:00 au 02/01 à 00:00");
-    });
-
-    test('Testing formatDateOnlyHour', () {
-      final start = DateTime.parse("2021-01-01T00:00:00.000Z");
-      final end = DateTime.parse("2021-01-01T01:00:00.000Z");
-      expect(formatDateOnlyHour(start, end), "De 00:00 à 01:00");
-    });
-
-    test('Testing formatDateOnlyDay', () {
-      final start = DateTime.parse("2021-01-01T00:00:00.000Z");
-      final end = DateTime.parse("2021-01-01T01:00:00.000Z");
-      final end2 = DateTime.parse("2021-01-02T00:00:00.000Z");
-      expect(formatDateOnlyDay(start, end), "Le 01/01/2021");
-      expect(formatDateOnlyDay(start, end2), "Du 01/01/2021 au 02/01/2021");
     });
 
     test('Testing getMonth', () {

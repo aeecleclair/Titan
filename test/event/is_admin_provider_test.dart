@@ -18,7 +18,7 @@ void main() {
         )),
       ]);
 
-      final isEventAdminState = container.read(isEventAdmin);
+      final isEventAdminState = container.read(isEventAdminProvider);
 
       expect(isEventAdminState, true);
     });
@@ -32,7 +32,7 @@ void main() {
         )),
       ]);
 
-      final isEventAdminState = container.read(isEventAdmin);
+      final isEventAdminState = container.read(isEventAdminProvider);
 
       expect(isEventAdminState, false);
     });
