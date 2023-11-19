@@ -42,7 +42,7 @@ class UserNotifier extends SingleNotifier<User> {
   }
 
   Future<bool> askMailMigration(String mail) async {
-    return await _userRepository.askMailMigration(mail);
+    return await userRepository.askMailMigration(mail);
   }
 }
 
