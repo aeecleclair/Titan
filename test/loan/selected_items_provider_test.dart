@@ -10,7 +10,7 @@ void main() {
   group('SelectedListProvider', () {
     test('should initialize with false values', () {
       final provider = SelectedListProvider([1, 2, 3]);
-      expect(provider.state, [false, false, false]);
+      expect(provider.state, [0, 0, 0]);
     });
 
     // test('should toggle value at index', () async {

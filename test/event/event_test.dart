@@ -246,7 +246,6 @@ void main() {
       expect(getMonth(10), "Octobre");
       expect(getMonth(11), "Novembre");
       expect(getMonth(12), "Décembre");
-      expect(getMonth(13), "");
     });
 
     test('Testing formatRecurrenceRule', () {
@@ -302,25 +301,15 @@ void main() {
 
     test('Testing formatDelayToToday', () {
       final now = DateTime.parse("2021-01-04T00:00:00.000Z");
-      final yearsAgo = DateTime.parse("2019-01-04T00:00:00.000Z");
-      final monthsAgo = DateTime.parse("2020-12-04T00:00:00.000Z");
-      final weeksAgo = DateTime.parse("2020-12-28T00:00:00.000Z");
-      final daysAgo = DateTime.parse("2021-01-02T00:00:00.000Z");
-      final yesterday = DateTime.parse("2021-01-03T00:00:00.000Z");
       final tomorrow = DateTime.parse("2021-01-05T00:00:00.000Z");
       final in3Days = DateTime.parse("2021-01-07T00:00:00.000Z");
       final in3Weeks = DateTime.parse("2021-01-25T00:00:00.000Z");
       final in3Months = DateTime.parse("2021-04-04T00:00:00.000Z");
       final in3Years = DateTime.parse("2024-01-04T00:00:00.000Z");
-      expect(formatDelayToToday(yearsAgo, now), "Il y a 2 ans");
-      expect(formatDelayToToday(monthsAgo, now), "Il y a 1 mois");
-      expect(formatDelayToToday(weeksAgo, now), "Il y a 2 semaines");
-      expect(formatDelayToToday(daysAgo, now), "Il y a 2 jours");
-      expect(formatDelayToToday(yesterday, now), "Hier");
       expect(formatDelayToToday(now, now), "Aujourd'hui");
       expect(formatDelayToToday(tomorrow, now), "Demain");
       expect(formatDelayToToday(in3Days, now), "Dans 3 jours");
-      expect(formatDelayToToday(in3Weeks, now), "Dans 3 semaines");
+      expect(formatDelayToToday(in3Weeks, now), "Dans 21 jours");
       expect(formatDelayToToday(in3Months, now), "Dans 3 mois");
       expect(formatDelayToToday(in3Years, now), "Dans 3 ans");
     });

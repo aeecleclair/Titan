@@ -281,7 +281,7 @@ void main() {
         "name": "name",
         "description": "description",
         "members": [],
-        "type": "Ffake",
+        "type": "Pipo",
         "section": {
           "id": "id",
           "name": "name",
@@ -315,7 +315,7 @@ void main() {
         "name": "name",
         "description": "description",
         "members": [],
-        "type": "Ffake",
+        "type": "Pipo",
         "section_id": "",
         "program": "program",
       });
@@ -416,8 +416,8 @@ void main() {
 
   group('Testing functions', () {
     test('Should return a ListType', () {
-      expect(stringToListType('Ffake'), ListType.fake);
-      expect(stringToListType('Seserious'), ListType.serious);
+      expect(stringToListType('Pipo'), ListType.fake);
+      expect(stringToListType('Serio'), ListType.serious);
       expect(stringToListType('Blank'), ListType.blank);
       expect(stringToListType(''), ListType.blank);
     });

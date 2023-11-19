@@ -12,7 +12,7 @@ void main() {
         userProvider.overrideWithValue(User.empty().copyWith(
           groups: [
             SimpleGroup.empty().copyWith(
-                id: '53a669d6-84b1-4352-8d7c-421c1fbd9c6a',
+                id: '0a25cb76-4b63-4fd3-b939-da6d9feabf28',
                 name: 'Booking Admin'),
             SimpleGroup.empty().copyWith(id: '123', name: 'Other Group'),
           ],

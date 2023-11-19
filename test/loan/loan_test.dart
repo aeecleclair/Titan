@@ -69,12 +69,13 @@ void main() {
       );
     });
 
-    test('Should parse an item fron json', () {
+    test('Should parse an item from json', () {
       final item = Item.fromJson({
         'id': '1',
         'name': 'name',
         'suggested_caution': 1,
-        'available': true,
+        'total_quantity': 1,
+        'loaned_quantity': 1,
         'suggested_lending_duration': 1.0,
       });
       expect(item.id, '1');
@@ -98,9 +99,9 @@ void main() {
         'id': '1',
         'name': 'name',
         'suggested_caution': 1,
-        'totalQuantity': 1,
-        'loanedQuantity': 1,
-        'suggested_lending_duration': 1,
+        'total_quantity': 1,
+        'loaned_quantity': 1,
+        'suggested_lending_duration': 1.0
       });
     });
   });
@@ -214,20 +215,24 @@ void main() {
       );
       expect(
         loan.toString(),
-        'Loan(id: 1, loaner: Loaner(name: , groupManagerId: , id: ), borrower: SimpleUser {name: name, firstname: , nickname: , id: 1}, notes: , start: 2020-01-01 00:00:00.000, end: 2020-01-01 00:00:00.000, caution: , items: [Item(id: 1, name: name, caution: 1, available: true, suggestedLendingDuration: 1.0)], returned: true)',
+        'Loan(id: 1, loaner: Loaner(name: , groupManagerId: , id: ), borrower: SimpleUser {name: name, firstname: , nickname: , id: 1}, notes: , start: 2020-01-01 00:00:00.000, end: 2020-01-01 00:00:00.000, caution: , itemsQuantity: [ItemQuantity(itemSimple: ItemSimple(id: 1, name: name, quantity: 2)], returned: true)',
       );
     });
 
     test('Should parse a loan from json', () {
       final loan = Loan.fromJson({
         'id': '1',
-        'items': [
+        'items_qty': [
           {
-            'id': '1',
-            'name': 'name',
-            'suggested_caution': 1,
-            'available': true,
-            'suggested_lending_duration': 1.0,
+            'itemSimple': {
+              'id': '1',
+              'name': 'name',
+              'suggested_caution': 1,
+              'total_quantity': 1,
+              'loaned_quantity': 1,
+              'suggested_lending_duration': 1.0,
+            },
+            'quantity': 2
           }
         ],
         'borrower': {
@@ -248,7 +253,7 @@ void main() {
         'start': DateTime.now().toString(),
       });
       expect(loan.id, '1');
-      expect(loan.itemsQuantity[0].itemSimple.id, '2');
+      expect(loan.itemsQuantity[0].itemSimple.id, '1');
       expect(loan.borrower.id, '1');
       expect(loan.returned, true);
       expect(loan.caution, '');
@@ -278,13 +283,15 @@ void main() {
       );
       expect(loan.toJson(), {
         'id': '1',
-        'item_ids': ['1'],
         'borrower_id': '1',
-        'caution': '',
-        'end': '2020-01-01',
         'loaner_id': '',
         'notes': '',
         'start': '2020-01-01',
+        'end': '2020-01-01',
+        'caution': '',
+        'items_borrowed': [
+          {'item_id': '1', 'quantity': 2}
+        ]
       });
     });
   });

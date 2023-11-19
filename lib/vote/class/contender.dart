@@ -80,6 +80,6 @@ class Contender {
 
   @override
   String toString() {
-    return 'Pretendance{id: $id, name: $name, description: $description, listType: $listType, members: $members, section: $section, program: $program}';
+    return 'Contender{id: $id, name: $name, description: $description, listType: $listType, members: $members, section: $section, program: $program}';
   }
 }

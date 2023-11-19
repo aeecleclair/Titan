@@ -81,16 +81,15 @@ void main() {
 
     test('Should return a CreateAccount', () {
       final createAccount = CreateAccount(
-        password: 'password',
-        phone: 'phone',
-        activationToken: '',
-        birthday: DateTime.parse('2021-01-01'),
-        firstname: '',
-        floor: '',
-        name: '',
-        nickname: '',
-        promo: 1
-      );
+          password: 'password',
+          phone: 'phone',
+          activationToken: '',
+          birthday: DateTime.parse('2021-01-01'),
+          firstname: '',
+          floor: '',
+          name: '',
+          nickname: '',
+          promo: 1);
       expect(createAccount, isA<CreateAccount>());
       expect(createAccount.password, 'password');
       expect(createAccount.phone, 'phone');
@@ -105,16 +104,15 @@ void main() {
 
     test('Should update with new values', () {
       final createAccount = CreateAccount(
-        password: 'password',
-        phone: 'phone',
-        activationToken: '',
-        birthday: DateTime.parse('2021-01-01'),
-        firstname: '',
-        floor: '',
-        name: '',
-        nickname: '',
-        promo: 1
-      );
+          password: 'password',
+          phone: 'phone',
+          activationToken: '',
+          birthday: DateTime.parse('2021-01-01'),
+          firstname: '',
+          floor: '',
+          name: '',
+          nickname: '',
+          promo: 1);
       CreateAccount newCreateAccount = createAccount.copyWith(
         password: 'newPassword',
       );
@@ -155,18 +153,17 @@ void main() {
 
     test('Should print a createAccount', () {
       final createAccount = CreateAccount(
-        password: 'password',
-        phone: 'phone',
-        activationToken: '',
-        birthday: DateTime.parse('2021-01-01'),
-        firstname: '',
-        floor: '',
-        name: '',
-        nickname: '',
-        promo: 1
-      );
+          password: 'password',
+          phone: 'phone',
+          activationToken: '',
+          birthday: DateTime.parse('2021-01-01'),
+          firstname: '',
+          floor: '',
+          name: '',
+          nickname: '',
+          promo: 1);
       expect(createAccount.toString(),
-          'CreateAccount {name: , firstname: , nickname: , password: password, birthday: 2021-01-01 00:00:00.000, phone: phone, floor: , activationToken: }');
+          'CreateAccount {name: , firstname: , nickname: , password: password, birthday: 2021-01-01 00:00:00.000, phone: phone, promo: 1, floor: , activationToken: }');
     });
 
     test('Should parse a createAccount', () {
@@ -203,14 +200,15 @@ void main() {
         "nickname": "",
       });
       expect(createAccount.toJson(), {
-        "password": "password",
-        "phone": "phone",
-        "activation_token": "",
-        "birthday": "2021-01-01",
-        "firstname": "",
-        "floor": "",
-        "name": "",
-        "nickname": "",
+        'name': '',
+        'firstname': '',
+        'nickname': '',
+        'password': 'password',
+        'birthday': '2021-01-01',
+        'phone': 'phone',
+        'floor': '',
+        'promo': null,
+        'activation_token': ''
       });
     });
   });

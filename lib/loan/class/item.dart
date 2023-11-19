@@ -31,6 +31,7 @@ class Item {
     data['name'] = name;
     data['suggested_caution'] = caution;
     data['total_quantity'] = totalQuantity;
+    data['loaned_quantity'] = loanedQuantity;
     data['suggested_lending_duration'] = suggestedLendingDuration;
     return data;
   }
@@ -67,6 +68,6 @@ class Item {
 
   @override
   String toString() {
-    return 'Item(id: $id, name: $name, caution: $caution, totalQuantity: $totalQuantity,  loanedQuantity: $loanedQuantity, suggestedLendingDuration: $suggestedLendingDuration)';
+    return 'Item(id: $id, name: $name, caution: $caution, totalQuantity: $totalQuantity, loanedQuantity: $loanedQuantity, suggestedLendingDuration: $suggestedLendingDuration)';
   }
 }
