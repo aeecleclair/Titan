@@ -36,12 +36,12 @@ class Item {
   }
 
   Item copyWith(
-      {id,
-      name,
-      caution,
-      totalQuantity,
-      loanedQuantity,
-      suggestedLendingDuration}) {
+      {String? id,
+      String? name,
+      int? caution,
+      int? totalQuantity,
+      int? loanedQuantity,
+      double? suggestedLendingDuration}) {
     return Item(
         id: id ?? this.id,
         name: name ?? this.name,

@@ -52,15 +52,15 @@ class Loan {
   }
 
   Loan copyWith(
-      {id,
-      loaner,
-      borrower,
-      notes,
-      start,
-      end,
-      caution,
-      itemsQuantity,
-      returned}) {
+      {String? id,
+      Loaner? loaner,
+      SimpleUser? borrower,
+      String? notes,
+      DateTime? start,
+      DateTime? end,
+      String? caution,
+      List<ItemQuantity>? itemsQuantity,
+      bool? returned}) {
     return Loan(
         id: id ?? this.id,
         loaner: loaner ?? this.loaner,

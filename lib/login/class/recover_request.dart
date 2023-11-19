@@ -28,4 +28,9 @@ class RecoverRequest {
       newPassword: newPassword ?? this.newPassword,
     );
   }
+
+  @override
+  String toString() {
+    return 'RecoverRequest{resetToken: $resetToken, newPassword: $newPassword}';
+  }
 }
