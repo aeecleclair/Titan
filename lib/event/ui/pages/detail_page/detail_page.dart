@@ -93,7 +93,7 @@ class DetailPage extends HookConsumerWidget {
                                         }
                                       },
                                       child: Text(
-                                        event.applicant.email,
+                                        event.applicant.email!,
                                         style: const TextStyle(
                                           fontSize: 16,
                                           decoration: TextDecoration.underline,

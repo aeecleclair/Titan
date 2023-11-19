@@ -50,7 +50,7 @@ class CalendarDialog extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    "${BookingTextConstants.bookedfor} ${booking.entity}",
+                    "${BookingTextConstants.bookedfor} ${booking.entity} ${BookingTextConstants.by} ${booking.applicant.getName()}",
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 15,
@@ -69,15 +69,7 @@ class CalendarDialog extends StatelessWidget {
                           fontSize: 15,
                         ),
                       ),
-                    if (booking.note != null) const SizedBox(height: 10),
-                    Text(
-                      "${BookingTextConstants.bookedBy} ${booking.applicant.getName()}",
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
+                    if (booking.note != null) const SizedBox(height: 20),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -121,7 +113,7 @@ class CalendarDialog extends StatelessWidget {
                           width: 20,
                         ),
                         Text(
-                          booking.applicant.email,
+                          booking.applicant.email!,
                           style: const TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 15,

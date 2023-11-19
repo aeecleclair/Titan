@@ -11,13 +11,13 @@ class BookingTextConstants {
   static const String adminPage = "Administrateur";
   static const String allDay = "Toute la journée";
   static const String bookedfor = "Réservé pour";
-  static const String bookedBy = "Réservée par";
   static const String booking = "Réservation";
   static const String bookingCreated = "Réservation créée";
   static const String bookingDemand = "Demande de réservation";
   static const String bookingNote = "Note de la réservation";
   static const String bookingPage = "Réservation";
   static const String bookingReason = "Motif de la réservation";
+  static const String by = "par";
   static const String confirm = "Confirmer";
   static const String confirmation = "Confirmation";
   static const String confirmBooking = "Confirmer la réservation ?";
