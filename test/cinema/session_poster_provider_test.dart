@@ -1,6 +1,6 @@
 // ignore_for_file: invalid_use_of_protected_member
 
-import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -29,26 +29,26 @@ void main() {
     test('getLogo returns image from repository', () async {
       const id = '123';
       final image = Image.network('https://example.com/image.png');
-      when(() => repository.getPretendenceLogo(id))
+      when(() => repository.getSessionLogo(id))
           .thenAnswer((_) async => image);
 
       final result = await provider.getLogo(id);
 
       expect(result, image);
-      verify(() => repository.getPretendenceLogo(id)).called(1);
+      verify(() => repository.getSessionLogo(id)).called(1);
     });
 
     test('updateLogo returns image from repository', () async {
       const id = '123';
-      const path = '/path/to/image.png';
-      final image = Image.file(File(path));
-      when(() => repository.addPretendenceLogo(path, id))
+      Uint8List bytes = Uint8List(0);
+      final image = Image.memory(bytes);
+      when(() => repository.addSessionLogo(bytes, id))
           .thenAnswer((_) async => image);
 
-      final result = await provider.updateLogo(id, path);
+      final result = await provider.updateLogo(id, bytes);
 
       expect(result, equals(image));
-      verify(() => repository.addPretendenceLogo(path, id)).called(1);
+      verify(() => repository.addSessionLogo(bytes, id)).called(1);
     });
   });
 }

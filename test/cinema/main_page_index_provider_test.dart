@@ -19,7 +19,7 @@ void main() {
     test('MainPageIndexNotifier setStartPage updates startpage', () {
       final notifier = MainPageIndexNotifier(2);
       notifier.setStartPage(3);
-      expect(notifier.startpage, 3);
+      expect(notifier.startPage, 3);
     });
 
     test('MainPageIndexNotifier reset sets state to startpage', () {

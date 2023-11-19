@@ -18,7 +18,7 @@ void main() {
         )),
       ]);
 
-      final isCinemaAdminState = container.read(isCinemaAdmin);
+      final isCinemaAdminState = container.read(isCinemaAdminProvider);
 
       expect(isCinemaAdminState, true);
     });
@@ -33,7 +33,7 @@ void main() {
         )),
       ]);
 
-      final isCinemaAdminState = container.read(isCinemaAdmin);
+      final isCinemaAdminState = container.read(isCinemaAdminProvider);
 
       expect(isCinemaAdminState, false);
     });
