@@ -136,6 +136,9 @@ String processDateBackWithHour(String d) {
     return "";
   }
   List<String> e = d.split(" ");
+  if (e.length == 1) {
+    return processDateBack(e[0]);
+  }
   return "${processDateBack(e[0])} ${e[1]}";
 }
 
