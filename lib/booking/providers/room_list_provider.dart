@@ -1,28 +1,25 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/repositories/rooms_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class RoomListNotifier extends ListNotifier<Room> {
-  final RoomRepository _repository = RoomRepository();
-  RoomListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
-    _repository.setToken(token);
-  }
+  final RoomRepository roomRepository;
+  RoomListNotifier({required this.roomRepository})
+      : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Room>>> loadRooms() async {
-    return await loadList(_repository.getRoomList);
+    return await loadList(roomRepository.getRoomList);
   }
 
   Future<bool> addRoom(Room room) async {
-    return await add(_repository.createRoom, room);
+    return await add(roomRepository.createRoom, room);
   }
 
   Future<bool> updateRoom(Room room) async {
     return await update(
-        _repository.updateRoom,
+        roomRepository.updateRoom,
         (rooms, room) =>
             rooms..[rooms.indexWhere((r) => r.id == room.id)] = room,
         room);
@@ -30,7 +27,7 @@ class RoomListNotifier extends ListNotifier<Room> {
 
   Future<bool> deleteRoom(Room room) async {
     return await delete(
-        _repository.deleteRoom,
+        roomRepository.deleteRoom,
         (rooms, room) => rooms..removeWhere((i) => i.id == room.id),
         room.id,
         room);
@@ -39,8 +36,8 @@ class RoomListNotifier extends ListNotifier<Room> {
 
 final roomListProvider =
     StateNotifierProvider<RoomListNotifier, AsyncValue<List<Room>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  final provider = RoomListNotifier(token: token);
+  final roomRepository = ref.watch(roomRepositoryProvider);
+  final provider = RoomListNotifier(roomRepository: roomRepository);
   tokenExpireWrapperAuth(ref, () async {
     await provider.loadRooms();
   });
