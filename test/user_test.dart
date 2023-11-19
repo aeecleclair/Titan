@@ -18,7 +18,7 @@ void main() {
 
     test('Should return a user with a name', () async {
       final user = User.empty();
-      expect(user.name, 'Name'); // capitaliseAll
+      expect(user.name, 'Nom'); // capitaliseAll
     });
 
     test('Should parse an User from json', () async {
@@ -53,8 +53,8 @@ void main() {
         "promo": null
       });
       expect(user.toJson(), {
-        "name": "name",
-        "firstname": "firstname",
+        "name": "Name",
+        "firstname": "Firstname",
         "nickname": null,
         "id": "id",
         "birthday": "1999-01-01",

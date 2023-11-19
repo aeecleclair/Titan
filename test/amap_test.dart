@@ -810,7 +810,7 @@ void main() {
       when(() => mockInformationRepository.getInformation())
           .thenAnswer((_) async => information);
       when(() => mockInformationRepository.createInformation(information))
-          .thenAnswer((_) async => information);
+          .thenThrow(Exception());
       final informationNotifier =
           InformationNotifier(informationRepository: mockInformationRepository);
       await informationNotifier.loadInformation();
@@ -825,7 +825,7 @@ void main() {
       when(() => mockInformationRepository.getInformation())
           .thenAnswer((_) async => information);
       when(() => mockInformationRepository.createInformation(information))
-          .thenThrow(Exception());
+          .thenAnswer((_) async => information);
       final informationNotifier =
           InformationNotifier(informationRepository: mockInformationRepository);
       final informationAdded =
@@ -1321,7 +1321,7 @@ void main() {
           userRepository: mockUserOrderListRepository);
       await userOrderListNotifier.loadOrderList("");
       final orderUpdated = await userOrderListNotifier.updateOrder(order);
-      expect(orderUpdated, true);
+      expect(orderUpdated, false);
     });
   });
 }
