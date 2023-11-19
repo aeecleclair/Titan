@@ -1,5 +1,4 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/vote/class/section.dart';
@@ -7,22 +6,21 @@ import 'package:myecl/vote/providers/section_id_provider.dart';
 import 'package:myecl/vote/repositories/section_repository.dart';
 
 class SectionNotifier extends ListNotifier<Section> {
-  final SectionRepository _sectionRepository = SectionRepository();
-  SectionNotifier({required String token}) : super(const AsyncValue.loading()) {
-    _sectionRepository.setToken(token);
-  }
+  final SectionRepository sectionRepository;
+  SectionNotifier({required this.sectionRepository})
+      : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Section>>> loadSectionList() async {
-    return await loadList(_sectionRepository.getSections);
+    return await loadList(sectionRepository.getSections);
   }
 
   Future<bool> addSection(Section section) async {
-    return await add(_sectionRepository.createSection, section);
+    return await add(sectionRepository.createSection, section);
   }
 
   Future<bool> updateSection(Section section) async {
     return await update(
-        _sectionRepository.updateSection,
+        sectionRepository.updateSection,
         (sections, section) => sections
           ..[sections.indexWhere((s) => s.id == section.id)] = section,
         section);
@@ -30,7 +28,7 @@ class SectionNotifier extends ListNotifier<Section> {
 
   Future<bool> deleteSection(Section section) async {
     return await delete(
-        _sectionRepository.deleteSection,
+        sectionRepository.deleteSection,
         (sections, section) => sections..removeWhere((s) => s.id == section.id),
         section.id,
         section);
@@ -39,8 +37,9 @@ class SectionNotifier extends ListNotifier<Section> {
 
 final sectionsProvider =
     StateNotifierProvider<SectionNotifier, AsyncValue<List<Section>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  SectionNotifier notifier = SectionNotifier(token: token);
+  final sectionRepository = ref.watch(sectionRepositoryProvider);
+  SectionNotifier notifier =
+      SectionNotifier(sectionRepository: sectionRepository);
   tokenExpireWrapperAuth(ref, () async {
     await notifier.loadSectionList();
   });

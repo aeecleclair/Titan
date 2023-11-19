@@ -21,6 +21,13 @@ class Result {
     count = 0;
   }
 
+  Result copyWith({String? id, int? count}) {
+    return Result(
+      id: id ?? this.id,
+      count: count ?? this.count,
+    );
+  }
+
   @override
   String toString() {
     return 'Result{id: $id, count: $count}';

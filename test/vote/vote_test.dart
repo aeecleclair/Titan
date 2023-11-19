@@ -358,6 +358,18 @@ void main() {
       expect(result.count, 1);
     });
 
+    test('Should update with new value', () {
+      final result = Result.empty();
+      Result newResult = result.copyWith(
+        id: 'id2',
+      );
+      expect(newResult.id, 'id2');
+      newResult = result.copyWith(
+        count: 2,
+      );
+      expect(newResult.count, 2);
+    });
+
     test('Should return a correct json', () {
       final result = Result(
         id: 'id',
@@ -418,7 +430,6 @@ void main() {
       expect(stringToStatus('published'), Status.published);
       expect(stringToStatus(''), Status.waiting);
     });
-
 
     test('Should return a String', () {
       expect(statusToString(Status.waiting), 'Waiting');

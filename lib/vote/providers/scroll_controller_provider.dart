@@ -18,12 +18,9 @@ final scrollControllerProvider = StateNotifierProvider.family<
       case ScrollDirection.forward:
         animationController.forward();
         break;
-
       case ScrollDirection.reverse:
         animationController.reverse();
-
         break;
-
       case ScrollDirection.idle:
         break;
     }
