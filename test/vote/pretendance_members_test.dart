@@ -2,12 +2,12 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:myecl/vote/class/members.dart';
-import 'package:myecl/vote/providers/pretendance_members.dart';
+import 'package:myecl/vote/providers/contender_members.dart';
 
 void main() {
-  group('PretendanceMembersProvider', () {
+  group('ContenderMembersProvider', () {
     test('addMember should add a member to the state', () async {
-      final provider = PretendanceMembersProvider();
+      final provider = ContenderMembersProvider();
       final member = Member.empty().copyWith(name: 'John Doe', id: '123');
 
       final result = await provider.addMember(member);
@@ -18,7 +18,7 @@ void main() {
     });
 
     test('addMember should not add a member if already in the state', () async {
-      final provider = PretendanceMembersProvider();
+      final provider = ContenderMembersProvider();
       final member = Member.empty().copyWith(name: 'John Doe', id: '123');
 
       await provider.addMember(member);
@@ -30,7 +30,7 @@ void main() {
     });
 
     test('removeMember should remove a member from the state', () async {
-      final provider = PretendanceMembersProvider();
+      final provider = ContenderMembersProvider();
       final member = Member.empty().copyWith(name: 'John Doe', id: '123');
 
       await provider.addMember(member);
@@ -40,7 +40,7 @@ void main() {
     });
 
     test('clearMembers should clear the state', () async {
-      final provider = PretendanceMembersProvider();
+      final provider = ContenderMembersProvider();
       final member = Member.empty().copyWith(name: 'John Doe', id: '123');
 
       await provider.addMember(member);
@@ -51,7 +51,7 @@ void main() {
 
     test('setMembers should set the state to the given list of members',
         () async {
-      final provider = PretendanceMembersProvider();
+      final provider = ContenderMembersProvider();
       final members = [
         Member.empty().copyWith(name: 'John Doe', id: '123'),
         Member.empty().copyWith(name: 'Jane Doe', id: '456'),

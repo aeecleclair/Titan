@@ -26,7 +26,7 @@ class MapNotifier<T, E>
   }
 
   Future<bool> addE(T t, E e) {
-    state.when(data: (d) async {
+    return state.when(data: (d) async {
       try {
         List<E> eList = d[t]!.maybeWhen(data: (d) => d, orElse: () => []);
         d[t] = AsyncValue.data(eList + [e]);
@@ -40,14 +40,14 @@ class MapNotifier<T, E>
           return false;
         }
       }
-    }, error: (error, s) {
+    }, error: (error, s) async {
       if (error is AppException && error.type == ErrorType.tokenExpire) {
         throw error;
       } else {
         state = AsyncValue.error(error, s);
         return false;
       }
-    }, loading: () {
+    }, loading: () async {
       state =
           const AsyncValue.error("Cannot add while loading", StackTrace.empty);
       return false;

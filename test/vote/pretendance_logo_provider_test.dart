@@ -1,5 +1,7 @@
 // ignore_for_file: invalid_use_of_protected_member
 
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -16,7 +18,7 @@ void main() {
 
   setUp(() {
     repository = MockContenderLogoRepository();
-    provider = ContenderLogoProvider(repository: repository);
+    provider = ContenderLogoProvider(contenderLogoRepository: repository);
   });
 
   group('ContenderLogoProvider', () {
@@ -27,7 +29,7 @@ void main() {
     test('getLogo returns Image', () async {
       const id = '123';
       final image = Image.network('https://example.com/image.png');
-      when(() => repository.getPretendenceLogo(id))
+      when(() => repository.getContenderLogo(id))
           .thenAnswer((_) async => image);
 
       final result = await provider.getLogo(id);
@@ -37,12 +39,12 @@ void main() {
 
     test('updateLogo returns Image', () async {
       const id = '123';
-      const path = '/path/to/image.png';
+      Uint8List bytes = Uint8List(0);
       final image = Image.network('https://example.com/image.png');
-      when(() => repository.addPretendenceLogo(path, id))
+      when(() => repository.addContenderLogo(bytes, id))
           .thenAnswer((_) async => image);
 
-      final result = await provider.updateLogo(id, path);
+      final result = await provider.updateLogo(id, bytes);
 
       expect(result, equals(image));
     });

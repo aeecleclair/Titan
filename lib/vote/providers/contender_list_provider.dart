@@ -1,5 +1,4 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/vote/class/contender.dart';
@@ -7,11 +6,9 @@ import 'package:myecl/vote/repositories/contender_repository.dart';
 import 'package:myecl/vote/tools/functions.dart';
 
 class ContenderListNotifier extends ListNotifier<Contender> {
-  final ContenderRepository contenderRepository = ContenderRepository();
-  ContenderListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
-    contenderRepository.setToken(token);
-  }
+  final ContenderRepository contenderRepository;
+  ContenderListNotifier({required this.contenderRepository})
+      : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Contender>>> loadContenderList() async {
     await loadList(contenderRepository.getContenders);
@@ -85,8 +82,9 @@ class ContenderListNotifier extends ListNotifier<Contender> {
 final contenderListProvider =
     StateNotifierProvider<ContenderListNotifier, AsyncValue<List<Contender>>>(
         (ref) {
-  final token = ref.watch(tokenProvider);
-  final contenderListNotifier = ContenderListNotifier(token: token);
+  final contenderRepository = ref.watch(contenderRepositoryProvider);
+  final contenderListNotifier =
+      ContenderListNotifier(contenderRepository: contenderRepository);
   tokenExpireWrapperAuth(ref, () async {
     await contenderListNotifier.loadContenderList();
   });

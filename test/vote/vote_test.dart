@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/vote/class/members.dart';
-import 'package:myecl/vote/class/pretendance.dart';
+import 'package:myecl/vote/class/contender.dart';
 import 'package:myecl/vote/class/result.dart';
 import 'package:myecl/vote/class/section.dart';
 import 'package:myecl/vote/class/votes.dart';
@@ -196,92 +196,92 @@ void main() {
     });
   });
 
-  group('Testing Pretendance class', () {
-    test('Should return a Pretendance', () {
-      final pretendance = Pretendance.empty();
-      expect(pretendance, isA<Pretendance>());
-      expect(pretendance.id, '');
-      expect(pretendance.name, '');
-      expect(pretendance.description, '');
-      expect(pretendance.members, []);
-      expect(pretendance.listType, ListType.serio);
-      expect(pretendance.section, isA<Section>());
-      expect(pretendance.program, '');
+  group('Testing Contender class', () {
+    test('Should return a Contender', () {
+      final contender = Contender.empty();
+      expect(contender, isA<Contender>());
+      expect(contender.id, '');
+      expect(contender.name, '');
+      expect(contender.description, '');
+      expect(contender.members, []);
+      expect(contender.listType, ListType.serious);
+      expect(contender.section, isA<Section>());
+      expect(contender.program, '');
     });
 
-    test('Should return a Pretendance', () {
-      final pretendance = Pretendance(
+    test('Should return a Contender', () {
+      final contender = Contender(
         id: 'id',
         name: 'name',
         description: 'description',
         members: [],
-        listType: ListType.pipo,
+        listType: ListType.fake,
         section: Section.empty(),
         program: 'program',
       );
-      expect(pretendance, isA<Pretendance>());
-      expect(pretendance.id, 'id');
-      expect(pretendance.name, 'name');
-      expect(pretendance.description, 'description');
-      expect(pretendance.members, []);
-      expect(pretendance.listType, ListType.pipo);
-      expect(pretendance.section, isA<Section>());
-      expect(pretendance.program, 'program');
+      expect(contender, isA<Contender>());
+      expect(contender.id, 'id');
+      expect(contender.name, 'name');
+      expect(contender.description, 'description');
+      expect(contender.members, []);
+      expect(contender.listType, ListType.fake);
+      expect(contender.section, isA<Section>());
+      expect(contender.program, 'program');
     });
 
     test('Should update with new values', () {
-      final pretendance = Pretendance.empty();
-      Pretendance newPretendance = pretendance.copyWith(
+      final contender = Contender.empty();
+      Contender newContender = contender.copyWith(
         id: 'id2',
       );
-      expect(newPretendance.id, 'id2');
-      newPretendance = pretendance.copyWith(
+      expect(newContender.id, 'id2');
+      newContender = contender.copyWith(
         name: 'name2',
       );
-      expect(newPretendance.name, 'name2');
-      newPretendance = pretendance.copyWith(
+      expect(newContender.name, 'name2');
+      newContender = contender.copyWith(
         description: 'description2',
       );
-      expect(newPretendance.description, 'description2');
-      newPretendance = pretendance.copyWith(
+      expect(newContender.description, 'description2');
+      newContender = contender.copyWith(
         members: [],
       );
-      expect(newPretendance.members, []);
-      newPretendance = pretendance.copyWith(
-        listType: ListType.pipo,
+      expect(newContender.members, []);
+      newContender = contender.copyWith(
+        listType: ListType.fake,
       );
-      expect(newPretendance.listType, ListType.pipo);
-      newPretendance = pretendance.copyWith(
+      expect(newContender.listType, ListType.fake);
+      newContender = contender.copyWith(
         section: Section.empty(),
       );
-      expect(newPretendance.section, isA<Section>());
-      newPretendance = pretendance.copyWith(
+      expect(newContender.section, isA<Section>());
+      newContender = contender.copyWith(
         program: 'program2',
       );
-      expect(newPretendance.program, 'program2');
+      expect(newContender.program, 'program2');
     });
 
-    test('Should print a Pretendance', () {
-      final pretendance = Pretendance(
+    test('Should print a Contender', () {
+      final contender = Contender(
         id: 'id',
         name: 'name',
         description: 'description',
         members: [],
-        listType: ListType.pipo,
+        listType: ListType.fake,
         section: Section.empty(),
         program: 'program',
       );
-      expect(pretendance.toString(),
-          'Pretendance{id: id, name: name, description: description, listType: ListType.pipo, members: [], section: Section{id: , name: , description: }, program: program}');
+      expect(contender.toString(),
+          'Contender{id: id, name: name, description: description, listType: ListType.fake, members: [], section: Section{id: , name: , description: }, program: program}');
     });
 
-    test('Should parse a Pretendance', () {
-      final pretendance = Pretendance.fromJson({
+    test('Should parse a Contender', () {
+      final contender = Contender.fromJson({
         "id": "id",
         "name": "name",
         "description": "description",
         "members": [],
-        "type": "Pipo",
+        "type": "Ffake",
         "section": {
           "id": "id",
           "name": "name",
@@ -290,32 +290,32 @@ void main() {
         },
         "program": "program",
       });
-      expect(pretendance, isA<Pretendance>());
-      expect(pretendance.id, 'id');
-      expect(pretendance.name, 'name');
-      expect(pretendance.description, 'description');
-      expect(pretendance.members, []);
-      expect(pretendance.listType, ListType.pipo);
-      expect(pretendance.section, isA<Section>());
-      expect(pretendance.program, 'program');
+      expect(contender, isA<Contender>());
+      expect(contender.id, 'id');
+      expect(contender.name, 'name');
+      expect(contender.description, 'description');
+      expect(contender.members, []);
+      expect(contender.listType, ListType.fake);
+      expect(contender.section, isA<Section>());
+      expect(contender.program, 'program');
     });
 
     test('Should return a correct json', () {
-      final pretendance = Pretendance(
+      final contender = Contender(
         id: 'id',
         name: 'name',
         description: 'description',
         members: [],
-        listType: ListType.pipo,
+        listType: ListType.fake,
         section: Section.empty(),
         program: 'program',
       );
-      expect(pretendance.toJson(), {
+      expect(contender.toJson(), {
         "id": "id",
         "name": "name",
         "description": "description",
         "members": [],
-        "type": "Pipo",
+        "type": "Ffake",
         "section_id": "",
         "program": "program",
       });
@@ -416,8 +416,8 @@ void main() {
 
   group('Testing functions', () {
     test('Should return a ListType', () {
-      expect(stringToListType('Pipo'), ListType.pipo);
-      expect(stringToListType('Serio'), ListType.serio);
+      expect(stringToListType('Ffake'), ListType.fake);
+      expect(stringToListType('Seserious'), ListType.serious);
       expect(stringToListType('Blank'), ListType.blank);
       expect(stringToListType(''), ListType.blank);
     });

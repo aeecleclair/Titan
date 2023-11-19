@@ -21,7 +21,7 @@ void main() {
         ],
       );
 
-      final isVoteAdminState = container.read(isVoteAdmin);
+      final isVoteAdminState = container.read(isVoteAdminProvider);
 
       expect(isVoteAdminState, true);
     });
@@ -40,7 +40,7 @@ void main() {
         ],
       );
 
-      final isVoteAdminState = container.read(isVoteAdmin);
+      final isVoteAdminState = container.read(isVoteAdminProvider);
 
       expect(isVoteAdminState, false);
     });

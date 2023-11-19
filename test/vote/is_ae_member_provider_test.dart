@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/providers/user_provider.dart';
-import 'package:myecl/vote/providers/is_ae_member_provider.dart';
+import 'package:myecl/vote/providers/can_vote_provider.dart';
 
 void main() {
   group('isAEMemberProvider', () {
@@ -17,7 +17,7 @@ void main() {
         ),
       ]);
 
-      final result = container.read(isAEMemberProvider);
+      final result = container.read(canVoteProvider);
 
       expect(result, true);
     });
@@ -32,7 +32,7 @@ void main() {
         ),
       ]);
 
-      final result = container.read(isAEMemberProvider);
+      final result = container.read(canVoteProvider);
 
       expect(result, false);
     });
