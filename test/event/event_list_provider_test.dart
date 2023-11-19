@@ -29,9 +29,10 @@ void main() {
 
       final result = await eventListNotifier.loadEventList();
 
-      expect(result.when(
-          data: (data) => data, loading: () => [], error: (_, __) => []
-      ), events);
+      expect(
+          result.when(
+              data: (data) => data, loading: () => [], error: (_, __) => []),
+          events);
     });
 
     test('addEvent should return true', () async {
@@ -72,7 +73,8 @@ void main() {
           .thenAnswer((_) async => true);
       eventListNotifier.state = AsyncValue.data([event]);
 
-      final result = await eventListNotifier.toggleConfirmed(event, Decision.approved); 
+      final result =
+          await eventListNotifier.toggleConfirmed(event, Decision.approved);
 
       expect(result, true);
     });

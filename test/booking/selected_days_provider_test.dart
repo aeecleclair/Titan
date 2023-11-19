@@ -3,7 +3,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:myecl/booking/providers/selected_days_provider.dart';
 
-
 void main() {
   group('SelectedDaysProvider', () {
     test('initial state should be a list of 7 false values', () {

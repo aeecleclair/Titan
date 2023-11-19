@@ -29,8 +29,7 @@ void main() {
     test('getLogo returns image from repository', () async {
       const id = '123';
       final image = Image.network('https://example.com/image.png');
-      when(() => repository.getSessionLogo(id))
-          .thenAnswer((_) async => image);
+      when(() => repository.getSessionLogo(id)).thenAnswer((_) async => image);
 
       final result = await provider.getLogo(id);
 

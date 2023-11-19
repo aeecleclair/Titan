@@ -40,7 +40,8 @@ class Session {
     return data;
   }
 
-  Session copyWith({String? id,
+  Session copyWith(
+      {String? id,
       String? name,
       DateTime? start,
       int? duration,

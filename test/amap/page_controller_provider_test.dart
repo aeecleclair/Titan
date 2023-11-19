@@ -33,7 +33,8 @@ void main() {
 
     test('can read and update state', () {
       final container = ProviderContainer();
-      final controllerNotifier = container.read(amapPageControllerProvider.notifier);
+      final controllerNotifier =
+          container.read(amapPageControllerProvider.notifier);
       final newController = PageController(
         viewportFraction: 0.8,
         initialPage: 1,

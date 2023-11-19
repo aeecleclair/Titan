@@ -62,7 +62,6 @@ class UserRepository extends Repository {
   }
 }
 
-
 final userRepositoryProvider = Provider((ref) {
   final token = ref.watch(tokenProvider);
   return UserRepository()..setToken(token);

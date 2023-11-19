@@ -100,8 +100,8 @@ final deliveryListProvider =
     StateNotifierProvider<DeliveryListNotifier, AsyncValue<List<Delivery>>>(
         (ref) {
   final deliveryListRepository = ref.read(deliveryListRepositoryProvider);
-  DeliveryListNotifier orderListNotifier = DeliveryListNotifier(
-    deliveriesListRepository: deliveryListRepository);
+  DeliveryListNotifier orderListNotifier =
+      DeliveryListNotifier(deliveriesListRepository: deliveryListRepository);
   tokenExpireWrapperAuth(ref, () async {
     await orderListNotifier.loadDeliveriesList();
   });

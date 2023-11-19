@@ -21,7 +21,7 @@ class SignUpProvider extends StateNotifier {
   }
 
   Future<bool> resetPassword(RecoverRequest recoverRequest) async {
-      return await repository.resetPassword(recoverRequest);
+    return await repository.resetPassword(recoverRequest);
   }
 }
 

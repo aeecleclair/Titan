@@ -23,7 +23,6 @@ void main() {
       });
     });
 
-
     test('SwipeControllerNotifier can detect drag start from left', () {
       final controller = AnimationController(
           vsync: MockTicker(), duration: const Duration(seconds: 1));

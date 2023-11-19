@@ -255,7 +255,8 @@ void main() {
       const recurrenceRule =
           "FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR,SA,SU;WKST=MO;INTERVAL=1;UNTIL=20211231T235959Z";
       const recurrenceRule2 = "";
-      const recurrenceRule3 = "FREQ=WEEKLY;BYMONTH=1;BYDAY=MO;WKST=MO;UNTIL=20211231T235959Z";
+      const recurrenceRule3 =
+          "FREQ=WEEKLY;BYMONTH=1;BYDAY=MO;WKST=MO;UNTIL=20211231T235959Z";
       const allDay = false;
       const allDay2 = true;
       expect(formatRecurrenceRule(start, end, recurrenceRule, allDay),
@@ -276,7 +277,7 @@ void main() {
           "Du 01/01 à 00:00 au 02/01 à 00:00");
       expect(formatRecurrenceRule(start, end, recurrenceRule3, allDay),
           "Tous les Lundi de 00:00 à 01:00 jusqu'au 31/12/2021");
-      expect(formatRecurrenceRule(start, end2, recurrenceRule3, allDay), 
+      expect(formatRecurrenceRule(start, end2, recurrenceRule3, allDay),
           "Tous les Lundi de 00:00 à 00:00 jusqu'au 31/12/2021");
       expect(formatRecurrenceRule(start, end, recurrenceRule3, allDay2),
           "Tous les Lundi toute la journée jusqu'au 31/12/2021");

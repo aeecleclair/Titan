@@ -5,10 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:myecl/loan/providers/caution_provider.dart';
 
-
 void main() {
   group('CautionNotifier', () {
-    test('setCaution sets the text and selection of the TextEditingController', () {
+    test('setCaution sets the text and selection of the TextEditingController',
+        () {
       final notifier = CautionNotifier();
       final textEditingController = notifier.state;
 

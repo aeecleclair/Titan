@@ -8,7 +8,8 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 class CashListProvider extends ListNotifier<Cash> {
   final CashRepository cashRepository;
   AsyncValue<List<Cash>> _cashList = const AsyncLoading();
-  CashListProvider({required this.cashRepository}) : super(const AsyncLoading());
+  CashListProvider({required this.cashRepository})
+      : super(const AsyncLoading());
 
   Future<AsyncValue<List<Cash>>> loadCashList() async {
     return _cashList = await loadList(cashRepository.getCashList);
@@ -69,7 +70,8 @@ final cashListProvider =
     StateNotifierProvider<CashListProvider, AsyncValue<List<Cash>>>(
   (ref) {
     final cashRepository = ref.watch(cashRepositoryProvider);
-    CashListProvider cashListProvider = CashListProvider(cashRepository: cashRepository);
+    CashListProvider cashListProvider =
+        CashListProvider(cashRepository: cashRepository);
     tokenExpireWrapperAuth(ref, () async {
       await cashListProvider.loadCashList();
     });

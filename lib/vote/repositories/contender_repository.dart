@@ -29,7 +29,6 @@ class ContenderRepository extends Repository {
   }
 }
 
-
 final contenderRepositoryProvider = Provider<ContenderRepository>((ref) {
   final token = ref.watch(tokenProvider);
   return ContenderRepository()..setToken(token);

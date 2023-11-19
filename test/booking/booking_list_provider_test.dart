@@ -126,17 +126,14 @@ void main() {
       final newBooking = Booking.empty().copyWith(id: "1");
       when(() => mockBookingRepository.getBookingList())
           .thenAnswer((_) async => [Booking.empty(), newBooking]);
-      when(() =>
-              mockBookingRepository.confirmBooking(
-          newBooking, Decision.approved))
-          .thenAnswer((_) async => true);
+      when(() => mockBookingRepository.confirmBooking(
+          newBooking, Decision.approved)).thenAnswer((_) async => true);
       final bookingListProvider = BookingListProvider(
         bookingRepository: mockBookingRepository,
         userRepository: mockUserBookingRepository,
       );
       await bookingListProvider.loadBookings();
-      final result =
-          await bookingListProvider.toggleConfirmed(
+      final result = await bookingListProvider.toggleConfirmed(
           newBooking, Decision.approved);
       expect(result, true);
     });

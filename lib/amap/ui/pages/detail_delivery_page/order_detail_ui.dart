@@ -145,9 +145,10 @@ class DetailOrderUI extends HookConsumerWidget {
                                     deliveryOrdersNotifier.deleteE(
                                         deliveryId, index);
                                   }
-                                  cashListNotifier.fakeUpdateCash(userCash.copyWith(
-                                      balance:
-                                          userCash.balance + order.amount));
+                                  cashListNotifier.fakeUpdateCash(
+                                      userCash.copyWith(
+                                          balance:
+                                              userCash.balance + order.amount));
                                   displayToastWithContext(TypeMsg.msg,
                                       AMAPTextConstants.deletedOrder);
                                 } else {

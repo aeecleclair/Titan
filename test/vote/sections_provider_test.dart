@@ -39,7 +39,7 @@ void main() {
       final section = Section.empty().copyWith(id: '1', name: 'Section 1');
       when(() => sectionRepository.createSection(section))
           .thenAnswer((_) async => section);
-          sectionNotifier.state = AsyncValue.data([section]);
+      sectionNotifier.state = AsyncValue.data([section]);
 
       final result = await sectionNotifier.addSection(section);
 
@@ -50,7 +50,7 @@ void main() {
       final section = Section.empty().copyWith(id: '1', name: 'Section 1');
       when(() => sectionRepository.updateSection(section))
           .thenAnswer((_) async => true);
-        sectionNotifier.state = AsyncValue.data([section]);
+      sectionNotifier.state = AsyncValue.data([section]);
 
       final result = await sectionNotifier.updateSection(section);
 
@@ -61,7 +61,7 @@ void main() {
       final section = Section.empty().copyWith(id: '1', name: 'Section 1');
       when(() => sectionRepository.deleteSection(section.id))
           .thenAnswer((_) async => true);
-        sectionNotifier.state = AsyncValue.data([section]);
+      sectionNotifier.state = AsyncValue.data([section]);
 
       final result = await sectionNotifier.deleteSection(section);
 

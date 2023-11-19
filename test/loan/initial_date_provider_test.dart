@@ -4,7 +4,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/loan/providers/initial_date_provider.dart';
 
-
 void main() {
   group('InitialDateNotifier', () {
     test('initial value is DateTime.now()', () {

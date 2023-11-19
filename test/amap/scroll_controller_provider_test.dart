@@ -39,8 +39,7 @@ void main() {
         scrollControllerProvider(animationController2);
 
     expect(scrollControllerNotifier1, isNot(equals(scrollControllerNotifier2)));
-    expect(scrollControllerNotifier1,
-        isNot(equals(scrollControllerNotifier2)));
+    expect(scrollControllerNotifier1, isNot(equals(scrollControllerNotifier2)));
   });
 }
 

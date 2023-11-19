@@ -39,7 +39,8 @@ final sessionListProvider =
         (ref) {
   final sessionRepository = ref.watch(sessionRepositoryProvider);
   SessionListNotifier notifier = SessionListNotifier(
-    sessionRepository: sessionRepository,);
+    sessionRepository: sessionRepository,
+  );
   tokenExpireWrapperAuth(ref, () async {
     await notifier.loadSessions();
   });

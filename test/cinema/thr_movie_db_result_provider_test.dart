@@ -27,14 +27,16 @@ void main() {
         TheMovieDBSearchResult.empty(),
         TheMovieDBSearchResult.empty(),
       ];
-      when(()=>repository.searchMovie(query))
+      when(() => repository.searchMovie(query))
           .thenAnswer((_) async => expectedResults);
       final result = await notifier.loadMovies(query);
-      expect(result.when(
-        data: (data) => data,
-        loading: () => null,
-        error: (error, stack) => null,
-      ), isA<List<TheMovieDBSearchResult>>());
+      expect(
+          result.when(
+            data: (data) => data,
+            loading: () => null,
+            error: (error, stack) => null,
+          ),
+          isA<List<TheMovieDBSearchResult>>());
     });
 
     test('loadMovies returns an error when the repository throws an error',
@@ -44,7 +46,7 @@ void main() {
           TheMovieDBResultNotifier(theMoviesDBRepository: repository);
       const query = 'test';
       const expectedError = 'Error';
-      when(()=>repository.searchMovie(query)).thenThrow(expectedError);
+      when(() => repository.searchMovie(query)).thenThrow(expectedError);
       final result = await notifier.loadMovies(query);
       expect(result.hasError, true);
       expect(result.error, expectedError);

@@ -87,10 +87,9 @@ abstract class Repository {
     } catch (e) {
       if (kIsWeb) {
         logger.writeLog(Log(
-            message:
-                "GET ${ext + suffix}\nError while fetching response",
+            message: "GET ${ext + suffix}\nError while fetching response",
             level: LogLevel.error));
-       return [];
+        return [];
       }
       try {
         final toDecode = await cacheManager.readCache(ext + suffix);
@@ -166,8 +165,7 @@ abstract class Repository {
     } catch (e) {
       if (kIsWeb) {
         logger.writeLog(Log(
-            message:
-                "GET ${ext + suffix}\nError while fetching response",
+            message: "GET ${ext + suffix}\nError while fetching response",
             level: LogLevel.error));
         return <String, dynamic>{};
       }

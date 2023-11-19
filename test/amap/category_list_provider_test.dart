@@ -67,7 +67,8 @@ void main() {
       final productListRepository = MockProductListRepository();
       final productListNotifier =
           ProductListNotifier(productListRepository: productListRepository);
-      productListNotifier.state = const AsyncValue.error("test", StackTrace.empty);
+      productListNotifier.state =
+          const AsyncValue.error("test", StackTrace.empty);
       final container = ProviderContainer(
         overrides: [
           productListProvider.overrideWith((ref) => productListNotifier)

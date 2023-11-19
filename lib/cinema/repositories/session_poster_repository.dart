@@ -25,7 +25,6 @@ class SessionPosterRepository extends LogoRepository {
   }
 }
 
-
 final sessionPosterRepository = Provider<SessionPosterRepository>((ref) {
   final token = ref.watch(tokenProvider);
   return SessionPosterRepository()..setToken(token);

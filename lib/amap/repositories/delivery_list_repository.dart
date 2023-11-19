@@ -31,7 +31,7 @@ class DeliveryListRepository extends Repository {
   }
 
   Future<bool> openDelivery(Delivery delivery) async {
-    return await update({},"/${delivery.id}/openordering");
+    return await update({}, "/${delivery.id}/openordering");
   }
 
   Future<bool> lockDelivery(Delivery delivery) async {

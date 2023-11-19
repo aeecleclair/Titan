@@ -45,9 +45,10 @@ class DeliveryProductListNotifier extends ListNotifier<Product> {
   }
 }
 
-final deliveryProductListProvider =
-    StateNotifierProvider<DeliveryProductListNotifier, AsyncValue<List<Product>>>(
-        (ref) {
-  final deliveryProductListRepository = ref.watch(deliveryProductListRepositoryProvider);
-  return DeliveryProductListNotifier(productListRepository: deliveryProductListRepository);
+final deliveryProductListProvider = StateNotifierProvider<
+    DeliveryProductListNotifier, AsyncValue<List<Product>>>((ref) {
+  final deliveryProductListRepository =
+      ref.watch(deliveryProductListRepositoryProvider);
+  return DeliveryProductListNotifier(
+      productListRepository: deliveryProductListRepository);
 });
