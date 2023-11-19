@@ -1,0 +1,23 @@
+import 'package:flutter_test/flutter_test.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/booking/class/room.dart';
+import 'package:myecl/booking/providers/room_provider.dart';
+
+void main() {
+  group('RoomNotifier', () {
+    test('setRoom should update state', () {
+      final container = ProviderContainer();
+      final notifier = container.read(roomProvider.notifier);
+
+      final room = Room(
+        id: '1',
+        name: 'Test Room',
+      );
+
+      notifier.setRoom(room);
+
+      expect(container.read(roomProvider).id, equals('1'));
+      expect(container.read(roomProvider).name, equals('Test Room'));
+    });
+  });
+}

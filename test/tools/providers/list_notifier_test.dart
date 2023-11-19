@@ -36,7 +36,6 @@ class MockListNotifier extends ListNotifier<MockData> {
   }
 }
 
-
 void main() {
   group('Testing ListNotifier : loadList', () {
     test('Should initiate to AsyncLoading', () {
@@ -375,6 +374,38 @@ void main() {
       expect(result, isFalse);
       expect(notifier.state, isA<AsyncError>());
       expect(notifier.state.error, "Cannot delete while loading");
+    });
+
+    test(
+        'Should return false sets state on error when start state is AsyncError',
+        () async {
+      final notifier = MockListNotifier();
+      notifier.state = AsyncValue.error("test", StackTrace.current);
+      final data = [MockData(), MockData()];
+      final oldData = data.first;
+      final result = await notifier.testDelete((id) => Future.value(true),
+          (listT, t) => listT.skip(1).toList(), 'id', oldData);
+      expect(result, isFalse);
+      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state.error, "test");
+    });
+
+    test(
+        'Should return false sets state on error when start state is AsyncError with AppException.tokenExpire',
+        () async {
+      final notifier = MockListNotifier();
+      notifier.state = AsyncValue.error(
+          AppException(ErrorType.tokenExpire, "test"), StackTrace.current);
+      final data = [MockData(), MockData()];
+      final oldData = data.first;
+      try {
+        await notifier.testDelete((id) => Future.value(true),
+            (listT, t) => listT.skip(1).toList(), 'id', oldData);
+        expect(notifier.state, isA<AsyncError>()); // not reached
+      } catch (e) {
+        expect(notifier.state, isA<AsyncError>());
+        expect(notifier.state.error, isA<AppException>());
+      }
     });
   });
 }

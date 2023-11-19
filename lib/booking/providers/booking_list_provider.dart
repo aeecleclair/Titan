@@ -47,7 +47,7 @@ class BookingListProvider extends ListNotifier<Booking> {
         (booking) => bookingRepository.confirmBooking(booking, decision),
         (bookings, booking) => bookings
           ..[bookings.indexWhere((b) => b.id == booking.id)] = booking,
-        booking.copyWith(decision: decision));
+        booking);
   }
 }
 

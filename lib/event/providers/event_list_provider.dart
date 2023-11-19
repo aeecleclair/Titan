@@ -39,7 +39,7 @@ class EventListNotifier extends ListNotifier<Event> {
         (event) => eventRepository.confirmEvent(event, decision),
         (events, event) =>
             events..[events.indexWhere((b) => b.id == event.id)] = event,
-        event.copyWith(decision: decision));
+        event);
   }
 }
 
