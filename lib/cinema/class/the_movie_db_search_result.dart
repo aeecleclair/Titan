@@ -36,6 +36,17 @@ class TheMovieDBSearchResult {
     return data;
   }
 
+  static TheMovieDBSearchResult empty() {
+    return TheMovieDBSearchResult(
+      posterUrl: "",
+      overview: "",
+      genreIds: [],
+      genreNames: [],
+      id: "",
+      title: "",
+    );
+  }
+
   @override
   String toString() {
     return 'TheMovieDBSearchResult(posterUrl: $posterUrl, overview: $overview, genreIds: $genreIds, genreNames: $genreNames, id: $id, title: $title)';

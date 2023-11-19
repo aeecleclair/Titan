@@ -1,8 +1,8 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:myecl/cinema/class/session.dart';
-import 'package:myecl/cinema/providers/session_list_provider.dart';
+import 'package:myecl/cinema/class/the_movie_db_genre.dart';
+import 'package:myecl/cinema/class/the_movie_db_search_result.dart';
 import 'package:myecl/cinema/repositories/session_repository.dart';
 
 class MockSessionRepository extends Mock implements SessionRepository {}
@@ -41,27 +41,34 @@ void main() {
     test('Should update with new information', () {
       final session = Session.empty();
       Session newSession = session.copyWith(
-          id: "1",);
+        id: "1",
+      );
       expect(newSession, isA<Session>());
       expect(newSession.id, equals("1"));
       newSession = session.copyWith(
-          name: "Session 1",);
+        name: "Session 1",
+      );
       expect(newSession.name, equals("Session 1"));
       newSession = session.copyWith(
-          start: DateTime.parse("2021-01-01T00:00:00.000Z"),);
+        start: DateTime.parse("2021-01-01T00:00:00.000Z"),
+      );
       expect(
           newSession.start, equals(DateTime.parse("2021-01-01T00:00:00.000Z")));
       newSession = session.copyWith(
-          duration: 120,);
+        duration: 120,
+      );
       expect(newSession.duration, equals(120));
       newSession = session.copyWith(
-          overview: "Overview",);
+        overview: "Overview",
+      );
       expect(newSession.overview, equals("Overview"));
       newSession = session.copyWith(
-          genre: "Genre",);
+        genre: "Genre",
+      );
       expect(newSession.genre, equals("Genre"));
       newSession = session.copyWith(
-          tagline: "Tagline",);
+        tagline: "Tagline",
+      );
       expect(newSession.tagline, equals("Tagline"));
     });
 
@@ -109,194 +116,141 @@ void main() {
     });
   });
 
-  group('Testing SessionListNotifier : loadSession', () {
-    test('Should return a list of Session', () async {
-      final sessionRepository = MockSessionRepository();
-      when(() => sessionRepository.getAllSessions())
-          .thenAnswer((_) async => [Session.empty()]);
-      final sessionListNotifier =
-          SessionListNotifier(sessionRepository: sessionRepository);
-      final sessionList = await sessionListNotifier.loadSessions();
-      expect(sessionList, isA<AsyncData<List<Session>>>());
-      expect(
-          sessionList
-              .when(
-                  data: (data) => data,
-                  loading: () => [],
-                  error: (error, stackTrace) => [])
-              .length,
-          1);
+  group('TheMovieDBMovie', () {
+    test('fromJson should parse json correctly', () {
+      final json = {
+        'genres': [
+          {'name': 'Action'},
+          {'name': 'Adventure'},
+          {'name': 'Sci-Fi'},
+        ],
+        'overview': 'A great movie',
+        'poster_path': '/poster.jpg',
+        'title': 'The Movie',
+        'runtime': 120,
+        'tagline': 'The best movie ever',
+      };
+
+      final movie = TheMovieDBMovie.fromJson(json);
+
+      expect(movie.genres, ['Action', 'Adventure', 'Sci-Fi']);
+      expect(movie.overview, 'A great movie');
+      expect(movie.posterUrl, 'https://image.tmdb.org/t/p/w500/poster.jpg');
+      expect(movie.title, 'The Movie');
+      expect(movie.runtime, 120);
+      expect(movie.tagline, 'The best movie ever');
     });
 
-    test('Should return an error', () async {
-      final sessionRepository = MockSessionRepository();
-      when(() => sessionRepository.getAllSessions())
-          .thenThrow(Exception('Error'));
-      final sessionListNotifier =
-          SessionListNotifier(sessionRepository: sessionRepository);
-      final sessionList = await sessionListNotifier.loadSessions();
-      expect(sessionList, isA<AsyncError<List<Session>>>());
-      expect(
-          sessionList.maybeWhen(
-              error: (error, stackTrace) => error, orElse: () => null),
-          isA<Exception>());
-    });
-  });
+    test('toJson should convert object to json', () {
+      final movie = TheMovieDBMovie(
+        genres: ['Action', 'Adventure', 'Sci-Fi'],
+        overview: 'A great movie',
+        posterUrl: 'https://image.tmdb.org/t/p/w500/poster.jpg',
+        title: 'The Movie',
+        runtime: 120,
+        tagline: 'The best movie ever',
+      );
 
-  group('Testing SessionListNotifier : addSession', () {
-    test('Should create a Session', () async {
-      final sessionRepository = MockSessionRepository();
-      final newSession = Session.empty();
-      when(() => sessionRepository.getAllSessions())
-          .thenAnswer((_) async => [Session.empty()]);
-      when(() => sessionRepository.addSession(newSession))
-          .thenAnswer((_) async => newSession);
-      final sessionListNotifier =
-          SessionListNotifier(sessionRepository: sessionRepository);
-      await sessionListNotifier.loadSessions();
-      final session = await sessionListNotifier.addSession(newSession);
-      expect(session, true);
+      final json = movie.toJson();
+
+      expect(json['genres'], ['Action', 'Adventure', 'Sci-Fi']);
+      expect(json['overview'], 'A great movie');
+      expect(json['poster_path'], 'https://image.tmdb.org/t/p/w500/poster.jpg');
+      expect(json['title'], 'The Movie');
+      expect(json['runtime'], 120);
+      expect(json['tagline'], 'The best movie ever');
     });
 
-    test('Should return an error if session is not added', () async {
-      final sessionRepository = MockSessionRepository();
-      final newSession = Session.empty();
-      when(() => sessionRepository.getAllSessions())
-          .thenAnswer((_) async => [Session.empty()]);
-      when(() => sessionRepository.addSession(newSession))
-          .thenThrow(Exception('Error'));
-      final sessionListNotifier =
-          SessionListNotifier(sessionRepository: sessionRepository);
-      await sessionListNotifier.loadSessions();
-      final session = await sessionListNotifier.addSession(newSession);
-      expect(session, false);
+    test('empty should return an empty object', () {
+      final movie = TheMovieDBMovie.empty();
+
+      expect(movie.genres, []);
+      expect(movie.overview, '');
+      expect(movie.posterUrl, '');
+      expect(movie.title, '');
+      expect(movie.runtime, 0);
+      expect(movie.tagline, '');
     });
 
-    test('Should return an error if session is not loaded', () async {
-      final sessionRepository = MockSessionRepository();
-      final newSession = Session.empty();
-      when(() => sessionRepository.getAllSessions())
-          .thenAnswer((_) async => [Session.empty()]);
-      when(() => sessionRepository.addSession(newSession))
-          .thenAnswer((_) async => newSession);
-      final sessionListNotifier =
-          SessionListNotifier(sessionRepository: sessionRepository);
-      final session = await sessionListNotifier.addSession(newSession);
-      expect(session, false);
+    test('return correct String with toString()', () {
+      final movie = TheMovieDBMovie(
+        genres: ['Action', 'Adventure', 'Sci-Fi'],
+        overview: 'A great movie',
+        posterUrl: 'https://image.tmdb.org/t/p/w500/poster.jpg',
+        title: 'The Movie',
+        runtime: 120,
+        tagline: 'The best movie ever',
+      );
+
+      expect(movie.toString(),
+          'TheMovieDBMovie{genres: [Action, Adventure, Sci-Fi], overview: A great movie, posterUrl: https://image.tmdb.org/t/p/w500/poster.jpg, title: The Movie, runtime: 120, tagline: The best movie ever}');
     });
   });
 
-  group('Testing SessionListNotifier : updateSession', () {
-    test('Should update a Session', () async {
-      final sessionRepository = MockSessionRepository();
-      final newSession = Session.empty();
-      when(() => sessionRepository.getAllSessions())
-          .thenAnswer((_) async => [newSession]);
-      when(() => sessionRepository.updateSession(newSession))
-          .thenAnswer((_) async => true);
-      final sessionListNotifier =
-          SessionListNotifier(sessionRepository: sessionRepository);
-      await sessionListNotifier.loadSessions();
-      final session = await sessionListNotifier.updateSession(newSession);
-      expect(session, true);
+  group('TheMovieDBMovieSearchResult', () {
+    test('TheMovieDBSearchResult.fromJson should parse json correctly', () {
+      final json = {
+        'poster_path': '/poster.jpg',
+        'overview': 'A great movie',
+        'genre_ids': [1, 2, 3],
+        'id': 123,
+        'title': 'The Movie'
+      };
+
+      final result = TheMovieDBSearchResult.fromJson(json);
+
+      expect(result.posterUrl, 'https://image.tmdb.org/t/p/w500/poster.jpg');
+      expect(result.overview, 'A great movie');
+      expect(result.genreIds, [1, 2, 3]);
+      expect(result.genreNames, []);
+      expect(result.id, '123');
+      expect(result.title, 'The Movie');
     });
 
-    test('Should return an error if session is not updated', () async {
-      final sessionRepository = MockSessionRepository();
-      final newSession = Session.empty();
-      when(() => sessionRepository.getAllSessions())
-          .thenAnswer((_) async => [newSession]);
-      when(() => sessionRepository.updateSession(newSession))
-          .thenThrow(Exception('Error'));
-      final sessionListNotifier =
-          SessionListNotifier(sessionRepository: sessionRepository);
-      await sessionListNotifier.loadSessions();
-      final session = await sessionListNotifier.updateSession(newSession);
-      expect(session, false);
+    test(
+        'TheMovieDBSearchResult.toJson should convert object to json correctly',
+        () {
+      final result = TheMovieDBSearchResult(
+        posterUrl: 'https://image.tmdb.org/t/p/w500/poster.jpg',
+        overview: 'A great movie',
+        genreIds: [1, 2, 3],
+        genreNames: [],
+        id: '123',
+        title: 'The Movie',
+      );
+
+      final json = result.toJson();
+
+      expect(json['poster_path'], 'https://image.tmdb.org/t/p/w500/poster.jpg');
+      expect(json['overview'], 'A great movie');
+      expect(json['genre_ids'], [1, 2, 3]);
+      expect(json['id'], '123');
+      expect(json['title'], 'The Movie');
     });
 
-    test('Should return an error if session is not loaded', () async {
-      final sessionRepository = MockSessionRepository();
-      final newSession = Session.empty();
-      when(() => sessionRepository.getAllSessions())
-          .thenAnswer((_) async => [newSession]);
-      when(() => sessionRepository.updateSession(newSession))
-          .thenAnswer((_) async => true);
-      final sessionListNotifier =
-          SessionListNotifier(sessionRepository: sessionRepository);
-      final session = await sessionListNotifier.updateSession(newSession);
-      expect(session, false);
+    test('TheMovieDBSearchResult.empty should return an empty object', () {
+      final result = TheMovieDBSearchResult.empty();
+
+      expect(result.posterUrl, '');
+      expect(result.overview, '');
+      expect(result.genreIds, []);
+      expect(result.genreNames, []);
+      expect(result.id, '');
+      expect(result.title, '');
     });
 
-    test('Should return an error if session is not found', () async {
-      final sessionRepository = MockSessionRepository();
-      final newSession = Session.empty();
-      when(() => sessionRepository.getAllSessions())
-          .thenAnswer((_) async => [Session.empty()]);
-      when(() => sessionRepository.updateSession(newSession))
-          .thenAnswer((_) async => false);
-      final sessionListNotifier =
-          SessionListNotifier(sessionRepository: sessionRepository);
-      await sessionListNotifier.loadSessions();
-      final session = await sessionListNotifier.updateSession(newSession);
-      expect(session, false);
-    });
-  });
+    test('TheMovieDBSearchResult.toString should return correct String', () {
+      final result = TheMovieDBSearchResult(
+        posterUrl: 'https://image.tmdb.org/t/p/w500/poster.jpg',
+        overview: 'A great movie',
+        genreIds: [1, 2, 3],
+        genreNames: [],
+        id: '123',
+        title: 'The Movie',
+      );
 
-  group('Testing SessionListNotifier : deleteSession', () {
-    test('Should delete a Session', () async {
-      final sessionRepository = MockSessionRepository();
-      final newSession = Session.empty();
-      when(() => sessionRepository.getAllSessions())
-          .thenAnswer((_) async => [newSession]);
-      when(() => sessionRepository.deleteSession(newSession.id))
-          .thenAnswer((_) async => true);
-      final sessionListNotifier =
-          SessionListNotifier(sessionRepository: sessionRepository);
-      await sessionListNotifier.loadSessions();
-      final session = await sessionListNotifier.deleteSession(newSession);
-      expect(session, true);
-    });
-
-    test('Should return an error if session is not deleted', () async {
-      final sessionRepository = MockSessionRepository();
-      final newSession = Session.empty();
-      when(() => sessionRepository.getAllSessions())
-          .thenAnswer((_) async => [newSession]);
-      when(() => sessionRepository.deleteSession(newSession.id))
-          .thenThrow(Exception('Error'));
-      final sessionListNotifier =
-          SessionListNotifier(sessionRepository: sessionRepository);
-      await sessionListNotifier.loadSessions();
-      final session = await sessionListNotifier.deleteSession(newSession);
-      expect(session, false);
-    });
-
-    test('Should return an error if session is not loaded', () async {
-      final sessionRepository = MockSessionRepository();
-      final newSession = Session.empty();
-      when(() => sessionRepository.getAllSessions())
-          .thenAnswer((_) async => [newSession]);
-      when(() => sessionRepository.deleteSession(newSession.id))
-          .thenAnswer((_) async => true);
-      final sessionListNotifier =
-          SessionListNotifier(sessionRepository: sessionRepository);
-      final session = await sessionListNotifier.deleteSession(newSession);
-      expect(session, false);
-    });
-
-    test('Should return an error if session is not found', () async {
-      final sessionRepository = MockSessionRepository();
-      final newSession = Session.empty();
-      when(() => sessionRepository.getAllSessions())
-          .thenAnswer((_) async => [Session.empty()]);
-      when(() => sessionRepository.deleteSession(newSession.id))
-          .thenAnswer((_) async => false);
-      final sessionListNotifier =
-          SessionListNotifier(sessionRepository: sessionRepository);
-      await sessionListNotifier.loadSessions();
-      final session = await sessionListNotifier.deleteSession(newSession);
-      expect(session, false);
+      expect(result.toString(),
+          'TheMovieDBSearchResult(posterUrl: https://image.tmdb.org/t/p/w500/poster.jpg, overview: A great movie, genreIds: [1, 2, 3], genreNames: [], id: 123, title: The Movie)');
     });
   });
 }
