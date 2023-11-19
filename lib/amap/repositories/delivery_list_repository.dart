@@ -31,19 +31,19 @@ class DeliveryListRepository extends Repository {
   }
 
   Future<bool> openDelivery(Delivery delivery) async {
-    return await create({}, suffix: "/${delivery.id}/openordering");
+    return await update({},"/${delivery.id}/openordering");
   }
 
   Future<bool> lockDelivery(Delivery delivery) async {
-    return await create({}, suffix: "/${delivery.id}/lock");
+    return await update({}, "/${delivery.id}/lock");
   }
 
   Future<bool> deliverDelivery(Delivery delivery) async {
-    return await create({}, suffix: "/${delivery.id}/delivered");
+    return await update({}, "/${delivery.id}/delivered");
   }
 
   Future<bool> archiveDelivery(String deliveryId) async {
-    return await create({}, suffix: "/$deliveryId/archive");
+    return await update({}, "/$deliveryId/archive");
   }
 
   Future<List<Product>> getAllProductsFromOrder(

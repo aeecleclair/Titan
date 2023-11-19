@@ -27,6 +27,7 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
         state = AsyncValue.data(d);
         return true;
       } catch (error) {
+        print(error);
         state = AsyncValue.data(d);
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           rethrow;

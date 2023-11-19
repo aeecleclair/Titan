@@ -73,6 +73,7 @@ class DeliveryListNotifier extends ListNotifier<Delivery> {
     state.when(
       data: (deliveries) {
         var index = deliveries.indexWhere((p) => p.id == deliveryId);
+        if (index == -1) return;
         deliveries[index] =
             deliveries[index].copyWith(expanded: !deliveries[index].expanded);
         state = AsyncValue.data(deliveries);
