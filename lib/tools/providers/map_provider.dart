@@ -7,11 +7,11 @@ class MapNotifier<T, E>
   MapNotifier() : super(const AsyncLoading());
 
   void loadTList(List<T> tList) async {
-    Map<T, AsyncValue<List<E>>> loanersItems = {};
+    Map<T, AsyncValue<List<E>>> tMap = {};
     for (T l in tList) {
-      loanersItems[l] = const AsyncValue.data([]);
+      tMap[l] = const AsyncValue.data([]);
     }
-    state = AsyncValue.data(loanersItems);
+    state = AsyncValue.data(tMap);
   }
 
   Future addT(T t) async {
