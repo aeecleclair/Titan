@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/providers/is_admin.dart';
+import 'package:myecl/admin/providers/is_admin_provider.dart';
 import 'package:myecl/admin/ui/pages/add_association_page/add_association_page.dart'
     deferred as add_association_page;
 import 'package:myecl/admin/ui/pages/add_loaner_page/add_loaner_page.dart'
