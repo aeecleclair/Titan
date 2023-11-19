@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/loan/class/item.dart';
@@ -18,7 +20,7 @@ void main() {
   group('itemProvider', () {
     test('should return an instance of ItemNotifier', () {
       final container = ProviderContainer();
-      final itemNotifier = container.read(itemProvider);
+      final itemNotifier = container.read(itemProvider.notifier);
 
       expect(itemNotifier, isA<ItemNotifier>());
     });
