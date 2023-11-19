@@ -5,24 +5,27 @@ import 'package:myecl/login/class/recover_request.dart';
 import 'package:myecl/login/repositories/sign_up_repository.dart';
 
 class SignUpProvider extends StateNotifier {
-  SignUpProvider(state) : super(state);
-  final SignUpRepository _repository = SignUpRepository();
+  final SignUpRepository repository;
+  SignUpProvider({required this.repository}) : super(null);
 
   Future<bool> createUser(String email, AccountType accountType) async {
-    return await _repository.createUser(email, accountType);
+    return await repository.createUser(email, accountType);
   }
 
   Future<bool> recoverUser(String email) async {
-    return await _repository.recoverUser(email);
+    return await repository.recoverUser(email);
   }
 
   Future<bool> activateUser(CreateAccount createAccount) async {
-    return await _repository.activateUser(createAccount);
+    return await repository.activateUser(createAccount);
   }
 
   Future<bool> resetPassword(RecoverRequest recoverRequest) async {
-    return await _repository.resetPassword(recoverRequest);
+      return await repository.resetPassword(recoverRequest);
   }
 }
 
-final signUpProvider = StateNotifierProvider((ref) => SignUpProvider(null));
+final signUpProvider = StateNotifierProvider((ref) {
+  final signUpRepository = ref.watch(signUpRepositoryProvider);
+  return SignUpProvider(repository: signUpRepository);
+});

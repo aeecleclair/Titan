@@ -19,6 +19,11 @@ class RecoverRequest {
     return data;
   }
 
+  RecoverRequest.empty() {
+    resetToken = "";
+    newPassword = "";
+  }
+
   RecoverRequest copyWith({
     String? resetToken,
     String? newPassword,
