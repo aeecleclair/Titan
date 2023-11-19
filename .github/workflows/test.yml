@@ -4,6 +4,9 @@ name: Test
 on:
   pull_request:
     types: [opened, edited, ready_for_review, synchronize]
+  push:
+    branches:
+      - main
 
 jobs:
   test:
@@ -25,4 +28,9 @@ jobs:
         run: cp .env.template .env
 
       - name: Test project
-        run: flutter test
+        run: flutter test --coverage
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
