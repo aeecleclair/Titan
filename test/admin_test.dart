@@ -1,21 +1,107 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:myecl/admin/class/group.dart';
 import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/repositories/group_repository.dart';
+import 'package:myecl/user/class/list_users.dart';
 
 class MockGroupRepository extends Mock implements GroupRepository {}
 
 void main() {
-  group('Testing Group Class', () {
+  group('Testing SimpleGroup', () {
     test('Should return a group', () async {
-      final mockGroup = MockGroupRepository();
-      when(() => mockGroup.getGroupList())
-          .thenAnswer((_) async => [SimpleGroup.empty()]);
-      final group = await mockGroup.getGroupList();
-      expect(group, isA<List<SimpleGroup>>());
-      expect(group.length, 1);
+      final group = SimpleGroup.empty();
+      expect(group, isA<SimpleGroup>());
+    });
+
+    test('Should return a group with a name', () async {
+      final group = SimpleGroup.empty();
+      expect(group.name, 'Nom');
+    });
+
+    test('Should parse a group from json', () async {
+      final group = SimpleGroup.fromJson({
+        "id": "1",
+        "name": "name",
+        "description": "description",
+      });
+      expect(group.name, 'name'); // capitaliseAll
+    });
+
+    test('Should return correct json', () async {
+      final group = SimpleGroup(
+        id: "1",
+        name: "name",
+        description: "description",
+      );
+      expect(group.toJson(), {
+        "id": "1",
+        "name": "name",
+        "description": "description",
+      });
+    });
+  });
+
+  group('Testing Group', () {
+    test('Should return a group', () async {
+      final group = Group.empty();
+      expect(group, isA<Group>());
+    });
+
+    test('Should return a group with a name', () async {
+      final group = Group.empty();
+      expect(group.name, 'Nom');
+    });
+
+    test('Should parse a group from json', () async {
+      final group = Group.fromJson({
+        "id": "1",
+        "name": "name",
+        "description": "description",
+        "members": [
+          {
+            "id": "1",
+            "name": "name",
+            "firstname": "firstname",
+            "nickname": "nickname",
+          }
+        ]
+      });
+      expect(group.name, 'name');
+      expect(group.members, isA<List<SimpleUser>>());
+      expect(group.members.length, 1);
+      expect(group.members[0].name, 'Name');
+    });
+
+    test('Should return correct json', () async {
+      final group = Group(
+        id: "1",
+        name: "name",
+        description: "description",
+        members: [
+          SimpleUser(
+            id: "1",
+            name: "name",
+            firstname: "firstname",
+            nickname: null,
+          )
+        ],
+      );
+      expect(group.toJson(), {
+        "id": "1",
+        "name": "name",
+        "description": "description",
+        "members": [
+          {
+            "id": "1",
+            "name": "name",
+            "firstname": "firstname",
+            "nickname": null,
+          }
+        ]
+      });
     });
   });
 

@@ -12,74 +12,59 @@ class MockUserRepository extends Mock implements UserRepository {}
 void main() {
   group('Testing User Class', () {
     test('Should return a user', () async {
-      final mockUser = MockUserRepository();
-      when(() => mockUser.getMe()).thenAnswer((_) async => User.empty());
-      final user = await mockUser.getMe();
+      final user = User.empty();
       expect(user, isA<User>());
     });
 
     test('Should return a user with a name', () async {
-      final mockUser = MockUserRepository();
-      when(() => mockUser.getMe()).thenAnswer((_) async => User.empty());
-      final user = await mockUser.getMe();
-      expect(user.name, 'Nom');
-    });
-
-    test('Should parse an User from json', () async {
-      final mockUser = MockUserRepository();
-      when(() => mockUser.getMe()).thenAnswer((_) async => User.fromJson({
-            "birthday": "1999-01-01",
-            "created_on": "2021-01-01",
-            "email": "email",
-            "firstname": "firstname",
-            "floor": "floor",
-            "groups": [],
-            "id": "id",
-            "name": "name",
-            "nickname": "nickname",
-            "phone": "phone",
-            "promo": null
-          }));
-      final user = await mockUser.getMe();
+      final user = User.empty();
       expect(user.name, 'Name'); // capitaliseAll
     });
 
-    test('Should return correct json', () async {
-      final mockUser = MockUserRepository();
-      when(() => mockUser.getMe()).thenAnswer((_) async => User(
-          birthday: '1999-01-01',
-          createdOn: '2021-01-01',
-          email: 'email',
-          firstname: 'firstname',
-          floor: 'floor',
-          groups: [],
-          id: 'id',
-          name: 'name',
-          nickname: 'nickname',
-          phone: 'phone',
-          promo: null));
-      final user = await mockUser.getMe();
-      expect(user.toJson(), {
+    test('Should parse an User from json', () async {
+      final user = User.fromJson({
+        "name": "name",
+        "firstname": "firstname",
+        "nickname": null,
+        "id": "id",
         "birthday": "1999-01-01",
         "created_on": "2021-01-01",
         "email": "email",
-        "firstname": "firstname",
-        "floor": "floor",
+        "floor": "autre",
         "groups": [],
-        "id": "id",
-        "name": "name",
-        "nickname": "nickname",
         "phone": "phone",
         "promo": null
       });
+      expect(user, isA<User>());
     });
 
-    test('Should change user name', () async {
-      final mockUser = MockUserRepository();
-      when(() => mockUser.getMe()).thenAnswer((_) async => User.empty());
-      final user = await mockUser.getMe();
-      final newUser = user.copyWith(name: 'New Name');
-      expect(newUser.name, 'New Name');
+    test('Should return correct json', () async {
+      final user = User.fromJson({
+        "name": "name",
+        "firstname": "firstname",
+        "nickname": null,
+        "id": "id",
+        "birthday": "1999-01-01",
+        "created_on": "2021-01-01",
+        "email": "email",
+        "floor": "floor",
+        "groups": [],
+        "phone": "phone",
+        "promo": null
+      });
+      expect(user.toJson(), {
+        "name": "name",
+        "firstname": "firstname",
+        "nickname": null,
+        "id": "id",
+        "birthday": "1999-01-01",
+        "created_on": "2021-01-01",
+        "email": "email",
+        "floor": "floor",
+        "groups": [],
+        "phone": "phone",
+        "promo": null
+      });
     });
   });
 

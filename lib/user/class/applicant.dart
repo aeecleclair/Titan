@@ -49,8 +49,8 @@ class Applicant extends SimpleUser {
 
   @override
   Applicant.empty() : super.empty() {
-    email = '';
-    promo = 0;
+    email = 'empty@ecl.ec-lyon.fr';
+    promo = null;
     phone = null;
   }
 

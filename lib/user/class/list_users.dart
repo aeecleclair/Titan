@@ -31,8 +31,8 @@ class SimpleUser {
   }
 
   SimpleUser.empty()
-      : name = '',
-        firstname = '',
+      : name = 'Nom',
+        firstname = 'Prénom',
         nickname = null,
         id = '';
 
