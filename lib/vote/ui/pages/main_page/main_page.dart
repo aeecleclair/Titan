@@ -56,13 +56,33 @@ class VoteMainPage extends HookConsumerWidget {
       return VoteTemplate(
         child: SizedBox(
             height: MediaQuery.of(context).size.height - 100,
-            child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.0),
-                child: Center(
-                  child: Text(
-                    VoteTextConstants.canNotVote,
-                    style: TextStyle(fontSize: 20),
-                  ),
+            child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: Column(
+                  children: [
+                    if (isAdmin)
+                      Row(
+                        children: [
+                          const Spacer(),
+                          Container(
+                            margin: const EdgeInsets.only(right: 20),
+                            child: AdminButton(
+                              onTap: () {
+                                QR.to(VoteRouter.root + VoteRouter.admin);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    const Expanded(
+                      child: Center(
+                        child: Text(
+                          VoteTextConstants.canNotVote,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
+                    ),
+                  ],
                 ))),
       );
     }
