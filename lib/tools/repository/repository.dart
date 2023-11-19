@@ -40,7 +40,9 @@ abstract class Repository {
           if (host == displayHost) {
             toDecode = utf8.decode(response.body.runes.toList());
           }
-          cacheManager.writeCache(ext + suffix, toDecode);
+          if (!kIsWeb) {
+            cacheManager.writeCache(ext + suffix, toDecode);
+          }
           return jsonDecode(toDecode);
         } catch (e) {
           logger.writeLog(Log(
@@ -83,6 +85,12 @@ abstract class Repository {
     } on AppException {
       rethrow;
     } catch (e) {
+      if (kIsWeb) {
+        FLog.error(
+            text: "GET ${ext + suffix}\nError while fetching response",
+            exception: e);
+       return [];
+      }
       try {
         final toDecode = await cacheManager.readCache(ext + suffix);
         return jsonDecode(toDecode);
@@ -109,7 +117,9 @@ abstract class Repository {
           if (host == displayHost || decode) {
             toDecode = utf8.decode(response.body.runes.toList());
           }
-          cacheManager.writeCache(ext + id + suffix, toDecode);
+          if (!kIsWeb) {
+            cacheManager.writeCache(ext + id + suffix, toDecode);
+          }
           return jsonDecode(toDecode);
         } catch (e) {
           logger.writeLog(Log(
@@ -153,6 +163,12 @@ abstract class Repository {
     } on AppException {
       rethrow;
     } catch (e) {
+      if (kIsWeb) {
+        FLog.error(
+            text: "GET ${ext + id + suffix}\nError while fetching response",
+            exception: e);
+        return <String, dynamic>{};
+      }
       try {
         final toDecode = await cacheManager.readCache(ext + id + suffix);
         return jsonDecode(toDecode);
@@ -162,7 +178,7 @@ abstract class Repository {
                 "GET ${ext + id + suffix}\nError while decoding response from cache",
             level: LogLevel.error));
         cacheManager.deleteCache(ext + suffix);
-        return [];
+        return <String, dynamic>{};
       }
     }
   }
