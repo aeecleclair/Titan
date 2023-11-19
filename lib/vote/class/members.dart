@@ -66,4 +66,9 @@ class Member extends SimpleUser {
       role: '',
     );
   }
+
+  @override
+  String toString() {
+    return 'Member{id: $id, name: $name, firstname: $firstname, nickname: $nickname, role: $role}';
+  }
 }

@@ -42,4 +42,9 @@ class Section {
     name = '';
     description = '';
   }
+
+  @override
+  String toString() {
+    return 'Section{id: $id, name: $name, description: $description}';
+  }
 }

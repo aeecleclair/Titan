@@ -77,4 +77,9 @@ class Contender {
     section = Section.empty();
     program = '';
   }
+
+  @override
+  String toString() {
+    return 'Pretendance{id: $id, name: $name, description: $description, listType: $listType, members: $members, section: $section, program: $program}';
+  }
 }

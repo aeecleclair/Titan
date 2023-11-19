@@ -20,4 +20,9 @@ class Result {
     id = '';
     count = 0;
   }
+
+  @override
+  String toString() {
+    return 'Result{id: $id, count: $count}';
+  }
 }

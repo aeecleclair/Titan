@@ -12,4 +12,9 @@ class Votes {
   Votes.empty() {
     id = "";
   }
+
+  @override
+  String toString() {
+    return 'Votes{id: $id}';
+  }
 }
