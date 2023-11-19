@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
+import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/manager_booking_list_provider.dart';
@@ -12,6 +13,7 @@ import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/pages/admin_pages/admin_chip.dart';
+import 'package:myecl/booking/ui/pages/admin_pages/admin_scroll_chips.dart';
 import 'package:myecl/booking/ui/pages/booking_pages/checkbox_entry.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
@@ -20,7 +22,6 @@ import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/date_entry.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:myecl/user/providers/user_provider.dart';
@@ -28,9 +29,9 @@ import 'package:qlevar_router/qlevar_router.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class AddEditBookingPage extends HookConsumerWidget {
+  final dataKey = GlobalKey();
   final bool isManagerPage;
-  const AddEditBookingPage({Key? key, required this.isManagerPage})
-      : super(key: key);
+  AddEditBookingPage({Key? key, required this.isManagerPage}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -96,17 +97,22 @@ class AddEditBookingPage extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 20),
                 AsyncChild(
-                    value: rooms,
-                    builder: (context, data) => HorizontalListView.builder(
-                        height: 40,
-                        items: data,
-                        itemBuilder: (context, e, i) => AdminChip(
-                              label: capitalize(e.name),
-                              selected: room.value.id == e.id,
-                              onTap: () async {
-                                room.value = e;
-                              },
-                            ))),
+                  value: rooms,
+                  builder: (context, data) => AdminScrollChips(
+                    isEdit: isEdit,
+                    dataKey: dataKey,
+                    data: data,
+                    pageStorageKeyName: "booking_room_list",
+                    builder: (Room e) => AdminChip(
+                      key: room.value.id == e.id ? dataKey : null,
+                      label: e.name,
+                      selected: room.value.id == e.id,
+                      onTap: () {
+                        room.value = e;
+                      },
+                    ),
+                  ),
+                ),
                 const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
