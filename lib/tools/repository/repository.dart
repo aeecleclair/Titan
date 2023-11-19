@@ -86,9 +86,10 @@ abstract class Repository {
       rethrow;
     } catch (e) {
       if (kIsWeb) {
-        FLog.error(
-            text: "GET ${ext + suffix}\nError while fetching response",
-            exception: e);
+        logger.writeLog(Log(
+            message:
+                "GET ${ext + suffix}\nError while fetching response",
+            level: LogLevel.error));
        return [];
       }
       try {
@@ -164,9 +165,10 @@ abstract class Repository {
       rethrow;
     } catch (e) {
       if (kIsWeb) {
-        FLog.error(
-            text: "GET ${ext + id + suffix}\nError while fetching response",
-            exception: e);
+        logger.writeLog(Log(
+            message:
+                "GET ${ext + suffix}\nError while fetching response",
+            level: LogLevel.error));
         return <String, dynamic>{};
       }
       try {
