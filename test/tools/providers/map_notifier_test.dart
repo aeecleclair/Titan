@@ -2,7 +2,6 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/providers/map_provider.dart';
 
 class MockE {}
@@ -20,7 +19,7 @@ class MockMapNotifier extends MapNotifier<MockT, MockE> {
     return addT(t);
   }
 
-  Future<void> testAddE(MockT t, MockE e) async {
+  Future<bool> testAddE(MockT t, MockE e) async {
     return addE(t, e);
   }
 
@@ -52,312 +51,298 @@ void main() {
               error: (Object error, StackTrace stackTrace) => [],
               loading: () => []),
           data);
+      expect(
+          notifier.state.when(
+              data: (d) => d.values.first,
+              error: (Object error, StackTrace stackTrace) => null,
+              loading: () => null),
+          isA<AsyncValue<List<MockE>>>());
     });
   });
 
-  // group('Testing MapNotifier : add', () {
-  //   test('Should returns true and updates state on success', () async {
-  //     final notifier = MockMapNotifier();
-  //     final data = [MockE(), MockE()];
-  //     notifier.state = AsyncValue.data(data);
-  //     final newData = MockE();
-  //     final newDataList = [...data, newData];
-  //     final result =
-  //         await notifier.testAdd((t) => Future.value(newData), newData);
-  //     expect(result, isTrue);
-  //     expect(notifier.state, isA<AsyncData<List<MockE>>>());
-  //     expect(
-  //         notifier.state
-  //             .when(data: (d) => d, error: (e, s) => [], loading: () => []),
-  //         newDataList);
-  //   });
+  group('Testing MapNotifier : addT', () {
+    test('Should updates state on success', () async {
+      final notifier = MockMapNotifier();
+      final data = <MockT, AsyncValue<List<MockE>>>{
+        MockT(): const AsyncLoading(),
+        MockT(): const AsyncValue.data(<MockE>[]),
+      };
+      notifier.state = AsyncValue.data(data);
+      final newData = MockT();
+      await notifier.testAddT(newData);
+      expect(notifier.state,
+          isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>>>>());
+      expect(
+          notifier.state
+              .when(data: (d) => d, error: (e, s) => {}, loading: () => {})
+              .keys
+              .contains(newData),
+          isTrue);
+      expect(
+          notifier.state.when(
+              data: (d) => d, error: (e, s) => {}, loading: () => {})[newData],
+          isA<AsyncData<List<MockE>>>());
+    });
 
-  //   test(
-  //       'Should throw AppException.tokenExpire and restores state on previous data when add fails with AppException.tokenExpire',
-  //       () async {
-  //     final notifier = MockMapNotifier();
-  //     final data = [MockE(), MockE()];
-  //     notifier.state = AsyncValue.data(data);
-  //     final newData = MockE();
-  //     final error = AppException(ErrorType.tokenExpire, 'test');
-  //     try {
-  //       await notifier.testAdd((t) => throw error, newData);
-  //       expect(notifier.state, isA<AsyncData<List<MockE>>>()); // not reached
-  //     } catch (e) {
-  //       expect(e, error);
-  //       expect(notifier.state, isA<AsyncData<List<MockE>>>());
-  //       expect(
-  //           notifier.state
-  //               .when(data: (d) => d, error: (e, s) => [], loading: () => []),
-  //           data);
-  //     }
-  //   });
+    test('Should sets state on loading when start state is AsyncLoading',
+        () async {
+      final notifier = MockMapNotifier();
+      final newData = MockT();
+      await notifier.testAddT(newData);
+      expect(notifier.state, isA<AsyncLoading>());
+    });
 
-  //   test(
-  //       'Should return false and restores state on previous data when add fails with AppException.notFound',
-  //       () async {
-  //     final notifier = MockMapNotifier();
-  //     final data = [MockE(), MockE()];
-  //     notifier.state = AsyncValue.data(data);
-  //     final newData = MockE();
-  //     final error = AppException(ErrorType.notFound, 'test');
-  //     final result = await notifier.testAdd((t) => throw error, newData);
-  //     expect(result, isFalse);
-  //     expect(notifier.state, isA<AsyncData<List<MockE>>>());
-  //     expect(
-  //         notifier.state
-  //             .when(data: (d) => d, error: (e, s) => [], loading: () => []),
-  //         data);
-  //   });
+    test(
+        'Should return false sets state on error when start state is AsyncError',
+        () async {
+      final notifier = MockMapNotifier();
+      notifier.state = AsyncValue.error("test", StackTrace.current);
+      final newData = MockT();
+      await notifier.testAddT(newData);
+      expect(notifier.state, isA<AsyncError>());
+    });
+  });
 
-  //   test(
-  //       'Should return false sets state on error when start state is AsyncLoading',
-  //       () async {
-  //     final notifier = MockMapNotifier();
-  //     final newData = MockE();
-  //     final result = await notifier.testAdd((t) => Future.value(t), newData);
-  //     expect(result, isFalse);
-  //     expect(notifier.state, isA<AsyncError>());
-  //     expect(notifier.state.error, "Cannot add while loading");
-  //   });
+  group('Testing MapNotifier : addE', () {
+    test(
+        'Should returns true and updates state on success when value is AsyncData',
+        () async {
+      final notifier = MockMapNotifier();
+      final key = MockT();
+      final data = <MockT, AsyncValue<List<MockE>>>{
+        MockT(): const AsyncLoading(),
+        key: const AsyncValue.data(<MockE>[])
+      };
+      notifier.state = AsyncValue.data(data);
+      final newData = MockE();
+      final newDataList = [newData];
+      final result = await notifier.testAddE(key, newData);
+      expect(result, isTrue);
+      expect(notifier.state,
+          isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>>>>());
+      expect(
+          notifier.state
+              .when<Map<MockT, AsyncValue<List<MockE>>>>(
+                  data: (d) => d, error: (e, s) => {}, loading: () => {})[key]!
+              .when(
+                data: (d) => d,
+                error: (e, s) => [],
+                loading: () => [],
+              ),
+          newDataList);
+    });
 
-  //   test(
-  //       'Should return false sets state on error when start state is AsyncError',
-  //       () async {
-  //     final notifier = MockMapNotifier();
-  //     notifier.state = AsyncValue.error("test", StackTrace.current);
-  //     final newData = MockE();
-  //     final error = AppException(ErrorType.notFound, 'test');
-  //     final result = await notifier.testAdd((t) => throw error, newData);
-  //     expect(result, isFalse);
-  //     expect(notifier.state, isA<AsyncError>());
-  //     expect(notifier.state.error, "test");
-  //   });
-  // });
+    test(
+        'Should returns true and updates state on success when value is AsyncLoading',
+        () async {
+      final notifier = MockMapNotifier();
+      final key = MockT();
+      final data = <MockT, AsyncValue<List<MockE>>>{
+        MockT(): const AsyncLoading(),
+        key: const AsyncLoading()
+      };
+      notifier.state = AsyncValue.data(data);
+      final newData = MockE();
+      final newDataList = [newData];
+      final result = await notifier.testAddE(key, newData);
+      expect(result, isTrue);
+      expect(notifier.state,
+          isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>>>>());
+      expect(
+          notifier.state
+              .when<Map<MockT, AsyncValue<List<MockE>>>>(
+                  data: (d) => d, error: (e, s) => {}, loading: () => {})[key]!
+              .when(
+                data: (d) => d,
+                error: (e, s) => [],
+                loading: () => [],
+              ),
+          newDataList);
+    });
 
-  // group('Testing MapNotifier : update', () {
-  //   test('Should returns true and updates state on success', () async {
-  //     final notifier = MockMapNotifier();
-  //     final data = [MockE(), MockE()];
-  //     notifier.state = AsyncValue.data(data);
-  //     final newData = MockE();
-  //     final newDataList = [newData, ...data.skip(1)];
-  //     final result = await notifier.testUpdate((t) => Future.value(true),
-  //         (listT, t) => [t, ...listT.skip(1)], newData);
-  //     expect(result, isTrue);
-  //     expect(notifier.state, isA<AsyncData<List<MockE>>>());
-  //     expect(
-  //         notifier.state
-  //             .when(data: (d) => d, error: (e, s) => [], loading: () => []),
-  //         newDataList);
-  //   });
+    test(
+        'Should returns true and updates state on success when value is AsyncError',
+        () async {
+      final notifier = MockMapNotifier();
+      final key = MockT();
+      final data = <MockT, AsyncValue<List<MockE>>>{
+        MockT(): const AsyncLoading(),
+        key: AsyncError("test", StackTrace.current)
+      };
+      notifier.state = AsyncValue.data(data);
+      final newData = MockE();
+      final newDataList = [newData];
+      final result = await notifier.testAddE(key, newData);
+      expect(result, isTrue);
+      expect(notifier.state,
+          isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>>>>());
+      expect(
+          notifier.state
+              .when<Map<MockT, AsyncValue<List<MockE>>>>(
+                  data: (d) => d, error: (e, s) => {}, loading: () => {})[key]!
+              .when(
+                data: (d) => d,
+                error: (e, s) => [],
+                loading: () => [],
+              ),
+          newDataList);
+    });
 
-  //   test(
-  //       'Should return false and restores state on previous data when update function return false',
-  //       () async {
-  //     final notifier = MockMapNotifier();
-  //     final data = [MockE(), MockE()];
-  //     notifier.state = AsyncValue.data(data);
-  //     final newData = MockE();
-  //     final result = await notifier.testUpdate((t) => Future.value(false),
-  //         (listT, t) => [t, ...listT.skip(1)], newData);
-  //     expect(result, isFalse);
-  //     expect(notifier.state, isA<AsyncData<List<MockE>>>());
-  //     expect(
-  //         notifier.state
-  //             .when(data: (d) => d, error: (e, s) => [], loading: () => []),
-  //         data);
-  //   });
+    test(
+        'Should return false sets state on error when start state is AsyncLoading',
+        () async {
+      final notifier = MockMapNotifier();
+      final key = MockT();
+      final newData = MockE();
+      final result = await notifier.testAddE(key, newData);
+      expect(result, isFalse);
+      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state.error, "Cannot add while loading");
+    });
 
-  //   test(
-  //       'Should throw AppException.tokenExpire and restores state on previous data when add fails with AppException.tokenExpire',
-  //       () async {
-  //     final notifier = MockMapNotifier();
-  //     final data = [MockE(), MockE()];
-  //     notifier.state = AsyncValue.data(data);
-  //     final newData = MockE();
-  //     final newDataList = [newData, ...data.skip(1)];
-  //     final error = AppException(ErrorType.tokenExpire, 'test');
-  //     try {
-  //       await notifier.testUpdate(
-  //           (t) => throw error, (listT, t) => [t, ...listT.skip(1)], newData);
-  //       expect(notifier.state, isA<AsyncData<List<MockE>>>()); // not reached
-  //     } catch (e) {
-  //       expect(e, error);
-  //       expect(notifier.state, isA<AsyncData<List<MockE>>>());
-  //       expect(
-  //           notifier.state
-  //               .when(data: (d) => d, error: (e, s) => [], loading: () => []),
-  //           data);
-  //       expect(
-  //           notifier.state.when(
-  //                   data: (d) => d, error: (e, s) => [], loading: () => []) ==
-  //               newDataList,
-  //           isFalse);
-  //     }
-  //   });
+    test(
+        'Should return false sets state on error when start state is AsyncError',
+        () async {
+      final notifier = MockMapNotifier();
+      notifier.state = AsyncValue.error("test", StackTrace.current);
+      final newData = MockE();
+      final key = MockT();
+      final result = await notifier.testAddE(key, newData);
+      expect(result, isFalse);
+      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state.error, "test");
+    });
+  });
 
-  //   test(
-  //       'Should return false and restores state on previous data when add fails with AppException.notFound',
-  //       () async {
-  //     final notifier = MockMapNotifier();
-  //     final data = [MockE(), MockE()];
-  //     notifier.state = AsyncValue.data(data);
-  //     final newData = MockE();
-  //     final newDataList = [newData, ...data.skip(1)];
-  //     final error = AppException(ErrorType.notFound, 'test');
-  //     final result = await notifier.testUpdate(
-  //         (t) => throw error, (listT, t) => [t, ...listT.skip(1)], newData);
-  //     expect(result, isFalse);
-  //     expect(notifier.state, isA<AsyncData<List<MockE>>>());
-  //     expect(
-  //         notifier.state
-  //             .when(data: (d) => d, error: (e, s) => [], loading: () => []),
-  //         data);
-  //     expect(
-  //         notifier.state.when(
-  //                 data: (d) => d, error: (e, s) => [], loading: () => []) ==
-  //             newDataList,
-  //         isFalse);
-  //   });
+  group('Testing MapNotifier : deleteT', () {
+    test('Should returns true and updates state', () async {
+      final notifier = MockMapNotifier();
+      final key = MockT();
+      final data = <MockT, AsyncValue<List<MockE>>>{
+        MockT(): const AsyncLoading(),
+        key: const AsyncValue.data(<MockE>[])
+      };
+      notifier.state = AsyncValue.data(data);
+      final result = await notifier.testDeleteT(key);
+      expect(result, isTrue);
+      expect(notifier.state,
+          isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>>>>());
+      expect(
+          notifier.state
+              .when<Map<MockT, AsyncValue<List<MockE>>>>(
+                  data: (d) => d, error: (e, s) => {}, loading: () => {})
+              .keys
+              .contains(key),
+          isFalse);
+    });
 
-  //   test(
-  //       'Should return false sets state on error when start state is AsyncLoading',
-  //       () async {
-  //     final notifier = MockMapNotifier();
-  //     final newData = MockE();
-  //     final result = await notifier.testUpdate((t) => Future.value(true),
-  //         (listT, t) => [t, ...listT.skip(1)], newData);
-  //     expect(result, isFalse);
-  //     expect(notifier.state, isA<AsyncError>());
-  //     expect(notifier.state.error, "Cannot update while loading");
-  //   });
+    test('Should returns true and does not touch state when key is not in map',
+        () async {
+      final notifier = MockMapNotifier();
+      final key = MockT();
+      final data = <MockT, AsyncValue<List<MockE>>>{
+        MockT(): const AsyncLoading(),
+        key: const AsyncLoading()
+      };
+      notifier.state = AsyncValue.data(data);
+      final result = await notifier.testDeleteT(MockT());
+      expect(result, isTrue);
+      expect(notifier.state,
+          isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>>>>());
+      expect(
+          notifier.state
+              .when<Map<MockT, AsyncValue<List<MockE>>>>(
+                  data: (d) => d, error: (e, s) => {}, loading: () => {})
+              .keys,
+          data.keys);
+    });
 
-  //   test(
-  //       'Should return false sets state on error when start state is AsyncError',
-  //       () async {
-  //     final notifier = MockMapNotifier();
-  //     notifier.state = AsyncValue.error("test", StackTrace.current);
-  //     final newData = MockE();
-  //     final result = await notifier.testUpdate((t) => Future.value(true),
-  //         (listT, t) => [t, ...listT.skip(1)], newData);
-  //     expect(result, isFalse);
-  //     expect(notifier.state, isA<AsyncError>());
-  //     expect(notifier.state.error, "test");
-  //   });
-  // });
+    test(
+        'Should return false sets state on error when start state is AsyncLoading',
+        () async {
+      final notifier = MockMapNotifier();
+      final key = MockT();
+      final result = await notifier.testDeleteT(key);
+      expect(result, isFalse);
+      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state.error, "Cannot delete while loading");
+    });
 
-  // group('Testing MapNotifier : delete', () {
-  //   test('Should returns true and updates state on success', () async {
-  //     final notifier = MockMapNotifier();
-  //     final data = [MockE(), MockE()];
-  //     notifier.state = AsyncValue.data(data);
-  //     final oldData = data.first;
-  //     final newDataList = data.skip(1).toList();
-  //     final result = await notifier.testDelete((id) => Future.value(true),
-  //         (listT, t) => listT.skip(1).toList(), 'id', oldData);
-  //     expect(result, isTrue);
-  //     expect(notifier.state, isA<AsyncData<List<MockE>>>());
-  //     expect(
-  //         notifier.state
-  //             .when(data: (d) => d, error: (e, s) => [], loading: () => []),
-  //         newDataList);
-  //   });
+    test(
+        'Should return false sets state on error when start state is AsyncError',
+        () async {
+      final notifier = MockMapNotifier();
+      notifier.state = AsyncValue.error("test", StackTrace.current);
+      final key = MockT();
+      final result = await notifier.testDeleteT(key);
+      expect(result, isFalse);
+      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state.error, "test");
+    });
+  });
 
-  //   test(
-  //       'Should return false and restores state on previous data when update function return false',
-  //       () async {
-  //     final notifier = MockMapNotifier();
-  //     final data = [MockE(), MockE()];
-  //     notifier.state = AsyncValue.data(data);
-  //     final oldData = data.first;
-  //     final result = await notifier.testDelete((id) => Future.value(false),
-  //         (listT, t) => listT.skip(1).toList(), 'id', oldData);
-  //     expect(result, isFalse);
-  //     expect(notifier.state, isA<AsyncData<List<MockE>>>());
-  //     expect(
-  //         notifier.state
-  //             .when(data: (d) => d, error: (e, s) => [], loading: () => []),
-  //         data);
-  //   });
+  group('Testing MapNotifier : setTData', () {
+    test('Should returns true and updates state', () async {
+      final notifier = MockMapNotifier();
+      final key = MockT();
+      final data = <MockT, AsyncValue<List<MockE>>>{
+        MockT(): const AsyncLoading(),
+        key: const AsyncValue.data(<MockE>[])
+      };
+      final newData = AsyncValue.data([MockE()]);
+      notifier.state = AsyncValue.data(data);
+      final result = await notifier.testSetTData(key, newData);
+      expect(result, isTrue);
+      expect(notifier.state,
+          isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>>>>());
+      expect(
+          notifier.state.when<Map<MockT, AsyncValue<List<MockE>>>>(
+              data: (d) => d, error: (e, s) => {}, loading: () => {})[key]!,
+          newData);
+    });
 
-  //   test(
-  //       'Should throw AppException.tokenExpire and restores state on previous data when add fails with AppException.tokenExpire',
-  //       () async {
-  //     final notifier = MockMapNotifier();
-  //     final data = [MockE(), MockE()];
-  //     notifier.state = AsyncValue.data(data);
-  //     final oldData = data.first;
-  //     final newDataList = data.skip(1).toList();
-  //     final error = AppException(ErrorType.tokenExpire, 'test');
-  //     try {
-  //       await notifier.testDelete((t) => throw error,
-  //           (listT, t) => listT.skip(1).toList(), 'id', oldData);
-  //       expect(notifier.state, isA<AsyncData<List<MockE>>>()); // not reached
-  //     } catch (e) {
-  //       expect(e, error);
-  //       expect(notifier.state, isA<AsyncData<List<MockE>>>());
-  //       expect(
-  //           notifier.state
-  //               .when(data: (d) => d, error: (e, s) => [], loading: () => []),
-  //           data);
-  //       expect(
-  //           notifier.state.when(
-  //                   data: (d) => d, error: (e, s) => [], loading: () => []) ==
-  //               newDataList,
-  //           isFalse);
-  //     }
-  //   });
+    test('Should returns true and does not touch state when key is not in map',
+        () async {
+      final notifier = MockMapNotifier();
+      final key = MockT();
+      final data = <MockT, AsyncValue<List<MockE>>>{
+        MockT(): const AsyncLoading(),
+      };
+      final newData = AsyncValue.data([MockE()]);
+      notifier.state = AsyncValue.data(data);
+      final result = await notifier.testSetTData(key, newData);
+      expect(result, isTrue);
+      expect(notifier.state,
+          isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>>>>());
+      expect(
+          notifier.state.when<Map<MockT, AsyncValue<List<MockE>>>>(
+              data: (d) => d, error: (e, s) => {}, loading: () => {})[key]!,
+          newData);
+    });
 
-  //   test(
-  //       'Should return false and restores state on previous data when add fails with AppException.notFound',
-  //       () async {
-  //     final notifier = MockMapNotifier();
-  //     final data = [MockE(), MockE()];
-  //     notifier.state = AsyncValue.data(data);
-  //     final oldData = data.first;
-  //     final newDataList = data.skip(1).toList();
-  //     final error = AppException(ErrorType.notFound, 'test');
-  //     final result = await notifier.testDelete((t) => throw error,
-  //         (listT, t) => listT.skip(1).toList(), 'id', oldData);
-  //     expect(result, isFalse);
-  //     expect(notifier.state, isA<AsyncData<List<MockE>>>());
-  //     expect(
-  //         notifier.state
-  //             .when(data: (d) => d, error: (e, s) => [], loading: () => []),
-  //         data);
-  //     expect(
-  //         notifier.state.when(
-  //                 data: (d) => d, error: (e, s) => [], loading: () => []) ==
-  //             newDataList,
-  //         isFalse);
-  //   });
+    test(
+        'Should return false sets state on error when start state is AsyncLoading',
+        () async {
+      final notifier = MockMapNotifier();
+      final key = MockT();
+      final newData = AsyncValue.data([MockE()]);
+      final result = await notifier.testSetTData(key, newData);
+      expect(result, isFalse);
+      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state.error, "Cannot add while loading");
+    });
 
-  //   test(
-  //       'Should return false sets state on error when start state is AsyncLoading',
-  //       () async {
-  //     final notifier = MockMapNotifier();
-  //     final data = [MockE(), MockE()];
-  //     final oldData = data.first;
-  //     final result = await notifier.testDelete((id) => Future.value(true),
-  //         (listT, t) => listT.skip(1).toList(), 'id', oldData);
-  //     expect(result, isFalse);
-  //     expect(notifier.state, isA<AsyncError>());
-  //     expect(notifier.state.error, "Cannot delete while loading");
-  //   });
-
-  //   test(
-  //       'Should return false sets state on error when start state is AsyncError',
-  //       () async {
-  //     final notifier = MockMapNotifier();
-  //     notifier.state = AsyncValue.error("test", StackTrace.current);
-  //     final data = [MockE(), MockE()];
-  //     final oldData = data.first;
-  //     final result = await notifier.testDelete((id) => Future.value(true),
-  //         (listT, t) => listT.skip(1).toList(), 'id', oldData);
-  //     expect(result, isFalse);
-  //     expect(notifier.state, isA<AsyncError>());
-  //     expect(notifier.state.error, "test");
-  //   });
-  // });
+    test(
+        'Should return false sets state on error when start state is AsyncError',
+        () async {
+      final notifier = MockMapNotifier();
+      notifier.state = AsyncValue.error("test", StackTrace.current);
+      final newData = AsyncValue.data([MockE()]);
+      final key = MockT();
+      final result = await notifier.testSetTData(key, newData);
+      expect(result, isFalse);
+      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state.error, "test");
+    });
+  });
 }

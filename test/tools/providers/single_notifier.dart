@@ -264,6 +264,34 @@ void main() {
       expect(notifier.state, isA<AsyncError>());
       expect(notifier.state.error, "test");
     });
+
+    test(
+        'Should return false sets state on error when start state is AsyncError(AppException.notFound)',
+        () async {
+      final notifier = MockSingleNotifier();
+      final error = AppException(ErrorType.notFound, 'test');
+      notifier.state = AsyncValue.error(error, StackTrace.current);
+      final newData = MockData();
+      final result =
+          await notifier.testUpdate((t) => Future.value(true), newData);
+      expect(result, isFalse);
+      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state.error, error);
+    });
+
+    test(
+        'Should return false sets state on error when start state is AsyncError(AppException.tokenExpire)',
+        () async {
+      final notifier = MockSingleNotifier();
+      final error = AppException(ErrorType.tokenExpire, 'test');
+      notifier.state = AsyncValue.error(error, StackTrace.current);
+      final newData = MockData();
+      final result =
+          await notifier.testUpdate((t) => Future.value(true), newData);
+      expect(result, isFalse);
+      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state.error, error);
+    });
   });
 
   group('Testing SingleNotifier : delete', () {
@@ -352,6 +380,34 @@ void main() {
       expect(result, isFalse);
       expect(notifier.state, isA<AsyncError>());
       expect(notifier.state.error, "test");
+    });
+
+    test(
+        'Should return false sets state on error when start state is AsyncError(AppException.notFound)',
+        () async {
+      final notifier = MockSingleNotifier();
+      final error = AppException(ErrorType.notFound, 'test');
+      notifier.state = AsyncValue.error(error, StackTrace.current);
+      final data = MockData();
+      final result =
+          await notifier.testDelete((id) => Future.value(true), 'id', data);
+      expect(result, isFalse);
+      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state.error, error);
+    });
+
+    test(
+        'Should return false sets state on error when start state is AsyncError(AppException.tokenExpire)',
+        () async {
+      final notifier = MockSingleNotifier();
+      final error = AppException(ErrorType.tokenExpire, 'test');
+      notifier.state = AsyncValue.error(error, StackTrace.current);
+      final data = MockData();
+      final result =
+          await notifier.testDelete((id) => Future.value(true), 'id', data);
+      expect(result, isFalse);
+      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state.error, error);
     });
   });
 }

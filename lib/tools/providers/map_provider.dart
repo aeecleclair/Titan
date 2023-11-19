@@ -9,16 +9,17 @@ class MapNotifier<T, E>
   void loadTList(List<T> tList) async {
     Map<T, AsyncValue<List<E>>> tMap = {};
     for (T l in tList) {
-      tMap[l] = const AsyncValue.data([]);
+      final emptyEList = <E>[];
+      tMap[l] = AsyncValue.data(emptyEList);
     }
     state = AsyncValue.data(tMap);
   }
 
   Future addT(T t) async {
     state.maybeWhen(
-      data: (loanersItems) async {
-        loanersItems[t] = const AsyncValue.data([]);
-        state = AsyncValue.data(loanersItems);
+      data: (tList) async {
+        tList[t] = const AsyncValue.data([]);
+        state = AsyncValue.data(tList);
       },
       orElse: () {},
     );
@@ -27,9 +28,8 @@ class MapNotifier<T, E>
   void addE(T t, E e) {
     state.when(data: (d) async {
       try {
-        List<E> currentLoans =
-            d[t]!.maybeWhen(data: (d) => d, orElse: () => []);
-        d[t] = AsyncValue.data(currentLoans + [e]);
+        List<E> eList = d[t]!.maybeWhen(data: (d) => d, orElse: () => []);
+        d[t] = AsyncValue.data(eList + [e]);
         state = AsyncValue.data(d);
         return true;
       } catch (error) {
@@ -56,25 +56,14 @@ class MapNotifier<T, E>
 
   Future<bool> deleteT(T t) {
     return state.when(data: (d) async {
-      try {
+      if (d.containsKey(t)) {
         d.remove(t);
         state = AsyncValue.data(d);
-        return true;
-      } catch (error) {
-        state = AsyncValue.data(d);
-        if (error is AppException && error.type == ErrorType.tokenExpire) {
-          rethrow;
-        } else {
-          return false;
-        }
       }
+      return true;
     }, error: (error, s) async {
-      if (error is AppException && error.type == ErrorType.tokenExpire) {
-        throw error;
-      } else {
-        state = AsyncValue.error(error, s);
-        return false;
-      }
+      state = AsyncValue.error(error, s);
+      return false;
     }, loading: () async {
       state = const AsyncValue.error(
           "Cannot delete while loading", StackTrace.empty);
