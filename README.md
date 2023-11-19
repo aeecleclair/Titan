@@ -30,6 +30,40 @@ cd build/web
 python -m http.server 8001
 ```
 
+## Testing
+
+<https://docs.flutter.dev/testing>
+
+```bash
+flutter test
+```
+
+If you want to run a specific test file :
+
+```bash
+flutter test path/to/file.dart
+```
+
+## Linting
+
+<https://dart.dev/guides/language/analysis-options>
+
+```bash
+flutter analyze
+```
+
+To fix some issues :
+
+```bash
+flutter analyze --fix
+```
+
+## Formatting
+
+```bash
+dart format .
+```
+
 ## Debug on the iOS simulator
 
 <https://docs.flutter.dev/get-started/test-drive?tab=vscode>
