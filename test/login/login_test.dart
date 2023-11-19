@@ -89,6 +89,7 @@ void main() {
         floor: '',
         name: '',
         nickname: '',
+        promo: 1
       );
       expect(createAccount, isA<CreateAccount>());
       expect(createAccount.password, 'password');
@@ -99,6 +100,7 @@ void main() {
       expect(createAccount.floor, '');
       expect(createAccount.name, '');
       expect(createAccount.nickname, '');
+      expect(createAccount.promo, 1);
     });
 
     test('Should update with new values', () {
@@ -111,6 +113,7 @@ void main() {
         floor: '',
         name: '',
         nickname: '',
+        promo: 1
       );
       CreateAccount newCreateAccount = createAccount.copyWith(
         password: 'newPassword',
@@ -144,6 +147,10 @@ void main() {
         nickname: 'newNickname',
       );
       expect(newCreateAccount.nickname, 'newNickname');
+      newCreateAccount = newCreateAccount.copyWith(
+        promo: 2,
+      );
+      expect(newCreateAccount.promo, 2);
     });
 
     test('Should print a createAccount', () {
@@ -156,6 +163,7 @@ void main() {
         floor: '',
         name: '',
         nickname: '',
+        promo: 1
       );
       expect(createAccount.toString(),
           'CreateAccount {name: , firstname: , nickname: , password: password, birthday: 2021-01-01 00:00:00.000, phone: phone, floor: , activationToken: }');
