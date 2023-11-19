@@ -1,5 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:myecl/loan/class/item.dart';
+import 'package:myecl/loan/class/item_quantity.dart';
+import 'package:myecl/loan/class/item_simple.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/user/class/list_users.dart';
@@ -16,13 +18,15 @@ void main() {
         id: '1',
         name: 'name',
         caution: 1,
-        available: true,
+        totalQuantity: 1,
+        loanedQuantity: 1,
         suggestedLendingDuration: 1,
       );
       expect(item.id, '1');
       expect(item.name, 'name');
       expect(item.caution, 1);
-      expect(item.available, true);
+      expect(item.totalQuantity, 1);
+      expect(item.loanedQuantity, 1);
       expect(item.suggestedLendingDuration, 1);
     });
 
@@ -40,10 +44,10 @@ void main() {
         caution: 2,
       );
       expect(newItem.caution, 2);
-      newItem = item.copyWith(
-        available: false,
-      );
-      expect(newItem.available, false);
+      newItem = item.copyWith(totalQuantity: 1);
+      expect(newItem.totalQuantity, 1);
+      newItem = item.copyWith(loanedQuantity: 1);
+      expect(newItem.loanedQuantity, 1);
       newItem = item.copyWith(
         suggestedLendingDuration: 2.0,
       );
@@ -55,12 +59,13 @@ void main() {
         id: '1',
         name: 'name',
         caution: 1,
-        available: true,
+        totalQuantity: 1,
+        loanedQuantity: 1,
         suggestedLendingDuration: 1,
       );
       expect(
         item.toString(),
-        'Item(id: 1, name: name, caution: 1, available: true, suggestedLendingDuration: 1.0)',
+        'Item(id: 1, name: name, caution: 1, totalQuantity: 1, loanedQuantity: 1, suggestedLendingDuration: 1.0)',
       );
     });
 
@@ -75,7 +80,8 @@ void main() {
       expect(item.id, '1');
       expect(item.name, 'name');
       expect(item.caution, 1);
-      expect(item.available, true);
+      expect(item.totalQuantity, 1);
+      expect(item.loanedQuantity, 1);
       expect(item.suggestedLendingDuration, 1.0);
     });
 
@@ -84,14 +90,16 @@ void main() {
         id: '1',
         name: 'name',
         caution: 1,
-        available: true,
+        totalQuantity: 1,
+        loanedQuantity: 1,
         suggestedLendingDuration: 1,
       );
       expect(item.toJson(), {
         'id': '1',
         'name': 'name',
         'suggested_caution': 1,
-        'available': true,
+        'totalQuantity': 1,
+        'loanedQuantity': 1,
         'suggested_lending_duration': 1,
       });
     });
@@ -106,14 +114,9 @@ void main() {
     test('Should return a loan with the right values', () {
       final loan = Loan(
         id: '1',
-        items: [
-          Item(
-            id: '1',
-            name: 'name',
-            caution: 1,
-            available: true,
-            suggestedLendingDuration: 1,
-          )
+        itemsQuantity: [
+          ItemQuantity(
+              itemSimple: ItemSimple(id: '1', name: 'name'), quantity: 2)
         ],
         borrower: SimpleUser(
           id: '1',
@@ -129,7 +132,7 @@ void main() {
         start: DateTime.now(),
       );
       expect(loan.id, '1');
-      expect(loan.items[0].id, '1');
+      expect(loan.itemsQuantity[0].itemSimple.id, '1');
       expect(loan.borrower.id, '1');
       expect(loan.returned, true);
     });
@@ -140,16 +143,10 @@ void main() {
         id: '2',
       );
       expect(newLoan.id, '2');
-      newLoan = loan.copyWith(items: [
-        Item(
-          id: '2',
-          name: 'name2',
-          caution: 2,
-          available: false,
-          suggestedLendingDuration: 2,
-        ),
+      newLoan = loan.copyWith(itemsQuantity: [
+        ItemQuantity(itemSimple: ItemSimple(id: '2', name: 'name'), quantity: 2)
       ]);
-      expect(newLoan.items[0].id, '2');
+      expect(newLoan.itemsQuantity[0].itemSimple.id, '2');
       newLoan = loan.copyWith(
         borrower: SimpleUser(
           id: '2',
@@ -198,14 +195,9 @@ void main() {
     test('Should print properly', () {
       final loan = Loan(
         id: '1',
-        items: [
-          Item(
-            id: '1',
-            name: 'name',
-            caution: 1,
-            available: true,
-            suggestedLendingDuration: 1,
-          )
+        itemsQuantity: [
+          ItemQuantity(
+              itemSimple: ItemSimple(id: '1', name: 'name'), quantity: 2)
         ],
         borrower: SimpleUser(
           id: '1',
@@ -256,7 +248,7 @@ void main() {
         'start': DateTime.now().toString(),
       });
       expect(loan.id, '1');
-      expect(loan.items[0].id, '1');
+      expect(loan.itemsQuantity[0].itemSimple.id, '2');
       expect(loan.borrower.id, '1');
       expect(loan.returned, true);
       expect(loan.caution, '');
@@ -267,14 +259,9 @@ void main() {
     test('Should return correct json', () {
       final loan = Loan(
         id: '1',
-        items: [
-          Item(
-            id: '1',
-            name: 'name',
-            caution: 1,
-            available: true,
-            suggestedLendingDuration: 1,
-          )
+        itemsQuantity: [
+          ItemQuantity(
+              itemSimple: ItemSimple(id: '1', name: 'name'), quantity: 2)
         ],
         borrower: SimpleUser(
           id: '1',
