@@ -1,7 +1,8 @@
-
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/class/room.dart';
+import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/user/class/applicant.dart';
 import 'package:myecl/user/class/list_users.dart';
 
@@ -251,6 +252,111 @@ void main() {
         "entity": "entity",
         "applicant_id": "1",
       });
+    });
+  });
+
+  group('Testing functions', () {
+    test('String to decision', () {
+      expect(Decision.approved, stringToDecision("approved"));
+      expect(Decision.declined, stringToDecision("declined"));
+      expect(Decision.pending, stringToDecision("pending"));
+      expect(Decision.pending, stringToDecision("random"));
+    });
+
+    test('Decision to string', () {
+      expect("Validée", decisionToString(Decision.approved));
+      expect("Refusée", decisionToString(Decision.declined));
+      expect("En attente", decisionToString(Decision.pending));
+    });
+
+    test('formatDates returns correct string for same day event', () {
+      final dateStart = DateTime(2022, 1, 1, 10, 0);
+      final dateEnd = DateTime(2022, 1, 1, 14, 0);
+      const allDay = false;
+      final result = formatDates(dateStart, dateEnd, allDay);
+      expect(result, "Le 01/01 de 10:00 à 14:00");
+    });
+
+    test('formatDates returns correct string for same day all day event', () {
+      final dateStart = DateTime(2022, 1, 1);
+      final dateEnd = DateTime(2022, 1, 1);
+      const allDay = true;
+      final result = formatDates(dateStart, dateEnd, allDay);
+      expect(result, "Le 01/01 toute la journée");
+    });
+
+    test('formatDates returns correct string for multi-day event', () {
+      final dateStart = DateTime(2022, 1, 1, 10, 0);
+      final dateEnd = DateTime(2022, 1, 3, 14, 0);
+      const allDay = false;
+      final result = formatDates(dateStart, dateEnd, allDay);
+      expect(result, "Du 01/01 à 10:00 au 03/01 à 14:00");
+    });
+
+    test('formatRecurrenceRule returns correct string for empty recurrenceRule',
+        () {
+      DateTime dateStart = DateTime(2022, 1, 1, 10, 0);
+      DateTime dateEnd = DateTime(2022, 1, 1, 12, 0);
+      String recurrenceRule = "";
+      bool allDay = false;
+      expect(formatRecurrenceRule(dateStart, dateEnd, recurrenceRule, allDay),
+          "Le 01/01 de 10:00 à 12:00");
+    });
+
+    test(
+        'formatRecurrenceRule returns correct string for non-empty recurrenceRule',
+        () {
+      DateTime dateStart = DateTime(2022, 1, 1, 10, 0);
+      DateTime dateEnd = DateTime(2022, 1, 1, 12, 0);
+      String recurrenceRule =
+          "FREQ=WEEKLY;BYDAY=MO,WE,FR;UNTIL=20220131T000000Z";
+      bool allDay = false;
+      expect(formatRecurrenceRule(dateStart, dateEnd, recurrenceRule, allDay),
+          "Tous les Lundi, Mercredi et Vendredi de 10:00 à 12:00 jusqu'au 31/01/2022");
+    });
+
+    test('formatRecurrenceRule returns correct string for allDay event', () {
+      DateTime dateStart = DateTime(2022, 1, 1);
+      DateTime dateEnd = DateTime(2022, 1, 3);
+      String recurrenceRule = "";
+      bool allDay = true;
+      expect(formatRecurrenceRule(dateStart, dateEnd, recurrenceRule, allDay),
+          "Du 01/01 à 00:00 au 03/01 à 00:00");
+    });
+
+    test('color invert returns correct inverted color', () {
+      const inputColor = Color(0xFF0000FF); // blue
+      const expectedOutputColor = Color(0xffffff00); // yellow
+      final outputColor = invert(inputColor);
+      expect(outputColor, equals(expectedOutputColor));
+    });
+
+    test(
+        'getTrueEnd returns correct end date for recurring booking with multiple days',
+        () {
+      final booking = Booking.empty().copyWith(
+        start: DateTime(2022, 1, 1, 10, 0),
+        end: DateTime(2022, 1, 1, 12, 0),
+        recurrenceRule: 'FREQ=DAILY;BYDAY=MO,WE,FR;UNTIL=20220131T000000Z',
+      );
+      expect(getTrueEnd(booking), equals(DateTime(2022, 1, 30, 12, 0)));
+    });
+
+    test(
+        'getTrueEnd returns correct end date for recurring booking with single day',
+        () {
+      final booking = Booking.empty().copyWith(
+        start: DateTime(2022, 1, 1, 10, 0),
+        end: DateTime(2022, 1, 1, 12, 0),
+        recurrenceRule: 'FREQ=WEEKLY;BYDAY=MO;UNTIL=20220201T000000Z',
+      );
+      expect(getTrueEnd(booking), equals(DateTime(2022, 1, 1, 12, 0)));
+    });
+
+    test('combineDate returns correct date', () {
+      final date = DateTime(2022, 1, 1);
+      final time = DateTime(2000, 2, 2, 10, 0);
+      expect(combineDate(date, time), equals(DateTime(2022, 1, 1, 10, 0)));
     });
   });
 }

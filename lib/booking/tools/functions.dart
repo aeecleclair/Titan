@@ -23,8 +23,6 @@ String decisionToString(Decision d) {
       return BookingTextConstants.declined;
     case Decision.pending:
       return BookingTextConstants.pending;
-    default:
-      return BookingTextConstants.pending;
   }
 }
 
@@ -34,9 +32,14 @@ DateTime getTrueEnd(Booking b) {
   } else {
     final days = b.recurrenceRule.split("BYDAY=")[1].split(";")[0].split(",");
     if (days.length > 1) {
-      final date = getDateInRecurrence(b.recurrenceRule, b.start).last;
+      final dates = getDateInRecurrence(b.recurrenceRule, b.start);
+      if (dates.isNotEmpty) {
+        final date = dates.last;
+        return DateTime(
+            date.year, date.month, date.day, b.end.hour, b.end.minute);
+      }
       return DateTime(
-          date.year, date.month, date.day, b.end.hour, b.end.minute);
+          b.start.year, b.start.month, b.start.day, b.end.hour, b.end.minute);
     }
     return b.end;
   }
