@@ -5,6 +5,8 @@ import 'package:myecl/vote/class/pretendance.dart';
 import 'package:myecl/vote/class/result.dart';
 import 'package:myecl/vote/class/section.dart';
 import 'package:myecl/vote/class/votes.dart';
+import 'package:myecl/vote/repositories/status_repository.dart';
+import 'package:myecl/vote/tools/functions.dart';
 
 void main() {
   group('Testing Member class', () {
@@ -397,6 +399,33 @@ void main() {
       expect(votes.toJson(), {
         "list_id": "id",
       });
+    });
+  });
+
+  group('Testing functions', () {
+    test('Should return a ListType', () {
+      expect(stringToListType('Pipo'), ListType.pipo);
+      expect(stringToListType('Serio'), ListType.serio);
+      expect(stringToListType('Blank'), ListType.blank);
+      expect(stringToListType(''), ListType.blank);
+    });
+
+    test('Should return a Status', () {
+      expect(stringToStatus('waiting'), Status.waiting);
+      expect(stringToStatus('open'), Status.open);
+      expect(stringToStatus('closed'), Status.closed);
+      expect(stringToStatus('counting'), Status.counting);
+      expect(stringToStatus('published'), Status.published);
+      expect(stringToStatus(''), Status.waiting);
+    });
+
+
+    test('Should return a String', () {
+      expect(statusToString(Status.waiting), 'Waiting');
+      expect(statusToString(Status.open), 'Open');
+      expect(statusToString(Status.closed), 'Closed');
+      expect(statusToString(Status.counting), 'Counting');
+      expect(statusToString(Status.published), 'Published');
     });
   });
 }

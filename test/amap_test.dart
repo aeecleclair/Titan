@@ -20,6 +20,7 @@ import 'package:myecl/amap/repositories/delivery_product_list_repository.dart';
 import 'package:myecl/amap/repositories/information_repository.dart';
 import 'package:myecl/amap/repositories/order_list_repository.dart';
 import 'package:myecl/amap/repositories/product_repository.dart';
+import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/user/class/list_users.dart';
 
 class MockAmapUserRespository extends Mock implements AmapUserRepository {}
@@ -453,6 +454,33 @@ void main() {
         "category": "category",
         "quantity": 0,
       });
+    });
+  });
+
+  group('Testing functions', () {
+    test('Should return a string', () async {
+      expect(collectionSlotToString(CollectionSlot.midi), "midi");
+      expect(collectionSlotToString(CollectionSlot.soir), "soir");
+    });
+    test('Should return a CollectionSlot', () async {
+      expect(stringToCollectionSlot("midi"), CollectionSlot.midi);
+      expect(stringToCollectionSlot("soir"), CollectionSlot.soir);
+      expect(stringToCollectionSlot("test"), CollectionSlot.midi);
+    });
+
+    test('Should return a string', () async {
+      expect(deliveryStatusToString(DeliveryStatus.creation), "creation");
+      expect(deliveryStatusToString(DeliveryStatus.orderable), "orderable");
+      expect(deliveryStatusToString(DeliveryStatus.locked), "locked");
+      expect(deliveryStatusToString(DeliveryStatus.delivered), "delivered");
+    });
+
+    test('Should return a DeliveryStatus', () async {
+      expect(stringToDeliveryStatus("creation"), DeliveryStatus.creation);
+      expect(stringToDeliveryStatus("orderable"), DeliveryStatus.orderable);
+      expect(stringToDeliveryStatus("locked"), DeliveryStatus.locked);
+      expect(stringToDeliveryStatus("delivered"), DeliveryStatus.delivered);
+      expect(stringToDeliveryStatus("test"), DeliveryStatus.creation);
     });
   });
 
