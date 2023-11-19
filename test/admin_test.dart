@@ -6,6 +6,7 @@ import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/repositories/group_repository.dart';
 import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/user/class/user.dart';
 
 class MockGroupRepository extends Mock implements GroupRepository {}
 
@@ -33,7 +34,8 @@ void main() {
 
     test('Should return correct toString', () async {
       final group = SimpleGroup.empty();
-      expect(group.toString(), 'SimpleGroup(name: Nom, description: Description, id: )');
+      expect(group.toString(),
+          'SimpleGroup(name: Nom, description: Description, id: )');
     });
 
     test('Should parse a group from json', () async {
@@ -94,7 +96,8 @@ void main() {
 
     test('Should print a group', () async {
       final group = Group.empty();
-      expect(group.toString(), 'Group(id: , name: Nom, description: Description, members: [])');
+      expect(group.toString(),
+          'Group(id: , name: Nom, description: Description, members: [])');
     });
 
     test('Should parse a group from json', () async {
@@ -177,6 +180,46 @@ void main() {
       final GroupListNotifier groupNotifier =
           GroupListNotifier(groupRepository: mockGroup);
       expect(await groupNotifier.loadGroups(), isA<AsyncError>());
+    });
+  });
+
+  group('Testing loadGroupsFromUser', () {
+    test('Should return a group', () async {
+      final mockGroup = MockGroupRepository();
+      final group = SimpleGroup(
+        id: "1",
+        name: "name",
+        description: "description",
+      );
+      final user = User(
+        id: "1",
+        name: "name",
+        firstname: "firstname",
+        nickname: null,
+        email: "email",
+        groups: [group],
+        birthday: '',
+        createdOn: '',
+        floor: '',
+        phone: '',
+        promo: null,
+      );
+      final GroupListNotifier groupNotifier =
+          GroupListNotifier(groupRepository: mockGroup);
+      final groupList = await groupNotifier.loadGroupsFromUser(user);
+      expect(groupList, isA<AsyncData<List<SimpleGroup>>>());
+      expect(
+          groupList.when(
+              data: (liste) => liste,
+              error: (e, s) => null,
+              loading: () => null),
+          isA<List<SimpleGroup>>());
+      expect(
+          groupList.when(
+              data: (liste) => liste.length,
+              error: (e, s) => 0,
+              loading: () => 0),
+          1);
     });
   });
 

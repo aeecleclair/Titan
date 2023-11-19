@@ -1357,6 +1357,45 @@ void main() {
     });
   });
 
+  group('Testing UserOrderListNotifier : loadDeliveryOrderList', () {
+    test('Should load delivery order list', () async {
+      final mockUserOrderListRepository = MockAmapUserRespository();
+      final mockOrderListRepository = MockOrderListRepository();
+      final orderList = [
+        Order.empty().copyWith(id: "1"),
+        Order.empty().copyWith(id: "2"),
+      ];
+      when(() => mockOrderListRepository.getDeliveryOrderList(""))
+          .thenAnswer((_) async => orderList);
+      final userOrderListNotifier = UserOrderListNotifier(
+          orderListRepository: mockOrderListRepository,
+          userRepository: mockUserOrderListRepository);
+      final userOrderListLoaded =
+          await userOrderListNotifier.loadDeliveryOrderList("");
+      expect(userOrderListLoaded, isA<AsyncData<List<Order>>>());
+      expect(
+          userOrderListLoaded.when(
+            data: (orderList) => orderList,
+            loading: () => null,
+            error: (error, stackTrace) => null,
+          ),
+          orderList);
+    });
+
+    test('Should return an error if delivery order list is not loaded', () async {
+      final mockUserOrderListRepository = MockAmapUserRespository();
+      final mockOrderListRepository = MockOrderListRepository();
+      when(() => mockOrderListRepository.getDeliveryOrderList(""))
+          .thenThrow(Exception());
+      final userOrderListNotifier = UserOrderListNotifier(
+          orderListRepository: mockOrderListRepository,
+          userRepository: mockUserOrderListRepository);
+      final userOrderListLoaded =
+          await userOrderListNotifier.loadDeliveryOrderList("");
+      expect(userOrderListLoaded, isA<AsyncError<List<Order>>>());
+    });
+  });
+
   group('Testing UserOrderListNotifier : addOrder', () {
     test('Should add order', () async {
       final mockUserOrderListRepository = MockAmapUserRespository();
