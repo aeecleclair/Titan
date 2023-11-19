@@ -7,25 +7,23 @@ import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class ItemListNotifier extends ListNotifier<Item> {
-  final ItemRepository _itemrepository = ItemRepository();
+  final ItemRepository itemRepository = ItemRepository();
   ItemListNotifier({required String token})
       : super(const AsyncValue.loading()) {
-    _itemrepository.setToken(token);
+    itemRepository.setToken(token);
   }
 
-
   Future<AsyncValue<List<Item>>> loadItemList(String id) async {
-    return await loadList(() async => _itemrepository.getItemList(id));
+    return await loadList(() async => itemRepository.getItemList(id));
   }
 
   Future<bool> addItem(Item item, String loanerId) async {
-    return await add(
-        (i) async => _itemrepository.createItem(loanerId, i), item);
+    return await add((i) async => itemRepository.createItem(loanerId, i), item);
   }
 
   Future<bool> updateItem(Item item, String loanerId) async {
     return await update(
-        (i) async => _itemrepository.updateItem(loanerId, i),
+        (i) async => itemRepository.updateItem(loanerId, i),
         (items, item) =>
             items..[items.indexWhere((i) => i.id == item.id)] = item,
         item);
@@ -33,23 +31,19 @@ class ItemListNotifier extends ListNotifier<Item> {
 
   Future<bool> deleteItem(Item item, String loanerId) async {
     return await delete(
-        (id) async => _itemrepository.deleteItem(loanerId, id),
+        (id) async => itemRepository.deleteItem(loanerId, id),
         (items, item) => items..removeWhere((i) => i.id == item.id),
         item.id,
         item);
   }
 
   Future<AsyncValue<List<Item>>> copy() async {
-    return state.when(
-        data: (d) => AsyncValue.data(d.sublist(0)),
-        error: (e, s) => AsyncValue.error(e, s),
-        loading: () => const AsyncValue.loading());
+    return state.whenData((d) => d.sublist(0));
   }
 
   Future<AsyncValue<List<Item>>> filterItems(String query) async {
     return state.whenData((items) => items
-        .where((item) =>
-            item.name.toLowerCase().contains(query.toLowerCase()))
+        .where((item) => item.name.toLowerCase().contains(query.toLowerCase()))
         .toList());
   }
 }

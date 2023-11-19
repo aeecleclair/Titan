@@ -2,13 +2,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
-import 'package:myecl/loan/ui/item_card_in_loan.dart';
+import 'package:myecl/loan/ui/pages/detail_pages/item_card_in_loan.dart';
 import 'package:myecl/loan/ui/loan.dart';
-import 'package:myecl/loan/ui/loan_card.dart';
+import 'package:myecl/loan/ui/pages/admin_page/loan_card.dart';
 import 'package:myecl/tools/functions.dart';
 
 class DetailLoanPage extends HookConsumerWidget {
-  const DetailLoanPage({Key? key}) : super(key: key);
+  const DetailLoanPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,9 +22,7 @@ class DetailLoanPage extends HookConsumerWidget {
               padding: const EdgeInsets.all(30.0),
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 80,
-                  ),
+                  const SizedBox(height: 80),
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -40,9 +38,7 @@ class DetailLoanPage extends HookConsumerWidget {
                     ),
                     child: Column(
                       children: [
-                        const SizedBox(
-                          height: 100,
-                        ),
+                        const SizedBox(height: 100),
                         Container(
                           padding: const EdgeInsets.all(30.0),
                           alignment: Alignment.centerLeft,
@@ -58,9 +54,7 @@ class DetailLoanPage extends HookConsumerWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(
-                                height: 10,
-                              ),
+                              const SizedBox(height: 10),
                               Text(
                                 capitalize(loan.loaner.name),
                                 style: const TextStyle(
@@ -68,9 +62,7 @@ class DetailLoanPage extends HookConsumerWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(
-                                height: 30,
-                              ),
+                              const SizedBox(height: 30),
                               Text(
                                 loan.notes,
                                 style: const TextStyle(
@@ -105,12 +97,7 @@ class DetailLoanPage extends HookConsumerWidget {
               child: Center(
                 child: LoanCard(
                   loan: loan,
-                  onEdit: () {},
-                  onReturn: () async {},
-                  onInfo: () {},
-                  isAdmin: false,
                   isDetail: true,
-                  onCalendar: () async {},
                 ),
               ),
             )

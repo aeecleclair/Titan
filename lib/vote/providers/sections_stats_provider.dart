@@ -10,8 +10,7 @@ class SectionsStatsNotifier extends MapNotifier<Section, int> {
 
 final sectionsStatsProvider = StateNotifierProvider<SectionsStatsNotifier,
     AsyncValue<Map<Section, AsyncValue<List<int>>>>>((ref) {
-  SectionsStatsNotifier sectionsStatsNotifier =
-      SectionsStatsNotifier();
+  SectionsStatsNotifier sectionsStatsNotifier = SectionsStatsNotifier();
   tokenExpireWrapperAuth(ref, () async {
     final sections = ref.watch(sectionsProvider);
     sections.whenData((value) {

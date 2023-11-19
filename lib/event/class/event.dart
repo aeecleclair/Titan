@@ -59,7 +59,9 @@ class Event {
     description = json['description'];
     recurrenceRule = json['recurrence_rule'] ?? "";
     applicantId = json['applicant_id'];
-    applicant = json['applicant'] != null ? Applicant.fromJson(json['applicant']) : Applicant.empty().copyWith(id: applicantId);
+    applicant = json['applicant'] != null
+        ? Applicant.fromJson(json['applicant'])
+        : Applicant.empty().copyWith(id: applicantId);
     decision = stringToDecision(json['decision']);
     roomId = json['room_id'] ?? "";
   }

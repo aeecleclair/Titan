@@ -3,16 +3,17 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
+import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/manager_booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/manager_confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/booking/ui/booking_card.dart';
-import 'package:myecl/tools/ui/dialog.dart';
+import 'package:myecl/booking/ui/components/booking_card.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/web_list_view.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class ListBooking extends HookConsumerWidget {
@@ -31,7 +32,7 @@ class ListBooking extends HookConsumerWidget {
     final bookingNotifier = ref.watch(bookingProvider.notifier);
     final bookingListNotifier = ref.watch(managerBookingListProvider.notifier);
     final confirmedBookingListNotifier =
-        ref.watch(managerConfirmedBookingListProvider.notifier);
+        ref.watch(confirmedBookingListProvider.notifier);
     final managerConfirmedBookingListNotifier =
         ref.watch(managerConfirmedBookingListProvider.notifier);
 
@@ -74,107 +75,101 @@ class ListBooking extends HookConsumerWidget {
           if (toggle.value)
             Container(
               margin: const EdgeInsets.only(top: 10),
-              height: 210,
-              child: HorizontalListView(
-                child: Row(
-                  children: [
-                    const SizedBox(width: 10),
-                    ...bookings.map((e) => BookingCard(
-                          booking: e,
-                          isAdmin: true,
-                          isDetail: false,
-                          onEdit: () {
-                            bookingNotifier.setBooking(e);
-                            QR.to(BookingRouter.root +
-                                BookingRouter.manager +
-                                BookingRouter.addEdit);
-                          },
-                          onInfo: () {
-                            bookingNotifier.setBooking(e);
-                            QR.to(BookingRouter.root +
-                                BookingRouter.manager +
-                                BookingRouter.detail);
-                          },
-                          onConfirm: () async {
-                            await showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return CustomDialogBox(
-                                      title: BookingTextConstants.confirm,
-                                      descriptions:
-                                          BookingTextConstants.confirmBooking,
-                                      onYes: () async {
-                                        await tokenExpireWrapper(ref, () async {
-                                          Booking newBooking = e.copyWith(
-                                              decision: Decision.approved);
-                                          bookingListNotifier
-                                              .toggleConfirmed(
-                                                  newBooking, Decision.approved)
-                                              .then((value) {
-                                            if (value) {
-                                              ref
-                                                  .watch(userBookingListProvider
-                                                      .notifier)
-                                                  .loadUserBookings();
-                                              confirmedBookingListNotifier
-                                                  .addBooking(newBooking);
-                                              managerConfirmedBookingListNotifier
-                                                  .addBooking(newBooking);
-                                            }
-                                          });
+              child: HorizontalListView.builder(
+                  height: 210,
+                  horizontalSpace: 10,
+                  items: bookings,
+                  itemBuilder: (context, e, i) => BookingCard(
+                        booking: e,
+                        isAdmin: true,
+                        isDetail: false,
+                        onEdit: () {
+                          bookingNotifier.setBooking(e);
+                          QR.to(BookingRouter.root +
+                              BookingRouter.manager +
+                              BookingRouter.addEdit);
+                        },
+                        onInfo: () {
+                          bookingNotifier.setBooking(e);
+                          QR.to(BookingRouter.root +
+                              BookingRouter.manager +
+                              BookingRouter.detail);
+                        },
+                        onConfirm: () async {
+                          await showDialog(
+                              context: context,
+                              builder: (context) {
+                                return CustomDialogBox(
+                                    title: BookingTextConstants.confirm,
+                                    descriptions:
+                                        BookingTextConstants.confirmBooking,
+                                    onYes: () async {
+                                      await tokenExpireWrapper(ref, () async {
+                                        Booking newBooking = e.copyWith(
+                                            decision: Decision.approved);
+                                        bookingListNotifier
+                                            .toggleConfirmed(
+                                                newBooking, Decision.approved)
+                                            .then((value) {
+                                          if (value) {
+                                            ref
+                                                .watch(userBookingListProvider
+                                                    .notifier)
+                                                .loadUserBookings();
+                                            confirmedBookingListNotifier
+                                                .addBooking(newBooking);
+                                            managerConfirmedBookingListNotifier
+                                                .addBooking(newBooking);
+                                          }
                                         });
                                       });
-                                });
-                          },
-                          onDecline: () async {
-                            await showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return CustomDialogBox(
-                                      title: BookingTextConstants.decline,
-                                      descriptions:
-                                          BookingTextConstants.declineBooking,
-                                      onYes: () async {
-                                        await tokenExpireWrapper(ref, () async {
-                                          Booking newBooking = e.copyWith(
-                                              decision: Decision.declined);
-                                          bookingListNotifier
-                                              .toggleConfirmed(
-                                                  newBooking, Decision.declined)
-                                              .then((value) {
-                                            if (value) {
-                                              ref
-                                                  .watch(userBookingListProvider
-                                                      .notifier)
-                                                  .loadUserBookings();
-                                              confirmedBookingListNotifier
-                                                  .deleteBooking(newBooking);
-                                              managerConfirmedBookingListNotifier
-                                                  .deleteBooking(newBooking);
-                                            }
-                                          });
+                                    });
+                              });
+                        },
+                        onDecline: () async {
+                          await showDialog(
+                              context: context,
+                              builder: (context) {
+                                return CustomDialogBox(
+                                    title: BookingTextConstants.decline,
+                                    descriptions:
+                                        BookingTextConstants.declineBooking,
+                                    onYes: () async {
+                                      await tokenExpireWrapper(ref, () async {
+                                        Booking newBooking = e.copyWith(
+                                            decision: Decision.declined);
+                                        bookingListNotifier
+                                            .toggleConfirmed(
+                                                newBooking, Decision.declined)
+                                            .then((value) {
+                                          if (value) {
+                                            ref
+                                                .watch(userBookingListProvider
+                                                    .notifier)
+                                                .loadUserBookings();
+                                            confirmedBookingListNotifier
+                                                .deleteBooking(newBooking);
+                                            managerConfirmedBookingListNotifier
+                                                .deleteBooking(newBooking);
+                                          }
                                         });
                                       });
-                                });
-                          },
-                          onCopy: () {
-                            bookingNotifier.setBooking(e.copyWith(id: ""));
-                            QR.to(BookingRouter.root +
-                                BookingRouter.manager +
-                                BookingRouter.addEdit);
-                          },
-                          onDelete: () async {},
-                        )),
-                    const SizedBox(width: 10),
-                  ],
-                ),
-              ),
+                                    });
+                              });
+                        },
+                        onCopy: () {
+                          bookingNotifier.setBooking(e.copyWith(id: ""));
+                          QR.to(BookingRouter.root +
+                              BookingRouter.manager +
+                              BookingRouter.addEdit);
+                        },
+                        onDelete: () async {},
+                      )),
             ),
           const SizedBox(height: 30),
         ],
       );
-    } else {
-      return const SizedBox();
     }
+    return const SizedBox();
   }
 }

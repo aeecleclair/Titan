@@ -22,12 +22,12 @@ import 'package:qlevar_router/qlevar_router.dart';
 class DrawerTemplate extends HookConsumerWidget {
   static Duration duration = const Duration(milliseconds: 200);
   static const double maxSlide = 255;
-  static const dragRigthStartVal = 60;
+  static const dragRightStartVal = 60;
   static const dragLeftStartVal = maxSlide - 20;
   static bool shouldDrag = false;
   final Widget child;
 
-  const DrawerTemplate({Key? key, required this.child}) : super(key: key);
+  const DrawerTemplate({super.key, required this.child});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -76,7 +76,7 @@ class DrawerTemplate extends HookConsumerWidget {
                     double translateVal = animationVal * maxSlide;
                     double scaleVal =
                         1 - (isWebFormat ? 0 : (animationVal * 0.3));
-                    double cornerval = isWebFormat ? 0 : 30.0 * animationVal;
+                    double cornerVal = isWebFormat ? 0 : 30.0 * animationVal;
                     return Stack(
                       children: [
                         const CustomDrawer(),
@@ -92,7 +92,7 @@ class DrawerTemplate extends HookConsumerWidget {
                                 }
                               },
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(cornerval),
+                                borderRadius: BorderRadius.circular(cornerVal),
                                 child: Stack(
                                   children: [
                                     Container(

@@ -8,7 +8,7 @@ import 'package:myecl/drawer/ui/list_module.dart';
 import 'package:myecl/drawer/ui/drawer_top_bar.dart';
 
 class CustomDrawer extends HookConsumerWidget {
-  const CustomDrawer({Key? key}) : super(key: key);
+  const CustomDrawer({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,7 +21,6 @@ class CustomDrawer extends HookConsumerWidget {
               colors: [
             DrawerColorConstants.lightBlue,
             DrawerColorConstants.darkBlue,
-            // DrawerColorConstants.darkBlue,
           ])),
       child: SafeArea(
         child: Stack(children: [

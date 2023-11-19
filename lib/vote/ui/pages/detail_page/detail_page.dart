@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/vote/providers/pretendance_logo_provider.dart';
-import 'package:myecl/vote/providers/pretendance_logos_provider.dart';
-import 'package:myecl/vote/providers/pretendance_provider.dart';
-import 'package:myecl/vote/ui/member_card.dart';
-import 'package:myecl/vote/ui/pages/admin_page/pretendance_card.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/vote/providers/contender_logo_provider.dart';
+import 'package:myecl/vote/providers/contender_logos_provider.dart';
+import 'package:myecl/vote/providers/contender_provider.dart';
+import 'package:myecl/vote/ui/components/member_card.dart';
+import 'package:myecl/vote/ui/pages/admin_page/contender_card.dart';
 import 'package:myecl/vote/ui/vote.dart';
 
 class DetailPage extends HookConsumerWidget {
@@ -13,11 +15,10 @@ class DetailPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pretendanceLogos = ref.watch(pretendanceLogosProvider);
-    final pretendance = ref.watch(pretendanceProvider);
-    final pretendanceLogosNotifier =
-        ref.watch(pretendanceLogosProvider.notifier);
-    final logoNotifier = ref.watch(pretendenceLogoProvider.notifier);
+    final contenderLogos = ref.watch(contenderLogosProvider);
+    final contender = ref.watch(contenderProvider);
+    final contenderLogosNotifier = ref.watch(contenderLogosProvider.notifier);
+    final logoNotifier = ref.watch(contenderLogoProvider.notifier);
     return VoteTemplate(
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -27,9 +28,7 @@ class DetailPage extends HookConsumerWidget {
               padding: const EdgeInsets.all(30.0),
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 80,
-                  ),
+                  const SizedBox(height: 80),
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -45,9 +44,7 @@ class DetailPage extends HookConsumerWidget {
                     ),
                     child: Column(
                       children: [
-                        const SizedBox(
-                          height: 50,
-                        ),
+                        const SizedBox(height: 50),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 30.0),
                           alignment: Alignment.center,
@@ -55,18 +52,33 @@ class DetailPage extends HookConsumerWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              const SizedBox(
-                                height: 30,
-                              ),
-                              pretendanceLogos.when(
-                                  data: (data) {
-                                    if (data[pretendance] != null) {
-                                      return data[pretendance]!.when(
-                                          data: (data) {
-                                        if (data.isNotEmpty) {
+                              const SizedBox(height: 30),
+                              AsyncChild(
+                                value: contenderLogos,
+                                builder: (context, data) {
+                                  if (data[contender] == null) {
+                                    return const SizedBox.shrink();
+                                  }
+                                  return SizedBox(
+                                    height: 140,
+                                    width: 140,
+                                    child: AsyncChild(
+                                        value: data[contender]!,
+                                        builder: (context, data) {
+                                          if (data.isEmpty) {
+                                            logoNotifier
+                                                .getLogo(contender.id)
+                                                .then((value) {
+                                              contenderLogosNotifier.setTData(
+                                                  contender,
+                                                  AsyncData([value]));
+                                            });
+                                            return const HeroIcon(
+                                              HeroIcons.userCircle,
+                                              size: 40,
+                                            );
+                                          }
                                           return Container(
-                                            height: 140,
-                                            width: 140,
                                             decoration: BoxDecoration(
                                               shape: BoxShape.circle,
                                               color: Colors.grey.shade50,
@@ -85,104 +97,53 @@ class DetailPage extends HookConsumerWidget {
                                               ],
                                             ),
                                           );
-                                        } else {
-                                          logoNotifier
-                                              .getLogo(pretendance.id)
-                                              .then((value) {
-                                            pretendanceLogosNotifier.setTData(
-                                                pretendance, AsyncData([value]));
-                                          });
-                                          return const HeroIcon(
-                                            HeroIcons.userCircle,
-                                            size: 40,
-                                          );
-                                        }
-                                      }, loading: () {
-                                        return const SizedBox(
-                                          height: 50,
-                                          width: 50,
-                                          child: Center(
-                                            child: CircularProgressIndicator(),
-                                          ),
-                                        );
-                                      }, error: (error, stack) {
-                                        return const SizedBox(
-                                          height: 50,
-                                          width: 50,
-                                          child: Center(
-                                            child: HeroIcon(
-                                                HeroIcons.exclamationCircle),
-                                          ),
-                                        );
-                                      });
-                                    } else {
-                                      return const SizedBox.shrink();
-                                    }
-                                  },
-                                  loading: () =>
-                                      const CircularProgressIndicator(),
-                                  error: (error, stack) => Text('Error $error')),
-                              const SizedBox(
-                                height: 20,
+                                        },
+                                        errorBuilder: (error, stack) =>
+                                            const Center(
+                                              child: HeroIcon(
+                                                  HeroIcons.exclamationCircle,
+                                                  size: 40),
+                                            )),
+                                  );
+                                },
                               ),
+                              const SizedBox(height: 20),
                               Text(
-                                pretendance.section.name,
+                                contender.section.name,
                                 style: const TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  pretendance.description,
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 20,
+                              AlignLeftText(
+                                contender.description,
+                                padding:
+                                    const EdgeInsets.only(top: 15, bottom: 20),
                               ),
                             ],
                           ),
                         ),
-                        pretendance.members.isNotEmpty
+                        contender.members.isNotEmpty
                             ? SingleChildScrollView(
                                 physics: const BouncingScrollPhysics(),
                                 child: Wrap(
-                                  children: pretendance.members
-                                      .map(
-                                        (e) => MemberCard(
-                                          member: e,
-                                          isAdmin: false,
-                                          onDelete: () {},
-                                          onEdit: () {},
-                                        ),
-                                      )
+                                  children: contender.members
+                                      .map((e) => MemberCard(member: e))
                                       .toList(),
                                 ))
                             : const SizedBox(),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        const SizedBox(height: 20),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 30.0),
                           child: Text(
-                            pretendance.program,
+                            contender.program,
                             style: const TextStyle(
                               fontSize: 15,
                             ),
                           ),
                         ),
-                        if (pretendance.program.trim().isNotEmpty)
-                          const SizedBox(
-                            height: 20,
-                          ),
+                        if (contender.program.trim().isNotEmpty)
+                          const SizedBox(height: 20),
                       ],
                     ),
                   ),
@@ -192,13 +153,7 @@ class DetailPage extends HookConsumerWidget {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Center(
-                child: PretendanceCard(
-                  pretendance: pretendance,
-                  onEdit: () {},
-                  isAdmin: false,
-                  onDelete: () async {},
-                  isDetail: true,
-                ),
+                child: ContenderCard(contender: contender),
               ),
             )
           ],

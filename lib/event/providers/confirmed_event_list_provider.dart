@@ -30,8 +30,9 @@ class ConfirmedEventListProvider extends ListNotifier<Event> {
   }
 }
 
-final confirmedEventListProvider = StateNotifierProvider<
-    ConfirmedEventListProvider, AsyncValue<List<Event>>>((ref) {
+final confirmedEventListProvider =
+    StateNotifierProvider<ConfirmedEventListProvider, AsyncValue<List<Event>>>(
+        (ref) {
   final token = ref.watch(tokenProvider);
   final provider = ConfirmedEventListProvider(token: token);
   tokenExpireWrapperAuth(ref, () async {

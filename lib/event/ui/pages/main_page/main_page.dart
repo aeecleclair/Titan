@@ -8,12 +8,15 @@ import 'package:myecl/event/providers/user_event_list_provider.dart';
 import 'package:myecl/event/router.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/ui/event.dart';
-import 'package:myecl/event/ui/event_ui.dart';
-import 'package:myecl/tools/ui/refresher.dart';
+import 'package:myecl/event/ui/components/event_ui.dart';
+import 'package:myecl/tools/ui/widgets/admin_button.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class EventMainPage extends HookConsumerWidget {
-  const EventMainPage({Key? key}) : super(key: key);
+  const EventMainPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,137 +29,73 @@ class EventMainPage extends HookConsumerWidget {
         onRefresh: () async {
           await eventListNotifier.loadConfirmedEvent();
         },
-        child: Column(
-          children: [
-            events.when(data: (events) {
-              events.sort((a, b) => b.start.compareTo(a.start));
-              return Column(
-                children: [
+        child: AsyncChild(
+          value: events,
+          builder: (context, eventList) {
+            eventList.sort((a, b) => b.start.compareTo(a.start));
+            return Column(
+              children: [
                 const SizedBox(height: 40),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                              events.isEmpty
-                                  ? EventTextConstants.noEvent
-                                  : EventTextConstants.myEvents,
-                              style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 149, 149, 149))),
-                          if (isAdmin)
-                            GestureDetector(
-                              onTap: () {
-                                QR.to(EventRouter.root + EventRouter.admin);
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12, vertical: 8),
-                                decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.black.withOpacity(0.2),
-                                          blurRadius: 10,
-                                          offset: const Offset(0, 5))
-                                    ]),
-                                child: const Row(
-                                  children: [
-                                    HeroIcon(HeroIcons.userGroup,
-                                        color: Colors.white, size: 20),
-                                    SizedBox(width: 10),
-                                    Text("Admin",
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white)),
-                                  ],
-                                ),
-                              ),
-                            )
-                        ],
-                      ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                            eventList.isEmpty
+                                ? EventTextConstants.noEvent
+                                : EventTextConstants.myEvents,
+                            style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey)),
+                        if (isAdmin)
+                          AdminButton(
+                            onTap: () {
+                              QR.to(EventRouter.root + EventRouter.admin);
+                            },
+                          )
+                      ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height - 106,
-                    child: ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: events.length + 2,
-                        itemBuilder: (context, index) {
-                          if (index == 0) {
-                            return GestureDetector(
-                              onTap: () {
-                                eventNotifier.setEvent(Event.empty());
-                                QR.to(EventRouter.root + EventRouter.addEdit);
-                              },
-                              child: Container(
-                                  margin: const EdgeInsets.only(
-                                      bottom: 10, top: 20, left: 40, right: 40),
-                                  width: double.infinity,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          Colors.white,
-                                          Colors.grey.shade100,
-                                        ],
-                                      ),
-                                      borderRadius: BorderRadius.circular(20),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.2),
-                                          spreadRadius: 5,
-                                          blurRadius: 10,
-                                          offset: const Offset(3, 3),
-                                        )
-                                      ]),
-                                  child: Center(
-                                      child: HeroIcon(
-                                    HeroIcons.plus,
-                                    size: 40,
-                                    color: Colors.grey.shade500,
-                                  ))),
-                            );
-                          } else if (index == events.length + 1) {
-                            return Container(
-                              height: 80,
-                            );
-                          }
-                          return EventUi(
-                            event: events[index - 1],
-                            isAdmin: false,
-                            isDetailPage: false,
-                            onConfirm: () {},
-                            onCopy: () {},
-                            onDecline: () {},
-                            onEdit: () {},
-                            onInfo: () {},
+                ),
+                const SizedBox(height: 20),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height - 106,
+                  child: ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: eventList.length + 2,
+                      itemBuilder: (context, index) {
+                        if (index == 0) {
+                          return GestureDetector(
+                            onTap: () {
+                              eventNotifier.setEvent(Event.empty());
+                              QR.to(EventRouter.root + EventRouter.addEdit);
+                            },
+                            child: CardLayout(
+                                margin: const EdgeInsets.only(
+                                    bottom: 10, top: 20, left: 40, right: 40),
+                                width: double.infinity,
+                                height: 100,
+                                color: Colors.white,
+                                child: Center(
+                                    child: HeroIcon(
+                                  HeroIcons.plus,
+                                  size: 40,
+                                  color: Colors.grey.shade500,
+                                ))),
                           );
-                        }),
-                  ),
-                ],
-              );
-            }, loading: () {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }, error: (error, stack) {
-              return Center(
-                child: Text("Error $error"),
-              );
-            })
-          ],
+                        } else if (index == eventList.length + 1) {
+                          return const SizedBox(height: 80);
+                        }
+                        return EventUi(event: eventList[index - 1]);
+                      }),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

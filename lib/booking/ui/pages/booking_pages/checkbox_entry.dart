@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 class CheckBoxEntry extends StatelessWidget {
   final String title;
   final ValueNotifier<bool> valueNotifier;
-  final VoidCallback onChanged;
+  final VoidCallback? onChanged;
   const CheckBoxEntry(
-      {Key? key,
+      {super.key,
       required this.title,
       required this.valueNotifier,
-      required this.onChanged})
-      : super(key: key);
+      this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +33,7 @@ class CheckBoxEntry extends StatelessWidget {
             value: valueNotifier.value,
             onChanged: (value) {
               valueNotifier.value = value!;
-              onChanged();
+              onChanged?.call();
             },
           ),
         ],

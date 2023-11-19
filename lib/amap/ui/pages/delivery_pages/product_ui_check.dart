@@ -4,12 +4,14 @@ import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/tools/constants.dart';
 
 class ProductUi extends ConsumerWidget {
-  final Product p;
+  final Product product;
   final Function onclick;
-  final bool isModif;
+  final bool isModification;
   const ProductUi(
-      {Key? key, required this.p, required this.onclick, required this.isModif})
-      : super(key: key);
+      {super.key,
+      required this.product,
+      required this.onclick,
+      required this.isModification});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,29 +23,25 @@ class ProductUi extends ConsumerWidget {
           children: [
             Expanded(
               child: Text(
-                p.name,
+                product.name,
                 style: const TextStyle(fontSize: 13),
                 overflow: TextOverflow.ellipsis,
               ),
             ),
             Row(
               children: [
-                Container(
-                  width: 15,
-                ),
+                const SizedBox(width: 15),
                 Container(
                   width: 50,
                   alignment: Alignment.centerRight,
                   child: Text(
-                    "${p.price.toStringAsFixed(2)}€",
+                    "${product.price.toStringAsFixed(2)}€",
                     style: const TextStyle(fontSize: 13),
                   ),
                 ),
-                Container(
-                  width: 15,
-                ),
+                const SizedBox(width: 15),
                 Checkbox(
-                  value: isModif,
+                  value: isModification,
                   checkColor: AMAPColorConstants.background,
                   activeColor: AMAPColorConstants.green2,
                   onChanged: (value) {

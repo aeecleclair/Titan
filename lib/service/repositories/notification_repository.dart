@@ -31,8 +31,8 @@ class NotificationRepository extends Repository {
     return await create({}, suffix: "topics/$topicString/unsubscribe");
   }
 
-    Future<List<Topic>> getTopics() async {
-    return List<Topic>.from((await getList(suffix: "topics"))
-        .map((x) => stringToTopic(x)));
+  Future<List<Topic>> getTopics() async {
+    return List<Topic>.from(
+        (await getList(suffix: "topics")).map((x) => stringToTopic(x)));
   }
 }

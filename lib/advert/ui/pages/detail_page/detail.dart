@@ -8,8 +8,9 @@ import 'package:myecl/advert/providers/advert_posters_provider.dart';
 import 'package:myecl/advert/providers/advert_provider.dart';
 import 'package:myecl/advert/ui/components/tag_chip.dart';
 import 'package:myecl/cinema/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/text_with_hyper_link.dart';
+import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/widgets/text_with_hyper_link.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdvertDetailPage extends HookConsumerWidget {
@@ -26,74 +27,26 @@ class AdvertDetailPage extends HookConsumerWidget {
     final inTagChipsList = [advert.announcer.name] + filteredTagList;
 
     return Stack(children: [
-      Stack(
-        children: [
-          advertPosters.when(
-              data: (data) {
-                if (data[advert] != null) {
-                  return data[advert]!.when(data: (data) {
-                    if (data.isNotEmpty) {
-                      return Container(
-                        width: double.infinity,
-                        decoration: const BoxDecoration(boxShadow: [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 10,
-                            spreadRadius: 7,
-                            offset: Offset(0, 5),
-                          ),
-                        ]),
-                        child: Image(
-                          image: data.first.image,
-                          fit: BoxFit.fill,
-                        ),
-                      );
-                    } else {
-                      Future.delayed(const Duration(milliseconds: 1), () {
-                        advertPostersNotifier.setTData(
-                            advert, const AsyncLoading());
-                      });
-                      tokenExpireWrapper(ref, () async {
-                        logoNotifier.getAdvertPoster(advert.id).then((value) {
-                          advertPostersNotifier.setTData(
-                              advert, AsyncData([value]));
-                        });
-                      });
-                      return Container(
-                        width: double.infinity,
-                        decoration: const BoxDecoration(boxShadow: [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 10,
-                            spreadRadius: 7,
-                            offset: Offset(0, 5),
-                          ),
-                        ]),
-                      );
-                    }
-                  }, loading: () {
-                    return const SizedBox(
-                      width: double.infinity,
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  }, error: (error, stack) {
-                    return const SizedBox(
-                      width: double.infinity,
-                      child: Center(
-                        child: HeroIcon(HeroIcons.exclamationCircle),
-                      ),
-                    );
-                  });
-                } else {
-                  return const SizedBox.shrink();
-                }
-              },
-              loading: () => const CircularProgressIndicator(),
-              error: (error, stack) => Text('Error $error')),
-        ],
-      ),
+      Container(
+          width: double.infinity,
+          decoration: const BoxDecoration(boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 10,
+              spreadRadius: 7,
+              offset: Offset(0, 5),
+            ),
+          ]),
+          child: AutoLoaderChild(
+            value: advertPosters,
+            notifier: advertPostersNotifier,
+            mapKey: advert,
+            loader: (ref) => logoNotifier.getAdvertPoster(advert.id),
+            dataBuilder: (context, value) => Image(
+              image: value.first.image,
+              fit: BoxFit.fill,
+            ),
+          )),
       SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
@@ -153,20 +106,14 @@ class AdvertDetailPage extends HookConsumerWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    height: 35,
-                    margin: const EdgeInsets.symmetric(horizontal: 30),
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: inTagChipsList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return TagChip(tagname: inTagChipsList[index]);
-                      },
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  HorizontalListView.builder(
+                      height: 35,
+                      horizontalSpace: 30,
+                      items: inTagChipsList,
+                      itemBuilder:
+                          (BuildContext context, String item, int index) =>
+                              TagChip(tagName: item)),
+                  const SizedBox(height: 15),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 30.0),
                     child: TextWithHyperLink(
@@ -177,9 +124,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 140,
-                  ),
+                  const SizedBox(height: 140),
                 ],
               ),
             ),
@@ -187,13 +132,9 @@ class AdvertDetailPage extends HookConsumerWidget {
         ),
       ),
       Column(children: [
-        const SizedBox(
-          height: 45,
-        ),
+        const SizedBox(height: 45),
         Row(children: [
-          const SizedBox(
-            width: 20,
-          ),
+          const SizedBox(width: 20),
           GestureDetector(
             onTap: QR.back,
             child: Container(
@@ -232,13 +173,8 @@ class AdvertDetailPage extends HookConsumerWidget {
               ),
               child: Row(
                 children: [
-                  const HeroIcon(
-                    HeroIcons.calendar,
-                    size: 20,
-                  ),
-                  const SizedBox(
-                    width: 7,
-                  ),
+                  const HeroIcon(HeroIcons.calendar, size: 20),
+                  const SizedBox(width: 7),
                   Text(
                     DateFormat('dd/MM/yyyy - HH:mm').format(advert.date),
                     style: const TextStyle(fontSize: 16),
@@ -246,9 +182,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                   ),
                 ],
               )),
-          const SizedBox(
-            width: 20,
-          ),
+          const SizedBox(width: 20),
         ])
       ]),
     ]);

@@ -3,14 +3,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/admin/providers/is_admin.dart';
 import 'package:myecl/advert/providers/is_advert_admin_provider.dart';
-import 'package:myecl/advert/ui/pages/admin_page/admin_page.dart';
-import 'package:myecl/advert/ui/pages/detail_page/detail.dart';
-import 'package:myecl/advert/ui/pages/form_page/add_edit_advert_page.dart';
-import 'package:myecl/advert/ui/pages/form_page/add_rem_announcer_page.dart';
-import 'package:myecl/advert/ui/pages/main_page/main_page.dart';
+import 'package:myecl/advert/ui/pages/admin_page/admin_page.dart'
+    deferred as admin_page;
+import 'package:myecl/advert/ui/pages/detail_page/detail.dart'
+    deferred as detail_page;
+import 'package:myecl/advert/ui/pages/form_page/add_edit_advert_page.dart'
+    deferred as add_edit_advert_page;
+import 'package:myecl/advert/ui/pages/form_page/add_rem_announcer_page.dart'
+    deferred as add_rem_announcer_page;
+import 'package:myecl/advert/ui/pages/main_page/main_page.dart'
+    deferred as main_page;
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/tools/middlewares/admin_middleware.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
+import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdvertRouter {
@@ -29,26 +35,39 @@ class AdvertRouter {
 
   QRoute route() => QRoute(
         path: AdvertRouter.root,
-        builder: () => const AdvertMainPage(),
-        middleware: [AuthenticatedMiddleware(ref)],
+        builder: () => main_page.AdvertMainPage(),
+        middleware: [
+          AuthenticatedMiddleware(ref),
+          DeferredLoadingMiddleware(main_page.loadLibrary)
+        ],
         children: [
           QRoute(
               path: admin,
-              builder: () => const AdvertAdminPage(),
+              builder: () => admin_page.AdvertAdminPage(),
               middleware: [
                 AdminMiddleware(ref, isAdvertAdminProvider),
+                DeferredLoadingMiddleware(admin_page.loadLibrary)
               ],
               children: [
                 QRoute(
                     path: addEditAdvert,
-                    builder: () => const AdvertAddEditAdvertPage()),
+                    builder: () =>
+                        add_edit_advert_page.AdvertAddEditAdvertPage(),
+                    middleware: [
+                      DeferredLoadingMiddleware(
+                          add_edit_advert_page.loadLibrary)
+                    ]),
               ]),
-          QRoute(path: detail, builder: () => const AdvertDetailPage()),
+          QRoute(
+              path: detail,
+              builder: () => detail_page.AdvertDetailPage(),
+              middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)]),
           QRoute(
             path: addRemAnnouncer,
-            builder: () => const AddRemAnnouncerPage(),
+            builder: () => add_rem_announcer_page.AddRemAnnouncerPage(),
             middleware: [
               AdminMiddleware(ref, isAdminProvider),
+              DeferredLoadingMiddleware(add_rem_announcer_page.loadLibrary)
             ],
           ),
         ],

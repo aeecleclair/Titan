@@ -4,7 +4,7 @@ import 'package:myecl/loan/providers/selected_items_provider.dart';
 import 'package:myecl/loan/tools/functions.dart';
 
 class NumberSelectedText extends HookConsumerWidget {
-  const NumberSelectedText({Key? key}) : super(key: key);
+  const NumberSelectedText({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

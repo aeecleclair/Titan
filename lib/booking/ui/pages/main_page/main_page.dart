@@ -12,25 +12,27 @@ import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
-import 'package:myecl/booking/ui/booking_card.dart';
 import 'package:myecl/booking/ui/calendar/calendar.dart';
-import 'package:myecl/tools/constants.dart';
+import 'package:myecl/booking/ui/components/booking_card.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/dialog.dart';
-import 'package:myecl/tools/ui/refresher.dart';
-import 'package:myecl/tools/ui/web_list_view.dart';
+import 'package:myecl/tools/ui/widgets/admin_button.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:myecl/tools/ui/widgets/dialog.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class BookingMainPage extends HookConsumerWidget {
-  const BookingMainPage({Key? key}) : super(key: key);
+  const BookingMainPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isManager = ref.watch(isManagerProvider);
     final isAdmin = ref.watch(isAdminProvider);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
-    final confirmedbookingsNotifier =
+    final confirmedBookingsNotifier =
         ref.watch(confirmedBookingListProvider.notifier);
     final bookings = ref.watch(userBookingListProvider);
     final bookingNotifier = ref.watch(bookingProvider.notifier);
@@ -40,10 +42,28 @@ class BookingMainPage extends HookConsumerWidget {
       displayToast(context, type, message);
     }
 
+    void handleBooking(Booking booking) {
+      bookingNotifier.setBooking(booking);
+      final recurrent = booking.recurrenceRule != "";
+      if (recurrent) {
+        final allDays = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
+        final recurrentDays = booking.recurrenceRule
+            .split(";")
+            .where((element) => element.contains("BYDAY"))
+            .first
+            .split("=")
+            .last
+            .split(",");
+        selectedDaysNotifier.setSelectedDays(
+            allDays.map((e) => recurrentDays.contains(e)).toList());
+      }
+      QR.to(BookingRouter.root + BookingRouter.addEdit);
+    }
+
     return BookingTemplate(
       child: Refresher(
         onRefresh: () async {
-          await confirmedbookingsNotifier.loadConfirmedBooking();
+          await confirmedBookingsNotifier.loadConfirmedBooking();
           await bookingsNotifier.loadUserBookings();
         },
         child: Column(children: [
@@ -54,72 +74,17 @@ class BookingMainPage extends HookConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 if (isAdmin)
-                  GestureDetector(
+                  AdminButton(
                     onTap: () {
                       QR.to(BookingRouter.root + BookingRouter.admin);
                     },
-                    child: Container(
-                      width: 120,
-                      margin: const EdgeInsets.symmetric(vertical: 5),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 8),
-                      decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.white, width: 1),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey.shade200.withOpacity(0.2),
-                                blurRadius: 10,
-                                offset: const Offset(0, 5))
-                          ]),
-                      child: const Row(
-                        children: [
-                          HeroIcon(HeroIcons.userGroup,
-                              color: Colors.white, size: 20),
-                          SizedBox(width: 10),
-                          Text("Admin",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white)),
-                        ],
-                      ),
-                    ),
                   ),
                 if (isManager)
-                  GestureDetector(
+                  AdminButton(
+                    text: "Gestion",
                     onTap: () {
                       QR.to(BookingRouter.root + BookingRouter.manager);
                     },
-                    child: Container(
-                      width: 130,
-                      margin: const EdgeInsets.symmetric(vertical: 5),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 8),
-                      decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.white, width: 1),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey.shade200.withOpacity(0.2),
-                                blurRadius: 10,
-                                offset: const Offset(0, 5))
-                          ]),
-                      child: const Row(
-                        children: [
-                          HeroIcon(HeroIcons.userGroup,
-                              color: Colors.white, size: 20),
-                          SizedBox(width: 10),
-                          Text("Gestion",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white)),
-                        ],
-                      ),
-                    ),
                   ),
               ],
             ),
@@ -144,150 +109,73 @@ class BookingMainPage extends HookConsumerWidget {
           const SizedBox(
             height: 10,
           ),
-          bookings.when(data: (List<Booking> data) {
-            data.sort((a, b) => b.creation.compareTo(a.creation));
-            return SizedBox(
+          AsyncChild(
+            value: bookings,
+            builder: (context, data) {
+              data.sort((a, b) => b.creation.compareTo(a.creation));
+              return HorizontalListView.builder(
                 height: 210,
-                child: HorizontalListView(
-                    child: Row(children: [
-                  Container(
-                    margin: const EdgeInsets.only(left: 15),
-                    child: GestureDetector(
-                      onTap: () {
-                        bookingNotifier.setBooking(Booking.empty());
-                        selectedDaysNotifier.clear();
-                        QR.to(BookingRouter.root + BookingRouter.addEdit);
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Container(
-                          width: 120,
-                          height: 200,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(30),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.shade200.withOpacity(0.5),
-                                spreadRadius: 5,
-                                blurRadius: 10,
-                                offset: const Offset(3, 3),
-                              ),
-                            ],
-                          ),
-                          child: const Center(
-                              child: HeroIcon(
-                            HeroIcons.plus,
-                            size: 40.0,
-                            color: Colors.black,
-                          )),
-                        ),
+                firstChild: GestureDetector(
+                  onTap: () {
+                    bookingNotifier.setBooking(Booking.empty());
+                    selectedDaysNotifier.clear();
+                    QR.to(BookingRouter.root + BookingRouter.addEdit);
+                  },
+                  child: const CardLayout(
+                    width: 120,
+                    height: 200,
+                    child: Center(
+                      child: HeroIcon(
+                        HeroIcons.plus,
+                        size: 40.0,
+                        color: Colors.black,
                       ),
                     ),
                   ),
-                  ...data.map((e) => BookingCard(
-                        booking: e,
-                        isAdmin: false,
-                        isDetail: false,
-                        onEdit: () {
-                          bookingNotifier.setBooking(e);
-                          final recurrent = e.recurrenceRule != "";
-                          if (recurrent) {
-                            final allDays = [
-                              "MO",
-                              "TU",
-                              "WE",
-                              "TH",
-                              "FR",
-                              "SA",
-                              "SU"
-                            ];
-                            final recurrentDays = e.recurrenceRule
-                                .split(";")
-                                .where((element) => element.contains("BYDAY"))
-                                .first
-                                .split("=")
-                                .last
-                                .split(",");
-                            selectedDaysNotifier.setSelectedDays(allDays
-                                .map((e) => recurrentDays.contains(e))
-                                .toList());
-                          }
-                          QR.to(BookingRouter.root + BookingRouter.addEdit);
-                        },
-                        onInfo: () {
-                          bookingNotifier.setBooking(e);
-                          QR.to(BookingRouter.root + BookingRouter.detail);
-                        },
-                        onConfirm: () {},
-                        onDecline: () {},
-                        onDelete: () async {
-                          await tokenExpireWrapper(ref, () async {
-                            await showDialog(
-                                context: context,
-                                builder: (context) => CustomDialogBox(
-                                      descriptions: BookingTextConstants
-                                          .deleteBookingConfirmation,
-                                      onYes: () async {
-                                        final value = await bookingsNotifier
-                                            .deleteBooking(e);
-                                        if (value) {
-                                          ref
-                                              .watch(managerBookingListProvider
-                                                  .notifier)
-                                              .loadUserManageBookings;
-                                          displayToastWithContext(
-                                              TypeMsg.msg,
-                                              BookingTextConstants
-                                                  .deleteBooking);
-                                        } else {
-                                          displayToastWithContext(
-                                              TypeMsg.error,
-                                              BookingTextConstants
-                                                  .deletingError);
-                                        }
-                                      },
-                                      title: BookingTextConstants.deleteBooking,
-                                    ));
-                          });
-                        },
-                        onCopy: () {
-                          bookingNotifier.setBooking(e.copyWith(id: ""));
-                          final recurrent = e.recurrenceRule != "";
-                          if (recurrent) {
-                            final allDays = [
-                              "MO",
-                              "TU",
-                              "WE",
-                              "TH",
-                              "FR",
-                              "SA",
-                              "SU"
-                            ];
-                            final recurrentDays = e.recurrenceRule
-                                .split(";")
-                                .where((element) => element.contains("BYDAY"))
-                                .first
-                                .split("=")
-                                .last
-                                .split(",");
-                            selectedDaysNotifier.setSelectedDays(allDays
-                                .map((e) => recurrentDays.contains(e))
-                                .toList());
-                          }
-                          QR.to(BookingRouter.root + BookingRouter.addEdit);
-                        },
-                      )),
-                  const SizedBox(width: 15)
-                ])));
-          }, error: (Object error, StackTrace? stackTrace) {
-            return Center(child: Text("Error $error"));
-          }, loading: () {
-            return const Center(
-                child: CircularProgressIndicator(
-              color: ColorConstants.background2,
-            ));
-          }),
+                ),
+                items: data,
+                itemBuilder: (context, e, i) => BookingCard(
+                  booking: e,
+                  onEdit: () {
+                    handleBooking(e);
+                  },
+                  onInfo: () {
+                    bookingNotifier.setBooking(e);
+                    QR.to(BookingRouter.root + BookingRouter.detail);
+                  },
+                  onDelete: () async {
+                    await tokenExpireWrapper(ref, () async {
+                      await showDialog(
+                          context: context,
+                          builder: (context) => CustomDialogBox(
+                                descriptions: BookingTextConstants
+                                    .deleteBookingConfirmation,
+                                onYes: () async {
+                                  final value =
+                                      await bookingsNotifier.deleteBooking(e);
+                                  if (value) {
+                                    ref
+                                        .watch(
+                                            managerBookingListProvider.notifier)
+                                        .loadUserManageBookings;
+                                    displayToastWithContext(TypeMsg.msg,
+                                        BookingTextConstants.deleteBooking);
+                                  } else {
+                                    displayToastWithContext(TypeMsg.error,
+                                        BookingTextConstants.deletingError);
+                                  }
+                                },
+                                title: BookingTextConstants.deleteBooking,
+                              ));
+                    });
+                  },
+                  onCopy: () {
+                    handleBooking(e.copyWith(id: ""));
+                  },
+                ),
+              );
+            },
+          )
         ]),
       ),
     );

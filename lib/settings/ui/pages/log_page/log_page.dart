@@ -5,8 +5,9 @@ import 'package:myecl/settings/providers/logs_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/log_page/log_card.dart';
 import 'package:myecl/settings/ui/settings.dart';
-import 'package:myecl/tools/ui/dialog.dart';
-import 'package:myecl/tools/ui/refresher.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/widgets/dialog.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
 
 class LogPage extends HookConsumerWidget {
   const LogPage({super.key});
@@ -23,9 +24,7 @@ class LogPage extends HookConsumerWidget {
           child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: Column(children: [
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -33,7 +32,7 @@ class LogPage extends HookConsumerWidget {
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 149, 149, 149))),
+                            color: Colors.grey)),
                     GestureDetector(
                       onTap: () {
                         showDialog(
@@ -67,24 +66,13 @@ class LogPage extends HookConsumerWidget {
                     )
                   ],
                 ),
-                const SizedBox(
-                  height: 20,
+                const SizedBox(height: 20),
+                AsyncChild(
+                  value: logs,
+                  builder: (context, data) => Column(
+                      children: data.map((e) => LogCard(log: e)).toList()),
                 ),
-                logs.when(data: (data) {
-                  return Column(
-                      children: data.map((e) => LogCard(log: e)).toList());
-                }, loading: () {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }, error: (e, s) {
-                  return Center(
-                    child: Text("Error : $e"),
-                  );
-                }),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
               ]))),
     );
   }

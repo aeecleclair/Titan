@@ -2,9 +2,11 @@ import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
-import 'package:myecl/event/ui/pages/detail_page/detail_page.dart';
-import 'package:myecl/home/ui/home.dart';
+import 'package:myecl/event/ui/pages/detail_page/detail_page.dart'
+    deferred as detail_page;
+import 'package:myecl/home/ui/home.dart' deferred as home_page;
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
+import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class HomeRouter {
@@ -19,11 +21,18 @@ class HomeRouter {
   HomeRouter(this.ref);
 
   QRoute route() => QRoute(
-        path: HomeRouter.root,
-        builder: () => const HomePage(),
-        middleware: [AuthenticatedMiddleware(ref)],
-        children: [
-          QRoute(path: detail, builder: () => const DetailPage(isAdmin: false)),
-        ]
-      );
+          path: HomeRouter.root,
+          builder: () => home_page.HomePage(),
+          middleware: [
+            AuthenticatedMiddleware(ref),
+            DeferredLoadingMiddleware(home_page.loadLibrary)
+          ],
+          children: [
+            QRoute(
+                path: detail,
+                builder: () => detail_page.DetailPage(isAdmin: false),
+                middleware: [
+                  DeferredLoadingMiddleware(detail_page.loadLibrary)
+                ]),
+          ]);
 }

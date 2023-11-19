@@ -6,8 +6,8 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/login/providers/animation_provider.dart';
 import 'package:myecl/login/router.dart';
 import 'package:myecl/login/tools/constants.dart';
-import 'package:myecl/login/ui/sign_in_up_bar.dart';
-import 'package:myecl/login/ui/main_page.dart';
+import 'package:myecl/login/ui/auth_page.dart';
+import 'package:myecl/login/ui/components/sign_in_up_bar.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/providers/path_forwarding_provider.dart';
@@ -58,10 +58,8 @@ class AppSignIn extends HookConsumerWidget {
                             ),
                           ),
                           SignInUpBar(
-                            isLoading: ref.watch(loadingrovider).when(
-                                data: (data) => data,
-                                error: (e, s) => false,
-                                loading: () => false),
+                            isLoading: ref.watch(loadingProvider).maybeWhen(
+                                data: (data) => data, orElse: () => false),
                             label: LoginTextConstants.signIn,
                             onPressed: () async {
                               await authNotifier.getTokenFromRequest();

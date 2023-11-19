@@ -5,13 +5,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/ui/event.dart';
-import 'package:myecl/event/ui/event_ui.dart';
+import 'package:myecl/event/ui/components/event_ui.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailPage extends HookConsumerWidget {
   final bool isAdmin;
-  const DetailPage({Key? key, required this.isAdmin}) : super(key: key);
+  const DetailPage({super.key, required this.isAdmin});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,9 +30,7 @@ class DetailPage extends HookConsumerWidget {
               padding: const EdgeInsets.all(30.0),
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 80,
-                  ),
+                  const SizedBox(height: 80),
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -48,9 +46,7 @@ class DetailPage extends HookConsumerWidget {
                     ),
                     child: Column(
                       children: [
-                        const SizedBox(
-                          height: 60,
-                        ),
+                        const SizedBox(height: 60),
                         Container(
                           padding: const EdgeInsets.all(30.0),
                           alignment: Alignment.centerLeft,
@@ -64,9 +60,7 @@ class DetailPage extends HookConsumerWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(
-                                height: 10,
-                              ),
+                              const SizedBox(height: 10),
                               Text(
                                 event.description,
                                 style: const TextStyle(
@@ -74,9 +68,7 @@ class DetailPage extends HookConsumerWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(
-                                height: 30,
-                              ),
+                              const SizedBox(height: 30),
                               AutoSizeText(
                                 event.applicant.getName(),
                                 maxLines: 2,
@@ -86,13 +78,11 @@ class DetailPage extends HookConsumerWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(
-                                height: 20,
-                              ),
+                              const SizedBox(height: 20),
                               if (isAdmin)
                                 Column(
                                   children: [
-                                                              GestureDetector(
+                                    GestureDetector(
                                       onTap: () async {
                                         try {
                                           await launchUrl(Uri.parse(
@@ -110,17 +100,13 @@ class DetailPage extends HookConsumerWidget {
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(
-                                      height: 30,
-                                    ),
+                                    const SizedBox(height: 30),
                                     Text(
                                       event.applicant.phone ??
                                           EventTextConstants.noPhoneRegistered,
                                       style: const TextStyle(fontSize: 25),
                                     ),
-                                    const SizedBox(
-                                      height: 50,
-                                    ),
+                                    const SizedBox(height: 50),
                                     Row(
                                       children: [
                                         const Spacer(),
@@ -132,7 +118,8 @@ class DetailPage extends HookConsumerWidget {
                                                     'tel:${event.applicant.phone}'));
                                               } catch (e) {
                                                 displayToastWithoutContext(
-                                                    TypeMsg.error, e.toString());
+                                                    TypeMsg.error,
+                                                    e.toString());
                                               }
                                             }
                                           },
@@ -174,7 +161,8 @@ class DetailPage extends HookConsumerWidget {
                                                     'sms:${event.applicant.phone}'));
                                               } catch (e) {
                                                 displayToastWithoutContext(
-                                                    TypeMsg.error, e.toString());
+                                                    TypeMsg.error,
+                                                    e.toString());
                                               }
                                             }
                                           },
@@ -209,9 +197,7 @@ class DetailPage extends HookConsumerWidget {
                                         const Spacer(),
                                       ],
                                     ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
+                                    const SizedBox(height: 20),
                                   ],
                                 ),
                             ],
@@ -226,16 +212,7 @@ class DetailPage extends HookConsumerWidget {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Center(
-                child: EventUi(
-                  event: event,
-                  isAdmin: false,
-                  isDetailPage: true,
-                  onConfirm: () {},
-                  onCopy: () {},
-                  onDecline: () {},
-                  onEdit: () {},
-                  onInfo: () {},
-                ),
+                child: EventUi(event: event, isDetailPage: true),
               ),
             )
           ],

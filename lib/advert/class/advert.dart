@@ -8,15 +8,14 @@ class Advert {
   late final DateTime date;
   late final Announcer announcer;
   late final List<String> tags;
-  
-  Advert({
-    required this.id,
-    required this.title,
-    required this.content,
-    required this.date,
-    required this.announcer,
-    required this.tags
-  });
+
+  Advert(
+      {required this.id,
+      required this.title,
+      required this.content,
+      required this.date,
+      required this.announcer,
+      required this.tags});
 
   Advert.fromJson(Map<String, dynamic> json) {
     id = json["id"];
@@ -38,25 +37,24 @@ class Advert {
     return data;
   }
 
-  Advert copyWith(
-    {id, title, content, date, author, announcer, tags}) {
-      return Advert(
+  Advert copyWith({id, title, content, date, author, announcer, tags}) {
+    return Advert(
         id: id ?? this.id,
         title: title ?? this.title,
         content: content ?? this.content,
         date: date ?? this.date,
         announcer: announcer ?? this.announcer,
         tags: tags ?? this.tags);
-    }
+  }
 
   static Advert empty() {
     return Advert(
-      id: "",
-      title: "",
-      content: "",
-      date: DateTime.now(),
-      announcer: Announcer.empty(),
-      tags: []);
+        id: "",
+        title: "",
+        content: "",
+        date: DateTime.now(),
+        announcer: Announcer.empty(),
+        tags: []);
   }
 
   @override

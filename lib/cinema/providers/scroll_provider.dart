@@ -17,6 +17,6 @@ class ScrollNotifier extends StateNotifier<double> {
 }
 
 final scrollProvider = StateNotifierProvider<ScrollNotifier, double>((ref) {
-    final mainPageIndex = ref.watch(mainPageIndexProvider.notifier);
+  final mainPageIndex = ref.watch(mainPageIndexProvider.notifier);
   return ScrollNotifier(mainPageIndex.startPage.toDouble());
 });

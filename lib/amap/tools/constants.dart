@@ -7,10 +7,14 @@ class AMAPColorConstants extends ColorConstants {
   static final Color background3 = Colors.grey.shade300;
   static const Color greenGradient1 = Color(0xff79a400);
   static const Color greenGradient2 = Color(0xff387200);
+  static const Color darkGreen = Color(0xff204300);
   static const Color textDark = Color(0xff255000);
   static const Color textLight = Color(0xff528700);
   static const Color green1 = Color(0xdfa8c700);
   static const Color green2 = Color(0xdF79a400);
+  static const Color green3 = Color(0xFFF4FFB7);
+  static const Color lightGradient1 = Color(0xffB6D40A);
+  static const Color lightGradient2 = Color(0xff6C9300);
   static const Color enabled = Color(0xff6b9200);
   static const Color red = Color(0xFFC91717);
   static const Color redGradient1 = Color(0xFF9E131F);
@@ -31,7 +35,8 @@ class AMAPTextConstants {
   static const String addingCommand = "Ajouter la commande";
   static const String addingError = "Erreur lors de l'ajout";
   static const String addingProduct = "Ajouter un produit";
-  static const String admin = "Administrateur";
+  static const String addOrder = "Ajouter une commande";
+  static const String admin = "Admin";
   static const String alreadyExistCommand =
       "Il existe déjà une commande à cette date";
   static const String amap = "Amap";
@@ -49,20 +54,25 @@ class AMAPTextConstants {
   static const String delete = "Supprimer";
   static const String deleteDelivery = "Supprimer la livraison ?";
   static const String deleteDeliveryDescription =
-      "Cette action est irréversible";
+      "Voulez-vous vraiment supprimer cette livraison ?";
   static const String deletedDelivery = "Livraison supprimée";
   static const String deletedOrder = "Commande supprimée";
   static const String deletedProduct = "Produit supprimé";
+  static const String deleteProduct = "Supprimer le produit ?";
+  static const String deleteProductDescription =
+      "Voulez-vous vraiment supprimer ce produit ?";
   static const String deleting = "Suppression";
   static const String deletingDelivery = "Supprimer la livraison ?";
   static const String deletingError = "Erreur lors de la suppression";
   static const String deletingOrder = "Supprimer la commande ?";
   static const String deletingProduct = "Supprimer le produit ?";
   static const String deliver = "Livraison teminée ?";
+  static const String deliveries = "Livraisons";
   static const String deliveringDelivery =
       "Toutes les commandes sont livrées ?";
   static const String delivery = "Livraison";
   static const String deliveryArchived = "Livraison archivée";
+  static const String deliveryDate = "Date de livraison";
   static const String deliveryDelivered = "Livraison effectuée";
   static const String deliveryHistory = "Historique des livraisons";
   static const String deliveryList = "Liste des livraisons";
@@ -78,6 +88,7 @@ class AMAPTextConstants {
   static const String editingError = "Erreur lors de la modification";
   static const String editProduct = "Modifier le produit";
   static const String endingDelivery = "Fin de la livraison";
+  static const String error = "Erreur";
   static const String errorLink = "Erreur lors de l'ouverture du lien";
   static const String errorLoadingUser =
       "Erreur lors du chargement des utilisateurs";
@@ -94,10 +105,12 @@ class AMAPTextConstants {
   static const String lockingDelivery = "Verrouiller la livraison ?";
   static const String myOrders = "Mes commandes";
   static const String name = "Nom";
+  static const String nextStep = "Étape suivante";
   static const String noProduct = "Pas de produit";
   static const String noCurrentOrder = "Pas de commande en cours";
   static const String noMoney = "Pas assez d'argent";
   static const String noOpennedDelivery = "Pas de livraison ouverte";
+  static const String noOrder = "Pas de commande";
   static const String noSelectedDelivery = "Pas de livraison sélectionnée";
   static const String notEnoughMoney = "Pas assez d'argent";
   static const String notPlannedDelivery = "Pas de livraison planifiée";
@@ -106,6 +119,7 @@ class AMAPTextConstants {
   static const String opened = "Ouverte";
   static const String openningDelivery = "Ouvrir la livraison ?";
   static const String order = "Commander";
+  static const String orders = "Commandes";
   static const String pickChooseCategory =
       "Veuillez créer une catégorie ou en choisir une";
   static const String pickDeliveryMoment = "Choisissez un moment de livraison";
@@ -116,6 +130,7 @@ class AMAPTextConstants {
       "\n\nN'hésitez pas à nous contacter en cas de problème !";
   static const String price = "Prix";
   static const String product = "produit";
+  static const String products = "Produits";
   static const String productInDelivery =
       "Produit dans une livraison non terminée";
   static const String quantity = "Quantité";

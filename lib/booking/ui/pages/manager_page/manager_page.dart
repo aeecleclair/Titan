@@ -8,7 +8,7 @@ import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/calendar/calendar.dart';
 import 'package:myecl/booking/ui/pages/manager_page/list_booking.dart';
-import 'package:myecl/tools/ui/refresher.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
 
 class ManagerPage extends HookConsumerWidget {
   const ManagerPage({Key? key}) : super(key: key);
@@ -36,9 +36,9 @@ class ManagerPage extends HookConsumerWidget {
                 break;
             }
           }
-          confirmedBookings.sort((a, b) => a.creation.compareTo(b.creation));
-          canceledBookings.sort((a, b) => a.creation.compareTo(b.creation));
-          pendingBookings.sort((a, b) => a.creation.compareTo(b.creation));
+          confirmedBookings.sort((a, b) => b.creation.compareTo(a.creation));
+          canceledBookings.sort((a, b) => b.creation.compareTo(a.creation));
+          pendingBookings.sort((a, b) => b.creation.compareTo(a.creation));
         },
         orElse: () {});
     return BookingTemplate(

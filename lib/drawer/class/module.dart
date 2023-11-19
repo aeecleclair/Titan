@@ -25,10 +25,11 @@ class Module {
   Widget getIcon(Color color, {double size = 30}) {
     return icon.fold(
         (heroIcon) => HeroIcon(heroIcon, color: color, size: size),
-        (svgPath) => SvgPicture.asset(svgPath,
-            width: size,
-            height: size,
+        (svgPath) => SvgPicture.asset(
+              svgPath,
+              width: size,
+              height: size,
               colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
-        ));
+            ));
   }
 }

@@ -22,8 +22,7 @@ class Item {
     caution = json['suggested_caution'];
     totalQuantity = json['total_quantity'];
     loanedQuantity = json['loaned_quantity'];
-    suggestedLendingDuration =
-        json['suggested_lending_duration'];
+    suggestedLendingDuration = json['suggested_lending_duration'];
   }
 
   Map<String, dynamic> toJson() {
@@ -36,7 +35,13 @@ class Item {
     return data;
   }
 
-  Item copyWith({id, name, caution, totalQuantity,loanedQuantity, suggestedLendingDuration}) {
+  Item copyWith(
+      {id,
+      name,
+      caution,
+      totalQuantity,
+      loanedQuantity,
+      suggestedLendingDuration}) {
     return Item(
         id: id ?? this.id,
         name: name ?? this.name,
@@ -48,7 +53,7 @@ class Item {
   }
 
   ItemSimple toItemSimple() {
-    return ItemSimple(id: id,name: name);
+    return ItemSimple(id: id, name: name);
   }
 
   Item.empty() {
@@ -65,5 +70,3 @@ class Item {
     return 'Item(id: $id, name: $name, caution: $caution, totalQuantity: $totalQuantity,  loanedQuantity: $loanedQuantity, suggestedLendingDuration: $suggestedLendingDuration)';
   }
 }
-
-

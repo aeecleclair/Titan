@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/ui/dialog.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/vote/class/section.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/vote/providers/section_id_provider.dart';
-import 'package:myecl/vote/providers/sections_pretendance_provider.dart';
+import 'package:myecl/vote/providers/sections_contender_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/ui/section_chip.dart';
+import 'package:myecl/vote/ui/pages/admin_page/section_chip.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class SectionBar extends HookConsumerWidget {
@@ -22,9 +24,9 @@ class SectionBar extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final section = ref.watch(sectionProvider);
     final sectionIdNotifier = ref.watch(sectionIdProvider.notifier);
-    final sectionPretendance = ref.watch(sectionPretendanceProvider);
-    final sectionPretendanceListNotifier =
-        ref.watch(sectionPretendanceProvider.notifier);
+    final sectionContender = ref.watch(sectionContenderProvider);
+    final sectionContenderListNotifier =
+        ref.watch(sectionContenderProvider.notifier);
     final sectionsNotifier = ref.watch(sectionsProvider.notifier);
     final asyncStatus = ref.watch(statusProvider);
     Status status = Status.open;
@@ -33,92 +35,56 @@ class SectionBar extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      physics: const BouncingScrollPhysics(),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const SizedBox(width: 15),
-          if (status == Status.waiting)
-            GestureDetector(
-              onTap: () {
-                QR.to(VoteRouter.root +
-                    VoteRouter.admin +
-                    VoteRouter.addSection);
-              },
-              child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Chip(
-                    label: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: HeroIcon(
+    return AsyncChild(
+        value: sectionContender,
+        builder: (context, sections) => HorizontalListView.builder(
+              height: 40,
+              items: sections.keys.toList(),
+              firstChild: (status == Status.waiting)
+                  ? ItemChip(
+                      onTap: () {
+                        QR.to(VoteRouter.root +
+                            VoteRouter.admin +
+                            VoteRouter.addSection);
+                      },
+                      child: const HeroIcon(
                         HeroIcons.plus,
                         color: Colors.black,
                       ),
-                    ),
-                    backgroundColor: Colors.grey.shade200,
-                  )),
-            ),
-          if (section.id != Section.empty().id)
-            ...sectionPretendance.when(data: (sections) {
-              return sections
-                  .map((key, value) => MapEntry(
-                      SectionChip(
-                          label: key.name,
-                          selected: section.id == key.id,
-                          isAdmin: status == Status.waiting,
-                          onTap: () async {
-                            tokenExpireWrapper(ref, () async {
-                              sectionIdNotifier.setId(key.id);
-                            });
-                          },
-                          onDelete: () async {
-                            tokenExpireWrapper(ref, () async {
-                              await showDialog(
-                                  context: context,
-                                  builder: (context) => CustomDialogBox(
-                                        title: VoteTextConstants.deleteSection,
-                                        descriptions: VoteTextConstants
-                                            .deleteSectionDescription,
-                                        onYes: () async {
-                                          final result = await sectionsNotifier
-                                              .deleteSection(key);
-                                          if (result) {
-                                            sectionPretendanceListNotifier
-                                                .deleteT(key);
-                                            displayVoteToastWithContext(
-                                                TypeMsg.msg,
-                                                VoteTextConstants
-                                                    .deletedSection);
-                                          } else {
-                                            displayVoteToastWithContext(
-                                                TypeMsg.error,
-                                                VoteTextConstants
-                                                    .deletingError);
-                                          }
-                                        },
-                                      ));
-                            });
-                          }),
-                      value))
-                  .keys;
-            }, loading: () {
-              return const [
-                SizedBox(
-                  width: 20,
-                )
-              ];
-            }, error: (error, stack) {
-              return const [
-                SizedBox(
-                  width: 20,
-                )
-              ];
-            }),
-          const SizedBox(width: 15),
-        ],
-      ),
-    );
+                    )
+                  : null,
+              itemBuilder: (context, key, i) => SectionChip(
+                  label: key.name,
+                  selected: section.id == key.id,
+                  isAdmin: status == Status.waiting,
+                  onTap: () async {
+                    tokenExpireWrapper(ref, () async {
+                      sectionIdNotifier.setId(key.id);
+                    });
+                  },
+                  onDelete: () async {
+                    tokenExpireWrapper(ref, () async {
+                      await showDialog(
+                          context: context,
+                          builder: (context) => CustomDialogBox(
+                                title: VoteTextConstants.deleteSection,
+                                descriptions:
+                                    VoteTextConstants.deleteSectionDescription,
+                                onYes: () async {
+                                  final result =
+                                      await sectionsNotifier.deleteSection(key);
+                                  if (result) {
+                                    sectionContenderListNotifier.deleteT(key);
+                                    displayVoteToastWithContext(TypeMsg.msg,
+                                        VoteTextConstants.deletedSection);
+                                  } else {
+                                    displayVoteToastWithContext(TypeMsg.error,
+                                        VoteTextConstants.deletingError);
+                                  }
+                                },
+                              ));
+                    });
+                  }),
+            ));
   }
 }

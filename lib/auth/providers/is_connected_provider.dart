@@ -9,7 +9,8 @@ class IsConnectedProvider extends StateNotifier<bool> {
 
   Future isInternet() async {
     try {
-      final result = await http.get(Uri.parse("${Repository.displayHost}information"));
+      final result =
+          await http.get(Uri.parse("${Repository.displayHost}information"));
       state = result.statusCode < 400;
     } catch (e) {
       state = false;

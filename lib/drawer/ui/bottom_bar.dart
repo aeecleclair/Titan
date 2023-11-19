@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/providers/display_quit_popup.dart';
 import 'package:myecl/drawer/tools/constants.dart';
+
 class BottomBar extends ConsumerWidget {
-  const BottomBar({Key? key})
-      : super(key: key);
+  const BottomBar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,17 +25,13 @@ class BottomBar extends ConsumerWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      width: 25,
-                    ),
+                    const SizedBox(width: 25),
                     HeroIcon(
                       HeroIcons.arrowRightOnRectangle,
                       color: DrawerColorConstants.lightText,
                       size: 27,
                     ),
-                    Container(
-                      width: 15,
-                    ),
+                    const SizedBox(width: 15),
                     Text(DrawerTextConstants.logOut,
                         style: TextStyle(
                           color: DrawerColorConstants.lightText,
@@ -47,9 +43,7 @@ class BottomBar extends ConsumerWidget {
             ],
           ),
         ),
-        Container(
-          height: 30,
-        )
+        const SizedBox(height: 30)
       ],
     );
   }

@@ -19,9 +19,8 @@ final sortedByCategoryDeliveryProductsProvider =
 
 final deliveryProductList = Provider<List<Product>>((ref) {
   final products = ref.watch(deliveryProductListProvider);
-  return products.when(
+  return products.maybeWhen(
     data: (products) => products,
-    loading: () => [],
-    error: (error, stack) => [],
+    orElse: () => [],
   );
 });

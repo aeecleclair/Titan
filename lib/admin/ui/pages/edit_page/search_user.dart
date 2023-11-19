@@ -8,66 +8,59 @@ import 'package:myecl/admin/providers/group_provider.dart';
 import 'package:myecl/admin/providers/simple_groups_groups_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/ui/pages/edit_page/results.dart';
-import 'package:myecl/admin/ui/user_ui.dart';
+import 'package:myecl/admin/ui/components/user_ui.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/dialog.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/widgets/loader.dart';
+import 'package:myecl/tools/ui/widgets/styled_search_bar.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class SearchUser extends HookConsumerWidget {
-  const SearchUser({Key? key}) : super(key: key);
+  const SearchUser({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final editingController = useTextEditingController();
     final group = ref.watch(groupProvider);
     final usersNotifier = ref.watch(userList.notifier);
     final groupId = ref.watch(groupIdProvider);
     final groupNotifier = ref.watch(groupProvider.notifier);
-    final simplegroupsGroups = ref.watch(simpleGroupsGroupsProvider);
-    final simplegroupGroupsNotifier =
+    final simpleGroupsGroups = ref.watch(simpleGroupsGroupsProvider);
+    final simpleGroupGroupsNotifier =
         ref.watch(simpleGroupsGroupsProvider.notifier);
     final add = useState(false);
-    final focusNode = useFocusNode();
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
 
-    return simplegroupsGroups.when(data: (value) {
-      final g = value[groupId];
-      if (g == null) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      }
-      return g.when(
-        data: (g) {
-          return Column(
-            children: [
-              TextField(
-                focusNode: focusNode,
-                onChanged: (value) {
-                  tokenExpireWrapper(ref, () async {
-                    if (editingController.text.isNotEmpty) {
-                      await usersNotifier.filterUsers(editingController.text,
-                          excludeGroup: [group.value!.toSimpleGroup()]);
-                    } else {
-                      usersNotifier.clear();
-                    }
-                  });
-                },
-                controller: editingController,
-                cursorColor: ColorConstants.gradient1,
-                decoration: InputDecoration(
-                    labelText: AdminTextConstants.members,
-                    labelStyle: const TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: ColorConstants.background2),
-                    suffixIcon: GestureDetector(
-                      onTap: () {
+    return AsyncChild(
+        value: simpleGroupsGroups,
+        builder: (context, value) {
+          final simpleGroup = value[groupId];
+          if (simpleGroup == null) {
+            return const Loader();
+          }
+          return AsyncChild(
+              value: simpleGroup,
+              builder: (context, g) {
+                return Column(
+                  children: [
+                    StyledSearchBar(
+                      label: AdminTextConstants.members,
+                      color: ColorConstants.gradient1,
+                      padding: const EdgeInsets.all(0),
+                      onChanged: (value) async {
+                        if (value.isNotEmpty) {
+                          await usersNotifier.filterUsers(value,
+                              excludeGroup: [group.value!.toSimpleGroup()]);
+                        } else {
+                          usersNotifier.clear();
+                        }
+                      },
+                      onSuffixIconTap: (focusNode, editingController) {
                         add.value = !add.value;
                         if (!add.value) {
                           editingController.clear();
@@ -77,7 +70,7 @@ class SearchUser extends HookConsumerWidget {
                           focusNode.requestFocus();
                         }
                       },
-                      child: Padding(
+                      suffixIcon: Padding(
                         padding: const EdgeInsets.all(7.0),
                         child: Container(
                           padding: const EdgeInsets.all(7),
@@ -107,69 +100,50 @@ class SearchUser extends HookConsumerWidget {
                         ),
                       ),
                     ),
-                    enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                      ),
-                    ),
-                    focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: ColorConstants.gradient1,
-                      ),
-                    )),
-              ),
-              if (add.value) const SizedBox(height: 10),
-              if (add.value) const MemberResults(),
-              if (!add.value)
-                ...g[0].members.map((x) => UserUi(
-                    user: x,
-                    onDelete: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) => CustomDialogBox(
-                              descriptions:
-                                  AdminTextConstants.removeAssociationMember,
-                              title: AdminTextConstants.deleting,
-                              onYes: () async {
-                                await tokenExpireWrapper(ref, () async {
-                                  Group newGroup = g[0].copyWith(
-                                      members: g[0]
-                                          .members
-                                          .where(
-                                              (element) => element.id != x.id)
-                                          .toList());
-                                  final value = await groupNotifier
-                                      .deleteMember(newGroup, x);
-                                  if (value) {
-                                    simplegroupGroupsNotifier.setTData(
-                                        newGroup.id, AsyncData([newGroup]));
-                                    displayToastWithContext(TypeMsg.msg,
-                                        AdminTextConstants.updatedAssociation);
-                                  } else {
-                                    displayToastWithContext(TypeMsg.msg,
-                                        AdminTextConstants.updatingError);
-                                  }
-                                });
-                              }));
-                    })),
-            ],
-          );
-        },
-        loading: () => const Center(
-          child: CircularProgressIndicator(),
-        ),
-        error: (e, s) => const Center(
-          child: Text('Error'),
-        ),
-      );
-    }, loading: () {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    }, error: (e, s) {
-      return const Center(
-        child: Text('Error'),
-      );
-    });
+                    if (add.value) const SizedBox(height: 10),
+                    if (add.value) const MemberResults(),
+                    if (!add.value)
+                      ...g[0].members.map((x) => UserUi(
+                          user: x,
+                          onDelete: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    CustomDialogBox(
+                                        descriptions: AdminTextConstants
+                                            .removeAssociationMember,
+                                        title: AdminTextConstants.deleting,
+                                        onYes: () async {
+                                          await tokenExpireWrapper(ref,
+                                              () async {
+                                            Group newGroup = g[0].copyWith(
+                                                members: g[0]
+                                                    .members
+                                                    .where((element) =>
+                                                        element.id != x.id)
+                                                    .toList());
+                                            final value = await groupNotifier
+                                                .deleteMember(newGroup, x);
+                                            if (value) {
+                                              simpleGroupGroupsNotifier
+                                                  .setTData(newGroup.id,
+                                                      AsyncData([newGroup]));
+                                              displayToastWithContext(
+                                                  TypeMsg.msg,
+                                                  AdminTextConstants
+                                                      .updatedAssociation);
+                                            } else {
+                                              displayToastWithContext(
+                                                  TypeMsg.msg,
+                                                  AdminTextConstants
+                                                      .updatingError);
+                                            }
+                                          });
+                                        }));
+                          })),
+                  ],
+                );
+              });
+        });
   }
 }

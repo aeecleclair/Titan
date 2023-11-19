@@ -20,6 +20,7 @@ class EventTextConstants {
   static const String editingError = "Erreur lors de la modification";
   static const String endDate = "Date de fin";
   static const String endHour = "Heure de fin";
+  static const String error = "Erreur";
   static const String eventList = "Liste des événements";
   static const String eventType = "Type d'événement";
   static const String every = "Tous les";
@@ -30,6 +31,7 @@ class EventTextConstants {
       "La date de fin doit être après la date de début";
   static const String invalidIntervalError =
       "Veuillez entrer un intervalle valide";
+  static const String location = "Lieu";
   static const String myEvents = "Mes événements";
   static const String name = "Nom";
   static const String next = "Suivant";
@@ -45,13 +47,14 @@ class EventTextConstants {
   static const String noPhoneRegistered = "Numéro non renseigné";
   static const String noRuleError = "Veuillez entrer une règle de récurrence";
   static const String organizer = "Organisateur";
-  static const String location = "Lieu";
+  static const String other = "Autre";
   static const String pending = "En attente";
   static const String previous = "Précédent";
   static const String recurrence = "Récurrence";
   static const String recurrenceDays = "Jours de récurrence";
   static const String recurrenceEndDate = "Date de fin de la récurrence";
   static const String recurrenceRule = "Règle de récurrence";
+  static const String room = "Salle";
   static const String startDate = "Date de début";
   static const String startHour = "Heure de début";
   static const String title = "Événements";
@@ -68,5 +71,4 @@ class EventTextConstants {
     'Samedi',
     'Dimanche'
   ];
-
 }

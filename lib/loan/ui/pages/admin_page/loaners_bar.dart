@@ -3,8 +3,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
-import 'package:myecl/loan/ui/loaner_chip.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/layouts/item_chip.dart';
 
 class LoanersBar extends HookConsumerWidget {
   final Function(Loaner) onTap;
@@ -14,40 +16,27 @@ class LoanersBar extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final adminLoanList = ref.watch(adminLoanListProvider);
     final loaner = ref.watch(loanerProvider);
-    return adminLoanList.when(
-      data: (loans) => SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        physics: const BouncingScrollPhysics(),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            
-            const SizedBox(width: 15),
-            ...loans
-                .map((key, value) => MapEntry(
-                    LoanerChip(
-                      label: capitalize(key.name),
-                      selected: loaner.id == key.id,
-                      onTap: () async {
-                        onTap(key);
-                      },
-                    ),
-                    value))
-                .keys,
-            const SizedBox(width: 15),
-          ],
-        ),
+    return AsyncChild(
+      value: adminLoanList,
+      builder: (context, loans) => HorizontalListView.builder(
+        height: 40,
+        items: loans.keys.toList(),
+        itemBuilder: (context, key, i) {
+          final selected = loaner.id == key.id;
+          return ItemChip(
+            selected: selected,
+            onTap: () async {
+              onTap(key);
+            },
+            child: Text(
+              capitalize(key.name),
+              style: TextStyle(
+                  color: selected ? Colors.white : Colors.black,
+                  fontWeight: FontWeight.bold),
+            ),
+          );
+        },
       ),
-      error: (Object error, StackTrace stackTrace) {
-        return Center(
-          child: Text('Error: $error'),
-        );
-      },
-      loading: () {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      },
     );
   }
 }

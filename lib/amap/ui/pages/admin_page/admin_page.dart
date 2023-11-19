@@ -7,10 +7,10 @@ import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/amap/ui/pages/admin_page/account_handler.dart';
 import 'package:myecl/amap/ui/pages/admin_page/delivery_handler.dart';
 import 'package:myecl/amap/ui/pages/admin_page/product_handler.dart';
-import 'package:myecl/tools/ui/refresher.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
 
 class AdminPage extends HookConsumerWidget {
-  const AdminPage({Key? key}) : super(key: key);
+  const AdminPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,13 +27,9 @@ class AdminPage extends HookConsumerWidget {
           child: const Column(
             children: [
               AccountHandler(),
-              SizedBox(
-                height: 12,
-              ),
+              SizedBox(height: 12),
               DeliveryHandler(),
-              SizedBox(
-                height: 12,
-              ),
+              SizedBox(height: 12),
               ProductHandler(),
             ],
           )),

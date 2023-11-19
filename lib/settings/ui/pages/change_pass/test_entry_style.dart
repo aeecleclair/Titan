@@ -11,9 +11,9 @@ InputDecoration changePassInputDecoration(
       ),
       hintText: hintText,
       focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFFfb6d10))),
-      enabledBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(color: Color.fromARGB(255, 124, 124, 124)),
+          borderSide: BorderSide(color: ColorConstants.gradient1)),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey.shade600),
       ),
       errorBorder: const UnderlineInputBorder(
         borderSide: BorderSide(color: ColorConstants.background2),
@@ -24,7 +24,7 @@ InputDecoration changePassInputDecoration(
       errorStyle: const TextStyle(color: ColorConstants.background2),
       suffixIcon: IconButton(
         icon: Icon(notifier.value ? Icons.visibility : Icons.visibility_off,
-            color: const Color.fromARGB(255, 124, 124, 124)),
+            color: Colors.grey.shade600),
         onPressed: () {
           notifier.value = !notifier.value;
         },

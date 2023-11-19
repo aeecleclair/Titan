@@ -9,7 +9,6 @@ class ItemNotifier extends StateNotifier<Item> {
   }
 }
 
-final itemProvider =
-    StateNotifierProvider<ItemNotifier, Item>((ref) {
+final itemProvider = StateNotifierProvider<ItemNotifier, Item>((ref) {
   return ItemNotifier();
 });

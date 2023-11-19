@@ -52,8 +52,5 @@ final userLoanerListProvider =
 
 final loanerList = Provider<List<Loaner>>((ref) {
   final deliveryProvider = ref.watch(userLoanerListProvider);
-  return deliveryProvider.when(
-      data: (loans) => loans,
-      error: (error, stackTrace) => [],
-      loading: () => []);
+  return deliveryProvider.maybeWhen(data: (loans) => loans, orElse: () => []);
 });

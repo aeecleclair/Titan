@@ -7,7 +7,7 @@ import 'package:myecl/tools/logs/log.dart';
 
 class LogCard extends StatelessWidget {
   final Log log;
-  const LogCard({Key? key, required this.log}) : super(key: key);
+  const LogCard({super.key, required this.log});
 
   @override
   Widget build(BuildContext context) {

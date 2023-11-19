@@ -39,8 +39,8 @@ class EventListNotifier extends ListNotifier<Event> {
   Future<bool> toggleConfirmed(Event event, Decision decision) async {
     return await update(
         (event) => _eventRepository.confirmEvent(event, decision),
-        (events, event) => events
-          ..[events.indexWhere((b) => b.id == event.id)] = event,
+        (events, event) =>
+            events..[events.indexWhere((b) => b.id == event.id)] = event,
         event.copyWith(decision: decision));
   }
 }

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/providers/order_provider.dart';
+import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/amap.dart';
-import 'package:myecl/amap/ui/order_ui.dart';
-import 'package:myecl/amap/ui/product_ui.dart';
+import 'package:myecl/amap/ui/components/order_ui.dart';
+import 'package:myecl/amap/ui/components/product_ui.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 
 class DetailPage extends HookConsumerWidget {
-  const DetailPage({Key? key}) : super(key: key);
+  const DetailPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,9 +22,7 @@ class DetailPage extends HookConsumerWidget {
               padding: const EdgeInsets.all(30.0),
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 60,
-                  ),
+                  const SizedBox(height: 60),
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -38,38 +38,23 @@ class DetailPage extends HookConsumerWidget {
                     ),
                     child: Column(
                       children: [
-                        const SizedBox(
-                          height: 50,
+                        const SizedBox(height: 50),
+                        const AlignLeftText(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          AMAPTextConstants.products,
+                          fontSize: 25,
                         ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          alignment: Alignment.centerLeft,
-                          child: const Text(
-                            'Produits',
-                            style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
+                        const SizedBox(height: 10),
+                        if (order.products.isNotEmpty)
+                          Wrap(
+                            children: order.products
+                                .map((product) => ProductCard(
+                                      product: product,
+                                      showButton: false,
+                                    ))
+                                .toList(),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        order.products.isNotEmpty
-                            ? Wrap(
-                                children: order.products
-                                    .map((product) => ProductCard(
-                                          product: product,
-                                          onDelete: () async {},
-                                          onEdit: () {},
-                                          showButton: false,
-                                        ))
-                                    .toList(),
-                              )
-                            : const SizedBox(),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        const SizedBox(height: 20),
                       ],
                     ),
                   ),
@@ -79,13 +64,7 @@ class DetailPage extends HookConsumerWidget {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Center(
-                child: CommandeUI(
-                  order: order,
-                  onTap: () {},
-                  onEdit: () {},
-                  showButton: false,
-                  isDetail: true,
-                ),
+                child: OrderUI(order: order, showButton: false, isDetail: true),
               ),
             )
           ],

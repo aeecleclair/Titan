@@ -12,7 +12,7 @@ final sortedByCategoryProductsProvider =
         (ref) {
   final products = ref.watch(productListProvider);
   final sortedByCategoryProducts = <String, List<Product>>{};
-  products.when(
+  products.maybeWhen(
       data: (products) {
         for (var product in products) {
           if (sortedByCategoryProducts.containsKey(product.category)) {
@@ -22,7 +22,6 @@ final sortedByCategoryProductsProvider =
           }
         }
       },
-      loading: () {},
-      error: (error, stack) {});
+      orElse: () {});
   return SortedByCategoryProvider(sortedByCategoryProducts);
 });

@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class AppointmentDataSource extends CalendarDataSource<Booking> {

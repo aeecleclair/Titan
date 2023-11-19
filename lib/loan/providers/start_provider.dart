@@ -8,7 +8,6 @@ class StartNotifier extends StateNotifier<String> {
   }
 }
 
-final startProvider =
-    StateNotifierProvider<StartNotifier, String>((ref) {
+final startProvider = StateNotifierProvider<StartNotifier, String>((ref) {
   return StartNotifier();
 });

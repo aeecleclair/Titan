@@ -14,7 +14,8 @@ import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/service/class/message.dart';
 import 'package:myecl/service/local_notification_service.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class DetailPage extends HookConsumerWidget {
@@ -43,76 +44,28 @@ class DetailPage extends HookConsumerWidget {
         CurvedAnimation(parent: animation, curve: Curves.easeInOut);
     return Stack(
       children: [
-        Stack(
-          children: [
-            sessionPosterMap.when(
-                data: (data) {
-                  if (data[session] != null) {
-                    return data[session]!.when(data: (data) {
-                      if (data.isNotEmpty) {
-                        return Container(
-                          width: double.infinity,
-                          decoration: const BoxDecoration(boxShadow: [
-                            BoxShadow(
-                              color: Colors.black26,
-                              blurRadius: 10,
-                              spreadRadius: 7,
-                              offset: Offset(0, 5),
-                            ),
-                          ]),
-                          child: Image(
-                            image: data.first.image,
-                            fit: BoxFit.fill,
-                          ),
-                        );
-                      } else {
-                        Future.delayed(const Duration(milliseconds: 1), () {
-                          sessionPosterMapNotifier.setTData(
-                              session, const AsyncLoading());
-                        });
-                        tokenExpireWrapper(ref, () async {
-                          sessionPosterNotifier
-                              .getLogo(session.id)
-                              .then((value) {
-                            sessionPosterMapNotifier.setTData(
-                                session, AsyncData([value]));
-                          });
-                        });
-                        return Container(
-                          width: double.infinity,
-                          decoration: const BoxDecoration(boxShadow: [
-                            BoxShadow(
-                              color: Colors.black26,
-                              blurRadius: 10,
-                              spreadRadius: 7,
-                              offset: Offset(0, 5),
-                            ),
-                          ]),
-                        );
-                      }
-                    }, loading: () {
-                      return const SizedBox(
-                        width: double.infinity,
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      );
-                    }, error: (error, stack) {
-                      return const SizedBox(
-                        width: double.infinity,
-                        child: Center(
-                          child: HeroIcon(HeroIcons.exclamationCircle),
-                        ),
-                      );
-                    });
-                  } else {
-                    return const SizedBox.shrink();
-                  }
-                },
-                loading: () => const CircularProgressIndicator(),
-                error: (error, stack) => Text('Error $error')),
-          ],
-        ),
+        Container(
+            width: double.infinity,
+            decoration: const BoxDecoration(boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 10,
+                spreadRadius: 7,
+                offset: Offset(0, 5),
+              ),
+            ]),
+            child: AutoLoaderChild(
+                value: sessionPosterMap,
+                notifier: sessionPosterMapNotifier,
+                mapKey: session,
+                loader: (session) => sessionPosterNotifier.getLogo(session.id),
+                dataBuilder: (context, data) => Image(
+                      image: data.first.image,
+                      fit: BoxFit.fill,
+                    ),
+                errorBuilder: (error, stack) => const Center(
+                      child: HeroIcon(HeroIcons.exclamationCircle),
+                    ))),
         SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
@@ -128,7 +81,7 @@ class DetailPage extends HookConsumerWidget {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      const Color.fromARGB(0, 255, 255, 255),
+                      Colors.transparent,
                       Colors.grey.shade50.withOpacity(0.85),
                       Colors.grey.shade50,
                     ],
@@ -140,9 +93,7 @@ class DetailPage extends HookConsumerWidget {
                 color: Colors.grey.shade50,
                 child: Column(
                   children: [
-                    const SizedBox(
-                      height: 15,
-                    ),
+                    const SizedBox(height: 15),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       alignment: Alignment.center,
@@ -156,9 +107,7 @@ class DetailPage extends HookConsumerWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 15,
-                    ),
+                    const SizedBox(height: 15),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       alignment: Alignment.center,
@@ -169,21 +118,12 @@ class DetailPage extends HookConsumerWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    SizedBox(
-                      height: 35,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: genres.length + 2,
-                        itemBuilder: (BuildContext context, int index) {
-                          if (index == 0 || index == genres.length + 1) {
-                            return const SizedBox(
-                              width: 20,
-                            );
-                          } else {
-                            return Container(
+                    const SizedBox(height: 20),
+                    HorizontalListView.builder(
+                        height: 35,
+                        items: genres,
+                        horizontalSpace: 20,
+                        itemBuilder: (context, genre, index) => Container(
                               margin:
                                   const EdgeInsets.symmetric(horizontal: 10),
                               padding: const EdgeInsets.symmetric(
@@ -193,20 +133,14 @@ class DetailPage extends HookConsumerWidget {
                                 borderRadius: BorderRadius.circular(18),
                               ),
                               child: Text(
-                                genres[index - 1],
+                                genre,
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            );
-                          }
-                        },
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
+                            )),
+                    const SizedBox(height: 15),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       child: Text(
@@ -228,73 +162,71 @@ class DetailPage extends HookConsumerWidget {
             ],
           ),
         ),
-        Column(
+        Column(children: [
+          const SizedBox(
+            height: 45,
+          ),
+          Row(
             children: [
               const SizedBox(
-                height: 45,
+                width: 20,
               ),
-              Row(
-                children: [
-                  const SizedBox(
-                    width: 20,
+              GestureDetector(
+                onTap: QR.back,
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.9),
+                      borderRadius: BorderRadius.circular(18),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.white.withOpacity(0.3),
+                          blurRadius: 7,
+                          spreadRadius: 2,
+                          offset: const Offset(2, 3),
+                        ),
+                      ]),
+                  child: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
                   ),
-                  GestureDetector(
-                    onTap: QR.back,
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.9),
-                          borderRadius: BorderRadius.circular(18),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.white.withOpacity(0.3),
-                              blurRadius: 7,
-                              spreadRadius: 2,
-                              offset: const Offset(2, 3),
-                            ),
-                          ]),
-                      child: const Icon(
-                        Icons.arrow_back,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  const Spacer(),
-                  Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 12),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.9),
-                        borderRadius: BorderRadius.circular(18),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.white.withOpacity(0.3),
-                              blurRadius: 7,
-                              spreadRadius: 2,
-                              offset: const Offset(2, 3),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          const HeroIcon(
-                            HeroIcons.clock,
-                            size: 20,
-                          ),
-                          const SizedBox(
-                            width: 7,
-                          ),
-                          Text(formatDuration(session.duration),
-                              style: const TextStyle(fontSize: 16)),
-                        ],
-                      )),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                ],
+                ),
               ),
-            ]
-        ),
+              const Spacer(),
+              Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.9),
+                    borderRadius: BorderRadius.circular(18),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.white.withOpacity(0.3),
+                        blurRadius: 7,
+                        spreadRadius: 2,
+                        offset: const Offset(2, 3),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      const HeroIcon(
+                        HeroIcons.clock,
+                        size: 20,
+                      ),
+                      const SizedBox(
+                        width: 7,
+                      ),
+                      Text(formatDuration(session.duration),
+                          style: const TextStyle(fontSize: 16)),
+                    ],
+                  )),
+              const SizedBox(
+                width: 20,
+              ),
+            ],
+          ),
+        ]),
         if (session.start.isAfter(DateTime.now()))
           Positioned(
             bottom: 0,
@@ -331,9 +263,9 @@ class DetailPage extends HookConsumerWidget {
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withOpacity(0.2),
-                              blurRadius: 7,
-                              spreadRadius: 2,
-                              offset: const Offset(2, 3),
+                                blurRadius: 7,
+                                spreadRadius: 2,
+                                offset: const Offset(2, 3),
                               ),
                             ],
                           ),

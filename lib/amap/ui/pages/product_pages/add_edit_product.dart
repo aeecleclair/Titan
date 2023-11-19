@@ -9,15 +9,16 @@ import 'package:myecl/amap/providers/selected_category_provider.dart';
 import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/amap.dart';
-import 'package:myecl/amap/ui/green_btn.dart';
-import 'package:myecl/amap/ui/pages/product_pages/text_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditProduct extends HookConsumerWidget {
-  const AddEditProduct({Key? key}) : super(key: key);
+  const AddEditProduct({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -37,7 +38,7 @@ class AddEditProduct extends HookConsumerWidget {
     final categoryController = ref.watch(selectedCategoryProvider(beginState));
     final categoryNotifier =
         ref.watch(selectedCategoryProvider(beginState).notifier);
-    final nouvellecategory = useTextEditingController(text: "");
+    final newCategory = useTextEditingController(text: "");
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -52,103 +53,49 @@ class AddEditProduct extends HookConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 10,
+                  const SizedBox(height: 10),
+                  AlignLeftText(
+                    isEdit
+                        ? AMAPTextConstants.editProduct
+                        : AMAPTextConstants.addProduct,
+                    color: AMAPColorConstants.green2,
                   ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      isEdit
-                          ? AMAPTextConstants.editProduct
-                          : AMAPTextConstants.addProduct,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w800,
-                        fontSize: 18,
-                        color: AMAPColorConstants.green2,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
+                  const SizedBox(height: 40),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        AMAPTextConstants.name,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 20,
+                      Center(
+                        child: TextEntry(
+                          label: AMAPTextConstants.name,
+                          controller: nameController,
                           color: AMAPColorConstants.greenGradient2,
+                          enabledColor: AMAPColorConstants.enabled,
                         ),
                       ),
-                      const SizedBox(
-                        height: 10,
+                      const SizedBox(height: 30),
+                      Center(
+                        child: TextEntry(
+                            label: AMAPTextConstants.price,
+                            isDouble: true,
+                            color: AMAPColorConstants.greenGradient2,
+                            enabledColor: AMAPColorConstants.enabled,
+                            keyboardType: TextInputType.number,
+                            controller: priceController),
                       ),
-                      TextEntry(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return AMAPTextConstants.fillField;
-                          }
-                          return null;
-                        },
-                        enabled: true,
-                        onChanged: (_) {},
-                        textEditingController: nameController,
-                        keyboardType: TextInputType.text,
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      const Text(
-                        AMAPTextConstants.price,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 20,
-                          color: AMAPColorConstants.greenGradient2,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextEntry(
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return AMAPTextConstants.fillField;
-                            } else if (double.tryParse(
-                                    value.replaceAll(',', '.')) ==
-                                null) {
-                              return AMAPTextConstants.expectingNumber;
-                            }
-                            return null;
-                          },
-                          enabled: true,
-                          onChanged: (_) {},
-                          keyboardType: TextInputType.number,
-                          textEditingController: priceController),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      const Text(
+                      const SizedBox(height: 30),
+                      const AlignLeftText(
                         AMAPTextConstants.category,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 20,
-                          color: AMAPColorConstants.greenGradient2,
-                        ),
+                        fontSize: 20,
+                        color: AMAPColorConstants.greenGradient2,
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        alignment: Alignment.center,
+                      const SizedBox(height: 10),
+                      Center(
                         child: DropdownButtonFormField<String>(
                           value: categoryController,
                           validator: ((value) {
                             if ((value == null ||
                                     value ==
                                         AMAPTextConstants.createCategory) &&
-                                nouvellecategory.text.isEmpty) {
+                                newCategory.text.isEmpty) {
                               return AMAPTextConstants.pickChooseCategory;
                             }
                             return null;
@@ -158,8 +105,8 @@ class AddEditProduct extends HookConsumerWidget {
                                 borderSide: BorderSide(
                                     color: AMAPColorConstants.enabled)),
                             errorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color.fromARGB(255, 201, 23, 23))),
+                                borderSide:
+                                    BorderSide(color: AMAPColorConstants.red)),
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
                               color: AMAPColorConstants.greenGradient2,
@@ -177,56 +124,45 @@ class AddEditProduct extends HookConsumerWidget {
                           onChanged: (value) {
                             categoryNotifier.setText(
                                 value ?? AMAPTextConstants.createCategory);
-                            nouvellecategory.text = "";
+                            newCategory.text = "";
                           },
                         ),
                       ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      const Text(
-                        AMAPTextConstants.createCategory,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 20,
+                      const SizedBox(height: 30),
+                      Center(
+                        child: TextEntry(
+                          label: AMAPTextConstants.createCategory,
+                          validator: ((value) {
+                            if (categoryController ==
+                                AMAPTextConstants.createCategory) {
+                              return AMAPTextConstants.pickChooseCategory;
+                            }
+                            return null;
+                          }),
+                          enabled: categoryController ==
+                              AMAPTextConstants.createCategory,
+                          onChanged: (value) {
+                            newCategory.text = value;
+                            newCategory.selection = TextSelection.fromPosition(
+                                TextPosition(offset: newCategory.text.length));
+                          },
                           color: AMAPColorConstants.greenGradient2,
+                          enabledColor: AMAPColorConstants.enabled,
+                          controller: newCategory,
                         ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextEntry(
-                        validator: ((value) {
-                          if ((value == null || value.isEmpty) &&
-                              categoryController ==
-                                  AMAPTextConstants.createCategory) {
-                            return AMAPTextConstants.pickChooseCategory;
-                          }
-                          return null;
-                        }),
-                        enabled: categoryController ==
-                            AMAPTextConstants.createCategory,
-                        onChanged: (value) {
-                          nouvellecategory.text = value ?? "";
-                          nouvellecategory.selection =
-                              TextSelection.fromPosition(TextPosition(
-                                  offset: nouvellecategory.text.length));
-                        },
-                        textEditingController: nouvellecategory,
-                        keyboardType: TextInputType.text,
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      ShrinkButton(
-                        waitChild: const GreenBtn(
-                          text: AMAPTextConstants.waiting,
-                        ),
+                      const SizedBox(height: 40),
+                      WaitingButton(
+                        waitingColor: AMAPColorConstants.background,
+                        builder: (child) => AddEditButtonLayout(colors: const [
+                          AMAPColorConstants.greenGradient1,
+                          AMAPColorConstants.greenGradient2
+                        ], child: child),
                         onTap: () async {
                           if (formKey.currentState!.validate()) {
                             String cate = categoryController ==
                                     AMAPTextConstants.createCategory
-                                ? nouvellecategory.text
+                                ? newCategory.text
                                 : categoryController;
                             Product newProduct = Product(
                               id: isEdit ? product.id : "",
@@ -250,10 +186,9 @@ class AddEditProduct extends HookConsumerWidget {
                                 } else {
                                   ref
                                       .watch(selectedListProvider.notifier)
-                                      .rebuild(products.when(
+                                      .rebuild(products.maybeWhen(
                                           data: (data) => data,
-                                          error: (e, s) => [],
-                                          loading: () => []));
+                                          orElse: () => []));
                                   displayToastWithContext(TypeMsg.msg,
                                       AMAPTextConstants.addedProduct);
                                 }
@@ -270,15 +205,17 @@ class AddEditProduct extends HookConsumerWidget {
                             });
                           }
                         },
-                        child: GreenBtn(
-                          text: isEdit
+                        child: Text(
+                          isEdit
                               ? AMAPTextConstants.update
                               : AMAPTextConstants.add,
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: AMAPColorConstants.background),
                         ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                     ],
                   ),
                 ],

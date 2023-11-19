@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/tools/ui/top_bar.dart';
+import 'package:myecl/tools/ui/widgets/top_bar.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AmapTemplate extends StatelessWidget {
   final Widget child;
-  const AmapTemplate({Key? key, required this.child}) : super(key: key);
+  const AmapTemplate({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

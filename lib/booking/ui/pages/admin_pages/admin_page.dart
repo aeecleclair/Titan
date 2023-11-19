@@ -16,19 +16,19 @@ import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/calendar/calendar.dart';
 import 'package:myecl/booking/ui/pages/admin_pages/admin_chip.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/refresher.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdminPage extends HookConsumerWidget {
-  const AdminPage({Key? key}) : super(key: key);
+  const AdminPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final roomList = ref.watch(roomListProvider);
     final roomNotifier = ref.watch(roomProvider.notifier);
-    final managerList = ref.watch(managerListProvider);
-    final managerIdNotifier = ref.watch(managerIdProvider.notifier);
     final managerNotifier = ref.watch(managerProvider.notifier);
+    final managerIdNotifier = ref.watch(managerIdProvider.notifier);
+    final managerList = ref.watch(managerListProvider);
     final groupIdNotifier = ref.watch(groupIdProvider.notifier);
     return BookingTemplate(
       child: Refresher(
@@ -72,7 +72,7 @@ class AdminPage extends HookConsumerWidget {
                         managerIdNotifier.setId("");
                         QR.to(BookingRouter.root +
                             BookingRouter.admin +
-                            BookingRouter.room);
+                            BookingRouter.manager);
                       },
                       child: Container(
                           margin: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -97,7 +97,7 @@ class AdminPage extends HookConsumerWidget {
                           managerIdNotifier.setId(e.managerId);
                           QR.to(BookingRouter.root +
                               BookingRouter.admin +
-                              BookingRouter.room);
+                              BookingRouter.manager);
                         },
                       ),
                     ),
