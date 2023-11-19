@@ -1,29 +1,26 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/repositories/cash_repository.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class CashProvider extends ListNotifier<Cash> {
-  final CashRepository _cashRepository = CashRepository();
+  final CashRepository cashRepository;
   AsyncValue<List<Cash>> _cashList = const AsyncLoading();
-  CashProvider({required String token}) : super(const AsyncLoading()) {
-    _cashRepository.setToken(token);
-  }
+  CashProvider({required this.cashRepository}) : super(const AsyncLoading());
 
   Future<AsyncValue<List<Cash>>> loadCashList() async {
-    return _cashList = await loadList(_cashRepository.getCashList);
+    return _cashList = await loadList(cashRepository.getCashList);
   }
 
   Future<bool> addCash(Cash cash) async {
-    return await add(_cashRepository.createCash, cash);
+    return await add(cashRepository.createCash, cash);
   }
 
   Future<bool> updateCash(Cash cash, double amount) async {
     return await update(
-        _cashRepository.updateCash,
+        cashRepository.updateCash,
         (cashList, c) => cashList
           ..[cashList.indexWhere((c) => c.user.id == cash.user.id)] =
               cash.copyWith(balance: cash.balance + amount),
@@ -71,8 +68,8 @@ class CashProvider extends ListNotifier<Cash> {
 final cashProvider =
     StateNotifierProvider<CashProvider, AsyncValue<List<Cash>>>(
   (ref) {
-    final token = ref.watch(tokenProvider);
-    CashProvider cashProvider = CashProvider(token: token);
+    final cashRepository = ref.watch(cashRepositoryProvider);
+    CashProvider cashProvider = CashProvider(cashRepository: cashRepository);
     tokenExpireWrapperAuth(ref, () async {
       await cashProvider.loadCashList();
     });

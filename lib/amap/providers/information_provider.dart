@@ -1,16 +1,13 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/information.dart';
 import 'package:myecl/amap/repositories/information_repository.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class InformationNotifier extends SingleNotifier<Information> {
-  final informationRepository = InformationRepository();
-  InformationNotifier({required String token}) : super(const AsyncLoading()) {
-    informationRepository.setToken(token);
-  }
-
+  final InformationRepository informationRepository;
+  InformationNotifier({required this.informationRepository})
+      : super(const AsyncLoading());
   Future<AsyncValue<Information>> loadInformation() async {
     return await load(informationRepository.getInformation);
   }
@@ -31,8 +28,9 @@ class InformationNotifier extends SingleNotifier<Information> {
 
 final informationProvider =
     StateNotifierProvider<InformationNotifier, AsyncValue<Information>>((ref) {
-  final token = ref.watch(tokenProvider);
-  InformationNotifier informationNotifier = InformationNotifier(token: token);
+  final informationRepository = ref.watch(informationRepositoryProvider);
+  InformationNotifier informationNotifier =
+      InformationNotifier(informationRepository: informationRepository);
   tokenExpireWrapperAuth(ref, () async {
     informationNotifier.loadInformation();
   });

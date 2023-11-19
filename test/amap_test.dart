@@ -11,7 +11,6 @@ import 'package:myecl/amap/repositories/delivery_list_repository.dart';
 import 'package:myecl/amap/repositories/delivery_product_list_repository.dart';
 import 'package:myecl/amap/repositories/information_repository.dart';
 import 'package:myecl/amap/repositories/order_list_repository.dart';
-import 'package:myecl/amap/repositories/order_repository.dart';
 import 'package:myecl/amap/repositories/product_repository.dart';
 import 'package:myecl/user/class/list_users.dart';
 
@@ -28,8 +27,6 @@ class MockDeliveryProductListRepository extends Mock
 class MockInformationRepository extends Mock implements InformationRepository {}
 
 class MockOrderListRepository extends Mock implements OrderListRepository {}
-
-class MockOrderRepository extends Mock implements OrderRepository {}
 
 class MockProductListRepository extends Mock implements ProductListRepository {}
 
@@ -267,4 +264,5 @@ void main() {
       });
     });
   });
+
 }

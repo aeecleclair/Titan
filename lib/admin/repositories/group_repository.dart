@@ -56,7 +56,5 @@ class GroupRepository extends Repository {
 
 final groupRepositoryProvider = Provider((ref) {
   final token = ref.watch(tokenProvider);
-  final GroupRepository repository = GroupRepository();
-  repository.setToken(token);
-  return repository;
+  return GroupRepository()..setToken(token);
 });
