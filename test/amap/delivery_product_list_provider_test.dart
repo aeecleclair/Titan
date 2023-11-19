@@ -1,13 +1,12 @@
 // ignore_for_file: invalid_use_of_protected_member
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
-import 'package:test/test.dart';
 
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/repositories/delivery_product_list_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
 
 class MockDeliveryProductListRepository extends Mock
     implements DeliveryProductListRepository {}
