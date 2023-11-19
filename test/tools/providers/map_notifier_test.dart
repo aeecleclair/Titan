@@ -336,7 +336,7 @@ void main() {
         'Should return false sets state on error when start state is AsyncError',
         () async {
       final notifier = MockMapNotifier();
-      notifier.state = AsyncValue.error("test", StackTrace.current);
+      notifier.state = const AsyncValue.error("test", StackTrace.empty);
       final newData = AsyncValue.data([MockE()]);
       final key = MockT();
       final result = await notifier.testSetTData(key, newData);

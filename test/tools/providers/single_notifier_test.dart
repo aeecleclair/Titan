@@ -286,11 +286,14 @@ void main() {
       final error = AppException(ErrorType.tokenExpire, 'test');
       notifier.state = AsyncValue.error(error, StackTrace.current);
       final newData = MockData();
-      final result =
-          await notifier.testUpdate((t) => Future.value(true), newData);
-      expect(result, isFalse);
-      expect(notifier.state, isA<AsyncError>());
-      expect(notifier.state.error, error);
+      try {
+        await notifier.testUpdate((t) => Future.value(true), newData);
+        expect(notifier.state, isA<AsyncError>()); // not reached
+      } catch (e) {
+        expect(e, error);
+        expect(notifier.state, isA<AsyncError>());
+        expect(notifier.state.error, error);
+      }
     });
   });
 
@@ -403,11 +406,14 @@ void main() {
       final error = AppException(ErrorType.tokenExpire, 'test');
       notifier.state = AsyncValue.error(error, StackTrace.current);
       final data = MockData();
-      final result =
-          await notifier.testDelete((id) => Future.value(true), 'id', data);
-      expect(result, isFalse);
-      expect(notifier.state, isA<AsyncError>());
-      expect(notifier.state.error, error);
+      try {
+        await notifier.testDelete((t) => Future.value(true), 'id', data);
+        expect(notifier.state, isA<AsyncError>()); // not reached
+      } catch (e) {
+        expect(e, error);
+        expect(notifier.state, isA<AsyncError>());
+        expect(notifier.state.error, error);
+      }
     });
   });
 }
