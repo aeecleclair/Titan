@@ -5,16 +5,16 @@ import 'package:myecl/booking/repositories/booking_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class ConfirmedBookingListProvider extends ListNotifier<Booking> {
+class ManagerConfirmedBookingListProvider extends ListNotifier<Booking> {
   final BookingRepository _bookingRepository = BookingRepository();
-  ConfirmedBookingListProvider({required String token})
+  ManagerConfirmedBookingListProvider({required String token})
       : super(const AsyncValue.loading()) {
     _bookingRepository.setToken(token);
   }
 
-  Future<AsyncValue<List<Booking>>> loadConfirmedBooking() async {
+  Future<AsyncValue<List<Booking>>> loadConfirmedBookingForManager() async {
     return await loadList(
-        () async => _bookingRepository.getConfirmedBookingList());
+        () async => _bookingRepository.getUserManageConfirmedBookingList());
   }
 
   Future<bool> addBooking(Booking booking) async {
@@ -29,25 +29,17 @@ class ConfirmedBookingListProvider extends ListNotifier<Booking> {
         booking.id,
         booking);
   }
-
-  Future<bool> updateBooking(Booking booking) async {
-    return await update(
-        (_) async => true,
-        (bookings, booking) => bookings
-          ..[bookings.indexWhere((b) => b.id == booking.id)] = booking,
-        booking);
-  }
 }
 
-final confirmedBookingListProvider = StateNotifierProvider<
-    ConfirmedBookingListProvider, AsyncValue<List<Booking>>>(
+final managerConfirmedBookingListProvider = StateNotifierProvider<
+    ManagerConfirmedBookingListProvider, AsyncValue<List<Booking>>>(
   (ref) {
     final token = ref.watch(tokenProvider);
-    final provider = ConfirmedBookingListProvider(token: token);
+    final provider = ManagerConfirmedBookingListProvider(token: token);
     tokenExpireWrapperAuth(
       ref,
       () async {
-        await provider.loadConfirmedBooking();
+        await provider.loadConfirmedBookingForManager();
       },
     );
     return provider;

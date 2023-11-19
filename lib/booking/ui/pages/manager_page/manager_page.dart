@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/providers/booking_list_provider.dart';
-import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
+import 'package:myecl/booking/providers/manager_booking_list_provider.dart';
+import 'package:myecl/booking/providers/manager_confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
@@ -15,7 +15,7 @@ class ManagerPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bookings = ref.watch(bookingListProvider);
+    final bookings = ref.watch(managerBookingListProvider);
     final List<Booking> pendingBookings = [],
         confirmedBookings = [],
         canceledBookings = [];
@@ -45,12 +45,12 @@ class ManagerPage extends HookConsumerWidget {
       child: Refresher(
         onRefresh: () async {
           await ref
-              .watch(bookingListProvider.notifier)
+              .watch(managerBookingListProvider.notifier)
               .loadUserManageBookings();
           await ref.watch(roomListProvider.notifier).loadRooms();
           await ref
-              .watch(confirmedBookingListProvider(true).notifier)
-              .loadConfirmedBooking();
+              .watch(managerConfirmedBookingListProvider.notifier)
+              .loadConfirmedBookingForManager();
         },
         child: Column(
           children: [

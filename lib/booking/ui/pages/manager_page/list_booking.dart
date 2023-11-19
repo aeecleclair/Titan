@@ -3,9 +3,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/providers/booking_list_provider.dart';
+import 'package:myecl/booking/providers/manager_booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
-import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
+import 'package:myecl/booking/providers/manager_confirmed_booking_list_provider.dart';
+import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking_card.dart';
@@ -28,9 +29,11 @@ class ListBooking extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bookingNotifier = ref.watch(bookingProvider.notifier);
-    final bookingListNotifier = ref.watch(bookingListProvider.notifier);
+    final bookingListNotifier = ref.watch(managerBookingListProvider.notifier);
     final confirmedBookingListNotifier =
-        ref.watch(confirmedBookingListProvider(true).notifier);
+        ref.watch(managerConfirmedBookingListProvider.notifier);
+    final managerConfirmedBookingListNotifier =
+        ref.watch(managerConfirmedBookingListProvider.notifier);
 
     final toggle = useState(!canToggle);
     if (bookings.isNotEmpty) {
@@ -109,7 +112,13 @@ class ListBooking extends HookConsumerWidget {
                                                   newBooking, Decision.approved)
                                               .then((value) {
                                             if (value) {
+                                              ref
+                                                  .watch(userBookingListProvider
+                                                      .notifier)
+                                                  .loadUserBookings();
                                               confirmedBookingListNotifier
+                                                  .addBooking(newBooking);
+                                              managerConfirmedBookingListNotifier
                                                   .addBooking(newBooking);
                                             }
                                           });
@@ -134,7 +143,13 @@ class ListBooking extends HookConsumerWidget {
                                                   newBooking, Decision.declined)
                                               .then((value) {
                                             if (value) {
+                                              ref
+                                                  .watch(userBookingListProvider
+                                                      .notifier)
+                                                  .loadUserBookings();
                                               confirmedBookingListNotifier
+                                                  .deleteBooking(newBooking);
+                                              managerConfirmedBookingListNotifier
                                                   .deleteBooking(newBooking);
                                             }
                                           });

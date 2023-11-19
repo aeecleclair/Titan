@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/is_admin_provider.dart';
 import 'package:myecl/booking/providers/is_manager_provider.dart';
+import 'package:myecl/booking/providers/manager_booking_list_provider.dart';
 import 'package:myecl/booking/providers/selected_days_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/router.dart';
@@ -31,9 +31,8 @@ class BookingMainPage extends HookConsumerWidget {
     final isAdmin = ref.watch(isAdminProvider);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
     final confirmedbookingsNotifier =
-        ref.watch(confirmedBookingListProvider(false).notifier);
+        ref.watch(confirmedBookingListProvider.notifier);
     final bookings = ref.watch(userBookingListProvider);
-    final allBookingsNotifier = ref.watch(bookingListProvider.notifier);
     final bookingNotifier = ref.watch(bookingProvider.notifier);
     final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
 
@@ -146,7 +145,7 @@ class BookingMainPage extends HookConsumerWidget {
             height: 10,
           ),
           bookings.when(data: (List<Booking> data) {
-            data.sort((a, b) => a.creation.compareTo(b.creation));
+            data.sort((a, b) => b.creation.compareTo(a.creation));
             return SizedBox(
                 height: 210,
                 child: HorizontalListView(
@@ -230,15 +229,13 @@ class BookingMainPage extends HookConsumerWidget {
                                       descriptions: BookingTextConstants
                                           .deleteBookingConfirmation,
                                       onYes: () async {
-                                        final value = await allBookingsNotifier
+                                        final value = await bookingsNotifier
                                             .deleteBooking(e);
                                         if (value) {
-                                          bookingsNotifier.deleteBooking(e);
-                                          if (e.decision == Decision.approved) {
-                                            confirmedbookingsNotifier
-                                                .deleteBooking(e);
-                                          }
-
+                                          ref
+                                              .watch(managerBookingListProvider
+                                                  .notifier)
+                                              .loadUserManageBookings;
                                           displayToastWithContext(
                                               TypeMsg.msg,
                                               BookingTextConstants

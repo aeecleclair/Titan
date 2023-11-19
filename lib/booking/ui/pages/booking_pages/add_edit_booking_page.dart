@@ -4,9 +4,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
+import 'package:myecl/booking/providers/manager_booking_list_provider.dart';
+import 'package:myecl/booking/providers/manager_confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/selected_days_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
@@ -25,8 +26,9 @@ import 'package:qlevar_router/qlevar_router.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class AddEditBookingPage extends HookConsumerWidget {
-  final bool isAdmin;
-  const AddEditBookingPage({Key? key, required this.isAdmin}) : super(key: key);
+  final bool isManagerPage;
+  const AddEditBookingPage({Key? key, required this.isManagerPage})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,11 +36,6 @@ class AddEditBookingPage extends HookConsumerWidget {
     final user = ref.watch(userProvider);
     final key = GlobalKey<FormState>();
     final rooms = ref.watch(roomListProvider);
-    final usersBookingsNotifier = ref.watch(userBookingListProvider.notifier);
-    final confirmedBookingListNotifier =
-        ref.watch(confirmedBookingListProvider(isAdmin).notifier);
-    final bookingsNotifier = ref.watch(bookingListProvider.notifier);
-    final bookings = ref.watch(bookingListProvider);
     final booking = ref.watch(bookingProvider);
     final isEdit = booking.id != Booking.empty().id;
     final room = useState(booking.room);
@@ -596,35 +593,40 @@ class AddEditBookingPage extends HookConsumerWidget {
                                   entity: entity.text,
                                   applicant: user.toApplicant(),
                                   applicantId: user.id);
-                              final value = isEdit
-                                  ? await bookingsNotifier
+                              final value = isManagerPage
+                                  ? await ref
+                                      .watch(
+                                          managerBookingListProvider.notifier)
                                       .updateBooking(newBooking)
-                                  : await bookingsNotifier
-                                      .addBooking(newBooking);
+                                  : isEdit
+                                      ? await ref
+                                          .watch(
+                                              userBookingListProvider.notifier)
+                                          .updateBooking(newBooking)
+                                      : await ref
+                                          .watch(
+                                              userBookingListProvider.notifier)
+                                          .addBooking(newBooking);
                               if (value) {
                                 QR.back();
+                                ref
+                                    .watch(userBookingListProvider.notifier)
+                                    .loadUserBookings();
+                                ref
+                                    .watch(
+                                        confirmedBookingListProvider.notifier)
+                                    .loadConfirmedBooking();
+                                ref
+                                    .watch(managerBookingListProvider.notifier)
+                                    .loadUserManageBookings();
+                                ref
+                                    .watch(managerConfirmedBookingListProvider
+                                        .notifier)
+                                    .loadConfirmedBookingForManager();
                                 if (isEdit) {
-                                  if (booking.decision == Decision.approved) {
-                                    await confirmedBookingListNotifier
-                                        .updateBooking(newBooking);
-                                  }
-                                  if (!isAdmin) {
-                                    await usersBookingsNotifier
-                                        .updateBooking(newBooking);
-                                  }
                                   displayToastWithContext(TypeMsg.msg,
                                       BookingTextConstants.editedBooking);
                                 } else {
-                                  if (!isAdmin) {
-                                    newBooking = bookings.when(
-                                        data: (value) => value.last,
-                                        error: (e, s) => Booking.empty(),
-                                        loading: () => Booking.empty());
-                                    if (newBooking.id != Booking.empty().id) {
-                                      await usersBookingsNotifier
-                                          .addBooking(newBooking);
-                                    }
-                                  }
                                   displayToastWithContext(TypeMsg.msg,
                                       BookingTextConstants.addedBooking);
                                 }

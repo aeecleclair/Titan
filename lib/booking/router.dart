@@ -65,14 +65,14 @@ class BookingRouter {
                   ]),
               QRoute(
                 path: addEdit,
-                builder: () => const AddEditBookingPage(isAdmin: true),
+                builder: () => const AddEditBookingPage(isManagerPage: true),
                 middleware: [AdminMiddleware(ref, isManagerProvider)],
               ),
             ],
           ),
           QRoute(
             path: addEdit,
-            builder: () => const AddEditBookingPage(isAdmin: false),
+            builder: () => const AddEditBookingPage(isManagerPage: false),
           ),
           QRoute(
             path: detail,

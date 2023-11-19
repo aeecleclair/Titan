@@ -35,7 +35,7 @@ class AdminPage extends HookConsumerWidget {
         onRefresh: () async {
           await ref.watch(roomListProvider.notifier).loadRooms();
           await ref
-              .watch(confirmedBookingListProvider(false).notifier)
+              .watch(confirmedBookingListProvider.notifier)
               .loadConfirmedBooking();
         },
         child: Column(
