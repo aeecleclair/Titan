@@ -72,7 +72,7 @@ class AdminPage extends HookConsumerWidget {
                         managerIdNotifier.setId("");
                         QR.to(BookingRouter.root +
                             BookingRouter.admin +
-                            BookingRouter.manager);
+                            BookingRouter.room);
                       },
                       child: Container(
                           margin: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -97,7 +97,7 @@ class AdminPage extends HookConsumerWidget {
                           managerIdNotifier.setId(e.managerId);
                           QR.to(BookingRouter.root +
                               BookingRouter.admin +
-                              BookingRouter.manager);
+                              BookingRouter.room);
                         },
                       ),
                     ),
