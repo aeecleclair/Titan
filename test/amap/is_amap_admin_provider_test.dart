@@ -32,7 +32,7 @@ void main() {
         )),
       ]);
 
-      final isAmapAdminState = container.read(isAmapAdmin);
+      final isAmapAdminState = container.read(isAmapAdminProvider);
 
       expect(isAmapAdminState, false);
     });
