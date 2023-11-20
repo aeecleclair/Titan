@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/tools/ui/layouts/item_chip.dart';
 
 class VoterChip extends StatelessWidget {
   final bool selected;
@@ -14,20 +15,16 @@ class VoterChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Chip(
-            label: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                label,
-                style: TextStyle(
-                    color: selected ? Colors.white : Colors.black,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            backgroundColor: selected ? Colors.black : Colors.grey.shade200,
-          )),
+      child: ItemChip(
+        onTap: onTap,
+        selected: selected,
+        child: Text(
+          label,
+          style: TextStyle(
+              color: selected ? Colors.white : Colors.black,
+              fontWeight: FontWeight.bold),
+        ),
+      ),
     );
   }
 }
