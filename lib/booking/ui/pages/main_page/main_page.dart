@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -29,6 +31,8 @@ class BookingMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    const double minCalendarHeight = 400;
+    const double sumOfHeightOfOthersWidgets = 361;
     final isManager = ref.watch(isManagerProvider);
     final isAdmin = ref.watch(isAdminProvider);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
@@ -61,122 +65,135 @@ class BookingMainPage extends HookConsumerWidget {
     }
 
     return BookingTemplate(
-      child: Refresher(
-        onRefresh: () async {
-          await confirmedBookingsNotifier.loadConfirmedBooking();
-          await bookingsNotifier.loadUserBookings();
-        },
-        child: Column(children: [
-          if (isAdmin | isManager) const SizedBox(height: 10),
-          SizedBox(
-            width: 300,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+      child: LayoutBuilder(
+        builder: (context, constraints) => Refresher(
+          onRefresh: () async {
+            await confirmedBookingsNotifier.loadConfirmedBooking();
+            await bookingsNotifier.loadUserBookings();
+          },
+          child: SizedBox(
+            height: max(constraints.maxHeight,
+                minCalendarHeight + sumOfHeightOfOthersWidgets),
+            child: Column(
               children: [
-                if (isAdmin)
-                  AdminButton(
-                    onTap: () {
-                      QR.to(BookingRouter.root + BookingRouter.admin);
-                    },
+                if (isAdmin | isManager) const SizedBox(height: 10),
+                SizedBox(
+                  width: 300,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      if (isAdmin)
+                        AdminButton(
+                          onTap: () {
+                            QR.to(BookingRouter.root + BookingRouter.admin);
+                          },
+                        ),
+                      if (isManager)
+                        AdminButton(
+                          text: "Gestion",
+                          onTap: () {
+                            QR.to(BookingRouter.root + BookingRouter.manager);
+                          },
+                        ),
+                    ],
                   ),
-                if (isManager)
-                  AdminButton(
-                    text: "Gestion",
-                    onTap: () {
-                      QR.to(BookingRouter.root + BookingRouter.manager);
-                    },
-                  ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 10),
-          const SizedBox(height: 400, child: Calendar(isManagerPage: false)),
-          const SizedBox(height: 30),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30.0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                BookingTextConstants.myBookings,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 149, 149, 149),
                 ),
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          AsyncChild(
-            value: bookings,
-            builder: (context, data) {
-              data.sort((a, b) => b.creation.compareTo(a.creation));
-              return HorizontalListView.builder(
-                height: 210,
-                firstChild: GestureDetector(
-                  onTap: () {
-                    bookingNotifier.setBooking(Booking.empty());
-                    selectedDaysNotifier.clear();
-                    QR.to(BookingRouter.root + BookingRouter.addEdit);
-                  },
-                  child: const CardLayout(
-                    width: 120,
-                    height: 200,
-                    child: Center(
-                      child: HeroIcon(
-                        HeroIcons.plus,
-                        size: 40.0,
-                        color: Colors.black,
+                const SizedBox(height: 10),
+                const Expanded(child: Calendar(isManagerPage: false)),
+                const SizedBox(height: 30),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      BookingTextConstants.myBookings,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 149, 149, 149),
                       ),
                     ),
                   ),
                 ),
-                items: data,
-                itemBuilder: (context, e, i) => BookingCard(
-                  booking: e,
-                  onEdit: () {
-                    handleBooking(e);
-                  },
-                  onInfo: () {
-                    bookingNotifier.setBooking(e);
-                    QR.to(BookingRouter.root + BookingRouter.detail);
-                  },
-                  onDelete: () async {
-                    await tokenExpireWrapper(ref, () async {
-                      await showDialog(
-                          context: context,
-                          builder: (context) => CustomDialogBox(
-                                descriptions: BookingTextConstants
-                                    .deleteBookingConfirmation,
-                                onYes: () async {
-                                  final value =
-                                      await bookingsNotifier.deleteBooking(e);
-                                  if (value) {
-                                    ref
-                                        .watch(
-                                            managerBookingListProvider.notifier)
-                                        .loadUserManageBookings;
-                                    displayToastWithContext(TypeMsg.msg,
-                                        BookingTextConstants.deleteBooking);
-                                  } else {
-                                    displayToastWithContext(TypeMsg.error,
-                                        BookingTextConstants.deletingError);
-                                  }
-                                },
-                                title: BookingTextConstants.deleteBooking,
-                              ));
-                    });
-                  },
-                  onCopy: () {
-                    handleBooking(e.copyWith(id: ""));
+                const SizedBox(
+                  height: 10,
+                ),
+                AsyncChild(
+                  value: bookings,
+                  builder: (context, data) {
+                    data.sort((a, b) => b.creation.compareTo(a.creation));
+                    return HorizontalListView.builder(
+                      height: 210,
+                      firstChild: GestureDetector(
+                        onTap: () {
+                          bookingNotifier.setBooking(Booking.empty());
+                          selectedDaysNotifier.clear();
+                          QR.to(BookingRouter.root + BookingRouter.addEdit);
+                        },
+                        child: const CardLayout(
+                          width: 120,
+                          height: 200,
+                          child: Center(
+                            child: HeroIcon(
+                              HeroIcons.plus,
+                              size: 40.0,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                      items: data,
+                      itemBuilder: (context, e, i) => BookingCard(
+                        booking: e,
+                        onEdit: () {
+                          handleBooking(e);
+                        },
+                        onInfo: () {
+                          bookingNotifier.setBooking(e);
+                          QR.to(BookingRouter.root + BookingRouter.detail);
+                        },
+                        onDelete: () async {
+                          await tokenExpireWrapper(ref, () async {
+                            await showDialog(
+                                context: context,
+                                builder: (context) => CustomDialogBox(
+                                      descriptions: BookingTextConstants
+                                          .deleteBookingConfirmation,
+                                      onYes: () async {
+                                        final value = await bookingsNotifier
+                                            .deleteBooking(e);
+                                        if (value) {
+                                          ref
+                                              .watch(managerBookingListProvider
+                                                  .notifier)
+                                              .loadUserManageBookings;
+                                          displayToastWithContext(
+                                              TypeMsg.msg,
+                                              BookingTextConstants
+                                                  .deleteBooking);
+                                        } else {
+                                          displayToastWithContext(
+                                              TypeMsg.error,
+                                              BookingTextConstants
+                                                  .deletingError);
+                                        }
+                                      },
+                                      title: BookingTextConstants.deleteBooking,
+                                    ));
+                          });
+                        },
+                        onCopy: () {
+                          handleBooking(e.copyWith(id: ""));
+                        },
+                      ),
+                    );
                   },
                 ),
-              );
-            },
-          )
-        ]),
+                const SizedBox(height: 20)
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
