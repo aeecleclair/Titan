@@ -31,17 +31,18 @@ class Item {
     data['name'] = name;
     data['suggested_caution'] = caution;
     data['total_quantity'] = totalQuantity;
+    data['loaned_quantity'] = loanedQuantity;
     data['suggested_lending_duration'] = suggestedLendingDuration;
     return data;
   }
 
   Item copyWith(
-      {id,
-      name,
-      caution,
-      totalQuantity,
-      loanedQuantity,
-      suggestedLendingDuration}) {
+      {String? id,
+      String? name,
+      int? caution,
+      int? totalQuantity,
+      int? loanedQuantity,
+      double? suggestedLendingDuration}) {
     return Item(
         id: id ?? this.id,
         name: name ?? this.name,
@@ -67,6 +68,6 @@ class Item {
 
   @override
   String toString() {
-    return 'Item(id: $id, name: $name, caution: $caution, totalQuantity: $totalQuantity,  loanedQuantity: $loanedQuantity, suggestedLendingDuration: $suggestedLendingDuration)';
+    return 'Item(id: $id, name: $name, caution: $caution, totalQuantity: $totalQuantity, loanedQuantity: $loanedQuantity, suggestedLendingDuration: $suggestedLendingDuration)';
   }
 }

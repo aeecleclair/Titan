@@ -19,6 +19,11 @@ class RecoverRequest {
     return data;
   }
 
+  RecoverRequest.empty() {
+    resetToken = "";
+    newPassword = "";
+  }
+
   RecoverRequest copyWith({
     String? resetToken,
     String? newPassword,
@@ -27,5 +32,10 @@ class RecoverRequest {
       resetToken: resetToken ?? this.resetToken,
       newPassword: newPassword ?? this.newPassword,
     );
+  }
+
+  @override
+  String toString() {
+    return 'RecoverRequest{resetToken: $resetToken, newPassword: $newPassword}';
   }
 }

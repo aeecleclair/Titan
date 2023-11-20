@@ -49,6 +49,17 @@ class CreateAccount {
     return data;
   }
 
+  CreateAccount.empty() {
+    name = "";
+    firstname = "";
+    nickname = "";
+    password = "";
+    birthday = DateTime.now();
+    phone = "";
+    floor = "";
+    activationToken = "";
+  }
+
   CreateAccount copyWith({
     String? name,
     String? firstname,

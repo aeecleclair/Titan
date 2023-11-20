@@ -34,6 +34,12 @@ class Information {
     );
   }
 
+  static Information empty() => Information(
+        manager: '',
+        link: '',
+        description: '',
+      );
+
   @override
   String toString() {
     return 'Information{manager: $manager, link: $link, description: $description}';

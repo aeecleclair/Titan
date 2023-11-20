@@ -1,7 +1,10 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/cinema/class/the_movie_db_genre.dart';
 import 'package:myecl/cinema/class/the_movie_db_search_result.dart';
 import 'package:myecl/tools/repository/repository.dart';
+
+import '../../auth/providers/openid_provider.dart';
 
 class TheMovieDBRepository extends Repository {
   @override
@@ -26,3 +29,8 @@ class TheMovieDBRepository extends Repository {
         await getOne("movie/$id", suffix: "?api_key=$apiKey&language=fr-FR"));
   }
 }
+
+final theMovieDBRepository = Provider<TheMovieDBRepository>((ref) {
+  final token = ref.watch(tokenProvider);
+  return TheMovieDBRepository()..setToken(token);
+});

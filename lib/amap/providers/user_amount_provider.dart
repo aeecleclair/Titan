@@ -6,14 +6,12 @@ import 'package:myecl/tools/providers/single_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class UserCashNotifier extends SingleNotifier<Cash> {
-  final AmapUserRepository _amapUserRepository = AmapUserRepository();
-  UserCashNotifier({required String token})
-      : super(const AsyncValue.loading()) {
-    _amapUserRepository.setToken(token);
-  }
+  final AmapUserRepository amapUserRepository;
+  UserCashNotifier({required this.amapUserRepository})
+      : super(const AsyncValue.loading());
 
   Future<AsyncValue<Cash>> loadCashByUser(String userId) async {
-    return await load(() async => _amapUserRepository.getCashByUser(userId));
+    return await load(() async => amapUserRepository.getCashByUser(userId));
   }
 
   Future updateCash(double amount) async {
@@ -31,8 +29,10 @@ class UserCashNotifier extends SingleNotifier<Cash> {
 
 final userAmountProvider =
     StateNotifierProvider<UserCashNotifier, AsyncValue<Cash>>((ref) {
-  final token = ref.watch(tokenProvider);
-  UserCashNotifier userCashNotifier = UserCashNotifier(token: token);
+  final AmapUserRepository amapUserRepository =
+      ref.watch(amapUserRepositoryProvider);
+  UserCashNotifier userCashNotifier =
+      UserCashNotifier(amapUserRepository: amapUserRepository);
   tokenExpireWrapperAuth(ref, () async {
     final userId = ref.watch(idProvider);
     userId.whenData(

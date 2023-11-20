@@ -29,6 +29,7 @@ class Applicant extends SimpleUser {
     return data;
   }
 
+  @override
   Applicant copyWith(
       {String? name,
       String? firstname,
@@ -49,8 +50,13 @@ class Applicant extends SimpleUser {
 
   @override
   Applicant.empty() : super.empty() {
-    email = '';
-    promo = 0;
+    email = 'empty@ecl.ec-lyon.fr';
+    promo = null;
     phone = null;
+  }
+
+  @override
+  String toString() {
+    return 'Applicant{name: $name, firstname: $firstname, nickname: $nickname, id: $id, email: $email, promo: $promo, phone: $phone}';
   }
 }

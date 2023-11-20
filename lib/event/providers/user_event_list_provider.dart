@@ -6,29 +6,25 @@ import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class EventEventListProvider extends ListNotifier<Event> {
-  final EventRepository _eventRepository = EventRepository();
+  final EventRepository eventRepository;
   String userId = "";
-  EventEventListProvider({required String token})
-      : super(const AsyncValue.loading()) {
-    _eventRepository.setToken(token);
-  }
-
+  EventEventListProvider({required this.eventRepository})
+      : super(const AsyncValue.loading());
   void setId(String id) {
     userId = id;
   }
 
   Future<AsyncValue<List<Event>>> loadConfirmedEvent() async {
-    return await loadList(
-        () async => _eventRepository.getUserEventList(userId));
+    return await loadList(() async => eventRepository.getUserEventList(userId));
   }
 
   Future<bool> addEvent(Event event) async {
-    return await add(_eventRepository.createEvent, event);
+    return await add(eventRepository.createEvent, event);
   }
 
   Future<bool> updateEvent(Event event) async {
     return await update(
-        _eventRepository.updateEvent,
+        eventRepository.updateEvent,
         (events, event) =>
             events..[events.indexWhere((e) => e.id == event.id)] = event,
         event);
@@ -36,7 +32,7 @@ class EventEventListProvider extends ListNotifier<Event> {
 
   Future<bool> deleteEvent(Event event) async {
     return await delete(
-        _eventRepository.deleteEvent,
+        eventRepository.deleteEvent,
         (events, event) => events..removeWhere((e) => e.id == event.id),
         event.id,
         event);
@@ -46,9 +42,9 @@ class EventEventListProvider extends ListNotifier<Event> {
 final eventEventListProvider =
     StateNotifierProvider<EventEventListProvider, AsyncValue<List<Event>>>(
         (ref) {
-  final token = ref.watch(tokenProvider);
+  final eventRepository = ref.watch(eventRepositoryProvider);
   final userId = ref.watch(idProvider);
-  final provider = EventEventListProvider(token: token);
+  final provider = EventEventListProvider(eventRepository: eventRepository);
   tokenExpireWrapperAuth(ref, () async {
     userId.whenData((value) async {
       provider.setId(value);

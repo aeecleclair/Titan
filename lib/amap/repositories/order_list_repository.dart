@@ -1,4 +1,6 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/order.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class OrderListRepository extends Repository {
@@ -29,3 +31,8 @@ class OrderListRepository extends Repository {
             .map((x) => Order.fromJson(x)));
   }
 }
+
+final orderListRepositoryProvider = Provider((ref) {
+  final token = ref.watch(tokenProvider);
+  return OrderListRepository()..setToken(token);
+});

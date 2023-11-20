@@ -1,3 +1,5 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/user/class/user.dart';
 
@@ -59,3 +61,8 @@ class UserRepository extends Repository {
     }
   }
 }
+
+final userRepositoryProvider = Provider((ref) {
+  final token = ref.watch(tokenProvider);
+  return UserRepository()..setToken(token);
+});

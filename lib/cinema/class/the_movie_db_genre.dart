@@ -38,4 +38,20 @@ class TheMovieDBMovie {
     data['tagline'] = tagline;
     return data;
   }
+
+  static TheMovieDBMovie empty() {
+    return TheMovieDBMovie(
+      genres: [],
+      overview: "",
+      posterUrl: "",
+      title: "",
+      runtime: 0,
+      tagline: "",
+    );
+  }
+
+  @override
+  String toString() {
+    return 'TheMovieDBMovie{genres: $genres, overview: $overview, posterUrl: $posterUrl, title: $title, runtime: $runtime, tagline: $tagline}';
+  }
 }

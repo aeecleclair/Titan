@@ -1,27 +1,24 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/repositories/loan_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class LoanListNotifier extends ListNotifier<Loan> {
-  final LoanRepository loanRepository = LoanRepository();
-  LoanListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
-    loanRepository.setToken(token);
-  }
+  final LoanRepository loanrepository;
+  LoanListNotifier({required this.loanrepository})
+      : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Loan>>> loadLoanList() async {
-    return await loadList(loanRepository.getMyLoanList);
+    return await loadList(loanrepository.getMyLoanList);
   }
 
   Future<bool> addLoan(Loan loan) async {
-    return await add(loanRepository.createLoan, loan);
+    return await add(loanrepository.createLoan, loan);
   }
 
   Future<bool> updateLoan(Loan loan) async {
-    return await update(loanRepository.updateLoan, (loans, loan) {
+    return await update(loanrepository.updateLoan, (loans, loan) {
       final index = loans.indexWhere((l) => l.id == loan.id);
       loans[index] = loan;
       return loans;
@@ -30,7 +27,7 @@ class LoanListNotifier extends ListNotifier<Loan> {
 
   Future<bool> deleteLoan(Loan loan) async {
     return await delete(
-        loanRepository.deleteLoan,
+        loanrepository.deleteLoan,
         (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
         loan.id,
         loan);
@@ -38,7 +35,7 @@ class LoanListNotifier extends ListNotifier<Loan> {
 
   Future<bool> returnLoan(Loan loan) async {
     return await delete(
-        loanRepository.returnLoan,
+        loanrepository.returnLoan,
         (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
         loan.id,
         loan);
@@ -47,8 +44,9 @@ class LoanListNotifier extends ListNotifier<Loan> {
 
 final loanListProvider =
     StateNotifierProvider<LoanListNotifier, AsyncValue<List<Loan>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  LoanListNotifier loanListNotifier = LoanListNotifier(token: token);
+  final loanRepository = ref.watch(loanRepositoryProvider);
+  LoanListNotifier loanListNotifier =
+      LoanListNotifier(loanrepository: loanRepository);
   tokenExpireWrapperAuth(ref, () async {
     await loanListNotifier.loadLoanList();
   });

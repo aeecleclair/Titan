@@ -4,7 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/class/order.dart';
-import 'package:myecl/amap/providers/cash_provider.dart';
+import 'package:myecl/amap/providers/cash_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_order_list_provider.dart';
 import 'package:myecl/amap/providers/user_order_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
@@ -32,7 +32,7 @@ class DetailOrderUI extends HookConsumerWidget {
     final orderListNotifier = ref.watch(userOrderListProvider.notifier);
     final deliveryOrdersNotifier =
         ref.watch(adminDeliveryOrderListProvider.notifier);
-    final cashNotifier = ref.watch(cashProvider.notifier);
+    final cashListNotifier = ref.watch(cashListProvider.notifier);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -145,9 +145,10 @@ class DetailOrderUI extends HookConsumerWidget {
                                     deliveryOrdersNotifier.deleteE(
                                         deliveryId, index);
                                   }
-                                  cashNotifier.fakeUpdateCash(userCash.copyWith(
-                                      balance:
-                                          userCash.balance + order.amount));
+                                  cashListNotifier.fakeUpdateCash(
+                                      userCash.copyWith(
+                                          balance:
+                                              userCash.balance + order.amount));
                                   displayToastWithContext(TypeMsg.msg,
                                       AMAPTextConstants.deletedOrder);
                                 } else {

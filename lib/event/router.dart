@@ -2,7 +2,7 @@ import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
-import 'package:myecl/event/providers/is_admin.dart';
+import 'package:myecl/event/providers/is_admin_provider.dart';
 import 'package:myecl/event/ui/pages/detail_page/detail_page.dart'
     deferred as detail_page;
 import 'package:myecl/event/ui/pages/admin_page/admin_page.dart'

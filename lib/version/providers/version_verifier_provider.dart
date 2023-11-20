@@ -4,17 +4,20 @@ import 'package:myecl/version/class/version.dart';
 import 'package:myecl/version/repositories/version_repository.dart';
 
 class VersionVerifierNotifier extends SingleNotifier<Version> {
-  final VersionRepository _versionRepository = VersionRepository();
-  VersionVerifierNotifier() : super(const AsyncLoading());
+  final VersionRepository versionRepository;
+  VersionVerifierNotifier({required this.versionRepository})
+      : super(const AsyncLoading());
 
   Future<AsyncValue<Version>> loadVersion() async {
-    return await load(_versionRepository.getVersion);
+    return await load(versionRepository.getVersion);
   }
 }
 
 final versionVerifierProvider =
     StateNotifierProvider<VersionVerifierNotifier, AsyncValue<Version>>((ref) {
-  final notifier = VersionVerifierNotifier();
+  final versionRepository = ref.watch(versionRepositoryProvider);
+  final notifier =
+      VersionVerifierNotifier(versionRepository: versionRepository);
   notifier.loadVersion();
   return notifier;
 });

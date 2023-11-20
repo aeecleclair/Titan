@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/repositories/event_repository.dart';
@@ -7,22 +6,21 @@ import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class EventListNotifier extends ListNotifier<Event> {
-  final EventRepository _eventRepository = EventRepository();
-  EventListNotifier(String token) : super(const AsyncValue.loading()) {
-    _eventRepository.setToken(token);
-  }
+  final EventRepository eventRepository;
+  EventListNotifier({required this.eventRepository})
+      : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Event>>> loadEventList() async {
-    return await loadList(_eventRepository.getAllEvent);
+    return await loadList(eventRepository.getAllEvent);
   }
 
   Future<bool> addEvent(Event event) async {
-    return await add(_eventRepository.createEvent, event);
+    return await add(eventRepository.createEvent, event);
   }
 
   Future<bool> updateEvent(Event event) async {
     return await update(
-        _eventRepository.updateEvent,
+        eventRepository.updateEvent,
         (events, event) =>
             events..[events.indexWhere((e) => e.id == event.id)] = event,
         event);
@@ -30,7 +28,7 @@ class EventListNotifier extends ListNotifier<Event> {
 
   Future<bool> deleteEvent(Event event) async {
     return await delete(
-        _eventRepository.deleteEvent,
+        eventRepository.deleteEvent,
         (events, event) => events..removeWhere((e) => e.id == event.id),
         event.id,
         event);
@@ -38,17 +36,18 @@ class EventListNotifier extends ListNotifier<Event> {
 
   Future<bool> toggleConfirmed(Event event, Decision decision) async {
     return await update(
-        (event) => _eventRepository.confirmEvent(event, decision),
+        (event) => eventRepository.confirmEvent(event, decision),
         (events, event) =>
             events..[events.indexWhere((b) => b.id == event.id)] = event,
-        event.copyWith(decision: decision));
+        event);
   }
 }
 
 final eventListProvider =
     StateNotifierProvider<EventListNotifier, AsyncValue<List<Event>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  EventListNotifier notifier = EventListNotifier(token);
+  final eventRepository = ref.watch(eventRepositoryProvider);
+  EventListNotifier notifier =
+      EventListNotifier(eventRepository: eventRepository);
   tokenExpireWrapperAuth(ref, () async {
     await notifier.loadEventList();
   });

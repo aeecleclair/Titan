@@ -1,35 +1,31 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/admin/repositories/group_repository.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/class/user.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 
 class GroupListNotifier extends ListNotifier<SimpleGroup> {
-  final GroupRepository _groupRepository = GroupRepository();
-  GroupListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
-    _groupRepository.setToken(token);
-  }
+  final GroupRepository groupRepository;
+  GroupListNotifier({required this.groupRepository})
+      : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<SimpleGroup>>> loadGroups() async {
-    return await loadList(_groupRepository.getGroupList);
+    return await loadList(groupRepository.getGroupList);
   }
 
   Future<AsyncValue<List<SimpleGroup>>> loadGroupsFromUser(User user) async {
-    return await loadList(() async {
-      return user.groups;
-    });
+    return await loadList(() async => user.groups);
   }
 
   Future<bool> createGroup(SimpleGroup group) async {
-    return await add(_groupRepository.createGroup, group);
+    return await add(groupRepository.createGroup, group);
   }
 
   Future<bool> updateGroup(SimpleGroup group) async {
     return await update(
-        _groupRepository.updateGroup,
+        groupRepository.updateGroup,
         (groups, group) =>
             groups..[groups.indexWhere((g) => g.id == group.id)] = group,
         group);
@@ -37,7 +33,7 @@ class GroupListNotifier extends ListNotifier<SimpleGroup> {
 
   Future<bool> deleteGroup(SimpleGroup group) async {
     return await delete(
-        _groupRepository.deleteGroup,
+        groupRepository.deleteGroup,
         (groups, group) => groups..removeWhere((i) => i.id == group.id),
         group.id,
         group);
@@ -46,6 +42,7 @@ class GroupListNotifier extends ListNotifier<SimpleGroup> {
   void setGroup(SimpleGroup group) {
     state.whenData(
       (d) {
+        if (d.indexWhere((g) => g.id == group.id) == -1) return;
         state =
             AsyncValue.data(d..[d.indexWhere((g) => g.id == group.id)] = group);
       },
@@ -56,10 +53,23 @@ class GroupListNotifier extends ListNotifier<SimpleGroup> {
 final allGroupListProvider =
     StateNotifierProvider<GroupListNotifier, AsyncValue<List<SimpleGroup>>>(
         (ref) {
-  final token = ref.watch(tokenProvider);
-  GroupListNotifier provider = GroupListNotifier(token: token);
+  final groupRepository = ref.watch(groupRepositoryProvider);
+  GroupListNotifier provider =
+      GroupListNotifier(groupRepository: groupRepository);
   tokenExpireWrapperAuth(ref, () async {
     await provider.loadGroups();
+  });
+  return provider;
+});
+
+final userGroupListNotifier =
+    StateNotifierProvider<GroupListNotifier, AsyncValue<List<SimpleGroup>>>(
+        (ref) {
+  final groupRepository = ref.watch(groupRepositoryProvider);
+  GroupListNotifier provider =
+      GroupListNotifier(groupRepository: groupRepository);
+  tokenExpireWrapperAuth(ref, () async {
+    await provider.loadGroupsFromUser(ref.watch(userProvider));
   });
   return provider;
 });
