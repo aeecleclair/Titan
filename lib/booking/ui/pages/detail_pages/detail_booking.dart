@@ -100,7 +100,7 @@ class DetailBookingPage extends HookConsumerWidget {
                               }
                             },
                             child: Text(
-                              booking.applicant.email!,
+                              booking.applicant.email.toString(),
                               style: const TextStyle(
                                 fontSize: 16,
                                 decoration: TextDecoration.underline,

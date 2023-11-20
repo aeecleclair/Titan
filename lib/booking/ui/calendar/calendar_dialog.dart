@@ -113,7 +113,7 @@ class CalendarDialog extends StatelessWidget {
                           width: 20,
                         ),
                         Text(
-                          booking.applicant.email!,
+                          booking.applicant.email.toString(),
                           style: const TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 15,
