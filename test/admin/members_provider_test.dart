@@ -1,5 +1,3 @@
-// ignore_for_file: invalid_use_of_protected_member
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:myecl/admin/providers/members_provider.dart';
 import 'package:myecl/user/class/list_users.dart';

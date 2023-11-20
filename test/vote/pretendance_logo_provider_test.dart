@@ -1,5 +1,3 @@
-// ignore_for_file: invalid_use_of_protected_member
-
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
