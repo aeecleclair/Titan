@@ -189,6 +189,7 @@ class CreateAccountPage extends HookConsumerWidget {
         formKey: formKeys[8],
         keyboardType: TextInputType.number,
         canBeEmpty: true,
+        mustBeInt: true,
         hint: LoginTextConstants.canBeEmpty,
       ),
       Column(
