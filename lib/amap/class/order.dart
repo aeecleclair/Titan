@@ -94,13 +94,6 @@ class Order {
         user: user ?? this.user);
   }
 
-  void setProducts(List<Product> products) {
-    this.products = products
-        .where((element) => productsDetail.contains(element.id))
-        .toList();
-    productsQuantity = products.map((element) => element.quantity).toList();
-  }
-
   static Order empty() {
     return Order(
         id: '',
@@ -115,5 +108,10 @@ class Order {
         collectionSlot: CollectionSlot.midDay,
         expanded: false,
         user: SimpleUser.empty());
+  }
+
+  @override
+  String toString() {
+    return 'Order{id: $id, orderingDate: $orderingDate, deliveryDate: $deliveryDate, productsDetail: $productsDetail, productsQuantity: $productsQuantity, deliveryId: $deliveryId, products: $products, amount: $amount, lastAmount: $lastAmount, collectionSlot: $collectionSlot, user: $user, expanded: $expanded}';
   }
 }

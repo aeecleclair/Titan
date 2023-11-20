@@ -50,7 +50,10 @@ abstract class SingleNotifier<T> extends StateNotifier<AsyncValue<T>> {
   Future<bool> update(Future<bool> Function(T t) f, T t) async {
     return state.when(data: (d) async {
       try {
-        await f(t);
+        final value = await f(t);
+        if (!value) {
+          return false;
+        }
         state = AsyncValue.data(t);
         return true;
       } catch (error) {
@@ -79,7 +82,10 @@ abstract class SingleNotifier<T> extends StateNotifier<AsyncValue<T>> {
       Future<bool> Function(String id) f, T t, String id) async {
     return state.when(data: (d) async {
       try {
-        await f(id);
+        final value = await f(id);
+        if (!value) {
+          return false;
+        }
         state = const AsyncValue.loading();
         return true;
       } catch (error) {

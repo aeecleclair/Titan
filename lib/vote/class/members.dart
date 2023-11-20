@@ -11,13 +11,21 @@ class Member extends SimpleUser {
       required super.id,
       required this.role});
 
-  Member copyWith({String? role}) {
+  @override
+  Member copyWith({
+    String? name,
+    String? firstname,
+    String? nickname,
+    String? id,
+    String? role,
+  }) {
     return Member(
-        name: super.name,
-        firstname: super.firstname,
-        nickname: super.nickname,
-        id: super.id,
-        role: role ?? this.role);
+      name: name ?? this.name,
+      firstname: firstname ?? this.firstname,
+      nickname: nickname ?? this.nickname,
+      id: id ?? this.id,
+      role: role ?? this.role,
+    );
   }
 
   @override
@@ -57,5 +65,10 @@ class Member extends SimpleUser {
       id: '',
       role: '',
     );
+  }
+
+  @override
+  String toString() {
+    return 'Member{id: $id, name: $name, firstname: $firstname, nickname: $nickname, role: $role}';
   }
 }

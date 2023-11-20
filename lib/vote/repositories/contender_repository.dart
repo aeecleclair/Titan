@@ -1,3 +1,5 @@
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/vote/class/contender.dart';
 
@@ -26,3 +28,8 @@ class ContenderRepository extends Repository {
     return delete("/?list_type=$type");
   }
 }
+
+final contenderRepositoryProvider = Provider<ContenderRepository>((ref) {
+  final token = ref.watch(tokenProvider);
+  return ContenderRepository()..setToken(token);
+});

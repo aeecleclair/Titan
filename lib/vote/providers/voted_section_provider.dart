@@ -1,14 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/vote/repositories/voted_sections_repository.dart';
 
 class VotedSectionProvider extends ListNotifier<String> {
-  final votesRepository = VotedSectionRepository();
-  VotedSectionProvider({required String token})
-      : super(const AsyncValue.loading()) {
-    votesRepository.setToken(token);
-  }
+  final VotedSectionRepository votesRepository;
+  VotedSectionProvider({required this.votesRepository})
+      : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<String>>> getVotedSections() async {
     return await loadList(votesRepository.getVotes);
@@ -26,7 +23,9 @@ class VotedSectionProvider extends ListNotifier<String> {
 final votedSectionProvider =
     StateNotifierProvider<VotedSectionProvider, AsyncValue<List<String>>>(
         (ref) {
-  final token = ref.watch(tokenProvider);
-  VotedSectionProvider votesProvider = VotedSectionProvider(token: token);
+  final votesRepository = ref.watch(votedSectionRepositoryProvider);
+  VotedSectionProvider votesProvider = VotedSectionProvider(
+    votesRepository: votesRepository,
+  );
   return votesProvider;
 });

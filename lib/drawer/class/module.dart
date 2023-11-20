@@ -15,7 +15,12 @@ class Module {
       required this.root,
       required this.selected});
 
-  Module copy({name, icon, root, selected}) => Module(
+  Module copy(
+          {String? name,
+          Either<HeroIcons, String>? icon,
+          String? root,
+          bool? selected}) =>
+      Module(
         name: name ?? this.name,
         icon: icon ?? this.icon,
         root: root ?? this.root,

@@ -7,8 +7,6 @@ String collectionSlotToString(CollectionSlot slot) {
       return 'midi';
     case CollectionSlot.evening:
       return 'soir';
-    default:
-      return 'midi';
   }
 }
 

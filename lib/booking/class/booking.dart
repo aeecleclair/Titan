@@ -74,19 +74,19 @@ class Booking {
   }
 
   Booking copyWith(
-      {id,
-      reason,
-      start,
-      end,
-      creation,
-      note,
-      room,
-      key,
-      decision,
-      recurrenceRule,
-      entity,
-      applicant,
-      applicantId}) {
+      {String? id,
+      String? reason,
+      DateTime? start,
+      DateTime? end,
+      DateTime? creation,
+      String? note,
+      Room? room,
+      bool? key,
+      Decision? decision,
+      String? recurrenceRule,
+      String? entity,
+      Applicant? applicant,
+      String? applicantId}) {
     return Booking(
         id: id ?? this.id,
         reason: reason ?? this.reason,

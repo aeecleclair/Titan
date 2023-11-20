@@ -6,7 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/cash.dart';
-import 'package:myecl/amap/providers/cash_provider.dart';
+import 'package:myecl/amap/providers/cash_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/admin_page/user_cash_ui_layout.dart';
 import 'package:myecl/tools/functions.dart';
@@ -146,9 +146,12 @@ class UserCashUi extends HookConsumerWidget {
                                 if (key.currentState!.validate()) {
                                   await tokenExpireWrapper(ref, () async {
                                     await ref
-                                        .read(cashProvider.notifier)
+                                        .read(cashListProvider.notifier)
                                         .updateCash(
-                                          cash,
+                                          cash.copyWith(
+                                            balance: double.parse(amount.text
+                                                .replaceAll(',', '.')),
+                                          ),
                                           double.parse(
                                               amount.text.replaceAll(',', '.')),
                                         )

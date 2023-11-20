@@ -9,31 +9,29 @@ import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class UserOrderListNotifier extends ListNotifier<Order> {
-  final OrderListRepository _orderListRepository = OrderListRepository();
-  final AmapUserRepository _userRepository = AmapUserRepository();
-  UserOrderListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
-    _orderListRepository.setToken(token);
-    _userRepository.setToken(token);
-  }
+  final OrderListRepository orderListRepository;
+  final AmapUserRepository userRepository;
+  UserOrderListNotifier(
+      {required this.userRepository, required this.orderListRepository})
+      : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Order>>> loadOrderList(String userId) async {
-    return await loadList(() async => _userRepository.getOrderList(userId));
+    return await loadList(() async => userRepository.getOrderList(userId));
   }
 
   Future<AsyncValue<List<Order>>> loadDeliveryOrderList(
       String deliveryId) async {
     return await loadList(
-        () async => _orderListRepository.getDeliveryOrderList(deliveryId));
+        () async => orderListRepository.getDeliveryOrderList(deliveryId));
   }
 
   Future<bool> addOrder(Order order) async {
-    return await add((o) async => _orderListRepository.createOrder(o), order);
+    return await add(orderListRepository.createOrder, order);
   }
 
   Future<bool> updateOrder(Order order) async {
     return await update(
-        (o) async => _orderListRepository.updateOrder(order),
+        orderListRepository.updateOrder,
         (orders, order) =>
             orders..[orders.indexWhere((o) => o.id == order.id)] = order,
         order);
@@ -41,7 +39,7 @@ class UserOrderListNotifier extends ListNotifier<Order> {
 
   Future<bool> deleteOrder(Order order) async {
     return await delete(
-        (id) async => _orderListRepository.deleteOrder(order.id),
+        orderListRepository.deleteOrder,
         (orders, order) => orders..removeWhere((i) => i.id == order.id),
         order.id,
         order);
@@ -90,7 +88,7 @@ class UserOrderListNotifier extends ListNotifier<Order> {
       data: (orders) async {
         try {
           var newOrder = orders[indexOrder].copyWith(products: newListProduct);
-          await _orderListRepository.updateOrder(newOrder);
+          await orderListRepository.updateOrder(newOrder);
           orders[indexOrder] = newOrder;
           state = AsyncValue.data(orders);
           return true;
@@ -147,9 +145,11 @@ class UserOrderListNotifier extends ListNotifier<Order> {
 final userOrderListProvider =
     StateNotifierProvider<UserOrderListNotifier, AsyncValue<List<Order>>>(
         (ref) {
-  final token = ref.watch(tokenProvider);
-  UserOrderListNotifier userOrderListNotifier =
-      UserOrderListNotifier(token: token);
+  final amapUserRepository = ref.watch(amapUserRepositoryProvider);
+  final orderListRepository = ref.watch(orderListRepositoryProvider);
+  UserOrderListNotifier userOrderListNotifier = UserOrderListNotifier(
+      userRepository: amapUserRepository,
+      orderListRepository: orderListRepository);
   tokenExpireWrapperAuth(ref, () async {
     final userId = ref.watch(idProvider);
     userId.whenData(

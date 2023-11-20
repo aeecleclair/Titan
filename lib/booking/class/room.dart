@@ -18,7 +18,7 @@ class Room {
     return data;
   }
 
-  Room copyWith({name, managerId, id}) {
+  Room copyWith({String? name, String? managerId, String? id}) {
     return Room(
       name: name ?? this.name,
       managerId: managerId ?? this.managerId,

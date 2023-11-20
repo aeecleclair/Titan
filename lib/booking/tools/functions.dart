@@ -22,7 +22,5 @@ String decisionToString(Decision d) {
       return BookingTextConstants.declined;
     case Decision.pending:
       return BookingTextConstants.pending;
-    default:
-      return BookingTextConstants.pending;
   }
 }

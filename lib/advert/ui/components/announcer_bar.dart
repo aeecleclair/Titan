@@ -4,6 +4,7 @@ import 'package:myecl/advert/providers/announcer_provider.dart';
 import 'package:myecl/advert/providers/announcer_list_provider.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/layouts/item_chip.dart';
 
 class AnnouncerBar extends HookConsumerWidget {
   final bool useUserAnnouncers;
@@ -48,24 +49,15 @@ class AnnouncerBar extends HookConsumerWidget {
               }
             }
           },
-          child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Chip(
-                label: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    e.name,
-                    style: TextStyle(
-                        color: selectedId.contains(e.id)
-                            ? Colors.white
-                            : darkerColor,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                backgroundColor: selectedId.contains(e.id)
-                    ? darkerColor
-                    : Colors.grey.shade200,
-              )),
+          child: ItemChip(
+            selected: selectedId.contains(e.id),
+            child: Text(
+              e.name,
+              style: TextStyle(
+                  color: selectedId.contains(e.id) ? Colors.white : darkerColor,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
         ),
       ),
     );

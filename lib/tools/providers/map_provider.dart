@@ -7,57 +7,29 @@ class MapNotifier<T, E>
   MapNotifier() : super(const AsyncLoading());
 
   void loadTList(List<T> tList) async {
-    Map<T, AsyncValue<List<E>>> loanersItems = {};
+    Map<T, AsyncValue<List<E>>> tMap = {};
     for (T l in tList) {
-      loanersItems[l] = const AsyncValue.data([]);
+      final emptyEList = <E>[];
+      tMap[l] = AsyncValue.data(emptyEList);
     }
-    state = AsyncValue.data(loanersItems);
+    state = AsyncValue.data(tMap);
   }
 
   Future addT(T t) async {
     state.maybeWhen(
-      data: (loanersItems) async {
-        loanersItems[t] = const AsyncValue.data([]);
-        state = AsyncValue.data(loanersItems);
+      data: (tList) async {
+        tList[t] = const AsyncValue.data([]);
+        state = AsyncValue.data(tList);
       },
       orElse: () {},
     );
   }
 
-  void addE(T t, E e) {
-    state.when(data: (d) async {
-      try {
-        List<E> currentLoans =
-            d[t]!.maybeWhen(data: (d) => d, orElse: () => []);
-        d[t] = AsyncValue.data(currentLoans + [e]);
-        state = AsyncValue.data(d);
-        return true;
-      } catch (error) {
-        state = AsyncValue.data(d);
-        if (error is AppException && error.type == ErrorType.tokenExpire) {
-          rethrow;
-        } else {
-          return false;
-        }
-      }
-    }, error: (error, s) {
-      if (error is AppException && error.type == ErrorType.tokenExpire) {
-        throw error;
-      } else {
-        state = AsyncValue.error(error, s);
-        return false;
-      }
-    }, loading: () {
-      state =
-          const AsyncValue.error("Cannot add while loading", StackTrace.empty);
-      return false;
-    });
-  }
-
-  Future<bool> deleteT(T t) {
+  Future<bool> addE(T t, E e) {
     return state.when(data: (d) async {
       try {
-        d.remove(t);
+        List<E> eList = d[t]!.maybeWhen(data: (d) => d, orElse: () => []);
+        d[t] = AsyncValue.data(eList + [e]);
         state = AsyncValue.data(d);
         return true;
       } catch (error) {
@@ -75,6 +47,23 @@ class MapNotifier<T, E>
         state = AsyncValue.error(error, s);
         return false;
       }
+    }, loading: () async {
+      state =
+          const AsyncValue.error("Cannot add while loading", StackTrace.empty);
+      return false;
+    });
+  }
+
+  Future<bool> deleteT(T t) {
+    return state.when(data: (d) async {
+      if (d.containsKey(t)) {
+        d.remove(t);
+        state = AsyncValue.data(d);
+      }
+      return true;
+    }, error: (error, s) async {
+      state = AsyncValue.error(error, s);
+      return false;
     }, loading: () async {
       state = const AsyncValue.error(
           "Cannot delete while loading", StackTrace.empty);

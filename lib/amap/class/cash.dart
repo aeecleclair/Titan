@@ -20,6 +20,8 @@ class Cash {
     return Cash(user: user ?? this.user, balance: balance ?? this.balance);
   }
 
+  static Cash empty() => Cash(user: SimpleUser.empty(), balance: 0);
+
   @override
   String toString() {
     return 'Cash{balance: $balance, user: $user}';

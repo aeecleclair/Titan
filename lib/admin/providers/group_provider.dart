@@ -1,28 +1,26 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/class/group.dart';
 import 'package:myecl/admin/repositories/group_repository.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
 import 'package:myecl/user/class/list_users.dart';
 
 class GroupNotifier extends SingleNotifier<Group> {
-  final GroupRepository _groupRepository = GroupRepository();
-  GroupNotifier({required String token}) : super(const AsyncValue.loading()) {
-    _groupRepository.setToken(token);
-  }
+  final GroupRepository groupRepository;
+  GroupNotifier({required this.groupRepository})
+      : super(const AsyncValue.loading());
 
   Future<AsyncValue<Group>> loadGroup(String groupId) async {
-    return await load(() async => _groupRepository.getGroup(groupId));
+    return await load(() async => groupRepository.getGroup(groupId));
   }
 
   Future<bool> addMember(Group group, SimpleUser user) async {
     return await update(
-        (group) async => _groupRepository.addMember(group, user), group);
+        (group) async => groupRepository.addMember(group, user), group);
   }
 
   Future<bool> deleteMember(Group group, SimpleUser user) async {
     return await update(
-        (group) async => _groupRepository.deleteMember(group, user), group);
+        (group) async => groupRepository.deleteMember(group, user), group);
   }
 
   void setGroup(Group group) {
@@ -32,6 +30,6 @@ class GroupNotifier extends SingleNotifier<Group> {
 
 final groupProvider =
     StateNotifierProvider<GroupNotifier, AsyncValue<Group>>((ref) {
-  final token = ref.watch(tokenProvider);
-  return GroupNotifier(token: token);
+  final groupRepository = ref.watch(groupRepositoryProvider);
+  return GroupNotifier(groupRepository: groupRepository);
 });

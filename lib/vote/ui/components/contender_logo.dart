@@ -20,6 +20,8 @@ class ContenderLogo extends HookConsumerWidget {
         mapKey: contender,
         loader: (contender) => logoNotifier.getLogo(contender.id),
         dataBuilder: (context, logo) => Container(
+              width: 40,
+              height: 40,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(

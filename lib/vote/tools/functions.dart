@@ -56,7 +56,5 @@ String statusToString(Status status) {
       return 'Counting';
     case Status.published:
       return 'Published';
-    default:
-      return 'Waiting';
   }
 }

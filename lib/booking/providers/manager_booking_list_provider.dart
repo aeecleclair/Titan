@@ -1,24 +1,21 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/repositories/booking_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class ManagerBookingListProvider extends ListNotifier<Booking> {
-  final BookingRepository _repository = BookingRepository();
-  ManagerBookingListProvider({required String token})
-      : super(const AsyncValue.loading()) {
-    _repository.setToken(token);
-  }
+  final BookingRepository bookingRepository;
+  ManagerBookingListProvider({required this.bookingRepository})
+      : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Booking>>> loadUserManageBookings() async {
-    return await loadList(_repository.getUserManageBookingList);
+    return await loadList(bookingRepository.getUserManageBookingList);
   }
 
   Future<bool> updateBooking(Booking booking) async {
     return await update(
-        _repository.updateBooking,
+        bookingRepository.updateBooking,
         (bookings, booking) => bookings
           ..[bookings.indexWhere((b) => b.id == booking.id)] = booking,
         booking);
@@ -26,17 +23,18 @@ class ManagerBookingListProvider extends ListNotifier<Booking> {
 
   Future<bool> toggleConfirmed(Booking booking, Decision decision) async {
     return await update(
-        (booking) => _repository.confirmBooking(booking, decision),
+        (booking) => bookingRepository.confirmBooking(booking, decision),
         (bookings, booking) => bookings
           ..[bookings.indexWhere((b) => b.id == booking.id)] = booking,
-        booking.copyWith(decision: decision));
+        booking);
   }
 }
 
 final managerBookingListProvider = StateNotifierProvider<
     ManagerBookingListProvider, AsyncValue<List<Booking>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  final provider = ManagerBookingListProvider(token: token);
+  final bookingRepository = ref.watch(bookingRepositoryProvider);
+  final provider =
+      ManagerBookingListProvider(bookingRepository: bookingRepository);
   tokenExpireWrapperAuth(ref, () async {
     await provider.loadUserManageBookings();
   });

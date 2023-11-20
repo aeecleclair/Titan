@@ -1,4 +1,6 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/cash.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class CashRepository extends Repository {
@@ -24,3 +26,8 @@ class CashRepository extends Repository {
     return await update(cash.toJson(), cash.user.id, suffix: "/cash");
   }
 }
+
+final cashRepositoryProvider = Provider((ref) {
+  final token = ref.watch(tokenProvider);
+  return CashRepository()..setToken(token);
+});

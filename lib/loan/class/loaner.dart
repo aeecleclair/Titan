@@ -22,7 +22,7 @@ class Loaner {
     return data;
   }
 
-  Loaner copyWith({name, groupManagerId, id}) {
+  Loaner copyWith({String? name, String? groupManagerId, String? id}) {
     return Loaner(
       name: name ?? this.name,
       groupManagerId: groupManagerId ?? this.groupManagerId,
