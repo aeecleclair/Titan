@@ -47,7 +47,7 @@ void main() {
         "name": "name",
         "description": "description",
       });
-      expect(group.name, 'name'); // capitaliseAll
+      expect(group.name, 'name');
     });
 
     test('Should return correct json', () async {
