@@ -16,6 +16,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class ListBooking extends HookConsumerWidget {
   final List<Booking> bookings;
@@ -42,19 +43,9 @@ class ListBooking extends HookConsumerWidget {
 
     void handleBooking(Booking booking) {
       bookingNotifier.setBooking(booking);
-      final recurrent = booking.recurrenceRule != "";
-      if (recurrent) {
-        final allDays = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
-        final recurrentDays = booking.recurrenceRule
-            .split(";")
-            .where((element) => element.contains("BYDAY"))
-            .first
-            .split("=")
-            .last
-            .split(",");
-        selectedDaysNotifier.setSelectedDays(
-            allDays.map((e) => recurrentDays.contains(e)).toList());
-      }
+      final recurrentDays =
+          SfCalendar.parseRRule(booking.recurrenceRule, booking.start).weekDays;
+      selectedDaysNotifier.setSelectedDays(recurrentDays);
       QR.to(BookingRouter.root + BookingRouter.manager + BookingRouter.addEdit);
     }
 

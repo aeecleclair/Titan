@@ -1,5 +1,6 @@
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/tools/constants.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 Decision stringToDecision(String s) {
   switch (s) {
@@ -22,5 +23,24 @@ String decisionToString(Decision d) {
       return BookingTextConstants.declined;
     case Decision.pending:
       return BookingTextConstants.pending;
+  }
+}
+
+String weekDayToString(WeekDays day) {
+  switch (day) {
+    case WeekDays.sunday:
+      return "Dimanche";
+    case WeekDays.monday:
+      return "Lundi";
+    case WeekDays.tuesday:
+      return "Mardi";
+    case WeekDays.wednesday:
+      return "Mercredi";
+    case WeekDays.thursday:
+      return "Jeudi";
+    case WeekDays.friday:
+      return "Vendredi";
+    case WeekDays.saturday:
+      return "Samedi";
   }
 }

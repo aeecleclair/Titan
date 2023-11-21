@@ -11,6 +11,7 @@ import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/selected_days_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
+import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/pages/admin_pages/admin_chip.dart';
 import 'package:myecl/booking/ui/pages/admin_pages/admin_scroll_chips.dart';
@@ -165,12 +166,10 @@ class AddEditBookingPage extends HookConsumerWidget {
                                   style: TextStyle(color: Colors.black)),
                               const SizedBox(height: 10),
                               Column(
-                                  children: BookingTextConstants.dayList
+                                  children: BookingTextConstants.weekDaysOrdered
                                       .map((e) => GestureDetector(
                                             onTap: () {
-                                              selectedDaysNotifier.toggle(
-                                                  BookingTextConstants.dayList
-                                                      .indexOf(e));
+                                              selectedDaysNotifier.toggle(e);
                                             },
                                             behavior: HitTestBehavior.opaque,
                                             child: Row(
@@ -179,7 +178,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                                                       .spaceBetween,
                                               children: [
                                                 Text(
-                                                  e,
+                                                  weekDayToString(e),
                                                   style: TextStyle(
                                                     color: Colors.grey.shade700,
                                                     fontSize: 16,
@@ -188,15 +187,11 @@ class AddEditBookingPage extends HookConsumerWidget {
                                                 Checkbox(
                                                   checkColor: Colors.white,
                                                   activeColor: Colors.black,
-                                                  value: selectedDays[
-                                                      BookingTextConstants
-                                                          .dayList
-                                                          .indexOf(e)],
+                                                  value:
+                                                      selectedDays.contains(e),
                                                   onChanged: (value) {
-                                                    selectedDaysNotifier.toggle(
-                                                        BookingTextConstants
-                                                            .dayList
-                                                            .indexOf(e));
+                                                    selectedDaysNotifier
+                                                        .toggle(e);
                                                   },
                                                 ),
                                               ],
@@ -279,10 +274,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                           } else if (room.value.id.isEmpty) {
                             displayToast(context, TypeMsg.error,
                                 BookingTextConstants.invalidRoom);
-                          } else if (recurrent.value &&
-                              selectedDays
-                                  .where((element) => element)
-                                  .isEmpty) {
+                          } else if (recurrent.value && selectedDays.isEmpty) {
                             displayToast(context, TypeMsg.error,
                                 BookingTextConstants.noDaySelected);
                           } else {
@@ -306,11 +298,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                                     RecurrenceRange.endDate;
                                 recurrence.endDate = DateTime.parse(
                                     processDateBack(recurrenceEndDate.text));
-                                recurrence.weekDays = WeekDays.values
-                                    .where((element) => selectedDays[
-                                        (WeekDays.values.indexOf(element) - 1) %
-                                            7])
-                                    .toList();
+                                recurrence.weekDays = selectedDays;
                                 recurrence.interval = int.parse(interval.text);
                                 recurrenceRule = SfCalendar.generateRRule(
                                     recurrence,

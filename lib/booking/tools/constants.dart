@@ -1,3 +1,5 @@
+import 'package:syncfusion_flutter_calendar/calendar.dart';
+
 class BookingTextConstants {
   static const String add = "Ajouter";
   static const String addBookingPage = "Demande";
@@ -96,13 +98,13 @@ class BookingTextConstants {
   static const String weeks = "Semaines";
   static const String yes = "Oui";
 
-  static const List<String> dayList = [
-    "Lundi",
-    "Mardi",
-    "Mercredi",
-    "Jeudi",
-    "Vendredi",
-    "Samedi",
-    "Dimanche"
+  static const List<WeekDays> weekDaysOrdered = [
+    WeekDays.monday,
+    WeekDays.tuesday,
+    WeekDays.wednesday,
+    WeekDays.thursday,
+    WeekDays.friday,
+    WeekDays.saturday,
+    WeekDays.sunday,
   ];
 }

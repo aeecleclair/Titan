@@ -1,24 +1,29 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 final selectedDaysProvider =
-    StateNotifierProvider<SelectedDaysProvider, List<bool>>((ref) {
+    StateNotifierProvider<SelectedDaysProvider, List<WeekDays>>((ref) {
   return SelectedDaysProvider();
 });
 
-class SelectedDaysProvider extends StateNotifier<List<bool>> {
-  SelectedDaysProvider() : super(List.generate(7, (index) => false));
+class SelectedDaysProvider extends StateNotifier<List<WeekDays>> {
+  SelectedDaysProvider() : super(List.empty());
 
-  void toggle(int i) {
+  void toggle(WeekDays day) {
     var copy = state.toList();
-    copy[i] = !copy[i];
+    if (copy.contains(day)) {
+      copy.remove(day);
+    } else {
+      copy.add(day);
+    }
     state = copy;
   }
 
   void clear() {
-    state = List.generate(state.length, (index) => false);
+    state = List.empty();
   }
 
-  void setSelectedDays(List<bool> days) {
+  void setSelectedDays(List<WeekDays> days) {
     state = days;
   }
 }
