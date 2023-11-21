@@ -8,6 +8,7 @@ import 'package:myecl/booking/providers/manager_booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/manager_confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
+import 'package:myecl/booking/providers/selected_days_provider.dart';
 import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/components/booking_card.dart';
@@ -35,8 +36,28 @@ class ListBooking extends HookConsumerWidget {
         ref.watch(confirmedBookingListProvider.notifier);
     final managerConfirmedBookingListNotifier =
         ref.watch(managerConfirmedBookingListProvider.notifier);
+    final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
 
     final toggle = useState(!canToggle);
+
+    void handleBooking(Booking booking) {
+      bookingNotifier.setBooking(booking);
+      final recurrent = booking.recurrenceRule != "";
+      if (recurrent) {
+        final allDays = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
+        final recurrentDays = booking.recurrenceRule
+            .split(";")
+            .where((element) => element.contains("BYDAY"))
+            .first
+            .split("=")
+            .last
+            .split(",");
+        selectedDaysNotifier.setSelectedDays(
+            allDays.map((e) => recurrentDays.contains(e)).toList());
+      }
+      QR.to(BookingRouter.root + BookingRouter.manager + BookingRouter.addEdit);
+    }
+
     if (bookings.isNotEmpty) {
       return Column(
         children: [
@@ -84,10 +105,7 @@ class ListBooking extends HookConsumerWidget {
                         isAdmin: true,
                         isDetail: false,
                         onEdit: () {
-                          bookingNotifier.setBooking(e);
-                          QR.to(BookingRouter.root +
-                              BookingRouter.manager +
-                              BookingRouter.addEdit);
+                          handleBooking(e);
                         },
                         onInfo: () {
                           bookingNotifier.setBooking(e);
