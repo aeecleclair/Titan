@@ -9,7 +9,7 @@ void main() {
   group('isAmapAdmin', () {
     test('should return true if user is an Amap admin', () {
       final container = ProviderContainer(overrides: [
-        userProvider.overrideWithValue(User.empty().copyWith(
+        userProvider2.overrideWithValue(User.empty().copyWith(
           groups: [
             SimpleGroup.empty().copyWith(
                 id: '70db65ee-d533-4f6b-9ffa-a4d70a17b7ef', name: 'Amap Admin'),
@@ -25,7 +25,7 @@ void main() {
 
     test('should return false if user is not an Amap admin', () {
       final container = ProviderContainer(overrides: [
-        userProvider.overrideWithValue(User.empty().copyWith(
+        userProvider2.overrideWithValue(User.empty().copyWith(
           groups: [
             SimpleGroup.empty().copyWith(id: '123', name: 'Some Group'),
           ],

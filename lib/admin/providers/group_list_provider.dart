@@ -69,7 +69,7 @@ final userGroupListNotifier =
   GroupListNotifier provider =
       GroupListNotifier(groupRepository: groupRepository);
   tokenExpireWrapperAuth(ref, () async {
-    await provider.loadGroupsFromUser(ref.watch(userProvider));
+    await provider.loadGroupsFromUser(ref.watch(userProvider2));
   });
   return provider;
 });

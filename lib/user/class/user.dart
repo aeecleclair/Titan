@@ -1,6 +1,7 @@
 import 'package:myecl/admin/class/simple_group.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/class/applicant.dart';
+import 'package:myecl/user/class/applicant.dart' as applicant;
 import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/class/floors.dart';
 
@@ -106,6 +107,21 @@ class User {
     );
   }
 
+  static User fromCoreUser(CoreUser user) {
+    return User(
+        name: user.name,
+        firstname: user.firstname,
+        nickname: user.nickname,
+        id: user.id,
+        email: user.email,
+        birthday: processDate(user.birthday!),
+        promo: user.promo,
+        floor: user.floor.toString().split('.').last,
+        phone: user.phone,
+        createdOn: processDate(user.createdOn!),
+        groups: user.groups!.map((e) => SimpleGroup.fromCoreGroup(e)).toList());
+  }
+
   SimpleUser toSimpleUser() {
     return SimpleUser(
         name: name, firstname: firstname, nickname: nickname, id: id);
@@ -116,8 +132,8 @@ class User {
     return "User {name: $name, firstname: $firstname, nickname: $nickname, id: $id, email: $email, birthday: $birthday, promo: $promo, floor: $floor, phone: $phone, createdOn: $createdOn, groups: $groups}";
   }
 
-  Applicant toApplicant() {
-    return Applicant(
+  applicant.Applicant toApplicant() {
+    return applicant.Applicant(
         name: name,
         firstname: firstname,
         nickname: nickname,

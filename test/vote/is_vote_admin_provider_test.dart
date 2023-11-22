@@ -10,7 +10,7 @@ void main() {
     test('should return true if user is a vote admin', () {
       final container = ProviderContainer(
         overrides: [
-          userProvider.overrideWithValue(
+          userProvider2.overrideWithValue(
             User.empty().copyWith(
               groups: [
                 SimpleGroup.empty()
@@ -29,7 +29,7 @@ void main() {
     test('should return false if user is not a vote admin', () {
       final container = ProviderContainer(
         overrides: [
-          userProvider.overrideWithValue(
+          userProvider2.overrideWithValue(
             User.empty().copyWith(
               groups: [
                 SimpleGroup.empty()

@@ -63,8 +63,8 @@ abstract class SingleNotifier2<T> extends StateNotifier<AsyncValue<T>> {
       try {
         final response = await f(t);
         if (response.isSuccessful) {
-        state = AsyncValue.data(t);
-        return true;
+          state = AsyncValue.data(t);
+          return true;
         } else {
           throw response.error!;
         }
@@ -96,8 +96,8 @@ abstract class SingleNotifier2<T> extends StateNotifier<AsyncValue<T>> {
       try {
         final response = await f(id);
         if (response.isSuccessful) {
-        state = const AsyncValue.loading();
-        return true;
+          state = const AsyncValue.loading();
+          return true;
         } else {
           throw response.error!;
         }

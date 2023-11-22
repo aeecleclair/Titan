@@ -1,3 +1,5 @@
+import 'package:myecl/generated/openapi.models.swagger.dart';
+
 class SimpleGroup {
   SimpleGroup({
     required this.name,
@@ -37,6 +39,14 @@ class SimpleGroup {
     name = 'Nom';
     description = 'Description';
     id = '';
+  }
+
+  static SimpleGroup fromCoreGroup(CoreGroupSimple group) {
+    return SimpleGroup(
+      name: group.name,
+      description: group.description ?? '',
+      id: group.id,
+    );
   }
 
   @override

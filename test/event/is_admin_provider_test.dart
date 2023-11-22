@@ -9,7 +9,7 @@ void main() {
   group('isEventAdmin', () {
     test('should return true if user is event admin', () {
       final container = ProviderContainer(overrides: [
-        userProvider.overrideWithValue(User.empty().copyWith(
+        userProvider2.overrideWithValue(User.empty().copyWith(
           groups: [
             SimpleGroup.empty().copyWith(
                 id: '53a669d6-84b1-4352-8d7c-421c1fbd9c6a', name: 'Admin'),
@@ -25,7 +25,7 @@ void main() {
 
     test('should return false if user is not event admin', () {
       final container = ProviderContainer(overrides: [
-        userProvider.overrideWithValue(User.empty().copyWith(
+        userProvider2.overrideWithValue(User.empty().copyWith(
           groups: [
             SimpleGroup.empty().copyWith(id: '123', name: 'User'),
           ],

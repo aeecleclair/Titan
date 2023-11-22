@@ -9,7 +9,7 @@ void main() {
   group('isBookingAdminProvider', () {
     test('should return true if user is a booking admin', () {
       final container = ProviderContainer(overrides: [
-        userProvider.overrideWithValue(User.empty().copyWith(
+        userProvider2.overrideWithValue(User.empty().copyWith(
           groups: [
             SimpleGroup.empty().copyWith(
                 id: '0a25cb76-4b63-4fd3-b939-da6d9feabf28',
@@ -26,7 +26,7 @@ void main() {
 
     test('should return false if user is not a booking admin', () {
       final container = ProviderContainer(overrides: [
-        userProvider.overrideWithValue(User.empty().copyWith(
+        userProvider2.overrideWithValue(User.empty().copyWith(
           groups: [
             SimpleGroup.empty().copyWith(id: '123', name: 'Other Group'),
           ],
