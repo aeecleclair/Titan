@@ -8,12 +8,12 @@ import 'package:myecl/booking/providers/manager_list_provider.dart';
 import 'package:myecl/booking/providers/manager_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
-import 'package:myecl/booking/ui/pages/admin_pages/admin_chip.dart';
 import 'package:myecl/booking/ui/pages/admin_pages/admin_entry.dart';
 import 'package:myecl/booking/ui/pages/admin_pages/admin_scroll_chips.dart';
 import 'package:myecl/booking/ui/pages/admin_pages/admin_shrink_button.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
@@ -74,14 +74,22 @@ class AddEditManagerPage extends HookConsumerWidget {
                       data: data,
                       dataKey: dataKey,
                       pageStorageKeyName: "group_list",
-                      builder: (SimpleGroup e) => AdminChip(
-                        key: groupId == e.id ? dataKey : null,
-                        label: e.name,
-                        selected: groupId == e.id,
-                        onTap: () {
-                          groupIdNotifier.setId(e.id);
-                        },
-                      ),
+                      builder: (SimpleGroup e) {
+                        final selected = groupId == e.id;
+                        return ItemChip(
+                          key: selected ? dataKey : null,
+                          selected: selected,
+                          onTap: () {
+                            groupIdNotifier.setId(e.id);
+                          },
+                          child: Text(
+                            e.name,
+                            style: TextStyle(
+                                color: selected ? Colors.white : Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        );
+                      },
                     ),
                     error: (Object error, StackTrace? stackTrace) {
                       return Center(child: Text('Error $error'));

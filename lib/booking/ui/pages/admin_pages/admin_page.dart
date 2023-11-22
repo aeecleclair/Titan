@@ -16,8 +16,8 @@ import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/calendar/calendar.dart';
-import 'package:myecl/booking/ui/pages/admin_pages/admin_chip.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -71,7 +71,7 @@ class AdminPage extends HookConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         const SizedBox(width: 15),
-                        GestureDetector(
+                        ItemChip(
                           onTap: () {
                             roomNotifier.setRoom(Room.empty());
                             managerIdNotifier.setId("");
@@ -79,25 +79,13 @@ class AdminPage extends HookConsumerWidget {
                                 BookingRouter.admin +
                                 BookingRouter.room);
                           },
-                          child: Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 10.0),
-                              child: Chip(
-                                label: const Padding(
-                                  padding: EdgeInsets.all(6.0),
-                                  child: HeroIcon(
-                                    HeroIcons.plus,
-                                    color: Colors.black,
-                                    size: 20,
-                                  ),
-                                ),
-                                backgroundColor: Colors.grey.shade200,
-                              )),
+                          child: const HeroIcon(
+                            HeroIcons.plus,
+                            color: Colors.black,
+                          ),
                         ),
                         ...data.map(
-                          (e) => AdminChip(
-                            label: capitalize(e.name),
-                            selected: false,
+                          (e) => ItemChip(
                             onTap: () {
                               roomNotifier.setRoom(e);
                               managerIdNotifier.setId(e.managerId);
@@ -105,6 +93,13 @@ class AdminPage extends HookConsumerWidget {
                                   BookingRouter.admin +
                                   BookingRouter.room);
                             },
+                            child: Text(
+                              capitalize(e.name),
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ),
                         const SizedBox(width: 15),
@@ -139,7 +134,7 @@ class AdminPage extends HookConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         const SizedBox(width: 15),
-                        GestureDetector(
+                        ItemChip(
                           onTap: () {
                             managerNotifier.setManager(Manager.empty());
                             groupIdNotifier.setId("");
@@ -147,25 +142,13 @@ class AdminPage extends HookConsumerWidget {
                                 BookingRouter.admin +
                                 BookingRouter.manager);
                           },
-                          child: Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 10.0),
-                              child: Chip(
-                                label: const Padding(
-                                  padding: EdgeInsets.all(6.0),
-                                  child: HeroIcon(
-                                    HeroIcons.plus,
-                                    color: Colors.black,
-                                    size: 20,
-                                  ),
-                                ),
-                                backgroundColor: Colors.grey.shade200,
-                              )),
+                          child: const HeroIcon(
+                            HeroIcons.plus,
+                            color: Colors.black,
+                          ),
                         ),
                         ...data.map(
-                          (e) => AdminChip(
-                            label: e.name,
-                            selected: false,
+                          (e) => ItemChip(
                             onTap: () {
                               managerNotifier.setManager(e);
                               groupIdNotifier.setId(e.groupId);
@@ -173,6 +156,12 @@ class AdminPage extends HookConsumerWidget {
                                   BookingRouter.admin +
                                   BookingRouter.manager);
                             },
+                            child: Text(
+                              e.name,
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
                         const SizedBox(width: 15),

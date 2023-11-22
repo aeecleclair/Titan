@@ -13,13 +13,13 @@ import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/booking/ui/booking.dart';
-import 'package:myecl/booking/ui/pages/admin_pages/admin_chip.dart';
 import 'package:myecl/booking/ui/pages/admin_pages/admin_scroll_chips.dart';
 import 'package:myecl/booking/ui/pages/booking_pages/checkbox_entry.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/date_entry.dart';
@@ -104,14 +104,22 @@ class AddEditBookingPage extends HookConsumerWidget {
                     dataKey: dataKey,
                     data: data,
                     pageStorageKeyName: "booking_room_list",
-                    builder: (Room e) => AdminChip(
-                      key: room.value.id == e.id ? dataKey : null,
-                      label: e.name,
-                      selected: room.value.id == e.id,
-                      onTap: () {
-                        room.value = e;
-                      },
-                    ),
+                    builder: (Room e) {
+                      final selected = room.value.id == e.id;
+                      return ItemChip(
+                        key: selected ? dataKey : null,
+                        selected: selected,
+                        onTap: () {
+                          room.value = e;
+                        },
+                        child: Text(
+                          e.name,
+                          style: TextStyle(
+                              color: selected ? Colors.white : Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      );
+                    },
                   ),
                 ),
                 const SizedBox(height: 10),
