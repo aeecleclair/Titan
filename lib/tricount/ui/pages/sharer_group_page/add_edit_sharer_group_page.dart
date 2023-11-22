@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
@@ -127,26 +126,26 @@ class AddEditSharerGroupPage extends HookConsumerWidget {
                                 QR.back();
                                 if (isEdit) {
                                   displayToastWithContext(TypeMsg.msg,
-                                      RaffleTextConstants.updatedSharerGroup);
+                                      TricountTextConstants.updatedSharerGroup);
                                 } else {
                                   displayToastWithContext(TypeMsg.msg,
-                                      RaffleTextConstants.addedSharerGroup);
+                                      TricountTextConstants.addedSharerGroup);
                                 }
                               } else {
                                 if (isEdit) {
                                   displayToastWithContext(TypeMsg.error,
-                                      RaffleTextConstants.updatingError);
+                                      TricountTextConstants.updatingError);
                                 } else {
                                   displayToastWithContext(TypeMsg.error,
-                                      RaffleTextConstants.addingError);
+                                      TricountTextConstants.addingError);
                                 }
                               }
                             });
                           },
                           child: Text(
                               isEdit
-                                  ? RaffleTextConstants.edit
-                                  : RaffleTextConstants.add,
+                                  ? TricountTextConstants.edit
+                                  : TricountTextConstants.add,
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 25,
