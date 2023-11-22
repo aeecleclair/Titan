@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
@@ -31,6 +32,7 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class AddEditBookingPage extends HookConsumerWidget {
   final dataKey = GlobalKey();
+  final scrollKey = GlobalKey();
   final bool isManagerPage;
   AddEditBookingPage({Key? key, required this.isManagerPage}) : super(key: key);
 
@@ -100,6 +102,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                 AsyncChild(
                   value: rooms,
                   builder: (context, data) => AdminScrollChips(
+                    key: scrollKey,
                     isEdit: isEdit,
                     dataKey: dataKey,
                     data: data,
@@ -111,6 +114,15 @@ class AddEditBookingPage extends HookConsumerWidget {
                         selected: selected,
                         onTap: () {
                           room.value = e;
+                          SchedulerBinding.instance.addPostFrameCallback(
+                            (_) {
+                              Scrollable.ensureVisible(
+                                dataKey.currentContext!,
+                                duration: const Duration(milliseconds: 500),
+                                alignment: 0.5,
+                              );
+                            },
+                          );
                         },
                         child: Text(
                           e.name,
