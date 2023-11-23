@@ -23,10 +23,9 @@ void main() {
       expect(bookings, isA<AsyncData<List<Booking>>>());
       expect(
           bookings
-              .when(
+              .maybeWhen(
                 data: (data) => data,
-                loading: () => [],
-                error: (error, stack) => [],
+                orElse: () => [],
               )
               .length,
           2);

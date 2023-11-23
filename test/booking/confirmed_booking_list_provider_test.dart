@@ -23,10 +23,9 @@ void main() {
       final result = await provider.loadConfirmedBooking();
 
       expect(
-          result.when(
+          result.maybeWhen(
             data: (data) => data,
-            loading: () => [],
-            error: (error, stack) => [],
+            orElse: () => [],
           ),
           bookings);
     });
@@ -48,10 +47,9 @@ void main() {
 
       expect(result, true);
       expect(
-          provider.state.when(
+          provider.state.maybeWhen(
             data: (data) => data,
-            loading: () => [],
-            error: (error, stack) => [],
+            orElse: () => [],
           ),
           [...bookings, newBooking]);
     });
@@ -73,10 +71,9 @@ void main() {
 
       expect(result, true);
       expect(
-          provider.state.when(
+          provider.state.maybeWhen(
             data: (data) => data,
-            loading: () => [],
-            error: (error, stack) => [],
+            orElse: () => [],
           ),
           bookings.skip(1));
     });
@@ -98,10 +95,9 @@ void main() {
 
       expect(result, true);
       expect(
-          provider.state.when(
+          provider.state.maybeWhen(
             data: (data) => data,
-            loading: () => [],
-            error: (error, stack) => [],
+            orElse: () => [],
           ),
           [booking, ...bookings.skip(1)]);
     });
