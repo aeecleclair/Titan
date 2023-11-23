@@ -28,11 +28,13 @@ class BookingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final showButton = booking.recurrenceRule.isNotEmpty
+    final isNotEnded = booking.recurrenceRule.isNotEmpty
         ? SfCalendar.parseRRule(booking.recurrenceRule, booking.start)
             .endDate!
             .isAfter(DateTime.now())
         : booking.end.isAfter(DateTime.now());
+    final showButton =
+        (isNotEnded && booking.decision == Decision.pending) || isAdmin;
     final List<Color> cardColor;
     final Color smallTextColor;
     final Color bigTextColor;
@@ -164,8 +166,7 @@ class BookingCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if ((showButton && booking.decision == Decision.pending) ||
-                    isAdmin)
+                if (showButton)
                   GestureDetector(
                     onTap: onEdit,
                     child: CardButton(
@@ -177,9 +178,7 @@ class BookingCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                if ((showButton && booking.decision == Decision.pending) ||
-                    isAdmin)
-                  const Spacer(),
+                if (showButton) const Spacer(),
                 GestureDetector(
                   onTap: onCopy,
                   child: CardButton(
