@@ -122,7 +122,7 @@ class ListBooking extends HookConsumerWidget {
                                             .then((value) {
                                           if (value) {
                                             ref
-                                                .watch(userBookingListProvider
+                                                .read(userBookingListProvider
                                                     .notifier)
                                                 .loadUserBookings();
                                             confirmedBookingListNotifier
@@ -153,7 +153,7 @@ class ListBooking extends HookConsumerWidget {
                                             .then((value) {
                                           if (value) {
                                             ref
-                                                .watch(userBookingListProvider
+                                                .read(userBookingListProvider
                                                     .notifier)
                                                 .loadUserBookings();
                                             confirmedBookingListNotifier

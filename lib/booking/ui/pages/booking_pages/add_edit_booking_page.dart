@@ -345,32 +345,30 @@ class AddEditBookingPage extends HookConsumerWidget {
                                   applicantId: user.id);
                               final value = isManagerPage
                                   ? await ref
-                                      .watch(
-                                          managerBookingListProvider.notifier)
+                                      .read(managerBookingListProvider.notifier)
                                       .updateBooking(newBooking)
                                   : isEdit
                                       ? await ref
-                                          .watch(
+                                          .read(
                                               userBookingListProvider.notifier)
                                           .updateBooking(newBooking)
                                       : await ref
-                                          .watch(
+                                          .read(
                                               userBookingListProvider.notifier)
                                           .addBooking(newBooking);
                               if (value) {
                                 QR.back();
                                 ref
-                                    .watch(userBookingListProvider.notifier)
+                                    .read(userBookingListProvider.notifier)
                                     .loadUserBookings();
                                 ref
-                                    .watch(
-                                        confirmedBookingListProvider.notifier)
+                                    .read(confirmedBookingListProvider.notifier)
                                     .loadConfirmedBooking();
                                 ref
-                                    .watch(managerBookingListProvider.notifier)
+                                    .read(managerBookingListProvider.notifier)
                                     .loadUserManageBookings();
                                 ref
-                                    .watch(managerConfirmedBookingListProvider
+                                    .read(managerConfirmedBookingListProvider
                                         .notifier)
                                     .loadConfirmedBookingForManager();
                                 if (isEdit) {

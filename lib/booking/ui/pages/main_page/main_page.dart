@@ -155,7 +155,7 @@ class BookingMainPage extends HookConsumerWidget {
                                             .deleteBooking(e);
                                         if (value) {
                                           ref
-                                              .watch(managerBookingListProvider
+                                              .read(managerBookingListProvider
                                                   .notifier)
                                               .loadUserManageBookings;
                                           displayToastWithContext(
