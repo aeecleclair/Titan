@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/tools/constants.dart';
+import 'package:myecl/booking/ui/calendar/calendar_dialog_button.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class CalendarDialog extends StatelessWidget {
   final Booking booking;
@@ -14,10 +14,6 @@ class CalendarDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void displayToastWithoutContext(TypeMsg type, String message) {
-      displayToast(context, type, message);
-    }
-
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       child: Stack(
@@ -57,9 +53,11 @@ class CalendarDialog extends StatelessWidget {
                     ),
                   ),
                   if (isManager) ...[
+                    const SizedBox(height: 10),
                     const Divider(
                       thickness: 3,
                     ),
+                    const SizedBox(height: 10),
                     if (booking.note != null)
                       Text(
                         booking.note!,
@@ -73,41 +71,9 @@ class CalendarDialog extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        GestureDetector(
-                          onTap: () async {
-                            try {
-                              await launchUrl(
-                                Uri.parse('mailto:${booking.applicant.email}'),
-                              );
-                            } catch (e) {
-                              displayToastWithoutContext(
-                                  TypeMsg.error, e.toString());
-                            }
-                          },
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            padding: const EdgeInsets.all(5.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2,
-                              ),
-                              color: Colors.grey.shade50,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  blurRadius: 10,
-                                  offset: const Offset(0, 10),
-                                ),
-                              ],
-                            ),
-                            child: const HeroIcon(
-                              HeroIcons.atSymbol,
-                              color: Colors.black,
-                            ),
-                          ),
+                        CalendarDialogButton(
+                          uri: 'mailto:${booking.applicant.email}',
+                          heroIcons: HeroIcons.atSymbol,
                         ),
                         const SizedBox(
                           width: 20,
@@ -127,42 +93,11 @@ class CalendarDialog extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        GestureDetector(
-                          onTap: () async {
-                            if (booking.applicant.phone != null) {
-                              try {
-                                await launchUrl(Uri.parse(
-                                    'sms:${booking.applicant.phone}'));
-                              } catch (e) {
-                                displayToastWithoutContext(
-                                    TypeMsg.error, e.toString());
-                              }
-                            }
-                          },
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            padding: const EdgeInsets.all(5.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2,
-                              ),
-                              color: Colors.grey.shade50,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  blurRadius: 10,
-                                  offset: const Offset(0, 10),
-                                ),
-                              ],
-                            ),
-                            child: const HeroIcon(
-                              HeroIcons.chatBubbleBottomCenterText,
-                              color: Colors.black,
-                            ),
-                          ),
+                        CalendarDialogButton(
+                          uri: (booking.applicant.phone != null)
+                              ? 'sms:${booking.applicant.phone}'
+                              : null,
+                          heroIcons: HeroIcons.chatBubbleBottomCenterText,
                         ),
                         const SizedBox(
                           width: 20,
