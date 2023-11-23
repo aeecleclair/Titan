@@ -10,7 +10,7 @@ class UserBookingListProvider extends ListNotifier<Booking> {
       : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Booking>>> loadUserBookings() async {
-    return await loadList(() async => bookingRepository.getUserBookingList());
+    return await loadList(bookingRepository.getUserBookingList);
   }
 
   Future<bool> addBooking(Booking booking) async {
