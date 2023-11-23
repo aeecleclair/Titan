@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class AdminScrollChips<T> extends StatefulWidget {
+class AdminScrollChips<T> extends HookWidget {
   final bool isEdit;
   final List<T> data;
   final GlobalKey dataKey;
@@ -17,35 +18,29 @@ class AdminScrollChips<T> extends StatefulWidget {
   });
 
   @override
-  State<AdminScrollChips<T>> createState() => _AdminScrollChipsState<T>();
-}
-
-class _AdminScrollChipsState<T> extends State<AdminScrollChips<T>> {
-  @override
-  void initState() {
-    super.initState();
-    if (widget.isEdit) {
-      Future(
-        () => Scrollable.ensureVisible(
-          widget.dataKey.currentContext!,
-          duration: const Duration(milliseconds: 500),
-          alignment: 0.5,
-        ),
-      );
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+    useEffect(
+      () {
+        Future(
+          () => Scrollable.ensureVisible(
+            dataKey.currentContext!,
+            duration: const Duration(milliseconds: 500),
+            alignment: 0.5,
+          ),
+        );
+        return;
+      },
+      [],
+    );
     return SingleChildScrollView(
-      key: PageStorageKey(widget.pageStorageKeyName),
+      key: PageStorageKey(pageStorageKeyName),
       scrollDirection: Axis.horizontal,
       physics: const BouncingScrollPhysics(),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const SizedBox(width: 15),
-          ...widget.data.map((e) => widget.builder(e)),
+          ...data.map((e) => builder(e)),
           const SizedBox(width: 15),
         ],
       ),

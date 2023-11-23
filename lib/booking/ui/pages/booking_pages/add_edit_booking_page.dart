@@ -34,7 +34,7 @@ class AddEditBookingPage extends HookConsumerWidget {
   final dataKey = GlobalKey();
   final scrollKey = GlobalKey();
   final bool isManagerPage;
-  AddEditBookingPage({Key? key, required this.isManagerPage}) : super(key: key);
+  AddEditBookingPage({super.key, required this.isManagerPage});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
