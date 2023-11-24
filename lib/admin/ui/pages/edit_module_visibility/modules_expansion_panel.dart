@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/class/module_visibility.dart';
 import 'package:myecl/admin/providers/all_groups_list_provider.dart';
+import 'package:myecl/admin/providers/is_expanded_list_provider.dart';
 import 'package:myecl/admin/providers/module_visibility_list_provider.dart';
 
 class ModulesExpansionPanel extends HookConsumerWidget {
@@ -18,18 +18,16 @@ class ModulesExpansionPanel extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final modulesNotifier = ref.watch(moduleVisibilityListProvider.notifier);
     final groups = ref.watch(allGroupList);
-    final isExpanded =
-        useState(List.generate(modules.length, (index) => false));
+    final isExpandedList = ref.watch(isExpandedListProvider);
+    final isExpandedListNotifier = ref.watch(isExpandedListProvider.notifier);
     return ExpansionPanelList(
       expansionCallback: (i, isOpen) {
-        final copy = isExpanded.value.sublist(0);
-        copy[i] = !isOpen;
-        isExpanded.value = copy;
+        isExpandedListNotifier.toggle(i);
       },
       children: modules
           .map((moduleVisibility) => ExpansionPanel(
                 canTapOnHeader: true,
-                isExpanded: isExpanded.value[modules.indexOf(moduleVisibility)],
+                isExpanded: isExpandedList[modules.indexOf(moduleVisibility)],
                 headerBuilder: (context, isOpen) => Container(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: Text(
