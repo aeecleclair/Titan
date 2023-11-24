@@ -74,7 +74,7 @@ class LoanersItems extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 10),
                   HorizontalListView.builder(
-                      height: 140,
+                      height: 150,
                       firstChild: GestureDetector(
                         onTap: () {
                           itemNotifier.setItem(Item.empty());
