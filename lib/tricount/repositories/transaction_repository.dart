@@ -4,15 +4,17 @@ import 'package:myecl/tricount/class/transaction.dart';
 class TransactionRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = "tricount/group/";
+  final ext = "tricount/transactions";
 
-  Future<bool> createTransaction(
-      String sharerGroupId, Transaction transaction) async {
-    return await update(transaction.toJson(), "$sharerGroupId/transaction");
+  Future<bool> createTransaction(Transaction transaction) async {
+    return await create(transaction.toJson());
   }
 
-  Future<bool> deleteTransaction(
-      String sharerGroupId, String transactionId) async {
-    return await delete("$sharerGroupId/transaction/$transactionId");
+  Future<bool> deleteTransaction(String transactionId) async {
+    return await delete("/$transactionId");
+  }
+
+  Future<bool> updateTransaction(Transaction transaction) async {
+    return await update(transaction.toJson(), "/${transaction.id}");
   }
 }

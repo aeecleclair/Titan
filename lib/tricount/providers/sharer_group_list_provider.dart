@@ -39,15 +39,6 @@ class SharerGroupListNotifier extends ListNotifier<SharerGroup> {
         sharerGroup);
   }
 
-  Future<bool> deleteSharerGroup(SharerGroup sharerGroup) async {
-    return await delete(
-        sharerGroupRepository.deleteSharerGroup,
-        (sharerGroups, sharerGroup) =>
-            sharerGroups..removeWhere((i) => i.id == sharerGroup.id),
-        sharerGroup.id,
-        sharerGroup);
-  }
-
   Future<bool> addSharerToSharerGroup(
       SharerGroup sharerGroup, String sharerId, bool retroPropagate) async {
     return await update(
@@ -73,8 +64,7 @@ class SharerGroupListNotifier extends ListNotifier<SharerGroup> {
   Future<bool> addTransactionToSharerGroup(
       SharerGroup sharerGroup, Transaction transaction) async {
     return await update(
-        (sharerGroup) => transactionRepository.createTransaction(
-            sharerGroup.id, transaction),
+        (sharerGroup) => transactionRepository.createTransaction(transaction),
         (sharerGroups, sharerGroup) => sharerGroups
           ..[sharerGroups.indexWhere((i) => i.id == sharerGroup.id)] =
               sharerGroup,
@@ -84,8 +74,7 @@ class SharerGroupListNotifier extends ListNotifier<SharerGroup> {
   Future<bool> deleteTransactionFromSharerGroup(
       SharerGroup sharerGroup, String transactionId) async {
     return await update(
-        (sharerGroup) => transactionRepository.deleteTransaction(
-            sharerGroup.id, transactionId),
+        (sharerGroup) => transactionRepository.deleteTransaction(transactionId),
         (sharerGroups, sharerGroup) => sharerGroups
           ..[sharerGroups.indexWhere((i) => i.id == sharerGroup.id)] =
               sharerGroup,

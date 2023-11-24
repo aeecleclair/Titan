@@ -1,6 +1,7 @@
 import 'package:myecl/tricount/class/transaction_type.dart';
 
 class Transaction {
+  late final String id;
   late final double amount;
   late final TransactionType type;
   late final String title;
@@ -10,6 +11,7 @@ class Transaction {
   late final List<String> beneficiaries;
 
   Transaction({
+    required this.id,
     required this.amount,
     required this.type,
     required this.title,
@@ -20,6 +22,7 @@ class Transaction {
   });
 
   Transaction.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     amount = json['amount'];
     type = TransactionType.values[json['type']];
     title = json['title'];
@@ -36,6 +39,7 @@ class Transaction {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     data['amount'] = amount;
     data['type'] = type.index;
     data['title'] = title;
@@ -48,7 +52,7 @@ class Transaction {
 
   @override
   String toString() {
-    return 'Transaction{amount: $amount, type: $type, title: $title, description: $description, creationDate: $creationDate, payer: $payer, beneficiaries: $beneficiaries}';
+    return 'Transaction{id: $id, amount: $amount, type: $type, title: $title, description: $description, creationDate: $creationDate, payer: $payer, beneficiaries: $beneficiaries}';
   }
 
   Transaction copyWith({
@@ -61,6 +65,7 @@ class Transaction {
     List<String>? beneficiaries,
   }) {
     return Transaction(
+      id: id,
       amount: amount ?? this.amount,
       type: type ?? this.type,
       title: title ?? this.title,
@@ -72,6 +77,7 @@ class Transaction {
   }
 
   Transaction.empty() {
+    id = '';
     amount = 0;
     type = TransactionType.expense;
     title = '';
