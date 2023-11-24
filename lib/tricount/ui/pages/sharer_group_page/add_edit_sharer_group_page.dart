@@ -8,7 +8,7 @@ import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:myecl/tricount/class/sharer_group.dart';
-import 'package:myecl/tricount/providers/sharer_group_list_provider.dart';
+import 'package:myecl/tricount/providers/sharer_group_provider.dart';
 import 'package:myecl/tricount/providers/sharer_group_member_list_provider.dart';
 import 'package:myecl/tricount/providers/sharer_group_provider.dart';
 import 'package:myecl/tricount/tools/constants.dart';

@@ -7,7 +7,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tricount/class/sharer_group.dart';
 import 'package:myecl/tricount/providers/cross_group_stats_provider.dart';
-import 'package:myecl/tricount/providers/sharer_group_list_provider.dart';
+import 'package:myecl/tricount/providers/sharer_group_provider.dart';
 import 'package:myecl/tricount/providers/sharer_group_member_list_provider.dart';
 import 'package:myecl/tricount/providers/sharer_group_provider.dart';
 import 'package:myecl/tricount/router.dart';
