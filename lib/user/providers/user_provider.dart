@@ -8,30 +8,27 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/repositories/user_repository.dart';
 
 class UserNotifier extends SingleNotifier2<CoreUser> {
-  UserNotifier({required String token})
-      : _userRepository = UserRepository(token: token),
-        super(const AsyncLoading());
-
-  final UserRepository _userRepository;
+  final Openapi userRepository;
+  UserNotifier({required this.userRepository}) : super(const AsyncLoading());
 
   Future<AsyncValue<CoreUser>> loadUser(String userId) async {
-    return await load(() async => _userRepository.getUser(userId));
+    return await load(() async => userRepository.getUser(userId));
   }
 
   Future<AsyncValue<CoreUser>> loadMe() async {
-    return await load(_userRepository.getMe);
+    return await load(userRepository.getMe);
   }
 
   Future<bool> updateUser(CoreUser user) async {
     return await update(
-        (user) => _userRepository.updateUser(
+        (user) => userRepository.updateUser(
             coreUserUpdateAdminAdapter(user), user.id),
         user);
   }
 
   Future<bool> updateMe(CoreUser user) async {
     return await update(
-        (user) async => _userRepository.updateMe(coreUserUpdateAdapter(user)),
+        (user) async => userRepository.updateMe(coreUserUpdateAdapter(user)),
         user);
   }
 
@@ -40,7 +37,7 @@ class UserNotifier extends SingleNotifier2<CoreUser> {
     String newPassword,
     CoreUser user,
   ) async {
-    return (await _userRepository.changePassword(
+    return (await userRepository.changePassword(
           oldPassword,
       newPassword,
       user.email,
@@ -49,18 +46,18 @@ class UserNotifier extends SingleNotifier2<CoreUser> {
   }
 
   Future<bool> deletePersonal() async {
-    return (await _userRepository.deletePersonalData()).isSuccessful;
+    return (await userRepository.deletePersonalData()).isSuccessful;
   }
 
   Future<bool> askMailMigration(String mail) async {
-    return (await _userRepository.askMailMigration(mail)).isSuccessful;
+    return (await userRepository.askMailMigration(mail)).isSuccessful;
   }
 }
 
 final asyncUserProvider =
     StateNotifierProvider<UserNotifier, AsyncValue<CoreUser>>((ref) {
   final token = ref.watch(tokenProvider);
-  UserNotifier userNotifier = UserNotifier(token: token);
+  UserNotifier userNotifier = UserNotifier(userRepository: token: token);
   final token = ref.watch(tokenProvider);
   tokenExpireWrapperAuth(ref, () async {
     final isLoggedIn = ref.watch(isLoggedInProvider);

@@ -20,7 +20,6 @@ class OpenIdRepository extends Repository {
       "grant_type": grantType,
       "refresh_token": token,
     };
-
     final Map<String, String> headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
       "Accept": "application/json",

@@ -8,15 +8,12 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter/foundation.dart' show kDebugMode, kIsWeb;
 import 'package:myecl/auth/providers/is_connected_provider.dart';
-import 'package:myecl/auth/repository/openid_repository.dart';
+import 'package:myecl/auth/repository/auth_repository.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/cache/cache_manager.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/repository/repository.dart';
-import 'dart:convert';
-import 'package:universal_html/html.dart' as html;
 
 final authTokenProvider =
-    StateNotifierProvider<OpenIdTokenProvider, AsyncValue<Map<String, String>>>(
+    StateNotifierProvider<OpenIdTokenProvider, AsyncValue<TokenResponse>>(
         (ref) {
   OpenIdTokenProvider openIdTokenProvider = OpenIdTokenProvider();
   final isConnected = ref.watch(isConnectedProvider);
@@ -29,11 +26,11 @@ final authTokenProvider =
 class IsLoggedInProvider extends StateNotifier<bool> {
   IsLoggedInProvider(super.b);
 
-  void refresh(AsyncValue<Map<String, String>> token) {
+  void refresh(AsyncValue<TokenResponse> token) {
     state = token.maybeWhen(
-      data: (tokens) => tokens["token"] == ""
+      data: (tokens) => tokens.accessToken == ""
           ? false
-          : !JwtDecoder.isExpired(tokens["token"] as String),
+          : !JwtDecoder.isExpired(tokens.accessToken),
       orElse: () => false,
     );
   }
@@ -79,7 +76,7 @@ final loadingProvider = FutureProvider<bool>((ref) {
   return isCaching ||
       ref.watch(authTokenProvider).when(
             data: (tokens) =>
-                tokens["token"] != "" && ref.watch(isLoggedInProvider),
+                tokens.accessToken != "" && ref.watch(isLoggedInProvider),
             error: (e, s) => false,
             loading: () => true,
           );
@@ -89,9 +86,9 @@ final idProvider = FutureProvider<String>((ref) {
   final cacheManager = CacheManager();
   return ref.watch(authTokenProvider).when(
         data: (tokens) {
-          final id = tokens["token"] == ""
+          final id = tokens.accessToken == ""
               ? ""
-              : JwtDecoder.decode(tokens["token"] as String)["sub"];
+              : JwtDecoder.decode(tokens.accessToken)["sub"];
           cacheManager.writeCache("id", id);
           return id;
         },
@@ -102,13 +99,13 @@ final idProvider = FutureProvider<String>((ref) {
 
 final tokenProvider = Provider((ref) {
   return ref.watch(authTokenProvider).maybeWhen(
-        data: (tokens) => tokens["token"] as String,
+        data: (tokens) => tokens.accessToken,
         orElse: () => "",
       );
 });
 
 class OpenIdTokenProvider
-    extends StateNotifier<AsyncValue<Map<String, String>>> {
+    extends StateNotifier<AsyncValue<TokenResponse>> {
   FlutterAppAuth appAuth = const FlutterAppAuth();
   final CacheManager cacheManager = CacheManager();
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
@@ -137,232 +134,46 @@ class OpenIdTokenProvider
   }
 
   Future getTokenFromRequest() async {
-    html.WindowBase? popupWin;
-
-    final redirectUri = Uri(
-      host: redirectUrlHost,
-      scheme: "https",
-      path: '/static.html',
-    );
-    final codeVerifier = generateRandomString(128);
-
-    final authUrl =
-        "${Repository.host}auth/authorize?client_id=$clientId&response_type=code&scope=${scopes.join(" ")}&redirect_uri=$redirectUri&code_challenge=${hash(codeVerifier)}&code_challenge_method=S256";
-
     state = const AsyncValue.loading();
-    try {
-      if (kIsWeb) {
-        popupWin = html.window
-            .open(authUrl, "Hyperion", "width=800, height=900, scrollbars=yes");
-
-        final completer = Completer();
-        void checkWindowClosed() {
-          if (popupWin != null && popupWin!.closed == true) {
-            completer.complete();
-          } else {
-            Future.delayed(
-              const Duration(milliseconds: 100),
-              checkWindowClosed,
-            );
-          }
-        }
-
-        checkWindowClosed();
-        completer.future.then((_) {
-          state.maybeWhen(
-            loading: () {
-              state = AsyncValue.data({
-                tokenKey: "",
-                refreshTokenKey: "",
-              });
-            },
-            orElse: () {},
-          );
-        });
-
-        void login(String data) async {
-          final receivedUri = Uri.parse(data);
-          final token = receivedUri.queryParameters["code"];
-          if (popupWin != null) {
-            popupWin!.close();
-            popupWin = null;
-          }
-          try {
-            if (token != null && token.isNotEmpty) {
-              final resp = await openIdRepository.getToken(
-                token,
-                clientId,
-                redirectUri.toString(),
-                codeVerifier,
-                "authorization_code",
-              );
-              final accessToken = resp[tokenKey]!;
-              final refreshToken = resp[refreshTokenKey]!;
-              await _secureStorage.write(key: tokenName, value: refreshToken);
-              state = AsyncValue.data({
-                tokenKey: accessToken,
-                refreshTokenKey: refreshToken,
-              });
-            } else {
-              throw Exception('Wrong credentials');
-            }
-          } on TimeoutException catch (_) {
-            throw Exception('No response from server');
-          } catch (e) {
-            rethrow;
-          }
-        }
-
-        html.window.onMessage.listen((event) {
-          if (event.data.toString().contains('code=')) {
-            login(event.data);
-          }
-        });
-      } else {
-        AuthorizationTokenResponse resp =
-            await appAuth.authorizeAndExchangeCode(
-          AuthorizationTokenRequest(
-            clientId,
-            redirectUrl,
-            discoveryUrl: discoveryUrl,
-            scopes: scopes,
-            allowInsecureConnections: kDebugMode,
-          ),
-        );
-        await _secureStorage.write(key: tokenName, value: resp.refreshToken);
-        state = AsyncValue.data({
-          tokenKey: resp.accessToken!,
-          refreshTokenKey: resp.refreshToken!,
-        });
-      }
-    } catch (e) {
-      state = AsyncValue.error("Error $e", StackTrace.empty);
+    final tokenResponse = await userRepository!.getTokenFromRequest();
+    if (tokenResponse.accessToken != "") {
+      state = AsyncValue.data(tokenResponse);
+    } else {
+      state = const AsyncValue.error("Error", StackTrace.empty);
     }
   }
 
   Future getTokenFromStorage() async {
     state = const AsyncValue.loading();
-    _secureStorage.read(key: tokenName).then((token) async {
-      if (token != null) {
-        try {
-          if (kIsWeb) {
-            final resp = await openIdRepository.getToken(
-              token,
-              clientId,
-              "",
-              "",
-              refreshTokenKey,
-            );
-            final accessToken = resp[tokenKey]!;
-            final refreshToken = resp[refreshTokenKey]!;
-            await _secureStorage.write(key: tokenName, value: refreshToken);
-            state = AsyncValue.data({
-              tokenKey: accessToken,
-              refreshTokenKey: refreshToken,
-            });
-          } else {
-            final resp = await appAuth.token(
-              TokenRequest(
-                clientId,
-                redirectUrl,
-                discoveryUrl: discoveryUrl,
-                scopes: scopes,
-                refreshToken: token,
-                allowInsecureConnections: kDebugMode,
-              ),
-            );
-            state = AsyncValue.data({
-              tokenKey: resp.accessToken!,
-              refreshTokenKey: resp.refreshToken!,
-            });
-            storeToken();
-          }
-        } catch (e) {
-          state = AsyncValue.error(e, StackTrace.empty);
-        }
-      } else {
-        state = const AsyncValue.error("No token found", StackTrace.empty);
-      }
-    });
+    final tokenResponse = await userRepository!.getTokenFromStorage();
+    if (tokenResponse.accessToken != "") {
+      state = AsyncValue.data(tokenResponse);
+    } else {
+      state = const AsyncValue.error("Error", StackTrace.empty);
+    }
   }
 
   Future<void> getAuthToken(String authorizationToken) async {
-    appAuth
-        .token(
-      TokenRequest(
-        clientId,
-        redirectUrl,
-        discoveryUrl: discoveryUrl,
-        scopes: scopes,
-        authorizationCode: authorizationToken,
-        allowInsecureConnections: kDebugMode,
-      ),
-    )
-        .then((resp) {
-      state = AsyncValue.data({
-        tokenKey: resp.accessToken!,
-        refreshTokenKey: resp.refreshToken!,
-      });
-    });
+    state = const AsyncValue.loading();
+    final tokenResponse =
+        await userRepository!.getAuthToken(authorizationToken);
+    if (tokenResponse.accessToken != "") {
+      state = AsyncValue.data(tokenResponse);
+    } else {
+      state = const AsyncValue.error("Error", StackTrace.empty);
+    }
   }
 
   Future<bool> refreshToken() async {
-    return state.when(
-      data: (token) async {
-        if (token[refreshTokenKey] != null && token[refreshTokenKey] != "") {
-          TokenResponse? resp = await appAuth.token(
-            TokenRequest(
-              clientId,
-              redirectUrl,
-              discoveryUrl: discoveryUrl,
-              scopes: scopes,
-              refreshToken: token[refreshTokenKey] as String,
-              allowInsecureConnections: kDebugMode,
-            ),
-          );
-          state = AsyncValue.data({
-            tokenKey: resp.accessToken!,
-            refreshTokenKey: resp.refreshToken!,
-          });
-          storeToken();
-          return true;
-        }
-        state = const AsyncValue.error(e, StackTrace.empty);
-        return false;
-      },
-      error: (error, stackTrace) {
-        state = AsyncValue.error(error, stackTrace);
-        return false;
-      },
-      loading: () {
-        return false;
-      },
-    );
-  }
-
-  void storeToken() {
-    state.when(
-      data: (tokens) => _secureStorage.write(
-        key: tokenName,
-        value: tokens[refreshTokenKey],
-      ),
-      error: (e, s) {
-        throw e;
-      },
-      loading: () {
-        throw Exception("Token is not loaded");
-      },
-    );
-  }
-
-  void deleteToken() {
-    try {
-      _secureStorage.delete(key: tokenName);
-      cacheManager.deleteCache(tokenName);
-      cacheManager.deleteCache("id");
-      state = AsyncValue.data({tokenKey: "", refreshTokenKey: ""});
-    } catch (e) {
-      state = AsyncValue.error(e, StackTrace.empty);
+    state = const AsyncValue.loading();
+    final tokenResponse = await userRepository!.refreshToken();
+    if (tokenResponse.accessToken != "") {
+      state = AsyncValue.data(tokenResponse);
+    } else {
+      state = const AsyncValue.error("Error", StackTrace.empty);
     }
+    return tokenResponse.accessToken != "";
   }
+
+  void deleteToken() => userRepository!.deleteToken();
 }
