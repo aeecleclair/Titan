@@ -10,21 +10,21 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/class/user.dart';
 
 class UserNotifier extends SingleNotifier2<CoreUser> {
-  late final Openapi _userRepository;
-  UserNotifier(Openapi userRepository) : super(const AsyncLoading());
+  final Openapi userRepository;
+  UserNotifier({required this.userRepository}) : super(const AsyncLoading());
 
   Future<AsyncValue<CoreUser>> loadUser(String userId) async {
     return await load(
-        () async => _userRepository.usersUserIdGet(userId: userId));
+        () async => userRepository.usersUserIdGet(userId: userId));
   }
 
   Future<AsyncValue<CoreUser>> loadMe() async {
-    return await load(_userRepository.usersMeGet);
+    return await load(userRepository.usersMeGet);
   }
 
   Future<bool> updateUser(CoreUser user) async {
     return await update(
-        (user) => _userRepository.usersUserIdPatch(
+        (user) => userRepository.usersUserIdPatch(
             body: coreUserUpdateAdminAdapter(user), userId: user.id),
         user);
   }
@@ -32,13 +32,13 @@ class UserNotifier extends SingleNotifier2<CoreUser> {
   Future<bool> updateMe(CoreUser user) async {
     return await update(
         (user) async =>
-            _userRepository.usersMePatch(body: coreUserUpdateAdapter(user)),
+            userRepository.usersMePatch(body: coreUserUpdateAdapter(user)),
         user);
   }
 
   Future<bool> changePassword(
       String oldPassword, String newPassword, CoreUser user) async {
-    return (await _userRepository.usersChangePasswordPost(
+    return (await userRepository.usersChangePasswordPost(
             body: ChangePasswordRequest(
                 oldPassword: oldPassword,
                 newPassword: newPassword,
@@ -47,11 +47,11 @@ class UserNotifier extends SingleNotifier2<CoreUser> {
   }
 
   Future<bool> deletePersonal() async {
-    return (await _userRepository.usersMeAskDeletionPost()).isSuccessful;
+    return (await userRepository.usersMeAskDeletionPost()).isSuccessful;
   }
 
   Future<bool> askMailMigration(String mail) async {
-    return (await _userRepository.usersMigrateMailPost(
+    return (await userRepository.usersMigrateMailPost(
             body: MailMigrationRequest(newEmail: mail)))
         .isSuccessful;
   }
@@ -60,7 +60,7 @@ class UserNotifier extends SingleNotifier2<CoreUser> {
 final asyncUserProvider =
     StateNotifierProvider<UserNotifier, AsyncValue<CoreUser>>((ref) {
   final repository = ref.watch(repositoryProvider);
-  UserNotifier userNotifier = UserNotifier(repository);
+  UserNotifier userNotifier = UserNotifier(userRepository: repository);
   tokenExpireWrapperAuth(ref, () async {
     final isLoggedIn = ref.watch(isLoggedInProvider);
     final id = ref

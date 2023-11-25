@@ -3,17 +3,16 @@ import 'dart:async';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/is_connected_provider.dart';
+import 'package:myecl/auth/repository/auth_repository.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/cache/cache_manager.dart';
-import 'package:myecl/tools/repository/auth_repository.dart';
 
 final authTokenProvider =
-    StateNotifierProvider<OpenIdTokenProvider, AsyncValue<Map<String, String>>>(
+    StateNotifierProvider<OpenIdTokenProvider, AsyncValue<TokenResponse>>(
         (ref) {
   final repository = ref.watch(authRepositoryProvider);
-  print(repository.tokenResponse);
   final openIdTokenProvider = OpenIdTokenProvider(userRepository: repository);
   final isConnected = ref.watch(isConnectedProvider);
-  print('isConnected: $isConnected');
   if (isConnected) {
     openIdTokenProvider.getTokenFromStorage();
   }
@@ -23,11 +22,11 @@ final authTokenProvider =
 class IsLoggedInProvider extends StateNotifier<bool> {
   IsLoggedInProvider(bool b) : super(b);
 
-  void refresh(AsyncValue<Map<String, String>> token) {
+  void refresh(AsyncValue<TokenResponse> token) {
     state = token.maybeWhen(
-      data: (tokens) => tokens["token"] == ""
+      data: (tokens) => tokens.accessToken == ""
           ? false
-          : !JwtDecoder.isExpired(tokens["token"] as String),
+          : !JwtDecoder.isExpired(tokens.accessToken),
       orElse: () => false,
     );
   }
@@ -73,7 +72,7 @@ final loadingProvider = FutureProvider<bool>((ref) {
   return isCaching ||
       ref.watch(authTokenProvider).when(
             data: (tokens) =>
-                tokens["token"] != "" && ref.watch(isLoggedInProvider),
+                tokens.accessToken != "" && ref.watch(isLoggedInProvider),
             error: (e, s) => false,
             loading: () => true,
           );
@@ -83,9 +82,9 @@ final idProvider = FutureProvider<String>((ref) {
   final cacheManager = CacheManager();
   return ref.watch(authTokenProvider).when(
         data: (tokens) {
-          final id = tokens["token"] == ""
+          final id = tokens.accessToken == ""
               ? ""
-              : JwtDecoder.decode(tokens["token"] as String)["sub"];
+              : JwtDecoder.decode(tokens.accessToken)["sub"];
           cacheManager.writeCache("id", id);
           return id;
         },
@@ -96,13 +95,13 @@ final idProvider = FutureProvider<String>((ref) {
 
 final tokenProvider = Provider((ref) {
   return ref.watch(authTokenProvider).maybeWhen(
-        data: (tokens) => tokens["token"] as String,
+        data: (tokens) => tokens.accessToken,
         orElse: () => "",
       );
 });
 
 class OpenIdTokenProvider
-    extends StateNotifier<AsyncValue<Map<String, String>>> {
+    extends StateNotifier<AsyncValue<TokenResponse>> {
   final String tokenKey = "token";
   final String refreshTokenKey = "refresh_token";
   AuthRepository? userRepository;
@@ -110,31 +109,20 @@ class OpenIdTokenProvider
       : super(const AsyncValue.loading());
 
   Future getTokenFromRequest() async {
-    print("getTokenFromRequest");
     state = const AsyncValue.loading();
-    print("loafing");
-    await userRepository!.getTokenFromRequest();
-    print('token: ${userRepository!.tokenResponse.accessToken}');
-    if (userRepository!.tokenResponse.accessToken != "") {
-      state = AsyncValue.data({
-        tokenKey: userRepository!.tokenResponse.accessToken,
-        refreshTokenKey: userRepository!.tokenResponse.refreshToken,
-      });
+    final tokenResponse = await userRepository!.getTokenFromRequest();
+    if (tokenResponse.accessToken != "") {
+      state = AsyncValue.data(tokenResponse);
     } else {
       state = const AsyncValue.error("Error", StackTrace.empty);
     }
   }
 
   Future getTokenFromStorage() async {
-    print("getTokenFromStorage");
     state = const AsyncValue.loading();
-    print(userRepository);
-    await userRepository!.getTokenFromStorage();
-    if (userRepository!.tokenResponse.accessToken != "") {
-      state = AsyncValue.data({
-        tokenKey: userRepository!.tokenResponse.accessToken,
-        refreshTokenKey: userRepository!.tokenResponse.refreshToken,
-      });
+    final tokenResponse = await userRepository!.getTokenFromStorage();
+    if (tokenResponse.accessToken != "") {
+      state = AsyncValue.data(tokenResponse);
     } else {
       state = const AsyncValue.error("Error", StackTrace.empty);
     }
@@ -142,12 +130,10 @@ class OpenIdTokenProvider
 
   Future<void> getAuthToken(String authorizationToken) async {
     state = const AsyncValue.loading();
-    await userRepository!.getAuthToken(authorizationToken);
-    if (userRepository!.tokenResponse.accessToken != "") {
-      state = AsyncValue.data({
-        tokenKey: userRepository!.tokenResponse.accessToken,
-        refreshTokenKey: userRepository!.tokenResponse.refreshToken,
-      });
+    final tokenResponse =
+        await userRepository!.getAuthToken(authorizationToken);
+    if (tokenResponse.accessToken != "") {
+      state = AsyncValue.data(tokenResponse);
     } else {
       state = const AsyncValue.error("Error", StackTrace.empty);
     }
@@ -155,19 +141,14 @@ class OpenIdTokenProvider
 
   Future<bool> refreshToken() async {
     state = const AsyncValue.loading();
-    final response = await userRepository!.refreshToken();
-    if (userRepository!.tokenResponse.accessToken != "") {
-      state = AsyncValue.data({
-        tokenKey: userRepository!.tokenResponse.accessToken,
-        refreshTokenKey: userRepository!.tokenResponse.refreshToken,
-      });
+    final tokenResponse = await userRepository!.refreshToken();
+    if (tokenResponse.accessToken != "") {
+      state = AsyncValue.data(tokenResponse);
     } else {
       state = const AsyncValue.error("Error", StackTrace.empty);
     }
-    return response;
+    return tokenResponse.accessToken != "";
   }
-
-  void storeToken() => userRepository!.storeToken();
 
   void deleteToken() => userRepository!.deleteToken();
 }

@@ -3,12 +3,12 @@ import 'dart:io';
 
 import 'package:chopper/chopper.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/repository/auth_repository.dart';
+import 'package:myecl/auth/repository/auth_repository.dart';
 
 class MyAuthenticator implements Authenticator {
-  MyAuthenticator(AuthRepository repo);
+  MyAuthenticator({required this.repo});
 
-  late final AuthRepository _repo;
+  final AuthRepository repo;
 
   @override
   FutureOr<Request?> authenticate(
@@ -65,10 +65,10 @@ class MyAuthenticator implements Authenticator {
     completer = Completer<String>();
     _completer = completer;
 
-    _repo.refreshToken().then((response) {
+    repo.refreshToken().then((response) {
       print('[MyAuthenticator] Refreshed token');
       // Completing with a new token
-      completer?.complete(_repo.tokenResponse.accessToken);
+      completer?.complete(response.accessToken);
     }).onError((error, stackTrace) {
       // Completing with an error
       completer?.completeError(error ?? 'Refresh token error', stackTrace);
@@ -86,5 +86,5 @@ class MyAuthenticator implements Authenticator {
 
 final authenticatorProvider = Provider<MyAuthenticator>((ref) {
   final repo = ref.watch(authRepositoryProvider);
-  return MyAuthenticator(repo);
+  return MyAuthenticator(repo: repo);
 });
