@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/admin/ui/pages/main_page/association_button.dart';
 import 'package:myecl/admin/ui/pages/main_page/card_ui.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class AssociationUi extends HookConsumerWidget {
-  final SimpleGroup group;
+  final CoreGroupSimple group;
   final void Function() onEdit;
   final Future Function() onDelete;
   final bool isLoaner;

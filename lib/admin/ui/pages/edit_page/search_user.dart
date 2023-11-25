@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/group.dart';
 import 'package:myecl/admin/providers/group_id_provider.dart';
 import 'package:myecl/admin/providers/group_provider.dart';
 import 'package:myecl/admin/providers/simple_groups_groups_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/ui/pages/edit_page/results.dart';
 import 'package:myecl/admin/ui/components/user_ui.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/adapters/group.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
@@ -54,8 +55,9 @@ class SearchUser extends HookConsumerWidget {
                       padding: const EdgeInsets.all(0),
                       onChanged: (value) async {
                         if (value.isNotEmpty) {
-                          await usersNotifier.filterUsers(value,
-                              excludeGroup: [group.value!.toSimpleGroup()]);
+                          await usersNotifier.filterUsers(value, excludeGroup: [
+                            coreGroupSimpleAdapter(group.value!)
+                          ]);
                         } else {
                           usersNotifier.clear();
                         }
@@ -103,7 +105,7 @@ class SearchUser extends HookConsumerWidget {
                     if (add.value) const SizedBox(height: 10),
                     if (add.value) const MemberResults(),
                     if (!add.value)
-                      ...g[0].members.map((x) => UserUi(
+                      ...g[0].members!.map((x) => UserUi(
                           user: x,
                           onDelete: () {
                             showDialog(
@@ -116,9 +118,9 @@ class SearchUser extends HookConsumerWidget {
                                         onYes: () async {
                                           await tokenExpireWrapper(ref,
                                               () async {
-                                            Group newGroup = g[0].copyWith(
+                                            CoreGroup newGroup = g[0].copyWith(
                                                 members: g[0]
-                                                    .members
+                                                    .members!
                                                     .where((element) =>
                                                         element.id != x.id)
                                                     .toList());

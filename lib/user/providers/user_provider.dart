@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/adapters/users.dart';
+import 'package:myecl/tools/adapters/users.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/generated/client_index.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';

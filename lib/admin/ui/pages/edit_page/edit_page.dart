@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/group.dart';
+import 'package:myecl/tools/adapters/group.dart';
 import 'package:myecl/admin/providers/group_id_provider.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/providers/group_provider.dart';
@@ -97,8 +97,9 @@ class EditAssociationPage extends HookConsumerWidget {
                                       name: name.text,
                                       description: description.text);
                                   groupNotifier.setGroup(newGroup);
-                                  final value = await groupListNotifier
-                                      .updateGroup(newGroup.toSimpleGroup());
+                                  final value =
+                                      await groupListNotifier.updateGroup(
+                                          coreGroupSimpleAdapter(newGroup));
                                   if (value) {
                                     QR.back();
                                     displayToastWithContext(TypeMsg.msg,

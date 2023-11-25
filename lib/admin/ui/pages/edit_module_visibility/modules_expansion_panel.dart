@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/module_visibility.dart';
 import 'package:myecl/admin/providers/all_groups_list_provider.dart';
 import 'package:myecl/admin/providers/module_visibility_list_provider.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 
 class ModulesExpansionPanel extends HookConsumerWidget {
   final List<ModuleVisibility> modules;

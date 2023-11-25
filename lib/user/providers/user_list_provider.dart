@@ -11,8 +11,8 @@ class UserListNotifier extends ListNotifier2<CoreUserSimple> {
       : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<CoreUserSimple>>> filterUsers(String query,
-      {List<CoreUserSimple>? includeGroup,
-      List<CoreUserSimple>? excludeGroup}) async {
+      {List<CoreGroupSimple>? includeGroup,
+      List<CoreGroupSimple>? excludeGroup}) async {
     return await loadList(() async => userListRepository.usersSearchGet(
         query: query,
         includedGroups: includeGroup?.map((e) => e.id).toList(),
