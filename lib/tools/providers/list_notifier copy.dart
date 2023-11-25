@@ -5,7 +5,8 @@ import 'package:myecl/tools/exception.dart';
 abstract class ListNotifier2<T> extends StateNotifier<AsyncValue<List<T>>> {
   ListNotifier2(AsyncValue state) : super(const AsyncLoading());
 
-  Future<AsyncValue<List<T>>> loadList(Future<Response<List<T>>> Function() f) async {
+  Future<AsyncValue<List<T>>> loadList(
+      Future<Response<List<T>>> Function() f) async {
     try {
       final response = await f();
       final data = response.body;
@@ -23,6 +24,13 @@ abstract class ListNotifier2<T> extends StateNotifier<AsyncValue<List<T>>> {
         return state;
       }
     }
+  }
+
+  Future<AsyncValue<List<T>>> loadFromList(List<T>? listT) async {
+    if (listT == null) {
+      return state = const AsyncValue.data([]);
+    }
+    return state = AsyncValue.data(listT);
   }
 
   Future<bool> add(Future<Response<T>> Function(T t) f, T t) async {
@@ -59,8 +67,8 @@ abstract class ListNotifier2<T> extends StateNotifier<AsyncValue<List<T>>> {
     });
   }
 
-  Future<bool> addAll(
-      Future<Response<List<T>>> Function(List<T> listT) f, List<T> listT) async {
+  Future<bool> addAll(Future<Response<List<T>>> Function(List<T> listT) f,
+      List<T> listT) async {
     return state.when(data: (d) async {
       try {
         final response = await f(listT);

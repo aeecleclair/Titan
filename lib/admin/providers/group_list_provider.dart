@@ -1,45 +1,53 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/admin/repositories/group_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier%20copy.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
-class GroupListNotifier extends ListNotifier<SimpleGroup> {
-  final GroupRepository groupRepository;
+class GroupListNotifier extends ListNotifier2<CoreGroupSimple> {
+  final Openapi groupRepository;
   GroupListNotifier({required this.groupRepository})
       : super(const AsyncValue.loading());
 
-  Future<AsyncValue<List<SimpleGroup>>> loadGroups() async {
-    return await loadList(groupRepository.getGroupList);
+  Future<AsyncValue<List<CoreGroupSimple>>> loadGroups() async {
+    return await loadList(groupRepository.groupsGet);
   }
 
-  Future<AsyncValue<List<SimpleGroup>>> loadGroupsFromUser(User user) async {
-    return await loadList(() async => user.groups);
+  Future<AsyncValue<List<CoreGroupSimple>>> loadGroupsFromUser(
+      CoreUser user) async {
+    return await loadFromList(user.groups);
   }
 
-  Future<bool> createGroup(SimpleGroup group) async {
-    return await add(groupRepository.createGroup, group);
+  Future<bool> createGroup(CoreGroupSimple group) async {
+    return await add(
+        (group) async => groupRepository.groupsPost(
+            body: CoreGroupCreate(
+                name: group.name, description: group.description)),
+        group);
   }
 
-  Future<bool> updateGroup(SimpleGroup group) async {
+  Future<bool> updateGroup(CoreGroupSimple group) async {
     return await update(
-        groupRepository.updateGroup,
+        (group) async => groupRepository.groupsGroupIdPatch(
+            groupId: group.id,
+            body: CoreGroupUpdate(
+                name: group.name, description: group.description)),
         (groups, group) =>
             groups..[groups.indexWhere((g) => g.id == group.id)] = group,
         group);
   }
 
-  Future<bool> deleteGroup(SimpleGroup group) async {
+  Future<bool> deleteGroup(CoreGroupSimple group) async {
     return await delete(
-        groupRepository.deleteGroup,
+        (groupId) async =>
+            groupRepository.groupsGroupIdDelete(groupId: groupId),
         (groups, group) => groups..removeWhere((i) => i.id == group.id),
         group.id,
         group);
   }
 
-  void setGroup(SimpleGroup group) {
+  void setGroup(CoreGroupSimple group) {
     state.whenData(
       (d) {
         if (d.indexWhere((g) => g.id == group.id) == -1) return;
@@ -51,9 +59,9 @@ class GroupListNotifier extends ListNotifier<SimpleGroup> {
 }
 
 final allGroupListProvider =
-    StateNotifierProvider<GroupListNotifier, AsyncValue<List<SimpleGroup>>>(
+    StateNotifierProvider<GroupListNotifier, AsyncValue<List<CoreGroupSimple>>>(
         (ref) {
-  final groupRepository = ref.watch(groupRepositoryProvider);
+  final groupRepository = ref.watch(repositoryProvider);
   GroupListNotifier provider =
       GroupListNotifier(groupRepository: groupRepository);
   tokenExpireWrapperAuth(ref, () async {
@@ -63,13 +71,13 @@ final allGroupListProvider =
 });
 
 final userGroupListNotifier =
-    StateNotifierProvider<GroupListNotifier, AsyncValue<List<SimpleGroup>>>(
+    StateNotifierProvider<GroupListNotifier, AsyncValue<List<CoreGroupSimple>>>(
         (ref) {
-  final groupRepository = ref.watch(groupRepositoryProvider);
+  final groupRepository = ref.watch(repositoryProvider);
   GroupListNotifier provider =
       GroupListNotifier(groupRepository: groupRepository);
   tokenExpireWrapperAuth(ref, () async {
-    await provider.loadGroupsFromUser(ref.watch(userProvider2));
+    await provider.loadGroupsFromUser(ref.watch(userProvider));
   });
   return provider;
 });

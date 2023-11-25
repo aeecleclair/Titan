@@ -11,6 +11,7 @@ import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/ui/admin.dart';
 import 'package:myecl/admin/ui/components/admin_button.dart';
 import 'package:myecl/admin/ui/pages/edit_page/search_user.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -51,11 +52,11 @@ class EditAssociationPage extends HookConsumerWidget {
                     loader: (groupId) async =>
                         (await groupNotifier.loadGroup(groupId)).maybeWhen(
                             data: (groups) => groups,
-                            orElse: () => Group.empty()),
+                            orElse: () => CoreGroup.fromJson({})),
                     dataBuilder: (context, groups) {
                       final group = groups.first;
                       name.text = group.name;
-                      description.text = group.description;
+                      description.text = group.description ?? '';
                       return Column(children: [
                         const AlignLeftText(AdminTextConstants.edit,
                             fontSize: 20, color: ColorConstants.gradient1),
@@ -92,7 +93,7 @@ class EditAssociationPage extends HookConsumerWidget {
                                   return;
                                 }
                                 await tokenExpireWrapper(ref, () async {
-                                  Group newGroup = group.copyWith(
+                                  CoreGroup newGroup = group.copyWith(
                                       name: name.text,
                                       description: description.text);
                                   groupNotifier.setGroup(newGroup);
