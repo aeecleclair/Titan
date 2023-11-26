@@ -22,9 +22,8 @@ class AdvertDetailPage extends HookConsumerWidget {
     final advertPosters = ref.watch(advertPostersProvider);
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final logoNotifier = ref.watch(advertPosterProvider.notifier);
-    final filteredTagList =
-        advert.tags.where((element) => element != "").toList();
-    final inTagChipsList = [advert.announcer.name] + filteredTagList;
+    final filteredTagList = advert.tags!;
+    final inTagChipsList = [advert.advertiser.name] + [filteredTagList];
 
     return Stack(children: [
       Container(
@@ -97,7 +96,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 30.0),
                     alignment: Alignment.center,
                     child: Text(
-                      formatDate(advert.date),
+                      formatDate(advert.date!),
                       style: const TextStyle(
                         fontSize: 18,
                       ),
@@ -176,7 +175,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                   const HeroIcon(HeroIcons.calendar, size: 20),
                   const SizedBox(width: 7),
                   Text(
-                    DateFormat('dd/MM/yyyy - HH:mm').format(advert.date),
+                    DateFormat('dd/MM/yyyy - HH:mm').format(advert.date!),
                     style: const TextStyle(fontSize: 16),
                     textAlign: TextAlign.center,
                   ),

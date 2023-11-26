@@ -2,16 +2,16 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/advert/class/advert.dart';
 import 'package:myecl/advert/providers/advert_list_provider.dart';
 import 'package:myecl/advert/providers/advert_provider.dart';
 import 'package:myecl/advert/providers/announcer_list_provider.dart';
 import 'package:myecl/advert/providers/announcer_provider.dart';
 import 'package:myecl/advert/tools/constants.dart';
+import 'package:myecl/advert/ui/components/advertiser_bar.dart';
 import 'package:myecl/advert/ui/pages/admin_page/admin_advert_card.dart';
 import 'package:myecl/advert/ui/pages/advert.dart';
 import 'package:myecl/advert/router.dart';
-import 'package:myecl/advert/ui/components/announcer_bar.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
@@ -25,49 +25,51 @@ class AdvertAdminPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final advertNotifier = ref.watch(advertProvider.notifier);
     final advertList = ref.watch(advertListProvider);
-    final userAnnouncerListNotifier =
-        ref.watch(userAnnouncerListProvider.notifier);
-    final userAnnouncerList = ref.watch(userAnnouncerListProvider);
+    final userAdvertiserListNotifier =
+        ref.watch(userAdvertiserListProvider.notifier);
+    final userAdvertiserList = ref.watch(userAdvertiserListProvider);
     final advertListNotifier = ref.watch(advertListProvider.notifier);
-    final selectedAnnouncers = ref.watch(announcerProvider);
-    final selectedAnnouncersNotifier = ref.read(announcerProvider.notifier);
+    final selectedAdvertisers = ref.watch(advertiserProvider);
+    final selectedAdvertisersNotifier = ref.read(advertiserProvider.notifier);
     return AdvertTemplate(
       child: Refresher(
           onRefresh: () async {
             await advertListNotifier.loadAdverts();
-            await userAnnouncerListNotifier.loadMyAnnouncerList();
+            await userAdvertiserListNotifier.loadMyAdvertiserList();
           },
           child: AsyncChild(
               value: advertList,
               builder: (context, advertData) => AsyncChild(
-                    value: userAnnouncerList,
-                    builder: (context, userAnnouncerData) {
-                      final userAnnouncerAdvert = advertData.where((advert) =>
-                          userAnnouncerData
+                    value: userAdvertiserList,
+                    builder: (context, userAdvertiserData) {
+                      final userAdvertiserAdvert = advertData.where((advert) =>
+                          userAdvertiserData
                               .where((element) =>
-                                  advert.announcer.id == element.id)
+                                  advert.advertiser.id == element.id)
                               .isNotEmpty);
-                      final sortedUserAnnouncerAdverts = userAnnouncerAdvert
+                      final sortedUserAdvertiserAdverts = userAdvertiserAdvert
                           .toList()
-                          .sortedBy((element) => element.date)
+                          .sortedBy((element) => element.date!)
                           .reversed;
-                      final filteredSortedUserAnnouncerAdverts =
-                          sortedUserAnnouncerAdverts
+                      final filteredSortedUserAdvertiserAdverts =
+                          sortedUserAdvertiserAdverts
                               .where((advert) =>
-                                  selectedAnnouncers
-                                      .where((e) => advert.announcer.id == e.id)
+                                  selectedAdvertisers
+                                      .where(
+                                          (e) => advert.advertiser.id == e.id)
                                       .isNotEmpty ||
-                                  selectedAnnouncers.isEmpty)
+                                  selectedAdvertisers.isEmpty)
                               .toList();
                       return Column(
                         children: [
-                          const AnnouncerBar(
-                            useUserAnnouncers: true,
+                          const AdvertiserBar(
+                            useUserAdvertisers: true,
                             multipleSelect: true,
                           ),
                           GestureDetector(
                             onTap: () {
-                              advertNotifier.setAdvert(Advert.empty());
+                              advertNotifier
+                                  .setAdvert(AdvertReturnComplete.fromJson({}));
                               QR.to(AdvertRouter.root +
                                   AdvertRouter.admin +
                                   AdvertRouter.addEditAdvert);
@@ -89,7 +91,7 @@ class AdvertAdminPage extends HookConsumerWidget {
                                   color: Colors.grey.shade500,
                                 ))),
                           ),
-                          ...filteredSortedUserAnnouncerAdverts.map(
+                          ...filteredSortedUserAdvertiserAdverts.map(
                             (advert) => AdminAdvertCard(
                                 onTap: () {
                                   advertNotifier.setAdvert(advert);
@@ -101,9 +103,9 @@ class AdvertAdminPage extends HookConsumerWidget {
                                       AdvertRouter.admin +
                                       AdvertRouter.addEditAdvert);
                                   advertNotifier.setAdvert(advert);
-                                  selectedAnnouncersNotifier.clearAnnouncer();
-                                  selectedAnnouncersNotifier
-                                      .addAnnouncer(advert.announcer);
+                                  selectedAdvertisersNotifier.clearAdvertiser();
+                                  selectedAdvertisersNotifier
+                                      .addAdvertiser(advert.advertiser);
                                 },
                                 onDelete: () async {
                                   await showDialog(

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 
-class AnnouncerCard extends StatelessWidget {
+class AdvertiserCard extends StatelessWidget {
   final CoreGroupSimple e;
   final HeroIcons icon;
-  const AnnouncerCard({super.key, required this.e, required this.icon});
+  const AdvertiserCard({super.key, required this.e, required this.icon});
 
   @override
   Widget build(BuildContext context) {

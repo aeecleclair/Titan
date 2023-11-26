@@ -1,20 +1,20 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/advert/class/announcer.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 
-final announcerProvider =
-    StateNotifierProvider<AnnouncerNotifier, List<Announcer>>((ref) {
-  return AnnouncerNotifier();
+final advertiserProvider =
+    StateNotifierProvider<AdvertiserNotifier, List<AdvertiserComplete>>((ref) {
+  return AdvertiserNotifier();
 });
 
-class AnnouncerNotifier extends StateNotifier<List<Announcer>> {
-  AnnouncerNotifier() : super([]);
+class AdvertiserNotifier extends StateNotifier<List<AdvertiserComplete>> {
+  AdvertiserNotifier() : super([]);
 
-  void addAnnouncer(Announcer i) {
+  void addAdvertiser(AdvertiserComplete i) {
     state.add(i);
     state = state.sublist(0);
   }
 
-  void removeAnnouncer(Announcer i) {
+  void removeAdvertiser(AdvertiserComplete i) {
     state = state
         .where(
           (element) => element.id != i.id,
@@ -22,7 +22,7 @@ class AnnouncerNotifier extends StateNotifier<List<Announcer>> {
         .toList();
   }
 
-  void clearAnnouncer() {
+  void clearAdvertiser() {
     state = [];
   }
 }
