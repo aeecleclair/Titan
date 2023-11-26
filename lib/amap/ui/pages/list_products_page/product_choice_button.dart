@@ -1,7 +1,6 @@
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/user_order_list_provider.dart';
@@ -26,7 +25,7 @@ class ProductChoiceButton extends HookConsumerWidget {
     final orderListNotifier = ref.watch(userOrderListProvider.notifier);
     final userAmountNotifier = ref.watch(userAmountProvider.notifier);
     final me = ref.watch(userProvider);
-    final isEdit = order.id != Order.empty().id;
+    final isEdit = order.orderId != OrderReturn.fromJson({}).orderId;
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -61,15 +60,15 @@ class ProductChoiceButton extends HookConsumerWidget {
                     displayToast(
                         context, TypeMsg.error, AMAPTextConstants.noProduct);
                   } else {
-                    Order newOrder = order.copyWith(
+                    final lastAmount = order.amount;
+                    OrderReturn newOrder = order.copyWith(
                         deliveryId: deliveryId,
                         user: CoreUserSimple(
                           firstname: me.firstname,
                           name: me.name,
                           nickname: me.nickname,
                           id: me.id,
-                        ),
-                        lastAmount: order.amount);
+                        ));
                     await tokenExpireWrapper(ref, () async {
                       final value = isEdit
                           ? await orderListNotifier.updateOrder(newOrder)
@@ -77,7 +76,7 @@ class ProductChoiceButton extends HookConsumerWidget {
                       if (value) {
                         QR.back();
                         userAmountNotifier
-                            .updateCash(order.lastAmount - order.amount);
+                            .updateCash(lastAmount - order.amount);
                         if (isEdit) {
                           displayToastWithContext(
                               TypeMsg.msg, AMAPTextConstants.updatedOrder);
@@ -130,14 +129,15 @@ class ProductChoiceButton extends HookConsumerWidget {
               ),
             ),
             onTap: () {
-              if (order.amount != 0.0 || order.id != Order.empty().id) {
+              if (order.amount != 0.0 ||
+                  order.orderId != OrderReturn.fromJson({}).orderId) {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) => CustomDialogBox(
                         descriptions: AMAPTextConstants.deletingOrder,
                         title: AMAPTextConstants.deleting,
                         onYes: () {
-                          orderNotifier.setOrder(Order.empty());
+                          orderNotifier.setOrder(OrderReturn.fromJson({}));
                           QR.back();
                         }));
               } else {

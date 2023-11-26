@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/providers/cash_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
@@ -16,9 +15,10 @@ class AddingUserCard extends HookConsumerWidget {
     final cashNotifier = ref.watch(cashListProvider.notifier);
     return GestureDetector(
       onTap: () {
-        cashNotifier.addCash(Cash(
+        cashNotifier.addCash(AppSchemasSchemasAmapCashComplete(
           balance: 0,
           user: user,
+          userId: user.id,
         ));
         onAdd();
       },

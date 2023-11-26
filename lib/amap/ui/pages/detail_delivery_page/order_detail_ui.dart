@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/tools/functions.dart';
-import 'package:myecl/amap/class/cash.dart';
-import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/providers/cash_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_order_list_provider.dart';
 import 'package:myecl/amap/providers/user_order_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
@@ -17,8 +16,8 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class DetailOrderUI extends HookConsumerWidget {
-  final Order order;
-  final Cash userCash;
+  final OrderReturn order;
+  final AppSchemasSchemasAmapCashComplete userCash;
   final String deliveryId;
   const DetailOrderUI({
     super.key,
@@ -40,7 +39,7 @@ class DetailOrderUI extends HookConsumerWidget {
 
     return CardLayout(
       width: 250,
-      height: 145 + (20.0 * order.products.length),
+      height: 145 + (20.0 * order.productsdetail.length),
       colors: const [
         AMAPColorConstants.lightGradient1,
         AMAPColorConstants.greenGradient1
@@ -60,12 +59,12 @@ class DetailOrderUI extends HookConsumerWidget {
                     color: AMAPColorConstants.textDark)),
           ),
           const SizedBox(height: 10),
-          ...order.products.map(
-            (product) => Row(
+          ...order.productsdetail.map(
+            (productQuantity) => Row(
               children: [
                 Expanded(
                   child: AutoSizeText(
-                    product.name,
+                    productQuantity.product.name,
                     maxLines: 1,
                     minFontSize: 10,
                     overflow: TextOverflow.ellipsis,
@@ -78,7 +77,7 @@ class DetailOrderUI extends HookConsumerWidget {
                 SizedBox(
                   width: 90,
                   child: Text(
-                    "${product.quantity} (${(product.quantity * product.price).toStringAsFixed(2)}€)",
+                    "${productQuantity.quantity} (${(productQuantity.quantity * productQuantity.product.price).toStringAsFixed(2)}€)",
                     textAlign: TextAlign.right,
                     style: const TextStyle(
                         fontSize: 17,
@@ -98,7 +97,7 @@ class DetailOrderUI extends HookConsumerWidget {
           Row(
             children: [
               Text(
-                "${order.products.fold<int>(0, (value, product) => value + product.quantity)} ${AMAPTextConstants.product}${order.products.fold<int>(0, (value, product) => value + product.quantity) != 1 ? "s" : ""}",
+                "${order.productsdetail.fold<int>(0, (value, productQuantity) => value + productQuantity.quantity)} ${AMAPTextConstants.product}${order.productsdetail.fold<int>(0, (value, productQuantity) => value + productQuantity.quantity) != 1 ? "s" : ""}",
                 style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w700,
@@ -135,8 +134,8 @@ class DetailOrderUI extends HookConsumerWidget {
                           onYes: () async {
                             await tokenExpireWrapper(ref, () async {
                               final index = orderList.maybeWhen(
-                                  data: (data) => data.indexWhere(
-                                      (element) => element.id == order.id),
+                                  data: (data) => data.indexWhere((element) =>
+                                      element.orderId == order.orderId),
                                   orElse: () => -1);
                               await orderListNotifier
                                   .deleteOrder(order)
@@ -146,10 +145,7 @@ class DetailOrderUI extends HookConsumerWidget {
                                     deliveryOrdersNotifier.deleteE(
                                         deliveryId, index);
                                   }
-                                  cashListNotifier.fakeUpdateCash(
-                                      userCash.copyWith(
-                                          balance:
-                                              userCash.balance + order.amount));
+                                  cashListNotifier.loadCashList();
                                   displayToastWithContext(TypeMsg.msg,
                                       AMAPTextConstants.deletedOrder);
                                 } else {

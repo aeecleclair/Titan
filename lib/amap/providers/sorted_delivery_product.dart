@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 
 final sortedByCategoryDeliveryProductsProvider =
-    Provider<Map<String, List<Product>>>((ref) {
+    Provider<Map<String, List<ProductComplete>>>((ref) {
   final products = ref.watch(deliveryProductList);
-  final Map<String, List<Product>> sortedByCategoryProducts =
-      <String, List<Product>>{};
+  final Map<String, List<ProductComplete>> sortedByCategoryProducts =
+      <String, List<ProductComplete>>{};
   for (var product in products) {
     if (sortedByCategoryProducts.containsKey(product.category)) {
       sortedByCategoryProducts[product.category]!.add(product);
@@ -17,7 +17,7 @@ final sortedByCategoryDeliveryProductsProvider =
   return sortedByCategoryProducts;
 });
 
-final deliveryProductList = Provider<List<Product>>((ref) {
+final deliveryProductList = Provider<List<ProductComplete>>((ref) {
   final products = ref.watch(deliveryProductListProvider);
   return products.maybeWhen(
     data: (products) => products,

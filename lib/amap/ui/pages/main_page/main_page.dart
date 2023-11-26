@@ -2,6 +2,7 @@ import 'package:myecl/amap/providers/delivery_provider.dart';
 import 'package:myecl/amap/providers/available_deliveries.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/ui/amap.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/widgets/admin_button.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
@@ -11,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
 import 'package:myecl/amap/providers/is_amap_admin_provider.dart';
@@ -117,7 +117,7 @@ class AmapMainPage extends HookConsumerWidget {
                         addOrder: () {
                           balance.whenData(
                             (s) {
-                              orderNotifier.setOrder(Order.empty());
+                              orderNotifier.setOrder(OrderReturn.fromJson({}));
                               animation.forward();
                               showPanel.value = true;
                             },
@@ -200,14 +200,14 @@ class AmapMainPage extends HookConsumerWidget {
                                       Border.all(color: Colors.white, width: 2),
                                 ),
                                 child: Row(
-                                    children: CollectionSlot.values
+                                    children: AmapSlotType.values
                                         .map((e) => CollectionSlotSelector(
                                             collectionSlot: e))
                                         .toList())),
                           ),
                           const SizedBox(height: 30),
                           DeliverySection(
-                              editable: order.id == Order.empty().id),
+                              editable: order.orderId == OrderReturn.fromJson({}).orderId),
                           const SizedBox(height: 20),
                           WaitingButton(
                               onTap: () async {
@@ -215,7 +215,7 @@ class AmapMainPage extends HookConsumerWidget {
                                     .contains(delivery.id)) {
                                   await tokenExpireWrapper(ref, () async {
                                     await deliveryProductListNotifier
-                                        .loadProductList(delivery.products);
+                                        .loadProductList(delivery.products!);
                                   });
                                   QR.to(
                                       AmapRouter.root + AmapRouter.listProduct);

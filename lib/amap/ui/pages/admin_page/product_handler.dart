@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/providers/product_provider.dart';
-import 'package:myecl/amap/providers/sorted_by_category_products.dart';
+import 'package:myecl/amap/providers/product_quantity_list_provider.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/components/product_ui.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
@@ -22,12 +22,7 @@ class ProductHandler extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final productNotifier = ref.read(productProvider.notifier);
-    final sortedByCategoryProducts =
-        ref.watch(sortedByCategoryProductsProvider);
-    final products = sortedByCategoryProducts.values
-        .toList()
-        .expand((element) => element)
-        .toList();
+    final productsQuantity = ref.watch(productQuantityListProvider);
     final productsNotifier = ref.read(productListProvider.notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -46,7 +41,7 @@ class ProductHandler extends HookConsumerWidget {
           const SizedBox(width: 10),
           GestureDetector(
             onTap: () {
-              productNotifier.setProduct(Product.empty());
+              productNotifier.setProduct(ProductComplete.fromJson({}));
               QR.to(AmapRouter.root +
                   AmapRouter.admin +
                   AmapRouter.addEditProduct);
@@ -67,13 +62,13 @@ class ProductHandler extends HookConsumerWidget {
                   ),
                 )),
           ),
-          products.isEmpty
+          productsQuantity.isEmpty
               ? const Center(child: Text(AMAPTextConstants.noProduct))
               : Row(
-                  children: products
+                  children: productsQuantity
                       .map(
                         (e) => ProductCard(
-                          product: e,
+                          productQuantity: e,
                           onDelete: () async {
                             await showDialog(
                                 context: context,
@@ -84,7 +79,7 @@ class ProductHandler extends HookConsumerWidget {
                                       onYes: () {
                                         tokenExpireWrapper(ref, () async {
                                           final value = await productsNotifier
-                                              .deleteProduct(e);
+                                              .deleteProduct(e.product);
                                           if (value) {
                                             displayToastWithContext(
                                                 TypeMsg.msg,
@@ -101,7 +96,7 @@ class ProductHandler extends HookConsumerWidget {
                                     ));
                           },
                           onEdit: () {
-                            productNotifier.setProduct(e);
+                            productNotifier.setProduct(e.product);
                             QR.to(AmapRouter.root +
                                 AmapRouter.admin +
                                 AmapRouter.addEditProduct);

@@ -1,17 +1,20 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/amap/class/cash.dart';
-import 'package:myecl/amap/repositories/amap_user_repository.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/single_notifier%20copy.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class UserCashNotifier extends SingleNotifier<Cash> {
-  final AmapUserRepository amapUserRepository;
+class UserCashNotifier
+    extends SingleNotifier2<AppSchemasSchemasAmapCashComplete> {
+  final Openapi amapUserRepository;
   UserCashNotifier({required this.amapUserRepository})
       : super(const AsyncValue.loading());
 
-  Future<AsyncValue<Cash>> loadCashByUser(String userId) async {
-    return await load(() async => amapUserRepository.getCashByUser(userId));
+  Future<AsyncValue<AppSchemasSchemasAmapCashComplete>> loadCashByUser(
+      String userId) async {
+    return await load(
+        () async => amapUserRepository.amapUsersUserIdCashGet(userId: userId));
   }
 
   Future updateCash(double amount) async {
@@ -27,10 +30,9 @@ class UserCashNotifier extends SingleNotifier<Cash> {
   }
 }
 
-final userAmountProvider =
-    StateNotifierProvider<UserCashNotifier, AsyncValue<Cash>>((ref) {
-  final AmapUserRepository amapUserRepository =
-      ref.watch(amapUserRepositoryProvider);
+final userAmountProvider = StateNotifierProvider<UserCashNotifier,
+    AsyncValue<AppSchemasSchemasAmapCashComplete>>((ref) {
+  final amapUserRepository = ref.watch(repositoryProvider);
   UserCashNotifier userCashNotifier =
       UserCashNotifier(amapUserRepository: amapUserRepository);
   tokenExpireWrapperAuth(ref, () async {
