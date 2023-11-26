@@ -4,10 +4,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/providers/cash_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
 class AddingUserCard extends HookConsumerWidget {
-  final SimpleUser user;
+  final CoreUserSimple user;
   final VoidCallback onAdd;
   const AddingUserCard({super.key, required this.user, required this.onAdd});
 

@@ -1,6 +1,6 @@
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/raffle/class/pack_ticket.dart';
 import 'package:myecl/raffle/class/prize.dart';
-import 'package:myecl/user/class/list_users.dart';
 
 class Ticket {
   Ticket({
@@ -10,13 +10,13 @@ class Ticket {
     required this.id,
   });
   late final PackTicket packTicket;
-  late final SimpleUser user;
+  late final CoreUserSimple user;
   late final Prize? prize;
   late final String id;
 
   Ticket.fromJson(Map<String, dynamic> json) {
     packTicket = PackTicket.fromJson(json['type_ticket']);
-    user = SimpleUser.fromJson(json['user']);
+    user = CoreUserSimple.fromJson(json['user']);
     prize = json['lot'] != null ? Prize.fromJson(json['lot']) : null;
     id = json['id'];
   }
@@ -25,14 +25,14 @@ class Ticket {
     final data = <String, dynamic>{};
     data['type_id'] = packTicket.id;
     data['user_id'] = user.id;
-    data['lot'] = prize != null ? prize!.id : null;
+    data['lot'] = prize?.id;
     data['id'] = id;
     return data;
   }
 
   Ticket copyWith({
     PackTicket? packTicket,
-    SimpleUser? user,
+    CoreUserSimple? user,
     Prize? lot,
     String? id,
   }) =>
@@ -45,7 +45,7 @@ class Ticket {
 
   Ticket.empty() {
     packTicket = PackTicket.empty();
-    user = SimpleUser.empty();
+    user = CoreUserSimple.fromJson({});
     prize = null;
     id = '';
   }

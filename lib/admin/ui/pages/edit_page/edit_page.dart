@@ -32,9 +32,9 @@ class EditAssociationPage extends HookConsumerWidget {
     final key = GlobalKey<FormState>();
     final name = useTextEditingController();
     final description = useTextEditingController();
-    final simpleGroupsGroupsNotifier =
+    final simpleGroupsNotifier =
         ref.watch(simpleGroupsGroupsProvider.notifier);
-    final simpleGroupsGroups = ref.watch(simpleGroupsGroupsProvider);
+    final simpleGroups = ref.watch(simpleGroupsGroupsProvider);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -46,8 +46,8 @@ class EditAssociationPage extends HookConsumerWidget {
             child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: AutoLoaderChild(
-                    value: simpleGroupsGroups,
-                    notifier: simpleGroupsGroupsNotifier,
+                    value: simpleGroups,
+                    notifier: simpleGroupsNotifier,
                     mapKey: groupId,
                     loader: (groupId) async =>
                         (await groupNotifier.loadGroup(groupId)).maybeWhen(

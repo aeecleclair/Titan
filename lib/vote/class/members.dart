@@ -1,7 +1,7 @@
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/class/list_users.dart';
 
-class Member extends SimpleUser {
+class Member extends CoreUserSimple {
   late String role;
 
   Member(
@@ -11,7 +11,6 @@ class Member extends SimpleUser {
       required super.id,
       required this.role});
 
-  @override
   Member copyWith({
     String? name,
     String? firstname,
@@ -47,7 +46,7 @@ class Member extends SimpleUser {
     );
   }
 
-  factory Member.fromSimpleUser(SimpleUser user, String role) {
+  factory Member.fromSimpleUser(CoreUserSimple user, String role) {
     return Member(
       name: user.name,
       firstname: user.firstname,

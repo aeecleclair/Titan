@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/tools/functions.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/vote/providers/display_results.dart';
 
 class SearchResult extends HookConsumerWidget {
-  final ValueNotifier<SimpleUser> borrower;
+  final ValueNotifier<CoreUserSimple> borrower;
   final TextEditingController queryController;
   const SearchResult(
       {super.key, required this.borrower, required this.queryController});
@@ -32,7 +33,7 @@ class SearchResult extends HookConsumerWidget {
                                 ),
                                 Expanded(
                                   child: Text(
-                                    e.getName(),
+                                    getName(e),
                                     style: TextStyle(
                                       fontSize: 13,
                                       fontWeight: (borrower.value.id == e.id)
@@ -46,7 +47,7 @@ class SearchResult extends HookConsumerWidget {
                         ),
                         onTap: () {
                           borrower.value = e;
-                          queryController.text = e.getName();
+                          queryController.text = getName(e);
                           showNotifier.setId(false);
                         }))
                     .toList()))

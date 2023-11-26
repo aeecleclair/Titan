@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/tools/functions.dart';
 import 'package:myecl/raffle/class/prize.dart';
 import 'package:myecl/raffle/class/raffle_status_type.dart';
 import 'package:myecl/raffle/class/tickets.dart';
@@ -60,7 +61,7 @@ class PrizeHandler extends HookConsumerWidget {
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: Center(
                               child: Text(
-                                winningTickets[index].user.getName(),
+                                getName(winningTickets[index].user),
                                 style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,

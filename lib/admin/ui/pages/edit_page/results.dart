@@ -21,7 +21,7 @@ class MemberResults extends HookConsumerWidget {
     final group = ref.watch(groupProvider);
     final groupNotifier = ref.watch(groupProvider.notifier);
     final users = ref.watch(userList);
-    final simpleGroupGroupsNotifier =
+    final simpleGroupsGroupsNotifier =
         ref.watch(simpleGroupsGroupsProvider.notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -49,17 +49,18 @@ class MemberResults extends HookConsumerWidget {
                                 WaitingButton(
                                     onTap: () async {
                                       if (!group.value!.members!.contains(e)) {
-                                        CoreGroup newGroup = group.value!.copyWith(
-                                            members:
-                                                group.value!.members! + [e]);
+                                        CoreGroup newGroup = group.value!
+                                            .copyWith(
+                                                members: group.value!.members! +
+                                                    [e]);
                                         await tokenExpireWrapper(ref, () async {
                                           groupNotifier
                                               .addMember(newGroup, e)
                                               .then((value) {
                                             if (value) {
-                                              simpleGroupGroupsNotifier
-                                                  .setTData(newGroup.id,
-                                                      AsyncData([newGroup]))
+                                              simpleGroupsGroupsNotifier
+                                                      .setTData(newGroup.id,
+                                                          AsyncData([newGroup]))
                                                   .then((value) {
                                                 displayToastWithContext(
                                                     TypeMsg.msg,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/tools/functions.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/caution_provider.dart';
 import 'package:myecl/loan/providers/item_focus_provider.dart';
@@ -40,7 +41,7 @@ class AddEditLoanPage extends HookConsumerWidget {
     final itemList = ref.watch(itemListProvider);
     final itemListNotifier = ref.watch(itemListProvider.notifier);
     final queryController =
-        useTextEditingController(text: isEdit ? loan.borrower.getName() : "");
+        useTextEditingController(text: isEdit ? getName(loan.borrower) : "");
     final editingController = useTextEditingController();
     final focus = ref.watch(itemFocusProvider);
     final focusNode = useFocusNode();

@@ -1,7 +1,7 @@
 import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/tools/functions.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/class/applicant.dart';
 
 enum Decision { approved, declined, pending }
 
@@ -48,7 +48,7 @@ class Booking {
       applicantId: json["applicant_id"],
       applicant: json["applicant"] != null
           ? Applicant.fromJson(json["applicant"])
-          : Applicant.empty().copyWith(id: json["applicant_id"]),
+          : Applicant.fromJson({}).copyWith(id: json["applicant_id"]),
     );
     return booking.copyWith(end: getTrueEnd(booking));
   }
@@ -109,7 +109,7 @@ class Booking {
         decision: Decision.pending,
         recurrenceRule: '',
         entity: '',
-        applicant: Applicant.empty(),
+        applicant: Applicant.fromJson({}),
         applicantId: '');
   }
 

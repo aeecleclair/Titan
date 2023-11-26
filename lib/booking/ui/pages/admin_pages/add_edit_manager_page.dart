@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/admin/providers/group_id_provider.dart';
 import 'package:myecl/booking/class/manager.dart';
 import 'package:myecl/booking/providers/manager_list_provider.dart';
@@ -69,12 +68,12 @@ class AddEditManagerPage extends HookConsumerWidget {
                     height: 50,
                   ),
                   groupList.when(
-                    data: (List<SimpleGroup> data) => AdminScrollChips(
+                    data: (data) => AdminScrollChips(
                       isEdit: isEdit,
                       data: data,
                       dataKey: dataKey,
                       pageStorageKeyName: "group_list",
-                      builder: (SimpleGroup e) => AdminChip(
+                      builder: (e) => AdminChip(
                         key: groupId == e.id ? dataKey : null,
                         label: e.name,
                         selected: groupId == e.id,

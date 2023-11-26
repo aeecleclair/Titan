@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/admin/class/simple_group.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/user/repositories/user_list_repository.dart';
@@ -26,10 +26,10 @@ void main() {
     test('filterUsers returns list of users', () async {
       const query = 'test';
       final includeGroup = [
-        SimpleGroup.empty().copyWith(id: '1', name: 'Group 1')
+        CoreUserSimple.empty().copyWith(id: '1', name: 'Group 1')
       ];
       final excludeGroup = [
-        SimpleGroup.empty().copyWith(id: '2', name: 'Group 2')
+        CoreUserSimple.empty().copyWith(id: '2', name: 'Group 2')
       ];
       final users = [SimpleUser.empty().copyWith(id: '1', name: 'User 1')];
 

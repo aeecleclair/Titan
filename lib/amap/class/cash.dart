@@ -1,13 +1,13 @@
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 
 class Cash {
   Cash({required this.balance, required this.user});
   late final double balance;
-  late final SimpleUser user;
+  late final CoreUserSimple user;
 
   Cash.fromJson(Map<String, dynamic> json) {
     balance = json['balance'];
-    user = SimpleUser.fromJson(json['user']);
+    user = CoreUserSimple.fromJson(json['user']);
   }
 
   Map<String, dynamic> toJson() {
@@ -16,11 +16,11 @@ class Cash {
     return data;
   }
 
-  Cash copyWith({SimpleUser? user, double? balance}) {
+  Cash copyWith({CoreUserSimple? user, double? balance}) {
     return Cash(user: user ?? this.user, balance: balance ?? this.balance);
   }
 
-  static Cash empty() => Cash(user: SimpleUser.empty(), balance: 0);
+  static Cash empty() => Cash(user: CoreUserSimple.fromJson({}), balance: 0);
 
   @override
   String toString() {

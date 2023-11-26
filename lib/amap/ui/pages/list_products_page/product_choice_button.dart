@@ -7,11 +7,11 @@ import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/user_order_list_provider.dart';
 import 'package:myecl/amap/providers/user_amount_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -63,7 +63,7 @@ class ProductChoiceButton extends HookConsumerWidget {
                   } else {
                     Order newOrder = order.copyWith(
                         deliveryId: deliveryId,
-                        user: SimpleUser(
+                        user: CoreUserSimple(
                           firstname: me.firstname,
                           name: me.name,
                           nickname: me.nickname,

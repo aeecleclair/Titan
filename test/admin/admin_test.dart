@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:myecl/admin/class/group.dart';
-import 'package:myecl/admin/class/simple_group.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/admin/repositories/group_repository.dart';
 import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/class/user.dart';
@@ -12,20 +12,20 @@ class MockGroupRepository extends Mock implements GroupRepository {}
 class MockUserNotifier extends Mock implements StateNotifier<User> {}
 
 void main() {
-  group('Testing SimpleGroup', () {
+  group('Testing CoreUserSimple', () {
     test('Should return a group', () async {
-      final group = SimpleGroup.empty();
-      expect(group, isA<SimpleGroup>());
+      final group = CoreUserSimple.empty();
+      expect(group, isA<CoreUserSimple>());
     });
 
     test('Should return a group with a name', () async {
-      final group = SimpleGroup.empty();
+      final group = CoreUserSimple.empty();
       expect(group.name, 'Nom');
     });
 
     test('Should update a group', () async {
-      final group = SimpleGroup.empty();
-      SimpleGroup newGroup = group.copyWith(name: 'name');
+      final group = CoreUserSimple.empty();
+      CoreUserSimple newGroup = group.copyWith(name: 'name');
       expect(newGroup.name, 'name');
       newGroup = group.copyWith(description: 'description');
       expect(newGroup.description, 'description');
@@ -34,13 +34,13 @@ void main() {
     });
 
     test('Should return correct toString', () async {
-      final group = SimpleGroup.empty();
+      final group = CoreUserSimple.empty();
       expect(group.toString(),
-          'SimpleGroup(name: Nom, description: Description, id: )');
+          'CoreUserSimple(name: Nom, description: Description, id: )');
     });
 
     test('Should parse a group from json', () async {
-      final group = SimpleGroup.fromJson({
+      final group = CoreUserSimple.fromJson({
         "id": "1",
         "name": "name",
         "description": "description",
@@ -49,7 +49,7 @@ void main() {
     });
 
     test('Should return correct json', () async {
-      final group = SimpleGroup(
+      final group = CoreUserSimple(
         id: "1",
         name: "name",
         description: "description",
@@ -88,11 +88,11 @@ void main() {
 
     test('Should return a simple group', () async {
       final group = Group.empty();
-      final simpleGroup = group.toSimpleGroup();
-      expect(simpleGroup, isA<SimpleGroup>());
-      expect(simpleGroup.name, 'Nom');
-      expect(simpleGroup.description, 'Description');
-      expect(simpleGroup.id, '');
+      final CoreUserSimple = group.toCoreUserSimple();
+      expect(CoreUserSimple, isA<CoreUserSimple>());
+      expect(CoreUserSimple.name, 'Nom');
+      expect(CoreUserSimple.description, 'Description');
+      expect(CoreUserSimple.id, '');
     });
 
     test('Should print a group', () async {

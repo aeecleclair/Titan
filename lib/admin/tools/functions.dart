@@ -6,3 +6,10 @@ String getName(CoreUserSimple user) {
   }
   return "${user.firstname} ${user.name}";
 }
+
+String getApplicantName(Applicant applicant) {
+  if (applicant.nickname != null && applicant.nickname!.isNotEmpty) {
+    return "${applicant.nickname} (${applicant.firstname} ${applicant.name})";
+  }
+  return "${applicant.firstname} ${applicant.name}";
+}

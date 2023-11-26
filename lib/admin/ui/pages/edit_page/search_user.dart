@@ -29,7 +29,7 @@ class SearchUser extends HookConsumerWidget {
     final groupId = ref.watch(groupIdProvider);
     final groupNotifier = ref.watch(groupProvider.notifier);
     final simpleGroupsGroups = ref.watch(simpleGroupsGroupsProvider);
-    final simpleGroupGroupsNotifier =
+    final simpleGroupsGroupsNotifier =
         ref.watch(simpleGroupsGroupsProvider.notifier);
     final add = useState(false);
 
@@ -127,7 +127,7 @@ class SearchUser extends HookConsumerWidget {
                                             final value = await groupNotifier
                                                 .deleteMember(newGroup, x);
                                             if (value) {
-                                              simpleGroupGroupsNotifier
+                                              simpleGroupsGroupsNotifier
                                                   .setTData(newGroup.id,
                                                       AsyncData([newGroup]));
                                               displayToastWithContext(

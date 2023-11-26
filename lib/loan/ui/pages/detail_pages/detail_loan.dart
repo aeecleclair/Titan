@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/tools/functions.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/loan/ui/pages/detail_pages/item_card_in_loan.dart';
 import 'package:myecl/loan/ui/loan.dart';
@@ -46,7 +47,7 @@ class DetailLoanPage extends HookConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               AutoSizeText(
-                                loan.borrower.getName(),
+                                getName(loan.borrower),
                                 maxLines: 2,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(

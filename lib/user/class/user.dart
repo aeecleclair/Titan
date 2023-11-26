@@ -1,8 +1,5 @@
-import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/class/applicant.dart' as applicant;
-import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/class/floors.dart';
 
 class User {
@@ -29,7 +26,7 @@ class User {
   late final String floor;
   late final String? phone;
   late final String createdOn;
-  late final List<SimpleGroup> groups;
+  late final List<CoreGroupSimple> groups;
 
   User.fromJson(Map<String, dynamic> json) {
     name = capitaliseAll(json['name']);
@@ -45,8 +42,9 @@ class User {
     phone =
         (json['phone'] != "" && json["phone"] != null) ? json['phone'] : null;
     createdOn = json['created_on'];
-    groups =
-        List.from(json['groups']).map((e) => SimpleGroup.fromJson(e)).toList();
+    groups = List.from(json['groups'])
+        .map((e) => CoreGroupSimple.fromJson(e))
+        .toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -90,7 +88,7 @@ class User {
     String? floor,
     String? phone,
     String? createdOn,
-    List<SimpleGroup>? groups,
+    List<CoreGroupSimple>? groups,
   }) {
     return User(
       name: name ?? this.name,
@@ -119,11 +117,11 @@ class User {
         floor: user.floor.toString().split('.').last,
         phone: user.phone,
         createdOn: processDate(user.createdOn!),
-        groups: user.groups!.map((e) => SimpleGroup.fromCoreGroup(e)).toList());
+        groups: user.groups!);
   }
 
-  SimpleUser toSimpleUser() {
-    return SimpleUser(
+  CoreUserSimple toSimpleUser() {
+    return CoreUserSimple(
         name: name, firstname: firstname, nickname: nickname, id: id);
   }
 
@@ -132,8 +130,8 @@ class User {
     return "User {name: $name, firstname: $firstname, nickname: $nickname, id: $id, email: $email, birthday: $birthday, promo: $promo, floor: $floor, phone: $phone, createdOn: $createdOn, groups: $groups}";
   }
 
-  applicant.Applicant toApplicant() {
-    return applicant.Applicant(
+  Applicant toApplicant() {
+    return Applicant(
         name: name,
         firstname: firstname,
         nickname: nickname,

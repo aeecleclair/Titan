@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/tools/functions.dart';
 import 'package:myecl/loan/providers/borrower_provider.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
@@ -27,7 +28,7 @@ class SearchResult extends HookConsumerWidget {
                             Container(width: 20),
                             Expanded(
                               child: Text(
-                                simpleUser.getName(),
+                                getName(simpleUser),
                                 style: TextStyle(
                                   fontSize: 13,
                                   fontWeight: (borrower.id == simpleUser.id)
@@ -41,7 +42,7 @@ class SearchResult extends HookConsumerWidget {
                     ),
                     onTap: () {
                       borrowerNotifier.setBorrower(simpleUser);
-                      queryController.text = simpleUser.getName();
+                      queryController.text = getName(simpleUser);
                       usersNotifier.clear();
                     }))
                 .toList()));

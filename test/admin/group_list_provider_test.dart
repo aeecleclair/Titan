@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/admin/class/simple_group.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/repositories/group_repository.dart';
 import 'package:myecl/user/class/user.dart';
@@ -15,17 +15,17 @@ void main() {
     test('Should return a group', () async {
       final mockGroup = MockGroupRepository();
       when(() => mockGroup.getGroupList())
-          .thenAnswer((_) async => [SimpleGroup.empty()]);
+          .thenAnswer((_) async => [CoreUserSimple.empty()]);
       final GroupListNotifier groupNotifier =
           GroupListNotifier(groupRepository: mockGroup);
       final groupList = await groupNotifier.loadGroups();
-      expect(groupList, isA<AsyncData<List<SimpleGroup>>>());
+      expect(groupList, isA<AsyncData<List<CoreUserSimple>>>());
       expect(
           groupList.when(
               data: (liste) => liste,
               error: (e, s) => null,
               loading: () => null),
-          isA<List<SimpleGroup>>());
+          isA<List<CoreUserSimple>>());
       expect(
           groupList.when(
               data: (liste) => liste.length,
@@ -36,7 +36,7 @@ void main() {
 
     test('Should return a group', () async {
       final mockGroup = MockGroupRepository();
-      final group = SimpleGroup(
+      final group = CoreUserSimple(
         id: "1",
         name: "name",
         description: "description",
@@ -57,13 +57,13 @@ void main() {
       final GroupListNotifier groupNotifier =
           GroupListNotifier(groupRepository: mockGroup);
       final groupList = await groupNotifier.loadGroupsFromUser(user);
-      expect(groupList, isA<AsyncData<List<SimpleGroup>>>());
+      expect(groupList, isA<AsyncData<List<CoreUserSimple>>>());
       expect(
           groupList.when(
               data: (liste) => liste,
               error: (e, s) => null,
               loading: () => null),
-          isA<List<SimpleGroup>>());
+          isA<List<CoreUserSimple>>());
       expect(
           groupList.when(
               data: (liste) => liste.length,
@@ -74,9 +74,9 @@ void main() {
 
     test('Should create a group', () async {
       final mockGroup = MockGroupRepository();
-      final newGroup = SimpleGroup.empty().copyWith(id: "2");
+      final newGroup = CoreUserSimple.empty().copyWith(id: "2");
       when(() => mockGroup.getGroupList())
-          .thenAnswer((_) async => [SimpleGroup.empty()]);
+          .thenAnswer((_) async => [CoreUserSimple.empty()]);
       when(() => mockGroup.createGroup(newGroup))
           .thenAnswer((_) async => newGroup);
       final GroupListNotifier groupNotifier =
@@ -88,9 +88,9 @@ void main() {
 
     test('Should update a group', () async {
       final mockGroup = MockGroupRepository();
-      final newGroup = SimpleGroup.empty().copyWith(id: "2");
+      final newGroup = CoreUserSimple.empty().copyWith(id: "2");
       when(() => mockGroup.getGroupList())
-          .thenAnswer((_) async => [SimpleGroup.empty(), newGroup]);
+          .thenAnswer((_) async => [CoreUserSimple.empty(), newGroup]);
       when(() => mockGroup.updateGroup(newGroup)).thenAnswer((_) async => true);
       final GroupListNotifier groupNotifier =
           GroupListNotifier(groupRepository: mockGroup);
@@ -100,9 +100,9 @@ void main() {
 
     test('Should delete a group', () async {
       final mockGroup = MockGroupRepository();
-      final newGroup = SimpleGroup.empty().copyWith(id: "2");
+      final newGroup = CoreUserSimple.empty().copyWith(id: "2");
       when(() => mockGroup.getGroupList())
-          .thenAnswer((_) async => [SimpleGroup.empty(), newGroup]);
+          .thenAnswer((_) async => [CoreUserSimple.empty(), newGroup]);
       when(() => mockGroup.deleteGroup("2")).thenAnswer((_) async => true);
       final GroupListNotifier groupNotifier =
           GroupListNotifier(groupRepository: mockGroup);
@@ -112,9 +112,9 @@ void main() {
 
     test('Should return a group', () async {
       final mockGroup = MockGroupRepository();
-      final newGroup = SimpleGroup.empty().copyWith(id: "2");
+      final newGroup = CoreUserSimple.empty().copyWith(id: "2");
       when(() => mockGroup.getGroupList())
-          .thenAnswer((_) async => [SimpleGroup.empty(), newGroup]);
+          .thenAnswer((_) async => [CoreUserSimple.empty(), newGroup]);
       when(() => mockGroup.updateGroup(newGroup)).thenAnswer((_) async => true);
       final GroupListNotifier groupNotifier =
           GroupListNotifier(groupRepository: mockGroup);
@@ -122,14 +122,14 @@ void main() {
       expect(await groupNotifier.updateGroup(newGroup), true);
     });
 
-    test('setGroup should modify an existing SimpleGroup object in the list',
+    test('setGroup should modify an existing CoreUserSimple object in the list',
         () {
       final mockGroup = MockGroupRepository();
       final groupListNotifier = GroupListNotifier(groupRepository: mockGroup);
-      final existingGroup = SimpleGroup(
+      final existingGroup = CoreUserSimple(
           id: '1', name: 'Existing Group', description: 'Existing Description');
       groupListNotifier.state = AsyncValue.data([existingGroup]);
-      final modifiedGroup = SimpleGroup(
+      final modifiedGroup = CoreUserSimple(
           id: '1', name: 'Modified Group', description: 'Modified Description');
       groupListNotifier.setGroup(modifiedGroup);
       expect(

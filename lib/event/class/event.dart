@@ -1,8 +1,8 @@
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/event/tools/functions.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/class/applicant.dart';
 
 enum CalendarEventType {
   eventAE,
@@ -61,7 +61,7 @@ class Event {
     applicantId = json['applicant_id'];
     applicant = json['applicant'] != null
         ? Applicant.fromJson(json['applicant'])
-        : Applicant.empty().copyWith(id: applicantId);
+        : Applicant.fromJson({}).copyWith(id: applicantId);
     decision = stringToDecision(json['decision']);
     roomId = json['room_id'] ?? "";
   }
@@ -130,7 +130,7 @@ class Event {
     description = '';
     recurrenceRule = '';
     applicantId = '';
-    applicant = Applicant.empty();
+    applicant = Applicant.fromJson({});
     decision = Decision.pending;
     roomId = '';
   }

@@ -1,17 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
-import 'package:myecl/user/class/list_users.dart';
 
-class BorrowerNotifier extends StateNotifier<SimpleUser> {
-  BorrowerNotifier(SimpleUser borrower) : super(borrower);
+class BorrowerNotifier extends StateNotifier<CoreUserSimple> {
+  BorrowerNotifier(CoreUserSimple borrower) : super(borrower);
 
-  void setBorrower(SimpleUser borrower) {
+  void setBorrower(CoreUserSimple borrower) {
     state = borrower;
   }
 }
 
 final borrowerProvider =
-    StateNotifierProvider<BorrowerNotifier, SimpleUser>((ref) {
+    StateNotifierProvider<BorrowerNotifier, CoreUserSimple>((ref) {
   final loan = ref.watch(loanProvider);
   return BorrowerNotifier(loan.borrower);
 });

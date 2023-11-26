@@ -1,4 +1,4 @@
-import 'package:myecl/admin/class/simple_group.dart';
+import 'package:myecl/generated/openapi.swagger.dart' show CoreGroupSimple;
 import 'package:myecl/raffle/class/raffle_status_type.dart';
 import 'package:myecl/raffle/tools/functions.dart';
 
@@ -11,14 +11,14 @@ class Raffle {
     this.description,
   });
   late final String name;
-  late final SimpleGroup group;
+  late final CoreGroupSimple group;
   late final RaffleStatusType raffleStatusType;
   late final String id;
   late final String? description;
 
   Raffle.fromJson(Map<String, dynamic> json) {
     name = json['name'];
-    group = SimpleGroup.fromJson(json['group']);
+    group = CoreGroupSimple.fromJson(json['group']);
     raffleStatusType = stringToRaffleStatusType(json['status']);
     id = json['id'];
     description = json['description'];
@@ -36,7 +36,7 @@ class Raffle {
 
   Raffle copyWith({
     String? name,
-    SimpleGroup? group,
+    CoreGroupSimple? group,
     RaffleStatusType? raffleStatusType,
     String? id,
     String? description,
@@ -50,7 +50,7 @@ class Raffle {
 
   Raffle.empty() {
     name = '';
-    group = SimpleGroup.empty();
+    group = CoreGroupSimple.fromJson({});
     raffleStatusType = RaffleStatusType.creation;
     id = '';
     description = null;

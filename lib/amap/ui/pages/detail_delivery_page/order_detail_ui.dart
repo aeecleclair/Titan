@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/tools/functions.dart';
 import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/providers/cash_list_provider.dart';
@@ -51,7 +52,7 @@ class DetailOrderUI extends HookConsumerWidget {
         children: [
           SizedBox(
             width: 216,
-            child: AutoSizeText(order.user.getName(),
+            child: AutoSizeText(getName(order.user),
                 maxLines: 1,
                 style: const TextStyle(
                     fontSize: 18,

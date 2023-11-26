@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/tools/functions.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/tools/functions.dart';
@@ -78,7 +79,7 @@ class DetailBookingPage extends HookConsumerWidget {
                       Column(
                         children: [
                           AutoSizeText(
-                            booking.applicant.getName(),
+                            getApplicantName(booking.applicant),
                             style: const TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,

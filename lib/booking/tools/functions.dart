@@ -44,3 +44,4 @@ DateTime getTrueEnd(Booking b) {
     return b.end;
   }
 }
+

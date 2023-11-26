@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/admin/class/simple_group.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 
 class AnnouncerCard extends StatelessWidget {
-  final SimpleGroup e;
+  final CoreGroupSimple e;
   final HeroIcons icon;
   const AnnouncerCard({super.key, required this.e, required this.icon});
 

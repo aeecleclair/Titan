@@ -1,4 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/tools/functions.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/loaner_id_provider.dart';
 import 'package:myecl/loan/repositories/loan_repository.dart';
@@ -74,8 +75,7 @@ class LoanerLoanListNotifier extends ListNotifier<Loan> {
   Future<AsyncValue<List<Loan>>> filterLoans(String query) async {
     return state.whenData((loans) => loans
         .where((loan) =>
-            loan.borrower
-                .getName()
+            getName(loan.borrower)
                 .toLowerCase()
                 .contains(query.toLowerCase()) ||
             loan.itemsQuantity

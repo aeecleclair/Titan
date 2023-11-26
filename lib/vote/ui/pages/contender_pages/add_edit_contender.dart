@@ -6,6 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:myecl/generated/openapi.swagger.dart' show CoreUserSimple;
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -14,7 +15,6 @@ import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
-import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/vote/class/members.dart';
 import 'package:myecl/vote/class/contender.dart';
@@ -52,7 +52,7 @@ class AddEditContenderPage extends HookConsumerWidget {
     final queryController = useTextEditingController();
     final role = useTextEditingController();
     final program = useTextEditingController(text: contender.program);
-    final member = useState(SimpleUser.empty());
+    final member = useState(CoreUserSimple.fromJson({}));
     final members = ref.watch(contenderMembersProvider);
     final membersNotifier = ref.read(contenderMembersProvider.notifier);
     final contenderLogosNotifier = ref.read(contenderLogosProvider.notifier);
@@ -264,7 +264,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                                           member.value, role.text));
                                   if (value) {
                                     role.text = '';
-                                    member.value = SimpleUser.empty();
+                                    member.value = CoreUserSimple.fromJson({});
                                     queryController.text = '';
                                   } else {
                                     displayVoteToastWithContext(TypeMsg.error,
