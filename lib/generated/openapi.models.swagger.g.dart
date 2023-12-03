@@ -129,6 +129,16 @@ Map<String, dynamic> _$ApplicantToJson(Applicant instance) => <String, dynamic>{
       'phone': instance.phone,
     };
 
+Balance _$BalanceFromJson(Map<String, dynamic> json) => Balance(
+      userId: json['user_id'] as String? ?? '',
+      amount: (json['amount'] as num?)?.toDouble() ?? 0.0,
+    );
+
+Map<String, dynamic> _$BalanceToJson(Balance instance) => <String, dynamic>{
+      'user_id': instance.userId,
+      'amount': instance.amount,
+    };
+
 BatchResult _$BatchResultFromJson(Map<String, dynamic> json) => BatchResult(
       failed: json['failed'] as Map<String, dynamic>,
     );
@@ -413,7 +423,7 @@ BookingReturn _$BookingReturnFromJson(Map<String, dynamic> json) =>
       recurrenceRule: json['recurrence_rule'] as String? ?? '',
       entity: json['entity'] as String? ?? '',
       id: json['id'] as String? ?? '',
-      decision: appUtilsTypesBdebookingTypeDecisionFromJson(json['decision']),
+      decision: appUtilsTypesBookingTypeDecisionFromJson(json['decision']),
       applicantId: json['applicant_id'] as String? ?? '',
       room: RoomComplete.fromJson(json['room'] as Map<String, dynamic>),
     );
@@ -429,7 +439,7 @@ Map<String, dynamic> _$BookingReturnToJson(BookingReturn instance) =>
       'recurrence_rule': instance.recurrenceRule,
       'entity': instance.entity,
       'id': instance.id,
-      'decision': appUtilsTypesBdebookingTypeDecisionToJson(instance.decision),
+      'decision': appUtilsTypesBookingTypeDecisionToJson(instance.decision),
       'applicant_id': instance.applicantId,
       'room': instance.room.toJson(),
     };
@@ -446,7 +456,7 @@ BookingReturnApplicant _$BookingReturnApplicantFromJson(
       recurrenceRule: json['recurrence_rule'] as String? ?? '',
       entity: json['entity'] as String? ?? '',
       id: json['id'] as String? ?? '',
-      decision: appUtilsTypesBdebookingTypeDecisionFromJson(json['decision']),
+      decision: appUtilsTypesBookingTypeDecisionFromJson(json['decision']),
       applicantId: json['applicant_id'] as String? ?? '',
       room: RoomComplete.fromJson(json['room'] as Map<String, dynamic>),
       applicant: Applicant.fromJson(json['applicant'] as Map<String, dynamic>),
@@ -464,7 +474,7 @@ Map<String, dynamic> _$BookingReturnApplicantToJson(
       'recurrence_rule': instance.recurrenceRule,
       'entity': instance.entity,
       'id': instance.id,
-      'decision': appUtilsTypesBdebookingTypeDecisionToJson(instance.decision),
+      'decision': appUtilsTypesBookingTypeDecisionToJson(instance.decision),
       'applicant_id': instance.applicantId,
       'room': instance.room.toJson(),
       'applicant': instance.applicant.toJson(),
@@ -1400,6 +1410,41 @@ Map<String, dynamic> _$MailMigrationRequestToJson(
       'new_email': instance.newEmail,
     };
 
+Manager _$ManagerFromJson(Map<String, dynamic> json) => Manager(
+      name: json['name'] as String? ?? '',
+      groupId: json['group_id'] as String? ?? '',
+      id: json['id'] as String? ?? '',
+    );
+
+Map<String, dynamic> _$ManagerToJson(Manager instance) => <String, dynamic>{
+      'name': instance.name,
+      'group_id': instance.groupId,
+      'id': instance.id,
+    };
+
+ManagerBase _$ManagerBaseFromJson(Map<String, dynamic> json) => ManagerBase(
+      name: json['name'] as String? ?? '',
+      groupId: json['group_id'] as String? ?? '',
+    );
+
+Map<String, dynamic> _$ManagerBaseToJson(ManagerBase instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'group_id': instance.groupId,
+    };
+
+ManagerUpdate _$ManagerUpdateFromJson(Map<String, dynamic> json) =>
+    ManagerUpdate(
+      name: json['name'] as String? ?? '',
+      groupId: json['group_id'] as String? ?? '',
+    );
+
+Map<String, dynamic> _$ManagerUpdateToJson(ManagerUpdate instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'group_id': instance.groupId,
+    };
+
 Message _$MessageFromJson(Map<String, dynamic> json) => Message(
       context: json['context'] as String? ?? '',
       isVisible: json['is_visible'] as bool? ?? false,
@@ -1752,32 +1797,26 @@ Map<String, dynamic> _$ResetPasswordRequestToJson(
       'new_password': instance.newPassword,
     };
 
-Rights _$RightsFromJson(Map<String, dynamic> json) => Rights(
-      view: json['view'] as bool? ?? false,
-      manage: json['manage'] as bool? ?? false,
-    );
-
-Map<String, dynamic> _$RightsToJson(Rights instance) => <String, dynamic>{
-      'view': instance.view,
-      'manage': instance.manage,
-    };
-
 RoomBase _$RoomBaseFromJson(Map<String, dynamic> json) => RoomBase(
       name: json['name'] as String? ?? '',
+      managerId: json['manager_id'] as String? ?? '',
     );
 
 Map<String, dynamic> _$RoomBaseToJson(RoomBase instance) => <String, dynamic>{
       'name': instance.name,
+      'manager_id': instance.managerId,
     };
 
 RoomComplete _$RoomCompleteFromJson(Map<String, dynamic> json) => RoomComplete(
       name: json['name'] as String? ?? '',
+      managerId: json['manager_id'] as String? ?? '',
       id: json['id'] as String? ?? '',
     );
 
 Map<String, dynamic> _$RoomCompleteToJson(RoomComplete instance) =>
     <String, dynamic>{
       'name': instance.name,
+      'manager_id': instance.managerId,
       'id': instance.id,
     };
 
@@ -1804,6 +1843,72 @@ Map<String, dynamic> _$SectionCompleteToJson(SectionComplete instance) =>
       'name': instance.name,
       'description': instance.description,
       'id': instance.id,
+    };
+
+SharerGroup _$SharerGroupFromJson(Map<String, dynamic> json) => SharerGroup(
+      name: json['name'] as String? ?? '',
+      id: json['id'] as String? ?? '',
+      members: (json['members'] as List<dynamic>?)
+              ?.map((e) => CoreUserSimple.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      transactions: (json['transactions'] as List<dynamic>?)
+              ?.map((e) => Transaction.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      total: (json['total'] as num?)?.toDouble() ?? 0.0,
+      balances: (json['balances'] as List<dynamic>?)
+              ?.map((e) => Balance.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+    );
+
+Map<String, dynamic> _$SharerGroupToJson(SharerGroup instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'id': instance.id,
+      'members': instance.members.map((e) => e.toJson()).toList(),
+      'transactions': instance.transactions.map((e) => e.toJson()).toList(),
+      'total': instance.total,
+      'balances': instance.balances.map((e) => e.toJson()).toList(),
+    };
+
+SharerGroupBase _$SharerGroupBaseFromJson(Map<String, dynamic> json) =>
+    SharerGroupBase(
+      name: json['name'] as String? ?? '',
+    );
+
+Map<String, dynamic> _$SharerGroupBaseToJson(SharerGroupBase instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+    };
+
+SharerGroupMembership _$SharerGroupMembershipFromJson(
+        Map<String, dynamic> json) =>
+    SharerGroupMembership(
+      userId: json['user_id'] as String? ?? '',
+      sharerGroupId: json['sharer_group_id'] as String? ?? '',
+      position: json['position'] as int? ?? 0,
+      active: json['active'] as bool? ?? false,
+    );
+
+Map<String, dynamic> _$SharerGroupMembershipToJson(
+        SharerGroupMembership instance) =>
+    <String, dynamic>{
+      'user_id': instance.userId,
+      'sharer_group_id': instance.sharerGroupId,
+      'position': instance.position,
+      'active': instance.active,
+    };
+
+SharerGroupUpdate _$SharerGroupUpdateFromJson(Map<String, dynamic> json) =>
+    SharerGroupUpdate(
+      name: json['name'] as String? ?? '',
+    );
+
+Map<String, dynamic> _$SharerGroupUpdateToJson(SharerGroupUpdate instance) =>
+    <String, dynamic>{
+      'name': instance.name,
     };
 
 TicketComplete _$TicketCompleteFromJson(Map<String, dynamic> json) =>
@@ -1868,6 +1973,90 @@ Map<String, dynamic> _$TokenResponseToJson(TokenResponse instance) =>
       'id_token': instance.idToken,
     };
 
+Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
+      sharerGroupId: json['sharer_group_id'] as String? ?? '',
+      amount: (json['amount'] as num?)?.toDouble() ?? 0.0,
+      type: json['type'] as String? ?? '',
+      title: json['title'] as String? ?? '',
+      description: json['description'] as String? ?? '',
+      updateDatetime: DateTime.parse(json['update_datetime'] as String),
+      creatorId: json['creator_id'] as String? ?? '',
+      payerId: json['payer_id'] as String? ?? '',
+      id: json['id'] as String? ?? '',
+      creationDatetime: DateTime.parse(json['creation_datetime'] as String),
+      beneficiaries: (json['beneficiaries'] as List<dynamic>?)
+              ?.map((e) => CoreUserSimple.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+    );
+
+Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
+    <String, dynamic>{
+      'sharer_group_id': instance.sharerGroupId,
+      'amount': instance.amount,
+      'type': instance.type,
+      'title': instance.title,
+      'description': instance.description,
+      'update_datetime': instance.updateDatetime.toIso8601String(),
+      'creator_id': instance.creatorId,
+      'payer_id': instance.payerId,
+      'id': instance.id,
+      'creation_datetime': instance.creationDatetime.toIso8601String(),
+      'beneficiaries': instance.beneficiaries.map((e) => e.toJson()).toList(),
+    };
+
+TransactionCreate _$TransactionCreateFromJson(Map<String, dynamic> json) =>
+    TransactionCreate(
+      sharerGroupId: json['sharer_group_id'] as String? ?? '',
+      amount: (json['amount'] as num?)?.toDouble() ?? 0.0,
+      type: json['type'] as String? ?? '',
+      title: json['title'] as String? ?? '',
+      description: json['description'] as String? ?? '',
+      updateDatetime: DateTime.parse(json['update_datetime'] as String),
+      creatorId: json['creator_id'] as String? ?? '',
+      payerId: json['payer_id'] as String? ?? '',
+      beneficiariesUserIds: (json['beneficiaries_user_ids'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          [],
+    );
+
+Map<String, dynamic> _$TransactionCreateToJson(TransactionCreate instance) =>
+    <String, dynamic>{
+      'sharer_group_id': instance.sharerGroupId,
+      'amount': instance.amount,
+      'type': instance.type,
+      'title': instance.title,
+      'description': instance.description,
+      'update_datetime': instance.updateDatetime.toIso8601String(),
+      'creator_id': instance.creatorId,
+      'payer_id': instance.payerId,
+      'beneficiaries_user_ids': instance.beneficiariesUserIds,
+    };
+
+TransactionUpdate _$TransactionUpdateFromJson(Map<String, dynamic> json) =>
+    TransactionUpdate(
+      amount: (json['amount'] as num?)?.toDouble() ?? 0.0,
+      type: json['type'] as String? ?? '',
+      title: json['title'] as String? ?? '',
+      description: json['description'] as String? ?? '',
+      payerId: json['payer_id'] as String? ?? '',
+      beneficiariesUserIds: (json['beneficiaries_user_ids'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          [],
+    );
+
+Map<String, dynamic> _$TransactionUpdateToJson(TransactionUpdate instance) =>
+    <String, dynamic>{
+      'amount': instance.amount,
+      'type': instance.type,
+      'title': instance.title,
+      'description': instance.description,
+      'payer_id': instance.payerId,
+      'beneficiaries_user_ids': instance.beneficiariesUserIds,
+    };
+
 ValidationError _$ValidationErrorFromJson(Map<String, dynamic> json) =>
     ValidationError(
       loc: (json['loc'] as List<dynamic>?)?.map((e) => e as Object).toList() ??
@@ -1908,6 +2097,15 @@ VoteStatus _$VoteStatusFromJson(Map<String, dynamic> json) => VoteStatus(
 Map<String, dynamic> _$VoteStatusToJson(VoteStatus instance) =>
     <String, dynamic>{
       'status': statusTypeToJson(instance.status),
+    };
+
+VoterGroup _$VoterGroupFromJson(Map<String, dynamic> json) => VoterGroup(
+      groupId: json['group_id'] as String? ?? '',
+    );
+
+Map<String, dynamic> _$VoterGroupToJson(VoterGroup instance) =>
+    <String, dynamic>{
+      'group_id': instance.groupId,
     };
 
 AppSchemasSchemasAmapCashComplete _$AppSchemasSchemasAmapCashCompleteFromJson(

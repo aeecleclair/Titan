@@ -837,19 +837,72 @@ final class _$Openapi extends Openapi {
   }
 
   @override
-  Future<Response<Rights>> _bdebookingRightsGet() {
-    final Uri $url = Uri.parse('/bdebooking/rights');
+  Future<Response<List<Manager>>> _bookingManagersGet() {
+    final Uri $url = Uri.parse('/booking/managers');
     final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,
     );
-    return client.send<Rights, Rights>($request);
+    return client.send<List<Manager>, Manager>($request);
   }
 
   @override
-  Future<Response<List<BookingReturnApplicant>>> _bdebookingBookingsGet() {
-    final Uri $url = Uri.parse('/bdebooking/bookings');
+  Future<Response<Manager>> _bookingManagersPost({required ManagerBase? body}) {
+    final Uri $url = Uri.parse('/booking/managers');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<Manager, Manager>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _bookingManagersManagerIdDelete(
+      {required String? managerId}) {
+    final Uri $url = Uri.parse('/booking/managers/${managerId}');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _bookingManagersManagerIdPatch({
+    required String? managerId,
+    required ManagerUpdate? body,
+  }) {
+    final Uri $url = Uri.parse('/booking/managers/${managerId}');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<List<Manager>>> _bookingManagersUsersMeGet() {
+    final Uri $url = Uri.parse('/booking/managers/users/me');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<Manager>, Manager>($request);
+  }
+
+  @override
+  Future<Response<List<BookingReturnApplicant>>>
+      _bookingBookingsUsersMeManageGet() {
+    final Uri $url = Uri.parse('/booking/bookings/users/me/manage');
     final Request $request = Request(
       'GET',
       $url,
@@ -860,9 +913,32 @@ final class _$Openapi extends Openapi {
   }
 
   @override
-  Future<Response<BookingReturn>> _bdebookingBookingsPost(
+  Future<Response<List<BookingReturn>>> _bookingBookingsConfirmedGet() {
+    final Uri $url = Uri.parse('/booking/bookings/confirmed');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<BookingReturn>, BookingReturn>($request);
+  }
+
+  @override
+  Future<Response<List<BookingReturn>>> _bookingBookingsUsersApplicantIdGet(
+      {required String? applicantId}) {
+    final Uri $url = Uri.parse('/booking/bookings/users/${applicantId}');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<BookingReturn>, BookingReturn>($request);
+  }
+
+  @override
+  Future<Response<BookingReturn>> _bookingBookingsPost(
       {required BookingBase? body}) {
-    final Uri $url = Uri.parse('/bdebooking/bookings');
+    final Uri $url = Uri.parse('/booking/bookings');
     final $body = body;
     final Request $request = Request(
       'POST',
@@ -874,44 +950,9 @@ final class _$Openapi extends Openapi {
   }
 
   @override
-  Future<Response<List<BookingReturn>>> _bdebookingBookingsConfirmedGet() {
-    final Uri $url = Uri.parse('/bdebooking/bookings/confirmed');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
-    return client.send<List<BookingReturn>, BookingReturn>($request);
-  }
-
-  @override
-  Future<Response<List<BookingReturn>>> _bdebookingUserApplicantIdGet(
-      {required String? applicantId}) {
-    final Uri $url = Uri.parse('/bdebooking/user/${applicantId}');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
-    return client.send<List<BookingReturn>, BookingReturn>($request);
-  }
-
-  @override
-  Future<Response<BookingReturn>> _bdebookingBookingsBookingIdGet(
+  Future<Response<dynamic>> _bookingBookingsBookingIdDelete(
       {required String? bookingId}) {
-    final Uri $url = Uri.parse('/bdebooking/bookings/${bookingId}');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
-    return client.send<BookingReturn, BookingReturn>($request);
-  }
-
-  @override
-  Future<Response<dynamic>> _bdebookingBookingsBookingIdDelete(
-      {required Object? bookingId}) {
-    final Uri $url = Uri.parse('/bdebooking/bookings/${bookingId}');
+    final Uri $url = Uri.parse('/booking/bookings/${bookingId}');
     final Request $request = Request(
       'DELETE',
       $url,
@@ -921,11 +962,11 @@ final class _$Openapi extends Openapi {
   }
 
   @override
-  Future<Response<dynamic>> _bdebookingBookingsBookingIdPatch({
+  Future<Response<dynamic>> _bookingBookingsBookingIdPatch({
     required String? bookingId,
     required BookingEdit? body,
   }) {
-    final Uri $url = Uri.parse('/bdebooking/bookings/${bookingId}');
+    final Uri $url = Uri.parse('/booking/bookings/${bookingId}');
     final $body = body;
     final Request $request = Request(
       'PATCH',
@@ -937,24 +978,12 @@ final class _$Openapi extends Openapi {
   }
 
   @override
-  Future<Response<Applicant>> _bdebookingBookingsBookingIdApplicantGet(
-      {required String? bookingId}) {
-    final Uri $url = Uri.parse('/bdebooking/bookings/${bookingId}/applicant');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
-    return client.send<Applicant, Applicant>($request);
-  }
-
-  @override
-  Future<Response<dynamic>> _bdebookingBookingsBookingIdReplyDecisionPatch({
+  Future<Response<dynamic>> _bookingBookingsBookingIdReplyDecisionPatch({
     required String? bookingId,
     required String? decision,
   }) {
     final Uri $url =
-        Uri.parse('/bdebooking/bookings/${bookingId}/reply/${decision}');
+        Uri.parse('/booking/bookings/${bookingId}/reply/${decision}');
     final Request $request = Request(
       'PATCH',
       $url,
@@ -964,8 +993,8 @@ final class _$Openapi extends Openapi {
   }
 
   @override
-  Future<Response<List<RoomComplete>>> _bdebookingRoomsGet() {
-    final Uri $url = Uri.parse('/bdebooking/rooms');
+  Future<Response<List<RoomComplete>>> _bookingRoomsGet() {
+    final Uri $url = Uri.parse('/booking/rooms');
     final Request $request = Request(
       'GET',
       $url,
@@ -975,9 +1004,8 @@ final class _$Openapi extends Openapi {
   }
 
   @override
-  Future<Response<RoomComplete>> _bdebookingRoomsPost(
-      {required RoomBase? body}) {
-    final Uri $url = Uri.parse('/bdebooking/rooms');
+  Future<Response<RoomComplete>> _bookingRoomsPost({required RoomBase? body}) {
+    final Uri $url = Uri.parse('/booking/rooms');
     final $body = body;
     final Request $request = Request(
       'POST',
@@ -989,21 +1017,9 @@ final class _$Openapi extends Openapi {
   }
 
   @override
-  Future<Response<RoomComplete>> _bdebookingRoomsRoomIdGet(
+  Future<Response<dynamic>> _bookingRoomsRoomIdDelete(
       {required String? roomId}) {
-    final Uri $url = Uri.parse('/bdebooking/rooms/${roomId}');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
-    return client.send<RoomComplete, RoomComplete>($request);
-  }
-
-  @override
-  Future<Response<dynamic>> _bdebookingRoomsRoomIdDelete(
-      {required String? roomId}) {
-    final Uri $url = Uri.parse('/bdebooking/rooms/${roomId}');
+    final Uri $url = Uri.parse('/booking/rooms/${roomId}');
     final Request $request = Request(
       'DELETE',
       $url,
@@ -1013,11 +1029,11 @@ final class _$Openapi extends Openapi {
   }
 
   @override
-  Future<Response<dynamic>> _bdebookingRoomsRoomIdPatch({
+  Future<Response<dynamic>> _bookingRoomsRoomIdPatch({
     required String? roomId,
     required RoomBase? body,
   }) {
-    final Uri $url = Uri.parse('/bdebooking/rooms/${roomId}');
+    final Uri $url = Uri.parse('/booking/rooms/${roomId}');
     final $body = body;
     final Request $request = Request(
       'PATCH',
@@ -1264,6 +1280,54 @@ final class _$Openapi extends Openapi {
       $url,
       client.baseUrl,
       parameters: $params,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<List<VoterGroup>>> _campaignVotersGet() {
+    final Uri $url = Uri.parse('/campaign/voters');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<VoterGroup>, VoterGroup>($request);
+  }
+
+  @override
+  Future<Response<VoterGroup>> _campaignVotersPost(
+      {required VoterGroup? body}) {
+    final Uri $url = Uri.parse('/campaign/voters');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<VoterGroup, VoterGroup>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _campaignVotersDelete() {
+    final Uri $url = Uri.parse('/campaign/voters');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _campaignVotersGroupIdDelete(
+      {required String? groupId}) {
+    final Uri $url = Uri.parse('/campaign/voters/${groupId}');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
     );
     return client.send<dynamic, dynamic>($request);
   }
@@ -2531,6 +2595,133 @@ final class _$Openapi extends Openapi {
   }
 
   @override
+  Future<Response<List<SharerGroupMembership>>>
+      _tricountSharergroupsMembershipsGet() {
+    final Uri $url = Uri.parse('/tricount/sharergroups/memberships');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client
+        .send<List<SharerGroupMembership>, SharerGroupMembership>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _tricountSharergroupsMembershipsPost(
+      {required SharerGroupMembership? body}) {
+    final Uri $url = Uri.parse('/tricount/sharergroups/memberships');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>>
+      _tricountSharergroupsSharerGroupIdMembershipMembershipIdDelete({
+    required String? sharerGroupId,
+    required String? membershipId,
+  }) {
+    final Uri $url = Uri.parse(
+        '/tricount/sharergroups/${sharerGroupId}/membership/${membershipId}');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<SharerGroup>> _tricountSharergroupsSharerGroupIdGet(
+      {required String? sharerGroupId}) {
+    final Uri $url = Uri.parse('/tricount/sharergroups/${sharerGroupId}');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<SharerGroup, SharerGroup>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _tricountSharergroupsSharerGroupIdPatch({
+    required String? sharerGroupId,
+    required SharerGroupUpdate? body,
+  }) {
+    final Uri $url = Uri.parse('/tricount/sharergroups/${sharerGroupId}');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<SharerGroup>> _tricountSharergroupsPost(
+      {required SharerGroupBase? body}) {
+    final Uri $url = Uri.parse('/tricount/sharergroups');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<SharerGroup, SharerGroup>($request);
+  }
+
+  @override
+  Future<Response<Transaction>> _tricountTransactionsPost(
+      {required TransactionCreate? body}) {
+    final Uri $url = Uri.parse('/tricount/transactions');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<Transaction, Transaction>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _tricountTransactionsTransactionIdDelete(
+      {required String? transactionId}) {
+    final Uri $url = Uri.parse('/tricount/transactions/${transactionId}');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<Transaction>> _tricountTransactionsTransactionIdPatch({
+    required String? transactionId,
+    required TransactionUpdate? body,
+  }) {
+    final Uri $url = Uri.parse('/tricount/transactions/${transactionId}');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<Transaction, Transaction>($request);
+  }
+
+  @override
   Future<Response<List<CoreUserSimple>>> _usersGet() {
     final Uri $url = Uri.parse('/users/');
     final Request $request = Request(
@@ -2574,7 +2765,7 @@ final class _$Openapi extends Openapi {
   }
 
   @override
-  Future<Response<CoreUser>> _usersMeGet() async {
+  Future<Response<CoreUser>> _usersMeGet() {
     final Uri $url = Uri.parse('/users/me');
     final Request $request = Request(
       'GET',

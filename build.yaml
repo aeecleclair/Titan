@@ -8,7 +8,7 @@ targets:
           input_folder: "swaggers/"
           output_folder: "lib/generated/"
           input_urls:
-            - "https://hyperion.myecl.fr/openapi.json"
+            - "https://hyperion-1.dev.eclair.ec-lyon.fr/openapi.json"
           separate_models: true
           default_values_map:
             - type_name: int

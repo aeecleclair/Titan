@@ -610,6 +610,58 @@ extension $ApplicantExtension on Applicant {
 }
 
 @JsonSerializable(explicitToJson: true)
+class Balance {
+  const Balance({
+    required this.userId,
+    required this.amount,
+  });
+
+  factory Balance.fromJson(Map<String, dynamic> json) =>
+      _$BalanceFromJson(json);
+
+  static const toJsonFactory = _$BalanceToJson;
+  Map<String, dynamic> toJson() => _$BalanceToJson(this);
+
+  @JsonKey(name: 'user_id', defaultValue: '')
+  final String userId;
+  @JsonKey(name: 'amount', defaultValue: 0.0)
+  final double amount;
+  static const fromJsonFactory = _$BalanceFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is Balance &&
+            (identical(other.userId, userId) ||
+                const DeepCollectionEquality().equals(other.userId, userId)) &&
+            (identical(other.amount, amount) ||
+                const DeepCollectionEquality().equals(other.amount, amount)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(userId) ^
+      const DeepCollectionEquality().hash(amount) ^
+      runtimeType.hashCode;
+}
+
+extension $BalanceExtension on Balance {
+  Balance copyWith({String? userId, double? amount}) {
+    return Balance(
+        userId: userId ?? this.userId, amount: amount ?? this.amount);
+  }
+
+  Balance copyWithWrapped({Wrapped<String>? userId, Wrapped<double>? amount}) {
+    return Balance(
+        userId: (userId != null ? userId.value : this.userId),
+        amount: (amount != null ? amount.value : this.amount));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class BatchResult {
   const BatchResult({
     required this.failed,
@@ -1851,10 +1903,10 @@ class BookingReturn {
   final String id;
   @JsonKey(
     name: 'decision',
-    toJson: appUtilsTypesBdebookingTypeDecisionToJson,
-    fromJson: appUtilsTypesBdebookingTypeDecisionFromJson,
+    toJson: appUtilsTypesBookingTypeDecisionToJson,
+    fromJson: appUtilsTypesBookingTypeDecisionFromJson,
   )
-  final enums.AppUtilsTypesBdebookingTypeDecision decision;
+  final enums.AppUtilsTypesBookingTypeDecision decision;
   @JsonKey(name: 'applicant_id', defaultValue: '')
   final String applicantId;
   @JsonKey(name: 'room')
@@ -1925,7 +1977,7 @@ extension $BookingReturnExtension on BookingReturn {
       String? recurrenceRule,
       String? entity,
       String? id,
-      enums.AppUtilsTypesBdebookingTypeDecision? decision,
+      enums.AppUtilsTypesBookingTypeDecision? decision,
       String? applicantId,
       RoomComplete? room}) {
     return BookingReturn(
@@ -1953,7 +2005,7 @@ extension $BookingReturnExtension on BookingReturn {
       Wrapped<String?>? recurrenceRule,
       Wrapped<String?>? entity,
       Wrapped<String>? id,
-      Wrapped<enums.AppUtilsTypesBdebookingTypeDecision>? decision,
+      Wrapped<enums.AppUtilsTypesBookingTypeDecision>? decision,
       Wrapped<String>? applicantId,
       Wrapped<RoomComplete>? room}) {
     return BookingReturn(
@@ -2019,10 +2071,10 @@ class BookingReturnApplicant {
   final String id;
   @JsonKey(
     name: 'decision',
-    toJson: appUtilsTypesBdebookingTypeDecisionToJson,
-    fromJson: appUtilsTypesBdebookingTypeDecisionFromJson,
+    toJson: appUtilsTypesBookingTypeDecisionToJson,
+    fromJson: appUtilsTypesBookingTypeDecisionFromJson,
   )
-  final enums.AppUtilsTypesBdebookingTypeDecision decision;
+  final enums.AppUtilsTypesBookingTypeDecision decision;
   @JsonKey(name: 'applicant_id', defaultValue: '')
   final String applicantId;
   @JsonKey(name: 'room')
@@ -2099,7 +2151,7 @@ extension $BookingReturnApplicantExtension on BookingReturnApplicant {
       String? recurrenceRule,
       String? entity,
       String? id,
-      enums.AppUtilsTypesBdebookingTypeDecision? decision,
+      enums.AppUtilsTypesBookingTypeDecision? decision,
       String? applicantId,
       RoomComplete? room,
       Applicant? applicant}) {
@@ -2129,7 +2181,7 @@ extension $BookingReturnApplicantExtension on BookingReturnApplicant {
       Wrapped<String?>? recurrenceRule,
       Wrapped<String?>? entity,
       Wrapped<String>? id,
-      Wrapped<enums.AppUtilsTypesBdebookingTypeDecision>? decision,
+      Wrapped<enums.AppUtilsTypesBookingTypeDecision>? decision,
       Wrapped<String>? applicantId,
       Wrapped<RoomComplete>? room,
       Wrapped<Applicant>? applicant}) {
@@ -6543,6 +6595,175 @@ extension $MailMigrationRequestExtension on MailMigrationRequest {
 }
 
 @JsonSerializable(explicitToJson: true)
+class Manager {
+  const Manager({
+    required this.name,
+    required this.groupId,
+    required this.id,
+  });
+
+  factory Manager.fromJson(Map<String, dynamic> json) =>
+      _$ManagerFromJson(json);
+
+  static const toJsonFactory = _$ManagerToJson;
+  Map<String, dynamic> toJson() => _$ManagerToJson(this);
+
+  @JsonKey(name: 'name', defaultValue: '')
+  final String name;
+  @JsonKey(name: 'group_id', defaultValue: '')
+  final String groupId;
+  @JsonKey(name: 'id', defaultValue: '')
+  final String id;
+  static const fromJsonFactory = _$ManagerFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is Manager &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.groupId, groupId) ||
+                const DeepCollectionEquality()
+                    .equals(other.groupId, groupId)) &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(groupId) ^
+      const DeepCollectionEquality().hash(id) ^
+      runtimeType.hashCode;
+}
+
+extension $ManagerExtension on Manager {
+  Manager copyWith({String? name, String? groupId, String? id}) {
+    return Manager(
+        name: name ?? this.name,
+        groupId: groupId ?? this.groupId,
+        id: id ?? this.id);
+  }
+
+  Manager copyWithWrapped(
+      {Wrapped<String>? name, Wrapped<String>? groupId, Wrapped<String>? id}) {
+    return Manager(
+        name: (name != null ? name.value : this.name),
+        groupId: (groupId != null ? groupId.value : this.groupId),
+        id: (id != null ? id.value : this.id));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class ManagerBase {
+  const ManagerBase({
+    required this.name,
+    required this.groupId,
+  });
+
+  factory ManagerBase.fromJson(Map<String, dynamic> json) =>
+      _$ManagerBaseFromJson(json);
+
+  static const toJsonFactory = _$ManagerBaseToJson;
+  Map<String, dynamic> toJson() => _$ManagerBaseToJson(this);
+
+  @JsonKey(name: 'name', defaultValue: '')
+  final String name;
+  @JsonKey(name: 'group_id', defaultValue: '')
+  final String groupId;
+  static const fromJsonFactory = _$ManagerBaseFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is ManagerBase &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.groupId, groupId) ||
+                const DeepCollectionEquality().equals(other.groupId, groupId)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(groupId) ^
+      runtimeType.hashCode;
+}
+
+extension $ManagerBaseExtension on ManagerBase {
+  ManagerBase copyWith({String? name, String? groupId}) {
+    return ManagerBase(
+        name: name ?? this.name, groupId: groupId ?? this.groupId);
+  }
+
+  ManagerBase copyWithWrapped(
+      {Wrapped<String>? name, Wrapped<String>? groupId}) {
+    return ManagerBase(
+        name: (name != null ? name.value : this.name),
+        groupId: (groupId != null ? groupId.value : this.groupId));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class ManagerUpdate {
+  const ManagerUpdate({
+    this.name,
+    this.groupId,
+  });
+
+  factory ManagerUpdate.fromJson(Map<String, dynamic> json) =>
+      _$ManagerUpdateFromJson(json);
+
+  static const toJsonFactory = _$ManagerUpdateToJson;
+  Map<String, dynamic> toJson() => _$ManagerUpdateToJson(this);
+
+  @JsonKey(name: 'name', defaultValue: '')
+  final String? name;
+  @JsonKey(name: 'group_id', defaultValue: '')
+  final String? groupId;
+  static const fromJsonFactory = _$ManagerUpdateFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is ManagerUpdate &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.groupId, groupId) ||
+                const DeepCollectionEquality().equals(other.groupId, groupId)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(groupId) ^
+      runtimeType.hashCode;
+}
+
+extension $ManagerUpdateExtension on ManagerUpdate {
+  ManagerUpdate copyWith({String? name, String? groupId}) {
+    return ManagerUpdate(
+        name: name ?? this.name, groupId: groupId ?? this.groupId);
+  }
+
+  ManagerUpdate copyWithWrapped(
+      {Wrapped<String?>? name, Wrapped<String?>? groupId}) {
+    return ManagerUpdate(
+        name: (name != null ? name.value : this.name),
+        groupId: (groupId != null ? groupId.value : this.groupId));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class Message {
   const Message({
     required this.context,
@@ -8262,59 +8483,10 @@ extension $ResetPasswordRequestExtension on ResetPasswordRequest {
 }
 
 @JsonSerializable(explicitToJson: true)
-class Rights {
-  const Rights({
-    required this.view,
-    required this.manage,
-  });
-
-  factory Rights.fromJson(Map<String, dynamic> json) => _$RightsFromJson(json);
-
-  static const toJsonFactory = _$RightsToJson;
-  Map<String, dynamic> toJson() => _$RightsToJson(this);
-
-  @JsonKey(name: 'view', defaultValue: false)
-  final bool view;
-  @JsonKey(name: 'manage', defaultValue: false)
-  final bool manage;
-  static const fromJsonFactory = _$RightsFromJson;
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is Rights &&
-            (identical(other.view, view) ||
-                const DeepCollectionEquality().equals(other.view, view)) &&
-            (identical(other.manage, manage) ||
-                const DeepCollectionEquality().equals(other.manage, manage)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(view) ^
-      const DeepCollectionEquality().hash(manage) ^
-      runtimeType.hashCode;
-}
-
-extension $RightsExtension on Rights {
-  Rights copyWith({bool? view, bool? manage}) {
-    return Rights(view: view ?? this.view, manage: manage ?? this.manage);
-  }
-
-  Rights copyWithWrapped({Wrapped<bool>? view, Wrapped<bool>? manage}) {
-    return Rights(
-        view: (view != null ? view.value : this.view),
-        manage: (manage != null ? manage.value : this.manage));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
 class RoomBase {
   const RoomBase({
     required this.name,
+    required this.managerId,
   });
 
   factory RoomBase.fromJson(Map<String, dynamic> json) =>
@@ -8325,6 +8497,8 @@ class RoomBase {
 
   @JsonKey(name: 'name', defaultValue: '')
   final String name;
+  @JsonKey(name: 'manager_id', defaultValue: '')
+  final String managerId;
   static const fromJsonFactory = _$RoomBaseFromJson;
 
   @override
@@ -8332,7 +8506,10 @@ class RoomBase {
     return identical(this, other) ||
         (other is RoomBase &&
             (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)));
+                const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.managerId, managerId) ||
+                const DeepCollectionEquality()
+                    .equals(other.managerId, managerId)));
   }
 
   @override
@@ -8340,16 +8517,22 @@ class RoomBase {
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(name) ^ runtimeType.hashCode;
+      const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(managerId) ^
+      runtimeType.hashCode;
 }
 
 extension $RoomBaseExtension on RoomBase {
-  RoomBase copyWith({String? name}) {
-    return RoomBase(name: name ?? this.name);
+  RoomBase copyWith({String? name, String? managerId}) {
+    return RoomBase(
+        name: name ?? this.name, managerId: managerId ?? this.managerId);
   }
 
-  RoomBase copyWithWrapped({Wrapped<String>? name}) {
-    return RoomBase(name: (name != null ? name.value : this.name));
+  RoomBase copyWithWrapped(
+      {Wrapped<String>? name, Wrapped<String>? managerId}) {
+    return RoomBase(
+        name: (name != null ? name.value : this.name),
+        managerId: (managerId != null ? managerId.value : this.managerId));
   }
 }
 
@@ -8357,6 +8540,7 @@ extension $RoomBaseExtension on RoomBase {
 class RoomComplete {
   const RoomComplete({
     required this.name,
+    required this.managerId,
     required this.id,
   });
 
@@ -8368,6 +8552,8 @@ class RoomComplete {
 
   @JsonKey(name: 'name', defaultValue: '')
   final String name;
+  @JsonKey(name: 'manager_id', defaultValue: '')
+  final String managerId;
   @JsonKey(name: 'id', defaultValue: '')
   final String id;
   static const fromJsonFactory = _$RoomCompleteFromJson;
@@ -8378,6 +8564,9 @@ class RoomComplete {
         (other is RoomComplete &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.managerId, managerId) ||
+                const DeepCollectionEquality()
+                    .equals(other.managerId, managerId)) &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)));
   }
@@ -8388,18 +8577,26 @@ class RoomComplete {
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(managerId) ^
       const DeepCollectionEquality().hash(id) ^
       runtimeType.hashCode;
 }
 
 extension $RoomCompleteExtension on RoomComplete {
-  RoomComplete copyWith({String? name, String? id}) {
-    return RoomComplete(name: name ?? this.name, id: id ?? this.id);
+  RoomComplete copyWith({String? name, String? managerId, String? id}) {
+    return RoomComplete(
+        name: name ?? this.name,
+        managerId: managerId ?? this.managerId,
+        id: id ?? this.id);
   }
 
-  RoomComplete copyWithWrapped({Wrapped<String>? name, Wrapped<String>? id}) {
+  RoomComplete copyWithWrapped(
+      {Wrapped<String>? name,
+      Wrapped<String>? managerId,
+      Wrapped<String>? id}) {
     return RoomComplete(
         name: (name != null ? name.value : this.name),
+        managerId: (managerId != null ? managerId.value : this.managerId),
         id: (id != null ? id.value : this.id));
   }
 }
@@ -8522,6 +8719,268 @@ extension $SectionCompleteExtension on SectionComplete {
         description:
             (description != null ? description.value : this.description),
         id: (id != null ? id.value : this.id));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class SharerGroup {
+  const SharerGroup({
+    required this.name,
+    required this.id,
+    required this.members,
+    required this.transactions,
+    required this.total,
+    required this.balances,
+  });
+
+  factory SharerGroup.fromJson(Map<String, dynamic> json) =>
+      _$SharerGroupFromJson(json);
+
+  static const toJsonFactory = _$SharerGroupToJson;
+  Map<String, dynamic> toJson() => _$SharerGroupToJson(this);
+
+  @JsonKey(name: 'name', defaultValue: '')
+  final String name;
+  @JsonKey(name: 'id', defaultValue: '')
+  final String id;
+  @JsonKey(name: 'members', defaultValue: <CoreUserSimple>[])
+  final List<CoreUserSimple> members;
+  @JsonKey(name: 'transactions', defaultValue: <Transaction>[])
+  final List<Transaction> transactions;
+  @JsonKey(name: 'total', defaultValue: 0.0)
+  final double total;
+  @JsonKey(name: 'balances', defaultValue: <Balance>[])
+  final List<Balance> balances;
+  static const fromJsonFactory = _$SharerGroupFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is SharerGroup &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.members, members) ||
+                const DeepCollectionEquality()
+                    .equals(other.members, members)) &&
+            (identical(other.transactions, transactions) ||
+                const DeepCollectionEquality()
+                    .equals(other.transactions, transactions)) &&
+            (identical(other.total, total) ||
+                const DeepCollectionEquality().equals(other.total, total)) &&
+            (identical(other.balances, balances) ||
+                const DeepCollectionEquality()
+                    .equals(other.balances, balances)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(members) ^
+      const DeepCollectionEquality().hash(transactions) ^
+      const DeepCollectionEquality().hash(total) ^
+      const DeepCollectionEquality().hash(balances) ^
+      runtimeType.hashCode;
+}
+
+extension $SharerGroupExtension on SharerGroup {
+  SharerGroup copyWith(
+      {String? name,
+      String? id,
+      List<CoreUserSimple>? members,
+      List<Transaction>? transactions,
+      double? total,
+      List<Balance>? balances}) {
+    return SharerGroup(
+        name: name ?? this.name,
+        id: id ?? this.id,
+        members: members ?? this.members,
+        transactions: transactions ?? this.transactions,
+        total: total ?? this.total,
+        balances: balances ?? this.balances);
+  }
+
+  SharerGroup copyWithWrapped(
+      {Wrapped<String>? name,
+      Wrapped<String>? id,
+      Wrapped<List<CoreUserSimple>>? members,
+      Wrapped<List<Transaction>>? transactions,
+      Wrapped<double>? total,
+      Wrapped<List<Balance>>? balances}) {
+    return SharerGroup(
+        name: (name != null ? name.value : this.name),
+        id: (id != null ? id.value : this.id),
+        members: (members != null ? members.value : this.members),
+        transactions:
+            (transactions != null ? transactions.value : this.transactions),
+        total: (total != null ? total.value : this.total),
+        balances: (balances != null ? balances.value : this.balances));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class SharerGroupBase {
+  const SharerGroupBase({
+    required this.name,
+  });
+
+  factory SharerGroupBase.fromJson(Map<String, dynamic> json) =>
+      _$SharerGroupBaseFromJson(json);
+
+  static const toJsonFactory = _$SharerGroupBaseToJson;
+  Map<String, dynamic> toJson() => _$SharerGroupBaseToJson(this);
+
+  @JsonKey(name: 'name', defaultValue: '')
+  final String name;
+  static const fromJsonFactory = _$SharerGroupBaseFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is SharerGroupBase &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(name) ^ runtimeType.hashCode;
+}
+
+extension $SharerGroupBaseExtension on SharerGroupBase {
+  SharerGroupBase copyWith({String? name}) {
+    return SharerGroupBase(name: name ?? this.name);
+  }
+
+  SharerGroupBase copyWithWrapped({Wrapped<String>? name}) {
+    return SharerGroupBase(name: (name != null ? name.value : this.name));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class SharerGroupMembership {
+  const SharerGroupMembership({
+    required this.userId,
+    required this.sharerGroupId,
+    required this.position,
+    required this.active,
+  });
+
+  factory SharerGroupMembership.fromJson(Map<String, dynamic> json) =>
+      _$SharerGroupMembershipFromJson(json);
+
+  static const toJsonFactory = _$SharerGroupMembershipToJson;
+  Map<String, dynamic> toJson() => _$SharerGroupMembershipToJson(this);
+
+  @JsonKey(name: 'user_id', defaultValue: '')
+  final String userId;
+  @JsonKey(name: 'sharer_group_id', defaultValue: '')
+  final String sharerGroupId;
+  @JsonKey(name: 'position', defaultValue: 0)
+  final int position;
+  @JsonKey(name: 'active', defaultValue: false)
+  final bool active;
+  static const fromJsonFactory = _$SharerGroupMembershipFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is SharerGroupMembership &&
+            (identical(other.userId, userId) ||
+                const DeepCollectionEquality().equals(other.userId, userId)) &&
+            (identical(other.sharerGroupId, sharerGroupId) ||
+                const DeepCollectionEquality()
+                    .equals(other.sharerGroupId, sharerGroupId)) &&
+            (identical(other.position, position) ||
+                const DeepCollectionEquality()
+                    .equals(other.position, position)) &&
+            (identical(other.active, active) ||
+                const DeepCollectionEquality().equals(other.active, active)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(userId) ^
+      const DeepCollectionEquality().hash(sharerGroupId) ^
+      const DeepCollectionEquality().hash(position) ^
+      const DeepCollectionEquality().hash(active) ^
+      runtimeType.hashCode;
+}
+
+extension $SharerGroupMembershipExtension on SharerGroupMembership {
+  SharerGroupMembership copyWith(
+      {String? userId, String? sharerGroupId, int? position, bool? active}) {
+    return SharerGroupMembership(
+        userId: userId ?? this.userId,
+        sharerGroupId: sharerGroupId ?? this.sharerGroupId,
+        position: position ?? this.position,
+        active: active ?? this.active);
+  }
+
+  SharerGroupMembership copyWithWrapped(
+      {Wrapped<String>? userId,
+      Wrapped<String>? sharerGroupId,
+      Wrapped<int>? position,
+      Wrapped<bool>? active}) {
+    return SharerGroupMembership(
+        userId: (userId != null ? userId.value : this.userId),
+        sharerGroupId:
+            (sharerGroupId != null ? sharerGroupId.value : this.sharerGroupId),
+        position: (position != null ? position.value : this.position),
+        active: (active != null ? active.value : this.active));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class SharerGroupUpdate {
+  const SharerGroupUpdate({
+    this.name,
+  });
+
+  factory SharerGroupUpdate.fromJson(Map<String, dynamic> json) =>
+      _$SharerGroupUpdateFromJson(json);
+
+  static const toJsonFactory = _$SharerGroupUpdateToJson;
+  Map<String, dynamic> toJson() => _$SharerGroupUpdateToJson(this);
+
+  @JsonKey(name: 'name', defaultValue: '')
+  final String? name;
+  static const fromJsonFactory = _$SharerGroupUpdateFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is SharerGroupUpdate &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(name) ^ runtimeType.hashCode;
+}
+
+extension $SharerGroupUpdateExtension on SharerGroupUpdate {
+  SharerGroupUpdate copyWith({String? name}) {
+    return SharerGroupUpdate(name: name ?? this.name);
+  }
+
+  SharerGroupUpdate copyWithWrapped({Wrapped<String?>? name}) {
+    return SharerGroupUpdate(name: (name != null ? name.value : this.name));
   }
 }
 
@@ -8815,6 +9274,411 @@ extension $TokenResponseExtension on TokenResponse {
 }
 
 @JsonSerializable(explicitToJson: true)
+class Transaction {
+  const Transaction({
+    required this.sharerGroupId,
+    required this.amount,
+    required this.type,
+    required this.title,
+    this.description,
+    required this.updateDatetime,
+    required this.creatorId,
+    required this.payerId,
+    required this.id,
+    required this.creationDatetime,
+    required this.beneficiaries,
+  });
+
+  factory Transaction.fromJson(Map<String, dynamic> json) =>
+      _$TransactionFromJson(json);
+
+  static const toJsonFactory = _$TransactionToJson;
+  Map<String, dynamic> toJson() => _$TransactionToJson(this);
+
+  @JsonKey(name: 'sharer_group_id', defaultValue: '')
+  final String sharerGroupId;
+  @JsonKey(name: 'amount', defaultValue: 0.0)
+  final double amount;
+  @JsonKey(name: 'type', defaultValue: '')
+  final String type;
+  @JsonKey(name: 'title', defaultValue: '')
+  final String title;
+  @JsonKey(name: 'description', defaultValue: '')
+  final String? description;
+  @JsonKey(name: 'update_datetime')
+  final DateTime updateDatetime;
+  @JsonKey(name: 'creator_id', defaultValue: '')
+  final String creatorId;
+  @JsonKey(name: 'payer_id', defaultValue: '')
+  final String payerId;
+  @JsonKey(name: 'id', defaultValue: '')
+  final String id;
+  @JsonKey(name: 'creation_datetime')
+  final DateTime creationDatetime;
+  @JsonKey(name: 'beneficiaries', defaultValue: <CoreUserSimple>[])
+  final List<CoreUserSimple> beneficiaries;
+  static const fromJsonFactory = _$TransactionFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is Transaction &&
+            (identical(other.sharerGroupId, sharerGroupId) ||
+                const DeepCollectionEquality()
+                    .equals(other.sharerGroupId, sharerGroupId)) &&
+            (identical(other.amount, amount) ||
+                const DeepCollectionEquality().equals(other.amount, amount)) &&
+            (identical(other.type, type) ||
+                const DeepCollectionEquality().equals(other.type, type)) &&
+            (identical(other.title, title) ||
+                const DeepCollectionEquality().equals(other.title, title)) &&
+            (identical(other.description, description) ||
+                const DeepCollectionEquality()
+                    .equals(other.description, description)) &&
+            (identical(other.updateDatetime, updateDatetime) ||
+                const DeepCollectionEquality()
+                    .equals(other.updateDatetime, updateDatetime)) &&
+            (identical(other.creatorId, creatorId) ||
+                const DeepCollectionEquality()
+                    .equals(other.creatorId, creatorId)) &&
+            (identical(other.payerId, payerId) ||
+                const DeepCollectionEquality()
+                    .equals(other.payerId, payerId)) &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.creationDatetime, creationDatetime) ||
+                const DeepCollectionEquality()
+                    .equals(other.creationDatetime, creationDatetime)) &&
+            (identical(other.beneficiaries, beneficiaries) ||
+                const DeepCollectionEquality()
+                    .equals(other.beneficiaries, beneficiaries)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(sharerGroupId) ^
+      const DeepCollectionEquality().hash(amount) ^
+      const DeepCollectionEquality().hash(type) ^
+      const DeepCollectionEquality().hash(title) ^
+      const DeepCollectionEquality().hash(description) ^
+      const DeepCollectionEquality().hash(updateDatetime) ^
+      const DeepCollectionEquality().hash(creatorId) ^
+      const DeepCollectionEquality().hash(payerId) ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(creationDatetime) ^
+      const DeepCollectionEquality().hash(beneficiaries) ^
+      runtimeType.hashCode;
+}
+
+extension $TransactionExtension on Transaction {
+  Transaction copyWith(
+      {String? sharerGroupId,
+      double? amount,
+      String? type,
+      String? title,
+      String? description,
+      DateTime? updateDatetime,
+      String? creatorId,
+      String? payerId,
+      String? id,
+      DateTime? creationDatetime,
+      List<CoreUserSimple>? beneficiaries}) {
+    return Transaction(
+        sharerGroupId: sharerGroupId ?? this.sharerGroupId,
+        amount: amount ?? this.amount,
+        type: type ?? this.type,
+        title: title ?? this.title,
+        description: description ?? this.description,
+        updateDatetime: updateDatetime ?? this.updateDatetime,
+        creatorId: creatorId ?? this.creatorId,
+        payerId: payerId ?? this.payerId,
+        id: id ?? this.id,
+        creationDatetime: creationDatetime ?? this.creationDatetime,
+        beneficiaries: beneficiaries ?? this.beneficiaries);
+  }
+
+  Transaction copyWithWrapped(
+      {Wrapped<String>? sharerGroupId,
+      Wrapped<double>? amount,
+      Wrapped<String>? type,
+      Wrapped<String>? title,
+      Wrapped<String?>? description,
+      Wrapped<DateTime>? updateDatetime,
+      Wrapped<String>? creatorId,
+      Wrapped<String>? payerId,
+      Wrapped<String>? id,
+      Wrapped<DateTime>? creationDatetime,
+      Wrapped<List<CoreUserSimple>>? beneficiaries}) {
+    return Transaction(
+        sharerGroupId:
+            (sharerGroupId != null ? sharerGroupId.value : this.sharerGroupId),
+        amount: (amount != null ? amount.value : this.amount),
+        type: (type != null ? type.value : this.type),
+        title: (title != null ? title.value : this.title),
+        description:
+            (description != null ? description.value : this.description),
+        updateDatetime: (updateDatetime != null
+            ? updateDatetime.value
+            : this.updateDatetime),
+        creatorId: (creatorId != null ? creatorId.value : this.creatorId),
+        payerId: (payerId != null ? payerId.value : this.payerId),
+        id: (id != null ? id.value : this.id),
+        creationDatetime: (creationDatetime != null
+            ? creationDatetime.value
+            : this.creationDatetime),
+        beneficiaries:
+            (beneficiaries != null ? beneficiaries.value : this.beneficiaries));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class TransactionCreate {
+  const TransactionCreate({
+    required this.sharerGroupId,
+    required this.amount,
+    required this.type,
+    required this.title,
+    this.description,
+    required this.updateDatetime,
+    required this.creatorId,
+    required this.payerId,
+    required this.beneficiariesUserIds,
+  });
+
+  factory TransactionCreate.fromJson(Map<String, dynamic> json) =>
+      _$TransactionCreateFromJson(json);
+
+  static const toJsonFactory = _$TransactionCreateToJson;
+  Map<String, dynamic> toJson() => _$TransactionCreateToJson(this);
+
+  @JsonKey(name: 'sharer_group_id', defaultValue: '')
+  final String sharerGroupId;
+  @JsonKey(name: 'amount', defaultValue: 0.0)
+  final double amount;
+  @JsonKey(name: 'type', defaultValue: '')
+  final String type;
+  @JsonKey(name: 'title', defaultValue: '')
+  final String title;
+  @JsonKey(name: 'description', defaultValue: '')
+  final String? description;
+  @JsonKey(name: 'update_datetime')
+  final DateTime updateDatetime;
+  @JsonKey(name: 'creator_id', defaultValue: '')
+  final String creatorId;
+  @JsonKey(name: 'payer_id', defaultValue: '')
+  final String payerId;
+  @JsonKey(name: 'beneficiaries_user_ids', defaultValue: <String>[])
+  final List<String> beneficiariesUserIds;
+  static const fromJsonFactory = _$TransactionCreateFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is TransactionCreate &&
+            (identical(other.sharerGroupId, sharerGroupId) ||
+                const DeepCollectionEquality()
+                    .equals(other.sharerGroupId, sharerGroupId)) &&
+            (identical(other.amount, amount) ||
+                const DeepCollectionEquality().equals(other.amount, amount)) &&
+            (identical(other.type, type) ||
+                const DeepCollectionEquality().equals(other.type, type)) &&
+            (identical(other.title, title) ||
+                const DeepCollectionEquality().equals(other.title, title)) &&
+            (identical(other.description, description) ||
+                const DeepCollectionEquality()
+                    .equals(other.description, description)) &&
+            (identical(other.updateDatetime, updateDatetime) ||
+                const DeepCollectionEquality()
+                    .equals(other.updateDatetime, updateDatetime)) &&
+            (identical(other.creatorId, creatorId) ||
+                const DeepCollectionEquality()
+                    .equals(other.creatorId, creatorId)) &&
+            (identical(other.payerId, payerId) ||
+                const DeepCollectionEquality()
+                    .equals(other.payerId, payerId)) &&
+            (identical(other.beneficiariesUserIds, beneficiariesUserIds) ||
+                const DeepCollectionEquality()
+                    .equals(other.beneficiariesUserIds, beneficiariesUserIds)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(sharerGroupId) ^
+      const DeepCollectionEquality().hash(amount) ^
+      const DeepCollectionEquality().hash(type) ^
+      const DeepCollectionEquality().hash(title) ^
+      const DeepCollectionEquality().hash(description) ^
+      const DeepCollectionEquality().hash(updateDatetime) ^
+      const DeepCollectionEquality().hash(creatorId) ^
+      const DeepCollectionEquality().hash(payerId) ^
+      const DeepCollectionEquality().hash(beneficiariesUserIds) ^
+      runtimeType.hashCode;
+}
+
+extension $TransactionCreateExtension on TransactionCreate {
+  TransactionCreate copyWith(
+      {String? sharerGroupId,
+      double? amount,
+      String? type,
+      String? title,
+      String? description,
+      DateTime? updateDatetime,
+      String? creatorId,
+      String? payerId,
+      List<String>? beneficiariesUserIds}) {
+    return TransactionCreate(
+        sharerGroupId: sharerGroupId ?? this.sharerGroupId,
+        amount: amount ?? this.amount,
+        type: type ?? this.type,
+        title: title ?? this.title,
+        description: description ?? this.description,
+        updateDatetime: updateDatetime ?? this.updateDatetime,
+        creatorId: creatorId ?? this.creatorId,
+        payerId: payerId ?? this.payerId,
+        beneficiariesUserIds:
+            beneficiariesUserIds ?? this.beneficiariesUserIds);
+  }
+
+  TransactionCreate copyWithWrapped(
+      {Wrapped<String>? sharerGroupId,
+      Wrapped<double>? amount,
+      Wrapped<String>? type,
+      Wrapped<String>? title,
+      Wrapped<String?>? description,
+      Wrapped<DateTime>? updateDatetime,
+      Wrapped<String>? creatorId,
+      Wrapped<String>? payerId,
+      Wrapped<List<String>>? beneficiariesUserIds}) {
+    return TransactionCreate(
+        sharerGroupId:
+            (sharerGroupId != null ? sharerGroupId.value : this.sharerGroupId),
+        amount: (amount != null ? amount.value : this.amount),
+        type: (type != null ? type.value : this.type),
+        title: (title != null ? title.value : this.title),
+        description:
+            (description != null ? description.value : this.description),
+        updateDatetime: (updateDatetime != null
+            ? updateDatetime.value
+            : this.updateDatetime),
+        creatorId: (creatorId != null ? creatorId.value : this.creatorId),
+        payerId: (payerId != null ? payerId.value : this.payerId),
+        beneficiariesUserIds: (beneficiariesUserIds != null
+            ? beneficiariesUserIds.value
+            : this.beneficiariesUserIds));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class TransactionUpdate {
+  const TransactionUpdate({
+    this.amount,
+    this.type,
+    this.title,
+    this.description,
+    this.payerId,
+    this.beneficiariesUserIds,
+  });
+
+  factory TransactionUpdate.fromJson(Map<String, dynamic> json) =>
+      _$TransactionUpdateFromJson(json);
+
+  static const toJsonFactory = _$TransactionUpdateToJson;
+  Map<String, dynamic> toJson() => _$TransactionUpdateToJson(this);
+
+  @JsonKey(name: 'amount', defaultValue: 0.0)
+  final double? amount;
+  @JsonKey(name: 'type', defaultValue: '')
+  final String? type;
+  @JsonKey(name: 'title', defaultValue: '')
+  final String? title;
+  @JsonKey(name: 'description', defaultValue: '')
+  final String? description;
+  @JsonKey(name: 'payer_id', defaultValue: '')
+  final String? payerId;
+  @JsonKey(name: 'beneficiaries_user_ids', defaultValue: <String>[])
+  final List<String>? beneficiariesUserIds;
+  static const fromJsonFactory = _$TransactionUpdateFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is TransactionUpdate &&
+            (identical(other.amount, amount) ||
+                const DeepCollectionEquality().equals(other.amount, amount)) &&
+            (identical(other.type, type) ||
+                const DeepCollectionEquality().equals(other.type, type)) &&
+            (identical(other.title, title) ||
+                const DeepCollectionEquality().equals(other.title, title)) &&
+            (identical(other.description, description) ||
+                const DeepCollectionEquality()
+                    .equals(other.description, description)) &&
+            (identical(other.payerId, payerId) ||
+                const DeepCollectionEquality()
+                    .equals(other.payerId, payerId)) &&
+            (identical(other.beneficiariesUserIds, beneficiariesUserIds) ||
+                const DeepCollectionEquality()
+                    .equals(other.beneficiariesUserIds, beneficiariesUserIds)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(amount) ^
+      const DeepCollectionEquality().hash(type) ^
+      const DeepCollectionEquality().hash(title) ^
+      const DeepCollectionEquality().hash(description) ^
+      const DeepCollectionEquality().hash(payerId) ^
+      const DeepCollectionEquality().hash(beneficiariesUserIds) ^
+      runtimeType.hashCode;
+}
+
+extension $TransactionUpdateExtension on TransactionUpdate {
+  TransactionUpdate copyWith(
+      {double? amount,
+      String? type,
+      String? title,
+      String? description,
+      String? payerId,
+      List<String>? beneficiariesUserIds}) {
+    return TransactionUpdate(
+        amount: amount ?? this.amount,
+        type: type ?? this.type,
+        title: title ?? this.title,
+        description: description ?? this.description,
+        payerId: payerId ?? this.payerId,
+        beneficiariesUserIds:
+            beneficiariesUserIds ?? this.beneficiariesUserIds);
+  }
+
+  TransactionUpdate copyWithWrapped(
+      {Wrapped<double?>? amount,
+      Wrapped<String?>? type,
+      Wrapped<String?>? title,
+      Wrapped<String?>? description,
+      Wrapped<String?>? payerId,
+      Wrapped<List<String>?>? beneficiariesUserIds}) {
+    return TransactionUpdate(
+        amount: (amount != null ? amount.value : this.amount),
+        type: (type != null ? type.value : this.type),
+        title: (title != null ? title.value : this.title),
+        description:
+            (description != null ? description.value : this.description),
+        payerId: (payerId != null ? payerId.value : this.payerId),
+        beneficiariesUserIds: (beneficiariesUserIds != null
+            ? beneficiariesUserIds.value
+            : this.beneficiariesUserIds));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class ValidationError {
   const ValidationError({
     required this.loc,
@@ -9014,6 +9878,49 @@ extension $VoteStatusExtension on VoteStatus {
 
   VoteStatus copyWithWrapped({Wrapped<enums.StatusType>? status}) {
     return VoteStatus(status: (status != null ? status.value : this.status));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class VoterGroup {
+  const VoterGroup({
+    required this.groupId,
+  });
+
+  factory VoterGroup.fromJson(Map<String, dynamic> json) =>
+      _$VoterGroupFromJson(json);
+
+  static const toJsonFactory = _$VoterGroupToJson;
+  Map<String, dynamic> toJson() => _$VoterGroupToJson(this);
+
+  @JsonKey(name: 'group_id', defaultValue: '')
+  final String groupId;
+  static const fromJsonFactory = _$VoterGroupFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is VoterGroup &&
+            (identical(other.groupId, groupId) ||
+                const DeepCollectionEquality().equals(other.groupId, groupId)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(groupId) ^ runtimeType.hashCode;
+}
+
+extension $VoterGroupExtension on VoterGroup {
+  VoterGroup copyWith({String? groupId}) {
+    return VoterGroup(groupId: groupId ?? this.groupId);
+  }
+
+  VoterGroup copyWithWrapped({Wrapped<String>? groupId}) {
+    return VoterGroup(
+        groupId: (groupId != null ? groupId.value : this.groupId));
   }
 }
 
@@ -9378,6 +10285,10 @@ enums.AccountType? accountTypeNullableFromJson(
       defaultValue;
 }
 
+String accountTypeExplodedListToJson(List<enums.AccountType>? accountType) {
+  return accountType?.map((e) => e.value!).join(',') ?? '';
+}
+
 List<String> accountTypeListToJson(List<enums.AccountType>? accountType) {
   if (accountType == null) {
     return [];
@@ -9437,6 +10348,10 @@ enums.AmapSlotType? amapSlotTypeNullableFromJson(
   return enums.AmapSlotType.values
           .firstWhereOrNull((e) => e.value == amapSlotType) ??
       defaultValue;
+}
+
+String amapSlotTypeExplodedListToJson(List<enums.AmapSlotType>? amapSlotType) {
+  return amapSlotType?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> amapSlotTypeListToJson(List<enums.AmapSlotType>? amapSlotType) {
@@ -9499,6 +10414,11 @@ enums.CalendarEventType? calendarEventTypeNullableFromJson(
   return enums.CalendarEventType.values
           .firstWhereOrNull((e) => e.value == calendarEventType) ??
       defaultValue;
+}
+
+String calendarEventTypeExplodedListToJson(
+    List<enums.CalendarEventType>? calendarEventType) {
+  return calendarEventType?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> calendarEventTypeListToJson(
@@ -9568,6 +10488,11 @@ enums.DeliveryStatusType? deliveryStatusTypeNullableFromJson(
       defaultValue;
 }
 
+String deliveryStatusTypeExplodedListToJson(
+    List<enums.DeliveryStatusType>? deliveryStatusType) {
+  return deliveryStatusType?.map((e) => e.value!).join(',') ?? '';
+}
+
 List<String> deliveryStatusTypeListToJson(
     List<enums.DeliveryStatusType>? deliveryStatusType) {
   if (deliveryStatusType == null) {
@@ -9634,6 +10559,10 @@ enums.FloorsType? floorsTypeNullableFromJson(
       defaultValue;
 }
 
+String floorsTypeExplodedListToJson(List<enums.FloorsType>? floorsType) {
+  return floorsType?.map((e) => e.value!).join(',') ?? '';
+}
+
 List<String> floorsTypeListToJson(List<enums.FloorsType>? floorsType) {
   if (floorsType == null) {
     return [];
@@ -9692,6 +10621,10 @@ enums.ListType? listTypeNullableFromJson(
   }
   return enums.ListType.values.firstWhereOrNull((e) => e.value == listType) ??
       defaultValue;
+}
+
+String listTypeExplodedListToJson(List<enums.ListType>? listType) {
+  return listType?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> listTypeListToJson(List<enums.ListType>? listType) {
@@ -9754,6 +10687,11 @@ enums.RaffleStatusType? raffleStatusTypeNullableFromJson(
   return enums.RaffleStatusType.values
           .firstWhereOrNull((e) => e.value == raffleStatusType) ??
       defaultValue;
+}
+
+String raffleStatusTypeExplodedListToJson(
+    List<enums.RaffleStatusType>? raffleStatusType) {
+  return raffleStatusType?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> raffleStatusTypeListToJson(
@@ -9822,6 +10760,10 @@ enums.StatusType? statusTypeNullableFromJson(
       defaultValue;
 }
 
+String statusTypeExplodedListToJson(List<enums.StatusType>? statusType) {
+  return statusType?.map((e) => e.value!).join(',') ?? '';
+}
+
 List<String> statusTypeListToJson(List<enums.StatusType>? statusType) {
   if (statusType == null) {
     return [];
@@ -9852,79 +10794,81 @@ List<enums.StatusType>? statusTypeNullableListFromJson(
   return statusType.map((e) => statusTypeFromJson(e.toString())).toList();
 }
 
-String? appUtilsTypesBdebookingTypeDecisionNullableToJson(
-    enums.AppUtilsTypesBdebookingTypeDecision?
-        appUtilsTypesBdebookingTypeDecision) {
-  return appUtilsTypesBdebookingTypeDecision?.value;
+String? appUtilsTypesBookingTypeDecisionNullableToJson(
+    enums.AppUtilsTypesBookingTypeDecision? appUtilsTypesBookingTypeDecision) {
+  return appUtilsTypesBookingTypeDecision?.value;
 }
 
-String? appUtilsTypesBdebookingTypeDecisionToJson(
-    enums.AppUtilsTypesBdebookingTypeDecision
-        appUtilsTypesBdebookingTypeDecision) {
-  return appUtilsTypesBdebookingTypeDecision.value;
+String? appUtilsTypesBookingTypeDecisionToJson(
+    enums.AppUtilsTypesBookingTypeDecision appUtilsTypesBookingTypeDecision) {
+  return appUtilsTypesBookingTypeDecision.value;
 }
 
-enums.AppUtilsTypesBdebookingTypeDecision
-    appUtilsTypesBdebookingTypeDecisionFromJson(
-  Object? appUtilsTypesBdebookingTypeDecision, [
-  enums.AppUtilsTypesBdebookingTypeDecision? defaultValue,
+enums.AppUtilsTypesBookingTypeDecision appUtilsTypesBookingTypeDecisionFromJson(
+  Object? appUtilsTypesBookingTypeDecision, [
+  enums.AppUtilsTypesBookingTypeDecision? defaultValue,
 ]) {
-  return enums.AppUtilsTypesBdebookingTypeDecision.values.firstWhereOrNull(
-          (e) =>
-              e.value.toString().toLowerCase() ==
-              appUtilsTypesBdebookingTypeDecision?.toString().toLowerCase()) ??
+  return enums.AppUtilsTypesBookingTypeDecision.values.firstWhereOrNull((e) =>
+          e.value.toString().toLowerCase() ==
+          appUtilsTypesBookingTypeDecision?.toString().toLowerCase()) ??
       defaultValue ??
-      enums.AppUtilsTypesBdebookingTypeDecision.swaggerGeneratedUnknown;
+      enums.AppUtilsTypesBookingTypeDecision.swaggerGeneratedUnknown;
 }
 
-enums.AppUtilsTypesBdebookingTypeDecision?
-    appUtilsTypesBdebookingTypeDecisionNullableFromJson(
-  Object? appUtilsTypesBdebookingTypeDecision, [
-  enums.AppUtilsTypesBdebookingTypeDecision? defaultValue,
+enums.AppUtilsTypesBookingTypeDecision?
+    appUtilsTypesBookingTypeDecisionNullableFromJson(
+  Object? appUtilsTypesBookingTypeDecision, [
+  enums.AppUtilsTypesBookingTypeDecision? defaultValue,
 ]) {
-  if (appUtilsTypesBdebookingTypeDecision == null) {
+  if (appUtilsTypesBookingTypeDecision == null) {
     return null;
   }
-  return enums.AppUtilsTypesBdebookingTypeDecision.values.firstWhereOrNull(
-          (e) => e.value == appUtilsTypesBdebookingTypeDecision) ??
+  return enums.AppUtilsTypesBookingTypeDecision.values.firstWhereOrNull(
+          (e) => e.value == appUtilsTypesBookingTypeDecision) ??
       defaultValue;
 }
 
-List<String> appUtilsTypesBdebookingTypeDecisionListToJson(
-    List<enums.AppUtilsTypesBdebookingTypeDecision>?
-        appUtilsTypesBdebookingTypeDecision) {
-  if (appUtilsTypesBdebookingTypeDecision == null) {
+String appUtilsTypesBookingTypeDecisionExplodedListToJson(
+    List<enums.AppUtilsTypesBookingTypeDecision>?
+        appUtilsTypesBookingTypeDecision) {
+  return appUtilsTypesBookingTypeDecision?.map((e) => e.value!).join(',') ?? '';
+}
+
+List<String> appUtilsTypesBookingTypeDecisionListToJson(
+    List<enums.AppUtilsTypesBookingTypeDecision>?
+        appUtilsTypesBookingTypeDecision) {
+  if (appUtilsTypesBookingTypeDecision == null) {
     return [];
   }
 
-  return appUtilsTypesBdebookingTypeDecision.map((e) => e.value!).toList();
+  return appUtilsTypesBookingTypeDecision.map((e) => e.value!).toList();
 }
 
-List<enums.AppUtilsTypesBdebookingTypeDecision>
-    appUtilsTypesBdebookingTypeDecisionListFromJson(
-  List? appUtilsTypesBdebookingTypeDecision, [
-  List<enums.AppUtilsTypesBdebookingTypeDecision>? defaultValue,
+List<enums.AppUtilsTypesBookingTypeDecision>
+    appUtilsTypesBookingTypeDecisionListFromJson(
+  List? appUtilsTypesBookingTypeDecision, [
+  List<enums.AppUtilsTypesBookingTypeDecision>? defaultValue,
 ]) {
-  if (appUtilsTypesBdebookingTypeDecision == null) {
+  if (appUtilsTypesBookingTypeDecision == null) {
     return defaultValue ?? [];
   }
 
-  return appUtilsTypesBdebookingTypeDecision
-      .map((e) => appUtilsTypesBdebookingTypeDecisionFromJson(e.toString()))
+  return appUtilsTypesBookingTypeDecision
+      .map((e) => appUtilsTypesBookingTypeDecisionFromJson(e.toString()))
       .toList();
 }
 
-List<enums.AppUtilsTypesBdebookingTypeDecision>?
-    appUtilsTypesBdebookingTypeDecisionNullableListFromJson(
-  List? appUtilsTypesBdebookingTypeDecision, [
-  List<enums.AppUtilsTypesBdebookingTypeDecision>? defaultValue,
+List<enums.AppUtilsTypesBookingTypeDecision>?
+    appUtilsTypesBookingTypeDecisionNullableListFromJson(
+  List? appUtilsTypesBookingTypeDecision, [
+  List<enums.AppUtilsTypesBookingTypeDecision>? defaultValue,
 ]) {
-  if (appUtilsTypesBdebookingTypeDecision == null) {
+  if (appUtilsTypesBookingTypeDecision == null) {
     return defaultValue;
   }
 
-  return appUtilsTypesBdebookingTypeDecision
-      .map((e) => appUtilsTypesBdebookingTypeDecisionFromJson(e.toString()))
+  return appUtilsTypesBookingTypeDecision
+      .map((e) => appUtilsTypesBookingTypeDecisionFromJson(e.toString()))
       .toList();
 }
 
@@ -9963,6 +10907,13 @@ enums.AppUtilsTypesCalendarTypesDecision?
   return enums.AppUtilsTypesCalendarTypesDecision.values.firstWhereOrNull(
           (e) => e.value == appUtilsTypesCalendarTypesDecision) ??
       defaultValue;
+}
+
+String appUtilsTypesCalendarTypesDecisionExplodedListToJson(
+    List<enums.AppUtilsTypesCalendarTypesDecision>?
+        appUtilsTypesCalendarTypesDecision) {
+  return appUtilsTypesCalendarTypesDecision?.map((e) => e.value!).join(',') ??
+      '';
 }
 
 List<String> appUtilsTypesCalendarTypesDecisionListToJson(

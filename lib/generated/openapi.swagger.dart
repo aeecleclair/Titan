@@ -1,11 +1,16 @@
 // ignore_for_file: type=lint
 
+import 'package:json_annotation/json_annotation.dart';
+import 'package:collection/collection.dart';
+import 'dart:convert';
+
 import 'openapi.models.swagger.dart';
 import 'package:chopper/chopper.dart';
 
 import 'client_mapping.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart' show MultipartFile;
 import 'package:chopper/chopper.dart' as chopper;
 import 'openapi.enums.swagger.dart' as enums;
 export 'openapi.enums.swagger.dart';
@@ -1003,150 +1008,178 @@ abstract class Openapi extends ChopperService {
   @Get(path: '/.well-known/openid-configuration')
   Future<chopper.Response> _wellKnownOpenidConfigurationGet();
 
-  ///Get Rights
-  Future<chopper.Response<Rights>> bdebookingRightsGet() {
-    generatedMapping.putIfAbsent(Rights, () => Rights.fromJsonFactory);
+  ///Get Managers
+  Future<chopper.Response<List<Manager>>> bookingManagersGet() {
+    generatedMapping.putIfAbsent(Manager, () => Manager.fromJsonFactory);
 
-    return _bdebookingRightsGet();
+    return _bookingManagersGet();
   }
 
-  ///Get Rights
-  @Get(path: '/bdebooking/rights')
-  Future<chopper.Response<Rights>> _bdebookingRightsGet();
+  ///Get Managers
+  @Get(path: '/booking/managers')
+  Future<chopper.Response<List<Manager>>> _bookingManagersGet();
 
-  ///Get Bookings
+  ///Create Manager
+  Future<chopper.Response<Manager>> bookingManagersPost(
+      {required ManagerBase? body}) {
+    generatedMapping.putIfAbsent(Manager, () => Manager.fromJsonFactory);
+
+    return _bookingManagersPost(body: body);
+  }
+
+  ///Create Manager
+  @Post(
+    path: '/booking/managers',
+    optionalBody: true,
+  )
+  Future<chopper.Response<Manager>> _bookingManagersPost(
+      {@Body() required ManagerBase? body});
+
+  ///Delete Manager
+  ///@param manager_id
+  Future<chopper.Response> bookingManagersManagerIdDelete(
+      {required String? managerId}) {
+    return _bookingManagersManagerIdDelete(managerId: managerId);
+  }
+
+  ///Delete Manager
+  ///@param manager_id
+  @Delete(path: '/booking/managers/{manager_id}')
+  Future<chopper.Response> _bookingManagersManagerIdDelete(
+      {@Path('manager_id') required String? managerId});
+
+  ///Update Manager
+  ///@param manager_id
+  Future<chopper.Response> bookingManagersManagerIdPatch({
+    required String? managerId,
+    required ManagerUpdate? body,
+  }) {
+    return _bookingManagersManagerIdPatch(managerId: managerId, body: body);
+  }
+
+  ///Update Manager
+  ///@param manager_id
+  @Patch(
+    path: '/booking/managers/{manager_id}',
+    optionalBody: true,
+  )
+  Future<chopper.Response> _bookingManagersManagerIdPatch({
+    @Path('manager_id') required String? managerId,
+    @Body() required ManagerUpdate? body,
+  });
+
+  ///Get Current User Managers
+  Future<chopper.Response<List<Manager>>> bookingManagersUsersMeGet() {
+    generatedMapping.putIfAbsent(Manager, () => Manager.fromJsonFactory);
+
+    return _bookingManagersUsersMeGet();
+  }
+
+  ///Get Current User Managers
+  @Get(path: '/booking/managers/users/me')
+  Future<chopper.Response<List<Manager>>> _bookingManagersUsersMeGet();
+
+  ///Get Bookings For Manager
   Future<chopper.Response<List<BookingReturnApplicant>>>
-      bdebookingBookingsGet() {
+      bookingBookingsUsersMeManageGet() {
     generatedMapping.putIfAbsent(
         BookingReturnApplicant, () => BookingReturnApplicant.fromJsonFactory);
 
-    return _bdebookingBookingsGet();
+    return _bookingBookingsUsersMeManageGet();
   }
 
-  ///Get Bookings
-  @Get(path: '/bdebooking/bookings')
+  ///Get Bookings For Manager
+  @Get(path: '/booking/bookings/users/me/manage')
   Future<chopper.Response<List<BookingReturnApplicant>>>
-      _bdebookingBookingsGet();
+      _bookingBookingsUsersMeManageGet();
 
-  ///Create Bookings
-  Future<chopper.Response<BookingReturn>> bdebookingBookingsPost(
+  ///Get Confirmed Bookings For Manager
+  Future<chopper.Response<List<BookingReturn>>> bookingBookingsConfirmedGet() {
+    generatedMapping.putIfAbsent(
+        BookingReturn, () => BookingReturn.fromJsonFactory);
+
+    return _bookingBookingsConfirmedGet();
+  }
+
+  ///Get Confirmed Bookings For Manager
+  @Get(path: '/booking/bookings/confirmed')
+  Future<chopper.Response<List<BookingReturn>>> _bookingBookingsConfirmedGet();
+
+  ///Get Applicant Bookings
+  ///@param applicant_id
+  Future<chopper.Response<List<BookingReturn>>>
+      bookingBookingsUsersApplicantIdGet({required String? applicantId}) {
+    generatedMapping.putIfAbsent(
+        BookingReturn, () => BookingReturn.fromJsonFactory);
+
+    return _bookingBookingsUsersApplicantIdGet(applicantId: applicantId);
+  }
+
+  ///Get Applicant Bookings
+  ///@param applicant_id
+  @Get(path: '/booking/bookings/users/{applicant_id}')
+  Future<chopper.Response<List<BookingReturn>>>
+      _bookingBookingsUsersApplicantIdGet(
+          {@Path('applicant_id') required String? applicantId});
+
+  ///Create Booking
+  Future<chopper.Response<BookingReturn>> bookingBookingsPost(
       {required BookingBase? body}) {
     generatedMapping.putIfAbsent(
         BookingReturn, () => BookingReturn.fromJsonFactory);
 
-    return _bdebookingBookingsPost(body: body);
+    return _bookingBookingsPost(body: body);
   }
 
-  ///Create Bookings
+  ///Create Booking
   @Post(
-    path: '/bdebooking/bookings',
+    path: '/booking/bookings',
     optionalBody: true,
   )
-  Future<chopper.Response<BookingReturn>> _bdebookingBookingsPost(
+  Future<chopper.Response<BookingReturn>> _bookingBookingsPost(
       {@Body() required BookingBase? body});
 
-  ///Get Confirmed Bookings
-  Future<chopper.Response<List<BookingReturn>>>
-      bdebookingBookingsConfirmedGet() {
-    generatedMapping.putIfAbsent(
-        BookingReturn, () => BookingReturn.fromJsonFactory);
-
-    return _bdebookingBookingsConfirmedGet();
-  }
-
-  ///Get Confirmed Bookings
-  @Get(path: '/bdebooking/bookings/confirmed')
-  Future<chopper.Response<List<BookingReturn>>>
-      _bdebookingBookingsConfirmedGet();
-
-  ///Get Applicant Bookings
-  ///@param applicant_id
-  Future<chopper.Response<List<BookingReturn>>> bdebookingUserApplicantIdGet(
-      {required String? applicantId}) {
-    generatedMapping.putIfAbsent(
-        BookingReturn, () => BookingReturn.fromJsonFactory);
-
-    return _bdebookingUserApplicantIdGet(applicantId: applicantId);
-  }
-
-  ///Get Applicant Bookings
-  ///@param applicant_id
-  @Get(path: '/bdebooking/user/{applicant_id}')
-  Future<chopper.Response<List<BookingReturn>>> _bdebookingUserApplicantIdGet(
-      {@Path('applicant_id') required String? applicantId});
-
-  ///Get Booking By Id
+  ///Delete Booking
   ///@param booking_id
-  Future<chopper.Response<BookingReturn>> bdebookingBookingsBookingIdGet(
+  Future<chopper.Response> bookingBookingsBookingIdDelete(
       {required String? bookingId}) {
-    generatedMapping.putIfAbsent(
-        BookingReturn, () => BookingReturn.fromJsonFactory);
-
-    return _bdebookingBookingsBookingIdGet(bookingId: bookingId);
+    return _bookingBookingsBookingIdDelete(bookingId: bookingId);
   }
 
-  ///Get Booking By Id
+  ///Delete Booking
   ///@param booking_id
-  @Get(path: '/bdebooking/bookings/{booking_id}')
-  Future<chopper.Response<BookingReturn>> _bdebookingBookingsBookingIdGet(
+  @Delete(path: '/booking/bookings/{booking_id}')
+  Future<chopper.Response> _bookingBookingsBookingIdDelete(
       {@Path('booking_id') required String? bookingId});
 
-  ///Delete Bookings Id
+  ///Edit Booking
   ///@param booking_id
-  Future<chopper.Response> bdebookingBookingsBookingIdDelete(
-      {required Object? bookingId}) {
-    return _bdebookingBookingsBookingIdDelete(bookingId: bookingId);
-  }
-
-  ///Delete Bookings Id
-  ///@param booking_id
-  @Delete(path: '/bdebooking/bookings/{booking_id}')
-  Future<chopper.Response> _bdebookingBookingsBookingIdDelete(
-      {@Path('booking_id') required Object? bookingId});
-
-  ///Edit Bookings Id
-  ///@param booking_id
-  Future<chopper.Response> bdebookingBookingsBookingIdPatch({
+  Future<chopper.Response> bookingBookingsBookingIdPatch({
     required String? bookingId,
     required BookingEdit? body,
   }) {
-    return _bdebookingBookingsBookingIdPatch(bookingId: bookingId, body: body);
+    return _bookingBookingsBookingIdPatch(bookingId: bookingId, body: body);
   }
 
-  ///Edit Bookings Id
+  ///Edit Booking
   ///@param booking_id
   @Patch(
-    path: '/bdebooking/bookings/{booking_id}',
+    path: '/booking/bookings/{booking_id}',
     optionalBody: true,
   )
-  Future<chopper.Response> _bdebookingBookingsBookingIdPatch({
+  Future<chopper.Response> _bookingBookingsBookingIdPatch({
     @Path('booking_id') required String? bookingId,
     @Body() required BookingEdit? body,
   });
 
-  ///Get Booking Applicant
-  ///@param booking_id
-  Future<chopper.Response<Applicant>> bdebookingBookingsBookingIdApplicantGet(
-      {required String? bookingId}) {
-    generatedMapping.putIfAbsent(Applicant, () => Applicant.fromJsonFactory);
-
-    return _bdebookingBookingsBookingIdApplicantGet(bookingId: bookingId);
-  }
-
-  ///Get Booking Applicant
-  ///@param booking_id
-  @Get(path: '/bdebooking/bookings/{booking_id}/applicant')
-  Future<chopper.Response<Applicant>> _bdebookingBookingsBookingIdApplicantGet(
-      {@Path('booking_id') required String? bookingId});
-
   ///Confirm Booking
   ///@param booking_id
   ///@param decision
-  Future<chopper.Response> bdebookingBookingsBookingIdReplyDecisionPatch({
+  Future<chopper.Response> bookingBookingsBookingIdReplyDecisionPatch({
     required String? bookingId,
-    required enums.AppUtilsTypesBdebookingTypeDecision? decision,
+    required enums.AppUtilsTypesBookingTypeDecision? decision,
   }) {
-    return _bdebookingBookingsBookingIdReplyDecisionPatch(
+    return _bookingBookingsBookingIdReplyDecisionPatch(
         bookingId: bookingId, decision: decision?.value?.toString());
   }
 
@@ -1154,88 +1187,71 @@ abstract class Openapi extends ChopperService {
   ///@param booking_id
   ///@param decision
   @Patch(
-    path: '/bdebooking/bookings/{booking_id}/reply/{decision}',
+    path: '/booking/bookings/{booking_id}/reply/{decision}',
     optionalBody: true,
   )
-  Future<chopper.Response> _bdebookingBookingsBookingIdReplyDecisionPatch({
+  Future<chopper.Response> _bookingBookingsBookingIdReplyDecisionPatch({
     @Path('booking_id') required String? bookingId,
     @Path('decision') required String? decision,
   });
 
   ///Get Rooms
-  Future<chopper.Response<List<RoomComplete>>> bdebookingRoomsGet() {
+  Future<chopper.Response<List<RoomComplete>>> bookingRoomsGet() {
     generatedMapping.putIfAbsent(
         RoomComplete, () => RoomComplete.fromJsonFactory);
 
-    return _bdebookingRoomsGet();
+    return _bookingRoomsGet();
   }
 
   ///Get Rooms
-  @Get(path: '/bdebooking/rooms')
-  Future<chopper.Response<List<RoomComplete>>> _bdebookingRoomsGet();
+  @Get(path: '/booking/rooms')
+  Future<chopper.Response<List<RoomComplete>>> _bookingRoomsGet();
 
   ///Create Room
-  Future<chopper.Response<RoomComplete>> bdebookingRoomsPost(
+  Future<chopper.Response<RoomComplete>> bookingRoomsPost(
       {required RoomBase? body}) {
     generatedMapping.putIfAbsent(
         RoomComplete, () => RoomComplete.fromJsonFactory);
 
-    return _bdebookingRoomsPost(body: body);
+    return _bookingRoomsPost(body: body);
   }
 
   ///Create Room
   @Post(
-    path: '/bdebooking/rooms',
+    path: '/booking/rooms',
     optionalBody: true,
   )
-  Future<chopper.Response<RoomComplete>> _bdebookingRoomsPost(
+  Future<chopper.Response<RoomComplete>> _bookingRoomsPost(
       {@Body() required RoomBase? body});
 
-  ///Get Room By Id
-  ///@param room_id
-  Future<chopper.Response<RoomComplete>> bdebookingRoomsRoomIdGet(
-      {required String? roomId}) {
-    generatedMapping.putIfAbsent(
-        RoomComplete, () => RoomComplete.fromJsonFactory);
-
-    return _bdebookingRoomsRoomIdGet(roomId: roomId);
-  }
-
-  ///Get Room By Id
-  ///@param room_id
-  @Get(path: '/bdebooking/rooms/{room_id}')
-  Future<chopper.Response<RoomComplete>> _bdebookingRoomsRoomIdGet(
-      {@Path('room_id') required String? roomId});
-
   ///Delete Room
   ///@param room_id
-  Future<chopper.Response> bdebookingRoomsRoomIdDelete(
-      {required String? roomId}) {
-    return _bdebookingRoomsRoomIdDelete(roomId: roomId);
+  Future<chopper.Response> bookingRoomsRoomIdDelete({required String? roomId}) {
+    return _bookingRoomsRoomIdDelete(roomId: roomId);
   }
 
   ///Delete Room
   ///@param room_id
-  @Delete(path: '/bdebooking/rooms/{room_id}')
-  Future<chopper.Response> _bdebookingRoomsRoomIdDelete(
+  @Delete(path: '/booking/rooms/{room_id}')
+  Future<chopper.Response> _bookingRoomsRoomIdDelete(
       {@Path('room_id') required String? roomId});
 
   ///Edit Room
   ///@param room_id
-  Future<chopper.Response> bdebookingRoomsRoomIdPatch({
+  Future<chopper.Response> bookingRoomsRoomIdPatch({
     required String? roomId,
     required RoomBase? body,
   }) {
-    return _bdebookingRoomsRoomIdPatch(roomId: roomId, body: body);
+    return _bookingRoomsRoomIdPatch(roomId: roomId, body: body);
   }
 
   ///Edit Room
   ///@param room_id
   @Patch(
-    path: '/bdebooking/rooms/{room_id}',
+    path: '/booking/rooms/{room_id}',
     optionalBody: true,
   )
-  Future<chopper.Response> _bdebookingRoomsRoomIdPatch({
+  Future<chopper.Response> _bookingRoomsRoomIdPatch({
     @Path('room_id') required String? roomId,
     @Body() required RoomBase? body,
   });
@@ -1519,6 +1535,55 @@ abstract class Openapi extends ChopperService {
   @Delete(path: '/campaign/lists/')
   Future<chopper.Response> _campaignListsDelete(
       {@Query('list_type') String? listType});
+
+  ///Get Voters
+  Future<chopper.Response<List<VoterGroup>>> campaignVotersGet() {
+    generatedMapping.putIfAbsent(VoterGroup, () => VoterGroup.fromJsonFactory);
+
+    return _campaignVotersGet();
+  }
+
+  ///Get Voters
+  @Get(path: '/campaign/voters')
+  Future<chopper.Response<List<VoterGroup>>> _campaignVotersGet();
+
+  ///Add Voter
+  Future<chopper.Response<VoterGroup>> campaignVotersPost(
+      {required VoterGroup? body}) {
+    generatedMapping.putIfAbsent(VoterGroup, () => VoterGroup.fromJsonFactory);
+
+    return _campaignVotersPost(body: body);
+  }
+
+  ///Add Voter
+  @Post(
+    path: '/campaign/voters',
+    optionalBody: true,
+  )
+  Future<chopper.Response<VoterGroup>> _campaignVotersPost(
+      {@Body() required VoterGroup? body});
+
+  ///Delete Voters
+  Future<chopper.Response> campaignVotersDelete() {
+    return _campaignVotersDelete();
+  }
+
+  ///Delete Voters
+  @Delete(path: '/campaign/voters')
+  Future<chopper.Response> _campaignVotersDelete();
+
+  ///Delete Voter By Group Id
+  ///@param group_id
+  Future<chopper.Response> campaignVotersGroupIdDelete(
+      {required String? groupId}) {
+    return _campaignVotersGroupIdDelete(groupId: groupId);
+  }
+
+  ///Delete Voter By Group Id
+  ///@param group_id
+  @Delete(path: '/campaign/voters/{group_id}')
+  Future<chopper.Response> _campaignVotersGroupIdDelete(
+      {@Path('group_id') required String? groupId});
 
   ///Open Vote
   Future<chopper.Response> campaignStatusOpenPost() {
@@ -2969,6 +3034,168 @@ abstract class Openapi extends ChopperService {
   )
   Future<chopper.Response> _tombolaRafflesRaffleIdLockPatch(
       {@Path('raffle_id') required String? raffleId});
+
+  ///Get Sharer Group Memberships
+  Future<chopper.Response<List<SharerGroupMembership>>>
+      tricountSharergroupsMembershipsGet() {
+    generatedMapping.putIfAbsent(
+        SharerGroupMembership, () => SharerGroupMembership.fromJsonFactory);
+
+    return _tricountSharergroupsMembershipsGet();
+  }
+
+  ///Get Sharer Group Memberships
+  @Get(path: '/tricount/sharergroups/memberships')
+  Future<chopper.Response<List<SharerGroupMembership>>>
+      _tricountSharergroupsMembershipsGet();
+
+  ///Add Sharergroup Membership
+  Future<chopper.Response> tricountSharergroupsMembershipsPost(
+      {required SharerGroupMembership? body}) {
+    return _tricountSharergroupsMembershipsPost(body: body);
+  }
+
+  ///Add Sharergroup Membership
+  @Post(
+    path: '/tricount/sharergroups/memberships',
+    optionalBody: true,
+  )
+  Future<chopper.Response> _tricountSharergroupsMembershipsPost(
+      {@Body() required SharerGroupMembership? body});
+
+  ///Delete Sharergroup Membership
+  ///@param sharer_group_id
+  ///@param membership_id
+  Future<chopper.Response>
+      tricountSharergroupsSharerGroupIdMembershipMembershipIdDelete({
+    required String? sharerGroupId,
+    required String? membershipId,
+  }) {
+    return _tricountSharergroupsSharerGroupIdMembershipMembershipIdDelete(
+        sharerGroupId: sharerGroupId, membershipId: membershipId);
+  }
+
+  ///Delete Sharergroup Membership
+  ///@param sharer_group_id
+  ///@param membership_id
+  @Delete(
+      path:
+          '/tricount/sharergroups/{sharer_group_id}/membership/{membership_id}')
+  Future<chopper.Response>
+      _tricountSharergroupsSharerGroupIdMembershipMembershipIdDelete({
+    @Path('sharer_group_id') required String? sharerGroupId,
+    @Path('membership_id') required String? membershipId,
+  });
+
+  ///Get Sharer Group By Id
+  ///@param sharer_group_id
+  Future<chopper.Response<SharerGroup>> tricountSharergroupsSharerGroupIdGet(
+      {required String? sharerGroupId}) {
+    generatedMapping.putIfAbsent(
+        SharerGroup, () => SharerGroup.fromJsonFactory);
+
+    return _tricountSharergroupsSharerGroupIdGet(sharerGroupId: sharerGroupId);
+  }
+
+  ///Get Sharer Group By Id
+  ///@param sharer_group_id
+  @Get(path: '/tricount/sharergroups/{sharer_group_id}')
+  Future<chopper.Response<SharerGroup>> _tricountSharergroupsSharerGroupIdGet(
+      {@Path('sharer_group_id') required String? sharerGroupId});
+
+  ///Update Sharer Groups
+  ///@param sharer_group_id
+  Future<chopper.Response> tricountSharergroupsSharerGroupIdPatch({
+    required String? sharerGroupId,
+    required SharerGroupUpdate? body,
+  }) {
+    return _tricountSharergroupsSharerGroupIdPatch(
+        sharerGroupId: sharerGroupId, body: body);
+  }
+
+  ///Update Sharer Groups
+  ///@param sharer_group_id
+  @Patch(
+    path: '/tricount/sharergroups/{sharer_group_id}',
+    optionalBody: true,
+  )
+  Future<chopper.Response> _tricountSharergroupsSharerGroupIdPatch({
+    @Path('sharer_group_id') required String? sharerGroupId,
+    @Body() required SharerGroupUpdate? body,
+  });
+
+  ///Create Sharer Groups
+  Future<chopper.Response<SharerGroup>> tricountSharergroupsPost(
+      {required SharerGroupBase? body}) {
+    generatedMapping.putIfAbsent(
+        SharerGroup, () => SharerGroup.fromJsonFactory);
+
+    return _tricountSharergroupsPost(body: body);
+  }
+
+  ///Create Sharer Groups
+  @Post(
+    path: '/tricount/sharergroups',
+    optionalBody: true,
+  )
+  Future<chopper.Response<SharerGroup>> _tricountSharergroupsPost(
+      {@Body() required SharerGroupBase? body});
+
+  ///Create Transaction
+  Future<chopper.Response<Transaction>> tricountTransactionsPost(
+      {required TransactionCreate? body}) {
+    generatedMapping.putIfAbsent(
+        Transaction, () => Transaction.fromJsonFactory);
+
+    return _tricountTransactionsPost(body: body);
+  }
+
+  ///Create Transaction
+  @Post(
+    path: '/tricount/transactions',
+    optionalBody: true,
+  )
+  Future<chopper.Response<Transaction>> _tricountTransactionsPost(
+      {@Body() required TransactionCreate? body});
+
+  ///Delete Transaction
+  ///@param transaction_id
+  Future<chopper.Response> tricountTransactionsTransactionIdDelete(
+      {required String? transactionId}) {
+    return _tricountTransactionsTransactionIdDelete(
+        transactionId: transactionId);
+  }
+
+  ///Delete Transaction
+  ///@param transaction_id
+  @Delete(path: '/tricount/transactions/{transaction_id}')
+  Future<chopper.Response> _tricountTransactionsTransactionIdDelete(
+      {@Path('transaction_id') required String? transactionId});
+
+  ///Update Transaction
+  ///@param transaction_id
+  Future<chopper.Response<Transaction>> tricountTransactionsTransactionIdPatch({
+    required String? transactionId,
+    required TransactionUpdate? body,
+  }) {
+    generatedMapping.putIfAbsent(
+        Transaction, () => Transaction.fromJsonFactory);
+
+    return _tricountTransactionsTransactionIdPatch(
+        transactionId: transactionId, body: body);
+  }
+
+  ///Update Transaction
+  ///@param transaction_id
+  @Patch(
+    path: '/tricount/transactions/{transaction_id}',
+    optionalBody: true,
+  )
+  Future<chopper.Response<Transaction>>
+      _tricountTransactionsTransactionIdPatch({
+    @Path('transaction_id') required String? transactionId,
+    @Body() required TransactionUpdate? body,
+  });
 
   ///Read Users
   Future<chopper.Response<List<CoreUserSimple>>> usersGet() {

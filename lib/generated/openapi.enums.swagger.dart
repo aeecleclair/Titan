@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:collection/collection.dart';
 
 enum AccountType {
   @JsonValue(null)
@@ -189,7 +190,7 @@ enum StatusType {
   const StatusType(this.value);
 }
 
-enum AppUtilsTypesBdebookingTypeDecision {
+enum AppUtilsTypesBookingTypeDecision {
   @JsonValue(null)
   swaggerGeneratedUnknown(null),
 
@@ -202,7 +203,7 @@ enum AppUtilsTypesBdebookingTypeDecision {
 
   final String? value;
 
-  const AppUtilsTypesBdebookingTypeDecision(this.value);
+  const AppUtilsTypesBookingTypeDecision(this.value);
 }
 
 enum AppUtilsTypesCalendarTypesDecision {
