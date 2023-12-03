@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/login/class/account_type.dart';
 import 'package:myecl/login/providers/sign_up_provider.dart';
 import 'package:myecl/login/router.dart';
 import 'package:myecl/login/tools/constants.dart';
@@ -106,8 +105,8 @@ class Register extends HookConsumerWidget {
                             data: (data) => data, orElse: () => false),
                         onPressed: () async {
                           if (key.currentState!.validate()) {
-                            final value = await signUpNotifier.createUser(
-                                mail.text, AccountType.student);
+                            final value =
+                                await signUpNotifier.createUser(mail.text);
                             if (value) {
                               hidePass.value = true;
                               mail.clear();
