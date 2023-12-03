@@ -65,7 +65,7 @@ class DetailLoanPage extends HookConsumerWidget {
                               ),
                               const SizedBox(height: 30),
                               Text(
-                                loan.notes,
+                                loan.notes ?? 'Pas de notes',
                                 style: const TextStyle(
                                   fontSize: 18,
                                 ),
@@ -73,11 +73,11 @@ class DetailLoanPage extends HookConsumerWidget {
                             ],
                           ),
                         ),
-                        loan.itemsQuantity.isNotEmpty
+                        loan.itemsQty.isNotEmpty
                             ? SingleChildScrollView(
                                 physics: const BouncingScrollPhysics(),
                                 child: Wrap(
-                                  children: loan.itemsQuantity
+                                  children: loan.itemsQty
                                       .map(
                                         (itemQty) => ItemCardInLoan(
                                           itemQty: itemQty,

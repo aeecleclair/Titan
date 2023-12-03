@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/admin/tools/functions.dart';
-import 'package:myecl/loan/class/loan.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
@@ -92,7 +92,7 @@ class LoanCard extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     color: shouldReturn ? Colors.white : Colors.black)),
             const SizedBox(height: 7),
-            Text(formatItems(loan.itemsQuantity),
+            Text(formatItems(loan.itemsQty),
                 style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
@@ -100,7 +100,7 @@ class LoanCard extends StatelessWidget {
                         ? Colors.white.withOpacity(0.8)
                         : Colors.grey.shade400)),
             const SizedBox(height: 5),
-            Text(loan.caution,
+            Text(loan.caution.toString(),
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,

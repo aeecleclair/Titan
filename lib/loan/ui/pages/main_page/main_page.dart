@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/class/loan.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/is_loan_admin_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';

@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/loan/class/item.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
@@ -51,7 +51,7 @@ class ItemCard extends StatelessWidget {
                       ? Colors.grey.shade400
                       : LoanColorConstants.redGradient2)),
           const SizedBox(height: 5),
-          AutoSizeText('${item.caution.toStringAsFixed(2)} €',
+          AutoSizeText('${item.suggestedCaution.toStringAsFixed(2)} €',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(

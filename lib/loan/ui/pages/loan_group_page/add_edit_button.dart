@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/class/item_quantity.dart';
-import 'package:myecl/loan/class/loan.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/borrower_provider.dart';
 import 'package:myecl/loan/providers/caution_provider.dart';
@@ -74,13 +73,15 @@ class AddEditButton extends HookConsumerWidget {
                       .where((element) =>
                           selectedItems[itemList.indexOf(element)] != 0)
                       .map((e) => ItemQuantity(
-                          itemSimple: e.toItemSimple(),
+                          itemSimple: ItemSimple(id: e.id, name: e.name, loanerId: e.loanerId),
                           quantity: selectedItems[itemList.indexOf(e)]))
                       .toList();
                   if (selected.isNotEmpty) {
                     Loan newLoan = Loan(
                       loaner: isEdit ? loan.loaner : loaner,
-                      itemsQuantity: selected,
+                      loanerId: isEdit ? loan.loaner.id : loaner.id,
+                      borrowerId: borrower.id,
+                      itemsQty: selected,
                       borrower: borrower,
                       caution: caution.text,
                       end: DateTime.parse(processDateBack(end)),
