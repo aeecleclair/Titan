@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:collection/collection.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:myecl/service/class/message.dart' as message_class;
+import 'package:myecl/generated/openapi.swagger.dart' as message_class;
 import 'package:myecl/service/provider_list.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -56,14 +56,14 @@ class LocalNotificationService {
 
   Future showNotification(message_class.Message message) async {
     final notificationDetails = getNotificationDetails();
-    if (message.deliveryDateTime == null) {
+    if (message.deliveryDatetime == null) {
       _localNotificationService.show(generateIntFromString(message.context),
           message.title, message.content, notificationDetails,
           payload: json.encode(message.toJson()));
       return;
     }
-    tz.TZDateTime dateToDisplay = tz.TZDateTime.from(message.deliveryDateTime!,
-        tz.local); // TODO: The -2h is a fix that need to be deleted once UTC dates will be used
+    tz.TZDateTime dateToDisplay =
+        tz.TZDateTime.from(message.deliveryDatetime!, tz.local);
     final now = tz.TZDateTime.now(tz.local);
     if (dateToDisplay.isAfter(now)) {
       _localNotificationService.zonedSchedule(

@@ -11,7 +11,7 @@ import 'package:myecl/cinema/providers/session_poster_provider.dart';
 import 'package:myecl/cinema/providers/session_provider.dart';
 import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/tools/functions.dart';
-import 'package:myecl/service/class/message.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/service/local_notification_service.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
@@ -284,8 +284,10 @@ class DetailPage extends HookConsumerWidget {
                                 displayToast(
                                     context, TypeMsg.msg, "Rappel supprimé");
                               } else {
-                                localNotificationService.showNotification(
-                                    Message(
+                                final date = session.start
+                                    .subtract(const Duration(minutes: 10));
+                                localNotificationService
+                                    .showNotification(Message(
                                         actionModule: '',
                                         actionTable: '',
                                         content: 'La séance '
@@ -294,9 +296,8 @@ class DetailPage extends HookConsumerWidget {
                                         context: session.id,
                                         isVisible: true,
                                         title: '🎬 Cinéma',
-                                        deliveryDateTime: session.start
-                                            .subtract(
-                                                const Duration(minutes: 10))));
+                                        deliveryDatetime: date,
+                                        expireOn: date));
                                 displayToast(
                                     context, TypeMsg.msg, "Rappel ajouté");
                               }

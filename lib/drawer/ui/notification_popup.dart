@@ -8,8 +8,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/display_notification_popup.dart';
 import 'package:myecl/service/class/topic.dart';
 import 'package:myecl/service/providers/topic_provider.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/service/tools/functions.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class Consts {
@@ -99,7 +99,7 @@ class NotificationPopup extends HookConsumerWidget {
                                       onTap: () async {
                                         animation.forward(from: 0);
                                         await topicsNotifier
-                                            .fakeToggleSubscription(e);
+                                            .toggleSubscription(e);
                                       },
                                       child: Container(
                                         width: 130,
