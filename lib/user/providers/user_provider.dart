@@ -7,7 +7,6 @@ import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/providers/single_notifier%20copy.dart';
 import 'package:myecl/tools/repository/repository2.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/user/class/user.dart';
 
 class UserNotifier extends SingleNotifier2<CoreUser> {
   final Openapi userRepository;
@@ -77,9 +76,4 @@ final userProvider = Provider<CoreUser>((ref) {
   return ref
       .watch(asyncUserProvider)
       .maybeWhen(data: (user) => user, orElse: () => CoreUser.fromJson({}));
-});
-
-final userProvider2 = Provider<User>((ref) {
-  return ref.watch(asyncUserProvider).maybeWhen(
-      data: (user) => User.fromCoreUser(user), orElse: () => User.empty());
 });

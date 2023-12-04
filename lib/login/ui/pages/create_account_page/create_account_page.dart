@@ -16,7 +16,6 @@ import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/widgets/date_entry.dart';
-import 'package:myecl/user/class/floors.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -39,7 +38,7 @@ class CreateAccountPage extends HookConsumerWidget {
     final phone = useTextEditingController();
     final promo = useTextEditingController();
     final lastIndex = useState(isCodeGiven ? 1 : 0);
-    List<DropdownMenuItem> items = Floors.values
+    List<DropdownMenuItem> items = FloorsType.values
         .map((e) => DropdownMenuItem(
               value: capitalize(e.toString().split('.').last),
               child: Text(capitalize(e.toString().split('.').last)),

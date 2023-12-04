@@ -20,7 +20,6 @@ import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
-import 'package:myecl/user/class/floors.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/user/providers/profile_picture_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -47,7 +46,7 @@ class EditUserPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    List<DropdownMenuItem> items = Floors.values
+    List<DropdownMenuItem> items = FloorsType.values
         .map((e) => DropdownMenuItem(
               value: capitalize(e.toString().split('.').last),
               child: Text(capitalize(e.toString().split('.').last)),
