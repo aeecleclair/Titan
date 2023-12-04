@@ -2,8 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_provider.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/home/router.dart';
 import 'package:myecl/home/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
@@ -14,7 +14,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 class DaysEvent extends HookConsumerWidget {
   final DateTime now;
   final String day;
-  final List<Event> events;
+  final List<EventComplete> events;
   const DaysEvent({
     super.key,
     required this.day,
@@ -79,7 +79,19 @@ class DaysEvent extends HookConsumerWidget {
                         const SizedBox(width: 10),
                         GestureDetector(
                           onTap: () {
-                            eventNotifier.setEvent(event);
+                            eventNotifier.setEvent(EventReturn(
+                                name: event.name,
+                                organizer: event.organizer,
+                                start: event.start,
+                                end: event.end,
+                                allDay: event.allDay,
+                                location: event.location,
+                                type: event.type,
+                                description: event.description,
+                                id: event.id,
+                                decision: event.decision,
+                                applicantId: event.applicantId,
+                                applicant: EventApplicant.fromJson({})));
                             QR.to(HomeRouter.root + HomeRouter.detail);
                           },
                           child: HeroIcon(
