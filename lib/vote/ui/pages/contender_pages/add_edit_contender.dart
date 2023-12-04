@@ -6,7 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:myecl/generated/openapi.swagger.dart' show CoreUserSimple;
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -16,8 +16,6 @@ import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
-import 'package:myecl/vote/class/members.dart';
-import 'package:myecl/vote/class/contender.dart';
 import 'package:myecl/vote/providers/display_results.dart';
 import 'package:myecl/vote/providers/contender_logo_provider.dart';
 import 'package:myecl/vote/providers/contender_logos_provider.dart';
@@ -44,10 +42,10 @@ class AddEditContenderPage extends HookConsumerWidget {
     final contenderListNotifier = ref.read(contenderListProvider.notifier);
     final sectionsNotifier = ref.read(sectionContenderProvider.notifier);
     final contender = ref.watch(contenderProvider);
-    final isEdit = contender.id != Contender.empty().id;
+    final isEdit = contender.id != ListReturn.fromJson({}).id;
     final name = useTextEditingController(text: contender.name);
     final description = useTextEditingController(text: contender.description);
-    final listType = useState(contender.listType);
+    final listType = useState(contender.type);
     final usersNotifier = ref.read(userList.notifier);
     final queryController = useTextEditingController();
     final role = useTextEditingController();
@@ -260,8 +258,10 @@ class AddEditContenderPage extends HookConsumerWidget {
                                 }
                                 if (addMemberKey.currentState!.validate()) {
                                   final value = await membersNotifier.addMember(
-                                      Member.fromSimpleUser(
-                                          member.value, role.text));
+                                      ListMemberComplete(
+                                          userId: member.value.id,
+                                          role: role.text,
+                                          user: member.value));
                                   if (value) {
                                     role.text = '';
                                     member.value = CoreUserSimple.fromJson({});
@@ -340,11 +340,11 @@ class AddEditContenderPage extends HookConsumerWidget {
                     if (key.currentState!.validate()) {
                       await tokenExpireWrapper(ref, () async {
                         final contenderList = ref.watch(contenderListProvider);
-                        Contender newContender = Contender(
+                        ListReturn newContender = ListReturn(
                           name: name.text,
                           id: isEdit ? contender.id : '',
                           description: description.text,
-                          listType: listType.value,
+                          type: listType.value,
                           members: members,
                           section: section.value,
                           program: program.text,

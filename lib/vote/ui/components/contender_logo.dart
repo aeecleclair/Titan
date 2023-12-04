@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
-import 'package:myecl/vote/class/contender.dart';
 import 'package:myecl/vote/providers/contender_logo_provider.dart';
 import 'package:myecl/vote/providers/contender_logos_provider.dart';
 
 class ContenderLogo extends HookConsumerWidget {
-  final Contender contender;
+  final ListReturn contender;
   const ContenderLogo(this.contender, {super.key});
 
   @override

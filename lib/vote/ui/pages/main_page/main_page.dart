@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/ui/widgets/admin_button.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/vote/class/contender.dart';
 import 'package:myecl/vote/providers/can_vote_provider.dart';
 import 'package:myecl/vote/providers/is_vote_admin_provider.dart';
 import 'package:myecl/vote/providers/contender_list_provider.dart';
@@ -14,7 +14,6 @@ import 'package:myecl/vote/providers/sections_contender_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/providers/voted_section_provider.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/ui/pages/main_page/list_contender_card.dart';
@@ -43,8 +42,8 @@ class VoteMainPage extends HookConsumerWidget {
     );
     final status = ref.watch(statusProvider);
     final s =
-        status.maybeWhen(data: (value) => value, orElse: () => Status.closed);
-    if (s == Status.open) {
+        status.maybeWhen(data: (value) => value, orElse: () => StatusType.closed);
+    if (s == StatusType.open) {
       ref.watch(votedSectionProvider.notifier).getVotedSections();
     }
     final logosNotifier = ref.watch(contenderLogoProvider.notifier);
@@ -90,13 +89,13 @@ class VoteMainPage extends HookConsumerWidget {
       child: Refresher(
         onRefresh: () async {
           await statusNotifier.loadStatus();
-          if (s == Status.open) {
+          if (s == StatusType.open) {
             await ref.watch(votedSectionProvider.notifier).getVotedSections();
           }
           await contendersNotifier.loadContenderList();
           final sections = await sectionsNotifier.loadSectionList();
           sections.whenData((value) {
-            List<Contender> list = [];
+            List<ListReturn> list = [];
             contenders.whenData((contender) {
               list = contender;
             });
@@ -129,7 +128,7 @@ class VoteMainPage extends HookConsumerWidget {
                           children: [
                             SizedBox(
                               height: MediaQuery.of(context).size.height -
-                                  (s == Status.open
+                                  (s == StatusType.open
                                       ? isAdmin
                                           ? 215
                                           : 220
@@ -184,7 +183,7 @@ class VoteMainPage extends HookConsumerWidget {
                               ),
                             ),
                             const SizedBox(height: 20),
-                            if (sectionList.isNotEmpty && s == Status.open)
+                            if (sectionList.isNotEmpty && s == StatusType.open)
                               const VoteButton(),
                             const SizedBox(height: 20),
                           ],

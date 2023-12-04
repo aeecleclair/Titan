@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
@@ -11,7 +12,6 @@ import 'package:myecl/vote/providers/section_id_provider.dart';
 import 'package:myecl/vote/providers/sections_contender_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/ui/pages/admin_page/section_chip.dart';
@@ -29,8 +29,8 @@ class SectionBar extends HookConsumerWidget {
         ref.watch(sectionContenderProvider.notifier);
     final sectionsNotifier = ref.watch(sectionsProvider.notifier);
     final asyncStatus = ref.watch(statusProvider);
-    Status status = Status.open;
-    asyncStatus.whenData((value) => status = value);
+    StatusType status = StatusType.open;
+    asyncStatus.whenData((value) => status = value.status);
     void displayVoteToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -40,7 +40,7 @@ class SectionBar extends HookConsumerWidget {
         builder: (context, sections) => HorizontalListView.builder(
               height: 40,
               items: sections.keys.toList(),
-              firstChild: (status == Status.waiting)
+              firstChild: (status == StatusType.waiting)
                   ? ItemChip(
                       onTap: () {
                         QR.to(VoteRouter.root +
@@ -56,7 +56,7 @@ class SectionBar extends HookConsumerWidget {
               itemBuilder: (context, key, i) => SectionChip(
                   label: key.name,
                   selected: section.id == key.id,
-                  isAdmin: status == Status.waiting,
+                  isAdmin: status == StatusType.waiting,
                   onTap: () async {
                     tokenExpireWrapper(ref, () async {
                       sectionIdNotifier.setId(key.id);

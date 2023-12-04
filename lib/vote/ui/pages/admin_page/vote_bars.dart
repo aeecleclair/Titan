@@ -27,7 +27,7 @@ class VoteBars extends HookConsumerWidget {
     results.whenData(
       (votes) {
         for (var i = 0; i < votes.length; i++) {
-          voteValue[votes[i].id] = votes[i].count;
+          voteValue[votes[i].listId] = votes[i].count;
         }
       },
     );

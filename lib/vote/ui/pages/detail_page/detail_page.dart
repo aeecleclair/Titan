@@ -136,13 +136,13 @@ class DetailPage extends HookConsumerWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 30.0),
                           child: Text(
-                            contender.program,
+                            contender.program ?? "",
                             style: const TextStyle(
                               fontSize: 15,
                             ),
                           ),
                         ),
-                        if (contender.program.trim().isNotEmpty)
+                        if ((contender.program ?? "").trim().isNotEmpty)
                           const SizedBox(height: 20),
                       ],
                     ),

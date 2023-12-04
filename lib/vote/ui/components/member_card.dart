@@ -1,12 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
-import 'package:myecl/vote/class/members.dart';
 
 class MemberCard extends StatelessWidget {
-  final Member member;
+  final ListMemberComplete member;
   final Function()? onEdit, onDelete;
   final bool isAdmin;
   const MemberCard(
@@ -19,7 +19,7 @@ class MemberCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardLayout(
-      id: member.id,
+      id: member.userId,
       width: 150,
       height: isAdmin ? 145 : 110,
       margin: const EdgeInsets.all(10),
@@ -30,7 +30,7 @@ class MemberCard extends StatelessWidget {
         children: [
           const SizedBox(height: 10),
           AutoSizeText(
-              member.nickname != null ? member.nickname! : member.firstname,
+              member.user.nickname ?? member.user.firstname,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
@@ -39,9 +39,9 @@ class MemberCard extends StatelessWidget {
                   color: Colors.black)),
           const SizedBox(height: 2),
           AutoSizeText(
-              member.nickname != null
-                  ? '${member.firstname} ${member.name}'
-                  : member.name,
+              member.user.nickname != null
+                  ? '${member.user.firstname} ${member.user.name}'
+                  : member.user.name,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(

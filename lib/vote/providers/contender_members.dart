@@ -1,10 +1,10 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/vote/class/members.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 
-class ContenderMembersProvider extends StateNotifier<List<Member>> {
+class ContenderMembersProvider extends StateNotifier<List<ListMemberComplete>> {
   ContenderMembersProvider() : super([]);
 
-  Future<bool> addMember(Member m) async {
+  Future<bool> addMember(ListMemberComplete m) async {
     var copy = state.toList();
     if (!copy.contains(m)) {
       copy.add(m);
@@ -14,7 +14,7 @@ class ContenderMembersProvider extends StateNotifier<List<Member>> {
     return false;
   }
 
-  void removeMember(Member m) {
+  void removeMember(ListMemberComplete m) {
     var copy = state.toList();
     copy.remove(m);
     state = copy;
@@ -24,12 +24,13 @@ class ContenderMembersProvider extends StateNotifier<List<Member>> {
     state = [];
   }
 
-  void setMembers(List<Member> members) {
+  void setMembers(List<ListMemberComplete> members) {
     state = members;
   }
 }
 
 final contenderMembersProvider =
-    StateNotifierProvider<ContenderMembersProvider, List<Member>>((ref) {
+    StateNotifierProvider<ContenderMembersProvider, List<ListMemberComplete>>(
+        (ref) {
   return ContenderMembersProvider();
 });

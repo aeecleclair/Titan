@@ -1,36 +1,64 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier%20copy.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/vote/class/contender.dart';
-import 'package:myecl/vote/repositories/contender_repository.dart';
-import 'package:myecl/vote/tools/functions.dart';
 
-class ContenderListNotifier extends ListNotifier<Contender> {
-  final ContenderRepository contenderRepository;
+class ContenderListNotifier extends ListNotifier2<ListReturn> {
+  final Openapi contenderRepository;
   ContenderListNotifier({required this.contenderRepository})
       : super(const AsyncValue.loading());
 
-  Future<AsyncValue<List<Contender>>> loadContenderList() async {
-    await loadList(contenderRepository.getContenders);
+  Future<AsyncValue<List<ListReturn>>> loadContenderList() async {
+    await loadList(contenderRepository.campaignListsGet);
     shuffle();
     return state;
   }
 
-  Future<bool> addContender(Contender contender) async {
-    return await add(contenderRepository.createContender, contender);
+  Future<bool> addContender(ListReturn contender) async {
+    return await add(
+        (contender) async => contenderRepository.campaignListsPost(
+                body: ListBase(
+              sectionId: contender.sectionId,
+              name: contender.name,
+              description: contender.description,
+              type: contender.type,
+              members: contender.members
+                  .map((e) => ListMemberBase(
+                        role: e.role,
+                        userId: e.userId,
+                      ))
+                  .toList(),
+              program: contender.program,
+            )),
+        contender);
   }
 
-  Future<bool> updateContender(Contender contender) async {
+  Future<bool> updateContender(ListReturn contender) async {
     return await update(
-        contenderRepository.updateContender,
+        (contender) async => contenderRepository.campaignListsListIdPatch(
+            listId: contender.id,
+            body: ListEdit(
+              name: contender.name,
+              description: contender.description,
+              type: contender.type,
+              members: contender.members
+                  .map((e) => ListMemberBase(
+                        role: e.role,
+                        userId: e.userId,
+                      ))
+                  .toList(),
+              program: contender.program,
+            )),
         (contenders, contender) => contenders
           ..[contenders.indexWhere((p) => p.id == contender.id)] = contender,
         contender);
   }
 
-  Future<bool> deleteContender(Contender contender) async {
+  Future<bool> deleteContender(ListReturn contender) async {
     return await delete(
-        contenderRepository.deleteContender,
+        (contenderId) async =>
+            contenderRepository.campaignListsListIdDelete(listId: contenderId),
         (contenders, contender) =>
             contenders..removeWhere((p) => p.id == contender.id),
         contender.id,
@@ -39,14 +67,14 @@ class ContenderListNotifier extends ListNotifier<Contender> {
 
   Future<bool> deleteContenders({ListType? type}) async {
     return await delete(
-        contenderRepository.deleteContenders,
+        (_) async => contenderRepository.campaignListsDelete(listType: type),
         (contenders, contender) => contenders
-          ..removeWhere((p) => type != null ? p.listType == type : true),
-        listTypeToString(type),
-        Contender.empty());
+          ..removeWhere((p) => type != null ? p.type == type : true),
+        type?.value ?? "",
+        ListReturn.fromJson({}));
   }
 
-  Future<AsyncValue<List<Contender>>> copy() async {
+  Future<AsyncValue<List<ListReturn>>> copy() async {
     return state.when(
       data: (contenders) async => AsyncValue.data(contenders),
       loading: () async => const AsyncValue.loading(),
@@ -61,9 +89,9 @@ class ContenderListNotifier extends ListNotifier<Contender> {
         final fakes = [];
         final blank = [];
         for (var contender in contenders) {
-          if (contender.listType == ListType.serious) {
+          if (contender.type == ListType.serio) {
             serious.add(contender);
-          } else if (contender.listType == ListType.fake) {
+          } else if (contender.type == ListType.pipo) {
             fakes.add(contender);
           } else {
             blank.add(contender);
@@ -80,9 +108,9 @@ class ContenderListNotifier extends ListNotifier<Contender> {
 }
 
 final contenderListProvider =
-    StateNotifierProvider<ContenderListNotifier, AsyncValue<List<Contender>>>(
+    StateNotifierProvider<ContenderListNotifier, AsyncValue<List<ListReturn>>>(
         (ref) {
-  final contenderRepository = ref.watch(contenderRepositoryProvider);
+  final contenderRepository = ref.watch(repositoryProvider);
   final contenderListNotifier =
       ContenderListNotifier(contenderRepository: contenderRepository);
   tokenExpireWrapperAuth(ref, () async {
