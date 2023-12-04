@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/providers/is_admin_provider.dart';
 import 'package:myecl/event/providers/user_event_list_provider.dart';
@@ -9,10 +8,12 @@ import 'package:myecl/event/router.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/ui/event.dart';
 import 'package:myecl/event/ui/components/event_ui.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/ui/widgets/admin_button.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class EventMainPage extends HookConsumerWidget {
@@ -24,10 +25,11 @@ class EventMainPage extends HookConsumerWidget {
     final eventNotifier = ref.watch(eventProvider.notifier);
     final eventListNotifier = ref.watch(eventEventListProvider.notifier);
     final events = ref.watch(eventEventListProvider);
+    final user = ref.watch(userProvider);
     return EventTemplate(
       child: Refresher(
         onRefresh: () async {
-          await eventListNotifier.loadConfirmedEvent();
+          await eventListNotifier.loadConfirmedEvent(user.id);
         },
         child: AsyncChild(
           value: events,
@@ -71,7 +73,7 @@ class EventMainPage extends HookConsumerWidget {
                         if (index == 0) {
                           return GestureDetector(
                             onTap: () {
-                              eventNotifier.setEvent(Event.empty());
+                              eventNotifier.setEvent(EventReturn.fromJson({}));
                               QR.to(EventRouter.root + EventRouter.addEdit);
                             },
                             child: CardLayout(

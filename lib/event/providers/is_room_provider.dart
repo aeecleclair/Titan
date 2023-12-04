@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/event/providers/event_provider.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 
 class IsRoomNotifier extends StateNotifier<bool> {
   IsRoomNotifier(bool b) : super(b);
@@ -12,5 +12,5 @@ class IsRoomNotifier extends StateNotifier<bool> {
 
 final isRoomProvider = StateNotifierProvider<IsRoomNotifier, bool>((ref) {
   final event = ref.watch(eventProvider);
-  return IsRoomNotifier(event.roomId != Room.empty().id);
+  return IsRoomNotifier(event.location != RoomComplete.fromJson({}).id);
 });

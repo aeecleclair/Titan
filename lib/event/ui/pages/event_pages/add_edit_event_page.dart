@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
+import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/is_room_provider.dart';
 import 'package:myecl/event/providers/room_id_provider.dart';
 import 'package:myecl/event/ui/event.dart';
 import 'package:myecl/event/ui/pages/event_pages/checkbox_entry.dart';
-import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/providers/selected_days_provider.dart';
-import 'package:myecl/event/providers/user_event_list_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
-import 'package:myecl/generated/openapi.swagger.dart' show Applicant;
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
@@ -37,9 +35,9 @@ class AddEditEventPage extends HookConsumerWidget {
     final user = ref.watch(userProvider);
     final event = ref.watch(eventProvider);
     final rooms = ref.watch(roomListProvider);
-    final isEdit = event.id != Event.empty().id;
+    final isEdit = event.id != EventReturn.fromJson({}).id;
     final key = GlobalKey<FormState>();
-    final eventListNotifier = ref.watch(eventEventListProvider.notifier);
+    final eventListNotifier = ref.watch(eventListProvider.notifier);
     final eventType = useState(event.type);
     final name = useTextEditingController(text: event.name);
     final organizer = useTextEditingController(text: event.organizer);
@@ -51,7 +49,7 @@ class AddEditEventPage extends HookConsumerWidget {
     final isRoom = ref.watch(isRoomProvider);
     final isRoomNotifier = ref.watch(isRoomProvider.notifier);
     final recurrent = useState(event.recurrenceRule != ""
-        ? event.recurrenceRule.contains("BYDAY")
+        ? event.recurrenceRule!.contains("BYDAY")
         : false);
     final start = useTextEditingController(
         text: isEdit
@@ -75,12 +73,12 @@ class AddEditEventPage extends HookConsumerWidget {
             : "");
     final interval = useTextEditingController(
         text: event.recurrenceRule != ""
-            ? event.recurrenceRule.split(";INTERVAL=")[1].split(";")[0]
+            ? event.recurrenceRule!.split(";INTERVAL=")[1].split(";")[0]
             : "1");
     final recurrenceEndDate = useTextEditingController(
         text: event.recurrenceRule != ""
             ? processDate(DateTime.parse(
-                event.recurrenceRule.split(";UNTIL=")[1].split(";")[0]))
+                event.recurrenceRule!.split(";UNTIL=")[1].split(";")[0]))
             : "");
     final selectedDays = ref.watch(selectedDaysProvider);
     final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
@@ -115,7 +113,7 @@ class AddEditEventPage extends HookConsumerWidget {
                             eventType.value = value;
                           },
                           child: Text(
-                            calendarEventTypeToString(value),
+                            value.value!,
                             style: TextStyle(
                                 color: selected ? Colors.white : Colors.black,
                                 fontWeight: FontWeight.bold),
@@ -407,7 +405,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                         DateTime.parse(processDateBackWithHour(
                                             endString)));
                                   }
-                                  Event newEvent = Event(
+                                  EventReturn newEvent = EventReturn(
                                       id: isEdit ? event.id : "",
                                       description: description.text,
                                       end: DateTime.parse(
@@ -421,7 +419,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                       type: eventType.value,
                                       recurrenceRule: recurrenceRule,
                                       applicantId: user.id,
-                                      applicant: Applicant(
+                                      applicant: EventApplicant(
                                         name: user.name,
                                         nickname: user.nickname,
                                         firstname: user.firstname,
@@ -430,8 +428,8 @@ class AddEditEventPage extends HookConsumerWidget {
                                         phone: user.phone,
                                         promo: user.promo,
                                       ),
-                                      decision: Decision.pending,
-                                      roomId: roomId);
+                                      decision: AppUtilsTypesCalendarTypesDecision .pending,
+                                  );
                                   final value = isEdit
                                       ? await eventListNotifier
                                           .updateEvent(newEvent)

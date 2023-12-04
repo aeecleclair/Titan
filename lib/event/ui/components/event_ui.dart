@@ -2,14 +2,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/tools/functions.dart';
-import 'package:myecl/event/class/event.dart';
+import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/event_provider.dart';
-import 'package:myecl/event/providers/user_event_list_provider.dart';
 import 'package:myecl/event/router.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/ui/components/edit_delete_button.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
@@ -18,7 +16,7 @@ import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class EventUi extends ConsumerWidget {
-  final Event event;
+  final EventReturn event;
   final bool isDetailPage, isAdmin;
   final Function()? onEdit, onConfirm, onDecline, onCopy, onInfo;
   const EventUi(
@@ -35,7 +33,7 @@ class EventUi extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final now = DateTime.now();
-    final eventListNotifier = ref.watch(eventEventListProvider.notifier);
+    final eventListNotifier = ref.watch(eventListProvider.notifier);
     final eventNotifier = ref.watch(eventProvider.notifier);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -123,7 +121,7 @@ class EventUi extends ConsumerWidget {
                     const SizedBox(height: 7),
                     Text(
                       formatRecurrenceRule(event.start, event.end,
-                          event.recurrenceRule, event.allDay),
+                          event.recurrenceRule!, event.allDay),
                       style: TextStyle(
                           color: textColor.withOpacity(0.7), fontSize: 13),
                     ),
@@ -157,7 +155,7 @@ class EventUi extends ConsumerWidget {
                     Align(
                       alignment: Alignment.center,
                       child: Text(
-                        decisionToString(event.decision),
+                        event.decision.value!,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             color: textColor,
@@ -283,13 +281,16 @@ class EventUi extends ConsumerWidget {
                           const Spacer(),
                           GestureDetector(
                             onTap: () {
-                              if (event.decision != Decision.approved) {
+                              if (event.decision !=
+                                  AppUtilsTypesCalendarTypesDecision.approved) {
                                 onConfirm?.call();
                               }
                             },
                             child: CardButton(
                               borderColor: isAdmin
-                                  ? event.decision == Decision.approved
+                                  ? event.decision ==
+                                          AppUtilsTypesCalendarTypesDecision
+                                              .approved
                                       ? Colors.black
                                       : Colors.transparent
                                   : Colors.transparent,
@@ -300,14 +301,17 @@ class EventUi extends ConsumerWidget {
                           const Spacer(),
                           GestureDetector(
                             onTap: () {
-                              if (event.decision != Decision.declined) {
+                              if (event.decision !=
+                                  AppUtilsTypesCalendarTypesDecision.declined) {
                                 onDecline?.call();
                               }
                             },
                             child: CardButton(
                               color: Colors.black,
                               borderColor: isAdmin
-                                  ? event.decision == Decision.declined
+                                  ? event.decision ==
+                                          AppUtilsTypesCalendarTypesDecision
+                                              .declined
                                       ? Colors.white
                                       : Colors.transparent
                                   : Colors.transparent,
