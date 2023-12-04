@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/generated/openapi.models.swagger.dart';
-import 'package:myecl/raffle/class/raffle.dart';
-import 'package:myecl/raffle/class/raffle_status_type.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/raffle/providers/raffle_list_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -94,12 +92,13 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                                   child: child),
                               onTap: () async {
                                 await tokenExpireWrapper(ref, () async {
-                                  await raffleListNotifier.createRaffle(Raffle(
-                                      name: "Tombola : ${group.name}",
-                                      group: group,
-                                      id: '',
-                                      raffleStatusType:
-                                          RaffleStatusType.creation));
+                                  await raffleListNotifier.createRaffle(
+                                      RaffleComplete(
+                                          name: "Tombola : ${group.name}",
+                                          group: group,
+                                          id: '',
+                                          status: RaffleStatusType.creation,
+                                          groupId: group.id));
                                   await raffleListNotifier.loadRaffleList();
                                   navigationPop();
                                 });

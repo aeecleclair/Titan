@@ -1,7 +1,7 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/raffle/class/prize.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/raffle/providers/prize_list_provider.dart';
 import 'package:myecl/raffle/providers/prize_provider.dart';
 import 'package:myecl/raffle/providers/raffle_provider.dart';
@@ -24,7 +24,7 @@ class AddEditPrizePage extends HookConsumerWidget {
     final formKey = GlobalKey<FormState>();
     final raffle = ref.watch(raffleProvider);
     final prize = ref.watch(prizeProvider);
-    final isEdit = prize.id != Prize.empty().id;
+    final isEdit = prize.id != PrizeSimple.fromJson({}).id;
     final quantity = useTextEditingController(
         text: isEdit ? prize.quantity.toString() : "1");
     final name = useTextEditingController(text: prize.name);

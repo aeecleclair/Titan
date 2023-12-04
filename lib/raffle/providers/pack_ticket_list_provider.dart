@@ -1,64 +1,67 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/raffle/class/raffle.dart';
-import 'package:myecl/raffle/class/pack_ticket.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/raffle/providers/raffle_id_provider.dart';
-import 'package:myecl/raffle/repositories/raffle_detail_repository.dart';
-import 'package:myecl/raffle/repositories/pack_ticket_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/tools/providers/list_notifier%20copy.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class PackTicketsListNotifier extends ListNotifier<PackTicket> {
-  final PackTicketRepository _packTicketsRepository = PackTicketRepository();
-  final RaffleDetailRepository _raffleDetailRepository =
-      RaffleDetailRepository();
-  late String raffleId;
-  PackTicketsListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
-    _packTicketsRepository.setToken(token);
-    _raffleDetailRepository.setToken(token);
+class PackTicketsListNotifier extends ListNotifier2<PackTicketSimple> {
+  final Openapi packTicketsRepository;
+  PackTicketsListNotifier({required this.packTicketsRepository})
+      : super(const AsyncValue.loading());
+
+  Future<AsyncValue<List<PackTicketSimple>>> loadPackTicketList(
+      String raffleId) async {
+    return await loadList(() async => packTicketsRepository
+        .tombolaRafflesRaffleIdPackTicketsGet(raffleId: raffleId));
   }
 
-  void setRaffleId(String id) {
-    raffleId = id;
+  Future<bool> addPackTicket(PackTicketSimple packTicket) async {
+    return add(
+        (packTicket) async => packTicketsRepository.tombolaPackTicketsPost(
+                body: PackTicketBase(
+              price: packTicket.price,
+              packSize: packTicket.packSize,
+              raffleId: packTicket.raffleId,
+            )),
+        packTicket);
   }
 
-  Future<AsyncValue<List<PackTicket>>> loadPackTicketList() async {
-    return await loadList(() async =>
-        _raffleDetailRepository.getPackTicketListFromRaffle(raffleId));
+  Future<bool> updatePackTicket(PackTicketSimple packTicket) async {
+    return update(
+        (packTicket) async =>
+            packTicketsRepository.tombolaPackTicketsPackticketIdPatch(
+                packticketId: packTicket.id,
+                body: PackTicketEdit(
+                  raffleId: packTicket.raffleId,
+                  price: packTicket.price,
+                  packSize: packTicket.packSize,
+                )),
+        (packTickets, t) =>
+            packTickets..[packTickets.indexWhere((e) => e.id == t.id)] = t,
+        packTicket);
   }
 
-  Future<bool> addPackTicket(PackTicket packTicket) async {
-    return add(_packTicketsRepository.createPackTicket, packTicket);
-  }
-
-  Future<bool> deletePackTicket(PackTicket packTicket) async {
+  Future<bool> deletePackTicket(PackTicketSimple packTicket) async {
     return delete(
-      _packTicketsRepository.deletePackTicket,
+      (packTicketId) async => packTicketsRepository
+          .tombolaPackTicketsPackticketIdDelete(packticketId: packTicketId),
       (packTickets, t) => packTickets..removeWhere((e) => e.id == t.id),
       packTicket.id,
       packTicket,
     );
   }
-
-  Future<bool> updatePackTicket(PackTicket packTicket) async {
-    return update(
-        _packTicketsRepository.updatePackTicket,
-        (packTickets, t) =>
-            packTickets..[packTickets.indexWhere((e) => e.id == t.id)] = t,
-        packTicket);
-  }
 }
 
 final packTicketListProvider = StateNotifierProvider<PackTicketsListNotifier,
-    AsyncValue<List<PackTicket>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  final notifier = PackTicketsListNotifier(token: token);
+    AsyncValue<List<PackTicketSimple>>>((ref) {
+  final packTicketsRepository = ref.watch(repositoryProvider);
+  final notifier =
+      PackTicketsListNotifier(packTicketsRepository: packTicketsRepository);
   tokenExpireWrapperAuth(ref, () async {
     final raffleId = ref.watch(raffleIdProvider);
-    if (raffleId != Raffle.empty().id) {
-      notifier.setRaffleId(raffleId);
-      notifier.loadPackTicketList();
+    if (raffleId != RaffleSimple.fromJson({}).id) {
+      notifier.loadPackTicketList(raffleId);
     }
   });
   return notifier;

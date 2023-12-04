@@ -1,15 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/raffle/class/pack_ticket.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 
-class PackTicketNotifier extends StateNotifier<PackTicket> {
-  PackTicketNotifier() : super(PackTicket.empty());
+class PackTicketNotifier extends StateNotifier<PackTicketSimple> {
+  PackTicketNotifier() : super(PackTicketSimple.fromJson({}));
 
-  void setPackTicket(PackTicket packTicket) {
+  void setPackTicket(PackTicketSimple packTicket) {
     state = packTicket;
   }
 }
 
 final packTicketProvider =
-    StateNotifierProvider<PackTicketNotifier, PackTicket>((ref) {
+    StateNotifierProvider<PackTicketNotifier, PackTicketSimple>((ref) {
   return PackTicketNotifier();
 });
