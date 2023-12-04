@@ -1,15 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/tools/constants.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 
 class BookingCard extends StatelessWidget {
-  final Booking booking;
+  final BookingReturnApplicant booking;
   final Function()? onEdit, onConfirm, onDecline, onCopy, onInfo;
   final Future Function()? onDelete;
   final bool isAdmin, isDetail;
@@ -38,7 +38,7 @@ class BookingCard extends StatelessWidget {
     final Color informationCircleColor;
 
     switch (booking.decision) {
-      case Decision.pending:
+      case AppUtilsTypesBookingTypeDecision.pending:
         cardColor = [
           Colors.white,
           Colors.white,
@@ -46,7 +46,7 @@ class BookingCard extends StatelessWidget {
         darkIconBackgroundColor = Colors.black;
 
         break;
-      case Decision.approved:
+      case AppUtilsTypesBookingTypeDecision.approved:
         cardColor = [
           const Color(0xff79a400),
           const Color(0xff387200),
@@ -54,18 +54,25 @@ class BookingCard extends StatelessWidget {
 
         darkIconBackgroundColor = const Color.fromARGB(255, 26, 53, 0);
         break;
-      case Decision.declined:
+      case AppUtilsTypesBookingTypeDecision.declined:
         cardColor = [
           const Color.fromARGB(255, 250, 66, 38),
           const Color.fromARGB(255, 172, 32, 10),
         ];
         darkIconBackgroundColor = const Color.fromARGB(255, 99, 13, 0);
         break;
+      case AppUtilsTypesBookingTypeDecision.swaggerGeneratedUnknown:
+        cardColor = [
+          Colors.white,
+          Colors.white,
+        ];
+        darkIconBackgroundColor = Colors.black;
+        break;
     }
 
     lightIconColor = darkIconBackgroundColor;
 
-    if (booking.decision == Decision.pending) {
+    if (booking.decision == AppUtilsTypesBookingTypeDecision.pending) {
       smallTextColor = Colors.grey.shade400;
       cardBoxShadow = Colors.grey.shade200.withOpacity(0.5);
       lightIconBackgroundColor = Colors.white;
@@ -114,7 +121,7 @@ class BookingCard extends StatelessWidget {
           const SizedBox(height: 6),
           AutoSizeText(
               formatRecurrenceRule(
-                  booking.start, booking.end, booking.recurrenceRule, false),
+                  booking.start, booking.end, booking.recurrenceRule!, false),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -137,9 +144,10 @@ class BookingCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                  booking.decision == Decision.pending
+                  booking.decision == AppUtilsTypesBookingTypeDecision.pending
                       ? BookingTextConstants.pending
-                      : booking.decision == Decision.approved
+                      : booking.decision ==
+                              AppUtilsTypesBookingTypeDecision.approved
                           ? BookingTextConstants.confirmed
                           : BookingTextConstants.declined,
                   style: TextStyle(
@@ -190,7 +198,8 @@ class BookingCard extends StatelessWidget {
                     child: CardButton(
                       color: lightIconBackgroundColor,
                       borderColor: isAdmin
-                          ? booking.decision == Decision.approved
+                          ? booking.decision ==
+                                  AppUtilsTypesBookingTypeDecision.approved
                               ? darkIconBackgroundColor
                               : Colors.transparent
                           : Colors.transparent,
@@ -206,7 +215,8 @@ class BookingCard extends StatelessWidget {
                     child: CardButton(
                       color: darkIconBackgroundColor,
                       borderColor: isAdmin
-                          ? booking.decision == Decision.declined
+                          ? booking.decision ==
+                                  AppUtilsTypesBookingTypeDecision.declined
                               ? Colors.white
                               : Colors.transparent
                           : Colors.transparent,

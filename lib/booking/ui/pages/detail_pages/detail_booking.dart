@@ -5,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/tools/functions.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/components/booking_card.dart';
 import 'package:myecl/booking/ui/pages/detail_pages/contact_button.dart';
@@ -57,7 +56,7 @@ class DetailBookingPage extends HookConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            decisionToString(booking.decision),
+                            booking.decision.value!,
                             style: const TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
@@ -65,7 +64,7 @@ class DetailBookingPage extends HookConsumerWidget {
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            booking.note,
+                            booking.note.toString(),
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -105,7 +104,7 @@ class DetailBookingPage extends HookConsumerWidget {
                             ),
                           ),
                           const SizedBox(height: 30),
-                          if (booking.entity.isNotEmpty)
+                          if (booking.entity!.isNotEmpty)
                             Column(
                               children: [
                                 AutoSizeText(

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/is_admin_provider.dart';
 import 'package:myecl/booking/providers/is_manager_provider.dart';
 import 'package:myecl/booking/providers/selected_days_provider.dart';
-import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/components/booking_card.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -23,6 +22,7 @@ import 'package:myecl/tools/ui/widgets/calendar.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -31,13 +31,14 @@ class BookingMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userProvider);
     final isManager = ref.watch(isManagerProvider);
     final isAdmin = ref.watch(isAdminProvider);
-    final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
+    final bookingsNotifier = ref.watch(bookingListProvider.notifier);
     final confirmedBookingsNotifier =
         ref.watch(confirmedBookingListProvider.notifier);
     final confirmedBookings = ref.watch(confirmedBookingListProvider);
-    final bookings = ref.watch(userBookingListProvider);
+    final bookings = ref.watch(bookingListProvider);
     final allBookingsNotifier = ref.watch(bookingListProvider.notifier);
     final bookingNotifier = ref.watch(bookingProvider.notifier);
     final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
@@ -46,12 +47,12 @@ class BookingMainPage extends HookConsumerWidget {
       displayToast(context, type, message);
     }
 
-    void handleBooking(Booking booking) {
+    void handleBooking(BookingReturnApplicant booking) {
       bookingNotifier.setBooking(booking);
       final recurrent = booking.recurrenceRule != "";
       if (recurrent) {
         final allDays = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
-        final recurrentDays = booking.recurrenceRule
+        final recurrentDays = booking.recurrenceRule!
             .split(";")
             .where((element) => element.contains("BYDAY"))
             .first
@@ -68,7 +69,7 @@ class BookingMainPage extends HookConsumerWidget {
     confirmedBookings.whenData((confirmedBookings) {
       confirmedBookings.map((e) {
         if (e.recurrenceRule != "") {
-          final dates = getDateInRecurrence(e.recurrenceRule, e.start);
+          final dates = getDateInRecurrence(e.recurrenceRule!, e.start);
           dates.map((data) {
             appointments.add(Appointment(
               startTime: combineDate(data, e.start),
@@ -100,7 +101,7 @@ class BookingMainPage extends HookConsumerWidget {
       child: Refresher(
         onRefresh: () async {
           await confirmedBookingsNotifier.loadConfirmedBooking();
-          await bookingsNotifier.loadUserBookings();
+          await bookingsNotifier.loadUserBookings(user.id);
         },
         child: SizedBox(
           height: MediaQuery.of(context).size.height - 85,
@@ -179,7 +180,8 @@ class BookingMainPage extends HookConsumerWidget {
                       height: 180,
                       firstChild: GestureDetector(
                         onTap: () {
-                          bookingNotifier.setBooking(Booking.empty());
+                          bookingNotifier
+                              .setBooking(BookingReturnApplicant.fromJson({}));
                           selectedDaysNotifier.clear();
                           QR.to(BookingRouter.root + BookingRouter.addEdit);
                         },
@@ -195,54 +197,71 @@ class BookingMainPage extends HookConsumerWidget {
                         ),
                       ),
                       items: data,
-                      itemBuilder: (context, e, i) => BookingCard(
-                            booking: e,
-                            onEdit: () {
-                              handleBooking(e);
-                            },
-                            onInfo: () {
-                              bookingNotifier.setBooking(e);
-                              QR.to(BookingRouter.root + BookingRouter.detail);
-                            },
-                            onDelete: () async {
-                              await tokenExpireWrapper(ref, () async {
-                                await showDialog(
-                                    context: context,
-                                    builder: (context) => CustomDialogBox(
-                                          descriptions: BookingTextConstants
-                                              .deleteBookingConfirmation,
-                                          onYes: () async {
-                                            final value =
-                                                await allBookingsNotifier
-                                                    .deleteBooking(e);
-                                            if (value) {
-                                              bookingsNotifier.deleteBooking(e);
-                                              if (e.decision ==
-                                                  Decision.approved) {
-                                                confirmedBookingsNotifier
-                                                    .deleteBooking(e);
-                                              }
-
-                                              displayToastWithContext(
-                                                  TypeMsg.msg,
-                                                  BookingTextConstants
-                                                      .deleteBooking);
-                                            } else {
-                                              displayToastWithContext(
-                                                  TypeMsg.error,
-                                                  BookingTextConstants
-                                                      .deletingError);
+                      itemBuilder: (context, booking, i) {
+                        final e = BookingReturnApplicant(
+                          key: booking.key,
+                          id: booking.id,
+                          start: booking.start,
+                          end: booking.end,
+                          reason: booking.reason,
+                          note: booking.note,
+                          recurrenceRule: booking.recurrenceRule,
+                          room: booking.room,
+                          roomId: booking.roomId,
+                          decision: booking.decision,
+                          applicantId: booking.applicantId,
+                          applicant: Applicant.fromJson({}),
+                        );
+                        return BookingCard(
+                          booking: e,
+                          onEdit: () {
+                            handleBooking(e);
+                          },
+                          onInfo: () {
+                            bookingNotifier.setBooking(e);
+                            QR.to(BookingRouter.root + BookingRouter.detail);
+                          },
+                          onDelete: () async {
+                            await tokenExpireWrapper(ref, () async {
+                              await showDialog(
+                                  context: context,
+                                  builder: (context) => CustomDialogBox(
+                                        descriptions: BookingTextConstants
+                                            .deleteBookingConfirmation,
+                                        onYes: () async {
+                                          final value =
+                                              await allBookingsNotifier
+                                                  .deleteBooking(booking);
+                                          if (value) {
+                                            bookingsNotifier
+                                                .deleteBooking(booking);
+                                            if (e.decision ==
+                                                AppUtilsTypesBookingTypeDecision
+                                                    .approved) {
+                                              confirmedBookingsNotifier
+                                                  .loadConfirmedBooking();
                                             }
-                                          },
-                                          title: BookingTextConstants
-                                              .deleteBooking,
-                                        ));
-                              });
-                            },
-                            onCopy: () {
-                              handleBooking(e.copyWith(id: ""));
-                            },
-                          ));
+                                            displayToastWithContext(
+                                                TypeMsg.msg,
+                                                BookingTextConstants
+                                                    .deleteBooking);
+                                          } else {
+                                            displayToastWithContext(
+                                                TypeMsg.error,
+                                                BookingTextConstants
+                                                    .deletingError);
+                                          }
+                                        },
+                                        title:
+                                            BookingTextConstants.deleteBooking,
+                                      ));
+                            });
+                          },
+                          onCopy: () {
+                            handleBooking(e.copyWith(id: ""));
+                          },
+                        );
+                      });
                 },
                 loaderColor: ColorConstants.background2),
             const SizedBox(

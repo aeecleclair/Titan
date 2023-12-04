@@ -2,9 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -208,11 +208,11 @@ class Calendar extends HookConsumerWidget {
   }
 }
 
-_AppointmentDataSource _getCalendarDataSource(List<Booking> res) {
+_AppointmentDataSource _getCalendarDataSource(List<BookingReturn> res) {
   List<Appointment> appointments = <Appointment>[];
   res.map((e) {
     if (e.recurrenceRule != "") {
-      final dates = getDateInRecurrence(e.recurrenceRule, e.start);
+      final dates = getDateInRecurrence(e.recurrenceRule!, e.start);
       dates.map((data) {
         appointments.add(Appointment(
           startTime: combineDate(data, e.start),

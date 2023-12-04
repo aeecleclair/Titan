@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/providers/booking_list_provider.dart';
+import 'package:myecl/booking/providers/admin_booking_list_provider.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/calendar.dart';
-import 'package:myecl/booking/ui/pages/manager_page/list_booking.dart';
+import 'package:myecl/booking/ui/components/list_booking.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 
 class ManagerPage extends HookConsumerWidget {
@@ -15,24 +15,26 @@ class ManagerPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bookings = ref.watch(bookingListProvider);
-    final List<Booking> pendingBookings = [],
+    final bookings = ref.watch(adminBookingListProvider);
+    final List<BookingReturnApplicant> pendingBookings = [],
         confirmedBookings = [],
         canceledBookings = [];
     bookings.maybeWhen(
         data: (
           bookings,
         ) {
-          for (Booking b in bookings) {
+          for (BookingReturnApplicant b in bookings) {
             switch (b.decision) {
-              case Decision.approved:
+              case AppUtilsTypesBookingTypeDecision .approved:
                 confirmedBookings.add(b);
                 break;
-              case Decision.declined:
+              case AppUtilsTypesBookingTypeDecision .declined:
                 canceledBookings.add(b);
                 break;
-              case Decision.pending:
+              case AppUtilsTypesBookingTypeDecision .pending:
                 pendingBookings.add(b);
+                break;
+              case AppUtilsTypesBookingTypeDecision.swaggerGeneratedUnknown:
                 break;
             }
           }
@@ -44,7 +46,7 @@ class ManagerPage extends HookConsumerWidget {
     return BookingTemplate(
       child: Refresher(
         onRefresh: () async {
-          await ref.watch(bookingListProvider.notifier).loadBookings();
+          await ref.watch(adminBookingListProvider.notifier).loadBookings();
           await ref.watch(roomListProvider.notifier).loadRooms();
           await ref
               .watch(confirmedBookingListProvider.notifier)

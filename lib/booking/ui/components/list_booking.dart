@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/components/booking_card.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class ListBooking extends HookConsumerWidget {
-  final List<Booking> bookings;
+  final List<BookingReturnApplicant> bookings;
   final bool canToggle;
   final String title;
   const ListBooking({
@@ -101,15 +101,27 @@ class ListBooking extends HookConsumerWidget {
                                         BookingTextConstants.confirmBooking,
                                     onYes: () async {
                                       await tokenExpireWrapper(ref, () async {
-                                        Booking newBooking = e.copyWith(
-                                            decision: Decision.approved);
+                                        BookingReturn newBooking = BookingReturn(
+                                            reason: e.reason,
+                                            start: e.start,
+                                            end: e.end,
+                                            roomId: e.roomId,
+                                            key: e.key,
+                                            id: e.id,
+                                            applicantId: e.applicantId,
+                                            room: e.room,
+                                            decision:
+                                                AppUtilsTypesBookingTypeDecision
+                                                    .approved);
                                         bookingListNotifier
                                             .toggleConfirmed(
-                                                newBooking, Decision.approved)
+                                                newBooking,
+                                                AppUtilsTypesBookingTypeDecision
+                                                    .approved)
                                             .then((value) {
                                           if (value) {
                                             confirmedBookingListNotifier
-                                                .addBooking(newBooking);
+                                                .loadConfirmedBooking();
                                           }
                                         });
                                       });
@@ -126,15 +138,27 @@ class ListBooking extends HookConsumerWidget {
                                         BookingTextConstants.declineBooking,
                                     onYes: () async {
                                       await tokenExpireWrapper(ref, () async {
-                                        Booking newBooking = e.copyWith(
-                                            decision: Decision.declined);
+                                        BookingReturn newBooking = BookingReturn(
+                                            reason: e.reason,
+                                            start: e.start,
+                                            end: e.end,
+                                            roomId: e.roomId,
+                                            key: e.key,
+                                            id: e.id,
+                                            applicantId: e.applicantId,
+                                            room: e.room,
+                                            decision:
+                                                AppUtilsTypesBookingTypeDecision
+                                                    .approved);
                                         bookingListNotifier
                                             .toggleConfirmed(
-                                                newBooking, Decision.declined)
+                                                newBooking,
+                                                AppUtilsTypesBookingTypeDecision
+                                                    .declined)
                                             .then((value) {
                                           if (value) {
                                             confirmedBookingListNotifier
-                                                .deleteBooking(newBooking);
+                                                .loadConfirmedBooking();
                                           }
                                         });
                                       });
