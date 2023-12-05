@@ -31,7 +31,7 @@ class LoanCard extends StatelessWidget {
         DateTime.now().compareTo(loan.end) > 0 && !loan.returned;
     return GestureDetector(
       onTap: () {
-        if (isAdmin) {
+        if (isAdmin || isHistory) {
           onInfo?.call();
         }
       },
@@ -41,8 +41,8 @@ class LoanCard extends StatelessWidget {
         height: (isAdmin && !isDetail)
             ? 170
             : isHistory
-                ? 110
-                : 160,
+                ? 120
+                : 180,
         colors: shouldReturn
             ? [
                 LoanColorConstants.redGradient1,
