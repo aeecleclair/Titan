@@ -341,8 +341,12 @@ class AddEditBookingPage extends HookConsumerWidget {
                                   decision: booking.decision,
                                   recurrenceRule: recurrenceRule,
                                   entity: entity.text,
-                                  applicant: user.toApplicant(),
-                                  applicantId: user.id);
+                                  applicant: isManagerPage
+                                      ? booking.applicant
+                                      : user.toApplicant(),
+                                  applicantId: isManagerPage
+                                      ? booking.applicantId
+                                      : user.id);
                               final value = isManagerPage
                                   ? await ref
                                       .read(managerBookingListProvider.notifier)
