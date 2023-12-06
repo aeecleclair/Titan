@@ -14,11 +14,13 @@ Titan is a cross platform frontend for our project Hyperion
 
 In [`.env`](.env) change:
 
-RELEASE_HOST = "<<Your Production Server Host>>"
+RELEASE_HOST = "<\<Your Production Server Host>>"
 
 You can also specify a debug url :
 
-DEBUG_HOST = "<<Your Debbuging Server Host>>"
+DEBUG_HOST = "<\<Your Debbuging Server Host>>"
+
+Note that a trailing slash is required.
 
 ## Web dev
 
@@ -42,26 +44,6 @@ If you want to run a specific test file :
 
 ```bash
 flutter test path/to/file.dart
-```
-
-## Linting
-
-<https://dart.dev/guides/language/analysis-options>
-
-```bash
-flutter analyze
-```
-
-To fix some issues :
-
-```bash
-flutter analyze --fix
-```
-
-## Formatting
-
-```bash
-dart format .
 ```
 
 ## Debug on the iOS simulator
@@ -152,7 +134,9 @@ flutter pub run flutter_launcher_icons
 
 ## Use the linter
 
+<https://dart.dev/guides/language/analysis-options>
+
 ```
 dart format .
-flutter analyze
+flutter analyze --fix
 ```
