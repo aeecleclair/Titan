@@ -1,115 +1,93 @@
 # Titan
 
-Titan is a cross platform frontend for our project Hyperion
+Titan is a cross platform frontend written in Flutter for an open-source project launched by ÉCLAIR, the computer science association of Ecole Centrale de Lyon. This project aims to provide students of business and engineering schools a digital tool to simplify the association process.
 
-## Installing Flutter
+Our builds of Titan are called MyECL and can be downloaded from the App Store and from the Google Play Store.
 
-<https://docs.flutter.dev/get-started/install>
+## Setup environment
 
-## Configuring VS Code
+Install Flutter:
+https://docs.flutter.dev/get-started/install
 
-<https://docs.flutter.dev/get-started/editor?tab=vscode>
+Setup VS Code for Flutter development:
+https://docs.flutter.dev/get-started/editor?tab=vscode
 
-## Change the backend url
+Titan is designed to be launched on Web, Android and iOS platforms.
 
-In [`.env`](.env) change:
+## Configure Titan
 
-RELEASE_HOST = "<\<Your Production Server Host>>"
+Update [`.env`](.env) to match your Hyperion's backend:
 
-You can also specify a debug url :
+`RELEASE_HOST = "<<Your Production Server Host>>"`
 
-DEBUG_HOST = "<\<Your Debbuging Server Host>>"
+You can also specify an other host for debuging:
 
-Note that a trailing slash is required.
+`DEBUG_HOST = "<<Your Debbuging Server Host>>"`
 
-## Web dev
+NB: a trailing slash is required.
 
-<https://docs.flutter.dev/get-started/web>
+## Development
 
-```bash
-flutter build web
-cd build/web
-python -m http.server 8001
+### Linting
+Titan support linting according to the official [Flutter static analysis options](https://dart.dev/guides/language/analysis-options).
+
+The linter can be launched using:
+```
+dart format .
+flutter analyze --fix
 ```
 
-## Testing
+### Testing
 
-<https://docs.flutter.dev/testing>
+Titan's tests follow the official [Flutter documentation](https://docs.flutter.dev/testing).
 
+Tests can be run using:
 ```bash
 flutter test
 ```
 
-If you want to run a specific test file :
-
+To run a specific test file :
 ```bash
 flutter test path/to/file.dart
 ```
 
-## Notifications setup
+### Flavors
 
-<https://pub.dev/packages/firebase_messaging>
+Titan supports [flavors](https://docs.flutter.dev/deployment/flavors), which allows to easily switch between several versions of Titan for several use cases.
 
-### Android
+Titan includes 3 flavors: dev, alpha, prod. On VSCode, dev flavor is launched by default.
 
-<https://firebase.google.com/docs/cloud-messaging/android/client>
+### Notifications setup
 
-### iOS
+Notifications are handled using the Firebase Cloud Messaging API. On mobile platforms, a valid notification configuration is required to debug Titan. Notifications are disabled on web builds.
 
-<https://firebase.google.com/docs/cloud-messaging/ios/client>
+Please refer to the [documentation](https://pub.dev/packages/firebase_messaging) of the corresponding Flutter's package to correctly setup notifications.
 
-## Debug on Android
+Please follow [Android](https://firebase.google.com/docs/cloud-messaging/android/client) or [iOS](https://firebase.google.com/docs/cloud-messaging/ios/client) Firebase documentation to setup notifications.
 
-To debug on Android you need to have an Android device connected to your computer or an Android emulator running.
-You also need to have the notification configuration file in the `android/app` folder.
-<https://docs.flutter.dev/get-started/test-drive?tab=androidstudio>
+#### Android FCM config file
+For Android, add your `google-services.json` in `android/app/src/<flavor>/`.
 
-## Debug on the iOS simulator
-
-To debug on the iOS simulator you need to have Xcode installed.	You also need to have the notification configuration file in the `ios/Runner` folder.
-<https://docs.flutter.dev/get-started/test-drive?tab=vscode>
-
-## iOS export IPA
-
-<https://stackoverflow.com/questions/58724420/how-to-create-ipa-file-in-flutter-for-testing-purpose>
-
-## Export signed app bundles for the Play Store
-
-<https://docs.flutter.dev/deployment/android>
-
-> Don't forget to change the backend url
-
-Follow [_Signing the app_](https://docs.flutter.dev/deployment/android#signing-the-app) steps.
-
-Change the app version:
-
-- `flutterVersionCode` in [android/app/build.gradle](./android/app/build.gradle)
-- `flutterVersionName` in [android/app/build.gradle](./android/app/build.gradle)
-- `version` in [pubspec.yaml](./pubspec.yaml)
-
-> In pubspec `version` `flutterVersionCode` number should be used after the `+` sign
-
-```bash
-flutter build appbundle
-```
-
-## Export APKs
-
-```bash
-flutter build apk --split-per-abi
-```
+#### iOS FCM config file
+For iOS, add your `GoogleService-Info.plist` in `ios/config/<flavor/`.
 
 ## Advanced
 
-### Change the OAuth 2.0 client id
-
-[`lib/auth/repositories/oauth2_repositoty.dart`](./lib/auth/repositories/oauth2_repositoty.dart)
-
 ### Allows non SSL connexion to use a custom local Hyperion backend
 
-#### iOS
+On mobile, using plaintext HTTP connexions may raise issues.
 
-Add to `info.plist`
+#### Android
+Update [AndroidManifest.xml](./android/app/src/main/AndroidManifest.xml):
+```
+<application
+    ...
+    android:usesCleartextTraffic="true"
+    ...   >
+```
+
+#### iOS
+Update [Info.plist](ios/Runner/Info.plist):
 
 ```
 <key>CADisableMinimumFrameDurationOnPhone</key>
@@ -131,31 +109,12 @@ Add to `info.plist`
 </dict>
 ```
 
-#### Android
+### Update Titan's icon
 
-Add to `AndroidManifest.xml` file in the android/app/src/main folder :
+First update the icon's file and update [pubspec.yaml](./pubspec.yaml).
 
-```
-<application
-    ...
-    android:usesCleartextTraffic="true"
-    ...   >
-```
-
-## Mettre à jour l'icon de l'app
-
-On utilise le module [flutter_launcher_icons](https://pub.dev/packages/flutter_launcher_icons), après avoir modifié la config dans [pubspec.yaml](./pubspec.yaml) executer :
-
+Then, `flutter_launcher_icons` must be updated:
 ```bash
 flutter pub get
 flutter pub run flutter_launcher_icons
-```
-
-## Use the linter
-
-<https://dart.dev/guides/language/analysis-options>
-
-```
-dart format .
-flutter analyze --fix
 ```
