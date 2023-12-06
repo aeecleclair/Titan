@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/elocaps/class/caps_mode.dart';
 import 'package:myecl/elocaps/class/player.dart';
 import 'package:myecl/elocaps/repositories/leaderboard_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
@@ -14,13 +15,20 @@ class PlayerListNotifier extends ListNotifier<Player> {
   }
 
   Future<AsyncValue<List<Player>>> loadRanking() async {
-    List<Player> list = await _leaderboardrepository.getLeaderBoard("single")
-    ..addAll(await _leaderboardrepository.getLeaderBoard("cd"))
-    ..addAll(await _leaderboardrepository.getLeaderBoard("capacks"))
-    ..addAll(await _leaderboardrepository.getLeaderBoard("semiCapacks")); 
+    // List<Player> list = await _leaderboardrepository.getLeaderBoard("single")
+    // ..addAll(await _leaderboardrepository.getLeaderBoard("cd"))
+    // ..addAll(await _leaderboardrepository.getLeaderBoard("capacks"))
+    // ..addAll(await _leaderboardrepository.getLeaderBoard("semiCapacks")); 
     
-    return await loadList(
-        () async => Future.value(list)); 
+    // return await loadList(
+    //     () async => Future.value(list)); 
+    return state = AsyncData([
+      Player(elo: 3000, mode: CapsMode.cd, id: "1"),
+      Player(elo: 2800, mode: CapsMode.cd, id: "2"),
+      Player(elo: 2500, mode: CapsMode.cd, id: "3"),
+      Player(elo:2000, mode: CapsMode.cd, id: "4"),
+      Player(elo: 1000, mode: CapsMode.cd, id: "5"),
+    ]);
   }
 
 }
