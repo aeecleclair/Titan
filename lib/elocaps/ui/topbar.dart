@@ -49,30 +49,34 @@ class TopBar extends HookConsumerWidget {
             AnimatedBuilder(
                 animation: animation,
                 builder: (context, child) {
-                  return ShaderMask(
-                      blendMode: BlendMode.srcIn,
-                      shaderCallback: (bounds) => LinearGradient(
-                            colors: const [
-                              Color.fromARGB(255, 12, 0, 0),
-                              Color.fromARGB(255, 63, 2, 2),
-                              Color.fromARGB(255, 251, 118, 70),
-                              Color.fromARGB(255, 251, 194, 70),
-                            ],
-                            stops: [
-                              0.0,
-                              0.2 + 0.2 * animation.value,
-                              0.5 + 0.5 * animation.value,
-                              0.7 + 0.3 * animation.value
-                            ],
-                            tileMode: TileMode.mirror,
-                            begin: Alignment.bottomCenter,
-                            end: Alignment.topCenter,
-                          ).createShader(bounds),
-                      child: const Text(ElocapsTextConstant.elocaps,
+                  return
+                      // ShaderMask(
+                      //     blendMode: BlendMode.srcIn,
+                      //     shaderCallback: (bounds) => LinearGradient(
+                      //           colors: const [
+                      //             Color.fromARGB(255, 12, 0, 0),
+                      //             Color.fromARGB(255, 63, 2, 2),
+                      //             Color.fromARGB(255, 251, 118, 70),
+                      //             Color.fromARGB(255, 251, 194, 70),
+                      //           ],
+                      //           stops: [
+                      //             0.0,
+                      //             0.2 + 0.2 * animation.value,
+                      //             0.5 + 0.5 * animation.value,
+                      //             0.7 + 0.3 * animation.value
+                      //           ],
+                      //           tileMode: TileMode.mirror,
+                      //           begin: Alignment.bottomCenter,
+                      //           end: Alignment.topCenter,
+                      //         ).createShader(bounds),
+                      //     child:
+                      const Text(ElocapsTextConstant.elocaps,
                           style: TextStyle(
                               fontSize: 40,
                               fontWeight: FontWeight.w700,
-                              color: Colors.black)));
+                              color: Colors.black)
+                          // )
+                          );
                 }),
             const SizedBox(
               width: 70,

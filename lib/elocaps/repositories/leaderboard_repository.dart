@@ -7,6 +7,6 @@ class LeaderBoardRepository extends Repository {
   final ext = "elocaps/leaderboard";
 
    Future<List<Player>> getLeaderBoard(String mode) async {
-    return List<Player>.from((await getList(suffix:"/?mode=$mode")).map((x) => Player.fromJson(x)));
+    return List<Player>.from((await getList(suffix:"?mode=$mode")).map((x) => Player.fromJson(x)));
   }
 }

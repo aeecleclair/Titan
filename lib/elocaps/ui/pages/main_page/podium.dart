@@ -1,44 +1,41 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:myecl/elocaps/tools/constants.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/elocaps/providers/player_list_provider.dart';
+import 'package:myecl/elocaps/ui/pages/main_page/podium_card.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
 
-class Podium extends StatelessWidget {
-  const Podium(
-      {Key? key, required this.rank, required this.text,this.width = 100,this.height = 30})
-      : super(key: key);
+class Podium extends HookConsumerWidget {
+const Podium({super.key});
 
-  final int rank;
-  final String text;
-  final double? width;
-  final double? height;
-  
   @override
-  Widget build(BuildContext context) {
-    final int grisLev = 157 - 2*min(rank,75);
-    final Color color = rank <= 3 ? ElocapsColorConstant.podium_color[rank-1] : Color.fromARGB(255, grisLev, grisLev, grisLev);
-
-    return Container(
-      decoration: BoxDecoration(
-        gradient: RadialGradient(
-          colors: [
-            color.withOpacity(0.5),
-            color,
-          ],
-          center: Alignment.topLeft,
-          radius: 1.5,
-        ),
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(15),
-          topRight: Radius.circular(15),
-        ),
+  Widget build(BuildContext context, WidgetRef ref){
+    final leaderBoardPlayers = ref.watch(playerListProvider);
+    return AsyncChild(
+      value: leaderBoardPlayers,
+      builder: (context, players) => Container(
+                height: 200,
+      padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          if (players.length > 1)
+            PodiumCard(
+                player: players[1],
+                index: 1,
+              ),
+          if (players.isNotEmpty)
+            PodiumCard(
+                player: players[0],
+                index: 0,
+              ),
+          if (players.length > 2)
+             PodiumCard(
+                player: players[2],
+                index: 2,
+              ),
+        ],
       ),
-      margin: const EdgeInsets.all(5),
-      height:  height,
-      width: width,
-      child: Text(text,
-          textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 20,color: Colors.white)),
-    );
+    ));
   }
 }
