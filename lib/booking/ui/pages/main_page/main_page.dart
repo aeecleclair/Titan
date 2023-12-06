@@ -73,17 +73,17 @@ class BookingMainPage extends HookConsumerWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      if (isAdmin)
+                      if (isManager)
                         AdminButton(
                           onTap: () {
-                            QR.to(BookingRouter.root + BookingRouter.admin);
+                            QR.to(BookingRouter.root + BookingRouter.manager);
                           },
                         ),
-                      if (isManager)
+                      if (isAdmin)
                         AdminButton(
                           text: "Gestion",
                           onTap: () {
-                            QR.to(BookingRouter.root + BookingRouter.manager);
+                            QR.to(BookingRouter.root + BookingRouter.admin);
                           },
                         ),
                     ],
