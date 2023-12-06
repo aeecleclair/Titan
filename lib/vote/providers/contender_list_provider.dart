@@ -19,7 +19,7 @@ class ContenderListNotifier extends ListNotifier2<ListReturn> {
     return await add(
         (contender) async => contenderRepository.campaignListsPost(
                 body: ListBase(
-              sectionId: contender.sectionId,
+              sectionId: contender.section.id,
               name: contender.name,
               description: contender.description,
               type: contender.type,
