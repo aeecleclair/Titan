@@ -24,7 +24,7 @@ class AdvertRouter {
   static const String root = '/advert';
   static const String admin = '/admin';
   static const String addEditAdvert = '/add_edit_advert';
-  static const String addRemAnnouncer = '/add_remove_announcer';
+  static const String addRemAdvertiser = '/add_remove_Advertiser';
   static const String detail = '/detail';
   static final Module module = Module(
       name: "Annonce",
@@ -63,8 +63,8 @@ class AdvertRouter {
               builder: () => detail_page.AdvertDetailPage(),
               middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)]),
           QRoute(
-            path: addRemAnnouncer,
-            builder: () => add_rem_announcer_page.AddRemAnnouncerPage(),
+            path: addRemAdvertiser,
+            builder: () => add_rem_announcer_page.AddRemAdvertiserPage(),
             middleware: [
               AdminMiddleware(ref, isAdminProvider),
               DeferredLoadingMiddleware(add_rem_announcer_page.loadLibrary)

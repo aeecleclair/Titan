@@ -1,11 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/class/prize.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 
 class PrizeDialog extends HookConsumerWidget {
-  final Prize prize;
+  final PrizeSimple prize;
   const PrizeDialog({super.key, required this.prize});
 
   @override
@@ -62,9 +62,7 @@ class PrizeDialog extends HookConsumerWidget {
                       ))),
               const Spacer(),
               AutoSizeText(
-                prize.description == null || prize.description!.isEmpty
-                    ? RaffleTextConstants.noDescription
-                    : prize.description!,
+                prize.description,
                 maxLines: 4,
                 textAlign: TextAlign.justify,
                 style: const TextStyle(

@@ -1,55 +1,65 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/tools/adapters/users.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:myecl/generated/client_index.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/providers/single_notifier%20copy.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/user/class/user.dart';
-import 'package:myecl/user/repositories/user_repository.dart';
 
-class UserNotifier extends SingleNotifier<User> {
-  final UserRepository userRepository;
-  UserNotifier({required this.userRepository})
-      : super(const AsyncValue.loading());
+class UserNotifier extends SingleNotifier2<CoreUser> {
+  final Openapi userRepository;
+  UserNotifier({required this.userRepository}) : super(const AsyncLoading());
 
-  Future<bool> setUser(User user) async {
-    return await add((u) async => u, user);
+  Future<AsyncValue<CoreUser>> loadUser(String userId) async {
+    return await load(
+        () async => userRepository.usersUserIdGet(userId: userId));
   }
 
-  Future<AsyncValue<User>> loadUser(String userId) async {
-    return await load(() async => userRepository.getUser(userId));
+  Future<AsyncValue<CoreUser>> loadMe() async {
+    return await load(userRepository.usersMeGet);
   }
 
-  Future<AsyncValue<User>> loadMe() async {
-    return await load(userRepository.getMe);
+  Future<bool> updateUser(CoreUser user) async {
+    return await update(
+        (user) => userRepository.usersUserIdPatch(
+            body: coreUserUpdateAdminAdapter(user), userId: user.id),
+        user);
   }
 
-  Future<bool> updateUser(User user) async {
-    return await update(userRepository.updateUser, user);
-  }
-
-  Future<bool> updateMe(User user) async {
-    return await update(userRepository.updateMe, user);
+  Future<bool> updateMe(CoreUser user) async {
+    return await update(
+        (user) async =>
+            userRepository.usersMePatch(body: coreUserUpdateAdapter(user)),
+        user);
   }
 
   Future<bool> changePassword(
-      String oldPassword, String newPassword, User user) async {
-    return await userRepository.changePassword(
-        oldPassword, newPassword, user.email);
+      String oldPassword, String newPassword, CoreUser user) async {
+    return (await userRepository.usersChangePasswordPost(
+            body: ChangePasswordRequest(
+                oldPassword: oldPassword,
+                newPassword: newPassword,
+                email: user.email)))
+        .isSuccessful;
   }
 
   Future<bool> deletePersonal() async {
-    return await userRepository.deletePersonalData();
+    return (await userRepository.usersMeAskDeletionPost()).isSuccessful;
   }
 
   Future<bool> askMailMigration(String mail) async {
-    return await userRepository.askMailMigration(mail);
+    return (await userRepository.usersMigrateMailPost(
+            body: MailMigrationRequest(newEmail: mail)))
+        .isSuccessful;
   }
 }
 
 final asyncUserProvider =
-    StateNotifierProvider<UserNotifier, AsyncValue<User>>((ref) {
-  final UserRepository userRepository = ref.watch(userRepositoryProvider);
-  UserNotifier userNotifier = UserNotifier(userRepository: userRepository);
+    StateNotifierProvider<UserNotifier, AsyncValue<CoreUser>>((ref) {
+  final repository = ref.watch(repositoryProvider);
+  UserNotifier userNotifier = UserNotifier(userRepository: repository);
   tokenExpireWrapperAuth(ref, () async {
     final isLoggedIn = ref.watch(isLoggedInProvider);
     final id = ref
@@ -62,13 +72,8 @@ final asyncUserProvider =
   return userNotifier;
 });
 
-final userProvider = Provider((ref) {
-  return ref.watch(asyncUserProvider).maybeWhen(
-    data: (user) {
-      return user;
-    },
-    orElse: () {
-      return User.empty();
-    },
-  );
+final userProvider = Provider<CoreUser>((ref) {
+  return ref
+      .watch(asyncUserProvider)
+      .maybeWhen(data: (user) => user, orElse: () => CoreUser.fromJson({}));
 });

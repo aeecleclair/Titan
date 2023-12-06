@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/class/loan.dart';
+import 'package:myecl/admin/tools/functions.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/loan/providers/caution_provider.dart';
 import 'package:myecl/loan/providers/item_focus_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
@@ -29,18 +30,18 @@ class AddEditLoanPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final key = GlobalKey<FormState>();
     final loan = ref.watch(loanProvider);
-    final isEdit = loan.id != Loan.empty().id;
+    final isEdit = loan.id != Loan.fromJson({}).id;
     final note = useTextEditingController(text: loan.notes);
     final caution = ref.watch(cautionProvider);
     final cautionNotifier = ref.watch(cautionProvider.notifier);
-    cautionNotifier.setCaution(loan.caution);
+    cautionNotifier.setCaution(loan.caution.toString());
     final usersNotifier = ref.watch(userList.notifier);
     final loaner = ref.watch(loanerProvider);
     final loanersItemsNotifier = ref.watch(loanersItemsProvider.notifier);
     final itemList = ref.watch(itemListProvider);
     final itemListNotifier = ref.watch(itemListProvider.notifier);
     final queryController =
-        useTextEditingController(text: isEdit ? loan.borrower.getName() : "");
+        useTextEditingController(text: isEdit ? getName(loan.borrower) : "");
     final editingController = useTextEditingController();
     final focus = ref.watch(itemFocusProvider);
     final focusNode = useFocusNode();

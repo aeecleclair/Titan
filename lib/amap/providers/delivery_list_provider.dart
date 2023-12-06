@@ -1,94 +1,90 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/amap/class/delivery.dart';
-import 'package:myecl/amap/repositories/delivery_list_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier%20copy.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class DeliveryListNotifier extends ListNotifier<Delivery> {
-  final DeliveryListRepository deliveriesListRepository;
+class DeliveryListNotifier extends ListNotifier2<DeliveryReturn> {
+  final Openapi deliveriesListRepository;
   DeliveryListNotifier({required this.deliveriesListRepository})
       : super(const AsyncValue.loading());
-  Future<AsyncValue<List<Delivery>>> loadDeliveriesList() async {
-    return await loadList(deliveriesListRepository.getDeliveryList);
+  Future<AsyncValue<List<DeliveryReturn>>> loadDeliveriesList() async {
+    return await loadList(deliveriesListRepository.amapDeliveriesGet);
   }
 
-  Future<bool> addDelivery(Delivery delivery) async {
-    return await add(deliveriesListRepository.createDelivery, delivery);
+  Future<bool> addDelivery(DeliveryReturn delivery) async {
+    return await add(
+        (delivery) async => deliveriesListRepository.amapDeliveriesPost(
+                body: DeliveryBase(
+              deliveryDate: delivery.deliveryDate,
+              productsIds: delivery.products?.map((e) => e.id).toList(),
+            )),
+        delivery);
   }
 
-  Future<bool> updateDelivery(Delivery delivery) async {
+  Future<bool> updateDelivery(DeliveryReturn delivery) async {
     return await update(
-        deliveriesListRepository.updateDelivery,
+        (delivery) async =>
+            deliveriesListRepository.amapDeliveriesDeliveryIdPatch(
+                deliveryId: delivery.id,
+                body: DeliveryUpdate(
+                  deliveryDate: delivery.deliveryDate,
+                )),
         (deliveries, delivery) => deliveries
           ..[deliveries.indexWhere((d) => d.id == delivery.id)] = delivery,
         delivery);
   }
 
-  Future<bool> openDelivery(Delivery delivery) async {
+  Future<bool> openDelivery(DeliveryReturn delivery) async {
     return await update(
-        deliveriesListRepository.openDelivery,
+        (delivery) async => deliveriesListRepository
+            .amapDeliveriesDeliveryIdOpenorderingPost(deliveryId: delivery.id),
         (deliveries, delivery) => deliveries
           ..[deliveries.indexWhere((d) => d.id == delivery.id)] =
-              delivery.copyWith(status: DeliveryStatus.available),
+              delivery.copyWith(status: DeliveryStatusType.orderable),
         delivery);
   }
 
-  Future<bool> lockDelivery(Delivery delivery) async {
+  Future<bool> lockDelivery(DeliveryReturn delivery) async {
     return await update(
-        deliveriesListRepository.lockDelivery,
+        (delivery) async => deliveriesListRepository
+            .amapDeliveriesDeliveryIdLockPost(deliveryId: delivery.id),
         (deliveries, delivery) => deliveries
           ..[deliveries.indexWhere((d) => d.id == delivery.id)] =
-              delivery.copyWith(status: DeliveryStatus.locked),
+              delivery.copyWith(status: DeliveryStatusType.locked),
         delivery);
   }
 
-  Future<bool> deliverDelivery(Delivery delivery) async {
+  Future<bool> deliverDelivery(DeliveryReturn delivery) async {
     return await update(
-        deliveriesListRepository.deliverDelivery,
+        (delivery) async => deliveriesListRepository
+            .amapDeliveriesDeliveryIdDeliveredPost(deliveryId: delivery.id),
         (deliveries, delivery) => deliveries
           ..[deliveries.indexWhere((d) => d.id == delivery.id)] =
-              delivery.copyWith(status: DeliveryStatus.delivered),
+              delivery.copyWith(status: DeliveryStatusType.delivered),
         delivery);
   }
 
-  Future<bool> archiveDelivery(Delivery delivery) async {
+  Future<bool> archiveDelivery(DeliveryReturn delivery) async {
     return await delete(
-        deliveriesListRepository.archiveDelivery,
+        (deliveryId) async => deliveriesListRepository
+            .amapDeliveriesDeliveryIdArchivePost(deliveryId: deliveryId),
         (deliveries, delivery) =>
             deliveries..removeWhere((i) => i.id == delivery.id),
         delivery.id,
         delivery);
   }
 
-  Future<bool> deleteDelivery(Delivery delivery) async {
+  Future<bool> deleteDelivery(DeliveryReturn delivery) async {
     return await delete(
-        deliveriesListRepository.deleteDelivery,
+        (deliveryId) async => deliveriesListRepository.amapDeliveriesDeliveryIdDelete(deliveryId: deliveryId),
         (deliveries, delivery) =>
             deliveries..removeWhere((i) => i.id == delivery.id),
         delivery.id,
         delivery);
   }
 
-  void toggleExpanded(String deliveryId) {
-    state.when(
-      data: (deliveries) {
-        var index = deliveries.indexWhere((p) => p.id == deliveryId);
-        if (index == -1) return;
-        deliveries[index] =
-            deliveries[index].copyWith(expanded: !deliveries[index].expanded);
-        state = AsyncValue.data(deliveries);
-      },
-      error: (error, stackTrace) {
-        state = AsyncValue.error(error, stackTrace);
-      },
-      loading: () {
-        state = const AsyncValue.error(
-            "Cannot toggle expanded while loading", StackTrace.empty);
-      },
-    );
-  }
-
-  Future<List<Delivery>> copy() async {
+  Future<List<DeliveryReturn>> copy() async {
     return state.maybeWhen(
       data: (deliveries) => List.from(deliveries),
       orElse: () => [],
@@ -96,10 +92,9 @@ class DeliveryListNotifier extends ListNotifier<Delivery> {
   }
 }
 
-final deliveryListProvider =
-    StateNotifierProvider<DeliveryListNotifier, AsyncValue<List<Delivery>>>(
-        (ref) {
-  final deliveryListRepository = ref.read(deliveryListRepositoryProvider);
+final deliveryListProvider = StateNotifierProvider<DeliveryListNotifier,
+    AsyncValue<List<DeliveryReturn>>>((ref) {
+  final deliveryListRepository = ref.read(repositoryProvider);
   DeliveryListNotifier orderListNotifier =
       DeliveryListNotifier(deliveriesListRepository: deliveryListRepository);
   tokenExpireWrapperAuth(ref, () async {
@@ -108,7 +103,7 @@ final deliveryListProvider =
   return orderListNotifier;
 });
 
-final deliveryList = Provider<List<Delivery>>((ref) {
+final deliveryList = Provider<List<DeliveryReturn>>((ref) {
   final state = ref.watch(deliveryListProvider);
   return state.maybeWhen(
     data: (deliveries) => deliveries,

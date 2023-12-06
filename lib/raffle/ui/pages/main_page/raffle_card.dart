@@ -1,8 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/class/raffle.dart';
-import 'package:myecl/raffle/class/stats.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/raffle/providers/pack_ticket_list_provider.dart';
 import 'package:myecl/raffle/providers/prize_list_provider.dart';
 import 'package:myecl/raffle/providers/raffle_id_provider.dart';
@@ -16,7 +15,7 @@ import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RaffleWidget extends HookConsumerWidget {
-  final Raffle raffle;
+  final RaffleComplete raffle;
   const RaffleWidget({super.key, required this.raffle});
 
   @override
@@ -32,9 +31,9 @@ class RaffleWidget extends HookConsumerWidget {
       child: GestureDetector(
           onTap: () {
             raffleIdNotifier.setId(raffle.id);
-            prizeListNotifier.loadPrizeList();
-            ticketListNotifier.loadTicketList();
-            packTicketListNotifier.loadPackTicketList();
+            prizeListNotifier.loadPrizeList(raffle.id);
+            ticketListNotifier.loadTicketList(raffle.id);
+            packTicketListNotifier.loadPackTicketList(raffle.id);
             QR.to(RaffleRouter.root + RaffleRouter.detail);
           },
           behavior: HitTestBehavior.opaque,
@@ -82,10 +81,10 @@ class RaffleWidget extends HookConsumerWidget {
                   notifier: rafflesStatsNotifier,
                   mapKey: raffle.id,
                   loader: (raffleId) async => (await singleRaffleStats
-                          .loadRaffleStats(customRaffleId: raffleId))
+                          .loadRaffleStats(raffleId))
                       .maybeWhen(
                     data: (value) => value,
-                    orElse: () => RaffleStats.empty(),
+                    orElse: () => RaffleStats.fromJson({}),
                   ),
                   dataBuilder: (context, stats) {
                     final stat = stats.first;

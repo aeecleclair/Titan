@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/event/ui/event.dart';
-import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/ui/pages/admin_page/list_event.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/ui/widgets/calendar.dart';
@@ -18,21 +17,23 @@ class AdminPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final events = ref.watch(eventListProvider);
 
-    final List<Event> pendingEvents = [],
+    final List<EventReturn> pendingEvents = [],
         confirmedEvents = [],
         canceledEvents = [];
     events.maybeWhen(
         data: (events) {
-          for (Event b in events) {
+          for (EventReturn b in events) {
             switch (b.decision) {
-              case Decision.approved:
+              case AppUtilsTypesCalendarTypesDecision .approved:
                 confirmedEvents.add(b);
                 break;
-              case Decision.declined:
+              case AppUtilsTypesCalendarTypesDecision .declined:
                 canceledEvents.add(b);
                 break;
-              case Decision.pending:
+              case AppUtilsTypesCalendarTypesDecision .pending:
                 pendingEvents.add(b);
+                break;
+              case AppUtilsTypesCalendarTypesDecision.swaggerGeneratedUnknown:
                 break;
             }
           }
@@ -41,7 +42,7 @@ class AdminPage extends HookConsumerWidget {
     List<Appointment> appointments = <Appointment>[];
     confirmedEvents.map((e) {
       if (e.recurrenceRule != "") {
-        final dates = getDateInRecurrence(e.recurrenceRule, e.start);
+        final dates = getDateInRecurrence(e.recurrenceRule!, e.start);
         dates.map((data) {
           appointments.add(Appointment(
             startTime: combineDate(data, e.start),

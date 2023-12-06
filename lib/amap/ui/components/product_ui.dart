@@ -1,20 +1,20 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class ProductCard extends StatelessWidget {
-  final Product product;
+  final ProductQuantity productQuantity;
   final Function()? onEdit;
   final Future Function()? onDelete;
   final bool showButton;
   const ProductCard(
       {super.key,
-      required this.product,
+      required this.productQuantity,
       this.onEdit,
       this.onDelete,
       this.showButton = true});
@@ -22,7 +22,7 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardLayout(
-      id: product.id,
+      id: productQuantity.product.id,
       width: 130,
       height: showButton ? 155 : 130,
       colors: const [
@@ -35,7 +35,7 @@ class ProductCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 10),
-          AutoSizeText(product.category,
+          AutoSizeText(productQuantity.product.category,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
@@ -43,7 +43,7 @@ class ProductCard extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: AMAPColorConstants.darkGreen)),
           const SizedBox(height: 4),
-          AutoSizeText(product.name,
+          AutoSizeText(productQuantity.product.name,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
@@ -51,7 +51,7 @@ class ProductCard extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: Colors.white)),
           const SizedBox(height: 4),
-          AutoSizeText('${product.price.toStringAsFixed(2)} €',
+          AutoSizeText('${productQuantity.product.price.toStringAsFixed(2)} €',
               maxLines: 1,
               minFontSize: 10,
               overflow: TextOverflow.ellipsis,
@@ -88,7 +88,7 @@ class ProductCard extends StatelessWidget {
               : Container(
                   margin: const EdgeInsets.only(bottom: 5),
                   child: Text(
-                      "${AMAPTextConstants.quantity} : ${product.quantity}",
+                      "${AMAPTextConstants.quantity} : ${productQuantity.quantity}",
                       style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,

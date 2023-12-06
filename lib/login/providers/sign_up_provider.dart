@@ -1,31 +1,35 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/login/class/account_type.dart';
-import 'package:myecl/login/class/create_account.dart';
-import 'package:myecl/login/class/recover_request.dart';
-import 'package:myecl/login/repositories/sign_up_repository.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 
 class SignUpProvider extends StateNotifier {
-  final SignUpRepository repository;
+  final Openapi repository;
   SignUpProvider({required this.repository}) : super(null);
 
-  Future<bool> createUser(String email, AccountType accountType) async {
-    return await repository.createUser(email, accountType);
+  Future<bool> createUser(String email) async {
+    return (await repository.usersCreatePost(
+            body: CoreUserCreateRequest(
+      email: email,
+    )))
+        .isSuccessful;
   }
 
   Future<bool> recoverUser(String email) async {
-    return await repository.recoverUser(email);
+    return (await repository.usersRecoverPost(
+            body: BodyRecoverUserUsersRecoverPost(email: email)))
+        .isSuccessful;
   }
 
-  Future<bool> activateUser(CreateAccount createAccount) async {
-    return await repository.activateUser(createAccount);
+  Future<bool> activateUser(CoreUserActivateRequest createAccount) async {
+    return (await repository.usersActivatePost(body: createAccount)).isSuccessful;
   }
 
-  Future<bool> resetPassword(RecoverRequest recoverRequest) async {
-    return await repository.resetPassword(recoverRequest);
+  Future<bool> resetPassword(ResetPasswordRequest recoverRequest) async {
+    return (await repository.usersResetPasswordPost(body: recoverRequest)).isSuccessful;
   }
 }
 
 final signUpProvider = StateNotifierProvider((ref) {
-  final signUpRepository = ref.watch(signUpRepositoryProvider);
+  final signUpRepository = ref.watch(repositoryProvider);
   return SignUpProvider(repository: signUpRepository);
 });

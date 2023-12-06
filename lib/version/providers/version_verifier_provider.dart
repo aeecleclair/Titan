@@ -1,21 +1,22 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/version/class/version.dart';
-import 'package:myecl/version/repositories/version_repository.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/single_notifier%20copy.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 
-class VersionVerifierNotifier extends SingleNotifier<Version> {
-  final VersionRepository versionRepository;
+class VersionVerifierNotifier extends SingleNotifier2<CoreInformation> {
+  final Openapi versionRepository;
   VersionVerifierNotifier({required this.versionRepository})
       : super(const AsyncLoading());
 
-  Future<AsyncValue<Version>> loadVersion() async {
-    return await load(versionRepository.getVersion);
+  Future<AsyncValue<CoreInformation>> loadVersion() async {
+    return await load(versionRepository.informationGet);
   }
 }
 
 final versionVerifierProvider =
-    StateNotifierProvider<VersionVerifierNotifier, AsyncValue<Version>>((ref) {
-  final versionRepository = ref.watch(versionRepositoryProvider);
+    StateNotifierProvider<VersionVerifierNotifier, AsyncValue<CoreInformation>>(
+        (ref) {
+  final versionRepository = ref.watch(repositoryProvider);
   final notifier =
       VersionVerifierNotifier(versionRepository: versionRepository);
   notifier.loadVersion();

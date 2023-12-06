@@ -1,15 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/vote/class/contender.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 
-final contenderProvider =
-    StateNotifierProvider<ContenderNotifier, Contender>((ref) {
-  return ContenderNotifier();
-});
+class ContenderNotifier extends StateNotifier<ListReturn> {
+  ContenderNotifier() : super(ListReturn.fromJson({}));
 
-class ContenderNotifier extends StateNotifier<Contender> {
-  ContenderNotifier() : super(Contender.empty());
-
-  void setId(Contender p) {
+  void setId(ListReturn p) {
     state = p;
   }
 }
+
+final contenderProvider =
+    StateNotifierProvider<ContenderNotifier, ListReturn>((ref) {
+  return ContenderNotifier();
+});

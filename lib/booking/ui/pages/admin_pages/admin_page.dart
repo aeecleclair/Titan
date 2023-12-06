@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/group_id_provider.dart';
-import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/class/manager.dart';
-import 'package:myecl/booking/class/room.dart';
-import 'package:myecl/booking/providers/booking_list_provider.dart';
+import 'package:myecl/booking/providers/admin_booking_list_provider.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/manager_list_provider.dart';
 import 'package:myecl/booking/providers/manager_id_provider.dart';
@@ -16,7 +13,8 @@ import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/pages/admin_pages/admin_chip.dart';
-import 'package:myecl/booking/ui/pages/manager_page/list_booking.dart';
+import 'package:myecl/booking/ui/components/list_booking.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
@@ -35,28 +33,30 @@ class AdminPage extends HookConsumerWidget {
     final roomList = ref.watch(roomListProvider);
     final room = ref.watch(roomProvider);
     final roomNotifier = ref.watch(roomProvider.notifier);
-    final bookings = ref.watch(bookingListProvider);
+    final bookings = ref.watch(adminBookingListProvider);
     final managerNotifier = ref.watch(managerProvider.notifier);
     final managerIdNotifier = ref.watch(managerIdProvider.notifier);
     final managerList = ref.watch(managerListProvider);
     final groupIdNotifier = ref.watch(groupIdProvider.notifier);
-    final List<Booking> pendingBookings = [],
+    final List<BookingReturnApplicant> pendingBookings = [],
         confirmedBookings = [],
         canceledBookings = [];
     bookings.maybeWhen(
         data: (
           bookings,
         ) {
-          for (Booking b in bookings) {
+          for (BookingReturnApplicant b in bookings) {
             switch (b.decision) {
-              case Decision.approved:
+              case AppUtilsTypesBookingTypeDecision .approved:
                 confirmedBookings.add(b);
                 break;
-              case Decision.declined:
+              case AppUtilsTypesBookingTypeDecision .declined:
                 canceledBookings.add(b);
                 break;
-              case Decision.pending:
+              case AppUtilsTypesBookingTypeDecision .pending:
                 pendingBookings.add(b);
+                break;
+              case AppUtilsTypesBookingTypeDecision.swaggerGeneratedUnknown:
                 break;
             }
           }
@@ -68,7 +68,7 @@ class AdminPage extends HookConsumerWidget {
     List<Appointment> appointments = <Appointment>[];
     confirmedBookings.map((e) {
       if (e.recurrenceRule != "") {
-        final dates = getDateInRecurrence(e.recurrenceRule, e.start);
+        final dates = getDateInRecurrence(e.recurrenceRule!, e.start);
         dates.map((data) {
           appointments.add(Appointment(
             startTime: combineDate(data, e.start),
@@ -97,7 +97,7 @@ class AdminPage extends HookConsumerWidget {
     return BookingTemplate(
       child: Refresher(
         onRefresh: () async {
-          await ref.watch(bookingListProvider.notifier).loadBookings();
+          await ref.watch(adminBookingListProvider.notifier).loadBookings();
           await ref.watch(roomListProvider.notifier).loadRooms();
           await ref
               .watch(confirmedBookingListProvider.notifier)
@@ -149,7 +149,7 @@ class AdminPage extends HookConsumerWidget {
                 items: rooms,
                 firstChild: ItemChip(
                   onTap: () {
-                    roomNotifier.setRoom(Room.empty());
+                    roomNotifier.setRoom(RoomComplete.fromJson({}));
                     managerIdNotifier.setId("");
                     QR.to(BookingRouter.root +
                         BookingRouter.admin +
@@ -196,7 +196,7 @@ class AdminPage extends HookConsumerWidget {
             ),
             const SizedBox(height: 20),
             roomList.when(
-              data: (List<Room> data) => SingleChildScrollView(
+              data: (data) => SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 physics: const BouncingScrollPhysics(),
                 child: Row(
@@ -205,7 +205,7 @@ class AdminPage extends HookConsumerWidget {
                     const SizedBox(width: 15),
                     GestureDetector(
                       onTap: () {
-                        roomNotifier.setRoom(Room.empty());
+                        roomNotifier.setRoom(RoomComplete.fromJson({}));
                         managerIdNotifier.setId("");
                         QR.to(BookingRouter.root +
                             BookingRouter.admin +
@@ -272,7 +272,7 @@ class AdminPage extends HookConsumerWidget {
                     const SizedBox(width: 15),
                     GestureDetector(
                       onTap: () {
-                        managerNotifier.setManager(Manager.empty());
+                        managerNotifier.setManager(Manager.fromJson({}));
                         groupIdNotifier.setId("");
                         QR.to(BookingRouter.root +
                             BookingRouter.admin +

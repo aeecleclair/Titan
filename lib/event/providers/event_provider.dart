@@ -1,14 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/event/class/event.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 
-class EventNotifier extends StateNotifier<Event> {
-  EventNotifier() : super(Event.empty());
+class EventNotifier extends StateNotifier<EventReturn> {
+  EventNotifier() : super(EventReturn.fromJson({}));
 
-  void setEvent(Event event) {
+  void setEvent(EventReturn event) {
     state = event;
   }
 }
 
-final eventProvider = StateNotifierProvider<EventNotifier, Event>((ref) {
+final eventProvider = StateNotifierProvider<EventNotifier, EventReturn>((ref) {
   return EventNotifier();
 });

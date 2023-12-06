@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/group.dart';
+import 'package:myecl/tools/adapters/group.dart';
 import 'package:myecl/admin/providers/group_id_provider.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/providers/group_provider.dart';
@@ -11,6 +11,7 @@ import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/ui/admin.dart';
 import 'package:myecl/admin/ui/components/admin_button.dart';
 import 'package:myecl/admin/ui/pages/edit_page/search_user.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -31,9 +32,9 @@ class EditAssociationPage extends HookConsumerWidget {
     final key = GlobalKey<FormState>();
     final name = useTextEditingController();
     final description = useTextEditingController();
-    final simpleGroupsGroupsNotifier =
+    final simpleGroupsNotifier =
         ref.watch(simpleGroupsGroupsProvider.notifier);
-    final simpleGroupsGroups = ref.watch(simpleGroupsGroupsProvider);
+    final simpleGroups = ref.watch(simpleGroupsGroupsProvider);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -45,17 +46,17 @@ class EditAssociationPage extends HookConsumerWidget {
             child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: AutoLoaderChild(
-                    value: simpleGroupsGroups,
-                    notifier: simpleGroupsGroupsNotifier,
+                    value: simpleGroups,
+                    notifier: simpleGroupsNotifier,
                     mapKey: groupId,
                     loader: (groupId) async =>
                         (await groupNotifier.loadGroup(groupId)).maybeWhen(
                             data: (groups) => groups,
-                            orElse: () => Group.empty()),
+                            orElse: () => CoreGroup.fromJson({})),
                     dataBuilder: (context, groups) {
                       final group = groups.first;
                       name.text = group.name;
-                      description.text = group.description;
+                      description.text = group.description ?? '';
                       return Column(children: [
                         const AlignLeftText(AdminTextConstants.edit,
                             fontSize: 20, color: ColorConstants.gradient1),
@@ -92,12 +93,13 @@ class EditAssociationPage extends HookConsumerWidget {
                                   return;
                                 }
                                 await tokenExpireWrapper(ref, () async {
-                                  Group newGroup = group.copyWith(
+                                  CoreGroup newGroup = group.copyWith(
                                       name: name.text,
                                       description: description.text);
                                   groupNotifier.setGroup(newGroup);
-                                  final value = await groupListNotifier
-                                      .updateGroup(newGroup.toSimpleGroup());
+                                  final value =
+                                      await groupListNotifier.updateGroup(
+                                          coreGroupSimpleAdapter(newGroup));
                                   if (value) {
                                     QR.back();
                                     displayToastWithContext(TypeMsg.msg,

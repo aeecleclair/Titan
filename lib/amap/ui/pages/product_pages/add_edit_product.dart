@@ -1,7 +1,6 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/category_list_provider.dart';
 import 'package:myecl/amap/providers/product_provider.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
@@ -9,6 +8,7 @@ import 'package:myecl/amap/providers/selected_category_provider.dart';
 import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/amap.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
@@ -24,7 +24,7 @@ class AddEditProduct extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = GlobalKey<FormState>();
     final product = ref.watch(productProvider);
-    final isEdit = product.id != Product.empty().id;
+    final isEdit = product.id != ProductComplete.fromJson({}).id;
     final products = ref.watch(productListProvider);
     final productsNotifier = ref.watch(productListProvider.notifier);
     final categories = ref.watch(categoryListProvider);
@@ -164,13 +164,12 @@ class AddEditProduct extends HookConsumerWidget {
                                     AMAPTextConstants.createCategory
                                 ? newCategory.text
                                 : categoryController;
-                            Product newProduct = Product(
+                            ProductComplete newProduct = ProductComplete(
                               id: isEdit ? product.id : "",
                               name: nameController.text,
                               price: double.parse(
                                   priceController.text.replaceAll(',', '.')),
                               category: cate,
-                              quantity: 0,
                             );
                             await tokenExpireWrapper(ref, () async {
                               final value = isEdit

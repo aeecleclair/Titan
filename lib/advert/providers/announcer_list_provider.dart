@@ -1,68 +1,77 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/advert/class/announcer.dart';
-import 'package:myecl/advert/repositories/announcer_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier%20copy.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class AnnouncerListNotifier extends ListNotifier<Announcer> {
-  final AnnouncerRepository _announcerRepository = AnnouncerRepository();
-  AnnouncerListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
-    _announcerRepository.setToken(token);
+class AdvertiserListNotifier extends ListNotifier2<AdvertiserComplete> {
+  final Openapi advertiserRepository;
+  AdvertiserListNotifier({required this.advertiserRepository})
+      : super(const AsyncValue.loading());
+
+  Future<AsyncValue<List<AdvertiserComplete>>> loadAllAdvertiserList() async {
+    return await loadList(advertiserRepository.advertAdvertisersGet);
   }
 
-  Future<AsyncValue<List<Announcer>>> loadAllAnnouncerList() async {
-    return await loadList(_announcerRepository.getAllAnnouncer);
+  Future<AsyncValue<List<AdvertiserComplete>>> loadMyAdvertiserList() async {
+    return await loadList(advertiserRepository.advertMeAdvertisersGet);
   }
 
-  Future<AsyncValue<List<Announcer>>> loadMyAnnouncerList() async {
-    return await loadList(_announcerRepository.getMyAnnouncer);
+  Future<bool> addAdvertiser(AdvertiserComplete advertiser) async {
+    return await add(
+        (advertiser) async => advertiserRepository.advertAdvertisersPost(
+                body: AdvertiserBase(
+              name: advertiser.name,
+              groupManagerId: advertiser.groupManagerId,
+            )),
+        advertiser);
   }
 
-  Future<bool> addAnnouncer(Announcer announcer) async {
-    return await add(_announcerRepository.createAnnouncer, announcer);
-  }
-
-  Future<bool> updateAnnouncer(Announcer announcer) async {
+  Future<bool> updateAdvertiser(AdvertiserComplete advertiser) async {
     return await update(
-        _announcerRepository.updateAnnouncer,
-        (announcers, announcer) => announcers
-          ..[announcers.indexWhere((i) => i.id == announcer.id)] = announcer,
-        announcer);
+        (advertiser) async =>
+            advertiserRepository.advertAdvertisersAdvertiserIdPatch(
+                advertiserId: advertiser.id,
+                body: AdvertiserUpdate(
+                  name: advertiser.name,
+                  groupManagerId: advertiser.groupManagerId,
+                )),
+        (advertisers, advertiser) => advertisers
+          ..[advertisers.indexWhere((i) => i.id == advertiser.id)] = advertiser,
+        advertiser);
   }
 
-  Future<bool> deleteAnnouncer(Announcer announcer) async {
+  Future<bool> deleteAdvertiser(AdvertiserComplete advertiser) async {
     return await delete(
-        _announcerRepository.deleteAnnouncer,
+        (advertiserId) async  => advertiserRepository.advertAdvertsAdvertIdDelete(advertId: advertiserId),
         (adverts, advert) => adverts..removeWhere((i) => i.id == advert.id),
-        announcer.id,
-        announcer);
+        advertiser.id,
+        advertiser);
   }
 }
 
-final announcerListProvider =
-    StateNotifierProvider<AnnouncerListNotifier, AsyncValue<List<Announcer>>>(
+final advertiserListProvider = StateNotifierProvider<AdvertiserListNotifier,
+    AsyncValue<List<AdvertiserComplete>>>(
   (ref) {
-    final token = ref.watch(tokenProvider);
-    AnnouncerListNotifier announcerListNotifier =
-        AnnouncerListNotifier(token: token);
+    final advertiserRepository = ref.watch(repositoryProvider);
+    AdvertiserListNotifier advertiserListNotifier =
+        AdvertiserListNotifier(advertiserRepository: advertiserRepository);
     tokenExpireWrapperAuth(ref, () async {
-      await announcerListNotifier.loadAllAnnouncerList();
+      await advertiserListNotifier.loadAllAdvertiserList();
     });
-    return announcerListNotifier;
+    return advertiserListNotifier;
   },
 );
 
-final userAnnouncerListProvider =
-    StateNotifierProvider<AnnouncerListNotifier, AsyncValue<List<Announcer>>>(
+final userAdvertiserListProvider = StateNotifierProvider<AdvertiserListNotifier,
+    AsyncValue<List<AdvertiserComplete>>>(
   (ref) {
-    final token = ref.watch(tokenProvider);
-    AnnouncerListNotifier announcerListNotifier =
-        AnnouncerListNotifier(token: token);
+    final advertiserRepository = ref.watch(repositoryProvider);
+    AdvertiserListNotifier advertiserListNotifier =
+        AdvertiserListNotifier(advertiserRepository: advertiserRepository);
     tokenExpireWrapperAuth(ref, () async {
-      await announcerListNotifier.loadMyAnnouncerList();
+      await advertiserListNotifier.loadMyAdvertiserList();
     });
-    return announcerListNotifier;
+    return advertiserListNotifier;
   },
 );

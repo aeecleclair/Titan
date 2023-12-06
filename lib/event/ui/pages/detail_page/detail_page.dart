@@ -4,6 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
+import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/event/ui/event.dart';
 import 'package:myecl/event/ui/components/event_ui.dart';
 import 'package:myecl/tools/functions.dart';
@@ -70,7 +71,7 @@ class DetailPage extends HookConsumerWidget {
                               ),
                               const SizedBox(height: 30),
                               AutoSizeText(
-                                event.applicant.getName(),
+                                getApplicantName(event.applicant),
                                 maxLines: 2,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(

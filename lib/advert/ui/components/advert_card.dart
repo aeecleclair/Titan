@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:myecl/advert/class/advert.dart';
 import 'package:myecl/advert/providers/advert_poster_provider.dart';
 import 'package:myecl/advert/providers/advert_posters_provider.dart';
 import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:myecl/tools/ui/widgets/text_with_hyper_link.dart';
 
 class AdvertCard extends HookConsumerWidget {
   final VoidCallback onTap;
-  final Advert advert;
+  final AdvertReturnComplete advert;
 
   const AdvertCard({Key? key, required this.onTap, required this.advert})
       : super(key: key);
@@ -82,7 +82,7 @@ class AdvertCard extends HookConsumerWidget {
                             const SizedBox(
                               height: 10,
                             ),
-                            Text(formatDate(advert.date),
+                            Text(formatDate(advert.date!),
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                   fontSize: 16,
@@ -208,7 +208,7 @@ class AdvertCard extends HookConsumerWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   AutoSizeText(
-                                    DateFormat('dd').format(advert.date),
+                                    DateFormat('dd').format(advert.date!),
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
                                       color: Colors.black,
@@ -220,7 +220,7 @@ class AdvertCard extends HookConsumerWidget {
                                   AutoSizeText(
                                     AdvertTextConstants.months[int.parse(
                                             DateFormat('MM')
-                                                .format(advert.date)) -
+                                                .format(advert.date!)) -
                                         1],
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
@@ -261,7 +261,7 @@ class AdvertCard extends HookConsumerWidget {
                                   vertical: 5, horizontal: 10),
                               alignment: Alignment.center,
                               child: AutoSizeText(
-                                advert.announcer.name,
+                                advert.advertiser.name,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                   color: Colors.black,

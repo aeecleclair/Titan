@@ -1,17 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 
 class SortedByCategoryProvider
-    extends StateNotifier<Map<String, List<Product>>> {
-  SortedByCategoryProvider(Map<String, List<Product>> p) : super(p);
+    extends StateNotifier<Map<String, List<ProductComplete>>> {
+  SortedByCategoryProvider(Map<String, List<ProductComplete>> p) : super(p);
 }
 
 final sortedByCategoryProductsProvider =
-    StateNotifierProvider<SortedByCategoryProvider, Map<String, List<Product>>>(
+    StateNotifierProvider<SortedByCategoryProvider, Map<String, List<ProductComplete>>>(
         (ref) {
   final products = ref.watch(productListProvider);
-  final sortedByCategoryProducts = <String, List<Product>>{};
+  final sortedByCategoryProducts = <String, List<ProductComplete>>{};
   products.maybeWhen(
       data: (products) {
         for (var product in products) {

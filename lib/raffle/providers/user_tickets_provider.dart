@@ -1,47 +1,37 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/raffle/class/pack_ticket.dart';
-import 'package:myecl/raffle/class/tickets.dart';
-import 'package:myecl/raffle/repositories/tickets_repository.dart';
-import 'package:myecl/raffle/repositories/user_tickets_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier%20copy.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class UserTicketListNotifier extends ListNotifier<Ticket> {
-  final UserDetailRepository _userDetailRepository = UserDetailRepository();
-  final TicketRepository _ticketsRepository = TicketRepository();
-  late String userId;
-  UserTicketListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
-    _userDetailRepository.setToken(token);
-    _ticketsRepository.setToken(token);
+class UserTicketListNotifier extends ListNotifier2<TicketComplete> {
+  final Openapi ticketsRepository;
+  UserTicketListNotifier({required this.ticketsRepository})
+      : super(const AsyncValue.loading());
+
+  Future<AsyncValue<List<TicketComplete>>> loadTicketList(String userId) async {
+    return await loadList(() async =>
+        ticketsRepository.tombolaUsersUserIdTicketsGet(userId: userId));
   }
 
-  void setId(String id) {
-    userId = id;
-  }
-
-  Future<AsyncValue<List<Ticket>>> loadTicketList() async {
-    return await loadList(
-        () async => _userDetailRepository.getTicketsListByUserId(userId));
-  }
-
-  Future<bool> buyTicket(PackTicket packTicket) async {
+  Future<bool> buyTicket(PackTicketSimple packTicket) async {
     return addAll(
-        (_) async => _ticketsRepository.buyTicket(packTicket.id, userId), []);
+        (_) async => ticketsRepository.tombolaTicketsBuyPackIdPost(
+            packId: packTicket.id),
+        []);
   }
 }
 
-final userTicketListProvider =
-    StateNotifierProvider<UserTicketListNotifier, AsyncValue<List<Ticket>>>(
-        (ref) {
-  final token = ref.watch(tokenProvider);
-  UserTicketListNotifier notifier = UserTicketListNotifier(token: token);
+final userTicketListProvider = StateNotifierProvider<UserTicketListNotifier,
+    AsyncValue<List<TicketComplete>>>((ref) {
+  final ticketsRepository = ref.watch(repositoryProvider);
+  UserTicketListNotifier notifier =
+      UserTicketListNotifier(ticketsRepository: ticketsRepository);
   tokenExpireWrapperAuth(ref, () async {
     final userId = ref.watch(idProvider);
     userId.whenData((value) async {
-      notifier.setId(value);
-      await notifier.loadTicketList();
+      await notifier.loadTicketList(value);
     });
   });
   return notifier;

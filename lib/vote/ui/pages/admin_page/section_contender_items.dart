@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/vote/class/contender.dart';
 import 'package:myecl/vote/providers/contender_list_provider.dart';
 import 'package:myecl/vote/providers/contender_members.dart';
 import 'package:myecl/vote/providers/contender_provider.dart';
 import 'package:myecl/vote/providers/sections_contender_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/ui/pages/admin_page/contender_card.dart';
@@ -34,8 +33,8 @@ class SectionContenderItems extends HookConsumerWidget {
     final contenderNotifier = ref.read(contenderProvider.notifier);
 
     final asyncStatus = ref.watch(statusProvider);
-    Status status = Status.open;
-    asyncStatus.whenData((value) => status = value);
+    StatusType status = StatusType.open;
+    asyncStatus.whenData((value) => status = value.status);
 
     void displayVoteToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -54,10 +53,10 @@ class SectionContenderItems extends HookConsumerWidget {
             value: sections[section]!,
             builder: (context, data) => HorizontalListView.builder(
                 height: 190,
-                firstChild: (status == Status.waiting)
+                firstChild: (status == StatusType.waiting)
                     ? GestureDetector(
                         onTap: () {
-                          contenderNotifier.setId(Contender.empty());
+                          contenderNotifier.setId(ListReturn.fromJson({}));
                           membersNotifier.setMembers([]);
                           QR.to(VoteRouter.root +
                               VoteRouter.admin +

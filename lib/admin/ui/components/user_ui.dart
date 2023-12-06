@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/tools/functions.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:myecl/user/class/list_users.dart';
 
 class UserUi extends HookConsumerWidget {
-  final SimpleUser user;
+  final CoreUserSimple user;
   final void Function() onDelete;
 
   const UserUi({super.key, required this.user, required this.onDelete});
@@ -19,7 +20,7 @@ class UserUi extends HookConsumerWidget {
           children: [
             Expanded(
               child: Text(
-                user.getName(),
+                getName(user),
                 style: const TextStyle(fontSize: 15),
                 overflow: TextOverflow.ellipsis,
               ),

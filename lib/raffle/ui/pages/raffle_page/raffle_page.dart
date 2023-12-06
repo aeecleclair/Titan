@@ -6,7 +6,7 @@ import 'package:myecl/raffle/providers/user_amount_provider.dart';
 import 'package:myecl/raffle/providers/prize_list_provider.dart';
 import 'package:myecl/raffle/providers/raffle_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/raffle/ui/pages/raffle_page/buy_type_ticket_card.dart';
+import 'package:myecl/raffle/ui/pages/raffle_page/buy_pack_ticket_card.dart';
 import 'package:myecl/raffle/ui/pages/raffle_page/prize_card.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
@@ -33,8 +33,8 @@ class RaffleInfoPage extends HookConsumerWidget {
         onRefresh: () async {
           userId.whenData(
               (value) async => await balanceNotifier.loadCashByUser(value));
-          await packTicketListNotifier.loadPackTicketList();
-          await prizeListNotifier.loadPrizeList();
+          await packTicketListNotifier.loadPackTicketList(raffle.id);
+          await prizeListNotifier.loadPrizeList(raffle.id);
         },
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Container(

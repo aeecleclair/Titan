@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/loan/class/item_quantity.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 

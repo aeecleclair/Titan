@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/class/prize.dart';
-import 'package:myecl/raffle/class/raffle_status_type.dart';
-import 'package:myecl/raffle/class/tickets.dart';
+import 'package:myecl/admin/tools/functions.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/raffle/providers/prize_list_provider.dart';
 import 'package:myecl/raffle/providers/prize_provider.dart';
 import 'package:myecl/raffle/providers/raffle_provider.dart';
@@ -32,7 +31,7 @@ class PrizeHandler extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    void displayWinningsDialog(List<Ticket> winningTickets) {
+    void displayWinningsDialog(List<TicketComplete> winningTickets) {
       showDialog(
           context: context,
           builder: (context) {
@@ -60,7 +59,7 @@ class PrizeHandler extends HookConsumerWidget {
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: Center(
                               child: Text(
-                                winningTickets[index].user.getName(),
+                                getName(winningTickets[index].user),
                                 style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -97,10 +96,10 @@ class PrizeHandler extends HookConsumerWidget {
             const SizedBox(
               width: 10,
             ),
-            if (raffle.raffleStatusType == RaffleStatusType.creation)
+            if (raffle.status == RaffleStatusType.creation)
               GestureDetector(
                 onTap: () {
-                  prizeNotifier.setPrize(Prize.empty());
+                  prizeNotifier.setPrize(PrizeSimple.fromJson({}));
                   QR.to(RaffleRouter.root +
                       RaffleRouter.detail +
                       RaffleRouter.creation +
@@ -190,7 +189,7 @@ class PrizeHandler extends HookConsumerWidget {
                                     RaffleRouter.creation +
                                     RaffleRouter.addEditPrize);
                               },
-                              status: raffle.raffleStatusType,
+                              status: raffle.status!,
                               onDraw: () async {
                                 await showDialog(
                                     context: context,
@@ -207,8 +206,7 @@ class PrizeHandler extends HookConsumerWidget {
                                                   data: (winningTicketList) {
                                                     prizesNotifier
                                                         .setPrizeQuantityToZero(
-                                                            e.copyWith(
-                                                                quantity: 0));
+                                                            e);
                                                     displayWinningsDialog(
                                                         winningTicketList);
                                                   },

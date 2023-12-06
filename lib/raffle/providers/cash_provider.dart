@@ -1,36 +1,47 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/raffle/class/cash.dart';
-import 'package:myecl/raffle/repositories/cash_repository.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/exception.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/tools/providers/list_notifier%20copy.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class CashProvider extends ListNotifier<Cash> {
-  final CashRepository _cashRepository = CashRepository();
-  AsyncValue<List<Cash>> _cashList = const AsyncLoading();
-  CashProvider({required String token}) : super(const AsyncLoading()) {
-    _cashRepository.setToken(token);
+class CashProvider extends ListNotifier2<AppSchemasSchemasRaffleCashComplete> {
+  final Openapi cashRepository;
+  AsyncValue<List<AppSchemasSchemasRaffleCashComplete>> _cashList =
+      const AsyncLoading();
+  CashProvider({required this.cashRepository}) : super(const AsyncLoading());
+
+  Future<AsyncValue<List<AppSchemasSchemasRaffleCashComplete>>>
+      loadCashList() async {
+    return _cashList = await loadList(cashRepository.tombolaUsersCashGet);
   }
 
-  Future<AsyncValue<List<Cash>>> loadCashList() async {
-    return _cashList = await loadList(_cashRepository.getCashList);
+  Future<bool> addCash(AppSchemasSchemasRaffleCashComplete cash) async {
+    return await add(
+        (cash) async => cashRepository.tombolaUsersUserIdCashPost(
+            userId: cash.userId,
+            body: AppSchemasSchemasRaffleCashEdit(
+              balance: cash.balance,
+            )),
+        cash);
   }
 
-  Future<bool> addCash(Cash cash) async {
-    return await add(_cashRepository.createCash, cash);
-  }
-
-  Future<bool> updateCash(Cash cash, int amount) async {
+  Future<bool> updateCash(
+      AppSchemasSchemasRaffleCashComplete cash, int amount) async {
     return await update(
-        _cashRepository.updateCash,
+        (cash) async => cashRepository.tombolaUsersUserIdCashPatch(
+            userId: cash.userId,
+            body: AppSchemasSchemasRaffleCashEdit(
+              balance: cash.balance,
+            )),
         (cashList, c) => cashList
           ..[cashList.indexWhere((c) => c.user.id == cash.user.id)] =
               cash.copyWith(balance: cash.balance + amount),
         cash.copyWith(balance: amount.toDouble()));
   }
 
-  Future<AsyncValue<List<Cash>>> filterCashList(String filter) async {
+  Future<AsyncValue<List<AppSchemasSchemasRaffleCashComplete>>> filterCashList(
+      String filter) async {
     return state.when(
       data: (cashList) async {
         final lowerQuery = filter.toLowerCase();
@@ -60,11 +71,11 @@ class CashProvider extends ListNotifier<Cash> {
   }
 }
 
-final cashProvider =
-    StateNotifierProvider<CashProvider, AsyncValue<List<Cash>>>(
+final cashProvider = StateNotifierProvider<CashProvider,
+    AsyncValue<List<AppSchemasSchemasRaffleCashComplete>>>(
   (ref) {
-    final token = ref.watch(tokenProvider);
-    CashProvider cashProvider = CashProvider(token: token);
+    final cashRepository = ref.watch(repositoryProvider);
+    CashProvider cashProvider = CashProvider(cashRepository: cashRepository);
     tokenExpireWrapperAuth(ref, () async {
       await cashProvider.loadCashList();
     });

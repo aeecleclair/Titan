@@ -1,13 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/raffle/class/prize.dart';
-import 'package:myecl/raffle/class/raffle_status_type.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class PrizeCard extends StatelessWidget {
-  final Prize lot;
+  final PrizeSimple lot;
   final Function() onEdit;
   final Future Function() onDelete, onDraw;
   final RaffleStatusType status;

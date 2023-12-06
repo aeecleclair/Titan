@@ -6,16 +6,15 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:myecl/advert/class/advert.dart';
-import 'package:myecl/advert/class/announcer.dart';
 import 'package:myecl/advert/providers/advert_list_provider.dart';
 import 'package:myecl/advert/providers/advert_poster_provider.dart';
 import 'package:myecl/advert/providers/advert_posters_provider.dart';
 import 'package:myecl/advert/providers/advert_provider.dart';
 import 'package:myecl/advert/providers/announcer_provider.dart';
 import 'package:myecl/advert/tools/constants.dart';
+import 'package:myecl/advert/ui/components/advertiser_bar.dart';
 import 'package:myecl/advert/ui/pages/advert.dart';
-import 'package:myecl/advert/ui/components/announcer_bar.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
@@ -30,13 +29,13 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final advert = ref.watch(advertProvider);
     final key = GlobalKey<FormState>();
-    final isEdit = advert.id != Advert.empty().id;
+    final isEdit = advert.id != AdvertReturnComplete.fromJson({}).id;
     final title = useTextEditingController(text: advert.title);
     final content = useTextEditingController(text: advert.content);
-    final selectedAnnouncers = ref.watch(announcerProvider);
+    final selectedAdvertisers = ref.watch(advertiserProvider);
 
     final tags = advert.tags;
-    var textTags = tags.join(', ');
+    var textTags = tags!;
     final textTagsController = useTextEditingController(text: textTags);
 
     final advertListNotifier = ref.watch(advertListProvider.notifier);
@@ -184,10 +183,10 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 50),
-              FormField<List<Announcer>>(
+              FormField<List<AdvertiserComplete>>(
                 validator: (e) {
-                  if (selectedAnnouncers.isEmpty) {
-                    return AdvertTextConstants.choosingAnnouncer;
+                  if (selectedAdvertisers.isEmpty) {
+                    return AdvertTextConstants.choosingAdvertiser;
                   }
                   return null;
                 },
@@ -206,8 +205,8 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                           ]
                         : [],
                   ),
-                  child: AnnouncerBar(
-                    useUserAnnouncers: true,
+                  child: AdvertiserBar(
+                    useUserAdvertisers: true,
                     multipleSelect: false,
                     isNotClickable: isEdit,
                   ),
@@ -232,16 +231,17 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                             return;
                           }
                           if (key.currentState!.validate() &&
-                              selectedAnnouncers.isNotEmpty &&
+                              selectedAdvertisers.isNotEmpty &&
                               (poster.value != null || isEdit)) {
                             await tokenExpireWrapper(ref, () async {
                               final advertList = ref.watch(advertListProvider);
-                              Advert newAdvert = Advert(
+                              AdvertReturnComplete newAdvert = AdvertReturnComplete(
                                   id: isEdit ? advert.id : '',
-                                  announcer: selectedAnnouncers[0],
+                                  advertiser: selectedAdvertisers[0],
+                                  advertiserId: selectedAdvertisers[0].id,
                                   content: content.text,
                                   date: DateTime.now(),
-                                  tags: textTagsController.text.split(', '),
+                                  tags: textTagsController.text,
                                   title: title.text);
                               final value = isEdit
                                   ? await advertListNotifier

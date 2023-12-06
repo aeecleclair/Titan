@@ -1,26 +1,28 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/module_visibility.dart';
-import 'package:myecl/admin/repositories/module_visibility_repository.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier%20copy.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class ModuleVisibilityListNotifier extends ListNotifier<ModuleVisibility> {
-  ModuleVisibilityRepository repository = ModuleVisibilityRepository();
-  ModuleVisibilityListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
-    repository.setToken(token);
-  }
+class ModuleVisibilityListNotifier extends ListNotifier2<ModuleVisibility> {
+  final Openapi moduleVisibilityRepository;
+  ModuleVisibilityListNotifier({required this.moduleVisibilityRepository})
+      : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<ModuleVisibility>>> loadModuleVisibility() async {
-    return await loadList(repository.getModuleVisibilityList);
+    return await loadList(moduleVisibilityRepository.moduleVisibilityGet);
   }
 
   Future<bool> addGroupToModule(
       ModuleVisibility moduleVisibility, String allowedGroupId) async {
     return await update(
         (moduleVisibility) async =>
-            repository.addGroupToModule(moduleVisibility.root, allowedGroupId),
+            moduleVisibilityRepository.moduleVisibilityPost(
+              body: ModuleVisibilityCreate(
+                root: moduleVisibility.root,
+                allowedGroupId: allowedGroupId,
+              ),
+            ),
         (list, moduleVisibility) => list
           ..[list.indexWhere((m) => m.root == moduleVisibility.root)] =
               moduleVisibility,
@@ -30,8 +32,11 @@ class ModuleVisibilityListNotifier extends ListNotifier<ModuleVisibility> {
   Future<bool> deleteGroupAccessForModule(
       ModuleVisibility moduleVisibility, String allowedGroupId) async {
     return await update(
-        (moduleVisibility) async => repository.deleteGroupAccessForModule(
-            moduleVisibility.root, allowedGroupId),
+        (moduleVisibility) async =>
+            moduleVisibilityRepository.moduleVisibilityRootGroupIdDelete(
+              root: moduleVisibility.root,
+              groupId: allowedGroupId,
+            ),
         (list, moduleVisibility) => list
           ..[list.indexWhere((m) => m.root == moduleVisibility.root)] =
               moduleVisibility,
@@ -45,9 +50,9 @@ class ModuleVisibilityListNotifier extends ListNotifier<ModuleVisibility> {
 
 final moduleVisibilityListProvider = StateNotifierProvider<
     ModuleVisibilityListNotifier, AsyncValue<List<ModuleVisibility>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  ModuleVisibilityListNotifier notifier =
-      ModuleVisibilityListNotifier(token: token);
+  final moduleVisibilityRepository = ref.watch(repositoryProvider);
+  ModuleVisibilityListNotifier notifier = ModuleVisibilityListNotifier(
+      moduleVisibilityRepository: moduleVisibilityRepository);
   tokenExpireWrapperAuth(ref, () async {
     await notifier.loadModuleVisibility();
   });

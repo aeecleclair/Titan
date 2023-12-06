@@ -11,7 +11,7 @@ class AdvertTemplate extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedAnnouncersNotifier = ref.read(announcerProvider.notifier);
+    final selectedAdvertisersNotifier = ref.read(advertiserProvider.notifier);
     return Scaffold(
       body: Container(
         color: Colors.white,
@@ -22,7 +22,7 @@ class AdvertTemplate extends HookConsumerWidget {
                 title: AdvertTextConstants.advert,
                 root: AdvertRouter.root,
                 onBack: () {
-                  selectedAnnouncersNotifier.clearAnnouncer();
+                  selectedAdvertisersNotifier.clearAdvertiser();
                 },
               ),
               const SizedBox(height: 30),

@@ -1,43 +1,23 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/class/loaner.dart';
-import 'package:myecl/loan/repositories/loaner_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier%20copy.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class UserLoanerListNotifier extends ListNotifier<Loaner> {
-  final LoanerRepository loanerRepository;
+class UserLoanerListNotifier extends ListNotifier2<Loaner> {
+  final Openapi loanerRepository;
   UserLoanerListNotifier({required this.loanerRepository})
       : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Loaner>>> loadMyLoanerList() async {
-    return await loadList(loanerRepository.getMyLoaner);
-  }
-
-  Future<bool> addLoaner(Loaner loaner) async {
-    return await add(loanerRepository.createLoaner, loaner);
-  }
-
-  Future<bool> updateLoaner(Loaner loaner) async {
-    return await update(
-        loanerRepository.updateLoaner,
-        (loaners, loaner) =>
-            loaners..[loaners.indexWhere((i) => i.id == loaner.id)] = loaner,
-        loaner);
-  }
-
-  Future<bool> deleteLoaner(Loaner loaner) async {
-    return await delete(
-        loanerRepository.deleteLoaner,
-        (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
-        loaner.id,
-        loaner);
+    return await loadList(loanerRepository.loansUsersMeLoanersGet);
   }
 }
 
 final userLoanerListProvider =
     StateNotifierProvider<UserLoanerListNotifier, AsyncValue<List<Loaner>>>(
   (ref) {
-    final loanerRepository = ref.watch(loanerRepositoryProvider);
+    final loanerRepository = ref.watch(repositoryProvider);
     UserLoanerListNotifier orderListNotifier =
         UserLoanerListNotifier(loanerRepository: loanerRepository);
     tokenExpireWrapperAuth(ref, () async {

@@ -1,14 +1,14 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/booking.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 
-class BookingNotifier extends StateNotifier<Booking> {
-  BookingNotifier() : super(Booking.empty());
+class BookingNotifier extends StateNotifier<BookingReturnApplicant> {
+  BookingNotifier() : super(BookingReturnApplicant.fromJson({}));
 
-  void setBooking(Booking booking) {
+  void setBooking(BookingReturnApplicant booking) {
     state = booking;
   }
 }
 
-final bookingProvider = StateNotifierProvider<BookingNotifier, Booking>((ref) {
+final bookingProvider = StateNotifierProvider<BookingNotifier, BookingReturnApplicant>((ref) {
   return BookingNotifier();
 });

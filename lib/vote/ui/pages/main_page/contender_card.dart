@@ -2,21 +2,20 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
-import 'package:myecl/vote/class/contender.dart';
 import 'package:myecl/vote/providers/contender_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/selected_contender_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/ui/components/contender_logo.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class ContenderCard extends HookConsumerWidget {
-  final Contender contender;
+  final ListReturn contender;
   final AnimationController animation;
   final int index;
   final bool enableVote;
@@ -38,10 +37,10 @@ class ContenderCard extends HookConsumerWidget {
         ref.read(selectedContenderProvider.notifier);
     final status = ref.watch(statusProvider);
     final s =
-        status.maybeWhen(data: (value) => value, orElse: () => Status.closed);
+        status.maybeWhen(data: (value) => value, orElse: () => StatusType.closed);
     return Stack(
       children: [
-        if (s == Status.published)
+        if (s == StatusType.published)
           SlideTransition(
             position: Tween<Offset>(
               begin: const Offset(1, 0),
@@ -122,7 +121,7 @@ class ContenderCard extends HookConsumerWidget {
           child: Container(
               padding: const EdgeInsets.all(10.0),
               margin: const EdgeInsets.only(bottom: 15, left: 10),
-              height: (s == Status.open && enableVote) ? 160 : 120,
+              height: (s == StatusType.open && enableVote) ? 160 : 120,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: const BorderRadius.only(
@@ -146,7 +145,7 @@ class ContenderCard extends HookConsumerWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        contender.listType != ListType.blank
+                        contender.type != ListType.blank
                             ? ContenderLogo(contender)
                             : const HeroIcon(
                                 HeroIcons.cubeTransparent,
@@ -164,7 +163,7 @@ class ContenderCard extends HookConsumerWidget {
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black)),
                               Text(
-                                  capitalize(contender.listType
+                                  capitalize(contender.type
                                       .toString()
                                       .split('.')
                                       .last),
@@ -177,7 +176,7 @@ class ContenderCard extends HookConsumerWidget {
                           ),
                         ),
                         const SizedBox(width: 5),
-                        contender.listType != ListType.blank
+                        contender.type != ListType.blank
                             ? GestureDetector(
                                 onTap: () {
                                   contenderNotifier.setId(contender);
@@ -202,7 +201,7 @@ class ContenderCard extends HookConsumerWidget {
                               color: Colors.grey.shade400)),
                     ),
                     const Spacer(),
-                    if (s == Status.open && enableVote)
+                    if (s == StatusType.open && enableVote)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

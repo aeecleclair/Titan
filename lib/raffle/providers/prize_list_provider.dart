@@ -1,60 +1,82 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/raffle/class/prize.dart';
-import 'package:myecl/raffle/class/raffle.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/raffle/providers/raffle_id_provider.dart';
-import 'package:myecl/raffle/repositories/prize_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/tools/providers/list_notifier%20copy.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class LotListNotifier extends ListNotifier<Prize> {
-  final LotRepository _lotRepository = LotRepository();
-  late String raffleId;
-  LotListNotifier({required String token}) : super(const AsyncValue.loading()) {
-    _lotRepository.setToken(token);
+class PrizeListNotifier extends ListNotifier2<PrizeSimple> {
+  final Openapi prizeRepository;
+  PrizeListNotifier({required this.prizeRepository})
+      : super(const AsyncValue.loading());
+
+  Future<AsyncValue<List<PrizeSimple>>> loadPrizeList(String raffleId) async {
+    return await loadList(() async =>
+        prizeRepository.tombolaRafflesRaffleIdPrizesGet(raffleId: raffleId));
   }
 
-  void setRaffleId(String id) {
-    raffleId = id;
+  Future<bool> addPrize(PrizeSimple prize) async {
+    return await add(
+        (prize) async => prizeRepository.tombolaPrizesPost(
+                body: PrizeBase(
+              name: prize.name,
+              description: prize.description,
+              raffleId: prize.raffleId,
+              quantity: prize.quantity,
+            )),
+        prize);
   }
 
-  Future<AsyncValue<List<Prize>>> loadPrizeList() async {
-    return await loadList(() async => _lotRepository.getLotList(raffleId));
-  }
-
-  Future<bool> addPrize(Prize lot) async {
-    return await add(_lotRepository.createLot, lot);
-  }
-
-  Future<bool> deletePrize(Prize lot) async {
+  Future<bool> deletePrize(PrizeSimple prize) async {
     return await delete(
-      _lotRepository.deleteLot,
-      (lot, t) => lot..removeWhere((e) => e.id == t.id),
-      lot.id,
-      lot,
+      (prizeId) async =>
+          prizeRepository.tombolaPrizesPrizeIdDelete(prizeId: prizeId),
+      (prize, t) => prize..removeWhere((e) => e.id == t.id),
+      prize.id,
+      prize,
     );
   }
 
-  Future<bool> updatePrize(Prize lot) async {
-    return await update(_lotRepository.updateLot,
-        (lot, t) => lot..[lot.indexWhere((e) => e.id == t.id)] = t, lot);
+  Future<bool> updatePrize(PrizeSimple prize) async {
+    return await update(
+        (prize) async => prizeRepository.tombolaPrizesPrizeIdPatch(
+            prizeId: prize.id,
+            body: PrizeEdit(
+              name: prize.name,
+              description: prize.description,
+              raffleId: prize.raffleId,
+              quantity: prize.quantity,
+            )),
+        (prize, t) => prize..[prize.indexWhere((e) => e.id == t.id)] = t,
+        prize);
   }
 
-  Future<bool> setPrizeQuantityToZero(Prize lot) async {
-    return await update((_) async => true,
-        (lot, t) => lot..[lot.indexWhere((e) => e.id == t.id)] = t, lot);
+  Future<bool> setPrizeQuantityToZero(PrizeSimple prize) async {
+    return state.when(data: (prizeList) async {
+      final newPrize = prize.copyWith(quantity: 0);
+      state = AsyncValue.data(prizeList
+        ..[prizeList.indexWhere((e) => e.id == prize.id)] = newPrize);
+      return true;
+    }, error: (error, stackTrace) {
+      state = AsyncValue.error(error, stackTrace);
+      return false;
+    }, loading: () {
+      state = const AsyncValue.error(
+          "Cannot update prize while loading", StackTrace.empty);
+      return false;
+    });
   }
 }
 
 final prizeListProvider =
-    StateNotifierProvider<LotListNotifier, AsyncValue<List<Prize>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  final notifier = LotListNotifier(token: token);
+    StateNotifierProvider<PrizeListNotifier, AsyncValue<List<PrizeSimple>>>(
+        (ref) {
+  final prizeRepository = ref.watch(repositoryProvider);
+  final notifier = PrizeListNotifier(prizeRepository: prizeRepository);
   tokenExpireWrapperAuth(ref, () async {
     final raffleId = ref.watch(raffleIdProvider);
-    if (raffleId != Raffle.empty().id) {
-      notifier.setRaffleId(raffleId);
-      notifier.loadPrizeList();
+    if (raffleId != RaffleSimple.fromJson({}).id) {
+      notifier.loadPrizeList(raffleId);
     }
   });
   return notifier;

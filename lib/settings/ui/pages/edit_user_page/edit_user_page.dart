@@ -4,6 +4,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/settings/router.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/edit_user_page/picture_button.dart';
@@ -18,7 +20,6 @@ import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
-import 'package:myecl/user/class/floors.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/user/providers/profile_picture_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -34,7 +35,7 @@ class EditUserPage extends HookConsumerWidget {
     final profilePicture = ref.watch(profilePictureProvider);
     final profilePictureNotifier = ref.watch(profilePictureProvider.notifier);
     final dateController =
-        useTextEditingController(text: processDatePrint(user.birthday));
+        useTextEditingController(text: processDate(user.birthday!));
     final nickNameController =
         useTextEditingController(text: user.nickname ?? '');
     final phoneController = useTextEditingController(text: user.phone ?? '');
@@ -45,7 +46,7 @@ class EditUserPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    List<DropdownMenuItem> items = Floors.values
+    List<DropdownMenuItem> items = FloorsType.values
         .map((e) => DropdownMenuItem(
               value: capitalize(e.toString().split('.').last),
               child: Text(capitalize(e.toString().split('.').last)),
@@ -233,7 +234,7 @@ class EditUserPage extends HookConsumerWidget {
                     ),
                     GestureDetector(
                         onTap: () => getOnlyDayDate(context, dateController,
-                            initialDate: DateTime.parse(user.birthday),
+                            initialDate: user.birthday!,
                             firstDate: DateTime(1900),
                             lastDate: DateTime.now()),
                         child: Container(
@@ -316,14 +317,17 @@ class EditUserPage extends HookConsumerWidget {
                       await tokenExpireWrapper(ref, () async {
                         final value =
                             await asyncUserNotifier.updateMe(user.copyWith(
-                          birthday: processDateBack(dateController.value.text),
+                          birthday: DateTime.parse(
+                              processDateBack(dateController.value.text)),
                           nickname: nickNameController.value.text.isEmpty
                               ? null
                               : nickNameController.value.text,
                           phone: phoneController.value.text.isEmpty
                               ? null
                               : phoneController.value.text,
-                          floor: floorController.value.text,
+                          floor: FloorsType.values.firstWhere((e) =>
+                              e.toString().split('.').last ==
+                              floorController.value.text),
                         ));
                         if (value) {
                           displayToastWithContext(TypeMsg.msg,

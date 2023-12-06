@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/event/providers/event_provider.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 
 class RoomIdNotifier extends StateNotifier<String> {
   RoomIdNotifier(String b) : super(b);
@@ -18,7 +18,7 @@ final roomIdProvider = StateNotifierProvider<RoomIdNotifier, String>((ref) {
       data: (data) => data
           .firstWhere(
             (element) => element.name == event.location,
-            orElse: () => Room.empty(),
+            orElse: () => RoomComplete.fromJson({}),
           )
           .id,
       orElse: () => "");

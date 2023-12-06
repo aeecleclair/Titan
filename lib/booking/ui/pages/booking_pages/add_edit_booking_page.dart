@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/booking.dart';
+import 'package:myecl/booking/providers/admin_booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/selected_days_provider.dart';
-import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/pages/admin_pages/admin_chip.dart';
 import 'package:myecl/booking/ui/pages/booking_pages/checkbox_entry.dart';
 import 'package:myecl/event/tools/functions.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
@@ -37,16 +37,15 @@ class AddEditBookingPage extends HookConsumerWidget {
     final user = ref.watch(userProvider);
     final key = GlobalKey<FormState>();
     final rooms = ref.watch(roomListProvider);
-    final usersBookingsNotifier = ref.watch(userBookingListProvider.notifier);
+    final adminBookingsListNotifier = ref.watch(adminBookingListProvider.notifier);
     final confirmedBookingListNotifier =
         ref.watch(confirmedBookingListProvider.notifier);
     final bookingsNotifier = ref.watch(bookingListProvider.notifier);
-    final bookings = ref.watch(bookingListProvider);
     final booking = ref.watch(bookingProvider);
-    final isEdit = booking.id != Booking.empty().id;
+    final isEdit = booking.id != BookingReturn.fromJson({}).id;
     final room = useState(booking.room);
     final recurrent = useState(booking.recurrenceRule != ""
-        ? booking.recurrenceRule.contains("BYDAY")
+        ? booking.recurrenceRule!.contains("BYDAY")
         : false);
     final allDay = useState(booking.start.hour == 0 &&
         booking.end.hour == 23 &&
@@ -72,12 +71,12 @@ class AddEditBookingPage extends HookConsumerWidget {
     final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
     final interval = useTextEditingController(
         text: booking.recurrenceRule != ""
-            ? booking.recurrenceRule.split(";INTERVAL=")[1].split(";")[0]
+            ? booking.recurrenceRule!.split(";INTERVAL=")[1].split(";")[0]
             : "1");
     final recurrenceEndDate = useTextEditingController(
         text: booking.recurrenceRule != ""
             ? processDate(DateTime.parse(
-                booking.recurrenceRule.split(";UNTIL=")[1].split(";")[0]))
+                booking.recurrenceRule!.split(";UNTIL=")[1].split(";")[0]))
             : "");
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -316,7 +315,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                                     DateTime.parse(
                                         processDateBackWithHour(endString)));
                               }
-                              Booking newBooking = Booking(
+                              BookingReturn newBooking = BookingReturn(
                                   id: isEdit ? booking.id : "",
                                   reason: motif.text,
                                   start: DateTime.parse(
@@ -325,11 +324,11 @@ class AddEditBookingPage extends HookConsumerWidget {
                                       processDateBackWithHour(endString)),
                                   note: note.text,
                                   room: room.value,
+                                  roomId: room.value.id,
                                   key: keyRequired.value,
                                   decision: booking.decision,
                                   recurrenceRule: recurrenceRule,
                                   entity: entity.text,
-                                  applicant: user.toApplicant(),
                                   applicantId: user.id);
                               final value = isEdit
                                   ? await bookingsNotifier
@@ -339,26 +338,17 @@ class AddEditBookingPage extends HookConsumerWidget {
                               if (value) {
                                 QR.back();
                                 if (isEdit) {
-                                  if (booking.decision == Decision.approved) {
+                                  if (booking.decision == AppUtilsTypesBookingTypeDecision.approved) {
                                     await confirmedBookingListNotifier
-                                        .updateBooking(newBooking);
+                                        .loadConfirmedBooking();
                                   }
-                                  if (!isAdmin) {
-                                    await usersBookingsNotifier
-                                        .updateBooking(newBooking);
+                                  if (isAdmin) {
+                                    await adminBookingsListNotifier
+                                        .loadBookings();
                                   }
                                   displayToastWithContext(TypeMsg.msg,
                                       BookingTextConstants.editedBooking);
                                 } else {
-                                  if (!isAdmin) {
-                                    newBooking = bookings.maybeWhen(
-                                        data: (value) => value.last,
-                                        orElse: () => Booking.empty());
-                                    if (newBooking.id != Booking.empty().id) {
-                                      await usersBookingsNotifier
-                                          .addBooking(newBooking);
-                                    }
-                                  }
                                   displayToastWithContext(TypeMsg.msg,
                                       BookingTextConstants.addedBooking);
                                 }

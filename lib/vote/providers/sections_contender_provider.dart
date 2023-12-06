@@ -1,27 +1,24 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/map_provider.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/vote/class/contender.dart';
-import 'package:myecl/vote/class/section.dart';
 import 'package:myecl/vote/providers/contender_list_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 
-class SectionContender extends MapNotifier<Section, Contender> {
+class SectionContender extends MapNotifier<SectionComplete, ListReturn> {
   SectionContender() : super();
 }
 
 final sectionContenderProvider = StateNotifierProvider<SectionContender,
-    AsyncValue<Map<Section, AsyncValue<List<Contender>>>>>((ref) {
+    AsyncValue<Map<SectionComplete, AsyncValue<List<ListReturn>>>>>((ref) {
   SectionContender adminLoanListNotifier = SectionContender();
   tokenExpireWrapperAuth(ref, () async {
     final loaners = ref.watch(sectionList);
     final contenders = ref.watch(contenderListProvider);
-    List<Contender> list = [];
-    contenders.when(data: (contender) {
+    List<ListReturn> list = [];
+    contenders.maybeWhen(data: (contender) {
       list = contender;
-    }, error: (error, stackTrace) {
-      list = [];
-    }, loading: () {
+    }, orElse: () {
       list = [];
     });
     adminLoanListNotifier.loadTList(loaners);

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/cinema/class/session.dart';
 import 'package:myecl/cinema/providers/cinema_topic_provider.dart';
 import 'package:myecl/cinema/providers/scroll_provider.dart';
 import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
@@ -9,10 +8,11 @@ import 'package:myecl/cinema/providers/session_poster_provider.dart';
 import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 
 class SessionCard extends HookConsumerWidget {
-  final Session session;
+  final CineSessionComplete session;
   final int index;
   final VoidCallback? onTap;
   const SessionCard(

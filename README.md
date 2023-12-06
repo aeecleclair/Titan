@@ -55,7 +55,7 @@ flutter analyze
 To fix some issues :
 
 ```bash
-flutter analyze --fix
+dart fix --apply
 ```
 
 ## Formatting

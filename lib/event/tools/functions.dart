@@ -1,46 +1,6 @@
 import 'dart:math';
 
-import 'package:myecl/event/class/event.dart';
-
-String calendarEventTypeToString(CalendarEventType type) {
-  switch (type) {
-    case CalendarEventType.eventAE:
-      return "Event AE";
-    case CalendarEventType.eventUSE:
-      return "Event USE";
-    case CalendarEventType.independentAssociation:
-      return "Asso indé";
-    case CalendarEventType.happyHour:
-      return "HH";
-    case CalendarEventType.direction:
-      return "Strass";
-    case CalendarEventType.nightParty:
-      return "Rewass";
-    case CalendarEventType.other:
-      return "Autre";
-  }
-}
-
-CalendarEventType stringToCalendarEventType(String type) {
-  switch (type) {
-    case "Event AE":
-      return CalendarEventType.eventAE;
-    case "Event USE":
-      return CalendarEventType.eventUSE;
-    case "Asso indé":
-      return CalendarEventType.independentAssociation;
-    case "HH":
-      return CalendarEventType.happyHour;
-    case "Strass":
-      return CalendarEventType.direction;
-    case "Rewass":
-      return CalendarEventType.nightParty;
-    case "Autre":
-      return CalendarEventType.other;
-    default:
-      return CalendarEventType.other;
-  }
-}
+import 'package:myecl/generated/openapi.swagger.dart';
 
 String processDateOnlyHour(DateTime date) {
   return "${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}";
@@ -66,4 +26,11 @@ String formatDelayToToday(DateTime date, DateTime now) {
     return "Dans ${(date.month - now.month) % 12} mois";
   }
   return "Dans ${date.year - now.year} ans";
+}
+
+String getApplicantName(EventApplicant applicant) {
+  if (applicant.nickname != null && applicant.nickname!.isNotEmpty) {
+    return "${applicant.nickname} (${applicant.firstname} ${applicant.name})";
+  }
+  return "${applicant.firstname} ${applicant.name}";
 }

@@ -1,9 +1,21 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/vote/class/contender.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 
+class SelectedContenderProvider extends StateNotifier<ListReturn> {
+  SelectedContenderProvider(List<dynamic> p) : super(ListReturn.fromJson({}));
+
+  void changeSelection(ListReturn s) {
+    state = s;
+  }
+
+  void clear() {
+    state = ListReturn.fromJson({});
+  }
+}
+
 final selectedContenderProvider =
-    StateNotifierProvider<SelectedContenderProvider, Contender>((ref) {
+    StateNotifierProvider<SelectedContenderProvider, ListReturn>((ref) {
   final contenderList = ref.watch(sectionsProvider);
   final contenders = [];
   contenderList.maybeWhen(
@@ -12,15 +24,3 @@ final selectedContenderProvider =
   );
   return SelectedContenderProvider(contenders);
 });
-
-class SelectedContenderProvider extends StateNotifier<Contender> {
-  SelectedContenderProvider(List<dynamic> p) : super(Contender.empty());
-
-  void changeSelection(Contender s) {
-    state = s;
-  }
-
-  void clear() {
-    state = Contender.empty();
-  }
-}
