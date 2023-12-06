@@ -46,8 +46,27 @@ If you want to run a specific test file :
 flutter test path/to/file.dart
 ```
 
+## Notifications setup
+
+<https://pub.dev/packages/firebase_messaging>
+
+### Android
+
+<https://firebase.google.com/docs/cloud-messaging/android/client>
+
+### iOS
+
+<https://firebase.google.com/docs/cloud-messaging/ios/client>
+
+## Debug on Android
+
+To debug on Android you need to have an Android device connected to your computer or an Android emulator running.
+You also need to have the notification configuration file in the `android/app` folder.
+<https://docs.flutter.dev/get-started/test-drive?tab=androidstudio>
+
 ## Debug on the iOS simulator
 
+To debug on the iOS simulator you need to have Xcode installed.	You also need to have the notification configuration file in the `ios/Runner` folder.
 <https://docs.flutter.dev/get-started/test-drive?tab=vscode>
 
 ## iOS export IPA
