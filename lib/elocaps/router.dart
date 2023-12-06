@@ -1,3 +1,4 @@
+import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
@@ -15,7 +16,7 @@ class ElocapsRouter {
 
   static final Module module = Module(
       name: "Elocaps",
-      icon: HeroIcons.rss, // Mettre un icon venant d'un svg [plus tard]
+      icon: Left(HeroIcons.rss), // Mettre un icon venant d'un svg [plus tard]
       root: ElocapsRouter.root,
       selected: false);
   ElocapsRouter(this.ref);
