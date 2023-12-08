@@ -29,26 +29,36 @@ class GamePage extends HookConsumerWidget {
     final gameNotifier = ref.watch(gameProvider.notifier);
     final isFocused = useState(List.generate(4, (index) => false));
     final user = ref.watch(userProvider);
+    final keys = [
+      GlobalKey<FormState>(),
+      GlobalKey<FormState>(),
+      GlobalKey<FormState>(),
+      GlobalKey<FormState>(),
+    ];
     final playersForm = [
       PlayerForm(
           index: 0,
           isFocused: isFocused,
+          formKey: keys[0],
           queryController:
               useTextEditingController(text: user.toSimpleUser().getName()),
           user: useState(user.toSimpleUser())),
       PlayerForm(
           index: 1,
           isFocused: isFocused,
+          formKey: keys[1],
           queryController: useTextEditingController(text: ""),
           user: useState(SimpleUser.empty())),
       PlayerForm(
           index: 2,
           isFocused: isFocused,
+          formKey: keys[2],
           queryController: useTextEditingController(text: ""),
           user: useState(SimpleUser.empty())),
       PlayerForm(
           index: 3,
           isFocused: isFocused,
+          formKey: keys[3],
           queryController: useTextEditingController(text: ""),
           user: useState(SimpleUser.empty())),
     ];
@@ -84,50 +94,52 @@ class GamePage extends HookConsumerWidget {
               },
               height: 40),
           const SizedBox(height: 30),
-          Form(
-            key: key,
-            child: Column(
-              children: modeChosen == CapsMode.cd
-                  ? [
-                      const AlignLeftText("Equipe 1",
-                          padding: EdgeInsets.symmetric(horizontal: 30)),
-                      const SizedBox(height: 10),
-                      playersForm[0],
-                      playersForm[1],
-                      const SizedBox(height: 20),
-                      const AlignLeftText("Equipe 2",
-                          padding: EdgeInsets.symmetric(horizontal: 30)),
-                      const SizedBox(height: 10),
-                      playersForm[2],
-                      playersForm[3],
-                    ]
-                  : [
-                      const AlignLeftText("Joueur 1",
-                          padding: EdgeInsets.symmetric(horizontal: 30)),
-                      const SizedBox(height: 20),
-                      playersForm[0],
-                      const SizedBox(height: 20),
-                      const AlignLeftText("Joueur 2",
-                          padding: EdgeInsets.symmetric(horizontal: 30)),
-                      const SizedBox(height: 20),
-                      playersForm[1],
-                    ],
-            ),
+          Column(
+            children: modeChosen == CapsMode.cd
+                ? [
+                    const AlignLeftText("Equipe 1",
+                        padding: EdgeInsets.symmetric(horizontal: 30)),
+                    const SizedBox(height: 10),
+                    playersForm[0],
+                    playersForm[1],
+                    const SizedBox(height: 20),
+                    const AlignLeftText("Equipe 2",
+                        padding: EdgeInsets.symmetric(horizontal: 30)),
+                    const SizedBox(height: 10),
+                    playersForm[2],
+                    playersForm[3],
+                  ]
+                : [
+                    const AlignLeftText("Joueur 1",
+                        padding: EdgeInsets.symmetric(horizontal: 30)),
+                    const SizedBox(height: 20),
+                    playersForm[0],
+                    const SizedBox(height: 20),
+                    const AlignLeftText("Joueur 2",
+                        padding: EdgeInsets.symmetric(horizontal: 30)),
+                    const SizedBox(height: 20),
+                    playersForm[1],
+                  ],
           ),
           const SizedBox(height: 30),
           if (!isGameCreated.value)
             GestureDetector(
               onTap: () {
+                if (modeChosen == CapsMode.cd) {
+                  if (playersForm[0].formKey.currentState!.validate() &&
+                      playersForm[1].formKey.currentState!.validate() &&
+                      playersForm[2].formKey.currentState!.validate() &&
+                      playersForm[3].formKey.currentState!.validate()) {
+                    isGameCreated.value = true;
+                  }
+                } else if (playersForm[0].formKey.currentState!.validate() &&
+                    playersForm[1].formKey.currentState!.validate()) {
+                  isGameCreated.value = true;
+                }
                 players.value = playersForm
                     .map<SimpleUser>((e) => e.user.value)
                     .where((user) => user.id != "")
                     .toList();
-                if (modeChosen == CapsMode.cd && players.value.length == 4) {
-                  isGameCreated.value = true;
-                } else if (modeChosen != CapsMode.cd &&
-                    players.value.length == 2) {
-                  isGameCreated.value = true;
-                }
               },
               child: const MyButton(text: "Lancer la partie"),
             ),

@@ -11,12 +11,14 @@ class PlayerForm extends HookConsumerWidget {
       {Key? key,
       required this.index,
       required this.isFocused,
+      required this.formKey,
       required this.queryController,
       required this.user})
       : super(key: key);
 
   final int index;
   final ValueNotifier<List<bool>> isFocused;
+  final GlobalKey<FormState> formKey;
   final TextEditingController queryController;
   final ValueNotifier<SimpleUser> user;
 
@@ -28,19 +30,23 @@ class PlayerForm extends HookConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Column(
         children: [
-          TextEntry(
-            label: "Joueur ${index + 1}",
-            onChanged: (value) {
-              isFocused.value = List.generate(4, (index) => false)..[index] = true;
-              tokenExpireWrapper(ref, () async {
-                if (queryController.text.isNotEmpty) {
-                  await usersNotifier.filterUsers(queryController.text);
-                } else {
-                  usersNotifier.clear();
-                }
-              });
-            },
-            controller: queryController,
+          Form(
+            key: formKey,
+            child: TextEntry(
+              label: "Joueur ${index + 1}",
+              onChanged: (value) {
+                isFocused.value = List.generate(4, (index) => false)
+                  ..[index] = true;
+                tokenExpireWrapper(ref, () async {
+                  if (queryController.text.isNotEmpty) {
+                    await usersNotifier.filterUsers(queryController.text);
+                  } else {
+                    usersNotifier.clear();
+                  }
+                });
+              },
+              controller: queryController,
+            ),
           ),
           const SizedBox(
             height: 10,
