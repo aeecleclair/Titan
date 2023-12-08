@@ -32,7 +32,8 @@ class GamePage extends HookConsumerWidget {
       PlayerForm(
           index: 0,
           isFocused: isFocused,
-          queryController: useTextEditingController(text: user.toSimpleUser().getName()),
+          queryController:
+              useTextEditingController(text: user.toSimpleUser().getName()),
           user: useState(user.toSimpleUser())),
       PlayerForm(
           index: 1,
@@ -131,13 +132,35 @@ class GamePage extends HookConsumerWidget {
           //                         color:
           //                             Color.fromARGB(255, 248, 248, 248))));
           //           })),
-          const SizedBox(height: 20),
+          const SizedBox(height: 30),
           Form(
             key: key,
             child: Column(
               children: modeChosen == CapsMode.cd
-                  ? playersForm
-                  : playersForm.sublist(0, 2),
+                  ? [
+                      const AlignLeftText("Equipe 1",
+                          padding: EdgeInsets.symmetric(horizontal: 30)),
+                      const SizedBox(height: 10),
+                      playersForm[0],
+                      playersForm[1],
+                      const SizedBox(height: 20),
+                      const AlignLeftText("Equipe 2",
+                          padding: EdgeInsets.symmetric(horizontal: 30)),
+                      const SizedBox(height: 10),
+                      playersForm[2],
+                      playersForm[3],
+                    ]
+                  : [
+                      const AlignLeftText("Joueur 1",
+                          padding: EdgeInsets.symmetric(horizontal: 30)),
+                      const SizedBox(height: 20),
+                      playersForm[0],
+                      const SizedBox(height: 20),
+                      const AlignLeftText("Joueur 2",
+                          padding: EdgeInsets.symmetric(horizontal: 30)),
+                      const SizedBox(height: 20),
+                      playersForm[1],
+                    ],
             ),
           ),
           const SizedBox(height: 30),
@@ -191,7 +214,7 @@ class GamePage extends HookConsumerWidget {
                                           color:
                                               Color.fromARGB(255, 7, 8, 14))),
                                   Container(
-                                      child: Text(
+                                      child: const Text(
                                           "ici on met le score //bug textformField à voir"))
                                 ],
                               )
