@@ -14,6 +14,7 @@ import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class GamePage extends HookConsumerWidget {
@@ -26,12 +27,13 @@ class GamePage extends HookConsumerWidget {
     final modeChosenNotifier = ref.read(modeChosenProvider.notifier);
     final gameNotifier = ref.watch(gameProvider.notifier);
     final isFocused = useState(List.generate(4, (index) => false));
+    final user = ref.watch(userProvider);
     final playersForm = [
       PlayerForm(
           index: 0,
           isFocused: isFocused,
-          queryController: useTextEditingController(text: ""),
-          user: useState(SimpleUser.empty())),
+          queryController: useTextEditingController(text: user.toSimpleUser().getName()),
+          user: useState(user.toSimpleUser())),
       PlayerForm(
           index: 1,
           isFocused: isFocused,
