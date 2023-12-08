@@ -10,6 +10,7 @@ import 'package:myecl/elocaps/router.dart';
 import 'package:myecl/elocaps/ui/button.dart';
 import 'package:myecl/elocaps/ui/elocaps.dart';
 import 'package:myecl/elocaps/ui/pages/game_page/player_form.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
@@ -35,6 +36,7 @@ class GamePage extends HookConsumerWidget {
       GlobalKey<FormState>(),
       GlobalKey<FormState>(),
     ];
+    final scoreKey = GlobalKey<FormState>();
     final playersForm = [
       PlayerForm(
           index: 0,
@@ -67,6 +69,10 @@ class GamePage extends HookConsumerWidget {
       useTextEditingController(text: ""),
     ];
     final players = useState(<SimpleUser>[]);
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
 
     return ElocapsTemplate(
         child: SingleChildScrollView(
@@ -151,7 +157,7 @@ class GamePage extends HookConsumerWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Form(
-                  key: key,
+                  key: scoreKey,
                   child: Row(
                       children: modeChosen == CapsMode.cd
                           ? [
@@ -191,8 +197,11 @@ class GamePage extends HookConsumerWidget {
             ),
             const SizedBox(height: 30),
             GestureDetector(
-                onTap: () {
-                  gameNotifier.createGame(Game(
+                onTap: () async {
+                  if (!scoreKey.currentState!.validate()) {
+                    return;
+                  }
+                  final value = await gameNotifier.createGame(Game(
                       timestamp: DateTime.now(),
                       gamePlayers: players.value.asMap().entries.map((entry) {
                         int index = entry.key;
@@ -211,8 +220,13 @@ class GamePage extends HookConsumerWidget {
                       id: '',
                       isConfirmed: false,
                       mode: modeChosen));
-                  QR.to(ElocapsRouter
-                      .root); // Peut être mettre une verif que la partie est bien créee avant de retourner à la page d'accueil
+                  if (value) {
+                    displayToastWithContext(TypeMsg.msg, "Partie enregistrée");
+                    QR.to(ElocapsRouter.root);
+                  } else {
+                    displayToastWithContext(TypeMsg.error,
+                        "Erreur lors de l'enregistrement de la partie");
+                  }
                 },
                 child: const MyButton(text: "Enregistrer la partie"))
           ],
