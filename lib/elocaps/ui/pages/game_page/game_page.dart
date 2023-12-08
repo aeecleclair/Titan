@@ -185,12 +185,15 @@ class GamePage extends HookConsumerWidget {
                       gamePlayers: players.value.asMap().entries.map((entry) {
                         int index = entry.key;
                         SimpleUser e = entry.value;
+                        final isTeamOne = index < players.value.length / 2;
                         return GamePlayer(
                           user: e,
                           eloGain: 0,
                           playerId: e.id,
-                          quarters: index == 1 ? 4 : 2,
-                          team: index < players.value.length / 2 ? 1 : 2,
+                          quarters: isTeamOne
+                              ? int.parse(scores[0].text)
+                              : int.parse(scores[1].text),
+                          team: isTeamOne ? 1 : 2,
                         );
                       }).toList(),
                       id: '',
