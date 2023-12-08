@@ -165,20 +165,21 @@ class GamePage extends HookConsumerWidget {
           ),
           const SizedBox(height: 30),
           GestureDetector(
-              onTap: () {
-                players.value = playersForm
-                    .map<SimpleUser>((e) => e.user.value)
-                    .where((user) => user.id != "")
-                    .toList();
+            onTap: () {
+              players.value = playersForm
+                  .map<SimpleUser>((e) => e.user.value)
+                  .where((user) => user.id != "")
+                  .toList();
 
-                if (modeChosen == CapsMode.cd && players.value.length == 4) {
-                  isGameCreated.value = true;
-                } else if (modeChosen != CapsMode.cd &&
-                    players.value.length == 2) {
-                  isGameCreated.value = true;
-                }
-              },
-              child: const MyButton(text: "Lancer la partie")),
+              if (modeChosen == CapsMode.cd && players.value.length == 4) {
+                isGameCreated.value = true;
+              } else if (modeChosen != CapsMode.cd &&
+                  players.value.length == 2) {
+                isGameCreated.value = true;
+              }
+            },
+            child: const MyButton(text: "Lancer la partie"),
+          ),
           // ],
           if (isGameCreated.value) ...[
             const SizedBox(height: 20),

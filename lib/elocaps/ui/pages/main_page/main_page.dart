@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/elocaps/providers/player_list_provider.dart';
 import 'package:myecl/elocaps/router.dart';
+import 'package:myecl/elocaps/ui/button.dart';
 import 'package:myecl/elocaps/ui/elocaps.dart';
 import 'package:myecl/elocaps/ui/pages/main_page/leader_board.dart';
 import 'package:myecl/elocaps/ui/pages/main_page/podium.dart';
@@ -30,20 +31,14 @@ class EloCapsMainPage extends HookConsumerWidget {
         ),
         Positioned(
           bottom: 20,
-          left: 30,
-          right: 30,
+          left: 0,
+          right: 0,
           child: GestureDetector(
             onTap: () {
               QR.to(ElocapsRouter.root + ElocapsRouter.game);
             },
-            child: const AddEditButtonLayout(
-              child: Text(
-                "Jouer",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
-              ),
+            child: const MyButton(
+              text: "Jouer",
             ),
           ),
         ),

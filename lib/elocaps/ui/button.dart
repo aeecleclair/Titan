@@ -9,9 +9,9 @@ class MyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.4,
-      padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
-      height: 100,
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(horizontal: 30),
+      height: 40,
       decoration: const BoxDecoration(
         gradient: LinearGradient(colors: [
           Color.fromARGB(255, 115, 3, 3),
