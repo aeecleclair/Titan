@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:myecl/elocaps/class/player.dart';
 import 'package:myecl/elocaps/tools/constants.dart';
@@ -30,14 +28,14 @@ class PodiumCard extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 7),
-        Text("Name",
+        const SizedBox(height: 7),
+        const Text("Name",
             textAlign: TextAlign.center,
-            style: const TextStyle(
+            style: TextStyle(
                 fontSize: 20,
                 color: Colors.black,
                 fontWeight: FontWeight.bold)),
-        SizedBox(height: 3),
+        const SizedBox(height: 3),
         Container(
           decoration: BoxDecoration(
             gradient: RadialGradient(
