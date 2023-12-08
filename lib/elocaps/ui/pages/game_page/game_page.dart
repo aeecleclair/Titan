@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -11,7 +9,6 @@ import 'package:myecl/elocaps/providers/mode_chosen_provider.dart';
 import 'package:myecl/elocaps/router.dart';
 import 'package:myecl/elocaps/ui/button.dart';
 import 'package:myecl/elocaps/ui/elocaps.dart';
-import 'package:myecl/elocaps/ui/pages/game_page/mode_dialog.dart';
 import 'package:myecl/elocaps/ui/pages/game_page/player_form.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
@@ -24,29 +21,30 @@ class GamePage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final animation = useAnimationController(
-        duration: const Duration(milliseconds: 3000), initialValue: 0)
-      ..repeat(reverse: true);
-
     final isGameCreated = useState(false);
     final modeChosen = ref.watch(modeChosenProvider);
     final modeChosenNotifier = ref.read(modeChosenProvider.notifier);
     final gameNotifier = ref.watch(gameProvider.notifier);
+    final isFocused = useState(List.generate(4, (index) => false));
     final playersForm = [
       PlayerForm(
-          num: 1,
+          index: 0,
+          isFocused: isFocused,
           queryController: useTextEditingController(text: ""),
           user: useState(SimpleUser.empty())),
       PlayerForm(
-          num: 2,
+          index: 1,
+          isFocused: isFocused,
           queryController: useTextEditingController(text: ""),
           user: useState(SimpleUser.empty())),
       PlayerForm(
-          num: 3,
+          index: 2,
+          isFocused: isFocused,
           queryController: useTextEditingController(text: ""),
           user: useState(SimpleUser.empty())),
       PlayerForm(
-          num: 4,
+          index: 3,
+          isFocused: isFocused,
           queryController: useTextEditingController(text: ""),
           user: useState(SimpleUser.empty())),
     ];
@@ -131,6 +129,7 @@ class GamePage extends HookConsumerWidget {
           //                         color:
           //                             Color.fromARGB(255, 248, 248, 248))));
           //           })),
+          const SizedBox(height: 20),
           Form(
             key: key,
             child: Column(
@@ -220,7 +219,8 @@ class GamePage extends HookConsumerWidget {
                       .root); // Peut être mettre une verif que la partie est bien créee avant de retourner à la page d'accueil
                 },
                 child: const MyButton(text: "Enregistrer la partie"))
-          ]
+          ],
+          const SizedBox(height: 20),
         ],
       ),
     ));
