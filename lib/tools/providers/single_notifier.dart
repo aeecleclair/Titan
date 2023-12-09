@@ -2,7 +2,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/exception.dart';
 
 abstract class SingleNotifier<T> extends StateNotifier<AsyncValue<T>> {
-  SingleNotifier(AsyncValue state) : super(const AsyncLoading());
+  SingleNotifier(AsyncValue<T> state) : super(state);
 
   Future<AsyncValue<T>> load(Future<T> Function() f) async {
     try {
