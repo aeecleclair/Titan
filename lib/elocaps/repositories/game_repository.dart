@@ -14,17 +14,16 @@ class GameRepository extends Repository {
     return Game.fromJson(await getOne(gameId));
   }
 
-   Future<Game> createGame(Game game) async {
-    print(game.toJsonForCreate());
+  Future<Game> createGame(Game game) async {
     return Game.fromJson(await create(game.toJsonForCreate()));
   }
 
-   Future<List<Game>> getLatestGame() async {
-    return List<Game>.from((await getList(suffix: "/latest")).map((x) => Game.fromJson(x)));
-  }
-  
-  Future<bool> validateGame(String gameId) async {
-    return await create({},suffix:"/$gameId/validate");
+  Future<List<Game>> getLatestGame() async {
+    return List<Game>.from(
+        (await getList(suffix: "/latest")).map((x) => Game.fromJson(x)));
   }
 
+  Future<bool> validateGame(String gameId) async {
+    return await create({}, suffix: "/$gameId/validate");
   }
+}
