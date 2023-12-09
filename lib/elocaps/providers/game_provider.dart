@@ -6,7 +6,7 @@ import 'package:myecl/tools/providers/single_notifier.dart';
 
 class GameNotifier extends SingleNotifier<Game> {
   final GameRepository _gameRepository = GameRepository();
-  GameNotifier({required String token}) : super(const AsyncValue.loading()) {
+  GameNotifier({required String token}) : super(AsyncData(Game.empty())) {
     _gameRepository.setToken(token);
   }
 

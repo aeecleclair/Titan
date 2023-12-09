@@ -188,7 +188,7 @@ class GamePage extends HookConsumerWidget {
                       !playersKey.currentState!.validate()) {
                     return;
                   }
-                  final value = await gameNotifier.createGame(Game(
+                  final game = Game(
                       timestamp: DateTime.now(),
                       gamePlayers: players.value.asMap().entries.map((entry) {
                         int index = entry.key;
@@ -206,7 +206,8 @@ class GamePage extends HookConsumerWidget {
                       }).toList(),
                       id: '',
                       isConfirmed: false,
-                      mode: modeChosen));
+                      mode: modeChosen);
+                  final value = await gameNotifier.createGame(game);
                   if (value) {
                     displayToastWithContext(TypeMsg.msg, "Partie enregistrée");
                     QR.to(ElocapsRouter.root);
