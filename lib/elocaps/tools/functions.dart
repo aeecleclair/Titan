@@ -10,7 +10,7 @@ String capsModeToString(CapsMode mode) {
     case CapsMode.capacks:
       return 'capacks';
     case CapsMode.semiCapacks:
-      return 'semiCapacks';
+      return 'semi_capacks';
   }
 }
 
@@ -22,7 +22,7 @@ CapsMode stringToCapsMode(String mode) {
         return CapsMode.cd;
       case 'capacks':
         return CapsMode.capacks;
-      case 'semiCapacks':
+      case 'semi_capacks':
         return CapsMode.semiCapacks;
       default:
         return CapsMode.single;
