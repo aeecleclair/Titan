@@ -5,11 +5,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/elocaps/ui/button.dart';
 
-
 void maybeShowDialog(context) {
-  final bool is_waited = true; ///////////
-  
-  if (is_waited) {
+  const bool isWaited = true; ///////////
+
+  if (isWaited) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -18,6 +17,7 @@ void maybeShowDialog(context) {
     );
   }
 }
+
 class WaitingDialog extends HookConsumerWidget {
   const WaitingDialog({
     Key? key,
@@ -61,15 +61,20 @@ class WaitingDialog extends HookConsumerWidget {
                           center: Alignment.bottomRight,
                           radius: 1.5)),
                   child: const SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
+                      physics: BouncingScrollPhysics(),
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text("[user (à faire)] vous défi dans une partie de [mode]"),
-                            Row(children: [MyButton(text: "J'accepte"),MyButton(text: "Non je l'aime pas")],)
-                      ]))));
+                            Text(
+                                "[user (à faire)] vous défi dans une partie de [mode]"),
+                            Row(
+                              children: [
+                                MyButton(text: "J'accepte"),
+                                MyButton(text: "Non je l'aime pas")
+                              ],
+                            )
+                          ]))));
         });
   }
 }
-
