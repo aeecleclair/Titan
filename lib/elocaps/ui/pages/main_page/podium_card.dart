@@ -21,7 +21,7 @@ class PodiumCard extends StatelessWidget {
           backgroundColor: color,
           child: ClipOval(
             child: Image.network(
-              "https://www.gravatar.com/avatar/${player.id}?d=identicon",
+              "https://www.gravatar.com/avatar/${player.user.id}?d=identicon",
               width: 50,
               height: 50,
               fit: BoxFit.cover,
@@ -29,9 +29,9 @@ class PodiumCard extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 7),
-        const Text("Name",
+        Text(player.user.nickname ?? player.user.firstname,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 20,
                 color: Colors.black,
                 fontWeight: FontWeight.bold)),

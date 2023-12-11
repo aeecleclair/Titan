@@ -20,15 +20,8 @@ class PlayerListNotifier extends ListNotifier<Player> {
     // ..addAll(await _leaderboardrepository.getLeaderBoard("capacks"))
     // ..addAll(await _leaderboardrepository.getLeaderBoard("semiCapacks")); 
     
-    // return await loadList(
-    //     () async => Future.value(list)); 
-    return state = AsyncData([
-      Player(elo: 3000, mode: CapsMode.cd, id: "1"),
-      Player(elo: 2800, mode: CapsMode.cd, id: "2"),
-      Player(elo: 2500, mode: CapsMode.cd, id: "3"),
-      Player(elo:2000, mode: CapsMode.cd, id: "4"),
-      Player(elo: 1000, mode: CapsMode.cd, id: "5"),
-    ]);
+    return await loadList(
+        () async => _leaderboardrepository.getLeaderBoard("single")); 
   }
 
 }

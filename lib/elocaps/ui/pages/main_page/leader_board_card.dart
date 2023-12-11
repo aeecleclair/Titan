@@ -32,9 +32,9 @@ class LeaderBoardCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        "Name",
-                        style: TextStyle(
+                      Text(
+                        player.user.nickname ?? player.user.firstname,
+                        style: const TextStyle(
                             fontSize: 15,
                             color: Colors.black,
                             fontWeight: FontWeight.bold),
@@ -53,7 +53,7 @@ class LeaderBoardCard extends StatelessWidget {
                     backgroundColor: Colors.white,
                     child: ClipOval(
                       child: Image.network(
-                        "https://www.gravatar.com/avatar/${player.id}?d=identicon",
+                        "https://www.gravatar.com/avatar/${player.user.id}?d=identicon",
                         width: 40,
                         height: 40,
                         fit: BoxFit.cover,
