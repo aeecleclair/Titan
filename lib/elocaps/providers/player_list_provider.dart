@@ -4,8 +4,6 @@ import 'package:myecl/elocaps/class/caps_mode.dart';
 import 'package:myecl/elocaps/class/player.dart';
 import 'package:myecl/elocaps/repositories/leaderboard_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-
 
 class PlayerListNotifier extends ListNotifier<Player> {
   final LeaderBoardRepository _leaderboardrepository = LeaderBoardRepository();
@@ -14,24 +12,15 @@ class PlayerListNotifier extends ListNotifier<Player> {
     _leaderboardrepository.setToken(token);
   }
 
-  Future<AsyncValue<List<Player>>> loadRanking() async {
-    // List<Player> list = await _leaderboardrepository.getLeaderBoard("single")
-    // ..addAll(await _leaderboardrepository.getLeaderBoard("cd"))
-    // ..addAll(await _leaderboardrepository.getLeaderBoard("capacks"))
-    // ..addAll(await _leaderboardrepository.getLeaderBoard("semiCapacks")); 
-    
+  Future<AsyncValue<List<Player>>> loadRanking(CapsMode mode) async {
     return await loadList(
-        () async => _leaderboardrepository.getLeaderBoard("single")); 
+        () async => _leaderboardrepository.getLeaderBoard(mode.name));
   }
-
 }
 
 final playerListProvider =
     StateNotifierProvider<PlayerListNotifier, AsyncValue<List<Player>>>((ref) {
   final token = ref.watch(tokenProvider);
   PlayerListNotifier notifier = PlayerListNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadRanking();
-  });
   return notifier;
 });
