@@ -16,16 +16,20 @@ class ElocapsRouter {
 
   static final Module module = Module(
       name: "Elocaps",
-      icon: Left(HeroIcons.rss), // Mettre un icon venant d'un svg [plus tard]
+      icon: const Left(
+          HeroIcons.rss), // Mettre un icon venant d'un svg [plus tard]
       root: ElocapsRouter.root,
       selected: false);
   ElocapsRouter(this.ref);
 
   QRoute route() => QRoute(
-        path: ElocapsRouter.root,
-        builder: () => const EloCapsMainPage(),
-        middleware: [AuthenticatedMiddleware(ref)],
-        children: [QRoute(builder: () => const HistoryPage() , path: history),
-        QRoute(builder: () => const GamePage() , path: game),]
-      );
+          path: ElocapsRouter.root,
+          builder: () => const EloCapsMainPage(),
+          middleware: [
+            AuthenticatedMiddleware(ref)
+          ],
+          children: [
+            QRoute(builder: () => const HistoryPage(), path: history),
+            QRoute(builder: () => const GamePage(), path: game),
+          ]);
 }

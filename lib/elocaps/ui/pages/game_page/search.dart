@@ -13,43 +13,42 @@ class SearchResult extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final users = ref.watch(userList);
     final usersNotifier = ref.watch(userList.notifier);
-    
+
     return users.when(
-            data: (u) {
-              return Column(
-                  children: u
-                      .map((e) => GestureDetector(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    width: 20,
+        data: (u) {
+          return Column(
+              children: u
+                  .map((e) => GestureDetector(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                width: 20,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  e.getName(),
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: (user.value.id == e.id)
+                                        ? FontWeight.bold
+                                        : FontWeight.w400,
                                   ),
-                                  Expanded(
-                                    child: Text(
-                                      e.getName(),
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: (user.value.id == e.id)
-                                            ? FontWeight.bold
-                                            : FontWeight.w400,
-                                      ),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                ]),
-                          ),
-                          onTap: () {
-                            user.value = e;
-                            queryController.text = e.getName();
-                            usersNotifier.clear();
-                          }))
-                      .toList());
-            },
-            loading: () => const Center(child: CircularProgressIndicator()),
-            error: (e, s) => Text(e.toString()));
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ]),
+                      ),
+                      onTap: () {
+                        user.value = e;
+                        queryController.text = e.getName();
+                        usersNotifier.clear();
+                      }))
+                  .toList());
+        },
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (e, s) => Text(e.toString()));
   }
 }

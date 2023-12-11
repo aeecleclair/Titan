@@ -26,7 +26,7 @@ class MyButton extends StatelessWidget {
             fontWeight: FontWeight.w700,
             color: Color.fromARGB(255, 255, 252, 251),
           ),
-          maxLines: 1, 
+          maxLines: 1,
         ),
       ),
     );

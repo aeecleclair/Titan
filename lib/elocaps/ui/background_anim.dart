@@ -9,18 +9,18 @@ class Bottle {
   final double speed;
   final double angle;
   final Paint paint = Paint()..style = PaintingStyle.fill;
-  Bottle(this.x, this.y, this.h, this.w , this.speed, this.angle);
+  Bottle(this.x, this.y, this.h, this.w, this.speed, this.angle);
 
   static Bottle generateNextBottle(double width, double height) {
     Bottle newBottle = Bottle(
-        (0.5 + Random().nextDouble()) * width/2,
+        (0.5 + Random().nextDouble()) * width / 2,
         height + 20,
         81,
         25,
         2 + Random().nextDouble() * 2,
         -2 * pi / 3 + Random().nextDouble() * pi / 3);
     int red = 150 + Random().nextInt(100);
-    int green = Random().nextInt(red-100) + 50;
+    int green = Random().nextInt(red - 100) + 50;
     newBottle.paint.color = Color.fromARGB(
       255,
       red,
@@ -54,7 +54,8 @@ class MyCustomPainter extends CustomPainter {
     int i = 0;
     while (i < bottles.length) {
       Bottle bottle = bottles[i];
-      if (bottle.x - bottle.w > size.width) { //500 pour tester mais y a des problèmes de size.width
+      if (bottle.x - bottle.w > size.width) {
+        //500 pour tester mais y a des problèmes de size.width
         bottles.remove(bottle);
       } else if (bottle.x + bottle.w < 0) {
         bottles.remove(bottle);
@@ -66,7 +67,7 @@ class MyCustomPainter extends CustomPainter {
         canvas.save();
         canvas.translate(bottle.x, bottle.y);
         canvas.scale(bottle.w, bottle.h);
-        
+
         Path path = Path();
 
         path.lineTo(0.25, 0.04);
@@ -100,11 +101,10 @@ class MyCustomPainter extends CustomPainter {
         path.cubicTo(0.25, 0.04, 0.25, 0.04, 0.25, 0.04);
         path.cubicTo(0.25, 0.04, 0.25, 0.04, 0.25, 0.04);
 
-
         canvas.drawPath(path, bottle.paint);
         canvas.restore();
-        }
       }
+    }
   }
 
   @override
