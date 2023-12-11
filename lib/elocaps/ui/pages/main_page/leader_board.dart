@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/elocaps/providers/player_list_provider.dart';
 import 'package:myecl/elocaps/ui/pages/main_page/leader_board_card.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 
 class LeaderBoard extends HookConsumerWidget {
   const LeaderBoard({super.key});
@@ -12,6 +13,7 @@ class LeaderBoard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final leaderBoardPlayers = ref.watch(playerListProvider);
+    final me = ref.watch(userProvider);
     return AsyncChild(
         value: leaderBoardPlayers,
         builder: (context, players) => Container(
@@ -29,7 +31,7 @@ class LeaderBoard extends HookConsumerWidget {
               children: players
                   .skip(3)
                   .map((e) =>
-                      LeaderBoardCard(player: e, index: players.indexOf(e) + 1))
+                      LeaderBoardCard(player: e, index: players.indexOf(e) + 1, isMe: e.user.id == me.id))
                   .toList(),
             )));
   }

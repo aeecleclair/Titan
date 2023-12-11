@@ -4,7 +4,12 @@ import 'package:myecl/elocaps/class/player.dart';
 class LeaderBoardCard extends StatelessWidget {
   final Player player;
   final int index;
-  const LeaderBoardCard({super.key, required this.player, required this.index});
+  final bool isMe;
+  const LeaderBoardCard(
+      {super.key,
+      required this.player,
+      required this.index,
+      required this.isMe});
 
   @override
   Widget build(BuildContext context) {
@@ -48,18 +53,34 @@ class LeaderBoardCard extends StatelessWidget {
                   ),
                   const Spacer(),
                   const SizedBox(width: 20),
-                  CircleAvatar(
-                    radius: 20,
-                    backgroundColor: Colors.white,
-                    child: ClipOval(
-                      child: Image.network(
-                        "https://www.gravatar.com/avatar/${player.user.id}?d=identicon",
-                        width: 40,
-                        height: 40,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
+                  isMe
+                      ? CircleAvatar(
+                          radius: 22,
+                          backgroundColor: Colors.black,
+                          child: CircleAvatar(
+                            radius: 20,
+                            backgroundColor: Colors.white,
+                            child: ClipOval(
+                              child: Image.network(
+                                "https://www.gravatar.com/avatar/${player.user.id}?d=identicon",
+                                width: 40,
+                                height: 40,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ))
+                      : CircleAvatar(
+                          radius: 20,
+                          backgroundColor: Colors.white,
+                          child: ClipOval(
+                            child: Image.network(
+                              "https://www.gravatar.com/avatar/${player.user.id}?d=identicon",
+                              width: 40,
+                              height: 40,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
                   const SizedBox(width: 20),
                 ],
               ),

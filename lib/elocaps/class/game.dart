@@ -4,7 +4,12 @@ import 'package:myecl/elocaps/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 
 class Game {
-  Game({required this.id, required this.timestamp, required this.mode,required this.gamePlayers,required this.isConfirmed});
+  Game(
+      {required this.id,
+      required this.timestamp,
+      required this.mode,
+      required this.gamePlayers,
+      required this.isConfirmed});
   late final String id;
   late final DateTime timestamp;
   late final CapsMode mode;
@@ -15,9 +20,10 @@ class Game {
     id = json['id'];
     timestamp = DateTime.parse(json['timestamp']);
     mode = stringToCapsMode(json['mode']);
-    gamePlayers = json['game_players'].map<GamePlayer>((e) => GamePlayer.fromJson(e)).toList();
+    gamePlayers = json['game_players']
+        .map<GamePlayer>((e) => GamePlayer.fromJson(e))
+        .toList();
     isConfirmed = json['is_confirmed'];
-
   }
 
   Map<String, dynamic> toJson() {
@@ -30,6 +36,7 @@ class Game {
 
     return data;
   }
+
   Map<String, dynamic> toJsonForCreate() {
     final data = <String, dynamic>{};
     data['mode'] = capsModeToString(mode);
@@ -37,12 +44,18 @@ class Game {
     return data;
   }
 
-  Game copyWith({DateTime? timestamp, CapsMode? mode, String? id, List<GamePlayer>? gamePlayers, bool? isConfirmed}) 
-  => Game(timestamp: timestamp ?? this.timestamp,
-      mode: mode ?? this.mode,
-      id: id ?? this.id,
-      gamePlayers: gamePlayers ?? this.gamePlayers,
-      isConfirmed: isConfirmed ?? this.isConfirmed);
+  Game copyWith(
+          {DateTime? timestamp,
+          CapsMode? mode,
+          String? id,
+          List<GamePlayer>? gamePlayers,
+          bool? isConfirmed}) =>
+      Game(
+          timestamp: timestamp ?? this.timestamp,
+          mode: mode ?? this.mode,
+          id: id ?? this.id,
+          gamePlayers: gamePlayers ?? this.gamePlayers,
+          isConfirmed: isConfirmed ?? this.isConfirmed);
 
   Game.empty() {
     id = '';
