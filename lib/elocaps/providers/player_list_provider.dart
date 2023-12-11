@@ -3,6 +3,7 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/elocaps/class/caps_mode.dart';
 import 'package:myecl/elocaps/class/player.dart';
 import 'package:myecl/elocaps/repositories/leaderboard_repository.dart';
+import 'package:myecl/elocaps/tools/functions.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 
 class PlayerListNotifier extends ListNotifier<Player> {
@@ -13,8 +14,8 @@ class PlayerListNotifier extends ListNotifier<Player> {
   }
 
   Future<AsyncValue<List<Player>>> loadRanking(CapsMode mode) async {
-    return await loadList(
-        () async => _leaderboardrepository.getLeaderBoard(mode.name));
+    return await loadList(() async =>
+        _leaderboardrepository.getLeaderBoard(capsModeToString(mode)));
   }
 }
 
