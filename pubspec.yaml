@@ -45,6 +45,7 @@ dependencies:
   package_info_plus: ^5.0.1
   path: ^1.8.2
   path_provider: ^2.0.11
+  plausible_analytics: ^0.3.0
   rxdart: ^0.27.7
   qlevar_router: ^1.9.0
   shared_preferences: ^2.1.1
@@ -53,6 +54,7 @@ dependencies:
   timezone: ^0.9.0
   tuple: ^2.0.0
   universal_html: ^2.0.8
+  universal_io: ^2.2.2
   url_launcher: ^6.1.7
   vector_math: ^2.1.2
   zxcvbn: ^1.0.0

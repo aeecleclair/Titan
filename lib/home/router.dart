@@ -21,6 +21,7 @@ class HomeRouter {
   HomeRouter(this.ref);
 
   QRoute route() => QRoute(
+          name: "home",
           path: HomeRouter.root,
           builder: () => home_page.HomePage(),
           middleware: [

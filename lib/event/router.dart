@@ -30,6 +30,7 @@ class EventRouter {
   EventRouter(this.ref);
 
   QRoute route() => QRoute(
+        name: "event",
         path: EventRouter.root,
         builder: () => main_page.EventMainPage(),
         middleware: [

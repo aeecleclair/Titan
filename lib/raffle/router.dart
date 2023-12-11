@@ -35,6 +35,7 @@ class RaffleRouter {
       selected: false);
   RaffleRouter(this.ref);
   QRoute route() => QRoute(
+        name: "raffle",
         path: RaffleRouter.root,
         builder: () => main_page.RaffleMainPage(),
         middleware: [
