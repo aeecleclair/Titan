@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/elocaps/class/game.dart';
+import 'package:myecl/elocaps/providers/game_provider.dart';
+import 'package:myecl/elocaps/providers/player_histo_provider.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 
 class GameCard extends HookConsumerWidget {
   const GameCard({Key? key, required this.game}) : super(key: key);
@@ -12,6 +15,9 @@ class GameCard extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final firstTeam = game.gamePlayers.where((element) => element.team == 1);
     final secondTeam = game.gamePlayers.where((element) => element.team == 2);
+    final gameNotifier = ref.watch(gameProvider.notifier);
+    final me = ref.watch(userProvider);
+    final historyNotifier = ref.read(playerHistoProvider.notifier);
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
@@ -86,6 +92,32 @@ class GameCard extends HookConsumerWidget {
             ],
           ),
           const SizedBox(height: 10),
+          if (!game.isConfirmed) ...[
+            firstTeam.map((e) => e.playerId).contains(me.id)
+                ? const Text("En attente de validation de l'équipe adverse",
+                    style: TextStyle(color: Colors.white))
+                : GestureDetector(
+                    onTap: () async {
+                      await gameNotifier.validateGame(game);
+                      await historyNotifier.loadHisto(me.id);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      margin: const EdgeInsets.symmetric(horizontal: 30),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(15)),
+                        border: const Border.fromBorderSide(
+                            BorderSide(color: Colors.white, width: 1)),
+                      ),
+                      child: const Text("Valider",
+                          style: TextStyle(color: Colors.white)),
+                    ),
+                  ),
+            const SizedBox(height: 10),
+          ]
         ],
       ),
     );
