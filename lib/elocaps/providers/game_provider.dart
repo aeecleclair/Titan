@@ -13,6 +13,10 @@ class GameNotifier extends SingleNotifier<Game> {
   Future<bool> createGame(Game game) async {
     return await add(_gameRepository.createGame, game);
   }
+
+  Future<bool> validateGame(Game game) async {
+    return await update((game) => _gameRepository.validateGame(game.id), game);
+  }
 }
 
 final gameProvider =
