@@ -3,11 +3,13 @@ import 'package:myecl/elocaps/class/player.dart';
 import 'package:myecl/elocaps/tools/constants.dart';
 
 class PodiumCard extends StatelessWidget {
-  const PodiumCard({Key? key, required this.player, required this.index})
+  const PodiumCard(
+      {Key? key, required this.player, required this.index, required this.isMe})
       : super(key: key);
 
   final Player player;
   final int index;
+  final bool isMe;
 
   @override
   Widget build(BuildContext context) {
@@ -16,18 +18,35 @@ class PodiumCard extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        CircleAvatar(
-          radius: 25,
-          backgroundColor: color,
-          child: ClipOval(
-            child: Image.network(
-              "https://www.gravatar.com/avatar/${player.user.id}?d=identicon",
-              width: 50,
-              height: 50,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
+        isMe
+            ? CircleAvatar(
+                radius: 27,
+                backgroundColor: Colors.black,
+                child: CircleAvatar(
+                  radius: 25,
+                  backgroundColor: Colors.white,
+                  child: ClipOval(
+                    child: Image.network(
+                      "https://www.gravatar.com/avatar/${player.user.id}?d=identicon",
+                      width: 50,
+                      height: 50,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              )
+            : CircleAvatar(
+                radius: 25,
+                backgroundColor: Colors.white,
+                child: ClipOval(
+                  child: Image.network(
+                    "https://www.gravatar.com/avatar/${player.user.id}?d=identicon",
+                    width: 50,
+                    height: 50,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
         const SizedBox(height: 7),
         Text(player.user.nickname ?? player.user.firstname,
             textAlign: TextAlign.center,
@@ -59,7 +78,7 @@ class PodiumCard extends StatelessWidget {
               ),
             ],
           ),
-          height: 90.0 - 15 * index,
+          height: 90.0 - 15 * index - (isMe ? 5 : 0),
           width: 60,
           padding: const EdgeInsets.only(top: 7),
           child: Text(
