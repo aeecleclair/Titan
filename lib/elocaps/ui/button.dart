@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 
 class MyButton extends StatelessWidget {
   final String text;
+  final EdgeInsets? margin;
 
-  const MyButton({Key? key, required this.text}) : super(key: key);
+  const MyButton({Key? key, required this.text, this.margin}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 30),
+      margin: margin ?? const EdgeInsets.symmetric(horizontal: 30),
       height: 40,
       decoration: const BoxDecoration(
         gradient: LinearGradient(colors: [
