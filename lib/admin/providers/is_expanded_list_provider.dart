@@ -15,7 +15,7 @@ class IsExpandedListProvider extends StateNotifier<List<bool>> {
 
 final isExpandedListProvider =
     StateNotifierProvider<IsExpandedListProvider, List<bool>>((ref) {
-  final modules = ref.watch(moduleVisibilityListProvider);
+  final modules = ref.read(moduleVisibilityListProvider);
   return modules.maybeWhen(
       data: (data) => IsExpandedListProvider(data),
       orElse: () {
