@@ -11,11 +11,9 @@ import 'package:myecl/elocaps/ui/button.dart';
 import 'package:myecl/elocaps/ui/elocaps.dart';
 import 'package:myecl/elocaps/ui/pages/game_page/player_form.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -56,10 +54,7 @@ class GamePage extends HookConsumerWidget {
           queryController: useTextEditingController(text: ""),
           user: useState(SimpleUser.empty())),
     ];
-    final scores = [
-      useTextEditingController(text: ""),
-      useTextEditingController(text: ""),
-    ];
+    final scores = useState([0, 0]);
     final players = useState(<SimpleUser>[]);
 
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -145,68 +140,49 @@ class GamePage extends HookConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Form(
                 key: scoreKey,
-                child: Row(children: 
-                [
+                child: Row(children: [
                   Expanded(
-                    child: MyButton(
-                      margin: const EdgeInsets.all(0),
-                      text: modeChosen == CapsMode.cd
-                          ? "Victoire équipe 1"
-                          : "Victoire joueur 1",
+                    child: GestureDetector(
+                      onTap: () {
+                        scores.value[0] += 1;
+                        scores.value[1] -= 1;
+                      },
+                      child: MyButton(
+                        margin: const EdgeInsets.all(0),
+                        text: modeChosen == CapsMode.cd
+                            ? "Victoire équipe 1"
+                            : "Victoire joueur 1",
+                      ),
                     ),
                   ),
-                  const SizedBox(
+                  SizedBox(
                     width: 90,
-                    child: MyButton(
-                      margin: EdgeInsets.symmetric(horizontal: 10),
-                      text: "Egalité",
+                    child: GestureDetector(
+                      onTap: () {
+                        scores.value[0] = 0;
+                        scores.value[1] = 0;
+                      },
+                      child: const MyButton(
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        text: "Egalité",
+                      ),
                     ),
                   ),
                   Expanded(
-                    child: MyButton(
-                      margin: const EdgeInsets.all(0),
-                      text: modeChosen == CapsMode.cd
-                          ? "Victoire équipe 2"
-                          : "Victoire joueur 2",
+                    child: GestureDetector(
+                      onTap: () {
+                        scores.value[0] -= 1;
+                        scores.value[1] += 1;
+                      },
+                      child: MyButton(
+                        margin: const EdgeInsets.all(0),
+                        text: modeChosen == CapsMode.cd
+                            ? "Victoire équipe 2"
+                            : "Victoire joueur 2",
+                      ),
                     ),
                   ),
-                ]
-                    // modeChosen == CapsMode.cd
-                    // ? [
-                    //     Expanded(
-                    //       child: TextEntry(
-                    //         label: "Score équipe 1",
-                    //         controller: scores[0],
-                    //         isInt: true,
-                    //       ),
-                    //     ),
-                    //     const SizedBox(width: 20),
-                    //     Expanded(
-                    //       child: TextEntry(
-                    //         label: "Score équipe 2",
-                    //         controller: scores[1],
-                    //         isInt: true,
-                    //       ),
-                    //     ),
-                    //   ]
-                    // : [
-                    //     Expanded(
-                    //       child: TextEntry(
-                    //         label: "Score joueur 1",
-                    //         controller: scores[0],
-                    //         isInt: true,
-                    //       ),
-                    //     ),
-                    //     const SizedBox(width: 20),
-                    //     Expanded(
-                    //       child: TextEntry(
-                    //         label: "Score joueur 2",
-                    //         controller: scores[1],
-                    //         isInt: true,
-                    //       ),
-                    //     ),
-                    //   ],
-                    ),
+                ]),
               ),
             ),
             const SizedBox(height: 30),
@@ -226,9 +202,8 @@ class GamePage extends HookConsumerWidget {
                           user: e,
                           eloGain: 0,
                           playerId: e.id,
-                          quarters: isTeamOne
-                              ? int.parse(scores[0].text)
-                              : int.parse(scores[1].text),
+                          quarters:
+                              isTeamOne ? scores.value[0] : scores.value[1],
                           team: isTeamOne ? 1 : 2,
                         );
                       }).toList(),
