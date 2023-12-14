@@ -6,6 +6,7 @@ import 'package:myecl/elocaps/class/game.dart';
 import 'package:myecl/elocaps/class/game_player.dart';
 import 'package:myecl/elocaps/providers/game_provider.dart';
 import 'package:myecl/elocaps/providers/mode_chosen_provider.dart';
+import 'package:myecl/elocaps/providers/scores_provider.dart';
 import 'package:myecl/elocaps/router.dart';
 import 'package:myecl/elocaps/ui/button.dart';
 import 'package:myecl/elocaps/ui/elocaps.dart';
@@ -54,7 +55,8 @@ class GamePage extends HookConsumerWidget {
           queryController: useTextEditingController(text: ""),
           user: useState(SimpleUser.empty())),
     ];
-    final scores = useState([0, 0]);
+    final scores = ref.watch(scoresProvider);
+    final scoresNotifier = ref.read(scoresProvider.notifier);
     final players = useState(<SimpleUser>[]);
 
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -143,12 +145,10 @@ class GamePage extends HookConsumerWidget {
                 child: Row(children: [
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {
-                        scores.value[0] += 1;
-                        scores.value[1] -= 1;
-                      },
+                      onTap: scoresNotifier.oneWin,
                       child: MyButton(
                         margin: const EdgeInsets.all(0),
+                        enabled: scores[0] == 1,
                         text: modeChosen == CapsMode.cd
                             ? "Victoire équipe 1"
                             : "Victoire joueur 1",
@@ -158,24 +158,20 @@ class GamePage extends HookConsumerWidget {
                   SizedBox(
                     width: 90,
                     child: GestureDetector(
-                      onTap: () {
-                        scores.value[0] = 0;
-                        scores.value[1] = 0;
-                      },
-                      child: const MyButton(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
+                      onTap: scoresNotifier.equality,
+                      child: MyButton(
+                        enabled: scores[0] == 0,
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
                         text: "Egalité",
                       ),
                     ),
                   ),
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {
-                        scores.value[0] -= 1;
-                        scores.value[1] += 1;
-                      },
+                      onTap: scoresNotifier.twoWin,
                       child: MyButton(
                         margin: const EdgeInsets.all(0),
+                        enabled: scores[1] == 1,
                         text: modeChosen == CapsMode.cd
                             ? "Victoire équipe 2"
                             : "Victoire joueur 2",
@@ -202,8 +198,7 @@ class GamePage extends HookConsumerWidget {
                           user: e,
                           eloGain: 0,
                           playerId: e.id,
-                          quarters:
-                              isTeamOne ? scores.value[0] : scores.value[1],
+                          quarters: isTeamOne ? scores[0] : scores[1],
                           team: isTeamOne ? 1 : 2,
                         );
                       }).toList(),
