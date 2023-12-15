@@ -198,7 +198,7 @@ class GamePage extends HookConsumerWidget {
                           user: e,
                           eloGain: 0,
                           playerId: e.id,
-                          quarters: isTeamOne ? scores[0] : scores[1],
+                          score: isTeamOne ? scores[0] : scores[1],
                           team: isTeamOne ? 1 : 2,
                         );
                       }).toList(),
