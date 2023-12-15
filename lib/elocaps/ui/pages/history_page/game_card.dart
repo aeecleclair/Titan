@@ -70,7 +70,7 @@ class GameCard extends HookConsumerWidget {
                         .fold<int>(
                             0,
                             (previousValue, element) =>
-                                previousValue + element.quarters)
+                                previousValue + element.score)
                         .toString(),
                     style: const TextStyle(color: Colors.white, fontSize: 25),
                   ),
@@ -83,7 +83,7 @@ class GameCard extends HookConsumerWidget {
                         .fold<int>(
                             0,
                             (previousValue, element) =>
-                                previousValue + element.quarters)
+                                previousValue + element.score)
                         .toString(),
                     style: const TextStyle(color: Colors.white, fontSize: 25),
                   ),

@@ -5,20 +5,20 @@ class GamePlayer {
       {required this.playerId,
       required this.eloGain,
       required this.team,
-      required this.quarters,
+      required this.score,
       required this.user});
 
   late final String playerId;
   late final int eloGain;
   late final int team;
-  late final int quarters;
+  late final int score;
   late final SimpleUser user;
 
   GamePlayer.fromJson(Map<String, dynamic> json) {
     playerId = json['user_id'];
     eloGain = json['elo_gain'];
     team = json['team'];
-    quarters = json['quarters'];
+    score = json['score'];
     user = SimpleUser.fromJson(json['user']);
   }
 
@@ -27,7 +27,7 @@ class GamePlayer {
     data['user_id'] = playerId;
     data['elo_gain'] = eloGain;
     data['team'] = team;
-    data['quarters'] = quarters;
+    data['score'] = score;
     data['user'] = user.toJson();
     return data;
   }
@@ -36,7 +36,7 @@ class GamePlayer {
     final data = <String, dynamic>{};
     data['user_id'] = playerId;
     data['team'] = team;
-    data['quarters'] = quarters;
+    data['score'] = score;
     return data;
   }
 
@@ -44,14 +44,14 @@ class GamePlayer {
     String? playerId,
     int? eloGain,
     int? team,
-    int? quarters,
+    int? score,
     SimpleUser? user,
   }) =>
       GamePlayer(
         playerId: playerId ?? this.playerId,
         eloGain: eloGain ?? this.eloGain,
         team: team ?? this.team,
-        quarters: quarters ?? this.quarters,
+        score: score ?? this.score,
         user: user ?? this.user,
       );
 
@@ -59,12 +59,12 @@ class GamePlayer {
     playerId = '';
     eloGain = 0;
     team = 1;
-    quarters = 0;
+    score = 0;
     user = SimpleUser.empty();
   }
 
   @override
   String toString() {
-    return 'GamePlayer(playerId: $playerId, elo_gain: $eloGain, team: $team, quarters: $quarters, user: ${user.toString()})';
+    return 'GamePlayer(playerId: $playerId, elo_gain: $eloGain, team: $team, score: $score, user: ${user.toString()})';
   }
 }
