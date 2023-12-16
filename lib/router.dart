@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/admin/router.dart';
 import 'package:myecl/advert/router.dart';
@@ -20,7 +19,6 @@ import 'package:myecl/settings/router.dart';
 import 'package:myecl/raffle/router.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:myecl/tools/middlewares/deferred_middleware.dart';
-import 'package:myecl/tools/plausible.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -34,17 +32,8 @@ class AppRouter {
   static const String update = '/update';
   static const String noInternet = '/no_internet';
   static const String noModule = '/no_module';
-  AppRouter(this.ref) {
-    if (!kDebugMode) {
-      QR.observer.onNavigate.add(
-        (path, route) async {
-          if (route.name != null) {
-            plausible!.event(page: route.name!);
-          }
-        },
-      );
-    }
 
+  AppRouter(this.ref) {
     routes = [
       QRoute(
         path: root,

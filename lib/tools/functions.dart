@@ -1,10 +1,12 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:plausible_analytics/plausible_analytics.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 enum TypeMsg { msg, error }
@@ -376,4 +378,21 @@ bool isEmailInValid(String email) {
 bool isStudent(String email) {
   final regex = RegExp(studentRegex);
   return regex.hasMatch(email);
+}
+
+String getTitanFlavor() {
+  // See https://github.com/flutter/flutter/issues/31441
+  const String flavor = String.fromEnvironment('app.flavor');
+  if (flavor == "") {
+    throw StateError("App flavor is not set");
+  }
+
+  return flavor;
+}
+
+Plausible getPlausible() {
+  final serverUrl = dotenv.env["PLAUSIBLE_HOST"];
+  final domain = dotenv.env["PLAUSIBLE_DOMAIN"];
+
+  return Plausible(serverUrl!, domain!);
 }
