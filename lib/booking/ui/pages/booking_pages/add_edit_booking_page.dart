@@ -85,59 +85,61 @@ class AddEditBookingPage extends HookConsumerWidget {
 
     return BookingTemplate(
       child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Form(
-              key: key,
-              child: Column(children: [
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: AlignLeftText(
-                      isEdit
-                          ? BookingTextConstants.editBooking
-                          : BookingTextConstants.addBooking,
-                      color: Colors.grey),
+        physics: const BouncingScrollPhysics(),
+        child: Form(
+          key: key,
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: AlignLeftText(
+                    isEdit
+                        ? BookingTextConstants.editBooking
+                        : BookingTextConstants.addBooking,
+                    color: Colors.grey),
+              ),
+              const SizedBox(height: 20),
+              AsyncChild(
+                value: rooms,
+                builder: (context, data) => AdminScrollChips(
+                  key: scrollKey,
+                  isEdit: isEdit,
+                  dataKey: dataKey,
+                  data: data,
+                  pageStorageKeyName: "booking_room_list",
+                  builder: (Room e) {
+                    final selected = room.value.id == e.id;
+                    return ItemChip(
+                      key: selected ? dataKey : null,
+                      selected: selected,
+                      onTap: () {
+                        room.value = e;
+                        SchedulerBinding.instance.addPostFrameCallback(
+                          (_) {
+                            Scrollable.ensureVisible(
+                              dataKey.currentContext!,
+                              duration: const Duration(milliseconds: 500),
+                              alignment: 0.5,
+                            );
+                          },
+                        );
+                      },
+                      child: Text(
+                        e.name,
+                        style: TextStyle(
+                            color: selected ? Colors.white : Colors.black,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    );
+                  },
                 ),
-                const SizedBox(height: 20),
-                AsyncChild(
-                  value: rooms,
-                  builder: (context, data) => AdminScrollChips(
-                    key: scrollKey,
-                    isEdit: isEdit,
-                    dataKey: dataKey,
-                    data: data,
-                    pageStorageKeyName: "booking_room_list",
-                    builder: (Room e) {
-                      final selected = room.value.id == e.id;
-                      return ItemChip(
-                        key: selected ? dataKey : null,
-                        selected: selected,
-                        onTap: () {
-                          room.value = e;
-                          SchedulerBinding.instance.addPostFrameCallback(
-                            (_) {
-                              Scrollable.ensureVisible(
-                                dataKey.currentContext!,
-                                duration: const Duration(milliseconds: 500),
-                                alignment: 0.5,
-                              );
-                            },
-                          );
-                        },
-                        child: Text(
-                          e.name,
-                          style: TextStyle(
-                              color: selected ? Colors.white : Colors.black,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Column(children: [
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: Column(
+                  children: [
                     TextEntry(
                       controller: entity,
                       label: BookingTextConstants.entity,
@@ -298,100 +300,115 @@ class AddEditBookingPage extends HookConsumerWidget {
                             displayToast(context, TypeMsg.error,
                                 BookingTextConstants.noDaySelected);
                           } else {
-                            await tokenExpireWrapper(ref, () async {
-                              String recurrenceRule = "";
-                              String startString = start.text;
-                              if (!startString.contains("/")) {
-                                startString =
-                                    "${processDate(now)} $startString";
-                              }
-                              String endString = end.text;
-                              if (!endString.contains("/")) {
-                                endString = "${processDate(now)} $endString";
-                              }
-                              if (recurrent.value) {
-                                RecurrenceProperties recurrence =
-                                    RecurrenceProperties(startDate: now);
-                                recurrence.recurrenceType =
-                                    RecurrenceType.weekly;
-                                recurrence.recurrenceRange =
-                                    RecurrenceRange.endDate;
-                                recurrence.endDate = DateTime.parse(
-                                    processDateBack(recurrenceEndDate.text));
-                                recurrence.weekDays = selectedDays;
-                                recurrence.interval = int.parse(interval.text);
-                                recurrenceRule = SfCalendar.generateRRule(
-                                    recurrence,
-                                    DateTime.parse(
-                                        processDateBackWithHour(startString)),
-                                    DateTime.parse(
-                                        processDateBackWithHour(endString)));
-                              }
-                              Booking newBooking = Booking(
-                                  id: isEdit ? booking.id : "",
-                                  reason: motif.text,
-                                  start: DateTime.parse(
+                            String recurrenceRule = "";
+                            String startString = start.text;
+                            if (!startString.contains("/")) {
+                              startString = "${processDate(now)} $startString";
+                            }
+                            String endString = end.text;
+                            if (!endString.contains("/")) {
+                              endString = "${processDate(now)} $endString";
+                            }
+                            if (recurrent.value) {
+                              RecurrenceProperties recurrence =
+                                  RecurrenceProperties(startDate: now);
+                              recurrence.recurrenceType = RecurrenceType.weekly;
+                              recurrence.recurrenceRange =
+                                  RecurrenceRange.endDate;
+                              recurrence.endDate = DateTime.parse(
+                                  processDateBack(recurrenceEndDate.text));
+                              recurrence.weekDays = selectedDays;
+                              recurrence.interval = int.parse(interval.text);
+                              recurrenceRule = SfCalendar.generateRRule(
+                                  recurrence,
+                                  DateTime.parse(
                                       processDateBackWithHour(startString)),
-                                  end: DateTime.parse(
-                                      processDateBackWithHour(endString)),
-                                  creation: DateTime.now(),
-                                  note: note.text.isEmpty ? null : note.text,
-                                  room: room.value,
-                                  key: keyRequired.value,
-                                  decision: booking.decision,
-                                  recurrenceRule: recurrenceRule,
-                                  entity: entity.text,
-                                  applicant: isManagerPage
-                                      ? booking.applicant
-                                      : user.toApplicant(),
-                                  applicantId: isManagerPage
-                                      ? booking.applicantId
-                                      : user.id);
-                              final value = isManagerPage
-                                  ? await ref
-                                      .read(managerBookingListProvider.notifier)
-                                      .updateBooking(newBooking)
-                                  : isEdit
-                                      ? await ref
-                                          .read(
-                                              userBookingListProvider.notifier)
-                                          .updateBooking(newBooking)
-                                      : await ref
-                                          .read(
-                                              userBookingListProvider.notifier)
-                                          .addBooking(newBooking);
-                              if (value) {
-                                QR.back();
-                                ref
-                                    .read(userBookingListProvider.notifier)
-                                    .loadUserBookings();
-                                ref
-                                    .read(confirmedBookingListProvider.notifier)
-                                    .loadConfirmedBooking();
-                                ref
-                                    .read(managerBookingListProvider.notifier)
-                                    .loadUserManageBookings();
-                                ref
-                                    .read(managerConfirmedBookingListProvider
-                                        .notifier)
-                                    .loadConfirmedBookingForManager();
-                                if (isEdit) {
-                                  displayToastWithContext(TypeMsg.msg,
-                                      BookingTextConstants.editedBooking);
-                                } else {
-                                  displayToastWithContext(TypeMsg.msg,
-                                      BookingTextConstants.addedBooking);
-                                }
-                              } else {
-                                if (isEdit) {
-                                  displayToastWithContext(TypeMsg.error,
-                                      BookingTextConstants.editionError);
-                                } else {
-                                  displayToastWithContext(TypeMsg.error,
-                                      BookingTextConstants.addingError);
-                                }
+                                  DateTime.parse(
+                                      processDateBackWithHour(endString)));
+                              try {
+                                SfCalendar.getRecurrenceDateTimeCollection(
+                                    recurrenceRule, recurrence.startDate);
+                              } catch (e) {
+                                displayToast(
+                                  context,
+                                  TypeMsg.error,
+                                  BookingTextConstants
+                                      .noAppointmentInReccurence,
+                                );
+                                return;
                               }
-                            });
+                            }
+                            await tokenExpireWrapper(
+                              ref,
+                              () async {
+                                Booking newBooking = Booking(
+                                    id: isEdit ? booking.id : "",
+                                    reason: motif.text,
+                                    start: DateTime.parse(
+                                        processDateBackWithHour(startString)),
+                                    end: DateTime.parse(
+                                        processDateBackWithHour(endString)),
+                                    creation: DateTime.now(),
+                                    note: note.text.isEmpty ? null : note.text,
+                                    room: room.value,
+                                    key: keyRequired.value,
+                                    decision: booking.decision,
+                                    recurrenceRule: recurrenceRule,
+                                    entity: entity.text,
+                                    applicant: isManagerPage
+                                        ? booking.applicant
+                                        : user.toApplicant(),
+                                    applicantId: isManagerPage
+                                        ? booking.applicantId
+                                        : user.id);
+                                final value = isManagerPage
+                                    ? await ref
+                                        .read(
+                                            managerBookingListProvider.notifier)
+                                        .updateBooking(newBooking)
+                                    : isEdit
+                                        ? await ref
+                                            .read(userBookingListProvider
+                                                .notifier)
+                                            .updateBooking(newBooking)
+                                        : await ref
+                                            .read(userBookingListProvider
+                                                .notifier)
+                                            .addBooking(newBooking);
+                                if (value) {
+                                  QR.back();
+                                  ref
+                                      .read(userBookingListProvider.notifier)
+                                      .loadUserBookings();
+                                  ref
+                                      .read(
+                                          confirmedBookingListProvider.notifier)
+                                      .loadConfirmedBooking();
+                                  ref
+                                      .read(managerBookingListProvider.notifier)
+                                      .loadUserManageBookings();
+                                  ref
+                                      .read(managerConfirmedBookingListProvider
+                                          .notifier)
+                                      .loadConfirmedBookingForManager();
+                                  if (isEdit) {
+                                    displayToastWithContext(TypeMsg.msg,
+                                        BookingTextConstants.editedBooking);
+                                  } else {
+                                    displayToastWithContext(TypeMsg.msg,
+                                        BookingTextConstants.addedBooking);
+                                  }
+                                } else {
+                                  if (isEdit) {
+                                    displayToastWithContext(TypeMsg.error,
+                                        BookingTextConstants.editionError);
+                                  } else {
+                                    displayToastWithContext(TypeMsg.error,
+                                        BookingTextConstants.addingError);
+                                  }
+                                }
+                              },
+                            );
                           }
                         } else {
                           displayToast(context, TypeMsg.error,
@@ -408,9 +425,13 @@ class AddEditBookingPage extends HookConsumerWidget {
                               fontWeight: FontWeight.bold)),
                     ),
                     const SizedBox(height: 30),
-                  ]),
-                )
-              ]))),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
