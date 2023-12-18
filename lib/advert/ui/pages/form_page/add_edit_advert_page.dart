@@ -240,7 +240,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                   id: isEdit ? advert.id : '',
                                   announcer: selectedAnnouncers[0],
                                   content: content.text,
-                                  date: DateTime.now(),
+                                  date: isEdit ? advert.date : DateTime.now(),
                                   tags: textTagsController.text.split(', '),
                                   title: title.text);
                               final value = isEdit
