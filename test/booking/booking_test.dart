@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/advert/tools/functions.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/tools/functions.dart';
@@ -338,13 +336,6 @@ void main() {
       bool allDay = true;
       expect(formatRecurrenceRule(dateStart, dateEnd, recurrenceRule, allDay),
           "Du 01/01 à 00:00 au 03/01 à 00:00");
-    });
-
-    test('color invert returns correct inverted color', () {
-      const inputColor = Color(0xFF0000FF); // blue
-      const expectedOutputColor = Color(0xffffff00); // yellow
-      final outputColor = invert(inputColor);
-      expect(outputColor, equals(expectedOutputColor));
     });
 
     test('combineDate returns correct date', () {
