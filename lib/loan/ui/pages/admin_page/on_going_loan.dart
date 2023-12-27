@@ -88,7 +88,6 @@ class OnGoingLoan extends HookConsumerWidget {
                         firstChild: GestureDetector(
                           onTap: () async {
                             await loanNotifier.setLoan(Loan.empty());
-                            ref.watch(itemListProvider);
                             startNotifier.setStart(processDate(DateTime.now()));
                             endNotifier.setEnd("");
                             QR.to(LoanRouter.root +
@@ -113,12 +112,12 @@ class OnGoingLoan extends HookConsumerWidget {
                               isAdmin: true,
                               onEdit: () async {
                                 await loanNotifier.setLoan(e);
-                                ref.watch(itemListProvider);
                                 startNotifier.setStart(processDate(e.start));
                                 endNotifier.setEnd(processDate(e.end));
                                 QR.to(LoanRouter.root +
                                     LoanRouter.admin +
                                     LoanRouter.addEditLoan);
+                                loanersItemsNotifier.setTData(loaner, itemList);
                               },
                               onCalendar: () async {
                                 await showDialog<int>(
