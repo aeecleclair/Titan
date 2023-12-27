@@ -27,6 +27,7 @@ class AddEditRecommendationPage extends HookConsumerWidget {
     final formKey = GlobalKey<FormState>();
     final ImagePicker picker = ImagePicker();
     final recommendation = ref.watch(recommendationProvider);
+    final recommendationNotifier = ref.watch(recommendationProvider.notifier);
     final recommendationList = ref.watch(recommendationListProvider);
     final recommendationListNotifier =
         ref.watch(recommendationListProvider.notifier);
@@ -170,6 +171,8 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                               .addRecommendation(newRecommendation);
                       if (value) {
                         if (isEdit) {
+                          recommendationNotifier
+                              .setRecommendation(newRecommendation);
                           displayAdvertToastWithContext(TypeMsg.msg,
                               RecommendationTextConstants.editedRecommendation);
                           recommendationList.maybeWhen(
