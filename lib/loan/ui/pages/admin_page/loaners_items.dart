@@ -31,7 +31,6 @@ class LoanersItems extends HookConsumerWidget {
     final itemListNotifier = ref.watch(itemListProvider.notifier);
     final itemList = ref.watch(itemListProvider);
     final itemNotifier = ref.watch(itemProvider.notifier);
-    final editingController = useTextEditingController();
     final focus = ref.watch(itemFocusProvider);
     final focusNode = useFocusNode();
     if (focus) {
@@ -62,11 +61,9 @@ class LoanersItems extends HookConsumerWidget {
                   StyledSearchBar(
                     label: LoanTextConstants.itemHandling,
                     onChanged: (value) async {
-                      if (editingController.text.isNotEmpty) {
+                      if (value.isNotEmpty) {
                         loanersItemsNotifier.setTData(
-                            loaner,
-                            await itemListNotifier
-                                .filterItems(editingController.text));
+                            loaner, await itemListNotifier.filterItems(value));
                       } else {
                         loanersItemsNotifier.setTData(loaner, itemList);
                       }

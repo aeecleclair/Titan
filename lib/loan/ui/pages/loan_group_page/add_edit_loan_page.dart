@@ -41,7 +41,6 @@ class AddEditLoanPage extends HookConsumerWidget {
     final itemListNotifier = ref.watch(itemListProvider.notifier);
     final queryController =
         useTextEditingController(text: isEdit ? loan.borrower.getName() : "");
-    final editingController = useTextEditingController();
     final focus = ref.watch(itemFocusProvider);
     final focusNode = useFocusNode();
     if (focus) {
@@ -60,11 +59,9 @@ class AddEditLoanPage extends HookConsumerWidget {
                     ? LoanTextConstants.editLoan
                     : LoanTextConstants.addLoan,
                 onChanged: (value) async {
-                  if (editingController.text.isNotEmpty) {
+                  if (value.isNotEmpty) {
                     loanersItemsNotifier.setTData(
-                        loaner,
-                        await itemListNotifier
-                            .filterItems(editingController.text));
+                        loaner, await itemListNotifier.filterItems(value));
                   } else {
                     loanersItemsNotifier.setTData(loaner, itemList);
                   }
