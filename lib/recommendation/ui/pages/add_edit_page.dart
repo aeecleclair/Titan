@@ -24,6 +24,7 @@ class AddEditRecommendationPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    const maxFileSize = 4194304;
     final formKey = GlobalKey<FormState>();
     final ImagePicker picker = ImagePicker();
     final recommendation = ref.watch(recommendationProvider);
@@ -90,13 +91,19 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                         final XFile? image =
                             await picker.pickImage(source: ImageSource.gallery);
                         if (image != null) {
-                          if (kIsWeb) {
-                            logo.value = await image.readAsBytes();
-                            logoFile.value = Image.network(image.path);
+                          final size = await image.length();
+                          if (size > maxFileSize) {
+                            displayAdvertToastWithContext(TypeMsg.error,
+                                RecommendationTextConstants.imageSizeTooBig);
                           } else {
-                            final file = File(image.path);
-                            logo.value = await file.readAsBytes();
-                            logoFile.value = Image.file(file);
+                            if (kIsWeb) {
+                              logo.value = await image.readAsBytes();
+                              logoFile.value = Image.network(image.path);
+                            } else {
+                              final file = File(image.path);
+                              logo.value = await file.readAsBytes();
+                              logoFile.value = Image.file(file);
+                            }
                           }
                         }
                       },
