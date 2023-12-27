@@ -101,8 +101,8 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                       },
                       child: logoFile.value != null
                           ? Container(
-                              height: 200,
-                              width: 200,
+                              height: 100,
+                              width: 100,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(50.0),
                                 image: DecorationImage(
@@ -114,7 +114,7 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                             )
                           : const HeroIcon(
                               HeroIcons.photo,
-                              size: 200,
+                              size: 100,
                               color: Colors.grey,
                             ),
                     ),
