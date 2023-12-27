@@ -1,21 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/loan/providers/item_list_provider.dart';
+import 'package:myecl/loan/providers/loaner_provider.dart';
+import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/router.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/tools/ui/widgets/top_bar.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
-class LoanTemplate extends StatelessWidget {
+class LoanTemplate extends HookConsumerWidget {
   final Widget child;
   const LoanTemplate({super.key, required this.child});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SafeArea(
       child: Column(
         children: [
-          const TopBar(
-            title: LoanTextConstants.loan,
-            root: LoanRouter.root,
-          ),
+          TopBar(
+              title: LoanTextConstants.loan,
+              root: LoanRouter.root,
+              onBack: () {
+                if (QR.currentPath ==
+                    LoanRouter.root +
+                        LoanRouter.admin +
+                        LoanRouter.addEditLoan) {
+                  final loanersItemsNotifier =
+                      ref.watch(loanersItemsProvider.notifier);
+                  final loaner = ref.watch(loanerProvider);
+                  final itemList = ref.watch(itemListProvider);
+                  loanersItemsNotifier.setTData(loaner, itemList);
+                }
+              }),
           Expanded(child: child)
         ],
       ),
