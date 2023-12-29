@@ -172,7 +172,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                   label: CinemaTextConstants.posterUrl,
                   controller: posterUrl,
                   onChanged: (value) async {
-                    logo.value = await File(posterUrl.text).readAsBytes();
+                    logo.value = await getFromUrl(posterUrl.text);
                   },
                   canBeEmpty: true,
                 ),
