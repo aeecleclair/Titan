@@ -110,8 +110,6 @@ class AddEditSessionPage extends HookConsumerWidget {
                                 data: (data) async {
                                   name.text = data.title;
                                   overview.text = data.overview;
-                                  logo.value =
-                                      await File(data.posterUrl).readAsBytes();
                                   posterUrl.text = data.posterUrl;
                                   genre.text = data.genres.join(', ');
                                   tagline.text = data.tagline;
