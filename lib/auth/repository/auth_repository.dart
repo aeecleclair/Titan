@@ -7,18 +7,18 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/repository/openid_repository.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart' as models;
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/cache/cache_manager.dart';
 import 'package:myecl/tools/repository/constants.dart';
 import 'package:universal_html/html.dart' as html;
 
 class AuthRepository {
+  final Openapi openIdRepository;
   final FlutterAppAuth appAuth = const FlutterAppAuth();
   final CacheManager cacheManager = CacheManager();
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
   final Base64Codec base64 = const Base64Codec.urlSafe();
-  final OpenIdRepository openIdRepository = OpenIdRepository();
   final String tokenName = "my_ecl_auth_token";
   final String clientId = "Titan";
   final String redirectUrl = "fr.myecl.titan://authorized";
@@ -26,7 +26,7 @@ class AuthRepository {
   final String discoveryUrl = "$BASE_URL.well-known/openid-configuration";
   final List<String> scopes = ["API"];
 
-  AuthRepository();
+  AuthRepository({required this.openIdRepository});
 
   String generateRandomString(int len) {
     var r = Random.secure();
@@ -67,10 +67,7 @@ class AuthRepository {
       }
 
       checkWindowClosed();
-      completer.future.then((_) {
-        // tokenResponse =
-        //     const models.TokenResponse(accessToken: "", refreshToken: "");
-      });
+      completer.future.then((_) {});
 
       Future<models.TokenResponse> login(String data) async {
         final receivedUri = Uri.parse(data);
@@ -81,20 +78,17 @@ class AuthRepository {
         }
         try {
           if (token != null && token.isNotEmpty) {
-            final resp = await openIdRepository.getToken(
-              token,
-              clientId,
-              redirectUri.toString(),
-              codeVerifier,
-              "authorization_code",
-            );
-            if (resp["token"] != null && resp["token"]!.isNotEmpty) {
-              models.TokenResponse tr = models.TokenResponse(
-                accessToken: resp["token"]!,
-                refreshToken: resp["refresh_token"]!,
-              );
-              storeToken(tr);
-              return tr;
+            final response = await openIdRepository.authTokenPost(body: {
+              "client_id": clientId,
+              "code": token,
+              "redirect_uri": redirectUri.toString(),
+              "code_verifier": codeVerifier,
+              "grant_type": "authorization_code",
+              "refresh_token": token,
+            });
+            if (response.isSuccessful && response.body != null) {
+              storeToken(response.body!);
+              return response.body!;
             } else {
               throw Exception('Wrong credentials');
             }
@@ -142,18 +136,16 @@ class AuthRepository {
       if (token != null) {
         try {
           if (kIsWeb) {
-            final resp = await openIdRepository.getToken(
-              token,
-              clientId,
-              "",
-              "",
-              "refresh_token",
-            );
-            if (resp["token"] != null && resp["token"]!.isNotEmpty) {
-              tokenResponse = models.TokenResponse(
-                accessToken: resp["token"]!,
-                refreshToken: resp["refresh_token"]!,
-              );
+            final response = await openIdRepository.authTokenPost(body: {
+              "client_id": clientId,
+              "code": token,
+              "redirect_uri": "",
+              "code_verifier": "",
+              "grant_type": "refresh_token",
+              "refresh_token": token,
+            });
+            if (response.isSuccessful && response.body != null) {
+              tokenResponse = response.body!;
               storeToken(tokenResponse);
             }
           } else {
@@ -248,4 +240,7 @@ class AuthRepository {
   }
 }
 
-final authRepositoryProvider = Provider((ref) => AuthRepository());
+final authRepositoryProvider = Provider((ref) {
+  final openIdRepository = Openapi.create(baseUrl: Uri.parse(BASE_URL));
+  AuthRepository(openIdRepository: openIdRepository);
+});
