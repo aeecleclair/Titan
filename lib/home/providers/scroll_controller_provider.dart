@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ScrollControllerNotifier extends StateNotifier<ScrollController> {
-  ScrollControllerNotifier(ScrollController scrollController)
-      : super(scrollController);
+  ScrollControllerNotifier(super.scrollController);
 }
 
 final scrollControllerProvider =

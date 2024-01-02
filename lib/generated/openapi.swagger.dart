@@ -1,16 +1,11 @@
 // ignore_for_file: type=lint
 
-import 'package:json_annotation/json_annotation.dart';
-import 'package:collection/collection.dart';
-import 'dart:convert';
-
 import 'openapi.models.swagger.dart';
 import 'package:chopper/chopper.dart';
 
 import 'client_mapping.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart' show MultipartFile;
 import 'package:chopper/chopper.dart' as chopper;
 import 'openapi.enums.swagger.dart' as enums;
 export 'openapi.enums.swagger.dart';
@@ -28,6 +23,7 @@ abstract class Openapi extends ChopperService {
     ChopperClient? client,
     http.Client? httpClient,
     Authenticator? authenticator,
+    ErrorConverter? errorConverter,
     Converter? converter,
     Uri? baseUrl,
     Iterable<dynamic>? interceptors,
@@ -42,6 +38,7 @@ abstract class Openapi extends ChopperService {
         interceptors: interceptors ?? [],
         client: httpClient,
         authenticator: authenticator,
+        errorConverter: errorConverter,
         baseUrl: baseUrl ?? Uri.parse('http://'));
     return _$Openapi(newClient);
   }
@@ -857,7 +854,7 @@ abstract class Openapi extends ChopperService {
 
   ///Login For Access Token
   Future<chopper.Response<AccessToken>> authSimpleTokenPost(
-      {required BodyLoginForAccessTokenAuthSimpleTokenPost body}) {
+      {required Map<String, String> body}) {
     generatedMapping.putIfAbsent(
         AccessToken, () => AccessToken.fromJsonFactory);
 
@@ -867,11 +864,11 @@ abstract class Openapi extends ChopperService {
   ///Login For Access Token
   @Post(
     path: '/auth/simple_token',
-    optionalBody: true,
+    headers: {contentTypeKey: formEncodedHeaders},
   )
-  @Multipart()
+  @FactoryConverter(request: FormUrlEncodedConverter.requestFactory)
   Future<chopper.Response<AccessToken>> _authSimpleTokenPost(
-      {@Part() required BodyLoginForAccessTokenAuthSimpleTokenPost body});
+      {@Body() required Map<String, String> body});
 
   ///Get Authorize Page
   ///@param client_id
@@ -926,42 +923,39 @@ abstract class Openapi extends ChopperService {
 
   ///Post Authorize Page
   Future<chopper.Response<String>> authAuthorizePost(
-      {required BodyPostAuthorizePageAuthAuthorizePost body}) {
+      {required Map<String, String> body}) {
     return _authAuthorizePost(body: body);
   }
 
   ///Post Authorize Page
   @Post(
     path: '/auth/authorize',
-    optionalBody: true,
+    headers: {contentTypeKey: formEncodedHeaders},
   )
-  @Multipart()
+  @FactoryConverter(request: FormUrlEncodedConverter.requestFactory)
   Future<chopper.Response<String>> _authAuthorizePost(
-      {@Part() required BodyPostAuthorizePageAuthAuthorizePost body});
+      {@Body() required Map<String, String> body});
 
   ///Authorize Validation
   Future<chopper.Response> authAuthorizationFlowAuthorizeValidationPost(
-      {required BodyAuthorizeValidationAuthAuthorizationFlowAuthorizeValidationPost
-          body}) {
+      {required Map<String, String> body}) {
     return _authAuthorizationFlowAuthorizeValidationPost(body: body);
   }
 
   ///Authorize Validation
   @Post(
     path: '/auth/authorization-flow/authorize-validation',
-    optionalBody: true,
+    headers: {contentTypeKey: formEncodedHeaders},
   )
-  @Multipart()
+  @FactoryConverter(request: FormUrlEncodedConverter.requestFactory)
   Future<chopper.Response> _authAuthorizationFlowAuthorizeValidationPost(
-      {@Part()
-      required BodyAuthorizeValidationAuthAuthorizationFlowAuthorizeValidationPost
-          body});
+      {@Body() required Map<String, String> body});
 
   ///Token
   ///@param authorization
   Future<chopper.Response<TokenResponse>> authTokenPost({
     String? authorization,
-    required BodyTokenAuthTokenPost body,
+    required Map<String, String> body,
   }) {
     generatedMapping.putIfAbsent(
         TokenResponse, () => TokenResponse.fromJsonFactory);
@@ -973,12 +967,12 @@ abstract class Openapi extends ChopperService {
   ///@param authorization
   @Post(
     path: '/auth/token',
-    optionalBody: true,
+    headers: {contentTypeKey: formEncodedHeaders},
   )
-  @Multipart()
+  @FactoryConverter(request: FormUrlEncodedConverter.requestFactory)
   Future<chopper.Response<TokenResponse>> _authTokenPost({
     @Header('authorization') String? authorization,
-    @Part() required BodyTokenAuthTokenPost body,
+    @Body() required Map<String, String> body,
   });
 
   ///Auth Get Userinfo
@@ -3035,168 +3029,6 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response> _tombolaRafflesRaffleIdLockPatch(
       {@Path('raffle_id') required String? raffleId});
 
-  ///Get Sharer Group Memberships
-  Future<chopper.Response<List<SharerGroupMembership>>>
-      tricountSharergroupsMembershipsGet() {
-    generatedMapping.putIfAbsent(
-        SharerGroupMembership, () => SharerGroupMembership.fromJsonFactory);
-
-    return _tricountSharergroupsMembershipsGet();
-  }
-
-  ///Get Sharer Group Memberships
-  @Get(path: '/tricount/sharergroups/memberships')
-  Future<chopper.Response<List<SharerGroupMembership>>>
-      _tricountSharergroupsMembershipsGet();
-
-  ///Add Sharergroup Membership
-  Future<chopper.Response> tricountSharergroupsMembershipsPost(
-      {required SharerGroupMembership? body}) {
-    return _tricountSharergroupsMembershipsPost(body: body);
-  }
-
-  ///Add Sharergroup Membership
-  @Post(
-    path: '/tricount/sharergroups/memberships',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _tricountSharergroupsMembershipsPost(
-      {@Body() required SharerGroupMembership? body});
-
-  ///Delete Sharergroup Membership
-  ///@param sharer_group_id
-  ///@param membership_id
-  Future<chopper.Response>
-      tricountSharergroupsSharerGroupIdMembershipMembershipIdDelete({
-    required String? sharerGroupId,
-    required String? membershipId,
-  }) {
-    return _tricountSharergroupsSharerGroupIdMembershipMembershipIdDelete(
-        sharerGroupId: sharerGroupId, membershipId: membershipId);
-  }
-
-  ///Delete Sharergroup Membership
-  ///@param sharer_group_id
-  ///@param membership_id
-  @Delete(
-      path:
-          '/tricount/sharergroups/{sharer_group_id}/membership/{membership_id}')
-  Future<chopper.Response>
-      _tricountSharergroupsSharerGroupIdMembershipMembershipIdDelete({
-    @Path('sharer_group_id') required String? sharerGroupId,
-    @Path('membership_id') required String? membershipId,
-  });
-
-  ///Get Sharer Group By Id
-  ///@param sharer_group_id
-  Future<chopper.Response<SharerGroup>> tricountSharergroupsSharerGroupIdGet(
-      {required String? sharerGroupId}) {
-    generatedMapping.putIfAbsent(
-        SharerGroup, () => SharerGroup.fromJsonFactory);
-
-    return _tricountSharergroupsSharerGroupIdGet(sharerGroupId: sharerGroupId);
-  }
-
-  ///Get Sharer Group By Id
-  ///@param sharer_group_id
-  @Get(path: '/tricount/sharergroups/{sharer_group_id}')
-  Future<chopper.Response<SharerGroup>> _tricountSharergroupsSharerGroupIdGet(
-      {@Path('sharer_group_id') required String? sharerGroupId});
-
-  ///Update Sharer Groups
-  ///@param sharer_group_id
-  Future<chopper.Response> tricountSharergroupsSharerGroupIdPatch({
-    required String? sharerGroupId,
-    required SharerGroupUpdate? body,
-  }) {
-    return _tricountSharergroupsSharerGroupIdPatch(
-        sharerGroupId: sharerGroupId, body: body);
-  }
-
-  ///Update Sharer Groups
-  ///@param sharer_group_id
-  @Patch(
-    path: '/tricount/sharergroups/{sharer_group_id}',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _tricountSharergroupsSharerGroupIdPatch({
-    @Path('sharer_group_id') required String? sharerGroupId,
-    @Body() required SharerGroupUpdate? body,
-  });
-
-  ///Create Sharer Groups
-  Future<chopper.Response<SharerGroup>> tricountSharergroupsPost(
-      {required SharerGroupBase? body}) {
-    generatedMapping.putIfAbsent(
-        SharerGroup, () => SharerGroup.fromJsonFactory);
-
-    return _tricountSharergroupsPost(body: body);
-  }
-
-  ///Create Sharer Groups
-  @Post(
-    path: '/tricount/sharergroups',
-    optionalBody: true,
-  )
-  Future<chopper.Response<SharerGroup>> _tricountSharergroupsPost(
-      {@Body() required SharerGroupBase? body});
-
-  ///Create Transaction
-  Future<chopper.Response<Transaction>> tricountTransactionsPost(
-      {required TransactionCreate? body}) {
-    generatedMapping.putIfAbsent(
-        Transaction, () => Transaction.fromJsonFactory);
-
-    return _tricountTransactionsPost(body: body);
-  }
-
-  ///Create Transaction
-  @Post(
-    path: '/tricount/transactions',
-    optionalBody: true,
-  )
-  Future<chopper.Response<Transaction>> _tricountTransactionsPost(
-      {@Body() required TransactionCreate? body});
-
-  ///Delete Transaction
-  ///@param transaction_id
-  Future<chopper.Response> tricountTransactionsTransactionIdDelete(
-      {required String? transactionId}) {
-    return _tricountTransactionsTransactionIdDelete(
-        transactionId: transactionId);
-  }
-
-  ///Delete Transaction
-  ///@param transaction_id
-  @Delete(path: '/tricount/transactions/{transaction_id}')
-  Future<chopper.Response> _tricountTransactionsTransactionIdDelete(
-      {@Path('transaction_id') required String? transactionId});
-
-  ///Update Transaction
-  ///@param transaction_id
-  Future<chopper.Response<Transaction>> tricountTransactionsTransactionIdPatch({
-    required String? transactionId,
-    required TransactionUpdate? body,
-  }) {
-    generatedMapping.putIfAbsent(
-        Transaction, () => Transaction.fromJsonFactory);
-
-    return _tricountTransactionsTransactionIdPatch(
-        transactionId: transactionId, body: body);
-  }
-
-  ///Update Transaction
-  ///@param transaction_id
-  @Patch(
-    path: '/tricount/transactions/{transaction_id}',
-    optionalBody: true,
-  )
-  Future<chopper.Response<Transaction>>
-      _tricountTransactionsTransactionIdPatch({
-    @Path('transaction_id') required String? transactionId,
-    @Body() required TransactionUpdate? body,
-  });
-
   ///Read Users
   Future<chopper.Response<List<CoreUserSimple>>> usersGet() {
     generatedMapping.putIfAbsent(
@@ -3521,6 +3353,138 @@ abstract class Openapi extends ChopperService {
   @Get(path: '/users/{user_id}/profile-picture')
   Future<chopper.Response> _usersUserIdProfilePictureGet(
       {@Path('user_id') required String? userId});
+
+  ///Get Games Played On
+  ///@param time
+  Future<chopper.Response<List<Game>>> elocapsGamesGet(
+      {required String? time}) {
+    generatedMapping.putIfAbsent(Game, () => Game.fromJsonFactory);
+
+    return _elocapsGamesGet(time: time);
+  }
+
+  ///Get Games Played On
+  ///@param time
+  @Get(path: '/elocaps/games')
+  Future<chopper.Response<List<Game>>> _elocapsGamesGet(
+      {@Query('time') required String? time});
+
+  ///Register Game
+  Future<chopper.Response<Game>> elocapsGamesPost(
+      {required GameCreateRequest? body}) {
+    generatedMapping.putIfAbsent(Game, () => Game.fromJsonFactory);
+
+    return _elocapsGamesPost(body: body);
+  }
+
+  ///Register Game
+  @Post(
+    path: '/elocaps/games',
+    optionalBody: true,
+  )
+  Future<chopper.Response<Game>> _elocapsGamesPost(
+      {@Body() required GameCreateRequest? body});
+
+  ///Get Latest Games
+  Future<chopper.Response<List<Game>>> elocapsGamesLatestGet() {
+    generatedMapping.putIfAbsent(Game, () => Game.fromJsonFactory);
+
+    return _elocapsGamesLatestGet();
+  }
+
+  ///Get Latest Games
+  @Get(path: '/elocaps/games/latest')
+  Future<chopper.Response<List<Game>>> _elocapsGamesLatestGet();
+
+  ///Get Waiting Games
+  Future<chopper.Response<List<GameMode>>> elocapsGamesWaitingGet() {
+    generatedMapping.putIfAbsent(GameMode, () => GameMode.fromJsonFactory);
+
+    return _elocapsGamesWaitingGet();
+  }
+
+  ///Get Waiting Games
+  @Get(path: '/elocaps/games/waiting')
+  Future<chopper.Response<List<GameMode>>> _elocapsGamesWaitingGet();
+
+  ///Get Game Detail
+  ///@param game_id
+  Future<chopper.Response<Game>> elocapsGamesGameIdGet(
+      {required String? gameId}) {
+    generatedMapping.putIfAbsent(Game, () => Game.fromJsonFactory);
+
+    return _elocapsGamesGameIdGet(gameId: gameId);
+  }
+
+  ///Get Game Detail
+  ///@param game_id
+  @Get(path: '/elocaps/games/{game_id}')
+  Future<chopper.Response<Game>> _elocapsGamesGameIdGet(
+      {@Path('game_id') required String? gameId});
+
+  ///Confirm Game
+  ///@param game_id
+  Future<chopper.Response<Game>> elocapsGamesGameIdValidatePost(
+      {required String? gameId}) {
+    generatedMapping.putIfAbsent(Game, () => Game.fromJsonFactory);
+
+    return _elocapsGamesGameIdValidatePost(gameId: gameId);
+  }
+
+  ///Confirm Game
+  ///@param game_id
+  @Post(
+    path: '/elocaps/games/{game_id}/validate',
+    optionalBody: true,
+  )
+  Future<chopper.Response<Game>> _elocapsGamesGameIdValidatePost(
+      {@Path('game_id') required String? gameId});
+
+  ///Get Player Games
+  ///@param user_id
+  Future<chopper.Response<List<Game>>> elocapsPlayersUserIdGamesGet(
+      {required String? userId}) {
+    generatedMapping.putIfAbsent(Game, () => Game.fromJsonFactory);
+
+    return _elocapsPlayersUserIdGamesGet(userId: userId);
+  }
+
+  ///Get Player Games
+  ///@param user_id
+  @Get(path: '/elocaps/players/{user_id}/games')
+  Future<chopper.Response<List<Game>>> _elocapsPlayersUserIdGamesGet(
+      {@Path('user_id') required String? userId});
+
+  ///Get Player Info
+  ///@param user_id
+  Future<chopper.Response<DetailedPlayer>> elocapsPlayersUserIdGet(
+      {required String? userId}) {
+    generatedMapping.putIfAbsent(
+        DetailedPlayer, () => DetailedPlayer.fromJsonFactory);
+
+    return _elocapsPlayersUserIdGet(userId: userId);
+  }
+
+  ///Get Player Info
+  ///@param user_id
+  @Get(path: '/elocaps/players/{user_id}')
+  Future<chopper.Response<DetailedPlayer>> _elocapsPlayersUserIdGet(
+      {@Path('user_id') required String? userId});
+
+  ///Get Leaderboard
+  ///@param mode
+  Future<chopper.Response<List<PlayerBase>>> elocapsLeaderboardGet(
+      {required enums.CapsMode? mode}) {
+    generatedMapping.putIfAbsent(PlayerBase, () => PlayerBase.fromJsonFactory);
+
+    return _elocapsLeaderboardGet(mode: mode?.value?.toString());
+  }
+
+  ///Get Leaderboard
+  ///@param mode
+  @Get(path: '/elocaps/leaderboard')
+  Future<chopper.Response<List<PlayerBase>>> _elocapsLeaderboardGet(
+      {@Query('mode') required String? mode});
 }
 
 typedef $JsonFactory<T> = T Function(Map<String, dynamic> json);

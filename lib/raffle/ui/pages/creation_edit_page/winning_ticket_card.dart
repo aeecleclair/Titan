@@ -9,11 +9,11 @@ class WinningTicketUI extends HookConsumerWidget {
   final VoidCallback onEdit;
   final Future Function() onDelete;
   const WinningTicketUI({
-    Key? key,
+    super.key,
     required this.ticket,
     required this.onEdit,
     required this.onDelete,
-  }) : super(key: key);
+  });
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Stack(children: [

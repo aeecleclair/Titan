@@ -36,8 +36,8 @@ class ContenderCard extends HookConsumerWidget {
     final selectedContenderNotifier =
         ref.read(selectedContenderProvider.notifier);
     final status = ref.watch(statusProvider);
-    final s =
-        status.maybeWhen(data: (value) => value, orElse: () => StatusType.closed);
+    final s = status.maybeWhen(
+        data: (value) => value, orElse: () => StatusType.closed);
     return Stack(
       children: [
         if (s == StatusType.published)

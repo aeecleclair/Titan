@@ -30,7 +30,8 @@ class AdminPage extends HookConsumerWidget {
             children: [
               GestureDetector(
                   onTap: () {
-                    sessionNotifier.setSession(CineSessionComplete.fromJson({}));
+                    sessionNotifier
+                        .setSession(CineSessionComplete.fromJson({}));
                     QR.to(CinemaRouter.root +
                         CinemaRouter.admin +
                         CinemaRouter.addEdit);

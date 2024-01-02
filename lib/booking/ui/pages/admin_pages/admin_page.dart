@@ -47,13 +47,13 @@ class AdminPage extends HookConsumerWidget {
         ) {
           for (BookingReturnApplicant b in bookings) {
             switch (b.decision) {
-              case AppUtilsTypesBookingTypeDecision .approved:
+              case AppUtilsTypesBookingTypeDecision.approved:
                 confirmedBookings.add(b);
                 break;
-              case AppUtilsTypesBookingTypeDecision .declined:
+              case AppUtilsTypesBookingTypeDecision.declined:
                 canceledBookings.add(b);
                 break;
-              case AppUtilsTypesBookingTypeDecision .pending:
+              case AppUtilsTypesBookingTypeDecision.pending:
                 pendingBookings.add(b);
                 break;
               case AppUtilsTypesBookingTypeDecision.swaggerGeneratedUnknown:

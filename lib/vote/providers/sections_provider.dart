@@ -24,7 +24,8 @@ class SectionNotifier extends ListNotifier2<SectionComplete> {
 
   Future<bool> deleteSection(SectionComplete section) async {
     return await delete(
-        (sectionId) async => sectionRepository.campaignSectionsSectionIdDelete(sectionId: sectionId),
+        (sectionId) async => sectionRepository.campaignSectionsSectionIdDelete(
+            sectionId: sectionId),
         (sections, section) => sections..removeWhere((s) => s.id == section.id),
         section.id,
         section);

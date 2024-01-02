@@ -32,8 +32,7 @@ class EditAssociationPage extends HookConsumerWidget {
     final key = GlobalKey<FormState>();
     final name = useTextEditingController();
     final description = useTextEditingController();
-    final simpleGroupsNotifier =
-        ref.watch(simpleGroupsGroupsProvider.notifier);
+    final simpleGroupsNotifier = ref.watch(simpleGroupsGroupsProvider.notifier);
     final simpleGroups = ref.watch(simpleGroupsGroupsProvider);
 
     void displayToastWithContext(TypeMsg type, String msg) {

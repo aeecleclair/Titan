@@ -37,7 +37,8 @@ final messagesProvider =
     StateNotifierProvider<MessagesProvider, AsyncValue<List<Message>>>((ref) {
   final notificationRepository = ref.watch(repositoryProvider);
   final firebaseToken = ref.watch(firebaseTokenProvider);
-  MessagesProvider notifier = MessagesProvider(notificationRepository: notificationRepository);
+  MessagesProvider notifier =
+      MessagesProvider(notificationRepository: notificationRepository);
   firebaseToken.then((value) => notifier.setFirebaseToken(value));
   return notifier;
 });

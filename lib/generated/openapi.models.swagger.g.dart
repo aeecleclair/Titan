@@ -129,16 +129,6 @@ Map<String, dynamic> _$ApplicantToJson(Applicant instance) => <String, dynamic>{
       'phone': instance.phone,
     };
 
-Balance _$BalanceFromJson(Map<String, dynamic> json) => Balance(
-      userId: json['user_id'] as String? ?? '',
-      amount: (json['amount'] as num?)?.toDouble() ?? 0.0,
-    );
-
-Map<String, dynamic> _$BalanceToJson(Balance instance) => <String, dynamic>{
-      'user_id': instance.userId,
-      'amount': instance.amount,
-    };
-
 BatchResult _$BatchResultFromJson(Map<String, dynamic> json) => BatchResult(
       failed: json['failed'] as Map<String, dynamic>,
     );
@@ -595,14 +585,14 @@ CoreBatchUserCreateRequest _$CoreBatchUserCreateRequestFromJson(
         Map<String, dynamic> json) =>
     CoreBatchUserCreateRequest(
       email: json['email'] as String? ?? '',
-      accountType: accountTypeNullableFromJson(json['account_type']),
+      accountType: accountTypeFromJson(json['account_type']),
     );
 
 Map<String, dynamic> _$CoreBatchUserCreateRequestToJson(
         CoreBatchUserCreateRequest instance) =>
     <String, dynamic>{
       'email': instance.email,
-      'account_type': accountTypeNullableToJson(instance.accountType),
+      'account_type': accountTypeToJson(instance.accountType),
     };
 
 CoreGroup _$CoreGroupFromJson(Map<String, dynamic> json) => CoreGroup(
@@ -900,6 +890,18 @@ Map<String, dynamic> _$DeliveryUpdateToJson(DeliveryUpdate instance) =>
       'delivery_date': _dateToJson(instance.deliveryDate),
     };
 
+DetailedPlayer _$DetailedPlayerFromJson(Map<String, dynamic> json) =>
+    DetailedPlayer(
+      user: CoreUserSimple.fromJson(json['user'] as Map<String, dynamic>),
+      info: json['info'] as Map<String, dynamic>,
+    );
+
+Map<String, dynamic> _$DetailedPlayerToJson(DetailedPlayer instance) =>
+    <String, dynamic>{
+      'user': instance.user.toJson(),
+      'info': instance.info,
+    };
+
 EventApplicant _$EventApplicantFromJson(Map<String, dynamic> json) =>
     EventApplicant(
       name: json['name'] as String? ?? '',
@@ -1048,6 +1050,81 @@ Map<String, dynamic> _$FirebaseDeviceToJson(FirebaseDevice instance) =>
     <String, dynamic>{
       'user_id': instance.userId,
       'firebase_device_token': instance.firebaseDeviceToken,
+    };
+
+Game _$GameFromJson(Map<String, dynamic> json) => Game(
+      mode: capsModeFromJson(json['mode']),
+      timestamp: DateTime.parse(json['timestamp'] as String),
+      id: json['id'] as String? ?? '',
+      gamePlayers: (json['game_players'] as List<dynamic>?)
+              ?.map((e) => GamePlayer.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      isConfirmed: json['is_confirmed'] as bool? ?? false,
+    );
+
+Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
+      'mode': capsModeToJson(instance.mode),
+      'timestamp': instance.timestamp.toIso8601String(),
+      'id': instance.id,
+      'game_players': instance.gamePlayers.map((e) => e.toJson()).toList(),
+      'is_confirmed': instance.isConfirmed,
+    };
+
+GameCreateRequest _$GameCreateRequestFromJson(Map<String, dynamic> json) =>
+    GameCreateRequest(
+      mode: capsModeFromJson(json['mode']),
+      players: (json['players'] as List<dynamic>?)
+              ?.map((e) => GamePlayerBase.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+    );
+
+Map<String, dynamic> _$GameCreateRequestToJson(GameCreateRequest instance) =>
+    <String, dynamic>{
+      'mode': capsModeToJson(instance.mode),
+      'players': instance.players.map((e) => e.toJson()).toList(),
+    };
+
+GameMode _$GameModeFromJson(Map<String, dynamic> json) => GameMode(
+      mode: capsModeFromJson(json['mode']),
+    );
+
+Map<String, dynamic> _$GameModeToJson(GameMode instance) => <String, dynamic>{
+      'mode': capsModeToJson(instance.mode),
+    };
+
+GamePlayer _$GamePlayerFromJson(Map<String, dynamic> json) => GamePlayer(
+      userId: json['user_id'] as String? ?? '',
+      team: json['team'] as int? ?? 0,
+      score: json['score'] as int? ?? 0,
+      eloGain: json['elo_gain'] as int? ?? 0,
+      hasConfirmed: json['has_confirmed'] as bool? ?? false,
+      user: CoreUserSimple.fromJson(json['user'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$GamePlayerToJson(GamePlayer instance) =>
+    <String, dynamic>{
+      'user_id': instance.userId,
+      'team': instance.team,
+      'score': instance.score,
+      'elo_gain': instance.eloGain,
+      'has_confirmed': instance.hasConfirmed,
+      'user': instance.user.toJson(),
+    };
+
+GamePlayerBase _$GamePlayerBaseFromJson(Map<String, dynamic> json) =>
+    GamePlayerBase(
+      userId: json['user_id'] as String? ?? '',
+      team: json['team'] as int? ?? 0,
+      score: json['score'] as int? ?? 0,
+    );
+
+Map<String, dynamic> _$GamePlayerBaseToJson(GamePlayerBase instance) =>
+    <String, dynamic>{
+      'user_id': instance.userId,
+      'team': instance.team,
+      'score': instance.score,
     };
 
 HTTPValidationError _$HTTPValidationErrorFromJson(Map<String, dynamic> json) =>
@@ -1505,7 +1582,7 @@ OrderBase _$OrderBaseFromJson(Map<String, dynamic> json) => OrderBase(
               ?.map((e) => e as String)
               .toList() ??
           [],
-      collectionSlot: amapSlotTypeNullableFromJson(json['collection_slot']),
+      collectionSlot: amapSlotTypeFromJson(json['collection_slot']),
       productsQuantity: (json['products_quantity'] as List<dynamic>?)
               ?.map((e) => e as int)
               .toList() ??
@@ -1516,7 +1593,7 @@ Map<String, dynamic> _$OrderBaseToJson(OrderBase instance) => <String, dynamic>{
       'user_id': instance.userId,
       'delivery_id': instance.deliveryId,
       'products_ids': instance.productsIds,
-      'collection_slot': amapSlotTypeNullableToJson(instance.collectionSlot),
+      'collection_slot': amapSlotTypeToJson(instance.collectionSlot),
       'products_quantity': instance.productsQuantity,
     };
 
@@ -1545,7 +1622,7 @@ OrderReturn _$OrderReturnFromJson(Map<String, dynamic> json) => OrderReturn(
               ?.map((e) => ProductQuantity.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      collectionSlot: amapSlotTypeNullableFromJson(json['collection_slot']),
+      collectionSlot: amapSlotTypeFromJson(json['collection_slot']),
       orderId: json['order_id'] as String? ?? '',
       amount: (json['amount'] as num?)?.toDouble() ?? 0.0,
       orderingDate: DateTime.parse(json['ordering_date'] as String),
@@ -1557,7 +1634,7 @@ Map<String, dynamic> _$OrderReturnToJson(OrderReturn instance) =>
       'user': instance.user.toJson(),
       'delivery_id': instance.deliveryId,
       'productsdetail': instance.productsdetail.map((e) => e.toJson()).toList(),
-      'collection_slot': amapSlotTypeNullableToJson(instance.collectionSlot),
+      'collection_slot': amapSlotTypeToJson(instance.collectionSlot),
       'order_id': instance.orderId,
       'amount': instance.amount,
       'ordering_date': instance.orderingDate.toIso8601String(),
@@ -1606,6 +1683,31 @@ Map<String, dynamic> _$PackTicketSimpleToJson(PackTicketSimple instance) =>
       'pack_size': instance.packSize,
       'raffle_id': instance.raffleId,
       'id': instance.id,
+    };
+
+PlayerBase _$PlayerBaseFromJson(Map<String, dynamic> json) => PlayerBase(
+      user: CoreUserSimple.fromJson(json['user'] as Map<String, dynamic>),
+      elo: json['elo'] as int? ?? 0,
+      mode: capsModeFromJson(json['mode']),
+    );
+
+Map<String, dynamic> _$PlayerBaseToJson(PlayerBase instance) =>
+    <String, dynamic>{
+      'user': instance.user.toJson(),
+      'elo': instance.elo,
+      'mode': capsModeToJson(instance.mode),
+    };
+
+PlayerModeInfo _$PlayerModeInfoFromJson(Map<String, dynamic> json) =>
+    PlayerModeInfo(
+      elo: json['elo'] as int? ?? 0,
+      winrate: (json['winrate'] as num?)?.toDouble() ?? 0.0,
+    );
+
+Map<String, dynamic> _$PlayerModeInfoToJson(PlayerModeInfo instance) =>
+    <String, dynamic>{
+      'elo': instance.elo,
+      'winrate': instance.winrate,
     };
 
 PrizeBase _$PrizeBaseFromJson(Map<String, dynamic> json) => PrizeBase(
@@ -1845,72 +1947,6 @@ Map<String, dynamic> _$SectionCompleteToJson(SectionComplete instance) =>
       'id': instance.id,
     };
 
-SharerGroup _$SharerGroupFromJson(Map<String, dynamic> json) => SharerGroup(
-      name: json['name'] as String? ?? '',
-      id: json['id'] as String? ?? '',
-      members: (json['members'] as List<dynamic>?)
-              ?.map((e) => CoreUserSimple.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
-      transactions: (json['transactions'] as List<dynamic>?)
-              ?.map((e) => Transaction.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
-      total: (json['total'] as num?)?.toDouble() ?? 0.0,
-      balances: (json['balances'] as List<dynamic>?)
-              ?.map((e) => Balance.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
-    );
-
-Map<String, dynamic> _$SharerGroupToJson(SharerGroup instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      'id': instance.id,
-      'members': instance.members.map((e) => e.toJson()).toList(),
-      'transactions': instance.transactions.map((e) => e.toJson()).toList(),
-      'total': instance.total,
-      'balances': instance.balances.map((e) => e.toJson()).toList(),
-    };
-
-SharerGroupBase _$SharerGroupBaseFromJson(Map<String, dynamic> json) =>
-    SharerGroupBase(
-      name: json['name'] as String? ?? '',
-    );
-
-Map<String, dynamic> _$SharerGroupBaseToJson(SharerGroupBase instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-    };
-
-SharerGroupMembership _$SharerGroupMembershipFromJson(
-        Map<String, dynamic> json) =>
-    SharerGroupMembership(
-      userId: json['user_id'] as String? ?? '',
-      sharerGroupId: json['sharer_group_id'] as String? ?? '',
-      position: json['position'] as int? ?? 0,
-      active: json['active'] as bool? ?? false,
-    );
-
-Map<String, dynamic> _$SharerGroupMembershipToJson(
-        SharerGroupMembership instance) =>
-    <String, dynamic>{
-      'user_id': instance.userId,
-      'sharer_group_id': instance.sharerGroupId,
-      'position': instance.position,
-      'active': instance.active,
-    };
-
-SharerGroupUpdate _$SharerGroupUpdateFromJson(Map<String, dynamic> json) =>
-    SharerGroupUpdate(
-      name: json['name'] as String? ?? '',
-    );
-
-Map<String, dynamic> _$SharerGroupUpdateToJson(SharerGroupUpdate instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-    };
-
 TicketComplete _$TicketCompleteFromJson(Map<String, dynamic> json) =>
     TicketComplete(
       packId: json['pack_id'] as String? ?? '',
@@ -1920,10 +1956,8 @@ TicketComplete _$TicketCompleteFromJson(Map<String, dynamic> json) =>
       prize: json['prize'] == null
           ? null
           : PrizeSimple.fromJson(json['prize'] as Map<String, dynamic>),
-      packTicket: json['pack_ticket'] == null
-          ? null
-          : PackTicketSimple.fromJson(
-              json['pack_ticket'] as Map<String, dynamic>),
+      packTicket: PackTicketSimple.fromJson(
+          json['pack_ticket'] as Map<String, dynamic>),
       user: CoreUserSimple.fromJson(json['user'] as Map<String, dynamic>),
     );
 
@@ -1934,7 +1968,7 @@ Map<String, dynamic> _$TicketCompleteToJson(TicketComplete instance) =>
       'winning_prize': instance.winningPrize,
       'id': instance.id,
       'prize': instance.prize?.toJson(),
-      'pack_ticket': instance.packTicket?.toJson(),
+      'pack_ticket': instance.packTicket.toJson(),
       'user': instance.user.toJson(),
     };
 
@@ -1971,90 +2005,6 @@ Map<String, dynamic> _$TokenResponseToJson(TokenResponse instance) =>
       'scopes': instance.scopes,
       'refresh_token': instance.refreshToken,
       'id_token': instance.idToken,
-    };
-
-Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
-      sharerGroupId: json['sharer_group_id'] as String? ?? '',
-      amount: (json['amount'] as num?)?.toDouble() ?? 0.0,
-      type: json['type'] as String? ?? '',
-      title: json['title'] as String? ?? '',
-      description: json['description'] as String? ?? '',
-      updateDatetime: DateTime.parse(json['update_datetime'] as String),
-      creatorId: json['creator_id'] as String? ?? '',
-      payerId: json['payer_id'] as String? ?? '',
-      id: json['id'] as String? ?? '',
-      creationDatetime: DateTime.parse(json['creation_datetime'] as String),
-      beneficiaries: (json['beneficiaries'] as List<dynamic>?)
-              ?.map((e) => CoreUserSimple.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
-    );
-
-Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
-    <String, dynamic>{
-      'sharer_group_id': instance.sharerGroupId,
-      'amount': instance.amount,
-      'type': instance.type,
-      'title': instance.title,
-      'description': instance.description,
-      'update_datetime': instance.updateDatetime.toIso8601String(),
-      'creator_id': instance.creatorId,
-      'payer_id': instance.payerId,
-      'id': instance.id,
-      'creation_datetime': instance.creationDatetime.toIso8601String(),
-      'beneficiaries': instance.beneficiaries.map((e) => e.toJson()).toList(),
-    };
-
-TransactionCreate _$TransactionCreateFromJson(Map<String, dynamic> json) =>
-    TransactionCreate(
-      sharerGroupId: json['sharer_group_id'] as String? ?? '',
-      amount: (json['amount'] as num?)?.toDouble() ?? 0.0,
-      type: json['type'] as String? ?? '',
-      title: json['title'] as String? ?? '',
-      description: json['description'] as String? ?? '',
-      updateDatetime: DateTime.parse(json['update_datetime'] as String),
-      creatorId: json['creator_id'] as String? ?? '',
-      payerId: json['payer_id'] as String? ?? '',
-      beneficiariesUserIds: (json['beneficiaries_user_ids'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          [],
-    );
-
-Map<String, dynamic> _$TransactionCreateToJson(TransactionCreate instance) =>
-    <String, dynamic>{
-      'sharer_group_id': instance.sharerGroupId,
-      'amount': instance.amount,
-      'type': instance.type,
-      'title': instance.title,
-      'description': instance.description,
-      'update_datetime': instance.updateDatetime.toIso8601String(),
-      'creator_id': instance.creatorId,
-      'payer_id': instance.payerId,
-      'beneficiaries_user_ids': instance.beneficiariesUserIds,
-    };
-
-TransactionUpdate _$TransactionUpdateFromJson(Map<String, dynamic> json) =>
-    TransactionUpdate(
-      amount: (json['amount'] as num?)?.toDouble() ?? 0.0,
-      type: json['type'] as String? ?? '',
-      title: json['title'] as String? ?? '',
-      description: json['description'] as String? ?? '',
-      payerId: json['payer_id'] as String? ?? '',
-      beneficiariesUserIds: (json['beneficiaries_user_ids'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          [],
-    );
-
-Map<String, dynamic> _$TransactionUpdateToJson(TransactionUpdate instance) =>
-    <String, dynamic>{
-      'amount': instance.amount,
-      'type': instance.type,
-      'title': instance.title,
-      'description': instance.description,
-      'payer_id': instance.payerId,
-      'beneficiaries_user_ids': instance.beneficiariesUserIds,
     };
 
 ValidationError _$ValidationErrorFromJson(Map<String, dynamic> json) =>

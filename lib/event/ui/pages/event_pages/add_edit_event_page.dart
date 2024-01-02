@@ -406,29 +406,30 @@ class AddEditEventPage extends HookConsumerWidget {
                                             endString)));
                                   }
                                   EventReturn newEvent = EventReturn(
-                                      id: isEdit ? event.id : "",
-                                      description: description.text,
-                                      end: DateTime.parse(
-                                          processDateBack(endString)),
-                                      name: name.text,
-                                      organizer: organizer.text,
-                                      allDay: allDay.value,
-                                      location: location.text,
-                                      start: DateTime.parse(
-                                          processDateBack(startString)),
-                                      type: eventType.value,
-                                      recurrenceRule: recurrenceRule,
-                                      applicantId: user.id,
-                                      applicant: EventApplicant(
-                                        name: user.name,
-                                        nickname: user.nickname,
-                                        firstname: user.firstname,
-                                        id: user.id,
-                                        email: user.email,
-                                        phone: user.phone,
-                                        promo: user.promo,
-                                      ),
-                                      decision: AppUtilsTypesCalendarTypesDecision .pending,
+                                    id: isEdit ? event.id : "",
+                                    description: description.text,
+                                    end: DateTime.parse(
+                                        processDateBack(endString)),
+                                    name: name.text,
+                                    organizer: organizer.text,
+                                    allDay: allDay.value,
+                                    location: location.text,
+                                    start: DateTime.parse(
+                                        processDateBack(startString)),
+                                    type: eventType.value,
+                                    recurrenceRule: recurrenceRule,
+                                    applicantId: user.id,
+                                    applicant: EventApplicant(
+                                      name: user.name,
+                                      nickname: user.nickname,
+                                      firstname: user.firstname,
+                                      id: user.id,
+                                      email: user.email,
+                                      phone: user.phone,
+                                      promo: user.promo,
+                                    ),
+                                    decision: AppUtilsTypesCalendarTypesDecision
+                                        .pending,
                                   );
                                   final value = isEdit
                                       ? await eventListNotifier

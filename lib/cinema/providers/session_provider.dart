@@ -9,6 +9,7 @@ class SessionNotifier extends StateNotifier<CineSessionComplete> {
   }
 }
 
-final sessionProvider = StateNotifierProvider<SessionNotifier, CineSessionComplete>((ref) {
+final sessionProvider =
+    StateNotifierProvider<SessionNotifier, CineSessionComplete>((ref) {
   return SessionNotifier();
 });

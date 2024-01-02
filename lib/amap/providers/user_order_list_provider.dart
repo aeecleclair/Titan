@@ -65,8 +65,8 @@ class UserOrderListNotifier extends ListNotifier2<OrderReturn> {
       data: (orders) async {
         orders[indexOrder] = orders[indexOrder].copyWith(
             productsdetail: orders[indexOrder].productsdetail
-              ..replaceRange(orders[indexOrder].productsdetail.indexOf(product), 1,
-                  [product.copyWith(quantity: newQuantity)]));
+              ..replaceRange(orders[indexOrder].productsdetail.indexOf(product),
+                  1, [product.copyWith(quantity: newQuantity)]));
         state = AsyncValue.data(orders);
       },
       error: (error, stackTrace) {
@@ -84,7 +84,8 @@ class UserOrderListNotifier extends ListNotifier2<OrderReturn> {
     try {
       state.when(
         data: (orders) async {
-          price = orders[indexOrder].productsdetail.fold(0, (previousValue, element) {
+          price = orders[indexOrder].productsdetail.fold(0,
+              (previousValue, element) {
             return previousValue + element.product.price * element.quantity;
           });
         },

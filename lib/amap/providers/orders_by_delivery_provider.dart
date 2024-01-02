@@ -10,14 +10,13 @@ class OrderByDeliveryListNotifier extends ListNotifier2<OrderReturn> {
 
   Future<AsyncValue<List<OrderReturn>>> loadDeliveryOrderList(
       String deliveryId) async {
-    return await loadList(
-        () async => orderListRepository.amapDeliveriesDeliveryIdOrdersGet(deliveryId: deliveryId));
+    return await loadList(() async => orderListRepository
+        .amapDeliveriesDeliveryIdOrdersGet(deliveryId: deliveryId));
   }
 }
 
-final orderByDeliveryListProvider =
-    StateNotifierProvider<OrderByDeliveryListNotifier, AsyncValue<List<OrderReturn>>>(
-        (ref) {
+final orderByDeliveryListProvider = StateNotifierProvider<
+    OrderByDeliveryListNotifier, AsyncValue<List<OrderReturn>>>((ref) {
   final orderListRepository = ref.watch(repositoryProvider);
   return OrderByDeliveryListNotifier(orderListRepository: orderListRepository);
 });

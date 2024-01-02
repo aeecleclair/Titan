@@ -77,7 +77,8 @@ class DeliveryListNotifier extends ListNotifier2<DeliveryReturn> {
 
   Future<bool> deleteDelivery(DeliveryReturn delivery) async {
     return await delete(
-        (deliveryId) async => deliveriesListRepository.amapDeliveriesDeliveryIdDelete(deliveryId: deliveryId),
+        (deliveryId) async => deliveriesListRepository
+            .amapDeliveriesDeliveryIdDelete(deliveryId: deliveryId),
         (deliveries, delivery) =>
             deliveries..removeWhere((i) => i.id == delivery.id),
         delivery.id,

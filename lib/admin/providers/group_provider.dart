@@ -10,27 +10,30 @@ class GroupNotifier extends SingleNotifier2<CoreGroup> {
       : super(const AsyncValue.loading());
 
   Future<AsyncValue<CoreGroup>> loadGroup(String groupId) async {
-    return await load(() async => groupRepository.groupsGroupIdGet(groupId: groupId));
+    return await load(
+        () async => groupRepository.groupsGroupIdGet(groupId: groupId));
   }
 
   Future<bool> addMember(CoreGroup group, CoreUserSimple user) async {
     return await update(
         (group) async => groupRepository.groupsMembershipPost(
-          body: CoreMembership(
-            groupId: group.id,
-            userId: user.id,
-          ),
-        ), group);
+              body: CoreMembership(
+                groupId: group.id,
+                userId: user.id,
+              ),
+            ),
+        group);
   }
 
   Future<bool> deleteMember(CoreGroup group, CoreUserSimple user) async {
     return await update(
         (group) async => groupRepository.groupsMembershipDelete(
-          body: CoreMembershipDelete(
-            groupId: group.id,
-            userId: user.id,
-          ),
-        ), group);
+              body: CoreMembershipDelete(
+                groupId: group.id,
+                userId: user.id,
+              ),
+            ),
+        group);
   }
 
   void setGroup(CoreGroup group) {

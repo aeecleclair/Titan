@@ -131,7 +131,8 @@ class OnGoingLoan extends HookConsumerWidget {
                                           await loanNotifier.setLoan(newLoan);
                                           tokenExpireWrapper(ref, () async {
                                             final value = await loanListNotifier
-                                                .extendLoan(newLoan, i.toDouble());
+                                                .extendLoan(
+                                                    newLoan, i.toDouble());
                                             if (value) {
                                               await adminLoanListNotifier
                                                   .setTData(

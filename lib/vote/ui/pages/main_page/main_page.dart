@@ -41,8 +41,8 @@ class VoteMainPage extends HookConsumerWidget {
       duration: const Duration(milliseconds: 2400),
     );
     final status = ref.watch(statusProvider);
-    final s =
-        status.maybeWhen(data: (value) => value, orElse: () => StatusType.closed);
+    final s = status.maybeWhen(
+        data: (value) => value, orElse: () => StatusType.closed);
     if (s == StatusType.open) {
       ref.watch(votedSectionProvider.notifier).getVotedSections();
     }

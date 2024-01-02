@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/booking/providers/is_admin_provider.dart';
 import 'package:myecl/user/class/user.dart';
-import 'package:myecl/user/providers/user_provider.dart';
 
 void main() {
   group('isBookingAdminProvider', () {

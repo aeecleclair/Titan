@@ -12,8 +12,7 @@ class BuyPackTicket extends HookConsumerWidget {
   final PackTicketSimple packTicket;
   final RaffleComplete raffle;
   const BuyPackTicket(
-      {Key? key, required this.packTicket, required this.raffle})
-      : super(key: key);
+      {super.key, required this.packTicket, required this.raffle});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -145,13 +144,12 @@ class BuyPackTicket extends HookConsumerWidget {
                   width: 150,
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
-                          colors:
-                              raffle.status != RaffleStatusType.open
-                                  ? [
-                                      RaffleColorConstants.redGradient1,
-                                      RaffleColorConstants.redGradient2,
-                                    ]
-                                  : [Colors.white, Colors.white],
+                          colors: raffle.status != RaffleStatusType.open
+                              ? [
+                                  RaffleColorConstants.redGradient1,
+                                  RaffleColorConstants.redGradient2,
+                                ]
+                              : [Colors.white, Colors.white],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight),
                       borderRadius:
@@ -165,8 +163,7 @@ class BuyPackTicket extends HookConsumerWidget {
                                   ? "Tombola fermée"
                                   : "Pas encore disponible",
                           style: TextStyle(
-                              color: raffle.status !=
-                                      RaffleStatusType.open
+                              color: raffle.status != RaffleStatusType.open
                                   ? Colors.white
                                   : RaffleColorConstants.gradient2,
                               fontWeight: FontWeight.bold)))),

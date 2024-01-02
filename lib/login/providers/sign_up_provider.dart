@@ -21,11 +21,13 @@ class SignUpProvider extends StateNotifier {
   }
 
   Future<bool> activateUser(CoreUserActivateRequest createAccount) async {
-    return (await repository.usersActivatePost(body: createAccount)).isSuccessful;
+    return (await repository.usersActivatePost(body: createAccount))
+        .isSuccessful;
   }
 
   Future<bool> resetPassword(ResetPasswordRequest recoverRequest) async {
-    return (await repository.usersResetPasswordPost(body: recoverRequest)).isSuccessful;
+    return (await repository.usersResetPasswordPost(body: recoverRequest))
+        .isSuccessful;
   }
 }
 

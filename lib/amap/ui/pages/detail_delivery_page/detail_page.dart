@@ -55,61 +55,60 @@ class DetailDeliveryPage extends HookConsumerWidget {
                 ],
               ),
             ),
-            ...sortedByCategoryDeliveryProducts
-                .map((key, value) {
-                  Map<String, int> productsQuantity = {};
-                  deliveryOrders.maybeWhen(
-                      data: (orderMap) {
-                        final deliveryOrderList = orderMap[delivery.id];
-                        if (deliveryOrderList != null) {
-                          deliveryOrderList.maybeWhen(
-                              data: (listOrders) {
-                                for (OrderReturn o in listOrders) {
-                                  for (ProductQuantity p in o.productsdetail) {
-                                    if (!productsQuantity.containsKey(p.product.id)) {
-                                      productsQuantity
-                                          .addEntries({p.product.id: 0}.entries);
-                                    }
-                                    productsQuantity[p.product.id] =
-                                        productsQuantity[p.product.id]! + p.quantity;
-                                  }
+            ...sortedByCategoryDeliveryProducts.map((key, value) {
+              Map<String, int> productsQuantity = {};
+              deliveryOrders.maybeWhen(
+                  data: (orderMap) {
+                    final deliveryOrderList = orderMap[delivery.id];
+                    if (deliveryOrderList != null) {
+                      deliveryOrderList.maybeWhen(
+                          data: (listOrders) {
+                            for (OrderReturn o in listOrders) {
+                              for (ProductQuantity p in o.productsdetail) {
+                                if (!productsQuantity
+                                    .containsKey(p.product.id)) {
+                                  productsQuantity
+                                      .addEntries({p.product.id: 0}.entries);
                                 }
-                              },
-                              orElse: () {});
-                        }
-                      },
-                      orElse: () {});
-                  return MapEntry(
-                    key,
-                    Column(
-                      children: [
-                        Text(
-                          key,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        Wrap(
-                          children: value
-                              .map((e) => Container(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 5),
-                                    child: ProductDetailCard(
-                                      product: e,
-                                      quantity: productsQuantity[e.id] ?? 0,
-                                    ),
-                                  ))
-                              .toList(),
-                        ),
-                        const SizedBox(height: 10),
-                      ],
+                                productsQuantity[p.product.id] =
+                                    productsQuantity[p.product.id]! +
+                                        p.quantity;
+                              }
+                            }
+                          },
+                          orElse: () {});
+                    }
+                  },
+                  orElse: () {});
+              return MapEntry(
+                key,
+                Column(
+                  children: [
+                    Text(
+                      key,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  );
-                })
-                .values
-                .toList(),
+                    const SizedBox(height: 5),
+                    Wrap(
+                      children: value
+                          .map((e) => Container(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5),
+                                child: ProductDetailCard(
+                                  product: e,
+                                  quantity: productsQuantity[e.id] ?? 0,
+                                ),
+                              ))
+                          .toList(),
+                    ),
+                    const SizedBox(height: 10),
+                  ],
+                ),
+              );
+            }).values,
             const SizedBox(height: 20),
             const AlignLeftText(
               "${AMAPTextConstants.orders} :",

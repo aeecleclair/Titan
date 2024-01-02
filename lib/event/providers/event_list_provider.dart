@@ -52,15 +52,18 @@ class EventListNotifier extends ListNotifier2<EventReturn> {
 
   Future<bool> deleteEvent(EventReturn event) async {
     return await delete(
-        (eventId) async => eventRepository.calendarEventsEventIdDelete(eventId: eventId),
+        (eventId) async =>
+            eventRepository.calendarEventsEventIdDelete(eventId: eventId),
         (events, event) => events..removeWhere((e) => e.id == event.id),
         event.id,
         event);
   }
 
-  Future<bool> toggleConfirmed(EventReturn event, AppUtilsTypesCalendarTypesDecision decision) async {
+  Future<bool> toggleConfirmed(
+      EventReturn event, AppUtilsTypesCalendarTypesDecision decision) async {
     return await update(
-        (event) => eventRepository.calendarEventsEventIdReplyDecisionPatch(eventId: event.id, decision: decision),
+        (event) => eventRepository.calendarEventsEventIdReplyDecisionPatch(
+            eventId: event.id, decision: decision),
         (events, event) =>
             events..[events.indexWhere((b) => b.id == event.id)] = event,
         event);

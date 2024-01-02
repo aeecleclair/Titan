@@ -15,7 +15,7 @@ import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 
 class AddRemAdvertiserPage extends HookConsumerWidget {
-  const AddRemAdvertiserPage({Key? key}) : super(key: key);
+  const AddRemAdvertiserPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -64,7 +64,8 @@ class AddRemAdvertiserPage extends HookConsumerWidget {
                                 children: canAdd
                                         .map((e) => GestureDetector(
                                               onTap: () {
-                                                AdvertiserComplete newAdvertiser =
+                                                AdvertiserComplete
+                                                    newAdvertiser =
                                                     AdvertiserComplete(
                                                         groupManagerId: e.id,
                                                         id: '',
@@ -116,9 +117,11 @@ class AddRemAdvertiserPage extends HookConsumerWidget {
                                                                 .deleteAdvertiser(
                                                                     advertisers
                                                                         .where(
-                                                              (element) =>
-                                                                  e.id == e.id,
-                                                            ).toList()[0]);
+                                                                          (element) =>
+                                                                              e.id ==
+                                                                              e.id,
+                                                                        )
+                                                                        .toList()[0]);
                                                             if (value) {
                                                               displayToastWithContext(
                                                                   TypeMsg.msg,

@@ -21,7 +21,7 @@ class TicketWidget extends HookConsumerWidget {
     final raffleList = ref.watch(raffleListProvider);
     final raffle = raffleList.maybeWhen(
         data: (data) => data.firstWhere(
-            (element) => element.id == ticket[0].packTicket!.raffleId),
+            (element) => element.id == ticket[0].packTicket.raffleId),
         orElse: () => RaffleComplete.fromJson({}));
     final tombolaLogos = ref.watch(tombolaLogosProvider);
     final tombolaLogosNotifier = ref.watch(tombolaLogosProvider.notifier);

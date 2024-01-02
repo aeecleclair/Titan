@@ -12,8 +12,7 @@ import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class ConfirmCreationDialog extends HookConsumerWidget {
   final CoreGroupSimple group;
-  const ConfirmCreationDialog({Key? key, required this.group})
-      : super(key: key);
+  const ConfirmCreationDialog({super.key, required this.group});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

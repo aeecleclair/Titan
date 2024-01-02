@@ -61,8 +61,7 @@ class ContenderCard extends HookConsumerWidget {
                               fontWeight: FontWeight.bold,
                               color: Colors.black)),
                       Text(
-                          capitalize(
-                              contender.type.toString().split('.').last),
+                          capitalize(contender.type.toString().split('.').last),
                           style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.bold,

@@ -3,7 +3,7 @@ import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
 
 class BorrowerNotifier extends StateNotifier<CoreUserSimple> {
-  BorrowerNotifier(CoreUserSimple borrower) : super(borrower);
+  BorrowerNotifier(super.borrower);
 
   void setBorrower(CoreUserSimple borrower) {
     state = borrower;

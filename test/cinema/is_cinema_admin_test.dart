@@ -3,7 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/cinema/providers/is_cinema_admin.dart';
 import 'package:myecl/user/class/user.dart';
-import 'package:myecl/user/providers/user_provider.dart';
 
 void main() {
   group('isCinemaAdmin', () {

@@ -239,7 +239,8 @@ class CreateAccountPage extends HookConsumerWidget {
               activationCode.text.isNotEmpty &&
               passwordConfirmation.text.isNotEmpty &&
               password.text == passwordConfirmation.text) {
-            CoreUserActivateRequest finalCreateAccount = CoreUserActivateRequest(
+            CoreUserActivateRequest finalCreateAccount =
+                CoreUserActivateRequest(
               name: name.text,
               firstname: firstname.text,
               nickname: nickname.text.isEmpty ? null : nickname.text,

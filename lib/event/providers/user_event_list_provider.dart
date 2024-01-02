@@ -10,14 +10,15 @@ class EventEventListProvider extends ListNotifier2<EventReturn> {
   EventEventListProvider({required this.eventRepository})
       : super(const AsyncValue.loading());
 
-  Future<AsyncValue<List<EventReturn>>> loadConfirmedEvent(String userId) async {
-    return await loadList(() async => eventRepository.calendarEventsUserApplicantIdGet(applicantId: userId));
+  Future<AsyncValue<List<EventReturn>>> loadConfirmedEvent(
+      String userId) async {
+    return await loadList(() async =>
+        eventRepository.calendarEventsUserApplicantIdGet(applicantId: userId));
   }
 }
 
-final eventEventListProvider =
-    StateNotifierProvider<EventEventListProvider, AsyncValue<List<EventReturn>>>(
-        (ref) {
+final eventEventListProvider = StateNotifierProvider<EventEventListProvider,
+    AsyncValue<List<EventReturn>>>((ref) {
   final eventRepository = ref.watch(repositoryProvider);
   final userId = ref.watch(idProvider);
   final provider = EventEventListProvider(eventRepository: eventRepository);

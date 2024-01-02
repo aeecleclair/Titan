@@ -9,7 +9,7 @@ final raffleIdProvider = StateNotifierProvider<RaffleIdProvider, String>((ref) {
 });
 
 class RaffleIdProvider extends StateNotifier<String> {
-  RaffleIdProvider(String id) : super(id);
+  RaffleIdProvider(super.id);
 
   void setId(String i) {
     state = i;

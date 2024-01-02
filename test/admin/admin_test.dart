@@ -49,7 +49,7 @@ void main() {
     });
 
     test('Should return correct json', () async {
-      final group = CoreUserSimple(
+      const group = CoreUserSimple(
         id: "1",
         name: "name",
         description: "description",

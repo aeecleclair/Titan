@@ -11,7 +11,7 @@ import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 
 class ManagerPage extends HookConsumerWidget {
-  const ManagerPage({Key? key}) : super(key: key);
+  const ManagerPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,13 +25,13 @@ class ManagerPage extends HookConsumerWidget {
         ) {
           for (BookingReturnApplicant b in bookings) {
             switch (b.decision) {
-              case AppUtilsTypesBookingTypeDecision .approved:
+              case AppUtilsTypesBookingTypeDecision.approved:
                 confirmedBookings.add(b);
                 break;
-              case AppUtilsTypesBookingTypeDecision .declined:
+              case AppUtilsTypesBookingTypeDecision.declined:
                 canceledBookings.add(b);
                 break;
-              case AppUtilsTypesBookingTypeDecision .pending:
+              case AppUtilsTypesBookingTypeDecision.pending:
                 pendingBookings.add(b);
                 break;
               case AppUtilsTypesBookingTypeDecision.swaggerGeneratedUnknown:

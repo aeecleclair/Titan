@@ -43,7 +43,8 @@ class AdvertiserListNotifier extends ListNotifier2<AdvertiserComplete> {
 
   Future<bool> deleteAdvertiser(AdvertiserComplete advertiser) async {
     return await delete(
-        (advertiserId) async  => advertiserRepository.advertAdvertsAdvertIdDelete(advertId: advertiserId),
+        (advertiserId) async => advertiserRepository
+            .advertAdvertsAdvertIdDelete(advertId: advertiserId),
         (adverts, advert) => adverts..removeWhere((i) => i.id == advert.id),
         advertiser.id,
         advertiser);

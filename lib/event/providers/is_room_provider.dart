@@ -3,7 +3,7 @@ import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 
 class IsRoomNotifier extends StateNotifier<bool> {
-  IsRoomNotifier(bool b) : super(b);
+  IsRoomNotifier(super.b);
 
   void setIsRoom(bool b) {
     state = b;

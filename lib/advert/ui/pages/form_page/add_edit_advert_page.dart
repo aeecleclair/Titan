@@ -23,7 +23,7 @@ import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdvertAddEditAdvertPage extends HookConsumerWidget {
-  const AdvertAddEditAdvertPage({Key? key}) : super(key: key);
+  const AdvertAddEditAdvertPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -235,14 +235,15 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                               (poster.value != null || isEdit)) {
                             await tokenExpireWrapper(ref, () async {
                               final advertList = ref.watch(advertListProvider);
-                              AdvertReturnComplete newAdvert = AdvertReturnComplete(
-                                  id: isEdit ? advert.id : '',
-                                  advertiser: selectedAdvertisers[0],
-                                  advertiserId: selectedAdvertisers[0].id,
-                                  content: content.text,
-                                  date: DateTime.now(),
-                                  tags: textTagsController.text,
-                                  title: title.text);
+                              AdvertReturnComplete newAdvert =
+                                  AdvertReturnComplete(
+                                      id: isEdit ? advert.id : '',
+                                      advertiser: selectedAdvertisers[0],
+                                      advertiserId: selectedAdvertisers[0].id,
+                                      content: content.text,
+                                      date: DateTime.now(),
+                                      tags: textTagsController.text,
+                                      title: title.text);
                               final value = isEdit
                                   ? await advertListNotifier
                                       .updateAdvert(newAdvert)

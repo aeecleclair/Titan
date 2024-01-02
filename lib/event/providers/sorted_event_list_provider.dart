@@ -4,7 +4,8 @@ import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 
-final sortedEventListProvider = Provider<Map<String, List<EventComplete>>>((ref) {
+final sortedEventListProvider =
+    Provider<Map<String, List<EventComplete>>>((ref) {
   final eventList = ref.watch(confirmedEventListProvider);
   final sortedEventList = <String, List<EventComplete>>{};
   final dateTitle = <String, DateTime>{};

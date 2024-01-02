@@ -73,7 +73,8 @@ class AddEditButton extends HookConsumerWidget {
                       .where((element) =>
                           selectedItems[itemList.indexOf(element)] != 0)
                       .map((e) => ItemQuantity(
-                          itemSimple: ItemSimple(id: e.id, name: e.name, loanerId: e.loanerId),
+                          itemSimple: ItemSimple(
+                              id: e.id, name: e.name, loanerId: e.loanerId),
                           quantity: selectedItems[itemList.indexOf(e)]))
                       .toList();
                   if (selected.isNotEmpty) {

@@ -16,7 +16,7 @@ class RaffleListNotifier extends ListNotifier2<RaffleComplete> {
   Future<bool> createRaffle(RaffleComplete raffle) async {
     return await add(
         (raffle) async => raffleRepository.tombolaRafflesPost(
-              // TODO: RaffleBase
+                // TODO: RaffleBase
                 body: RaffleBase(
               name: raffle.name,
               status: raffle.status,

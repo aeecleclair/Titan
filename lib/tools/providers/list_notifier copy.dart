@@ -59,8 +59,7 @@ abstract class ListNotifier2<T> extends StateNotifier<AsyncValue<List<T>>> {
         });
   }
 
-  Future<bool> add(
-      Future<Response<T>> Function(T) f, T t) async {
+  Future<bool> add(Future<Response<T>> Function(T) f, T t) async {
     return handleState((d) async {
       final response = await f(t);
       final data = response.body;

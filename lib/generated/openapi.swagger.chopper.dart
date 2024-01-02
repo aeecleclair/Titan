@@ -6,8 +6,8 @@ part of 'openapi.swagger.dart';
 // ChopperGenerator
 // **************************************************************************
 
-// ignore_for_file: type=lint
-final class _$Openapi extends Openapi {
+// ignore_for_file: always_put_control_body_on_new_line, always_specify_types, prefer_const_declarations, unnecessary_brace_in_string_interps
+class _$Openapi extends Openapi {
   _$Openapi([ChopperClient? client]) {
     if (client == null) return;
     this.client = client;
@@ -686,22 +686,23 @@ final class _$Openapi extends Openapi {
 
   @override
   Future<Response<AccessToken>> _authSimpleTokenPost(
-      {required BodyLoginForAccessTokenAuthSimpleTokenPost body}) {
+      {required Map<String, String> body}) {
     final Uri $url = Uri.parse('/auth/simple_token');
-    final List<PartValue> $parts = <PartValue>[
-      PartValue<BodyLoginForAccessTokenAuthSimpleTokenPost>(
-        'body',
-        body,
-      )
-    ];
+    final Map<String, String> $headers = {
+      'content-type': 'application/x-www-form-urlencoded',
+    };
+    final $body = body;
     final Request $request = Request(
       'POST',
       $url,
       client.baseUrl,
-      parts: $parts,
-      multipart: true,
+      body: $body,
+      headers: $headers,
     );
-    return client.send<AccessToken, AccessToken>($request);
+    return client.send<AccessToken, AccessToken>(
+      $request,
+      requestConverter: FormUrlEncodedConverter.requestFactory,
+    );
   }
 
   @override
@@ -737,70 +738,68 @@ final class _$Openapi extends Openapi {
 
   @override
   Future<Response<String>> _authAuthorizePost(
-      {required BodyPostAuthorizePageAuthAuthorizePost body}) {
+      {required Map<String, String> body}) {
     final Uri $url = Uri.parse('/auth/authorize');
-    final List<PartValue> $parts = <PartValue>[
-      PartValue<BodyPostAuthorizePageAuthAuthorizePost>(
-        'body',
-        body,
-      )
-    ];
+    final Map<String, String> $headers = {
+      'content-type': 'application/x-www-form-urlencoded',
+    };
+    final $body = body;
     final Request $request = Request(
       'POST',
       $url,
       client.baseUrl,
-      parts: $parts,
-      multipart: true,
+      body: $body,
+      headers: $headers,
     );
-    return client.send<String, String>($request);
+    return client.send<String, String>(
+      $request,
+      requestConverter: FormUrlEncodedConverter.requestFactory,
+    );
   }
 
   @override
   Future<Response<dynamic>> _authAuthorizationFlowAuthorizeValidationPost(
-      {required BodyAuthorizeValidationAuthAuthorizationFlowAuthorizeValidationPost
-          body}) {
+      {required Map<String, String> body}) {
     final Uri $url = Uri.parse('/auth/authorization-flow/authorize-validation');
-    final List<PartValue> $parts = <PartValue>[
-      PartValue<
-          BodyAuthorizeValidationAuthAuthorizationFlowAuthorizeValidationPost>(
-        'body',
-        body,
-      )
-    ];
+    final Map<String, String> $headers = {
+      'content-type': 'application/x-www-form-urlencoded',
+    };
+    final $body = body;
     final Request $request = Request(
       'POST',
       $url,
       client.baseUrl,
-      parts: $parts,
-      multipart: true,
+      body: $body,
+      headers: $headers,
     );
-    return client.send<dynamic, dynamic>($request);
+    return client.send<dynamic, dynamic>(
+      $request,
+      requestConverter: FormUrlEncodedConverter.requestFactory,
+    );
   }
 
   @override
   Future<Response<TokenResponse>> _authTokenPost({
     String? authorization,
-    required BodyTokenAuthTokenPost body,
+    required Map<String, String> body,
   }) {
     final Uri $url = Uri.parse('/auth/token');
     final Map<String, String> $headers = {
       if (authorization != null) 'authorization': authorization,
+      'content-type': 'application/x-www-form-urlencoded',
     };
-    final List<PartValue> $parts = <PartValue>[
-      PartValue<BodyTokenAuthTokenPost>(
-        'body',
-        body,
-      )
-    ];
+    final $body = body;
     final Request $request = Request(
       'POST',
       $url,
       client.baseUrl,
-      parts: $parts,
-      multipart: true,
+      body: $body,
       headers: $headers,
     );
-    return client.send<TokenResponse, TokenResponse>($request);
+    return client.send<TokenResponse, TokenResponse>(
+      $request,
+      requestConverter: FormUrlEncodedConverter.requestFactory,
+    );
   }
 
   @override
@@ -2595,133 +2594,6 @@ final class _$Openapi extends Openapi {
   }
 
   @override
-  Future<Response<List<SharerGroupMembership>>>
-      _tricountSharergroupsMembershipsGet() {
-    final Uri $url = Uri.parse('/tricount/sharergroups/memberships');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
-    return client
-        .send<List<SharerGroupMembership>, SharerGroupMembership>($request);
-  }
-
-  @override
-  Future<Response<dynamic>> _tricountSharergroupsMembershipsPost(
-      {required SharerGroupMembership? body}) {
-    final Uri $url = Uri.parse('/tricount/sharergroups/memberships');
-    final $body = body;
-    final Request $request = Request(
-      'POST',
-      $url,
-      client.baseUrl,
-      body: $body,
-    );
-    return client.send<dynamic, dynamic>($request);
-  }
-
-  @override
-  Future<Response<dynamic>>
-      _tricountSharergroupsSharerGroupIdMembershipMembershipIdDelete({
-    required String? sharerGroupId,
-    required String? membershipId,
-  }) {
-    final Uri $url = Uri.parse(
-        '/tricount/sharergroups/${sharerGroupId}/membership/${membershipId}');
-    final Request $request = Request(
-      'DELETE',
-      $url,
-      client.baseUrl,
-    );
-    return client.send<dynamic, dynamic>($request);
-  }
-
-  @override
-  Future<Response<SharerGroup>> _tricountSharergroupsSharerGroupIdGet(
-      {required String? sharerGroupId}) {
-    final Uri $url = Uri.parse('/tricount/sharergroups/${sharerGroupId}');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
-    return client.send<SharerGroup, SharerGroup>($request);
-  }
-
-  @override
-  Future<Response<dynamic>> _tricountSharergroupsSharerGroupIdPatch({
-    required String? sharerGroupId,
-    required SharerGroupUpdate? body,
-  }) {
-    final Uri $url = Uri.parse('/tricount/sharergroups/${sharerGroupId}');
-    final $body = body;
-    final Request $request = Request(
-      'PATCH',
-      $url,
-      client.baseUrl,
-      body: $body,
-    );
-    return client.send<dynamic, dynamic>($request);
-  }
-
-  @override
-  Future<Response<SharerGroup>> _tricountSharergroupsPost(
-      {required SharerGroupBase? body}) {
-    final Uri $url = Uri.parse('/tricount/sharergroups');
-    final $body = body;
-    final Request $request = Request(
-      'POST',
-      $url,
-      client.baseUrl,
-      body: $body,
-    );
-    return client.send<SharerGroup, SharerGroup>($request);
-  }
-
-  @override
-  Future<Response<Transaction>> _tricountTransactionsPost(
-      {required TransactionCreate? body}) {
-    final Uri $url = Uri.parse('/tricount/transactions');
-    final $body = body;
-    final Request $request = Request(
-      'POST',
-      $url,
-      client.baseUrl,
-      body: $body,
-    );
-    return client.send<Transaction, Transaction>($request);
-  }
-
-  @override
-  Future<Response<dynamic>> _tricountTransactionsTransactionIdDelete(
-      {required String? transactionId}) {
-    final Uri $url = Uri.parse('/tricount/transactions/${transactionId}');
-    final Request $request = Request(
-      'DELETE',
-      $url,
-      client.baseUrl,
-    );
-    return client.send<dynamic, dynamic>($request);
-  }
-
-  @override
-  Future<Response<Transaction>> _tricountTransactionsTransactionIdPatch({
-    required String? transactionId,
-    required TransactionUpdate? body,
-  }) {
-    final Uri $url = Uri.parse('/tricount/transactions/${transactionId}');
-    final $body = body;
-    final Request $request = Request(
-      'PATCH',
-      $url,
-      client.baseUrl,
-      body: $body,
-    );
-    return client.send<Transaction, Transaction>($request);
-  }
-
-  @override
   Future<Response<List<CoreUserSimple>>> _usersGet() {
     final Uri $url = Uri.parse('/users/');
     final Request $request = Request(
@@ -3015,5 +2887,114 @@ final class _$Openapi extends Openapi {
       client.baseUrl,
     );
     return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<List<Game>>> _elocapsGamesGet({required String? time}) {
+    final Uri $url = Uri.parse('/elocaps/games');
+    final Map<String, dynamic> $params = <String, dynamic>{'time': time};
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+    );
+    return client.send<List<Game>, Game>($request);
+  }
+
+  @override
+  Future<Response<Game>> _elocapsGamesPost({required GameCreateRequest? body}) {
+    final Uri $url = Uri.parse('/elocaps/games');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<Game, Game>($request);
+  }
+
+  @override
+  Future<Response<List<Game>>> _elocapsGamesLatestGet() {
+    final Uri $url = Uri.parse('/elocaps/games/latest');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<Game>, Game>($request);
+  }
+
+  @override
+  Future<Response<List<GameMode>>> _elocapsGamesWaitingGet() {
+    final Uri $url = Uri.parse('/elocaps/games/waiting');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<GameMode>, GameMode>($request);
+  }
+
+  @override
+  Future<Response<Game>> _elocapsGamesGameIdGet({required String? gameId}) {
+    final Uri $url = Uri.parse('/elocaps/games/${gameId}');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<Game, Game>($request);
+  }
+
+  @override
+  Future<Response<Game>> _elocapsGamesGameIdValidatePost(
+      {required String? gameId}) {
+    final Uri $url = Uri.parse('/elocaps/games/${gameId}/validate');
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<Game, Game>($request);
+  }
+
+  @override
+  Future<Response<List<Game>>> _elocapsPlayersUserIdGamesGet(
+      {required String? userId}) {
+    final Uri $url = Uri.parse('/elocaps/players/${userId}/games');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<Game>, Game>($request);
+  }
+
+  @override
+  Future<Response<DetailedPlayer>> _elocapsPlayersUserIdGet(
+      {required String? userId}) {
+    final Uri $url = Uri.parse('/elocaps/players/${userId}');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<DetailedPlayer, DetailedPlayer>($request);
+  }
+
+  @override
+  Future<Response<List<PlayerBase>>> _elocapsLeaderboardGet(
+      {required String? mode}) {
+    final Uri $url = Uri.parse('/elocaps/leaderboard');
+    final Map<String, dynamic> $params = <String, dynamic>{'mode': mode};
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+    );
+    return client.send<List<PlayerBase>, PlayerBase>($request);
   }
 }

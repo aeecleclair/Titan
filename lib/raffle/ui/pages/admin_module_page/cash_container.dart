@@ -4,7 +4,7 @@ import 'package:myecl/raffle/providers/cash_provider.dart';
 import 'package:myecl/raffle/ui/pages/creation_edit_page/user_cash_ui.dart';
 
 class CashContainer extends HookConsumerWidget {
-  const CashContainer({Key? key}) : super(key: key);
+  const CashContainer({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

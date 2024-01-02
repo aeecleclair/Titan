@@ -10,7 +10,8 @@ class VotesProvider extends ListNotifier<String> {
 
   Future<bool> addVote(String listId) async {
     try {
-      await votesRepository.campaignVotesPost(body: VoteBase(
+      await votesRepository.campaignVotesPost(
+          body: VoteBase(
         listId: listId,
       ));
       return true;

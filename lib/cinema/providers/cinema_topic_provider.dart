@@ -49,7 +49,8 @@ final cinemaTopicsProvider =
     StateNotifierProvider<CinemaTopicsProvider, AsyncValue<List<String>>>(
         (ref) {
   final cinemaTopicRepository = ref.watch(repositoryProvider);
-  CinemaTopicsProvider notifier = CinemaTopicsProvider(cinemaTopicRepository: cinemaTopicRepository);
+  CinemaTopicsProvider notifier =
+      CinemaTopicsProvider(cinemaTopicRepository: cinemaTopicRepository);
   tokenExpireWrapperAuth(ref, () async {
     notifier.getTopics();
   });

@@ -60,8 +60,7 @@ class CentralisationMainPage extends HookConsumerWidget {
                     ),
                   ),
                 ...sections
-                    .map<Widget>((section) => SectionList(section: section))
-                    .toList(),
+                    .map<Widget>((section) => SectionList(section: section)),
               ]),
             )));
   }

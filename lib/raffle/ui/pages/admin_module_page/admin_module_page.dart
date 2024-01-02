@@ -6,7 +6,7 @@ import 'package:myecl/raffle/ui/raffle.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 
 class AdminModulePage extends HookConsumerWidget {
-  const AdminModulePage({Key? key}) : super(key: key);
+  const AdminModulePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -17,7 +17,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 import 'package:myecl/advert/tools/constants.dart';
 
 class AdvertMainPage extends HookConsumerWidget {
-  const AdvertMainPage({Key? key}) : super(key: key);
+  const AdvertMainPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -71,8 +71,9 @@ class AdvertMainPage extends HookConsumerWidget {
                 child: AsyncChild(
                   value: advertList,
                   builder: (context, advertData) {
-                    final sortedAdvertData =
-                        advertData.sortedBy((element) => element.date!).reversed;
+                    final sortedAdvertData = advertData
+                        .sortedBy((element) => element.date!)
+                        .reversed;
                     final filteredSortedAdvertData = sortedAdvertData.where(
                         (advert) =>
                             selected

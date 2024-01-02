@@ -4,7 +4,8 @@ import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 
-final daySortedEventListProvider = Provider<Map<DateTime, List<EventComplete>>>((ref) {
+final daySortedEventListProvider =
+    Provider<Map<DateTime, List<EventComplete>>>((ref) {
   final eventList = ref.watch(confirmedEventListProvider);
   final now = DateTime.now();
   final normalizedNow = normalizedDate(now);

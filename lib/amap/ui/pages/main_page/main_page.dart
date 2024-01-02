@@ -207,7 +207,8 @@ class AmapMainPage extends HookConsumerWidget {
                           ),
                           const SizedBox(height: 30),
                           DeliverySection(
-                              editable: order.orderId == OrderReturn.fromJson({}).orderId),
+                              editable: order.orderId ==
+                                  OrderReturn.fromJson({}).orderId),
                           const SizedBox(height: 20),
                           WaitingButton(
                               onTap: () async {

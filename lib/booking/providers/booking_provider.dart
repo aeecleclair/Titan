@@ -9,6 +9,7 @@ class BookingNotifier extends StateNotifier<BookingReturnApplicant> {
   }
 }
 
-final bookingProvider = StateNotifierProvider<BookingNotifier, BookingReturnApplicant>((ref) {
+final bookingProvider =
+    StateNotifierProvider<BookingNotifier, BookingReturnApplicant>((ref) {
   return BookingNotifier();
 });

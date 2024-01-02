@@ -10,7 +10,7 @@ final loanerIdProvider = StateNotifierProvider<LoanerIdProvider, String>((ref) {
 });
 
 class LoanerIdProvider extends StateNotifier<String> {
-  LoanerIdProvider(String id) : super(id);
+  LoanerIdProvider(super.id);
 
   void setId(String i) {
     state = i;

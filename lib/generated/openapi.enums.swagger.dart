@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:collection/collection.dart';
 
 enum AccountType {
   @JsonValue(null)
@@ -44,20 +43,38 @@ enum CalendarEventType {
   eventAe('Event AE'),
   @JsonValue('Event USE')
   eventUse('Event USE'),
-  @JsonValue('Asso indÃ©')
-  assoInd('Asso indÃ©'),
+  @JsonValue('Asso indé')
+  assoInd('Asso indé'),
   @JsonValue('HH')
   hh('HH'),
   @JsonValue('Strass')
   strass('Strass'),
-  @JsonValue('SoirÃ©e')
-  soirE('SoirÃ©e'),
+  @JsonValue('Soirée')
+  soirE('Soirée'),
   @JsonValue('Autre')
   autre('Autre');
 
   final String? value;
 
   const CalendarEventType(this.value);
+}
+
+enum CapsMode {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('single')
+  single('single'),
+  @JsonValue('cd')
+  cd('cd'),
+  @JsonValue('capacks')
+  capacks('capacks'),
+  @JsonValue('semi_capacks')
+  semiCapacks('semi_capacks');
+
+  final String? value;
+
+  const CapsMode(this.value);
 }
 
 enum DeliveryStatusType {

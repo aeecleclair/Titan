@@ -4,12 +4,11 @@ import 'package:myecl/generated/openapi.swagger.dart';
 
 class SortedByCategoryProvider
     extends StateNotifier<Map<String, List<ProductComplete>>> {
-  SortedByCategoryProvider(Map<String, List<ProductComplete>> p) : super(p);
+  SortedByCategoryProvider(super.p);
 }
 
-final sortedByCategoryProductsProvider =
-    StateNotifierProvider<SortedByCategoryProvider, Map<String, List<ProductComplete>>>(
-        (ref) {
+final sortedByCategoryProductsProvider = StateNotifierProvider<
+    SortedByCategoryProvider, Map<String, List<ProductComplete>>>((ref) {
   final products = ref.watch(productListProvider);
   final sortedByCategoryProducts = <String, List<ProductComplete>>{};
   products.maybeWhen(

@@ -31,7 +31,7 @@ import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class CreationPage extends HookConsumerWidget {
-  const CreationPage({Key? key}) : super(key: key);
+  const CreationPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

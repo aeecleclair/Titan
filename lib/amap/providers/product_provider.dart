@@ -9,6 +9,7 @@ class ProductNotifier extends StateNotifier<ProductComplete> {
   }
 }
 
-final productProvider = StateNotifierProvider<ProductNotifier, ProductComplete>((ref) {
+final productProvider =
+    StateNotifierProvider<ProductNotifier, ProductComplete>((ref) {
   return ProductNotifier();
 });

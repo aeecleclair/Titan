@@ -24,13 +24,13 @@ class AdminPage extends HookConsumerWidget {
         data: (events) {
           for (EventReturn b in events) {
             switch (b.decision) {
-              case AppUtilsTypesCalendarTypesDecision .approved:
+              case AppUtilsTypesCalendarTypesDecision.approved:
                 confirmedEvents.add(b);
                 break;
-              case AppUtilsTypesCalendarTypesDecision .declined:
+              case AppUtilsTypesCalendarTypesDecision.declined:
                 canceledEvents.add(b);
                 break;
-              case AppUtilsTypesCalendarTypesDecision .pending:
+              case AppUtilsTypesCalendarTypesDecision.pending:
                 pendingEvents.add(b);
                 break;
               case AppUtilsTypesCalendarTypesDecision.swaggerGeneratedUnknown:

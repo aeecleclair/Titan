@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/generated/client_index.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/single_notifier%20copy.dart';
 import 'package:myecl/tools/repository/repository2.dart';

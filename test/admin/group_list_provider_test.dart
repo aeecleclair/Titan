@@ -36,7 +36,7 @@ void main() {
 
     test('Should return a group', () async {
       final mockGroup = MockGroupRepository();
-      final group = CoreUserSimple(
+      const group = CoreUserSimple(
         id: "1",
         name: "name",
         description: "description",
@@ -126,10 +126,10 @@ void main() {
         () {
       final mockGroup = MockGroupRepository();
       final groupListNotifier = GroupListNotifier(groupRepository: mockGroup);
-      final existingGroup = CoreUserSimple(
+      const existingGroup = CoreUserSimple(
           id: '1', name: 'Existing Group', description: 'Existing Description');
-      groupListNotifier.state = AsyncValue.data([existingGroup]);
-      final modifiedGroup = CoreUserSimple(
+      groupListNotifier.state = const AsyncValue.data([existingGroup]);
+      const modifiedGroup = CoreUserSimple(
           id: '1', name: 'Modified Group', description: 'Modified Description');
       groupListNotifier.setGroup(modifiedGroup);
       expect(

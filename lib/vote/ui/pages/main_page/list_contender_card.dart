@@ -26,8 +26,8 @@ class ListContenderCard extends HookConsumerWidget {
         duration: const Duration(milliseconds: 200), initialValue: 1);
 
     final status = ref.watch(statusProvider);
-    final s =
-        status.maybeWhen(data: (value) => value, orElse: () => StatusType.closed);
+    final s = status.maybeWhen(
+        data: (value) => value, orElse: () => StatusType.closed);
 
     Map<String, int> results = {};
     if (s == StatusType.published) {
@@ -45,7 +45,9 @@ class ListContenderCard extends HookConsumerWidget {
     sectionsContender.whenData((contenders) => contenders[section]!.whenData(
           (contenderList) {
             h = contenderList.length *
-                    ((s == StatusType.open || s == StatusType.published) ? 180 : 140) -
+                    ((s == StatusType.open || s == StatusType.published)
+                        ? 180
+                        : 140) -
                 MediaQuery.of(context).size.height +
                 (s == StatusType.open ? 250 : 150);
             List<int> numberVotes = [];

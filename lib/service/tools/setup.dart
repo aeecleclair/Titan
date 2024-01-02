@@ -92,7 +92,11 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
       .getToken(vapidKey: "")
       .then((value) => value.toString());
   Openapi notificationRepository = Openapi.create();
-  final messages = (await notificationRepository.notificationMessagesFirebaseTokenGet(firebaseToken: firebaseToken)).body ?? [];
+  final messages =
+      (await notificationRepository.notificationMessagesFirebaseTokenGet(
+                  firebaseToken: firebaseToken))
+              .body ??
+          [];
   for (final message in messages) {
     if (message.isVisible) {
       localNotificationService.showNotification(message);

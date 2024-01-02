@@ -19,7 +19,7 @@ import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdvertAdminPage extends HookConsumerWidget {
-  const AdvertAdminPage({Key? key}) : super(key: key);
+  const AdvertAdminPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

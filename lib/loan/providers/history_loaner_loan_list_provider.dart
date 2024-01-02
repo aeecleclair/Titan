@@ -23,7 +23,6 @@ class HistoryLoanerLoanListNotifier extends ListNotifier2<Loan> {
     return state.whenData((loans) => loans.sublist(0));
   }
 
-  
   Future<AsyncValue<List<Loan>>> filterLoans(String query) async {
     return state.whenData((loans) => loans
         .where((loan) =>

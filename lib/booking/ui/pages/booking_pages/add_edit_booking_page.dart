@@ -37,7 +37,8 @@ class AddEditBookingPage extends HookConsumerWidget {
     final user = ref.watch(userProvider);
     final key = GlobalKey<FormState>();
     final rooms = ref.watch(roomListProvider);
-    final adminBookingsListNotifier = ref.watch(adminBookingListProvider.notifier);
+    final adminBookingsListNotifier =
+        ref.watch(adminBookingListProvider.notifier);
     final confirmedBookingListNotifier =
         ref.watch(confirmedBookingListProvider.notifier);
     final bookingsNotifier = ref.watch(bookingListProvider.notifier);
@@ -338,7 +339,9 @@ class AddEditBookingPage extends HookConsumerWidget {
                               if (value) {
                                 QR.back();
                                 if (isEdit) {
-                                  if (booking.decision == AppUtilsTypesBookingTypeDecision.approved) {
+                                  if (booking.decision ==
+                                      AppUtilsTypesBookingTypeDecision
+                                          .approved) {
                                     await confirmedBookingListNotifier
                                         .loadConfirmedBooking();
                                   }

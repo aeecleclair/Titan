@@ -16,8 +16,7 @@ class AdvertCard extends HookConsumerWidget {
   final VoidCallback onTap;
   final AdvertReturnComplete advert;
 
-  const AdvertCard({Key? key, required this.onTap, required this.advert})
-      : super(key: key);
+  const AdvertCard({super.key, required this.onTap, required this.advert});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -6,7 +6,7 @@ import 'package:myecl/raffle/tools/constants.dart';
 
 class TombolaCard extends HookConsumerWidget {
   final RaffleComplete raffle;
-  const TombolaCard({Key? key, required this.raffle}) : super(key: key);
+  const TombolaCard({super.key, required this.raffle});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -58,8 +58,7 @@ class TombolaCard extends HookConsumerWidget {
                             fontWeight: FontWeight.bold,
                             color: RaffleColorConstants.textDark)),
                     const SizedBox(height: 5),
-                    AutoSizeText(
-                        raffle.status!.value!,
+                    AutoSizeText(raffle.status!.value!,
                         maxLines: 1,
                         minFontSize: 10,
                         overflow: TextOverflow.ellipsis,

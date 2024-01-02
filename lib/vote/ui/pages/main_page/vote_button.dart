@@ -31,8 +31,8 @@ class VoteButton extends HookConsumerWidget {
         orElse: () {});
 
     final status = ref.watch(statusProvider);
-    final s =
-        status.maybeWhen(data: (value) => value, orElse: () => StatusType.closed);
+    final s = status.maybeWhen(
+        data: (value) => value, orElse: () => StatusType.closed);
 
     void displayVoteToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -53,8 +53,8 @@ class VoteButton extends HookConsumerWidget {
                     descriptions: VoteTextConstants.confirmVote,
                     onYes: () {
                       tokenExpireWrapper(ref, () async {
-                        final result = await votesNotifier
-                            .addVote(selectedContender.id);
+                        final result =
+                            await votesNotifier.addVote(selectedContender.id);
                         if (result) {
                           votedSectionNotifier.addVote(section.id);
                           selectedContenderNotifier.clear();
