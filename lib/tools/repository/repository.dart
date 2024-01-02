@@ -18,9 +18,6 @@ abstract class Repository {
   final cacheManager = CacheManager();
   static final Logger logger = Logger();
 
-  void initLogger() {
-    logger.init();
-  }
 
   void setToken(String token) {
     headers["Authorization"] = 'Bearer $token';
