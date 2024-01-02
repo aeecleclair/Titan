@@ -8,6 +8,7 @@ import 'package:myecl/settings/router.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/main_page/settings_item.dart';
 import 'package:myecl/settings/ui/settings.dart';
+import 'package:myecl/tools/repository/constants.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
@@ -15,7 +16,6 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/user/providers/profile_picture_provider.dart';
 import 'package:myecl/version/providers/titan_version_provider.dart';
@@ -156,8 +156,8 @@ class SettingsMainPage extends HookConsumerWidget {
                   SettingsItem(
                     icon: HeroIcons.calendarDays,
                     onTap: () {
-                      Clipboard.setData(ClipboardData(
-                              text: "${Repository.displayHost}calendar/ical"))
+                      Clipboard.setData(
+                              ClipboardData(text: "${BASE_URL}calendar/ical"))
                           .then((value) {
                         displayToastWithContext(
                             TypeMsg.msg, SettingsTextConstants.icalCopied);
@@ -250,7 +250,7 @@ class SettingsMainPage extends HookConsumerWidget {
                           fontWeight: FontWeight.w500,
                           color: Colors.black)),
                   const SizedBox(height: 10),
-                  AutoSizeText(Repository.displayHost,
+                  AutoSizeText(BASE_URL,
                       maxLines: 1,
                       minFontSize: 10,
                       style: const TextStyle(

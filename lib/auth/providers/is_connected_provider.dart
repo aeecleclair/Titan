@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:myecl/tools/repository/constants.dart';
 
 class IsConnectedProvider extends StateNotifier<bool> {
   IsConnectedProvider() : super(false);
@@ -10,7 +10,7 @@ class IsConnectedProvider extends StateNotifier<bool> {
   Future isInternet() async {
     try {
       final result =
-          await http.get(Uri.parse("${Repository.displayHost}information"));
+          await http.get(Uri.parse("${BASE_URL}information"));
       state = result.statusCode < 400;
     } catch (e) {
       state = false;
