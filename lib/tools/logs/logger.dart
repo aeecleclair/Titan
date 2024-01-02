@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/tools/logs/log.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -56,3 +57,5 @@ class Logger {
     logFile.writeAsStringSync("");
   }
 }
+
+final loggerProvider = Provider((ref) => Logger());

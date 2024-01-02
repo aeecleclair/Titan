@@ -9,7 +9,7 @@ import 'package:myecl/service/providers/firebase_token_provider.dart';
 import 'package:myecl/service/providers/messages_provider.dart';
 import 'package:myecl/service/providers/topic_provider.dart';
 import 'package:myecl/tools/logs/log.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:myecl/tools/logs/logger.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
@@ -22,7 +22,7 @@ void setUpNotification(WidgetRef ref) {
   final messageNotifier = ref.watch(messagesProvider.notifier);
   final firebaseToken = ref.watch(firebaseTokenProvider);
   final topicsNotifier = ref.watch(topicsProvider.notifier);
-  final logger = Repository.logger;
+  final logger = ref.watch(loggerProvider);
 
   FirebaseMessaging.instance.requestPermission().then((value) {
     if (value.authorizationStatus == AuthorizationStatus.authorized) {
