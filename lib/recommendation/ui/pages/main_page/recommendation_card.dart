@@ -78,6 +78,7 @@ class RecommendationCard extends HookConsumerWidget {
                   ),
                   Text(
                     recommendation.summary,
+                    textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 15,
                       color: Colors.grey,
