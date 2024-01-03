@@ -10,6 +10,7 @@ import 'package:myecl/recommendation/ui/pages/main_page/recommendation_card.dart
 import 'package:myecl/recommendation/ui/pages/main_page/recommendation_card_layout.dart';
 import 'package:myecl/recommendation/ui/widgets/recommendation_template.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RecommendationMainPage extends HookConsumerWidget {
@@ -20,38 +21,45 @@ class RecommendationMainPage extends HookConsumerWidget {
     final isRecommendationAdmin = ref.watch(isRecommendationAdminProvider);
     final recommendationNotifier = ref.watch(recommendationProvider.notifier);
     final recommendationList = ref.watch(recommendationListProvider);
+    final recommendationListNotifier =
+        ref.watch(recommendationListProvider.notifier);
 
     return RecommendationTemplate(
-      child: AsyncChild(
-        value: recommendationList,
-        builder: (context, data) => ListView(
-          children: [
-            const SizedBox(height: 30),
-            if (isRecommendationAdmin)
-              GestureDetector(
-                onTap: () {
-                  recommendationNotifier
-                      .setRecommendation(Recommendation.empty());
-                  QR.to(
-                      RecommendationRouter.root + RecommendationRouter.addEdit);
-                },
-                child: const RecommendationCardLayout(
-                  child: Center(
-                    child: HeroIcon(
-                      HeroIcons.plus,
-                      size: 50,
+      child: Refresher(
+        onRefresh: () async {
+          await recommendationListNotifier.loadRecommendation();
+        },
+        child: AsyncChild(
+          value: recommendationList,
+          builder: (context, data) => Column(
+            children: [
+              const SizedBox(height: 30),
+              if (isRecommendationAdmin)
+                GestureDetector(
+                  onTap: () {
+                    recommendationNotifier
+                        .setRecommendation(Recommendation.empty());
+                    QR.to(RecommendationRouter.root +
+                        RecommendationRouter.addEdit);
+                  },
+                  child: const RecommendationCardLayout(
+                    child: Center(
+                      child: HeroIcon(
+                        HeroIcons.plus,
+                        size: 50,
+                      ),
                     ),
                   ),
                 ),
+              ...(data..sort((a, b) => b.creation!.compareTo(a.creation!))).map(
+                (e) => RecommendationCard(
+                  recommendation: e,
+                  isMainPage: true,
+                ),
               ),
-            ...(data..sort((a, b) => b.creation!.compareTo(a.creation!))).map(
-              (e) => RecommendationCard(
-                recommendation: e,
-                isMainPage: true,
-              ),
-            ),
-            const SizedBox(height: 30),
-          ],
+              const SizedBox(height: 30),
+            ],
+          ),
         ),
       ),
     );
