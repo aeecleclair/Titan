@@ -34,8 +34,6 @@ class AddEditRecommendationPage extends HookConsumerWidget {
         ref.watch(recommendationListProvider.notifier);
     final recommendationLogoNotifier =
         ref.watch(recommendationLogoProvider.notifier);
-    final recommendationLogoMapNotifier =
-        ref.watch(recommendationLogoMapProvider.notifier);
     final logo = useState<Uint8List?>(null);
     final logoFile = useState<Image?>(null);
     final isEdit = recommendation.id != Recommendation.empty().id;
@@ -188,10 +186,6 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                                 recommendationLogoNotifier
                                     .updateRecommendationLogo(
                                         recommendation.id!, logo.value!);
-                                recommendationLogoMapNotifier.setTData(
-                                  recommendation,
-                                  AsyncData([Image.memory(logo.value!)]),
-                                );
                               }
                             },
                             orElse: () {},
@@ -205,10 +199,6 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                               recommendationLogoNotifier
                                   .updateRecommendationLogo(
                                       newRecommendation.id!, logo.value!);
-                              recommendationLogoMapNotifier.setTData(
-                                newRecommendation,
-                                AsyncData([Image.memory(logo.value!)]),
-                              );
                             },
                             orElse: () {},
                           );
