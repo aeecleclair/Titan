@@ -5,31 +5,31 @@ import 'package:myecl/recommendation/providers/recommendation_list_provider.dart
 import 'package:myecl/tools/providers/map_provider.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class RecommendationLogoNotifier extends MapNotifier<Recommendation, Image> {
-  RecommendationLogoNotifier() : super();
+class RecommendationLogoMapNotifier extends MapNotifier<Recommendation, Image> {
+  RecommendationLogoMapNotifier() : super();
 }
 
 final recommendationLogoMapProvider = StateNotifierProvider<
-    RecommendationLogoNotifier,
+    RecommendationLogoMapNotifier,
     AsyncValue<Map<Recommendation, AsyncValue<List<Image>>>>>(
   (ref) {
-    RecommendationLogoNotifier recommendationLogoNotifier =
-        RecommendationLogoNotifier();
+    RecommendationLogoMapNotifier recommendationLogoMapNotifier =
+        RecommendationLogoMapNotifier();
     tokenExpireWrapperAuth(
       ref,
       () async {
         ref.watch(recommendationListProvider).maybeWhen(
           data: (data) {
-            recommendationLogoNotifier.loadTList(data);
-            return recommendationLogoNotifier;
+            recommendationLogoMapNotifier.loadTList(data);
+            return recommendationLogoMapNotifier;
           },
           orElse: () {
-            recommendationLogoNotifier.loadTList([]);
-            return recommendationLogoNotifier;
+            recommendationLogoMapNotifier.loadTList([]);
+            return recommendationLogoMapNotifier;
           },
         );
       },
     );
-    return recommendationLogoNotifier;
+    return recommendationLogoMapNotifier;
   },
 );
