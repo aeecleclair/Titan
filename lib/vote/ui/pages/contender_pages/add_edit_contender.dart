@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -13,6 +11,7 @@ import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myecl/tools/ui/widgets/image_picker_on_tap.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
@@ -130,21 +129,11 @@ class AddEditContenderPage extends HookConsumerWidget {
                     Positioned(
                       bottom: 0,
                       left: 0,
-                      child: GestureDetector(
-                        onTap: () async {
-                          final XFile? image = await picker.pickImage(
-                              source: ImageSource.gallery);
-                          if (image != null) {
-                            if (kIsWeb) {
-                              logo.value = await image.readAsBytes();
-                              logoFile.value = Image.network(image.path);
-                            } else {
-                              final file = File(image.path);
-                              logo.value = await file.readAsBytes();
-                              logoFile.value = Image.file(file);
-                            }
-                          }
-                        },
+                      child: ImagePickerOnTap(
+                        picker: picker,
+                        imageBytesNotifier: logo,
+                        imageNotifier: logoFile,
+                        displayToastWithContext: displayVoteToastWithContext,
                         child: const CardButton(
                           colors: [
                             ColorConstants.gradient1,
