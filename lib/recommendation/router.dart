@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/recommendation/providers/is_recommendation_admin_provider.dart';
-import 'package:myecl/recommendation/ui/pages/main_page/main_page.dart'
+import 'package:myecl/recommendation/ui/pages/main_page.dart'
     deferred as main_page;
 import 'package:myecl/recommendation/ui/pages/information_recommendation_page.dart'
     deferred as information_page;

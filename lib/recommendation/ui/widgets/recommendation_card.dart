@@ -9,7 +9,7 @@ import 'package:myecl/recommendation/providers/recommendation_logo_provider.dart
 import 'package:myecl/recommendation/providers/recommendation_provider.dart';
 import 'package:myecl/recommendation/router.dart';
 import 'package:myecl/recommendation/tools/constants.dart';
-import 'package:myecl/recommendation/ui/pages/main_page/recommendation_card_layout.dart';
+import 'package:myecl/recommendation/ui/widgets/recommendation_card_layout.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
