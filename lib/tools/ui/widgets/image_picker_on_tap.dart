@@ -33,6 +33,8 @@ class ImagePickerOnTap extends StatelessWidget {
         if (crossFile != null) {
           final size = await crossFile.length();
           if (size > maxHyperionFileSize) {
+            displayToastWithContext(
+                TypeMsg.error, TextConstants.imageSizeTooBig);
           } else {
             if (kIsWeb) {
               imageBytesNotifier.value = await crossFile.readAsBytes();
