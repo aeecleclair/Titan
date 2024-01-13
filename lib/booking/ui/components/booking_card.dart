@@ -7,6 +7,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class BookingCard extends StatelessWidget {
   final Booking booking;
@@ -27,7 +28,13 @@ class BookingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final showButton = booking.end.isAfter(DateTime.now());
+    final isNotEnded = booking.recurrenceRule.isNotEmpty
+        ? SfCalendar.parseRRule(booking.recurrenceRule, booking.start)
+            .endDate!
+            .isAfter(DateTime.now())
+        : booking.end.isAfter(DateTime.now());
+    final showButton =
+        (isNotEnded && booking.decision == Decision.pending) || isAdmin;
     final List<Color> cardColor;
     final Color smallTextColor;
     final Color bigTextColor;
@@ -80,7 +87,7 @@ class BookingCard extends StatelessWidget {
 
     return CardLayout(
       id: booking.id,
-      height: !isDetail ? 180 : 160,
+      height: !isDetail ? 210 : 160,
       width: 250,
       colors: cardColor,
       shadowColor: cardBoxShadow,
@@ -159,7 +166,7 @@ class BookingCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (showButton || isAdmin)
+                if (showButton)
                   GestureDetector(
                     onTap: onEdit,
                     child: CardButton(
@@ -171,7 +178,7 @@ class BookingCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                if (showButton || isAdmin) const Spacer(),
+                if (showButton) const Spacer(),
                 GestureDetector(
                   onTap: onCopy,
                   child: CardButton(
@@ -183,8 +190,8 @@ class BookingCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                if (showButton && isAdmin) const Spacer(),
-                if (showButton && isAdmin)
+                if (isAdmin) const Spacer(),
+                if (isAdmin)
                   GestureDetector(
                     onTap: onConfirm,
                     child: CardButton(
@@ -199,8 +206,8 @@ class BookingCard extends StatelessWidget {
                           color: darkIconBackgroundColor),
                     ),
                   ),
-                if (showButton && isAdmin) const Spacer(),
-                if (showButton && isAdmin)
+                if (isAdmin) const Spacer(),
+                if (isAdmin)
                   GestureDetector(
                     onTap: onDecline,
                     child: CardButton(
@@ -216,7 +223,7 @@ class BookingCard extends StatelessWidget {
                     ),
                   ),
                 if (!isAdmin) const Spacer(),
-                if (!isAdmin)
+                if (!isAdmin && booking.decision == Decision.pending)
                   WaitingButton(
                     onTap: onDelete,
                     builder: (child) => CardButton(

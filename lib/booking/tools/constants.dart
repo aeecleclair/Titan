@@ -1,3 +1,5 @@
+import 'package:syncfusion_flutter_calendar/calendar.dart';
+
 class BookingTextConstants {
   static const String add = "Ajouter";
   static const String addBookingPage = "Demande";
@@ -17,6 +19,7 @@ class BookingTextConstants {
   static const String bookingNote = "Note de la réservation";
   static const String bookingPage = "Réservation";
   static const String bookingReason = "Motif de la réservation";
+  static const String by = "par";
   static const String confirm = "Confirmer";
   static const String confirmation = "Confirmation";
   static const String confirmBooking = "Confirmer la réservation ?";
@@ -70,6 +73,8 @@ class BookingTextConstants {
   static const String no = "Non";
   static const String noCurrentBooking = "Pas de réservation en cours";
   static const String noDateError = "Veuillez choisir une date";
+  static const String noAppointmentInReccurence =
+      "Aucun créneau existe avec ces paramètres de récurrence";
   static const String noDaySelected = "Aucun jour sélectionné";
   static const String noDescriptionError = "Veuillez entrer une description";
   static const String noKeys = "Aucune clé";
@@ -95,13 +100,13 @@ class BookingTextConstants {
   static const String weeks = "Semaines";
   static const String yes = "Oui";
 
-  static const List<String> dayList = [
-    "Lundi",
-    "Mardi",
-    "Mercredi",
-    "Jeudi",
-    "Vendredi",
-    "Samedi",
-    "Dimanche"
+  static const List<WeekDays> weekDaysOrdered = [
+    WeekDays.monday,
+    WeekDays.tuesday,
+    WeekDays.wednesday,
+    WeekDays.thursday,
+    WeekDays.friday,
+    WeekDays.saturday,
+    WeekDays.sunday,
   ];
 }

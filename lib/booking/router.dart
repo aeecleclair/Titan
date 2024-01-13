@@ -90,8 +90,8 @@ class BookingRouter {
                   ]),
               QRoute(
                 path: addEdit,
-                builder: () =>
-                    add_edit_booking_page.AddEditBookingPage(isAdmin: true),
+                builder: () => add_edit_booking_page.AddEditBookingPage(
+                    isManagerPage: true),
                 middleware: [
                   AdminMiddleware(ref, isManagerProvider),
                   DeferredLoadingMiddleware(add_edit_booking_page.loadLibrary)
@@ -102,7 +102,7 @@ class BookingRouter {
           QRoute(
             path: addEdit,
             builder: () =>
-                add_edit_booking_page.AddEditBookingPage(isAdmin: false),
+                add_edit_booking_page.AddEditBookingPage(isManagerPage: false),
             middleware: [
               DeferredLoadingMiddleware(add_edit_booking_page.loadLibrary)
             ],

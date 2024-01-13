@@ -3,9 +3,12 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/providers/booking_list_provider.dart';
-import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
+import 'package:myecl/booking/providers/manager_booking_list_provider.dart';
+import 'package:myecl/booking/providers/booking_provider.dart';
+import 'package:myecl/booking/providers/manager_confirmed_booking_list_provider.dart';
+import 'package:myecl/booking/providers/user_booking_list_provider.dart';
+import 'package:myecl/booking/providers/selected_days_provider.dart';
 import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/components/booking_card.dart';
@@ -13,6 +16,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class ListBooking extends HookConsumerWidget {
   final List<Booking> bookings;
@@ -28,11 +32,23 @@ class ListBooking extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bookingNotifier = ref.watch(bookingProvider.notifier);
-    final bookingListNotifier = ref.watch(bookingListProvider.notifier);
+    final bookingListNotifier = ref.watch(managerBookingListProvider.notifier);
     final confirmedBookingListNotifier =
         ref.watch(confirmedBookingListProvider.notifier);
+    final managerConfirmedBookingListNotifier =
+        ref.watch(managerConfirmedBookingListProvider.notifier);
+    final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
 
     final toggle = useState(!canToggle);
+
+    void handleBooking(Booking booking) {
+      bookingNotifier.setBooking(booking);
+      final recurrentDays =
+          SfCalendar.parseRRule(booking.recurrenceRule, booking.start).weekDays;
+      selectedDaysNotifier.setSelectedDays(recurrentDays);
+      QR.to(BookingRouter.root + BookingRouter.manager + BookingRouter.addEdit);
+    }
+
     if (bookings.isNotEmpty) {
       return Column(
         children: [
@@ -80,10 +96,7 @@ class ListBooking extends HookConsumerWidget {
                         isAdmin: true,
                         isDetail: false,
                         onEdit: () {
-                          bookingNotifier.setBooking(e);
-                          QR.to(BookingRouter.root +
-                              BookingRouter.manager +
-                              BookingRouter.addEdit);
+                          handleBooking(e);
                         },
                         onInfo: () {
                           bookingNotifier.setBooking(e);
@@ -108,7 +121,13 @@ class ListBooking extends HookConsumerWidget {
                                                 newBooking, Decision.approved)
                                             .then((value) {
                                           if (value) {
+                                            ref
+                                                .read(userBookingListProvider
+                                                    .notifier)
+                                                .loadUserBookings();
                                             confirmedBookingListNotifier
+                                                .addBooking(newBooking);
+                                            managerConfirmedBookingListNotifier
                                                 .addBooking(newBooking);
                                           }
                                         });
@@ -133,7 +152,13 @@ class ListBooking extends HookConsumerWidget {
                                                 newBooking, Decision.declined)
                                             .then((value) {
                                           if (value) {
+                                            ref
+                                                .read(userBookingListProvider
+                                                    .notifier)
+                                                .loadUserBookings();
                                             confirmedBookingListNotifier
+                                                .deleteBooking(newBooking);
+                                            managerConfirmedBookingListNotifier
                                                 .deleteBooking(newBooking);
                                           }
                                         });

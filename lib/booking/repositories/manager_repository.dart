@@ -11,7 +11,7 @@ class ManagerRepository extends Repository {
         (await getList()).map((x) => Manager.fromJson(x)));
   }
 
-  Future<List<Manager>> getMyManager() async {
+  Future<List<Manager>> getUserManagerList() async {
     return List<Manager>.from(
         (await getList(suffix: "/users/me")).map((x) => Manager.fromJson(x)));
   }

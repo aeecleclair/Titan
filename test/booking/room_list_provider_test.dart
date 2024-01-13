@@ -21,10 +21,9 @@ void main() {
       expect(rooms, isA<AsyncData<List<Room>>>());
       expect(
           rooms
-              .when(
+              .maybeWhen(
                 data: (data) => data,
-                loading: () => [],
-                error: (_, __) => [],
+                orElse: () => [],
               )
               .length,
           1);

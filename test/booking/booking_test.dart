@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/advert/tools/functions.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/tools/functions.dart';
@@ -135,6 +133,7 @@ void main() {
         reason: "reason",
         start: DateTime.parse("2021-01-01T00:00:00.000Z"),
         end: DateTime.parse("2021-01-01T00:00:00.000Z"),
+        creation: DateTime.parse("2021-01-01T00:00:00.000Z"),
         note: "note",
         room: Room.empty().copyWith(id: "1"),
         key: true,
@@ -145,7 +144,7 @@ void main() {
         applicantId: "1",
       );
       expect(booking.toString(),
-          "Booking{id: 1, reason: reason, start: 2021-01-01 00:00:00.000Z, end: 2021-01-01 00:00:00.000Z, note: note, room: Room{name: , manager_id: , id: 1}, key: true, decision: Decision.approved, recurrenceRule: , entity: entity, applicant: Applicant{name: Nom, firstname: Prénom, nickname: null, id: 1, email: empty@ecl.ec-lyon.fr, promo: null, phone: null}, applicantId: 1}");
+          "Booking{id: 1, reason: reason, start: 2021-01-01 00:00:00.000Z, end: 2021-01-01 00:00:00.000Z, creation: 2021-01-01 00:00:00.000Z, note: note, room: Room{name: , manager_id: , id: 1}, key: true, decision: Decision.approved, recurrenceRule: , entity: entity, applicant: Applicant{name: Nom, firstname: Prénom, nickname: null, id: 1, email: empty@ecl.ec-lyon.fr, promo: null, phone: null}, applicantId: 1}");
     });
 
     test('Should parse a booking from json', () {
@@ -154,6 +153,7 @@ void main() {
         "reason": "reason",
         "start": "2021-01-01T00:00:00.000Z",
         "end": "2021-01-01T00:00:00.000Z",
+        "creation": "2021-01-01T00:00:00.000Z",
         "note": "note",
         "room": {
           "id": "1",
@@ -196,6 +196,7 @@ void main() {
         "reason": "reason",
         "start": "2021-01-01T00:00:00.000Z",
         "end": "2021-01-01T00:00:00.000Z",
+        "creation": "2021-01-01T00:00:00.000Z",
         "note": "note",
         "room": {
           "id": "1",
@@ -229,6 +230,7 @@ void main() {
         "reason": "reason",
         "start": "2021-01-01T00:00:00.000Z",
         "end": "2021-01-01T00:00:00.000Z",
+        "creation": "2021-01-01T00:00:00.000Z",
         "note": "note",
         "room": {
           "id": "1",
@@ -255,6 +257,7 @@ void main() {
         "reason": "reason",
         "start": "2021-01-01T00:00:00.000Z",
         "end": "2021-01-01T00:00:00.000Z",
+        "creation": "2021-01-01T00:00:00.000Z",
         "note": "note",
         "room_id": "1",
         "key": true,
@@ -333,35 +336,6 @@ void main() {
       bool allDay = true;
       expect(formatRecurrenceRule(dateStart, dateEnd, recurrenceRule, allDay),
           "Du 01/01 à 00:00 au 03/01 à 00:00");
-    });
-
-    test('color invert returns correct inverted color', () {
-      const inputColor = Color(0xFF0000FF); // blue
-      const expectedOutputColor = Color(0xffffff00); // yellow
-      final outputColor = invert(inputColor);
-      expect(outputColor, equals(expectedOutputColor));
-    });
-
-    test(
-        'getTrueEnd returns correct end date for recurring booking with multiple days',
-        () {
-      final booking = Booking.empty().copyWith(
-        start: DateTime(2022, 1, 1, 10, 0),
-        end: DateTime(2022, 1, 1, 12, 0),
-        recurrenceRule: 'FREQ=DAILY;BYDAY=MO,WE,FR;UNTIL=20220131T000000Z',
-      );
-      expect(getTrueEnd(booking), equals(DateTime(2022, 1, 30, 12, 0)));
-    });
-
-    test(
-        'getTrueEnd returns correct end date for recurring booking with single day',
-        () {
-      final booking = Booking.empty().copyWith(
-        start: DateTime(2022, 1, 1, 10, 0),
-        end: DateTime(2022, 1, 1, 12, 0),
-        recurrenceRule: 'FREQ=WEEKLY;BYDAY=MO;UNTIL=20220201T000000Z',
-      );
-      expect(getTrueEnd(booking), equals(DateTime(2022, 1, 1, 12, 0)));
     });
 
     test('combineDate returns correct date', () {

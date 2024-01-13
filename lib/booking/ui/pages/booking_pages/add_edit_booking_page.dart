@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/providers/booking_list_provider.dart';
+import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
+import 'package:myecl/booking/providers/manager_booking_list_provider.dart';
+import 'package:myecl/booking/providers/manager_confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/selected_days_provider.dart';
 import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
+import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/booking/ui/booking.dart';
-import 'package:myecl/booking/ui/pages/admin_pages/admin_chip.dart';
+import 'package:myecl/booking/ui/pages/admin_pages/admin_scroll_chips.dart';
 import 'package:myecl/booking/ui/pages/booking_pages/checkbox_entry.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/date_entry.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:myecl/user/providers/user_provider.dart';
@@ -27,9 +31,10 @@ import 'package:qlevar_router/qlevar_router.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class AddEditBookingPage extends HookConsumerWidget {
-  final bool isAdmin;
-
-  const AddEditBookingPage({super.key, required this.isAdmin});
+  final dataKey = GlobalKey();
+  final scrollKey = GlobalKey();
+  final bool isManagerPage;
+  AddEditBookingPage({super.key, required this.isManagerPage});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -37,11 +42,6 @@ class AddEditBookingPage extends HookConsumerWidget {
     final user = ref.watch(userProvider);
     final key = GlobalKey<FormState>();
     final rooms = ref.watch(roomListProvider);
-    final usersBookingsNotifier = ref.watch(userBookingListProvider.notifier);
-    final confirmedBookingListNotifier =
-        ref.watch(confirmedBookingListProvider.notifier);
-    final bookingsNotifier = ref.watch(bookingListProvider.notifier);
-    final bookings = ref.watch(bookingListProvider);
     final booking = ref.watch(bookingProvider);
     final isEdit = booking.id != Booking.empty().id;
     final room = useState(booking.room);
@@ -85,36 +85,61 @@ class AddEditBookingPage extends HookConsumerWidget {
 
     return BookingTemplate(
       child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Form(
-              key: key,
-              child: Column(children: [
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: AlignLeftText(
-                      isEdit
-                          ? BookingTextConstants.editBooking
-                          : BookingTextConstants.addBooking,
-                      color: Colors.grey),
+        physics: const BouncingScrollPhysics(),
+        child: Form(
+          key: key,
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: AlignLeftText(
+                    isEdit
+                        ? BookingTextConstants.editBooking
+                        : BookingTextConstants.addBooking,
+                    color: Colors.grey),
+              ),
+              const SizedBox(height: 20),
+              AsyncChild(
+                value: rooms,
+                builder: (context, data) => AdminScrollChips(
+                  key: scrollKey,
+                  isEdit: isEdit,
+                  dataKey: dataKey,
+                  data: data,
+                  pageStorageKeyName: "booking_room_list",
+                  builder: (Room e) {
+                    final selected = room.value.id == e.id;
+                    return ItemChip(
+                      key: selected ? dataKey : null,
+                      selected: selected,
+                      onTap: () {
+                        room.value = e;
+                        SchedulerBinding.instance.addPostFrameCallback(
+                          (_) {
+                            Scrollable.ensureVisible(
+                              dataKey.currentContext!,
+                              duration: const Duration(milliseconds: 500),
+                              alignment: 0.5,
+                            );
+                          },
+                        );
+                      },
+                      child: Text(
+                        e.name,
+                        style: TextStyle(
+                            color: selected ? Colors.white : Colors.black,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    );
+                  },
                 ),
-                const SizedBox(height: 20),
-                AsyncChild(
-                    value: rooms,
-                    builder: (context, data) => HorizontalListView.builder(
-                        height: 40,
-                        items: data,
-                        itemBuilder: (context, e, i) => AdminChip(
-                              label: capitalize(e.name),
-                              selected: room.value.id == e.id,
-                              onTap: () async {
-                                room.value = e;
-                              },
-                            ))),
-                const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Column(children: [
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: Column(
+                  children: [
                     TextEntry(
                       controller: entity,
                       label: BookingTextConstants.entity,
@@ -128,6 +153,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                     TextEntry(
                       label: BookingTextConstants.note,
                       controller: note,
+                      canBeEmpty: true,
                     ),
                     const SizedBox(height: 20),
                     CheckBoxEntry(
@@ -162,12 +188,10 @@ class AddEditBookingPage extends HookConsumerWidget {
                                   style: TextStyle(color: Colors.black)),
                               const SizedBox(height: 10),
                               Column(
-                                  children: BookingTextConstants.dayList
+                                  children: BookingTextConstants.weekDaysOrdered
                                       .map((e) => GestureDetector(
                                             onTap: () {
-                                              selectedDaysNotifier.toggle(
-                                                  BookingTextConstants.dayList
-                                                      .indexOf(e));
+                                              selectedDaysNotifier.toggle(e);
                                             },
                                             behavior: HitTestBehavior.opaque,
                                             child: Row(
@@ -176,7 +200,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                                                       .spaceBetween,
                                               children: [
                                                 Text(
-                                                  e,
+                                                  weekDayToString(e),
                                                   style: TextStyle(
                                                     color: Colors.grey.shade700,
                                                     fontSize: 16,
@@ -185,15 +209,11 @@ class AddEditBookingPage extends HookConsumerWidget {
                                                 Checkbox(
                                                   checkColor: Colors.white,
                                                   activeColor: Colors.black,
-                                                  value: selectedDays[
-                                                      BookingTextConstants
-                                                          .dayList
-                                                          .indexOf(e)],
+                                                  value:
+                                                      selectedDays.contains(e),
                                                   onChanged: (value) {
-                                                    selectedDaysNotifier.toggle(
-                                                        BookingTextConstants
-                                                            .dayList
-                                                            .indexOf(e));
+                                                    selectedDaysNotifier
+                                                        .toggle(e);
                                                   },
                                                 ),
                                               ],
@@ -276,102 +296,119 @@ class AddEditBookingPage extends HookConsumerWidget {
                           } else if (room.value.id.isEmpty) {
                             displayToast(context, TypeMsg.error,
                                 BookingTextConstants.invalidRoom);
-                          } else if (recurrent.value &&
-                              selectedDays
-                                  .where((element) => element)
-                                  .isEmpty) {
+                          } else if (recurrent.value && selectedDays.isEmpty) {
                             displayToast(context, TypeMsg.error,
                                 BookingTextConstants.noDaySelected);
                           } else {
-                            await tokenExpireWrapper(ref, () async {
-                              String recurrenceRule = "";
-                              String startString = start.text;
-                              if (!startString.contains("/")) {
-                                startString =
-                                    "${processDate(now)} $startString";
-                              }
-                              String endString = end.text;
-                              if (!endString.contains("/")) {
-                                endString = "${processDate(now)} $endString";
-                              }
-                              if (recurrent.value) {
-                                RecurrenceProperties recurrence =
-                                    RecurrenceProperties(startDate: now);
-                                recurrence.recurrenceType =
-                                    RecurrenceType.weekly;
-                                recurrence.recurrenceRange =
-                                    RecurrenceRange.endDate;
-                                recurrence.endDate = DateTime.parse(
-                                    processDateBack(recurrenceEndDate.text));
-                                recurrence.weekDays = WeekDays.values
-                                    .where((element) => selectedDays[
-                                        (WeekDays.values.indexOf(element) - 1) %
-                                            7])
-                                    .toList();
-                                recurrence.interval = int.parse(interval.text);
-                                recurrenceRule = SfCalendar.generateRRule(
-                                    recurrence,
-                                    DateTime.parse(
-                                        processDateBackWithHour(startString)),
-                                    DateTime.parse(
-                                        processDateBackWithHour(endString)));
-                              }
-                              Booking newBooking = Booking(
-                                  id: isEdit ? booking.id : "",
-                                  reason: motif.text,
-                                  start: DateTime.parse(
+                            String recurrenceRule = "";
+                            String startString = start.text;
+                            if (!startString.contains("/")) {
+                              startString = "${processDate(now)} $startString";
+                            }
+                            String endString = end.text;
+                            if (!endString.contains("/")) {
+                              endString = "${processDate(now)} $endString";
+                            }
+                            if (recurrent.value) {
+                              RecurrenceProperties recurrence =
+                                  RecurrenceProperties(startDate: now);
+                              recurrence.recurrenceType = RecurrenceType.weekly;
+                              recurrence.recurrenceRange =
+                                  RecurrenceRange.endDate;
+                              recurrence.endDate = DateTime.parse(
+                                  processDateBack(recurrenceEndDate.text));
+                              recurrence.weekDays = selectedDays;
+                              recurrence.interval = int.parse(interval.text);
+                              recurrenceRule = SfCalendar.generateRRule(
+                                  recurrence,
+                                  DateTime.parse(
                                       processDateBackWithHour(startString)),
-                                  end: DateTime.parse(
-                                      processDateBackWithHour(endString)),
-                                  note: note.text,
-                                  room: room.value,
-                                  key: keyRequired.value,
-                                  decision: booking.decision,
-                                  recurrenceRule: recurrenceRule,
-                                  entity: entity.text,
-                                  applicant: user.toApplicant(),
-                                  applicantId: user.id);
-                              final value = isEdit
-                                  ? await bookingsNotifier
-                                      .updateBooking(newBooking)
-                                  : await bookingsNotifier
-                                      .addBooking(newBooking);
-                              if (value) {
-                                QR.back();
-                                if (isEdit) {
-                                  if (booking.decision == Decision.approved) {
-                                    await confirmedBookingListNotifier
-                                        .updateBooking(newBooking);
-                                  }
-                                  if (!isAdmin) {
-                                    await usersBookingsNotifier
-                                        .updateBooking(newBooking);
-                                  }
-                                  displayToastWithContext(TypeMsg.msg,
-                                      BookingTextConstants.editedBooking);
-                                } else {
-                                  if (!isAdmin) {
-                                    newBooking = bookings.maybeWhen(
-                                        data: (value) => value.last,
-                                        orElse: () => Booking.empty());
-                                    if (newBooking.id != Booking.empty().id) {
-                                      await usersBookingsNotifier
-                                          .addBooking(newBooking);
-                                    }
-                                  }
-                                  displayToastWithContext(TypeMsg.msg,
-                                      BookingTextConstants.addedBooking);
-                                }
-                              } else {
-                                if (isEdit) {
-                                  displayToastWithContext(TypeMsg.error,
-                                      BookingTextConstants.editionError);
-                                } else {
-                                  displayToastWithContext(TypeMsg.error,
-                                      BookingTextConstants.addingError);
-                                }
+                                  DateTime.parse(
+                                      processDateBackWithHour(endString)));
+                              try {
+                                SfCalendar.getRecurrenceDateTimeCollection(
+                                    recurrenceRule, recurrence.startDate);
+                              } catch (e) {
+                                displayToast(
+                                  context,
+                                  TypeMsg.error,
+                                  BookingTextConstants
+                                      .noAppointmentInReccurence,
+                                );
+                                return;
                               }
-                            });
+                            }
+                            await tokenExpireWrapper(
+                              ref,
+                              () async {
+                                Booking newBooking = Booking(
+                                    id: isEdit ? booking.id : "",
+                                    reason: motif.text,
+                                    start: DateTime.parse(
+                                        processDateBackWithHour(startString)),
+                                    end: DateTime.parse(
+                                        processDateBackWithHour(endString)),
+                                    creation: DateTime.now(),
+                                    note: note.text.isEmpty ? null : note.text,
+                                    room: room.value,
+                                    key: keyRequired.value,
+                                    decision: booking.decision,
+                                    recurrenceRule: recurrenceRule,
+                                    entity: entity.text,
+                                    applicant: isManagerPage
+                                        ? booking.applicant
+                                        : user.toApplicant(),
+                                    applicantId: isManagerPage
+                                        ? booking.applicantId
+                                        : user.id);
+                                final value = isManagerPage
+                                    ? await ref
+                                        .read(
+                                            managerBookingListProvider.notifier)
+                                        .updateBooking(newBooking)
+                                    : isEdit
+                                        ? await ref
+                                            .read(userBookingListProvider
+                                                .notifier)
+                                            .updateBooking(newBooking)
+                                        : await ref
+                                            .read(userBookingListProvider
+                                                .notifier)
+                                            .addBooking(newBooking);
+                                if (value) {
+                                  QR.back();
+                                  ref
+                                      .read(userBookingListProvider.notifier)
+                                      .loadUserBookings();
+                                  ref
+                                      .read(
+                                          confirmedBookingListProvider.notifier)
+                                      .loadConfirmedBooking();
+                                  ref
+                                      .read(managerBookingListProvider.notifier)
+                                      .loadUserManageBookings();
+                                  ref
+                                      .read(managerConfirmedBookingListProvider
+                                          .notifier)
+                                      .loadConfirmedBookingForManager();
+                                  if (isEdit) {
+                                    displayToastWithContext(TypeMsg.msg,
+                                        BookingTextConstants.editedBooking);
+                                  } else {
+                                    displayToastWithContext(TypeMsg.msg,
+                                        BookingTextConstants.addedBooking);
+                                  }
+                                } else {
+                                  if (isEdit) {
+                                    displayToastWithContext(TypeMsg.error,
+                                        BookingTextConstants.editionError);
+                                  } else {
+                                    displayToastWithContext(TypeMsg.error,
+                                        BookingTextConstants.addingError);
+                                  }
+                                }
+                              },
+                            );
                           }
                         } else {
                           displayToast(context, TypeMsg.error,
@@ -388,9 +425,13 @@ class AddEditBookingPage extends HookConsumerWidget {
                               fontWeight: FontWeight.bold)),
                     ),
                     const SizedBox(height: 30),
-                  ]),
-                )
-              ]))),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

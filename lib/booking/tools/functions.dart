@@ -1,6 +1,6 @@
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 Decision stringToDecision(String s) {
   switch (s) {
@@ -26,21 +26,21 @@ String decisionToString(Decision d) {
   }
 }
 
-DateTime getTrueEnd(Booking b) {
-  if (b.recurrenceRule.isEmpty) {
-    return b.end;
-  } else {
-    final days = b.recurrenceRule.split("BYDAY=")[1].split(";")[0].split(",");
-    if (days.length > 1) {
-      final dates = getDateInRecurrence(b.recurrenceRule, b.start);
-      if (dates.isNotEmpty) {
-        final date = dates.last;
-        return DateTime(
-            date.year, date.month, date.day, b.end.hour, b.end.minute);
-      }
-      return DateTime(
-          b.start.year, b.start.month, b.start.day, b.end.hour, b.end.minute);
-    }
-    return b.end;
+String weekDayToString(WeekDays day) {
+  switch (day) {
+    case WeekDays.sunday:
+      return "Dimanche";
+    case WeekDays.monday:
+      return "Lundi";
+    case WeekDays.tuesday:
+      return "Mardi";
+    case WeekDays.wednesday:
+      return "Mercredi";
+    case WeekDays.thursday:
+      return "Jeudi";
+    case WeekDays.friday:
+      return "Vendredi";
+    case WeekDays.saturday:
+      return "Samedi";
   }
 }

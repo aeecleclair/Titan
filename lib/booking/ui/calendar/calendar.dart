@@ -1,94 +1,37 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
+import 'package:myecl/booking/providers/manager_confirmed_booking_list_provider.dart';
+import 'package:myecl/booking/ui/calendar/appointment_data_source.dart';
+import 'package:myecl/booking/ui/calendar/calendar_dialog.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class Calendar extends HookConsumerWidget {
-  const Calendar({Key? key}) : super(key: key);
+  final bool isManagerPage;
+  const Calendar({Key? key, required this.isManagerPage}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bookings = ref.watch(confirmedBookingListProvider);
+    final bookings = isManagerPage
+        ? ref.watch(managerConfirmedBookingListProvider)
+        : ref.watch(confirmedBookingListProvider);
     final isWebFormat = ref.watch(isWebFormatProvider);
     final CalendarController calendarController = CalendarController();
 
     void calendarTapped(CalendarTapDetails details, BuildContext context) {
       if (details.targetElement == CalendarElement.appointment ||
           details.targetElement == CalendarElement.agenda) {
-        final Appointment appointmentDetails = details.appointments![0];
+        final Booking booking = details.appointments![0];
         showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return Dialog(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Container(
-                        height: 220 +
-                            (appointmentDetails.notes!.length / 30 - 5) * 15,
-                        padding: const EdgeInsets.all(20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AutoSizeText(appointmentDetails.subject,
-                                maxLines: 2,
-                                style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black)),
-                            const SizedBox(height: 10),
-                            Text(
-                              formatDates(
-                                  appointmentDetails.startTime,
-                                  appointmentDetails.endTime,
-                                  appointmentDetails.isAllDay),
-                              style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                color: Colors.grey.shade400,
-                                fontSize: 15,
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Text(appointmentDetails.notes ?? "",
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w400, fontSize: 15)),
-                          ],
-                        ),
-                      ),
-                      Positioned(
-                          top: -10,
-                          right: -10,
-                          child: GestureDetector(
-                              onTap: () => Navigator.pop(context),
-                              child: Container(
-                                  height: 40,
-                                  width: 40,
-                                  padding: const EdgeInsets.all(7),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.grey.shade500
-                                                .withOpacity(0.3),
-                                            blurRadius: 5,
-                                            spreadRadius: 1)
-                                      ],
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: const HeroIcon(
-                                    HeroIcons.xMark,
-                                    size: 20,
-                                  ))))
-                    ],
-                  ));
-            });
+          context: context,
+          builder: (context) => isManagerPage
+              ? CalendarDialog(booking: booking, isManager: true)
+              : CalendarDialog(booking: booking, isManager: false),
+        );
       }
     }
 
@@ -99,7 +42,7 @@ class Calendar extends HookConsumerWidget {
           children: [
             SfCalendar(
               onTap: (details) => calendarTapped(details, context),
-              dataSource: _getCalendarDataSource(res),
+              dataSource: AppointmentDataSource(res),
               controller: calendarController,
               view: CalendarView.week,
               selectionDecoration: BoxDecoration(
@@ -205,44 +148,5 @@ class Calendar extends HookConsumerWidget {
         ),
       );
     });
-  }
-}
-
-_AppointmentDataSource _getCalendarDataSource(List<Booking> res) {
-  List<Appointment> appointments = <Appointment>[];
-  res.map((e) {
-    if (e.recurrenceRule != "") {
-      final dates = getDateInRecurrence(e.recurrenceRule, e.start);
-      dates.map((data) {
-        appointments.add(Appointment(
-          startTime: combineDate(data, e.start),
-          endTime: combineDate(data, e.end),
-          subject: '${e.room.name} - ${e.reason}',
-          isAllDay: false,
-          startTimeZone: "Europe/Paris",
-          endTimeZone: "Europe/Paris",
-          notes: e.note,
-          color: generateColor(e.room.name),
-        ));
-      }).toList();
-    } else {
-      appointments.add(Appointment(
-        startTime: e.start,
-        endTime: e.end,
-        subject: '${e.room.name} - ${e.reason}',
-        isAllDay: false,
-        startTimeZone: "Europe/Paris",
-        endTimeZone: "Europe/Paris",
-        notes: e.note,
-        color: generateColor(e.room.name),
-      ));
-    }
-  }).toList();
-  return _AppointmentDataSource(appointments);
-}
-
-class _AppointmentDataSource extends CalendarDataSource {
-  _AppointmentDataSource(List<Appointment> source) {
-    appointments = source;
   }
 }

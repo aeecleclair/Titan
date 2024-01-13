@@ -9,12 +9,12 @@ import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/providers/room_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
-import 'package:myecl/booking/ui/pages/admin_pages/admin_chip.dart';
 import 'package:myecl/booking/ui/pages/admin_pages/admin_entry.dart';
 import 'package:myecl/booking/ui/pages/admin_pages/admin_scroll_chips.dart';
 import 'package:myecl/booking/ui/pages/admin_pages/admin_shrink_button.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -74,14 +74,22 @@ class AddEditRoomPage extends HookConsumerWidget {
                       isEdit: isEdit,
                       dataKey: dataKey,
                       pageStorageKeyName: "manager_list",
-                      builder: (Manager e) => AdminChip(
-                        key: managerId == e.id ? dataKey : null,
-                        label: e.name,
-                        selected: managerId == e.id,
-                        onTap: () {
-                          managerIdNotifier.setId(e.id);
-                        },
-                      ),
+                      builder: (Manager e) {
+                        final selected = managerId == e.id;
+                        return ItemChip(
+                          key: selected ? dataKey : null,
+                          selected: selected,
+                          onTap: () {
+                            managerIdNotifier.setId(e.id);
+                          },
+                          child: Text(
+                            e.name,
+                            style: TextStyle(
+                                color: selected ? Colors.white : Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        );
+                      },
                     ),
                     error: (Object error, StackTrace? stackTrace) {
                       return Center(child: Text('Error $error'));

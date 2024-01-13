@@ -1,33 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class AdminScrollChips<T> extends StatelessWidget {
+class AdminScrollChips<T> extends HookWidget {
   final bool isEdit;
   final List<T> data;
   final GlobalKey dataKey;
   final String pageStorageKeyName;
   final Widget Function(T) builder;
 
-  AdminScrollChips({
+  const AdminScrollChips({
     super.key,
     required this.isEdit,
     required this.dataKey,
     required this.data,
     required this.pageStorageKeyName,
     required this.builder,
-  }) {
-    if (isEdit) {
-      Future(
-        () => Scrollable.ensureVisible(
-          dataKey.currentContext!,
-          duration: const Duration(milliseconds: 500),
-          alignment: 0.5,
-        ),
-      );
-    }
-  }
+  });
 
   @override
   Widget build(BuildContext context) {
+    if (isEdit) {
+      useEffect(
+        () {
+          Future(
+            () => Scrollable.ensureVisible(
+              dataKey.currentContext!,
+              duration: const Duration(milliseconds: 500),
+              alignment: 0.5,
+            ),
+          );
+          return;
+        },
+        [],
+      );
+    }
     return SingleChildScrollView(
       key: PageStorageKey(pageStorageKeyName),
       scrollDirection: Axis.horizontal,

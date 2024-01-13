@@ -62,14 +62,18 @@ class DetailBookingPage extends HookConsumerWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(height: 10),
-                          Text(
-                            booking.note,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                          if (booking.note != null)
+                            const SizedBox(
+                              height: 10,
                             ),
-                          ),
+                          if (booking.note != null)
+                            Text(
+                              booking.note!,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                         ],
                       ),
                     ),
@@ -96,7 +100,7 @@ class DetailBookingPage extends HookConsumerWidget {
                               }
                             },
                             child: Text(
-                              booking.applicant.email,
+                              booking.applicant.email.toString(),
                               style: const TextStyle(
                                 fontSize: 16,
                                 decoration: TextDecoration.underline,

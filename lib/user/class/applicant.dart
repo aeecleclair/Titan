@@ -1,7 +1,7 @@
 import 'package:myecl/user/class/list_users.dart';
 
 class Applicant extends SimpleUser {
-  late final String email;
+  late final String? email;
   late final int? promo;
   late final String? phone;
   Applicant(

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/providers/booking_list_provider.dart';
-import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
+import 'package:myecl/booking/providers/manager_booking_list_provider.dart';
+import 'package:myecl/booking/providers/manager_confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
-import 'package:myecl/booking/ui/calendar.dart';
+import 'package:myecl/booking/ui/calendar/calendar.dart';
 import 'package:myecl/booking/ui/pages/manager_page/list_booking.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 
@@ -15,7 +15,7 @@ class ManagerPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bookings = ref.watch(bookingListProvider);
+    final bookings = ref.watch(managerBookingListProvider);
     final List<Booking> pendingBookings = [],
         confirmedBookings = [],
         canceledBookings = [];
@@ -36,26 +36,28 @@ class ManagerPage extends HookConsumerWidget {
                 break;
             }
           }
-          confirmedBookings.sort((a, b) => b.start.compareTo(a.start));
-          canceledBookings.sort((a, b) => b.start.compareTo(a.start));
-          pendingBookings.sort((a, b) => b.start.compareTo(a.start));
+          confirmedBookings.sort((a, b) => b.creation.compareTo(a.creation));
+          canceledBookings.sort((a, b) => b.creation.compareTo(a.creation));
+          pendingBookings.sort((a, b) => b.creation.compareTo(a.creation));
         },
         orElse: () {});
     return BookingTemplate(
       child: Refresher(
         onRefresh: () async {
-          await ref.watch(bookingListProvider.notifier).loadBookings();
+          await ref
+              .watch(managerBookingListProvider.notifier)
+              .loadUserManageBookings();
           await ref.watch(roomListProvider.notifier).loadRooms();
           await ref
-              .watch(confirmedBookingListProvider.notifier)
-              .loadConfirmedBooking();
+              .watch(managerConfirmedBookingListProvider.notifier)
+              .loadConfirmedBookingForManager();
         },
         child: Column(
           children: [
             const SizedBox(height: 20),
             SizedBox(
                 height: MediaQuery.of(context).size.height - 380,
-                child: const Calendar()),
+                child: const Calendar(isManagerPage: true)),
             const SizedBox(height: 30),
             if (pendingBookings.isEmpty &&
                 confirmedBookings.isEmpty &&

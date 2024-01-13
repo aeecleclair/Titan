@@ -6,14 +6,14 @@ import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class UserManagerListNotifier extends ListNotifier<Manager> {
-  final ManagerRepository _repository = ManagerRepository();
+  final ManagerRepository managerRepository = ManagerRepository();
   UserManagerListNotifier({required String token})
       : super(const AsyncValue.loading()) {
-    _repository.setToken(token);
+    managerRepository.setToken(token);
   }
 
   Future<AsyncValue<List<Manager>>> loadManagers() async {
-    return await loadList(_repository.getMyManager);
+    return await loadList(managerRepository.getUserManagerList);
   }
 }
 
