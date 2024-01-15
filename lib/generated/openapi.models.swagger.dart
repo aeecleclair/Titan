@@ -1574,6 +1574,7 @@ class BookingBase {
     required this.reason,
     required this.start,
     required this.end,
+    required this.creation,
     this.note,
     required this.roomId,
     required this.key,
@@ -1593,6 +1594,8 @@ class BookingBase {
   final DateTime start;
   @JsonKey(name: 'end')
   final DateTime end;
+  @JsonKey(name: 'creation')
+  final DateTime creation;
   @JsonKey(name: 'note', defaultValue: '')
   final String? note;
   @JsonKey(name: 'room_id', defaultValue: '')
@@ -1609,6 +1612,134 @@ class BookingBase {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is BookingBase &&
+            (identical(other.reason, reason) ||
+                const DeepCollectionEquality().equals(other.reason, reason)) &&
+            (identical(other.start, start) ||
+                const DeepCollectionEquality().equals(other.start, start)) &&
+            (identical(other.end, end) ||
+                const DeepCollectionEquality().equals(other.end, end)) &&
+            (identical(other.creation, creation) ||
+                const DeepCollectionEquality()
+                    .equals(other.creation, creation)) &&
+            (identical(other.note, note) ||
+                const DeepCollectionEquality().equals(other.note, note)) &&
+            (identical(other.roomId, roomId) ||
+                const DeepCollectionEquality().equals(other.roomId, roomId)) &&
+            (identical(other.key, key) ||
+                const DeepCollectionEquality().equals(other.key, key)) &&
+            (identical(other.recurrenceRule, recurrenceRule) ||
+                const DeepCollectionEquality()
+                    .equals(other.recurrenceRule, recurrenceRule)) &&
+            (identical(other.entity, entity) ||
+                const DeepCollectionEquality().equals(other.entity, entity)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(reason) ^
+      const DeepCollectionEquality().hash(start) ^
+      const DeepCollectionEquality().hash(end) ^
+      const DeepCollectionEquality().hash(creation) ^
+      const DeepCollectionEquality().hash(note) ^
+      const DeepCollectionEquality().hash(roomId) ^
+      const DeepCollectionEquality().hash(key) ^
+      const DeepCollectionEquality().hash(recurrenceRule) ^
+      const DeepCollectionEquality().hash(entity) ^
+      runtimeType.hashCode;
+}
+
+extension $BookingBaseExtension on BookingBase {
+  BookingBase copyWith(
+      {String? reason,
+      DateTime? start,
+      DateTime? end,
+      DateTime? creation,
+      String? note,
+      String? roomId,
+      bool? key,
+      String? recurrenceRule,
+      String? entity}) {
+    return BookingBase(
+        reason: reason ?? this.reason,
+        start: start ?? this.start,
+        end: end ?? this.end,
+        creation: creation ?? this.creation,
+        note: note ?? this.note,
+        roomId: roomId ?? this.roomId,
+        key: key ?? this.key,
+        recurrenceRule: recurrenceRule ?? this.recurrenceRule,
+        entity: entity ?? this.entity);
+  }
+
+  BookingBase copyWithWrapped(
+      {Wrapped<String>? reason,
+      Wrapped<DateTime>? start,
+      Wrapped<DateTime>? end,
+      Wrapped<DateTime>? creation,
+      Wrapped<String?>? note,
+      Wrapped<String>? roomId,
+      Wrapped<bool>? key,
+      Wrapped<String?>? recurrenceRule,
+      Wrapped<String?>? entity}) {
+    return BookingBase(
+        reason: (reason != null ? reason.value : this.reason),
+        start: (start != null ? start.value : this.start),
+        end: (end != null ? end.value : this.end),
+        creation: (creation != null ? creation.value : this.creation),
+        note: (note != null ? note.value : this.note),
+        roomId: (roomId != null ? roomId.value : this.roomId),
+        key: (key != null ? key.value : this.key),
+        recurrenceRule: (recurrenceRule != null
+            ? recurrenceRule.value
+            : this.recurrenceRule),
+        entity: (entity != null ? entity.value : this.entity));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class BookingEdit {
+  const BookingEdit({
+    this.reason,
+    this.start,
+    this.end,
+    this.note,
+    this.roomId,
+    this.key,
+    this.recurrenceRule,
+    this.entity,
+  });
+
+  factory BookingEdit.fromJson(Map<String, dynamic> json) =>
+      _$BookingEditFromJson(json);
+
+  static const toJsonFactory = _$BookingEditToJson;
+  Map<String, dynamic> toJson() => _$BookingEditToJson(this);
+
+  @JsonKey(name: 'reason', defaultValue: '')
+  final String? reason;
+  @JsonKey(name: 'start')
+  final DateTime? start;
+  @JsonKey(name: 'end')
+  final DateTime? end;
+  @JsonKey(name: 'note', defaultValue: '')
+  final String? note;
+  @JsonKey(name: 'room_id', defaultValue: '')
+  final String? roomId;
+  @JsonKey(name: 'key', defaultValue: false)
+  final bool? key;
+  @JsonKey(name: 'recurrence_rule', defaultValue: '')
+  final String? recurrenceRule;
+  @JsonKey(name: 'entity', defaultValue: '')
+  final String? entity;
+  static const fromJsonFactory = _$BookingEditFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is BookingEdit &&
             (identical(other.reason, reason) ||
                 const DeepCollectionEquality().equals(other.reason, reason)) &&
             (identical(other.start, start) ||
@@ -1644,8 +1775,8 @@ class BookingBase {
       runtimeType.hashCode;
 }
 
-extension $BookingBaseExtension on BookingBase {
-  BookingBase copyWith(
+extension $BookingEditExtension on BookingEdit {
+  BookingEdit copyWith(
       {String? reason,
       DateTime? start,
       DateTime? end,
@@ -1654,7 +1785,7 @@ extension $BookingBaseExtension on BookingBase {
       bool? key,
       String? recurrenceRule,
       String? entity}) {
-    return BookingBase(
+    return BookingEdit(
         reason: reason ?? this.reason,
         start: start ?? this.start,
         end: end ?? this.end,
@@ -1665,16 +1796,16 @@ extension $BookingBaseExtension on BookingBase {
         entity: entity ?? this.entity);
   }
 
-  BookingBase copyWithWrapped(
-      {Wrapped<String>? reason,
-      Wrapped<DateTime>? start,
-      Wrapped<DateTime>? end,
+  BookingEdit copyWithWrapped(
+      {Wrapped<String?>? reason,
+      Wrapped<DateTime?>? start,
+      Wrapped<DateTime?>? end,
       Wrapped<String?>? note,
-      Wrapped<String>? roomId,
-      Wrapped<bool>? key,
+      Wrapped<String?>? roomId,
+      Wrapped<bool?>? key,
       Wrapped<String?>? recurrenceRule,
       Wrapped<String?>? entity}) {
-    return BookingBase(
+    return BookingEdit(
         reason: (reason != null ? reason.value : this.reason),
         start: (start != null ? start.value : this.start),
         end: (end != null ? end.value : this.end),
@@ -1689,131 +1820,12 @@ extension $BookingBaseExtension on BookingBase {
 }
 
 @JsonSerializable(explicitToJson: true)
-class BookingEdit {
-  const BookingEdit({
-    this.reason,
-    this.start,
-    this.end,
-    this.note,
-    this.room,
-    this.key,
-    this.recurrenceRule,
-    this.entity,
-  });
-
-  factory BookingEdit.fromJson(Map<String, dynamic> json) =>
-      _$BookingEditFromJson(json);
-
-  static const toJsonFactory = _$BookingEditToJson;
-  Map<String, dynamic> toJson() => _$BookingEditToJson(this);
-
-  @JsonKey(name: 'reason', defaultValue: '')
-  final String? reason;
-  @JsonKey(name: 'start')
-  final DateTime? start;
-  @JsonKey(name: 'end')
-  final DateTime? end;
-  @JsonKey(name: 'note', defaultValue: '')
-  final String? note;
-  @JsonKey(name: 'room', defaultValue: '')
-  final String? room;
-  @JsonKey(name: 'key', defaultValue: false)
-  final bool? key;
-  @JsonKey(name: 'recurrence_rule', defaultValue: '')
-  final String? recurrenceRule;
-  @JsonKey(name: 'entity', defaultValue: '')
-  final String? entity;
-  static const fromJsonFactory = _$BookingEditFromJson;
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is BookingEdit &&
-            (identical(other.reason, reason) ||
-                const DeepCollectionEquality().equals(other.reason, reason)) &&
-            (identical(other.start, start) ||
-                const DeepCollectionEquality().equals(other.start, start)) &&
-            (identical(other.end, end) ||
-                const DeepCollectionEquality().equals(other.end, end)) &&
-            (identical(other.note, note) ||
-                const DeepCollectionEquality().equals(other.note, note)) &&
-            (identical(other.room, room) ||
-                const DeepCollectionEquality().equals(other.room, room)) &&
-            (identical(other.key, key) ||
-                const DeepCollectionEquality().equals(other.key, key)) &&
-            (identical(other.recurrenceRule, recurrenceRule) ||
-                const DeepCollectionEquality()
-                    .equals(other.recurrenceRule, recurrenceRule)) &&
-            (identical(other.entity, entity) ||
-                const DeepCollectionEquality().equals(other.entity, entity)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(reason) ^
-      const DeepCollectionEquality().hash(start) ^
-      const DeepCollectionEquality().hash(end) ^
-      const DeepCollectionEquality().hash(note) ^
-      const DeepCollectionEquality().hash(room) ^
-      const DeepCollectionEquality().hash(key) ^
-      const DeepCollectionEquality().hash(recurrenceRule) ^
-      const DeepCollectionEquality().hash(entity) ^
-      runtimeType.hashCode;
-}
-
-extension $BookingEditExtension on BookingEdit {
-  BookingEdit copyWith(
-      {String? reason,
-      DateTime? start,
-      DateTime? end,
-      String? note,
-      String? room,
-      bool? key,
-      String? recurrenceRule,
-      String? entity}) {
-    return BookingEdit(
-        reason: reason ?? this.reason,
-        start: start ?? this.start,
-        end: end ?? this.end,
-        note: note ?? this.note,
-        room: room ?? this.room,
-        key: key ?? this.key,
-        recurrenceRule: recurrenceRule ?? this.recurrenceRule,
-        entity: entity ?? this.entity);
-  }
-
-  BookingEdit copyWithWrapped(
-      {Wrapped<String?>? reason,
-      Wrapped<DateTime?>? start,
-      Wrapped<DateTime?>? end,
-      Wrapped<String?>? note,
-      Wrapped<String?>? room,
-      Wrapped<bool?>? key,
-      Wrapped<String?>? recurrenceRule,
-      Wrapped<String?>? entity}) {
-    return BookingEdit(
-        reason: (reason != null ? reason.value : this.reason),
-        start: (start != null ? start.value : this.start),
-        end: (end != null ? end.value : this.end),
-        note: (note != null ? note.value : this.note),
-        room: (room != null ? room.value : this.room),
-        key: (key != null ? key.value : this.key),
-        recurrenceRule: (recurrenceRule != null
-            ? recurrenceRule.value
-            : this.recurrenceRule),
-        entity: (entity != null ? entity.value : this.entity));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
 class BookingReturn {
   const BookingReturn({
     required this.reason,
     required this.start,
     required this.end,
+    required this.creation,
     this.note,
     required this.roomId,
     required this.key,
@@ -1837,6 +1849,8 @@ class BookingReturn {
   final DateTime start;
   @JsonKey(name: 'end')
   final DateTime end;
+  @JsonKey(name: 'creation')
+  final DateTime creation;
   @JsonKey(name: 'note', defaultValue: '')
   final String? note;
   @JsonKey(name: 'room_id', defaultValue: '')
@@ -1871,6 +1885,9 @@ class BookingReturn {
                 const DeepCollectionEquality().equals(other.start, start)) &&
             (identical(other.end, end) ||
                 const DeepCollectionEquality().equals(other.end, end)) &&
+            (identical(other.creation, creation) ||
+                const DeepCollectionEquality()
+                    .equals(other.creation, creation)) &&
             (identical(other.note, note) ||
                 const DeepCollectionEquality().equals(other.note, note)) &&
             (identical(other.roomId, roomId) ||
@@ -1902,6 +1919,7 @@ class BookingReturn {
       const DeepCollectionEquality().hash(reason) ^
       const DeepCollectionEquality().hash(start) ^
       const DeepCollectionEquality().hash(end) ^
+      const DeepCollectionEquality().hash(creation) ^
       const DeepCollectionEquality().hash(note) ^
       const DeepCollectionEquality().hash(roomId) ^
       const DeepCollectionEquality().hash(key) ^
@@ -1919,6 +1937,7 @@ extension $BookingReturnExtension on BookingReturn {
       {String? reason,
       DateTime? start,
       DateTime? end,
+      DateTime? creation,
       String? note,
       String? roomId,
       bool? key,
@@ -1932,6 +1951,7 @@ extension $BookingReturnExtension on BookingReturn {
         reason: reason ?? this.reason,
         start: start ?? this.start,
         end: end ?? this.end,
+        creation: creation ?? this.creation,
         note: note ?? this.note,
         roomId: roomId ?? this.roomId,
         key: key ?? this.key,
@@ -1947,6 +1967,7 @@ extension $BookingReturnExtension on BookingReturn {
       {Wrapped<String>? reason,
       Wrapped<DateTime>? start,
       Wrapped<DateTime>? end,
+      Wrapped<DateTime>? creation,
       Wrapped<String?>? note,
       Wrapped<String>? roomId,
       Wrapped<bool>? key,
@@ -1960,6 +1981,7 @@ extension $BookingReturnExtension on BookingReturn {
         reason: (reason != null ? reason.value : this.reason),
         start: (start != null ? start.value : this.start),
         end: (end != null ? end.value : this.end),
+        creation: (creation != null ? creation.value : this.creation),
         note: (note != null ? note.value : this.note),
         roomId: (roomId != null ? roomId.value : this.roomId),
         key: (key != null ? key.value : this.key),
@@ -1981,6 +2003,7 @@ class BookingReturnApplicant {
     required this.reason,
     required this.start,
     required this.end,
+    required this.creation,
     this.note,
     required this.roomId,
     required this.key,
@@ -2005,6 +2028,8 @@ class BookingReturnApplicant {
   final DateTime start;
   @JsonKey(name: 'end')
   final DateTime end;
+  @JsonKey(name: 'creation')
+  final DateTime creation;
   @JsonKey(name: 'note', defaultValue: '')
   final String? note;
   @JsonKey(name: 'room_id', defaultValue: '')
@@ -2041,6 +2066,9 @@ class BookingReturnApplicant {
                 const DeepCollectionEquality().equals(other.start, start)) &&
             (identical(other.end, end) ||
                 const DeepCollectionEquality().equals(other.end, end)) &&
+            (identical(other.creation, creation) ||
+                const DeepCollectionEquality()
+                    .equals(other.creation, creation)) &&
             (identical(other.note, note) ||
                 const DeepCollectionEquality().equals(other.note, note)) &&
             (identical(other.roomId, roomId) ||
@@ -2075,6 +2103,7 @@ class BookingReturnApplicant {
       const DeepCollectionEquality().hash(reason) ^
       const DeepCollectionEquality().hash(start) ^
       const DeepCollectionEquality().hash(end) ^
+      const DeepCollectionEquality().hash(creation) ^
       const DeepCollectionEquality().hash(note) ^
       const DeepCollectionEquality().hash(roomId) ^
       const DeepCollectionEquality().hash(key) ^
@@ -2093,6 +2122,7 @@ extension $BookingReturnApplicantExtension on BookingReturnApplicant {
       {String? reason,
       DateTime? start,
       DateTime? end,
+      DateTime? creation,
       String? note,
       String? roomId,
       bool? key,
@@ -2107,6 +2137,7 @@ extension $BookingReturnApplicantExtension on BookingReturnApplicant {
         reason: reason ?? this.reason,
         start: start ?? this.start,
         end: end ?? this.end,
+        creation: creation ?? this.creation,
         note: note ?? this.note,
         roomId: roomId ?? this.roomId,
         key: key ?? this.key,
@@ -2123,6 +2154,7 @@ extension $BookingReturnApplicantExtension on BookingReturnApplicant {
       {Wrapped<String>? reason,
       Wrapped<DateTime>? start,
       Wrapped<DateTime>? end,
+      Wrapped<DateTime>? creation,
       Wrapped<String?>? note,
       Wrapped<String>? roomId,
       Wrapped<bool>? key,
@@ -2137,6 +2169,197 @@ extension $BookingReturnApplicantExtension on BookingReturnApplicant {
         reason: (reason != null ? reason.value : this.reason),
         start: (start != null ? start.value : this.start),
         end: (end != null ? end.value : this.end),
+        creation: (creation != null ? creation.value : this.creation),
+        note: (note != null ? note.value : this.note),
+        roomId: (roomId != null ? roomId.value : this.roomId),
+        key: (key != null ? key.value : this.key),
+        recurrenceRule: (recurrenceRule != null
+            ? recurrenceRule.value
+            : this.recurrenceRule),
+        entity: (entity != null ? entity.value : this.entity),
+        id: (id != null ? id.value : this.id),
+        decision: (decision != null ? decision.value : this.decision),
+        applicantId:
+            (applicantId != null ? applicantId.value : this.applicantId),
+        room: (room != null ? room.value : this.room),
+        applicant: (applicant != null ? applicant.value : this.applicant));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class BookingReturnSimpleApplicant {
+  const BookingReturnSimpleApplicant({
+    required this.reason,
+    required this.start,
+    required this.end,
+    required this.creation,
+    this.note,
+    required this.roomId,
+    required this.key,
+    this.recurrenceRule,
+    this.entity,
+    required this.id,
+    required this.decision,
+    required this.applicantId,
+    required this.room,
+    required this.applicant,
+  });
+
+  factory BookingReturnSimpleApplicant.fromJson(Map<String, dynamic> json) =>
+      _$BookingReturnSimpleApplicantFromJson(json);
+
+  static const toJsonFactory = _$BookingReturnSimpleApplicantToJson;
+  Map<String, dynamic> toJson() => _$BookingReturnSimpleApplicantToJson(this);
+
+  @JsonKey(name: 'reason', defaultValue: '')
+  final String reason;
+  @JsonKey(name: 'start')
+  final DateTime start;
+  @JsonKey(name: 'end')
+  final DateTime end;
+  @JsonKey(name: 'creation')
+  final DateTime creation;
+  @JsonKey(name: 'note', defaultValue: '')
+  final String? note;
+  @JsonKey(name: 'room_id', defaultValue: '')
+  final String roomId;
+  @JsonKey(name: 'key', defaultValue: false)
+  final bool key;
+  @JsonKey(name: 'recurrence_rule', defaultValue: '')
+  final String? recurrenceRule;
+  @JsonKey(name: 'entity', defaultValue: '')
+  final String? entity;
+  @JsonKey(name: 'id', defaultValue: '')
+  final String id;
+  @JsonKey(
+    name: 'decision',
+    toJson: appUtilsTypesBookingTypeDecisionToJson,
+    fromJson: appUtilsTypesBookingTypeDecisionFromJson,
+  )
+  final enums.AppUtilsTypesBookingTypeDecision decision;
+  @JsonKey(name: 'applicant_id', defaultValue: '')
+  final String applicantId;
+  @JsonKey(name: 'room')
+  final RoomComplete room;
+  @JsonKey(name: 'applicant')
+  final CoreUserSimple applicant;
+  static const fromJsonFactory = _$BookingReturnSimpleApplicantFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is BookingReturnSimpleApplicant &&
+            (identical(other.reason, reason) ||
+                const DeepCollectionEquality().equals(other.reason, reason)) &&
+            (identical(other.start, start) ||
+                const DeepCollectionEquality().equals(other.start, start)) &&
+            (identical(other.end, end) ||
+                const DeepCollectionEquality().equals(other.end, end)) &&
+            (identical(other.creation, creation) ||
+                const DeepCollectionEquality()
+                    .equals(other.creation, creation)) &&
+            (identical(other.note, note) ||
+                const DeepCollectionEquality().equals(other.note, note)) &&
+            (identical(other.roomId, roomId) ||
+                const DeepCollectionEquality().equals(other.roomId, roomId)) &&
+            (identical(other.key, key) ||
+                const DeepCollectionEquality().equals(other.key, key)) &&
+            (identical(other.recurrenceRule, recurrenceRule) ||
+                const DeepCollectionEquality()
+                    .equals(other.recurrenceRule, recurrenceRule)) &&
+            (identical(other.entity, entity) ||
+                const DeepCollectionEquality().equals(other.entity, entity)) &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.decision, decision) ||
+                const DeepCollectionEquality()
+                    .equals(other.decision, decision)) &&
+            (identical(other.applicantId, applicantId) ||
+                const DeepCollectionEquality()
+                    .equals(other.applicantId, applicantId)) &&
+            (identical(other.room, room) ||
+                const DeepCollectionEquality().equals(other.room, room)) &&
+            (identical(other.applicant, applicant) ||
+                const DeepCollectionEquality()
+                    .equals(other.applicant, applicant)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(reason) ^
+      const DeepCollectionEquality().hash(start) ^
+      const DeepCollectionEquality().hash(end) ^
+      const DeepCollectionEquality().hash(creation) ^
+      const DeepCollectionEquality().hash(note) ^
+      const DeepCollectionEquality().hash(roomId) ^
+      const DeepCollectionEquality().hash(key) ^
+      const DeepCollectionEquality().hash(recurrenceRule) ^
+      const DeepCollectionEquality().hash(entity) ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(decision) ^
+      const DeepCollectionEquality().hash(applicantId) ^
+      const DeepCollectionEquality().hash(room) ^
+      const DeepCollectionEquality().hash(applicant) ^
+      runtimeType.hashCode;
+}
+
+extension $BookingReturnSimpleApplicantExtension
+    on BookingReturnSimpleApplicant {
+  BookingReturnSimpleApplicant copyWith(
+      {String? reason,
+      DateTime? start,
+      DateTime? end,
+      DateTime? creation,
+      String? note,
+      String? roomId,
+      bool? key,
+      String? recurrenceRule,
+      String? entity,
+      String? id,
+      enums.AppUtilsTypesBookingTypeDecision? decision,
+      String? applicantId,
+      RoomComplete? room,
+      CoreUserSimple? applicant}) {
+    return BookingReturnSimpleApplicant(
+        reason: reason ?? this.reason,
+        start: start ?? this.start,
+        end: end ?? this.end,
+        creation: creation ?? this.creation,
+        note: note ?? this.note,
+        roomId: roomId ?? this.roomId,
+        key: key ?? this.key,
+        recurrenceRule: recurrenceRule ?? this.recurrenceRule,
+        entity: entity ?? this.entity,
+        id: id ?? this.id,
+        decision: decision ?? this.decision,
+        applicantId: applicantId ?? this.applicantId,
+        room: room ?? this.room,
+        applicant: applicant ?? this.applicant);
+  }
+
+  BookingReturnSimpleApplicant copyWithWrapped(
+      {Wrapped<String>? reason,
+      Wrapped<DateTime>? start,
+      Wrapped<DateTime>? end,
+      Wrapped<DateTime>? creation,
+      Wrapped<String?>? note,
+      Wrapped<String>? roomId,
+      Wrapped<bool>? key,
+      Wrapped<String?>? recurrenceRule,
+      Wrapped<String?>? entity,
+      Wrapped<String>? id,
+      Wrapped<enums.AppUtilsTypesBookingTypeDecision>? decision,
+      Wrapped<String>? applicantId,
+      Wrapped<RoomComplete>? room,
+      Wrapped<CoreUserSimple>? applicant}) {
+    return BookingReturnSimpleApplicant(
+        reason: (reason != null ? reason.value : this.reason),
+        start: (start != null ? start.value : this.start),
+        end: (end != null ? end.value : this.end),
+        creation: (creation != null ? creation.value : this.creation),
         note: (note != null ? note.value : this.note),
         roomId: (roomId != null ? roomId.value : this.roomId),
         key: (key != null ? key.value : this.key),
@@ -4007,58 +4230,6 @@ extension $DeliveryUpdateExtension on DeliveryUpdate {
 }
 
 @JsonSerializable(explicitToJson: true)
-class DetailedPlayer {
-  const DetailedPlayer({
-    required this.user,
-    required this.info,
-  });
-
-  factory DetailedPlayer.fromJson(Map<String, dynamic> json) =>
-      _$DetailedPlayerFromJson(json);
-
-  static const toJsonFactory = _$DetailedPlayerToJson;
-  Map<String, dynamic> toJson() => _$DetailedPlayerToJson(this);
-
-  @JsonKey(name: 'user')
-  final CoreUserSimple user;
-  @JsonKey(name: 'info')
-  final Map<String, dynamic> info;
-  static const fromJsonFactory = _$DetailedPlayerFromJson;
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is DetailedPlayer &&
-            (identical(other.user, user) ||
-                const DeepCollectionEquality().equals(other.user, user)) &&
-            (identical(other.info, info) ||
-                const DeepCollectionEquality().equals(other.info, info)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(user) ^
-      const DeepCollectionEquality().hash(info) ^
-      runtimeType.hashCode;
-}
-
-extension $DetailedPlayerExtension on DetailedPlayer {
-  DetailedPlayer copyWith({CoreUserSimple? user, Map<String, dynamic>? info}) {
-    return DetailedPlayer(user: user ?? this.user, info: info ?? this.info);
-  }
-
-  DetailedPlayer copyWithWrapped(
-      {Wrapped<CoreUserSimple>? user, Wrapped<Map<String, dynamic>>? info}) {
-    return DetailedPlayer(
-        user: (user != null ? user.value : this.user),
-        info: (info != null ? info.value : this.info));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
 class EventApplicant {
   const EventApplicant({
     required this.name,
@@ -4858,367 +5029,6 @@ extension $FirebaseDeviceExtension on FirebaseDevice {
         firebaseDeviceToken: (firebaseDeviceToken != null
             ? firebaseDeviceToken.value
             : this.firebaseDeviceToken));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class Game {
-  const Game({
-    required this.mode,
-    required this.timestamp,
-    required this.id,
-    required this.gamePlayers,
-    required this.isConfirmed,
-  });
-
-  factory Game.fromJson(Map<String, dynamic> json) => _$GameFromJson(json);
-
-  static const toJsonFactory = _$GameToJson;
-  Map<String, dynamic> toJson() => _$GameToJson(this);
-
-  @JsonKey(
-    name: 'mode',
-    toJson: capsModeToJson,
-    fromJson: capsModeFromJson,
-  )
-  final enums.CapsMode mode;
-  @JsonKey(name: 'timestamp')
-  final DateTime timestamp;
-  @JsonKey(name: 'id', defaultValue: '')
-  final String id;
-  @JsonKey(name: 'game_players', defaultValue: <GamePlayer>[])
-  final List<GamePlayer> gamePlayers;
-  @JsonKey(name: 'is_confirmed', defaultValue: false)
-  final bool isConfirmed;
-  static const fromJsonFactory = _$GameFromJson;
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is Game &&
-            (identical(other.mode, mode) ||
-                const DeepCollectionEquality().equals(other.mode, mode)) &&
-            (identical(other.timestamp, timestamp) ||
-                const DeepCollectionEquality()
-                    .equals(other.timestamp, timestamp)) &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.gamePlayers, gamePlayers) ||
-                const DeepCollectionEquality()
-                    .equals(other.gamePlayers, gamePlayers)) &&
-            (identical(other.isConfirmed, isConfirmed) ||
-                const DeepCollectionEquality()
-                    .equals(other.isConfirmed, isConfirmed)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(mode) ^
-      const DeepCollectionEquality().hash(timestamp) ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(gamePlayers) ^
-      const DeepCollectionEquality().hash(isConfirmed) ^
-      runtimeType.hashCode;
-}
-
-extension $GameExtension on Game {
-  Game copyWith(
-      {enums.CapsMode? mode,
-      DateTime? timestamp,
-      String? id,
-      List<GamePlayer>? gamePlayers,
-      bool? isConfirmed}) {
-    return Game(
-        mode: mode ?? this.mode,
-        timestamp: timestamp ?? this.timestamp,
-        id: id ?? this.id,
-        gamePlayers: gamePlayers ?? this.gamePlayers,
-        isConfirmed: isConfirmed ?? this.isConfirmed);
-  }
-
-  Game copyWithWrapped(
-      {Wrapped<enums.CapsMode>? mode,
-      Wrapped<DateTime>? timestamp,
-      Wrapped<String>? id,
-      Wrapped<List<GamePlayer>>? gamePlayers,
-      Wrapped<bool>? isConfirmed}) {
-    return Game(
-        mode: (mode != null ? mode.value : this.mode),
-        timestamp: (timestamp != null ? timestamp.value : this.timestamp),
-        id: (id != null ? id.value : this.id),
-        gamePlayers:
-            (gamePlayers != null ? gamePlayers.value : this.gamePlayers),
-        isConfirmed:
-            (isConfirmed != null ? isConfirmed.value : this.isConfirmed));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class GameCreateRequest {
-  const GameCreateRequest({
-    required this.mode,
-    required this.players,
-  });
-
-  factory GameCreateRequest.fromJson(Map<String, dynamic> json) =>
-      _$GameCreateRequestFromJson(json);
-
-  static const toJsonFactory = _$GameCreateRequestToJson;
-  Map<String, dynamic> toJson() => _$GameCreateRequestToJson(this);
-
-  @JsonKey(
-    name: 'mode',
-    toJson: capsModeToJson,
-    fromJson: capsModeFromJson,
-  )
-  final enums.CapsMode mode;
-  @JsonKey(name: 'players', defaultValue: <GamePlayerBase>[])
-  final List<GamePlayerBase> players;
-  static const fromJsonFactory = _$GameCreateRequestFromJson;
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is GameCreateRequest &&
-            (identical(other.mode, mode) ||
-                const DeepCollectionEquality().equals(other.mode, mode)) &&
-            (identical(other.players, players) ||
-                const DeepCollectionEquality().equals(other.players, players)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(mode) ^
-      const DeepCollectionEquality().hash(players) ^
-      runtimeType.hashCode;
-}
-
-extension $GameCreateRequestExtension on GameCreateRequest {
-  GameCreateRequest copyWith(
-      {enums.CapsMode? mode, List<GamePlayerBase>? players}) {
-    return GameCreateRequest(
-        mode: mode ?? this.mode, players: players ?? this.players);
-  }
-
-  GameCreateRequest copyWithWrapped(
-      {Wrapped<enums.CapsMode>? mode, Wrapped<List<GamePlayerBase>>? players}) {
-    return GameCreateRequest(
-        mode: (mode != null ? mode.value : this.mode),
-        players: (players != null ? players.value : this.players));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class GameMode {
-  const GameMode({
-    required this.mode,
-  });
-
-  factory GameMode.fromJson(Map<String, dynamic> json) =>
-      _$GameModeFromJson(json);
-
-  static const toJsonFactory = _$GameModeToJson;
-  Map<String, dynamic> toJson() => _$GameModeToJson(this);
-
-  @JsonKey(
-    name: 'mode',
-    toJson: capsModeToJson,
-    fromJson: capsModeFromJson,
-  )
-  final enums.CapsMode mode;
-  static const fromJsonFactory = _$GameModeFromJson;
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is GameMode &&
-            (identical(other.mode, mode) ||
-                const DeepCollectionEquality().equals(other.mode, mode)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(mode) ^ runtimeType.hashCode;
-}
-
-extension $GameModeExtension on GameMode {
-  GameMode copyWith({enums.CapsMode? mode}) {
-    return GameMode(mode: mode ?? this.mode);
-  }
-
-  GameMode copyWithWrapped({Wrapped<enums.CapsMode>? mode}) {
-    return GameMode(mode: (mode != null ? mode.value : this.mode));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class GamePlayer {
-  const GamePlayer({
-    required this.userId,
-    required this.team,
-    required this.score,
-    this.eloGain,
-    required this.hasConfirmed,
-    required this.user,
-  });
-
-  factory GamePlayer.fromJson(Map<String, dynamic> json) =>
-      _$GamePlayerFromJson(json);
-
-  static const toJsonFactory = _$GamePlayerToJson;
-  Map<String, dynamic> toJson() => _$GamePlayerToJson(this);
-
-  @JsonKey(name: 'user_id', defaultValue: '')
-  final String userId;
-  @JsonKey(name: 'team', defaultValue: 0)
-  final int team;
-  @JsonKey(name: 'score', defaultValue: 0)
-  final int score;
-  @JsonKey(name: 'elo_gain', defaultValue: 0)
-  final int? eloGain;
-  @JsonKey(name: 'has_confirmed', defaultValue: false)
-  final bool hasConfirmed;
-  @JsonKey(name: 'user')
-  final CoreUserSimple user;
-  static const fromJsonFactory = _$GamePlayerFromJson;
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is GamePlayer &&
-            (identical(other.userId, userId) ||
-                const DeepCollectionEquality().equals(other.userId, userId)) &&
-            (identical(other.team, team) ||
-                const DeepCollectionEquality().equals(other.team, team)) &&
-            (identical(other.score, score) ||
-                const DeepCollectionEquality().equals(other.score, score)) &&
-            (identical(other.eloGain, eloGain) ||
-                const DeepCollectionEquality()
-                    .equals(other.eloGain, eloGain)) &&
-            (identical(other.hasConfirmed, hasConfirmed) ||
-                const DeepCollectionEquality()
-                    .equals(other.hasConfirmed, hasConfirmed)) &&
-            (identical(other.user, user) ||
-                const DeepCollectionEquality().equals(other.user, user)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(userId) ^
-      const DeepCollectionEquality().hash(team) ^
-      const DeepCollectionEquality().hash(score) ^
-      const DeepCollectionEquality().hash(eloGain) ^
-      const DeepCollectionEquality().hash(hasConfirmed) ^
-      const DeepCollectionEquality().hash(user) ^
-      runtimeType.hashCode;
-}
-
-extension $GamePlayerExtension on GamePlayer {
-  GamePlayer copyWith(
-      {String? userId,
-      int? team,
-      int? score,
-      int? eloGain,
-      bool? hasConfirmed,
-      CoreUserSimple? user}) {
-    return GamePlayer(
-        userId: userId ?? this.userId,
-        team: team ?? this.team,
-        score: score ?? this.score,
-        eloGain: eloGain ?? this.eloGain,
-        hasConfirmed: hasConfirmed ?? this.hasConfirmed,
-        user: user ?? this.user);
-  }
-
-  GamePlayer copyWithWrapped(
-      {Wrapped<String>? userId,
-      Wrapped<int>? team,
-      Wrapped<int>? score,
-      Wrapped<int?>? eloGain,
-      Wrapped<bool>? hasConfirmed,
-      Wrapped<CoreUserSimple>? user}) {
-    return GamePlayer(
-        userId: (userId != null ? userId.value : this.userId),
-        team: (team != null ? team.value : this.team),
-        score: (score != null ? score.value : this.score),
-        eloGain: (eloGain != null ? eloGain.value : this.eloGain),
-        hasConfirmed:
-            (hasConfirmed != null ? hasConfirmed.value : this.hasConfirmed),
-        user: (user != null ? user.value : this.user));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class GamePlayerBase {
-  const GamePlayerBase({
-    required this.userId,
-    required this.team,
-    required this.score,
-  });
-
-  factory GamePlayerBase.fromJson(Map<String, dynamic> json) =>
-      _$GamePlayerBaseFromJson(json);
-
-  static const toJsonFactory = _$GamePlayerBaseToJson;
-  Map<String, dynamic> toJson() => _$GamePlayerBaseToJson(this);
-
-  @JsonKey(name: 'user_id', defaultValue: '')
-  final String userId;
-  @JsonKey(name: 'team', defaultValue: 0)
-  final int team;
-  @JsonKey(name: 'score', defaultValue: 0)
-  final int score;
-  static const fromJsonFactory = _$GamePlayerBaseFromJson;
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is GamePlayerBase &&
-            (identical(other.userId, userId) ||
-                const DeepCollectionEquality().equals(other.userId, userId)) &&
-            (identical(other.team, team) ||
-                const DeepCollectionEquality().equals(other.team, team)) &&
-            (identical(other.score, score) ||
-                const DeepCollectionEquality().equals(other.score, score)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(userId) ^
-      const DeepCollectionEquality().hash(team) ^
-      const DeepCollectionEquality().hash(score) ^
-      runtimeType.hashCode;
-}
-
-extension $GamePlayerBaseExtension on GamePlayerBase {
-  GamePlayerBase copyWith({String? userId, int? team, int? score}) {
-    return GamePlayerBase(
-        userId: userId ?? this.userId,
-        team: team ?? this.team,
-        score: score ?? this.score);
-  }
-
-  GamePlayerBase copyWithWrapped(
-      {Wrapped<String>? userId, Wrapped<int>? team, Wrapped<int>? score}) {
-    return GamePlayerBase(
-        userId: (userId != null ? userId.value : this.userId),
-        team: (team != null ? team.value : this.team),
-        score: (score != null ? score.value : this.score));
   }
 }
 
@@ -7887,125 +7697,6 @@ extension $PackTicketSimpleExtension on PackTicketSimple {
 }
 
 @JsonSerializable(explicitToJson: true)
-class PlayerBase {
-  const PlayerBase({
-    required this.user,
-    required this.elo,
-    required this.mode,
-  });
-
-  factory PlayerBase.fromJson(Map<String, dynamic> json) =>
-      _$PlayerBaseFromJson(json);
-
-  static const toJsonFactory = _$PlayerBaseToJson;
-  Map<String, dynamic> toJson() => _$PlayerBaseToJson(this);
-
-  @JsonKey(name: 'user')
-  final CoreUserSimple user;
-  @JsonKey(name: 'elo', defaultValue: 0)
-  final int elo;
-  @JsonKey(
-    name: 'mode',
-    toJson: capsModeToJson,
-    fromJson: capsModeFromJson,
-  )
-  final enums.CapsMode mode;
-  static const fromJsonFactory = _$PlayerBaseFromJson;
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is PlayerBase &&
-            (identical(other.user, user) ||
-                const DeepCollectionEquality().equals(other.user, user)) &&
-            (identical(other.elo, elo) ||
-                const DeepCollectionEquality().equals(other.elo, elo)) &&
-            (identical(other.mode, mode) ||
-                const DeepCollectionEquality().equals(other.mode, mode)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(user) ^
-      const DeepCollectionEquality().hash(elo) ^
-      const DeepCollectionEquality().hash(mode) ^
-      runtimeType.hashCode;
-}
-
-extension $PlayerBaseExtension on PlayerBase {
-  PlayerBase copyWith({CoreUserSimple? user, int? elo, enums.CapsMode? mode}) {
-    return PlayerBase(
-        user: user ?? this.user, elo: elo ?? this.elo, mode: mode ?? this.mode);
-  }
-
-  PlayerBase copyWithWrapped(
-      {Wrapped<CoreUserSimple>? user,
-      Wrapped<int>? elo,
-      Wrapped<enums.CapsMode>? mode}) {
-    return PlayerBase(
-        user: (user != null ? user.value : this.user),
-        elo: (elo != null ? elo.value : this.elo),
-        mode: (mode != null ? mode.value : this.mode));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class PlayerModeInfo {
-  const PlayerModeInfo({
-    required this.elo,
-    this.winrate,
-  });
-
-  factory PlayerModeInfo.fromJson(Map<String, dynamic> json) =>
-      _$PlayerModeInfoFromJson(json);
-
-  static const toJsonFactory = _$PlayerModeInfoToJson;
-  Map<String, dynamic> toJson() => _$PlayerModeInfoToJson(this);
-
-  @JsonKey(name: 'elo', defaultValue: 0)
-  final int elo;
-  @JsonKey(name: 'winrate', defaultValue: 0.0)
-  final double? winrate;
-  static const fromJsonFactory = _$PlayerModeInfoFromJson;
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is PlayerModeInfo &&
-            (identical(other.elo, elo) ||
-                const DeepCollectionEquality().equals(other.elo, elo)) &&
-            (identical(other.winrate, winrate) ||
-                const DeepCollectionEquality().equals(other.winrate, winrate)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(elo) ^
-      const DeepCollectionEquality().hash(winrate) ^
-      runtimeType.hashCode;
-}
-
-extension $PlayerModeInfoExtension on PlayerModeInfo {
-  PlayerModeInfo copyWith({int? elo, double? winrate}) {
-    return PlayerModeInfo(
-        elo: elo ?? this.elo, winrate: winrate ?? this.winrate);
-  }
-
-  PlayerModeInfo copyWithWrapped(
-      {Wrapped<int>? elo, Wrapped<double?>? winrate}) {
-    return PlayerModeInfo(
-        elo: (elo != null ? elo.value : this.elo),
-        winrate: (winrate != null ? winrate.value : this.winrate));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
 class PrizeBase {
   const PrizeBase({
     required this.name,
@@ -8602,7 +8293,6 @@ class RaffleComplete {
     this.description,
     required this.groupId,
     required this.id,
-    required this.group,
   });
 
   factory RaffleComplete.fromJson(Map<String, dynamic> json) =>
@@ -8625,8 +8315,6 @@ class RaffleComplete {
   final String groupId;
   @JsonKey(name: 'id', defaultValue: '')
   final String id;
-  @JsonKey(name: 'group')
-  final CoreGroupSimple group;
   static const fromJsonFactory = _$RaffleCompleteFromJson;
 
   @override
@@ -8644,9 +8332,7 @@ class RaffleComplete {
                 const DeepCollectionEquality()
                     .equals(other.groupId, groupId)) &&
             (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.group, group) ||
-                const DeepCollectionEquality().equals(other.group, group)));
+                const DeepCollectionEquality().equals(other.id, id)));
   }
 
   @override
@@ -8659,7 +8345,6 @@ class RaffleComplete {
       const DeepCollectionEquality().hash(description) ^
       const DeepCollectionEquality().hash(groupId) ^
       const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(group) ^
       runtimeType.hashCode;
 }
 
@@ -8669,15 +8354,13 @@ extension $RaffleCompleteExtension on RaffleComplete {
       enums.RaffleStatusType? status,
       String? description,
       String? groupId,
-      String? id,
-      CoreGroupSimple? group}) {
+      String? id}) {
     return RaffleComplete(
         name: name ?? this.name,
         status: status ?? this.status,
         description: description ?? this.description,
         groupId: groupId ?? this.groupId,
-        id: id ?? this.id,
-        group: group ?? this.group);
+        id: id ?? this.id);
   }
 
   RaffleComplete copyWithWrapped(
@@ -8685,16 +8368,14 @@ extension $RaffleCompleteExtension on RaffleComplete {
       Wrapped<enums.RaffleStatusType?>? status,
       Wrapped<String?>? description,
       Wrapped<String>? groupId,
-      Wrapped<String>? id,
-      Wrapped<CoreGroupSimple>? group}) {
+      Wrapped<String>? id}) {
     return RaffleComplete(
         name: (name != null ? name.value : this.name),
         status: (status != null ? status.value : this.status),
         description:
             (description != null ? description.value : this.description),
         groupId: (groupId != null ? groupId.value : this.groupId),
-        id: (id != null ? id.value : this.id),
-        group: (group != null ? group.value : this.group));
+        id: (id != null ? id.value : this.id));
   }
 }
 
@@ -8750,100 +8431,6 @@ extension $RaffleEditExtension on RaffleEdit {
         name: (name != null ? name.value : this.name),
         description:
             (description != null ? description.value : this.description));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class RaffleSimple {
-  const RaffleSimple({
-    required this.name,
-    this.status,
-    this.description,
-    required this.groupId,
-    required this.id,
-  });
-
-  factory RaffleSimple.fromJson(Map<String, dynamic> json) =>
-      _$RaffleSimpleFromJson(json);
-
-  static const toJsonFactory = _$RaffleSimpleToJson;
-  Map<String, dynamic> toJson() => _$RaffleSimpleToJson(this);
-
-  @JsonKey(name: 'name', defaultValue: '')
-  final String name;
-  @JsonKey(
-    name: 'status',
-    toJson: raffleStatusTypeNullableToJson,
-    fromJson: raffleStatusTypeNullableFromJson,
-  )
-  final enums.RaffleStatusType? status;
-  @JsonKey(name: 'description', defaultValue: '')
-  final String? description;
-  @JsonKey(name: 'group_id', defaultValue: '')
-  final String groupId;
-  @JsonKey(name: 'id', defaultValue: '')
-  final String id;
-  static const fromJsonFactory = _$RaffleSimpleFromJson;
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is RaffleSimple &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.status, status) ||
-                const DeepCollectionEquality().equals(other.status, status)) &&
-            (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
-            (identical(other.groupId, groupId) ||
-                const DeepCollectionEquality()
-                    .equals(other.groupId, groupId)) &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(status) ^
-      const DeepCollectionEquality().hash(description) ^
-      const DeepCollectionEquality().hash(groupId) ^
-      const DeepCollectionEquality().hash(id) ^
-      runtimeType.hashCode;
-}
-
-extension $RaffleSimpleExtension on RaffleSimple {
-  RaffleSimple copyWith(
-      {String? name,
-      enums.RaffleStatusType? status,
-      String? description,
-      String? groupId,
-      String? id}) {
-    return RaffleSimple(
-        name: name ?? this.name,
-        status: status ?? this.status,
-        description: description ?? this.description,
-        groupId: groupId ?? this.groupId,
-        id: id ?? this.id);
-  }
-
-  RaffleSimple copyWithWrapped(
-      {Wrapped<String>? name,
-      Wrapped<enums.RaffleStatusType?>? status,
-      Wrapped<String?>? description,
-      Wrapped<String>? groupId,
-      Wrapped<String>? id}) {
-    return RaffleSimple(
-        name: (name != null ? name.value : this.name),
-        status: (status != null ? status.value : this.status),
-        description:
-            (description != null ? description.value : this.description),
-        groupId: (groupId != null ? groupId.value : this.groupId),
-        id: (id != null ? id.value : this.id));
   }
 }
 
@@ -10267,70 +9854,6 @@ List<enums.CalendarEventType>? calendarEventTypeNullableListFromJson(
   return calendarEventType
       .map((e) => calendarEventTypeFromJson(e.toString()))
       .toList();
-}
-
-String? capsModeNullableToJson(enums.CapsMode? capsMode) {
-  return capsMode?.value;
-}
-
-String? capsModeToJson(enums.CapsMode capsMode) {
-  return capsMode.value;
-}
-
-enums.CapsMode capsModeFromJson(
-  Object? capsMode, [
-  enums.CapsMode? defaultValue,
-]) {
-  return enums.CapsMode.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          capsMode?.toString().toLowerCase()) ??
-      defaultValue ??
-      enums.CapsMode.swaggerGeneratedUnknown;
-}
-
-enums.CapsMode? capsModeNullableFromJson(
-  Object? capsMode, [
-  enums.CapsMode? defaultValue,
-]) {
-  if (capsMode == null) {
-    return null;
-  }
-  return enums.CapsMode.values.firstWhereOrNull((e) => e.value == capsMode) ??
-      defaultValue;
-}
-
-String capsModeExplodedListToJson(List<enums.CapsMode>? capsMode) {
-  return capsMode?.map((e) => e.value!).join(',') ?? '';
-}
-
-List<String> capsModeListToJson(List<enums.CapsMode>? capsMode) {
-  if (capsMode == null) {
-    return [];
-  }
-
-  return capsMode.map((e) => e.value!).toList();
-}
-
-List<enums.CapsMode> capsModeListFromJson(
-  List? capsMode, [
-  List<enums.CapsMode>? defaultValue,
-]) {
-  if (capsMode == null) {
-    return defaultValue ?? [];
-  }
-
-  return capsMode.map((e) => capsModeFromJson(e.toString())).toList();
-}
-
-List<enums.CapsMode>? capsModeNullableListFromJson(
-  List? capsMode, [
-  List<enums.CapsMode>? defaultValue,
-]) {
-  if (capsMode == null) {
-    return defaultValue;
-  }
-
-  return capsMode.map((e) => capsModeFromJson(e.toString())).toList();
 }
 
 String? deliveryStatusTypeNullableToJson(

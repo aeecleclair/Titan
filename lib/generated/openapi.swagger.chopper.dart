@@ -912,20 +912,34 @@ class _$Openapi extends Openapi {
   }
 
   @override
-  Future<Response<List<BookingReturn>>> _bookingBookingsConfirmedGet() {
+  Future<Response<List<BookingReturnApplicant>>>
+      _bookingBookingsConfirmedUsersMeManageGet() {
+    final Uri $url = Uri.parse('/booking/bookings/confirmed/users/me/manage');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client
+        .send<List<BookingReturnApplicant>, BookingReturnApplicant>($request);
+  }
+
+  @override
+  Future<Response<List<BookingReturnSimpleApplicant>>>
+      _bookingBookingsConfirmedGet() {
     final Uri $url = Uri.parse('/booking/bookings/confirmed');
     final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,
     );
-    return client.send<List<BookingReturn>, BookingReturn>($request);
+    return client.send<List<BookingReturnSimpleApplicant>,
+        BookingReturnSimpleApplicant>($request);
   }
 
   @override
-  Future<Response<List<BookingReturn>>> _bookingBookingsUsersApplicantIdGet(
-      {required String? applicantId}) {
-    final Uri $url = Uri.parse('/booking/bookings/users/${applicantId}');
+  Future<Response<List<BookingReturn>>> _bookingBookingsUsersMeGet() {
+    final Uri $url = Uri.parse('/booking/bookings/users/me');
     final Request $request = Request(
       'GET',
       $url,
@@ -1055,7 +1069,7 @@ class _$Openapi extends Openapi {
   }
 
   @override
-  Future<Response<EventComplete>> _calendarEventsPost(
+  Future<Response<EventReturn>> _calendarEventsPost(
       {required EventBase? body}) {
     final Uri $url = Uri.parse('/calendar/events/');
     final $body = body;
@@ -1065,7 +1079,7 @@ class _$Openapi extends Openapi {
       client.baseUrl,
       body: $body,
     );
-    return client.send<EventComplete, EventComplete>($request);
+    return client.send<EventReturn, EventReturn>($request);
   }
 
   @override
@@ -2184,7 +2198,7 @@ class _$Openapi extends Openapi {
   }
 
   @override
-  Future<Response<RaffleSimple>> _tombolaRafflesPost(
+  Future<Response<RaffleComplete>> _tombolaRafflesPost(
       {required RaffleBase? body}) {
     final Uri $url = Uri.parse('/tombola/raffles');
     final $body = body;
@@ -2194,7 +2208,7 @@ class _$Openapi extends Openapi {
       client.baseUrl,
       body: $body,
     );
-    return client.send<RaffleSimple, RaffleSimple>($request);
+    return client.send<RaffleComplete, RaffleComplete>($request);
   }
 
   @override
@@ -2226,7 +2240,7 @@ class _$Openapi extends Openapi {
   }
 
   @override
-  Future<Response<List<RaffleSimple>>> _tombolaGroupGroupIdRafflesGet(
+  Future<Response<List<RaffleComplete>>> _tombolaGroupGroupIdRafflesGet(
       {required String? groupId}) {
     final Uri $url = Uri.parse('/tombola/group/${groupId}/raffles');
     final Request $request = Request(
@@ -2234,7 +2248,7 @@ class _$Openapi extends Openapi {
       $url,
       client.baseUrl,
     );
-    return client.send<List<RaffleSimple>, RaffleSimple>($request);
+    return client.send<List<RaffleComplete>, RaffleComplete>($request);
   }
 
   @override
@@ -2887,114 +2901,5 @@ class _$Openapi extends Openapi {
       client.baseUrl,
     );
     return client.send<dynamic, dynamic>($request);
-  }
-
-  @override
-  Future<Response<List<Game>>> _elocapsGamesGet({required String? time}) {
-    final Uri $url = Uri.parse('/elocaps/games');
-    final Map<String, dynamic> $params = <String, dynamic>{'time': time};
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-      parameters: $params,
-    );
-    return client.send<List<Game>, Game>($request);
-  }
-
-  @override
-  Future<Response<Game>> _elocapsGamesPost({required GameCreateRequest? body}) {
-    final Uri $url = Uri.parse('/elocaps/games');
-    final $body = body;
-    final Request $request = Request(
-      'POST',
-      $url,
-      client.baseUrl,
-      body: $body,
-    );
-    return client.send<Game, Game>($request);
-  }
-
-  @override
-  Future<Response<List<Game>>> _elocapsGamesLatestGet() {
-    final Uri $url = Uri.parse('/elocaps/games/latest');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
-    return client.send<List<Game>, Game>($request);
-  }
-
-  @override
-  Future<Response<List<GameMode>>> _elocapsGamesWaitingGet() {
-    final Uri $url = Uri.parse('/elocaps/games/waiting');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
-    return client.send<List<GameMode>, GameMode>($request);
-  }
-
-  @override
-  Future<Response<Game>> _elocapsGamesGameIdGet({required String? gameId}) {
-    final Uri $url = Uri.parse('/elocaps/games/${gameId}');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
-    return client.send<Game, Game>($request);
-  }
-
-  @override
-  Future<Response<Game>> _elocapsGamesGameIdValidatePost(
-      {required String? gameId}) {
-    final Uri $url = Uri.parse('/elocaps/games/${gameId}/validate');
-    final Request $request = Request(
-      'POST',
-      $url,
-      client.baseUrl,
-    );
-    return client.send<Game, Game>($request);
-  }
-
-  @override
-  Future<Response<List<Game>>> _elocapsPlayersUserIdGamesGet(
-      {required String? userId}) {
-    final Uri $url = Uri.parse('/elocaps/players/${userId}/games');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
-    return client.send<List<Game>, Game>($request);
-  }
-
-  @override
-  Future<Response<DetailedPlayer>> _elocapsPlayersUserIdGet(
-      {required String? userId}) {
-    final Uri $url = Uri.parse('/elocaps/players/${userId}');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
-    return client.send<DetailedPlayer, DetailedPlayer>($request);
-  }
-
-  @override
-  Future<Response<List<PlayerBase>>> _elocapsLeaderboardGet(
-      {required String? mode}) {
-    final Uri $url = Uri.parse('/elocaps/leaderboard');
-    final Map<String, dynamic> $params = <String, dynamic>{'mode': mode};
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-      parameters: $params,
-    );
-    return client.send<List<PlayerBase>, PlayerBase>($request);
   }
 }

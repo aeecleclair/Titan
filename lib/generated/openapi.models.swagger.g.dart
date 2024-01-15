@@ -358,6 +358,7 @@ BookingBase _$BookingBaseFromJson(Map<String, dynamic> json) => BookingBase(
       reason: json['reason'] as String? ?? '',
       start: DateTime.parse(json['start'] as String),
       end: DateTime.parse(json['end'] as String),
+      creation: DateTime.parse(json['creation'] as String),
       note: json['note'] as String? ?? '',
       roomId: json['room_id'] as String? ?? '',
       key: json['key'] as bool? ?? false,
@@ -370,6 +371,7 @@ Map<String, dynamic> _$BookingBaseToJson(BookingBase instance) =>
       'reason': instance.reason,
       'start': instance.start.toIso8601String(),
       'end': instance.end.toIso8601String(),
+      'creation': instance.creation.toIso8601String(),
       'note': instance.note,
       'room_id': instance.roomId,
       'key': instance.key,
@@ -384,7 +386,7 @@ BookingEdit _$BookingEditFromJson(Map<String, dynamic> json) => BookingEdit(
           : DateTime.parse(json['start'] as String),
       end: json['end'] == null ? null : DateTime.parse(json['end'] as String),
       note: json['note'] as String? ?? '',
-      room: json['room'] as String? ?? '',
+      roomId: json['room_id'] as String? ?? '',
       key: json['key'] as bool? ?? false,
       recurrenceRule: json['recurrence_rule'] as String? ?? '',
       entity: json['entity'] as String? ?? '',
@@ -396,7 +398,7 @@ Map<String, dynamic> _$BookingEditToJson(BookingEdit instance) =>
       'start': instance.start?.toIso8601String(),
       'end': instance.end?.toIso8601String(),
       'note': instance.note,
-      'room': instance.room,
+      'room_id': instance.roomId,
       'key': instance.key,
       'recurrence_rule': instance.recurrenceRule,
       'entity': instance.entity,
@@ -407,6 +409,7 @@ BookingReturn _$BookingReturnFromJson(Map<String, dynamic> json) =>
       reason: json['reason'] as String? ?? '',
       start: DateTime.parse(json['start'] as String),
       end: DateTime.parse(json['end'] as String),
+      creation: DateTime.parse(json['creation'] as String),
       note: json['note'] as String? ?? '',
       roomId: json['room_id'] as String? ?? '',
       key: json['key'] as bool? ?? false,
@@ -423,6 +426,7 @@ Map<String, dynamic> _$BookingReturnToJson(BookingReturn instance) =>
       'reason': instance.reason,
       'start': instance.start.toIso8601String(),
       'end': instance.end.toIso8601String(),
+      'creation': instance.creation.toIso8601String(),
       'note': instance.note,
       'room_id': instance.roomId,
       'key': instance.key,
@@ -440,6 +444,7 @@ BookingReturnApplicant _$BookingReturnApplicantFromJson(
       reason: json['reason'] as String? ?? '',
       start: DateTime.parse(json['start'] as String),
       end: DateTime.parse(json['end'] as String),
+      creation: DateTime.parse(json['creation'] as String),
       note: json['note'] as String? ?? '',
       roomId: json['room_id'] as String? ?? '',
       key: json['key'] as bool? ?? false,
@@ -458,6 +463,46 @@ Map<String, dynamic> _$BookingReturnApplicantToJson(
       'reason': instance.reason,
       'start': instance.start.toIso8601String(),
       'end': instance.end.toIso8601String(),
+      'creation': instance.creation.toIso8601String(),
+      'note': instance.note,
+      'room_id': instance.roomId,
+      'key': instance.key,
+      'recurrence_rule': instance.recurrenceRule,
+      'entity': instance.entity,
+      'id': instance.id,
+      'decision': appUtilsTypesBookingTypeDecisionToJson(instance.decision),
+      'applicant_id': instance.applicantId,
+      'room': instance.room.toJson(),
+      'applicant': instance.applicant.toJson(),
+    };
+
+BookingReturnSimpleApplicant _$BookingReturnSimpleApplicantFromJson(
+        Map<String, dynamic> json) =>
+    BookingReturnSimpleApplicant(
+      reason: json['reason'] as String? ?? '',
+      start: DateTime.parse(json['start'] as String),
+      end: DateTime.parse(json['end'] as String),
+      creation: DateTime.parse(json['creation'] as String),
+      note: json['note'] as String? ?? '',
+      roomId: json['room_id'] as String? ?? '',
+      key: json['key'] as bool? ?? false,
+      recurrenceRule: json['recurrence_rule'] as String? ?? '',
+      entity: json['entity'] as String? ?? '',
+      id: json['id'] as String? ?? '',
+      decision: appUtilsTypesBookingTypeDecisionFromJson(json['decision']),
+      applicantId: json['applicant_id'] as String? ?? '',
+      room: RoomComplete.fromJson(json['room'] as Map<String, dynamic>),
+      applicant:
+          CoreUserSimple.fromJson(json['applicant'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$BookingReturnSimpleApplicantToJson(
+        BookingReturnSimpleApplicant instance) =>
+    <String, dynamic>{
+      'reason': instance.reason,
+      'start': instance.start.toIso8601String(),
+      'end': instance.end.toIso8601String(),
+      'creation': instance.creation.toIso8601String(),
       'note': instance.note,
       'room_id': instance.roomId,
       'key': instance.key,
@@ -890,18 +935,6 @@ Map<String, dynamic> _$DeliveryUpdateToJson(DeliveryUpdate instance) =>
       'delivery_date': _dateToJson(instance.deliveryDate),
     };
 
-DetailedPlayer _$DetailedPlayerFromJson(Map<String, dynamic> json) =>
-    DetailedPlayer(
-      user: CoreUserSimple.fromJson(json['user'] as Map<String, dynamic>),
-      info: json['info'] as Map<String, dynamic>,
-    );
-
-Map<String, dynamic> _$DetailedPlayerToJson(DetailedPlayer instance) =>
-    <String, dynamic>{
-      'user': instance.user.toJson(),
-      'info': instance.info,
-    };
-
 EventApplicant _$EventApplicantFromJson(Map<String, dynamic> json) =>
     EventApplicant(
       name: json['name'] as String? ?? '',
@@ -1050,81 +1083,6 @@ Map<String, dynamic> _$FirebaseDeviceToJson(FirebaseDevice instance) =>
     <String, dynamic>{
       'user_id': instance.userId,
       'firebase_device_token': instance.firebaseDeviceToken,
-    };
-
-Game _$GameFromJson(Map<String, dynamic> json) => Game(
-      mode: capsModeFromJson(json['mode']),
-      timestamp: DateTime.parse(json['timestamp'] as String),
-      id: json['id'] as String? ?? '',
-      gamePlayers: (json['game_players'] as List<dynamic>?)
-              ?.map((e) => GamePlayer.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
-      isConfirmed: json['is_confirmed'] as bool? ?? false,
-    );
-
-Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
-      'mode': capsModeToJson(instance.mode),
-      'timestamp': instance.timestamp.toIso8601String(),
-      'id': instance.id,
-      'game_players': instance.gamePlayers.map((e) => e.toJson()).toList(),
-      'is_confirmed': instance.isConfirmed,
-    };
-
-GameCreateRequest _$GameCreateRequestFromJson(Map<String, dynamic> json) =>
-    GameCreateRequest(
-      mode: capsModeFromJson(json['mode']),
-      players: (json['players'] as List<dynamic>?)
-              ?.map((e) => GamePlayerBase.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
-    );
-
-Map<String, dynamic> _$GameCreateRequestToJson(GameCreateRequest instance) =>
-    <String, dynamic>{
-      'mode': capsModeToJson(instance.mode),
-      'players': instance.players.map((e) => e.toJson()).toList(),
-    };
-
-GameMode _$GameModeFromJson(Map<String, dynamic> json) => GameMode(
-      mode: capsModeFromJson(json['mode']),
-    );
-
-Map<String, dynamic> _$GameModeToJson(GameMode instance) => <String, dynamic>{
-      'mode': capsModeToJson(instance.mode),
-    };
-
-GamePlayer _$GamePlayerFromJson(Map<String, dynamic> json) => GamePlayer(
-      userId: json['user_id'] as String? ?? '',
-      team: json['team'] as int? ?? 0,
-      score: json['score'] as int? ?? 0,
-      eloGain: json['elo_gain'] as int? ?? 0,
-      hasConfirmed: json['has_confirmed'] as bool? ?? false,
-      user: CoreUserSimple.fromJson(json['user'] as Map<String, dynamic>),
-    );
-
-Map<String, dynamic> _$GamePlayerToJson(GamePlayer instance) =>
-    <String, dynamic>{
-      'user_id': instance.userId,
-      'team': instance.team,
-      'score': instance.score,
-      'elo_gain': instance.eloGain,
-      'has_confirmed': instance.hasConfirmed,
-      'user': instance.user.toJson(),
-    };
-
-GamePlayerBase _$GamePlayerBaseFromJson(Map<String, dynamic> json) =>
-    GamePlayerBase(
-      userId: json['user_id'] as String? ?? '',
-      team: json['team'] as int? ?? 0,
-      score: json['score'] as int? ?? 0,
-    );
-
-Map<String, dynamic> _$GamePlayerBaseToJson(GamePlayerBase instance) =>
-    <String, dynamic>{
-      'user_id': instance.userId,
-      'team': instance.team,
-      'score': instance.score,
     };
 
 HTTPValidationError _$HTTPValidationErrorFromJson(Map<String, dynamic> json) =>
@@ -1685,31 +1643,6 @@ Map<String, dynamic> _$PackTicketSimpleToJson(PackTicketSimple instance) =>
       'id': instance.id,
     };
 
-PlayerBase _$PlayerBaseFromJson(Map<String, dynamic> json) => PlayerBase(
-      user: CoreUserSimple.fromJson(json['user'] as Map<String, dynamic>),
-      elo: json['elo'] as int? ?? 0,
-      mode: capsModeFromJson(json['mode']),
-    );
-
-Map<String, dynamic> _$PlayerBaseToJson(PlayerBase instance) =>
-    <String, dynamic>{
-      'user': instance.user.toJson(),
-      'elo': instance.elo,
-      'mode': capsModeToJson(instance.mode),
-    };
-
-PlayerModeInfo _$PlayerModeInfoFromJson(Map<String, dynamic> json) =>
-    PlayerModeInfo(
-      elo: json['elo'] as int? ?? 0,
-      winrate: (json['winrate'] as num?)?.toDouble() ?? 0.0,
-    );
-
-Map<String, dynamic> _$PlayerModeInfoToJson(PlayerModeInfo instance) =>
-    <String, dynamic>{
-      'elo': instance.elo,
-      'winrate': instance.winrate,
-    };
-
 PrizeBase _$PrizeBaseFromJson(Map<String, dynamic> json) => PrizeBase(
       name: json['name'] as String? ?? '',
       description: json['description'] as String? ?? '',
@@ -1833,7 +1766,6 @@ RaffleComplete _$RaffleCompleteFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String? ?? '',
       groupId: json['group_id'] as String? ?? '',
       id: json['id'] as String? ?? '',
-      group: CoreGroupSimple.fromJson(json['group'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$RaffleCompleteToJson(RaffleComplete instance) =>
@@ -1843,7 +1775,6 @@ Map<String, dynamic> _$RaffleCompleteToJson(RaffleComplete instance) =>
       'description': instance.description,
       'group_id': instance.groupId,
       'id': instance.id,
-      'group': instance.group.toJson(),
     };
 
 RaffleEdit _$RaffleEditFromJson(Map<String, dynamic> json) => RaffleEdit(
@@ -1855,23 +1786,6 @@ Map<String, dynamic> _$RaffleEditToJson(RaffleEdit instance) =>
     <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
-    };
-
-RaffleSimple _$RaffleSimpleFromJson(Map<String, dynamic> json) => RaffleSimple(
-      name: json['name'] as String? ?? '',
-      status: raffleStatusTypeNullableFromJson(json['status']),
-      description: json['description'] as String? ?? '',
-      groupId: json['group_id'] as String? ?? '',
-      id: json['id'] as String? ?? '',
-    );
-
-Map<String, dynamic> _$RaffleSimpleToJson(RaffleSimple instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      'status': raffleStatusTypeNullableToJson(instance.status),
-      'description': instance.description,
-      'group_id': instance.groupId,
-      'id': instance.id,
     };
 
 RaffleStats _$RaffleStatsFromJson(Map<String, dynamic> json) => RaffleStats(

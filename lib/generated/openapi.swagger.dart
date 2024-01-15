@@ -1088,33 +1088,44 @@ abstract class Openapi extends ChopperService {
       _bookingBookingsUsersMeManageGet();
 
   ///Get Confirmed Bookings For Manager
-  Future<chopper.Response<List<BookingReturn>>> bookingBookingsConfirmedGet() {
+  Future<chopper.Response<List<BookingReturnApplicant>>>
+      bookingBookingsConfirmedUsersMeManageGet() {
     generatedMapping.putIfAbsent(
-        BookingReturn, () => BookingReturn.fromJsonFactory);
+        BookingReturnApplicant, () => BookingReturnApplicant.fromJsonFactory);
+
+    return _bookingBookingsConfirmedUsersMeManageGet();
+  }
+
+  ///Get Confirmed Bookings For Manager
+  @Get(path: '/booking/bookings/confirmed/users/me/manage')
+  Future<chopper.Response<List<BookingReturnApplicant>>>
+      _bookingBookingsConfirmedUsersMeManageGet();
+
+  ///Get Confirmed Bookings
+  Future<chopper.Response<List<BookingReturnSimpleApplicant>>>
+      bookingBookingsConfirmedGet() {
+    generatedMapping.putIfAbsent(BookingReturnSimpleApplicant,
+        () => BookingReturnSimpleApplicant.fromJsonFactory);
 
     return _bookingBookingsConfirmedGet();
   }
 
-  ///Get Confirmed Bookings For Manager
+  ///Get Confirmed Bookings
   @Get(path: '/booking/bookings/confirmed')
-  Future<chopper.Response<List<BookingReturn>>> _bookingBookingsConfirmedGet();
+  Future<chopper.Response<List<BookingReturnSimpleApplicant>>>
+      _bookingBookingsConfirmedGet();
 
   ///Get Applicant Bookings
-  ///@param applicant_id
-  Future<chopper.Response<List<BookingReturn>>>
-      bookingBookingsUsersApplicantIdGet({required String? applicantId}) {
+  Future<chopper.Response<List<BookingReturn>>> bookingBookingsUsersMeGet() {
     generatedMapping.putIfAbsent(
         BookingReturn, () => BookingReturn.fromJsonFactory);
 
-    return _bookingBookingsUsersApplicantIdGet(applicantId: applicantId);
+    return _bookingBookingsUsersMeGet();
   }
 
   ///Get Applicant Bookings
-  ///@param applicant_id
-  @Get(path: '/booking/bookings/users/{applicant_id}')
-  Future<chopper.Response<List<BookingReturn>>>
-      _bookingBookingsUsersApplicantIdGet(
-          {@Path('applicant_id') required String? applicantId});
+  @Get(path: '/booking/bookings/users/me')
+  Future<chopper.Response<List<BookingReturn>>> _bookingBookingsUsersMeGet();
 
   ///Create Booking
   Future<chopper.Response<BookingReturn>> bookingBookingsPost(
@@ -1263,10 +1274,10 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<EventReturn>>> _calendarEventsGet();
 
   ///Add Event
-  Future<chopper.Response<EventComplete>> calendarEventsPost(
+  Future<chopper.Response<EventReturn>> calendarEventsPost(
       {required EventBase? body}) {
     generatedMapping.putIfAbsent(
-        EventComplete, () => EventComplete.fromJsonFactory);
+        EventReturn, () => EventReturn.fromJsonFactory);
 
     return _calendarEventsPost(body: body);
   }
@@ -1276,7 +1287,7 @@ abstract class Openapi extends ChopperService {
     path: '/calendar/events/',
     optionalBody: true,
   )
-  Future<chopper.Response<EventComplete>> _calendarEventsPost(
+  Future<chopper.Response<EventReturn>> _calendarEventsPost(
       {@Body() required EventBase? body});
 
   ///Get Confirmed Events
@@ -2521,10 +2532,10 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<RaffleComplete>>> _tombolaRafflesGet();
 
   ///Create Raffle
-  Future<chopper.Response<RaffleSimple>> tombolaRafflesPost(
+  Future<chopper.Response<RaffleComplete>> tombolaRafflesPost(
       {required RaffleBase? body}) {
     generatedMapping.putIfAbsent(
-        RaffleSimple, () => RaffleSimple.fromJsonFactory);
+        RaffleComplete, () => RaffleComplete.fromJsonFactory);
 
     return _tombolaRafflesPost(body: body);
   }
@@ -2534,7 +2545,7 @@ abstract class Openapi extends ChopperService {
     path: '/tombola/raffles',
     optionalBody: true,
   )
-  Future<chopper.Response<RaffleSimple>> _tombolaRafflesPost(
+  Future<chopper.Response<RaffleComplete>> _tombolaRafflesPost(
       {@Body() required RaffleBase? body});
 
   ///Delete Raffle
@@ -2572,10 +2583,10 @@ abstract class Openapi extends ChopperService {
 
   ///Get Raffles By Group Id
   ///@param group_id
-  Future<chopper.Response<List<RaffleSimple>>> tombolaGroupGroupIdRafflesGet(
+  Future<chopper.Response<List<RaffleComplete>>> tombolaGroupGroupIdRafflesGet(
       {required String? groupId}) {
     generatedMapping.putIfAbsent(
-        RaffleSimple, () => RaffleSimple.fromJsonFactory);
+        RaffleComplete, () => RaffleComplete.fromJsonFactory);
 
     return _tombolaGroupGroupIdRafflesGet(groupId: groupId);
   }
@@ -2583,7 +2594,7 @@ abstract class Openapi extends ChopperService {
   ///Get Raffles By Group Id
   ///@param group_id
   @Get(path: '/tombola/group/{group_id}/raffles')
-  Future<chopper.Response<List<RaffleSimple>>> _tombolaGroupGroupIdRafflesGet(
+  Future<chopper.Response<List<RaffleComplete>>> _tombolaGroupGroupIdRafflesGet(
       {@Path('group_id') required String? groupId});
 
   ///Get Raffle Stats
@@ -3353,138 +3364,6 @@ abstract class Openapi extends ChopperService {
   @Get(path: '/users/{user_id}/profile-picture')
   Future<chopper.Response> _usersUserIdProfilePictureGet(
       {@Path('user_id') required String? userId});
-
-  ///Get Games Played On
-  ///@param time
-  Future<chopper.Response<List<Game>>> elocapsGamesGet(
-      {required String? time}) {
-    generatedMapping.putIfAbsent(Game, () => Game.fromJsonFactory);
-
-    return _elocapsGamesGet(time: time);
-  }
-
-  ///Get Games Played On
-  ///@param time
-  @Get(path: '/elocaps/games')
-  Future<chopper.Response<List<Game>>> _elocapsGamesGet(
-      {@Query('time') required String? time});
-
-  ///Register Game
-  Future<chopper.Response<Game>> elocapsGamesPost(
-      {required GameCreateRequest? body}) {
-    generatedMapping.putIfAbsent(Game, () => Game.fromJsonFactory);
-
-    return _elocapsGamesPost(body: body);
-  }
-
-  ///Register Game
-  @Post(
-    path: '/elocaps/games',
-    optionalBody: true,
-  )
-  Future<chopper.Response<Game>> _elocapsGamesPost(
-      {@Body() required GameCreateRequest? body});
-
-  ///Get Latest Games
-  Future<chopper.Response<List<Game>>> elocapsGamesLatestGet() {
-    generatedMapping.putIfAbsent(Game, () => Game.fromJsonFactory);
-
-    return _elocapsGamesLatestGet();
-  }
-
-  ///Get Latest Games
-  @Get(path: '/elocaps/games/latest')
-  Future<chopper.Response<List<Game>>> _elocapsGamesLatestGet();
-
-  ///Get Waiting Games
-  Future<chopper.Response<List<GameMode>>> elocapsGamesWaitingGet() {
-    generatedMapping.putIfAbsent(GameMode, () => GameMode.fromJsonFactory);
-
-    return _elocapsGamesWaitingGet();
-  }
-
-  ///Get Waiting Games
-  @Get(path: '/elocaps/games/waiting')
-  Future<chopper.Response<List<GameMode>>> _elocapsGamesWaitingGet();
-
-  ///Get Game Detail
-  ///@param game_id
-  Future<chopper.Response<Game>> elocapsGamesGameIdGet(
-      {required String? gameId}) {
-    generatedMapping.putIfAbsent(Game, () => Game.fromJsonFactory);
-
-    return _elocapsGamesGameIdGet(gameId: gameId);
-  }
-
-  ///Get Game Detail
-  ///@param game_id
-  @Get(path: '/elocaps/games/{game_id}')
-  Future<chopper.Response<Game>> _elocapsGamesGameIdGet(
-      {@Path('game_id') required String? gameId});
-
-  ///Confirm Game
-  ///@param game_id
-  Future<chopper.Response<Game>> elocapsGamesGameIdValidatePost(
-      {required String? gameId}) {
-    generatedMapping.putIfAbsent(Game, () => Game.fromJsonFactory);
-
-    return _elocapsGamesGameIdValidatePost(gameId: gameId);
-  }
-
-  ///Confirm Game
-  ///@param game_id
-  @Post(
-    path: '/elocaps/games/{game_id}/validate',
-    optionalBody: true,
-  )
-  Future<chopper.Response<Game>> _elocapsGamesGameIdValidatePost(
-      {@Path('game_id') required String? gameId});
-
-  ///Get Player Games
-  ///@param user_id
-  Future<chopper.Response<List<Game>>> elocapsPlayersUserIdGamesGet(
-      {required String? userId}) {
-    generatedMapping.putIfAbsent(Game, () => Game.fromJsonFactory);
-
-    return _elocapsPlayersUserIdGamesGet(userId: userId);
-  }
-
-  ///Get Player Games
-  ///@param user_id
-  @Get(path: '/elocaps/players/{user_id}/games')
-  Future<chopper.Response<List<Game>>> _elocapsPlayersUserIdGamesGet(
-      {@Path('user_id') required String? userId});
-
-  ///Get Player Info
-  ///@param user_id
-  Future<chopper.Response<DetailedPlayer>> elocapsPlayersUserIdGet(
-      {required String? userId}) {
-    generatedMapping.putIfAbsent(
-        DetailedPlayer, () => DetailedPlayer.fromJsonFactory);
-
-    return _elocapsPlayersUserIdGet(userId: userId);
-  }
-
-  ///Get Player Info
-  ///@param user_id
-  @Get(path: '/elocaps/players/{user_id}')
-  Future<chopper.Response<DetailedPlayer>> _elocapsPlayersUserIdGet(
-      {@Path('user_id') required String? userId});
-
-  ///Get Leaderboard
-  ///@param mode
-  Future<chopper.Response<List<PlayerBase>>> elocapsLeaderboardGet(
-      {required enums.CapsMode? mode}) {
-    generatedMapping.putIfAbsent(PlayerBase, () => PlayerBase.fromJsonFactory);
-
-    return _elocapsLeaderboardGet(mode: mode?.value?.toString());
-  }
-
-  ///Get Leaderboard
-  ///@param mode
-  @Get(path: '/elocaps/leaderboard')
-  Future<chopper.Response<List<PlayerBase>>> _elocapsLeaderboardGet(
-      {@Query('mode') required String? mode});
 }
 
 typedef $JsonFactory<T> = T Function(Map<String, dynamic> json);

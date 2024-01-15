@@ -43,38 +43,20 @@ enum CalendarEventType {
   eventAe('Event AE'),
   @JsonValue('Event USE')
   eventUse('Event USE'),
-  @JsonValue('Asso indé')
-  assoInd('Asso indé'),
+  @JsonValue('Asso indÃ©')
+  assoInd('Asso indÃ©'),
   @JsonValue('HH')
   hh('HH'),
   @JsonValue('Strass')
   strass('Strass'),
-  @JsonValue('Soirée')
-  soirE('Soirée'),
+  @JsonValue('SoirÃ©e')
+  soirE('SoirÃ©e'),
   @JsonValue('Autre')
   autre('Autre');
 
   final String? value;
 
   const CalendarEventType(this.value);
-}
-
-enum CapsMode {
-  @JsonValue(null)
-  swaggerGeneratedUnknown(null),
-
-  @JsonValue('single')
-  single('single'),
-  @JsonValue('cd')
-  cd('cd'),
-  @JsonValue('capacks')
-  capacks('capacks'),
-  @JsonValue('semi_capacks')
-  semiCapacks('semi_capacks');
-
-  final String? value;
-
-  const CapsMode(this.value);
 }
 
 enum DeliveryStatusType {
