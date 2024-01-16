@@ -13,6 +13,9 @@ class TextConstants {
   static const String noValue = "Veuillez entrer une valeur";
   static const String invalidNumber = "Veuillez entrer un nombre";
   static const String noDateError = "Veuillez entrer une date";
+  static const String imageSizeTooBig =
+      "La taille de l'image ne doit pas dépasser 4 Mio";
+  static const String imageError = "Erreur lors de l'ajout de l'image";
 }
 
 const String previousEmailRegex =
@@ -21,3 +24,5 @@ const String previousEmailRegex =
 const String studentRegex = r'^[\w\-.]*@etu(-enise)?.ec-lyon.fr$';
 
 const String unableToOpen = 'Impossible d\'ouvrir le lien';
+
+const int maxHyperionFileSize = 4194304;

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
@@ -24,10 +22,12 @@ import 'package:myecl/raffle/ui/pages/creation_edit_page/prize_handler.dart';
 import 'package:myecl/raffle/ui/pages/creation_edit_page/ticket_handler.dart';
 import 'package:myecl/raffle/ui/pages/creation_edit_page/winning_ticket_handler.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
+import 'package:myecl/tools/ui/widgets/image_picker_on_tap.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -52,7 +52,6 @@ class CreationPage extends HookConsumerWidget {
     final name = useTextEditingController(text: raffle.name);
     final ImagePicker picker = ImagePicker();
 
-    final raffleLogosNotifier = ref.watch(tombolaLogosProvider.notifier);
     final raffleLogoNotifier = ref.watch(tombolaLogoProvider.notifier);
     final logo = useState<Uint8List?>(null);
     final logoFile = useState<Image?>(null);
@@ -65,6 +64,10 @@ class CreationPage extends HookConsumerWidget {
         });
       }
     });
+
+    void displayRaffleToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
 
     return RaffleTemplate(
       child: Refresher(
@@ -132,23 +135,12 @@ class CreationPage extends HookConsumerWidget {
                     Positioned(
                       bottom: 0,
                       left: 0,
-                      child: GestureDetector(
-                        onTap: () async {
-                          final XFile? image = await picker.pickImage(
-                              source: ImageSource.gallery, imageQuality: 20);
-                          if (image != null) {
-                            if (kIsWeb) {
-                              logo.value = await image.readAsBytes();
-                              logoFile.value = Image.network(image.path);
-                            } else {
-                              final file = File(image.path);
-                              logo.value = await file.readAsBytes();
-                              logoFile.value = Image.file(file);
-                            }
-                            raffleLogoNotifier.updateLogo(
-                                raffle.id, logo.value!);
-                          }
-                        },
+                      child: ImagePickerOnTap(
+                        picker: picker,
+                        imageBytesNotifier: logo,
+                        imageNotifier: logoFile,
+                        displayToastWithContext: displayRaffleToastWithContext,
+                        imageQuality: 20,
                         child: Container(
                           height: 40,
                           width: 40,
@@ -217,14 +209,6 @@ class CreationPage extends HookConsumerWidget {
                               if (logo.value != null) {
                                 raffleLogoNotifier.updateLogo(
                                     raffle.id, logo.value!);
-                                raffleLogosNotifier.setTData(
-                                    raffle,
-                                    AsyncData([
-                                      Image.memory(
-                                        logo.value!,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ]));
                                 QR.to(RaffleRouter.root + RaffleRouter.detail);
                               }
                             },

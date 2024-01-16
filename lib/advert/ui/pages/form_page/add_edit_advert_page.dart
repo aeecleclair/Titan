@@ -20,6 +20,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:myecl/tools/ui/widgets/image_picker_on_tap.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -41,7 +42,6 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
 
     final advertListNotifier = ref.watch(advertListProvider.notifier);
     final posterNotifier = ref.watch(advertPosterProvider.notifier);
-    final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final poster = useState<Uint8List?>(null);
     final posterFile = useState<Image?>(null);
 
@@ -90,22 +90,12 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                         child: Stack(
                           clipBehavior: Clip.none,
                           children: [
-                            GestureDetector(
-                              onTap: () async {
-                                final XFile? image = await picker.pickImage(
-                                    source: ImageSource.gallery);
-                                if (image != null) {
-                                  if (kIsWeb) {
-                                    poster.value = await image.readAsBytes();
-                                    posterFile.value =
-                                        Image.network(image.path);
-                                  } else {
-                                    final file = File(image.path);
-                                    poster.value = await file.readAsBytes();
-                                    posterFile.value = Image.file(file);
-                                  }
-                                }
-                              },
+                            ImagePickerOnTap(
+                              picker: picker,
+                              imageBytesNotifier: poster,
+                              imageNotifier: posterFile,
+                              displayToastWithContext:
+                                  displayAdvertToastWithContext,
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: Colors.white,
@@ -258,14 +248,6 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                       if (poster.value != null) {
                                         posterNotifier.updateAdvertPoster(
                                             advert.id, poster.value!);
-                                        advertPostersNotifier.setTData(
-                                            advert,
-                                            AsyncData([
-                                              Image.memory(
-                                                poster.value!,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ]));
                                       }
                                     },
                                     orElse: () {},
@@ -278,14 +260,6 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                         final newAdvert = list.last;
                                         posterNotifier.updateAdvertPoster(
                                             newAdvert.id, poster.value!);
-                                        advertPostersNotifier.setTData(
-                                            newAdvert,
-                                            AsyncData([
-                                              Image.memory(
-                                                poster.value!,
-                                                fit: BoxFit.cover,
-                                              )
-                                            ]));
                                       },
                                       orElse: () {});
                                 }
