@@ -316,7 +316,8 @@ getOnlyDayDate(BuildContext context, TextEditingController dateController,
   final DateTime? date =
       await _getDate(context, now, initialDate, firstDate, lastDate);
 
-  dateController.text = DateFormat('dd/MM/yyyy').format(date ?? now);
+  dateController.text =
+      DateFormat('dd/MM/yyyy').format(date ?? initialDate ?? now);
 }
 
 getOnlyDayDateFunction(BuildContext context, void Function(String) setDate,
@@ -325,7 +326,7 @@ getOnlyDayDateFunction(BuildContext context, void Function(String) setDate,
   final DateTime? date =
       await _getDate(context, now, initialDate, firstDate, lastDate);
 
-  setDate(DateFormat('dd/MM/yyyy').format(date ?? now));
+  setDate(DateFormat('dd/MM/yyyy').format(date ?? initialDate ?? now));
 }
 
 getOnlyHourDate(
@@ -352,7 +353,8 @@ getFullDate(BuildContext context, TextEditingController dateController,
           },
         );
       } else {
-        dateController.text = DateFormat('dd/MM/yyyy HH:mm').format(now);
+        dateController.text =
+            DateFormat('dd/MM/yyyy HH:mm').format(initialDate ?? now);
       }
     },
   );
