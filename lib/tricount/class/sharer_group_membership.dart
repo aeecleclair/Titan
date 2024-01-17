@@ -12,16 +12,16 @@ class SharerGroupMembership {
   });
 
   SharerGroupMembership.fromJson(Map<String, dynamic> json) {
-    userId = json['userId'];
-    sharerGroupId = json['sharerGroupId'];
+    userId = json['user_id'];
+    sharerGroupId = json['sharer_group_id'];
     position = json['position'];
     active = json['active'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['userId'] = userId;
-    data['sharerGroupId'] = sharerGroupId;
+    data['user_id'] = userId;
+    data['sharer_group_id'] = sharerGroupId;
     data['position'] = position;
     data['active'] = active;
     return data;
