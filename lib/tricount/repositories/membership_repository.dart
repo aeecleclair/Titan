@@ -4,7 +4,7 @@ import 'package:myecl/tricount/class/sharer_group_membership.dart';
 class MembershipRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = "tricount/";
+  final ext = "tricount/sharergroups/";
 
   Future<List<SharerGroupMembership>> getMembershipList() async {
     return List<SharerGroupMembership>.from(
@@ -20,6 +20,6 @@ class MembershipRepository extends Repository {
 
   Future<bool> deleteMembership(
       String sharerGroupId, String sharerMembershipId) async {
-    return await delete("/$sharerMembershipId");
+    return await delete(sharerGroupId, suffix: "/memberships/$sharerMembershipId");
   }
 }
