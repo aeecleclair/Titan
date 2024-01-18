@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:myecl/tricount/class/balance.dart';
 import 'package:myecl/tricount/tools/functions.dart';
@@ -17,6 +19,7 @@ class BalanceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final maxBalance = max(maxAbsBalance, 1e-2);
     final isPositive = balance.amount >= 0;
     final payer = getMember(members, balance.userId);
     return SizedBox(
@@ -40,13 +43,13 @@ class BalanceCard extends StatelessWidget {
                       ))
                   : LayoutBuilder(builder: (context, constraints) {
                       final textOverflowing = hasTextOverflow(
-                              payer.nickname ?? payer.firstname,
-                              const TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                              maxWidth: balance.amount.abs() /
-                                      maxAbsBalance *
-                                      constraints.maxWidth -
-                                  30);
+                          payer.nickname ?? payer.firstname,
+                          const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                          maxWidth: balance.amount.abs() /
+                                  maxBalance *
+                                  constraints.maxWidth -
+                              30);
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -62,7 +65,7 @@ class BalanceCard extends StatelessWidget {
                             ),
                           Container(
                               width: balance.amount.abs() /
-                                  maxAbsBalance *
+                                  maxBalance *
                                   constraints.maxWidth,
                               height: 50,
                               decoration: BoxDecoration(
@@ -96,21 +99,22 @@ class BalanceCard extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: isPositive
                   ? LayoutBuilder(builder: (context, constraints) {
-                      final textOverflowing = balance.amount == 0.0
-                          ? true
-                          : hasTextOverflow(
-                          payer.nickname ?? payer.firstname,
-                          const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                          maxWidth: balance.amount.abs() /
-                                  maxAbsBalance *
-                                  constraints.maxWidth -
-                              30);
+                      final textOverflowing = balance.amount == 0.0 ||
+                          hasTextOverflow(
+                              payer.nickname ?? payer.firstname,
+                              const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                              maxWidth: min(
+                                  balance.amount.abs() /
+                                          maxBalance *
+                                          constraints.maxWidth -
+                                      30,
+                                  0));
                       return Row(
                         children: [
                           Container(
                               width: balance.amount.abs() /
-                                  maxAbsBalance *
+                                  maxBalance *
                                   constraints.maxWidth,
                               height: 60,
                               decoration: BoxDecoration(
