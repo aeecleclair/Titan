@@ -6,7 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:myecl/tricount/class/sharer_group_membership.dart';
 import 'package:myecl/tricount/providers/sharer_group_membership_map_provider.dart';
-import 'package:myecl/tricount/providers/sharer_group_provider.dart';
+import 'package:myecl/tricount/providers/async_sharer_group_provider.dart';
 import 'package:myecl/tricount/tools/functions.dart';
 import 'package:myecl/tricount/ui/pages/main_page/overlapping_avatar.dart';
 import 'package:myecl/tricount/ui/pages/main_page/sharer_card_layout.dart';
@@ -26,7 +26,7 @@ class SharerGroupCard extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final sharerGroupMap = ref.watch(sharerGroupMapProvider);
     final sharerGroupMapNotifier = ref.watch(sharerGroupMapProvider.notifier);
-    final sharerGroupNotifier = ref.watch(sharerGroupProvider.notifier);
+    final sharerGroupNotifier = ref.watch(asyncSharerGroupProvider.notifier);
     return SharerCardLayout(
       depth: depth,
       offset: offset,

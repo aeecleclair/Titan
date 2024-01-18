@@ -25,7 +25,7 @@ class TricountRouter {
         builder: () => const TricountMainPage(),
         middleware: [AuthenticatedMiddleware(ref)],
         children: [
-          // QRoute(path: detail, builder: () => const SharerGroupDetailPage()),
+          QRoute(path: detail, builder: () => const SharerGroupDetailPage()),
           QRoute(path: addEdit, builder: () => const AddEditSharerGroupPage()),
         ],
       );

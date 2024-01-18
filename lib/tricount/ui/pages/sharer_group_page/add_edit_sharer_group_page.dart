@@ -12,7 +12,7 @@ import 'package:myecl/tricount/class/sharer_group_membership.dart';
 import 'package:myecl/tricount/providers/membership_list_provider.dart';
 import 'package:myecl/tricount/providers/membership_provider.dart';
 import 'package:myecl/tricount/providers/sharer_group_membership_map_provider.dart';
-import 'package:myecl/tricount/providers/sharer_group_provider.dart';
+import 'package:myecl/tricount/providers/async_sharer_group_provider.dart';
 import 'package:myecl/tricount/providers/sharer_group_member_list_provider.dart';
 import 'package:myecl/tricount/tools/constants.dart';
 import 'package:myecl/tricount/ui/pages/sharer_group_page/add_members_to_sharer_group_card.dart';
@@ -30,7 +30,7 @@ class AddEditSharerGroupPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final userId = ref.watch(userProvider).id;
     final membership = ref.watch(sharerGroupMembershipProvider);
-    final sharerGroupNotifier = ref.watch(sharerGroupProvider.notifier);
+    final sharerGroupNotifier = ref.watch(asyncSharerGroupProvider.notifier);
     final sharerGroupMap = ref.watch(sharerGroupMapProvider);
     final sharerGroupMapNotifier = ref.watch(sharerGroupMapProvider.notifier);
     final membershipListNotifier = ref.watch(membershipListProvider.notifier);

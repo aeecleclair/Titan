@@ -40,13 +40,13 @@ class BalanceCard extends StatelessWidget {
                       ))
                   : LayoutBuilder(builder: (context, constraints) {
                       final textOverflowing = hasTextOverflow(
-                          payer.nickname ?? payer.firstname,
-                          const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                          maxWidth: balance.amount.abs() /
-                                  maxAbsBalance *
-                                  constraints.maxWidth -
-                              30);
+                              payer.nickname ?? payer.firstname,
+                              const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                              maxWidth: balance.amount.abs() /
+                                      maxAbsBalance *
+                                      constraints.maxWidth -
+                                  30);
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -96,7 +96,9 @@ class BalanceCard extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: isPositive
                   ? LayoutBuilder(builder: (context, constraints) {
-                      final textOverflowing = hasTextOverflow(
+                      final textOverflowing = balance.amount == 0.0
+                          ? true
+                          : hasTextOverflow(
                           payer.nickname ?? payer.firstname,
                           const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
