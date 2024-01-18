@@ -9,15 +9,15 @@ class SharerGroupNotifier extends SingleNotifier<SharerGroup> {
   SharerGroupNotifier({required String token})
       : super(const AsyncValue.loading()) {
     sharerGroupRepository.setToken(token);
+    state = AsyncValue.data(SharerGroup.empty());
   }
 
-  Future<AsyncValue<SharerGroup>> loadSharerGroup(String sharerGroupId) async {
-    return await load(
-        () => sharerGroupRepository.getSharerGroup(sharerGroupId));
+  Future<SharerGroup> loadSharerGroup(String sharerGroupId) async {
+    return await sharerGroupRepository.getSharerGroup(sharerGroupId);
   }
 
-  Future<bool> addSharerGroup(SharerGroup sharerGroup) async {
-    return await add(sharerGroupRepository.createSharerGroup, sharerGroup);
+  Future<SharerGroup> addSharerGroup(SharerGroup sharerGroup) async {
+    return await sharerGroupRepository.createSharerGroup(sharerGroup);
   }
 
   Future<bool> updateSharerGroup(SharerGroup sharerGroup) async {

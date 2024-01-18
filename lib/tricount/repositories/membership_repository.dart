@@ -14,8 +14,11 @@ class MembershipRepository extends Repository {
 
   Future<SharerGroupMembership> createMembership(
       SharerGroupMembership sharerGroup) async {
-    return SharerGroupMembership.fromJson(
-        await create(sharerGroup.toJson(), suffix: "memberships"));
+        print(sharerGroup.toJson());
+        print("add");
+        final res = await create(sharerGroup.toJson(), suffix: "memberships");
+        print(res);
+    return SharerGroupMembership.fromJson(res);
   }
 
   Future<bool> deleteMembership(

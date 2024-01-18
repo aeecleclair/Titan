@@ -3,7 +3,7 @@ import 'package:myecl/tools/providers/map_provider.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tricount/class/sharer_group.dart';
 import 'package:myecl/tricount/class/sharer_group_membership.dart';
-import 'package:myecl/tricount/providers/membership_provider.dart';
+import 'package:myecl/tricount/providers/membership_list_provider.dart';
 
 class SharerGroupMembershipMapNotifier
     extends MapNotifier<SharerGroupMembership, SharerGroup> {}

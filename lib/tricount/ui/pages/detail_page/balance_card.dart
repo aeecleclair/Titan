@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/tricount/class/sharer_group.dart';
 import 'package:myecl/tricount/class/balance.dart';
 import 'package:myecl/tricount/tools/functions.dart';
 import 'package:myecl/user/class/list_users.dart';

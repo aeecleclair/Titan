@@ -6,7 +6,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tricount/class/sharer_group.dart';
+import 'package:myecl/tricount/class/sharer_group_membership.dart';
 import 'package:myecl/tricount/providers/cross_group_stats_provider.dart';
+import 'package:myecl/tricount/providers/membership_list_provider.dart';
+import 'package:myecl/tricount/providers/membership_provider.dart';
 import 'package:myecl/tricount/providers/sharer_group_provider.dart';
 import 'package:myecl/tricount/providers/sharer_group_member_list_provider.dart';
 import 'package:myecl/tricount/providers/sharer_group_provider.dart';
@@ -21,12 +24,13 @@ class TricountMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sharerGroupNotifier = ref.watch(sharerGroupProvider.notifier);
-    final sharerGroupList = ref.watch(sharerGroupListProvider);
-    final sharerGroupListNotifier = ref.watch(sharerGroupListProvider.notifier);
+    final sharerGroupMembership =
+        ref.watch(sharerGroupMembershipProvider.notifier);
+    final membershipList = ref.watch(membershipListProvider);
+    final membershipListNotifier = ref.watch(membershipListProvider.notifier);
+    // final myBalances = ref.watch(crossGroupStatsProvider);
     final sharerGroupMemberListNotifier =
         ref.watch(sharerGroupMemberListProvider.notifier);
-    final myBalances = ref.watch(crossGroupStatsProvider);
     final scrollController = useScrollController();
     final scrollValue = useState<double>(0);
     final currentPage = useState(0);
@@ -39,27 +43,27 @@ class TricountMainPage extends HookConsumerWidget {
       // We don't use Refresher because it doesn't work with the stacked PageView and SingleChildScrollView
       child: RefreshIndicator(
           onRefresh: () => tokenExpireWrapper(ref, () async {
-                sharerGroupListNotifier.loadSharerGroupList();
+                membershipListNotifier.loadMembership();
               }),
           child: AsyncChild(
-            value: sharerGroupList,
-            builder: (context, sharerGroupList) {
-              final ids = <String>{};
-              final allMembersList = sharerGroupList
-                  .expand((sharerGroup) => sharerGroup.members)
-                  .where((member) {
-                if (!ids.contains(member.id)) {
-                  ids.add(member.id);
-                  return true;
-                }
-                return false;
-              }).toList();
+            value: membershipList,
+            builder: (context, memberships) {
+              // final ids = <String>{};
+              // final allMembersList = sharerGroupList
+              //     .expand((sharerGroup) => sharerGroup.members)
+              //     .where((member) {
+              //   if (!ids.contains(member.id)) {
+              //     ids.add(member.id);
+              //     return true;
+              //   }
+              //   return false;
+              // }).toList();
               final pageController = usePageController(
                   viewportFraction: viewPortFraction,
-                  initialPage: sharerGroupList.length - 1);
+                  initialPage: memberships.length);
               final fakePageController = usePageController(
                   viewportFraction: viewPortFraction,
-                  initialPage: sharerGroupList.length - 1);
+                  initialPage: memberships.length);
               pageController.addListener(() {
                 fakePageController.jumpTo(pageController.offset);
               });
@@ -89,7 +93,7 @@ class TricountMainPage extends HookConsumerWidget {
                               opacity:
                                   min(1.0, max(1 - scrollValue.value / 500, 0)),
                               child: SharerGroupHandler(
-                                  sharerGroups: sharerGroupList,
+                                  memberships: memberships,
                                   pageController: fakePageController,
                                   viewPortFraction: viewPortFraction)),
                         ),
@@ -114,21 +118,21 @@ class TricountMainPage extends HookConsumerWidget {
                                     physics: const BouncingScrollPhysics(),
                                     clipBehavior: Clip.none,
                                     controller: pageController,
-                                    itemCount: sharerGroupList.length + 1,
+                                    itemCount: memberships.length + 1,
                                     reverse: true,
                                     onPageChanged: (index) {
                                       currentPage.value =
-                                          sharerGroupList.length - 1 - index;
+                                          memberships.length - 1 - index;
                                     },
                                     itemBuilder: (context, index) {
-                                      if (index == sharerGroupList.length) {
+                                      if (index == memberships.length) {
                                         return Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 45, horizontal: 10),
                                             child: GestureDetector(onTap: () {
-                                              sharerGroupNotifier
-                                                  .setSharerGroup(
-                                                      SharerGroup.empty());
+                                              sharerGroupMembership.set(
+                                                  SharerGroupMembership
+                                                      .empty());
                                               sharerGroupMemberListNotifier
                                                   .reset();
                                               QR.to(TricountRouter.root +
@@ -139,28 +143,26 @@ class TricountMainPage extends HookConsumerWidget {
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 45, horizontal: 10),
                                           child: GestureDetector(onTap: () {
-                                            final sharerGroup = sharerGroupList[
-                                                sharerGroupList.length -
-                                                    1 -
-                                                    index];
-                                            sharerGroupNotifier
-                                                .setSharerGroup(sharerGroup);
+                                            final membership = memberships[
+                                                memberships.length - 1 - index];
+                                            sharerGroupMembership
+                                                .set(membership);
                                             QR.to(TricountRouter.root +
                                                 TricountRouter.detail);
                                           }));
                                     }),
                               ),
-                              SharerGroupStats(
-                                balances: currentPage.value >= 0
-                                    ? sharerGroupList[currentPage.value]
-                                        .balances
-                                        .where((element) => element.amount < 0)
-                                        .toList()
-                                    : myBalances,
-                                members: currentPage.value >= 0
-                                    ? sharerGroupList[currentPage.value].members
-                                    : allMembersList,
-                              ),
+                              // SharerGroupStats(
+                              //   balances: currentPage.value >= 0
+                              //       ? memberships[currentPage.value]
+                              //           .balances
+                              //           .where((element) => element.amount < 0)
+                              //           .toList()
+                              //       : myBalances,
+                              //   members: currentPage.value >= 0
+                              //       ? sharerGroupList[currentPage.value].members
+                              //       : allMembersList,
+                              // ),
                             ],
                           )),
                     ),

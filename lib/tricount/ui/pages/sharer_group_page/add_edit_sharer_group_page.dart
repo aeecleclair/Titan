@@ -8,15 +8,19 @@ import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:myecl/tricount/class/sharer_group.dart';
+import 'package:myecl/tricount/class/sharer_group_membership.dart';
+import 'package:myecl/tricount/providers/membership_list_provider.dart';
+import 'package:myecl/tricount/providers/membership_provider.dart';
+import 'package:myecl/tricount/providers/sharer_group_membership_map_provider.dart';
 import 'package:myecl/tricount/providers/sharer_group_provider.dart';
 import 'package:myecl/tricount/providers/sharer_group_member_list_provider.dart';
-import 'package:myecl/tricount/providers/sharer_group_provider.dart';
 import 'package:myecl/tricount/tools/constants.dart';
 import 'package:myecl/tricount/ui/pages/sharer_group_page/add_members_to_sharer_group_card.dart';
 import 'package:myecl/tricount/ui/pages/sharer_group_page/search_result.dart';
 import 'package:myecl/tricount/ui/pages/sharer_group_page/sharer_group_member_chip_list.dart';
 import 'package:myecl/tricount/ui/pages/tricount.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditSharerGroupPage extends HookConsumerWidget {
@@ -24,8 +28,20 @@ class AddEditSharerGroupPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sharerGroup = ref.watch(sharerGroupProvider);
-    final sharerGroupListNotifier = ref.watch(sharerGroupListProvider.notifier);
+    final userId = ref.watch(userProvider).id;
+    final membership = ref.watch(sharerGroupMembershipProvider);
+    final sharerGroupNotifier = ref.watch(sharerGroupProvider.notifier);
+    final sharerGroupMap = ref.watch(sharerGroupMapProvider);
+    final sharerGroupMapNotifier = ref.watch(sharerGroupMapProvider.notifier);
+    final membershipListNotifier = ref.watch(membershipListProvider.notifier);
+    final sharerGroup =
+        membership.userId != SharerGroupMembership.empty().userId
+            ? sharerGroupMap.maybeWhen(
+                orElse: () => SharerGroup.empty(),
+                data: (value) => value[membership]!.maybeWhen(
+                    orElse: () => SharerGroup.empty(),
+                    data: (value) => value.first))
+            : SharerGroup.empty();
     final sharerGroupMemberList = ref.watch(sharerGroupMemberListProvider);
     final sharerGroupMemberListNotifier =
         ref.watch(sharerGroupMemberListProvider.notifier);
@@ -117,24 +133,36 @@ class AddEditSharerGroupPage extends HookConsumerWidget {
                                   members: sharerGroupMemberList,
                                   total: 0.0,
                                   transactions: []);
-                              final value = isEdit
-                                  ? await sharerGroupListNotifier
-                                      .updateSharerGroup(newSharerGroup)
-                                  : await sharerGroupListNotifier
-                                      .addSharerGroup(newSharerGroup);
-                              if (value) {
-                                QR.back();
-                                if (isEdit) {
+                              if (isEdit) {
+                                final value = await sharerGroupNotifier
+                                    .updateSharerGroup(newSharerGroup);
+                                if (value) {
+                                  sharerGroupMapNotifier.setTData(
+                                      membership, AsyncData([newSharerGroup]));
+                                  QR.back();
                                   displayToastWithContext(TypeMsg.msg,
                                       TricountTextConstants.updatedSharerGroup);
                                 } else {
-                                  displayToastWithContext(TypeMsg.msg,
-                                      TricountTextConstants.addedSharerGroup);
-                                }
-                              } else {
-                                if (isEdit) {
                                   displayToastWithContext(TypeMsg.error,
                                       TricountTextConstants.updatingError);
+                                }
+                              } else {
+                                final sharerGroup = await sharerGroupNotifier
+                                    .addSharerGroup(newSharerGroup);
+                                if (sharerGroup.id != SharerGroup.empty().id) {
+                                  final newMembership = SharerGroupMembership(
+                                      position: 0,
+                                      active: true,
+                                      sharerGroupId: sharerGroup.id,
+                                      userId: userId);
+                                  await membershipListNotifier
+                                      .fakeAddMembership(newMembership);
+                                  sharerGroupMapNotifier.addT(newMembership);
+                                  sharerGroupMapNotifier.setTData(
+                                      newMembership, AsyncData([sharerGroup]));
+                                  QR.back();
+                                  displayToastWithContext(TypeMsg.msg,
+                                      TricountTextConstants.addedSharerGroup);
                                 } else {
                                   displayToastWithContext(TypeMsg.error,
                                       TricountTextConstants.addingError);
