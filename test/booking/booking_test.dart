@@ -288,7 +288,7 @@ void main() {
       final dateEnd = DateTime(2022, 1, 1, 14, 0);
       const allDay = false;
       final result = formatDates(dateStart, dateEnd, allDay);
-      expect(result, "Le 01/01 de 10:00 à 14:00");
+      expect(result, "Le 01/01/2022 de 10:00 à 14:00");
     });
 
     test('formatDates returns correct string for same day all day event', () {
@@ -296,7 +296,7 @@ void main() {
       final dateEnd = DateTime(2022, 1, 1);
       const allDay = true;
       final result = formatDates(dateStart, dateEnd, allDay);
-      expect(result, "Le 01/01 toute la journée");
+      expect(result, "Le 01/01/2022 toute la journée");
     });
 
     test('formatDates returns correct string for multi-day event', () {
@@ -304,7 +304,7 @@ void main() {
       final dateEnd = DateTime(2022, 1, 3, 14, 0);
       const allDay = false;
       final result = formatDates(dateStart, dateEnd, allDay);
-      expect(result, "Du 01/01 à 10:00 au 03/01 à 14:00");
+      expect(result, "Du 01/01/2022 à 10:00 au 03/01/2022 à 14:00");
     });
 
     test('formatRecurrenceRule returns correct string for empty recurrenceRule',
@@ -314,7 +314,7 @@ void main() {
       String recurrenceRule = "";
       bool allDay = false;
       expect(formatRecurrenceRule(dateStart, dateEnd, recurrenceRule, allDay),
-          "Le 01/01 de 10:00 à 12:00");
+          "Le 01/01/2022 de 10:00 à 12:00");
     });
 
     test(
@@ -335,7 +335,7 @@ void main() {
       String recurrenceRule = "";
       bool allDay = true;
       expect(formatRecurrenceRule(dateStart, dateEnd, recurrenceRule, allDay),
-          "Du 01/01 à 00:00 au 03/01 à 00:00");
+          "Du 01/01/2022 à 00:00 au 03/01/2022 à 00:00");
     });
 
     test('combineDate returns correct date', () {
