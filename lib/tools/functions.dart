@@ -164,11 +164,11 @@ String processDateToAPIWithoutHour(DateTime date) {
 String formatDates(DateTime dateStart, DateTime dateEnd, bool allDay) {
   final start = parseDate(dateStart);
   final end = parseDate(dateEnd);
+  final displayYear = dateEnd.year != DateTime.now().year;
   if (start[0] == end[0]) {
-    return "Le ${start[0].substring(0, start[0].length - 5)} ${allDay ? "toute la journée" : "de ${start[1]} à ${end[1]}"}";
-  } else {
-    return "Du ${start[0].substring(0, start[0].length - 5)} à ${start[1]} au ${end[0].substring(0, end[0].length - 5)} à ${end[1]}";
+    return "Le ${start[0].substring(0, start[0].length - (displayYear ? 0 : 5))} ${allDay ? "toute la journée" : "de ${start[1]} à ${end[1]}"}";
   }
+  return "Du ${start[0].substring(0, start[0].length - (displayYear ? 0 : 5))} à ${start[1]} au ${end[0].substring(0, end[0].length - (displayYear ? 0 : 5))} à ${end[1]}";
 }
 
 List<String> parseDate(DateTime date) {
@@ -182,12 +182,14 @@ String formatRecurrenceRule(
     DateTime dateStart, DateTime dateEnd, String recurrenceRule, bool allDay) {
   final start = parseDate(dateStart);
   final end = parseDate(dateEnd);
+  final displayYear = dateEnd.year != DateTime.now().year;
   String r = "";
   if (recurrenceRule.isEmpty) {
     if (start[0] == end[0]) {
-      r += "Le ${start[0].substring(0, start[0].length - 5)} ";
+      r +=
+          "Le ${start[0].substring(0, start[0].length - (displayYear ? 0 : 5))} ";
     } else {
-      return "Du ${start[0].substring(0, start[0].length - 5)} à ${start[1]} au ${end[0].substring(0, end[0].length - 5)} à ${end[1]}";
+      return "Du ${start[0].substring(0, start[0].length - (displayYear ? 0 : 5))} à ${start[1]} au ${end[0].substring(0, end[0].length - (displayYear ? 0 : 5))} à ${end[1]}";
     }
   }
   final listDay = [
