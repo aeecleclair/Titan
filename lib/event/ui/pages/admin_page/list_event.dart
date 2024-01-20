@@ -32,8 +32,10 @@ class ListEvent extends HookConsumerWidget {
     final eventListNotifier = ref.watch(eventListProvider.notifier);
     final confirmedEventListNotifier =
         ref.watch(confirmedEventListProvider.notifier);
-    final incomingEvents =
-        events.where((e) => e.start.isAfter(DateTime.now())).toList();
+    final incomingEvents = events
+        .where((e) => e.start.isAfter(DateTime.now()))
+        .toList()
+      ..sort((a, b) => a.start.compareTo(b.start));
 
     final toggle = useState(!canToggle);
     if (incomingEvents.isEmpty) {
