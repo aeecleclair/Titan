@@ -12,6 +12,7 @@ import 'package:myecl/event/router.dart';
 import 'package:myecl/home/router.dart';
 import 'package:myecl/loan/router.dart';
 import 'package:myecl/raffle/router.dart';
+import 'package:myecl/tricount/router.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -40,23 +41,22 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     LoanRouter.module,
     EventRouter.module,
     RaffleRouter.module,
+    TricountRouter.module,
+    VoteRouter.module,
   ];
   ModulesNotifier() : super([]);
 
-  void saveModules() {
-    SharedPreferences.getInstance().then((prefs) {
-      prefs.remove(dbModule);
-      prefs.setStringList(
-          dbModule, state.map((e) => e.root.toString()).toList());
-    });
+  void saveModules() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(dbModule);
+    prefs.setStringList(dbModule, state.map((e) => e.root.toString()).toList());
   }
 
-  void saveAllModules() {
-    SharedPreferences.getInstance().then((prefs) {
-      prefs.remove(dbAllModules);
-      prefs.setStringList(
-          dbAllModules, allModules.map((e) => e.root.toString()).toList());
-    });
+  void saveAllModules() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(dbAllModules);
+    prefs.setStringList(
+        dbAllModules, allModules.map((e) => e.root.toString()).toList());
   }
 
   Future loadModules(List<String> roots) async {
@@ -66,14 +66,12 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     final allModulesName = allModules.map((e) => e.root.toString()).toList();
     if (modulesName.isEmpty) {
       modulesName = allModulesName;
-      saveModules();
     }
     if (allSavedModulesName.isEmpty ||
         !eq.equals(allSavedModulesName, allModulesName)) {
       allSavedModulesName = allModulesName;
       modulesName = allModulesName;
       saveAllModules();
-      saveModules();
     } else {
       allModules.sort((a, b) => allSavedModulesName
           .indexOf(a.root.toString())
@@ -87,9 +85,10 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     for (String name in modulesName) {
       if (allModulesName.contains(name)) {
         Module module = allModules[allSavedModulesName.indexOf(name)];
-        if (roots.contains(module.root)) {
+        if (roots.contains(module.root) || kDebugMode) {
           modules.add(module);
         } else if (!kDebugMode) {
+          // Disabling visibility check in debug mode
           toDelete.add(module);
         }
       }
@@ -98,6 +97,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
       allModules.remove(module);
     }
     state = modules;
+    saveModules();
   }
 
   void sortModules() {

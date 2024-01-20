@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/widgets/loader.dart';
 
-class AsyncChild<T> extends StatelessWidget {
+class AsyncChild<T> extends HookWidget {
   final AsyncValue<T> value;
   final Widget Function(BuildContext context, T value) builder;
   final Widget Function(Object? error, StackTrace? stack)? errorBuilder;
