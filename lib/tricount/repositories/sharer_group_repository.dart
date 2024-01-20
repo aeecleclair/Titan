@@ -11,9 +11,7 @@ class SharerGroupRepository extends Repository {
   }
 
   Future<SharerGroup> createSharerGroup(SharerGroup sharerGroup) async {
-    final res = await create(sharerGroup.toJson());
-    print(res);
-    return SharerGroup.fromJson(res);
+    return SharerGroup.fromJson(await create(sharerGroup.toJson()));
   }
 
   Future<bool> updateSharerGroup(SharerGroup sharerGroup) async {
