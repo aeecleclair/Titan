@@ -226,10 +226,10 @@ void main() {
       final format2 = formatDates(start, end2, allDay);
       final format3 = formatDates(start, end, allDay2);
       final format4 = formatDates(start, end2, allDay2);
-      expect(format, "Le 01/01 de 00:00 à 01:00");
-      expect(format2, "Du 01/01 à 00:00 au 02/01 à 00:00");
-      expect(format3, "Le 01/01 toute la journée");
-      expect(format4, "Du 01/01 à 00:00 au 02/01 à 00:00");
+      expect(format, "Le 01/01/2021 de 00:00 à 01:00");
+      expect(format2, "Du 01/01/2021 à 00:00 au 02/01/2021 à 00:00");
+      expect(format3, "Le 01/01/2021 toute la journée");
+      expect(format4, "Du 01/01/2021 à 00:00 au 02/01/2021 à 00:00");
     });
 
     test('Testing getMonth', () {
@@ -264,17 +264,17 @@ void main() {
       expect(formatRecurrenceRule(start, end2, recurrenceRule, allDay),
           "Tous les Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi et Dimanche de 00:00 à 00:00 jusqu'au 31/12/2021");
       expect(formatRecurrenceRule(start, end, recurrenceRule2, allDay),
-          "Le 01/01 de 00:00 à 01:00");
+          "Le 01/01/2021 de 00:00 à 01:00");
       expect(formatRecurrenceRule(start, end2, recurrenceRule2, allDay),
-          "Du 01/01 à 00:00 au 02/01 à 00:00");
+          "Du 01/01/2021 à 00:00 au 02/01/2021 à 00:00");
       expect(formatRecurrenceRule(start, end, recurrenceRule, allDay2),
           "Tous les Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi et Dimanche toute la journée jusqu'au 31/12/2021");
       expect(formatRecurrenceRule(start, end2, recurrenceRule, allDay2),
           "Tous les Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi et Dimanche toute la journée jusqu'au 31/12/2021");
       expect(formatRecurrenceRule(start, end, recurrenceRule2, allDay2),
-          "Le 01/01 toute la journée");
+          "Le 01/01/2021 toute la journée");
       expect(formatRecurrenceRule(start, end2, recurrenceRule2, allDay2),
-          "Du 01/01 à 00:00 au 02/01 à 00:00");
+          "Du 01/01/2021 à 00:00 au 02/01/2021 à 00:00");
       expect(formatRecurrenceRule(start, end, recurrenceRule3, allDay),
           "Tous les Lundi de 00:00 à 01:00 jusqu'au 31/12/2021");
       expect(formatRecurrenceRule(start, end2, recurrenceRule3, allDay),
