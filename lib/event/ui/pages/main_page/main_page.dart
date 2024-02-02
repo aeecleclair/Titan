@@ -62,37 +62,26 @@ class EventMainPage extends HookConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height - 106,
-                  child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: eventList.length + 2,
-                      itemBuilder: (context, index) {
-                        if (index == 0) {
-                          return GestureDetector(
-                            onTap: () {
-                              eventNotifier.setEvent(Event.empty());
-                              QR.to(EventRouter.root + EventRouter.addEdit);
-                            },
-                            child: CardLayout(
-                                margin: const EdgeInsets.only(
-                                    bottom: 10, top: 20, left: 40, right: 40),
-                                width: double.infinity,
-                                height: 100,
-                                color: Colors.white,
-                                child: Center(
-                                    child: HeroIcon(
-                                  HeroIcons.plus,
-                                  size: 40,
-                                  color: Colors.grey.shade500,
-                                ))),
-                          );
-                        } else if (index == eventList.length + 1) {
-                          return const SizedBox(height: 80);
-                        }
-                        return EventUi(event: eventList[index - 1]);
-                      }),
+                GestureDetector(
+                  onTap: () {
+                    eventNotifier.setEvent(Event.empty());
+                    QR.to(EventRouter.root + EventRouter.addEdit);
+                  },
+                  child: CardLayout(
+                      margin: const EdgeInsets.only(
+                          bottom: 10, top: 20, left: 40, right: 40),
+                      width: double.infinity,
+                      height: 100,
+                      color: Colors.white,
+                      child: Center(
+                          child: HeroIcon(
+                        HeroIcons.plus,
+                        size: 40,
+                        color: Colors.grey.shade500,
+                      ))),
                 ),
+                ...eventList.map((event) => EventUi(event: event)).toList(),
+                const SizedBox(height: 80),
               ],
             );
           },
