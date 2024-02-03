@@ -21,46 +21,50 @@ class AdminAdvertCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Stack(
-      children: [
-        AdvertCard(onTap: onTap, advert: advert),
-        Positioned(
-          right: 15,
-          child: Container(
-            margin: const EdgeInsets.only(top: 30),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: onEdit,
-                  child: CardButton(
-                    colors: [
-                      Colors.grey.shade100,
-                      Colors.grey.shade400,
-                    ],
-                    shadowColor: Colors.grey.shade300.withOpacity(0.2),
-                    child:
-                        const HeroIcon(HeroIcons.pencil, color: Colors.black),
-                  ),
-                ),
-                const SizedBox(width: 20),
-                WaitingButton(
-                  onTap: onDelete,
-                  builder: (child) => CardButton(
-                      colors: const [
-                        AdvertColorConstants.redGradient1,
-                        AdvertColorConstants.redGradient2,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10, top: 20, left: 30, right: 30),
+      child: Stack(
+        children: [
+          AdvertCard(onTap: onTap, advert: advert),
+          Positioned(
+            top: 10,
+            right: 15,
+            child: Container(
+              margin: const EdgeInsets.only(top: 30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: onEdit,
+                    child: CardButton(
+                      colors: [
+                        Colors.grey.shade100,
+                        Colors.grey.shade400,
                       ],
-                      shadowColor:
-                          AdvertColorConstants.redGradient2.withOpacity(0.2),
-                      child: child),
-                  child: const HeroIcon(HeroIcons.trash, color: Colors.white),
-                ),
-              ],
+                      shadowColor: Colors.grey.shade300.withOpacity(0.2),
+                      child:
+                          const HeroIcon(HeroIcons.pencil, color: Colors.black),
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                  WaitingButton(
+                    onTap: onDelete,
+                    builder: (child) => CardButton(
+                        colors: const [
+                          AdvertColorConstants.redGradient1,
+                          AdvertColorConstants.redGradient2,
+                        ],
+                        shadowColor:
+                            AdvertColorConstants.redGradient2.withOpacity(0.2),
+                        child: child),
+                    child: const HeroIcon(HeroIcons.trash, color: Colors.white),
+                  ),
+                ],
+              ),
             ),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 }
