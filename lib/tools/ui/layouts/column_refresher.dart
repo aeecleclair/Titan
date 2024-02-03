@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class ColumnRefresher extends HookConsumerWidget {
+class ColumnRefresher extends ConsumerWidget {
   final List<Widget> children;
   final Future Function() onRefresh;
   const ColumnRefresher(
@@ -23,33 +23,29 @@ class ColumnRefresher extends HookConsumerWidget {
     return Platform.isAndroid ? buildAndroidList(ref) : buildIOSList(ref);
   }
 
-  Widget buildAndroidList(WidgetRef ref) => LayoutBuilder(
-        builder: (context, constraints) => RefreshIndicator(
-          onRefresh: () async {
-            tokenExpireWrapper(ref, onRefresh);
-          },
-          child: ListView(
-              physics: const AlwaysScrollableScrollPhysics(
-                  parent: BouncingScrollPhysics()),
-              children: children),
-        ),
+  Widget buildAndroidList(WidgetRef ref) => RefreshIndicator(
+        onRefresh: () async {
+          tokenExpireWrapper(ref, onRefresh);
+        },
+        child: ListView(
+            physics: const AlwaysScrollableScrollPhysics(
+                parent: BouncingScrollPhysics()),
+            children: children),
       );
-  Widget buildIOSList(WidgetRef ref) => LayoutBuilder(
-        builder: (context, constraints) => CustomScrollView(
-          shrinkWrap: true,
-          physics: const BouncingScrollPhysics(),
-          slivers: [
-            CupertinoSliverRefreshControl(
-              onRefresh: () async {
-                tokenExpireWrapper(ref, onRefresh);
-              },
-            ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                  (context, index) => children[index],
-                  childCount: children.length),
-            )
-          ],
-        ),
+  Widget buildIOSList(WidgetRef ref) => CustomScrollView(
+        shrinkWrap: true,
+        physics: const BouncingScrollPhysics(),
+        slivers: [
+          CupertinoSliverRefreshControl(
+            onRefresh: () async {
+              tokenExpireWrapper(ref, onRefresh);
+            },
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+                (context, index) => children[index],
+                childCount: children.length),
+          )
+        ],
       );
 }
