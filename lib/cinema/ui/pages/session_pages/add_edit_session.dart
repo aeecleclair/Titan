@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -110,8 +109,6 @@ class AddEditSessionPage extends HookConsumerWidget {
                                 data: (data) async {
                                   name.text = data.title;
                                   overview.text = data.overview;
-                                  logo.value =
-                                      await File(data.posterUrl).readAsBytes();
                                   posterUrl.text = data.posterUrl;
                                   genre.text = data.genres.join(', ');
                                   tagline.text = data.tagline;
@@ -174,7 +171,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                   label: CinemaTextConstants.posterUrl,
                   controller: posterUrl,
                   onChanged: (value) async {
-                    logo.value = await File(posterUrl.text).readAsBytes();
+                    logo.value = await getFromUrl(posterUrl.text);
                   },
                   canBeEmpty: true,
                 ),
