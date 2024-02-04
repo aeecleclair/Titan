@@ -33,7 +33,7 @@ class ListEvent extends HookConsumerWidget {
     final confirmedEventListNotifier =
         ref.watch(confirmedEventListProvider.notifier);
     final incomingEvents = events
-        .where((e) => e.start.isAfter(DateTime.now()))
+        .where((e) => e.end.isAfter(DateTime.now()))
         .toList()
       ..sort((a, b) => a.start.compareTo(b.start));
 
