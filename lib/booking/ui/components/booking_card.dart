@@ -119,15 +119,22 @@ class BookingCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 6),
-          AutoSizeText(
-              formatRecurrenceRule(
-                  booking.start, booking.end, booking.recurrenceRule, false),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                  color: smallTextColor)),
+          Container(
+            constraints: const BoxConstraints(maxHeight: 38),
+            child: Scrollbar(
+              radius: const Radius.circular(8),
+              child: SingleChildScrollView(
+                child: Text(
+                  formatRecurrenceRule(booking.start, booking.end,
+                      booking.recurrenceRule, false),
+                  style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                      color: smallTextColor),
+                ),
+              ),
+            ),
+          ),
           const SizedBox(height: 4),
           AutoSizeText(
             booking.reason,
