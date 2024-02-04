@@ -121,11 +121,20 @@ class EventUi extends ConsumerWidget {
                       ],
                     ),
                     const SizedBox(height: 7),
-                    Text(
-                      formatRecurrenceRule(event.start, event.end,
-                          event.recurrenceRule, event.allDay),
-                      style: TextStyle(
-                          color: textColor.withOpacity(0.7), fontSize: 13),
+                    Container(
+                      constraints: const BoxConstraints(maxHeight: 35),
+                      child: Scrollbar(
+                        radius: const Radius.circular(8),
+                        child: SingleChildScrollView(
+                          child: Text(
+                            formatRecurrenceRule(event.start, event.end,
+                                event.recurrenceRule, event.allDay),
+                            style: TextStyle(
+                                color: textColor.withOpacity(0.7),
+                                fontSize: 13),
+                          ),
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 5),
                     Row(
