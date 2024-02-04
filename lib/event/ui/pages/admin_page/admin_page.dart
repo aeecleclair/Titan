@@ -104,6 +104,11 @@ class AdminPage extends HookConsumerWidget {
               title: EventTextConstants.declined,
               events: canceledEvents,
             ),
+            ListEvent(
+              title: EventTextConstants.history,
+              events: confirmedEvents + canceledEvents + pendingEvents,
+              isHistory: true,
+            ),
             const SizedBox(height: 30),
           ],
         ),
