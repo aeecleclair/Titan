@@ -354,8 +354,10 @@ class AddEditEventPage extends HookConsumerWidget {
                             }
                             if (key.currentState!.validate()) {
                               if (allDay.value) {
-                                start.text = "${start.text} 00:00";
-                                end.text = "${end.text} 23:59";
+                                start.text =
+                                    "${!recurrent.value ? "${start.text} " : ""}00:00";
+                                end.text =
+                                    "${!recurrent.value ? "${end.text} " : ""}23:59";
                               }
                               if (end.text.contains("/") &&
                                   isDateBefore(processDateBack(end.text),
