@@ -122,7 +122,7 @@ class EventUi extends ConsumerWidget {
                     ),
                     const SizedBox(height: 7),
                     Container(
-                      constraints: const BoxConstraints(maxHeight: 35),
+                      constraints: const BoxConstraints(maxHeight: 38),
                       child: Scrollbar(
                         radius: const Radius.circular(8),
                         child: SingleChildScrollView(
