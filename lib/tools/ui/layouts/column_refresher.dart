@@ -15,10 +15,12 @@ class ColumnRefresher extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (kIsWeb) {
-      return ListView(
-          physics: const AlwaysScrollableScrollPhysics(
-              parent: BouncingScrollPhysics()),
-          children: children);
+      return ListView.builder(
+        itemCount: children.length,
+        itemBuilder: (BuildContext context, int index) => children[index],
+        physics: const AlwaysScrollableScrollPhysics(
+            parent: BouncingScrollPhysics()),
+      );
     }
     return Platform.isAndroid ? buildAndroidList(ref) : buildIOSList(ref);
   }
@@ -27,10 +29,12 @@ class ColumnRefresher extends ConsumerWidget {
         onRefresh: () async {
           tokenExpireWrapper(ref, onRefresh);
         },
-        child: ListView(
-            physics: const AlwaysScrollableScrollPhysics(
-                parent: BouncingScrollPhysics()),
-            children: children),
+        child: ListView.builder(
+          itemCount: children.length,
+          itemBuilder: (BuildContext context, int index) => children[index],
+          physics: const AlwaysScrollableScrollPhysics(
+              parent: BouncingScrollPhysics()),
+        ),
       );
   Widget buildIOSList(WidgetRef ref) => CustomScrollView(
         shrinkWrap: true,
