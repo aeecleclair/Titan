@@ -60,11 +60,12 @@ class Register extends HookConsumerWidget {
                   child: Text(
                     LoginTextConstants.createAccountTitle,
                     style: GoogleFonts.elMessiri(
-                        textStyle: const TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    )),
+                      textStyle: const TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -74,9 +75,9 @@ class Register extends HookConsumerWidget {
                   children: [
                     const Spacer(),
                     Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        child: AutofillGroup(
-                            child: TextFormField(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: AutofillGroup(
+                        child: TextFormField(
                           controller: mail,
                           style: const TextStyle(
                             fontSize: 18,
@@ -98,7 +99,9 @@ class Register extends HookConsumerWidget {
                             }
                             return null;
                           },
-                        ))),
+                        ),
+                      ),
+                    ),
                     const SizedBox(height: 30),
                     SignInUpBar(
                         label: LoginTextConstants.create,
