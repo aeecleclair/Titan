@@ -158,20 +158,23 @@ class CreateAccountPage extends HookConsumerWidget {
           color: ColorConstants.background2,
         ),
         const SizedBox(height: 1),
-        DateEntry(
-          onTap: () {
-            DateTime now = DateTime.now();
-            getOnlyDayDate(context, birthday,
-                firstDate: DateTime(now.year - 110, now.month, now.day),
-                initialDate: DateTime(now.year - 21, now.month, now.day),
-                lastDate: DateTime.now());
-          },
+        Form(
           key: formKeys[6],
-          label: LoginTextConstants.birthday,
-          controller: birthday,
-          color: Colors.white,
-          enabledColor: ColorConstants.background2,
-          errorColor: Colors.white,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          child: DateEntry(
+            onTap: () {
+              DateTime now = DateTime.now();
+              getOnlyDayDate(context, birthday,
+                  firstDate: DateTime(now.year - 110, now.month, now.day),
+                  initialDate: DateTime(now.year - 21, now.month, now.day),
+                  lastDate: DateTime.now());
+            },
+            label: LoginTextConstants.birthday,
+            controller: birthday,
+            color: Colors.white,
+            enabledColor: ColorConstants.background2,
+            errorColor: Colors.white,
+          ),
         ),
       ]),
       CreateAccountField(
