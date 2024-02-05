@@ -66,13 +66,13 @@ void main() {
     });
 
     test('toggleConfirmed should return true', () async {
-      final event = Event.empty().copyWith(id: '1', name: 'Event 1');
-      when(() => eventRepository.confirmEvent(event, Decision.approved))
+      final event = Event.empty()
+          .copyWith(id: '1', name: 'Event 1', decision: Decision.approved);
+      when(() => eventRepository.confirmEvent(event))
           .thenAnswer((_) async => true);
       eventListNotifier.state = AsyncValue.data([event]);
 
-      final result =
-          await eventListNotifier.toggleConfirmed(event, Decision.approved);
+      final result = await eventListNotifier.toggleConfirmed(event);
 
       expect(result, true);
     });

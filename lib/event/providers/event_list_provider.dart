@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/repositories/event_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
@@ -34,12 +33,12 @@ class EventListNotifier extends ListNotifier<Event> {
         event);
   }
 
-  Future<bool> toggleConfirmed(Event event, Decision decision) async {
+  Future<bool> toggleConfirmed(Event event) async {
     return await update(
-        (event) => eventRepository.confirmEvent(event, decision),
+        (event) => eventRepository.confirmEvent(event),
         (events, event) =>
             events..[events.indexWhere((b) => b.id == event.id)] = event,
-        event.copyWith(decision: decision));
+        event);
   }
 }
 
