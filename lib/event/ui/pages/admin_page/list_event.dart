@@ -100,7 +100,8 @@ class ListEvent extends HookConsumerWidget {
                                 onYes: () async {
                                   await tokenExpireWrapper(ref, () async {
                                     eventListNotifier
-                                        .toggleConfirmed(e, Decision.approved)
+                                        .toggleConfirmed(e.copyWith(
+                                            decision: Decision.approved))
                                         .then((value) {
                                       if (value) {
                                         confirmedEventListNotifier.addEvent(e);
@@ -121,7 +122,8 @@ class ListEvent extends HookConsumerWidget {
                                 onYes: () async {
                                   await tokenExpireWrapper(ref, () async {
                                     eventListNotifier
-                                        .toggleConfirmed(e, Decision.declined)
+                                        .toggleConfirmed(e.copyWith(
+                                            decision: Decision.declined))
                                         .then((value) {
                                       if (value) {
                                         confirmedEventListNotifier
