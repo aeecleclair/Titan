@@ -30,7 +30,7 @@ class MemberCard extends StatelessWidget {
         children: [
           const SizedBox(height: 10),
           AutoSizeText(
-              member.nickname != null ? member.nickname! : member.firstname,
+              member.nickname ?? member.firstname,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(

@@ -73,9 +73,7 @@ class UserCashUi extends HookConsumerWidget {
                     children: [
                       const SizedBox(height: 8),
                       AutoSizeText(
-                          cash.user.nickname != null
-                              ? cash.user.nickname!
-                              : cash.user.firstname,
+                          cash.user.nickname ?? cash.user.firstname,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(

@@ -38,9 +38,7 @@ class AddingUserCard extends HookConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       AutoSizeText(
-                          user.nickname != null
-                              ? user.nickname!
-                              : user.firstname,
+                          user.nickname ?? user.firstname,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(

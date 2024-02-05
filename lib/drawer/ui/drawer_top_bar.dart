@@ -144,9 +144,7 @@ class DrawerTopBar extends HookConsumerWidget {
                       SizedBox(
                         width: 200,
                         child: Text(
-                          user.nickname != null
-                              ? user.nickname!
-                              : user.firstname,
+                          user.nickname ?? user.firstname,
                           style: TextStyle(
                               color: Colors.grey.shade100,
                               fontSize: 20,
