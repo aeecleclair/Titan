@@ -72,8 +72,7 @@ class UserCashUi extends HookConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 8),
-                      AutoSizeText(
-                          cash.user.nickname ?? cash.user.firstname,
+                      AutoSizeText(cash.user.nickname ?? cash.user.firstname,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
