@@ -159,7 +159,13 @@ class CreateAccountPage extends HookConsumerWidget {
         ),
         const SizedBox(height: 1),
         DateEntry(
-          onTap: () => getOnlyDayDate(context, birthday),
+          onTap: () {
+            DateTime now = DateTime.now();
+            getOnlyDayDate(context, birthday,
+                firstDate: DateTime(now.year - 110, now.month, now.day),
+                initialDate: DateTime(now.year - 21, now.month, now.day),
+                lastDate: DateTime.now());
+          },
           key: formKeys[5],
           label: LoginTextConstants.birthday,
           controller: birthday,
