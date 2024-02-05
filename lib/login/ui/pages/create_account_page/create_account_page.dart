@@ -166,7 +166,7 @@ class CreateAccountPage extends HookConsumerWidget {
                 initialDate: DateTime(now.year - 21, now.month, now.day),
                 lastDate: DateTime.now());
           },
-          key: formKeys[5],
+          key: formKeys[6],
           label: LoginTextConstants.birthday,
           controller: birthday,
           color: Colors.white,
