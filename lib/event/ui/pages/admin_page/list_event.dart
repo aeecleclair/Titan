@@ -20,11 +20,13 @@ class ListEvent extends HookConsumerWidget {
   final List<Event> events;
   final bool canToggle;
   final String title;
+  final bool isHistory;
   const ListEvent(
       {super.key,
       required this.events,
       required this.title,
-      this.canToggle = true});
+      this.canToggle = true,
+      this.isHistory = false});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,13 +34,14 @@ class ListEvent extends HookConsumerWidget {
     final eventListNotifier = ref.watch(eventListProvider.notifier);
     final confirmedEventListNotifier =
         ref.watch(confirmedEventListProvider.notifier);
-    final incomingEvents = events
-        .where((e) => e.end.isAfter(DateTime.now()))
-        .toList()
-      ..sort((a, b) => a.start.compareTo(b.start));
+    final filteredEvents = isHistory
+        ? events.where((e) => e.end.isBefore(DateTime.now())).toList()
+        : events.where((e) => e.end.isAfter(DateTime.now())).toList();
+    filteredEvents
+        .sort((a, b) => (isHistory ? -1 : 1) * a.start.compareTo(b.start));
 
     final toggle = useState(!canToggle);
-    if (incomingEvents.isEmpty) {
+    if (filteredEvents.isEmpty) {
       return const SizedBox();
     }
     return Column(children: [
@@ -55,7 +58,7 @@ class ListEvent extends HookConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AlignLeftText(
-                  "$title${incomingEvents.length > 1 ? "s" : ""} (${incomingEvents.length})",
+                  "$title${filteredEvents.length > 1 ? "s" : ""} (${filteredEvents.length})",
                   color: Colors.grey,
                 ),
                 if (canToggle)
@@ -72,7 +75,7 @@ class ListEvent extends HookConsumerWidget {
           margin: const EdgeInsets.only(top: 10),
           child: HorizontalListView.builder(
               height: 235,
-              items: incomingEvents,
+              items: filteredEvents,
               itemBuilder: (context, e, i) => EventUi(
                     event: e,
                     isDetailPage: true,

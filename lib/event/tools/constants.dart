@@ -24,6 +24,7 @@ class EventTextConstants {
   static const String eventList = "Liste des événements";
   static const String eventType = "Type d'événement";
   static const String every = "Tous les";
+  static const String history = "Historique";
   static const String incorrectOrMissingFields =
       "Certains champs sont incorrects ou manquants";
   static const String interval = "Intervalle";
