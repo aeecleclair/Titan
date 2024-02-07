@@ -8,8 +8,8 @@ class EventNotifier extends StateNotifier<Event> {
     state = event;
   }
 
-  void setRoom(String location, String roomId) {
-    state = state.copyWith(location: location, roomId: roomId);
+  void setRoom(String location) {
+    state = state.copyWith(location: location);
   }
 }
 

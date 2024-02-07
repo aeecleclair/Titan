@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/event/ui/event.dart';
 import 'package:myecl/event/ui/pages/event_pages/checkbox_entry.dart';
@@ -44,9 +43,8 @@ class AddEditEventPage extends HookConsumerWidget {
     final organizer = useTextEditingController(text: event.organizer);
     final description = useTextEditingController(text: event.description);
     final allDay = useState(event.allDay);
-    final isRoom = useState(event.roomId != "");
-    final location =
-        useTextEditingController(text: isRoom.value ? "" : event.location);
+    final isRoom = useState(false);
+    final location = useTextEditingController(text: event.location);
 
     final recurrent = useState(event.recurrenceRule != ""
         ? event.recurrenceRule.contains("BYDAY")
@@ -313,11 +311,12 @@ class AddEditEventPage extends HookConsumerWidget {
                                     height: 40,
                                     items: rooms,
                                     itemBuilder: (context, room, index) {
-                                      final selected = room.id == event.roomId;
+                                      final selected =
+                                          room.name == event.location;
                                       return ItemChip(
                                         onTap: () {
-                                          eventNotifier.setRoom(
-                                              room.name, room.id);
+                                          eventNotifier.setRoom(room.name);
+                                          location.text = room.name;
                                         },
                                         selected: selected,
                                         child: Text(room.name,
@@ -350,22 +349,6 @@ class AddEditEventPage extends HookConsumerWidget {
                         WaitingButton(
                           builder: (child) => AddEditButtonLayout(child: child),
                           onTap: () async {
-                            String roomId = Room.empty().id;
-                            if (isRoom.value) {
-                              location.text = event.location; //for validation
-                              roomId = event.roomId;
-                            } else {
-                              rooms.maybeWhen(
-                                  data: (data) {
-                                    final room = data.firstWhere(
-                                      (element) =>
-                                          element.name == location.text,
-                                      orElse: () => Room.empty(),
-                                    );
-                                    roomId = room.id;
-                                  },
-                                  orElse: () {});
-                            }
                             if (key.currentState == null) {
                               return;
                             }
@@ -433,15 +416,14 @@ class AddEditEventPage extends HookConsumerWidget {
                                       name: name.text,
                                       organizer: organizer.text,
                                       allDay: allDay.value,
-                                      location: location.text,
+                                      location: event.location,
                                       start: DateTime.parse(
                                           processDateBack(startString)),
                                       type: eventType.value,
                                       recurrenceRule: recurrenceRule,
                                       applicantId: user.id,
                                       applicant: user.toApplicant(),
-                                      decision: Decision.pending,
-                                      roomId: roomId);
+                                      decision: Decision.pending);
                                   final value = isEdit
                                       ? await eventListNotifier
                                           .updateEvent(newEvent)
