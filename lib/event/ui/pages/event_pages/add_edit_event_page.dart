@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
+import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
-import 'package:myecl/event/providers/is_room_provider.dart';
-import 'package:myecl/event/providers/room_id_provider.dart';
 import 'package:myecl/event/ui/event.dart';
 import 'package:myecl/event/ui/pages/event_pages/checkbox_entry.dart';
 import 'package:myecl/event/class/event.dart';
@@ -35,6 +34,7 @@ class AddEditEventPage extends HookConsumerWidget {
     final now = DateTime.now();
     final user = ref.watch(userProvider);
     final event = ref.watch(eventProvider);
+    final eventNotifier = ref.watch(eventProvider.notifier);
     final rooms = ref.watch(roomListProvider);
     final isEdit = event.id != Event.empty().id;
     final key = GlobalKey<FormState>();
@@ -42,13 +42,12 @@ class AddEditEventPage extends HookConsumerWidget {
     final eventType = useState(event.type);
     final name = useTextEditingController(text: event.name);
     final organizer = useTextEditingController(text: event.organizer);
-    final location = useTextEditingController(text: event.location);
     final description = useTextEditingController(text: event.description);
     final allDay = useState(event.allDay);
-    final roomId = ref.watch(roomIdProvider);
-    final roomIdNotifier = ref.watch(roomIdProvider.notifier);
-    final isRoom = ref.watch(isRoomProvider);
-    final isRoomNotifier = ref.watch(isRoomProvider.notifier);
+    final isRoom = useState(event.roomId != "");
+    final location =
+        useTextEditingController(text: isRoom.value ? "" : event.location);
+
     final recurrent = useState(event.recurrenceRule != ""
         ? event.recurrenceRule.contains("BYDAY")
         : false);
@@ -280,29 +279,31 @@ class AddEditEventPage extends HookConsumerWidget {
                       children: [
                         ItemChip(
                             onTap: () {
-                              isRoomNotifier.setIsRoom(true);
+                              isRoom.value = true;
                             },
-                            selected: isRoom,
+                            selected: isRoom.value,
                             child: Text(EventTextConstants.room,
                                 style: TextStyle(
-                                  color: isRoom ? Colors.white : Colors.black,
+                                  color: isRoom.value
+                                      ? Colors.white
+                                      : Colors.black,
                                   fontWeight: FontWeight.bold,
                                 ))),
                         ItemChip(
                           onTap: () {
-                            isRoomNotifier.setIsRoom(false);
-                            roomIdNotifier.setRoomId("");
+                            isRoom.value = false;
                           },
-                          selected: !isRoom,
+                          selected: !isRoom.value,
                           child: Text(EventTextConstants.other,
                               style: TextStyle(
-                                color: isRoom ? Colors.black : Colors.white,
+                                color:
+                                    isRoom.value ? Colors.black : Colors.white,
                                 fontWeight: FontWeight.bold,
                               )),
                         )
                       ]),
                   const SizedBox(height: 20),
-                  isRoom
+                  isRoom.value
                       ? SizedBox(
                           height: 59,
                           child: AsyncChild(
@@ -312,11 +313,11 @@ class AddEditEventPage extends HookConsumerWidget {
                                     height: 40,
                                     items: rooms,
                                     itemBuilder: (context, room, index) {
-                                      final selected = room.id == roomId;
+                                      final selected = room.id == event.roomId;
                                       return ItemChip(
                                         onTap: () {
-                                          location.text = room.name;
-                                          roomIdNotifier.setRoomId(room.id);
+                                          eventNotifier.setRoom(
+                                              room.name, room.id);
                                         },
                                         selected: selected,
                                         child: Text(room.name,
@@ -349,6 +350,22 @@ class AddEditEventPage extends HookConsumerWidget {
                         WaitingButton(
                           builder: (child) => AddEditButtonLayout(child: child),
                           onTap: () async {
+                            String roomId = Room.empty().id;
+                            if (isRoom.value) {
+                              location.text = event.location; //for validation
+                              roomId = event.roomId;
+                            } else {
+                              rooms.maybeWhen(
+                                  data: (data) {
+                                    final room = data.firstWhere(
+                                      (element) =>
+                                          element.name == location.text,
+                                      orElse: () => Room.empty(),
+                                    );
+                                    roomId = room.id;
+                                  },
+                                  orElse: () {});
+                            }
                             if (key.currentState == null) {
                               return;
                             }
