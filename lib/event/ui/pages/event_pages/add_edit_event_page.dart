@@ -28,8 +28,9 @@ import 'package:qlevar_router/qlevar_router.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class AddEditEventPage extends HookConsumerWidget {
-  const AddEditEventPage({super.key});
-
+  final eventTypeScrollKey = GlobalKey();
+  final eventRoomScrollKey = GlobalKey();
+  AddEditEventPage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final now = DateTime.now();
@@ -104,6 +105,7 @@ class AddEditEventPage extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 30),
                 HorizontalListView.builder(
+                    key: eventTypeScrollKey,
                     height: 40,
                     items: CalendarEventType.values,
                     itemBuilder: (context, value, index) {
@@ -309,6 +311,7 @@ class AddEditEventPage extends HookConsumerWidget {
                             value: rooms,
                             builder: (context, rooms) =>
                                 HorizontalListView.builder(
+                                    key: eventRoomScrollKey,
                                     height: 40,
                                     items: rooms,
                                     itemBuilder: (context, room, index) {
