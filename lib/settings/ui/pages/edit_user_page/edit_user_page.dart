@@ -185,14 +185,17 @@ class EditUserPage extends HookConsumerWidget {
                         );
                       }),
                   const SizedBox(height: 50),
-                  Text(
-                    '${SettingsTextConstants.promo} ${user.promo}',
-                    style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black),
-                  ),
-                  const SizedBox(height: 20),
+                  if (user.promo != null)
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 20),
+                      child: Text(
+                        '${SettingsTextConstants.promo} ${user.promo}',
+                        style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black),
+                      ),
+                    ),
                   AutoSizeText(
                     '${SettingsTextConstants.email} : ${user.email}',
                     maxLines: 1,
