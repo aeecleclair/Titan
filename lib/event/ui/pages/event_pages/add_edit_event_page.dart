@@ -293,7 +293,6 @@ class AddEditEventPage extends HookConsumerWidget {
                         ItemChip(
                           onTap: () {
                             isRoomNotifier.setIsRoom(false);
-                            roomIdNotifier.setRoomId("");
                           },
                           selected: !isRoom,
                           child: Text(EventTextConstants.other,
@@ -352,6 +351,9 @@ class AddEditEventPage extends HookConsumerWidget {
                         WaitingButton(
                           builder: (child) => AddEditButtonLayout(child: child),
                           onTap: () async {
+                            if (!isRoom) {
+                              roomIdNotifier.setRoomId("");
+                            }
                             if (key.currentState == null) {
                               return;
                             }
