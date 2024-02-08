@@ -420,7 +420,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                       name: name.text,
                                       organizer: organizer.text,
                                       allDay: allDay.value,
-                                      location: event.location,
+                                      location: location.text,
                                       start: DateTime.parse(
                                           processDateBack(startString)),
                                       type: eventType.value,
