@@ -51,7 +51,7 @@ class TestVSync implements TickerProvider {
 }
 
 class TestTicker extends Ticker {
-  TestTicker(TickerCallback onTick) : super(onTick);
+  TestTicker(super.onTick);
 
   @override
   void stop({bool canceled = true}) {}
