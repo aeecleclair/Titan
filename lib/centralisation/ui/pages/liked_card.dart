@@ -7,7 +7,7 @@ import 'package:myecl/centralisation/tools/functions.dart';
 
 class LikedCard extends StatelessWidget {
   final Module module;
-  const LikedCard({Key? key, required this.module}) : super(key: key);
+  const LikedCard({super.key, required this.module});
 
   @override
   Widget build(BuildContext context) {

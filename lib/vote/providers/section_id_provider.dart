@@ -12,7 +12,7 @@ final sectionIdProvider =
 });
 
 class SectionIdProvider extends StateNotifier<String> {
-  SectionIdProvider(String id) : super(id);
+  SectionIdProvider(super.id);
 
   void setId(String i) {
     state = i;

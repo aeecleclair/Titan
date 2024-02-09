@@ -26,7 +26,7 @@ final authTokenProvider =
 });
 
 class IsLoggedInProvider extends StateNotifier<bool> {
-  IsLoggedInProvider(bool b) : super(b);
+  IsLoggedInProvider(super.b);
 
   void refresh(AsyncValue<Map<String, String>> token) {
     state = token.maybeWhen(
@@ -39,7 +39,7 @@ class IsLoggedInProvider extends StateNotifier<bool> {
 }
 
 class IsCachingProvider extends StateNotifier<bool> {
-  IsCachingProvider(bool b) : super(b);
+  IsCachingProvider(super.b);
 
   void set(bool b) {
     state = b;

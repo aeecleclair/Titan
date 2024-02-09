@@ -15,7 +15,7 @@ import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 
 class AddRemAnnouncerPage extends HookConsumerWidget {
-  const AddRemAnnouncerPage({Key? key}) : super(key: key);
+  const AddRemAnnouncerPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

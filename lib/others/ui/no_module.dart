@@ -7,7 +7,7 @@ import 'package:myecl/tools/providers/path_forwarding_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class NoModulePage extends HookConsumerWidget {
-  const NoModulePage({Key? key}) : super(key: key);
+  const NoModulePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

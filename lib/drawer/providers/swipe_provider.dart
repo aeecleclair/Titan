@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SwipeControllerNotifier extends StateNotifier<AnimationController> {
-  SwipeControllerNotifier(AnimationController controller) : super(controller);
+  SwipeControllerNotifier(super.controller);
 
   static const double maxSlide = 255;
   static const dragRightStartVal = 60;

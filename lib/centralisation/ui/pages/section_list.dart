@@ -4,7 +4,7 @@ import 'package:myecl/centralisation/ui/pages/module_card.dart';
 
 class SectionList extends StatelessWidget {
   final Section section;
-  const SectionList({Key? key, required this.section}) : super(key: key);
+  const SectionList({super.key, required this.section});
 
   @override
   Widget build(BuildContext context) {

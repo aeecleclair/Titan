@@ -3,7 +3,7 @@ import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 
 class IsRoomNotifier extends StateNotifier<bool> {
-  IsRoomNotifier(bool b) : super(b);
+  IsRoomNotifier(super.b);
 
   void setIsRoom(bool b) {
     state = b;

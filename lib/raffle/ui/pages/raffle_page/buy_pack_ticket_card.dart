@@ -14,8 +14,7 @@ class BuyPackTicket extends HookConsumerWidget {
   final PackTicket packTicket;
   final Raffle raffle;
   const BuyPackTicket(
-      {Key? key, required this.packTicket, required this.raffle})
-      : super(key: key);
+      {super.key, required this.packTicket, required this.raffle});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

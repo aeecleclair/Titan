@@ -14,7 +14,7 @@ import 'package:myecl/tools/providers/path_forwarding_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AppSignIn extends HookConsumerWidget {
-  const AppSignIn({Key? key}) : super(key: key);
+  const AppSignIn({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

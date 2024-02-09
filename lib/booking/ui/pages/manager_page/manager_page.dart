@@ -11,7 +11,7 @@ import 'package:myecl/booking/ui/pages/manager_page/list_booking.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 
 class ManagerPage extends HookConsumerWidget {
-  const ManagerPage({Key? key}) : super(key: key);
+  const ManagerPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

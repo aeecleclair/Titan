@@ -4,7 +4,7 @@ import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 
 class RoomIdNotifier extends StateNotifier<String> {
-  RoomIdNotifier(String b) : super(b);
+  RoomIdNotifier(super.b);
 
   void setRoomId(String b) {
     state = b;

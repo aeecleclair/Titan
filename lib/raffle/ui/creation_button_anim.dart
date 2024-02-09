@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 
 class CustomButton extends HookConsumerWidget {
-  const CustomButton({Key? key, required this.text}) : super(key: key);
+  const CustomButton({super.key, required this.text});
   final String text;
 
   @override
