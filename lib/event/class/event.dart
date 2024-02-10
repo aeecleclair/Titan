@@ -28,24 +28,21 @@ class Event {
   late final String applicantId;
   late final Applicant applicant;
   late final Decision decision;
-  late final String roomId;
 
-  Event({
-    required this.id,
-    required this.name,
-    required this.organizer,
-    required this.start,
-    required this.end,
-    required this.location,
-    required this.type,
-    required this.description,
-    required this.allDay,
-    required this.recurrenceRule,
-    required this.applicantId,
-    required this.applicant,
-    required this.decision,
-    required this.roomId,
-  });
+  Event(
+      {required this.id,
+      required this.name,
+      required this.organizer,
+      required this.start,
+      required this.end,
+      required this.location,
+      required this.type,
+      required this.description,
+      required this.allDay,
+      required this.recurrenceRule,
+      required this.applicantId,
+      required this.applicant,
+      required this.decision});
 
   Event.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -63,7 +60,6 @@ class Event {
         ? Applicant.fromJson(json['applicant'])
         : Applicant.empty().copyWith(id: applicantId);
     decision = stringToDecision(json['decision']);
-    roomId = json['room_id'] ?? "";
   }
 
   Map<String, dynamic> toJson() {
@@ -80,42 +76,38 @@ class Event {
     data['recurrence_rule'] = recurrenceRule;
     data['applicant_id'] = applicant.id;
     data['decision'] = decision.toString().split('.')[1];
-    data['room_id'] = roomId;
     return data;
   }
 
-  Event copyWith({
-    String? id,
-    String? name,
-    String? organizer,
-    DateTime? start,
-    DateTime? end,
-    String? location,
-    CalendarEventType? type,
-    String? description,
-    bool? allDay,
-    String? recurrenceRule,
-    String? applicantId,
-    Applicant? applicant,
-    Decision? decision,
-    String? roomId,
-  }) {
+  Event copyWith(
+      {String? id,
+      String? name,
+      String? organizer,
+      DateTime? start,
+      DateTime? end,
+      String? location,
+      CalendarEventType? type,
+      String? description,
+      bool? allDay,
+      String? recurrenceRule,
+      String? applicantId,
+      Applicant? applicant,
+      Decision? decision,
+      bool? hasRoom}) {
     return Event(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      organizer: organizer ?? this.organizer,
-      start: start ?? this.start,
-      end: end ?? this.end,
-      location: location ?? this.location,
-      type: type ?? this.type,
-      description: description ?? this.description,
-      recurrenceRule: recurrenceRule ?? this.recurrenceRule,
-      allDay: allDay ?? this.allDay,
-      applicantId: applicantId ?? this.applicantId,
-      applicant: applicant ?? this.applicant,
-      decision: decision ?? this.decision,
-      roomId: roomId ?? this.roomId,
-    );
+        id: id ?? this.id,
+        name: name ?? this.name,
+        organizer: organizer ?? this.organizer,
+        start: start ?? this.start,
+        end: end ?? this.end,
+        location: location ?? this.location,
+        type: type ?? this.type,
+        description: description ?? this.description,
+        recurrenceRule: recurrenceRule ?? this.recurrenceRule,
+        allDay: allDay ?? this.allDay,
+        applicantId: applicantId ?? this.applicantId,
+        applicant: applicant ?? this.applicant,
+        decision: decision ?? this.decision);
   }
 
   Event.empty() {
@@ -132,11 +124,10 @@ class Event {
     applicantId = '';
     applicant = Applicant.empty();
     decision = Decision.pending;
-    roomId = '';
   }
 
   @override
   String toString() {
-    return 'Event{id: $id, name: $name, organizer: $organizer, start: $start, end: $end, allDay: $allDay, location: $location, type: $type, description: $description, recurrenceRule: $recurrenceRule, applicantId: $applicantId, applicant: $applicant, decision: $decision, roomId: $roomId}';
+    return 'Event{id: $id, name: $name, organizer: $organizer, start: $start, end: $end, allDay: $allDay, location: $location, type: $type, description: $description, recurrenceRule: $recurrenceRule, applicantId: $applicantId, applicant: $applicant, decision: $decision';
   }
 }

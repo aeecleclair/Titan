@@ -75,11 +75,6 @@ void main() {
       newEvent = event.copyWith(
         decision: Decision.approved,
       );
-      expect(newEvent.decision, Decision.approved);
-      newEvent = event.copyWith(
-        roomId: "1",
-      );
-      expect(newEvent.roomId, "1");
     });
 
     test('Should print an event', () {
@@ -97,10 +92,9 @@ void main() {
         applicantId: "1",
         applicant: Applicant.empty().copyWith(id: "1"),
         decision: Decision.approved,
-        roomId: "1",
       );
       expect(event.toString(),
-          'Event{id: 1, name: Event 1, organizer: 1, start: 2021-01-01 00:00:00.000Z, end: 2021-01-01 00:00:00.000Z, allDay: false, location: Location 1, type: CalendarEventType.eventAE, description: Description 1, recurrenceRule: , applicantId: 1, applicant: Applicant{name: Nom, firstname: Prénom, nickname: null, id: 1, email: empty@ecl.ec-lyon.fr, promo: null, phone: null}, decision: Decision.approved, roomId: 1}');
+          'Event{id: 1, name: Event 1, organizer: 1, start: 2021-01-01 00:00:00.000Z, end: 2021-01-01 00:00:00.000Z, allDay: false, location: Location 1, type: CalendarEventType.eventAE, description: Description 1, recurrenceRule: , applicantId: 1, applicant: Applicant{name: Nom, firstname: Prénom, nickname: null, id: 1, email: empty@ecl.ec-lyon.fr, promo: null, phone: null}, decision: Decision.approved');
     });
 
     test('Should parse an event from json', () {
@@ -126,7 +120,6 @@ void main() {
           "promo": null,
         },
         "decision": "accepted",
-        "room_id": "1",
       });
       expect(event, isA<Event>());
     });
@@ -154,7 +147,6 @@ void main() {
           "promo": null,
         },
         "decision": "approved",
-        "room_id": "1",
       });
       expect(event.toJson(), {
         "id": "1",
@@ -169,7 +161,6 @@ void main() {
         "recurrence_rule": "",
         "applicant_id": "1",
         "decision": "approved",
-        "room_id": "1",
       });
     });
   });

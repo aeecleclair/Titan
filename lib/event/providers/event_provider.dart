@@ -7,6 +7,10 @@ class EventNotifier extends StateNotifier<Event> {
   void setEvent(Event event) {
     state = event;
   }
+
+  void setRoom(String location) {
+    state = state.copyWith(location: location);
+  }
 }
 
 final eventProvider = StateNotifierProvider<EventNotifier, Event>((ref) {
