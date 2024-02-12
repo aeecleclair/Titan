@@ -6,7 +6,7 @@ final deliveryIdProvider =
 });
 
 class DeliveryIdProvider extends StateNotifier<String> {
-  DeliveryIdProvider(String id) : super(id);
+  DeliveryIdProvider(super.id);
 
   void setId(String i) {
     state = i;

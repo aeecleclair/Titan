@@ -4,7 +4,7 @@ import 'package:myecl/amap/providers/product_list_provider.dart';
 
 class SortedByCategoryProvider
     extends StateNotifier<Map<String, List<Product>>> {
-  SortedByCategoryProvider(Map<String, List<Product>> p) : super(p);
+  SortedByCategoryProvider(super.p);
 }
 
 final sortedByCategoryProductsProvider =

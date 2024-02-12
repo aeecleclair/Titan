@@ -11,12 +11,11 @@ class TicketUI extends HookConsumerWidget {
   final Future Function() onDelete;
   final bool showButton;
   const TicketUI(
-      {Key? key,
+      {super.key,
       required this.packTicket,
       required this.onEdit,
       required this.onDelete,
-      required this.showButton})
-      : super(key: key);
+      required this.showButton});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

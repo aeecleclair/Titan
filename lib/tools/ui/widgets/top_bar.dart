@@ -15,13 +15,12 @@ class TopBar extends HookConsumerWidget {
   final VoidCallback? onBack;
   final Widget? rightIcon;
   const TopBar(
-      {Key? key,
+      {super.key,
       required this.title,
       required this.root,
       this.onMenu,
       this.onBack,
-      this.rightIcon})
-      : super(key: key);
+      this.rightIcon});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

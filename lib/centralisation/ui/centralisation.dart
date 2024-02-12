@@ -5,8 +5,7 @@ import 'package:myecl/tools/ui/widgets/top_bar.dart';
 
 class CentralisationTemplate extends StatelessWidget {
   final Widget child;
-  const CentralisationTemplate({Key? key, required this.child})
-      : super(key: key);
+  const CentralisationTemplate({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

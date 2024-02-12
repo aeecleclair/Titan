@@ -12,7 +12,7 @@ import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class LeftPanel extends HookConsumerWidget {
-  const LeftPanel({Key? key}) : super(key: key);
+  const LeftPanel({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

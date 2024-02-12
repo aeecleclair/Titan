@@ -3,7 +3,7 @@ import 'package:myecl/cinema/providers/session_list_provider.dart';
 
 class MainPageIndexNotifier extends StateNotifier<int> {
   int startPage = 0;
-  MainPageIndexNotifier(int i) : super(i);
+  MainPageIndexNotifier(super.i);
 
   void setMainPageIndex(int event) {
     state = event;
