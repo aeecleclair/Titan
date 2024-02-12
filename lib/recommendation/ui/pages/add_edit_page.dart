@@ -16,6 +16,7 @@ import 'package:myecl/recommendation/ui/widgets/recommendation_template.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:myecl/tools/ui/widgets/image_picker_on_tap.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -24,7 +25,6 @@ class AddEditRecommendationPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    const maxFileSize = 4194304;
     final formKey = GlobalKey<FormState>();
     final ImagePicker picker = ImagePicker();
     final recommendation = ref.watch(recommendationProvider);
@@ -34,8 +34,8 @@ class AddEditRecommendationPage extends HookConsumerWidget {
         ref.watch(recommendationListProvider.notifier);
     final recommendationLogoNotifier =
         ref.watch(recommendationLogoProvider.notifier);
-    final logo = useState<Uint8List?>(null);
-    final logoFile = useState<Image?>(null);
+    final logoBytes = useState<Uint8List?>(null);
+    final logo = useState<Image?>(null);
     final isEdit = recommendation.id != Recommendation.empty().id;
 
     final title = useTextEditingController(text: recommendation.title);
@@ -50,7 +50,7 @@ class AddEditRecommendationPage extends HookConsumerWidget {
           value[recommendation]!.whenData(
             (data) {
               if (data.isNotEmpty) {
-                logoFile.value = data.first;
+                logo.value = data.first;
               }
             },
           );
@@ -78,43 +78,27 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                 const SizedBox(height: 30),
                 FormField<File>(
                   validator: (e) {
-                    if (logo.value == null && !isEdit) {
+                    if (logoBytes.value == null && !isEdit) {
                       return RecommendationTextConstants.addImage;
                     }
                     return null;
                   },
                   builder: (formFieldState) => Center(
-                    child: GestureDetector(
-                      onTap: () async {
-                        final XFile? image =
-                            await picker.pickImage(source: ImageSource.gallery);
-                        if (image != null) {
-                          final size = await image.length();
-                          if (size > maxFileSize) {
-                            displayAdvertToastWithContext(TypeMsg.error,
-                                RecommendationTextConstants.imageSizeTooBig);
-                          } else {
-                            if (kIsWeb) {
-                              logo.value = await image.readAsBytes();
-                              logoFile.value = Image.network(image.path);
-                            } else {
-                              final file = File(image.path);
-                              logo.value = await file.readAsBytes();
-                              logoFile.value = Image.file(file);
-                            }
-                          }
-                        }
-                      },
-                      child: logoFile.value != null
+                    child: ImagePickerOnTap(
+                      imageBytesNotifier: logoBytes,
+                      imageNotifier: logo,
+                      displayToastWithContext: displayAdvertToastWithContext,
+                      picker: picker,
+                      child: logo.value != null
                           ? Container(
                               height: 100,
                               width: 100,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(50.0),
                                 image: DecorationImage(
-                                  image: logo.value != null
-                                      ? Image.memory(logo.value!).image
-                                      : logoFile.value!.image,
+                                  image: logoBytes.value != null
+                                      ? Image.memory(logoBytes.value!).image
+                                      : logo.value!.image,
                                 ),
                               ),
                             )
@@ -182,10 +166,10 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                               RecommendationTextConstants.editedRecommendation);
                           recommendationList.maybeWhen(
                             data: (list) {
-                              if (logo.value != null) {
+                              if (logoBytes.value != null) {
                                 recommendationLogoNotifier
                                     .updateRecommendationLogo(
-                                        recommendation.id!, logo.value!);
+                                        recommendation.id!, logoBytes.value!);
                               }
                             },
                             orElse: () {},
@@ -198,7 +182,7 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                               final newRecommendation = list.last;
                               recommendationLogoNotifier
                                   .updateRecommendationLogo(
-                                      newRecommendation.id!, logo.value!);
+                                      newRecommendation.id!, logoBytes.value!);
                             },
                             orElse: () {},
                           );

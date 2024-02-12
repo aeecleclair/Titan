@@ -21,6 +21,4 @@ class RecommendationTextConstants {
       'Champs incorrects ou manquants';
   static const String editingError = "Échec de la modification";
   static const String addingError = "Échec de l'ajout";
-  static const String imageSizeTooBig =
-      "La taille de l'image ne doit pas dépasser 4 Mio";
 }
