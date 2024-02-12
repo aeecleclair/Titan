@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:plausible_analytics/plausible_analytics.dart';
+import 'package:myecl/tools/plausible/plausible.dart';
 
 class PlausibleObserver extends NavigatorObserver {
   final Plausible plausible;

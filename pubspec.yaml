@@ -45,7 +45,6 @@ dependencies:
   package_info_plus: ^5.0.1
   path: ^1.8.2
   path_provider: ^2.0.11
-  plausible_analytics: ^0.3.0
   rxdart: ^0.27.7
   qlevar_router: ^1.9.0
   shared_preferences: ^2.1.1
