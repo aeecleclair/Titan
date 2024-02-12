@@ -5,7 +5,7 @@ import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/recommendation/providers/is_recommendation_admin_provider.dart';
 import 'package:myecl/recommendation/ui/pages/main_page.dart'
     deferred as main_page;
-import 'package:myecl/recommendation/ui/pages/information_recommendation_page.dart'
+import 'package:myecl/recommendation/ui/pages/information_page.dart'
     deferred as information_page;
 import 'package:myecl/recommendation/ui/pages/add_edit_page.dart'
     deferred as add_edit_page;
