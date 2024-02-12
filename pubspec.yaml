@@ -17,14 +17,14 @@ dependencies:
   firebase_core: ^2.15.1
   either_dart: ^1.0.0
   firebase_messaging: ^14.4.1
-  fl_chart: ^0.63.0
+  fl_chart: ^0.66.1
   flash: ^3.0.5+1
   flutter:
     sdk: flutter
   flutter_appauth: ^6.0.0
   flutter_dotenv: ^5.0.2
   flutter_hooks: ^0.20.0
-  flutter_local_notifications: ^15.0.0
+  flutter_local_notifications: ^16.3.2
   flutter_localizations:
     sdk: flutter
   flutter_riverpod: ^2.1.1
@@ -40,16 +40,16 @@ dependencies:
   intl: ^0.18.0
   jwt_decoder: ^2.0.1
   load_switch: ^2.0.5
-  mocktail: ^0.3.0
+  mocktail: ^1.0.3
   numberpicker: ^2.1.1
-  package_info_plus: ^4.0.2
+  package_info_plus: ^5.0.1
   path: ^1.8.2
   path_provider: ^2.0.11
   rxdart: ^0.27.7
   qlevar_router: ^1.9.0
   shared_preferences: ^2.1.1
   smooth_page_indicator: ^1.0.0+2
-  syncfusion_flutter_calendar: ^23.1.36
+  syncfusion_flutter_calendar: ^24.2.4
   timezone: ^0.9.0
   tuple: ^2.0.0
   universal_html: ^2.0.8
