@@ -22,7 +22,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 
 class RaffleRouter {
   final ProviderRef ref;
-  static const String root = '/raffle';
+  static const String root = '/tombola';
   static const String admin = '/admin';
   static const String detail = '/detail';
   static const String addEditPrize = '/add_edit_prize';
