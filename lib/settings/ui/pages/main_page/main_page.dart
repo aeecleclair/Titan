@@ -95,9 +95,7 @@ class SettingsMainPage extends HookConsumerWidget {
                                       children: [
                                         const SizedBox(height: 8),
                                         Text(
-                                          me.nickname != null
-                                              ? me.nickname!
-                                              : me.firstname,
+                                          me.nickname ?? me.firstname,
                                           style: const TextStyle(
                                             fontSize: 25,
                                             fontWeight: FontWeight.bold,

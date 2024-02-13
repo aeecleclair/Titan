@@ -29,8 +29,7 @@ class MemberCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 10),
-          AutoSizeText(
-              member.nickname != null ? member.nickname! : member.firstname,
+          AutoSizeText(member.nickname ?? member.firstname,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
