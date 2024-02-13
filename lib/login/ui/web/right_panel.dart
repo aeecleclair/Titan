@@ -8,7 +8,7 @@ import 'package:myecl/login/class/screen_shot.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class RightPanel extends HookConsumerWidget {
-  const RightPanel({Key? key}) : super(key: key);
+  const RightPanel({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

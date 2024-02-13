@@ -3,7 +3,7 @@ import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/settings/providers/module_list_provider.dart';
 
 class ModuleListNotifier extends StateNotifier<List<Module>> {
-  ModuleListNotifier(List<Module> listModule) : super(listModule);
+  ModuleListNotifier(super.listModule);
 
   void select(int i) {
     List<Module> r = state.sublist(0);

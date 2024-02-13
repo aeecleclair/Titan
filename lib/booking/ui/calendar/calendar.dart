@@ -12,7 +12,7 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class Calendar extends HookConsumerWidget {
   final bool isManagerPage;
-  const Calendar({Key? key, required this.isManagerPage}) : super(key: key);
+  const Calendar({super.key, required this.isManagerPage});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

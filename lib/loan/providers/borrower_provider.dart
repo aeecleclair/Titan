@@ -3,7 +3,7 @@ import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/user/class/list_users.dart';
 
 class BorrowerNotifier extends StateNotifier<SimpleUser> {
-  BorrowerNotifier(SimpleUser borrower) : super(borrower);
+  BorrowerNotifier(super.borrower);
 
   void setBorrower(SimpleUser borrower) {
     state = borrower;

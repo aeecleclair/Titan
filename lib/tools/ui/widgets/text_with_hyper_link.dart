@@ -7,7 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 class TextWithHyperLink extends StatelessWidget {
   const TextWithHyperLink(
     this.text, {
-    Key? key,
+    super.key,
     this.style,
     this.linkStyle,
     this.strutStyle,
@@ -27,7 +27,7 @@ class TextWithHyperLink extends StatelessWidget {
     this.maxFontSize = double.infinity,
     this.stepGranularity = 1,
     this.wrapWords = true,
-  }) : super(key: key);
+  });
 
   final String text;
   final TextStyle? style;

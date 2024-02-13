@@ -7,7 +7,7 @@ import 'package:myecl/tools/ui/widgets/top_bar.dart';
 
 class AdvertTemplate extends HookConsumerWidget {
   final Widget child;
-  const AdvertTemplate({Key? key, required this.child}) : super(key: key);
+  const AdvertTemplate({super.key, required this.child});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

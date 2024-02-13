@@ -10,7 +10,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 
 class QuitDialog extends HookConsumerWidget {
-  const QuitDialog({Key? key}) : super(key: key);
+  const QuitDialog({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

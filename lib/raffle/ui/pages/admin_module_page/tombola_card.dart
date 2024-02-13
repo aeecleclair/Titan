@@ -7,7 +7,7 @@ import 'package:myecl/raffle/tools/functions.dart';
 
 class TombolaCard extends HookConsumerWidget {
   final Raffle raffle;
-  const TombolaCard({Key? key, required this.raffle}) : super(key: key);
+  const TombolaCard({super.key, required this.raffle});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

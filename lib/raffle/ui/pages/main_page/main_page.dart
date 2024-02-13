@@ -144,9 +144,7 @@ class RaffleMainPage extends HookConsumerWidget {
                               child: const SectionTitle(
                                   text: RaffleTextConstants.actualRaffles),
                             ),
-                          ...onGoingRaffles
-                              .map((e) => RaffleWidget(raffle: e))
-                              .toList(),
+                          ...onGoingRaffles.map((e) => RaffleWidget(raffle: e)),
                           if (incomingRaffles.isNotEmpty)
                             Container(
                                 margin: const EdgeInsets.only(
@@ -154,17 +152,14 @@ class RaffleMainPage extends HookConsumerWidget {
                                 child: const SectionTitle(
                                     text: RaffleTextConstants.nextRaffles)),
                           ...incomingRaffles
-                              .map((e) => RaffleWidget(raffle: e))
-                              .toList(),
+                              .map((e) => RaffleWidget(raffle: e)),
                           if (pastRaffles.isNotEmpty)
                             Container(
                                 margin: const EdgeInsets.only(
                                     bottom: 10, top: 20, left: 5),
                                 child: const SectionTitle(
                                     text: RaffleTextConstants.pastRaffles)),
-                          ...pastRaffles
-                              .map((e) => RaffleWidget(raffle: e))
-                              .toList(),
+                          ...pastRaffles.map((e) => RaffleWidget(raffle: e)),
                           if (onGoingRaffles.isEmpty &&
                               incomingRaffles.isEmpty &&
                               pastRaffles.isEmpty)

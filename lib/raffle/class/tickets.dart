@@ -25,7 +25,7 @@ class Ticket {
     final data = <String, dynamic>{};
     data['type_id'] = packTicket.id;
     data['user_id'] = user.id;
-    data['lot'] = prize != null ? prize!.id : null;
+    data['lot'] = prize?.id;
     data['id'] = id;
     return data;
   }

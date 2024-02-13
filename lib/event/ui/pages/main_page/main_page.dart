@@ -79,11 +79,9 @@ class EventMainPage extends HookConsumerWidget {
                       color: Colors.grey.shade500,
                     ))),
               ),
-              ...eventList
-                  .map((event) => EventUi(
-                        event: event,
-                      ))
-                  .toList(),
+              ...eventList.map((event) => EventUi(
+                    event: event,
+                  )),
               const SizedBox(height: 80)
             ],
           );

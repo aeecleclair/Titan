@@ -112,45 +112,43 @@ class AdminMainPage extends HookConsumerWidget {
                           ],
                         ),
                       ),
-                      ...g
-                          .map((group) => AssociationUi(
-                                group: group,
-                                isLoaner: loanersId.contains(group.id),
-                                onEdit: () {
-                                  groupIdNotifier.setId(group.id);
-                                  QR.to(AdminRouter.root +
-                                      AdminRouter.editAssociation);
-                                },
-                                onDelete: () async {
-                                  await showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return CustomDialogBox(
-                                          title: AdminTextConstants.deleting,
-                                          descriptions: AdminTextConstants
-                                              .deleteAssociation,
-                                          onYes: () async {
-                                            tokenExpireWrapper(ref, () async {
-                                              final value = await groupsNotifier
-                                                  .deleteGroup(group);
-                                              if (value) {
-                                                displayToastWithContext(
-                                                    TypeMsg.msg,
-                                                    AdminTextConstants
-                                                        .deletedAssociation);
-                                              } else {
-                                                displayToastWithContext(
-                                                    TypeMsg.error,
-                                                    AdminTextConstants
-                                                        .deletingError);
-                                              }
-                                            });
-                                          },
-                                        );
-                                      });
-                                },
-                              ))
-                          .toList(),
+                      ...g.map((group) => AssociationUi(
+                            group: group,
+                            isLoaner: loanersId.contains(group.id),
+                            onEdit: () {
+                              groupIdNotifier.setId(group.id);
+                              QR.to(AdminRouter.root +
+                                  AdminRouter.editAssociation);
+                            },
+                            onDelete: () async {
+                              await showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return CustomDialogBox(
+                                      title: AdminTextConstants.deleting,
+                                      descriptions:
+                                          AdminTextConstants.deleteAssociation,
+                                      onYes: () async {
+                                        tokenExpireWrapper(ref, () async {
+                                          final value = await groupsNotifier
+                                              .deleteGroup(group);
+                                          if (value) {
+                                            displayToastWithContext(
+                                                TypeMsg.msg,
+                                                AdminTextConstants
+                                                    .deletedAssociation);
+                                          } else {
+                                            displayToastWithContext(
+                                                TypeMsg.error,
+                                                AdminTextConstants
+                                                    .deletingError);
+                                          }
+                                        });
+                                      },
+                                    );
+                                  });
+                            },
+                          )),
                       const SizedBox(height: 20)
                     ],
                   ),

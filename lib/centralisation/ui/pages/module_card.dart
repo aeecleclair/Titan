@@ -8,7 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class ModuleCard extends HookConsumerWidget {
   final Module module;
-  const ModuleCard({Key? key, required this.module}) : super(key: key);
+  const ModuleCard({super.key, required this.module});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
