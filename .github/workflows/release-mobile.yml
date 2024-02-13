@@ -61,7 +61,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: '3.13'
+          flutter-version: '3.16.9'
           cache: true
       
       - name: Cleanup 🧹
