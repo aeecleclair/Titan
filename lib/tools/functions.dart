@@ -1,6 +1,7 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:intl/intl.dart';
@@ -380,9 +381,17 @@ bool isStudent(String email) {
   return regex.hasMatch(email);
 }
 
-Plausible getPlausible() {
+Plausible? getPlausible() {
   final serverUrl = dotenv.env["PLAUSIBLE_HOST"];
   final domain = dotenv.env["PLAUSIBLE_DOMAIN"];
 
-  return Plausible(serverUrl!, domain!);
+  if (serverUrl == null || domain == null) {
+    return null;
+  }
+
+  if (appFlavor == "prod" || appFlavor == "alpha") {
+    return Plausible(serverUrl, domain);
+  }
+
+  return null;
 }

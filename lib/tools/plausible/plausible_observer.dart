@@ -10,7 +10,7 @@ class PlausibleObserver extends NavigatorObserver {
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPush(route, previousRoute);
     if (route.settings.name != null) {
-      plausible.event(page: route.settings.name!);
+      plausible.event(route.settings.name!);
     }
   }
 
@@ -18,7 +18,7 @@ class PlausibleObserver extends NavigatorObserver {
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPop(route, previousRoute);
     if (previousRoute?.settings.name != null) {
-      plausible.event(page: previousRoute!.settings.name!);
+      plausible.event(previousRoute!.settings.name!);
     }
   }
 }

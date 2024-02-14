@@ -47,6 +47,7 @@ class MyApp extends HookConsumerWidget {
         useAnimationController(duration: const Duration(seconds: 2));
     final animationNotifier = ref.read(backgroundAnimationProvider.notifier);
     final navigatorKey = GlobalKey<NavigatorState>();
+    final plausible = getPlausible();
     Future(() => animationNotifier.setController(animationController));
 
     final myWillPopScope = WillPopScope(
@@ -93,9 +94,7 @@ class MyApp extends HookConsumerWidget {
           },
           routerDelegate: QRouterDelegate(
             appRouter.routes,
-            observers: appFlavor == "prod" || appFlavor == "alpha"
-                ? [PlausibleObserver(getPlausible())]
-                : [],
+            observers: [if (plausible != null) PlausibleObserver(plausible)],
             initPath: AppRouter.root,
             navKey: navigatorKey,
           ),

@@ -1,78 +1,51 @@
 import 'package:flutter/foundation.dart';
-import 'package:universal_io/io.dart'; // instead of 'dart:io';
 import 'dart:convert';
 
-// Code taken from the plugin plausible_analytics
-// The plugin should be used once it is fixed
+import 'package:http/http.dart' as http;
+import 'package:ua_client_hints/ua_client_hints.dart';
+
+// This code was taken from the plugin plausible_analytics and adapted
+// We should switch to a plugin when one will work
 
 /// Plausible class. Use the constructor to set the parameters.
 class Plausible {
   /// The url of your plausible server e.g. https://plausible.io
-  String serverUrl;
-  String userAgent;
-  String domain;
-  String screenWidth;
-  bool enabled = true;
+  final String serverUrl;
+  final String domain;
 
   /// Constructor
-  Plausible(this.serverUrl, this.domain,
-      {this.userAgent = "", this.screenWidth = ""});
+  Plausible(serverUrl, this.domain)
+      // Remove trailing slash '/'
+      : serverUrl = serverUrl.endsWith("/")
+            ? serverUrl.substring(0, serverUrl.length - 1)
+            : serverUrl;
 
   /// Post event to plausible
-  Future<int> event(
-      {String name = "pageview",
-      String referrer = "",
-      String page = "",
-      Map<String, String> props = const {}}) async {
-    if (!enabled) {
-      return 0;
-    }
-
-    // Post-edit parameters
-    int lastCharIndex = serverUrl.length - 1;
-    if (serverUrl.toString()[lastCharIndex] == '/') {
-      // Remove trailing slash '/'
-      serverUrl = serverUrl.substring(0, lastCharIndex);
-    }
+  Future<int> event(String page) async {
+    // https://plausible.io/docs/events-api#request-body-json-parameters
     page = "app://localhost/$page";
-    referrer = "app://localhost/$referrer";
 
-    // Get and set device infos
-    String version = Platform.operatingSystemVersion.replaceAll('"', '');
+    final Map<String, String> headers = {
+      "Content-Type": "application/json",
+    };
 
-    if (userAgent == "") {
-      userAgent = "Mozilla/5.0 ($version; rv:53.0) Gecko/20100101 Chrome/53.0";
+    if (!kIsWeb) {
+      // browser adds by default this header so we should not overwrite it
+      headers["User-Agent"] = await userAgent();
     }
 
-    // Http Post request see https://plausible.io/docs/events-api
-    HttpClient client = HttpClient();
-    try {
-      HttpClientRequest request =
-          await client.postUrl(Uri.parse('$serverUrl/api/event'));
-      if (!kIsWeb) {
-        // browser adds by default this header so we should not overwrite it
-        request.headers.set('User-Agent', userAgent);
-      }
-      request.headers.set('Content-Type', 'application/json; charset=utf-8');
-      Object body = {
-        "domain": domain,
-        "name": name,
-        "url": page,
-        "referrer": referrer,
-        "screen_width": screenWidth,
-        "props": props,
-      };
-      request.write(json.encode(body));
-      final HttpClientResponse response = await request.close();
-      return response.statusCode;
-    } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
-    } finally {
-      client.close();
-    }
+    final Map<String, String> body = {
+      "domain": domain,
+      "name": "pageview",
+      "url": page,
+    };
 
-    return 1;
+    final response = await http.post(
+      Uri.parse('$serverUrl/api/event'),
+      body: jsonEncode(body),
+      headers: headers,
+    );
+
+    return response.statusCode;
   }
 }
