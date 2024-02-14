@@ -13,6 +13,7 @@ dependencies:
   collection: ^1.16.0
   crypto: ^3.0.2
   datetime_picker_formfield: ^2.0.1
+  device_info_plus: ^9.1.2
   dotenv: ^4.0.1
   firebase_core: ^2.15.1
   either_dart: ^1.0.0
@@ -52,7 +53,6 @@ dependencies:
   syncfusion_flutter_calendar: ^23.1.36
   timezone: ^0.9.0
   tuple: ^2.0.0
-  ua_client_hints: ^1.2.2
   universal_html: ^2.0.8
   url_launcher: ^6.1.7
   vector_math: ^2.1.2

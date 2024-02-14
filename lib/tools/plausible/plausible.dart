@@ -1,8 +1,11 @@
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:ua_client_hints/ua_client_hints.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 // This code was taken from the plugin plausible_analytics and adapted
 // We should switch to a plugin when one will work
@@ -29,9 +32,22 @@ class Plausible {
       "Content-Type": "application/json",
     };
 
+    // browser adds by default the User-Agent header so we should not overwrite it
     if (!kIsWeb) {
-      // browser adds by default this header so we should not overwrite it
-      headers["User-Agent"] = await userAgent();
+      final packageInfo = await PackageInfo.fromPlatform();
+      final deviceInfoPlugin = DeviceInfoPlugin();
+      if (Platform.isAndroid) {
+        final androidInfo = await deviceInfoPlugin.androidInfo;
+        if (Platform.isAndroid) {
+          headers["User-Agent"] =
+              "${packageInfo.appName}/${packageInfo.version} Android/${androidInfo.version.release} (SDK ${androidInfo.version.sdkInt}; ${androidInfo.model} Build/${androidInfo.id})";
+        }
+        if (Platform.isIOS) {
+          final iosInfo = await deviceInfoPlugin.iosInfo;
+          headers["User-Agent"] =
+              "${packageInfo.appName}/${packageInfo.version} iOS/${iosInfo.systemVersion} (${iosInfo.model})";
+        }
+      }
     }
 
     final Map<String, String> body = {
