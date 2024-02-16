@@ -17,16 +17,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 final modulesProvider =
     StateNotifierProvider<ModulesNotifier, List<Module>>((ref) {
-  final myModulesRoot =
+  final userRoots =
       ref.watch(allMyModuleRootList).map((root) => '/$root').toList();
 
   ModulesNotifier modulesNotifier = ModulesNotifier();
-  modulesNotifier.loadModules(myModulesRoot);
+  modulesNotifier.loadModules(userRoots);
   return modulesNotifier;
 });
 
 class ModulesNotifier extends StateNotifier<List<Module>> {
-  String dbModule = "modules";
+  String dbSelectedModules = "modules";
   String dbAllModules = "allModules";
   final eq = const DeepCollectionEquality.unordered();
   List<Module> allModules = [
@@ -45,9 +45,9 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
 
   void saveModules() {
     SharedPreferences.getInstance().then((prefs) {
-      prefs.remove(dbModule);
+      prefs.remove(dbSelectedModules);
       prefs.setStringList(
-          dbModule, state.map((e) => e.root.toString()).toList());
+          dbSelectedModules, state.map((e) => e.root.toString()).toList());
     });
   }
 
@@ -59,37 +59,39 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     });
   }
 
-  Future loadModules(List<String> roots) async {
+  Future loadModules(List<String> userRoots) async {
     final prefs = await SharedPreferences.getInstance();
-    List<String> modulesName = prefs.getStringList(dbModule) ?? [];
-    List<String> allSavedModulesName = prefs.getStringList(dbAllModules) ?? [];
-    final allModulesName = allModules.map((e) => e.root.toString()).toList();
-    if (modulesName.isEmpty) {
-      modulesName = allModulesName;
+    List<String> selectedModulesRoot =
+        prefs.getStringList(dbSelectedModules) ?? [];
+    List<String> allSavedModulesRoot = prefs.getStringList(dbAllModules) ?? [];
+    final allModulesRoot = allModules.map((e) => e.root.toString()).toList();
+    if (selectedModulesRoot.isEmpty) {
+      selectedModulesRoot = allModulesRoot;
       saveModules();
     }
-    if (allSavedModulesName.isEmpty ||
-        !eq.equals(allSavedModulesName, allModulesName)) {
-      allSavedModulesName = allModulesName;
-      modulesName = allModulesName;
+    if (allSavedModulesRoot.isEmpty ||
+        !eq.equals(allSavedModulesRoot, allModulesRoot)) {
+      allSavedModulesRoot = allModulesRoot;
+      selectedModulesRoot = allModulesRoot;
       saveAllModules();
       saveModules();
     } else {
-      allModules.sort((a, b) => allSavedModulesName
+      allModules.sort((a, b) => allSavedModulesRoot
           .indexOf(a.root.toString())
-          .compareTo(allSavedModulesName.indexOf(b.root.toString())));
-      modulesName.sort((a, b) => allSavedModulesName
+          .compareTo(allSavedModulesRoot.indexOf(b.root.toString())));
+      selectedModulesRoot.sort((a, b) => allSavedModulesRoot
           .indexOf(a)
-          .compareTo(allSavedModulesName.indexOf(b)));
+          .compareTo(allSavedModulesRoot.indexOf(b)));
     }
-    List<Module> modules = [];
+    List<Module> selectedModules = [];
     List<Module> toDelete = [];
-    for (String name in modulesName) {
-      if (allModulesName.contains(name)) {
-        Module module = allModules[allSavedModulesName.indexOf(name)];
-        if (roots.contains(module.root)) {
-          modules.add(module);
+    for (String root in selectedModulesRoot) {
+      if (allModulesRoot.contains(root)) {
+        Module module = allModules[allSavedModulesRoot.indexOf(root)];
+        if (userRoots.contains(module.root)) {
+          selectedModules.add(module);
         } else if (!kDebugMode) {
+          // Allow debug on modules that don't have a Hyperion Module Visibility root
           toDelete.add(module);
         }
       }
@@ -97,15 +99,15 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     for (Module module in toDelete) {
       allModules.remove(module);
     }
-    state = modules;
+    state = selectedModules;
   }
 
   void sortModules() {
-    final allModulesName = allModules.map((e) => e.root.toString()).toList();
+    final allModulesRoot = allModules.map((e) => e.root.toString()).toList();
     final sorted = state.sublist(0)
-      ..sort((a, b) => allModulesName
+      ..sort((a, b) => allModulesRoot
           .indexOf(a.root.toString())
-          .compareTo(allModulesName.indexOf(b.root.toString())));
+          .compareTo(allModulesRoot.indexOf(b.root.toString())));
     state = sorted;
     saveModules();
   }
@@ -122,14 +124,14 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     saveAllModules();
   }
 
-  void toggleModule(Module m) {
-    List<Module> r = state.sublist(0);
-    if (r.contains(m)) {
-      r.remove(m);
+  void toggleModule(Module module) {
+    List<Module> selectedModules = state.sublist(0);
+    if (selectedModules.contains(module)) {
+      selectedModules.remove(module);
     } else {
-      r.add(m);
+      selectedModules.add(module);
     }
-    state = r;
+    state = selectedModules;
     sortModules();
     saveModules();
   }
