@@ -11,6 +11,7 @@ import 'package:myecl/drawer/tools/constants.dart';
 import 'package:myecl/home/providers/scrolled_provider.dart';
 import 'package:myecl/settings/router.dart';
 import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/providers/path_forwarding_provider.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/user/providers/user_provider.dart';
@@ -90,8 +91,7 @@ class DrawerTopBar extends HookConsumerWidget {
                             child: CircleAvatar(
                               radius: 25,
                               backgroundImage: file.isEmpty
-                                  // TODO: use get_titan_logo()
-                                  ? const AssetImage("assets/images/logo.png")
+                                  ? AssetImage(getTitanLogo())
                                   : Image.memory(file).image,
                             ),
                           ),

@@ -41,9 +41,8 @@ class LocalNotificationService {
   }
 
   NotificationDetails getNotificationDetails() {
-    // TODO: use get_titan_url_scheme()
     AndroidNotificationDetails androidNotificationDetails =
-        const AndroidNotificationDetails("fr.myecl.titan", "TitanNotification",
+        AndroidNotificationDetails(getTitanUrlScheme(), "TitanNotification",
             channelDescription: "Notifications channel for Titan",
             importance: Importance.max,
             priority: Priority.max,
