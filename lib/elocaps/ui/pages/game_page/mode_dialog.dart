@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/elocaps/class/caps_mode.dart';
 import 'package:myecl/elocaps/providers/mode_chosen_provider.dart';
 import 'package:myecl/elocaps/ui/pages/game_page/player_form.dart';
+import 'package:myecl/elocaps/tools/constants.dart';
 
 class ModeDialog extends HookConsumerWidget {
   const ModeDialog({
@@ -33,7 +34,7 @@ class ModeDialog extends HookConsumerWidget {
         child: Column(
           children: [
             const Text(
-              "Quel mode ?",
+              ElocapsTextConstant.which_mode,
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,

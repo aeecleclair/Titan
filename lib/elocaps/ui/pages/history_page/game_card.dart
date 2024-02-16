@@ -5,6 +5,7 @@ import 'package:myecl/elocaps/providers/game_provider.dart';
 import 'package:myecl/elocaps/providers/player_histo_provider.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/providers/user_provider.dart';
+import 'package:myecl/tools/constants.dart';
 
 class GameCard extends HookConsumerWidget {
   const GameCard({Key? key, required this.game}) : super(key: key);
@@ -94,7 +95,7 @@ class GameCard extends HookConsumerWidget {
           const SizedBox(height: 10),
           if (!game.isConfirmed) ...[
             firstTeam.map((e) => e.playerId).contains(me.id)
-                ? const Text("En attente de validation de l'équipe adverse",
+                ? const Text(ElocapsTextConstant.waiting_opposite_team_approval,
                     style: TextStyle(color: Colors.white))
                 : GestureDetector(
                     onTap: () async {
@@ -112,7 +113,7 @@ class GameCard extends HookConsumerWidget {
                         border: const Border.fromBorderSide(
                             BorderSide(color: Colors.white, width: 1)),
                       ),
-                      child: const Text("Valider",
+                      child: const Text(ElocapsTextConstant.validate,
                           style: TextStyle(color: Colors.white)),
                     ),
                   ),

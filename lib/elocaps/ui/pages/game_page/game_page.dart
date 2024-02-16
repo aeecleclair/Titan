@@ -12,6 +12,7 @@ import 'package:myecl/elocaps/ui/button.dart';
 import 'package:myecl/elocaps/ui/elocaps.dart';
 import 'package:myecl/elocaps/ui/pages/game_page/player_form.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/elocaps/tools/constants.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
@@ -69,7 +70,7 @@ class GamePage extends HookConsumerWidget {
       child: Column(
         children: [
           const SizedBox(height: 20),
-          const AlignLeftText("Mode de jeu",
+          const AlignLeftText(ElocapsTextConstant.game_mode,
               padding: EdgeInsets.symmetric(horizontal: 30)),
           const SizedBox(height: 20),
           HorizontalListView.builder(
@@ -94,25 +95,25 @@ class GamePage extends HookConsumerWidget {
             child: Column(
               children: modeChosen == CapsMode.cd
                   ? [
-                      const AlignLeftText("Equipe 1",
+                      const AlignLeftText(ElocapsTextConstant.team_1,
                           padding: EdgeInsets.symmetric(horizontal: 30)),
                       const SizedBox(height: 10),
                       playersForm[0],
                       playersForm[1],
                       const SizedBox(height: 20),
-                      const AlignLeftText("Equipe 2",
+                      const AlignLeftText(ElocapsTextConstant.team_2,
                           padding: EdgeInsets.symmetric(horizontal: 30)),
                       const SizedBox(height: 10),
                       playersForm[2],
                       playersForm[3],
                     ]
                   : [
-                      const AlignLeftText("Joueur 1",
+                      const AlignLeftText(ElocapsTextConstant.player_1,
                           padding: EdgeInsets.symmetric(horizontal: 30)),
                       const SizedBox(height: 20),
                       playersForm[0],
                       const SizedBox(height: 20),
-                      const AlignLeftText("Joueur 2",
+                      const AlignLeftText(ElocapsTextConstant.player_1,
                           padding: EdgeInsets.symmetric(horizontal: 30)),
                       const SizedBox(height: 20),
                       playersForm[1],
@@ -131,11 +132,11 @@ class GamePage extends HookConsumerWidget {
                     .where((user) => user.id != "")
                     .toList();
               },
-              child: const MyButton(text: "Lancer la partie"),
+              child: const MyButton(text: ElocapsTextConstant.game_start),
             ),
           const SizedBox(height: 20),
           if (isGameCreated.value) ...[
-            const AlignLeftText("Résultat",
+            const AlignLeftText(ElocapsTextConstant.result,
                 padding: EdgeInsets.symmetric(horizontal: 30)),
             const SizedBox(height: 20),
             Padding(
@@ -150,8 +151,8 @@ class GamePage extends HookConsumerWidget {
                         margin: const EdgeInsets.all(0),
                         enabled: scores[0] == 1,
                         text: modeChosen == CapsMode.cd
-                            ? "Victoire équipe 1"
-                            : "Victoire joueur 1",
+                            ? ElocapsTextConstant.vicotry_team_1
+                            : ElocapsTextConstant.victory_player_1,
                       ),
                     ),
                   ),
@@ -162,7 +163,7 @@ class GamePage extends HookConsumerWidget {
                       child: MyButton(
                         enabled: scores[0] == 0,
                         margin: const EdgeInsets.symmetric(horizontal: 10),
-                        text: "Egalité",
+                        text: ElocapsTextConstant.draw,
                       ),
                     ),
                   ),
@@ -173,8 +174,8 @@ class GamePage extends HookConsumerWidget {
                         margin: const EdgeInsets.all(0),
                         enabled: scores[1] == 1,
                         text: modeChosen == CapsMode.cd
-                            ? "Victoire équipe 2"
-                            : "Victoire joueur 2",
+                            ? ElocapsTextConstant.victoty_team_2
+                            : ElocapsTextConstant.victory_player_2,
                       ),
                     ),
                   ),
@@ -207,14 +208,15 @@ class GamePage extends HookConsumerWidget {
                       mode: modeChosen);
                   final value = await gameNotifier.createGame(game);
                   if (value) {
-                    displayToastWithContext(TypeMsg.msg, "Partie enregistrée");
+                    displayToastWithContext(
+                        TypeMsg.msg, ElocapsTextConstant.saved_game);
                     QR.to(ElocapsRouter.root);
                   } else {
-                    displayToastWithContext(TypeMsg.error,
-                        "Erreur lors de l'enregistrement de la partie");
+                    displayToastWithContext(
+                        TypeMsg.error, ElocapsTextConstant.error_saving_game);
                   }
                 },
-                child: const MyButton(text: "Enregistrer la partie"))
+                child: const MyButton(text: ElocapsTextConstant.save_the_game))
           ],
           const SizedBox(height: 20),
         ],

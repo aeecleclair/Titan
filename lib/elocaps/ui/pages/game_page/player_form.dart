@@ -5,6 +5,7 @@ import 'package:myecl/elocaps/ui/pages/game_page/search.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
+import 'package:myecl/elocaps/tools/constants.dart';
 
 class PlayerForm extends HookConsumerWidget {
   const PlayerForm(
@@ -29,7 +30,7 @@ class PlayerForm extends HookConsumerWidget {
       child: Column(
         children: [
           TextEntry(
-            label: "Joueur ${index + 1}",
+            label: "${ElocapsTextConstant.player} ${index + 1}",
             onChanged: (value) {
               if (!isFocused.value[index]) {
                 isFocused.value = List.generate(4, (index) => false)
