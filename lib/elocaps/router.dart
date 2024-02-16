@@ -7,6 +7,7 @@ import 'package:myecl/elocaps/ui/pages/history_page/history_page.dart';
 import 'package:myecl/elocaps/ui/pages/main_page/main_page.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:myecl/elocaps/tools/constants.dart';
 
 class ElocapsRouter {
   final ProviderRef ref;
@@ -15,7 +16,7 @@ class ElocapsRouter {
   static const String game = '/game';
 
   static final Module module = Module(
-      name: "Elocaps",
+      name: ElocapsTextConstant.elocaps,
       icon: const Left(
           HeroIcons.rss), // Mettre un icon venant d'un svg [plus tard]
       root: ElocapsRouter.root,

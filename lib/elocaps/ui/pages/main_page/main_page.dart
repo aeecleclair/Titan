@@ -14,6 +14,7 @@ import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:myecl/tools/constants.dart';
 
 class EloCapsMainPage extends HookConsumerWidget {
   const EloCapsMainPage({Key? key}) : super(key: key);
@@ -33,7 +34,7 @@ class EloCapsMainPage extends HookConsumerWidget {
         Column(
           children: [
             const SizedBox(height: 20),
-            const AlignLeftText("Mode de jeu",
+            const AlignLeftText(ElocapsTextConstant.game_mode,
                 padding: EdgeInsets.symmetric(horizontal: 30)),
             const SizedBox(height: 20),
             HorizontalListView.builder(
@@ -77,7 +78,7 @@ class EloCapsMainPage extends HookConsumerWidget {
               QR.to(ElocapsRouter.root + ElocapsRouter.game);
             },
             child: const MyButton(
-              text: "Jouer",
+              text: ElocapsTextConstant.play,
             ),
           ),
         ),

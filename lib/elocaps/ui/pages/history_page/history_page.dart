@@ -25,7 +25,7 @@ class HistoryPage extends HookConsumerWidget {
       child: Column(
         children: [
           const SizedBox(height: 20),
-          const AlignLeftText("Historique",
+          const AlignLeftText(ElocapsTextConstant.history,
               padding: EdgeInsets.symmetric(horizontal: 30)),
           const SizedBox(height: 20),
           AsyncChild(
