@@ -14,7 +14,7 @@ class GroupLogoNotifier extends SingleNotifier<Image> {
   Future<Image> getLogo(String id) async {
     final bytes = await groupLogoRepository.getLogo(id, suffix: "/logo");
     if (bytes.isEmpty) {
-      return Image.asset(get_titan_logo());
+      return Image.asset(getTitanLogo());
     }
     return Image.memory(bytes);
   }

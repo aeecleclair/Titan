@@ -14,7 +14,7 @@ class ContenderLogoRepository extends LogoRepository {
   Future<Image> getContenderLogo(String id) async {
     final bytes = await getLogo(id, suffix: "/logo");
     if (bytes.isEmpty) {
-      return Image.asset(get_titan_logo());
+      return Image.asset(getTitanLogo());
     }
     return Image.memory(bytes);
   }

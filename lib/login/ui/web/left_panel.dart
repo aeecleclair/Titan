@@ -35,7 +35,7 @@ class LeftPanel extends HookConsumerWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(get_titan_logo(), width: 70, height: 70),
+                        Image.asset(getTitanLogo(), width: 70, height: 70),
                         const SizedBox(width: 20),
                         const Text('MyECL',
                             style: TextStyle(

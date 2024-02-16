@@ -13,7 +13,7 @@ class AdvertPosterRepository extends LogoRepository {
   Future<Image> getAdvertPoster(String id) async {
     final uint8List = await getLogo("", suffix: "adverts/$id/picture");
     if (uint8List.isEmpty) {
-      return Image.asset(get_titan_logo());
+      return Image.asset(getTitanLogo());
     }
     return Image.memory(uint8List);
   }

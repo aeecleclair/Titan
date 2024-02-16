@@ -15,7 +15,7 @@ class SessionPosterRepository extends LogoRepository {
   Future<Image> getSessionLogo(String id) async {
     final bytes = await getLogo(id, suffix: "/poster");
     if (bytes.isEmpty) {
-      return Image.asset(get_titan_logo());
+      return Image.asset(getTitanLogo());
     }
     return Image.memory(bytes);
   }

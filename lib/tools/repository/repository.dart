@@ -9,9 +9,9 @@ import 'package:myecl/tools/logs/log.dart';
 import 'package:myecl/tools/logs/logger.dart';
 
 abstract class Repository {
-  final String host = get_titan_host();
+  final String host = getTitanHost();
 
-  static final String displayHost = get_titan_host();
+  static final String displayHost = getTitanHost();
   static const String expiredTokenDetail = "Could not validate credentials";
   final String ext = "";
   final Map<String, String> headers = {

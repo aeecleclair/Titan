@@ -397,18 +397,8 @@ Plausible? getPlausible() {
   return null;
 }
 
-String get_titan_flavor() {
-  // See https://github.com/flutter/flutter/issues/31441
-  const String flavor = String.fromEnvironment('app.flavor');
-  if (flavor == "") {
-    throw StateError("App flavor is not set");
-  }
-
-  return flavor;
-}
-
-String get_titan_host() {
-  var host = dotenv.env[get_titan_flavor().toUpperCase() + "_HOST"];
+String getTitanHost() {
+  var host = dotenv.env["${appFlavor!.toUpperCase()}_HOST"];
 
   if (host == null || host == "") {
     throw StateError("Could not find host corresponding to flavor");
@@ -417,8 +407,8 @@ String get_titan_host() {
   return host;
 }
 
-String get_titan_url_scheme() {
-  switch (get_titan_flavor()) {
+String getTitanUrlScheme() {
+  switch (appFlavor) {
     case "dev":
       return "fr.myecl.titan.dev";
     case "alpha":
@@ -430,6 +420,6 @@ String get_titan_url_scheme() {
   }
 }
 
-String get_titan_logo() {
-  return "assets/images/logo_" + get_titan_flavor() + ".png";
+String getTitanLogo() {
+  return "assets/images/logo_${appFlavor!}.png";
 }
