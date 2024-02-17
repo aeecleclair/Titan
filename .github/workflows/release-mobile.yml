@@ -132,21 +132,13 @@ jobs:
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
       
-      - name: Set Alpha icons
-        if: needs.extract-version.outputs.isAlpha == 'true'
-        run: |
-          rm assets/images/icon.png
-          mv assets/images/icon_alpha.png assets/images/icon.png
-          rm assets/images/logo.png
-          mv assets/images/logo_alpha.png assets/images/logo.png
-      
       - name: Build Alpha 🔧
         if: needs.extract-version.outputs.isAlpha == 'true'
-        run: flutter build ${{ matrix.target }} --flavor=alpha  --dart-define=app.flavor=alpha --release --build-name ${{ needs.extract-version.outputs.versionName }} --build-number ${{ needs.extract-version.outputs.versionCode }}
+        run: flutter build ${{ matrix.target }} --flavor=alpha --release --build-name ${{ needs.extract-version.outputs.versionName }} --build-number ${{ needs.extract-version.outputs.versionCode }}
       
       - name: Build production 🔧
         if: needs.extract-version.outputs.isAlpha == 'false'
-        run: flutter build ${{ matrix.target }} --flavor=prod --dart-define=app.flavor=prod --release --build-name ${{ needs.extract-version.outputs.versionName }} --build-number ${{ needs.extract-version.outputs.versionCode }}
+        run: flutter build ${{ matrix.target }} --flavor=prod --release --build-name ${{ needs.extract-version.outputs.versionName }} --build-number ${{ needs.extract-version.outputs.versionCode }}
       
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
