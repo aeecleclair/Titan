@@ -28,7 +28,6 @@ class HistoryLoan extends HookConsumerWidget {
     final adminHistoryLoanListNotifier =
         ref.watch(adminHistoryLoanListProvider.notifier);
     final adminLoanList = ref.watch(adminHistoryLoanListProvider);
-    final editingController = useTextEditingController();
     final focus = ref.watch(loanFocusProvider);
     final focusNode = useFocusNode();
     if (focus) {
@@ -53,11 +52,9 @@ class HistoryLoan extends HookConsumerWidget {
                     StyledSearchBar(
                       label: LoanTextConstants.history,
                       onChanged: (value) async {
-                        if (editingController.text.isNotEmpty) {
-                          adminHistoryLoanListNotifier.setTData(
-                              loaner,
-                              await historyLoanListNotifier
-                                  .filterLoans(editingController.text));
+                        if (value.isNotEmpty) {
+                          adminHistoryLoanListNotifier.setTData(loaner,
+                              await historyLoanListNotifier.filterLoans(value));
                         } else {
                           adminHistoryLoanListNotifier.setTData(
                               loaner, loanList);
