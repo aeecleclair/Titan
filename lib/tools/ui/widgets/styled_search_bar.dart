@@ -44,12 +44,15 @@ class StyledSearchBar extends HookConsumerWidget {
               labelText: label,
               labelStyle: TextStyle(
                   fontSize: 18, fontWeight: FontWeight.bold, color: color),
-              suffixIcon: GestureDetector(
-                  onTap: () {
-                    onSuffixIconTap?.call(focusNode, editingController);
-                  },
-                  child:
-                      suffixIcon ?? Icon(Icons.search, color: color, size: 30)),
+              suffixIcon: onSuffixIconTap == null
+                  ? suffixIcon ?? Icon(Icons.search, color: color, size: 30)
+                  : GestureDetector(
+                      onTap: () {
+                        onSuffixIconTap!(focusNode, editingController);
+                      },
+                      child: suffixIcon ??
+                          Icon(Icons.search, color: color, size: 30),
+                    ),
               enabledBorder: const UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
               ),
