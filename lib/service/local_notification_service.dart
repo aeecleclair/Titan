@@ -42,7 +42,7 @@ class LocalNotificationService {
 
   NotificationDetails getNotificationDetails() {
     AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails(getTitanUrlScheme(), "TitanNotification",
+        AndroidNotificationDetails(getTitanPackageName(), "TitanNotification",
             channelDescription: "Notifications channel for Titan",
             importance: Importance.max,
             priority: Priority.max,
@@ -102,7 +102,7 @@ class LocalNotificationService {
             summaryText: body,
             htmlFormatSummaryText: true);
     final AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails(getTitanUrlScheme(), "TitanNotification",
+        AndroidNotificationDetails(getTitanPackageName(), "TitanNotification",
             channelDescription: "Notifications channel for Titan",
             importance: Importance.max,
             priority: Priority.max,
@@ -210,7 +210,7 @@ class LocalNotificationService {
       final path =
           await handleAction(message.actionModule!, message.actionTable!);
       QR.to(
-          "${getTitanUrlScheme()}://$path?actionModule=${message.actionModule!}&actionTable=${message.actionTable!}");
+          "${getTitanPackageName()}://$path?actionModule=${message.actionModule!}&actionTable=${message.actionTable!}");
     }
   }
 }
@@ -234,6 +234,6 @@ void onDidReceiveBackgroundNotificationResponse(
     }
     final path = information.item1;
     QR.to(
-        "${getTitanUrlScheme()}://$path?actionModule=${message.actionModule!}&actionTable=${message.actionTable!}");
+        "${getTitanPackageName()}://$path?actionModule=${message.actionModule!}&actionTable=${message.actionTable!}");
   }
 }

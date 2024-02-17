@@ -118,7 +118,7 @@ class OpenIdTokenProvider
   final String clientId = "Titan";
   final String tokenKey = "token";
   final String refreshTokenKey = "refresh_token";
-  final String redirectUrl = "${getTitanUrlScheme()}://authorized";
+  final String redirectUrl = "${getTitanPackageName()}://authorized";
   final String redirectUrlHost = "myecl.fr";
   final String discoveryUrl =
       "${Repository.displayHost}.well-known/openid-configuration";

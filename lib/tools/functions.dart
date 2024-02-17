@@ -407,7 +407,7 @@ String getTitanHost() {
   return host;
 }
 
-String getTitanUrlScheme() {
+String getTitanPackageName() {
   switch (appFlavor) {
     case "dev":
       return "fr.myecl.titan.dev";
