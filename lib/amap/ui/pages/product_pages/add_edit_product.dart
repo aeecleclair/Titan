@@ -132,6 +132,7 @@ class AddEditProduct extends HookConsumerWidget {
                       Center(
                         child: TextEntry(
                           label: AMAPTextConstants.createCategory,
+                          canBeEmpty: true,
                           validator: ((value) {
                             if (categoryController ==
                                 AMAPTextConstants.createCategory) {
