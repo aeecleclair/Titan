@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/providers/cash_list_provider.dart';
-import 'package:myecl/amap/providers/focus_provider.dart';
 import 'package:myecl/amap/providers/searching_amap_user_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/admin_page/adding_user_container.dart';
@@ -24,12 +23,6 @@ class AccountHandler extends HookConsumerWidget {
     final searchingAmapUser = ref.watch(searchingAmapUserProvider);
     final searchingAmapUserNotifier =
         ref.read(searchingAmapUserProvider.notifier);
-    final focus = ref.watch(focusProvider);
-    final focusNotifier = ref.read(focusProvider.notifier);
-    final focusNode = useFocusNode();
-    if (focus) {
-      focusNode.requestFocus();
-    }
 
     return Column(children: [
       StyledSearchBar(
@@ -64,7 +57,6 @@ class AccountHandler extends HookConsumerWidget {
                     if (editingController.text.isNotEmpty) {
                       await usersNotifier.filterUsers(editingController.text);
                     }
-                    focusNotifier.setFocus(true);
                   }
                 : () async {
                     cashNotifier.refreshCashList();
