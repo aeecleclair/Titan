@@ -37,7 +37,7 @@ class CashListProvider extends ListNotifier<Cash> {
   }
 
   Future<AsyncValue<List<Cash>>> filterCashList(String filter) async {
-    return state.when(
+    return _cashList.when(
       data: (cashList) async {
         final lowerQuery = filter.toLowerCase();
         return state = AsyncData(cashList

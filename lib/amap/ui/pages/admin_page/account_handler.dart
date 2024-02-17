@@ -53,13 +53,11 @@ class AccountHandler extends HookConsumerWidget {
             onTap: searchingAmapUser
                 ? () async {
                     searchingAmapUserNotifier.setProduct(false);
-                    usersNotifier.clear();
                     if (editingController.text.isNotEmpty) {
                       await usersNotifier.filterUsers(editingController.text);
                     }
                   }
                 : () async {
-                    cashNotifier.refreshCashList();
                     searchingAmapUserNotifier.setProduct(true);
                     if (editingController.text.isNotEmpty) {
                       await cashNotifier.filterCashList(editingController.text);
