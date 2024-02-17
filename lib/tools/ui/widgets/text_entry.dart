@@ -78,6 +78,10 @@ class TextEntry extends StatelessWidget {
       ),
       validator: (value) {
         if (canBeEmpty) {
+          if (value == null || value.isEmpty) {
+            return null;
+          }
+          validator?.call(value);
           return null;
         }
         if (value == null || value.isEmpty) {
