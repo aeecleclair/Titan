@@ -43,12 +43,12 @@ Titan's tests follow the official [Flutter documentation](https://docs.flutter.d
 
 Tests can be run using:
 ```bash
-flutter test
+flutter test --flavor dev
 ```
 
 To run a specific test file :
 ```bash
-flutter test path/to/file.dart
+flutter test --flavor dev path/to/file.dart
 ```
 
 ### Flavors
