@@ -145,13 +145,11 @@ class UserCashUi extends HookConsumerWidget {
                                     await ref
                                         .read(cashListProvider.notifier)
                                         .updateCash(
-                                          cash.copyWith(
-                                            balance: double.parse(amount.text
-                                                .replaceAll(',', '.')),
-                                          ),
-                                          double.parse(
-                                              amount.text.replaceAll(',', '.')),
-                                        )
+                                            cash.copyWith(
+                                              balance: double.parse(amount.text
+                                                  .replaceAll(',', '.')),
+                                            ),
+                                            cash.balance)
                                         .then((value) {
                                       if (value) {
                                         key.currentState!.reset();
