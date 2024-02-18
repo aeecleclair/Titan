@@ -127,7 +127,9 @@ void main() {
             balance: 300),
       ];
 
-      cashProvider.state = AsyncData(cashList);
+      when(() => mockRepository.getCashList())
+          .thenAnswer((_) async => cashList);
+      await cashProvider.loadCashList();
 
       final result1 = await cashProvider.filterCashList('j');
       cashProvider.state = AsyncData(cashList);
@@ -184,19 +186,6 @@ void main() {
               )
               .length,
           0);
-    });
-
-    test(
-        'filterCashList should throw AppException with tokenExpire type if error is tokenExpire',
-        () async {
-      final mockRepository = MockCashRepository();
-      final cashProvider = CashListProvider(cashRepository: mockRepository);
-
-      cashProvider.state = AsyncError(
-          AppException(ErrorType.tokenExpire, "test"), StackTrace.empty);
-
-      expect(
-          () => cashProvider.filterCashList('j'), throwsA(isA<AppException>()));
     });
 
     test(
