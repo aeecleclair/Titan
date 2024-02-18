@@ -9,12 +9,11 @@ import 'package:myecl/elocaps/tools/constants.dart';
 
 class PlayerForm extends HookConsumerWidget {
   const PlayerForm(
-      {Key? key,
+      {super.key,
       required this.index,
       required this.isFocused,
       required this.queryController,
-      required this.user})
-      : super(key: key);
+      required this.user});
 
   final int index;
   final ValueNotifier<List<bool>> isFocused;

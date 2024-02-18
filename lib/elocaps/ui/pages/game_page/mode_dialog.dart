@@ -7,9 +7,9 @@ import 'package:myecl/elocaps/tools/constants.dart';
 
 class ModeDialog extends HookConsumerWidget {
   const ModeDialog({
-    Key? key,
+    super.key,
     required this.players,
-  }) : super(key: key);
+  });
 
   final List<PlayerForm> players;
 

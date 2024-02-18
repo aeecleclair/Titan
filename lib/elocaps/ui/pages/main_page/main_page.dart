@@ -5,6 +5,7 @@ import 'package:myecl/elocaps/providers/leader_board_player_map_notifier.dart';
 import 'package:myecl/elocaps/providers/mode_chosen_provider.dart';
 import 'package:myecl/elocaps/providers/player_list_provider.dart';
 import 'package:myecl/elocaps/router.dart';
+import 'package:myecl/elocaps/tools/constants.dart';
 import 'package:myecl/elocaps/ui/button.dart';
 import 'package:myecl/elocaps/ui/elocaps.dart';
 import 'package:myecl/elocaps/ui/pages/main_page/leader_board.dart';
@@ -14,10 +15,9 @@ import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-import 'package:myecl/tools/constants.dart';
 
 class EloCapsMainPage extends HookConsumerWidget {
-  const EloCapsMainPage({Key? key}) : super(key: key);
+  const EloCapsMainPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

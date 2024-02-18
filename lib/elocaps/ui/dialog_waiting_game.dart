@@ -21,8 +21,8 @@ void maybeShowDialog(context) {
 
 class WaitingDialog extends HookConsumerWidget {
   const WaitingDialog({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
