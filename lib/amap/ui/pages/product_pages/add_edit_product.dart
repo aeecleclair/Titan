@@ -91,15 +91,6 @@ class AddEditProduct extends HookConsumerWidget {
                       Center(
                         child: DropdownButtonFormField<String>(
                           value: categoryController,
-                          validator: ((value) {
-                            if ((value == null ||
-                                    value ==
-                                        AMAPTextConstants.createCategory) &&
-                                newCategory.text.isEmpty) {
-                              return AMAPTextConstants.pickChooseCategory;
-                            }
-                            return null;
-                          }),
                           decoration: const InputDecoration(
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
@@ -128,30 +119,27 @@ class AddEditProduct extends HookConsumerWidget {
                           },
                         ),
                       ),
-                      const SizedBox(height: 30),
-                      Center(
-                        child: TextEntry(
-                          label: AMAPTextConstants.createCategory,
-                          canBeEmpty: true,
-                          validator: ((value) {
-                            if (categoryController ==
-                                AMAPTextConstants.createCategory) {
-                              return AMAPTextConstants.pickChooseCategory;
-                            }
-                            return null;
-                          }),
-                          enabled: categoryController ==
-                              AMAPTextConstants.createCategory,
-                          onChanged: (value) {
-                            newCategory.text = value;
-                            newCategory.selection = TextSelection.fromPosition(
-                                TextPosition(offset: newCategory.text.length));
-                          },
-                          color: AMAPColorConstants.greenGradient2,
-                          enabledColor: AMAPColorConstants.enabled,
-                          controller: newCategory,
+                      if (categoryController ==
+                          AMAPTextConstants.createCategory) ...[
+                        const SizedBox(height: 30),
+                        Center(
+                          child: TextEntry(
+                            label: AMAPTextConstants.createCategory,
+                            noValueError: AMAPTextConstants.pickChooseCategory,
+                            enabled: categoryController ==
+                                AMAPTextConstants.createCategory,
+                            onChanged: (value) {
+                              newCategory.text = value;
+                              newCategory.selection =
+                                  TextSelection.fromPosition(TextPosition(
+                                      offset: newCategory.text.length));
+                            },
+                            color: AMAPColorConstants.greenGradient2,
+                            enabledColor: AMAPColorConstants.enabled,
+                            controller: newCategory,
+                          ),
                         ),
-                      ),
+                      ],
                       const SizedBox(height: 40),
                       WaitingButton(
                         waitingColor: AMAPColorConstants.background,
