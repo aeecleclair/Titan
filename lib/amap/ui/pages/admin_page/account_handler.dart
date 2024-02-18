@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/providers/cash_list_provider.dart';
-import 'package:myecl/amap/providers/focus_provider.dart';
 import 'package:myecl/amap/providers/searching_amap_user_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/admin_page/adding_user_container.dart';
@@ -24,12 +23,6 @@ class AccountHandler extends HookConsumerWidget {
     final searchingAmapUser = ref.watch(searchingAmapUserProvider);
     final searchingAmapUserNotifier =
         ref.read(searchingAmapUserProvider.notifier);
-    final focus = ref.watch(focusProvider);
-    final focusNotifier = ref.read(focusProvider.notifier);
-    final focusNode = useFocusNode();
-    if (focus) {
-      focusNode.requestFocus();
-    }
 
     return Column(children: [
       StyledSearchBar(
@@ -43,68 +36,59 @@ class AccountHandler extends HookConsumerWidget {
               usersNotifier.clear();
             }
           } else {
-            if (editingController.text.isNotEmpty) {
-              await cashNotifier.filterCashList(editingController.text);
+            if (value.isNotEmpty) {
+              await cashNotifier.filterCashList(value);
             } else {
               cashNotifier.refreshCashList();
             }
           }
         },
+        editingController: editingController,
       ),
       HorizontalListView(
         height: 135,
         children: [
           const SizedBox(width: 15),
-          CardLayout(
-            height: 100,
-            width: 100,
-            colors: const [
-              AMAPColorConstants.green1,
-              AMAPColorConstants.textLight
-            ],
-            shadowColor: AMAPColorConstants.textDark.withOpacity(0.2),
-            padding: const EdgeInsets.symmetric(horizontal: 17.0),
-            child: !searchingAmapUser
-                ? Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          searchingAmapUserNotifier.setProduct(true);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                          child: const HeroIcon(
-                            HeroIcons.xMark,
-                            color: AMAPColorConstants.green3,
-                            size: 50,
-                          ),
-                        ),
-                      ),
-                      AddingUserContainer(onAdd: () async {
-                        searchingAmapUserNotifier.setProduct(true);
-                      })
-                    ],
-                  )
-                : GestureDetector(
-                    onTap: () async {
-                      searchingAmapUserNotifier.setProduct(false);
-                      if (editingController.text.isNotEmpty) {
-                        await usersNotifier.filterUsers(editingController.text);
-                      } else {
-                        usersNotifier.clear();
-                      }
-                      focusNotifier.setFocus(true);
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                      child: const HeroIcon(
-                        HeroIcons.plus,
-                        color: AMAPColorConstants.green3,
-                        size: 50,
-                      ),
-                    )),
+          GestureDetector(
+            onTap: searchingAmapUser
+                ? () async {
+                    searchingAmapUserNotifier.setProduct(false);
+                    if (editingController.text.isNotEmpty) {
+                      await usersNotifier.filterUsers(editingController.text);
+                    }
+                  }
+                : () async {
+                    searchingAmapUserNotifier.setProduct(true);
+                    if (editingController.text.isNotEmpty) {
+                      await cashNotifier.filterCashList(editingController.text);
+                    }
+                  },
+            child: CardLayout(
+              height: 100,
+              width: 100,
+              colors: const [
+                AMAPColorConstants.green1,
+                AMAPColorConstants.textLight
+              ],
+              shadowColor: AMAPColorConstants.textDark.withOpacity(0.2),
+              padding: const EdgeInsets.symmetric(horizontal: 17.0),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: HeroIcon(
+                  searchingAmapUser ? HeroIcons.plus : HeroIcons.xMark,
+                  color: AMAPColorConstants.green3,
+                  size: 50,
+                ),
+              ),
+            ),
           ),
-          const CashContainer(),
+          searchingAmapUser
+              ? const CashContainer()
+              : AddingUserContainer(
+                  onAdd: () async {
+                    searchingAmapUserNotifier.setProduct(true);
+                  },
+                ),
           const SizedBox(width: 10),
         ],
       ),

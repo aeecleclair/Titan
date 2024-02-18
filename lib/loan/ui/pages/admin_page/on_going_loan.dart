@@ -42,7 +42,6 @@ class OnGoingLoan extends HookConsumerWidget {
     final adminLoanList = ref.watch(adminLoanListProvider);
     final startNotifier = ref.watch(startProvider.notifier);
     final endNotifier = ref.watch(endProvider.notifier);
-    final editingController = useTextEditingController();
     final focus = ref.watch(loanFocusProvider);
     final itemList = ref.watch(itemListProvider);
     final focusNode = useFocusNode();
@@ -72,11 +71,9 @@ class OnGoingLoan extends HookConsumerWidget {
                       label:
                           '${data.isEmpty ? LoanTextConstants.none : data.length} ${LoanTextConstants.loan.toLowerCase()}${data.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
                       onChanged: (value) async {
-                        if (editingController.text.isNotEmpty) {
-                          adminLoanListNotifier.setTData(
-                              loaner,
-                              await loanListNotifier
-                                  .filterLoans(editingController.text));
+                        if (value.isNotEmpty) {
+                          adminLoanListNotifier.setTData(loaner,
+                              await loanListNotifier.filterLoans(value));
                         } else {
                           adminLoanListNotifier.setTData(loaner, loanList);
                         }

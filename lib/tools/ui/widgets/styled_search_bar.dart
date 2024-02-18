@@ -11,19 +11,23 @@ class StyledSearchBar extends HookConsumerWidget {
   final EdgeInsetsGeometry? padding;
   final void Function(FocusNode focusNode, TextEditingController controller)?
       onSuffixIconTap;
-  const StyledSearchBar(
-      {super.key,
-      this.onChanged,
-      required this.label,
-      this.suffixIcon,
-      this.onSuffixIconTap,
-      this.padding,
-      this.color = Colors.grey});
+  final TextEditingController? editingController;
+  const StyledSearchBar({
+    super.key,
+    this.onChanged,
+    required this.label,
+    this.suffixIcon,
+    this.onSuffixIconTap,
+    this.padding,
+    this.color = Colors.grey,
+    this.editingController,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final focusNode = useFocusNode();
-    final editingController = useTextEditingController();
+    final editingController =
+        this.editingController ?? useTextEditingController();
     return Container(
         padding: padding ?? const EdgeInsets.symmetric(horizontal: 30),
         alignment: Alignment.centerLeft,
@@ -40,12 +44,15 @@ class StyledSearchBar extends HookConsumerWidget {
               labelText: label,
               labelStyle: TextStyle(
                   fontSize: 18, fontWeight: FontWeight.bold, color: color),
-              suffixIcon: GestureDetector(
-                  onTap: () {
-                    onSuffixIconTap?.call(focusNode, editingController);
-                  },
-                  child:
-                      suffixIcon ?? Icon(Icons.search, color: color, size: 30)),
+              suffixIcon: onSuffixIconTap == null
+                  ? suffixIcon ?? Icon(Icons.search, color: color, size: 30)
+                  : GestureDetector(
+                      onTap: () {
+                        onSuffixIconTap!(focusNode, editingController);
+                      },
+                      child: suffixIcon ??
+                          Icon(Icons.search, color: color, size: 30),
+                    ),
               enabledBorder: const UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
               ),

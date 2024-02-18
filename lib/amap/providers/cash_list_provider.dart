@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/repositories/cash_repository.dart';
-import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
@@ -37,28 +36,19 @@ class CashListProvider extends ListNotifier<Cash> {
   }
 
   Future<AsyncValue<List<Cash>>> filterCashList(String filter) async {
-    return state.when(
-      data: (cashList) async {
+    state = _cashList.whenData(
+      (cashList) {
         final lowerQuery = filter.toLowerCase();
-        return state = AsyncData(cashList
+        return cashList
             .where((cash) =>
                 cash.user.name.toLowerCase().contains(lowerQuery) ||
                 cash.user.firstname.toLowerCase().contains(lowerQuery) ||
                 (cash.user.nickname != null &&
                     cash.user.nickname!.toLowerCase().contains(lowerQuery)))
-            .toList());
-      },
-      error: (error, stackTrace) {
-        if (error is AppException && error.type == ErrorType.tokenExpire) {
-          throw error;
-        } else {
-          return state;
-        }
-      },
-      loading: () {
-        return state;
+            .toList();
       },
     );
+    return state;
   }
 
   Future<void> refreshCashList() async {
