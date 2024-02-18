@@ -18,13 +18,14 @@ class CashListProvider extends ListNotifier<Cash> {
     return await add(cashRepository.createCash, cash);
   }
 
-  Future<bool> updateCash(Cash cash, double amount) async {
+  Future<bool> updateCash(Cash addedCash, double previousCashAmount) async {
     return await update(
         cashRepository.updateCash,
         (cashList, c) => cashList
-          ..[cashList.indexWhere((c) => c.user.id == cash.user.id)] =
-              cash.copyWith(balance: cash.balance + amount),
-        cash);
+          ..[cashList.indexWhere((c) => c.user.id == addedCash.user.id)] =
+              addedCash.copyWith(
+                  balance: addedCash.balance + previousCashAmount),
+        addedCash);
   }
 
   Future<bool> fakeUpdateCash(Cash cash) async {
