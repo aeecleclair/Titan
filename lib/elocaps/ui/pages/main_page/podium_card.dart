@@ -4,8 +4,10 @@ import 'package:myecl/elocaps/tools/constants.dart';
 
 class PodiumCard extends StatelessWidget {
   const PodiumCard(
-      {Key? key, required this.player, required this.index, required this.isMe})
-      : super(key: key);
+      {super.key,
+      required this.player,
+      required this.index,
+      required this.isMe});
 
   final Player player;
   final int index;

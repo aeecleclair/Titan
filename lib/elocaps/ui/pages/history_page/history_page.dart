@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/elocaps/providers/player_histo_provider.dart';
+import 'package:myecl/elocaps/tools/constants.dart';
 import 'package:myecl/elocaps/ui/elocaps.dart';
 import 'package:myecl/elocaps/ui/pages/history_page/game_card.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
@@ -9,7 +10,7 @@ import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 class HistoryPage extends HookConsumerWidget {
-  const HistoryPage({Key? key}) : super(key: key);
+  const HistoryPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -9,7 +9,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 
 class ElocapsTemplate extends HookConsumerWidget {
   final Widget child;
-  const ElocapsTemplate({Key? key, required this.child}) : super(key: key);
+  const ElocapsTemplate({super.key, required this.child});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

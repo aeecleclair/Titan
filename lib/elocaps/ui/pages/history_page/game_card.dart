@@ -3,12 +3,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/elocaps/class/game.dart';
 import 'package:myecl/elocaps/providers/game_provider.dart';
 import 'package:myecl/elocaps/providers/player_histo_provider.dart';
+import 'package:myecl/elocaps/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/providers/user_provider.dart';
-import 'package:myecl/tools/constants.dart';
 
 class GameCard extends HookConsumerWidget {
-  const GameCard({Key? key, required this.game}) : super(key: key);
+  const GameCard({super.key, required this.game});
 
   final Game game;
 

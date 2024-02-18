@@ -7,8 +7,7 @@ class MyButton extends StatelessWidget {
   final EdgeInsets? margin;
 
   const MyButton(
-      {Key? key, required this.text, this.enabled = true, this.margin})
-      : super(key: key);
+      {super.key, required this.text, this.enabled = true, this.margin});
 
   @override
   Widget build(BuildContext context) {
