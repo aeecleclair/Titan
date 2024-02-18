@@ -46,12 +46,6 @@ class AutoLoaderChild<MapKey, MapValue> extends ConsumerWidget {
           return AsyncChild(
               value: group,
               builder: (context, list) {
-                // if (list.isEmpty) {
-                //   loader == null
-                //       ? notifier.autoLoadList(ref, mapKey, listLoader!)
-                //       : notifier.autoLoad(ref, mapKey, loader!);
-                //   return nonNullLoadingBuilder(context);
-                // }
                 return dataBuilder(context, list);
               },
               orElseBuilder: orElseBuilder,
