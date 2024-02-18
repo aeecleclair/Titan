@@ -120,7 +120,7 @@ void main() {
           isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>>>>());
       expect(
           notifier.state
-              .when<Map<MockT, AsyncValue<List<MockE>>>>(
+              .when<Map<MockT, AsyncValue<List<MockE>>?>>(
                   data: (d) => d, error: (e, s) => {}, loading: () => {})[key]!
               .when(
                 data: (d) => d,
@@ -148,7 +148,7 @@ void main() {
           isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>>>>());
       expect(
           notifier.state
-              .when<Map<MockT, AsyncValue<List<MockE>>>>(
+              .when<Map<MockT, AsyncValue<List<MockE>>?>>(
                   data: (d) => d, error: (e, s) => {}, loading: () => {})[key]!
               .when(
                 data: (d) => d,
@@ -176,7 +176,7 @@ void main() {
           isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>>>>());
       expect(
           notifier.state
-              .when<Map<MockT, AsyncValue<List<MockE>>>>(
+              .when<Map<MockT, AsyncValue<List<MockE>>?>>(
                   data: (d) => d, error: (e, s) => {}, loading: () => {})[key]!
               .when(
                 data: (d) => d,
@@ -227,7 +227,7 @@ void main() {
           isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>>>>());
       expect(
           notifier.state
-              .when<Map<MockT, AsyncValue<List<MockE>>>>(
+              .when<Map<MockT, AsyncValue<List<MockE>>?>>(
                   data: (d) => d, error: (e, s) => {}, loading: () => {})
               .keys
               .contains(key),
@@ -249,7 +249,7 @@ void main() {
           isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>>>>());
       expect(
           notifier.state
-              .when<Map<MockT, AsyncValue<List<MockE>>>>(
+              .when<Map<MockT, AsyncValue<List<MockE>>?>>(
                   data: (d) => d, error: (e, s) => {}, loading: () => {})
               .keys,
           data.keys);
@@ -294,7 +294,7 @@ void main() {
       expect(notifier.state,
           isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>>>>());
       expect(
-          notifier.state.when<Map<MockT, AsyncValue<List<MockE>>>>(
+          notifier.state.when<Map<MockT, AsyncValue<List<MockE>>?>>(
               data: (d) => d, error: (e, s) => {}, loading: () => {})[key]!,
           newData);
     });
@@ -313,7 +313,7 @@ void main() {
       expect(notifier.state,
           isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>>>>());
       expect(
-          notifier.state.when<Map<MockT, AsyncValue<List<MockE>>>>(
+          notifier.state.when<Map<MockT, AsyncValue<List<MockE>>?>>(
               data: (d) => d, error: (e, s) => {}, loading: () => {})[key]!,
           newData);
     });

@@ -9,7 +9,7 @@ class RaffleStatsMapNotifier extends MapNotifier<String, RaffleStats> {
 }
 
 final raffleStatsMapProvider = StateNotifierProvider<RaffleStatsMapNotifier,
-    AsyncValue<Map<String, AsyncValue<List<RaffleStats>>>>>((ref) {
+    AsyncValue<Map<String, AsyncValue<List<RaffleStats>>?>>>((ref) {
   RaffleStatsMapNotifier notifier = RaffleStatsMapNotifier();
   tokenExpireWrapperAuth(ref, () async {
     final raffles = ref.watch(raffleListProvider);
