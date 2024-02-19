@@ -10,19 +10,13 @@ class RaffleLogoNotifier extends MapNotifier<Raffle, Image> {
 }
 
 final tombolaLogosProvider = StateNotifierProvider<RaffleLogoNotifier,
-    AsyncValue<Map<Raffle, AsyncValue<List<Image>>>>>((ref) {
+    AsyncValue<Map<Raffle, AsyncValue<List<Image>>?>>>((ref) {
   RaffleLogoNotifier raffleLogoNotifier = RaffleLogoNotifier();
   tokenExpireWrapperAuth(ref, () async {
-    ref.watch(raffleListProvider).when(data: (raffle) {
+    ref.watch(raffleListProvider).maybeWhen(data: (raffle) {
       raffleLogoNotifier.loadTList(raffle);
-      for (final l in raffle) {
-        raffleLogoNotifier.setTData(l, const AsyncValue.data([]));
-      }
       return RaffleLogoNotifier;
-    }, error: (error, stackTrace) {
-      raffleLogoNotifier.loadTList([]);
-      return RaffleLogoNotifier;
-    }, loading: () {
+    }, orElse: () {
       raffleLogoNotifier.loadTList([]);
       return RaffleLogoNotifier;
     });

@@ -42,7 +42,7 @@ void main() {
       final data = [MockT(), MockT()];
       await notifier.testLoadTlist(data);
       expect(notifier.state,
-          isA<AsyncValue<Map<MockT, AsyncValue<List<MockE>>>>>());
+          isA<AsyncValue<Map<MockT, AsyncValue<List<MockE>>?>>>());
       expect(
           notifier.state.when(
               data: (d) => d.keys.toList(),
@@ -54,14 +54,14 @@ void main() {
               data: (d) => d.values.first,
               error: (Object error, StackTrace stackTrace) => null,
               loading: () => null),
-          isA<AsyncValue<List<MockE>>>());
+          isA<AsyncValue<List<MockE>>?>());
     });
   });
 
   group('Testing MapNotifier : addT', () {
     test('Should updates state on success', () async {
       final notifier = MockMapNotifier();
-      final data = <MockT, AsyncValue<List<MockE>>>{
+      final data = <MockT, AsyncValue<List<MockE>>?>{
         MockT(): const AsyncLoading(),
         MockT(): const AsyncValue.data(<MockE>[]),
       };
@@ -69,7 +69,7 @@ void main() {
       final newData = MockT();
       await notifier.testAddT(newData);
       expect(notifier.state,
-          isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>>>>());
+          isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>?>>>());
       expect(
           notifier.state
               .when(data: (d) => d, error: (e, s) => {}, loading: () => {})
@@ -79,7 +79,7 @@ void main() {
       expect(
           notifier.state.when(
               data: (d) => d, error: (e, s) => {}, loading: () => {})[newData],
-          isA<AsyncData<List<MockE>>>());
+          isNull);
     });
 
     test('Should sets state on loading when start state is AsyncLoading',
@@ -117,10 +117,10 @@ void main() {
       final result = await notifier.testAddE(key, newData);
       expect(result, isTrue);
       expect(notifier.state,
-          isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>>>>());
+          isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>?>>>());
       expect(
           notifier.state
-              .when<Map<MockT, AsyncValue<List<MockE>>>>(
+              .when<Map<MockT, AsyncValue<List<MockE>>?>>(
                   data: (d) => d, error: (e, s) => {}, loading: () => {})[key]!
               .when(
                 data: (d) => d,
@@ -145,10 +145,10 @@ void main() {
       final result = await notifier.testAddE(key, newData);
       expect(result, isTrue);
       expect(notifier.state,
-          isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>>>>());
+          isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>?>>>());
       expect(
           notifier.state
-              .when<Map<MockT, AsyncValue<List<MockE>>>>(
+              .when<Map<MockT, AsyncValue<List<MockE>>?>>(
                   data: (d) => d, error: (e, s) => {}, loading: () => {})[key]!
               .when(
                 data: (d) => d,
@@ -173,10 +173,10 @@ void main() {
       final result = await notifier.testAddE(key, newData);
       expect(result, isTrue);
       expect(notifier.state,
-          isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>>>>());
+          isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>?>>>());
       expect(
           notifier.state
-              .when<Map<MockT, AsyncValue<List<MockE>>>>(
+              .when<Map<MockT, AsyncValue<List<MockE>>?>>(
                   data: (d) => d, error: (e, s) => {}, loading: () => {})[key]!
               .when(
                 data: (d) => d,
@@ -224,10 +224,10 @@ void main() {
       final result = await notifier.testDeleteT(key);
       expect(result, isTrue);
       expect(notifier.state,
-          isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>>>>());
+          isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>?>>>());
       expect(
           notifier.state
-              .when<Map<MockT, AsyncValue<List<MockE>>>>(
+              .when<Map<MockT, AsyncValue<List<MockE>>?>>(
                   data: (d) => d, error: (e, s) => {}, loading: () => {})
               .keys
               .contains(key),
@@ -246,10 +246,10 @@ void main() {
       final result = await notifier.testDeleteT(MockT());
       expect(result, isTrue);
       expect(notifier.state,
-          isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>>>>());
+          isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>?>>>());
       expect(
           notifier.state
-              .when<Map<MockT, AsyncValue<List<MockE>>>>(
+              .when<Map<MockT, AsyncValue<List<MockE>>?>>(
                   data: (d) => d, error: (e, s) => {}, loading: () => {})
               .keys,
           data.keys);
@@ -292,9 +292,9 @@ void main() {
       final result = await notifier.testSetTData(key, newData);
       expect(result, isTrue);
       expect(notifier.state,
-          isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>>>>());
+          isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>?>>>());
       expect(
-          notifier.state.when<Map<MockT, AsyncValue<List<MockE>>>>(
+          notifier.state.when<Map<MockT, AsyncValue<List<MockE>>?>>(
               data: (d) => d, error: (e, s) => {}, loading: () => {})[key]!,
           newData);
     });
@@ -311,9 +311,9 @@ void main() {
       final result = await notifier.testSetTData(key, newData);
       expect(result, isTrue);
       expect(notifier.state,
-          isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>>>>());
+          isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>?>>>());
       expect(
-          notifier.state.when<Map<MockT, AsyncValue<List<MockE>>>>(
+          notifier.state.when<Map<MockT, AsyncValue<List<MockE>>?>>(
               data: (d) => d, error: (e, s) => {}, loading: () => {})[key]!,
           newData);
     });

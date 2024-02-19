@@ -11,7 +11,7 @@ class SectionContender extends MapNotifier<Section, Contender> {
 }
 
 final sectionContenderProvider = StateNotifierProvider<SectionContender,
-    AsyncValue<Map<Section, AsyncValue<List<Contender>>>>>((ref) {
+    AsyncValue<Map<Section, AsyncValue<List<Contender>>?>>>((ref) {
   SectionContender adminLoanListNotifier = SectionContender();
   tokenExpireWrapperAuth(ref, () async {
     final loaners = ref.watch(sectionList);

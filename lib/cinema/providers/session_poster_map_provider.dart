@@ -10,19 +10,13 @@ class SessionLogoNotifier extends MapNotifier<Session, Image> {
 }
 
 final sessionPosterMapProvider = StateNotifierProvider<SessionLogoNotifier,
-    AsyncValue<Map<Session, AsyncValue<List<Image>>>>>((ref) {
+    AsyncValue<Map<Session, AsyncValue<List<Image>>?>>>((ref) {
   SessionLogoNotifier sessionLogoNotifier = SessionLogoNotifier();
   tokenExpireWrapperAuth(ref, () async {
-    ref.watch(sessionListProvider).when(data: (session) {
+    ref.watch(sessionListProvider).maybeWhen(data: (session) {
       sessionLogoNotifier.loadTList(session);
-      for (final l in session) {
-        sessionLogoNotifier.setTData(l, const AsyncValue.data([]));
-      }
       return sessionLogoNotifier;
-    }, error: (error, stackTrace) {
-      sessionLogoNotifier.loadTList([]);
-      return sessionLogoNotifier;
-    }, loading: () {
+    }, orElse: () {
       sessionLogoNotifier.loadTList([]);
       return sessionLogoNotifier;
     });

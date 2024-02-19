@@ -5,7 +5,7 @@ import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/loader.dart';
 
 class AutoLoaderChild<MapKey, MapValue> extends ConsumerWidget {
-  final AsyncValue<Map<MapKey, AsyncValue<List<MapValue>>>> value;
+  final AsyncValue<Map<MapKey, AsyncValue<List<MapValue>>?>> value;
   final MapNotifier<MapKey, MapValue> notifier;
   final MapKey mapKey;
   final Future<MapValue> Function(MapKey t)? loader;
@@ -46,12 +46,6 @@ class AutoLoaderChild<MapKey, MapValue> extends ConsumerWidget {
           return AsyncChild(
               value: group,
               builder: (context, list) {
-                if (list.isEmpty) {
-                  loader == null
-                      ? notifier.autoLoadList(ref, mapKey, listLoader!)
-                      : notifier.autoLoad(ref, mapKey, loader!);
-                  return nonNullLoadingBuilder(context);
-                }
                 return dataBuilder(context, list);
               },
               orElseBuilder: orElseBuilder,

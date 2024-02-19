@@ -3,14 +3,13 @@ import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class MapNotifier<T, E>
-    extends StateNotifier<AsyncValue<Map<T, AsyncValue<List<E>>>>> {
+    extends StateNotifier<AsyncValue<Map<T, AsyncValue<List<E>>?>>> {
   MapNotifier() : super(const AsyncLoading());
 
   void loadTList(List<T> tList) async {
-    Map<T, AsyncValue<List<E>>> tMap = {};
+    Map<T, AsyncValue<List<E>>?> tMap = {};
     for (T l in tList) {
-      final emptyEList = <E>[];
-      tMap[l] = AsyncValue.data(emptyEList);
+      tMap[l] = null;
     }
     state = AsyncValue.data(tMap);
   }
@@ -18,7 +17,7 @@ class MapNotifier<T, E>
   Future addT(T t) async {
     state.maybeWhen(
       data: (tList) async {
-        tList[t] = const AsyncValue.data([]);
+        tList[t] = null;
         state = AsyncValue.data(tList);
       },
       orElse: () {},

@@ -9,7 +9,7 @@ class LoanersItemsNotifier extends MapNotifier<Loaner, Item> {
 }
 
 final loanersItemsProvider = StateNotifierProvider<LoanersItemsNotifier,
-    AsyncValue<Map<Loaner, AsyncValue<List<Item>>>>>((ref) {
+    AsyncValue<Map<Loaner, AsyncValue<List<Item>>?>>>((ref) {
   final loaners = ref.watch(loanerList);
   LoanersItemsNotifier loanerLoanListNotifier = LoanersItemsNotifier();
   loanerLoanListNotifier.loadTList(loaners);

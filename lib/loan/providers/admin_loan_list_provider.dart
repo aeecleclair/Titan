@@ -12,7 +12,7 @@ class AdminLoanListNotifier extends MapNotifier<Loaner, Loan> {
 }
 
 final adminLoanListProvider = StateNotifierProvider<AdminLoanListNotifier,
-    AsyncValue<Map<Loaner, AsyncValue<List<Loan>>>>>((ref) {
+    AsyncValue<Map<Loaner, AsyncValue<List<Loan>>?>>>((ref) {
   AdminLoanListNotifier adminLoanListNotifier = AdminLoanListNotifier();
   tokenExpireWrapperAuth(ref, () async {
     final loaners = ref.watch(loanerList);
