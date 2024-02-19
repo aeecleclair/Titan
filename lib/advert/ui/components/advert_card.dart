@@ -72,28 +72,38 @@ class AdvertCard extends HookConsumerWidget {
                       Expanded(
                         child: Column(
                           children: [
-                            Text(advert.title,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                )),
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Text(advert.title,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                            ),
                             const SizedBox(
                               height: 10,
                             ),
-                            Text(formatDate(advert.date),
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                )),
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Text(formatDate(advert.date),
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                  )),
+                            ),
                             const SizedBox(
                               height: 10,
                             ),
-                            TextWithHyperLink(advert.content,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                )),
+                            Expanded(
+                              child: SingleChildScrollView(
+                                child: TextWithHyperLink(advert.content,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                    )),
+                              ),
+                            ),
                           ],
                         ),
                       ),
