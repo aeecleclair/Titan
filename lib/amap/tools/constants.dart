@@ -121,7 +121,7 @@ class AMAPTextConstants {
   static const String order = "Commander";
   static const String orders = "Commandes";
   static const String pickChooseCategory =
-      "Veuillez créer une catégorie ou en choisir une";
+      "Veuillez entrer une valeur ou choisir une catégorie existante";
   static const String pickDeliveryMoment = "Choisissez un moment de livraison";
   static const String presentation = "Présentation";
   static const String presentation1 =

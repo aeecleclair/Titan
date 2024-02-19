@@ -77,22 +77,33 @@ class TextEntry extends StatelessWidget {
         ),
       ),
       validator: (value) {
-        if (canBeEmpty) {
-          return null;
-        }
         if (value == null || value.isEmpty) {
-          return noValueError;
+          if (canBeEmpty) {
+            return null;
+          } else {
+            return noValueError;
+          }
         }
-        final intValue = int.tryParse(value);
-        if (isInt && (intValue == null || intValue < 0)) {
-          return TextConstants.invalidNumber;
+
+        if (isInt) {
+          final intValue = int.tryParse(value);
+          if (intValue == null || intValue < 0) {
+            return TextConstants.invalidNumber;
+          }
         }
-        final doubleValue = double.tryParse(value.replaceAll(',', '.'));
-        if (isDouble && (doubleValue == null || doubleValue < 0)) {
-          return TextConstants.invalidNumber;
+
+        if (isDouble) {
+          final doubleValue = double.tryParse(value.replaceAll(',', '.'));
+          if (doubleValue == null || doubleValue < 0) {
+            return TextConstants.invalidNumber;
+          }
         }
-        validator?.call(value);
-        return null;
+
+        if (validator == null) {
+          return null;
+        } else {
+          return validator!(value);
+        }
       },
     );
   }
