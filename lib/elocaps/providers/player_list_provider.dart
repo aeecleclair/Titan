@@ -15,7 +15,7 @@ class PlayerListNotifier extends ListNotifier<Player> {
 
   Future<AsyncValue<List<Player>>> loadRanking(CapsMode mode) async {
     return await loadList(() async =>
-        _leaderboardrepository.getLeaderBoard(capsModeToString(mode)));
+        _leaderboardrepository.getLeaderBoard(apiCapsModeToString(mode)));
   }
 }
 

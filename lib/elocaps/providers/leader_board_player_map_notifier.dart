@@ -9,7 +9,7 @@ class LeaderBoardPlayerListNotifier extends MapNotifier<CapsMode, Player> {
 
 final leaderBoardPlayerListProvider = StateNotifierProvider<
     LeaderBoardPlayerListNotifier,
-    AsyncValue<Map<CapsMode, AsyncValue<List<Player>>>>>((ref) {
+    AsyncValue<Map<CapsMode, AsyncValue<List<Player>>?>>>((ref) {
   LeaderBoardPlayerListNotifier notifier = LeaderBoardPlayerListNotifier();
   notifier.loadTList(CapsMode.values);
   return notifier;
