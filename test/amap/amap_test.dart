@@ -12,6 +12,7 @@ import 'package:myecl/amap/repositories/delivery_product_list_repository.dart';
 import 'package:myecl/amap/repositories/information_repository.dart';
 import 'package:myecl/amap/repositories/order_list_repository.dart';
 import 'package:myecl/amap/repositories/product_repository.dart';
+import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/user/class/list_users.dart';
 
@@ -450,14 +451,20 @@ void main() {
   });
 
   group('Testing functions', () {
+    test('Should return the correct string', () async {
+      expect(uiCollectionSlotToString(CollectionSlot.midDay),
+          AMAPTextConstants.midDay);
+      expect(uiCollectionSlotToString(CollectionSlot.evening),
+          AMAPTextConstants.evening);
+    });
     test('Should return a string', () async {
-      expect(collectionSlotToString(CollectionSlot.midDay), "midi");
-      expect(collectionSlotToString(CollectionSlot.evening), "soir");
+      expect(apiCollectionSlotToString(CollectionSlot.midDay), "midi");
+      expect(apiCollectionSlotToString(CollectionSlot.evening), "soir");
     });
     test('Should return a CollectionSlot', () async {
-      expect(stringToCollectionSlot("midi"), CollectionSlot.midDay);
-      expect(stringToCollectionSlot("soir"), CollectionSlot.evening);
-      expect(stringToCollectionSlot("test"), CollectionSlot.midDay);
+      expect(apiStringToCollectionSlot("midi"), CollectionSlot.midDay);
+      expect(apiStringToCollectionSlot("soir"), CollectionSlot.evening);
+      expect(apiStringToCollectionSlot("test"), CollectionSlot.midDay);
     });
 
     test('Should return a string', () async {
