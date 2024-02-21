@@ -34,7 +34,7 @@ class EloCapsMainPage extends HookConsumerWidget {
         Column(
           children: [
             const SizedBox(height: 20),
-            const AlignLeftText(ElocapsTextConstant.game_mode,
+            const AlignLeftText(ElocapsTextConstant.gameMode,
                 padding: EdgeInsets.symmetric(horizontal: 30)),
             const SizedBox(height: 20),
             HorizontalListView.builder(

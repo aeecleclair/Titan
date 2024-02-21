@@ -13,6 +13,7 @@ import 'package:myecl/elocaps/ui/elocaps.dart';
 import 'package:myecl/elocaps/ui/pages/game_page/player_form.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/elocaps/tools/constants.dart';
+import 'package:myecl/elocaps/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
@@ -70,7 +71,7 @@ class GamePage extends HookConsumerWidget {
       child: Column(
         children: [
           const SizedBox(height: 20),
-          const AlignLeftText(ElocapsTextConstant.game_mode,
+          const AlignLeftText(ElocapsTextConstant.gameMode,
               padding: EdgeInsets.symmetric(horizontal: 30)),
           const SizedBox(height: 20),
           HorizontalListView.builder(
@@ -83,7 +84,7 @@ class GamePage extends HookConsumerWidget {
                       modeChosenNotifier.setMode(item);
                     },
                     child: Text(
-                      item.name,
+                      capsModeToString(item),
                       style: TextStyle(
                           color: selected ? Colors.white : Colors.black),
                     ));
@@ -132,7 +133,7 @@ class GamePage extends HookConsumerWidget {
                     .where((user) => user.id != "")
                     .toList();
               },
-              child: const MyButton(text: ElocapsTextConstant.game_start),
+              child: const MyButton(text: ElocapsTextConstant.gameStart),
             ),
           const SizedBox(height: 20),
           if (isGameCreated.value) ...[
@@ -151,8 +152,8 @@ class GamePage extends HookConsumerWidget {
                         margin: const EdgeInsets.all(0),
                         enabled: scores[0] == 1,
                         text: modeChosen == CapsMode.cd
-                            ? ElocapsTextConstant.vicotry_team_1
-                            : ElocapsTextConstant.victory_player_1,
+                            ? ElocapsTextConstant.vicotryTeam_1
+                            : ElocapsTextConstant.victoryPlayer_1,
                       ),
                     ),
                   ),
@@ -174,8 +175,8 @@ class GamePage extends HookConsumerWidget {
                         margin: const EdgeInsets.all(0),
                         enabled: scores[1] == 1,
                         text: modeChosen == CapsMode.cd
-                            ? ElocapsTextConstant.victoty_team_2
-                            : ElocapsTextConstant.victory_player_2,
+                            ? ElocapsTextConstant.victotyTeam_2
+                            : ElocapsTextConstant.victoryPlayer_2,
                       ),
                     ),
                   ),
@@ -209,14 +210,14 @@ class GamePage extends HookConsumerWidget {
                   final value = await gameNotifier.createGame(game);
                   if (value) {
                     displayToastWithContext(
-                        TypeMsg.msg, ElocapsTextConstant.saved_game);
+                        TypeMsg.msg, ElocapsTextConstant.savedGame);
                     QR.to(ElocapsRouter.root);
                   } else {
                     displayToastWithContext(
-                        TypeMsg.error, ElocapsTextConstant.error_saving_game);
+                        TypeMsg.error, ElocapsTextConstant.errorSavingGame);
                   }
                 },
-                child: const MyButton(text: ElocapsTextConstant.save_the_game))
+                child: const MyButton(text: ElocapsTextConstant.saveTheGame))
           ],
           const SizedBox(height: 20),
         ],

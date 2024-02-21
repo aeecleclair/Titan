@@ -68,13 +68,12 @@ class WaitingDialog extends HookConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                                "[user (à faire)] ${ElocapsTextConstant.is_challenging_you} [mode]"),
+                                "[user (à faire)] ${ElocapsTextConstant.isChallengingYou} [mode]"),
                             Row(
                               children: [
-                                MyButton(text: ElocapsTextConstant.i_accept),
+                                MyButton(text: ElocapsTextConstant.iAccept),
                                 MyButton(
-                                    text:
-                                        ElocapsTextConstant.no_i_dont_like_him)
+                                    text: ElocapsTextConstant.noIDontLikeHim)
                               ],
                             )
                           ]))));

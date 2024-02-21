@@ -95,7 +95,7 @@ class GameCard extends HookConsumerWidget {
           const SizedBox(height: 10),
           if (!game.isConfirmed) ...[
             firstTeam.map((e) => e.playerId).contains(me.id)
-                ? const Text(ElocapsTextConstant.waiting_opposite_team_approval,
+                ? const Text(ElocapsTextConstant.waitingOppositeTeamApproval,
                     style: TextStyle(color: Colors.white))
                 : GestureDetector(
                     onTap: () async {

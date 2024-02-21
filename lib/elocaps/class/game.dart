@@ -30,7 +30,7 @@ class Game {
     final data = <String, dynamic>{};
     data['id'] = id;
     data['timestamp'] = processDateToAPI(timestamp);
-    data['mode'] = capsModeToString(mode);
+    data['mode'] = apiCapsModeToString(mode);
     data['game_players'] = gamePlayers.map((e) => e.toJson()).toList();
     data['is_confirmed'] = isConfirmed.toString();
 
@@ -39,7 +39,7 @@ class Game {
 
   Map<String, dynamic> toJsonForCreate() {
     final data = <String, dynamic>{};
-    data['mode'] = capsModeToString(mode);
+    data['mode'] = apiCapsModeToString(mode);
     data['players'] = gamePlayers.map((e) => e.toJsonForCreate()).toList();
     return data;
   }

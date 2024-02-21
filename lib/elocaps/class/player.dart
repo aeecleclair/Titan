@@ -20,7 +20,7 @@ class Player {
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['mode'] = capsModeToString(mode);
+    data['mode'] = apiCapsModeToString(mode);
     data['elo'] = elo;
     data['user'] = user.toJson();
     return data;

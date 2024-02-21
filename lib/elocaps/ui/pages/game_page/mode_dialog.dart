@@ -4,6 +4,7 @@ import 'package:myecl/elocaps/class/caps_mode.dart';
 import 'package:myecl/elocaps/providers/mode_chosen_provider.dart';
 import 'package:myecl/elocaps/ui/pages/game_page/player_form.dart';
 import 'package:myecl/elocaps/tools/constants.dart';
+import 'package:myecl/elocaps/tools/functions.dart';
 
 class ModeDialog extends HookConsumerWidget {
   const ModeDialog({
@@ -34,7 +35,7 @@ class ModeDialog extends HookConsumerWidget {
         child: Column(
           children: [
             const Text(
-              ElocapsTextConstant.which_mode,
+              ElocapsTextConstant.whichMode,
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -57,7 +58,7 @@ class ModeDialog extends HookConsumerWidget {
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: Center(
                         child: Text(
-                          capsModeList[index].name,
+                          capsModeToString(capsModeList[index]),
                           style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
