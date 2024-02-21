@@ -93,7 +93,7 @@ class OrderUI extends HookConsumerWidget {
           ),
           const SizedBox(height: 3),
           Text(
-            collectionSlotToString(order.collectionSlot),
+            uiCollectionSlotToString(order.collectionSlot),
             style: const TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.w700,

@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 
 class CollectionSlotSelector extends HookConsumerWidget {
@@ -35,7 +36,7 @@ class CollectionSlotSelector extends HookConsumerWidget {
           ),
           child: Center(
             child: Text(
-              capitalize(collectionSlot.name),
+              capitalize(uiCollectionSlotToString(collectionSlot)),
               style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
