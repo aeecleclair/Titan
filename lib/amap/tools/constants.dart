@@ -92,6 +92,7 @@ class AMAPTextConstants {
   static const String errorLink = "Erreur lors de l'ouverture du lien";
   static const String errorLoadingUser =
       "Erreur lors du chargement des utilisateurs";
+  static const String evening = "Soir";
   static const String expectingNumber = "Veuillez entrer un nombre";
   static const String fillField = "Veuillez remplir ce champ";
   static const String handlingAccount = "Gérer les comptes";
@@ -103,6 +104,7 @@ class AMAPTextConstants {
   static const String lockedOrder = "Commande verrouillée";
   static const String looking = "Rechercher";
   static const String lockingDelivery = "Verrouiller la livraison ?";
+  static const String midDay = "Midi";
   static const String myOrders = "Mes commandes";
   static const String name = "Nom";
   static const String nextStep = "Étape suivante";

@@ -1,7 +1,19 @@
 import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/class/order.dart';
+import 'package:myecl/amap/tools/constants.dart';
 
-String collectionSlotToString(CollectionSlot slot) {
+// Slots in Titan UI must changed based on language
+String uiCollectionSlotToString(CollectionSlot slot) {
+  switch (slot) {
+    case CollectionSlot.midDay:
+      return AMAPTextConstants.midDay;
+    case CollectionSlot.evening:
+      return AMAPTextConstants.evening;
+  }
+}
+
+// Slots are represented with hardcoded strings in API
+String apiCollectionSlotToString(CollectionSlot slot) {
   switch (slot) {
     case CollectionSlot.midDay:
       return 'midi';
@@ -10,7 +22,8 @@ String collectionSlotToString(CollectionSlot slot) {
   }
 }
 
-CollectionSlot stringToCollectionSlot(String slot) {
+// Slots are represented with hardcoded strings in API
+CollectionSlot apiStringToCollectionSlot(String slot) {
   switch (slot) {
     case 'midi':
       return CollectionSlot.midDay;

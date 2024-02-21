@@ -43,7 +43,7 @@ class Order {
         List<String>.from(products.map((element) => element.id).toList());
     productsQuantity =
         List<int>.from(products.map((element) => element.quantity).toList());
-    collectionSlot = stringToCollectionSlot(json['collection_slot']);
+    collectionSlot = apiStringToCollectionSlot(json['collection_slot']);
     user = SimpleUser.fromJson(json['user']);
     orderingDate = DateTime.parse(json['ordering_date']);
     deliveryDate = DateTime.parse(json['delivery_date']);
@@ -57,7 +57,7 @@ class Order {
     data['ordering_date'] = processDateToAPIWithoutHour(orderingDate);
     data['delivery_date'] = processDateToAPIWithoutHour(deliveryDate);
     data['products_ids'] = productsDetail;
-    data['collection_slot'] = collectionSlotToString(collectionSlot);
+    data['collection_slot'] = apiCollectionSlotToString(collectionSlot);
     data['products_quantity'] = products.map((e) => e.quantity).toList();
     data['user_id'] = user.id;
     return data;
