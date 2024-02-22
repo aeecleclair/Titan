@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/recommendation/class/recommendation.dart';
@@ -68,13 +69,34 @@ class RecommendationCard extends HookConsumerWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text(
-                    "${recommendation.title} - ${recommendation.code}",
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "${recommendation.title} - ${recommendation.code}",
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      IconButton(
+                        onPressed: () async {
+                          await Clipboard.setData(
+                            ClipboardData(text: recommendation.code),
+                          );
+
+                          displayToastWithContext(
+                            TypeMsg.msg,
+                            RecommendationTextConstants.copiedCode,
+                          );
+                        },
+                        icon: const Icon(Icons.content_copy),
+                      ),
+                    ],
                   ),
                   Text(
                     recommendation.summary,
@@ -91,14 +113,14 @@ class RecommendationCard extends HookConsumerWidget {
             isMainPage
                 ? SizedBox(
                     width: 50,
-                    child: GestureDetector(
-                      onTap: () {
+                    child: IconButton(
+                      onPressed: () {
                         recommendationNotifier
                             .setRecommendation(recommendation);
                         QR.to(RecommendationRouter.root +
                             RecommendationRouter.information);
                       },
-                      child: const HeroIcon(
+                      icon: const HeroIcon(
                         HeroIcons.informationCircle,
                         size: 40,
                       ),

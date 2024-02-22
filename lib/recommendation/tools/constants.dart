@@ -21,4 +21,5 @@ class RecommendationTextConstants {
       'Champs incorrects ou manquants';
   static const String editingError = "Échec de la modification";
   static const String addingError = "Échec de l'ajout";
+  static const String copiedCode = "Code de réduction copié";
 }
