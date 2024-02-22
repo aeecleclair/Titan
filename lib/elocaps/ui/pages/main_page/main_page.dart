@@ -6,6 +6,7 @@ import 'package:myecl/elocaps/providers/mode_chosen_provider.dart';
 import 'package:myecl/elocaps/providers/player_list_provider.dart';
 import 'package:myecl/elocaps/router.dart';
 import 'package:myecl/elocaps/tools/constants.dart';
+import 'package:myecl/elocaps/tools/functions.dart';
 import 'package:myecl/elocaps/ui/button.dart';
 import 'package:myecl/elocaps/ui/elocaps.dart';
 import 'package:myecl/elocaps/ui/pages/main_page/leader_board.dart';
@@ -47,7 +48,7 @@ class EloCapsMainPage extends HookConsumerWidget {
                         modeChosenNotifier.setMode(item);
                       },
                       child: Text(
-                        item.name,
+                        capsModeToString(item),
                         style: TextStyle(
                             color: selected ? Colors.white : Colors.black),
                       ));
