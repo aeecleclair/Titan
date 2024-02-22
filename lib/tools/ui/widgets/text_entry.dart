@@ -44,7 +44,9 @@ class TextEntry extends StatelessWidget {
       keyboardType: keyboardType,
       cursorColor: color,
       onChanged: onChanged,
-      textInputAction: TextInputAction.next,
+      textInputAction: (keyboardType == TextInputType.multiline)
+          ? TextInputAction.newline
+          : TextInputAction.next,
       enabled: enabled,
       decoration: InputDecoration(
         label: Text(
