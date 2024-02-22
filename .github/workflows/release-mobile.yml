@@ -82,7 +82,7 @@ jobs:
           THE_MOVIE_DB_API: ${{ secrets.THE_MOVIE_DB_API }}
           DEBUG_HOST: ${{ secrets.DEBUG_HOST }}
           PLAUSIBLE_HOST: ${{ secrets.PLAUSIBLE_ALPHA_HOST }}
-          PLAUSIBLE_DOMAIN: ${{ secrets.PLAUSIBLE_DOMAIN }}
+          PLAUSIBLE_DOMAIN: ${{ secrets.PLAUSIBLE_ALPHA_DOMAIN }}
       
       - name: Configure production env
         if: needs.extract-version.outputs.isAlpha == 'false'
