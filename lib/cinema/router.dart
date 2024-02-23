@@ -31,6 +31,7 @@ class CinemaRouter {
   CinemaRouter(this.ref);
 
   QRoute route() => QRoute(
+        name: "cinema",
         path: CinemaRouter.root,
         builder: () => main_page.CinemaMainPage(),
         middleware: [

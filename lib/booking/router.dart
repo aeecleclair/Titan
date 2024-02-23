@@ -39,6 +39,7 @@ class BookingRouter {
   BookingRouter(this.ref);
 
   QRoute route() => QRoute(
+        name: "booking",
         path: BookingRouter.root,
         builder: () => main_page.BookingMainPage(),
         middleware: [

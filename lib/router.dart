@@ -32,6 +32,7 @@ class AppRouter {
   static const String update = '/update';
   static const String noInternet = '/no_internet';
   static const String noModule = '/no_module';
+
   AppRouter(this.ref) {
     routes = [
       QRoute(

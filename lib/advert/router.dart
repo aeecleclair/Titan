@@ -34,6 +34,7 @@ class AdvertRouter {
   AdvertRouter(this.ref);
 
   QRoute route() => QRoute(
+        name: "advert",
         path: AdvertRouter.root,
         builder: () => main_page.AdvertMainPage(),
         middleware: [

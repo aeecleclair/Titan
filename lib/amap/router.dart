@@ -43,6 +43,7 @@ class AmapRouter {
   AmapRouter(this.ref);
 
   QRoute route() => QRoute(
+        name: "amap",
         path: AmapRouter.root,
         builder: () => main_page.AmapMainPage(),
         middleware: [

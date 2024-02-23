@@ -13,6 +13,7 @@ dependencies:
   collection: ^1.16.0
   crypto: ^3.0.2
   datetime_picker_formfield: ^2.0.1
+  device_info_plus: ^9.1.2
   dotenv: ^4.0.1
   firebase_core: ^2.15.1
   either_dart: ^1.0.0

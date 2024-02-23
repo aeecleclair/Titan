@@ -15,6 +15,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/router.dart';
 import 'package:myecl/service/tools/setup.dart';
+import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/plausible/plausible_observer.dart';
 import 'package:myecl/tools/ui/layouts/app_template.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -45,7 +47,7 @@ class MyApp extends HookConsumerWidget {
         useAnimationController(duration: const Duration(seconds: 2));
     final animationNotifier = ref.read(backgroundAnimationProvider.notifier);
     final navigatorKey = GlobalKey<NavigatorState>();
-
+    final plausible = getPlausible();
     Future(() => animationNotifier.setController(animationController));
 
     final myWillPopScope = WillPopScope(
@@ -92,6 +94,7 @@ class MyApp extends HookConsumerWidget {
           },
           routerDelegate: QRouterDelegate(
             appRouter.routes,
+            observers: [if (plausible != null) PlausibleObserver(plausible)],
             initPath: AppRouter.root,
             navKey: navigatorKey,
           ),

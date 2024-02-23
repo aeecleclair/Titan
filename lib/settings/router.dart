@@ -26,6 +26,7 @@ class SettingsRouter {
   SettingsRouter(this.ref);
 
   QRoute route() => QRoute(
+          name: "settings",
           path: SettingsRouter.root,
           builder: () => main_page.SettingsMainPage(),
           middleware: [

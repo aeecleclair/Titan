@@ -33,6 +33,7 @@ class VoteRouter {
   VoteRouter(this.ref);
 
   QRoute route() => QRoute(
+        name: "vote",
         path: VoteRouter.root,
         builder: () => main_page.VoteMainPage(),
         middleware: [

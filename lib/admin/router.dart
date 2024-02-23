@@ -25,6 +25,7 @@ class AdminRouter {
   AdminRouter(this.ref);
 
   QRoute route() => QRoute(
+          name: "admin",
           path: AdminRouter.root,
           builder: () => main_page.AdminMainPage(),
           middleware: [

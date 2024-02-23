@@ -76,9 +76,13 @@ jobs:
           echo THE_MOVIE_DB_API=$THE_MOVIE_DB_API >> .env
           echo DEBUG_HOST=$DEBUG_HOST >> .env
           echo RELEASE_HOST=$DEBUG_HOST >> .env
+          echo PLAUSIBLE_HOST=$PLAUSIBLE_HOST >> .env
+          echo PLAUSIBLE_DOMAIN=$PLAUSIBLE_DOMAIN >> .env
         env:
           THE_MOVIE_DB_API: ${{ secrets.THE_MOVIE_DB_API }}
           DEBUG_HOST: ${{ secrets.DEBUG_HOST }}
+          PLAUSIBLE_HOST: ${{ secrets.PLAUSIBLE_ALPHA_HOST }}
+          PLAUSIBLE_DOMAIN: ${{ secrets.PLAUSIBLE_ALPHA_DOMAIN }}
       
       - name: Configure production env
         if: needs.extract-version.outputs.isAlpha == 'false'
@@ -86,10 +90,15 @@ jobs:
           echo THE_MOVIE_DB_API=$THE_MOVIE_DB_API >> .env
           echo DEBUG_HOST=$DEBUG_HOST >> .env
           echo RELEASE_HOST=$RELEASE_HOST >> .env
+          echo PLAUSIBLE_HOST=$PLAUSIBLE_HOST >> .env
+          echo PLAUSIBLE_DOMAIN=$PLAUSIBLE_DOMAIN >> .env
         env:
           THE_MOVIE_DB_API: ${{ secrets.THE_MOVIE_DB_API }}
           DEBUG_HOST: ${{ secrets.DEBUG_HOST }}
           RELEASE_HOST: ${{ secrets.RELEASE_HOST }}
+          PLAUSIBLE_HOST: ${{ secrets.PLAUSIBLE_HOST }}
+          PLAUSIBLE_DOMAIN: ${{ secrets.PLAUSIBLE_DOMAIN }}
+          
       
       - name: Add Firebase configuration for Alpha
         if: needs.extract-version.outputs.isAlpha == 'true'

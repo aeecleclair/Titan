@@ -33,6 +33,7 @@ class LoanRouter {
   LoanRouter(this.ref);
 
   QRoute route() => QRoute(
+        name: "loan",
         path: LoanRouter.root,
         builder: () => main_page.LoanMainPage(),
         middleware: [

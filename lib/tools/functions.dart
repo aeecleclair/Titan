@@ -1,10 +1,13 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:myecl/tools/plausible/plausible.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 enum TypeMsg { msg, error }
@@ -376,4 +379,19 @@ bool isEmailInValid(String email) {
 bool isStudent(String email) {
   final regex = RegExp(studentRegex);
   return regex.hasMatch(email);
+}
+
+Plausible? getPlausible() {
+  final serverUrl = dotenv.env["PLAUSIBLE_HOST"];
+  final domain = dotenv.env["PLAUSIBLE_DOMAIN"];
+
+  if (serverUrl == null || domain == null) {
+    return null;
+  }
+
+  if (appFlavor == "prod" || appFlavor == "alpha") {
+    return Plausible(serverUrl, domain);
+  }
+
+  return null;
 }
