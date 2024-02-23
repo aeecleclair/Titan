@@ -25,7 +25,7 @@ class InformationRecommendationPage extends HookConsumerWidget {
               backgroundColor: Colors.grey.withOpacity(0.2),
               child: Text(
                 recommendation.description,
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.justify,
               ),
             ),
           ],
