@@ -72,16 +72,15 @@ class RecommendationCard extends HookConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        "${recommendation.title} - ${recommendation.code}",
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                      Flexible(
+                        child: Text(
+                          "${recommendation.title} - ${recommendation.code}",
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        width: 5,
                       ),
                       IconButton(
                         onPressed: () async {
@@ -94,7 +93,7 @@ class RecommendationCard extends HookConsumerWidget {
                             RecommendationTextConstants.copiedCode,
                           );
                         },
-                        icon: const Icon(Icons.content_copy),
+                        icon: const Icon(Icons.copy),
                       ),
                     ],
                   ),
