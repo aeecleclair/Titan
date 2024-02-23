@@ -398,6 +398,7 @@ Plausible? getPlausible() {
 }
 
 String get_titan_flavor() {
+  // See https://github.com/flutter/flutter/issues/31441
   const String flavor = String.fromEnvironment('app.flavor');
   if (flavor == "") {
     throw StateError("App flavor is not set");

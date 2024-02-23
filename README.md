@@ -18,11 +18,11 @@ Titan is designed to be launched on Web, Android and iOS platforms.
 
 Update [`.env`](.env) to match your Hyperion's backend:
 
-`RELEASE_HOST = "<<Your Production Server Host>>"`
+`PROD_HOST = "<<Your Production Server Host>>`
 
 You can also specify an other host for debuging:
 
-`DEBUG_HOST = "<<Your Debbuging Server Host>>"`
+`DEV_HOST = "<<Your Debbuging Server Host>>`
 
 NB: a trailing slash is required.
 
