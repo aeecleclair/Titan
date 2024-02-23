@@ -2,7 +2,7 @@ class Recommendation {
   final String? id;
   final DateTime? creation;
   final String title;
-  final String code;
+  final String? code;
   final String summary;
   final String description;
 
@@ -46,7 +46,7 @@ class Recommendation {
   static Recommendation empty() {
     return Recommendation(
       title: "",
-      code: "",
+      code: null,
       summary: "",
       description: "",
     );

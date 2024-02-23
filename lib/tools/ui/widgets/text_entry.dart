@@ -50,7 +50,7 @@ class TextEntry extends StatelessWidget {
       enabled: enabled,
       decoration: InputDecoration(
         label: Text(
-          label,
+          canBeEmpty ? '$label (optionnel)' : label,
           style: TextStyle(color: color, height: 0.5),
         ),
         suffix: suffixIcon == null && suffix.isEmpty

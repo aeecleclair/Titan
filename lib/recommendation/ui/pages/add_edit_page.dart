@@ -114,6 +114,7 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                   maxLines: 1,
                   label: RecommendationTextConstants.code,
                   controller: code,
+                  canBeEmpty: true,
                 ),
                 const SizedBox(height: 30),
                 TextEntry(
@@ -149,7 +150,7 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                         id: recommendation.id,
                         creation: recommendation.creation,
                         title: title.text,
-                        code: code.text,
+                        code: code.text == "" ? null : code.text,
                         summary: summary.text,
                         description: description.text,
                       );

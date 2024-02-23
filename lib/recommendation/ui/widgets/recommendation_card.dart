@@ -74,7 +74,9 @@ class RecommendationCard extends HookConsumerWidget {
                     children: [
                       Flexible(
                         child: Text(
-                          "${recommendation.title} - ${recommendation.code}",
+                          recommendation.code == null
+                              ? recommendation.title
+                              : "${recommendation.title} - ${recommendation.code}",
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontSize: 20,
@@ -82,19 +84,20 @@ class RecommendationCard extends HookConsumerWidget {
                           ),
                         ),
                       ),
-                      IconButton(
-                        onPressed: () async {
-                          await Clipboard.setData(
-                            ClipboardData(text: recommendation.code),
-                          );
+                      if (recommendation.code != null)
+                        IconButton(
+                          onPressed: () async {
+                            await Clipboard.setData(
+                              ClipboardData(text: recommendation.code!),
+                            );
 
-                          displayToastWithContext(
-                            TypeMsg.msg,
-                            RecommendationTextConstants.copiedCode,
-                          );
-                        },
-                        icon: const Icon(Icons.copy),
-                      ),
+                            displayToastWithContext(
+                              TypeMsg.msg,
+                              RecommendationTextConstants.copiedCode,
+                            );
+                          },
+                          icon: const Icon(Icons.copy),
+                        ),
                     ],
                   ),
                   Text(
