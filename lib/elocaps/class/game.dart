@@ -9,12 +9,14 @@ class Game {
       required this.timestamp,
       required this.mode,
       required this.gamePlayers,
-      required this.isConfirmed});
+      required this.isConfirmed,
+      required this.isCancelled});
   late final String id;
   late final DateTime timestamp;
   late final CapsMode mode;
   late final List<GamePlayer> gamePlayers;
   late final bool isConfirmed;
+  late final bool isCancelled;
 
   Game.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -24,6 +26,7 @@ class Game {
         .map<GamePlayer>((e) => GamePlayer.fromJson(e))
         .toList();
     isConfirmed = json['is_confirmed'];
+    isCancelled = json['cancelled'];
   }
 
   Map<String, dynamic> toJson() {
@@ -33,7 +36,7 @@ class Game {
     data['mode'] = apiCapsModeToString(mode);
     data['game_players'] = gamePlayers.map((e) => e.toJson()).toList();
     data['is_confirmed'] = isConfirmed.toString();
-
+    data['cancelled'] = isCancelled.toString();
     return data;
   }
 
@@ -49,13 +52,15 @@ class Game {
           CapsMode? mode,
           String? id,
           List<GamePlayer>? gamePlayers,
-          bool? isConfirmed}) =>
+          bool? isConfirmed,
+          bool? isCancelled}) =>
       Game(
           timestamp: timestamp ?? this.timestamp,
           mode: mode ?? this.mode,
           id: id ?? this.id,
           gamePlayers: gamePlayers ?? this.gamePlayers,
-          isConfirmed: isConfirmed ?? this.isConfirmed);
+          isConfirmed: isConfirmed ?? this.isConfirmed,
+          isCancelled: isCancelled ?? this.isCancelled);
 
   Game.empty() {
     id = '';
@@ -63,10 +68,11 @@ class Game {
     mode = CapsMode.single;
     gamePlayers = [];
     isConfirmed = false;
+    isCancelled = false;
   }
 
   @override
   String toString() {
-    return 'Game(id: $id, date de la partie : $timestamp, mode: $mode, isConfirmed : $isConfirmed)';
+    return 'Game(id: $id, date de la partie : $timestamp, mode: $mode, isConfirmed : $isConfirmed), isCancelled : $isCancelled';
   }
 }

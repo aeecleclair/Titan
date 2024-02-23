@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:myecl/elocaps/class/caps_mode.dart';
 import 'package:myecl/elocaps/tools/constants.dart';
 
@@ -39,5 +40,46 @@ CapsMode stringToCapsMode(String mode) {
       return CapsMode.semiCapacks;
     default:
       return CapsMode.single;
+  }
+}
+
+String scoreToWinOrLose(int score) {
+  if (score > 0) {
+    return ElocapsTextConstant.victory;
+  } else if (score == 0) {
+    return ElocapsTextConstant.draw;
+  } else {
+    return ElocapsTextConstant.defeat;
+  }
+}
+
+List scoreToColor(int score, bool gameConfirmed, bool gameCancelled) {
+  if (gameConfirmed) {
+    if (score > 0) {
+      return [
+        const Color.fromARGB(255, 27, 72, 30),
+        const Color.fromARGB(255, 95, 230, 65)
+      ];
+    } else if (score == 0) {
+      return [
+        const Color.fromARGB(255, 81, 86, 15),
+        const Color.fromARGB(255, 227, 240, 39)
+      ];
+    } else {
+      return [
+        const Color.fromARGB(255, 115, 3, 3),
+        const Color.fromARGB(255, 231, 84, 31)
+      ];
+    }
+  } else if (gameCancelled) {
+    return [
+      Color.fromARGB(255, 32, 31, 31),
+      Color.fromARGB(255, 201, 197, 196)
+    ];
+  } else {
+    return [
+      const Color.fromARGB(255, 30, 17, 75),
+      const Color.fromARGB(255, 59, 189, 241)
+    ];
   }
 }
