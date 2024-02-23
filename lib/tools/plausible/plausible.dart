@@ -38,15 +38,13 @@ class Plausible {
       final deviceInfoPlugin = DeviceInfoPlugin();
       if (Platform.isAndroid) {
         final androidInfo = await deviceInfoPlugin.androidInfo;
-        if (Platform.isAndroid) {
-          headers["User-Agent"] =
-              "${packageInfo.appName}/${packageInfo.version} Android/${androidInfo.version.release} (SDK ${androidInfo.version.sdkInt}; ${androidInfo.model} Build/${androidInfo.id})";
-        }
-        if (Platform.isIOS) {
-          final iosInfo = await deviceInfoPlugin.iosInfo;
-          headers["User-Agent"] =
-              "${packageInfo.appName}/${packageInfo.version} iOS/${iosInfo.systemVersion} (${iosInfo.model})";
-        }
+        headers["User-Agent"] =
+            "${packageInfo.appName}/${packageInfo.version} Android/${androidInfo.version.release} (SDK ${androidInfo.version.sdkInt}; ${androidInfo.model} Build/${androidInfo.id})";
+      }
+      if (Platform.isIOS) {
+        final iosInfo = await deviceInfoPlugin.iosInfo;
+        headers["User-Agent"] =
+            "${packageInfo.appName}/${packageInfo.version} iOS/${iosInfo.systemVersion} (${iosInfo.model})";
       }
     }
 
