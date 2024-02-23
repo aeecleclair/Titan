@@ -16,7 +16,10 @@ class ElocapsTextConstant {
   static const String apiCapacks = "capacks";
   static const String cd = "CD";
   static const String apiCd = "cd";
+  static const String defeat = "Défaite";
   static const String draw = "Égalité";
+  static const String cancel = "Annuler";
+  static const String cancelledGame = "La partie a été annulée";
   static const String elocaps = "Elocaps";
   static const String errorSavingGame =
       "Erreur lors de l'enregistrement de la partie";
@@ -40,11 +43,14 @@ class ElocapsTextConstant {
   static const String team_1 = "Equipe 1";
   static const String team_2 = "Equipe 2";
   static const String validate = "Valider";
-  static const String vicotryTeam_1 = "Victoire équipe 1";
+  static const String victory = "Victoire";
+  static const String victoryTeam_1 = "Victoire équipe 1";
   static const String victoryPlayer_1 = "Victoire joueur 1";
   static const String victoryPlayer_2 = "Victoire joueur 2";
-  static const String victotyTeam_2 = "Victoire équipe 2";
+  static const String victoryTeam_2 = "Victoire équipe 2";
   static const String waitingOppositeTeamApproval =
       "En attente de validation de l'équipe adverse";
+  static const String won = "a gagné";
+  static const String wonCd = "ont gagné";
   static const String whichMode = "Quel mode ?";
 }

@@ -26,7 +26,7 @@ class GamePage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isGameCreated = useState(false);
+    var isGameCreated = useState(false);
     final modeChosen = ref.watch(modeChosenProvider);
     final modeChosenNotifier = ref.read(modeChosenProvider.notifier);
     final gameNotifier = ref.watch(gameProvider.notifier);
@@ -114,7 +114,7 @@ class GamePage extends HookConsumerWidget {
                       const SizedBox(height: 20),
                       playersForm[0],
                       const SizedBox(height: 20),
-                      const AlignLeftText(ElocapsTextConstant.player_1,
+                      const AlignLeftText(ElocapsTextConstant.player_2,
                           padding: EdgeInsets.symmetric(horizontal: 30)),
                       const SizedBox(height: 20),
                       playersForm[1],
@@ -140,49 +140,61 @@ class GamePage extends HookConsumerWidget {
             const AlignLeftText(ElocapsTextConstant.result,
                 padding: EdgeInsets.symmetric(horizontal: 30)),
             const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Form(
-                key: scoreKey,
-                child: Row(children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: scoresNotifier.oneWin,
-                      child: MyButton(
-                        margin: const EdgeInsets.all(0),
-                        enabled: scores[0] == 1,
-                        text: modeChosen == CapsMode.cd
-                            ? ElocapsTextConstant.vicotryTeam_1
-                            : ElocapsTextConstant.victoryPlayer_1,
+            Builder(builder: (context) {
+              isGameCreated.value = false;
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Form(
+                  key: scoreKey,
+                  child: Row(children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          scoresNotifier.oneWin();
+                          isGameCreated.value = true;
+                        },
+                        child: MyButton(
+                          margin: const EdgeInsets.all(0),
+                          enabled: scores[0] == 1,
+                          text: modeChosen == CapsMode.cd
+                              ? '${players.value[0].nickname ?? players.value[0].firstname} et ${players.value[1].nickname ?? players.value[1].firstname} ${ElocapsTextConstant.wonCd}'
+                              : '${players.value[0].nickname ?? players.value[0].firstname} ${ElocapsTextConstant.won}',
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 90,
-                    child: GestureDetector(
-                      onTap: scoresNotifier.equality,
-                      child: MyButton(
-                        enabled: scores[0] == 0,
-                        margin: const EdgeInsets.symmetric(horizontal: 10),
-                        text: ElocapsTextConstant.draw,
+                    SizedBox(
+                      width: 90,
+                      child: GestureDetector(
+                        onTap: () {
+                          scoresNotifier.equality();
+                          isGameCreated.value = true;
+                        },
+                        child: MyButton(
+                          enabled: scores[0] == 0,
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          text: ElocapsTextConstant.draw,
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: scoresNotifier.twoWin,
-                      child: MyButton(
-                        margin: const EdgeInsets.all(0),
-                        enabled: scores[1] == 1,
-                        text: modeChosen == CapsMode.cd
-                            ? ElocapsTextConstant.victotyTeam_2
-                            : ElocapsTextConstant.victoryPlayer_2,
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          scoresNotifier.twoWin();
+                          isGameCreated.value = true;
+                        },
+                        child: MyButton(
+                          margin: const EdgeInsets.all(0),
+                          enabled: scores[1] == 1,
+                          text: modeChosen == CapsMode.cd
+                              ? '${players.value[2].nickname ?? players.value[2].firstname} et ${players.value[3].nickname ?? players.value[3].firstname} ${ElocapsTextConstant.wonCd}'
+                              : '${players.value[1].nickname ?? players.value[1].firstname} ${ElocapsTextConstant.won}',
+                        ),
                       ),
                     ),
-                  ),
-                ]),
-              ),
-            ),
+                  ]),
+                ),
+              );
+            }),
             const SizedBox(height: 30),
             GestureDetector(
                 onTap: () async {
@@ -202,10 +214,12 @@ class GamePage extends HookConsumerWidget {
                           playerId: e.id,
                           score: isTeamOne ? scores[0] : scores[1],
                           team: isTeamOne ? 1 : 2,
+                          hasConfirmed: false,
                         );
                       }).toList(),
                       id: '',
                       isConfirmed: false,
+                      isCancelled: false,
                       mode: modeChosen);
                   final value = await gameNotifier.createGame(game);
                   if (value) {
