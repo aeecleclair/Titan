@@ -74,13 +74,12 @@ jobs:
         if: needs.extract-version.outputs.isAlpha == 'true'
         run: |
           echo THE_MOVIE_DB_API=$THE_MOVIE_DB_API >> .env
-          echo DEBUG_HOST=$DEBUG_HOST >> .env
-          echo RELEASE_HOST=$DEBUG_HOST >> .env
+          echo ALPHA_HOST=$ALPHA_HOST >> .env
           echo PLAUSIBLE_HOST=$PLAUSIBLE_HOST >> .env
           echo PLAUSIBLE_DOMAIN=$PLAUSIBLE_DOMAIN >> .env
         env:
           THE_MOVIE_DB_API: ${{ secrets.THE_MOVIE_DB_API }}
-          DEBUG_HOST: ${{ secrets.DEBUG_HOST }}
+          ALPHA_HOST: ${{ vars.ALPHA_HOST }}
           PLAUSIBLE_HOST: ${{ secrets.PLAUSIBLE_ALPHA_HOST }}
           PLAUSIBLE_DOMAIN: ${{ secrets.PLAUSIBLE_ALPHA_DOMAIN }}
       
@@ -88,14 +87,12 @@ jobs:
         if: needs.extract-version.outputs.isAlpha == 'false'
         run: |
           echo THE_MOVIE_DB_API=$THE_MOVIE_DB_API >> .env
-          echo DEBUG_HOST=$DEBUG_HOST >> .env
-          echo RELEASE_HOST=$RELEASE_HOST >> .env
+          echo PROD_HOST=$PROD_HOST >> .env
           echo PLAUSIBLE_HOST=$PLAUSIBLE_HOST >> .env
           echo PLAUSIBLE_DOMAIN=$PLAUSIBLE_DOMAIN >> .env
         env:
           THE_MOVIE_DB_API: ${{ secrets.THE_MOVIE_DB_API }}
-          DEBUG_HOST: ${{ secrets.DEBUG_HOST }}
-          RELEASE_HOST: ${{ secrets.RELEASE_HOST }}
+          PROD_HOST: ${{ vars.PROD_HOST }}
           PLAUSIBLE_HOST: ${{ secrets.PLAUSIBLE_HOST }}
           PLAUSIBLE_DOMAIN: ${{ secrets.PLAUSIBLE_DOMAIN }}
           

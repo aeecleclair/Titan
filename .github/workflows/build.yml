@@ -62,11 +62,9 @@ jobs:
         run: |
           echo THE_MOVIE_DB_API=$THE_MOVIE_DB_API >> .env
           echo DEV_HOST=$DEV_HOST >> .env
-          echo PROD_HOST=$PROD_HOST >> .env
         env:
           THE_MOVIE_DB_API: ${{ secrets.THE_MOVIE_DB_API }}
-          DEV_HOST: ${{ secrets.DEBUG_HOST }}
-          PROD_HOST: ${{ secrets.DEBUG_HOST }}
+          DEV_HOST: ${{ vars.DEV_HOST }}
       
       - name: Add Firebase configuration for Dev
         run: |
