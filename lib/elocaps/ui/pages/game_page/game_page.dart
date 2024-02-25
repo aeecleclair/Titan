@@ -26,7 +26,7 @@ class GamePage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var isGameCreated = useState(false);
+    final isGameCreated = useState(false);
     final modeChosen = ref.watch(modeChosenProvider);
     final modeChosenNotifier = ref.read(modeChosenProvider.notifier);
     final gameNotifier = ref.watch(gameProvider.notifier);

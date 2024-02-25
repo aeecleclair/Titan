@@ -19,7 +19,7 @@ class GameNotifier extends SingleNotifier<Game> {
   }
 
   Future<bool> cancelledGame(Game game) async {
-    return await update((game) => _gameRepository.cancelledGame(game.id), game);
+    return await update((game) => _gameRepository.cancelGame(game.id), game);
   }
 }
 

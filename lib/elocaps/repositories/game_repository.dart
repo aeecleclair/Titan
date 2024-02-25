@@ -27,7 +27,7 @@ class GameRepository extends Repository {
     return await create({}, suffix: "/$gameId/validate");
   }
 
-  Future<bool> cancelledGame(String gameId) async {
+  Future<bool> cancelGame(String gameId) async {
     return await create({}, suffix: "/$gameId/cancel");
   }
 }

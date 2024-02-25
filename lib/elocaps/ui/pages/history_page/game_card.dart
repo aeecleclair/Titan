@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/elocaps/class/game.dart';
 import 'package:myecl/elocaps/providers/game_provider.dart';
-import 'package:myecl/elocaps/providers/player_histo_provider.dart';
 import 'package:myecl/elocaps/tools/constants.dart';
 import 'package:myecl/elocaps/tools/functions.dart';
+import 'package:myecl/elocaps/ui/pages/history_page/button_ui.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
@@ -24,24 +24,20 @@ class GameCard extends HookConsumerWidget {
         game.gamePlayers.where((element) => element.team == myTeamNumber);
     final secondTeam =
         game.gamePlayers.where((element) => element.team == 3 - myTeamNumber);
+    final firstTeamScore = firstTeam.fold<int>(
+        0, (previousValue, element) => previousValue + element.score);
+    final secondTeamScore = secondTeam.fold<int>(
+        0, (previousValue, element) => previousValue + element.score);
     final gameNotifier = ref.watch(gameProvider.notifier);
-    final historyNotifier = ref.read(playerHistoProvider.notifier);
     return Container(
         width: double.infinity,
         margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
         decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-            scoreToColor(
-                firstTeam.fold<int>(0,
-                    (previousValue, element) => previousValue + element.score),
-                game.isConfirmed,
-                game.isCancelled)[0],
-            scoreToColor(
-                firstTeam.fold<int>(0,
-                    (previousValue, element) => previousValue + element.score),
-                game.isConfirmed,
-                game.isCancelled)[1],
-          ], begin: Alignment.bottomRight, end: Alignment.topLeft),
+          gradient: LinearGradient(
+              colors: scoreToColor(
+                  firstTeamScore, game.isConfirmed, game.isCancelled),
+              begin: Alignment.bottomRight,
+              end: Alignment.topLeft),
           borderRadius: const BorderRadius.all(Radius.circular(15)),
         ),
         child: Column(children: [
@@ -81,10 +77,7 @@ class GameCard extends HookConsumerWidget {
               Expanded(
                 child: Center(
                   child: Text(
-                    scoreToWinOrLose(firstTeam.fold<int>(
-                        0,
-                        (previousValue, element) =>
-                            previousValue + element.score)),
+                    scoreToWinOrLose(firstTeamScore),
                     style: const TextStyle(color: Colors.white, fontSize: 25),
                   ),
                 ),
@@ -92,10 +85,7 @@ class GameCard extends HookConsumerWidget {
               Expanded(
                 child: Center(
                   child: Text(
-                    scoreToWinOrLose(secondTeam.fold<int>(
-                        0,
-                        (previousValue, element) =>
-                            previousValue + element.score)),
+                    scoreToWinOrLose(secondTeamScore),
                     style: const TextStyle(color: Colors.white, fontSize: 25),
                   ),
                 ),
@@ -111,52 +101,14 @@ class GameCard extends HookConsumerWidget {
                 ? const Text(ElocapsTextConstant.waitingOppositeTeamApproval,
                     style: TextStyle(color: Colors.white))
                 : Row(children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () async {
-                          await gameNotifier.validateGame(game);
-                          await historyNotifier.loadHisto(me.id);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          margin: const EdgeInsets.symmetric(horizontal: 30),
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(15)),
-                            border: const Border.fromBorderSide(
-                                BorderSide(color: Colors.white, width: 1)),
-                          ),
-                          child: const Text(ElocapsTextConstant.validate,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.white)),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () async {
-                          await gameNotifier.cancelledGame(game);
-                          await historyNotifier.loadHisto(me.id);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          margin: const EdgeInsets.symmetric(horizontal: 30),
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(15)),
-                            border: const Border.fromBorderSide(
-                                BorderSide(color: Colors.white, width: 1)),
-                          ),
-                          child: const Text(ElocapsTextConstant.cancel,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.white)),
-                        ),
-                      ),
-                    )
+                    ButtonCard(
+                        game: game,
+                        validateOrCancelledGame: gameNotifier.validateGame,
+                        validateOrCancelled: ElocapsTextConstant.validate),
+                    ButtonCard(
+                        game: game,
+                        validateOrCancelledGame: gameNotifier.cancelledGame,
+                        validateOrCancelled: ElocapsTextConstant.cancel)
                   ]),
             const SizedBox(height: 10),
           ] else if (game.isCancelled)
