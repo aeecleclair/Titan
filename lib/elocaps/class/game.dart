@@ -26,7 +26,7 @@ class Game {
         .map<GamePlayer>((e) => GamePlayer.fromJson(e))
         .toList();
     isConfirmed = json['is_confirmed'];
-    isCancelled = json['cancelled'];
+    isCancelled = json['is_cancelled'];
   }
 
   Map<String, dynamic> toJson() {
@@ -36,7 +36,7 @@ class Game {
     data['mode'] = apiCapsModeToString(mode);
     data['game_players'] = gamePlayers.map((e) => e.toJson()).toList();
     data['is_confirmed'] = isConfirmed.toString();
-    data['cancelled'] = isCancelled.toString();
+    data['is_cancelled'] = isCancelled.toString();
     return data;
   }
 
