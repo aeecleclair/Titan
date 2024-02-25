@@ -59,3 +59,6 @@ ios/config/Prod/GoogleService-Info.plist
 
 # Coverage
 coverage/
+
+# Platforms not supported by this project
+/windows/
