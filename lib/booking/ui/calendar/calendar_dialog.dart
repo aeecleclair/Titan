@@ -78,11 +78,13 @@ class CalendarDialog extends StatelessWidget {
                         const SizedBox(
                           width: 20,
                         ),
-                        Text(
-                          booking.applicant.email.toString(),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 15,
+                        Flexible(
+                          child: Text(
+                            booking.applicant.email.toString(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 15,
+                            ),
                           ),
                         ),
                       ],
@@ -102,12 +104,14 @@ class CalendarDialog extends StatelessWidget {
                         const SizedBox(
                           width: 20,
                         ),
-                        Text(
-                          booking.applicant.phone ??
-                              BookingTextConstants.noPhoneRegistered,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 15,
+                        Flexible(
+                          child: Text(
+                            booking.applicant.phone ??
+                                BookingTextConstants.noPhoneRegistered,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 15,
+                            ),
                           ),
                         ),
                       ],
