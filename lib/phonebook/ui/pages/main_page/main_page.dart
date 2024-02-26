@@ -126,7 +126,7 @@ class PhonebookMainPage extends HookConsumerWidget {
               const SizedBox(height: 30),
               if (associationList.isEmpty)
                 const Center(
-                  child: CircularProgressIndicator(),
+                  child: Text(PhonebookTextConstants.noAssociationFound),
                 )
               else
                 ...associationList

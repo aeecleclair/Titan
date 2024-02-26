@@ -104,6 +104,8 @@ class PhonebookTextConstants {
   static const String validation = "Valider";
 
   static const String promoNotGiven = "Promo non renseignée";
+
+  static const String noAssociationFound = "Aucune association trouvée";
 }
 
 class PhonebookColorConstants {
