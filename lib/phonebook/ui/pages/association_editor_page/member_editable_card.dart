@@ -115,10 +115,16 @@ class MemberEditableCard extends HookConsumerWidget {
               roleTagsNotifier.loadRoleTagsFromMember(member, association);
               completeMemberNotifier.setCompleteMember(member);
               editionNotifier.setStatus(true);
-              QR.to(PhonebookRouter.root +
+              if (QR.currentPath.contains(PhonebookRouter.admin)) {
+                QR.to(PhonebookRouter.root +
                   PhonebookRouter.admin +
                   PhonebookRouter.editAssociation +
                   PhonebookRouter.addEditMember);
+              } else {
+                QR.to(PhonebookRouter.root +
+                  PhonebookRouter.editAssociation +
+                  PhonebookRouter.addEditMember);
+              }
             }),
             const SizedBox(width: 10),
             DeleteButton(

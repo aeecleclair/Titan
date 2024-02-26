@@ -5,6 +5,7 @@ import 'package:myecl/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/admin_page.dart';
 import 'package:myecl/phonebook/ui/pages/association_creation_page/association_creation_page.dart';
 import 'package:myecl/phonebook/ui/pages/association_editor_page/association_editor_page.dart';
+import 'package:myecl/phonebook/ui/pages/association_page/association_page.dart';
 import 'package:myecl/phonebook/ui/pages/main_page/main_page.dart';
 import 'package:myecl/phonebook/ui/pages/member_detail_page/member_detail_page.dart';
 import 'package:myecl/phonebook/ui/pages/membership_editor_page/membership_editor_page.dart';
@@ -43,7 +44,7 @@ class PhonebookRouter {
             ),
             QRoute(path: createAssociaiton, builder: () => const AssociationCreationPage()),
           ]),
-          QRoute(path: associationDetail, builder: () => const AssociationEditorPage(),
+          QRoute(path: associationDetail, builder: () => const AssociationPage(),
             children: [
               QRoute(path: editAssociation, builder: () => const AssociationEditorPage(),
                 middleware: [
