@@ -9,7 +9,7 @@ import 'package:myecl/phonebook/providers/association_member_list_provider.dart'
 import 'package:myecl/phonebook/providers/association_picture_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
-import 'package:myecl/phonebook/providers/edition_provider.dart';
+import 'package:myecl/phonebook/providers/is_edit_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
@@ -18,6 +18,7 @@ import 'package:myecl/phonebook/ui/pages/association_editor_page/member_editable
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
@@ -35,18 +36,16 @@ class AssociationEditorPage extends HookConsumerWidget {
     final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
     final associationMemberListNotifier =
         ref.watch(associationMemberListProvider.notifier);
-    final associationMemberList =
-        ref.watch(associationMemberSortedListProvider);
+    final associationMemberList = ref.watch(associationMemberListProvider);
     final associationPictureNotifier =
         ref.watch(associationPictureProvider.notifier);
-    final associationListNotifier =
-        ref.watch(asyncAssociationListProvider.notifier);
+    final associationListNotifier = ref.watch(associationListProvider.notifier);
     final associationKinds = ref.watch(associationKindsProvider);
     final kind = useState(association.kind);
     final name = useTextEditingController(text: association.name);
     final description = useTextEditingController(text: association.description);
     final rolesTagsNotifier = ref.watch(rolesTagsProvider.notifier);
-    final editionNotifier = ref.watch(editionProvider.notifier);
+    final isEditNotifier = ref.watch(isEditProvider.notifier);
     final completeMemberNotifier = ref.watch(completeMemberProvider.notifier);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -250,7 +249,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                   rolesTagsNotifier.resetChecked();
                   completeMemberNotifier
                       .setCompleteMember(CompleteMember.empty());
-                  editionNotifier.setStatus(false);
+                  isEditNotifier.setStatus(false);
                   if (QR.currentPath.contains(PhonebookRouter.admin)) {
                     QR.to(PhonebookRouter.root +
                         PhonebookRouter.admin +
@@ -262,8 +261,9 @@ class AssociationEditorPage extends HookConsumerWidget {
                         PhonebookRouter.addEditMember);
                   }
                 },
-                child: const Icon(
-                  Icons.add,
+                child: const HeroIcon(
+                  HeroIcons.plus,
+                  size: 30,
                   color: Colors.white,
                 ),
               ),
@@ -273,17 +273,15 @@ class AssociationEditorPage extends HookConsumerWidget {
         const SizedBox(
           height: 10,
         ),
-        if (associationMemberList.isEmpty)
-          const Center(
-            child: Text(
-              PhonebookTextConstants.noMember,
-            ),
-          )
-        else if (associationMemberList.first.member.id != '')
-          ...associationMemberList
-              .map((member) => MemberEditableCard(member: member)),
-        const SizedBox(
-          height: 30,
+        AsyncChild(
+          value: associationMemberList,
+          builder: (context, associationMembers) => associationMembers.isEmpty
+              ? const Text(PhonebookTextConstants.noMember)
+              : Column(
+                  children: associationMembers
+                      .map((member) => MemberEditableCard(member: member))
+                      .toList(),
+                ),
         ),
         Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),

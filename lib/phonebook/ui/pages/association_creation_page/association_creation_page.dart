@@ -27,9 +27,8 @@ class AssociationCreationPage extends HookConsumerWidget {
     final key = GlobalKey<FormState>();
     final name = useTextEditingController();
     final description = useTextEditingController();
-    final associationListNotifier =
-        ref.watch(asyncAssociationListProvider.notifier);
-    final associations = ref.watch(asyncAssociationListProvider);
+    final associationListNotifier = ref.watch(associationListProvider.notifier);
+    final associations = ref.watch(associationListProvider);
     final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
     final associationKinds = ref.watch(associationKindsProvider);
     final kind = useState('');

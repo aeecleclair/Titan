@@ -108,6 +108,7 @@ class PhonebookTextConstants {
   static const String noAssociationFound = "Aucune association trouvée";
 
   static const String noMember = "Aucun membre";
+  static const String noMemberRole = "Aucun role trouvé";
 }
 
 class PhonebookColorConstants {

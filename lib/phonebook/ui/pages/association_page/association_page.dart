@@ -9,6 +9,7 @@ import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/ui/pages/association_page/member_card.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -18,9 +19,7 @@ class AssociationPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final association = ref.watch(associationProvider);
-    final associationPicture = ref.watch(associationPictureProvider);
-    final associationMemberList =
-        ref.watch(associationMemberSortedListProvider);
+    final associationMemberList = ref.watch(associationMemberListProvider);
     final associationMemberListNotifier =
         ref.watch(associationMemberListProvider.notifier);
     final associationPictureNotifier =
@@ -28,54 +27,56 @@ class AssociationPage extends HookConsumerWidget {
     final isPresident = ref.watch(isAssociationPresidentProvider);
 
     return PhonebookTemplate(
-        child: Refresher(
-            onRefresh: () async {
-              await associationMemberListNotifier.loadMembers(
-                  association.id, association.mandateYear.toString(), ref);
-              await associationPictureNotifier
-                  .getAssociationPicture(association.id);
-            },
-            child: Stack(children: [
-              Column(children: [
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        spreadRadius: 5,
-                        blurRadius: 10,
-                        offset: const Offset(2, 3),
-                      ),
-                    ],
-                  ),
-                  child: associationPicture.when(
-                    data: (picture) {
-                      return Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: picture.image,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      );
-                    },
-                    loading: () {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    },
-                    error: (e, s) {
-                      return const Center(
-                        child: Text(
-                            PhonebookTextConstants.errorLoadAssociationPicture),
-                      );
-                    },
-                  ),
-                ),
+      child: Refresher(
+        onRefresh: () async {
+          await associationMemberListNotifier.loadMembers(
+              association.id, association.mandateYear.toString(), ref);
+          await associationPictureNotifier
+              .getAssociationPicture(association.id);
+        },
+        child: Stack(
+          children: [
+            Column(
+              children: [
+                // Container(
+                //   decoration: BoxDecoration(
+                //     shape: BoxShape.circle,
+                //     boxShadow: [
+                //       BoxShadow(
+                //         color: Colors.black.withOpacity(0.1),
+                //         spreadRadius: 5,
+                //         blurRadius: 10,
+                //         offset: const Offset(2, 3),
+                //       ),
+                //     ],
+                //   ),
+                //   child: associationPicture.when(
+                //     data: (picture) {
+                //       return Container(
+                //         width: 40,
+                //         height: 40,
+                //         decoration: BoxDecoration(
+                //           shape: BoxShape.circle,
+                //           image: DecorationImage(
+                //             image: picture.image,
+                //             fit: BoxFit.cover,
+                //           ),
+                //         ),
+                //       );
+                //     },
+                //     loading: () {
+                //       return const Center(
+                //         child: CircularProgressIndicator(),
+                //       );
+                //     },
+                //     error: (e, s) {
+                //       return const Center(
+                //         child: Text(
+                //             PhonebookTextConstants.errorLoadAssociationPicture),
+                //       );
+                //     },
+                //   ),
+                // ),
                 const SizedBox(height: 20),
                 Text(
                   association.name,
@@ -97,51 +98,61 @@ class AssociationPage extends HookConsumerWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                (associationMemberList.isEmpty)
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : Column(
-                        children: associationMemberList
-                            .map((member) => MemberCard(member: member))
-                            .toList())
-              ]),
-              if (isPresident)
-                Positioned(
-                  top: 20,
-                  right: 20,
-                  child: GestureDetector(
-                    onTap: () {
-                      QR.to(PhonebookRouter.root +
-                          PhonebookRouter.associationDetail +
-                          PhonebookRouter.editAssociation);
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 8),
-                      decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                blurRadius: 10,
-                                offset: const Offset(0, 5))
-                          ]),
-                      child: const Row(
-                        children: [
-                          HeroIcon(HeroIcons.userGroup, color: Colors.white),
-                          SizedBox(width: 10),
-                          Text(PhonebookTextConstants.admin,
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white)),
-                        ],
-                      ),
+                AsyncChild(
+                  value: associationMemberList,
+                  builder: (context, associationMembers) =>
+                      associationMembers.isEmpty
+                          ? const Text(PhonebookTextConstants.noMember)
+                          : Column(
+                              children: associationMembers
+                                  .map((member) => MemberCard(
+                                        member: member,
+                                        association: association,
+                                      ))
+                                  .toList(),
+                            ),
+                )
+              ],
+            ),
+            if (isPresident)
+              Positioned(
+                top: 20,
+                right: 20,
+                child: GestureDetector(
+                  onTap: () {
+                    QR.to(PhonebookRouter.root +
+                        PhonebookRouter.associationDetail +
+                        PhonebookRouter.editAssociation);
+                  },
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 10,
+                              offset: const Offset(0, 5))
+                        ]),
+                    child: const Row(
+                      children: [
+                        HeroIcon(HeroIcons.userGroup, color: Colors.white),
+                        SizedBox(width: 10),
+                        Text(PhonebookTextConstants.admin,
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white)),
+                      ],
                     ),
                   ),
                 ),
-            ])));
+              ),
+          ],
+        ),
+      ),
+    );
   }
 }

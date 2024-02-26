@@ -1,11 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/providers/association_kinds_provider.dart';
 import 'package:myecl/phonebook/repositories/association_repository.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/phonebook/tools/function.dart';
 
 class AssociationListNotifier extends ListNotifier<Association> {
   final AssociationRepository associationRepository = AssociationRepository();
@@ -85,28 +83,12 @@ class AssociationListNotifier extends ListNotifier<Association> {
   }
 }
 
-final asyncAssociationListProvider = StateNotifierProvider<
-    AssociationListNotifier, AsyncValue<List<Association>>>((ref) {
+final associationListProvider = StateNotifierProvider<AssociationListNotifier,
+    AsyncValue<List<Association>>>((ref) {
   final token = ref.watch(tokenProvider);
   AssociationListNotifier notifier = AssociationListNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {
     await notifier.loadAssociations();
   });
   return notifier;
-});
-
-final associationListProvider = Provider<List<Association>>((ref) {
-  final association = ref.watch(asyncAssociationListProvider);
-  return association.maybeWhen(
-      data: (association) => association, orElse: () => []);
-});
-
-final associationSortedListProvider = Provider<List<Association>>((ref) {
-  final associationList = ref.watch(associationListProvider);
-  final associationKinds = ref.watch(associationKindsProvider);
-  return associationKinds.maybeWhen(
-      data: (associationKinds) {
-        return sortAssociation(associationList, associationKinds);
-      },
-      orElse: () => []);
 });

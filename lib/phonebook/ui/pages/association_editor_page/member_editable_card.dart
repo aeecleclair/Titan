@@ -5,7 +5,7 @@ import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
-import 'package:myecl/phonebook/providers/edition_provider.dart';
+import 'package:myecl/phonebook/providers/is_edit_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/delete_button.dart';
@@ -28,7 +28,7 @@ class MemberEditableCard extends HookConsumerWidget {
     final associationMembersNotifier =
         ref.watch(associationMemberListProvider.notifier);
     final roleTagsNotifier = ref.watch(rolesTagsProvider.notifier);
-    final editionNotifier = ref.watch(editionProvider.notifier);
+    final isEditNotifier = ref.watch(isEditProvider.notifier);
     final completeMemberNotifier = ref.watch(completeMemberProvider.notifier);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -101,7 +101,7 @@ class MemberEditableCard extends HookConsumerWidget {
               roleTagsNotifier.resetChecked();
               roleTagsNotifier.loadRoleTagsFromMember(member, association);
               completeMemberNotifier.setCompleteMember(member);
-              editionNotifier.setStatus(true);
+              isEditNotifier.setStatus(true);
               if (QR.currentPath.contains(PhonebookRouter.admin)) {
                 QR.to(PhonebookRouter.root +
                     PhonebookRouter.admin +
