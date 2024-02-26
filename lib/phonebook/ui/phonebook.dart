@@ -6,33 +6,31 @@ import 'package:myecl/phonebook/ui/top_bar.dart';
 
 class PhonebookTemplate extends HookConsumerWidget {
   final Widget child;
-  const PhonebookTemplate(
-      {Key? key, required this.child})
-      : super(key: key);
+  const PhonebookTemplate({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final animationNotifier = ref.watch(animationProvider.notifier);
     final controller =
-    ref.watch(swipeControllerProvider(animationNotifier.animation!));
+        ref.watch(swipeControllerProvider(animationNotifier.animation!));
     final controllerNotifier = ref
         .watch(swipeControllerProvider(animationNotifier.animation!).notifier);
     return Scaffold(
       body: Container(
         color: Colors.white,
         child: SafeArea(
-            child: IgnorePointer(
-              ignoring: controller.isCompleted,
-              child: Column(
-                children: [
-                  TopBar(
-                    controllerNotifier: controllerNotifier,
-                  ),
-                  Expanded(child: child),
-                ],
-              ),
+          child: IgnorePointer(
+            ignoring: controller.isCompleted,
+            child: Column(
+              children: [
+                TopBar(
+                  controllerNotifier: controllerNotifier,
+                ),
+                Expanded(child: child),
+              ],
             ),
           ),
+        ),
       ),
     );
   }

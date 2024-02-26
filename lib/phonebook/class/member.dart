@@ -10,13 +10,14 @@ class Member extends SimpleUser {
     required this.promotion,
   });
   late final String email;
-  late final String promotion;
+  late final int promotion;
 
   Member.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     email = json['email'];
     promotion = json['promotion'];
   }
 
+  @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = super.toJson();
     data['email'] = email;
@@ -30,7 +31,7 @@ class Member extends SimpleUser {
     String? nickname,
     String? id,
     String? email,
-    String? promotion,
+    int? promotion,
   }) {
     return Member(
       name: name ?? this.name,
@@ -44,7 +45,7 @@ class Member extends SimpleUser {
 
   Member.empty() : super.empty() {
     email = "email.test@empty.useless";
-    promotion = "Exx";
+    promotion = 0;
   }
 
   Member.fromUser(SimpleUser user) : super.empty() {
@@ -53,7 +54,7 @@ class Member extends SimpleUser {
     nickname = user.nickname;
     id = user.id;
     email = "";
-    promotion = "Exx";
+    promotion = 0;
   }
 
   @override

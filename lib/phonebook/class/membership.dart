@@ -14,14 +14,14 @@ class Membership {
   late final List<String> rolesTags;
   late final String apparentName;
 
-  Membership.fromJson(Map<String, dynamic> json){
+  Membership.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     association = Association.fromJson(json['association']);
     rolesTags = json['role_tags'].split(";");
     apparentName = json['role_name'];
-    }
-  
-  Map<String, dynamic> toJson(){
+  }
+
+  Map<String, dynamic> toJson() {
     final data = <String, dynamic>{
       'id': id,
       'association': association.id,

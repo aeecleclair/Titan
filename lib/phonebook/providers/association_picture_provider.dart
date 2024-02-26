@@ -9,14 +9,16 @@ import 'package:myecl/tools/providers/single_notifier.dart';
 final associationPictureProvider =
     StateNotifierProvider<AssociationPictureNotifier, AsyncValue<Image>>((ref) {
   final token = ref.watch(tokenProvider);
-  AssociationPictureNotifier notifier = AssociationPictureNotifier(token);
+  AssociationPictureNotifier notifier =
+      AssociationPictureNotifier(token: token);
   return notifier;
 });
 
 class AssociationPictureNotifier extends SingleNotifier<Image> {
   final AssociationPictureRepository associationPictureRepository =
       AssociationPictureRepository();
-  AssociationPictureNotifier(String token) : super(const AsyncLoading()) {
+  AssociationPictureNotifier({required String token})
+      : super(const AsyncLoading()) {
     associationPictureRepository.setToken(token);
   }
 

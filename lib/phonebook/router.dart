@@ -38,23 +38,35 @@ class PhonebookRouter {
           QRoute(path: admin, builder: () => const AdminPage(), middleware: [
             AdminMiddleware(ref, isPhonebookAdminProvider),
           ], children: [
-            QRoute(path: editAssociation, builder: () => const AssociationEditorPage(),
+            QRoute(
+              path: editAssociation,
+              builder: () => const AssociationEditorPage(),
               children: [
-                QRoute(path: addEditMember, builder: () => const MembershipEditorPage()),
+                QRoute(
+                    path: addEditMember,
+                    builder: () => const MembershipEditorPage()),
               ],
             ),
-            QRoute(path: createAssociaiton, builder: () => const AssociationCreationPage()),
+            QRoute(
+                path: createAssociaiton,
+                builder: () => const AssociationCreationPage()),
           ]),
-          QRoute(path: associationDetail, builder: () => const AssociationPage(),
-            children: [
-              QRoute(path: editAssociation, builder: () => const AssociationEditorPage(),
-                middleware: [
-                  AdminMiddleware(ref, isAssociationPresidentProvider),
-                ],
-                children: [
-                  QRoute(path: addEditMember, builder: () => const MembershipEditorPage()),
-                ])
-            ]),
+          QRoute(
+              path: associationDetail,
+              builder: () => const AssociationPage(),
+              children: [
+                QRoute(
+                    path: editAssociation,
+                    builder: () => const AssociationEditorPage(),
+                    middleware: [
+                      AdminMiddleware(ref, isAssociationPresidentProvider),
+                    ],
+                    children: [
+                      QRoute(
+                          path: addEditMember,
+                          builder: () => const MembershipEditorPage()),
+                    ])
+              ]),
           QRoute(path: memberDetail, builder: () => const MemberDetailPage()),
         ],
       );

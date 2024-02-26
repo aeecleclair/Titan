@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/providers/association_picture_provider.dart';
 import 'package:myecl/phonebook/providers/associations_pictures_provider.dart';
+import 'package:myecl/phonebook/providers/complete_member_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
@@ -12,10 +13,12 @@ class AssociationCard extends HookConsumerWidget {
     super.key,
     required this.association,
     required this.onClicked,
+    required this.giveMemberRole,
   });
 
   final Association association;
   final VoidCallback onClicked;
+  final bool giveMemberRole;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -24,6 +27,7 @@ class AssociationCard extends HookConsumerWidget {
         ref.watch(associationPicturesProvider.notifier);
     final associationPictureNotifier =
         ref.watch(associationPictureProvider.notifier);
+    final member = ref.watch(completeMemberProvider);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -117,7 +121,12 @@ class AssociationCard extends HookConsumerWidget {
                 ),
                 const Spacer(flex: 1),
                 Text(
-                  association.kind,
+                  giveMemberRole
+                      ? member.memberships
+                          .firstWhere((element) =>
+                              element.association.id == association.id)
+                          .apparentName
+                      : association.kind,
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Association{
+class Association {
   Association({
     required this.id,
     required this.name,
@@ -15,13 +15,13 @@ class Association{
   late final String kind;
   late final int mandateYear;
 
-  Association.fromJson(Map<String, dynamic> json){
-      id = json['id'];
-      name = json['name'];
-      description = json['description'];
-      kind = json['kind'];
-      mandateYear = json['mandate_year'];
-      }
+  Association.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    description = json['description'];
+    kind = json['kind'];
+    mandateYear = json['mandate_year'];
+  }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{
@@ -58,12 +58,12 @@ class Association{
     mandateYear = 0;
   }
 
-  void newMandate(){
-    mandateYear =  mandateYear + 1;
+  void newMandate() {
+    mandateYear = mandateYear + 1;
   }
 
   @override
   String toString() {
-    return "Nom : $name, id : $id, description : $description, kind : $kind, mandate_year : $mandateYear";
+    return "Association(Nom : $name, id : $id, description : $description, kind : $kind, mandate_year : $mandateYear)";
   }
 }

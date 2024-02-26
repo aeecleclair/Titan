@@ -19,10 +19,9 @@ class CompleteMember {
         nickname: json['nickname'],
         id: json['id'],
         email: json['email'],
-        promotion: json['promotion']??"");
+        promotion: json['promotion'] ?? "");
     memberships = List<Membership>.from(json['memberships']
         .map((membership) => Membership.fromJson(membership)));
-        
   }
 
   Map<String, dynamic> toJson() {
@@ -49,14 +48,7 @@ class CompleteMember {
   }
 
   Member toMember() {
-    return Member(
-      name: member.name,
-      firstname: member.firstname,
-      nickname: member.nickname,
-      id: member.id,
-      email: member.email,
-      promotion: member.promotion,
-    );
+    return member;
   }
 
   @override

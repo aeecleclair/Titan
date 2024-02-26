@@ -9,9 +9,8 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 class AssociationListNotifier extends ListNotifier<Association> {
   final AssociationRepository associationRepository = AssociationRepository();
   AsyncValue<List<Association>> associationList = const AsyncValue.loading();
-  AssociationListNotifier({
-    required String token,
-  }) : super(const AsyncValue.loading()) {
+  AssociationListNotifier({required String token})
+      : super(const AsyncValue.loading()) {
     associationRepository.setToken(token);
   }
 
@@ -94,4 +93,3 @@ final associationListProvider = StateNotifierProvider<AssociationListNotifier,
   });
   return notifier;
 });
-

@@ -27,15 +27,14 @@ class AssociationPage extends HookConsumerWidget {
     final isPresident = ref.watch(isAssociationPresidentProvider);
 
     return PhonebookTemplate(
-      child: 
-        Refresher(
-          onRefresh: () async {
-            await associationMemberListNotifier.loadMembers(association.id, association.mandateYear.toString());
-            await associationPictureNotifier
-                .getAssociationPicture(association.id);
-          },
-          child: Stack(
-            children: [
+        child: Refresher(
+            onRefresh: () async {
+              await associationMemberListNotifier.loadMembers(
+                  association.id, association.mandateYear.toString());
+              await associationPictureNotifier
+                  .getAssociationPicture(association.id);
+            },
+            child: Stack(children: [
               Column(children: [
                 const Text(PhonebookTextConstants.associationDetail,
                     style: TextStyle(fontSize: 30)),
@@ -75,8 +74,8 @@ class AssociationPage extends HookConsumerWidget {
                     },
                     error: (e, s) {
                       return const Center(
-                        child:
-                            Text(PhonebookTextConstants.errorLoadAssociationPicture),
+                        child: Text(
+                            PhonebookTextConstants.errorLoadAssociationPicture),
                       );
                     },
                   ),
@@ -116,49 +115,48 @@ class AssociationPage extends HookConsumerWidget {
                   },
                   error: (e, s) {
                     return const Center(
-                      child: Text(PhonebookTextConstants.errorLoadAssociationMember),
+                      child: Text(
+                          PhonebookTextConstants.errorLoadAssociationMember),
                     );
                   },
                 )
-              ]
-            ),
-            if (isPresident)
-              Positioned(
-                top: 20,
-                right: 20,
-                child: GestureDetector(
-                      onTap: () {
-                        QR.to(PhonebookRouter.root + PhonebookRouter.admin + PhonebookRouter.editAssociation);
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 8),
-                        decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  blurRadius: 10,
-                                  offset: const Offset(0, 5))
-                            ]),
-                        child: const Row(
-                          children: [
-                            HeroIcon(HeroIcons.userGroup, color: Colors.white),
-                            SizedBox(width: 10),
-                            Text(PhonebookTextConstants.admin,
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white)),
-                          ],
-                        ),
+              ]),
+              if (isPresident)
+                Positioned(
+                  top: 20,
+                  right: 20,
+                  child: GestureDetector(
+                    onTap: () {
+                      QR.to(PhonebookRouter.root +
+                          PhonebookRouter.admin +
+                          PhonebookRouter.editAssociation);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                blurRadius: 10,
+                                offset: const Offset(0, 5))
+                          ]),
+                      child: const Row(
+                        children: [
+                          HeroIcon(HeroIcons.userGroup, color: Colors.white),
+                          SizedBox(width: 10),
+                          Text(PhonebookTextConstants.admin,
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white)),
+                        ],
                       ),
                     ),
-              ),
-            ]
-        )
-      )
-    );
+                  ),
+                ),
+            ])));
   }
 }
