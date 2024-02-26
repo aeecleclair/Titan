@@ -13,7 +13,7 @@ import 'package:myecl/phonebook/tools/function.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
@@ -137,7 +137,8 @@ class MembershipEditorPage extends HookConsumerWidget {
                   controller: apparentNameController,
                 ),
                 const SizedBox(height: 5),
-                ShrinkButton(
+                WaitingButton(
+                  builder: (child) => child,
                   child: Text(!edition
                       ? PhonebookTextConstants.add
                       : PhonebookTextConstants.edit),
