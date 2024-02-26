@@ -46,7 +46,7 @@ List<CompleteMember> fakeMembersList = [
             id: '1',
             email: 'test1@useless',
             promotion: 'E21'),
-        memberships: [Membership(association: fakeAssociations[0], rolesTags: [fakeRolesTags.tags[0]], apparentName: 'Prez\'')]),
+        memberships: [Membership(id:"1", association: fakeAssociations[0], rolesTags: [fakeRolesTags.tags[0]], apparentName: 'Prez\'')]),
     CompleteMember(
         member: Member(
             name: 'Debouck',
@@ -55,7 +55,7 @@ List<CompleteMember> fakeMembersList = [
             id: '2',
             email: 'test2@useless',
             promotion: 'E22'),
-        memberships: [Membership(association: fakeAssociations[0], rolesTags: [fakeRolesTags.tags[1]], apparentName: 'Trez\'')]),
+        memberships: [Membership(id:"2", association: fakeAssociations[0], rolesTags: [fakeRolesTags.tags[1]], apparentName: 'Trez\'')]),
     CompleteMember(
         member: Member(
             name: 'Ray',
@@ -64,7 +64,7 @@ List<CompleteMember> fakeMembersList = [
             id: '3',
             email: 'test3@useless',
             promotion: 'E21'),
-        memberships: [Membership(association: fakeAssociations[1], rolesTags: [fakeRolesTags.tags[2]], apparentName: 'SG')]),
+        memberships: [Membership(id:"3", association: fakeAssociations[1], rolesTags: [fakeRolesTags.tags[2]], apparentName: 'SG')]),
     CompleteMember(
         member: Member(
             name: 'Guarriguenc',
@@ -74,8 +74,8 @@ List<CompleteMember> fakeMembersList = [
             email: 'test4@useless',
             promotion: 'E20'),
         memberships: [
-          Membership(association: fakeAssociations[1], rolesTags: [fakeRolesTags.tags[0]], apparentName: 'Prez\''),
-          Membership(association: fakeAssociations[0], rolesTags: [fakeRolesTags.tags[4]], apparentName: 'VP sponsor'),
+          Membership(id:"4", association: fakeAssociations[1], rolesTags: [fakeRolesTags.tags[0]], apparentName: 'Prez\''),
+          Membership(id:"5", association: fakeAssociations[0], rolesTags: [fakeRolesTags.tags[4]], apparentName: 'VP sponsor'),
         ]),
     CompleteMember(
         member: Member(
@@ -85,7 +85,7 @@ List<CompleteMember> fakeMembersList = [
             id: '5',
             email: 'test5@useless',
             promotion: 'E20'),
-        memberships: [Membership(association: fakeAssociations[1], rolesTags: [], apparentName: 'VP Emprunt')]),
+        memberships: [Membership(id:"6", association: fakeAssociations[1], rolesTags: [], apparentName: 'VP Emprunt')]),
     CompleteMember(
         member: Member(
             name: 'Sarrazin',
@@ -95,7 +95,7 @@ List<CompleteMember> fakeMembersList = [
             email: 'test6@useless',
             promotion: 'E21'),
         memberships: [
-          Membership(association: fakeAssociations[0], rolesTags: [fakeRolesTags.tags[3]], apparentName: 'VP com'),
-          Membership(association: fakeAssociations[0], rolesTags: [], apparentName: 'VP Event')]),
+          Membership(id:"7", association: fakeAssociations[0], rolesTags: [fakeRolesTags.tags[3]], apparentName: 'VP com'),
+          Membership(id:"8", association: fakeAssociations[0], rolesTags: [], apparentName: 'VP Event')]),
   ];
 

@@ -62,19 +62,18 @@ class AssociationRepository extends Repository {
     //     .memberships
     //     .add(Membership(association: association, rolesTags: rolesTags, apparentName: apparentName));
     return await create({"member_id": member.id, "association_id": association.id, "rolesTags": rolesTags, "apparentName": apparentName},
-       suffix: "membership");
+       suffix: "memberships");
     // return true;
   }
 
-  Future<bool> deleteMember(Association association, CompleteMember member) async {
+  Future<bool> deleteMember(Membership membership) async {
     // fakeMembersList[fakeMembersList.indexWhere((element) => element.member.id == member.member.id)]
     //     .memberships
     //     .removeWhere((element) => element.association.id == association.id);
     // return true;
     final response = await http.delete(
-       Uri.parse("$host${ext}membership"),
-        headers: headers,
-        body: json.encode({"member_id": member.member.id, "association_id": association.id}));
+       Uri.parse("$host${ext}memberships/${membership.id}"),
+        headers: headers);
     if (response.statusCode == 204) {
       return true;
     } else if (response.statusCode == 403) {
@@ -91,7 +90,7 @@ class AssociationRepository extends Repository {
     //     .where((element) => element.association.id == association.id).toList()[0] = 
     //       Membership(association: association, rolesTags: rolesTags, apparentName: apparentName);
     return await update({"member_id": member.id, "association_id": association.id, "rolesTags": rolesTags, "apparentName": apparentName}, association.id,
-       suffix: "membership");
+       suffix: "memberships");
     // return true;
   }
 }
