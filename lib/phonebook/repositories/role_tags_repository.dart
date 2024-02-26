@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:myecl/phonebook/class/roles_tags.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:tuple/tuple.dart';
@@ -9,6 +10,7 @@ class RolesTagsRepository extends Repository {
 
   Future<Tuple2<RolesTags, List<bool>>> getRolesTags() async {
     RolesTags rolesTags = RolesTags.fromJSON(await getOne("roletags"));
+    debugPrint(rolesTags.toString());
     return Tuple2(rolesTags, List<bool>.filled(rolesTags.tags.length, false));
   }
 }

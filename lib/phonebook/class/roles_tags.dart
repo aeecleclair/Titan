@@ -3,10 +3,10 @@ class RolesTags {
     required this.tags,
   });
 
-  late final List<dynamic> tags;
+  late final List<String> tags;
 
   RolesTags.fromJSON(Map<String, dynamic> json) {
-    tags = json['tags'];
+    tags = json['tags'].map<String>((dynamic tag) => tag.toString()).toList();
   }
 
   Map<String, dynamic> toJSON() {
