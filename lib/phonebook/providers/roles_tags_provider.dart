@@ -5,49 +5,59 @@ import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/roles_tags.dart';
 import 'package:myecl/phonebook/repositories/role_tags_repository.dart';
+import 'package:myecl/tools/providers/map_provider.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:tuple/tuple.dart';
 
-class RolesTagsNotifier extends SingleNotifier<Tuple2<RolesTags, List<bool>>> {
+class RolesTagsNotifier extends MapNotifier<String, bool> {
   final RolesTagsRepository rolesTagsRepository = RolesTagsRepository();
-  RolesTagsNotifier({required String token})
-      : super(const AsyncValue.loading()) {
+  RolesTagsNotifier({required String token}) {
     rolesTagsRepository.setToken(token);
   }
 
-  void setRole(RolesTags i) {
-    state = AsyncValue.data(Tuple2(i, state.value!.item2));
-  }
 
-  Future<AsyncValue<Tuple2<RolesTags, List<bool>>>> loadRolesTags() async {
-    return await load(rolesTagsRepository.getRolesTags);
+
+  // void setRole(RolesTags i) {
+  //   state = AsyncValue.data(Tuple2(i, state.value!.item2));
+  // }
+
+  Future<void> loadRolesTags() async {
+    loadTList([]);
+    final result = await rolesTagsRepository.getRolesTags();
+    for (int i = 0; i < result.tags.length; i++) {
+        setTData(result.tags[i], const AsyncData([false]));
+    }
   }
 
   void resetChecked() {
-    final checked = state.value!.item2;
-    state = AsyncValue.data(
-        Tuple2(state.value!.item1, List<bool>.filled(checked.length, false)));
+    state.maybeWhen(data: (d) {
+      for (int i = 0; i < d.length; i++) {
+        d[d.keys.toList()[i]] = const AsyncData([false]);
+      }
+      state = AsyncValue.data(d);
+    }, orElse: () {});
   }
 
-  void setChecked(int index, bool value) {
-    List<bool> checked = state.value!.item2;
-    checked[index] = value;
-    state = AsyncValue.data(Tuple2(state.value!.item1, checked));
-  }
+  // void setChecked(int index, bool value) {
+  //   List<bool> checked = state.value!.item2;
+  //   checked[index] = value;
+  //   state = AsyncValue.data(Tuple2(state.value!.item1, checked));
+  // }
 
   void loadRoleTagsFromMember(CompleteMember member, Association association) {
-    final checked = state.value!.item2;
     List<String> roleTags = member.getRolesTags(association.id);
-    for (int i = 0; i < checked.length; i++) {
-      checked[i] = roleTags.contains(state.value!.item1.tags[i]);
-    }
-    state = AsyncValue.data(Tuple2(state.value!.item1, checked));
+    state.maybeWhen(data: (d) {
+      for (int i = 0; i < roleTags.length; i++) {
+        d[roleTags[i]] = const AsyncData([true]);
+      }
+      state = AsyncValue.data(d);
+    }, orElse: () {});
   }
 }
 
 final rolesTagsProvider = StateNotifierProvider<RolesTagsNotifier,
-    AsyncValue<Tuple2<RolesTags, List<bool>>>>((ref) {
+    AsyncValue<Map<String,AsyncValue<List<bool>>>>>((ref) {
   final token = ref.watch(tokenProvider);
   RolesTagsNotifier notifier = RolesTagsNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {

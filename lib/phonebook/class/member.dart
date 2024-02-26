@@ -1,40 +1,26 @@
 import 'package:myecl/user/class/list_users.dart';
 
-class Member {
+class Member extends SimpleUser {
   Member({
-    required this.name,
-    required this.firstname,
-    required this.nickname,
-    required this.id,
+    required super.name,
+    required super.firstname,
+    required super.nickname,
+    required super.id,
     required this.email,
     required this.promotion,
   });
-
-  late final String name;
-  late final String firstname;
-  late final String? nickname;
-  late final String id;
   late final String email;
   late final String promotion;
 
-  Member.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    firstname = json['firstname'];
-    nickname = json['nickname'];
-    id = json['id'];
+  Member.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     email = json['email'];
     promotion = json['promotion'];
   }
 
   Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{
-      'name': name,
-      'firstname': firstname,
-      'nickname': nickname,
-      'id': id,
-      'email': email,
-      'promotion': promotion,
-    };
+    final Map<String, dynamic> data = super.toJson();
+    data['email'] = email;
+    data['promotion'] = promotion;
     return data;
   }
 
@@ -56,16 +42,12 @@ class Member {
     );
   }
 
-  Member.empty() {
-    name = "nom";
-    firstname = "prénom";
-    nickname = null;
-    id = "";
+  Member.empty() : super.empty() {
     email = "email.test@empty.useless";
     promotion = "Exx";
   }
 
-  Member.fromUser(SimpleUser user) {
+  Member.fromUser(SimpleUser user) : super.empty() {
     name = user.name;
     firstname = user.firstname;
     nickname = user.nickname;
@@ -77,9 +59,5 @@ class Member {
   @override
   String toString() {
     return 'Member(name: $name, firstname: $firstname, nickname: $nickname, id: $id, email: $email, promotion: $promotion)';
-  }
-
-  String getName() {
-    return "$firstname $name ($nickname)";
   }
 }
