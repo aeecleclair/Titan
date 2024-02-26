@@ -5,6 +5,7 @@ import 'package:myecl/phonebook/providers/association_kind_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/research_filter_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
+import 'package:myecl/tools/constants.dart';
 
 class AssociationResearchBar extends HookConsumerWidget {
   const AssociationResearchBar({Key? key}) : super(key: key);
@@ -17,40 +18,29 @@ class AssociationResearchBar extends HookConsumerWidget {
     final associationsNotifier = ref.watch(associationListProvider.notifier);
     final associationKind = ref.watch(associationKindProvider);
 
-    return Container(
-        decoration: BoxDecoration(
-          border: Border.all(),
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 1,
-              blurRadius: 7,
-              offset: const Offset(0, 3), // changes position of shadow
+    return TextField(
+      onChanged: (value) async {
+        associationsNotifier.filterAssociationList(value, associationKind);
+        filterNotifier.setFilter(value);
+      },
+      focusNode: focusNode,
+      controller: editingController,
+      cursorColor: PhonebookColorConstants.textDark,
+      decoration: const InputDecoration(
+          isDense: true,
+          suffixIcon: Icon(
+            Icons.search,
+            color: PhonebookColorConstants.textDark,
+            size: 30,
+          ),
+          label: Text(
+            PhonebookTextConstants.research,
+            style: TextStyle(
+              color: PhonebookColorConstants.textDark,
             ),
-          ],
-        ),
-        width: 300,
-        child: TextField(
-          onChanged: (value) async {
-            associationsNotifier.filterAssociationList(value, associationKind);
-            filterNotifier.setFilter(value);
-          },
-          focusNode: focusNode,
-          controller: editingController,
-          cursorColor: PhonebookColorConstants.textDark,
-          decoration: const InputDecoration(
-              labelText: PhonebookTextConstants.associationPureSearch,
-              labelStyle: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: PhonebookColorConstants.textDark),
-              suffixIcon: Icon(
-                Icons.search,
-                color: PhonebookColorConstants.textDark,
-                size: 30,
-              )),
-        ));
+          ),
+          focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: ColorConstants.gradient1))),
+    );
   }
 }

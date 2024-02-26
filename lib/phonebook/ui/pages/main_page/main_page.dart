@@ -39,7 +39,7 @@ class MainPage extends HookConsumerWidget {
         },
         child: Column(children: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 20),
+            padding: const EdgeInsets.all(30.0),
             child: Row(
               children: [
                 const ResearchBar(),

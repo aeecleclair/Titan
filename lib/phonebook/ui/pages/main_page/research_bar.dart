@@ -27,7 +27,7 @@ class ResearchBar extends HookConsumerWidget {
           focusNode: focusNode,
           controller: editingController,
           cursorColor: PhonebookColorConstants.textDark,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
               isDense: true,
               suffixIcon: Icon(
                 Icons.search,
