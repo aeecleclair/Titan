@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class EditionButton extends HookConsumerWidget {
   const EditionButton({Key? key, required this.onEdition}) : super(key: key);
-  final Future Function() onEdition;
+  final void Function() onEdition;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -3,20 +3,19 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/class/roles_tags.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/edition_provider.dart';
 import 'package:myecl/phonebook/providers/member_role_tags_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
+import 'package:myecl/phonebook/tools/function.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-import 'package:tuple/tuple.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
 import 'package:myecl/phonebook/ui/pages/membership_editor_page/search_result.dart';
 
@@ -25,28 +24,6 @@ class MembershipEditorPage extends HookConsumerWidget {
     Key? key,
   }) : super(key: key);
 
-  String nameConstructor(Tuple2<RolesTags, List<bool>> data) {
-    String name = '';
-    for (int i = 0; i < data.item2.length; i++) {
-      if (data.item2[i]) {
-        name = "$name, ${data.item1.tags[i]}";
-      }
-    }
-    if (name == "") {
-      return "";
-    }
-    return name.substring(1, name.length);
-  }
-
-  List<String> setRoleTagsWithFilter(Tuple2<RolesTags, List<bool>> data) {
-    List<String> roleTags = [];
-    for (int i = 0; i < data.item2.length; i++) {
-      if (data.item2[i]) {
-        roleTags.add(data.item1.tags[i]);
-      }
-    }
-    return roleTags;
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

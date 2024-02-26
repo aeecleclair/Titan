@@ -10,18 +10,18 @@ class MemberRepository extends Repository {
 
   Future<List<Membership>> getMemberMembershipList(int memberId) async {
     return List<Membership>.from((await getList(suffix: "/$memberId/posts"))
-        .map((x) => Membership.fromJSON(x)));
+        .map((x) => Membership.fromJson(x)));
   }
 
   Future<Member> getMember(String memberId) async {
-    return Member.fromJSON(await getOne(memberId));
+    return Member.fromJson(await getOne(memberId));
   }
 
   Future<CompleteMember> getCompleteMember(String memberId) async {
-    return CompleteMember.fromJSON(await getOne(memberId, suffix: "complete"));
+    return CompleteMember.fromJson(await getOne(memberId, suffix: "complete"));
   }
 
   Future<CompleteMember> getMe() async {
-    return CompleteMember.fromJSON(await getOne("me", suffix: "complete"));
+    return CompleteMember.fromJson(await getOne("me", suffix: "complete"));
   }
 }

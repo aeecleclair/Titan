@@ -11,7 +11,7 @@ class CompleteMember {
   late final Member member;
   late final List<Membership> memberships;
 
-  CompleteMember.fromJSON(Map<String, dynamic> json) {
+  CompleteMember.fromJson(Map<String, dynamic> json) {
     debugPrint(json.toString());
     member = Member(
         name: json['name'],
@@ -21,14 +21,14 @@ class CompleteMember {
         email: json['email'],
         promotion: json['promotion']??"");
     memberships = List<Membership>.from(json['memberships']
-        .map((membership) => Membership.fromJSON(membership)));
+        .map((membership) => Membership.fromJson(membership)));
         
   }
 
-  Map<String, dynamic> toJSON() {
+  Map<String, dynamic> toJson() {
     final data = <String, dynamic>{
       'member': member.id,
-      'memberships': memberships.map((e) => e.toJSON()).toList(),
+      'memberships': memberships.map((e) => e.toJson()).toList(),
     };
     return data;
   }

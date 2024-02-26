@@ -138,8 +138,6 @@ class AssociationEditorPage extends HookConsumerWidget {
                                         } else if (value.isEmpty) {
                                           return PhonebookTextConstants
                                               .emptyFieldError;
-                                        } else {
-                                          return null;
                                         }
                                       },
                                     ),
@@ -183,8 +181,6 @@ class AssociationEditorPage extends HookConsumerWidget {
                                         } else if (value.isEmpty) {
                                           return PhonebookTextConstants
                                               .emptyFieldError;
-                                        } else {
-                                          return null;
                                         }
                                       },
                                     ),

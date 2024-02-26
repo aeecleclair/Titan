@@ -121,13 +121,9 @@ class EditableAssociationCard extends HookConsumerWidget {
                   fontSize: 20,
                   fontWeight: FontWeight.bold)),
           const Spacer(),
-          EditionButton(onEdition: () async {
-            onEdit();
-          }),
+          EditionButton(onEdition: onEdit),
           const SizedBox(width: 10),
-          DeleteButton(onDelete: () async {
-            await onDelete();
-          }),
+          DeleteButton(onDelete: onDelete),
         ],
       ),
     );

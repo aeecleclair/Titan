@@ -16,8 +16,7 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
   }
 
   Future<AsyncValue<List<CompleteMember>>> loadMembers(String associationId, String year) async {
-    dynamic members = await loadList(() async => associationMemberRepository.getAssociationMemberList(associationId, year));
-    return members;
+    return await loadList(() async => associationMemberRepository.getAssociationMemberList(associationId, year));
   }
 }
 

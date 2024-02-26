@@ -18,9 +18,7 @@ class AssociationKindsNotifier extends SingleNotifier<AssociationKinds> {
   }
 
   Future<AsyncValue<AssociationKinds>> loadAssociationKinds() async {
-    AsyncValue<AssociationKinds> result =
-        await load(() async => associationRepository.getAssociationKinds());
-    return result;
+    return await load(associationRepository.getAssociationKinds);
   }
 }
 

@@ -21,7 +21,7 @@ class RolesTagsNotifier extends SingleNotifier<Tuple2<RolesTags, List<bool>>> {
   }
 
   Future<AsyncValue<Tuple2<RolesTags, List<bool>>>> loadRolesTags() async {
-    return await load(() async => rolesTagsRepository.getRolesTags());
+    return await load(rolesTagsRepository.getRolesTags);
   }
 
   void resetChecked() {

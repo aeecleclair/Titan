@@ -5,11 +5,11 @@ class AssociationKinds {
 
   late final List<String> kinds;
 
-  AssociationKinds.fromJSON(Map<String, dynamic> json) {
+  AssociationKinds.fromJson(Map<String, dynamic> json) {
     kinds = json['kinds'].map<String>((dynamic tag) => tag.toString()).toList();
   }
 
-  Map<String, dynamic> toJSON() {
+  Map<String, dynamic> toJson() {
     final data = <String, dynamic>{
       'kinds': kinds,
     };

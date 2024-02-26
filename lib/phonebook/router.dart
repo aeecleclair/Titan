@@ -1,3 +1,4 @@
+import 'package:either_dart/either.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/class/module.dart';
@@ -24,7 +25,7 @@ class PhonebookRouter {
   static const String addEditMember = '/add_edit_member';
   static final Module module = Module(
       name: "Annuaire",
-      icon: HeroIcons.phone,
+      icon: const Left(HeroIcons.phone),
       root: PhonebookRouter.root,
       selected: false);
   PhonebookRouter(this.ref);
