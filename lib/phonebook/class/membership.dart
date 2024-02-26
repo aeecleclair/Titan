@@ -13,19 +13,19 @@ class Membership {
   late final List<String> rolesTags;
   late final String apparentName;
 
-  Membership.fromJSON(Map<String, dynamic> json) {
-    id = json['id'];
-    association = json['association'];
-    rolesTags = json['roleTags'];
-    apparentName = json['apparentName'];
-  }
-
-  Map<String, dynamic> toJSON() {
+  Membership.fromJSON(Map<String, dynamic> json){
+      id = json['id'];
+      association = json['association'];
+      rolesTags = json['role_tags'];
+      apparentName = json['role_name'];
+      }
+  
+  Map<String, dynamic> toJSON(){
     final data = <String, dynamic>{
       'id': id,
       'association': association.id,
-      'roleTags': rolesTags,
-      'apparentName': apparentName,
+      'role_tags': rolesTags.join(";"),
+      'role_name': apparentName,
     };
     return data;
   }
@@ -65,6 +65,6 @@ class Membership {
 
   @override
   String toString() {
-    return 'Membership(id: $id, association: $association, rolesTags: $rolesTags, apparentName: $apparentName)';
+    return 'Membership(id: $id, association: $association, rolesTags: ${rolesTags.join(";")}, apparentName: $apparentName)';
   }
 }

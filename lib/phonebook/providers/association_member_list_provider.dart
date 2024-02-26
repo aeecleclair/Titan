@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
@@ -14,10 +15,10 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
     associationMemberRepository.setToken(token);
   }
 
-  Future<AsyncValue<List<CompleteMember>>> loadMembers(
-      String associationId) async {
-    return await loadList(() async =>
-        associationMemberRepository.getAssociationMemberList(associationId));
+  Future<AsyncValue<List<CompleteMember>>> loadMembers(String associationId) async {
+    dynamic members = await loadList(() async => associationMemberRepository.getAssociationMemberList(associationId));
+    debugPrint("Membres : $members");
+    return members;
   }
 }
 

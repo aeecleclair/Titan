@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/repositories/association_repository.dart';
@@ -15,8 +16,8 @@ class AssociationListNotifier extends ListNotifier<Association> {
   }
 
   Future<AsyncValue<List<Association>>> loadAssociations() async {
-    associationList =
-        await loadList(() async => associationRepository.getAssociationList());
+    associationList = await loadList(() async => associationRepository.getAssociationList());
+    debugPrint("associationList: $associationList");
     return associationList;
   }
 

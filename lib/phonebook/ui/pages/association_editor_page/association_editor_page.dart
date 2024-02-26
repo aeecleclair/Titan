@@ -381,9 +381,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                       await tokenExpireWrapper(ref, () async {
                         final value = await associationListNotifier
                             .updateAssociation(association.copyWith(
-                                mandateYear:
-                                    (int.parse(association.mandateYear) + 1)
-                                        .toString()));
+                                mandateYear: association.mandateYear+1));
                         if (value) {
                           displayToastWithContext(TypeMsg.msg,
                               PhonebookTextConstants.newMandateConfirmed);
@@ -422,7 +420,7 @@ class AssociationEditorPage extends HookConsumerWidget {
               borderRadius: BorderRadius.circular(15),
             ),
             child: Text(
-              "${PhonebookTextConstants.changeMandate} ${(int.parse(association.mandateYear) + 1).toString()}",
+              "${PhonebookTextConstants.changeMandate} ${association.mandateYear+1}",
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
