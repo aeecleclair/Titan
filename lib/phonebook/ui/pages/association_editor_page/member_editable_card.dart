@@ -5,13 +5,14 @@ import 'package:myecl/phonebook/providers/association_member_list_provider.dart'
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
 import 'package:myecl/phonebook/providers/edition_provider.dart';
-import 'package:myecl/phonebook/providers/phonebook_page_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
+import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/delete_button.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/edition_button.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/providers/profile_picture_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class MemberEditableCard extends HookConsumerWidget {
   const MemberEditableCard({super.key, required this.member});
@@ -28,8 +29,6 @@ class MemberEditableCard extends HookConsumerWidget {
     final roleTagsNotifier = ref.watch(rolesTagsProvider.notifier);
     final editionNotifier = ref.watch(editionProvider.notifier);
     final completeMemberNotifier = ref.watch(completeMemberProvider.notifier);
-    final pageNotifier = ref.watch(phonebookPageProvider.notifier);
-
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -116,7 +115,10 @@ class MemberEditableCard extends HookConsumerWidget {
               roleTagsNotifier.loadRoleTagsFromMember(member, association);
               completeMemberNotifier.setCompleteMember(member);
               editionNotifier.setStatus(true);
-              pageNotifier.setPhonebookPage(PhonebookPage.membershipEdition);
+              QR.to(PhonebookRouter.root +
+                  PhonebookRouter.admin +
+                  PhonebookRouter.editAssociation +
+                  PhonebookRouter.addEditMember);
             }),
             const SizedBox(width: 10),
             DeleteButton(

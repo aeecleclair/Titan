@@ -1,66 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/drawer/providers/animation_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
-import 'package:myecl/phonebook/providers/phonebook_page_provider.dart';
-import 'package:myecl/phonebook/ui/page_switcher.dart';
 import 'package:myecl/phonebook/ui/top_bar.dart';
 
-class PhonebookHomePage extends HookConsumerWidget {
-  final SwipeControllerNotifier controllerNotifier;
-  final AnimationController controller;
-  const PhonebookHomePage(
-      {Key? key, required this.controllerNotifier, required this.controller})
+class PhonebookTemplate extends HookConsumerWidget {
+  final Widget child;
+  const PhonebookTemplate(
+      {Key? key, required this.child})
       : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final page = ref.watch(phonebookPageProvider);
-    final pageNotifier = ref.watch(phonebookPageProvider.notifier);
+    final animationNotifier = ref.watch(animationProvider.notifier);
+    final controller =
+    ref.watch(swipeControllerProvider(animationNotifier.animation!));
+    final controllerNotifier = ref
+        .watch(swipeControllerProvider(animationNotifier.animation!).notifier);
     return Scaffold(
-      body: WillPopScope(
-        onWillPop: () async {
-          switch (page) {
-            case PhonebookPage.main:
-              if (!controller.isCompleted) {
-                controllerNotifier.toggle();
-                break;
-              } else {
-                return true;
-              }
-            case PhonebookPage.memberDetail:
-              pageNotifier.setPhonebookPage(PhonebookPage.associationPage);
-              break;
-            case PhonebookPage.admin:
-              pageNotifier.setPhonebookPage(PhonebookPage.main);
-              break;
-            case PhonebookPage.associationEditor:
-              pageNotifier.setPhonebookPage(PhonebookPage.admin);
-              break;
-            case PhonebookPage.associationPage:
-              pageNotifier.setPhonebookPage(PhonebookPage.main);
-              break;
-            case PhonebookPage.associationCreation:
-              pageNotifier.setPhonebookPage(PhonebookPage.admin);
-              break;
-            case PhonebookPage.membershipEdition:
-              pageNotifier.setPhonebookPage(PhonebookPage.associationEditor);
-              break;
-          }
-          return false;
-        },
+      body: Container(
+        color: Colors.white,
         child: SafeArea(
-          child: IgnorePointer(
-            ignoring: controller.isCompleted,
-            child: Column(
-              children: [
-                TopBar(
-                  controllerNotifier: controllerNotifier,
-                ),
-                const Expanded(child: PageSwitcher()),
-              ],
+            child: IgnorePointer(
+              ignoring: controller.isCompleted,
+              child: Column(
+                children: [
+                  TopBar(
+                    controllerNotifier: controllerNotifier,
+                  ),
+                  Expanded(child: child),
+                ],
+              ),
             ),
           ),
-        ),
       ),
     );
   }

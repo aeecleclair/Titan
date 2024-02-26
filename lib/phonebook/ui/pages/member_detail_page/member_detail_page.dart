@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
+import 'package:myecl/phonebook/ui/phonebook.dart';
 
 class MemberDetailPage extends HookConsumerWidget {
   const MemberDetailPage({Key? key}) : super(key: key);
@@ -9,7 +10,10 @@ class MemberDetailPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final memberProvider = ref.watch(completeMemberProvider);
-    return Container(
+    
+    return PhonebookTemplate(
+      child:
+        Container(
         margin: const EdgeInsets.all(10),
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(50)),
@@ -38,6 +42,6 @@ class MemberDetailPage extends HookConsumerWidget {
                     const Spacer(flex: 1),
                   ]))
           ]),
-        ]));
+        ])));
   }
 }
