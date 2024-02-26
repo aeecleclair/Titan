@@ -3,10 +3,10 @@ class AssociationKinds {
     required this.kinds,
   });
 
-  late final List<dynamic> kinds;
+  late final List<String> kinds;
 
   AssociationKinds.fromJSON(Map<String, dynamic> json) {
-    kinds = json['kinds'];
+    kinds = json['kinds'].map<String>((dynamic tag) => tag.toString()).toList();
   }
 
   Map<String, dynamic> toJSON() {
