@@ -1,4 +1,5 @@
 import 'package:myecl/phonebook/class/complete_member.dart';
+import 'package:myecl/phonebook/tools/fake_class.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class AssociationMemberRepository extends Repository {
@@ -7,7 +8,8 @@ class AssociationMemberRepository extends Repository {
   final ext = "phonebook/association/";
 
   Future<List<CompleteMember>> getAssociationMemberList(String associationId) async {
-    return List<CompleteMember>.from(
-        (await getList(suffix: "$associationId/members")).map((x) => CompleteMember.fromJSON(x)));
+    return fakeMembersList.where((element) => element.memberships.map((e) => e.association.id).contains(associationId)).toList();
+    //return List<CompleteMember>.from(
+    //    (await getList(suffix: "$associationId/members")).map((x) => CompleteMember.fromJSON(x)));
   }
 }
