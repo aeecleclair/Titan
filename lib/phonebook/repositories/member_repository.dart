@@ -20,4 +20,8 @@ class MemberRepository extends Repository {
   Future<CompleteMember> getCompleteMember(String memberId) async {
     return CompleteMember.fromJSON(await getOne(memberId, suffix: "complete"));
   }
+
+  Future<CompleteMember> getMe() async {
+    return CompleteMember.fromJSON(await getOne("me", suffix: "complete"));
+  }
 }

@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
+import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/user/providers/profile_picture_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
-import 'package:myecl/phonebook/providers/phonebook_page_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class MemberCard extends HookConsumerWidget {
   const MemberCard({super.key, required this.member});
@@ -14,7 +15,6 @@ class MemberCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageNotifier = ref.watch(phonebookPageProvider.notifier);
     final memberNotifier = ref.watch(completeMemberProvider.notifier);
     final profilePicture = ref.watch(profilePictureProvider);
     final association = ref.watch(associationProvider);
@@ -23,7 +23,7 @@ class MemberCard extends HookConsumerWidget {
     return GestureDetector(
         onTap: () {
           memberNotifier.setCompleteMember(member);
-          pageNotifier.setPhonebookPage(PhonebookPage.memberDetail);
+          QR.to(PhonebookRouter.root + PhonebookRouter.memberDetail);
           profilePictureNotifier.getProfilePicture(member.member.id);
         },
         child: Container(
