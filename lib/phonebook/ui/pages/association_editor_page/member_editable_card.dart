@@ -132,7 +132,7 @@ class MemberEditableCard extends HookConsumerWidget {
                 final result = await associationNotifier.deleteMember(
                     member.memberships.firstWhere(
                         (element) => element.association.id == association.id));
-                await associationMembersNotifier.loadMembers(association.id);
+                await associationMembersNotifier.loadMembers(association.id, association.mandateYear.toString());
                 if (result) {
                   displayToastWithContext(
                       TypeMsg.msg, PhonebookTextConstants.deletedMember);

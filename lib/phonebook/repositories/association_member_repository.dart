@@ -7,9 +7,9 @@ class AssociationMemberRepository extends Repository {
   final ext = "phonebook/associations/";
 
   Future<List<CompleteMember>> getAssociationMemberList(
-      String associationId) async {
+      String associationId, String year) async {
     return List<CompleteMember>.from(
-        (await getList(suffix: "$associationId/members"))
+        (await getList(suffix: "$associationId/members/$year"))
             .map((x) => CompleteMember.fromJSON(x)));
   }
 }
