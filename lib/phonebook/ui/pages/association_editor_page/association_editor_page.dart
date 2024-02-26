@@ -19,7 +19,7 @@ import 'package:myecl/phonebook/ui/pages/association_editor_page/member_editable
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/refresher.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 

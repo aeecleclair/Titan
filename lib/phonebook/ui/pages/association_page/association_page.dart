@@ -9,7 +9,7 @@ import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/ui/pages/association_page/member_card.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
-import 'package:myecl/tools/ui/refresher.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AssociationPage extends HookConsumerWidget {
