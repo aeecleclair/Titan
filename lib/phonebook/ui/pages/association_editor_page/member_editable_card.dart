@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
@@ -34,7 +35,7 @@ class MemberEditableCard extends HookConsumerWidget {
     }
 
     return Container(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(5),
         margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
         decoration: BoxDecoration(
           border: Border.all(),
@@ -77,38 +78,26 @@ class MemberEditableCard extends HookConsumerWidget {
               ),
             ),
             const SizedBox(width: 10),
-            SizedBox(
-              width: 400,
-              child: Column(
-                children: [
-                  Text(
-                    member.member.getName(),
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    member.member.email,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+            AutoSizeText(
+              member.member.getName(),
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
               ),
+              maxLines: 2,
+              minFontSize: 10,
+              maxFontSize: 15,
             ),
             const Spacer(),
-            Text(
+            AutoSizeText(
                 member.memberships
                     .firstWhere(
                         (element) => element.associationId == association.id)
                     .apparentName,
                 style: const TextStyle(
-                  fontSize: 20,
                   fontWeight: FontWeight.bold,
-                )),
+                ),
+                minFontSize: 10,
+                maxFontSize: 15),
             const Spacer(),
             EditionButton(onEdition: () async {
               roleTagsNotifier.resetChecked();
@@ -122,11 +111,12 @@ class MemberEditableCard extends HookConsumerWidget {
                     PhonebookRouter.addEditMember);
               } else {
                 QR.to(PhonebookRouter.root +
+                    PhonebookRouter.associationDetail +
                     PhonebookRouter.editAssociation +
                     PhonebookRouter.addEditMember);
               }
             }),
-            const SizedBox(width: 10),
+            const SizedBox(width: 5),
             DeleteButton(
               onDelete: () async {
                 final result = await associationNotifier.deleteMember(
@@ -134,7 +124,7 @@ class MemberEditableCard extends HookConsumerWidget {
                         (element) => element.associationId == association.id),
                     association);
                 await associationMembersNotifier.loadMembers(
-                    association.id, association.mandateYear.toString());
+                    association.id, association.mandateYear.toString(), ref);
                 if (result) {
                   displayToastWithContext(
                       TypeMsg.msg, PhonebookTextConstants.deletedMember);

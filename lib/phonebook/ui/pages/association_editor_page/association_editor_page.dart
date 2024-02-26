@@ -33,7 +33,8 @@ class AssociationEditorPage extends HookConsumerWidget {
     final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
     final associationMemberListNotifier =
         ref.watch(associationMemberListProvider.notifier);
-    final associationMemberList = ref.watch(associationMemberListProvider);
+    final associationMemberList =
+        ref.watch(associationMemberSortedListProvider);
     final associationPictureNotifier =
         ref.watch(associationPictureProvider.notifier);
     final associationListNotifier =
@@ -53,7 +54,7 @@ class AssociationEditorPage extends HookConsumerWidget {
         child: Refresher(
       onRefresh: () async {
         await associationMemberListNotifier.loadMembers(
-            association.id, association.mandateYear.toString());
+            association.id, association.mandateYear.toString(), ref);
         await associationPictureNotifier.getAssociationPicture(association.id);
       },
       child: Column(children: [
@@ -308,23 +309,14 @@ class AssociationEditorPage extends HookConsumerWidget {
             ],
           ),
         ),
-        ...associationMemberList.when(
-          data: (data) {
-            return data
-                .map((member) => MemberEditableCard(member: member))
-                .toList();
-          },
-          error: (error, stackTrace) {
-            return const [
-              Text(PhonebookTextConstants.errorLoadAssociationMember),
-            ];
-          },
-          loading: () => [
-            const Center(
-              child: CircularProgressIndicator(),
-            ),
-          ],
-        ),
+        if (associationMemberList.isEmpty)
+          const Center(
+            child: CircularProgressIndicator(),
+          )
+        else if (associationMemberList.first.member.id != '')
+          ...associationMemberList
+              .map((member) => MemberEditableCard(member: member))
+              .toList(),
         const SizedBox(
           height: 10,
         ),

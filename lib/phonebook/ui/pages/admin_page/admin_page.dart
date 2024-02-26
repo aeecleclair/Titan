@@ -27,7 +27,7 @@ class AdminPage extends HookConsumerWidget {
     final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
     final associationsNotifier =
         ref.watch(asyncAssociationListProvider.notifier);
-    final associations = ref.watch(asyncAssociationListProvider);
+    final associations = ref.watch(associationSortedListProvider);
     final roleNotifier = ref.watch(rolesTagsProvider.notifier);
     final associationKinds = ref.watch(associationKindsProvider);
     final kind = useState('');
@@ -112,59 +112,48 @@ class AdminPage extends HookConsumerWidget {
                               child: Icon(Icons.add,
                                   color: Colors.black, size: 40))),
                     ),
-                    ...associations.when(
-                        data: (associations) {
-                          return associations
-                              .map((association) => EditableAssociationCard(
-                                  association: association,
-                                  onEdit: () {
-                                    associationNotifier
-                                        .setAssociation(association);
-                                    QR.to(PhonebookRouter.root +
-                                        PhonebookRouter.admin +
-                                        PhonebookRouter.editAssociation);
-                                  },
-                                  onDelete: () async {
-                                    await showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return CustomDialogBox(
-                                          title:
-                                              PhonebookTextConstants.deleting,
-                                          descriptions: PhonebookTextConstants
-                                              .deleteAssociation,
-                                          onYes: () async {
-                                            final result =
-                                                await associationsNotifier
-                                                    .deleteAssociation(
-                                                        association);
-                                            if (result) {
-                                              displayToastWithContext(
-                                                  TypeMsg.msg,
-                                                  PhonebookTextConstants
-                                                      .deletedAssociation);
-                                            } else {
-                                              displayToastWithContext(
-                                                  TypeMsg.error,
-                                                  PhonebookTextConstants
-                                                      .deletingError);
-                                            }
-                                            associationsNotifier
-                                                .loadAssociations();
-                                          },
-                                        );
+                    if (associations.isEmpty)
+                      const Center(child: CircularProgressIndicator())
+                    else
+                      ...associations
+                          .map((association) => EditableAssociationCard(
+                              association: association,
+                              onEdit: () {
+                                associationNotifier.setAssociation(association);
+                                QR.to(PhonebookRouter.root +
+                                    PhonebookRouter.admin +
+                                    PhonebookRouter.editAssociation);
+                              },
+                              onDelete: () async {
+                                await showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return CustomDialogBox(
+                                      title: PhonebookTextConstants.deleting,
+                                      descriptions: PhonebookTextConstants
+                                          .deleteAssociation,
+                                      onYes: () async {
+                                        final result =
+                                            await associationsNotifier
+                                                .deleteAssociation(association);
+                                        if (result) {
+                                          displayToastWithContext(
+                                              TypeMsg.msg,
+                                              PhonebookTextConstants
+                                                  .deletedAssociation);
+                                        } else {
+                                          displayToastWithContext(
+                                              TypeMsg.error,
+                                              PhonebookTextConstants
+                                                  .deletingError);
+                                        }
+                                        associationsNotifier.loadAssociations();
                                       },
                                     );
-                                  }))
-                              .toList();
-                        },
-                        loading: () =>
-                            const [Center(child: CircularProgressIndicator())],
-                        error: (error, stack) => [
-                              const Center(
-                                  child: Text(PhonebookTextConstants
-                                      .errorLoadAssociationList))
-                            ])
+                                  },
+                                );
+                              }))
+                          .toList()
                   ],
                 ),
               ),

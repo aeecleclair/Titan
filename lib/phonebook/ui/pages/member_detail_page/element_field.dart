@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:myecl/phonebook/tools/constants.dart';
+import 'package:myecl/tools/functions.dart';
 
 class ElementField extends StatelessWidget {
   final String label;
@@ -8,23 +11,37 @@ class ElementField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
+
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 2.0),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Text(
-              label,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Text(value),
-          ),
-        ],
-      ),
-    );
+        margin: const EdgeInsets.symmetric(vertical: 5.0),
+        child: Row(
+          children: [
+            Expanded(
+                flex: 1,
+                child: Center(
+                    child: Text(
+                  label,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 16),
+                ))),
+            Expanded(
+                flex: 4,
+                child: Center(
+                    child: SelectableText(
+                  value,
+                  maxLines: 1,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 16),
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: value));
+                    displayToastWithContext(
+                        TypeMsg.msg, PhonebookTextConstants.copied);
+                  },
+                ))),
+          ],
+        ));
   }
 }

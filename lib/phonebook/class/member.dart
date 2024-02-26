@@ -7,13 +7,16 @@ class Member extends SimpleUser {
     required super.nickname,
     required super.id,
     required this.email,
+    required this.phone,
     required this.promotion,
   });
   late final String email;
+  late final String? phone;
   late final int promotion;
 
   Member.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     email = json['email'];
+    phone = json['phone'];
     promotion = json['promo'] ?? 0;
   }
 
@@ -21,6 +24,7 @@ class Member extends SimpleUser {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = super.toJson();
     data['email'] = email;
+    data['phone'] = phone;
     data['promotion'] = promotion;
     return data;
   }
@@ -31,6 +35,7 @@ class Member extends SimpleUser {
     String? nickname,
     String? id,
     String? email,
+    String? phone,
     int? promotion,
   }) {
     return Member(
@@ -39,12 +44,14 @@ class Member extends SimpleUser {
       nickname: nickname,
       id: id ?? this.id,
       email: email ?? this.email,
+      phone: phone ?? this.phone,
       promotion: promotion ?? this.promotion,
     );
   }
 
   Member.empty() : super.empty() {
     email = "email.test@empty.useless";
+    phone = "00 00 00 00 00";
     promotion = 0;
   }
 
@@ -55,11 +62,12 @@ class Member extends SimpleUser {
             nickname: user.nickname,
             id: user.id) {
     email = "";
+    phone = "";
     promotion = 0;
   }
 
   @override
   String toString() {
-    return 'Member(name: $name, firstname: $firstname, nickname: $nickname, id: $id, email: $email, promotion: $promotion)';
+    return 'Member(name: $name, firstname: $firstname, nickname: $nickname, id: $id, email: $email, phone: $phone, promotion: $promotion)';
   }
 }

@@ -26,7 +26,7 @@ class PhonebookMainPage extends HookConsumerWidget {
     final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
     final associationListNotifier =
         ref.watch(asyncAssociationListProvider.notifier);
-    final associationList = ref.watch(asyncAssociationListProvider);
+    final associationList = ref.watch(associationSortedListProvider);
     final associationKindsNotifier =
         ref.watch(associationKindsProvider.notifier);
     final associationKinds = ref.watch(associationKindsProvider);
@@ -121,27 +121,22 @@ class PhonebookMainPage extends HookConsumerWidget {
                       const Text(PhonebookTextConstants.errorKindsLoading),
                   loading: () => const CircularProgressIndicator()),
               const SizedBox(height: 30),
-              ...associationList.when(
-                  data: (associations) {
-                    return associations
-                        .map((association) => AssociationCard(
-                              association: association,
-                              onClicked: () {
-                                associationNotifier.setAssociation(association);
-                                QR.to(PhonebookRouter.root +
-                                    PhonebookRouter.associationDetail);
-                              },
-                              giveMemberRole: false,
-                            ))
-                        .toList();
-                  },
-                  loading: () =>
-                      const [Center(child: CircularProgressIndicator())],
-                  error: (error, stack) => [
-                        const Center(
-                            child: Text(PhonebookTextConstants
-                                .errorLoadAssociationList))
-                      ])
+              if (associationList.isEmpty)
+                const Center(
+                  child: CircularProgressIndicator(),
+                )
+              else
+                ...associationList
+                    .map((association) => AssociationCard(
+                          association: association,
+                          onClicked: () {
+                            associationNotifier.setAssociation(association);
+                            QR.to(PhonebookRouter.root +
+                                PhonebookRouter.associationDetail);
+                          },
+                          giveMemberRole: false,
+                        ))
+                    .toList()
             ])));
   }
 }

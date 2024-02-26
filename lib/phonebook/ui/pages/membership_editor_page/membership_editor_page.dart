@@ -160,6 +160,8 @@ class MembershipEditorPage extends HookConsumerWidget {
                     tokenExpireWrapper(ref, () async {
                       if (edition) {
                         final value = await associationNotifier.updateMember(
+                            member.memberships.firstWhere((element) =>
+                                element.associationId == association.id),
                             association,
                             member.member,
                             memberRoleTags,
@@ -167,7 +169,8 @@ class MembershipEditorPage extends HookConsumerWidget {
                         if (value) {
                           associationMemberListNotifier.loadMembers(
                               association.id,
-                              association.mandateYear.toString());
+                              association.mandateYear.toString(),
+                              ref);
                           displayToastWithContext(TypeMsg.msg,
                               PhonebookTextConstants.updatedMember);
                           QR.back();
@@ -184,7 +187,8 @@ class MembershipEditorPage extends HookConsumerWidget {
                         if (value) {
                           associationMemberListNotifier.loadMembers(
                               association.id,
-                              association.mandateYear.toString());
+                              association.mandateYear.toString(),
+                              ref);
                           displayToastWithContext(
                               TypeMsg.msg, PhonebookTextConstants.addedMember);
                           QR.back();
