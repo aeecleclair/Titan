@@ -12,7 +12,7 @@ class DeleteButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShrinkButton(
         waitChild: Container(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             gradient: const LinearGradient(
               colors: [
@@ -24,9 +24,8 @@ class DeleteButton extends StatelessWidget {
             ),
             boxShadow: [
               BoxShadow(
-                color: ColorConstants.gradient2.withOpacity(0.3),
-                spreadRadius: 2,
-                blurRadius: 4,
+                color: ColorConstants.gradient2.withOpacity(0.2),
+                blurRadius: 10,
                 offset: const Offset(2, 3),
               ),
             ],
@@ -40,7 +39,7 @@ class DeleteButton extends StatelessWidget {
         ),
         onTap: onDelete,
         child: Container(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             gradient: const LinearGradient(
               colors: [
@@ -53,8 +52,7 @@ class DeleteButton extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                 color: ColorConstants.gradient2.withOpacity(0.3),
-                spreadRadius: 2,
-                blurRadius: 4,
+                blurRadius: 10,
                 offset: const Offset(2, 3),
               ),
             ],
