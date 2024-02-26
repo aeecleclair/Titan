@@ -11,6 +11,6 @@ class FilterNotifier extends StateNotifier<String> {
 
 
   void setFilter(String i) {
-    state = i;;
+    state = i;
   }
 }

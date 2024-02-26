@@ -1,4 +1,4 @@
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 import 'package:myecl/tools/repository/logo_repository.dart';
 
 class AssociationPictureRepository extends LogoRepository {
@@ -6,12 +6,17 @@ class AssociationPictureRepository extends LogoRepository {
   // ignore: overridden_fields
   final ext = 'phonebook/associations/';
 
-  Future<Uint8List> getAssociationPicture(String associationId) async {
-   return await getLogo(associationId, suffix: "/picture");
+  Future<Image> getAssociationPicture(String associationId) async {
+    final uint8List = await getLogo(associationId, suffix: "/picture");
+    if (uint8List.isEmpty) {
+      return Image.asset("assets/images/logo.png");
+    }
+    return Image.memory(uint8List);
   }
 
-  Future<Uint8List> addAssociationPicture(String path, String associationId) async {
+  Future<Image> addAssociationPicture(String path, String associationId) async {
     final image = await saveLogoToTemp(path);
-    return await addLogo(image.path, associationId, suffix: "/picture");
+    final uint8List = await addLogo(image.path, associationId, suffix: "/picture");
+    return Image.memory(uint8List);
   }
 }
