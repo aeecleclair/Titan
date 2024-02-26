@@ -3,15 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/phonebook/class/roles_tags.dart';
 import 'package:tuple/tuple.dart';
 
-
-final memberRoleTagsProvider = StateNotifierProvider<MemberRoleTagsProvider, List<String>>((ref) {
+final memberRoleTagsProvider =
+    StateNotifierProvider<MemberRoleTagsProvider, List<String>>((ref) {
   return MemberRoleTagsProvider();
 });
 
 class MemberRoleTagsProvider extends StateNotifier<List<String>> {
   MemberRoleTagsProvider() : super([]);
 
-  void setRoleTagsWithFilter(Tuple2<RolesTags,List<bool>> data) {
+  void setRoleTagsWithFilter(Tuple2<RolesTags, List<bool>> data) {
     debugPrint(data.item1.tags.toString());
     debugPrint(data.item2.toString());
     List<String> newRoleTags = [];

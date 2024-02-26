@@ -1,6 +1,6 @@
 import 'package:myecl/user/class/list_users.dart';
 
-class Member{
+class Member {
   Member({
     required this.name,
     required this.firstname,
@@ -17,16 +17,16 @@ class Member{
   late final String email;
   late final String promotion;
 
-  Member.fromJSON(Map<String, dynamic> json){
-      name = json['name'];
-      firstname = json['firstname'];
-      nickname = json['nickname'];
-      id = json['id'];
-      email = json['email'];
-      promotion = json['promotion'];
-      }
-  
-  Map<String, dynamic> toJSON(){
+  Member.fromJSON(Map<String, dynamic> json) {
+    name = json['name'];
+    firstname = json['firstname'];
+    nickname = json['nickname'];
+    id = json['id'];
+    email = json['email'];
+    promotion = json['promotion'];
+  }
+
+  Map<String, dynamic> toJSON() {
     final data = <String, dynamic>{
       'name': name,
       'firstname': firstname,
@@ -56,7 +56,7 @@ class Member{
     );
   }
 
-  Member.empty(){
+  Member.empty() {
     name = "nom";
     firstname = "prénom";
     nickname = null;
@@ -65,7 +65,7 @@ class Member{
     promotion = "Exx";
   }
 
-  Member.fromUser(SimpleUser user){
+  Member.fromUser(SimpleUser user) {
     name = user.name;
     firstname = user.firstname;
     nickname = user.nickname;

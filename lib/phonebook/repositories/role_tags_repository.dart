@@ -7,10 +7,8 @@ class RolesTagsRepository extends Repository {
   // ignore: overridden_fields
   final ext = "phonebook/";
 
-  Future<Tuple2<RolesTags,List<bool>>> getRolesTags() async {
+  Future<Tuple2<RolesTags, List<bool>>> getRolesTags() async {
     RolesTags rolesTags = RolesTags.fromJSON(await getOne("roletags"));
-    return Tuple2(rolesTags,List<bool>.filled(rolesTags.tags.length, false));
+    return Tuple2(rolesTags, List<bool>.filled(rolesTags.tags.length, false));
   }
 }
-
-

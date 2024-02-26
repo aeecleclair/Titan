@@ -9,7 +9,8 @@ class AssociationPictureNotifier extends MapNotifier<Association, Image> {
   AssociationPictureNotifier() : super();
 }
 
-final associationPicturesProvider = StateNotifierProvider<AssociationPictureNotifier,
+final associationPicturesProvider = StateNotifierProvider<
+    AssociationPictureNotifier,
     AsyncValue<Map<Association, AsyncValue<List<Image>>>>>((ref) {
   AssociationPictureNotifier associationPictureNotifier =
       AssociationPictureNotifier();

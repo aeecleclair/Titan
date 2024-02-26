@@ -6,8 +6,7 @@ import 'package:myecl/user/providers/user_list_provider.dart';
 
 class SearchResult extends HookConsumerWidget {
   final TextEditingController queryController;
-  const SearchResult(
-      {super.key, required this.queryController});
+  const SearchResult({super.key, required this.queryController});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

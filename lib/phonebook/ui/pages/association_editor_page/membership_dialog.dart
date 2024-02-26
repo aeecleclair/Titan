@@ -12,17 +12,16 @@ import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:tuple/tuple.dart';
 import 'package:myecl/phonebook/ui/pages/membership_editor_page/search_result.dart';
 
-
 class MembershipDialog extends HookConsumerWidget {
-  const MembershipDialog({
-    Key? key,
-    required this.apparentNameController,
-    required this.title,
-    required this.defaultText,
-    required this.onConfirm,
-    required this.member,
-    required this.association
-  }) : super(key: key);
+  const MembershipDialog(
+      {Key? key,
+      required this.apparentNameController,
+      required this.title,
+      required this.defaultText,
+      required this.onConfirm,
+      required this.member,
+      required this.association})
+      : super(key: key);
 
   final String title;
   final String defaultText;
@@ -67,7 +66,7 @@ class MembershipDialog extends HookConsumerWidget {
         child: SingleChildScrollView(
             child: Column(
           children: [
-            if (member.member.id == "") 
+            if (member.member.id == "")
               TextFormField(
                 enabled: member.member.id == "",
                 onChanged: (value) {
@@ -92,15 +91,19 @@ class MembershipDialog extends HookConsumerWidget {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              SearchResult(queryController: queryController),
+            const SizedBox(
+              height: 10,
+            ),
+            SearchResult(queryController: queryController),
             ...rolesTags.when(
               data: (data) {
                 if (member.member.id != "") {
                   for (int i = 0; i < data.item2.length; i++) {
-                    if (member.memberships.where((e) => e.association.id == association.id).toList()[0].rolesTags.contains(data.item1.tags[i])) {
+                    if (member.memberships
+                        .where((e) => e.association.id == association.id)
+                        .toList()[0]
+                        .rolesTags
+                        .contains(data.item1.tags[i])) {
                       data.item2[i] = true;
                     }
                   }

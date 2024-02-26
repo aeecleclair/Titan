@@ -32,7 +32,8 @@ class TopBar extends HookConsumerWidget {
                             controllerNotifier.toggle();
                             break;
                           case PhonebookPage.memberDetail:
-                            pageNotifier.setPhonebookPage(PhonebookPage.associationPage);
+                            pageNotifier.setPhonebookPage(
+                                PhonebookPage.associationPage);
                             break;
                           case PhonebookPage.admin:
                             pageNotifier.setPhonebookPage(PhonebookPage.main);
@@ -47,7 +48,8 @@ class TopBar extends HookConsumerWidget {
                             pageNotifier.setPhonebookPage(PhonebookPage.admin);
                             break;
                           case PhonebookPage.membershipEdition:
-                            pageNotifier.setPhonebookPage(PhonebookPage.associationEditor);
+                            pageNotifier.setPhonebookPage(
+                                PhonebookPage.associationEditor);
                             break;
                         }
                       },

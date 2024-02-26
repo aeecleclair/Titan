@@ -288,9 +288,11 @@ class AssociationEditorPage extends HookConsumerWidget {
               ShrinkButton(
                 onTap: () async {
                   rolesTagsNotifier.resetChecked();
-                  completeMemberNotifier.setCompleteMember(CompleteMember.empty());
+                  completeMemberNotifier
+                      .setCompleteMember(CompleteMember.empty());
                   editionNotifier.setStatus(false);
-                  pageNotifier.setPhonebookPage(PhonebookPage.membershipEdition);
+                  pageNotifier
+                      .setPhonebookPage(PhonebookPage.membershipEdition);
                 },
                 child: Container(
                   width: 40,
@@ -364,7 +366,8 @@ class AssociationEditorPage extends HookConsumerWidget {
               context: context,
               builder: (context) => AlertDialog(
                 title: const Text(PhonebookTextConstants.newMandate),
-                content: const Text(PhonebookTextConstants.changeMandateConfirm),
+                content:
+                    const Text(PhonebookTextConstants.changeMandateConfirm),
                 actions: [
                   TextButton(
                     onPressed: () {
@@ -378,7 +381,9 @@ class AssociationEditorPage extends HookConsumerWidget {
                       await tokenExpireWrapper(ref, () async {
                         final value = await associationListNotifier
                             .updateAssociation(association.copyWith(
-                                mandateYear: (int.parse(association.mandateYear)+1).toString()));
+                                mandateYear:
+                                    (int.parse(association.mandateYear) + 1)
+                                        .toString()));
                         if (value) {
                           displayToastWithContext(TypeMsg.msg,
                               PhonebookTextConstants.newMandateConfirmed);
@@ -392,7 +397,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                   ),
                 ],
               ),
-              );
+            );
           },
           child: Container(
             width: double.infinity,
@@ -417,7 +422,7 @@ class AssociationEditorPage extends HookConsumerWidget {
               borderRadius: BorderRadius.circular(15),
             ),
             child: Text(
-              "${PhonebookTextConstants.changeMandate} ${(int.parse(association.mandateYear)+1).toString()}",
+              "${PhonebookTextConstants.changeMandate} ${(int.parse(association.mandateYear) + 1).toString()}",
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,

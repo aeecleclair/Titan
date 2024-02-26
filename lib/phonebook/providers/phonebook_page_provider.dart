@@ -10,8 +10,8 @@ enum PhonebookPage {
   membershipEdition
 }
 
-
-final phonebookPageProvider = StateNotifierProvider<PhonebookPageNotifier, PhonebookPage>((ref) {
+final phonebookPageProvider =
+    StateNotifierProvider<PhonebookPageNotifier, PhonebookPage>((ref) {
   return PhonebookPageNotifier();
 });
 

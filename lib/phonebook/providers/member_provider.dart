@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/phonebook/class/member.dart';
 
-
 final memberProvider = StateNotifierProvider<MemberProvider, Member>((ref) {
   return MemberProvider();
 });

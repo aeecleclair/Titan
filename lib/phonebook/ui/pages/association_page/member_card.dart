@@ -19,9 +19,7 @@ class MemberCard extends HookConsumerWidget {
     final profilePicture = ref.watch(profilePictureProvider);
     final association = ref.watch(associationProvider);
     final profilePictureNotifier = ref.watch(profilePictureProvider.notifier);
-    
 
-    //profilePictureNotifier.getProfilePicture(member.member.id);
     return GestureDetector(
         onTap: () {
           memberNotifier.setCompleteMember(member);
@@ -95,7 +93,11 @@ class MemberCard extends HookConsumerWidget {
                   ),
                 ),
                 const Spacer(),
-                Text(member.memberships.firstWhere((element) => element.association.id == association.id).apparentName,
+                Text(
+                    member.memberships
+                        .firstWhere((element) =>
+                            element.association.id == association.id)
+                        .apparentName,
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

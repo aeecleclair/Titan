@@ -9,4 +9,5 @@ class AssociationIdNotifier extends StateNotifier<String> {
 }
 
 final associationIdProvider =
-    StateNotifierProvider<AssociationIdNotifier, String>((ref) => AssociationIdNotifier());
+    StateNotifierProvider<AssociationIdNotifier, String>(
+        (ref) => AssociationIdNotifier());
