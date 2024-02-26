@@ -88,8 +88,8 @@ class AdminPage extends HookConsumerWidget {
                     ),
                     height: 58,
                     margin: const EdgeInsets.all(10),
-                    child: Row(
-                        children: const [Spacer(), Icon(Icons.add), Spacer()])),
+                    child: const Row(
+                        children: [Spacer(), Icon(Icons.add), Spacer()])),
               ),
               ...associations.when(
                   data: (associations) {

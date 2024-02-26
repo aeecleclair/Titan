@@ -7,7 +7,6 @@ import 'package:myecl/phonebook/providers/association_kinds_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/research_filter_provider.dart';
-import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/admin/providers/is_admin.dart';
 import 'package:myecl/phonebook/providers/phonebook_page_provider.dart';
@@ -118,8 +117,8 @@ class MainPage extends HookConsumerWidget {
                           blurRadius: 10,
                           offset: const Offset(0, 5))
                     ]),
-                child: Row(
-                  children: const [
+                child: const Row(
+                  children: [
                     HeroIcon(HeroIcons.userGroup, color: Colors.white),
                     SizedBox(width: 10),
                     Text(PhonebookTextConstants.admin,
