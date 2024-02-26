@@ -40,10 +40,7 @@ class SearchResult extends HookConsumerWidget {
                             ]),
                       ),
                       onTap: () {
-                        debugPrint(e.toString());
-                        debugPrint(Member.fromUser(e).toString());
                         memberNotifier.setMember(Member.fromUser(e));
-                        debugPrint(member.toString());
                         queryController.text = e.getName();
                         usersNotifier.clear();
                       }))

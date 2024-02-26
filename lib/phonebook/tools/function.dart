@@ -1,12 +1,10 @@
 import 'dart:math';
 
-import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/association_kinds.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/membership.dart';
-import 'package:myecl/phonebook/class/roles_tags.dart';
 
 String nameConstructor(Map<String, AsyncValue<List<bool>>> data) {
   String name = '';

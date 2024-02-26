@@ -125,7 +125,7 @@ class MembershipEditorPage extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 50),
                 WaitingButton(
-                  builder: (child) => AddEditButtonLayout(colors: [
+                  builder: (child) => AddEditButtonLayout(colors: const [
                     ColorConstants.gradient1,
                     ColorConstants.gradient2,
                   ], child: child),
@@ -149,11 +149,6 @@ class MembershipEditorPage extends HookConsumerWidget {
                           PhonebookTextConstants.emptyApparentName);
                       return;
                     }
-                    debugPrint("Appui sur le bouton avec les paramètres:\n"
-                        "association: $association\n"
-                        "member: ${member.member}\n"
-                        "rolesTags: $memberRoleTags\n"
-                        "apparentName: ${apparentNameController.text}");
                     tokenExpireWrapper(ref, () async {
                       if (edition) {
                         final value = await associationNotifier.updateMember(

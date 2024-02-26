@@ -5,13 +5,11 @@ import 'package:myecl/phonebook/providers/association_kind_provider.dart';
 import 'package:myecl/phonebook/providers/association_kinds_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
-import 'package:myecl/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:myecl/phonebook/providers/research_filter_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
-import 'package:myecl/phonebook/ui/radio_chip.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/association_research_bar.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/editable_association_card.dart';
 import 'package:myecl/tools/functions.dart';
@@ -118,51 +116,55 @@ class AdminPage extends HookConsumerWidget {
                               child: Icon(Icons.add,
                                   color: Colors.black, size: 40))),
                     ),
-                    const SizedBox(height: 30),
-                    if (associations.isEmpty)
-                      const Center(
-                          child:
-                              Text(PhonebookTextConstants.noAssociationFound))
-                    else
-                      ...associations
-                          .map((association) => EditableAssociationCard(
-                              association: association,
-                              onEdit: () {
-                                associationNotifier.setAssociation(association);
-                                QR.to(PhonebookRouter.root +
-                                    PhonebookRouter.admin +
-                                    PhonebookRouter.editAssociation);
-                              },
-                              onDelete: () async {
-                                await showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return CustomDialogBox(
-                                      title: PhonebookTextConstants.deleting,
-                                      descriptions: PhonebookTextConstants
-                                          .deleteAssociation,
-                                      onYes: () async {
-                                        final result =
-                                            await associationsNotifier
-                                                .deleteAssociation(association);
-                                        if (result) {
-                                          displayToastWithContext(
-                                              TypeMsg.msg,
-                                              PhonebookTextConstants
-                                                  .deletedAssociation);
-                                        } else {
-                                          displayToastWithContext(
-                                              TypeMsg.error,
-                                              PhonebookTextConstants
-                                                  .deletingError);
-                                        }
-                                        associationsNotifier.loadAssociations();
-                                      },
-                                    );
-                                  },
-                                );
-                              }))
-                          .toList()
+                    const SizedBox(height: 5),
+                    (associations.isEmpty)
+                        ? const Center(
+                            child:
+                                Text(PhonebookTextConstants.noAssociationFound))
+                        : Column(
+                            children: associations
+                                .map((association) => EditableAssociationCard(
+                                    association: association,
+                                    onEdit: () {
+                                      associationNotifier
+                                          .setAssociation(association);
+                                      QR.to(PhonebookRouter.root +
+                                          PhonebookRouter.admin +
+                                          PhonebookRouter.editAssociation);
+                                    },
+                                    onDelete: () async {
+                                      await showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return CustomDialogBox(
+                                            title:
+                                                PhonebookTextConstants.deleting,
+                                            descriptions: PhonebookTextConstants
+                                                .deleteAssociation,
+                                            onYes: () async {
+                                              final result =
+                                                  await associationsNotifier
+                                                      .deleteAssociation(
+                                                          association);
+                                              if (result) {
+                                                displayToastWithContext(
+                                                    TypeMsg.msg,
+                                                    PhonebookTextConstants
+                                                        .deletedAssociation);
+                                              } else {
+                                                displayToastWithContext(
+                                                    TypeMsg.error,
+                                                    PhonebookTextConstants
+                                                        .deletingError);
+                                              }
+                                              associationsNotifier
+                                                  .loadAssociations();
+                                            },
+                                          );
+                                        },
+                                      );
+                                    }))
+                                .toList())
                   ],
                 ),
               ),

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
@@ -21,7 +20,6 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
       String associationId, String year, ref) async {
     final result = await loadList(() async => associationMemberRepository
         .getAssociationMemberList(associationId, year));
-    debugPrint("loadMembers: $result");
     result.whenData((value) {
       sortMembers(value, associationId, ref);
     });

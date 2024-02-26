@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/association_kinds.dart';
 import 'package:myecl/phonebook/class/member.dart';
@@ -47,9 +46,6 @@ class AssociationRepository extends Repository {
 
   Future<bool> updateMember(Membership membership, Association association,
       Member member, List<String> rolesTags, String apparentName) async {
-    debugPrint(
-        "updateMembership :\n id : ${membership.id}\n member_id : ${member.id}\n association_id : ${association.id}\n role_tags : ${rolesTags.join(";")}\n role_name : $apparentName");
-
     return await update({
       "id": membership.id,
       "member_id": member.id,

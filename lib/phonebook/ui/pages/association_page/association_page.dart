@@ -97,14 +97,14 @@ class AssociationPage extends HookConsumerWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                if (associationMemberList.isEmpty)
-                  const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                else
-                  ...associationMemberList
-                      .map((member) => MemberCard(member: member))
-                      .toList()
+                (associationMemberList.isEmpty)
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Column(
+                        children: associationMemberList
+                            .map((member) => MemberCard(member: member))
+                            .toList())
               ]),
               if (isPresident)
                 Positioned(

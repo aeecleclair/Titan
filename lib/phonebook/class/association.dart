@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Association {
   Association({
     required this.id,
