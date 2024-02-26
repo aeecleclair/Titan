@@ -41,8 +41,6 @@ class AddAssociationTextEntry extends StatelessWidget {
                     return AdminTextConstants.emptyFieldError;
                   } else if (value.isEmpty) {
                     return AdminTextConstants.emptyFieldError;
-                  } else {
-                    return null;
                   }
                 },
               ),

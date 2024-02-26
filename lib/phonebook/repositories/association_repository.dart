@@ -11,11 +11,11 @@ class AssociationRepository extends Repository {
 
   Future<List<Association>> getAssociationList() async {
     return List<Association>.from(
-        (await getList()).map((x) => Association.fromJSON(x)));
+        (await getList()).map((x) => Association.fromJson(x)));
   }
 
   Future<Association> getAssociation(String associationId) async {
-    return Association.fromJSON(await getOne(associationId));
+    return Association.fromJson(await getOne(associationId));
   }
 
   Future<bool> deleteAssociation(String associationId) async {
@@ -23,11 +23,11 @@ class AssociationRepository extends Repository {
   }
 
   Future<bool> updateAssociation(Association association) async {
-    return await update(association.toJSON(), association.id);
+    return await update(association.toJson(), association.id);
   }
 
   Future<Association> createAssociation(Association association) async {
-    return Association.fromJSON(await create(association.toJSON()));
+    return Association.fromJson(await create(association.toJson()));
   }
 
   Future<bool> addMember(Association association, Member member,
@@ -55,6 +55,6 @@ class AssociationRepository extends Repository {
   }
 
   Future<AssociationKinds> getAssociationKinds() async {
-    return AssociationKinds.fromJSON(await getOne("kinds"));
+    return AssociationKinds.fromJson(await getOne("kinds"));
   }
 }

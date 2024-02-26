@@ -17,7 +17,7 @@ class Member {
   late final String email;
   late final String promotion;
 
-  Member.fromJSON(Map<String, dynamic> json) {
+  Member.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     firstname = json['firstname'];
     nickname = json['nickname'];
@@ -26,7 +26,7 @@ class Member {
     promotion = json['promotion'];
   }
 
-  Map<String, dynamic> toJSON() {
+  Map<String, dynamic> toJson() {
     final data = <String, dynamic>{
       'name': name,
       'firstname': firstname,

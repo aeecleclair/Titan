@@ -15,7 +15,7 @@ class Association{
   late final String kind;
   late final int mandateYear;
 
-  Association.fromJSON(Map<String, dynamic> json){
+  Association.fromJson(Map<String, dynamic> json){
       id = json['id'];
       name = json['name'];
       description = json['description'];
@@ -23,7 +23,7 @@ class Association{
       mandateYear = json['mandate_year'];
       }
 
-  Map<String, dynamic> toJSON() {
+  Map<String, dynamic> toJson() {
     final data = <String, dynamic>{
       'id': id,
       'name': name,

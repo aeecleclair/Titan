@@ -16,8 +16,7 @@ class AssociationListNotifier extends ListNotifier<Association> {
   }
 
   Future<AsyncValue<List<Association>>> loadAssociations() async {
-    associationList = await loadList(() async => associationRepository.getAssociationList());
-    return associationList;
+    return await loadList(associationRepository.getAssociationList);
   }
 
   Future<bool> createAssociation(Association association) async {
@@ -95,13 +94,3 @@ final associationListProvider = StateNotifierProvider<AssociationListNotifier,
   return notifier;
 });
 
-//final userAssociationListNotifier =
-//    StateNotifierProvider<AssociationListNotifier, AsyncValue<List<Association>>>(
-//        (ref) {
-//  final token = ref.watch(tokenProvider);
-//  AssociationListNotifier provider = AssociationListNotifier(token: token);
-//  tokenExpireWrapperAuth(ref, () async {
-//    await provider.loadAssociationsFromUser(ref.watch(userProvider));
-//  });
-//  return provider;
-//});
