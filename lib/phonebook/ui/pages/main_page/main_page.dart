@@ -19,7 +19,7 @@ import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class PhonebookMainPage extends HookConsumerWidget {
-  const PhonebookMainPage({Key? key}) : super(key: key);
+  const PhonebookMainPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -130,17 +130,15 @@ class PhonebookMainPage extends HookConsumerWidget {
                   child: Text(PhonebookTextConstants.noAssociationFound),
                 )
               else
-                ...associationList
-                    .map((association) => AssociationCard(
-                          association: association,
-                          onClicked: () {
-                            associationNotifier.setAssociation(association);
-                            QR.to(PhonebookRouter.root +
-                                PhonebookRouter.associationDetail);
-                          },
-                          giveMemberRole: false,
-                        ))
-                    .toList()
+                ...associationList.map((association) => AssociationCard(
+                      association: association,
+                      onClicked: () {
+                        associationNotifier.setAssociation(association);
+                        QR.to(PhonebookRouter.root +
+                            PhonebookRouter.associationDetail);
+                      },
+                      giveMemberRole: false,
+                    ))
             ])));
   }
 }

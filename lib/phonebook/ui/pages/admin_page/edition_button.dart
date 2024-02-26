@@ -3,7 +3,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class EditionButton extends HookConsumerWidget {
-  const EditionButton({Key? key, required this.onEdition}) : super(key: key);
+  const EditionButton({super.key, required this.onEdition});
   final void Function() onEdition;
 
   @override

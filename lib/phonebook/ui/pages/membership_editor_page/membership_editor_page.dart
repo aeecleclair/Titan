@@ -26,8 +26,8 @@ import 'package:myecl/phonebook/ui/pages/membership_editor_page/search_result.da
 
 class MembershipEditorPage extends HookConsumerWidget {
   const MembershipEditorPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

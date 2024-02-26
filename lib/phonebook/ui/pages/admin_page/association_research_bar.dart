@@ -8,7 +8,7 @@ import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
 
 class AssociationResearchBar extends HookConsumerWidget {
-  const AssociationResearchBar({Key? key}) : super(key: key);
+  const AssociationResearchBar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

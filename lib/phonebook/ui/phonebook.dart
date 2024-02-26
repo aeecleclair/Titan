@@ -6,7 +6,7 @@ import 'package:myecl/tools/ui/widgets/top_bar.dart';
 
 class PhonebookTemplate extends HookConsumerWidget {
   final Widget child;
-  const PhonebookTemplate({Key? key, required this.child}) : super(key: key);
+  const PhonebookTemplate({super.key, required this.child});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

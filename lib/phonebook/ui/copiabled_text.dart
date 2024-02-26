@@ -5,8 +5,7 @@ import 'package:myecl/tools/functions.dart';
 
 class CopiabledText extends StatelessWidget {
   const CopiabledText(this.data,
-      {Key? key, required this.style, required this.flex, this.maxLines = 1})
-      : super(key: key);
+      {super.key, required this.style, required this.flex, this.maxLines = 1});
 
   final String data;
   final TextStyle style;
