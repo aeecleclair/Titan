@@ -110,6 +110,9 @@ class PhonebookMainPage extends HookConsumerWidget {
                           return ItemChip(
                             onTap: () {
                               kind.value = item;
+                              kindNotifier.setKind(item);
+                              associationListNotifier.filterAssociationList(
+                                  nameFilter, kind.value);
                             },
                             selected: selected,
                             child: Text(item,
