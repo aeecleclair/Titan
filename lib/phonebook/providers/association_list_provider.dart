@@ -102,7 +102,7 @@ final asyncAssociationListProvider = StateNotifierProvider<
 final associationListProvider = Provider<List<Association>>((ref) {
   final association = ref.watch(asyncAssociationListProvider);
   return association.maybeWhen(
-      data: (association) => association, orElse: () => [Association.empty()]);
+      data: (association) => association, orElse: () => []);
 });
 
 final associationSortedListProvider = Provider<List<Association>>((ref) {
