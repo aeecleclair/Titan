@@ -26,10 +26,11 @@ class AssociationNotifier extends SingleNotifier<Association> {
         association);
   }
 
-  Future<bool> deleteMember(Membership membership) async {
+  Future<bool> deleteMember(
+      Membership membership, Association association) async {
     return await update(
         (association) async => associationRepository.deleteMember(membership),
-        membership.association);
+        association);
   }
 
   Future<bool> updateMember(Association association, Member user,

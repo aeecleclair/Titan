@@ -96,7 +96,7 @@ class MemberCard extends HookConsumerWidget {
                 Text(
                     member.memberships
                         .firstWhere((element) =>
-                            element.association.id == association.id)
+                            element.associationId == association.id)
                         .apparentName,
                     style: const TextStyle(
                       fontSize: 20,

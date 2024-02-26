@@ -46,7 +46,7 @@ class MembershipEditorPage extends HookConsumerWidget {
 
     if (edition) {
       apparentNameController.text = member.memberships
-          .where((e) => e.association.id == association.id)
+          .where((e) => e.associationId == association.id)
           .toList()[0]
           .apparentName;
     }

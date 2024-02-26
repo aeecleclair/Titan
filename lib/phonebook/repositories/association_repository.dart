@@ -41,7 +41,7 @@ class AssociationRepository extends Repository {
   }
 
   Future<bool> deleteMember(Membership membership) async {
-    return await delete("/memberships/${membership.id}");
+    return await delete("memberships/${membership.id}");
   }
 
   Future<bool> updateMember(Association association, Member member,

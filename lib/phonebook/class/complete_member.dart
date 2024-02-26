@@ -12,14 +12,13 @@ class CompleteMember {
   late final List<Membership> memberships;
 
   CompleteMember.fromJson(Map<String, dynamic> json) {
-    debugPrint(json.toString());
     member = Member(
         name: json['name'],
         firstname: json['firstname'],
-        nickname: json['nickname'],
+        nickname: json['nickname'] ?? "",
         id: json['id'],
         email: json['email'],
-        promotion: json['promotion'] ?? "");
+        promotion: json['promo'] ?? 0);
     memberships = List<Membership>.from(json['memberships']
         .map((membership) => Membership.fromJson(membership)));
   }
@@ -58,7 +57,7 @@ class CompleteMember {
 
   List<String> getRolesTags(String associationId) {
     return memberships
-        .firstWhere((element) => element.association.id == associationId)
+        .firstWhere((element) => element.associationId == associationId)
         .rolesTags;
   }
 }

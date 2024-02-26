@@ -128,7 +128,6 @@ class AssociationPage extends HookConsumerWidget {
                   child: GestureDetector(
                     onTap: () {
                       QR.to(PhonebookRouter.root +
-                          PhonebookRouter.admin +
                           PhonebookRouter.editAssociation);
                     },
                     child: Container(

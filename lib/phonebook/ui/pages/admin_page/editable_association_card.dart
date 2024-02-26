@@ -27,7 +27,7 @@ class EditableAssociationCard extends HookConsumerWidget {
     final associationPictureNotifier =
         ref.watch(associationPictureProvider.notifier);
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 5),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
           color: Colors.white,
@@ -40,9 +40,6 @@ class EditableAssociationCard extends HookConsumerWidget {
           ]),
       child: Row(
         children: [
-          const SizedBox(
-            width: 10,
-          ),
           associationPictures.when(
             data: (pictures) {
               if (pictures[association] != null) {
@@ -104,7 +101,10 @@ class EditableAssociationCard extends HookConsumerWidget {
             },
             error: (e, s) {
               return const Center(
-                child: Text(PhonebookTextConstants.errorLoadAssociationPicture),
+                child: HeroIcon(
+                  HeroIcons.exclamationCircle,
+                  size: 40,
+                ),
               );
             },
           ),
@@ -112,17 +112,17 @@ class EditableAssociationCard extends HookConsumerWidget {
           Text(
             association.name,
             style: const TextStyle(
-                color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const Spacer(),
           Text(association.kind,
               style: const TextStyle(
                   color: Colors.black,
-                  fontSize: 20,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold)),
           const Spacer(),
           EditionButton(onEdition: onEdit),
-          const SizedBox(width: 10),
+          const SizedBox(width: 5),
           DeleteButton(onDelete: onDelete),
         ],
       ),

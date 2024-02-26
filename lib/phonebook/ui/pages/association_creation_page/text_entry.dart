@@ -5,8 +5,12 @@ import 'package:myecl/tools/constants.dart';
 class AddAssociationTextEntry extends StatelessWidget {
   final TextEditingController controller;
   final String title;
+  final bool canBeEmpty;
   const AddAssociationTextEntry(
-      {Key? key, required this.controller, required this.title})
+      {Key? key,
+      required this.controller,
+      required this.title,
+      required this.canBeEmpty})
       : super(key: key);
 
   @override
@@ -36,12 +40,14 @@ class AddAssociationTextEntry extends StatelessWidget {
                     focusedBorder: UnderlineInputBorder(
                         borderSide:
                             BorderSide(color: ColorConstants.gradient1))),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return AdminTextConstants.emptyFieldError;
-                  }
-                  return null;
-                },
+                validator: canBeEmpty
+                    ? null
+                    : (value) {
+                        if (value == null || value.isEmpty) {
+                          return AdminTextConstants.emptyFieldError;
+                        }
+                        return null;
+                      },
               ),
             ),
           ],
