@@ -97,6 +97,8 @@ class PhonebookTextConstants {
   static const String updatedMember = "Membre modifié";
 
   static const String validation = "Valider";
+
+  static const String promoNotGiven = "Promo non renseignée";
 }
 
 class PhonebookColorConstants {
