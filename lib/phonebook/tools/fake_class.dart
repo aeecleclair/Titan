@@ -1,4 +1,5 @@
 import 'package:myecl/phonebook/class/association.dart';
+import 'package:myecl/phonebook/class/association_kinds.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/member.dart';
 import 'package:myecl/phonebook/class/membership.dart';
@@ -25,6 +26,16 @@ RolesTags fakeRolesTags = RolesTags(tags: [
   'VP com',
   'VP sponsor',
 ]);
+
+AssociationKinds fakeAssociationKinds = AssociationKinds(kinds: [
+  'Section',
+  'Club',
+  'Comité',
+  'Fédération',
+  'Association',
+  'Autre',
+]);
+
 
 List<CompleteMember> fakeMembersList = [
     CompleteMember(

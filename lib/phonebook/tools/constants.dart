@@ -12,7 +12,6 @@ class PhonebookTextConstants {
   static const String updatedAssociationPicture = "La photo d'association a  été changée";
   static const String tooHeavyAssociationPicture =
       "L'image est trop lourde (max 4Mo)";
-  static const String membershipAssociation = "Association :";
   static const String membershipRole = "Rôle :";
   static const String membershipAssociationError = "Veuillez choisir une association";
   static const String membershipRoleError = "Veuillez choisir un rôle";
@@ -22,7 +21,6 @@ class PhonebookTextConstants {
   static const String associationPure = "Association";
   static const String rolePure = "Rôle";
   static const String associationPureSearch = "  Association";
-  static const String rolePureSearch = "  Rôle";
   static const String name = "Nom :";
   static const String firstname = "Prénom :";
   static const String nickname = "Surnom :";
@@ -30,8 +28,6 @@ class PhonebookTextConstants {
   static const String detail = "Détail :";
   static const String addRole = "Ajouter un rôle";
   static const String adminPage = "Page Administrateur";
-  static const String addEditAssociation = "Ajouter/Modifier une association";
-  static const String editRole = "Modifier un rôle";
   static const String admin = "Admin";
   static const String addAssociation = "Ajouter une association";
   static const String errorLoadAssociationPicture = "Erreur lors du chargement de la photo d'association";
@@ -42,22 +38,26 @@ class PhonebookTextConstants {
   static const String errorLoadAssociationList = "Erreur lors du chargement de la liste des associations";
   static const String associationDetail = "Détail de l'association :";
   static const String errorLoadAssociationMember = "Erreur lors du chargement des membres de l'association";
-  static const String errorLoadRoleList = "Erreur lors du chargement de la liste des rôles";
-  static const String editRoleName = "Modifier le nom du rôle";
-  static const String deleteRole = "Supprimer le rôle ?";
-  static const String deletedRole = "Rôle supprimé";
-  static const String updatedRole = "Rôle modifié";
   static const String updatingError = "Erreur lors de la modification";
   static const String errorLoadProfilePicture = "Erreur";
-  static const String newRole = "Nouveau rôle";
-  static const String errorRoleNameEmpty = "Veuillez entrer un nom de rôle";
-  static const String chooseRoleName = "Entrez le nom du rôle";
-  static const String errorRoleNameAlreadyExists = "Ce rôle existe déjà";
-  static const String roleCreated = "Rôle créé";
-  static const String updatedAssociationName = "Nom de l'association modifié";
+  static const String updatedAssociation = "Association modifiée";
   static const String errorAssociationLoading = "Erreur lors du chargement de l'association";
   static const String errorAssociationNameEmpty = "Veuillez entrer un nom d'association";
   static const String addedAssociation = "Association ajoutée";
+  static const String deletedMember = "Membre supprimé";
+  static const String associationKind = "Type d'association :";
+  static const String errorKindsLoading = "Erreur lors du chargement des types d'association";
+  static const String emptyFieldError = "Un champ n'est pas rempli";
+  static const String emptyKindError = "Veuillez choisir un type d'association";
+  static const String edit = "Modifier";
+  static const String members = "Membres";
+  static const String member = "Membre";
+  static const String apparentName = "Nom public du rôle:";
+  static const String editMembership = "Modifier le rôle";
+  static const String addedMember = "Membre ajouté";
+  static const String addingError = "Erreur lors de l'ajout";
+  static const String addMember = "Ajouter un membre";
+  static const String updatedMember = "Membre modifié";
 }
 
 class PhonebookColorConstants{
