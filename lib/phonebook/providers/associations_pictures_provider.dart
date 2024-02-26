@@ -15,7 +15,7 @@ final associationPicturesProvider = StateNotifierProvider<
   AssociationPictureNotifier associationPictureNotifier =
       AssociationPictureNotifier();
   tokenExpireWrapperAuth(ref, () async {
-    ref.watch(asyncAssociationListProvider).maybeWhen(data: (association) {
+    ref.watch(associationListProvider).maybeWhen(data: (association) {
       associationPictureNotifier.loadTList(association);
       for (final l in association) {
         associationPictureNotifier.setTData(l, const AsyncValue.data([]));

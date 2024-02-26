@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
-import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/repositories/association_member_repository.dart';
 import 'package:myecl/phonebook/tools/function.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
@@ -38,21 +37,4 @@ final associationMemberListProvider = StateNotifierProvider<
         association.id, association.mandateYear.toString(), ref);
   });
   return provider;
-});
-
-final associationMemberSortedListProvider =
-    Provider<List<CompleteMember>>((ref) {
-  final association = ref.watch(associationProvider);
-  final associationMemberList = ref.watch(associationMemberListProvider);
-  final rolesTags = ref.watch(rolesTagsProvider);
-  return rolesTags.maybeWhen(
-      orElse: () => [],
-      data: (rolesTags) {
-        return associationMemberList.maybeWhen(
-            orElse: () => [],
-            data: (members) {
-              return sortMembers(
-                  members, association.id, rolesTags.keys.toList());
-            });
-      });
 });

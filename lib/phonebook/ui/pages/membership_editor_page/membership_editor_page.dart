@@ -5,7 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
-import 'package:myecl/phonebook/providers/edition_provider.dart';
+import 'package:myecl/phonebook/providers/is_edit_provider.dart';
 import 'package:myecl/phonebook/providers/member_role_tags_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
@@ -14,6 +14,7 @@ import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
@@ -31,14 +32,14 @@ class MembershipEditorPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final rolesTags = ref.watch(rolesTagsProvider);
+    final rolesTagList = ref.watch(rolesTagsProvider);
     final queryController = useTextEditingController(text: '');
     final usersNotifier = ref.watch(userList.notifier);
     final rolesTagsNotifier = ref.watch(rolesTagsProvider.notifier);
     final apparentNameController = useTextEditingController(text: '');
     final member = ref.watch(completeMemberProvider);
     final association = ref.watch(associationProvider);
-    final edition = ref.watch(editionProvider);
+    final isEdit = ref.watch(isEditProvider);
     final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
     final associationMemberListNotifier =
         ref.watch(associationMemberListProvider.notifier);
@@ -49,7 +50,7 @@ class MembershipEditorPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    if (edition) {
+    if (isEdit) {
       apparentNameController.text = member.memberships
           .where((e) => e.associationId == association.id)
           .toList()[0]
@@ -62,10 +63,10 @@ class MembershipEditorPage extends HookConsumerWidget {
             child: SingleChildScrollView(
                 child: Column(
               children: [
-                AlignLeftText(edition
+                AlignLeftText(isEdit
                     ? PhonebookTextConstants.editMembership
                     : PhonebookTextConstants.addMember),
-                if (!edition)
+                if (!isEdit)
                   StyledSearchBar(
                     padding: EdgeInsets.zero,
                     label: PhonebookTextConstants.member,
@@ -86,37 +87,36 @@ class MembershipEditorPage extends HookConsumerWidget {
                 SearchResult(queryController: queryController),
                 SizedBox(
                   width: min(MediaQuery.of(context).size.width, 300),
-                  child: Column(children: [
-                    ...rolesTags.when(
-                      data: (data) {
-                        return data.keys
-                            .map((e) => Row(children: [
-                                  Text(e),
-                                  const Spacer(),
-                                  Checkbox(
-                                    value: data[e]!.maybeWhen(
-                                      data: (d) => d[0],
-                                      orElse: () => false,
-                                    ),
-                                    fillColor:
-                                        MaterialStateProperty.all(Colors.black),
-                                    onChanged: (value) {
-                                      data[e] = AsyncData([value!]);
-                                      apparentNameController.text =
-                                          nameConstructor(data);
-                                      memberRoleTagsNotifier
-                                          .setRoleTagsWithFilter(data);
-                                      rolesTagsNotifier.setTData(
-                                          e, AsyncData([value]));
-                                    },
-                                  ),
-                                ]))
-                            .toList();
-                      },
-                      error: (e, s) => [const Text('Error')],
-                      loading: () => [const Text('Loading')],
-                    ),
-                  ]),
+                  child: AsyncChild(
+                    value: rolesTagList,
+                    builder: (context, rolesTags) => Column(children: [
+                      ...rolesTags.keys.map(
+                        (tagKeys) => Row(
+                          children: [
+                            Text(tagKeys),
+                            const Spacer(),
+                            Checkbox(
+                              value: rolesTags[tagKeys]!.maybeWhen(
+                                data: (d) => d[0],
+                                orElse: () => false,
+                              ),
+                              fillColor:
+                                  MaterialStateProperty.all(Colors.black),
+                              onChanged: (value) {
+                                rolesTags[tagKeys] = AsyncData([value!]);
+                                apparentNameController.text =
+                                    nameConstructor(rolesTags);
+                                memberRoleTagsNotifier
+                                    .setRoleTagsWithFilter(rolesTags);
+                                rolesTagsNotifier.setTData(
+                                    tagKeys, AsyncData([value]));
+                              },
+                            ),
+                          ],
+                        ),
+                      )
+                    ]),
+                  ),
                 ),
                 const SizedBox(height: 30),
                 TextEntry(
@@ -130,7 +130,7 @@ class MembershipEditorPage extends HookConsumerWidget {
                     ColorConstants.gradient2,
                   ], child: child),
                   child: Text(
-                      !edition
+                      !isEdit
                           ? PhonebookTextConstants.add
                           : PhonebookTextConstants.edit,
                       style: const TextStyle(
@@ -150,7 +150,7 @@ class MembershipEditorPage extends HookConsumerWidget {
                       return;
                     }
                     tokenExpireWrapper(ref, () async {
-                      if (edition) {
+                      if (isEdit) {
                         final value = await associationNotifier.updateMember(
                             member.memberships.firstWhere((element) =>
                                 element.associationId == association.id),

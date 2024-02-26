@@ -35,6 +35,7 @@ class DeleteButton extends StatelessWidget {
       onTap: onDelete,
       child: const HeroIcon(
         HeroIcons.xMark,
+        size: 30,
         color: Colors.white,
       ),
     );

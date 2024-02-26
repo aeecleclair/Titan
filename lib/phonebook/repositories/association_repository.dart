@@ -32,12 +32,13 @@ class AssociationRepository extends Repository {
 
   Future<bool> addMember(Association association, Member member,
       List<String> rolesTags, String apparentName) async {
-    return await create({
+    final value = await create({
       "user_id": member.id,
       "association_id": association.id,
       "role_tags": rolesTags.join(";"),
       "role_name": apparentName
     }, suffix: "memberships");
+    return value != null;
   }
 
   Future<bool> deleteMember(Membership membership) async {

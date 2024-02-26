@@ -39,7 +39,7 @@ List<CompleteMember> sortMembers(List<CompleteMember> members,
         .compareTo(getPosition(b, associationId, rolesTags)));
 }
 
-List<Association> sortAssociation(
+List<Association> sortedAssociation(
     List<Association> associations, AssociationKinds kinds) {
   List<Association> sorted = [];
   List<List<Association>> sortedByKind =

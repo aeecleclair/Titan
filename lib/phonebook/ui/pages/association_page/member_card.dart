@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
-import 'package:myecl/phonebook/providers/association_provider.dart';
-import 'package:myecl/phonebook/providers/profile_pictures_provider.dart';
+import 'package:myecl/phonebook/class/membership.dart';
 import 'package:myecl/phonebook/router.dart';
+import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/ui/copiabled_text.dart';
-import 'package:myecl/phonebook/providers/profile_picture_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
-import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class MemberCard extends HookConsumerWidget {
-  const MemberCard({super.key, required this.member});
+  const MemberCard(
+      {super.key, required this.member, required this.association});
 
   final CompleteMember member;
+  final Association association;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final memberNotifier = ref.watch(completeMemberProvider.notifier);
-    final association = ref.watch(associationProvider);
-    final profilePictures = ref.watch(profilePicturesProvider);
-    final profilePicturesNotifier = ref.watch(profilePicturesProvider.notifier);
-    final profilePictureNotifier = ref.watch(profilePictureProvider.notifier);
+
+    List<Membership> assoMembership = member.memberships
+        .where((memberships) => memberships.associationId == association.id)
+        .toList();
 
     return GestureDetector(
         onTap: () {
@@ -36,36 +37,6 @@ class MemberCard extends HookConsumerWidget {
               margin: EdgeInsets.zero,
               child: Row(
                 children: [
-                  Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            spreadRadius: 5,
-                            blurRadius: 10,
-                            offset: const Offset(2, 3),
-                          ),
-                        ],
-                      ),
-                      child: AutoLoaderChild(
-                        value: profilePictures,
-                        notifier: profilePicturesNotifier,
-                        mapKey: member,
-                        loader: (member) => profilePictureNotifier
-                            .getProfilePicture(member.member.id),
-                        dataBuilder: (context, value) => Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: value.first.image,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      )),
                   const SizedBox(width: 20),
                   if (!kIsWeb) ...[
                     if (member.member.nickname != null)
@@ -143,10 +114,9 @@ class MemberCard extends HookConsumerWidget {
                       ),
                     const Spacer(flex: 1),
                     Text(
-                      member.memberships
-                          .firstWhere((element) =>
-                              element.associationId == association.id)
-                          .apparentName,
+                      assoMembership.isEmpty
+                          ? PhonebookTextConstants.noMemberRole
+                          : assoMembership.first.apparentName,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
