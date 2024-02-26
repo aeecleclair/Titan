@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
@@ -23,28 +25,20 @@ String nameConstructor(Map<String, AsyncValue<List<bool>>> data) {
   return name.substring(0, name.length - 2);
 }
 
+int getPosition(
+    CompleteMember member, String associationId, List<String> rolesTags) {
+  Membership membership = member.memberships
+      .firstWhere((element) => element.associationId == associationId);
+  return membership.rolesTags
+      .map((roleTag) => rolesTags.indexOf(roleTag))
+      .reduce((value, element) => min(value, element));
+}
+
 List<CompleteMember> sortMembers(List<CompleteMember> members,
     String associationId, List<String> rolesTags) {
-  List<CompleteMember> sorted = [];
-  List<List<CompleteMember>> sortedByRole =
-      List.generate(rolesTags.length, (index) => []);
-  for (CompleteMember member in members) {
-    Membership membership = member.memberships
-        .firstWhere((element) => element.associationId == associationId);
-    List<String> memberRoleTags = membership.rolesTags;
-    int highestPosition = 1000;
-    for (String roleTag in memberRoleTags) {
-      int position = rolesTags.indexOf(roleTag);
-      if (position < highestPosition) {
-        highestPosition = position;
-      }
-    }
-    sortedByRole[highestPosition].add(member);
-  }
-  for (List<CompleteMember> list in sortedByRole) {
-    sorted.addAll(list);
-  }
-  return sorted;
+  return members
+    ..sort((a, b) => getPosition(a, associationId, rolesTags)
+        .compareTo(getPosition(b, associationId, rolesTags)));
 }
 
 List<Association> sortAssociation(
