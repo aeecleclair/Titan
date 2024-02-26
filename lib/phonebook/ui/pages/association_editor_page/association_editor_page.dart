@@ -294,7 +294,12 @@ class AssociationEditorPage extends HookConsumerWidget {
                         completeMemberNotifier
                             .setCompleteMember(CompleteMember.empty());
                         editionNotifier.setStatus(false);
-                        QR.to(PhonebookRouter.root + PhonebookRouter.editAssociation + PhonebookRouter.addEditMember);
+                        if (QR.currentPath.contains(PhonebookRouter.admin)) {
+                          QR.to(PhonebookRouter.root + PhonebookRouter.admin + PhonebookRouter.editAssociation + PhonebookRouter.addEditMember);
+                        } else {
+                          QR.to(PhonebookRouter.root + PhonebookRouter.editAssociation + PhonebookRouter.addEditMember);
+                        }
+                        
                       },
                       child: Container(
                         width: 40,
