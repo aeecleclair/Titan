@@ -120,7 +120,7 @@ class LoanCard extends StatelessWidget {
                         color: shouldReturn
                             ? LoanColorConstants.urgentRed
                             : Colors.grey.shade400)),
-                Text(processDate(loan.end),
+                Text(processDate(loan.returned ? loan.returnedDate! : loan.end),
                     style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,

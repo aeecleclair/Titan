@@ -42,7 +42,7 @@ class HistoryLoan extends HookConsumerWidget {
         value: loan,
         builder: (context, data) {
           if (data.isNotEmpty) {
-            data.sort((a, b) => b.end.compareTo(a.end));
+            data.sort((a, b) => b.returnedDate!.compareTo(a.returnedDate!));
           }
           return Column(
             children: [
