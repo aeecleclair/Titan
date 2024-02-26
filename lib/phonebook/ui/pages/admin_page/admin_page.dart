@@ -52,7 +52,7 @@ class AdminPage extends HookConsumerWidget {
                     physics: const BouncingScrollPhysics(),
                     child: Row(children: [
                       RadioChip(
-                          label: "Toutes",
+                          label: PhonebookTextConstants.all,
                           selected: kind.value == "",
                           onTap: () {
                             kind.value = "";
