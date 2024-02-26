@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:myecl/user/class/list_users.dart';
 
 class Member{
@@ -64,5 +65,10 @@ class Member{
     nickname = user.nickname;
     id = user.id;
     email = "";
+  }
+
+  @override
+  String toString() {
+    return 'Member(name: $name, firstname: $firstname, nickname: $nickname, id: $id, email: $email)';
   }
 }
