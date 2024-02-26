@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
@@ -16,15 +17,17 @@ final isAssociationPresidentProvider = StateProvider<bool>((ref) {
   final association = ref.watch(associationProvider);
   final membersList = ref.watch(associationMemberListProvider);
   final me = ref.watch(userProvider);
+  bool isPresident = false;
   membersList.whenData((members) {
     if (members.map((e) => e.member.id).contains(me.id)) {
       if (members.firstWhere((member) => member.member.id == me.id)
         .memberships.firstWhere((membership) => membership.association.id == association.id)
         .rolesTags.contains(PhonebookTextConstants.presidentRoleTag)) {
-          return true;
+          isPresident = true;
         }
     }
   });
-  return false;
+  debugPrint("isPresident: $isPresident");
+  return isPresident;
 });
 
