@@ -33,12 +33,6 @@ class PhonebookHomePage extends HookConsumerWidget {
             case PhonebookPage.admin:
               pageNotifier.setPhonebookPage(PhonebookPage.main);
               break;
-            case PhonebookPage.addEditRoleMember:
-              pageNotifier.setPhonebookPage(PhonebookPage.memberDetail);
-              break;
-            case PhonebookPage.editRole:
-              pageNotifier.setPhonebookPage(PhonebookPage.admin);
-              break;
             case PhonebookPage.associationEditor:
               pageNotifier.setPhonebookPage(PhonebookPage.admin);
               break;
@@ -47,6 +41,9 @@ class PhonebookHomePage extends HookConsumerWidget {
               break;
             case PhonebookPage.associationCreation:
               pageNotifier.setPhonebookPage(PhonebookPage.admin);
+              break;
+            case PhonebookPage.membershipEdition:
+              pageNotifier.setPhonebookPage(PhonebookPage.associationEditor);
               break;
           }
           return false;

@@ -58,6 +58,18 @@ class PhonebookTextConstants {
   static const String addingError = "Erreur lors de l'ajout";
   static const String addMember = "Ajouter un membre";
   static const String updatedMember = "Membre modifié";
+  static const String add = "Ajouter";
+  static const String emptyMember = "Aucun membre sélectionné";
+  static const String emptyApparentName = "Veuillez entrer un nom de role";
+  static const String errorRoleTagsLoading = "Erreur lors du chargement des tags de rôle";
+  static const String promotion = "Promotion :";
+  static const String newMandateConfirmed = "Mandat changé";
+  static const String mandateChangingError = "Erreur lors du changement de mandat";
+  static const String changeMandateConfirm = "Êtes-vous sûr de vouloir changer tout le mandat ?\nCette action est irréversible !";
+  static const String newMandate = "Nouveau mandat";
+  static const String changeMandate = "Passer au mandat ";
+
+  static const String activeMandate = "Mandat actif :";
 }
 
 class PhonebookColorConstants{

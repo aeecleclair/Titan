@@ -4,12 +4,12 @@ import 'package:myecl/phonebook/class/roles_tags.dart';
 import 'package:tuple/tuple.dart';
 
 
-final memberRolesTagsProvider = StateNotifierProvider<MemberRolesTagsProvider, List<String>>((ref) {
-  return MemberRolesTagsProvider();
+final memberRoleTagsProvider = StateNotifierProvider<MemberRoleTagsProvider, List<String>>((ref) {
+  return MemberRoleTagsProvider();
 });
 
-class MemberRolesTagsProvider extends StateNotifier<List<String>> {
-  MemberRolesTagsProvider() : super([]);
+class MemberRoleTagsProvider extends StateNotifier<List<String>> {
+  MemberRoleTagsProvider() : super([]);
 
   void setRoleTagsWithFilter(Tuple2<RolesTags,List<bool>> data) {
     debugPrint(data.item1.tags.toString());

@@ -13,14 +13,14 @@ class Membership{
 
   Membership.fromJSON(Map<String, dynamic> json){
       association = json['association'];
-      rolesTags = json['role'];
+      rolesTags = json['roleTags'];
       apparentName = json['apparentName'];
       }
   
   Map<String, dynamic> toJSON(){
     final data = <String, dynamic>{
       'association': association.id,
-      'rolesTags': rolesTags,
+      'roleTags': rolesTags,
       'apparentName': apparentName,
     };
     return data;
@@ -54,5 +54,10 @@ class Membership{
 
   Membership setApparentName(String apparentName) {
     return copyWith(apparentName: apparentName);
+  }
+
+  @override
+  String toString() {
+    return 'Membership(association: $association, rolesTags: $rolesTags, apparentName: $apparentName)';
   }
 }
