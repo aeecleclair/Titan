@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
+
 class PhonebookTextConstants {
   static const String errorAssociationPicture =
       "Erreur lors de la modification de la photo d'association";
   static const String phonebook = "Annuaire";
-  static const String phonebookSearch = "Rechercher une personne par :   ";
+  static const String phonebookSearch = "Rechercher";
   static const String phonebookSearchName = "Nom/Prénom/Surnom";
   static const String phonebookSearchRole = "Poste";
   static const String phonebookSearchAssociation = "Association";
@@ -19,11 +21,11 @@ class PhonebookTextConstants {
   static const String association = "Association :";
   static const String associationPure = "Association";
   static const String rolePure = "Rôle";
-  static const String name = "Nom";
-  static const String firstname = "Prénom";
-  static const String nickname = "Surnom";
-  static const String email = "Email";
-  static const String detail = "Détail";
+  static const String name = "Nom :";
+  static const String firstname = "Prénom :";
+  static const String nickname = "Surnom :";
+  static const String email = "Email :";
+  static const String detail = "Détail :";
   static const String addRole = "Ajouter un rôle";
   static const String adminPage = "Page Administrateur";
   static const String addEditAssociation = "Ajouter/Modifier une association";
@@ -35,4 +37,12 @@ class PhonebookTextConstants {
   static const String deleteAssociation = "Supprimer l'association ?";
   static const String deletedAssociation = "Association supprimée";
   static const String deletingError = "Erreur lors de la suppression";
+  static const String errorLoadAssociationList = "Erreur lors du chargement de la liste des associations";
+  static const String associationDetail = "Détail de l'association :";
+
+  static const String errorLoadAssociationMember = "Erreur lors du chargement des membres de l'association";
+}
+
+class PhonebookColorConstants{
+  static const Color textDark = Color(0xFF1D1D1D);
 }

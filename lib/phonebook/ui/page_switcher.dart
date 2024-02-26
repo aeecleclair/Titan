@@ -22,14 +22,14 @@ class PageSwitcher extends ConsumerWidget {
         return const AdminPage();
       case PhonebookPage.memberDetail:
         return const MemberDetailPage();
-      case PhonebookPage.addEditAssociation:
-        return const AssociationPage();
       case PhonebookPage.addEditRoleMember:
         return const RoleMemberPage();
       case PhonebookPage.editRole:
         return const RolePage();
       case PhonebookPage.associationEditor:
         return const AssociationEditorPage();
+      case PhonebookPage.associationPage:
+        return const AssociationPage();
       default:
         return const Text('Unknown page');
     }

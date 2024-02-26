@@ -53,6 +53,6 @@ class Member{
     firstname = "prénom";
     nickname = null;
     id = "";
-    email = "";
+    email = "email.test@empty.useless";
   }
 }

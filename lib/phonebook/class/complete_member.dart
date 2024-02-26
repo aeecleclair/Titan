@@ -1,8 +1,4 @@
-import 'package:flutter/widgets.dart';
 import 'package:myecl/phonebook/class/post.dart';
-import 'package:tuple/tuple.dart';
-import 'role.dart';
-import 'association.dart';
 import 'member.dart';
 
 class CompleteMember{
@@ -16,8 +12,8 @@ class CompleteMember{
   
 
   CompleteMember.fromJSON(Map<String, dynamic> json){
-      member = json['user'];
-      post = json['post'];
+      member = Member.fromJSON(json['user']);
+      post = json['post'].map((post) => Post.fromJSON(post)).toList();
       }
     
   Map<String, dynamic> toJSON(){
