@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
@@ -24,8 +26,8 @@ class AssociationPictureNotifier extends SingleNotifier<Image> {
   }
 
   Future<Image> updateAssociationPicture(
-      String associationId, String path) async {
+      String associationId, Uint8List bytes) async {
     return await associationPictureRepository.addAssociationPicture(
-        path, associationId);
+        bytes, associationId);
   }
 }
