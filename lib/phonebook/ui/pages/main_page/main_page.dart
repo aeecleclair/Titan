@@ -32,106 +32,104 @@ class MainPage extends HookConsumerWidget {
     final kindNotifier = ref.watch(associationKindProvider.notifier);
     final nameFilter = ref.watch(filterProvider);
 
-    return Stack(
-      children: [
-        Refresher(
-            onRefresh: () async {
-              await associationKindsNotifier.loadAssociationKinds();
-              await associationListNotifier.loadAssociations();
-            },
-            child: Column(children: [
-              const SizedBox(height: 70),
-              associationKinds.when(
-                  data: (data) {
-                    debugPrint("associationKinds.when data: ${data.kinds}");
-                    return SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(children: [
-                          RadioChip(
-                              label: "Toutes",
-                              selected: kind.value == "",
+    return Refresher(
+        onRefresh: () async {
+          await associationKindsNotifier.loadAssociationKinds();
+          await associationListNotifier.loadAssociations();
+        },
+        child: Column(children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 20),
+            child: Row(
+              children: [
+                const ResearchBar(),
+                if (isAdmin) const SizedBox(width: 20),
+                if (isAdmin)
+                  GestureDetector(
+                    onTap: () {
+                      pageNotifier.setPhonebookPage(PhonebookPage.admin);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                blurRadius: 10,
+                                offset: const Offset(0, 5))
+                          ]),
+                      child: const Row(
+                        children: [
+                          HeroIcon(HeroIcons.userGroup, color: Colors.white),
+                          SizedBox(width: 10),
+                          Text(PhonebookTextConstants.admin,
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white)),
+                        ],
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          associationKinds.when(
+              data: (data) {
+                debugPrint("associationKinds.when data: ${data.kinds}");
+                return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    child: Row(children: [
+                      RadioChip(
+                          label: PhonebookTextConstants.all,
+                          selected: kind.value == "",
+                          onTap: () {
+                            kind.value = "";
+                            kindNotifier.setKind("");
+                            associationListNotifier.filterAssociationList(
+                                nameFilter, kind.value);
+                          }),
+                      ...data.kinds
+                          .map((e) => RadioChip(
+                              label: e,
+                              selected: kind.value == e,
                               onTap: () {
-                                kind.value = "";
-                                kindNotifier.setKind("");
+                                kind.value = e;
+                                kindNotifier.setKind(e);
                                 associationListNotifier.filterAssociationList(
                                     nameFilter, kind.value);
-                              }),
-                          ...data.kinds
-                              .map((e) => RadioChip(
-                                  label: e,
-                                  selected: kind.value == e,
-                                  onTap: () {
-                                    kind.value = e;
-                                    kindNotifier.setKind(e);
-                                    associationListNotifier
-                                        .filterAssociationList(
-                                            nameFilter, kind.value);
-                                  }))
-                              .toList()
-                        ]));
-                  },
-                  error: (error, stackTrace) =>
-                      const Text(PhonebookTextConstants.errorKindsLoading),
-                  loading: () => const CircularProgressIndicator()),
-              const SizedBox(height: 30),
-              const ResearchBar(),
-              const SizedBox(height: 10),
-              ...associationList.when(
-                  data: (associations) {
-                    return associations
-                        .map((association) => AssociationCard(
-                              association: association,
-                              onClicked: () {
-                                associationNotifier.setAssociation(association);
-                                pageNotifier.setPhonebookPage(
-                                    PhonebookPage.associationPage);
-                              },
-                            ))
-                        .toList();
-                  },
-                  loading: () =>
-                      const [Center(child: CircularProgressIndicator())],
-                  error: (error, stack) => [
-                        const Center(
-                            child: Text(PhonebookTextConstants
-                                .errorLoadAssociationList))
-                      ])
-            ])),
-        if (isAdmin)
-          Positioned(
-            top: 15,
-            right: 15,
-            child: GestureDetector(
-              onTap: () {
-                pageNotifier.setPhonebookPage(PhonebookPage.admin);
+                              }))
+                          .toList()
+                    ]));
               },
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          blurRadius: 10,
-                          offset: const Offset(0, 5))
-                    ]),
-                child: const Row(
-                  children: [
-                    HeroIcon(HeroIcons.userGroup, color: Colors.white),
-                    SizedBox(width: 10),
-                    Text(PhonebookTextConstants.admin,
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white)),
-                  ],
-                ),
-              ),
-            ),
-          )
-      ],
-    );
+              error: (error, stackTrace) =>
+                  const Text(PhonebookTextConstants.errorKindsLoading),
+              loading: () => const CircularProgressIndicator()),
+          const SizedBox(height: 30),
+          ...associationList.when(
+              data: (associations) {
+                return associations
+                    .map((association) => AssociationCard(
+                          association: association,
+                          onClicked: () {
+                            associationNotifier.setAssociation(association);
+                            pageNotifier.setPhonebookPage(
+                                PhonebookPage.associationPage);
+                          },
+                        ))
+                    .toList();
+              },
+              loading: () => const [Center(child: CircularProgressIndicator())],
+              error: (error, stack) => [
+                    const Center(
+                        child: Text(
+                            PhonebookTextConstants.errorLoadAssociationList))
+                  ])
+        ]));
   }
 }

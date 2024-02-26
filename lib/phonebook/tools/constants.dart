@@ -81,6 +81,8 @@ class PhonebookTextConstants {
   static const String changeMandate = "Passer au mandat ";
 
   static const String activeMandate = "Mandat actif :";
+
+  static const String all = "Toutes";
 }
 
 class PhonebookColorConstants {

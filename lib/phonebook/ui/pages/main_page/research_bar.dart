@@ -5,6 +5,7 @@ import 'package:myecl/phonebook/providers/association_kind_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/research_filter_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
+import 'package:myecl/tools/constants.dart';
 
 class ResearchBar extends HookConsumerWidget {
   const ResearchBar({Key? key}) : super(key: key);
@@ -17,21 +18,7 @@ class ResearchBar extends HookConsumerWidget {
     final associationsNotifier = ref.watch(associationListProvider.notifier);
     final associationKind = ref.watch(associationKindProvider);
 
-    return Container(
-        decoration: BoxDecoration(
-          border: Border.all(),
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 1,
-              blurRadius: 7,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        width: 300,
+    return Expanded(
         child: TextField(
           onChanged: (value) {
             associationsNotifier.filterAssociationList(value, associationKind);
@@ -41,17 +28,15 @@ class ResearchBar extends HookConsumerWidget {
           controller: editingController,
           cursorColor: PhonebookColorConstants.textDark,
           decoration: const InputDecoration(
-            labelText: PhonebookTextConstants.associationPureSearch,
-            labelStyle: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: PhonebookColorConstants.textDark),
-            suffixIcon: Icon(
-              Icons.search,
-              color: PhonebookColorConstants.textDark,
-              size: 30,
-            ),
-          ),
+              isDense: true,
+              suffixIcon: Icon(
+                Icons.search,
+                color: PhonebookColorConstants.textDark,
+                size: 30,
+              ),
+              focusedBorder: UnderlineInputBorder(
+                  borderSide:
+                  BorderSide(color: ColorConstants.gradient1))),
         ));
   }
 }
