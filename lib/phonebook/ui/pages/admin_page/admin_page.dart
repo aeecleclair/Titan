@@ -5,6 +5,7 @@ import 'package:myecl/phonebook/providers/association_kind_provider.dart';
 import 'package:myecl/phonebook/providers/association_kinds_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
+import 'package:myecl/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:myecl/phonebook/providers/research_filter_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/router.dart';
@@ -32,7 +33,6 @@ class AdminPage extends HookConsumerWidget {
     final kind = useState('');
     final kindNotifier = ref.watch(associationKindProvider.notifier);
     final nameFilter = ref.watch(filterProvider);
-
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
