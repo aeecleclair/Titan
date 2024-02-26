@@ -16,7 +16,6 @@ class Association{
   late final int mandateYear;
 
   Association.fromJSON(Map<String, dynamic> json){
-      debugPrint("Association.fromJSON: $json");
       id = json['id'];
       name = json['name'];
       description = json['description'];
