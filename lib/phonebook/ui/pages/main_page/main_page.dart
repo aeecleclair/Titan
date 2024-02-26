@@ -14,6 +14,9 @@ import 'package:myecl/phonebook/ui/pages/main_page/association_card.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/phonebook/ui/radio_chip.dart';
 import 'package:myecl/phonebook/ui/pages/main_page/research_bar.dart';
+import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -83,39 +86,39 @@ class PhonebookMainPage extends HookConsumerWidget {
               ),
               const SizedBox(height: 10),
               associationKinds.when(
-                  data: (data) {
-                    return SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        physics: const BouncingScrollPhysics(),
-                        child: Row(children: [
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          RadioChip(
-                              label: PhonebookTextConstants.all,
-                              selected: kind.value == "",
-                              onTap: () {
-                                kind.value = "";
-                                kindNotifier.setKind("");
-                                associationListNotifier.filterAssociationList(
-                                    nameFilter, kind.value);
-                              }),
-                          ...data.kinds
-                              .map((e) => RadioChip(
-                                  label: e,
-                                  selected: kind.value == e,
-                                  onTap: () {
-                                    kind.value = e;
-                                    kindNotifier.setKind(e);
-                                    associationListNotifier
-                                        .filterAssociationList(
-                                            nameFilter, kind.value);
-                                  }))
-                              .toList(),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                        ]));
+                  data: (association) {
+                    return HorizontalListView.builder(
+                        height: 40,
+                        items: association.kinds,
+                        firstChild: ItemChip(
+                            selected: kind.value == "",
+                            onTap: () {
+                              kind.value = "";
+                              kindNotifier.setKind("");
+                              associationListNotifier.filterAssociationList(
+                                  nameFilter, kind.value);
+                            },
+                            child: Text(PhonebookTextConstants.all,
+                                style: TextStyle(
+                                  color: kind.value == ""
+                                      ? Colors.white
+                                      : Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ))),
+                        itemBuilder: (context, item, index) {
+                          final selected = kind.value == item;
+                          return ItemChip(
+                            onTap: () {
+                              kind.value = item;
+                            },
+                            selected: selected,
+                            child: Text(item,
+                                style: TextStyle(
+                                  color: selected ? Colors.white : Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                          );
+                        });
                   },
                   error: (error, stackTrace) =>
                       const Text(PhonebookTextConstants.errorKindsLoading),
