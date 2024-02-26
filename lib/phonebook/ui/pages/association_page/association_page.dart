@@ -46,12 +46,17 @@ class AssociationPage extends HookConsumerWidget {
             ),
             child: associationPicture.when(
               data: (picture) {
-                return CircleAvatar(
-                  radius: 120,
-                  backgroundImage: picture.isEmpty
-                      ? const AssetImage('assets/images/logo_alpha.png')
-                      : Image.memory(picture).image,
-                );
+                return Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: picture.image,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          );
               },
               loading: () {
                 return const Center(
