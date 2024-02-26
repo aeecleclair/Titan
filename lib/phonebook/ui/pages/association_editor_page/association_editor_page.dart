@@ -2,17 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/providers/association_kinds_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/association_picture_provider.dart';
+import 'package:myecl/phonebook/providers/complete_member_provider.dart';
+import 'package:myecl/phonebook/providers/edition_provider.dart';
 import 'package:myecl/phonebook/providers/member_provider.dart';
 import 'package:myecl/phonebook/providers/member_role_tags_provider.dart';
+import 'package:myecl/phonebook/providers/phonebook_page_provider.dart';
+import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/phonebook/ui/pages/association_creation_page/kind_chip.dart';
+import 'package:myecl/phonebook/ui/kind_chip.dart';
 import 'package:myecl/phonebook/ui/pages/association_editor_page/member_editable_card.dart';
-import 'package:myecl/phonebook/ui/pages/association_editor_page/membership_dialog.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -32,14 +36,14 @@ class AssociationEditorPage extends HookConsumerWidget {
     final associationPictureNotifier =
         ref.watch(associationPictureProvider.notifier);
     final associationListNotifier = ref.watch(associationListProvider.notifier);
-    final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
     final associationKinds = ref.watch(associationKindsProvider);
     final kind = useState(association.kind);
     final name = useTextEditingController(text: association.name);
     final description = useTextEditingController(text: association.description);
-    final controller = TextEditingController();
-    final member = ref.watch(memberProvider);
-    final memberRoleTags = ref.watch(memberRolesTagsProvider);
+    final rolesTagsNotifier = ref.watch(rolesTagsProvider.notifier);
+    final editionNotifier = ref.watch(editionProvider.notifier);
+    final completeMemberNotifier = ref.watch(completeMemberProvider.notifier);
+    final pageNotifier = ref.watch(phonebookPageProvider.notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -285,35 +289,10 @@ class AssociationEditorPage extends HookConsumerWidget {
               const Spacer(),
               ShrinkButton(
                 onTap: () async {
-                  await tokenExpireWrapper(ref, () async {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return MembershipDialog(
-                              apparentNameController: controller,
-                              title: PhonebookTextConstants.addMember,
-                              defaultText: "",
-                              onConfirm: () async {
-                                debugPrint(
-                                    "assciation: $association,\n member: ${member.toString()},\n memberRoleTags: $memberRoleTags,\n controller: ${controller.text}");
-                                final value =
-                                    await associationNotifier.addMember(
-                                        association,
-                                        member,
-                                        memberRoleTags,
-                                        controller.text);
-                                if (value) {
-                                  associationMemberListNotifier
-                                      .loadMembers(association.id);
-                                  displayToastWithContext(TypeMsg.msg,
-                                      PhonebookTextConstants.addedMember);
-                                } else {
-                                  displayToastWithContext(TypeMsg.msg,
-                                      PhonebookTextConstants.addingError);
-                                }
-                              });
-                        });
-                  });
+                  rolesTagsNotifier.resetChecked();
+                  completeMemberNotifier.setCompleteMember(CompleteMember.empty());
+                  editionNotifier.setStatus(false);
+                  pageNotifier.setPhonebookPage(PhonebookPage.membershipEdition);
                 },
                 child: Container(
                   width: 40,
@@ -350,6 +329,104 @@ class AssociationEditorPage extends HookConsumerWidget {
         ),
         const SizedBox(
           height: 10,
+        ),
+        ShrinkButton(
+          waitChild: Container(
+            width: double.infinity,
+            margin: const EdgeInsets.all(30),
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [
+                  ColorConstants.gradient1,
+                  ColorConstants.gradient2,
+                ],
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: ColorConstants.gradient2.withOpacity(0.5),
+                  blurRadius: 5,
+                  offset: const Offset(2, 2),
+                  spreadRadius: 2,
+                ),
+              ],
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: const SizedBox(
+              height: 20,
+              width: 20,
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
+            ),
+          ),
+          onTap: () async {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text(PhonebookTextConstants.newMandate),
+                content: const Text(PhonebookTextConstants.changeMandateConfirm),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text(PhonebookTextConstants.cancel),
+                  ),
+                  TextButton(
+                    onPressed: () async {
+                      Navigator.pop(context);
+                      await tokenExpireWrapper(ref, () async {
+                        final value = await associationListNotifier
+                            .updateAssociation(association.copyWith(
+                                mandateYear: (int.parse(association.mandateYear)+1).toString()));
+                        if (value) {
+                          displayToastWithContext(TypeMsg.msg,
+                              PhonebookTextConstants.newMandateConfirmed);
+                        } else {
+                          displayToastWithContext(TypeMsg.error,
+                              PhonebookTextConstants.mandateChangingError);
+                        }
+                      });
+                    },
+                    child: const Text(PhonebookTextConstants.validation),
+                  ),
+                ],
+              ),
+              );
+          },
+          child: Container(
+            width: double.infinity,
+            margin: const EdgeInsets.all(30),
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [
+                  ColorConstants.gradient1,
+                  ColorConstants.gradient2,
+                ],
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: ColorConstants.gradient2.withOpacity(0.5),
+                  blurRadius: 5,
+                  offset: const Offset(2, 2),
+                  spreadRadius: 2,
+                ),
+              ],
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Text(
+              "${PhonebookTextConstants.changeMandate} ${(int.parse(association.mandateYear)+1).toString()}",
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: Color.fromARGB(255, 255, 255, 255),
+              ),
+            ),
+          ),
         )
       ]),
     );

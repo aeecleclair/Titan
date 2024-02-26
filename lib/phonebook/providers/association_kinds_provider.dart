@@ -13,7 +13,7 @@ class AssociationKindsNotifier extends SingleNotifier<AssociationKinds> {
       associationKindsRepository.setToken(token);
     }
 
-  void setRole(AssociationKinds i) {
+  void setKind(AssociationKinds i) {
     state = AsyncValue.data(i);
   }
 

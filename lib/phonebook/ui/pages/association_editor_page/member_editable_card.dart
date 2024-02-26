@@ -3,10 +3,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
+import 'package:myecl/phonebook/providers/complete_member_provider.dart';
+import 'package:myecl/phonebook/providers/edition_provider.dart';
 import 'package:myecl/phonebook/providers/member_role_tags_provider.dart';
+import 'package:myecl/phonebook/providers/phonebook_page_provider.dart';
+import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/ui/delete_button.dart';
 import 'package:myecl/phonebook/ui/edition_button.dart';
-import 'package:myecl/phonebook/ui/pages/association_editor_page/membership_dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/providers/profile_picture_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
@@ -21,10 +24,12 @@ class MemberEditableCard extends HookConsumerWidget {
     final profilePicture = ref.watch(profilePictureProvider);
     final association = ref.watch(associationProvider);
     final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
-    final controller = TextEditingController();
     final associationMembersNotifier =
         ref.watch(associationMemberListProvider.notifier);
-    final memberRoleTags = ref.watch(memberRolesTagsProvider);
+    final roleTagsNotifier = ref.watch(rolesTagsProvider.notifier);
+    final editionNotifier = ref.watch(editionProvider.notifier);
+    final completeMemberNotifier = ref.watch(completeMemberProvider.notifier);
+    final pageNotifier = ref.watch(phonebookPageProvider.notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -108,33 +113,11 @@ class MemberEditableCard extends HookConsumerWidget {
                 )),
             const Spacer(),
             EditionButton(onEdition: () async {
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return MembershipDialog(
-                        apparentNameController: controller,
-                        title: PhonebookTextConstants.editMembership,
-                        defaultText: member.memberships
-                            .firstWhere((element) =>
-                                element.association.id == association.id)
-                            .apparentName,
-                        onConfirm: () async {
-                          final result = await associationNotifier.updateMember(
-                              association,
-                              member.toMember(),
-                              memberRoleTags,
-                              controller.text);
-                          if (result) {
-                            await associationMembersNotifier
-                                .loadMembers(association.id);
-                            displayToastWithContext(TypeMsg.msg,
-                                PhonebookTextConstants.updatedMember);
-                          } else {
-                            displayToastWithContext(TypeMsg.error,
-                                PhonebookTextConstants.updatingError);
-                          }
-                        });
-                  });
+              roleTagsNotifier.resetChecked();
+              roleTagsNotifier.loadRoleTagsFromMember(member, association);
+              completeMemberNotifier.setCompleteMember(member);
+              editionNotifier.setStatus(true);
+              pageNotifier.setPhonebookPage(PhonebookPage.membershipEdition);
             }),
             const SizedBox(width: 10),
             DeleteButton(

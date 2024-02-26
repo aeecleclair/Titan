@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/phonebook/providers/association_kind_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/research_filter_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
@@ -13,7 +14,9 @@ class ResearchBar extends HookConsumerWidget {
     final focusNode = useFocusNode();
     final editingController = useTextEditingController();
     final filterNotifier = ref.watch(filterProvider.notifier);
-
+    final associationsNotifier = ref.watch(associationListProvider.notifier);
+    final associationKind = ref.watch(associationKindProvider);
+    
     return Container(
         decoration: BoxDecoration(
           border: Border.all(),
@@ -31,7 +34,8 @@ class ResearchBar extends HookConsumerWidget {
         width: 300,
         child: TextField(
           onChanged: (value) {
-            associationsNotifier.filterAssociationList(value);
+            associationsNotifier.filterAssociationList(value, associationKind);
+            filterNotifier.setFilter(value);
           },
           focusNode: focusNode,
           controller: editingController,

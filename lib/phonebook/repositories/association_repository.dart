@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/member.dart';
@@ -45,6 +46,15 @@ class AssociationRepository extends Repository {
   }
 
   Future<bool> addMember(Association association, Member member, List<String> rolesTags, String apparentName) async {
+    if (fakeMembersList.indexWhere((element) => element.member.id == member.id) == -1) {
+      fakeMembersList.add(CompleteMember(member: member, memberships: []));
+    }
+    if (fakeMembersList[fakeMembersList.indexWhere((element) => element.member.id == member.id)]
+            .memberships
+            .indexWhere((element) => element.association.id == association.id) !=
+        -1) {
+      return false;
+    }
     fakeMembersList[fakeMembersList.indexWhere((element) => element.member.id == member.id)]
         .memberships
         .add(Membership(association: association, rolesTags: rolesTags, apparentName: apparentName));
@@ -72,6 +82,7 @@ class AssociationRepository extends Repository {
   }
 
   Future<bool> updateMember(Association association, Member member, List<String> rolesTags, String apparentName) async {
+    debugPrint("updateMember");
     fakeMembersList[fakeMembersList.indexWhere((element) => element.member.id == member.id)]
         .memberships
         .where((element) => element.association.id == association.id).toList()[0] = 
