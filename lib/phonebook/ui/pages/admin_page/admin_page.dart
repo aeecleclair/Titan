@@ -76,60 +76,63 @@ class AdminPage extends HookConsumerWidget {
               error: (error, stackTrace) =>
                   const Text(PhonebookTextConstants.errorRoleTagsLoading),
               loading: () => const CircularProgressIndicator()),
-          const SizedBox(height: 10),
-          const SizedBox(height: 10),
-          Column(
-            children: <Widget>[
-              GestureDetector(
-                onTap: () {
-                  pageNotifier
-                      .setPhonebookPage(PhonebookPage.associationCreation);
-                },
-                child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black),
-                      borderRadius: const BorderRadius.all(Radius.circular(20)),
-                    ),
-                    height: 58,
-                    margin: const EdgeInsets.all(10),
-                    child: const Row(
-                        children: [Spacer(), Icon(Icons.add), Spacer()])),
-              ),
-              ...associations.when(
-                  data: (associations) {
-                    return associations
-                        .map((association) => EditableAssociationCard(
-                              association: association,
-                              onEdit: () {
-                                associationNotifier.setAssociation(association);
-                                pageNotifier.setPhonebookPage(
-                                    PhonebookPage.associationEditor);
-                              },
-                              onDelete: () async {
-                                final result = await associationsNotifier
-                                    .deleteAssociation(association);
-                                if (result) {
-                                  displayToastWithContext(
-                                      TypeMsg.msg,
-                                      PhonebookTextConstants
-                                          .deletedAssociation);
-                                } else {
-                                  displayToastWithContext(TypeMsg.error,
-                                      PhonebookTextConstants.deletingError);
-                                }
-                                associationsNotifier.loadAssociations();
-                              },
-                            ))
-                        .toList();
+          Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Column(
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () {
+                    pageNotifier
+                        .setPhonebookPage(PhonebookPage.associationCreation);
                   },
-                  loading: () =>
-                      const [Center(child: CircularProgressIndicator())],
-                  error: (error, stack) => [
-                        const Center(
-                            child: Text(PhonebookTextConstants
-                                .errorLoadAssociationList))
-                      ])
-            ],
+                  child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20)),
+                      ),
+                      height: 60,
+                      child: const Center(
+                          child:
+                              Icon(Icons.add, color: Colors.black, size: 40))),
+                ),
+                ...associations.when(
+                    data: (associations) {
+                      return associations
+                          .map((association) => EditableAssociationCard(
+                                association: association,
+                                onEdit: () {
+                                  associationNotifier
+                                      .setAssociation(association);
+                                  pageNotifier.setPhonebookPage(
+                                      PhonebookPage.associationEditor);
+                                },
+                                onDelete: () async {
+                                  final result = await associationsNotifier
+                                      .deleteAssociation(association);
+                                  if (result) {
+                                    displayToastWithContext(
+                                        TypeMsg.msg,
+                                        PhonebookTextConstants
+                                            .deletedAssociation);
+                                  } else {
+                                    displayToastWithContext(TypeMsg.error,
+                                        PhonebookTextConstants.deletingError);
+                                  }
+                                  associationsNotifier.loadAssociations();
+                                },
+                              ))
+                          .toList();
+                    },
+                    loading: () =>
+                        const [Center(child: CircularProgressIndicator())],
+                    error: (error, stack) => [
+                          const Center(
+                              child: Text(PhonebookTextConstants
+                                  .errorLoadAssociationList))
+                        ])
+              ],
+            ),
           ),
         ]));
   }
