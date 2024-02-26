@@ -40,7 +40,7 @@ class AssociationPage extends HookConsumerWidget {
                       associationNotifier.setAssociation(Association.empty());
                       pageNotifier.setPhonebookPage(PhonebookPage.associationEditor);
                       }, 
-                    child: const Text("Ajouter une association")),
+                    child: const Text(PhonebookTextConstants.addAssociation)),
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 7),
                     color: Colors.black,
@@ -48,8 +48,7 @@ class AssociationPage extends HookConsumerWidget {
                   ),
                   Expanded(
                       child: ListView.builder(
-                          padding: const EdgeInsets.all(
-                              PhonebookTextConstants.phonebookMargin),
+                          padding: const EdgeInsets.all(1),
                           itemCount: 10,
                           itemBuilder: (BuildContext context, int index) {
                             return Card(
