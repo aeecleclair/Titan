@@ -7,11 +7,10 @@ class AddAssociationTextEntry extends StatelessWidget {
   final String title;
   final bool canBeEmpty;
   const AddAssociationTextEntry(
-      {Key? key,
+      {super.key,
       required this.controller,
       required this.title,
-      required this.canBeEmpty})
-      : super(key: key);
+      required this.canBeEmpty});
 
   @override
   Widget build(BuildContext context) {

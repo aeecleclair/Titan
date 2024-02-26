@@ -7,8 +7,7 @@ import 'package:myecl/tools/functions.dart';
 class ElementField extends StatelessWidget {
   final String label;
   final String value;
-  const ElementField({Key? key, required this.label, required this.value})
-      : super(key: key);
+  const ElementField({super.key, required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {

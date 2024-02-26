@@ -12,7 +12,7 @@ import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class MemberDetailPage extends HookConsumerWidget {
-  const MemberDetailPage({Key? key}) : super(key: key);
+  const MemberDetailPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -64,17 +64,15 @@ class MemberDetailPage extends HookConsumerWidget {
       const SizedBox(
         height: 20,
       ),
-      ...memberProvider.memberships
-          .map((e) => AssociationCard(
-              association: associationList.firstWhere(
-                  (association) => association.id == e.associationId),
-              onClicked: () {
-                associationNotifier.setAssociation(associationList.firstWhere(
-                    (association) => association.id == e.associationId));
-                QR.to(PhonebookRouter.root + PhonebookRouter.associationDetail);
-              },
-              giveMemberRole: true))
-          .toList(),
+      ...memberProvider.memberships.map((e) => AssociationCard(
+          association: associationList
+              .firstWhere((association) => association.id == e.associationId),
+          onClicked: () {
+            associationNotifier.setAssociation(associationList.firstWhere(
+                (association) => association.id == e.associationId));
+            QR.to(PhonebookRouter.root + PhonebookRouter.associationDetail);
+          },
+          giveMemberRole: true)),
     ]));
   }
 }

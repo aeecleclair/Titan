@@ -4,13 +4,12 @@ import 'package:myecl/phonebook/tools/constants.dart';
 
 class TextInputDialog extends HookConsumerWidget {
   const TextInputDialog(
-      {Key? key,
+      {super.key,
       required this.controller,
       required this.title,
       required this.text,
       required this.defaultText,
-      required this.onConfirm})
-      : super(key: key);
+      required this.onConfirm});
 
   final String title;
   final String text;

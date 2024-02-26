@@ -13,7 +13,7 @@ import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AssociationPage extends HookConsumerWidget {
-  const AssociationPage({Key? key}) : super(key: key);
+  const AssociationPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -26,7 +26,7 @@ import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AssociationEditorPage extends HookConsumerWidget {
-  const AssociationEditorPage({Key? key}) : super(key: key);
+  const AssociationEditorPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -37,7 +37,6 @@ class AssociationEditorPage extends HookConsumerWidget {
         ref.watch(associationMemberListProvider.notifier);
     final associationMemberList =
         ref.watch(associationMemberSortedListProvider);
-    print(associationMemberList);
     final associationPictureNotifier =
         ref.watch(associationPictureProvider.notifier);
     final associationListNotifier =
@@ -282,8 +281,7 @@ class AssociationEditorPage extends HookConsumerWidget {
           )
         else if (associationMemberList.first.member.id != '')
           ...associationMemberList
-              .map((member) => MemberEditableCard(member: member))
-              .toList(),
+              .map((member) => MemberEditableCard(member: member)),
         const SizedBox(
           height: 30,
         ),

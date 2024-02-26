@@ -20,7 +20,7 @@ import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AssociationCreationPage extends HookConsumerWidget {
-  const AssociationCreationPage({Key? key}) : super(key: key);
+  const AssociationCreationPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

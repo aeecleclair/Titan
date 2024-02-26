@@ -8,7 +8,7 @@ import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
 
 class ResearchBar extends HookConsumerWidget {
-  const ResearchBar({Key? key}) : super(key: key);
+  const ResearchBar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
