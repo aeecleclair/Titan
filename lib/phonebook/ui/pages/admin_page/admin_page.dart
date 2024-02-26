@@ -76,6 +76,9 @@ class AdminPage extends HookConsumerWidget {
                           return ItemChip(
                             onTap: () {
                               kind.value = item;
+                              kindNotifier.setKind(item);
+                              associationsNotifier.filterAssociationList(
+                                  nameFilter, kind.value);
                             },
                             selected: selected,
                             child: Text(item,
@@ -118,7 +121,8 @@ class AdminPage extends HookConsumerWidget {
                     const SizedBox(height: 30),
                     if (associations.isEmpty)
                       const Center(
-                          child: Text(PhonebookTextConstants.noAssociationFound))
+                          child:
+                              Text(PhonebookTextConstants.noAssociationFound))
                     else
                       ...associations
                           .map((association) => EditableAssociationCard(
