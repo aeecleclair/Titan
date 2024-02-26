@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/association_kinds.dart';
 import 'package:myecl/phonebook/class/member.dart';
@@ -44,14 +45,18 @@ class AssociationRepository extends Repository {
     return await delete("memberships/${membership.id}");
   }
 
-  Future<bool> updateMember(Association association, Member member,
-      List<String> rolesTags, String apparentName) async {
+  Future<bool> updateMember(Membership membership, Association association,
+      Member member, List<String> rolesTags, String apparentName) async {
+    debugPrint(
+        "updateMembership :\n id : ${membership.id}\n member_id : ${member.id}\n association_id : ${association.id}\n role_tags : ${rolesTags.join(";")}\n role_name : $apparentName");
+
     return await update({
+      "id": membership.id,
       "member_id": member.id,
       "association_id": association.id,
-      "rolesTags": rolesTags,
-      "apparentName": apparentName
-    }, association.id, suffix: "memberships");
+      "role_tags": rolesTags.join(";"),
+      "role_name": apparentName
+    }, "memberships/", suffix: membership.id);
   }
 
   Future<AssociationKinds> getAssociationKinds() async {

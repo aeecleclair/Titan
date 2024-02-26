@@ -24,6 +24,7 @@ class PhonebookTextConstants {
   static const String changeMandate = "Passer au mandat ";
   static const String changeMandateConfirm =
       "Êtes-vous sûr de vouloir changer tout le mandat ?\nCette action est irréversible !";
+  static const String copied = "Copié dans le presse-papier";
 
   static const String detail = "Détail :";
   static const String deleteAssociation = "Supprimer l'association ?";
@@ -36,6 +37,7 @@ class PhonebookTextConstants {
   static const String edit = "Modifier";
   static const String editMembership = "Modifier le rôle";
   static const String email = "Email :";
+  static const String emailCopied = "Email copié dans le presse-papier";
   static const String emptyApparentName = "Veuillez entrer un nom de role";
   static const String emptyFieldError = "Un champ n'est pas rempli";
   static const String emptyKindError = "Veuillez choisir un type d'association";
@@ -70,11 +72,14 @@ class PhonebookTextConstants {
   static const String membershipRoleError = "Veuillez choisir un rôle";
 
   static const String name = "Nom :";
+  static const String nameCopied = "Nom et prénom copié dans le presse-papier";
   static const String namePure = "Nom";
   static const String newMandate = "Nouveau mandat";
   static const String newMandateConfirmed = "Mandat changé";
   static const String nickname = "Surnom :";
+  static const String nicknameCopied = "Surnom copié dans le presse-papier";
 
+  static const String phone = "Téléphone :";
   static const String phonebook = "Annuaire";
   static const String phonebookSearch = "Rechercher";
   static const String phonebookSearchAssociation = "Association";

@@ -33,11 +33,11 @@ class AssociationNotifier extends SingleNotifier<Association> {
         association);
   }
 
-  Future<bool> updateMember(Association association, Member user,
-      List<String> rolesTags, String apparentName) async {
+  Future<bool> updateMember(Membership membership, Association association,
+      Member user, List<String> rolesTags, String apparentName) async {
     return await update(
         (association) async => associationRepository.updateMember(
-            association, user, rolesTags, apparentName),
+            membership, association, user, rolesTags, apparentName),
         association);
   }
 

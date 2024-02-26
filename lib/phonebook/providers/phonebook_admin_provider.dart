@@ -43,10 +43,3 @@ final isAssociationPresidentProvider = StateProvider<bool>((ref) {
   debugPrint("isPresident: $isPresident");
   return isPresident;
 });
-
-final comeFromAdmin = StateProvider<bool>((ref) {
-  if (QR.currentPath == PhonebookRouter.root + PhonebookRouter.admin) {
-    return true;
-  }
-  return false;
-});

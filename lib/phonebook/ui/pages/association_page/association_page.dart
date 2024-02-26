@@ -19,7 +19,8 @@ class AssociationPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final association = ref.watch(associationProvider);
     final associationPicture = ref.watch(associationPictureProvider);
-    final associationMemberList = ref.watch(associationMemberListProvider);
+    final associationMemberList =
+        ref.watch(associationMemberSortedListProvider);
     final associationMemberListNotifier =
         ref.watch(associationMemberListProvider.notifier);
     final associationPictureNotifier =
@@ -30,17 +31,12 @@ class AssociationPage extends HookConsumerWidget {
         child: Refresher(
             onRefresh: () async {
               await associationMemberListNotifier.loadMembers(
-                  association.id, association.mandateYear.toString());
+                  association.id, association.mandateYear.toString(), ref);
               await associationPictureNotifier
                   .getAssociationPicture(association.id);
             },
             child: Stack(children: [
               Column(children: [
-                const Text(PhonebookTextConstants.associationDetail,
-                    style: TextStyle(fontSize: 30)),
-                const SizedBox(
-                  height: 20,
-                ),
                 Container(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
@@ -101,25 +97,14 @@ class AssociationPage extends HookConsumerWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                associationMemberList.when(
-                  data: (members) {
-                    return Column(
-                        children: members
-                            .map((member) => MemberCard(member: member))
-                            .toList());
-                  },
-                  loading: () {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  },
-                  error: (e, s) {
-                    return const Center(
-                      child: Text(
-                          PhonebookTextConstants.errorLoadAssociationMember),
-                    );
-                  },
-                )
+                if (associationMemberList.isEmpty)
+                  const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                else
+                  ...associationMemberList
+                      .map((member) => MemberCard(member: member))
+                      .toList()
               ]),
               if (isPresident)
                 Positioned(
