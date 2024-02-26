@@ -12,6 +12,7 @@ class CompleteMember {
   late final List<Membership> memberships;
 
   CompleteMember.fromJSON(Map<String, dynamic> json) {
+    debugPrint(json.toString());
     member = Member(
         name: json['name'],
         firstname: json['firstname'],
