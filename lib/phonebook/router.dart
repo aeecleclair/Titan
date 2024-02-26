@@ -60,6 +60,7 @@ class PhonebookRouter {
                     builder: () => const AssociationEditorPage(),
                     middleware: [
                       AdminMiddleware(ref, isAssociationPresidentProvider),
+                      AdminMiddleware(ref, comeFromAdmin)
                     ],
                     children: [
                       QRoute(

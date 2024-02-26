@@ -10,6 +10,7 @@ import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/association_picture_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
 import 'package:myecl/phonebook/providers/edition_provider.dart';
+import 'package:myecl/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
@@ -45,7 +46,6 @@ class AssociationEditorPage extends HookConsumerWidget {
     final rolesTagsNotifier = ref.watch(rolesTagsProvider.notifier);
     final editionNotifier = ref.watch(editionProvider.notifier);
     final completeMemberNotifier = ref.watch(completeMemberProvider.notifier);
-
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
