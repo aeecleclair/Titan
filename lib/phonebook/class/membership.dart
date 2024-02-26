@@ -1,6 +1,6 @@
 import 'package:myecl/phonebook/class/association.dart';
 
-class Membership{
+class Membership {
   Membership({
     required this.id,
     required this.association,
@@ -13,14 +13,14 @@ class Membership{
   late final List<String> rolesTags;
   late final String apparentName;
 
-  Membership.fromJSON(Map<String, dynamic> json){
-      id = json['id'];
-      association = json['association'];
-      rolesTags = json['roleTags'];
-      apparentName = json['apparentName'];
-      }
-  
-  Map<String, dynamic> toJSON(){
+  Membership.fromJSON(Map<String, dynamic> json) {
+    id = json['id'];
+    association = json['association'];
+    rolesTags = json['roleTags'];
+    apparentName = json['apparentName'];
+  }
+
+  Map<String, dynamic> toJSON() {
     final data = <String, dynamic>{
       'id': id,
       'association': association.id,
@@ -44,7 +44,7 @@ class Membership{
     );
   }
 
-  Membership.empty(){
+  Membership.empty() {
     id = "";
     association = Association.empty();
     rolesTags = [];

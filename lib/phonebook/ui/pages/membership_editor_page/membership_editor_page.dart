@@ -24,8 +24,6 @@ class MembershipEditorPage extends HookConsumerWidget {
     Key? key,
   }) : super(key: key);
 
-  
-
   String nameConstructor(Tuple2<RolesTags, List<bool>> data) {
     String name = '';
     for (int i = 0; i < data.item2.length; i++) {
@@ -60,7 +58,8 @@ class MembershipEditorPage extends HookConsumerWidget {
     final association = ref.watch(associationProvider);
     final edition = ref.watch(editionProvider);
     final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
-    final associationMemberListNotifier = ref.watch(associationMemberListProvider.notifier);
+    final associationMemberListNotifier =
+        ref.watch(associationMemberListProvider.notifier);
     final pageNotifier = ref.watch(phonebookPageProvider.notifier);
     final memberRoleTagsNotifier = ref.watch(memberRoleTagsProvider.notifier);
     final memberRoleTags = ref.watch(memberRoleTagsProvider);
@@ -69,28 +68,30 @@ class MembershipEditorPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    if (edition){
-      apparentNameController.text = member.memberships.where((e) => e.association.id == association.id).toList()[0].apparentName;
+    if (edition) {
+      apparentNameController.text = member.memberships
+          .where((e) => e.association.id == association.id)
+          .toList()[0]
+          .apparentName;
     }
 
     return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: SingleChildScrollView(
-        child : Column(
-          children : [
+        padding: const EdgeInsets.all(20.0),
+        child: SingleChildScrollView(
+            child: Column(
+          children: [
             Center(
-              child: Container(
-                decoration: const BoxDecoration(
-                  border: Border(bottom: BorderSide(color: Colors.black)),
-                  color: Colors.white,
-                ),
-                child: Text(
-                  edition? PhonebookTextConstants.editMembership : PhonebookTextConstants.addMember,
-                  style: const TextStyle(fontSize: 20)
-                )
-              )
-            ),
-            if (!edition) 
+                child: Container(
+                    decoration: const BoxDecoration(
+                      border: Border(bottom: BorderSide(color: Colors.black)),
+                      color: Colors.white,
+                    ),
+                    child: Text(
+                        edition
+                            ? PhonebookTextConstants.editMembership
+                            : PhonebookTextConstants.addMember,
+                        style: const TextStyle(fontSize: 20)))),
+            if (!edition)
               TextFormField(
                 onChanged: (value) {
                   tokenExpireWrapper(ref, () async {
@@ -114,10 +115,10 @@ class MembershipEditorPage extends HookConsumerWidget {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              SearchResult(queryController: queryController),
+            const SizedBox(
+              height: 10,
+            ),
+            SearchResult(queryController: queryController),
             SizedBox(
               width: min(MediaQuery.of(context).size.width, 300),
               child: Column(children: [
@@ -129,13 +130,18 @@ class MembershipEditorPage extends HookConsumerWidget {
                               const Spacer(),
                               Checkbox(
                                 value: data.item2[data.item1.tags.indexOf(e)],
-                                fillColor: MaterialStateProperty.all(Colors.black),
+                                fillColor:
+                                    MaterialStateProperty.all(Colors.black),
                                 onChanged: (value) {
-                                  data.item2[data.item1.tags.indexOf(e)] = value!;
+                                  data.item2[data.item1.tags.indexOf(e)] =
+                                      value!;
                                   debugPrint(data.item2.toString());
-                                  apparentNameController.text = nameConstructor(data);
-                                  memberRoleTagsNotifier.setRoleTagsWithFilter(data);
-                                  rolesTagsNotifier.setChecked(data.item1.tags.indexOf(e), value);
+                                  apparentNameController.text =
+                                      nameConstructor(data);
+                                  memberRoleTagsNotifier
+                                      .setRoleTagsWithFilter(data);
+                                  rolesTagsNotifier.setChecked(
+                                      data.item1.tags.indexOf(e), value);
                                 },
                               ),
                             ]))
@@ -153,14 +159,18 @@ class MembershipEditorPage extends HookConsumerWidget {
             ),
             const SizedBox(height: 5),
             ShrinkButton(
-              child: Text(!edition ? PhonebookTextConstants.add : PhonebookTextConstants.edit),
+              child: Text(!edition
+                  ? PhonebookTextConstants.add
+                  : PhonebookTextConstants.edit),
               onTap: () async {
                 if (member.member.id == "") {
-                  displayToastWithContext(TypeMsg.msg, PhonebookTextConstants.emptyMember);
+                  displayToastWithContext(
+                      TypeMsg.msg, PhonebookTextConstants.emptyMember);
                   return;
                 }
                 if (apparentNameController.text == "") {
-                  displayToastWithContext(TypeMsg.msg, PhonebookTextConstants.emptyApparentName);
+                  displayToastWithContext(
+                      TypeMsg.msg, PhonebookTextConstants.emptyApparentName);
                   return;
                 }
                 debugPrint("Appui sur le bouton avec les paramètres:\n"
@@ -170,36 +180,42 @@ class MembershipEditorPage extends HookConsumerWidget {
                     "apparentName: ${apparentNameController.text}");
                 tokenExpireWrapper(ref, () async {
                   if (edition) {
-                    final value = await associationNotifier.updateMember(association, member.member, memberRoleTags, apparentNameController.text);
+                    final value = await associationNotifier.updateMember(
+                        association,
+                        member.member,
+                        memberRoleTags,
+                        apparentNameController.text);
                     if (value) {
-                      associationMemberListNotifier
-                          .loadMembers(association.id);
-                      displayToastWithContext(TypeMsg.msg,
-                          PhonebookTextConstants.updatedMember);
-                      pageNotifier.setPhonebookPage(PhonebookPage.associationEditor);
+                      associationMemberListNotifier.loadMembers(association.id);
+                      displayToastWithContext(
+                          TypeMsg.msg, PhonebookTextConstants.updatedMember);
+                      pageNotifier
+                          .setPhonebookPage(PhonebookPage.associationEditor);
                     } else {
-                      displayToastWithContext(TypeMsg.msg,
-                          PhonebookTextConstants.updatingError);
+                      displayToastWithContext(
+                          TypeMsg.msg, PhonebookTextConstants.updatingError);
                     }
                   } else {
-                    final value = await associationNotifier.addMember(association, member.member, memberRoleTags, apparentNameController.text);
+                    final value = await associationNotifier.addMember(
+                        association,
+                        member.member,
+                        memberRoleTags,
+                        apparentNameController.text);
                     if (value) {
-                      associationMemberListNotifier
-                          .loadMembers(association.id);
-                      displayToastWithContext(TypeMsg.msg,
-                          PhonebookTextConstants.addedMember);
-                      pageNotifier.setPhonebookPage(PhonebookPage.associationEditor);
+                      associationMemberListNotifier.loadMembers(association.id);
+                      displayToastWithContext(
+                          TypeMsg.msg, PhonebookTextConstants.addedMember);
+                      pageNotifier
+                          .setPhonebookPage(PhonebookPage.associationEditor);
                     } else {
-                      displayToastWithContext(TypeMsg.msg,
-                          PhonebookTextConstants.addingError);
+                      displayToastWithContext(
+                          TypeMsg.msg, PhonebookTextConstants.addingError);
                     }
                   }
                 });
               },
             ),
           ],
-        )
-      )
-    );
+        )));
   }
 }

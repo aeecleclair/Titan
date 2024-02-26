@@ -39,23 +39,23 @@ class MainPage extends HookConsumerWidget {
               await associationKindsNotifier.loadAssociationKinds();
               await associationListNotifier.loadAssociations();
             },
-            child: Column(
-                children: [
-                  const SizedBox(height: 70),
-                  associationKinds.when(
-                    data: (data) {
-                      debugPrint("associationKinds.when data: ${data.kinds}");
-                      return SingleChildScrollView(
+            child: Column(children: [
+              const SizedBox(height: 70),
+              associationKinds.when(
+                  data: (data) {
+                    debugPrint("associationKinds.when data: ${data.kinds}");
+                    return SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(children: [
                           RadioChip(
-                            label: "Toutes",
-                            selected: kind.value == "",
-                            onTap: () {
-                              kind.value = "";
-                              kindNotifier.setKind("");
-                              associationListNotifier.filterAssociationList(nameFilter, kind.value);
-                          }),
+                              label: "Toutes",
+                              selected: kind.value == "",
+                              onTap: () {
+                                kind.value = "";
+                                kindNotifier.setKind("");
+                                associationListNotifier.filterAssociationList(
+                                    nameFilter, kind.value);
+                              }),
                           ...data.kinds
                               .map((e) => RadioChip(
                                   label: e,
@@ -63,40 +63,40 @@ class MainPage extends HookConsumerWidget {
                                   onTap: () {
                                     kind.value = e;
                                     kindNotifier.setKind(e);
-                                    associationListNotifier.filterAssociationList(nameFilter, kind.value);
+                                    associationListNotifier
+                                        .filterAssociationList(
+                                            nameFilter, kind.value);
                                   }))
                               .toList()
-                          ]
-                        )
-                      );
-                    },
-                    error: (error, stackTrace) =>
-                        const Text(PhonebookTextConstants.errorKindsLoading),
-                    loading: () => const CircularProgressIndicator()),
-                  const SizedBox(height: 30),
-                  const ResearchBar(),
-                  const SizedBox(height: 10),
-                  ...associationList.when(
-                    data: (associations) {
-                      return associations
-                          .map((association) => AssociationCard(
-                                association: association,
-                                onClicked: () {
-                                  associationNotifier
-                                      .setAssociation(association);
-                                  pageNotifier.setPhonebookPage(
-                                      PhonebookPage.associationPage);
-                                },
-                              ))
-                          .toList();
-                    },
-                    loading: () =>
-                        const [Center(child: CircularProgressIndicator())],
-                    error: (error, stack) => [
-                          const Center(
-                              child: Text(PhonebookTextConstants
-                                  .errorLoadAssociationList))
-                        ])])),
+                        ]));
+                  },
+                  error: (error, stackTrace) =>
+                      const Text(PhonebookTextConstants.errorKindsLoading),
+                  loading: () => const CircularProgressIndicator()),
+              const SizedBox(height: 30),
+              const ResearchBar(),
+              const SizedBox(height: 10),
+              ...associationList.when(
+                  data: (associations) {
+                    return associations
+                        .map((association) => AssociationCard(
+                              association: association,
+                              onClicked: () {
+                                associationNotifier.setAssociation(association);
+                                pageNotifier.setPhonebookPage(
+                                    PhonebookPage.associationPage);
+                              },
+                            ))
+                        .toList();
+                  },
+                  loading: () =>
+                      const [Center(child: CircularProgressIndicator())],
+                  error: (error, stack) => [
+                        const Center(
+                            child: Text(PhonebookTextConstants
+                                .errorLoadAssociationList))
+                      ])
+            ])),
         if (isAdmin)
           Positioned(
             top: 15,

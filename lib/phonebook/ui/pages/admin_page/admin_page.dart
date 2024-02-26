@@ -42,35 +42,35 @@ class AdminPage extends HookConsumerWidget {
         child: Column(children: <Widget>[
           const SizedBox(width: 10),
           associationKinds.when(
-            data: (data) {
-              return SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(children: [
-                  RadioChip(
-                    label: "Toutes",
-                    selected: kind.value == "",
-                    onTap: () {
-                      kind.value = "";
-                      kindNotifier.setKind("");
-                      associationsNotifier.filterAssociationList(nameFilter, kind.value);
-                  }),
-                  ...data.kinds
-                      .map((e) => RadioChip(
-                          label: e,
-                          selected: kind.value == e,
+              data: (data) {
+                return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(children: [
+                      RadioChip(
+                          label: "Toutes",
+                          selected: kind.value == "",
                           onTap: () {
-                            kind.value = e;
-                            kindNotifier.setKind(e);
-                            associationsNotifier.filterAssociationList(nameFilter, kind.value);
-                          }))
-                      .toList()
-                  ]
-                )
-              );
-            },
-            error: (error, stackTrace) =>
-                const Text(PhonebookTextConstants.errorRoleTagsLoading),
-            loading: () => const CircularProgressIndicator()),
+                            kind.value = "";
+                            kindNotifier.setKind("");
+                            associationsNotifier.filterAssociationList(
+                                nameFilter, kind.value);
+                          }),
+                      ...data.kinds
+                          .map((e) => RadioChip(
+                              label: e,
+                              selected: kind.value == e,
+                              onTap: () {
+                                kind.value = e;
+                                kindNotifier.setKind(e);
+                                associationsNotifier.filterAssociationList(
+                                    nameFilter, kind.value);
+                              }))
+                          .toList()
+                    ]));
+              },
+              error: (error, stackTrace) =>
+                  const Text(PhonebookTextConstants.errorRoleTagsLoading),
+              loading: () => const CircularProgressIndicator()),
           const SizedBox(height: 10),
           const AssociationResearchBar(),
           const SizedBox(height: 10),

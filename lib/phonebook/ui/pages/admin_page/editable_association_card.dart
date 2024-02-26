@@ -7,6 +7,7 @@ import 'package:myecl/phonebook/providers/associations_pictures_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/ui/delete_button.dart';
 import 'package:myecl/phonebook/ui/edition_button.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class EditableAssociationCard extends HookConsumerWidget {
   final Association association;
@@ -43,81 +44,75 @@ class EditableAssociationCard extends HookConsumerWidget {
             width: 10,
           ),
           associationPictures.when(
-                data: (pictures) {
-                  if (pictures[association] != null) {
-                    return pictures[association]!.when(
-                      data: (picture) {
-                        if (picture.isNotEmpty) {
-                          return Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: picture.first.image,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          );
-                        } else {
-                          associationPictureNotifier
-                              .getAssociationPicture(association.id)
-                              .then((value) {
-                            associationPicturesNotifier.setTData(
-                                association,
-                                AsyncData([
-                                  value.when(
-                                    data: (picture) => picture,
-                                    loading: () =>
-                                        Image.asset("assets/images/logo.png"),
-                                    error: (e, s) =>
-                                        Image.asset("assets/images/logo.png"),
-                                  )
-                                ]));
-                          });
-                          return const HeroIcon(
-                            HeroIcons.userCircle,
-                            size: 40,
-                          );
-                        }
-                      },
-                      loading: () {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      },
-                      error: (e, s) {
-                        return const Center(
-                          child: Text(PhonebookTextConstants
-                              .errorLoadAssociationPicture),
-                        );
-                      },
+            data: (pictures) {
+              if (pictures[association] != null) {
+                return pictures[association]!.when(
+                  data: (picture) {
+                    if (picture.isNotEmpty) {
+                      return Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: picture.first.image,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+                    } else {
+                      Future.delayed(
+                          const Duration(milliseconds: 1),
+                          () => associationPicturesNotifier.setTData(
+                              association, const AsyncLoading()));
+                      tokenExpireWrapper(ref, () async {
+                        associationPictureNotifier
+                            .getAssociationPicture(association.id)
+                            .then((value) {
+                          associationPicturesNotifier.setTData(
+                              association, AsyncData([value]));
+                        });
+                      });
+                      return const HeroIcon(
+                        HeroIcons.userCircle,
+                        size: 40,
+                      );
+                    }
+                  },
+                  loading: () {
+                    return const Center(
+                      child: CircularProgressIndicator(),
                     );
-                  }
-                  return const HeroIcon(
-                    HeroIcons.userCircle,
-                    size: 40,
-                  );
-                },
-                loading: () {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
-                error: (e, s) {
-                  return const Center(
-                    child: Text(
-                        PhonebookTextConstants.errorLoadAssociationPicture),
-                  );
-                },
-              ),
+                  },
+                  error: (e, s) {
+                    return const Center(
+                      child: Text(
+                          PhonebookTextConstants.errorLoadAssociationPicture),
+                    );
+                  },
+                );
+              }
+              return const HeroIcon(
+                HeroIcons.userCircle,
+                size: 40,
+              );
+            },
+            loading: () {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+            error: (e, s) {
+              return const Center(
+                child: Text(PhonebookTextConstants.errorLoadAssociationPicture),
+              );
+            },
+          ),
           const SizedBox(width: 10),
           Text(
             association.name,
             style: const TextStyle(
-                color: Colors.black,
-                fontSize: 20,
-                fontWeight: FontWeight.bold),
+                color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const Spacer(),
           Text(association.kind,
@@ -133,8 +128,6 @@ class EditableAssociationCard extends HookConsumerWidget {
           DeleteButton(onDelete: () async {
             await onDelete();
           }),
-
-
         ],
       ),
     );

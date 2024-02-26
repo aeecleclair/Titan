@@ -5,6 +5,7 @@ import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/providers/association_picture_provider.dart';
 import 'package:myecl/phonebook/providers/associations_pictures_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class AssociationCard extends HookConsumerWidget {
   const AssociationCard({
@@ -55,20 +56,17 @@ class AssociationCard extends HookConsumerWidget {
                             ),
                           );
                         } else {
-                          associationPictureNotifier
-                              .getAssociationPicture(association.id)
-                              .then((value) {
-                            associationPicturesNotifier.setTData(
-                                association,
-                                AsyncData([
-                                  value.when(
-                                    data: (picture) => picture,
-                                    loading: () =>
-                                        Image.asset("assets/images/logo.png"),
-                                    error: (e, s) =>
-                                        Image.asset("assets/images/logo.png"),
-                                  )
-                                ]));
+                          Future.delayed(
+                              const Duration(milliseconds: 1),
+                              () => associationPicturesNotifier.setTData(
+                                  association, const AsyncLoading()));
+                          tokenExpireWrapper(ref, () async {
+                            associationPictureNotifier
+                                .getAssociationPicture(association.id)
+                                .then((value) {
+                              associationPicturesNotifier.setTData(
+                                  association, AsyncData([value]));
+                            });
                           });
                           return const HeroIcon(
                             HeroIcons.userCircle,

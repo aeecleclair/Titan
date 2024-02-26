@@ -47,16 +47,16 @@ class AssociationPage extends HookConsumerWidget {
             child: associationPicture.when(
               data: (picture) {
                 return Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: picture.image,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          );
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: picture.image,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                );
               },
               loading: () {
                 return const Center(

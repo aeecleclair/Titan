@@ -6,13 +6,12 @@ import 'package:myecl/phonebook/repositories/association_repository.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-
 class AssociationKindsNotifier extends SingleNotifier<AssociationKinds> {
   final AssociationRepository associationRepository = AssociationRepository();
-    AssociationKindsNotifier({required String token})
-        : super(const AsyncValue.loading()) {
-      associationRepository.setToken(token);
-    }
+  AssociationKindsNotifier({required String token})
+      : super(const AsyncValue.loading()) {
+    associationRepository.setToken(token);
+  }
 
   void setKind(AssociationKinds i) {
     state = AsyncValue.data(i);
@@ -20,15 +19,17 @@ class AssociationKindsNotifier extends SingleNotifier<AssociationKinds> {
 
   Future<AsyncValue<AssociationKinds>> loadAssociationKinds() async {
     debugPrint("loadAssociationKinds");
-    AsyncValue<AssociationKinds> result = await load(() async => associationRepository.getAssociationKinds());
+    AsyncValue<AssociationKinds> result =
+        await load(() async => associationRepository.getAssociationKinds());
     debugPrint("loadAssociationKinds result: $result");
     return result;
   }
 }
 
-final associationKindsProvider = StateNotifierProvider<AssociationKindsNotifier, AsyncValue<AssociationKinds>>((ref) {
+final associationKindsProvider = StateNotifierProvider<AssociationKindsNotifier,
+    AsyncValue<AssociationKinds>>((ref) {
   final token = ref.watch(tokenProvider);
-  AssociationKindsNotifier notifier  = AssociationKindsNotifier(token: token);
+  AssociationKindsNotifier notifier = AssociationKindsNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {
     await notifier.loadAssociationKinds();
   });

@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 final editionProvider = StateNotifierProvider<EditionProvider, bool>((ref) {
   return EditionProvider();
 });

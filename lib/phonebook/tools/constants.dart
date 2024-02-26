@@ -9,11 +9,13 @@ class PhonebookTextConstants {
   static const String phonebookSearchRole = "Poste";
   static const String phonebookSearchAssociation = "Association";
   static const String phonebookSearchField = "Rechercher :";
-  static const String updatedAssociationPicture = "La photo d'association a  été changée";
+  static const String updatedAssociationPicture =
+      "La photo d'association a  été changée";
   static const String tooHeavyAssociationPicture =
       "L'image est trop lourde (max 4Mo)";
   static const String membershipRole = "Rôle :";
-  static const String membershipAssociationError = "Veuillez choisir une association";
+  static const String membershipAssociationError =
+      "Veuillez choisir une association";
   static const String membershipRoleError = "Veuillez choisir un rôle";
   static const String validation = "Valider";
   static const String cancel = "Annuler";
@@ -30,23 +32,29 @@ class PhonebookTextConstants {
   static const String adminPage = "Page Administrateur";
   static const String admin = "Admin";
   static const String addAssociation = "Ajouter une association";
-  static const String errorLoadAssociationPicture = "Erreur lors du chargement de la photo d'association";
+  static const String errorLoadAssociationPicture =
+      "Erreur lors du chargement de la photo d'association";
   static const String deleting = "Suppression";
   static const String deleteAssociation = "Supprimer l'association ?";
   static const String deletedAssociation = "Association supprimée";
   static const String deletingError = "Erreur lors de la suppression";
-  static const String errorLoadAssociationList = "Erreur lors du chargement de la liste des associations";
+  static const String errorLoadAssociationList =
+      "Erreur lors du chargement de la liste des associations";
   static const String associationDetail = "Détail de l'association :";
-  static const String errorLoadAssociationMember = "Erreur lors du chargement des membres de l'association";
+  static const String errorLoadAssociationMember =
+      "Erreur lors du chargement des membres de l'association";
   static const String updatingError = "Erreur lors de la modification";
   static const String errorLoadProfilePicture = "Erreur";
   static const String updatedAssociation = "Association modifiée";
-  static const String errorAssociationLoading = "Erreur lors du chargement de l'association";
-  static const String errorAssociationNameEmpty = "Veuillez entrer un nom d'association";
+  static const String errorAssociationLoading =
+      "Erreur lors du chargement de l'association";
+  static const String errorAssociationNameEmpty =
+      "Veuillez entrer un nom d'association";
   static const String addedAssociation = "Association ajoutée";
   static const String deletedMember = "Membre supprimé";
   static const String associationKind = "Type d'association :";
-  static const String errorKindsLoading = "Erreur lors du chargement des types d'association";
+  static const String errorKindsLoading =
+      "Erreur lors du chargement des types d'association";
   static const String emptyFieldError = "Un champ n'est pas rempli";
   static const String emptyKindError = "Veuillez choisir un type d'association";
   static const String edit = "Modifier";
@@ -61,17 +69,20 @@ class PhonebookTextConstants {
   static const String add = "Ajouter";
   static const String emptyMember = "Aucun membre sélectionné";
   static const String emptyApparentName = "Veuillez entrer un nom de role";
-  static const String errorRoleTagsLoading = "Erreur lors du chargement des tags de rôle";
+  static const String errorRoleTagsLoading =
+      "Erreur lors du chargement des tags de rôle";
   static const String promotion = "Promotion :";
   static const String newMandateConfirmed = "Mandat changé";
-  static const String mandateChangingError = "Erreur lors du changement de mandat";
-  static const String changeMandateConfirm = "Êtes-vous sûr de vouloir changer tout le mandat ?\nCette action est irréversible !";
+  static const String mandateChangingError =
+      "Erreur lors du changement de mandat";
+  static const String changeMandateConfirm =
+      "Êtes-vous sûr de vouloir changer tout le mandat ?\nCette action est irréversible !";
   static const String newMandate = "Nouveau mandat";
   static const String changeMandate = "Passer au mandat ";
 
   static const String activeMandate = "Mandat actif :";
 }
 
-class PhonebookColorConstants{
+class PhonebookColorConstants {
   static const Color textDark = Color(0xFF1D1D1D);
 }

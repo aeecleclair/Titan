@@ -16,7 +16,8 @@ class AssociationPictureRepository extends LogoRepository {
 
   Future<Image> addAssociationPicture(String path, String associationId) async {
     final image = await saveLogoToTemp(path);
-    final uint8List = await addLogo(image.path, associationId, suffix: "/picture");
+    final uint8List =
+        await addLogo(image.path, associationId, suffix: "/picture");
     return Image.memory(uint8List);
   }
 }

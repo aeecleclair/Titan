@@ -16,7 +16,7 @@ class ResearchBar extends HookConsumerWidget {
     final filterNotifier = ref.watch(filterProvider.notifier);
     final associationsNotifier = ref.watch(associationListProvider.notifier);
     final associationKind = ref.watch(associationKindProvider);
-    
+
     return Container(
         decoration: BoxDecoration(
           border: Border.all(),
@@ -27,7 +27,7 @@ class ResearchBar extends HookConsumerWidget {
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 1,
               blurRadius: 7,
-              offset: const Offset(0, 3), // changes position of shadow
+              offset: const Offset(0, 3),
             ),
           ],
         ),

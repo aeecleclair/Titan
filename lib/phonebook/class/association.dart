@@ -1,4 +1,4 @@
-class Association{
+class Association {
   Association({
     required this.id,
     required this.name,
@@ -6,22 +6,22 @@ class Association{
     required this.kind,
     required this.mandateYear,
   });
-  
+
   late final String id;
   late final String name;
   late final String description;
   late final String kind;
   late final String mandateYear;
 
-  Association.fromJSON(Map<String, dynamic> json){
-      id = json['id'];
-      name = json['name'];
-      description = json['description'];
-      kind = json['kind'];
-      mandateYear = json['mandateYear'];
-      }
+  Association.fromJSON(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    description = json['description'];
+    kind = json['kind'];
+    mandateYear = json['mandateYear'];
+  }
 
-  Map<String, dynamic> toJSON(){
+  Map<String, dynamic> toJSON() {
     final data = <String, dynamic>{
       'id': id,
       'name': name,
@@ -48,7 +48,7 @@ class Association{
     );
   }
 
-  Association.empty(){
+  Association.empty() {
     id = "";
     name = "";
     description = "";
@@ -56,14 +56,12 @@ class Association{
     mandateYear = "";
   }
 
-  void newMandate(){
-    mandateYear =  (int.parse(mandateYear) + 1).toString();
+  void newMandate() {
+    mandateYear = (int.parse(mandateYear) + 1).toString();
   }
 
   @override
-  String toString(){
+  String toString() {
     return "Nom : $name, id : $id, description : $description, kind : $kind, mandate_year : $mandateYear";
   }
-
-
 }

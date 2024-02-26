@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
-final associationKindProvider = StateNotifierProvider<AssociationKindNotifier, String>((ref) {
+final associationKindProvider =
+    StateNotifierProvider<AssociationKindNotifier, String>((ref) {
   return AssociationKindNotifier();
 });
 

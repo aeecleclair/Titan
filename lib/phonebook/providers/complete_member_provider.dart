@@ -2,8 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/member.dart';
 
-
-final completeMemberProvider = StateNotifierProvider<CompleteMemberProvider, CompleteMember>((ref) {
+final completeMemberProvider =
+    StateNotifierProvider<CompleteMemberProvider, CompleteMember>((ref) {
   return CompleteMemberProvider();
 });
 
