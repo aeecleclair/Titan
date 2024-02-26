@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/phonebook/providers/phonebook_page_provider.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/admin_page.dart';
+import 'package:myecl/phonebook/ui/pages/association_creation_page/association_creation_page.dart';
 import 'package:myecl/phonebook/ui/pages/association_editor_page/association_editor_page.dart';
 import 'package:myecl/phonebook/ui/pages/association_page/association_page.dart';
 import 'package:myecl/phonebook/ui/pages/main_page/main_page.dart';
@@ -30,6 +31,8 @@ class PageSwitcher extends ConsumerWidget {
         return const AssociationEditorPage();
       case PhonebookPage.associationPage:
         return const AssociationPage();
+      case PhonebookPage.associationCreation:
+        return const AssociationCreationPage();
       default:
         return const Text('Unknown page');
     }

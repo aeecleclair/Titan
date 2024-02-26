@@ -2,14 +2,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
-import 'package:myecl/phonebook/class/role.dart';
 import 'package:myecl/phonebook/repositories/association_repository.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
 
 
 class AssociationNotifier extends SingleNotifier<Association> {
   final AssociationRepository associationRepository = AssociationRepository();
-  AssociationNotifier({required String token}) : super(const AsyncValue.loading()) {
+  AssociationNotifier({required String token})
+      : super(const AsyncValue.loading()) {
     associationRepository.setToken(token);
   }
 
@@ -17,9 +17,9 @@ class AssociationNotifier extends SingleNotifier<Association> {
     return await load(() async => associationRepository.getAssociation(associationId));
   }
 
-  Future<bool> addMember(Association association, CompleteMember user, Role role) async {
+  Future<bool> addMember(Association association, CompleteMember user, List<String> rolesTags, String apparentName) async {
     return await update(
-        (association) async => associationRepository.addMember(association, user, role), association);
+        (association) async => associationRepository.addMember(association, user, rolesTags, apparentName), association);
   }
 
   Future<bool> deleteMember(Association association, CompleteMember user) async {
@@ -30,6 +30,7 @@ class AssociationNotifier extends SingleNotifier<Association> {
   void setAssociation(Association association) {
     state = AsyncValue.data(association);
   }
+
 }
 
 final asyncAssociationProvider =
