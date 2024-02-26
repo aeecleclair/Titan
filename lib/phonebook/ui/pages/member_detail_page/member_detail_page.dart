@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/providers/is_admin.dart';
-import 'package:myecl/phonebook/class/post.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
-import 'package:myecl/phonebook/providers/phonebook_page_provider.dart';
-import 'package:myecl/phonebook/providers/post_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 
 class MemberDetailPage extends HookConsumerWidget {
@@ -13,10 +8,7 @@ class MemberDetailPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isAdmin = ref.watch(isAdminProvider);
-    final pageNotifier = ref.watch(phonebookPageProvider.notifier);
     final memberProvider = ref.watch(completeMemberProvider);
-    final postProviderNotifier = ref.watch(postProvider.notifier);
     return Container(
         margin: const EdgeInsets.all(10),
         width: MediaQuery.of(context).size.width,
@@ -36,7 +28,7 @@ class MemberDetailPage extends HookConsumerWidget {
           const Text(PhonebookTextConstants
               .association), //à changer pour dépendre du nombre d'associatione
           Column(children: [
-            for (var post in memberProvider.post)
+            for (var membership in memberProvider.memberships)
               Container(
                   margin: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
@@ -46,32 +38,11 @@ class MemberDetailPage extends HookConsumerWidget {
                   child:  Row(
                       children: [
                         const Spacer(flex: 1),
-                        Text("${post.association.name} : ${post.role.name}",
+                        Text("${membership.association.name} : ${membership.role.name}",
                             style: const TextStyle(fontSize: 20)),
-                        if (isAdmin)
-                          IconButton(
-                              icon: const Icon(Icons.edit),
-                              onPressed: () {
-                                postProviderNotifier.setPost(post);
-                                pageNotifier.setPhonebookPage(
-                                    PhonebookPage.addEditRoleMember);
-                              }),
                         const Spacer(flex: 1),
                   ]))
           ]),
-          if (isAdmin)
-            ElevatedButton(
-                onPressed: () {
-                  postProviderNotifier.setPost(Post.empty());
-                  pageNotifier
-                      .setPhonebookPage(PhonebookPage.addEditRoleMember);
-                },
-                child: Row(
-                  children: const [
-                    Icon(Icons.add),
-                    Text(PhonebookTextConstants.addRole)
-                  ],
-                ))
         ]));
   }
 }

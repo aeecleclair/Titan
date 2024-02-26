@@ -52,15 +52,15 @@ class AssociationListNotifier extends ListNotifier<Association> {
   }
 }
 
-final allAssociationListProvider =
+final associationListProvider =
     StateNotifierProvider<AssociationListNotifier, AsyncValue<List<Association>>>(
         (ref) {
   final token = ref.watch(tokenProvider);
-  AssociationListNotifier provider = AssociationListNotifier(token: token);
+  AssociationListNotifier notifier = AssociationListNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {
-    await provider.loadAssociations();
+    await notifier.loadAssociations();
   });
-  return provider;
+  return notifier;
 });
 
 //final userAssociationListNotifier =

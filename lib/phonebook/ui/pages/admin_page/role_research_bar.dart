@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/providers/association_list_provider.dart';
+import 'package:myecl/phonebook/providers/role_list_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class ResearchBar extends HookConsumerWidget {
-  const ResearchBar({Key? key}) : super(key: key);
+class RoleResearchBar extends HookConsumerWidget {
+  const RoleResearchBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final associationListNotifier =
-        ref.watch(associationListProvider.notifier);
+        ref.watch(roleListProvider.notifier);
     final focusNode = useFocusNode();
     final editingController = useTextEditingController();
     return Container(
@@ -34,9 +34,9 @@ class ResearchBar extends HookConsumerWidget {
             tokenExpireWrapper(ref, () async {
               if (editingController.text.isNotEmpty) {
                 await associationListNotifier
-                    .loadAssociations(editingController.text);
+                    .loadRoles(editingController.text);
               } else {
-                await associationListNotifier.loadAssociations();
+                await associationListNotifier.loadRoles();
               }
             });
           },
@@ -44,7 +44,7 @@ class ResearchBar extends HookConsumerWidget {
           controller: editingController,
           cursorColor: PhonebookColorConstants.textDark,
           decoration: const InputDecoration(
-              labelText: PhonebookTextConstants.associationPure,
+              labelText: PhonebookTextConstants.rolePure,
               labelStyle: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,

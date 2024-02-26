@@ -9,7 +9,6 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/phonebook/repositories/association_picture_repository.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:path_provider/path_provider.dart';
 
 final associationPictureProvider =

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/class/post.dart';
+import 'package:myecl/phonebook/class/membership.dart';
 import 'package:myecl/phonebook/providers/phonebook_page_provider.dart';
-import 'package:myecl/phonebook/providers/post_provider.dart';
+import 'package:myecl/phonebook/providers/membership_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 
 
@@ -12,20 +12,20 @@ class RoleMemberPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final post = ref.watch(postProvider);
-    final postNotifier = ref.watch(postProvider.notifier);
+    final membership = ref.watch(membershipProvider);
+    final membershipNotifier = ref.watch(membershipProvider.notifier);
     final pageNotifier = ref.watch(phonebookPageProvider.notifier);
-    Post newPost = post;
+    Membership newMembership = membership;
     final associationList = useState([["Association 1","1"], ["Association 2","2"], ["Association 3","3"]]);
     final roleList = useState([["Rôle 1","1"], ["Rôle 2","2"], ["Rôle 3","3"]]);
     return Column(
       children: [
-        const Text(PhonebookTextConstants.postAssociation),
+        const Text(PhonebookTextConstants.membershipAssociation),
         const SizedBox(width: 10),
         SizedBox(
           width: 200,
           child: Autocomplete<String>(
-            initialValue: TextEditingValue(text: post.association.name),
+            initialValue: TextEditingValue(text: membership.association.name),
             optionsBuilder: (TextEditingValue textValue) {
               if (textValue.text == "") {
                 return associationList.value.map((e) => e[0]).toList();
@@ -36,16 +36,16 @@ class RoleMemberPage extends HookConsumerWidget {
             },
             onSelected: (String selection) {
               String id = associationList.value.firstWhere((element) => element[0] == selection)[1];
-              newPost = newPost.setAssociation(selection,id);
+              newMembership = newMembership.setAssociation(selection,id);
             },)),
         
         const SizedBox(width: 30),
-        const Text(PhonebookTextConstants.postRole),
+        const Text(PhonebookTextConstants.membershipRole),
         const SizedBox(width: 10),
         SizedBox(
           width: 200,
           child: Autocomplete<String>(
-            initialValue: TextEditingValue(text: post.role.name),
+            initialValue: TextEditingValue(text: membership.role.name),
             optionsBuilder: (TextEditingValue textValue) {
               if (textValue.text == "") {
                 return roleList.value.map((e) => e[0]).toList();
@@ -56,20 +56,20 @@ class RoleMemberPage extends HookConsumerWidget {
             },
             onSelected: (String selection) {
               String id = roleList.value.firstWhere((element) => element[0] == selection)[1];
-              newPost = newPost.setRole(selection,id);
+              newMembership = newMembership.setRole(selection,id);
             },)),
         ElevatedButton(
           onPressed: () {
-            if (newPost.association.name == "") {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text(PhonebookTextConstants.postAssociationError)));
+            if (newMembership.association.name == "") {
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text(PhonebookTextConstants.membershipAssociationError)));
               return;
             }
-            else if (newPost.role.name == "") {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text(PhonebookTextConstants.postRoleError)));
+            else if (newMembership.role.name == "") {
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text(PhonebookTextConstants.membershipRoleError)));
               return;
             }
             else {
-            postNotifier.setPost(newPost);
+            membershipNotifier.setMembership(newMembership);
             pageNotifier.setPhonebookPage(PhonebookPage.memberDetail);
             }
           },
