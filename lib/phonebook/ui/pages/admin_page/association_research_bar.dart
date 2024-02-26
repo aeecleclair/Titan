@@ -5,8 +5,8 @@ import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class ResearchBar extends HookConsumerWidget {
-  const ResearchBar({Key? key}) : super(key: key);
+class AssociationResearchBar extends HookConsumerWidget {
+  const AssociationResearchBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
