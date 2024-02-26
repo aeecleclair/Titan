@@ -7,6 +7,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class AssociationListNotifier extends ListNotifier<Association> {
   final AssociationRepository associationRepository = AssociationRepository();
+  AsyncValue<List<Association>> associationList = const AsyncValue.loading();
   AssociationListNotifier({
     required String token,})
       : super(const AsyncValue.loading()) {
@@ -15,28 +16,47 @@ class AssociationListNotifier extends ListNotifier<Association> {
 
 
   Future<AsyncValue<List<Association>>> loadAssociations() async {
-    return await loadList(() async => associationRepository.getAssociationList());
+    associationList = await loadList(() async => associationRepository.getAssociationList());
+    return associationList;
   }
 
   Future<bool> createAssociation(Association association) async {
-    return await add(associationRepository.createAssociation, association);
+    final result = await add(associationRepository.createAssociation, association);
+    if (result) {
+      associationList = state;
+    }
+    return result;
   }
 
   Future<bool> updateAssociation(Association association) async {
-    return await update(
+    final result = await update(
         associationRepository.updateAssociation,
         (associations, association) =>
             associations..[associations.indexWhere((g) => g.id == association.id)] = association,
         association);
+    if (result) {
+      associationList = state;
+    }
+    return result;
   }
 
   Future<bool> deleteAssociation(Association association) async {
-    return await delete(
+    final result = await delete(
         associationRepository.deleteAssociation,
         (associations, association) => associations..removeWhere((i) => i.id == association.id),
         association.id,
         association);
+    if (result) {
+      associationList = state;
+    }
+    return result;
   }
+
+  void filterAssociationList(String filter) async {
+      associationList.maybeWhen(
+        data: (data) => state = AsyncValue.data(data.where((element) => element.name.toLowerCase().contains(filter.toLowerCase())).toList()),
+        orElse: () => state = const AsyncLoading(),);
+    }
 
   void setAssociationList(List<Association> associationList) {
     state.whenData(

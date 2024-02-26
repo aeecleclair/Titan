@@ -18,6 +18,7 @@ class AssociationResearchBar extends HookConsumerWidget {
     final focusNode = useFocusNode();
     final editingController = useTextEditingController();
     final filterNotifier = ref.watch(filterProvider.notifier);
+    final associationsNotifier = ref.watch(associationListProvider.notifier);
 
     return Container(
         decoration: BoxDecoration(
@@ -36,7 +37,7 @@ class AssociationResearchBar extends HookConsumerWidget {
         width: 300,
         child: TextField(
           onChanged: (value) async {
-            filterNotifier.setFilter(value);
+            associationsNotifier.filterAssociationList(value);
           },
           focusNode: focusNode,
           controller: editingController,

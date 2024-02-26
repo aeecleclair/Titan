@@ -19,6 +19,7 @@ class ResearchBar extends HookConsumerWidget {
     final focusNode = useFocusNode();
     final editingController = useTextEditingController();
     final filterNotifier = ref.watch(filterProvider.notifier);
+    final associationsNotifier = ref.watch(associationListProvider.notifier);
     
     return Container(
         decoration: BoxDecoration(
@@ -37,7 +38,7 @@ class ResearchBar extends HookConsumerWidget {
         width: 300,
         child: TextField(
           onChanged: (value) {
-            filterNotifier.setFilter(value);
+            associationsNotifier.filterAssociationList(value);
           },
           focusNode: focusNode,
           controller: editingController,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/filtered_association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
@@ -21,7 +23,7 @@ class AdminPage extends HookConsumerWidget {
     final pageNotifier = ref.watch(phonebookPageProvider.notifier);
     final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
     final associationsNotifier = ref.watch(associationListProvider.notifier);
-    final filteredAssociations = ref.watch(filteredAssociationListProvider);
+    final filteredAssociations = useState(AsyncValue<List<Association>>);
     final associations = ref.watch(associationListProvider);
     final roleNotifier = ref.watch(rolesTagsProvider.notifier);
     final filterNotifier = ref.watch(filterProvider.notifier);
@@ -35,7 +37,6 @@ class AdminPage extends HookConsumerWidget {
       onRefresh: () async {
       await associationsNotifier.loadAssociations();
       await roleNotifier.loadRolesTags();
-      await filteredAssociationListNotifier.loadAssociations();
       },
       child: Column(
         children:
@@ -57,8 +58,8 @@ class AdminPage extends HookConsumerWidget {
                     margin: const EdgeInsets.all(10),
                     child: Row(children: const [Spacer(), Icon(Icons.add), Spacer()])
                   ),
-            )] + 
-            associations.when(
+            ), 
+            ...associations.when(
               data: (associations) {
                 return associations.map((association) => EditableAssociationCard(
                   association: association,
@@ -79,7 +80,7 @@ class AdminPage extends HookConsumerWidget {
                 ).toList();},
               loading: () => const [Center(child: CircularProgressIndicator())],
               error: (error, stack) => [const Center(child: Text(PhonebookTextConstants.errorLoadAssociationList))])
-          ),
+          ],),
           ])
 
       );
