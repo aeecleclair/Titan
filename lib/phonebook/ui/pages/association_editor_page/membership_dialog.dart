@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/phonebook/class/roles_tags.dart';
 import 'package:myecl/phonebook/providers/member_role_tags_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/ui/pages/association_editor_page/search_result.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
+import 'package:tuple/tuple.dart';
 
 class MembershipDialog extends HookConsumerWidget{
   const MembershipDialog({
@@ -22,13 +24,14 @@ class MembershipDialog extends HookConsumerWidget{
   final VoidCallback onConfirm;
   final TextEditingController apparentNameController;
 
-  String nameConstructor (List<String> names, List<bool> checked) {
+  String nameConstructor (Tuple2<RolesTags, List<bool>> data) {
     String name = '';
-    for (int i = 0; i < names.length; i++) {
-      if (checked[i]) {
-        name ="$name, ${names[i]}";
+    for (int i = 0; i < data.item2.length; i++) {
+      if (data.item2[i]) {
+        name ="$name, ${data.item1.tags[i]}";
       }
     }
+    if (name == "") {return "";};
     return name.substring(1, name.length);
   }
 
@@ -40,6 +43,7 @@ class MembershipDialog extends HookConsumerWidget{
         useTextEditingController(text: '');
     final usersNotifier = ref.watch(userList.notifier);
     final memberRoleTagsNotifier = ref.watch(memberRolesTagsProvider.notifier);
+    final rolesTagsNotifier = ref.watch(rolesTagsProvider.notifier);
 
     List<bool> checked = [];
     apparentNameController.text = apparentName.value;
@@ -89,20 +93,20 @@ class MembershipDialog extends HookConsumerWidget{
                 SearchResult(queryController: queryController),
               ...rolesTags.when(
                 data: (data) {
-                  checked = List.filled(data.tags.length, false);
-                  return data.tags.map((e) => Row(
+                  return data.item1.tags.map((e) => Row(
                   children: [
                     Text(e),
                     const Spacer(),
                     Checkbox(
-                      value: false,
+                      value: data.item2[data.item1.tags.indexOf(e)],
                       fillColor: MaterialStateProperty.all(Colors.black),
                       onChanged: (value) {
-                        checked[data.tags.indexOf(e)] = value!;
+                        checked = data.item2;
+                        checked[data.item1.tags.indexOf(e)] = value!;
                         debugPrint(checked.toString());
-                        apparentName.value = nameConstructor(data.tags, checked);
+                        apparentName.value = nameConstructor(data);
                         apparentNameController.text = apparentName.value;
-                        memberRoleTagsNotifier.setRoleTagsWithFilter(data.tags, checked);
+                        memberRoleTagsNotifier.setRoleTagsWithFilter(data);
                       },
                   )])).toList();
                 },
@@ -127,6 +131,7 @@ class MembershipDialog extends HookConsumerWidget{
             onPressed: () {
               Navigator.of(context).pop();
               onConfirm();
+              rolesTagsNotifier.resetChecked();
             },
             child: const Text(PhonebookTextConstants.validation),
           ),

@@ -14,6 +14,7 @@ class SearchResult extends HookConsumerWidget {
     final users = ref.watch(userList);
     final usersNotifier = ref.watch(userList.notifier);
     final memberNotifier = ref.watch(memberProvider.notifier);
+    final member = ref.watch(memberProvider);
 
     return users.when(
         data: (u) {
@@ -40,7 +41,10 @@ class SearchResult extends HookConsumerWidget {
                             ]),
                       ),
                       onTap: () {
+                        debugPrint(e.toString());
+                        debugPrint(Member.fromUser(e).toString());
                         memberNotifier.setMember(Member.fromUser(e));
+                        debugPrint(member.toString());
                         queryController.text = e.getName();
                         usersNotifier.clear();
                       }))
