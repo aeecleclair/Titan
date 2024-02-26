@@ -73,7 +73,7 @@ class CalendarDialog extends StatelessWidget {
                       children: [
                         CalendarDialogButton(
                           uri: 'mailto:${booking.applicant.email}',
-                          heroIcons: HeroIcons.atSymbol,
+                          icon: HeroIcons.atSymbol,
                         ),
                         const SizedBox(
                           width: 20,
@@ -99,7 +99,7 @@ class CalendarDialog extends StatelessWidget {
                           uri: (booking.applicant.phone != null)
                               ? 'sms:${booking.applicant.phone}'
                               : null,
-                          heroIcons: HeroIcons.chatBubbleBottomCenterText,
+                          icon: HeroIcons.chatBubbleBottomCenterText,
                         ),
                         const SizedBox(
                           width: 20,
