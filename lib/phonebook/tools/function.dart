@@ -12,7 +12,7 @@ String nameConstructor(Map<String, AsyncValue<List<bool>>> data) {
     value.maybeWhen(
         data: (d) {
           if (d[0]) {
-            name += "$key,";
+            name += "$key, ";
           }
         },
         orElse: () {});
@@ -20,7 +20,7 @@ String nameConstructor(Map<String, AsyncValue<List<bool>>> data) {
   if (name.isEmpty) {
     return "";
   }
-  return name.substring(0, name.length - 1);
+  return name.substring(0, name.length - 2);
 }
 
 List<CompleteMember> sortMembers(List<CompleteMember> members,

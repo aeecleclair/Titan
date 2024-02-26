@@ -11,9 +11,14 @@ import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/tools/function.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/widgets/styled_search_bar.dart';
+import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
@@ -53,45 +58,27 @@ class MembershipEditorPage extends HookConsumerWidget {
 
     return PhonebookTemplate(
         child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(30.0),
             child: SingleChildScrollView(
                 child: Column(
               children: [
-                Center(
-                    child: Container(
-                        decoration: const BoxDecoration(
-                          border:
-                              Border(bottom: BorderSide(color: Colors.black)),
-                          color: Colors.white,
-                        ),
-                        child: Text(
-                            edition
-                                ? PhonebookTextConstants.editMembership
-                                : PhonebookTextConstants.addMember,
-                            style: const TextStyle(fontSize: 20)))),
+                AlignLeftText(edition
+                    ? PhonebookTextConstants.editMembership
+                    : PhonebookTextConstants.addMember),
                 if (!edition)
-                  TextFormField(
-                    onChanged: (value) {
+                  StyledSearchBar(
+                    padding: EdgeInsets.zero,
+                    label: PhonebookTextConstants.member,
+                    onChanged: (value) async {
                       tokenExpireWrapper(ref, () async {
-                        if (queryController.text.isNotEmpty) {
-                          await usersNotifier.filterUsers(queryController.text);
+                        queryController.text = value;
+                        if (value.isNotEmpty) {
+                          await usersNotifier.filterUsers(value);
                         } else {
                           usersNotifier.clear();
                         }
                       });
                     },
-                    cursorColor: Colors.black,
-                    controller: queryController,
-                    decoration: const InputDecoration(
-                      labelText: PhonebookTextConstants.member,
-                      floatingLabelStyle: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black, width: 2.0),
-                      ),
-                    ),
                   ),
                 const SizedBox(
                   height: 10,
@@ -131,17 +118,26 @@ class MembershipEditorPage extends HookConsumerWidget {
                     ),
                   ]),
                 ),
-                const SizedBox(height: 5),
-                const Text(PhonebookTextConstants.apparentName),
-                TextField(
+                const SizedBox(height: 30),
+                TextEntry(
                   controller: apparentNameController,
+                  label: PhonebookTextConstants.apparentName,
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: 50),
                 WaitingButton(
-                  builder: (child) => child,
-                  child: Text(!edition
-                      ? PhonebookTextConstants.add
-                      : PhonebookTextConstants.edit),
+                  builder: (child) => AddEditButtonLayout(colors: [
+                    ColorConstants.gradient1,
+                    ColorConstants.gradient2,
+                  ], child: child),
+                  child: Text(
+                      !edition
+                          ? PhonebookTextConstants.add
+                          : PhonebookTextConstants.edit,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromARGB(255, 255, 255, 255),
+                      )),
                   onTap: () async {
                     if (member.member.id == "") {
                       displayToastWithContext(
@@ -176,7 +172,7 @@ class MembershipEditorPage extends HookConsumerWidget {
                               PhonebookTextConstants.updatedMember);
                           QR.back();
                         } else {
-                          displayToastWithContext(TypeMsg.msg,
+                          displayToastWithContext(TypeMsg.error,
                               PhonebookTextConstants.updatingError);
                         }
                       } else {
@@ -194,8 +190,8 @@ class MembershipEditorPage extends HookConsumerWidget {
                               TypeMsg.msg, PhonebookTextConstants.addedMember);
                           QR.back();
                         } else {
-                          displayToastWithContext(
-                              TypeMsg.msg, PhonebookTextConstants.addingError);
+                          displayToastWithContext(TypeMsg.error,
+                              PhonebookTextConstants.addingError);
                         }
                       }
                     });
