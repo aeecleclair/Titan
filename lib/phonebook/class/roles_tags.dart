@@ -3,7 +3,7 @@ class RolesTags{
     required this.tags,
     });
   
-  late final List<String> tags;
+  late final List<dynamic> tags;
 
   RolesTags.fromJSON(Map<String, dynamic> json){
       tags = json['tags'];

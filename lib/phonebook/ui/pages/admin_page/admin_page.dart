@@ -9,7 +9,7 @@ import 'package:myecl/phonebook/providers/phonebook_page_provider.dart';
 import 'package:myecl/phonebook/providers/research_filter_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/phonebook/ui/kind_chip.dart';
+import 'package:myecl/phonebook/ui/radio_chip.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/association_research_bar.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/editable_association_card.dart';
 import 'package:myecl/tools/functions.dart';
@@ -46,7 +46,7 @@ class AdminPage extends HookConsumerWidget {
               return SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(children: [
-                  KindChip(
+                  RadioChip(
                     label: "Toutes",
                     selected: kind.value == "",
                     onTap: () {
@@ -55,7 +55,7 @@ class AdminPage extends HookConsumerWidget {
                       associationsNotifier.filterAssociationList(nameFilter, kind.value);
                   }),
                   ...data.kinds
-                      .map((e) => KindChip(
+                      .map((e) => RadioChip(
                           label: e,
                           selected: kind.value == e,
                           onTap: () {

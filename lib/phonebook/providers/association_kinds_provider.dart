@@ -1,16 +1,17 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/phonebook/class/association_kinds.dart';
-import 'package:myecl/phonebook/repositories/association_kind_repository.dart';
+import 'package:myecl/phonebook/repositories/association_repository.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 
 class AssociationKindsNotifier extends SingleNotifier<AssociationKinds> {
-  final AssociationKindsRepository associationKindsRepository = AssociationKindsRepository();
+  final AssociationRepository associationRepository = AssociationRepository();
     AssociationKindsNotifier({required String token})
         : super(const AsyncValue.loading()) {
-      associationKindsRepository.setToken(token);
+      associationRepository.setToken(token);
     }
 
   void setKind(AssociationKinds i) {
@@ -18,7 +19,10 @@ class AssociationKindsNotifier extends SingleNotifier<AssociationKinds> {
   }
 
   Future<AsyncValue<AssociationKinds>> loadAssociationKinds() async {
-    return await load(() async => associationKindsRepository.getAssociationKinds());
+    debugPrint("loadAssociationKinds");
+    AsyncValue<AssociationKinds> result = await load(() async => associationRepository.getAssociationKinds());
+    debugPrint("loadAssociationKinds result: $result");
+    return result;
   }
 }
 

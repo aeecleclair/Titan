@@ -12,7 +12,7 @@ import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/admin/providers/is_admin.dart';
 import 'package:myecl/phonebook/providers/phonebook_page_provider.dart';
 import 'package:myecl/phonebook/ui/association_card.dart';
-import 'package:myecl/phonebook/ui/kind_chip.dart';
+import 'package:myecl/phonebook/ui/radio_chip.dart';
 import 'package:myecl/phonebook/ui/pages/main_page/research_bar.dart';
 import 'package:myecl/tools/ui/refresher.dart';
 
@@ -28,7 +28,6 @@ class MainPage extends HookConsumerWidget {
     final associationList = ref.watch(associationListProvider);
     final associationKindsNotifier =
         ref.watch(associationKindsProvider.notifier);
-    final rolesTagsNotifier = ref.watch(rolesTagsProvider.notifier);
     final associationKinds = ref.watch(associationKindsProvider);
     final kind = useState('');
     final kindNotifier = ref.watch(associationKindProvider.notifier);
@@ -38,7 +37,6 @@ class MainPage extends HookConsumerWidget {
       children: [
         Refresher(
             onRefresh: () async {
-              await rolesTagsNotifier.loadRolesTags();
               await associationKindsNotifier.loadAssociationKinds();
               await associationListNotifier.loadAssociations();
             },
@@ -47,10 +45,11 @@ class MainPage extends HookConsumerWidget {
                   const SizedBox(height: 70),
                   associationKinds.when(
                     data: (data) {
+                      debugPrint("associationKinds.when data: ${data.kinds}");
                       return SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(children: [
-                          KindChip(
+                          RadioChip(
                             label: "Toutes",
                             selected: kind.value == "",
                             onTap: () {
@@ -59,7 +58,7 @@ class MainPage extends HookConsumerWidget {
                               associationListNotifier.filterAssociationList(nameFilter, kind.value);
                           }),
                           ...data.kinds
-                              .map((e) => KindChip(
+                              .map((e) => RadioChip(
                                   label: e,
                                   selected: kind.value == e,
                                   onTap: () {
@@ -73,7 +72,7 @@ class MainPage extends HookConsumerWidget {
                       );
                     },
                     error: (error, stackTrace) =>
-                        const Text(PhonebookTextConstants.errorRoleTagsLoading),
+                        const Text(PhonebookTextConstants.errorKindsLoading),
                     loading: () => const CircularProgressIndicator()),
                   const SizedBox(height: 30),
                   const ResearchBar(),

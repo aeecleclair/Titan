@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:myecl/phonebook/class/association.dart';
+import 'package:myecl/phonebook/class/association_kinds.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/member.dart';
 import 'package:myecl/phonebook/class/membership.dart';
@@ -92,5 +93,10 @@ class AssociationRepository extends Repository {
     return await update({"member_id": member.id, "association_id": association.id, "rolesTags": rolesTags, "apparentName": apparentName}, association.id,
        suffix: "memberships");
     // return true;
+  }
+
+  Future<AssociationKinds> getAssociationKinds() async {
+    // return fakeAssociationKinds ;
+    return AssociationKinds.fromJSON(await getOne("kinds"));
   }
 }

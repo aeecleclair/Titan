@@ -8,7 +8,7 @@ import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/phonebook_page_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/phonebook/ui/kind_chip.dart';
+import 'package:myecl/phonebook/ui/radio_chip.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -60,7 +60,7 @@ class AssociationCreationPage extends HookConsumerWidget {
                             children: [
                             const Spacer(),
                               ...value.kinds.map(
-                              (e) => KindChip(
+                              (e) => RadioChip(
                                 label: e,
                                 selected: e == kind.value,
                                 onTap: () async {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class KindChip extends StatelessWidget {
+class RadioChip extends StatelessWidget {
   final bool selected;
   final String label;
   final Function() onTap;
-  const KindChip(
+  const RadioChip(
       {super.key,
       required this.label,
       required this.selected,
