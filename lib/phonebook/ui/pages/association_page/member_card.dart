@@ -76,7 +76,7 @@ class MemberCard extends HookConsumerWidget {
                   if (!kIsWeb) ...[
                     if (member.member.nickname != null)
                       CopiabledText(
-                        data: member.member.nickname!,
+                        member.member.nickname!,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -84,7 +84,7 @@ class MemberCard extends HookConsumerWidget {
                         flex: 1,
                       ),
                     CopiabledText(
-                      data: "${member.member.name} ${member.member.firstname}",
+                      "${member.member.name} ${member.member.firstname}",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -95,7 +95,7 @@ class MemberCard extends HookConsumerWidget {
                       flex: 1,
                     ),
                     CopiabledText(
-                        data: member.member.email,
+                        member.member.email,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -103,14 +103,14 @@ class MemberCard extends HookConsumerWidget {
                         flex: 1),
                     if (member.member.phone != null)
                       CopiabledText(
-                          data: member.member.phone!,
+                          member.member.phone!,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
                           ),
                           flex: 1),
                     CopiabledText(
-                        data: member.memberships
+                        member.memberships
                             .firstWhere((element) =>
                                 element.associationId == association.id)
                             .apparentName,
