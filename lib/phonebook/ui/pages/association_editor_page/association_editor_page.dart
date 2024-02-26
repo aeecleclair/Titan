@@ -30,12 +30,14 @@ class AssociationEditorPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final key = GlobalKey<FormState>();
     final association = ref.watch(associationProvider);
+    final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
     final associationMemberListNotifier =
         ref.watch(associationMemberListProvider.notifier);
     final associationMemberList = ref.watch(associationMemberListProvider);
     final associationPictureNotifier =
         ref.watch(associationPictureProvider.notifier);
-    final associationListNotifier = ref.watch(associationListProvider.notifier);
+    final associationListNotifier =
+        ref.watch(asyncAssociationListProvider.notifier);
     final associationKinds = ref.watch(associationKindsProvider);
     final kind = useState(association.kind);
     final name = useTextEditingController(text: association.name);
@@ -112,7 +114,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                                 controller: name,
                                 cursorColor: ColorConstants.gradient1,
                                 decoration: InputDecoration(
-                                    labelText: "Name",
+                                    labelText: PhonebookTextConstants.namePure,
                                     labelStyle: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -153,7 +155,8 @@ class AssociationEditorPage extends HookConsumerWidget {
                                 controller: description,
                                 cursorColor: ColorConstants.gradient1,
                                 decoration: InputDecoration(
-                                    labelText: "Description",
+                                    labelText:
+                                        PhonebookTextConstants.description,
                                     labelStyle: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -172,13 +175,6 @@ class AssociationEditorPage extends HookConsumerWidget {
                                     focusedBorder: const UnderlineInputBorder(
                                         borderSide: BorderSide(
                                             color: ColorConstants.gradient1))),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return PhonebookTextConstants
-                                        .emptyFieldError;
-                                  }
-                                  return null;
-                                },
                               ),
                             ),
                           ],
@@ -388,6 +384,9 @@ class AssociationEditorPage extends HookConsumerWidget {
                         if (value) {
                           displayToastWithContext(TypeMsg.msg,
                               PhonebookTextConstants.newMandateConfirmed);
+                          associationNotifier.setAssociation(
+                              association.copyWith(
+                                  mandateYear: association.mandateYear + 1));
                         } else {
                           displayToastWithContext(TypeMsg.error,
                               PhonebookTextConstants.mandateChangingError);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
 import 'package:myecl/phonebook/router.dart';
@@ -15,6 +16,7 @@ class MemberDetailPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final memberProvider = ref.watch(completeMemberProvider);
     final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
+    final associationList = ref.watch(associationListProvider);
     return PhonebookTemplate(
         child: Container(
             margin: const EdgeInsets.all(10),
@@ -30,7 +32,7 @@ class MemberDetailPage extends HookConsumerWidget {
                 Text(
                     "${PhonebookTextConstants.nickname} ${memberProvider.member.nickname!}"),
               Text(
-                  "${PhonebookTextConstants.promotion} ${memberProvider.member.promotion}"),
+                  "${PhonebookTextConstants.promotion} ${memberProvider.member.promotion + 2000}"),
               Text(
                   "${PhonebookTextConstants.email} ${memberProvider.member.email}"),
               if (memberProvider.memberships.isNotEmpty)
@@ -39,9 +41,12 @@ class MemberDetailPage extends HookConsumerWidget {
                     : PhonebookTextConstants.associations),
               ...memberProvider.memberships
                   .map((e) => AssociationCard(
-                      association: e.association,
+                      association: associationList.firstWhere(
+                          (association) => association.id == e.associationId),
                       onClicked: () {
-                        associationNotifier.setAssociation(e.association);
+                        associationNotifier.setAssociation(
+                            associationList.firstWhere((association) =>
+                                association.id == e.associationId));
                         QR.to(PhonebookRouter.root +
                             PhonebookRouter.associationDetail);
                       },

@@ -14,5 +14,5 @@ String nameConstructor(Map<String, AsyncValue<List<bool>>> data) {
   if (name.isEmpty) {
     return "";
   }
-  return name.substring(1, name.length);
+  return name.substring(0, name.length - 1);
 }

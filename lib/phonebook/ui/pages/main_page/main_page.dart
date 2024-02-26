@@ -24,8 +24,9 @@ class PhonebookMainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isAdmin = ref.watch(isPhonebookAdminProvider);
     final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
-    final associationListNotifier = ref.watch(associationListProvider.notifier);
-    final associationList = ref.watch(associationListProvider);
+    final associationListNotifier =
+        ref.watch(asyncAssociationListProvider.notifier);
+    final associationList = ref.watch(asyncAssociationListProvider);
     final associationKindsNotifier =
         ref.watch(associationKindsProvider.notifier);
     final associationKinds = ref.watch(associationKindsProvider);
@@ -83,7 +84,6 @@ class PhonebookMainPage extends HookConsumerWidget {
               const SizedBox(height: 10),
               associationKinds.when(
                   data: (data) {
-                    debugPrint("associationKinds.when data: ${data.kinds}");
                     return SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         physics: const BouncingScrollPhysics(),

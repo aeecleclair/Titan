@@ -55,6 +55,8 @@ class AssociationListNotifier extends ListNotifier<Association> {
   }
 
   void filterAssociationList(String nameFilter, String kindFilter) async {
+    debugPrint("nameFilter: $nameFilter");
+    debugPrint("kindFilter: $kindFilter");
     if (kindFilter == "") {
       associationList.maybeWhen(
         data: (data) => state = AsyncValue.data(data
@@ -84,12 +86,18 @@ class AssociationListNotifier extends ListNotifier<Association> {
   }
 }
 
-final associationListProvider = StateNotifierProvider<AssociationListNotifier,
-    AsyncValue<List<Association>>>((ref) {
+final asyncAssociationListProvider = StateNotifierProvider<
+    AssociationListNotifier, AsyncValue<List<Association>>>((ref) {
   final token = ref.watch(tokenProvider);
   AssociationListNotifier notifier = AssociationListNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {
     await notifier.loadAssociations();
   });
   return notifier;
+});
+
+final associationListProvider = Provider<List<Association>>((ref) {
+  final association = ref.watch(asyncAssociationListProvider);
+  return association.maybeWhen(
+      data: (association) => association, orElse: () => [Association.empty()]);
 });

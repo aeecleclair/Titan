@@ -15,7 +15,8 @@ class ResearchBar extends HookConsumerWidget {
     final focusNode = useFocusNode();
     final editingController = useTextEditingController();
     final filterNotifier = ref.watch(filterProvider.notifier);
-    final associationsNotifier = ref.watch(associationListProvider.notifier);
+    final associationsNotifier =
+        ref.watch(asyncAssociationListProvider.notifier);
     final associationKind = ref.watch(associationKindProvider);
 
     return Expanded(

@@ -31,6 +31,7 @@ class PhonebookTextConstants {
   static const String deletedMember = "Membre supprimé";
   static const String deleting = "Suppression";
   static const String deletingError = "Erreur lors de la suppression";
+  static const String description = "Description";
 
   static const String edit = "Modifier";
   static const String editMembership = "Modifier le rôle";
@@ -69,6 +70,7 @@ class PhonebookTextConstants {
   static const String membershipRoleError = "Veuillez choisir un rôle";
 
   static const String name = "Nom :";
+  static const String namePure = "Nom";
   static const String newMandate = "Nouveau mandat";
   static const String newMandateConfirmed = "Mandat changé";
   static const String nickname = "Surnom :";

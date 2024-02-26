@@ -103,7 +103,7 @@ class MemberEditableCard extends HookConsumerWidget {
             Text(
                 member.memberships
                     .firstWhere(
-                        (element) => element.association.id == association.id)
+                        (element) => element.associationId == association.id)
                     .apparentName,
                 style: const TextStyle(
                   fontSize: 20,
@@ -131,7 +131,8 @@ class MemberEditableCard extends HookConsumerWidget {
               onDelete: () async {
                 final result = await associationNotifier.deleteMember(
                     member.memberships.firstWhere(
-                        (element) => element.association.id == association.id));
+                        (element) => element.associationId == association.id),
+                    association);
                 await associationMembersNotifier.loadMembers(
                     association.id, association.mandateYear.toString());
                 if (result) {

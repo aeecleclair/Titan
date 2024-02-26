@@ -14,7 +14,7 @@ class Member extends SimpleUser {
 
   Member.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     email = json['email'];
-    promotion = json['promotion'];
+    promotion = json['promo'] ?? 0;
   }
 
   @override
@@ -48,11 +48,12 @@ class Member extends SimpleUser {
     promotion = 0;
   }
 
-  Member.fromUser(SimpleUser user) : super.empty() {
-    name = user.name;
-    firstname = user.firstname;
-    nickname = user.nickname;
-    id = user.id;
+  Member.fromUser(SimpleUser user)
+      : super(
+            name: user.name,
+            firstname: user.firstname,
+            nickname: user.nickname,
+            id: user.id) {
     email = "";
     promotion = 0;
   }

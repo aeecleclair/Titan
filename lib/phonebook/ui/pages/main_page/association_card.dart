@@ -30,10 +30,11 @@ class AssociationCard extends HookConsumerWidget {
     final member = ref.watch(completeMemberProvider);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: GestureDetector(
           onTap: onClicked,
           child: Container(
+              margin: const EdgeInsets.symmetric(vertical: 5),
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                   color: Colors.white,
@@ -115,7 +116,7 @@ class AssociationCard extends HookConsumerWidget {
                 Text(
                   association.name,
                   style: const TextStyle(
-                    fontSize: 20,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -124,11 +125,11 @@ class AssociationCard extends HookConsumerWidget {
                   giveMemberRole
                       ? member.memberships
                           .firstWhere((element) =>
-                              element.association.id == association.id)
+                              element.associationId == association.id)
                           .apparentName
                       : association.kind,
                   style: const TextStyle(
-                    fontSize: 20,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
