@@ -20,6 +20,9 @@ import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -35,6 +38,7 @@ class AssociationEditorPage extends HookConsumerWidget {
         ref.watch(associationMemberListProvider.notifier);
     final associationMemberList =
         ref.watch(associationMemberSortedListProvider);
+    print(associationMemberList);
     final associationPictureNotifier =
         ref.watch(associationPictureProvider.notifier);
     final associationListNotifier =
@@ -77,20 +81,24 @@ class AssociationEditorPage extends HookConsumerWidget {
             key: key,
             child: Column(children: [
               associationKinds.when(
-                data: (value) {
-                  return SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                          children: value.kinds
-                              .map((e) => RadioChip(
-                                    label: e,
-                                    selected: e == kind.value,
-                                    onTap: () async {
-                                      kind.value = e;
-                                    },
-                                  ))
-                              .toList()));
+                data: (association) {
+                  return HorizontalListView.builder(
+                      height: 40,
+                      items: association.kinds,
+                      itemBuilder: (context, item, index) {
+                        final selected = kind.value == item;
+                        return ItemChip(
+                          onTap: () {
+                            kind.value = item;
+                          },
+                          selected: selected,
+                          child: Text(item,
+                              style: TextStyle(
+                                color: selected ? Colors.white : Colors.black,
+                                fontWeight: FontWeight.bold,
+                              )),
+                        );
+                      });
                 },
                 error: (error, stack) {
                   return const Text(PhonebookTextConstants.errorKindsLoading);
@@ -180,30 +188,10 @@ class AssociationEditorPage extends HookConsumerWidget {
                           ],
                         )),
                     WaitingButton(
-                      builder: (child) => Container(
-                          width: double.infinity,
-                          margin: const EdgeInsets.symmetric(vertical: 20),
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [
-                                ColorConstants.gradient1,
-                                ColorConstants.gradient2,
-                              ],
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color:
-                                    ColorConstants.gradient2.withOpacity(0.5),
-                                blurRadius: 5,
-                                offset: const Offset(2, 2),
-                                spreadRadius: 2,
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: child),
+                      builder: (child) => AddEditButtonLayout(colors: [
+                        ColorConstants.gradient1,
+                        ColorConstants.gradient2,
+                      ], child: child),
                       onTap: () async {
                         if (!key.currentState!.validate()) {
                           return;
@@ -241,6 +229,9 @@ class AssociationEditorPage extends HookConsumerWidget {
                 ),
               )
             ])),
+        const SizedBox(
+          height: 30,
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Row(
@@ -281,89 +272,78 @@ class AssociationEditorPage extends HookConsumerWidget {
             ],
           ),
         ),
+        const SizedBox(
+          height: 30,
+        ),
         if (associationMemberList.isEmpty)
           const Center(
-            child: CircularProgressIndicator(),
+            child: Text(
+              PhonebookTextConstants.noMember,
+            ),
           )
         else if (associationMemberList.first.member.id != '')
           ...associationMemberList
               .map((member) => MemberEditableCard(member: member))
               .toList(),
         const SizedBox(
-          height: 10,
+          height: 50,
         ),
-        WaitingButton(
-          builder: (child) => Container(
-              width: double.infinity,
-              margin: const EdgeInsets.all(30),
-              padding: const EdgeInsets.symmetric(vertical: 15),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [
-                    ColorConstants.gradient1,
-                    ColorConstants.gradient2,
-                  ],
+        Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: WaitingButton(
+              builder: (child) => AddEditButtonLayout(colors: [
+                ColorConstants.gradient1,
+                ColorConstants.gradient2,
+              ], child: child),
+              onTap: () async {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text(PhonebookTextConstants.newMandate),
+                    content:
+                        const Text(PhonebookTextConstants.changeMandateConfirm),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text(PhonebookTextConstants.cancel),
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          Navigator.pop(context);
+                          await tokenExpireWrapper(ref, () async {
+                            final value = await associationListNotifier
+                                .updateAssociation(association.copyWith(
+                                    mandateYear: association.mandateYear + 1));
+                            if (value) {
+                              displayToastWithContext(TypeMsg.msg,
+                                  PhonebookTextConstants.newMandateConfirmed);
+                              associationNotifier.setAssociation(
+                                  association.copyWith(
+                                      mandateYear:
+                                          association.mandateYear + 1));
+                            } else {
+                              displayToastWithContext(TypeMsg.error,
+                                  PhonebookTextConstants.mandateChangingError);
+                            }
+                          });
+                        },
+                        child: const Text(PhonebookTextConstants.validation),
+                      ),
+                    ],
+                  ),
+                );
+              },
+              child: Text(
+                "${PhonebookTextConstants.changeMandate} ${association.mandateYear + 1}",
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Color.fromARGB(255, 255, 255, 255),
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: ColorConstants.gradient2.withOpacity(0.5),
-                    blurRadius: 5,
-                    offset: const Offset(2, 2),
-                    spreadRadius: 2,
-                  ),
-                ],
-                borderRadius: BorderRadius.circular(15),
               ),
-              child: child),
-          onTap: () async {
-            showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: const Text(PhonebookTextConstants.newMandate),
-                content:
-                    const Text(PhonebookTextConstants.changeMandateConfirm),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text(PhonebookTextConstants.cancel),
-                  ),
-                  TextButton(
-                    onPressed: () async {
-                      Navigator.pop(context);
-                      await tokenExpireWrapper(ref, () async {
-                        final value = await associationListNotifier
-                            .updateAssociation(association.copyWith(
-                                mandateYear: association.mandateYear + 1));
-                        if (value) {
-                          displayToastWithContext(TypeMsg.msg,
-                              PhonebookTextConstants.newMandateConfirmed);
-                          associationNotifier.setAssociation(
-                              association.copyWith(
-                                  mandateYear: association.mandateYear + 1));
-                        } else {
-                          displayToastWithContext(TypeMsg.error,
-                              PhonebookTextConstants.mandateChangingError);
-                        }
-                      });
-                    },
-                    child: const Text(PhonebookTextConstants.validation),
-                  ),
-                ],
-              ),
-            );
-          },
-          child: Text(
-            "${PhonebookTextConstants.changeMandate} ${association.mandateYear + 1}",
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: Color.fromARGB(255, 255, 255, 255),
-            ),
-          ),
-        )
+            ))
       ]),
     ));
   }
