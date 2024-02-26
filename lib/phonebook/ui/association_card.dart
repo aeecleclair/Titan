@@ -16,7 +16,6 @@ class AssociationCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageNotifier = ref.watch(phonebookPageProvider.notifier);
     final associationPicture = ref.watch(associationPictureProvider);
     
     return GestureDetector(
@@ -77,6 +76,13 @@ class AssociationCard extends HookConsumerWidget {
                 ),
               ),
             ),
+          const Spacer(flex: 1),
+          Text(association.kind,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ],
       )
     )

@@ -99,7 +99,7 @@ class MemberCard extends HookConsumerWidget {
                   width: 100,
                   child: Center(
                     child: Text(
-                      member.memberships.firstWhere((element) => element.association.id == association.id).role.name,
+                      member.memberships.firstWhere((element) => element.association.id == association.id).apparentName,
                       style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,

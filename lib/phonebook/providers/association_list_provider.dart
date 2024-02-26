@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/repositories/association_repository.dart';
@@ -12,21 +13,23 @@ class AssociationListNotifier extends ListNotifier<Association> {
     associationRepository.setToken(token);
   }
 
-  late List<Association> associationList;
 
   Future<AsyncValue<List<Association>>> loadAssociations() async {
-    associationList = await associationRepository.getAssociationList();
     return await loadList(() async => associationRepository.getAssociationList());
   }
 
   List<Association> filterAssociations(String filter) {
     if (filter.isEmpty) {
-      return associationList;
+      return state.maybeWhen(
+          data: (associations) => associations,
+          orElse: () => []);
     }
-    return associationList
-        .where((association) =>
-            association.name.toLowerCase().contains(filter.toLowerCase()))
-        .toList();
+    return state.maybeWhen(
+        data: (associations) => associations
+            .where((association) =>
+                association.name.toLowerCase().contains(filter.toLowerCase()))
+            .toList(),
+        orElse: () => []);
   }
 
 //  Future<AsyncValue<List<Association>>> loadAssociationsFromUser(User user) async {
@@ -36,6 +39,7 @@ class AssociationListNotifier extends ListNotifier<Association> {
 //  }
 
   Future<bool> createAssociation(Association association) async {
+    debugPrint("createAssociation");
     return await add(associationRepository.createAssociation, association);
   }
 

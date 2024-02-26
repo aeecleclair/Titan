@@ -93,7 +93,7 @@ class MemberEditableCard extends HookConsumerWidget {
                     child : Row(
                       children: member.memberships.where((element) => element.association.id == association.id).map((e) =>
                         Text(
-                        e.role.name,
+                        e.apparentName,
                         style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,

@@ -19,7 +19,7 @@ class CompleteMember{
   Map<String, dynamic> toJSON(){
     final data = <String, dynamic>{
       'member': member.id,
-      'membership': memberships.map((e) => [e.association.id, e.role.id]),
+      'membership': memberships.map((e) => e.toJSON()).toList(),
     };
     return data;
   }
@@ -30,7 +30,7 @@ class CompleteMember{
   }) {
     return CompleteMember(
       member: member ?? this.member,
-      memberships: membership ?? this.memberships,
+      memberships: membership ?? memberships,
     );
   }
 

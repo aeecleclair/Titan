@@ -54,6 +54,7 @@ class TextInputDialog extends HookConsumerWidget{
           ),
           TextButton(
             onPressed: () {
+              Navigator.of(context).pop();
               onConfirm();
             },
             child: const Text(PhonebookTextConstants.validation),

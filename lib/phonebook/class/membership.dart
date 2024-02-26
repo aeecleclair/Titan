@@ -1,48 +1,59 @@
 import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/class/role.dart';
+import 'package:myecl/phonebook/class/roles_tags.dart';
 
 class Membership{
   Membership({
     required this.association,
-    required this.role,
+    required this.rolesTags,
+    required this.apparentName,
   });
 
   late final Association association;
-  late final Role role;
+  late final List<String> rolesTags;
+  late final String apparentName;
 
   Membership.fromJSON(Map<String, dynamic> json){
       association = json['association'];
-      role = json['role'];
+      rolesTags = json['role'];
+      apparentName = json['apparentName'];
       }
   
   Map<String, dynamic> toJSON(){
     final data = <String, dynamic>{
       'association': association.id,
-      'role': role.id,
+      'rolesTags': rolesTags,
+      'apparentName': apparentName,
     };
     return data;
   }
 
   Membership copyWith({
     Association? association,
-    Role? role,
+    List<String>? rolesTags,
+    String? apparentName,
   }) {
     return Membership(
       association: association ?? this.association,
-      role: role ?? this.role,
+      rolesTags: rolesTags ?? this.rolesTags,
+      apparentName: apparentName ?? this.apparentName,
     );
   }
 
   Membership.empty(){
     association = Association.empty();
-    role = Role.empty();
+    rolesTags = [];
+    apparentName = "";
   }
 
   Membership setAssociation(String name, String id) {
     return copyWith(association: association.copyWith(name: name, id: id));
   }
 
-  Membership setRole(String name, String id) {
-    return copyWith(role: role.copyWith(name: name, id: id));
+  Membership setRolesTags(List<String> rolesTags) {
+    return copyWith(rolesTags: rolesTags);
+  }
+
+  Membership setApparentName(String apparentName) {
+    return copyWith(apparentName: apparentName);
   }
 }

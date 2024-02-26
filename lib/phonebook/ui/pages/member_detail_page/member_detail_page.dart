@@ -38,7 +38,7 @@ class MemberDetailPage extends HookConsumerWidget {
                   child:  Row(
                       children: [
                         const Spacer(flex: 1),
-                        Text("${membership.association.name} : ${membership.role.name}",
+                        Text("${membership.association.name} : ${membership.apparentName}",
                             style: const TextStyle(fontSize: 20)),
                         const Spacer(flex: 1),
                   ]))

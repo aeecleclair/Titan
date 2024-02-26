@@ -46,12 +46,18 @@ class PhonebookTextConstants {
   static const String editRoleName = "Modifier le nom du rôle";
   static const String deleteRole = "Supprimer le rôle ?";
   static const String deletedRole = "Rôle supprimé";
+  static const String updatedRole = "Rôle modifié";
+  static const String updatingError = "Erreur lors de la modification";
   static const String errorLoadProfilePicture = "Erreur";
   static const String newRole = "Nouveau rôle";
   static const String errorRoleNameEmpty = "Veuillez entrer un nom de rôle";
   static const String chooseRoleName = "Entrez le nom du rôle";
   static const String errorRoleNameAlreadyExists = "Ce rôle existe déjà";
   static const String roleCreated = "Rôle créé";
+  static const String updatedAssociationName = "Nom de l'association modifié";
+  static const String errorAssociationLoading = "Erreur lors du chargement de l'association";
+  static const String errorAssociationNameEmpty = "Veuillez entrer un nom d'association";
+  static const String addedAssociation = "Association ajoutée";
 }
 
 class PhonebookColorConstants{

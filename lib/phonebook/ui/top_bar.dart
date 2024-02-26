@@ -49,6 +49,9 @@ class TopBar extends HookConsumerWidget {
                           case PhonebookPage.associationPage:
                             pageNotifier.setPhonebookPage(PhonebookPage.main);
                             break;
+                          case PhonebookPage.associationCreation:
+                            pageNotifier.setPhonebookPage(PhonebookPage.admin);
+                            break;
                         }
                       },
                       icon: HeroIcon(
