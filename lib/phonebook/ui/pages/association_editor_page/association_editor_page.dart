@@ -132,13 +132,11 @@ class AssociationEditorPage extends HookConsumerWidget {
                                               borderSide: BorderSide(
                                                   color: ColorConstants.gradient1))),
                                       validator: (value) {
-                                        if (value == null) {
+                                        if (value == null || value.isEmpty) {
                                           return PhonebookTextConstants
                                               .emptyFieldError;
-                                        } else if (value.isEmpty) {
-                                          return PhonebookTextConstants
-                                              .emptyFieldError;
-                                        }
+                                        } 
+                                        return null;
                                       },
                                     ),
                                   ),
@@ -175,13 +173,11 @@ class AssociationEditorPage extends HookConsumerWidget {
                                               borderSide: BorderSide(
                                                   color: ColorConstants.gradient1))),
                                       validator: (value) {
-                                        if (value == null) {
-                                          return PhonebookTextConstants
-                                              .emptyFieldError;
-                                        } else if (value.isEmpty) {
+                                        if (value == null || value.isEmpty) {
                                           return PhonebookTextConstants
                                               .emptyFieldError;
                                         }
+                                        return null;
                                       },
                                     ),
                                   ),

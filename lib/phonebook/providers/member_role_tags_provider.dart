@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/phonebook/class/roles_tags.dart';
-import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
-import 'package:tuple/tuple.dart';
 
 final memberRoleTagsProvider =
     StateNotifierProvider<MemberRoleTagsProvider, List<String>>((ref) {

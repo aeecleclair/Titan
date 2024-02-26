@@ -3,12 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
-import 'package:myecl/phonebook/class/roles_tags.dart';
 import 'package:myecl/phonebook/repositories/role_tags_repository.dart';
 import 'package:myecl/tools/providers/map_provider.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:tuple/tuple.dart';
 
 class RolesTagsNotifier extends MapNotifier<String, bool> {
   final RolesTagsRepository rolesTagsRepository = RolesTagsRepository();

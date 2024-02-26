@@ -37,11 +37,10 @@ class AddAssociationTextEntry extends StatelessWidget {
                         borderSide:
                             BorderSide(color: ColorConstants.gradient1))),
                 validator: (value) {
-                  if (value == null) {
-                    return AdminTextConstants.emptyFieldError;
-                  } else if (value.isEmpty) {
+                  if (value == null || value.isEmpty) {
                     return AdminTextConstants.emptyFieldError;
                   }
+                  return null;
                 },
               ),
             ),

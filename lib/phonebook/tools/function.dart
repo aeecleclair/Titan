@@ -1,6 +1,4 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/class/roles_tags.dart';
-import 'package:tuple/tuple.dart';
 
 String nameConstructor(Map<String, AsyncValue<List<bool>>> data) {
   String name = '';
@@ -11,7 +9,7 @@ String nameConstructor(Map<String, AsyncValue<List<bool>>> data) {
       }
     }, orElse: () {});
   });
-  if (name == "") {
+  if (name.isEmpty) {
     return "";
   }
   return name.substring(1, name.length);
