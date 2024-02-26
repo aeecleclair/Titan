@@ -78,26 +78,24 @@ class MemberEditableCard extends HookConsumerWidget {
               ),
             ),
             const SizedBox(width: 10),
-            AutoSizeText(
-              member.member.getName(),
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-              maxLines: 2,
-              minFontSize: 10,
-              maxFontSize: 15,
-            ),
-            const Spacer(),
-            AutoSizeText(
-                member.memberships
-                    .firstWhere(
-                        (element) => element.associationId == association.id)
-                    .apparentName,
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              AutoSizeText(
+                "${(member.member.nickname ?? member.member.firstname)} - ${member.memberships.firstWhere((element) => element.associationId == association.id).apparentName}",
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
                 minFontSize: 10,
-                maxFontSize: 15),
+                maxFontSize: 15,
+              ),
+              const SizedBox(height: 3),
+              AutoSizeText(
+                member.member.nickname != null
+                    ? "${member.member.firstname} ${member.member.name}"
+                    : member.member.name,
+                minFontSize: 10,
+                maxFontSize: 15,
+              ),
+            ]),
             const Spacer(),
             EditionButton(onEdition: () async {
               roleTagsNotifier.resetChecked();
@@ -116,7 +114,7 @@ class MemberEditableCard extends HookConsumerWidget {
                     PhonebookRouter.addEditMember);
               }
             }),
-            const SizedBox(width: 5),
+            const SizedBox(width: 10),
             DeleteButton(
               onDelete: () async {
                 final result = await associationNotifier.deleteMember(

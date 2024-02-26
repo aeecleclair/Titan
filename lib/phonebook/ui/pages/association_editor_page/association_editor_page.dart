@@ -14,7 +14,6 @@ import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
-import 'package:myecl/phonebook/ui/radio_chip.dart';
 import 'package:myecl/phonebook/ui/pages/association_editor_page/member_editable_card.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
@@ -188,7 +187,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                           ],
                         )),
                     WaitingButton(
-                      builder: (child) => AddEditButtonLayout(colors: [
+                      builder: (child) => AddEditButtonLayout(colors: const [
                         ColorConstants.gradient1,
                         ColorConstants.gradient2,
                       ], child: child),
@@ -273,7 +272,7 @@ class AssociationEditorPage extends HookConsumerWidget {
           ),
         ),
         const SizedBox(
-          height: 30,
+          height: 10,
         ),
         if (associationMemberList.isEmpty)
           const Center(
@@ -286,12 +285,12 @@ class AssociationEditorPage extends HookConsumerWidget {
               .map((member) => MemberEditableCard(member: member))
               .toList(),
         const SizedBox(
-          height: 50,
+          height: 30,
         ),
         Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: WaitingButton(
-              builder: (child) => AddEditButtonLayout(colors: [
+              builder: (child) => AddEditButtonLayout(colors: const [
                 ColorConstants.gradient1,
                 ColorConstants.gradient2,
               ], child: child),

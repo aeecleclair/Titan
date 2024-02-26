@@ -1,19 +1,13 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/profile_pictures_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/ui/copiabled_text.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/phonebook/providers/profile_picture_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
-import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -94,16 +88,14 @@ class MemberCard extends HookConsumerWidget {
                       ),
                       flex: 1,
                     ),
-                    CopiabledText(
-                        member.member.email,
+                    CopiabledText(member.member.email,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
                         flex: 1),
                     if (member.member.phone != null)
-                      CopiabledText(
-                          member.member.phone!,
+                      CopiabledText(member.member.phone!,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,

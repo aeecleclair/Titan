@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:myecl/phonebook/class/association.dart';
-
 class Membership {
   Membership({
     required this.id,

@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/providers/association_kind_provider.dart';
 import 'package:myecl/phonebook/providers/association_kinds_provider.dart';
 import 'package:myecl/phonebook/repositories/association_repository.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
@@ -58,8 +56,6 @@ class AssociationListNotifier extends ListNotifier<Association> {
   }
 
   void filterAssociationList(String nameFilter, String kindFilter) async {
-    debugPrint("nameFilter: $nameFilter");
-    debugPrint("kindFilter: $kindFilter");
     if (kindFilter == "") {
       associationList.maybeWhen(
         data: (data) => state = AsyncValue.data(data

@@ -1,13 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_provider.dart';
-import 'package:qlevar_router/qlevar_router.dart';
-import 'package:myecl/phonebook/router.dart';
 
 final isPhonebookAdminProvider = StateProvider<bool>((ref) {
   final user = ref.watch(userProvider);
@@ -40,6 +35,5 @@ final isAssociationPresidentProvider = StateProvider<bool>((ref) {
       }
     }
   });
-  debugPrint("isPresident: $isPresident");
   return isPresident;
 });

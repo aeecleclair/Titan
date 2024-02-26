@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:myecl/phonebook/class/roles_tags.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -9,7 +8,6 @@ class RolesTagsRepository extends Repository {
 
   Future<RolesTags> getRolesTags() async {
     RolesTags rolesTags = RolesTags.fromJson(await getOne("roletags"));
-    debugPrint(rolesTags.toString());
     return rolesTags;
   }
 }

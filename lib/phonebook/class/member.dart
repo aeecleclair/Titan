@@ -29,6 +29,7 @@ class Member extends SimpleUser {
     return data;
   }
 
+  @override
   Member copyWith({
     String? name,
     String? firstname,
