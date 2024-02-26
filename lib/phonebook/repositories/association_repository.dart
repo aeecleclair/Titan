@@ -38,8 +38,13 @@ class AssociationRepository extends Repository {
   }
 
   Future<Association> createAssociation(Association association) async {
+    List<String> ids = fakeAssociations.map((e) => e.id).toList();
+    String newId = "1";
+    while (ids.contains(newId)) {
+      newId = (int.parse(newId) + 1).toString();
+    }
+    association.id = newId;
     fakeAssociations.add(association);
-    association.id = fakeAssociations.length.toString();
     return association;
     //return Association.fromJSON(await create(association.toJSON()));
   }

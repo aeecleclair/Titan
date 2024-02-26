@@ -55,11 +55,11 @@ class AssociationListNotifier extends ListNotifier<Association> {
         association);
   }
 
-  void setAssociation(Association association) {
+  void setAssociationList(List<Association> associationList) {
     state.whenData(
       (d) {
         state =
-            AsyncValue.data(d..[d.indexWhere((g) => g.id == association.id)] = association);
+            AsyncValue.data(associationList);
       },
     );
   }

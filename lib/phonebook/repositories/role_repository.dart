@@ -31,8 +31,13 @@ class RoleRepository extends Repository {
   }
 
 Future<Role> createRole(Role role) async {
+    List<String> ids = fakeRoles.map((e) => e.id).toList();
+    String newId = "1";
+    while (ids.contains(newId)) {
+      newId = (int.parse(newId) + 1).toString();
+    }
+    role.id = newId;
     fakeRoles.add(role);
-    role.id = fakeRoles.length.toString();
     return role;
     //return Role.fromJSON(await create(role.toJSON()));
   }

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -31,13 +33,14 @@ class RoleResearchBar extends HookConsumerWidget {
         width: 300,
         child: TextField(
           onChanged: (value) {
-            roleListNotifier.filterRoles(value);
+            debugPrint('value: $value');
+            roleListNotifier.setRoleList(roleListNotifier.filterRoles(value));
           },
           focusNode: focusNode,
           controller: editingController,
           cursorColor: PhonebookColorConstants.textDark,
           decoration: const InputDecoration(
-              labelText: PhonebookTextConstants.rolePure,
+              labelText: PhonebookTextConstants.rolePureSearch,
               labelStyle: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
