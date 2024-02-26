@@ -83,6 +83,8 @@ class PhonebookTextConstants {
   static const String activeMandate = "Mandat actif :";
 
   static const String all = "Toutes";
+
+  static const String research = "Rechercher";
 }
 
 class PhonebookColorConstants {

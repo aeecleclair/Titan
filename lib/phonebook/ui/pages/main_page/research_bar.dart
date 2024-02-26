@@ -27,12 +27,17 @@ class ResearchBar extends HookConsumerWidget {
           focusNode: focusNode,
           controller: editingController,
           cursorColor: PhonebookColorConstants.textDark,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
               isDense: true,
               suffixIcon: Icon(
                 Icons.search,
                 color: PhonebookColorConstants.textDark,
                 size: 30,
+              ),
+              label: Text(
+                PhonebookTextConstants.research,
+                style: TextStyle(
+                    color: PhonebookColorConstants.textDark,),
               ),
               focusedBorder: UnderlineInputBorder(
                   borderSide:
