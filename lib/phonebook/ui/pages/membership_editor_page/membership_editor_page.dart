@@ -103,24 +103,23 @@ class MembershipEditorPage extends HookConsumerWidget {
                 child: Column(children: [
                   ...rolesTags.when(
                     data: (data) {
-                      return data.item1.tags
+                      return data.keys
                           .map((e) => Row(children: [
                                 Text(e),
                                 const Spacer(),
                                 Checkbox(
-                                  value: data.item2[data.item1.tags.indexOf(e)],
+                                  value: data[e]!.maybeWhen(
+                                      data: (d) => d[0],
+                                      orElse:() => false,),
                                   fillColor:
                                       MaterialStateProperty.all(Colors.black),
                                   onChanged: (value) {
-                                    data.item2[data.item1.tags.indexOf(e)] =
-                                        value!;
-                                    debugPrint(data.item2.toString());
+                                    data[e] = AsyncData([value!]);
                                     apparentNameController.text =
                                         nameConstructor(data);
                                     memberRoleTagsNotifier
                                         .setRoleTagsWithFilter(data);
-                                    rolesTagsNotifier.setChecked(
-                                        data.item1.tags.indexOf(e), value);
+                                    rolesTagsNotifier.setTData(e, AsyncData([value]));
                                   },
                                 ),
                               ]))
