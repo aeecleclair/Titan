@@ -52,7 +52,7 @@ class AssociationEditorPage extends HookConsumerWidget {
         child: 
           Refresher(
             onRefresh: () async {
-              await associationMemberListNotifier.loadMembers(association.id);
+              await associationMemberListNotifier.loadMembers(association.id, association.mandateYear.toString());
               await associationPictureNotifier.getAssociationPicture(association.id);
             },
             child: Column(children: [

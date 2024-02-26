@@ -188,7 +188,7 @@ class MembershipEditorPage extends HookConsumerWidget {
                           memberRoleTags,
                           apparentNameController.text);
                       if (value) {
-                        associationMemberListNotifier.loadMembers(association.id);
+                        associationMemberListNotifier.loadMembers(association.id, association.mandateYear.toString());
                         displayToastWithContext(
                             TypeMsg.msg, PhonebookTextConstants.updatedMember);
                         QR.back();
@@ -203,7 +203,7 @@ class MembershipEditorPage extends HookConsumerWidget {
                           memberRoleTags,
                           apparentNameController.text);
                       if (value) {
-                        associationMemberListNotifier.loadMembers(association.id);
+                        associationMemberListNotifier.loadMembers(association.id, association.mandateYear.toString());
                         displayToastWithContext(
                             TypeMsg.msg, PhonebookTextConstants.addedMember);
                         QR.back();

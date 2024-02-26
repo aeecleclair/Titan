@@ -20,7 +20,7 @@ final isAssociationPresidentProvider = StateProvider<bool>((ref) {
   bool isPresident = false;
   membersList.whenData((members) {
     if (members.map((e) => e.member.id).contains(me.id)) {
-      if (members.firstWhere((member) => member.member.id == me.id)
+      if (members.firstWhere((completeMember) => completeMember.member.id == me.id)
         .memberships.firstWhere((membership) => membership.association.id == association.id)
         .rolesTags.contains(PhonebookTextConstants.presidentRoleTag)) {
           isPresident = true;
