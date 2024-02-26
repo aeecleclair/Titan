@@ -6,6 +6,6 @@ class RoleMemberPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SizedBox();
+    return const SizedBox();
   }
 }

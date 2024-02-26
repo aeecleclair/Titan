@@ -1,11 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/repositories/association_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class FilteredAssociationListNotifier extends ListNotifier<Association> {

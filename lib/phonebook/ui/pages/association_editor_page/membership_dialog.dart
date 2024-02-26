@@ -34,7 +34,6 @@ class MembershipDialog extends HookConsumerWidget {
     if (name == "") {
       return "";
     }
-    ;
     return name.substring(1, name.length);
   }
 

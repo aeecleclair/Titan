@@ -1,14 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/member.dart';
 import 'package:myecl/phonebook/class/membership.dart';
 import 'package:myecl/phonebook/tools/fake_class.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/user/class/list_users.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:myecl/tools/exception.dart';
 
 class AssociationRepository extends Repository {
   @override
