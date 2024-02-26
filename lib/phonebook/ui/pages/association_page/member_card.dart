@@ -14,6 +14,8 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/phonebook/providers/profile_picture_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
+import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
+import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class MemberCard extends HookConsumerWidget {
@@ -34,143 +36,122 @@ class MemberCard extends HookConsumerWidget {
           memberNotifier.setCompleteMember(member);
           QR.to(PhonebookRouter.root + PhonebookRouter.memberDetail);
         },
-        child: Container(
-            margin: const EdgeInsets.all(5),
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: Colors.grey.withOpacity(0.2)),
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      blurRadius: 5,
-                      spreadRadius: 2)
-                ]),
-            child: Row(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        spreadRadius: 5,
-                        blurRadius: 10,
-                        offset: const Offset(2, 3),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: CardLayout(
+              margin: EdgeInsets.zero,
+              child: Row(
+                children: [
+                  Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            spreadRadius: 5,
+                            blurRadius: 10,
+                            offset: const Offset(2, 3),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  child: profilePictures.when(
-                    data: (picture) {
-                      if (picture[member] != null) {
-                        return picture[member]!.when(data: (data) {
-                          if (data.isNotEmpty) {
-                            return Container(
-                              width: 40,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image: data.first.image,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            );
-                          } else {
-                            Future.delayed(
-                                const Duration(milliseconds: 1),
-                                () => profilePicturesNotifier.setTData(
-                                    member, const AsyncLoading()));
-                            tokenExpireWrapper(ref, () async {
-                              profilePictureNotifier
-                                  .getProfilePicture(member.member.id)
-                                  .then((value) {
-                                profilePicturesNotifier.setTData(
-                                    member, AsyncData([value]));
-                              });
-                            });
-                            return const HeroIcon(
-                              HeroIcons.userCircle,
-                              size: 40,
-                            );
-                          }
-                        }, loading: () {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }, error: (e, s) {
-                          return const Center(
-                            child: Text(
-                                PhonebookTextConstants.errorLoadProfilePicture),
-                          );
-                        });
-                      } else {
-                        profilePicturesNotifier.setTData(
-                            member, const AsyncValue.data([]));
-                        profilePictureNotifier
-                            .getProfilePicture(member.member.id);
-                        return const CircleAvatar(
-                          radius: 20,
-                          backgroundImage:
-                              AssetImage('assets/images/logo_alpha.png'),
-                        );
-                      }
-                    },
-                    loading: () {
-                      return const CircleAvatar(
-                        radius: 20,
-                        backgroundImage:
-                            AssetImage('assets/images/logo_alpha.png'),
-                      );
-                    },
-                    error: (e, s) {
-                      return const Center(
-                        child: Text(
-                            PhonebookTextConstants.errorLoadProfilePicture),
-                      );
-                    },
-                  ),
-                ),
-                const SizedBox(width: 20),
-                if (kIsWeb) ...[
-                  if (member.member.nickname != null)
+                      child: AutoLoaderChild(
+                        value: profilePictures,
+                        notifier: profilePicturesNotifier,
+                        mapKey: member,
+                        loader: (member) => profilePictureNotifier
+                            .getProfilePicture(member.member.id),
+                        dataBuilder: (context, value) => Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image: value.first.image,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      )),
+                  const SizedBox(width: 20),
+                  if (!kIsWeb) ...[
+                    if (member.member.nickname != null)
+                      CopiabledText(
+                        data: member.member.nickname!,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                        flex: 1,
+                      ),
                     CopiabledText(
-                      data: member.member.nickname!,
-                      style: const TextStyle(
+                      data: "${member.member.name} ${member.member.firstname}",
+                      style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
+                        color: member.member.nickname != null
+                            ? const Color.fromARGB(255, 115, 115, 115)
+                            : Colors.black,
                       ),
                       flex: 1,
                     ),
-                  CopiabledText(
-                    data: "${member.member.name} ${member.member.firstname}",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: member.member.nickname != null
-                          ? const Color.fromARGB(255, 115, 115, 115)
-                          : Colors.black,
-                    ),
-                    flex: 1,
-                  ),
-                  CopiabledText(
-                      data: member.member.email,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                      flex: 1),
-                  if (member.member.phone != null)
                     CopiabledText(
-                        data: member.member.phone!,
+                        data: member.member.email,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
                         flex: 1),
-                  CopiabledText(
-                      data: member.memberships
+                    if (member.member.phone != null)
+                      CopiabledText(
+                          data: member.member.phone!,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                          flex: 1),
+                    CopiabledText(
+                        data: member.memberships
+                            .firstWhere((element) =>
+                                element.associationId == association.id)
+                            .apparentName,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                        flex: 1)
+                  ] else ...[
+                    if (member.member.nickname != null)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            member.member.nickname!,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            "${member.member.name} ${member.member.firstname}",
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Color.fromARGB(255, 115, 115, 115),
+                            ),
+                          ),
+                        ],
+                      )
+                    else
+                      Text(
+                        "${member.member.name} ${member.member.firstname}",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    const Spacer(flex: 1),
+                    Text(
+                      member.memberships
                           .firstWhere((element) =>
                               element.associationId == association.id)
                           .apparentName,
@@ -178,50 +159,10 @@ class MemberCard extends HookConsumerWidget {
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
-                      flex: 1)
-                ] else ...[
-                  if (member.member.nickname != null)
-                    Column(
-                      children: [
-                        Text(
-                          member.member.nickname!,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          "${member.member.name} ${member.member.firstname}",
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: Color.fromARGB(255, 115, 115, 115),
-                          ),
-                        ),
-                      ],
-                    )
-                  else
-                    Text(
-                      "${member.member.name} ${member.member.firstname}",
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
                     ),
-                  const Spacer(flex: 1),
-                  Text(
-                    member.memberships
-                        .firstWhere((element) =>
-                            element.associationId == association.id)
-                        .apparentName,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
+                  ],
                 ],
-              ],
-            )));
+              )),
+        ));
   }
 }
