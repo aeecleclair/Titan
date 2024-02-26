@@ -40,11 +40,16 @@ class AdminPage extends HookConsumerWidget {
           await roleNotifier.loadRolesTags();
         },
         child: Column(children: <Widget>[
-          const SizedBox(width: 10),
+          const Padding(
+            padding: EdgeInsets.all(30),
+            child: AssociationResearchBar(),
+          ),
+          const SizedBox(height: 10),
           associationKinds.when(
               data: (data) {
                 return SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
                     child: Row(children: [
                       RadioChip(
                           label: "Toutes",
@@ -72,7 +77,6 @@ class AdminPage extends HookConsumerWidget {
                   const Text(PhonebookTextConstants.errorRoleTagsLoading),
               loading: () => const CircularProgressIndicator()),
           const SizedBox(height: 10),
-          const AssociationResearchBar(),
           const SizedBox(height: 10),
           Column(
             children: <Widget>[
