@@ -11,7 +11,7 @@ class AssociationPictureNotifier extends MapNotifier<Association, Image> {
 
 final associationPicturesProvider = StateNotifierProvider<
     AssociationPictureNotifier,
-    AsyncValue<Map<Association, AsyncValue<List<Image>>>>>((ref) {
+    AsyncValue<Map<Association, AsyncValue<List<Image>>?>>>((ref) {
   AssociationPictureNotifier associationPictureNotifier =
       AssociationPictureNotifier();
   tokenExpireWrapperAuth(ref, () async {

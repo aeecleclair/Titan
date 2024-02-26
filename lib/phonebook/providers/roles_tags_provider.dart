@@ -43,7 +43,7 @@ class RolesTagsNotifier extends MapNotifier<String, bool> {
 }
 
 final rolesTagsProvider = StateNotifierProvider<RolesTagsNotifier,
-    AsyncValue<Map<String, AsyncValue<List<bool>>>>>((ref) {
+    AsyncValue<Map<String, AsyncValue<List<bool>>?>>>((ref) {
   final token = ref.watch(tokenProvider);
   RolesTagsNotifier notifier = RolesTagsNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {

@@ -8,10 +8,10 @@ final memberRoleTagsProvider =
 class MemberRoleTagsProvider extends StateNotifier<List<String>> {
   MemberRoleTagsProvider() : super([]);
 
-  void setRoleTagsWithFilter(Map<String, AsyncValue<List<bool>>> data) {
+  void setRoleTagsWithFilter(Map<String, AsyncValue<List<bool>>?> data) {
     List<String> newRoleTags = [];
     data.forEach((key, value) {
-      value.whenData(
+      value?.whenData(
         (d) {
           if (d[0]) {
             newRoleTags.add(key);
