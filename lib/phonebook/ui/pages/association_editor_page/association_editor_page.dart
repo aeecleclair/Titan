@@ -15,7 +15,7 @@ import 'package:myecl/phonebook/providers/member_role_tags_provider.dart';
 import 'package:myecl/phonebook/providers/phonebook_page_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/phonebook/ui/kind_chip.dart';
+import 'package:myecl/phonebook/ui/radio_chip.dart';
 import 'package:myecl/phonebook/ui/pages/association_editor_page/member_editable_card.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
@@ -80,7 +80,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                       scrollDirection: Axis.horizontal,
                       child: Row(
                           children: value.kinds
-                              .map((e) => KindChip(
+                              .map((e) => RadioChip(
                                     label: e,
                                     selected: e == kind.value,
                                     onTap: () async {
