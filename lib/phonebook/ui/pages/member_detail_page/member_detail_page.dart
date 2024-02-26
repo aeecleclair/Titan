@@ -6,6 +6,7 @@ import 'package:myecl/phonebook/providers/complete_member_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/ui/pages/main_page/association_card.dart';
+import 'package:myecl/phonebook/ui/pages/member_detail_page/element_field.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -24,17 +25,26 @@ class MemberDetailPage extends HookConsumerWidget {
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(50)),
             child: Column(children: [
               const Text(PhonebookTextConstants.detail),
-              Text(
-                  "${PhonebookTextConstants.name} ${memberProvider.member.name}"),
-              Text(
-                  "${PhonebookTextConstants.firstname} ${memberProvider.member.firstname}"),
+              ElementField(
+                  label: PhonebookTextConstants.name,
+                  value: memberProvider.member.name),
+              ElementField(
+                  label: PhonebookTextConstants.firstname,
+                  value: memberProvider.member.firstname),
               if (memberProvider.member.nickname != null)
-                Text(
-                    "${PhonebookTextConstants.nickname} ${memberProvider.member.nickname!}"),
-              Text(
-                  "${PhonebookTextConstants.promotion} ${memberProvider.member.promotion + 2000}"),
-              Text(
-                  "${PhonebookTextConstants.email} ${memberProvider.member.email}"),
+                ElementField(
+                    label: PhonebookTextConstants.nickname,
+                    value: memberProvider.member.nickname!),
+              ElementField(
+                  label: PhonebookTextConstants.email,
+                  value: memberProvider.member.email),
+              ElementField(
+                  label: PhonebookTextConstants.promotion,
+                  value: memberProvider.member.promotion == 0
+                      ? PhonebookTextConstants.promoNotGiven
+                      : memberProvider.member.promotion < 100
+                          ? "20${memberProvider.member.promotion}"
+                          : memberProvider.member.promotion.toString()),
               if (memberProvider.memberships.isNotEmpty)
                 Text(memberProvider.memberships.length == 1
                     ? PhonebookTextConstants.association
