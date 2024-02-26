@@ -51,6 +51,9 @@ class AdminPage extends HookConsumerWidget {
                     scrollDirection: Axis.horizontal,
                     physics: const BouncingScrollPhysics(),
                     child: Row(children: [
+                      const SizedBox(
+                        width: 20,
+                      ),
                       RadioChip(
                           label: PhonebookTextConstants.all,
                           selected: kind.value == "",
@@ -70,7 +73,10 @@ class AdminPage extends HookConsumerWidget {
                                 associationsNotifier.filterAssociationList(
                                     nameFilter, kind.value);
                               }))
-                          .toList()
+                          .toList(),
+                      const SizedBox(
+                        width: 20,
+                      ),
                     ]));
               },
               error: (error, stackTrace) =>
@@ -87,11 +93,16 @@ class AdminPage extends HookConsumerWidget {
                   },
                   child: Container(
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20)),
-                      ),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                blurRadius: 5,
+                                spreadRadius: 2)
+                          ]),
                       height: 60,
+                      margin: const EdgeInsets.only(bottom: 10),
                       child: const Center(
                           child:
                               Icon(Icons.add, color: Colors.black, size: 40))),

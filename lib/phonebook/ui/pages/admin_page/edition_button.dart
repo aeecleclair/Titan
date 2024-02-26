@@ -9,12 +9,8 @@ class EditionButton extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
-      onTap: () {
-        onEdition();
-      },
+      onTap: onEdition,
       child: Container(
-        width: 40,
-        height: 40,
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: Colors.grey.shade200,

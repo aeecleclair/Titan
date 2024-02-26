@@ -5,8 +5,8 @@ import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/providers/association_picture_provider.dart';
 import 'package:myecl/phonebook/providers/associations_pictures_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/phonebook/ui/delete_button.dart';
-import 'package:myecl/phonebook/ui/edition_button.dart';
+import 'package:myecl/phonebook/ui/pages/admin_page/delete_button.dart';
+import 'package:myecl/phonebook/ui/pages/admin_page/edition_button.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class EditableAssociationCard extends HookConsumerWidget {
@@ -31,7 +31,7 @@ class EditableAssociationCard extends HookConsumerWidget {
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
                 color: Colors.grey.withOpacity(0.2),

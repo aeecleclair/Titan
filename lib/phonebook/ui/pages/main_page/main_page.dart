@@ -10,7 +10,7 @@ import 'package:myecl/phonebook/providers/research_filter_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/admin/providers/is_admin.dart';
 import 'package:myecl/phonebook/providers/phonebook_page_provider.dart';
-import 'package:myecl/phonebook/ui/association_card.dart';
+import 'package:myecl/phonebook/ui/pages/main_page/association_card.dart';
 import 'package:myecl/phonebook/ui/radio_chip.dart';
 import 'package:myecl/phonebook/ui/pages/main_page/research_bar.dart';
 import 'package:myecl/tools/ui/refresher.dart';
@@ -85,6 +85,9 @@ class MainPage extends HookConsumerWidget {
                     scrollDirection: Axis.horizontal,
                     physics: const BouncingScrollPhysics(),
                     child: Row(children: [
+                      const SizedBox(
+                        width: 20,
+                      ),
                       RadioChip(
                           label: PhonebookTextConstants.all,
                           selected: kind.value == "",
@@ -104,7 +107,10 @@ class MainPage extends HookConsumerWidget {
                                 associationListNotifier.filterAssociationList(
                                     nameFilter, kind.value);
                               }))
-                          .toList()
+                          .toList(),
+                      const SizedBox(
+                        width: 20,
+                      ),
                     ]));
               },
               error: (error, stackTrace) =>
