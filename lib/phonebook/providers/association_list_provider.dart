@@ -12,8 +12,21 @@ class AssociationListNotifier extends ListNotifier<Association> {
     associationRepository.setToken(token);
   }
 
-  Future<AsyncValue<List<Association>>> loadAssociations([String? filter]) async {
-    return await loadList(() async => associationRepository.getAssociationList(filter!));
+  late List<Association> associationList;
+
+  Future<AsyncValue<List<Association>>> loadAssociations() async {
+    associationList = await associationRepository.getAssociationList();
+    return await loadList(() async => associationRepository.getAssociationList());
+  }
+
+  List<Association> filterAssociations(String filter) {
+    if (filter.isEmpty) {
+      return associationList;
+    }
+    return associationList
+        .where((association) =>
+            association.name.toLowerCase().contains(filter.toLowerCase()))
+        .toList();
   }
 
 //  Future<AsyncValue<List<Association>>> loadAssociationsFromUser(User user) async {

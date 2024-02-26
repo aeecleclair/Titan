@@ -10,7 +10,7 @@ class RoleResearchBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final associationListNotifier =
+    final roleListNotifier =
         ref.watch(roleListProvider.notifier);
     final focusNode = useFocusNode();
     final editingController = useTextEditingController();
@@ -31,14 +31,7 @@ class RoleResearchBar extends HookConsumerWidget {
         width: 300,
         child: TextField(
           onChanged: (value) {
-            tokenExpireWrapper(ref, () async {
-              if (editingController.text.isNotEmpty) {
-                await associationListNotifier
-                    .loadRoles(editingController.text);
-              } else {
-                await associationListNotifier.loadRoles();
-              }
-            });
+            roleListNotifier.filterRoles(value);
           },
           focusNode: focusNode,
           controller: editingController,
