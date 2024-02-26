@@ -129,14 +129,14 @@ class AssociationEditorPage extends HookConsumerWidget {
                 );
               },
               error: (e, s) {
-                //return const Center(
-                //  child: Text(PhonebookTextConstants.errorLoadAssociationMember),
-                List<CompleteMember> fakeMembers = [CompleteMember.empty()];
-                return Column(
-                  children: fakeMembers.map((member) => 
-                    MemberEditableCard(member: member)
-                  ).toList()
-                );
+                return const Center(
+                 child: Text(PhonebookTextConstants.errorLoadAssociationMember));
+                // List<CompleteMember> fakeMembers = [CompleteMember.empty()];
+                // return Column(
+                //   children: fakeMembers.map((member) => 
+                //     MemberEditableCard(member: member)
+                //   ).toList()
+                // );
               },
             ),
             Row(children: [ 
