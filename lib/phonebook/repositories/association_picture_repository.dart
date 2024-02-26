@@ -4,7 +4,7 @@ import 'package:myecl/tools/repository/logo_repository.dart';
 class AssociationPictureRepository extends LogoRepository {
   @override
   // ignore: overridden_fields
-  final ext = 'phonebook/association/';
+  final ext = 'phonebook/associations/';
 
   Future<Uint8List> getAssociationPicture(String associationId) async {
    return await getLogo(associationId, suffix: "/picture");

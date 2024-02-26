@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
+import 'package:myecl/phonebook/class/member.dart';
 import 'package:myecl/phonebook/class/membership.dart';
 import 'package:myecl/phonebook/tools/fake_class.dart';
 import 'package:myecl/tools/repository/repository.dart';
@@ -38,26 +39,21 @@ class AssociationRepository extends Repository {
   }
 
   Future<Association> createAssociation(Association association) async {
-    debugPrint("createAssociation2");
     List<String> ids = fakeAssociations.map((e) => e.id).toList();
-    debugPrint("createAssociation3");
     String newId = "1";
-    debugPrint("createAssociation4");
     while (ids.contains(newId)) {
       newId = (int.parse(newId) + 1).toString();
     }
-    debugPrint("createAssociation5");
     association = association.copyWith(id: newId);
-    debugPrint("newId: $newId");
     return association;
     //return Association.fromJSON(await create(association.toJSON()));
   }
 
-  Future<bool> addMember(Association association, CompleteMember member, List<String> rolesTags, String apparentName) async {
-    fakeMembersList[fakeMembersList.indexWhere((element) => element.member.id == member.member.id)]
+  Future<bool> addMember(Association association, Member member, List<String> rolesTags, String apparentName) async {
+    fakeMembersList[fakeMembersList.indexWhere((element) => element.member.id == member.id)]
         .memberships
         .add(Membership(association: association, rolesTags: rolesTags, apparentName: apparentName));
-    //await create({"member_id": member.member.id, "association_id": association.id, "roleId": role.id},
+    //await create({"member_id": member.id, "association_id": association.id, "rolesTags": rolesTags, "apparentName": apparentName"},
     //    suffix: "membership");
     return true;
   }
@@ -78,5 +74,14 @@ class AssociationRepository extends Repository {
     // } else {
     //   throw AppException(ErrorType.notFound, "Failed to update item");
     // }
+  }
+
+  Future<bool> updateMember(Association association, Member member, List<String> rolesTags, String apparentName) async {
+    fakeMembersList[fakeMembersList.indexWhere((element) => element.member.id == member.id)]
+        .memberships
+        .add(Membership(association: association, rolesTags: rolesTags, apparentName: apparentName));
+    //await update({"member_id": member.id, "association_id": association.id, "rolesTags": rolesTags, "apparentName": apparentName"},
+    //    suffix: "membership");
+    return true;
   }
 }

@@ -1,5 +1,4 @@
 import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/class/roles_tags.dart';
 
 class Membership{
   Membership({

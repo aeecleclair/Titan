@@ -39,4 +39,12 @@ class CompleteMember{
     memberships = [];
   }
 
+  Member toMember(){
+    return Member(
+      name: member.name,
+      firstname: member.firstname,
+      nickname: member.nickname,
+      id: member.id,
+      email: member.email);
+  }
 }  

@@ -1,6 +1,7 @@
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
+import 'package:myecl/phonebook/providers/research_filter_provider.dart';
 import 'package:myecl/phonebook/repositories/association_repository.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
@@ -8,7 +9,8 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class AssociationListNotifier extends ListNotifier<Association> {
   final AssociationRepository associationRepository = AssociationRepository();
-  AssociationListNotifier({required String token})
+  AssociationListNotifier({
+    required String token,})
       : super(const AsyncValue.loading()) {
     associationRepository.setToken(token);
   }
@@ -18,28 +20,7 @@ class AssociationListNotifier extends ListNotifier<Association> {
     return await loadList(() async => associationRepository.getAssociationList());
   }
 
-  List<Association> filterAssociations(String filter) {
-    if (filter.isEmpty) {
-      return state.maybeWhen(
-          data: (associations) => associations,
-          orElse: () => []);
-    }
-    return state.maybeWhen(
-        data: (associations) => associations
-            .where((association) =>
-                association.name.toLowerCase().contains(filter.toLowerCase()))
-            .toList(),
-        orElse: () => []);
-  }
-
-//  Future<AsyncValue<List<Association>>> loadAssociationsFromUser(User user) async {
-//    return await loadList(() async {
-//      return user.associations;
-//    });
-//  }
-
   Future<bool> createAssociation(Association association) async {
-    debugPrint("createAssociation");
     return await add(associationRepository.createAssociation, association);
   }
 

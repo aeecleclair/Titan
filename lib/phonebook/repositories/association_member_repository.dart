@@ -5,7 +5,7 @@ import 'package:myecl/tools/repository/repository.dart';
 class AssociationMemberRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = "phonebook/association/";
+  final ext = "phonebook/associations/";
 
   Future<List<CompleteMember>> getAssociationMemberList(String associationId) async {
     return fakeMembersList.where((element) => element.memberships.map((e) => e.association.id).contains(associationId)).toList();

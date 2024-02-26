@@ -1,3 +1,5 @@
+import 'package:myecl/user/class/list_users.dart';
+
 class Member{
   Member({
     required this.name,
@@ -54,5 +56,13 @@ class Member{
     nickname = null;
     id = "";
     email = "email.test@empty.useless";
+  }
+
+  Member.fromUser(SimpleUser user){
+    name = user.name;
+    firstname = user.firstname;
+    nickname = user.nickname;
+    id = user.id;
+    email = "";
   }
 }
