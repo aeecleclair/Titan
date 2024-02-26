@@ -15,8 +15,10 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
     associationMemberRepository.setToken(token);
   }
 
-  Future<AsyncValue<List<CompleteMember>>> loadMembers(String associationId, String year) async {
-    return await loadList(() async => associationMemberRepository.getAssociationMemberList(associationId, year));
+  Future<AsyncValue<List<CompleteMember>>> loadMembers(
+      String associationId, String year) async {
+    return await loadList(() async => associationMemberRepository
+        .getAssociationMemberList(associationId, year));
   }
 }
 
@@ -27,7 +29,8 @@ final associationMemberListProvider = StateNotifierProvider<
       AssociationMemberListNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {
     final association = ref.watch(associationProvider);
-    await provider.loadMembers(association.id, association.mandateYear.toString());
+    await provider.loadMembers(
+        association.id, association.mandateYear.toString());
   });
   return provider;
 });

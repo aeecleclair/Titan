@@ -12,11 +12,13 @@ class MemberRoleTagsProvider extends StateNotifier<List<String>> {
   void setRoleTagsWithFilter(Map<String, AsyncValue<List<bool>>> data) {
     List<String> newRoleTags = [];
     data.forEach((key, value) {
-      value.maybeWhen(data: (d) {
-        if (d[0]) {
-          newRoleTags.add(key);
-        }
-      }, orElse: () {});
+      value.whenData(
+        (d) {
+          if (d[0]) {
+            newRoleTags.add(key);
+          }
+        },
+      );
     });
     state = newRoleTags;
   }

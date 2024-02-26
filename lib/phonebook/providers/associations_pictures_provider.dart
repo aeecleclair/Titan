@@ -21,7 +21,7 @@ final associationPicturesProvider = StateNotifierProvider<
         associationPictureNotifier.setTData(l, const AsyncValue.data([]));
       }
       return associationPictureNotifier;
-    }, orElse: (){
+    }, orElse: () {
       associationPictureNotifier.loadTList([]);
       return associationPictureNotifier;
     });

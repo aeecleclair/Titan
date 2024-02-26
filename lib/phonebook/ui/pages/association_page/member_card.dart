@@ -75,7 +75,7 @@ class MemberCard extends HookConsumerWidget {
                   child: Column(
                     children: [
                       Text(
-                        "${member.member.name} ${member.member.firstname} (${member.member.nickname})",
+                        member.member.getName(),
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,

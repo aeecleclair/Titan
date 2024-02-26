@@ -82,7 +82,7 @@ class MemberEditableCard extends HookConsumerWidget {
               child: Column(
                 children: [
                   Text(
-                    "${member.member.name} ${member.member.firstname} (${member.member.nickname})",
+                    member.member.getName(),
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -117,13 +117,13 @@ class MemberEditableCard extends HookConsumerWidget {
               editionNotifier.setStatus(true);
               if (QR.currentPath.contains(PhonebookRouter.admin)) {
                 QR.to(PhonebookRouter.root +
-                  PhonebookRouter.admin +
-                  PhonebookRouter.editAssociation +
-                  PhonebookRouter.addEditMember);
+                    PhonebookRouter.admin +
+                    PhonebookRouter.editAssociation +
+                    PhonebookRouter.addEditMember);
               } else {
                 QR.to(PhonebookRouter.root +
-                  PhonebookRouter.editAssociation +
-                  PhonebookRouter.addEditMember);
+                    PhonebookRouter.editAssociation +
+                    PhonebookRouter.addEditMember);
               }
             }),
             const SizedBox(width: 10),
@@ -132,7 +132,8 @@ class MemberEditableCard extends HookConsumerWidget {
                 final result = await associationNotifier.deleteMember(
                     member.memberships.firstWhere(
                         (element) => element.association.id == association.id));
-                await associationMembersNotifier.loadMembers(association.id, association.mandateYear.toString());
+                await associationMembersNotifier.loadMembers(
+                    association.id, association.mandateYear.toString());
                 if (result) {
                   displayToastWithContext(
                       TypeMsg.msg, PhonebookTextConstants.deletedMember);
