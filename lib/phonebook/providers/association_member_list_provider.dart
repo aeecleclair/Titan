@@ -51,7 +51,7 @@ final associationMemberSortedListProvider =
       orElse: () => [],
       data: (rolesTags) {
         return associationMemberList.maybeWhen(
-            orElse: () => [CompleteMember.empty()],
+            orElse: () => [],
             data: (members) {
               return sortMembers(
                   members, association.id, rolesTags.keys.toList());
