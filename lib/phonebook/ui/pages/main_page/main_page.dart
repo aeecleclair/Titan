@@ -8,6 +8,7 @@ import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:myecl/admin/providers/is_admin.dart';
 import 'package:myecl/phonebook/providers/phonebook_page_provider.dart';
+import 'package:myecl/phonebook/ui/pages/main_page/member_cards.dart';
 
 class MainPage extends HookConsumerWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -18,9 +19,7 @@ class MainPage extends HookConsumerWidget {
     final searchType = useState("name");
     final isAdmin = ref.watch(isAdminProvider);
     final pageNotifier = ref.watch(phonebookPageProvider.notifier);
-    final completeMemberNotifier = ref.watch(completeMemberProvider.notifier);
-    return Expanded(
-        child: Container(
+    return Container(
             padding: const EdgeInsets.all(10),
             child: Stack(
               children: [
@@ -81,30 +80,8 @@ class MainPage extends HookConsumerWidget {
                     color: Colors.black,
                     height: 2,
                   ),
-                  Expanded(
-                      child: ListView.builder(
-                          padding: const EdgeInsets.all(
-                              PhonebookTextConstants.phonebookMargin),
-                          itemCount: 10,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Card(
-                                child: ListTile(
-                              title: Row(
-                                children: [
-                                  Expanded(
-                                      child: Text(
-                                          "Nom $index Prénom $index (Surnom $index)")),
-                                ],
-                              ),
-                              subtitle: Text("Email: $index"),
-                              onTap: () {
-                                completeMemberNotifier
-                                    .setCompleteMember(CompleteMember.empty());
-                                pageNotifier.setPhonebookPage(
-                                    PhonebookPage.memberDetail);
-                              },
-                            ));
-                          }))
+                  const Expanded(
+                      child: MemberCards() )
                 ]),
                 if (isAdmin)
                   Positioned(
@@ -130,7 +107,7 @@ class MainPage extends HookConsumerWidget {
                           children: const [
                             HeroIcon(HeroIcons.userGroup, color: Colors.white),
                             SizedBox(width: 10),
-                            Text("Admin",
+                            Text(PhonebookTextConstants.admin,
                                 style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -141,6 +118,6 @@ class MainPage extends HookConsumerWidget {
                     ),
                   )
               ],
-            )));
+            ));
   }
 }

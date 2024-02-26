@@ -6,6 +6,7 @@ import 'package:myecl/phonebook/class/post.dart';
 import 'package:myecl/phonebook/providers/member_provider.dart';
 import 'package:myecl/phonebook/providers/phonebook_page_provider.dart';
 import 'package:myecl/phonebook/providers/post_provider.dart';
+import 'package:myecl/phonebook/tools/constants.dart';
 
 class MemberDetailPage extends HookConsumerWidget {
   const MemberDetailPage({Key? key}) : super(key: key);
@@ -24,13 +25,13 @@ class MemberDetailPage extends HookConsumerWidget {
                 borderRadius: BorderRadius.circular(50),
                 color: const Color.fromARGB(255, 187, 187, 187)),
             child: Column(children: [
-              const Text("Détail"),
-              Text("Nom: ${memberProvider.member.name}"),
-              Text("Prénom: ${memberProvider.member.firstname}"),
+              const Text(PhonebookTextConstants.detail),
+              Text("${PhonebookTextConstants.name} ${memberProvider.member.name}"),
+              Text("${PhonebookTextConstants.firstname} ${memberProvider.member.firstname}"),
               if (memberProvider.member.nickname != null)
-                Text("Surnom: ${memberProvider.member.nickname!}"),
-              Text("Email: ${memberProvider.member.email}"),
-              const Text("Association :"),
+                Text("${PhonebookTextConstants.nickname} ${memberProvider.member.nickname!}"),
+              Text("${PhonebookTextConstants.email} ${memberProvider.member.email}"),
+              const Text(PhonebookTextConstants.association), //à changer pour dépendre du nombre d'associatione
               for (var post in memberProvider.post)
                 Row(children: [
                   Text("${post.association.name} : ${post.role.name}"),
@@ -53,7 +54,7 @@ class MemberDetailPage extends HookConsumerWidget {
                     child: Row(
                       children: const [
                         Icon(Icons.add),
-                        Text("Ajouter un rôle")
+                        Text(PhonebookTextConstants.addRole)
                       ],
                     ))
             ])));
