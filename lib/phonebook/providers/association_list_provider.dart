@@ -17,7 +17,6 @@ class AssociationListNotifier extends ListNotifier<Association> {
 
   Future<AsyncValue<List<Association>>> loadAssociations() async {
     associationList = await loadList(() async => associationRepository.getAssociationList());
-    debugPrint("associationList: $associationList");
     return associationList;
   }
 

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:myecl/phonebook/class/membership.dart';
 import 'member.dart';
 
@@ -17,10 +18,10 @@ class CompleteMember {
         nickname: json['nickname'],
         id: json['id'],
         email: json['email'],
-        promotion: json['promotion']);
-    memberships = json['memberships']
-        .map((membership) => Membership.fromJSON(membership))
-        .toList();
+        promotion: json['promotion']??"");
+    memberships = List<Membership>.from(json['memberships']
+        .map((membership) => Membership.fromJSON(membership)));
+        
   }
 
   Map<String, dynamic> toJSON() {

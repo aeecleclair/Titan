@@ -12,8 +12,6 @@ class MemberRoleTagsProvider extends StateNotifier<List<String>> {
   MemberRoleTagsProvider() : super([]);
 
   void setRoleTagsWithFilter(Tuple2<RolesTags, List<bool>> data) {
-    debugPrint(data.item1.tags.toString());
-    debugPrint(data.item2.toString());
     List<String> newRoleTags = [];
     for (int i = 0; i < data.item2.length; i++) {
       if (data.item2[i]) {
@@ -21,6 +19,5 @@ class MemberRoleTagsProvider extends StateNotifier<List<String>> {
       }
     }
     state = newRoleTags;
-    debugPrint(state.toString());
   }
 }

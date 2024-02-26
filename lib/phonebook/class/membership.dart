@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:myecl/phonebook/class/association.dart';
 
 class Membership {
@@ -14,11 +15,11 @@ class Membership {
   late final String apparentName;
 
   Membership.fromJSON(Map<String, dynamic> json){
-      id = json['id'];
-      association = json['association'];
-      rolesTags = json['role_tags'];
-      apparentName = json['role_name'];
-      }
+    id = json['id'];
+    association = Association.fromJSON(json['association']);
+    rolesTags = json['role_tags'].split(";");
+    apparentName = json['role_name'];
+    }
   
   Map<String, dynamic> toJSON(){
     final data = <String, dynamic>{
