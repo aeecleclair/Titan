@@ -8,13 +8,15 @@ import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/phonebook/ui/pages/association_creation_page/text_entry.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
-import 'package:myecl/phonebook/ui/radio_chip.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/layouts/item_chip.dart';
+import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AssociationCreationPage extends HookConsumerWidget {
@@ -62,23 +64,24 @@ class AssociationCreationPage extends HookConsumerWidget {
                   height: 30,
                 ),
                 associationKinds.when(
-                  data: (value) {
-                    return SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        physics: const BouncingScrollPhysics(),
-                        child: Row(children: [
-                          const SizedBox(width: 15),
-                          ...value.kinds
-                              .map((e) => RadioChip(
-                                    label: e,
-                                    selected: e == kind.value,
-                                    onTap: () async {
-                                      kind.value = e;
-                                    },
-                                  ))
-                              .toList(),
-                          const SizedBox(width: 15),
-                        ]));
+                  data: (association) {
+                    return HorizontalListView.builder(
+                        height: 40,
+                        items: association.kinds,
+                        itemBuilder: (context, item, index) {
+                          final selected = kind.value == item;
+                          return ItemChip(
+                            onTap: () {
+                              kind.value = item;
+                            },
+                            selected: selected,
+                            child: Text(item,
+                                style: TextStyle(
+                                  color: selected ? Colors.white : Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                          );
+                        });
                   },
                   error: (error, stack) {
                     return const Text(PhonebookTextConstants.errorKindsLoading);
@@ -96,38 +99,22 @@ class AssociationCreationPage extends HookConsumerWidget {
                           vertical: 10,
                         ),
                       ),
-                      AddAssociationTextEntry(
+                      TextEntry(
                           controller: name,
-                          title: AdminTextConstants.name,
+                          label: AdminTextConstants.name,
                           canBeEmpty: false),
-                      AddAssociationTextEntry(
+                      const SizedBox(height: 30),
+                      TextEntry(
                           controller: description,
-                          title: AdminTextConstants.description,
+                          label: AdminTextConstants.description,
                           canBeEmpty: true),
+                      const SizedBox(height: 50),
                       WaitingButton(
-                        builder: (child) => Container(
-                          width: double.infinity,
-                          margin: const EdgeInsets.symmetric(vertical: 20),
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [
-                                ColorConstants.gradient1,
-                                ColorConstants.gradient2,
-                              ],
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color:
-                                    ColorConstants.gradient2.withOpacity(0.5),
-                                blurRadius: 5,
-                                offset: const Offset(2, 2),
-                                spreadRadius: 2,
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(15),
-                          ),
+                        builder: (child) => AddEditButtonLayout(
+                          colors: const [
+                            ColorConstants.gradient1,
+                            ColorConstants.gradient2,
+                          ],
                           child: child,
                         ),
                         onTap: () async {
