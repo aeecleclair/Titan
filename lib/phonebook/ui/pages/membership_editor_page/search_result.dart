@@ -13,7 +13,6 @@ class SearchResult extends HookConsumerWidget {
     final users = ref.watch(userList);
     final usersNotifier = ref.watch(userList.notifier);
     final memberNotifier = ref.watch(completeMemberProvider.notifier);
-    final member = ref.watch(completeMemberProvider);
 
     return users.when(
         data: (u) {
