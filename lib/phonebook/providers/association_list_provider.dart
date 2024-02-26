@@ -4,8 +4,6 @@ import 'package:myecl/phonebook/repositories/association_repository.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/user/class/user.dart';
-import 'package:myecl/user/providers/user_provider.dart';
 
 class AssociationListNotifier extends ListNotifier<Association> {
   final AssociationRepository associationRepository = AssociationRepository();
@@ -14,8 +12,8 @@ class AssociationListNotifier extends ListNotifier<Association> {
     associationRepository.setToken(token);
   }
 
-  Future<AsyncValue<List<Association>>> loadAssociations() async {
-    return await loadList(associationRepository.getAssociationList);
+  Future<AsyncValue<List<Association>>> loadAssociations([String? filter]) async {
+    return await loadList(() async => associationRepository.getAssociationList(filter!));
   }
 
 //  Future<AsyncValue<List<Association>>> loadAssociationsFromUser(User user) async {
