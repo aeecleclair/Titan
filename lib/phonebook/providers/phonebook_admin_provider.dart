@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
+import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 final isPhonebookAdminProvider = StateProvider<bool>((ref) {
@@ -19,7 +20,7 @@ final isAssociationPresidentProvider = StateProvider<bool>((ref) {
     if (members.map((e) => e.member.id).contains(me.id)) {
       if (members.firstWhere((member) => member.member.id == me.id)
         .memberships.firstWhere((membership) => membership.association.id == association.id)
-        .rolesTags.contains("Prez'")) {
+        .rolesTags.contains(PhonebookTextConstants.presidentRoleTag)) {
           return true;
         }
     }

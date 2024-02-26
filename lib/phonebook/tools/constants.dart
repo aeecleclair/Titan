@@ -85,6 +85,8 @@ class PhonebookTextConstants {
   static const String all = "Toutes";
 
   static const String research = "Rechercher";
+
+  static const String presidentRoleTag = "Prez'";
 }
 
 class PhonebookColorConstants {
