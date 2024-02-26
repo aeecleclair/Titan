@@ -1,7 +1,5 @@
-import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/providers/research_filter_provider.dart';
 import 'package:myecl/phonebook/repositories/association_repository.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
