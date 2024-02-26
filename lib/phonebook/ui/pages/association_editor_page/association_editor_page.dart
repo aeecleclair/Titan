@@ -19,8 +19,8 @@ import 'package:myecl/phonebook/ui/pages/association_editor_page/member_editable
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AssociationEditorPage extends HookConsumerWidget {
@@ -179,37 +179,31 @@ class AssociationEditorPage extends HookConsumerWidget {
                             ),
                           ],
                         )),
-                    ShrinkButton(
-                      waitChild: Container(
-                        width: double.infinity,
-                        margin: const EdgeInsets.symmetric(vertical: 20),
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [
-                              ColorConstants.gradient1,
-                              ColorConstants.gradient2,
-                            ],
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: ColorConstants.gradient2.withOpacity(0.5),
-                              blurRadius: 5,
-                              offset: const Offset(2, 2),
-                              spreadRadius: 2,
+                    WaitingButton(
+                      builder: (child) => Container(
+                          width: double.infinity,
+                          margin: const EdgeInsets.symmetric(vertical: 20),
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              colors: [
+                                ColorConstants.gradient1,
+                                ColorConstants.gradient2,
+                              ],
                             ),
-                          ],
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: const SizedBox(
-                          height: 20,
-                          width: 20,
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color:
+                                    ColorConstants.gradient2.withOpacity(0.5),
+                                blurRadius: 5,
+                                offset: const Offset(2, 2),
+                                spreadRadius: 2,
+                              ),
+                            ],
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                        ),
-                      ),
+                          child: child),
                       onTap: () async {
                         if (!key.currentState!.validate()) {
                           return;
@@ -234,35 +228,12 @@ class AssociationEditorPage extends HookConsumerWidget {
                           }
                         });
                       },
-                      child: Container(
-                        width: double.infinity,
-                        margin: const EdgeInsets.symmetric(vertical: 20),
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [
-                              ColorConstants.gradient1,
-                              ColorConstants.gradient2,
-                            ],
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: ColorConstants.gradient2.withOpacity(0.5),
-                              blurRadius: 5,
-                              offset: const Offset(2, 2),
-                              spreadRadius: 2,
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: const Text(
-                          PhonebookTextConstants.edit,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: Color.fromARGB(255, 255, 255, 255),
-                          ),
+                      child: const Text(
+                        PhonebookTextConstants.edit,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Color.fromARGB(255, 255, 255, 255),
                         ),
                       ),
                     )
@@ -276,7 +247,16 @@ class AssociationEditorPage extends HookConsumerWidget {
             children: [
               const Text(PhonebookTextConstants.members),
               const Spacer(),
-              ShrinkButton(
+              WaitingButton(
+                builder: (child) => Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: ColorConstants.gradient1,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: child,
+                ),
                 onTap: () async {
                   rolesTagsNotifier.resetChecked();
                   completeMemberNotifier
@@ -293,17 +273,9 @@ class AssociationEditorPage extends HookConsumerWidget {
                         PhonebookRouter.addEditMember);
                   }
                 },
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: ColorConstants.gradient1,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Icon(
-                    Icons.add,
-                    color: Colors.white,
-                  ),
+                child: const Icon(
+                  Icons.add,
+                  color: Colors.white,
                 ),
               ),
             ],
@@ -320,37 +292,30 @@ class AssociationEditorPage extends HookConsumerWidget {
         const SizedBox(
           height: 10,
         ),
-        ShrinkButton(
-          waitChild: Container(
-            width: double.infinity,
-            margin: const EdgeInsets.all(30),
-            padding: const EdgeInsets.symmetric(vertical: 15),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [
-                  ColorConstants.gradient1,
-                  ColorConstants.gradient2,
-                ],
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: ColorConstants.gradient2.withOpacity(0.5),
-                  blurRadius: 5,
-                  offset: const Offset(2, 2),
-                  spreadRadius: 2,
+        WaitingButton(
+          builder: (child) => Container(
+              width: double.infinity,
+              margin: const EdgeInsets.all(30),
+              padding: const EdgeInsets.symmetric(vertical: 15),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [
+                    ColorConstants.gradient1,
+                    ColorConstants.gradient2,
+                  ],
                 ),
-              ],
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: const SizedBox(
-              height: 20,
-              width: 20,
-              child: CircularProgressIndicator(
-                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: ColorConstants.gradient2.withOpacity(0.5),
+                    blurRadius: 5,
+                    offset: const Offset(2, 2),
+                    spreadRadius: 2,
+                  ),
+                ],
+                borderRadius: BorderRadius.circular(15),
               ),
-            ),
-          ),
+              child: child),
           onTap: () async {
             showDialog(
               context: context,
@@ -390,35 +355,12 @@ class AssociationEditorPage extends HookConsumerWidget {
               ),
             );
           },
-          child: Container(
-            width: double.infinity,
-            margin: const EdgeInsets.all(30),
-            padding: const EdgeInsets.symmetric(vertical: 15),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [
-                  ColorConstants.gradient1,
-                  ColorConstants.gradient2,
-                ],
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: ColorConstants.gradient2.withOpacity(0.5),
-                  blurRadius: 5,
-                  offset: const Offset(2, 2),
-                  spreadRadius: 2,
-                ),
-              ],
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Text(
-              "${PhonebookTextConstants.changeMandate} ${association.mandateYear + 1}",
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: Color.fromARGB(255, 255, 255, 255),
-              ),
+          child: Text(
+            "${PhonebookTextConstants.changeMandate} ${association.mandateYear + 1}",
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: Color.fromARGB(255, 255, 255, 255),
             ),
           ),
         )

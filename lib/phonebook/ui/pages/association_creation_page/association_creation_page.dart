@@ -14,7 +14,7 @@ import 'package:myecl/phonebook/ui/radio_chip.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/shrink_button.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AssociationCreationPage extends HookConsumerWidget {
@@ -104,8 +104,8 @@ class AssociationCreationPage extends HookConsumerWidget {
                           controller: description,
                           title: AdminTextConstants.description,
                           canBeEmpty: true),
-                      ShrinkButton(
-                        waitChild: Container(
+                      WaitingButton(
+                        builder: (child) => Container(
                           width: double.infinity,
                           margin: const EdgeInsets.symmetric(vertical: 20),
                           padding: const EdgeInsets.symmetric(vertical: 15),
@@ -128,13 +128,7 @@ class AssociationCreationPage extends HookConsumerWidget {
                             ],
                             borderRadius: BorderRadius.circular(15),
                           ),
-                          child: const SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                            ),
-                          ),
+                          child: child,
                         ),
                         onTap: () async {
                           if (!key.currentState!.validate()) {
@@ -174,36 +168,12 @@ class AssociationCreationPage extends HookConsumerWidget {
                             }
                           });
                         },
-                        child: Container(
-                          width: double.infinity,
-                          margin: const EdgeInsets.symmetric(vertical: 20),
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [
-                                ColorConstants.gradient1,
-                                ColorConstants.gradient2,
-                              ],
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color:
-                                    ColorConstants.gradient2.withOpacity(0.5),
-                                blurRadius: 5,
-                                offset: const Offset(2, 2),
-                                spreadRadius: 2,
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: const Text(
-                            AdminTextConstants.add,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: Color.fromARGB(255, 255, 255, 255),
-                            ),
+                        child: const Text(
+                          AdminTextConstants.add,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromARGB(255, 255, 255, 255),
                           ),
                         ),
                       ),
