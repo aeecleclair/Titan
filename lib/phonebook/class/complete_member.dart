@@ -19,8 +19,11 @@ class CompleteMember {
         email: json['email'],
         phone: json['phone'],
         promotion: json['promo'] ?? 0);
-    memberships = List<Membership>.from(json['memberships']
-        .map((membership) => Membership.fromJson(membership)));
+    memberships = List<Membership>.from(
+      json['memberships'].map((membership) {
+        return Membership.fromJson(membership);
+      }),
+    );
   }
 
   Map<String, dynamic> toJson() {
