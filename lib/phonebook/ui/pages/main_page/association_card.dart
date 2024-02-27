@@ -30,7 +30,7 @@ class AssociationCard extends HookConsumerWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
       child: GestureDetector(
         onTap: onClicked,
         child: CardLayout(
