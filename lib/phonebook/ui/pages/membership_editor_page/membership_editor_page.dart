@@ -3,10 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/phonebook/class/membership.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
-import 'package:myecl/phonebook/providers/is_edit_provider.dart';
 import 'package:myecl/phonebook/providers/member_role_tags_provider.dart';
+import 'package:myecl/phonebook/providers/membership_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/tools/function.dart';
@@ -38,8 +39,9 @@ class MembershipEditorPage extends HookConsumerWidget {
     final rolesTagsNotifier = ref.watch(rolesTagsProvider.notifier);
     final apparentNameController = useTextEditingController(text: '');
     final member = ref.watch(completeMemberProvider);
+    final membership = ref.watch(membershipProvider);
     final association = ref.watch(associationProvider);
-    final isEdit = ref.watch(isEditProvider);
+    final isEdit = membership.id != Membership.empty().id;
     final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
     final associationMemberListNotifier =
         ref.watch(associationMemberListProvider.notifier);
@@ -50,12 +52,7 @@ class MembershipEditorPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    if (isEdit) {
-      apparentNameController.text = member.memberships
-          .where((e) => e.associationId == association.id)
-          .toList()[0]
-          .apparentName;
-    }
+    apparentNameController.text = membership.apparentName;
 
     return PhonebookTemplate(
         child: Padding(
@@ -97,7 +94,7 @@ class MembershipEditorPage extends HookConsumerWidget {
                             const Spacer(),
                             Checkbox(
                               value: rolesTags[tagKeys]!.maybeWhen(
-                                data: (d) => d[0],
+                                data: (rolesTag) => rolesTag[0],
                                 orElse: () => false,
                               ),
                               fillColor:
@@ -149,15 +146,30 @@ class MembershipEditorPage extends HookConsumerWidget {
                           PhonebookTextConstants.emptyApparentName);
                       return;
                     }
+                    print(member.memberships.map((mappedMembership) => (
+                          mappedMembership.associationId,
+                          mappedMembership.memberId,
+                          mappedMembership.mandateYear
+                        )));
+                    print((
+                      membership.associationId,
+                      membership.memberId,
+                      membership.mandateYear
+                    ));
                     tokenExpireWrapper(ref, () async {
                       if (isEdit) {
+                        final membershipEdit = Membership(
+                          id: membership.id,
+                          memberId: membership.memberId,
+                          associationId: membership.associationId,
+                          rolesTags: memberRoleTags,
+                          apparentName: apparentNameController.text,
+                          mandateYear: membership.mandateYear,
+                        );
                         final value = await associationNotifier.updateMember(
-                            member.memberships.firstWhere((element) =>
-                                element.associationId == association.id),
-                            association,
-                            member.member,
-                            memberRoleTags,
-                            apparentNameController.text);
+                          membershipEdit,
+                          association,
+                        );
                         if (value) {
                           associationMemberListNotifier.loadMembers(
                               association.id,
@@ -171,11 +183,16 @@ class MembershipEditorPage extends HookConsumerWidget {
                               PhonebookTextConstants.updatingError);
                         }
                       } else {
+                        final membershipAdd = Membership(
+                          id: "",
+                          memberId: member.member.id,
+                          associationId: association.id,
+                          rolesTags: memberRoleTags,
+                          apparentName: apparentNameController.text,
+                          mandateYear: association.mandateYear,
+                        );
                         final value = await associationNotifier.addMember(
-                            association,
-                            member.member,
-                            memberRoleTags,
-                            apparentNameController.text);
+                            membershipAdd, association);
                         if (value) {
                           associationMemberListNotifier.loadMembers(
                               association.id,

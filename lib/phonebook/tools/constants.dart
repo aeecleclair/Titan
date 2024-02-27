@@ -59,6 +59,8 @@ class PhonebookTextConstants {
   static const String errorLoadProfilePicture = "Erreur";
   static const String errorRoleTagsLoading =
       "Erreur lors du chargement des tags de rôle";
+  static const String existingMembership =
+      "Ce membre est déjà dans le mandat actuel";
 
   static const String firstname = "Prénom :";
 

@@ -3,13 +3,14 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
+import 'package:myecl/phonebook/class/membership.dart';
 import 'package:myecl/phonebook/providers/association_kinds_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_picture_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
-import 'package:myecl/phonebook/providers/is_edit_provider.dart';
+import 'package:myecl/phonebook/providers/membership_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
@@ -45,7 +46,7 @@ class AssociationEditorPage extends HookConsumerWidget {
     final name = useTextEditingController(text: association.name);
     final description = useTextEditingController(text: association.description);
     final rolesTagsNotifier = ref.watch(rolesTagsProvider.notifier);
-    final isEditNotifier = ref.watch(isEditProvider.notifier);
+    final membershipNotifier = ref.watch(membershipProvider.notifier);
     final completeMemberNotifier = ref.watch(completeMemberProvider.notifier);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -249,7 +250,8 @@ class AssociationEditorPage extends HookConsumerWidget {
                   rolesTagsNotifier.resetChecked();
                   completeMemberNotifier
                       .setCompleteMember(CompleteMember.empty());
-                  isEditNotifier.setStatus(false);
+                  membershipNotifier.setMembership(Membership.empty()
+                      .copyWith(associationId: association.id));
                   if (QR.currentPath.contains(PhonebookRouter.admin)) {
                     QR.to(PhonebookRouter.root +
                         PhonebookRouter.admin +
@@ -279,7 +281,12 @@ class AssociationEditorPage extends HookConsumerWidget {
               ? const Text(PhonebookTextConstants.noMember)
               : Column(
                   children: associationMembers
-                      .map((member) => MemberEditableCard(member: member))
+                      .map(
+                        (member) => MemberEditableCard(
+                          member: member,
+                          association: association,
+                        ),
+                      )
                       .toList(),
                 ),
         ),
