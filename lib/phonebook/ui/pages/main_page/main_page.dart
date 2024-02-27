@@ -122,7 +122,6 @@ class PhonebookMainPage extends HookConsumerWidget {
                               QR.to(PhonebookRouter.root +
                                   PhonebookRouter.associationDetail);
                             },
-                            showMemberRole: false,
                           ),
                         )
                     ],

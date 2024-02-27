@@ -5,8 +5,8 @@ import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/phonebook/ui/pages/main_page/association_card.dart';
 import 'package:myecl/phonebook/ui/pages/member_detail_page/element_field.dart';
+import 'package:myecl/phonebook/ui/pages/member_detail_page/membership_card.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
@@ -72,19 +72,21 @@ class MemberDetailPage extends HookConsumerWidget {
             builder: (context, associations) => Column(
               children: [
                 ...memberProvider.memberships.map(
-                  (e) => AssociationCard(
-                    association: associations.firstWhere(
-                        (association) => association.id == e.associationId),
-                    onClicked: () {
-                      associationNotifier.setAssociation(
-                          associations.firstWhere((association) =>
-                              association.id == e.associationId));
-                      QR.to(PhonebookRouter.root +
-                          PhonebookRouter.associationDetail);
-                    },
-                    showMemberRole: true,
-                    member: memberProvider,
-                  ),
+                  (membership) {
+                    final associationMembership = associations.firstWhere(
+                        (association) =>
+                            association.id == membership.associationId);
+                    return MembershipCard(
+                      association: associationMembership,
+                      onClicked: () {
+                        associationNotifier
+                            .setAssociation(associationMembership);
+                        QR.to(PhonebookRouter.root +
+                            PhonebookRouter.associationDetail);
+                      },
+                      membership: membership,
+                    );
+                  },
                 ),
               ],
             ),

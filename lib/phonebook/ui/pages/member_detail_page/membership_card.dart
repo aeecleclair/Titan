@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
+import 'package:myecl/phonebook/class/membership.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 
-class AssociationCard extends HookConsumerWidget {
-  const AssociationCard({
+class MembershipCard extends HookConsumerWidget {
+  const MembershipCard({
     super.key,
     required this.association,
+    required this.membership,
     required this.onClicked,
   });
 
   final Association association;
   final VoidCallback onClicked;
+  final Membership membership;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,14 +28,14 @@ class AssociationCard extends HookConsumerWidget {
             children: [
               const SizedBox(width: 10),
               Text(
-                association.name,
+                "${association.name} - ${membership.mandateYear}",
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const Spacer(flex: 1),
-              Text(association.kind)
+              Text(membership.apparentName)
             ],
           ),
         ),
