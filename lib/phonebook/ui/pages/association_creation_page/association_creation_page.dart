@@ -128,11 +128,14 @@ class AssociationCreationPage extends HookConsumerWidget {
                             return;
                           }
                           await tokenExpireWrapper(ref, () async {
-                            final value = await associationListNotifier
-                                .createAssociation(Association.empty().copyWith(
-                                    name: name.text,
-                                    description: description.text,
-                                    kind: kind.value));
+                            final value =
+                                await associationListNotifier.createAssociation(
+                              Association.empty().copyWith(
+                                  name: name.text,
+                                  description: description.text,
+                                  kind: kind.value,
+                                  mandateYear: DateTime.now().year),
+                            );
                             if (value) {
                               displayToastWithContext(TypeMsg.msg,
                                   PhonebookTextConstants.addedAssociation);
