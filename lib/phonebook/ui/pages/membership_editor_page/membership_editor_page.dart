@@ -67,6 +67,7 @@ class MembershipEditorPage extends HookConsumerWidget {
                   StyledSearchBar(
                     padding: EdgeInsets.zero,
                     label: PhonebookTextConstants.member,
+                    editingController: queryController,
                     onChanged: (value) async {
                       tokenExpireWrapper(ref, () async {
                         queryController.text = value;
@@ -146,16 +147,6 @@ class MembershipEditorPage extends HookConsumerWidget {
                           PhonebookTextConstants.emptyApparentName);
                       return;
                     }
-                    print(member.memberships.map((mappedMembership) => (
-                          mappedMembership.associationId,
-                          mappedMembership.memberId,
-                          mappedMembership.mandateYear
-                        )));
-                    print((
-                      membership.associationId,
-                      membership.memberId,
-                      membership.mandateYear
-                    ));
                     tokenExpireWrapper(ref, () async {
                       if (isEdit) {
                         final membershipEdit = Membership(

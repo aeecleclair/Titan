@@ -15,10 +15,10 @@ class SearchResult extends HookConsumerWidget {
     final memberNotifier = ref.watch(completeMemberProvider.notifier);
 
     return users.when(
-        data: (u) {
+        data: (usersData) {
           return Column(
-              children: u
-                  .map((e) => GestureDetector(
+              children: usersData
+                  .map((user) => GestureDetector(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
@@ -29,7 +29,7 @@ class SearchResult extends HookConsumerWidget {
                               ),
                               Expanded(
                                 child: Text(
-                                  e.getName(),
+                                  user.getName(),
                                   style: const TextStyle(
                                     fontSize: 13,
                                   ),
@@ -39,8 +39,8 @@ class SearchResult extends HookConsumerWidget {
                             ]),
                       ),
                       onTap: () {
-                        memberNotifier.setMember(Member.fromUser(e));
-                        queryController.text = e.getName();
+                        memberNotifier.setMember(Member.fromUser(user));
+                        queryController.text = user.getName();
                         usersNotifier.clear();
                       }))
                   .toList());
