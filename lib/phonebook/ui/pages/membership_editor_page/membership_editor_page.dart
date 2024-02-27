@@ -10,7 +10,6 @@ import 'package:myecl/phonebook/providers/member_role_tags_provider.dart';
 import 'package:myecl/phonebook/providers/membership_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/phonebook/tools/function.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
@@ -37,7 +36,6 @@ class MembershipEditorPage extends HookConsumerWidget {
     final queryController = useTextEditingController(text: '');
     final usersNotifier = ref.watch(userList.notifier);
     final rolesTagsNotifier = ref.watch(rolesTagsProvider.notifier);
-    final apparentNameController = useTextEditingController(text: '');
     final member = ref.watch(completeMemberProvider);
     final membership = ref.watch(membershipProvider);
     final association = ref.watch(associationProvider);
@@ -47,12 +45,12 @@ class MembershipEditorPage extends HookConsumerWidget {
         ref.watch(associationMemberListProvider.notifier);
     final memberRoleTagsNotifier = ref.watch(memberRoleTagsProvider.notifier);
     final memberRoleTags = ref.watch(memberRoleTagsProvider);
+    final apparentNameController =
+        useTextEditingController(text: membership.apparentName);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
-
-    apparentNameController.text = membership.apparentName;
 
     return PhonebookTemplate(
         child: Padding(
@@ -78,7 +76,23 @@ class MembershipEditorPage extends HookConsumerWidget {
                         }
                       });
                     },
-                  ),
+                  )
+                else
+                  member.member.nickname == null
+                      ? Text(
+                          "${member.member.firstname} ${member.member.name}",
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        )
+                      : Text(
+                          "${member.member.nickname} (${member.member.firstname} ${member.member.name})",
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -89,25 +103,30 @@ class MembershipEditorPage extends HookConsumerWidget {
                     value: rolesTagList,
                     builder: (context, rolesTags) => Column(children: [
                       ...rolesTags.keys.map(
-                        (tagKeys) => Row(
+                        (tagKey) => Row(
                           children: [
-                            Text(tagKeys),
+                            Text(tagKey),
                             const Spacer(),
                             Checkbox(
-                              value: rolesTags[tagKeys]!.maybeWhen(
+                              value: rolesTags[tagKey]!.maybeWhen(
                                 data: (rolesTag) => rolesTag[0],
                                 orElse: () => false,
                               ),
                               fillColor:
                                   MaterialStateProperty.all(Colors.black),
                               onChanged: (value) {
-                                rolesTags[tagKeys] = AsyncData([value!]);
-                                apparentNameController.text =
-                                    nameConstructor(rolesTags);
+                                rolesTags[tagKey] = AsyncData([value!]);
                                 memberRoleTagsNotifier
                                     .setRoleTagsWithFilter(rolesTags);
                                 rolesTagsNotifier.setTData(
-                                    tagKeys, AsyncData([value]));
+                                    tagKey, AsyncData([value]));
+                                if (value &&
+                                    apparentNameController.text == "") {
+                                  apparentNameController.text = tagKey;
+                                } else if (!value &&
+                                    apparentNameController.text == tagKey) {
+                                  apparentNameController.text = "";
+                                }
                               },
                             ),
                           ],
