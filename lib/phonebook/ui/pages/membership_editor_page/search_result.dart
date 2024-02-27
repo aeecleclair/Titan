@@ -42,6 +42,7 @@ class SearchResult extends HookConsumerWidget {
                         memberNotifier.setMember(Member.fromUser(user));
                         queryController.text = user.getName();
                         usersNotifier.clear();
+                        memberNotifier.loadMembership();
                       }))
                   .toList());
         },

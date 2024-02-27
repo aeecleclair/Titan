@@ -61,7 +61,7 @@ class MembershipEditorPage extends HookConsumerWidget {
                 AlignLeftText(isEdit
                     ? PhonebookTextConstants.editMembership
                     : PhonebookTextConstants.addMember),
-                if (!isEdit)
+                if (!isEdit) ...[
                   StyledSearchBar(
                     padding: EdgeInsets.zero,
                     label: PhonebookTextConstants.member,
@@ -76,8 +76,9 @@ class MembershipEditorPage extends HookConsumerWidget {
                         }
                       });
                     },
-                  )
-                else
+                  ),
+                  SearchResult(queryController: queryController),
+                ] else
                   member.member.nickname == null
                       ? Text(
                           "${member.member.firstname} ${member.member.name}",
@@ -96,7 +97,6 @@ class MembershipEditorPage extends HookConsumerWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                SearchResult(queryController: queryController),
                 SizedBox(
                   width: min(MediaQuery.of(context).size.width, 300),
                   child: AsyncChild(
@@ -166,6 +166,7 @@ class MembershipEditorPage extends HookConsumerWidget {
                           PhonebookTextConstants.emptyApparentName);
                       return;
                     }
+
                     tokenExpireWrapper(ref, () async {
                       if (isEdit) {
                         final membershipEdit = Membership(
@@ -193,6 +194,21 @@ class MembershipEditorPage extends HookConsumerWidget {
                               PhonebookTextConstants.updatingError);
                         }
                       } else {
+                        // Test if the membership already exists with (association_id,member_id,mandate_year)
+                        final memberAssociationMemberships = member.memberships
+                            .where((membership) =>
+                                membership.associationId == association.id);
+
+                        if (memberAssociationMemberships
+                            .where((membership) =>
+                                membership.mandateYear ==
+                                association.mandateYear)
+                            .isNotEmpty) {
+                          displayToastWithContext(TypeMsg.msg,
+                              PhonebookTextConstants.existingMembership);
+                          return;
+                        }
+
                         final membershipAdd = Membership(
                           id: "",
                           memberId: member.member.id,
