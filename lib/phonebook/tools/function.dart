@@ -1,27 +1,9 @@
 import 'dart:math';
 
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/association_kinds.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/membership.dart';
-
-String nameConstructor(Map<String, AsyncValue<List<bool>>?> data) {
-  String name = '';
-  data.forEach((key, value) {
-    value?.maybeWhen(
-        data: (d) {
-          if (d[0]) {
-            name += "$key, ";
-          }
-        },
-        orElse: () {});
-  });
-  if (name.isEmpty) {
-    return "";
-  }
-  return name.substring(0, name.length - 2);
-}
 
 int getPosition(
     CompleteMember member, String associationId, List<String> rolesTags) {
