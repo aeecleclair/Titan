@@ -30,14 +30,8 @@ class AssociationRepository extends Repository {
     return Association.fromJson(await create(association.toJson()));
   }
 
-  Future<bool> addMember(Association association, Member member,
-      List<String> rolesTags, String apparentName) async {
-    final value = await create({
-      "user_id": member.id,
-      "association_id": association.id,
-      "role_tags": rolesTags.join(";"),
-      "role_name": apparentName
-    }, suffix: "memberships");
+  Future<bool> addMember(Membership membership) async {
+    final value = await create(membership.toJson(), suffix: "memberships");
     return value != null;
   }
 
@@ -45,15 +39,9 @@ class AssociationRepository extends Repository {
     return await delete("memberships/${membership.id}");
   }
 
-  Future<bool> updateMember(Membership membership, Association association,
-      Member member, List<String> rolesTags, String apparentName) async {
-    return await update({
-      "id": membership.id,
-      "member_id": member.id,
-      "association_id": association.id,
-      "role_tags": rolesTags.join(";"),
-      "role_name": apparentName
-    }, "memberships/", suffix: membership.id);
+  Future<bool> updateMember(Membership membership) async {
+    return await update(membership.toJson(), "memberships/",
+        suffix: membership.id);
   }
 
   Future<AssociationKinds> getAssociationKinds() async {

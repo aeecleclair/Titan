@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -22,9 +23,10 @@ class MemberCard extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final memberNotifier = ref.watch(completeMemberProvider.notifier);
 
-    List<Membership> assoMembership = member.memberships
-        .where((memberships) => memberships.associationId == association.id)
-        .toList();
+    Membership? assoMembership = member.memberships.firstWhereOrNull(
+        (memberships) =>
+            memberships.associationId == association.id &&
+            memberships.mandateYear == association.mandateYear);
 
     return GestureDetector(
         onTap: () {
@@ -73,10 +75,9 @@ class MemberCard extends HookConsumerWidget {
                           ),
                           flex: 1),
                     CopiabledText(
-                        member.memberships
-                            .firstWhere((element) =>
-                                element.associationId == association.id)
-                            .apparentName,
+                        assoMembership == null
+                            ? PhonebookTextConstants.noMemberRole
+                            : assoMembership.apparentName,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -114,9 +115,9 @@ class MemberCard extends HookConsumerWidget {
                       ),
                     const Spacer(flex: 1),
                     Text(
-                      assoMembership.isEmpty
+                      assoMembership == null
                           ? PhonebookTextConstants.noMemberRole
-                          : assoMembership.first.apparentName,
+                          : assoMembership.apparentName,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,

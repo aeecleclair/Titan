@@ -1,11 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
+import 'package:myecl/phonebook/class/membership.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
 import 'package:myecl/phonebook/providers/is_edit_provider.dart';
+import 'package:myecl/phonebook/providers/membership_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/delete_button.dart';
@@ -16,23 +20,31 @@ import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class MemberEditableCard extends HookConsumerWidget {
-  const MemberEditableCard({super.key, required this.member});
+  const MemberEditableCard(
+      {super.key, required this.member, required this.association});
 
   final CompleteMember member;
+  final Association association;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final profilePicture = ref.watch(profilePictureProvider);
-    final association = ref.watch(associationProvider);
     final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
     final associationMembersNotifier =
         ref.watch(associationMemberListProvider.notifier);
     final roleTagsNotifier = ref.watch(rolesTagsProvider.notifier);
-    final isEditNotifier = ref.watch(isEditProvider.notifier);
+    final membershipNotifier = ref.watch(membershipProvider.notifier);
     final completeMemberNotifier = ref.watch(completeMemberProvider.notifier);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
+
+    Membership? assoMembership = member.memberships.firstWhereOrNull(
+        (memberships) =>
+            memberships.associationId == association.id &&
+            memberships.mandateYear == association.mandateYear);
+
+    assoMembership ??= Membership.empty();
 
     return Container(
         padding: const EdgeInsets.all(5),
@@ -101,7 +113,7 @@ class MemberEditableCard extends HookConsumerWidget {
               roleTagsNotifier.resetChecked();
               roleTagsNotifier.loadRoleTagsFromMember(member, association);
               completeMemberNotifier.setCompleteMember(member);
-              isEditNotifier.setStatus(true);
+              membershipNotifier.setMembership(assoMembership!);
               if (QR.currentPath.contains(PhonebookRouter.admin)) {
                 QR.to(PhonebookRouter.root +
                     PhonebookRouter.admin +

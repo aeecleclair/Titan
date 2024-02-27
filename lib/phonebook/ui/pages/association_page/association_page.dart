@@ -38,45 +38,6 @@ class AssociationPage extends HookConsumerWidget {
           children: [
             Column(
               children: [
-                // Container(
-                //   decoration: BoxDecoration(
-                //     shape: BoxShape.circle,
-                //     boxShadow: [
-                //       BoxShadow(
-                //         color: Colors.black.withOpacity(0.1),
-                //         spreadRadius: 5,
-                //         blurRadius: 10,
-                //         offset: const Offset(2, 3),
-                //       ),
-                //     ],
-                //   ),
-                //   child: associationPicture.when(
-                //     data: (picture) {
-                //       return Container(
-                //         width: 40,
-                //         height: 40,
-                //         decoration: BoxDecoration(
-                //           shape: BoxShape.circle,
-                //           image: DecorationImage(
-                //             image: picture.image,
-                //             fit: BoxFit.cover,
-                //           ),
-                //         ),
-                //       );
-                //     },
-                //     loading: () {
-                //       return const Center(
-                //         child: CircularProgressIndicator(),
-                //       );
-                //     },
-                //     error: (e, s) {
-                //       return const Center(
-                //         child: Text(
-                //             PhonebookTextConstants.errorLoadAssociationPicture),
-                //       );
-                //     },
-                //   ),
-                // ),
                 const SizedBox(height: 20),
                 Text(
                   association.name,
