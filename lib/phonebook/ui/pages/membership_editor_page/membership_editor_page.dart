@@ -68,7 +68,6 @@ class MembershipEditorPage extends HookConsumerWidget {
                     editingController: queryController,
                     onChanged: (value) async {
                       tokenExpireWrapper(ref, () async {
-                        queryController.text = value;
                         if (value.isNotEmpty) {
                           await usersNotifier.filterUsers(value);
                         } else {
