@@ -27,7 +27,8 @@ import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AssociationEditorPage extends HookConsumerWidget {
-  const AssociationEditorPage({super.key});
+  final scrollKey = GlobalKey();
+  AssociationEditorPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -76,7 +77,7 @@ class AssociationEditorPage extends HookConsumerWidget {
         Form(
             key: key,
             child: Column(children: [
-              const KindsBar(),
+              KindsBar(key: scrollKey),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Column(
