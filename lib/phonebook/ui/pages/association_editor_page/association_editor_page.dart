@@ -259,6 +259,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                         PhonebookRouter.addEditMember);
                   } else {
                     QR.to(PhonebookRouter.root +
+                        PhonebookRouter.associationDetail +
                         PhonebookRouter.editAssociation +
                         PhonebookRouter.addEditMember);
                   }
