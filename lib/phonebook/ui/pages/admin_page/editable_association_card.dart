@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/delete_button.dart';
@@ -29,23 +31,32 @@ class EditableAssociationCard extends HookConsumerWidget {
                 spreadRadius: 2)
           ]),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           const SizedBox(width: 10),
-          Text(
-            association.name,
-            style: const TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          const Spacer(),
-          Text(association.kind,
+          Expanded(
+            child: Text(
+              association.name,
               style: const TextStyle(
                   color: Colors.black,
                   fontSize: 16,
-                  fontWeight: FontWeight.bold)),
-          const Spacer(),
-          EditionButton(onEdition: onEdit),
-          const SizedBox(width: 5),
-          DeleteButton(onDelete: onDelete),
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          Expanded(
+            child: Text(association.kind,
+                style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold)),
+          ),
+          Row(
+            children: [
+              EditionButton(onEdition: onEdit),
+              const SizedBox(width: 5),
+              DeleteButton(onDelete: onDelete),
+            ],
+          ),
         ],
       ),
     );

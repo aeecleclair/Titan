@@ -77,39 +77,45 @@ class AdminPage extends HookConsumerWidget {
                       )
                     else
                       ...associationFilteredList.map(
-                        (association) => EditableAssociationCard(
-                          association: association,
-                          onEdit: () {
-                            associationNotifier.setAssociation(association);
-                            QR.to(PhonebookRouter.root +
-                                PhonebookRouter.admin +
-                                PhonebookRouter.editAssociation);
-                          },
-                          onDelete: () async {
-                            await showDialog(
-                              context: context,
-                              builder: (context) {
-                                return CustomDialogBox(
-                                  title: PhonebookTextConstants.deleting,
-                                  descriptions:
-                                      PhonebookTextConstants.deleteAssociation,
-                                  onYes: () async {
-                                    final result = await associationListNotifier
-                                        .deleteAssociation(association);
-                                    if (result) {
-                                      displayToastWithContext(
-                                          TypeMsg.msg,
-                                          PhonebookTextConstants
-                                              .deletedAssociation);
-                                    } else {
-                                      displayToastWithContext(TypeMsg.error,
-                                          PhonebookTextConstants.deletingError);
-                                    }
-                                  },
-                                );
-                              },
-                            );
-                          },
+                        (association) => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: EditableAssociationCard(
+                            association: association,
+                            onEdit: () {
+                              associationNotifier.setAssociation(association);
+                              QR.to(PhonebookRouter.root +
+                                  PhonebookRouter.admin +
+                                  PhonebookRouter.editAssociation);
+                            },
+                            onDelete: () async {
+                              await showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return CustomDialogBox(
+                                    title: PhonebookTextConstants.deleting,
+                                    descriptions: PhonebookTextConstants
+                                        .deleteAssociation,
+                                    onYes: () async {
+                                      final result =
+                                          await associationListNotifier
+                                              .deleteAssociation(association);
+                                      if (result) {
+                                        displayToastWithContext(
+                                            TypeMsg.msg,
+                                            PhonebookTextConstants
+                                                .deletedAssociation);
+                                      } else {
+                                        displayToastWithContext(
+                                            TypeMsg.error,
+                                            PhonebookTextConstants
+                                                .deletingError);
+                                      }
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                          ),
                         ),
                       ),
                   ],
