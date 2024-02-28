@@ -7,7 +7,6 @@ import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/phonebook/tools/function.dart';
 import 'package:myecl/phonebook/ui/components/kinds_bar.dart';
 import 'package:myecl/phonebook/ui/pages/main_page/association_card.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
@@ -29,7 +28,6 @@ class PhonebookMainPage extends HookConsumerWidget {
     final associationFilteredList = ref.watch(associationFilteredListProvider);
     final associationKindsNotifier =
         ref.watch(associationKindsProvider.notifier);
-    final associationKinds = ref.watch(associationKindsProvider);
 
     return PhonebookTemplate(
       child: Refresher(
@@ -58,35 +56,30 @@ class PhonebookMainPage extends HookConsumerWidget {
             ),
             const SizedBox(height: 10),
             AsyncChild(
-              value: associationKinds,
-              builder: (context, kinds) => AsyncChild(
-                value: associationList,
-                builder: (context, associations) {
-                  associations = sortedAssociation(associations, kinds);
-                  return Column(
-                    children: [
-                      const KindsBar(),
-                      const SizedBox(height: 30),
-                      if (associations.isEmpty)
-                        const Center(
-                          child:
-                              Text(PhonebookTextConstants.noAssociationFound),
-                        )
-                      else
-                        ...associationFilteredList.map(
-                          (association) => AssociationCard(
-                            association: association,
-                            onClicked: () {
-                              associationNotifier.setAssociation(association);
-                              QR.to(PhonebookRouter.root +
-                                  PhonebookRouter.associationDetail);
-                            },
-                          ),
-                        )
-                    ],
-                  );
-                },
-              ),
+              value: associationList,
+              builder: (context, associations) {
+                return Column(
+                  children: [
+                    const KindsBar(),
+                    const SizedBox(height: 30),
+                    if (associations.isEmpty)
+                      const Center(
+                        child: Text(PhonebookTextConstants.noAssociationFound),
+                      )
+                    else
+                      ...associationFilteredList.map(
+                        (association) => AssociationCard(
+                          association: association,
+                          onClicked: () {
+                            associationNotifier.setAssociation(association);
+                            QR.to(PhonebookRouter.root +
+                                PhonebookRouter.associationDetail);
+                          },
+                        ),
+                      )
+                  ],
+                );
+              },
             ),
           ],
         ),
