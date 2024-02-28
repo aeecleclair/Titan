@@ -12,17 +12,17 @@ final associationFilteredListProvider = Provider<List<Association>>((ref) {
       data: (associations) {
         if (kindFilter == "") {
           return associations
-              .where((element) => element.name
+              .where((association) => association.name
                   .toLowerCase()
                   .contains(searchFilter.toLowerCase()))
               .toList();
         } else {
           return associations
-              .where((element) =>
-                  element.name
+              .where((association) =>
+                  association.name
                       .toLowerCase()
                       .contains(searchFilter.toLowerCase()) &&
-                  element.kind == kindFilter)
+                  association.kind == kindFilter)
               .toList();
         }
       },
