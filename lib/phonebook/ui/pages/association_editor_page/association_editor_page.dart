@@ -7,6 +7,7 @@ import 'package:myecl/phonebook/class/membership.dart';
 import 'package:myecl/phonebook/providers/association_kind_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
+import 'package:myecl/phonebook/providers/association_member_sorted_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_picture_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
@@ -38,6 +39,8 @@ class AssociationEditorPage extends HookConsumerWidget {
     final associationMemberListNotifier =
         ref.watch(associationMemberListProvider.notifier);
     final associationMemberList = ref.watch(associationMemberListProvider);
+    final associationMemberSortedList =
+        ref.watch(associationMemberSortedListProvider);
     final associationPictureNotifier =
         ref.watch(associationPictureProvider.notifier);
     final associationListNotifier = ref.watch(associationListProvider.notifier);
@@ -55,7 +58,9 @@ class AssociationEditorPage extends HookConsumerWidget {
         child: Refresher(
       onRefresh: () async {
         await associationMemberListNotifier.loadMembers(
-            association.id, association.mandateYear.toString(), ref);
+          association.id,
+          association.mandateYear.toString(),
+        );
         await associationPictureNotifier.getAssociationPicture(association.id);
       },
       child: Column(children: [
@@ -254,7 +259,7 @@ class AssociationEditorPage extends HookConsumerWidget {
           builder: (context, associationMembers) => associationMembers.isEmpty
               ? const Text(PhonebookTextConstants.noMember)
               : Column(
-                  children: associationMembers
+                  children: associationMemberSortedList
                       .map(
                         (member) => MemberEditableCard(
                           member: member,

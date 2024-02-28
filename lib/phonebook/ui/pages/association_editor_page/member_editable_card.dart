@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/membership.dart';
-import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
 import 'package:myecl/phonebook/providers/membership_provider.dart';
@@ -28,8 +27,6 @@ class MemberEditableCard extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final profilePicture = ref.watch(profilePictureProvider);
     final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
-    final associationMembersNotifier =
-        ref.watch(associationMemberListProvider.notifier);
     final roleTagsNotifier = ref.watch(rolesTagsProvider.notifier);
     final membershipNotifier = ref.watch(membershipProvider.notifier);
     final completeMemberNotifier = ref.watch(completeMemberProvider.notifier);
@@ -131,8 +128,6 @@ class MemberEditableCard extends HookConsumerWidget {
                     member.memberships.firstWhere(
                         (element) => element.associationId == association.id),
                     association);
-                await associationMembersNotifier.loadMembers(
-                    association.id, association.mandateYear.toString(), ref);
                 if (result) {
                   displayToastWithContext(
                       TypeMsg.msg, PhonebookTextConstants.deletedMember);
