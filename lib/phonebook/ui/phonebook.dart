@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/tools/ui/widgets/top_bar.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class PhonebookTemplate extends HookConsumerWidget {
   final Widget child;
@@ -13,9 +14,19 @@ class PhonebookTemplate extends HookConsumerWidget {
     return Scaffold(
       body: Column(
         children: [
-          const TopBar(
+          TopBar(
             title: PhonebookTextConstants.phonebook,
             root: PhonebookRouter.root,
+            onBack: () {
+              if (QR.currentPath ==
+                  PhonebookRouter.root +
+                      PhonebookRouter.admin +
+                      PhonebookRouter.editAssociation) {
+                QR.to(PhonebookRouter.root +
+                    PhonebookRouter
+                        .admin); // Used on back after adding an association
+              }
+            },
           ),
           Expanded(child: child),
         ],
