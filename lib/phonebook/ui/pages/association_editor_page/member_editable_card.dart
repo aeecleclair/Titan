@@ -94,25 +94,28 @@ class MemberEditableCard extends HookConsumerWidget {
               ),
             ),
             const SizedBox(width: 10),
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              AutoSizeText(
-                "${(member.member.nickname ?? member.member.firstname)} - ${member.memberships.firstWhere((element) => element.associationId == association.id).apparentName}",
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-                minFontSize: 10,
-                maxFontSize: 15,
-              ),
-              const SizedBox(height: 3),
-              AutoSizeText(
-                member.member.nickname != null
-                    ? "${member.member.firstname} ${member.member.name}"
-                    : member.member.name,
-                minFontSize: 10,
-                maxFontSize: 15,
-              ),
-            ]),
-            const Spacer(),
+            Expanded(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AutoSizeText(
+                      "${(member.member.nickname ?? member.member.firstname)} - ${member.memberships.firstWhere((element) => element.associationId == association.id).apparentName}",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                      minFontSize: 10,
+                      maxFontSize: 15,
+                    ),
+                    const SizedBox(height: 3),
+                    AutoSizeText(
+                      member.member.nickname != null
+                          ? "${member.member.firstname} ${member.member.name}"
+                          : member.member.name,
+                      minFontSize: 10,
+                      maxFontSize: 15,
+                    ),
+                  ]),
+            ),
             EditionButton(onEdition: () async {
               roleTagsNotifier.resetChecked();
               roleTagsNotifier.loadRoleTagsFromMember(member, association);
