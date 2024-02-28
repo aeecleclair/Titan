@@ -113,8 +113,6 @@ class AdminPage extends HookConsumerWidget {
                                             PhonebookTextConstants
                                                 .deletingError);
                                       }
-                                      associationListNotifier
-                                          .loadAssociations(); // TODO
                                     },
                                   );
                                 },
