@@ -34,10 +34,6 @@ class AssociationRepository extends Repository {
     return value != null;
   }
 
-  Future<bool> deleteMember(Membership membership) async {
-    return await delete("memberships/${membership.id}");
-  }
-
   Future<bool> updateMember(Membership membership) async {
     return await update(membership.toJson(), "memberships/",
         suffix: membership.id);

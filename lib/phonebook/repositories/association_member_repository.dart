@@ -12,4 +12,8 @@ class AssociationMemberRepository extends Repository {
         (await getList(suffix: "$associationId/members/$year"))
             .map((x) => CompleteMember.fromJson(x)));
   }
+
+  Future<bool> deleteMember(String membershipId) async {
+    return await delete("memberships/$membershipId");
+  }
 }

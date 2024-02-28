@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/membership.dart';
-import 'package:myecl/phonebook/providers/association_provider.dart';
+import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
 import 'package:myecl/phonebook/providers/membership_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
@@ -27,7 +27,8 @@ class MemberEditableCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final profilePictureNotifier = ref.watch(profilePictureProvider.notifier);
-    final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
+    final associationMemberListNotifier =
+        ref.watch(associationMemberListProvider.notifier);
     final roleTagsNotifier = ref.watch(rolesTagsProvider.notifier);
     final membershipNotifier = ref.watch(membershipProvider.notifier);
     final completeMemberNotifier = ref.watch(completeMemberProvider.notifier);
@@ -136,10 +137,12 @@ class MemberEditableCard extends HookConsumerWidget {
             const SizedBox(width: 10),
             DeleteButton(
               onDelete: () async {
-                final result = await associationNotifier.deleteMember(
-                    member.memberships.firstWhere(
-                        (element) => element.associationId == association.id),
-                    association);
+                final result = await associationMemberListNotifier.deleteMember(
+                  member,
+                  member.memberships.firstWhere((element) =>
+                      element.associationId == association.id &&
+                      element.mandateYear == association.mandateYear),
+                );
                 if (result) {
                   displayToastWithContext(
                       TypeMsg.msg, PhonebookTextConstants.deletedMember);
