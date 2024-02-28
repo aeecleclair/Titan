@@ -8,12 +8,12 @@ import 'package:myecl/phonebook/class/membership.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
 import 'package:myecl/phonebook/providers/membership_provider.dart';
+import 'package:myecl/phonebook/providers/profile_picture_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/delete_button.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/edition_button.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/providers/profile_picture_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -39,9 +39,8 @@ class MemberEditableCard extends HookConsumerWidget {
     final profilePicture = useState(const AsyncValue.loading());
     if (!profilePicture.value.hasValue) {
       profilePictureNotifier.getProfilePicture(member.member.id).then(
-          (pictureAsync) => pictureAsync.maybeWhen(
-              data: (picture) => profilePicture.value = AsyncData(picture),
-              orElse: () {}));
+            (picture) => profilePicture.value = AsyncData(picture),
+          );
     }
 
     Membership assoMembership = member.memberships.firstWhere(
@@ -77,9 +76,7 @@ class MemberEditableCard extends HookConsumerWidget {
                 data: (picture) {
                   return CircleAvatar(
                     radius: 20,
-                    backgroundImage: picture.isEmpty
-                        ? const AssetImage('assets/images/logo_alpha.png')
-                        : Image.memory(picture).image,
+                    backgroundImage: picture.image,
                   );
                 },
                 loading: () {
