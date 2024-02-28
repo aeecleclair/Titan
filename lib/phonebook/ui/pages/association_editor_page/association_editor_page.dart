@@ -4,7 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/membership.dart';
-import 'package:myecl/phonebook/providers/association_kinds_provider.dart';
+import 'package:myecl/phonebook/providers/association_kind_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_picture_provider.dart';
@@ -14,6 +14,7 @@ import 'package:myecl/phonebook/providers/membership_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
+import 'package:myecl/phonebook/ui/kinds_bar.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/phonebook/ui/pages/association_editor_page/member_editable_card.dart';
 import 'package:myecl/tools/constants.dart';
@@ -22,8 +23,6 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -41,8 +40,7 @@ class AssociationEditorPage extends HookConsumerWidget {
     final associationPictureNotifier =
         ref.watch(associationPictureProvider.notifier);
     final associationListNotifier = ref.watch(associationListProvider.notifier);
-    final associationKinds = ref.watch(associationKindsProvider);
-    final kind = useState(association.kind);
+    final kind = ref.watch(associationKindProvider);
     final name = useTextEditingController(text: association.name);
     final description = useTextEditingController(text: association.description);
     final rolesTagsNotifier = ref.watch(rolesTagsProvider.notifier);
@@ -78,33 +76,7 @@ class AssociationEditorPage extends HookConsumerWidget {
         Form(
             key: key,
             child: Column(children: [
-              associationKinds.when(
-                data: (association) {
-                  return HorizontalListView.builder(
-                      height: 40,
-                      items: association.kinds,
-                      itemBuilder: (context, item, index) {
-                        final selected = kind.value == item;
-                        return ItemChip(
-                          onTap: () {
-                            kind.value = item;
-                          },
-                          selected: selected,
-                          child: Text(item,
-                              style: TextStyle(
-                                color: selected ? Colors.white : Colors.black,
-                                fontWeight: FontWeight.bold,
-                              )),
-                        );
-                      });
-                },
-                error: (error, stack) {
-                  return const Text(PhonebookTextConstants.errorKindsLoading);
-                },
-                loading: () {
-                  return const CircularProgressIndicator();
-                },
-              ),
+              const KindsBar(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Column(
@@ -194,7 +166,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                         if (!key.currentState!.validate()) {
                           return;
                         }
-                        if (kind.value == '') {
+                        if (kind == '') {
                           displayToastWithContext(TypeMsg.error,
                               PhonebookTextConstants.emptyKindError);
                           return;
@@ -204,7 +176,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                               .updateAssociation(association.copyWith(
                                   name: name.text,
                                   description: description.text,
-                                  kind: kind.value));
+                                  kind: kind));
                           if (value) {
                             displayToastWithContext(TypeMsg.msg,
                                 PhonebookTextConstants.updatedAssociation);

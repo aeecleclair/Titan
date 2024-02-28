@@ -3,19 +3,17 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/providers/association_kinds_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
+import 'package:myecl/phonebook/ui/kinds_bar.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -30,7 +28,6 @@ class AssociationCreationPage extends HookConsumerWidget {
     final associationListNotifier = ref.watch(associationListProvider.notifier);
     final associations = ref.watch(associationListProvider);
     final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
-    final associationKinds = ref.watch(associationKindsProvider);
     final kind = useState('');
 
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -62,33 +59,7 @@ class AssociationCreationPage extends HookConsumerWidget {
                 const SizedBox(
                   height: 30,
                 ),
-                associationKinds.when(
-                  data: (association) {
-                    return HorizontalListView.builder(
-                        height: 40,
-                        items: association.kinds,
-                        itemBuilder: (context, item, index) {
-                          final selected = kind.value == item;
-                          return ItemChip(
-                            onTap: () {
-                              kind.value = item;
-                            },
-                            selected: selected,
-                            child: Text(item,
-                                style: TextStyle(
-                                  color: selected ? Colors.white : Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                          );
-                        });
-                  },
-                  error: (error, stack) {
-                    return const Text(PhonebookTextConstants.errorKindsLoading);
-                  },
-                  loading: () {
-                    return const CircularProgressIndicator();
-                  },
-                ),
+                const KindsBar(),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Column(
