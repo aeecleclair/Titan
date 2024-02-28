@@ -7,7 +7,7 @@ import 'package:myecl/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/tools/function.dart';
-import 'package:myecl/phonebook/ui/kinds_bar.dart';
+import 'package:myecl/phonebook/ui/components/kinds_bar.dart';
 import 'package:myecl/phonebook/ui/pages/main_page/association_card.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/phonebook/ui/pages/main_page/research_bar.dart';

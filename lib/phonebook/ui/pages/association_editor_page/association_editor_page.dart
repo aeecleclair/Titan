@@ -14,7 +14,7 @@ import 'package:myecl/phonebook/providers/membership_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/phonebook/ui/kinds_bar.dart';
+import 'package:myecl/phonebook/ui/components/kinds_bar.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/phonebook/ui/pages/association_editor_page/member_editable_card.dart';
 import 'package:myecl/tools/constants.dart';
