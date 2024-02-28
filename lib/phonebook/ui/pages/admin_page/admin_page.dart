@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/phonebook/providers/association_filtered_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_kinds_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
@@ -27,6 +28,7 @@ class AdminPage extends HookConsumerWidget {
     final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
     final associationListNotifier = ref.watch(associationListProvider.notifier);
     final associationList = ref.watch(associationListProvider);
+    final associationFilteredList = ref.watch(associationFilteredListProvider);
     final roleNotifier = ref.watch(rolesTagsProvider.notifier);
     final associationKinds = ref.watch(associationKindsProvider);
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -81,7 +83,7 @@ class AdminPage extends HookConsumerWidget {
                               Text(PhonebookTextConstants.noAssociationFound),
                         )
                       else
-                        ...associations.map(
+                        ...associationFilteredList.map(
                           (association) => EditableAssociationCard(
                             association: association,
                             onEdit: () {

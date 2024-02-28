@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/providers/association_kind_provider.dart';
 import 'package:myecl/phonebook/providers/association_kinds_provider.dart';
-import 'package:myecl/phonebook/providers/association_list_provider.dart';
-import 'package:myecl/phonebook/providers/research_filter_provider.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
@@ -16,8 +14,6 @@ class KindsBar extends ConsumerWidget {
     final kind = ref.watch(associationKindProvider);
     final kindNotifier = ref.watch(associationKindProvider.notifier);
     final associationKinds = ref.watch(associationKindsProvider);
-    final nameFilter = ref.watch(filterProvider);
-    final associationListNotifier = ref.watch(associationListProvider.notifier);
 
     return AsyncChild(
       value: associationKinds,
@@ -29,8 +25,6 @@ class KindsBar extends ConsumerWidget {
           return ItemChip(
             onTap: () {
               kindNotifier.setKind(!selected ? item : "");
-              associationListNotifier.filterAssociationList(
-                  nameFilter, !selected ? item : "");
             },
             selected: selected,
             child: Text(
