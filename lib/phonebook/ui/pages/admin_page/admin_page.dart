@@ -39,7 +39,7 @@ class AdminPage extends HookConsumerWidget {
           await roleNotifier.loadRolesTags();
         },
         child: Column(
-          children: <Widget>[
+          children: [
             const Padding(
               padding: EdgeInsets.all(30),
               child: AssociationResearchBar(),
