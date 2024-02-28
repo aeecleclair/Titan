@@ -1,6 +1,5 @@
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/association_kinds.dart';
-import 'package:myecl/phonebook/class/membership.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class AssociationRepository extends Repository {
@@ -27,16 +26,6 @@ class AssociationRepository extends Repository {
 
   Future<Association> createAssociation(Association association) async {
     return Association.fromJson(await create(association.toJson()));
-  }
-
-  Future<bool> addMember(Membership membership) async {
-    final value = await create(membership.toJson(), suffix: "memberships");
-    return value != null;
-  }
-
-  Future<bool> updateMember(Membership membership) async {
-    return await update(membership.toJson(), "memberships/",
-        suffix: membership.id);
   }
 
   Future<AssociationKinds> getAssociationKinds() async {

@@ -40,7 +40,6 @@ class MembershipEditorPage extends HookConsumerWidget {
     final membership = ref.watch(membershipProvider);
     final association = ref.watch(associationProvider);
     final isEdit = membership.id != Membership.empty().id;
-    final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
     final associationMemberListNotifier =
         ref.watch(associationMemberListProvider.notifier);
     final memberRoleTagsNotifier = ref.watch(memberRoleTagsProvider.notifier);
@@ -184,9 +183,14 @@ class MembershipEditorPage extends HookConsumerWidget {
                           apparentName: apparentNameController.text,
                           mandateYear: membership.mandateYear,
                         );
-                        final value = await associationNotifier.updateMember(
+                        member.memberships[member.memberships.indexWhere(
+                                (membership) =>
+                                    membership.id == membershipEdit.id)] =
+                            membershipEdit;
+                        final value =
+                            await associationMemberListNotifier.updateMember(
+                          member,
                           membershipEdit,
-                          association,
                         );
                         if (value) {
                           associationMemberListNotifier.loadMembers(
@@ -224,14 +228,9 @@ class MembershipEditorPage extends HookConsumerWidget {
                           apparentName: apparentNameController.text,
                           mandateYear: association.mandateYear,
                         );
-                        final value = await associationNotifier.addMember(
-                            membershipAdd, association);
+                        final value = await associationMemberListNotifier
+                            .addMember(member, membershipAdd);
                         if (value) {
-                          associationMemberListNotifier.loadMembers(
-                            //TODO
-                            association.id,
-                            association.mandateYear.toString(),
-                          );
                           displayToastWithContext(
                               TypeMsg.msg, PhonebookTextConstants.addedMember);
                           QR.back();
