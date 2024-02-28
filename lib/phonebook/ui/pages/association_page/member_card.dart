@@ -7,7 +7,7 @@ import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/membership.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/phonebook/ui/copiabled_text.dart';
+import 'package:myecl/phonebook/ui/components/copiabled_text.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';

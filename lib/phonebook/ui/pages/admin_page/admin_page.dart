@@ -8,7 +8,7 @@ import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/tools/function.dart';
-import 'package:myecl/phonebook/ui/kinds_bar.dart';
+import 'package:myecl/phonebook/ui/components/kinds_bar.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/association_research_bar.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/editable_association_card.dart';
