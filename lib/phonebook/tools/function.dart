@@ -9,6 +9,9 @@ int getPosition(
     CompleteMember member, String associationId, List<String> rolesTags) {
   Membership membership = member.memberships
       .firstWhere((element) => element.associationId == associationId);
+  if (membership.rolesTags.isEmpty || membership.rolesTags.first == "") {
+    return rolesTags.length;
+  }
   return membership.rolesTags
       .map((roleTag) => rolesTags.indexOf(roleTag))
       .reduce((value, element) => min(value, element));
