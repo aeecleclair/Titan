@@ -264,6 +264,9 @@ class AssociationEditorPage extends HookConsumerWidget {
                       .toList(),
                 ),
         ),
+        const SizedBox(
+          height: 10,
+        ),
         Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: WaitingButton(
