@@ -49,7 +49,7 @@ class PhonebookRouter {
             ),
             QRoute(
                 path: createAssociaiton,
-                builder: () => const AssociationCreationPage()),
+                builder: () => AssociationCreationPage()),
           ]),
           QRoute(
               path: associationDetail,
