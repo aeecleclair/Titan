@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/providers/association_kind_provider.dart';
 import 'package:myecl/phonebook/providers/association_kinds_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/phonebook_admin_provider.dart';
-import 'package:myecl/phonebook/providers/research_filter_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/tools/function.dart';
+import 'package:myecl/phonebook/ui/kinds_bar.dart';
 import 'package:myecl/phonebook/ui/pages/main_page/association_card.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/phonebook/ui/pages/main_page/research_bar.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -33,9 +29,6 @@ class PhonebookMainPage extends HookConsumerWidget {
     final associationKindsNotifier =
         ref.watch(associationKindsProvider.notifier);
     final associationKinds = ref.watch(associationKindsProvider);
-    final kind = useState('');
-    final kindNotifier = ref.watch(associationKindProvider.notifier);
-    final nameFilter = ref.watch(filterProvider);
 
     return PhonebookTemplate(
       child: Refresher(
@@ -71,42 +64,7 @@ class PhonebookMainPage extends HookConsumerWidget {
                   associations = sortedAssociation(associations, kinds);
                   return Column(
                     children: [
-                      HorizontalListView.builder(
-                          height: 40,
-                          items: kinds.kinds,
-                          firstChild: ItemChip(
-                              selected: kind.value == "",
-                              onTap: () {
-                                kind.value = "";
-                                kindNotifier.setKind("");
-                                associationListNotifier.filterAssociationList(
-                                    nameFilter, kind.value);
-                              },
-                              child: Text(PhonebookTextConstants.all,
-                                  style: TextStyle(
-                                    color: kind.value == ""
-                                        ? Colors.white
-                                        : Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ))),
-                          itemBuilder: (context, item, index) {
-                            final selected = kind.value == item;
-                            return ItemChip(
-                              onTap: () {
-                                kind.value = item;
-                                kindNotifier.setKind(item);
-                                associationListNotifier.filterAssociationList(
-                                    nameFilter, kind.value);
-                              },
-                              selected: selected,
-                              child: Text(item,
-                                  style: TextStyle(
-                                    color:
-                                        selected ? Colors.white : Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  )),
-                            );
-                          }),
+                      const KindsBar(),
                       const SizedBox(height: 30),
                       if (associations.isEmpty)
                         const Center(
