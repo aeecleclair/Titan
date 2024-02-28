@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -9,6 +10,7 @@ import 'package:myecl/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/ui/pages/association_page/member_card.dart';
+import 'package:myecl/phonebook/ui/pages/association_page/web_member_card.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
@@ -71,10 +73,15 @@ class AssociationPage extends HookConsumerWidget {
                           ? const Text(PhonebookTextConstants.noMember)
                           : Column(
                               children: associationMemberSortedList
-                                  .map((member) => MemberCard(
-                                        member: member,
-                                        association: association,
-                                      ))
+                                  .map((member) => kIsWeb
+                                      ? WebMemberCard(
+                                          member: member,
+                                          association: association,
+                                        )
+                                      : MemberCard(
+                                          member: member,
+                                          association: association,
+                                        ))
                                   .toList(),
                             ),
                 )

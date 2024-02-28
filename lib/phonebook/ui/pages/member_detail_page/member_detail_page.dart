@@ -24,7 +24,7 @@ class MemberDetailPage extends HookConsumerWidget {
       child: Column(
         children: [
           Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
               child: CardLayout(
                 margin: EdgeInsets.zero,
                 child: Column(children: [
