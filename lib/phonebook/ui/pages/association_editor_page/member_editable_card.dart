@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
@@ -25,13 +26,21 @@ class MemberEditableCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final profilePicture = ref.watch(profilePictureProvider);
+    final profilePictureNotifier = ref.watch(profilePictureProvider.notifier);
     final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
     final roleTagsNotifier = ref.watch(rolesTagsProvider.notifier);
     final membershipNotifier = ref.watch(membershipProvider.notifier);
     final completeMemberNotifier = ref.watch(completeMemberProvider.notifier);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
+    }
+
+    final profilePicture = useState(const AsyncValue.loading());
+    if (!profilePicture.value.hasValue) {
+      profilePictureNotifier.getProfilePicture(member.member.id).then(
+          (pictureAsync) => pictureAsync.maybeWhen(
+              data: (picture) => profilePicture.value = AsyncData(picture),
+              orElse: () {}));
     }
 
     Membership assoMembership = member.memberships.firstWhere(
@@ -63,7 +72,7 @@ class MemberEditableCard extends HookConsumerWidget {
                   ),
                 ],
               ),
-              child: profilePicture.when(
+              child: profilePicture.value.when(
                 data: (picture) {
                   return CircleAvatar(
                     radius: 20,
