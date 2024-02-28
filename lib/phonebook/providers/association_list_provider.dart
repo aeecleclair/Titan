@@ -14,43 +14,29 @@ class AssociationListNotifier extends ListNotifier<Association> {
   }
 
   Future<AsyncValue<List<Association>>> loadAssociations() async {
-    associationList = await loadList(associationRepository.getAssociationList);
-    return associationList;
+    return await loadList(associationRepository.getAssociationList);
   }
 
   Future<bool> createAssociation(Association association) async {
-    final result =
-        await add(associationRepository.createAssociation, association);
-    if (result) {
-      associationList = state;
-    }
-    return result;
+    return await add(associationRepository.createAssociation, association);
   }
 
   Future<bool> updateAssociation(Association association) async {
-    final result = await update(
+    return await update(
         associationRepository.updateAssociation,
         (associations, association) => associations
           ..[associations.indexWhere((g) => g.id == association.id)] =
               association,
         association);
-    if (result) {
-      associationList = state;
-    }
-    return result;
   }
 
   Future<bool> deleteAssociation(Association association) async {
-    final result = await delete(
+    return await delete(
         associationRepository.deleteAssociation,
         (associations, association) =>
             associations..removeWhere((i) => i.id == association.id),
         association.id,
         association);
-    if (result) {
-      associationList = state;
-    }
-    return result;
   }
 
   void filterAssociationList(String nameFilter, String kindFilter) async {
