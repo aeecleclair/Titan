@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/providers/association_filtered_list_provider.dart';
+import 'package:myecl/phonebook/providers/association_kind_provider.dart';
 import 'package:myecl/phonebook/providers/association_kinds_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
@@ -28,6 +29,7 @@ class PhonebookMainPage extends HookConsumerWidget {
     final associationFilteredList = ref.watch(associationFilteredListProvider);
     final associationKindsNotifier =
         ref.watch(associationKindsProvider.notifier);
+    final kindNotifier = ref.watch(associationKindProvider.notifier);
 
     return PhonebookTemplate(
       child: Refresher(
@@ -47,6 +49,7 @@ class PhonebookMainPage extends HookConsumerWidget {
                       padding: const EdgeInsets.only(left: 20),
                       child: AdminButton(
                         onTap: () {
+                          kindNotifier.setKind('');
                           QR.to(PhonebookRouter.root + PhonebookRouter.admin);
                         },
                       ),

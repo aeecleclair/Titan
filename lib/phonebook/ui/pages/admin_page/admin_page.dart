@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/providers/association_filtered_list_provider.dart';
+import 'package:myecl/phonebook/providers/association_kind_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
@@ -24,6 +25,7 @@ class AdminPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
+    final kindNotifier = ref.watch(associationKindProvider.notifier);
     final associationListNotifier = ref.watch(associationListProvider.notifier);
     final associationList = ref.watch(associationListProvider);
     final associationFilteredList = ref.watch(associationFilteredListProvider);
@@ -82,6 +84,7 @@ class AdminPage extends HookConsumerWidget {
                           child: EditableAssociationCard(
                             association: association,
                             onEdit: () {
+                              kindNotifier.setKind(association.kind);
                               associationNotifier.setAssociation(association);
                               QR.to(PhonebookRouter.root +
                                   PhonebookRouter.admin +
