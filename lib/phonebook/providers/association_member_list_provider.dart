@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
+import 'package:myecl/phonebook/class/membership.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/repositories/association_member_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
@@ -18,6 +19,16 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
       String associationId, String year) async {
     return await loadList(() async => associationMemberRepository
         .getAssociationMemberList(associationId, year));
+  }
+
+  Future<bool> deleteMember(
+      CompleteMember member, Membership membership) async {
+    return await delete(
+        associationMemberRepository.deleteMember,
+        (members, member) =>
+            members..removeWhere((i) => i.member.id == member.member.id),
+        membership.id,
+        member);
   }
 }
 
