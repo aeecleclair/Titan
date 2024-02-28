@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/phonebook/class/association.dart';
+import 'package:myecl/phonebook/providers/association_kind_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/router.dart';
@@ -29,8 +30,7 @@ class AssociationCreationPage extends HookConsumerWidget {
     final associationListNotifier = ref.watch(associationListProvider.notifier);
     final associations = ref.watch(associationListProvider);
     final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
-    final kind = useState('');
-
+    final kind = ref.watch(associationKindProvider);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -94,7 +94,7 @@ class AssociationCreationPage extends HookConsumerWidget {
                                 PhonebookTextConstants.emptyFieldError);
                             return;
                           }
-                          if (kind.value == '') {
+                          if (kind == '') {
                             displayToastWithContext(TypeMsg.error,
                                 PhonebookTextConstants.emptyKindError);
                             return;
@@ -105,7 +105,7 @@ class AssociationCreationPage extends HookConsumerWidget {
                               Association.empty().copyWith(
                                   name: name.text,
                                   description: description.text,
-                                  kind: kind.value,
+                                  kind: kind,
                                   mandateYear: DateTime.now().year),
                             );
                             if (value) {
