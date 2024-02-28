@@ -89,25 +89,28 @@ class AssociationPage extends HookConsumerWidget {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              blurRadius: 10,
-                              offset: const Offset(0, 5))
-                        ]),
-                    child: const Row(
-                      children: [
-                        HeroIcon(HeroIcons.userGroup, color: Colors.white),
-                        SizedBox(width: 10),
-                        Text(PhonebookTextConstants.admin,
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white)),
+                      borderRadius: BorderRadius.circular(10),
+                      gradient: const RadialGradient(
+                        colors: [
+                          Color.fromARGB(255, 98, 98, 98),
+                          Color.fromARGB(255, 27, 27, 27),
+                        ],
+                        center: Alignment.topLeft,
+                        radius: 1.3,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color.fromARGB(255, 27, 27, 27)
+                              .withOpacity(0.3),
+                          spreadRadius: 5,
+                          blurRadius: 10,
+                          offset:
+                              const Offset(3, 3), // changes position of shadow
+                        ),
                       ],
                     ),
+                    child:
+                        const HeroIcon(HeroIcons.pencil, color: Colors.white),
                   ),
                 ),
               ),
