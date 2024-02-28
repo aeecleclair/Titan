@@ -18,7 +18,8 @@ import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AssociationCreationPage extends HookConsumerWidget {
-  const AssociationCreationPage({super.key});
+  final scrollKey = GlobalKey();
+  AssociationCreationPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -59,7 +60,7 @@ class AssociationCreationPage extends HookConsumerWidget {
                 const SizedBox(
                   height: 30,
                 ),
-                const KindsBar(),
+                KindsBar(key: scrollKey),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Column(
