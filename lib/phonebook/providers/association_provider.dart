@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/class/membership.dart';
 import 'package:myecl/phonebook/repositories/association_repository.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
 
@@ -15,19 +14,6 @@ class AssociationNotifier extends SingleNotifier<Association> {
   Future<AsyncValue<Association>> loadAssociation(String associationId) async {
     return await load(
         () async => associationRepository.getAssociation(associationId));
-  }
-
-  Future<bool> addMember(Membership membership, Association association) async {
-    return await update(
-        (association) async => associationRepository.addMember(membership),
-        association);
-  }
-
-  Future<bool> updateMember(
-      Membership membership, Association association) async {
-    return await update(
-        (association) async => associationRepository.updateMember(membership),
-        association);
   }
 
   void setAssociation(Association association) {
