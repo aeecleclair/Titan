@@ -24,14 +24,15 @@ class AssociationCard extends HookConsumerWidget {
           child: Row(
             children: [
               const SizedBox(width: 10),
-              Text(
-                association.name,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+              Expanded(
+                child: Text(
+                  association.name,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-              const Spacer(flex: 1),
               Text(association.kind)
             ],
           ),
