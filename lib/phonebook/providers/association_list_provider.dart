@@ -38,35 +38,6 @@ class AssociationListNotifier extends ListNotifier<Association> {
         association.id,
         association);
   }
-
-  void filterAssociationList(String nameFilter, String kindFilter) async {
-    if (kindFilter == "") {
-      associationList.maybeWhen(
-        data: (data) => state = AsyncValue.data(data
-            .where((element) =>
-                element.name.toLowerCase().contains(nameFilter.toLowerCase()))
-            .toList()),
-        orElse: () => state = const AsyncLoading(),
-      );
-    } else {
-      associationList.maybeWhen(
-        data: (data) => state = AsyncValue.data(data
-            .where((element) =>
-                (element.name.toLowerCase().contains(nameFilter.toLowerCase()) &
-                    (element.kind == kindFilter)))
-            .toList()),
-        orElse: () => state = const AsyncLoading(),
-      );
-    }
-  }
-
-  void setAssociationList(List<Association> associationList) {
-    state.whenData(
-      (d) {
-        state = AsyncValue.data(associationList);
-      },
-    );
-  }
 }
 
 final associationListProvider = StateNotifierProvider<AssociationListNotifier,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/phonebook/providers/association_filtered_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_kinds_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
@@ -13,9 +14,8 @@ import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/phonebook/ui/pages/main_page/research_bar.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:myecl/tools/ui/widgets/admin_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-
-import '../../../../tools/ui/widgets/admin_button.dart';
 
 class PhonebookMainPage extends HookConsumerWidget {
   const PhonebookMainPage({super.key});
@@ -26,6 +26,7 @@ class PhonebookMainPage extends HookConsumerWidget {
     final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
     final associationListNotifier = ref.watch(associationListProvider.notifier);
     final associationList = ref.watch(associationListProvider);
+    final associationFilteredList = ref.watch(associationFilteredListProvider);
     final associationKindsNotifier =
         ref.watch(associationKindsProvider.notifier);
     final associationKinds = ref.watch(associationKindsProvider);
@@ -72,7 +73,7 @@ class PhonebookMainPage extends HookConsumerWidget {
                               Text(PhonebookTextConstants.noAssociationFound),
                         )
                       else
-                        ...associations.map(
+                        ...associationFilteredList.map(
                           (association) => AssociationCard(
                             association: association,
                             onClicked: () {
