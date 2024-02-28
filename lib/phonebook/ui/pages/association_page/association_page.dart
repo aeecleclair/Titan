@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/phonebook/providers/association_member_sorted_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_picture_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
@@ -20,6 +21,8 @@ class AssociationPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final association = ref.watch(associationProvider);
     final associationMemberList = ref.watch(associationMemberListProvider);
+    final associationMemberSortedList =
+        ref.watch(associationMemberSortedListProvider);
     final associationMemberListNotifier =
         ref.watch(associationMemberListProvider.notifier);
     final associationPictureNotifier =
@@ -30,7 +33,9 @@ class AssociationPage extends HookConsumerWidget {
       child: Refresher(
         onRefresh: () async {
           await associationMemberListNotifier.loadMembers(
-              association.id, association.mandateYear.toString(), ref);
+            association.id,
+            association.mandateYear.toString(),
+          );
           await associationPictureNotifier
               .getAssociationPicture(association.id);
         },
@@ -65,7 +70,7 @@ class AssociationPage extends HookConsumerWidget {
                       associationMembers.isEmpty
                           ? const Text(PhonebookTextConstants.noMember)
                           : Column(
-                              children: associationMembers
+                              children: associationMemberSortedList
                                   .map((member) => MemberCard(
                                         member: member,
                                         association: association,

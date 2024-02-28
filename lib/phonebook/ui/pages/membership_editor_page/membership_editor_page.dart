@@ -53,54 +53,58 @@ class MembershipEditorPage extends HookConsumerWidget {
     }
 
     return PhonebookTemplate(
-        child: Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: SingleChildScrollView(
-                child: Column(
-              children: [
-                AlignLeftText(isEdit
-                    ? PhonebookTextConstants.editMembership
-                    : PhonebookTextConstants.addMember),
-                if (!isEdit) ...[
-                  StyledSearchBar(
-                    padding: EdgeInsets.zero,
-                    label: PhonebookTextConstants.member,
-                    editingController: queryController,
-                    onChanged: (value) async {
-                      tokenExpireWrapper(ref, () async {
+      child: Padding(
+        padding: const EdgeInsets.all(30.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              AlignLeftText(isEdit
+                  ? PhonebookTextConstants.editMembership
+                  : PhonebookTextConstants.addMember),
+              if (!isEdit) ...[
+                StyledSearchBar(
+                  padding: EdgeInsets.zero,
+                  label: PhonebookTextConstants.member,
+                  editingController: queryController,
+                  onChanged: (value) async {
+                    tokenExpireWrapper(
+                      ref,
+                      () async {
                         if (value.isNotEmpty) {
                           await usersNotifier.filterUsers(value);
                         } else {
                           usersNotifier.clear();
                         }
-                      });
-                    },
-                  ),
-                  SearchResult(queryController: queryController),
-                ] else
-                  member.member.nickname == null
-                      ? Text(
-                          "${member.member.firstname} ${member.member.name}",
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        )
-                      : Text(
-                          "${member.member.nickname} (${member.member.firstname} ${member.member.name})",
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                const SizedBox(
-                  height: 10,
+                      },
+                    );
+                  },
                 ),
-                SizedBox(
-                  width: min(MediaQuery.of(context).size.width, 300),
-                  child: AsyncChild(
-                    value: rolesTagList,
-                    builder: (context, rolesTags) => Column(children: [
+                SearchResult(queryController: queryController),
+              ] else
+                member.member.nickname == null
+                    ? Text(
+                        "${member.member.firstname} ${member.member.name}",
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      )
+                    : Text(
+                        "${member.member.nickname} (${member.member.firstname} ${member.member.name})",
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+              const SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                width: min(MediaQuery.of(context).size.width, 300),
+                child: AsyncChild(
+                  value: rolesTagList,
+                  builder: (context, rolesTags) => Column(
+                    children: [
                       ...rolesTags.keys.map(
                         (tagKey) => Row(
                           children: [
@@ -131,42 +135,46 @@ class MembershipEditorPage extends HookConsumerWidget {
                           ],
                         ),
                       )
-                    ]),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 30),
-                TextEntry(
-                  controller: apparentNameController,
-                  label: PhonebookTextConstants.apparentName,
+              ),
+              const SizedBox(height: 30),
+              TextEntry(
+                controller: apparentNameController,
+                label: PhonebookTextConstants.apparentName,
+              ),
+              const SizedBox(height: 50),
+              WaitingButton(
+                builder: (child) => AddEditButtonLayout(colors: const [
+                  ColorConstants.gradient1,
+                  ColorConstants.gradient2,
+                ], child: child),
+                child: Text(
+                  !isEdit
+                      ? PhonebookTextConstants.add
+                      : PhonebookTextConstants.edit,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                  ),
                 ),
-                const SizedBox(height: 50),
-                WaitingButton(
-                  builder: (child) => AddEditButtonLayout(colors: const [
-                    ColorConstants.gradient1,
-                    ColorConstants.gradient2,
-                  ], child: child),
-                  child: Text(
-                      !isEdit
-                          ? PhonebookTextConstants.add
-                          : PhonebookTextConstants.edit,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromARGB(255, 255, 255, 255),
-                      )),
-                  onTap: () async {
-                    if (member.member.id == "") {
-                      displayToastWithContext(
-                          TypeMsg.msg, PhonebookTextConstants.emptyMember);
-                      return;
-                    }
-                    if (apparentNameController.text == "") {
-                      displayToastWithContext(TypeMsg.msg,
-                          PhonebookTextConstants.emptyApparentName);
-                      return;
-                    }
+                onTap: () async {
+                  if (member.member.id == "") {
+                    displayToastWithContext(
+                        TypeMsg.msg, PhonebookTextConstants.emptyMember);
+                    return;
+                  }
+                  if (apparentNameController.text == "") {
+                    displayToastWithContext(
+                        TypeMsg.msg, PhonebookTextConstants.emptyApparentName);
+                    return;
+                  }
 
-                    tokenExpireWrapper(ref, () async {
+                  tokenExpireWrapper(
+                    ref,
+                    () async {
                       if (isEdit) {
                         final membershipEdit = Membership(
                           id: membership.id,
@@ -182,9 +190,9 @@ class MembershipEditorPage extends HookConsumerWidget {
                         );
                         if (value) {
                           associationMemberListNotifier.loadMembers(
-                              association.id,
-                              association.mandateYear.toString(),
-                              ref);
+                            association.id,
+                            association.mandateYear.toString(),
+                          );
                           displayToastWithContext(TypeMsg.msg,
                               PhonebookTextConstants.updatedMember);
                           QR.back();
@@ -220,9 +228,10 @@ class MembershipEditorPage extends HookConsumerWidget {
                             membershipAdd, association);
                         if (value) {
                           associationMemberListNotifier.loadMembers(
-                              association.id,
-                              association.mandateYear.toString(),
-                              ref);
+                            //TODO
+                            association.id,
+                            association.mandateYear.toString(),
+                          );
                           displayToastWithContext(
                               TypeMsg.msg, PhonebookTextConstants.addedMember);
                           QR.back();
@@ -231,10 +240,14 @@ class MembershipEditorPage extends HookConsumerWidget {
                               PhonebookTextConstants.addingError);
                         }
                       }
-                    });
-                  },
-                ),
-              ],
-            ))));
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

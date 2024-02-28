@@ -14,7 +14,7 @@ int getPosition(
       .reduce((value, element) => min(value, element));
 }
 
-List<CompleteMember> sortMembers(List<CompleteMember> members,
+List<CompleteMember> sortedMembers(List<CompleteMember> members,
     String associationId, List<String> rolesTags) {
   return members
     ..sort((a, b) => getPosition(a, associationId, rolesTags)

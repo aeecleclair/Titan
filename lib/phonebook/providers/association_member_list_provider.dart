@@ -3,7 +3,6 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/repositories/association_member_repository.dart';
-import 'package:myecl/phonebook/tools/function.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
@@ -16,13 +15,9 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
   }
 
   Future<AsyncValue<List<CompleteMember>>> loadMembers(
-      String associationId, String year, ref) async {
-    final result = await loadList(() async => associationMemberRepository
+      String associationId, String year) async {
+    return await loadList(() async => associationMemberRepository
         .getAssociationMemberList(associationId, year));
-    result.whenData((value) {
-      sortMembers(value, associationId, ref);
-    });
-    return result;
   }
 }
 
@@ -34,7 +29,7 @@ final associationMemberListProvider = StateNotifierProvider<
   tokenExpireWrapperAuth(ref, () async {
     final association = ref.watch(associationProvider);
     await provider.loadMembers(
-        association.id, association.mandateYear.toString(), ref);
+        association.id, association.mandateYear.toString());
   });
   return provider;
 });
