@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/phonebook/providers/association_kind_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/tools/ui/widgets/top_bar.dart';
@@ -11,6 +12,7 @@ class PhonebookTemplate extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final kindNotifier = ref.watch(associationKindProvider.notifier);
     return Scaffold(
       body: Column(
         children: [
@@ -18,6 +20,13 @@ class PhonebookTemplate extends HookConsumerWidget {
             title: PhonebookTextConstants.phonebook,
             root: PhonebookRouter.root,
             onBack: () {
+              if (QR.currentPath !=
+                  PhonebookRouter.root +
+                      PhonebookRouter.admin +
+                      PhonebookRouter.editAssociation +
+                      PhonebookRouter.addEditMember) {
+                kindNotifier.setKind('');
+              }
               if (QR.currentPath ==
                   PhonebookRouter.root +
                       PhonebookRouter.admin +
