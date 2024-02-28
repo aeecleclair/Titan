@@ -1,5 +1,4 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
@@ -38,12 +37,12 @@ class MemberEditableCard extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    Membership? assoMembership = member.memberships.firstWhereOrNull(
-        (memberships) =>
-            memberships.associationId == association.id &&
-            memberships.mandateYear == association.mandateYear);
-
-    assoMembership ??= Membership.empty();
+    Membership assoMembership = member.memberships.firstWhere(
+      (memberships) =>
+          memberships.associationId == association.id &&
+          memberships.mandateYear == association.mandateYear,
+      orElse: () => Membership.empty(),
+    );
 
     return Container(
         padding: const EdgeInsets.all(5),
@@ -112,7 +111,7 @@ class MemberEditableCard extends HookConsumerWidget {
               roleTagsNotifier.resetChecked();
               roleTagsNotifier.loadRoleTagsFromMember(member, association);
               completeMemberNotifier.setCompleteMember(member);
-              membershipNotifier.setMembership(assoMembership!);
+              membershipNotifier.setMembership(assoMembership);
               if (QR.currentPath.contains(PhonebookRouter.admin)) {
                 QR.to(PhonebookRouter.root +
                     PhonebookRouter.admin +
