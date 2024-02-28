@@ -1,13 +1,13 @@
 import 'package:collection/collection.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/membership.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/phonebook/ui/components/copiabled_text.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -38,17 +38,18 @@ class MemberCard extends HookConsumerWidget {
         child: CardLayout(
           margin: EdgeInsets.zero,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              if (!kIsWeb) ...[
-                if (member.member.nickname != null) ...[
-                  CopiabledText(
+              if (member.member.nickname != null) ...[
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(
                     member.member.nickname!,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
                   ),
-                  CopiabledText(
+                  Text(
                     "(${member.member.name} ${member.member.firstname})",
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
@@ -56,55 +57,18 @@ class MemberCard extends HookConsumerWidget {
                       color: Color.fromARGB(255, 115, 115, 115),
                     ),
                   ),
-                ] else
-                  CopiabledText(
-                    "${member.member.name} ${member.member.firstname}",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                const Spacer(),
-                CopiabledText(
-                  assoMembership == null
-                      ? PhonebookTextConstants.noMemberRole
-                      : assoMembership.apparentName,
+                ]),
+              ] else
+                Text(
+                  "${member.member.name} ${member.member.firstname}",
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),
-                )
-              ] else ...[
-                if (member.member.nickname != null)
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        member.member.nickname!,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      Text(
-                        "${member.member.name} ${member.member.firstname}",
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Color.fromARGB(255, 115, 115, 115),
-                        ),
-                      ),
-                    ],
-                  )
-                else
-                  Text(
-                    "${member.member.name} ${member.member.firstname}",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                const Spacer(flex: 1),
-                Text(
+                ),
+              Flexible(
+                child: Text(
+                  textAlign: TextAlign.right,
                   assoMembership == null
                       ? PhonebookTextConstants.noMemberRole
                       : assoMembership.apparentName,
@@ -113,7 +77,7 @@ class MemberCard extends HookConsumerWidget {
                     fontSize: 16,
                   ),
                 ),
-              ],
+              ),
             ],
           ),
         ),
