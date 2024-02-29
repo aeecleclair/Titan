@@ -39,13 +39,10 @@ class SearchResult extends HookConsumerWidget {
                             ]),
                       ),
                       onTap: () {
-                        memberNotifier.loadMember(user.id).then((value) {
-                          if (!value) {
-                            memberNotifier.setMember(Member.fromUser(user));
-                          }
-                        });
+                        memberNotifier.setMember(Member.fromUser(user));
                         queryController.text = user.getName();
                         usersNotifier.clear();
+                        memberNotifier.loadMemberComplete();
                       }))
                   .toList());
         },
