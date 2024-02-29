@@ -5,6 +5,7 @@ import 'package:myecl/phonebook/providers/association_kinds_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/research_filter_provider.dart';
 import 'package:myecl/phonebook/tools/function.dart';
+import 'package:diacritic/diacritic.dart';
 
 final associationFilteredListProvider = Provider<List<Association>>((ref) {
   final associationsProvider = ref.watch(associationListProvider);
@@ -14,9 +15,9 @@ final associationFilteredListProvider = Provider<List<Association>>((ref) {
   return associationsProvider.maybeWhen(
       data: (associations) {
         List<Association> filteredAssociations = associations
-            .where((association) => association.name
-                .toLowerCase()
-                .contains(searchFilter.toLowerCase()))
+            .where((association) =>
+                removeDiacritics(association.name.toLowerCase())
+                    .contains(removeDiacritics(searchFilter.toLowerCase())))
             .toList();
         if (kindFilter != "") {
           filteredAssociations = filteredAssociations
