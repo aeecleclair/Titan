@@ -25,6 +25,15 @@ class CompleteMemberProvider extends StateNotifier<CompleteMember> {
     state = state.copyWith(member: i);
   }
 
+  Future<bool> loadMember(String userId) async {
+    try {
+      state = await memberRepository.getCompleteMember(userId);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   Future<bool> loadMembership() async {
     try {
       final data = await memberRepository.getCompleteMember(state.member.id);
