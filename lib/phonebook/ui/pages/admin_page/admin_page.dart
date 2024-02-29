@@ -52,7 +52,7 @@ class AdminPage extends HookConsumerWidget {
               builder: (context, associations) {
                 return Column(
                   children: [
-                    const KindsBar(),
+                    KindsBar(),
                     GestureDetector(
                       onTap: () {
                         QR.to(PhonebookRouter.root +

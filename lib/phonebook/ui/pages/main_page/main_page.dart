@@ -63,7 +63,7 @@ class PhonebookMainPage extends HookConsumerWidget {
               builder: (context, associations) {
                 return Column(
                   children: [
-                    const KindsBar(),
+                    KindsBar(),
                     const SizedBox(height: 30),
                     if (associations.isEmpty)
                       const Center(
