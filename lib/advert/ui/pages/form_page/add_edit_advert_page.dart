@@ -39,21 +39,20 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
     final tags = advert.tags;
     var textTags = tags.join(', ');
     final textTagsController = useTextEditingController(text: textTags);
-
+    final advertPosters = ref.watch(advertPostersProvider);
     final advertListNotifier = ref.watch(advertListProvider.notifier);
     final posterNotifier = ref.watch(advertPosterProvider.notifier);
     final poster = useState<Uint8List?>(null);
     final posterFile = useState<Image?>(null);
 
-    ref.watch(advertPostersProvider).whenData((value) {
-      if (value[advert] != null) {
-        value[advert]!.whenData((data) {
-          if (data.isNotEmpty) {
-            posterFile.value = data.first;
-          }
-        });
-      }
-    });
+    if (advertPosters[advert] != null) {
+      advertPosters[advert]!.whenData((data) {
+        if (data.isNotEmpty) {
+          posterFile.value = data.first;
+        }
+      });
+    }
+
     final ImagePicker picker = ImagePicker();
 
     void displayAdvertToastWithContext(TypeMsg type, String msg) {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -35,56 +34,52 @@ class SectionBar extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    return AsyncChild(
-        value: sectionContender,
-        builder: (context, sections) => HorizontalListView.builder(
-              height: 40,
-              items: sections.keys.toList(),
-              firstChild: (status == Status.waiting)
-                  ? ItemChip(
-                      onTap: () {
-                        QR.to(VoteRouter.root +
-                            VoteRouter.admin +
-                            VoteRouter.addSection);
-                      },
-                      child: const HeroIcon(
-                        HeroIcons.plus,
-                        color: Colors.black,
-                      ),
-                    )
-                  : null,
-              itemBuilder: (context, key, i) => SectionChip(
-                  label: key.name,
-                  selected: section.id == key.id,
-                  isAdmin: status == Status.waiting,
-                  onTap: () async {
-                    tokenExpireWrapper(ref, () async {
-                      sectionIdNotifier.setId(key.id);
-                    });
+    return HorizontalListView.builder(
+      height: 40,
+      items: sectionContender.keys.toList(),
+      firstChild: (status == Status.waiting)
+          ? ItemChip(
+              onTap: () {
+                QR.to(
+                    VoteRouter.root + VoteRouter.admin + VoteRouter.addSection);
+              },
+              child: const HeroIcon(
+                HeroIcons.plus,
+                color: Colors.black,
+              ),
+            )
+          : null,
+      itemBuilder: (context, key, i) => SectionChip(
+          label: key.name,
+          selected: section.id == key.id,
+          isAdmin: status == Status.waiting,
+          onTap: () async {
+            tokenExpireWrapper(ref, () async {
+              sectionIdNotifier.setId(key.id);
+            });
+          },
+          onDelete: () async {
+            tokenExpireWrapper(ref, () async {
+              await showDialog(
+                context: context,
+                builder: (context) => CustomDialogBox(
+                  title: VoteTextConstants.deleteSection,
+                  descriptions: VoteTextConstants.deleteSectionDescription,
+                  onYes: () async {
+                    final result = await sectionsNotifier.deleteSection(key);
+                    if (result) {
+                      sectionContenderListNotifier.deleteT(key);
+                      displayVoteToastWithContext(
+                          TypeMsg.msg, VoteTextConstants.deletedSection);
+                    } else {
+                      displayVoteToastWithContext(
+                          TypeMsg.error, VoteTextConstants.deletingError);
+                    }
                   },
-                  onDelete: () async {
-                    tokenExpireWrapper(ref, () async {
-                      await showDialog(
-                          context: context,
-                          builder: (context) => CustomDialogBox(
-                                title: VoteTextConstants.deleteSection,
-                                descriptions:
-                                    VoteTextConstants.deleteSectionDescription,
-                                onYes: () async {
-                                  final result =
-                                      await sectionsNotifier.deleteSection(key);
-                                  if (result) {
-                                    sectionContenderListNotifier.deleteT(key);
-                                    displayVoteToastWithContext(TypeMsg.msg,
-                                        VoteTextConstants.deletedSection);
-                                  } else {
-                                    displayVoteToastWithContext(TypeMsg.error,
-                                        VoteTextConstants.deletingError);
-                                  }
-                                },
-                              ));
-                    });
-                  }),
-            ));
+                ),
+              );
+            });
+          }),
+    );
   }
 }

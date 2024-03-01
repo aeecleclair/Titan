@@ -55,15 +55,15 @@ class CreationPage extends HookConsumerWidget {
     final raffleLogoNotifier = ref.watch(tombolaLogoProvider.notifier);
     final logo = useState<Uint8List?>(null);
     final logoFile = useState<Image?>(null);
-    ref.watch(tombolaLogosProvider).whenData((value) {
-      if (value[raffle] != null) {
-        value[raffle]!.whenData((data) {
-          if (data.isNotEmpty) {
-            logoFile.value = data.first;
-          }
-        });
-      }
-    });
+    final tombolaLogos = ref.watch(tombolaLogosProvider);
+
+    if (tombolaLogos[raffle] != null) {
+      tombolaLogos[raffle]!.whenData((data) {
+        if (data.isNotEmpty) {
+          logoFile.value = data.first;
+        }
+      });
+    }
 
     void displayRaffleToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);

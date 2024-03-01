@@ -53,60 +53,55 @@ class DetailPage extends HookConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               const SizedBox(height: 30),
-                              AsyncChild(
-                                value: contenderLogos,
-                                builder: (context, data) {
-                                  if (data[contender] == null) {
-                                    return const SizedBox.shrink();
-                                  }
-                                  return SizedBox(
-                                    height: 140,
-                                    width: 140,
-                                    child: AsyncChild(
-                                        value: data[contender]!,
-                                        builder: (context, data) {
-                                          if (data.isEmpty) {
-                                            logoNotifier
-                                                .getLogo(contender.id)
-                                                .then((value) {
-                                              contenderLogosNotifier.setTData(
-                                                  contender,
-                                                  AsyncData([value]));
-                                            });
-                                            return const HeroIcon(
-                                              HeroIcons.userCircle,
-                                              size: 40,
-                                            );
-                                          }
-                                          return Container(
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Colors.grey.shade50,
-                                              image: DecorationImage(
-                                                image: data.first.image,
-                                                fit: BoxFit.cover,
-                                              ),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.grey
-                                                      .withOpacity(0.2),
-                                                  blurRadius: 10,
-                                                  spreadRadius: 5,
-                                                  offset: const Offset(0, 5),
-                                                ),
-                                              ],
+                              if (contenderLogos[contender] == null)
+                                const SizedBox.shrink()
+                              else
+                                SizedBox(
+                                  height: 140,
+                                  width: 140,
+                                  child: AsyncChild(
+                                    value: contenderLogos[contender]!,
+                                    builder: (context, data) {
+                                      if (data.isEmpty) {
+                                        logoNotifier
+                                            .getLogo(contender.id)
+                                            .then((value) {
+                                          contenderLogosNotifier.setTData(
+                                              contender, AsyncData([value]));
+                                        });
+                                        return const HeroIcon(
+                                          HeroIcons.userCircle,
+                                          size: 40,
+                                        );
+                                      }
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.grey.shade50,
+                                          image: DecorationImage(
+                                            image: data.first.image,
+                                            fit: BoxFit.cover,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.grey.withOpacity(0.2),
+                                              blurRadius: 10,
+                                              spreadRadius: 5,
+                                              offset: const Offset(0, 5),
                                             ),
-                                          );
-                                        },
-                                        errorBuilder: (error, stack) =>
-                                            const Center(
-                                              child: HeroIcon(
-                                                  HeroIcons.exclamationCircle,
-                                                  size: 40),
-                                            )),
-                                  );
-                                },
-                              ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                    errorBuilder: (error, stack) =>
+                                        const Center(
+                                      child: HeroIcon(
+                                          HeroIcons.exclamationCircle,
+                                          size: 40),
+                                    ),
+                                  ),
+                                ),
                               const SizedBox(height: 20),
                               Text(
                                 contender.section.name,

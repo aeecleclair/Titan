@@ -57,14 +57,14 @@ class MemberResults extends HookConsumerWidget {
                                               .then((value) {
                                             if (value) {
                                               simpleGroupGroupsNotifier
-                                                  .setTData(newGroup.id,
-                                                      AsyncData([newGroup]))
-                                                  .then((value) {
-                                                displayToastWithContext(
-                                                    TypeMsg.msg,
-                                                    AdminTextConstants
-                                                        .addedMember);
-                                              });
+                                                  .setTData(
+                                                newGroup.id,
+                                                AsyncData([newGroup]),
+                                              );
+                                              displayToastWithContext(
+                                                  TypeMsg.msg,
+                                                  AdminTextConstants
+                                                      .addedMember);
                                             } else {
                                               displayToastWithContext(
                                                   TypeMsg.error,

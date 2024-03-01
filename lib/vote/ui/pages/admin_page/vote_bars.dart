@@ -35,47 +35,38 @@ class VoteBars extends HookConsumerWidget {
     final Map<int, String> sectionIds = {};
     int total = 0;
 
-    sectionsContender.maybeWhen(
-        data: (data) {
-          if (data[section] != null) {
-            data[section]!.maybeWhen(
-                data: ((data) {
-                  sectionNames = data.map((e) => e.name).toList();
-                  sectionIds
-                      .addAll({for (var e in data) data.indexOf(e): e.id});
-                  total = data.map((e) => voteValue[e.id]).reduce(
-                          (value, element) => (value ?? 0) + (element ?? 0)) ??
-                      0;
-                  contenderBars = data
-                      .map((x) => BarChartGroupData(
-                            x: data.indexOf(x),
-                            barRods: [
-                              BarChartRodData(
-                                toY: (voteValue[sectionIds[data.indexOf(x)]] ??
-                                        0)
-                                    .toDouble(),
-                                color: isTouched.value
-                                    ? Colors.grey.shade800
-                                    : barColor,
-                                width: 40,
-                                borderSide: isTouched.value
-                                    ? const BorderSide(
-                                        color: Colors.white, width: 2)
-                                    : const BorderSide(
-                                        color: Colors.white, width: 0),
-                                backDrawRodData: BackgroundBarChartRodData(
-                                  show: true,
-                                  color: barBackgroundColor,
-                                ),
-                              ),
-                            ],
-                          ))
-                      .toList();
-                }),
-                orElse: () {});
-          }
-        },
-        orElse: () {});
+    if (sectionsContender[section] != null) {
+      sectionsContender[section]!.maybeWhen(
+          data: ((data) {
+            sectionNames = data.map((e) => e.name).toList();
+            sectionIds.addAll({for (var e in data) data.indexOf(e): e.id});
+            total = data.map((e) => voteValue[e.id]).reduce(
+                    (value, element) => (value ?? 0) + (element ?? 0)) ??
+                0;
+            contenderBars = data
+                .map((x) => BarChartGroupData(
+                      x: data.indexOf(x),
+                      barRods: [
+                        BarChartRodData(
+                          toY: (voteValue[sectionIds[data.indexOf(x)]] ?? 0)
+                              .toDouble(),
+                          color:
+                              isTouched.value ? Colors.grey.shade800 : barColor,
+                          width: 40,
+                          borderSide: isTouched.value
+                              ? const BorderSide(color: Colors.white, width: 2)
+                              : const BorderSide(color: Colors.white, width: 0),
+                          backDrawRodData: BackgroundBarChartRodData(
+                            show: true,
+                            color: barBackgroundColor,
+                          ),
+                        ),
+                      ],
+                    ))
+                .toList();
+          }),
+          orElse: () {});
+    }
 
     return Expanded(
       child: Container(

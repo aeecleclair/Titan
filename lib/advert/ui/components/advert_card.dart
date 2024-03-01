@@ -41,7 +41,7 @@ class AdvertCard extends HookConsumerWidget {
           value: advertPosters,
           notifier: advertPostersNotifier,
           mapKey: advert,
-          loader: (ref) => logoNotifier.getAdvertPoster(advert.id),
+          loader: (advert) => logoNotifier.getAdvertPoster(advert.id),
           loadingBuilder: (context) => HeroIcon(
             HeroIcons.photo,
             size: width,

@@ -10,7 +10,7 @@ class AdvertPosterNotifier extends MapNotifier<Advert, Image> {
 }
 
 final advertPostersProvider = StateNotifierProvider<AdvertPosterNotifier,
-    AsyncValue<Map<Advert, AsyncValue<List<Image>>?>>>((ref) {
+    Map<Advert, AsyncValue<List<Image>>?>>((ref) {
   AdvertPosterNotifier advertPosterNotifier = AdvertPosterNotifier();
   tokenExpireWrapperAuth(ref, () async {
     ref.watch(advertListProvider).maybeWhen(data: (advert) {

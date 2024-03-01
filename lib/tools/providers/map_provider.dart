@@ -1,131 +1,54 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/tools/exception.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class MapNotifier<T, E>
-    extends StateNotifier<AsyncValue<Map<T, AsyncValue<List<E>>?>>> {
-  MapNotifier() : super(const AsyncLoading());
+class MapNotifier<T, E> extends StateNotifier<Map<T, AsyncValue<List<E>>?>> {
+  MapNotifier() : super(<T, AsyncValue<List<E>>?>{});
 
   void loadTList(List<T> tList) async {
     Map<T, AsyncValue<List<E>>?> tMap = {};
     for (T l in tList) {
       tMap[l] = null;
     }
-    state = AsyncValue.data(tMap);
+    state = tMap;
   }
 
-  Future addT(T t) async {
-    state.maybeWhen(
-      data: (tList) async {
-        tList[t] = null;
-        state = AsyncValue.data(tList);
-      },
-      orElse: () {},
-    );
+  void addT(T t) async {
+    state[t] = null;
+    state = state;
   }
 
-  Future<bool> addE(T t, E e) {
-    return state.when(data: (d) async {
-      try {
-        List<E> eList = d[t]!.maybeWhen(data: (d) => d, orElse: () => []);
-        d[t] = AsyncValue.data(eList + [e]);
-        state = AsyncValue.data(d);
-        return true;
-      } catch (error) {
-        state = AsyncValue.data(d);
-        if (error is AppException && error.type == ErrorType.tokenExpire) {
-          rethrow;
-        } else {
-          return false;
-        }
-      }
-    }, error: (error, s) async {
-      if (error is AppException && error.type == ErrorType.tokenExpire) {
-        throw error;
-      } else {
-        state = AsyncValue.error(error, s);
-        return false;
-      }
-    }, loading: () async {
-      state =
-          const AsyncValue.error("Cannot add while loading", StackTrace.empty);
-      return false;
+  void addE(T t, E e) {
+    return state[t]!.maybeWhen(data: (eList) {
+      state[t] = AsyncValue.data(eList + [e]);
+      state = state;
+    }, orElse: () {
+      state[t] = AsyncValue.data([e]);
+      state = state;
     });
   }
 
-  Future<bool> deleteT(T t) {
-    return state.when(data: (d) async {
-      if (d.containsKey(t)) {
-        d.remove(t);
-        state = AsyncValue.data(d);
-      }
-      return true;
-    }, error: (error, s) async {
-      state = AsyncValue.error(error, s);
-      return false;
-    }, loading: () async {
-      state = const AsyncValue.error(
-          "Cannot delete while loading", StackTrace.empty);
-      return false;
-    });
+  void deleteT(T t) {
+    if (state.containsKey(t)) {
+      state.remove(t);
+      state = state;
+    }
   }
 
-  Future<bool> setTData(T t, AsyncValue<List<E>> asyncEList) async {
-    return state.when(data: (d) async {
-      try {
-        d[t] = asyncEList;
-        state = AsyncValue.data(d);
-        return true;
-      } catch (error) {
-        state = AsyncValue.data(d);
-        if (error is AppException && error.type == ErrorType.tokenExpire) {
-          rethrow;
-        } else {
-          return false;
-        }
-      }
-    }, error: (error, s) {
-      if (error is AppException && error.type == ErrorType.tokenExpire) {
-        throw error;
-      } else {
-        state = AsyncValue.error(error, s);
-        return false;
-      }
-    }, loading: () {
-      state =
-          const AsyncValue.error("Cannot add while loading", StackTrace.empty);
-      return false;
-    });
+  void setTData(T t, AsyncValue<List<E>> asyncEList) async {
+    state[t] = asyncEList;
+    state = state;
   }
 
-  Future<bool> deleteE(T t, int index) {
-    return state.when(data: (d) async {
-      try {
-        List<E> eList = d[t]!.maybeWhen(data: (d) => d, orElse: () => []);
-        eList.removeAt(index);
-        d[t] = AsyncValue.data(eList);
-        state = AsyncValue.data(d);
-        return true;
-      } catch (error) {
-        state = AsyncValue.data(d);
-        if (error is AppException && error.type == ErrorType.tokenExpire) {
-          rethrow;
-        } else {
-          return false;
-        }
-      }
-    }, error: (error, s) async {
-      if (error is AppException && error.type == ErrorType.tokenExpire) {
-        throw error;
-      } else {
-        state = AsyncValue.error(error, s);
-        return false;
-      }
-    }, loading: () async {
-      state =
-          const AsyncValue.error("Cannot add while loading", StackTrace.empty);
-      return false;
-    });
+  bool deleteE(T t, int index) {
+    return state[t]!.maybeWhen(
+        data: (eList) {
+          eList.removeAt(index);
+          state[t] = AsyncValue.data(eList);
+          state = state;
+          return true;
+        },
+        orElse: () => false);
   }
 
   Future<void> autoLoad(
@@ -142,6 +65,7 @@ class MapNotifier<T, E>
 
   Future<void> autoLoadList(WidgetRef ref, T t,
       Future<AsyncValue<List<E>>> Function(T t) loader) async {
+    setTData(t, const AsyncLoading());
     tokenExpireWrapper(ref, () async {
       loader(t).then((value) {
         if (mounted) {

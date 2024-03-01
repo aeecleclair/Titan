@@ -54,48 +54,37 @@ class TicketWidget extends HookConsumerWidget {
                           ],
                           borderRadius:
                               const BorderRadius.all(Radius.circular(15))),
-                      child: Center(
-                        child: tombolaLogos.when(
-                            data: (data) {
-                              if (data[raffle] != null) {
-                                return data[raffle]!.when(
-                                    data: (data) {
-                                      if (data.isNotEmpty) {
-                                        return data.first;
-                                      } else {
-                                        Future.delayed(
-                                            const Duration(milliseconds: 1),
-                                            () {
-                                          tombolaLogosNotifier.setTData(
-                                              raffle, const AsyncLoading());
-                                        });
-                                        tokenExpireWrapper(ref, () async {
-                                          tombolaLogoNotifier
-                                              .getLogo(raffle.id)
-                                              .then((value) {
-                                            tombolaLogosNotifier.setTData(
-                                                raffle, AsyncData([value]));
-                                          });
-                                        });
-                                        return const HeroIcon(
-                                            HeroIcons.cubeTransparent);
-                                      }
-                                    },
-                                    loading: () =>
-                                        const CircularProgressIndicator(),
-                                    error: (Object error,
-                                            StackTrace? stackTrace) =>
-                                        const HeroIcon(
-                                            HeroIcons.cubeTransparent));
-                              } else {
-                                return const HeroIcon(
-                                    HeroIcons.cubeTransparent);
-                              }
-                            },
-                            loading: () => const CircularProgressIndicator(),
-                            error: (Object error, StackTrace? stackTrace) =>
-                                const HeroIcon(HeroIcons.cubeTransparent)),
-                      ),
+                      child: Center(child: Builder(builder: (context) {
+                        if (tombolaLogos[raffle] != null) {
+                          return tombolaLogos[raffle]!.when(
+                              data: (tombolaLogos) {
+                                if (tombolaLogos.isNotEmpty) {
+                                  return tombolaLogos.first;
+                                } else {
+                                  Future.delayed(
+                                      const Duration(milliseconds: 1), () {
+                                    tombolaLogosNotifier.setTData(
+                                        raffle, const AsyncLoading());
+                                  });
+                                  tokenExpireWrapper(ref, () async {
+                                    tombolaLogoNotifier
+                                        .getLogo(raffle.id)
+                                        .then((value) {
+                                      tombolaLogosNotifier.setTData(
+                                          raffle, AsyncData([value]));
+                                    });
+                                  });
+                                  return const HeroIcon(
+                                      HeroIcons.cubeTransparent);
+                                }
+                              },
+                              loading: () => const CircularProgressIndicator(),
+                              error: (Object error, StackTrace? stackTrace) =>
+                                  const HeroIcon(HeroIcons.cubeTransparent));
+                        } else {
+                          return const HeroIcon(HeroIcons.cubeTransparent);
+                        }
+                      })),
                     ),
                     Expanded(
                       child: AutoSizeText(

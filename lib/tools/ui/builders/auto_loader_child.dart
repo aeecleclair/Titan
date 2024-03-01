@@ -5,7 +5,7 @@ import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/loader.dart';
 
 class AutoLoaderChild<MapKey, MapValue> extends ConsumerWidget {
-  final AsyncValue<Map<MapKey, AsyncValue<List<MapValue>>?>> value;
+  final Map<MapKey, AsyncValue<List<MapValue>>?> value;
   final MapNotifier<MapKey, MapValue> notifier;
   final MapKey mapKey;
   final Future<MapValue> Function(MapKey t)? loader;
@@ -33,25 +33,17 @@ class AutoLoaderChild<MapKey, MapValue> extends ConsumerWidget {
     assert(loader != null || listLoader != null);
     final nonNullLoadingBuilder =
         loadingBuilder ?? (context) => Loader(color: loaderColor);
+    final group = value[mapKey];
+    if (group == null) {
+      loader == null
+          ? notifier.autoLoadList(ref, mapKey, listLoader!)
+          : notifier.autoLoad(ref, mapKey, loader!);
+      return nonNullLoadingBuilder(context);
+    }
     return AsyncChild(
-        value: value,
-        builder: (context, value) {
-          final group = value[mapKey];
-          if (group == null) {
-            loader == null
-                ? notifier.autoLoadList(ref, mapKey, listLoader!)
-                : notifier.autoLoad(ref, mapKey, loader!);
-            return nonNullLoadingBuilder(context);
-          }
-          return AsyncChild(
-              value: group,
-              builder: (context, list) {
-                return dataBuilder(context, list);
-              },
-              orElseBuilder: orElseBuilder,
-              errorBuilder: errorBuilder,
-              loadingBuilder: loadingBuilder,
-              loaderColor: loaderColor);
+        value: group,
+        builder: (context, list) {
+          return dataBuilder(context, list);
         },
         orElseBuilder: orElseBuilder,
         errorBuilder: errorBuilder,

@@ -33,7 +33,6 @@ class VoteMainPage extends HookConsumerWidget {
     final isAdmin = ref.watch(isVoteAdminProvider);
     final sections = ref.watch(sectionsProvider);
     final sectionsNotifier = ref.watch(sectionsProvider.notifier);
-    final sectionsContenders = ref.watch(sectionContenderProvider);
     final contenders = ref.watch(contenderListProvider);
     final contendersNotifier = ref.watch(contenderListProvider.notifier);
     final sectionContenderNotifier =
@@ -145,39 +144,35 @@ class VoteMainPage extends HookConsumerWidget {
                                   Expanded(
                                     child: SizedBox(
                                       width: double.infinity,
-                                      child: AsyncChild(
-                                          value: sectionsContenders,
-                                          builder: (context, contenderList) =>
-                                              Column(children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    SectionTitle(
-                                                        sectionList:
-                                                            sectionList),
-                                                    if (isAdmin)
-                                                      Container(
-                                                        margin: const EdgeInsets
-                                                            .only(right: 20),
-                                                        child: AdminButton(
-                                                          onTap: () {
-                                                            QR.to(VoteRouter
-                                                                    .root +
-                                                                VoteRouter
-                                                                    .admin);
-                                                          },
-                                                        ),
-                                                      )
-                                                  ],
-                                                ),
-                                                const SizedBox(height: 15),
-                                                Expanded(
-                                                    child: ListContenderCard(
-                                                  animation: animation,
-                                                ))
-                                              ])),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SectionTitle(
+                                                  sectionList: sectionList),
+                                              if (isAdmin)
+                                                Container(
+                                                  margin: const EdgeInsets.only(
+                                                      right: 20),
+                                                  child: AdminButton(
+                                                    onTap: () {
+                                                      QR.to(VoteRouter.root +
+                                                          VoteRouter.admin);
+                                                    },
+                                                  ),
+                                                )
+                                            ],
+                                          ),
+                                          const SizedBox(height: 15),
+                                          Expanded(
+                                            child: ListContenderCard(
+                                              animation: animation,
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ],

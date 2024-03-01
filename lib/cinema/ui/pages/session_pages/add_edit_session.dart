@@ -49,15 +49,13 @@ class AddEditSessionPage extends HookConsumerWidget {
     final posterUrl = useTextEditingController();
     final sessionPosterNotifier = ref.watch(sessionPosterProvider.notifier);
 
-    sessionPosterMap.whenData((value) {
-      if (value[session] != null) {
-        value[session]!.whenData((data) {
-          if (data.isNotEmpty) {
-            logoFile.value = data.first;
-          }
-        });
-      }
-    });
+    if (sessionPosterMap[session] != null) {
+      sessionPosterMap[session]!.whenData((data) {
+        if (data.isNotEmpty) {
+          logoFile.value = data.first;
+        }
+      });
+    }
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);

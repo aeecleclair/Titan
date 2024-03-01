@@ -41,104 +41,93 @@ class LoanersItems extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
+    final item = loanersItems[loaner];
+    if (item == null) {
+      return const Center(
+        child: Text(LoanTextConstants.noItems),
+      );
+    }
     return AsyncChild(
-        value: loanersItems,
-        builder: (context, items) {
-          final item = items[loaner];
-          if (item == null) {
-            return const Center(
-              child: Text(LoanTextConstants.noItems),
-            );
-          }
-          return AsyncChild(
-            value: item,
-            builder: (context, data) {
-              if (data.isNotEmpty) {
-                data.sort((a, b) => a.name.compareTo(b.name));
-              }
-              return Column(
-                children: [
-                  StyledSearchBar(
-                    label: LoanTextConstants.itemHandling,
-                    onChanged: (value) async {
-                      if (value.isNotEmpty) {
-                        loanersItemsNotifier.setTData(
-                            loaner, await itemListNotifier.filterItems(value));
-                      } else {
-                        loanersItemsNotifier.setTData(loaner, itemList);
-                      }
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  HorizontalListView.builder(
-                      height: 150,
-                      firstChild: GestureDetector(
-                        onTap: () {
-                          itemNotifier.setItem(Item.empty());
-                          QR.to(LoanRouter.root +
-                              LoanRouter.admin +
-                              LoanRouter.addEditItem);
-                        },
-                        child: const CardLayout(
-                          width: 100,
-                          height: 140,
-                          child: Center(
-                            child: HeroIcon(
-                              HeroIcons.plus,
-                              size: 40.0,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
+      value: item,
+      builder: (context, data) {
+        if (data.isNotEmpty) {
+          data.sort((a, b) => a.name.compareTo(b.name));
+        }
+        return Column(
+          children: [
+            StyledSearchBar(
+              label: LoanTextConstants.itemHandling,
+              onChanged: (value) async {
+                if (value.isNotEmpty) {
+                  loanersItemsNotifier.setTData(
+                      loaner, await itemListNotifier.filterItems(value));
+                } else {
+                  loanersItemsNotifier.setTData(loaner, itemList);
+                }
+              },
+            ),
+            const SizedBox(height: 10),
+            HorizontalListView.builder(
+                height: 150,
+                firstChild: GestureDetector(
+                  onTap: () {
+                    itemNotifier.setItem(Item.empty());
+                    QR.to(LoanRouter.root +
+                        LoanRouter.admin +
+                        LoanRouter.addEditItem);
+                  },
+                  child: const CardLayout(
+                    width: 100,
+                    height: 140,
+                    child: Center(
+                      child: HeroIcon(
+                        HeroIcons.plus,
+                        size: 40.0,
+                        color: Colors.black,
                       ),
-                      items: data,
-                      itemBuilder: (context, e, i) => ItemCard(
-                            item: e,
-                            showButtons: true,
-                            onDelete: () async {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return CustomDialogBox(
-                                        descriptions:
-                                            LoanTextConstants.deletingItem,
-                                        onYes: () {
-                                          tokenExpireWrapper(ref, () async {
-                                            final value = await itemListNotifier
-                                                .deleteItem(e, loaner.id);
-                                            if (value) {
-                                              itemListNotifier
-                                                  .copy()
-                                                  .then((value) {
-                                                loanersItemsNotifier.setTData(
-                                                    loaner, value);
-                                              });
-                                              displayToastWithContext(
-                                                  TypeMsg.msg,
-                                                  LoanTextConstants
-                                                      .deletedItem);
-                                            } else {
-                                              displayToastWithContext(
-                                                  TypeMsg.error,
-                                                  LoanTextConstants
-                                                      .deletingError);
-                                            }
-                                          });
-                                        },
-                                        title: LoanTextConstants.delete);
-                                  });
-                            },
-                            onEdit: () {
-                              QR.to(LoanRouter.root +
-                                  LoanRouter.admin +
-                                  LoanRouter.addEditItem);
-                              itemNotifier.setItem(e);
-                            },
-                          )),
-                ],
-              );
-            },
-          );
-        });
+                    ),
+                  ),
+                ),
+                items: data,
+                itemBuilder: (context, e, i) => ItemCard(
+                      item: e,
+                      showButtons: true,
+                      onDelete: () async {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return CustomDialogBox(
+                                  descriptions: LoanTextConstants.deletingItem,
+                                  onYes: () {
+                                    tokenExpireWrapper(ref, () async {
+                                      final value = await itemListNotifier
+                                          .deleteItem(e, loaner.id);
+                                      if (value) {
+                                        itemListNotifier.copy().then((value) {
+                                          loanersItemsNotifier.setTData(
+                                              loaner, value);
+                                        });
+                                        displayToastWithContext(TypeMsg.msg,
+                                            LoanTextConstants.deletedItem);
+                                      } else {
+                                        displayToastWithContext(TypeMsg.error,
+                                            LoanTextConstants.deletingError);
+                                      }
+                                    });
+                                  },
+                                  title: LoanTextConstants.delete);
+                            });
+                      },
+                      onEdit: () {
+                        QR.to(LoanRouter.root +
+                            LoanRouter.admin +
+                            LoanRouter.addEditItem);
+                        itemNotifier.setItem(e);
+                      },
+                    )),
+          ],
+        );
+      },
+    );
   }
 }

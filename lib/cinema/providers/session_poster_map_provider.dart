@@ -10,7 +10,7 @@ class SessionLogoNotifier extends MapNotifier<Session, Image> {
 }
 
 final sessionPosterMapProvider = StateNotifierProvider<SessionLogoNotifier,
-    AsyncValue<Map<Session, AsyncValue<List<Image>>?>>>((ref) {
+    Map<Session, AsyncValue<List<Image>>?>>((ref) {
   SessionLogoNotifier sessionLogoNotifier = SessionLogoNotifier();
   tokenExpireWrapperAuth(ref, () async {
     ref.watch(sessionListProvider).maybeWhen(data: (session) {
