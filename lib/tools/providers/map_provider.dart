@@ -142,6 +142,7 @@ class MapNotifier<T, E>
 
   Future<void> autoLoadList(WidgetRef ref, T t,
       Future<AsyncValue<List<E>>> Function(T t) loader) async {
+    setTData(t, const AsyncLoading());
     tokenExpireWrapper(ref, () async {
       loader(t).then((value) {
         if (mounted) {
