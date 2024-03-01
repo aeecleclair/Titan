@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/is_admin_provider.dart';
 import 'package:myecl/advert/providers/advert_list_provider.dart';
+import 'package:myecl/advert/providers/advert_posters_provider.dart';
 import 'package:myecl/advert/providers/advert_provider.dart';
 import 'package:myecl/advert/providers/announcer_provider.dart';
 import 'package:myecl/advert/providers/is_advert_admin_provider.dart';
@@ -24,6 +25,7 @@ class AdvertMainPage extends HookConsumerWidget {
     final advertNotifier = ref.watch(advertProvider.notifier);
     final advertList = ref.watch(advertListProvider);
     final advertListNotifier = ref.watch(advertListProvider.notifier);
+    final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final selected = ref.watch(announcerProvider);
     final selectedNotifier = ref.watch(announcerProvider.notifier);
     final isAdmin = ref.watch(isAdminProvider);
@@ -34,6 +36,7 @@ class AdvertMainPage extends HookConsumerWidget {
           ColumnRefresher(
             onRefresh: () async {
               await advertListNotifier.loadAdverts();
+              advertPostersNotifier.resetTData();
             },
             children: [
               SizedBox(

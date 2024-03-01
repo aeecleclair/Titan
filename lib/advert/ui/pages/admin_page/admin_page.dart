@@ -59,6 +59,7 @@ class AdvertAdminPage extends HookConsumerWidget {
                     onRefresh: () async {
                       await advertListNotifier.loadAdverts();
                       await userAnnouncerListNotifier.loadMyAnnouncerList();
+                      advertPostersNotifier.resetTData();
                     },
                     children: [
                       const AnnouncerBar(
@@ -114,8 +115,8 @@ class AdvertAdminPage extends HookConsumerWidget {
                                           AdvertTextConstants.deleteAdvert,
                                       onYes: () {
                                         advertListNotifier.deleteAdvert(advert);
-                                        advertPostersNotifier
-                                            .deleteT(advert.id);
+                                        advertPostersNotifier.deleteE(
+                                            advert.id, 0);
                                       },
                                     );
                                   });
