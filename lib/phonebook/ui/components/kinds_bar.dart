@@ -39,7 +39,7 @@ class KindsBar extends HookConsumerWidget {
             final item = kinds.kinds[index];
             final selected = kind == item;
             return ItemChip(
-              key: selected ? dataKey : null,
+              key: selected || (kind == "" && index == 0) ? dataKey : null,
               onTap: () {
                 kindNotifier.setKind(!selected ? item : "");
               },
