@@ -26,7 +26,8 @@ class RaffleWidget extends HookConsumerWidget {
     final ticketListNotifier = ref.watch(ticketsListProvider.notifier);
     final packTicketListNotifier = ref.watch(packTicketListProvider.notifier);
     final singleRaffleStats = ref.watch(raffleStatsProvider.notifier);
-    final raffleStats = ref.watch(raffleStatsMapProvider);
+    final raffleStat =
+        ref.watch(raffleStatsMapProvider.select((value) => value[raffle.id]));
     final rafflesStatsNotifier = ref.watch(raffleStatsMapProvider.notifier);
     return RaffleTemplate(
       child: GestureDetector(
@@ -78,7 +79,7 @@ class RaffleWidget extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 20),
                 AutoLoaderChild(
-                  value: raffleStats,
+                  group: raffleStat,
                   notifier: rafflesStatsNotifier,
                   mapKey: raffle.id,
                   loader: (raffleId) async => (await singleRaffleStats

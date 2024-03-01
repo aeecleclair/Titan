@@ -15,7 +15,7 @@ class MapNotifier<T, E> extends StateNotifier<Map<T, AsyncValue<List<E>>?>> {
 
   void addT(T t) async {
     state[t] = null;
-    state = state;
+    state = Map.of(state);
   }
 
   void addE(T t, E e) {
@@ -24,20 +24,20 @@ class MapNotifier<T, E> extends StateNotifier<Map<T, AsyncValue<List<E>>?>> {
       state = state;
     }, orElse: () {
       state[t] = AsyncValue.data([e]);
-      state = state;
+      state = Map.of(state);
     });
   }
 
   void deleteT(T t) {
     if (state.containsKey(t)) {
       state.remove(t);
-      state = state;
+      state = Map.of(state);
     }
   }
 
   void setTData(T t, AsyncValue<List<E>> asyncEList) async {
     state[t] = asyncEList;
-    state = state;
+    state = Map.of(state);
   }
 
   bool deleteE(T t, int index) {

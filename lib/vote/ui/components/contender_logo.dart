@@ -11,11 +11,12 @@ class ContenderLogo extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final contenderLogos = ref.watch(contenderLogosProvider);
+    final contenderLogos =
+        ref.watch(contenderLogosProvider.select((value) => value[contender]));
     final contenderLogosNotifier = ref.read(contenderLogosProvider.notifier);
     final logoNotifier = ref.read(contenderLogoProvider.notifier);
     return AutoLoaderChild(
-        value: contenderLogos,
+        group: contenderLogos,
         notifier: contenderLogosNotifier,
         mapKey: contender,
         loader: (contender) => logoNotifier.getLogo(contender.id),

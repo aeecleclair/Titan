@@ -24,7 +24,8 @@ class AdvertCard extends HookConsumerWidget {
     double height = 300;
     double imageHeight = 175;
     double maxHeight = MediaQuery.of(context).size.height - 344;
-    final advertPosters = ref.watch(advertPostersProvider);
+    final posters = ref.watch(
+        advertPostersProvider.select((advertPosters) => advertPosters[advert]));
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final logoNotifier = ref.watch(advertPosterProvider.notifier);
     final isWebFormat = ref.watch(isWebFormatProvider);
@@ -38,7 +39,7 @@ class AdvertCard extends HookConsumerWidget {
         margin: const EdgeInsets.all(10),
         padding: EdgeInsets.all(isWebFormat ? 50 : 0),
         child: AutoLoaderChild(
-          value: advertPosters,
+          group: posters,
           notifier: advertPostersNotifier,
           mapKey: advert,
           loader: (advert) => logoNotifier.getAdvertPoster(advert.id),
