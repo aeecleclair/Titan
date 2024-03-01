@@ -49,8 +49,8 @@ class AddEditSessionPage extends HookConsumerWidget {
     final posterUrl = useTextEditingController();
     final sessionPosterNotifier = ref.watch(sessionPosterProvider.notifier);
 
-    if (sessionPosterMap[session] != null) {
-      sessionPosterMap[session]!.whenData((data) {
+    if (sessionPosterMap[session.id] != null) {
+      sessionPosterMap[session.id]!.whenData((data) {
         if (data.isNotEmpty) {
           logoFile.value = data.first;
         }
@@ -242,9 +242,9 @@ class AddEditSessionPage extends HookConsumerWidget {
                                         sessionPosterMapProvider.notifier);
                                     sessionPosterMapNotifier.autoLoad(
                                         ref,
-                                        session,
-                                        (session) => sessionPosterNotifier
-                                            .updateLogo(session.id, logoBytes));
+                                        session.id,
+                                        (sessionId) => sessionPosterNotifier
+                                            .updateLogo(sessionId, logoBytes));
                                   }
                                 },
                                 orElse: () {});
@@ -260,9 +260,9 @@ class AddEditSessionPage extends HookConsumerWidget {
                                         sessionPosterMapProvider.notifier);
                                     sessionPosterMapNotifier.autoLoad(
                                         ref,
-                                        newSession,
-                                        (session) => sessionPosterNotifier
-                                            .updateLogo(session.id, logoBytes));
+                                        newSession.id,
+                                        (sessionId) => sessionPosterNotifier
+                                            .updateLogo(sessionId, logoBytes));
                                   }
                                 },
                                 orElse: () {});

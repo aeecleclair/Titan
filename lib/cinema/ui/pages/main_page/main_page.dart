@@ -6,6 +6,7 @@ import 'package:myecl/cinema/providers/main_page_index_provider.dart';
 import 'package:myecl/cinema/providers/scroll_provider.dart';
 import 'package:myecl/cinema/providers/session_list_page_provider.dart';
 import 'package:myecl/cinema/providers/session_list_provider.dart';
+import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
 import 'package:myecl/cinema/providers/session_provider.dart';
 import 'package:myecl/cinema/router.dart';
 import 'package:myecl/cinema/tools/constants.dart';
@@ -25,6 +26,8 @@ class CinemaMainPage extends HookConsumerWidget {
     final sessionList = ref.watch(sessionListProvider);
     final sessionListNotifier = ref.read(sessionListProvider.notifier);
     final sessionNotifier = ref.watch(sessionProvider.notifier);
+    final sessionPosterMapNotifier =
+        ref.watch(sessionPosterMapProvider.notifier);
     final initialPageNotifier = ref.watch(mainPageIndexProvider.notifier);
     final initialPage = ref.watch(mainPageIndexProvider);
     int currentPage = initialPage;
@@ -44,6 +47,7 @@ class CinemaMainPage extends HookConsumerWidget {
             await sessionListNotifier.loadSessions();
             ref.watch(mainPageIndexProvider.notifier).reset();
             ref.read(cinemaTopicsProvider.notifier).getTopics();
+            sessionPosterMapNotifier.resetTData();
           },
           child: SizedBox(
             height: MediaQuery.of(context).size.height - 85,
