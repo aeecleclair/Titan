@@ -61,8 +61,8 @@ class AddEditContenderPage extends HookConsumerWidget {
     final showNotifier = ref.read(displayResult.notifier);
 
     final contenderLogos = ref.watch(contenderLogosProvider);
-    if (contenderLogos[contender] != null) {
-      contenderLogos[contender]!.whenData((data) {
+    if (contenderLogos[contender.id] != null) {
+      contenderLogos[contender.id]!.whenData((data) {
         if (data.isNotEmpty) {
           logoFile.value = data.first;
         }

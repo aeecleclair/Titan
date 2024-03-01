@@ -57,8 +57,8 @@ class CreationPage extends HookConsumerWidget {
     final logoFile = useState<Image?>(null);
     final tombolaLogos = ref.watch(tombolaLogosProvider);
 
-    if (tombolaLogos[raffle] != null) {
-      tombolaLogos[raffle]!.whenData((data) {
+    if (tombolaLogos[raffle.id] != null) {
+      tombolaLogos[raffle.id]!.whenData((data) {
         if (data.isNotEmpty) {
           logoFile.value = data.first;
         }
