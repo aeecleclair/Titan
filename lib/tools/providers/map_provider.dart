@@ -8,7 +8,9 @@ class MapNotifier<T, E> extends StateNotifier<Map<T, AsyncValue<List<E>>?>> {
   void loadTList(List<T> tList) async {
     Map<T, AsyncValue<List<E>>?> tMap = {};
     for (T l in tList) {
-      tMap[l] = null;
+      if (!tMap.containsKey(l)) {
+        tMap[l] = null;
+      }
     }
     state = tMap;
   }
