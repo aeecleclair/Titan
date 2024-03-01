@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
 import 'package:myecl/cinema/providers/session_poster_provider.dart';
 import 'package:myecl/cinema/repositories/session_poster_repository.dart';
 import 'package:mocktail/mocktail.dart';
@@ -10,14 +11,19 @@ import 'package:mocktail/mocktail.dart';
 class MockSessionPosterRepository extends Mock
     implements SessionPosterRepository {}
 
+class MockSessionLogoNotifier extends Mock implements SessionLogoNotifier {}
+
 void main() {
   group('SessionPosterProvider', () {
     late SessionPosterRepository repository;
     late SessionPosterProvider provider;
+    late SessionLogoNotifier notifier;
 
     setUp(() {
       repository = MockSessionPosterRepository();
-      provider = SessionPosterProvider(repository: repository);
+      notifier = MockSessionLogoNotifier();
+      provider = SessionPosterProvider(
+          repository: repository, sessionLogoNotifier: notifier);
     });
 
     test('initial state is loading', () {

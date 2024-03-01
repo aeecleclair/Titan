@@ -5,18 +5,24 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:myecl/vote/providers/contender_logo_provider.dart';
+import 'package:myecl/vote/providers/contender_logos_provider.dart';
 import 'package:myecl/vote/repositories/contender_logo_repository.dart';
 
 class MockContenderLogoRepository extends Mock
     implements ContenderLogoRepository {}
 
+class MockContenderLogoNotifier extends Mock implements ContenderLogoNotifier {}
+
 void main() {
   late ContenderLogoRepository repository;
+  late ContenderLogoNotifier notifier;
   late ContenderLogoProvider provider;
 
   setUp(() {
     repository = MockContenderLogoRepository();
-    provider = ContenderLogoProvider(contenderLogoRepository: repository);
+    notifier = MockContenderLogoNotifier();
+    provider = ContenderLogoProvider(
+        contenderLogoRepository: repository, contenderLogosNotifier: notifier);
   });
 
   group('ContenderLogoProvider', () {
