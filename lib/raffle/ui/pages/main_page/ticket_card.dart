@@ -55,8 +55,8 @@ class TicketWidget extends HookConsumerWidget {
                           borderRadius:
                               const BorderRadius.all(Radius.circular(15))),
                       child: Center(child: Builder(builder: (context) {
-                        if (tombolaLogos[raffle] != null) {
-                          return tombolaLogos[raffle]!.when(
+                        if (tombolaLogos[raffle.id] != null) {
+                          return tombolaLogos[raffle.id]!.when(
                               data: (tombolaLogos) {
                                 if (tombolaLogos.isNotEmpty) {
                                   return tombolaLogos.first;
@@ -64,14 +64,14 @@ class TicketWidget extends HookConsumerWidget {
                                   Future.delayed(
                                       const Duration(milliseconds: 1), () {
                                     tombolaLogosNotifier.setTData(
-                                        raffle, const AsyncLoading());
+                                        raffle.id, const AsyncLoading());
                                   });
                                   tokenExpireWrapper(ref, () async {
                                     tombolaLogoNotifier
                                         .getLogo(raffle.id)
                                         .then((value) {
                                       tombolaLogosNotifier.setTData(
-                                          raffle, AsyncData([value]));
+                                          raffle.id, AsyncData([value]));
                                     });
                                   });
                                   return const HeroIcon(

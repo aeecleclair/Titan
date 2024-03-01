@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/tools/providers/map_provider.dart';
-import 'package:myecl/raffle/class/raffle.dart';
 
-class RaffleLogoNotifier extends MapNotifier<Raffle, Image> {
-  RaffleLogoNotifier() : super();
+class TombolaLogosNotifier extends MapNotifier<String, Image> {
+  TombolaLogosNotifier() : super();
 }
 
-final tombolaLogosProvider = StateNotifierProvider<RaffleLogoNotifier,
-    Map<Raffle, AsyncValue<List<Image>>?>>((ref) {
-  RaffleLogoNotifier raffleLogoNotifier = RaffleLogoNotifier();
-  return raffleLogoNotifier;
+final tombolaLogosProvider = StateNotifierProvider<TombolaLogosNotifier,
+    Map<String, AsyncValue<List<Image>>?>>((ref) {
+  TombolaLogosNotifier tombolaLogosNotifier = TombolaLogosNotifier();
+  return tombolaLogosNotifier;
 });

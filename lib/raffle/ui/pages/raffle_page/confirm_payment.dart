@@ -103,8 +103,8 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                                         Radius.circular(25))),
                                 child:
                                     Center(child: Builder(builder: (context) {
-                                  if (tombolaLogos[raffle] != null) {
-                                    return tombolaLogos[raffle]!.when(
+                                  if (tombolaLogos[raffle.id] != null) {
+                                    return tombolaLogos[raffle.id]!.when(
                                         data: (data) {
                                           if (data.isNotEmpty) {
                                             return ClipRRect(
@@ -116,14 +116,16 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                                                 const Duration(milliseconds: 1),
                                                 () {
                                               tombolaLogosNotifier.setTData(
-                                                  raffle, const AsyncLoading());
+                                                  raffle.id,
+                                                  const AsyncLoading());
                                             });
                                             tokenExpireWrapper(ref, () async {
                                               tombolaLogoNotifier
                                                   .getLogo(raffle.id)
                                                   .then((value) {
                                                 tombolaLogosNotifier.setTData(
-                                                    raffle, AsyncData([value]));
+                                                    raffle.id,
+                                                    AsyncData([value]));
                                               });
                                             });
                                             return const HeroIcon(

@@ -75,8 +75,8 @@ class BuyPackTicket extends HookConsumerWidget {
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(15))),
                         child: Builder(builder: (context) {
-                          if (tombolaLogos[raffle] != null) {
-                            return tombolaLogos[raffle]!.when(
+                          if (tombolaLogos[raffle.id] != null) {
+                            return tombolaLogos[raffle.id]!.when(
                                 data: (data) {
                                   if (data.isNotEmpty) {
                                     return ClipRRect(
@@ -87,14 +87,14 @@ class BuyPackTicket extends HookConsumerWidget {
                                     Future.delayed(
                                         const Duration(milliseconds: 1), () {
                                       tombolaLogosNotifier.setTData(
-                                          raffle, const AsyncLoading());
+                                          raffle.id, const AsyncLoading());
                                     });
                                     tokenExpireWrapper(ref, () async {
                                       tombolaLogoNotifier
                                           .getLogo(raffle.id)
                                           .then((value) {
                                         tombolaLogosNotifier.setTData(
-                                            raffle, AsyncData([value]));
+                                            raffle.id, AsyncData([value]));
                                       });
                                     });
                                     return const HeroIcon(
