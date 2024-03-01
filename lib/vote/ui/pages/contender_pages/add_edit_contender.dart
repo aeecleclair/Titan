@@ -355,9 +355,10 @@ class AddEditContenderPage extends HookConsumerWidget {
                                   if (logoBytes != null) {
                                     contenderLogosNotifier.autoLoad(
                                         ref,
-                                        contender,
-                                        (contender) => logoNotifier.updateLogo(
-                                            contender.id, logoBytes));
+                                        contender.id,
+                                        (contenderId) =>
+                                            logoNotifier.updateLogo(
+                                                contenderId, logoBytes));
                                   }
                                 },
                                 orElse: () {});
@@ -371,9 +372,10 @@ class AddEditContenderPage extends HookConsumerWidget {
                                   if (logoBytes != null) {
                                     contenderLogosNotifier.autoLoad(
                                         ref,
-                                        newContender,
-                                        (contender) => logoNotifier.updateLogo(
-                                            contender.id, logoBytes));
+                                        newContender.id,
+                                        (contenderId) =>
+                                            logoNotifier.updateLogo(
+                                                contenderId, logoBytes));
                                   }
                                 },
                                 orElse: () {});

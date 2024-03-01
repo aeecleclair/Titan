@@ -100,7 +100,8 @@ class VoteMainPage extends HookConsumerWidget {
               list = contender;
             });
             sectionContenderNotifier.loadTList(value);
-            contenderLogosNotifier.loadTList(list);
+            contenderLogosNotifier
+                .loadTList(list.map((contender) => contender.id).toList());
             for (final l in value) {
               sectionContenderNotifier.setTData(
                   l,
@@ -108,9 +109,10 @@ class VoteMainPage extends HookConsumerWidget {
                       .where((element) => element.section.id == l.id)
                       .toList()));
             }
-            for (final l in list) {
-              logosNotifier.getLogo(l.id).then((value) =>
-                  contenderLogosNotifier.setTData(l, AsyncValue.data([value])));
+            for (final contender in list) {
+              logosNotifier.getLogo(contender.id).then((value) =>
+                  contenderLogosNotifier.setTData(
+                      contender.id, AsyncValue.data([value])));
             }
           });
         },

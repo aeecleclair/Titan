@@ -53,21 +53,21 @@ class DetailPage extends HookConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               const SizedBox(height: 30),
-                              if (contenderLogos[contender] == null)
+                              if (contenderLogos[contender.id] == null)
                                 const SizedBox.shrink()
                               else
                                 SizedBox(
                                   height: 140,
                                   width: 140,
                                   child: AsyncChild(
-                                    value: contenderLogos[contender]!,
+                                    value: contenderLogos[contender.id]!,
                                     builder: (context, data) {
                                       if (data.isEmpty) {
                                         logoNotifier
                                             .getLogo(contender.id)
                                             .then((value) {
                                           contenderLogosNotifier.setTData(
-                                              contender, AsyncData([value]));
+                                              contender.id, AsyncData([value]));
                                         });
                                         return const HeroIcon(
                                           HeroIcons.userCircle,
