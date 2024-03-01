@@ -13,8 +13,8 @@ class PhonebookTemplate extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final kindNotifier = ref.watch(associationKindProvider.notifier);
-    return Scaffold(
-      body: Column(
+    return SafeArea(
+      child: Column(
         children: [
           TopBar(
             title: PhonebookTextConstants.phonebook,
