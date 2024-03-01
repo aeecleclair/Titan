@@ -135,7 +135,9 @@ class MapNotifier<T, E>
     });
     tokenExpireWrapper(ref, () async {
       loader(t).then((value) {
-        setTData(t, AsyncData([value]));
+        if (mounted) {
+          setTData(t, AsyncData([value]));
+        }
       });
     });
   }
@@ -147,7 +149,9 @@ class MapNotifier<T, E>
     });
     tokenExpireWrapper(ref, () async {
       loader(t).then((value) {
-        setTData(t, value);
+        if (mounted) {
+          setTData(t, value);
+        }
       });
     });
   }
