@@ -1,12 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/membership.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
+import 'package:myecl/phonebook/providers/member_pictures_provider.dart';
 import 'package:myecl/phonebook/providers/membership_provider.dart';
 import 'package:myecl/phonebook/providers/profile_picture_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
@@ -15,6 +15,7 @@ import 'package:myecl/phonebook/ui/pages/admin_page/delete_button.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/edition_button.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
+import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class MemberEditableCard extends HookConsumerWidget {
@@ -36,12 +37,8 @@ class MemberEditableCard extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    final profilePicture = useState(const AsyncValue.loading());
-    if (!profilePicture.value.hasValue) {
-      profilePictureNotifier.getProfilePicture(member.member.id).then(
-            (picture) => profilePicture.value = AsyncData(picture),
-          );
-    }
+    final memberPictures = ref.watch(memberPicturesProvider);
+    final memberPicturesNotifier = ref.watch(memberPicturesProvider.notifier);
 
     Membership assoMembership = member.memberships.firstWhere(
       (memberships) =>
@@ -72,23 +69,16 @@ class MemberEditableCard extends HookConsumerWidget {
                   ),
                 ],
               ),
-              child: profilePicture.value.when(
-                data: (picture) {
-                  return CircleAvatar(
-                    radius: 20,
-                    backgroundImage: picture.image,
-                  );
-                },
-                loading: () {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
-                error: (e, s) {
-                  return const Center(
-                    child: Text("Error"),
-                  );
-                },
+              child: AutoLoaderChild(
+                value: memberPictures,
+                notifier: memberPicturesNotifier,
+                mapKey: member,
+                loader: (ref) =>
+                    profilePictureNotifier.getProfilePicture(member.member.id),
+                loadingBuilder: (context) => const CircleAvatar(
+                    radius: 20, child: CircularProgressIndicator()),
+                dataBuilder: (context, data) =>
+                    CircleAvatar(radius: 20, backgroundImage: data.first.image),
               ),
             ),
             const SizedBox(width: 10),
