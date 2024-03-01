@@ -24,10 +24,10 @@ class AdvertCard extends HookConsumerWidget {
     double height = 300;
     double imageHeight = 175;
     double maxHeight = MediaQuery.of(context).size.height - 344;
-    final posters = ref.watch(
-        advertPostersProvider.select((advertPosters) => advertPosters[advert]));
+    final posters = ref.watch(advertPostersProvider
+        .select((advertPosters) => advertPosters[advert.id]));
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
-    final logoNotifier = ref.watch(advertPosterProvider.notifier);
+    final posterNotifier = ref.watch(advertPosterProvider.notifier);
     final isWebFormat = ref.watch(isWebFormatProvider);
     return GestureDetector(
       onTap: () {
@@ -41,8 +41,8 @@ class AdvertCard extends HookConsumerWidget {
         child: AutoLoaderChild(
           group: posters,
           notifier: advertPostersNotifier,
-          mapKey: advert,
-          loader: (advert) => logoNotifier.getAdvertPoster(advert.id),
+          mapKey: advert.id,
+          loader: (advertId) => posterNotifier.getAdvertPoster(advertId),
           loadingBuilder: (context) => HeroIcon(
             HeroIcons.photo,
             size: width,

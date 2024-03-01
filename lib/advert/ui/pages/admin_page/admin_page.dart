@@ -4,6 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/advert/class/advert.dart';
 import 'package:myecl/advert/providers/advert_list_provider.dart';
+import 'package:myecl/advert/providers/advert_posters_provider.dart';
 import 'package:myecl/advert/providers/advert_provider.dart';
 import 'package:myecl/advert/providers/announcer_list_provider.dart';
 import 'package:myecl/advert/providers/announcer_provider.dart';
@@ -28,6 +29,7 @@ class AdvertAdminPage extends HookConsumerWidget {
     final userAnnouncerListNotifier =
         ref.watch(userAnnouncerListProvider.notifier);
     final userAnnouncerList = ref.watch(userAnnouncerListProvider);
+    final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final advertListNotifier = ref.watch(advertListProvider.notifier);
     final selectedAnnouncers = ref.watch(announcerProvider);
     final selectedAnnouncersNotifier = ref.read(announcerProvider.notifier);
@@ -112,6 +114,8 @@ class AdvertAdminPage extends HookConsumerWidget {
                                           AdvertTextConstants.deleteAdvert,
                                       onYes: () {
                                         advertListNotifier.deleteAdvert(advert);
+                                        advertPostersNotifier
+                                            .deleteT(advert.id);
                                       },
                                     );
                                   });

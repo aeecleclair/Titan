@@ -45,8 +45,8 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
     final poster = useState<Uint8List?>(null);
     final posterFile = useState<Image?>(null);
 
-    if (advertPosters[advert] != null) {
-      advertPosters[advert]!.whenData((data) {
+    if (advertPosters[advert.id] != null) {
+      advertPosters[advert.id]!.whenData((data) {
         if (data.isNotEmpty) {
           posterFile.value = data.first;
         }

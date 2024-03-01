@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/advert/class/advert.dart';
 import 'package:myecl/tools/providers/map_provider.dart';
 
-class AdvertPosterNotifier extends MapNotifier<Advert, Image> {
-  AdvertPosterNotifier() : super();
+class AdvertPostersNotifier extends MapNotifier<String, Image> {
+  AdvertPostersNotifier() : super();
 }
 
-final advertPostersProvider = StateNotifierProvider<AdvertPosterNotifier,
-    Map<Advert, AsyncValue<List<Image>>?>>((ref) {
-  AdvertPosterNotifier advertPosterNotifier = AdvertPosterNotifier();
+final advertPostersProvider = StateNotifierProvider<AdvertPostersNotifier,
+    Map<String, AsyncValue<List<Image>>?>>((ref) {
+  AdvertPostersNotifier advertPosterNotifier = AdvertPostersNotifier();
   return advertPosterNotifier;
 });
