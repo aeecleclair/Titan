@@ -17,25 +17,21 @@ class TombolaLogoProvider extends SingleNotifier<Image> {
   }
 
   Future<Image> getLogo(String id) async {
-    Image logo = await repository.getTombolaLogo(id).then((image) {
-      tombolaLogosNotifier.setTData(
-        id,
-        AsyncData([image]),
-      );
-      return image;
-    });
+    Image logo = await repository.getTombolaLogo(id);
+    tombolaLogosNotifier.setTData(
+      id,
+      AsyncData([logo]),
+    );
     state = AsyncValue.data(logo);
     return logo;
   }
 
   Future<Image> updateLogo(String id, Uint8List bytes) async {
-    Image logo = await repository.addTombolaLogo(bytes, id).then((image) {
-      tombolaLogosNotifier.setTData(
-        id,
-        AsyncData([image]),
-      );
-      return image;
-    });
+    Image logo = await repository.addTombolaLogo(bytes, id);
+    tombolaLogosNotifier.setTData(
+      id,
+      AsyncData([logo]),
+    );
     state = AsyncValue.data(logo);
     return logo;
   }

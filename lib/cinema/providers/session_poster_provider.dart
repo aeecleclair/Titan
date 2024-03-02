@@ -14,17 +14,15 @@ class SessionPosterProvider extends SingleNotifier<Image> {
       : super(const AsyncValue.loading());
 
   Future<Image> getLogo(String id) async {
-    return await repository.getSessionLogo(id).then((image) {
-      sessionLogoNotifier.setTData(id, AsyncData([image]));
-      return image;
-    });
+    final image = await repository.getSessionLogo(id);
+    sessionLogoNotifier.setTData(id, AsyncData([image]));
+    return image;
   }
 
   Future<Image> updateLogo(String id, Uint8List bytes) async {
-    return await repository.addSessionLogo(bytes, id).then((image) {
-      sessionLogoNotifier.setTData(id, AsyncData([image]));
-      return image;
-    });
+    final image = await repository.addSessionLogo(bytes, id);
+    sessionLogoNotifier.setTData(id, AsyncData([image]));
+    return image;
   }
 }
 

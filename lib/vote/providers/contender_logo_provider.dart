@@ -22,12 +22,9 @@ class ContenderLogoProvider extends SingleNotifier<Image> {
   }
 
   Future<Image> updateLogo(String id, Uint8List bytes) async {
-    return await contenderLogoRepository
-        .addContenderLogo(bytes, id)
-        .then((image) {
-      contenderLogosNotifier.setTData(id, AsyncData([image]));
-      return image;
-    });
+    final image = await contenderLogoRepository.addContenderLogo(bytes, id);
+    contenderLogosNotifier.setTData(id, AsyncData([image]));
+    return image;
   }
 }
 
