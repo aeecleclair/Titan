@@ -18,20 +18,16 @@ class AdvertPosterNotifier extends SingleNotifier<Image> {
   }
 
   Future<Image> getAdvertPoster(String id) async {
-    return await advertPosterRepository.getAdvertPoster(id).then((image) {
-      advertPostersNotifier.setTData(id, AsyncData([image]));
-      return image;
-    });
+    final image = await advertPosterRepository.getAdvertPoster(id);
+    advertPostersNotifier.setTData(id, AsyncData([image]));
+    return image;
   }
 
   Future<Image> updateAdvertPoster(String id, Uint8List bytes) async {
     advertPostersNotifier.setTData(id, const AsyncLoading());
-    return await advertPosterRepository
-        .addAdvertPoster(bytes, id)
-        .then((image) {
-      advertPostersNotifier.setTData(id, AsyncData([image]));
-      return image;
-    });
+    final image = await advertPosterRepository.addAdvertPoster(bytes, id);
+    advertPostersNotifier.setTData(id, AsyncData([image]));
+    return image;
   }
 }
 
