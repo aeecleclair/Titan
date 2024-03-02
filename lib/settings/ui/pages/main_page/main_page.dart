@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:heroicons/heroicons.dart';
@@ -178,17 +179,20 @@ class SettingsMainPage extends HookConsumerWidget {
                         style: TextStyle(fontSize: 16, color: Colors.black)),
                   ),
                   const SizedBox(height: 50),
-                  const AlignLeftText(SettingsTextConstants.help, fontSize: 25),
-                  const SizedBox(height: 30),
-                  SettingsItem(
-                    icon: HeroIcons.clipboardDocumentList,
-                    onTap: () {
-                      QR.to(SettingsRouter.root + SettingsRouter.logs);
-                    },
-                    child: const Text(SettingsTextConstants.logs,
-                        style: TextStyle(fontSize: 16, color: Colors.black)),
-                  ),
-                  const SizedBox(height: 50),
+                  if (!kIsWeb) ...[
+                    const AlignLeftText(SettingsTextConstants.help,
+                        fontSize: 25),
+                    const SizedBox(height: 30),
+                    SettingsItem(
+                      icon: HeroIcons.clipboardDocumentList,
+                      onTap: () {
+                        QR.to(SettingsRouter.root + SettingsRouter.logs);
+                      },
+                      child: const Text(SettingsTextConstants.logs,
+                          style: TextStyle(fontSize: 16, color: Colors.black)),
+                    ),
+                    const SizedBox(height: 50),
+                  ],
                   const AlignLeftText(SettingsTextConstants.personalisation,
                       fontSize: 25),
                   const SizedBox(height: 30),

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:myecl/tools/logs/log.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -12,15 +13,20 @@ class Logger {
   }
 
   void init() async {
-    Directory root = await getApplicationDocumentsDirectory();
-    final path = '${root.path}/$logFileName';
-    if (!(await File(path).exists())) {
-      await File(path).create();
+    if (!kIsWeb) {
+      Directory root = await getApplicationDocumentsDirectory();
+      final path = '${root.path}/$logFileName';
+      if (!(await File(path).exists())) {
+        await File(path).create();
+        logFile = File(path);
+      }
     }
-    logFile = File(path);
   }
 
   bool writeLog(Log log) {
+    if (kIsWeb) {
+      return false;
+    }
     try {
       logFile.writeAsStringSync(log.toString(), mode: FileMode.append);
       return true;
@@ -30,6 +36,9 @@ class Logger {
   }
 
   List<Log> getLogs() {
+    if (kIsWeb) {
+      return [];
+    }
     return logFile
         .readAsStringSync()
         .split(";")
@@ -53,6 +62,9 @@ class Logger {
   }
 
   void clearLogs() {
+    if (kIsWeb) {
+      return;
+    }
     logFile.writeAsStringSync("");
   }
 }
