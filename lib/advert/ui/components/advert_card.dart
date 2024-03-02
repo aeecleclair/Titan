@@ -142,9 +142,17 @@ class AdvertCard extends HookConsumerWidget {
                         mapKey: advert.id,
                         loader: (advertId) =>
                             posterNotifier.getAdvertPoster(advertId),
-                        loadingBuilder: (context) => HeroIcon(
-                          HeroIcons.photo,
-                          size: width,
+                        loadingBuilder: (context) => Container(
+                          width: width,
+                          height: imageHeight,
+                          decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(20),
+                                  topRight: Radius.circular(20))),
+                          child: HeroIcon(
+                            HeroIcons.photo,
+                            size: width,
+                          ),
                         ),
                         dataBuilder: (context, value) => Container(
                           width: width,
