@@ -47,7 +47,7 @@ class SettingsRouter {
                 middleware: [
                   DeferredLoadingMiddleware(change_pass.loadLibrary)
                 ]),
-            if (kIsWeb)
+            if (!kIsWeb)
               QRoute(
                   path: logs,
                   builder: () => log_page.LogPage(),
