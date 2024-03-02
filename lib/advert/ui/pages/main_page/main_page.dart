@@ -33,72 +33,69 @@ class AdvertMainPage extends HookConsumerWidget {
     return AdvertTemplate(
       child: Stack(
         children: [
-          ColumnRefresher(
-            onRefresh: () async {
-              await advertListNotifier.loadAdverts();
-              advertPostersNotifier.resetTData();
-            },
-            children: [
-              SizedBox(
-                width: 300,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+          AsyncChild(
+              value: advertList,
+              builder: (context, advertData) {
+                final sortedAdvertData =
+                    advertData.sortedBy((element) => element.date).reversed;
+                final filteredSortedAdvertData = sortedAdvertData.where(
+                    (advert) =>
+                        selected
+                            .where((e) => advert.announcer.name == e.name)
+                            .isNotEmpty ||
+                        selected.isEmpty);
+                return ColumnRefresher(
+                  onRefresh: () async {
+                    await advertListNotifier.loadAdverts();
+                    advertPostersNotifier.resetTData();
+                  },
                   children: [
-                    if (isAdvertAdmin)
-                      AdminButton(
-                        onTap: () {
-                          selectedNotifier.clearAnnouncer();
-                          QR.to(AdvertRouter.root + AdvertRouter.admin);
-                        },
-                      ),
-                    if (isAdmin)
-                      AdminButton(
-                          onTap: () {
-                            QR.to(AdvertRouter.root +
-                                AdvertRouter.addRemAnnouncer);
-                          },
-                          text: AdvertTextConstants.management),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const AnnouncerBar(
-                  useUserAnnouncers: false, multipleSelect: true),
-              const SizedBox(
-                height: 20,
-              ),
-              Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: AsyncChild(
-                    value: advertList,
-                    builder: (context, advertData) {
-                      final sortedAdvertData = advertData
-                          .sortedBy((element) => element.date)
-                          .reversed;
-                      final filteredSortedAdvertData = sortedAdvertData.where(
-                          (advert) =>
-                              selected
-                                  .where((e) => advert.announcer.name == e.name)
-                                  .isNotEmpty ||
-                              selected.isEmpty);
-                      return Column(children: [
-                        ...filteredSortedAdvertData.map(
-                          (advert) => AdvertCard(
+                    SizedBox(
+                      width: 300,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          if (isAdvertAdmin)
+                            AdminButton(
                               onTap: () {
-                                advertNotifier.setAdvert(advert);
-                                QR.to(AdvertRouter.root + AdvertRouter.detail);
+                                selectedNotifier.clearAnnouncer();
+                                QR.to(AdvertRouter.root + AdvertRouter.admin);
                               },
-                              advert: advert),
-                        ),
-                      ]);
-                    },
-                  )),
-              const SizedBox(
-                height: 20,
-              ),
-            ],
+                            ),
+                          if (isAdmin)
+                            AdminButton(
+                                onTap: () {
+                                  QR.to(AdvertRouter.root +
+                                      AdvertRouter.addRemAnnouncer);
+                                },
+                                text: AdvertTextConstants.management),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const AnnouncerBar(
+                        useUserAnnouncers: false, multipleSelect: true),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ...filteredSortedAdvertData.map(
+                      (advert) => Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: AdvertCard(
+                            onTap: () {
+                              advertNotifier.setAdvert(advert);
+                              QR.to(AdvertRouter.root + AdvertRouter.detail);
+                            },
+                            advert: advert),
+                      ),
+                    ),
+                  ],
+                );
+              }),
+          const SizedBox(
+            height: 20,
           ),
         ],
       ),
