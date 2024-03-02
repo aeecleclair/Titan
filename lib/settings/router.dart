@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/settings/ui/pages/change_pass/change_pass.dart'
     deferred as change_pass;
@@ -46,10 +47,13 @@ class SettingsRouter {
                 middleware: [
                   DeferredLoadingMiddleware(change_pass.loadLibrary)
                 ]),
-            QRoute(
-                path: logs,
-                builder: () => log_page.LogPage(),
-                middleware: [DeferredLoadingMiddleware(log_page.loadLibrary)]),
+            if (kIsWeb)
+              QRoute(
+                  path: logs,
+                  builder: () => log_page.LogPage(),
+                  middleware: [
+                    DeferredLoadingMiddleware(log_page.loadLibrary)
+                  ]),
             QRoute(
                 path: modules,
                 builder: () => modules_page.ModulesPage(),
