@@ -37,10 +37,11 @@ class WebSignIn extends StatelessWidget {
                   ])
                 else
                   Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       const TitleBar(),
                       SizedBox(
-                          height: MediaQuery.sizeOf(context).height - 140,
+                          height: MediaQuery.sizeOf(context).height * 4 / 5,
                           width: MediaQuery.sizeOf(context).width,
                           child: const LeftPanel()),
                     ],
