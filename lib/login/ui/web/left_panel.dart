@@ -25,39 +25,6 @@ class LeftPanel extends HookConsumerWidget {
 
     return Column(
       children: [
-        SizedBox(
-            height: 160,
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset('assets/images/logo.png',
-                            width: 70, height: 70),
-                        const SizedBox(width: 20),
-                        const Text('MyECL',
-                            style: TextStyle(
-                                fontSize: 30, fontWeight: FontWeight.bold)),
-                        const SizedBox(width: 15),
-                        const Text("-",
-                            style:
-                                TextStyle(fontSize: 25, color: Colors.black)),
-                        const SizedBox(width: 15),
-                        const Text("L'application de l'associatif centralien",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black)),
-                      ],
-                    ),
-                  ),
-                ),
-                const Spacer(flex: 1)
-              ],
-            )),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -68,67 +35,70 @@ class LeftPanel extends HookConsumerWidget {
                   child: SvgPicture.asset('assets/images/login.svg',
                       width: 350, height: double.infinity)),
               const SizedBox(height: 70),
-              WaitingButton(
-                onTap: () async {
-                  await authNotifier.getTokenFromRequest();
-                  ref.watch(authTokenProvider).when(
-                      data: (token) {
-                        QR.to(pathForwarding.path);
-                      },
-                      error: (e, s) {
-                        displayToast(context, TypeMsg.error,
-                            LoginTextConstants.loginFailed);
-                      },
-                      loading: () {});
-                },
-                builder: (child) => Container(
-                    width: 400,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [
-                          Color(0xFFFF8A14),
-                          Color.fromARGB(255, 255, 114, 0)
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color.fromARGB(255, 255, 114, 0)
-                              .withOpacity(0.2),
-                          spreadRadius: 3,
-                          blurRadius: 7,
-                          offset: const Offset(0, 3),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: WaitingButton(
+                  onTap: () async {
+                    await authNotifier.getTokenFromRequest();
+                    ref.watch(authTokenProvider).when(
+                        data: (token) {
+                          QR.to(pathForwarding.path);
+                        },
+                        error: (e, s) {
+                          displayToast(context, TypeMsg.error,
+                              LoginTextConstants.loginFailed);
+                        },
+                        loading: () {});
+                  },
+                  builder: (child) => Container(
+                      width: 400,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [
+                            Color(0xFFFF8A14),
+                            Color.fromARGB(255, 255, 114, 0)
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
                         ),
-                      ],
-                    ),
-                    child: child),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(LoginTextConstants.signIn,
-                        style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white)),
-                    Container(
-                      margin: const EdgeInsets.only(left: 20),
-                      child: isLoading
-                          ? const Padding(
-                              padding: EdgeInsets.all(12.0),
-                              child: CircularProgressIndicator(
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color.fromARGB(255, 255, 114, 0)
+                                .withOpacity(0.2),
+                            spreadRadius: 3,
+                            blurRadius: 7,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: child),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(LoginTextConstants.signIn,
+                          style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white)),
+                      Container(
+                        margin: const EdgeInsets.only(left: 20),
+                        child: isLoading
+                            ? const Padding(
+                                padding: EdgeInsets.all(12.0),
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              )
+                            : const HeroIcon(
+                                HeroIcons.arrowRight,
                                 color: Colors.white,
+                                size: 35.0,
                               ),
-                            )
-                          : const HeroIcon(
-                              HeroIcons.arrowRight,
-                              color: Colors.white,
-                              size: 35.0,
-                            ),
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const Spacer(flex: 3),

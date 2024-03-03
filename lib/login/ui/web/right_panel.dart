@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/login/class/screen_shot.dart';
@@ -77,83 +79,79 @@ class RightPanel extends HookConsumerWidget {
                         width: 20,
                       ),
                       if (screenShot.title.isNotEmpty)
-                        Text(
-                          screenShot.title,
-                          style: const TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              AutoSizeText(
+                                screenShot.title,
+                                maxLines: 1,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                              AutoSizeText(
+                                screenShot.description,
+                                maxLines: 1,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                            ],
+                          ),
                         ),
-                      if (screenShot.title.isNotEmpty)
-                        const Text(
-                          " - ",
-                          style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        ),
-                      Expanded(
-                        child: AutoSizeText(
-                          screenShot.description,
-                          maxLines: 1,
-                          style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        ),
-                      ),
                     ],
                   ),
-                  Expanded(
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 20, horizontal: 15),
-                      child: LayoutBuilder(
-                        builder: (context, constraints) => MouseRegion(
-                          onHover: (event) {
-                            if (isHovering.value) {
-                              offset.value = event.localPosition -
-                                  Offset(constraints.maxWidth / 2,
-                                      constraints.maxHeight / 2);
-                            }
-                          },
-                          onExit: (event) {
-                            resetAnimation.forward(from: 0);
-                            isHovering.value = false;
-                          },
-                          onEnter: (event) {
-                            resetAnimation.reverse(from: 1);
-                            isHovering.value = true;
-                          },
-                          child: Transform(
-                            transform: Matrix4.identity()
-                              ..setEntry(3, 2, 0.0005)
-                              ..rotateX(0.0005 * offset.value.dy)
-                              ..rotateY(-0.0005 * offset.value.dx),
-                            alignment: FractionalOffset.center,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: BackdropFilter(
-                                filter: ImageFilter.blur(
-                                  sigmaX: 10,
-                                  sigmaY: 10,
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Flexible(
+                    child: LayoutBuilder(
+                      builder: (context, constraints) => MouseRegion(
+                        onHover: (event) {
+                          if (isHovering.value) {
+                            offset.value = event.localPosition -
+                                Offset(constraints.minWidth / 2,
+                                    constraints.minHeight / 2);
+                          }
+                        },
+                        onExit: (event) {
+                          resetAnimation.forward(from: 0);
+                          isHovering.value = false;
+                        },
+                        onEnter: (event) {
+                          resetAnimation.reverse(from: 1);
+                          isHovering.value = true;
+                        },
+                        child: Transform(
+                          transform: Matrix4.identity()
+                            ..setEntry(3, 2, 0.0005)
+                            ..rotateX(0.0005 * offset.value.dy)
+                            ..rotateY(-0.0005 * offset.value.dx),
+                          alignment: FractionalOffset.center,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: BackdropFilter(
+                              filter: ImageFilter.blur(
+                                sigmaX: 10,
+                                sigmaY: 10,
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade200.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                      color: Colors.white.withOpacity(0.2),
+                                      width: 2),
                                 ),
-                                child: Container(
-                                  width: constraints.maxWidth,
-                                  decoration: BoxDecoration(
-                                    color:
-                                        Colors.grey.shade200.withOpacity(0.2),
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(
-                                        color: Colors.white.withOpacity(0.2),
-                                        width: 2),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10),
-                                    child: Image.asset(
-                                      screenShot.path,
-                                      fit: BoxFit.contain,
-                                    ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Image.asset(
+                                    screenShot.path,
+                                    fit: BoxFit.contain,
                                   ),
                                 ),
                               ),
@@ -170,8 +168,9 @@ class RightPanel extends HookConsumerWidget {
           ),
         ),
         Expanded(
-            flex: 5,
-            child: Column(children: [
+          flex: 5,
+          child: Column(
+            children: [
               const SizedBox(height: 50),
               Row(
                 children: [
@@ -195,16 +194,45 @@ class RightPanel extends HookConsumerWidget {
                 ],
               ),
               const Spacer(),
-              Image.asset('assets/images/eclair.png', width: 120, height: 120),
+              ClipRRect(
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(40),
+                    bottomRight: Radius.circular(40),
+                    bottomLeft: Radius.circular(20),
+                    topRight: Radius.circular(20)),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(
+                    sigmaX: 5,
+                    sigmaY: 5,
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade200.withOpacity(0.2),
+                      border: Border.all(
+                          color: Colors.white.withOpacity(0.2), width: 2),
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(40),
+                          bottomRight: Radius.circular(40),
+                          bottomLeft: Radius.circular(20),
+                          topRight: Radius.circular(20)),
+                    ),
+                    child: Image.asset('assets/images/eclair.png',
+                        width: 120, height: 120),
+                  ),
+                ),
+              ),
               const SizedBox(
-                height: 30,
+                height: 15,
               ),
               const Text(
-                "Développé par ECLAIR",
+                "Développée par ECLAIR",
+                textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 50),
-            ])),
+            ],
+          ),
+        ),
       ],
     );
   }
