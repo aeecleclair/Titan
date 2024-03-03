@@ -23,124 +23,117 @@ class LeftPanel extends HookConsumerWidget {
         .watch(loadingProvider)
         .maybeWhen(data: (data) => data, orElse: () => false);
 
-    return Column(
-      children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Spacer(),
-              Expanded(
-                  flex: 5,
-                  child: SvgPicture.asset('assets/images/login.svg',
-                      width: 350, height: double.infinity)),
-              const SizedBox(height: 70),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: WaitingButton(
-                  onTap: () async {
-                    await authNotifier.getTokenFromRequest();
-                    ref.watch(authTokenProvider).when(
-                        data: (token) {
-                          QR.to(pathForwarding.path);
-                        },
-                        error: (e, s) {
-                          displayToast(context, TypeMsg.error,
-                              LoginTextConstants.loginFailed);
-                        },
-                        loading: () {});
-                  },
-                  builder: (child) => Container(
-                      width: 400,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [
-                            Color(0xFFFF8A14),
-                            Color.fromARGB(255, 255, 114, 0)
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color.fromARGB(255, 255, 114, 0)
-                                .withOpacity(0.2),
-                            spreadRadius: 3,
-                            blurRadius: 7,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      child: child),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(LoginTextConstants.signIn,
-                          style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white)),
-                      Container(
-                        margin: const EdgeInsets.only(left: 20),
-                        child: isLoading
-                            ? const Padding(
-                                padding: EdgeInsets.all(12.0),
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                ),
-                              )
-                            : const HeroIcon(
-                                HeroIcons.arrowRight,
-                                color: Colors.white,
-                                size: 35.0,
-                              ),
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          const SizedBox(
+            height: 100,
+          ),
+          Flexible(
+              child: SvgPicture.asset('assets/images/login.svg', width: 350)),
+          const SizedBox(height: 70),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: WaitingButton(
+              onTap: () async {
+                await authNotifier.getTokenFromRequest();
+                ref.watch(authTokenProvider).when(
+                    data: (token) {
+                      QR.to(pathForwarding.path);
+                    },
+                    error: (e, s) {
+                      displayToast(context, TypeMsg.error,
+                          LoginTextConstants.loginFailed);
+                    },
+                    loading: () {});
+              },
+              builder: (child) => Container(
+                  width: 400,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [
+                        Color(0xFFFF8A14),
+                        Color.fromARGB(255, 255, 114, 0)
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color.fromARGB(255, 255, 114, 0)
+                            .withOpacity(0.2),
+                        spreadRadius: 3,
+                        blurRadius: 7,
+                        offset: const Offset(0, 3),
                       ),
                     ],
                   ),
-                ),
+                  child: child),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(LoginTextConstants.signIn,
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white)),
+                  Container(
+                    margin: const EdgeInsets.only(left: 20),
+                    child: isLoading
+                        ? const Padding(
+                            padding: EdgeInsets.all(12.0),
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          )
+                        : const HeroIcon(
+                            HeroIcons.arrowRight,
+                            color: Colors.white,
+                            size: 35.0,
+                          ),
+                  ),
+                ],
               ),
-              const Spacer(flex: 3),
-              SizedBox(
-                width: double.infinity,
-                child: Row(
-                  children: [
-                    const Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        QR.to(LoginRouter.createAccount);
-                        controller?.forward();
-                      },
-                      child: const Text(LoginTextConstants.createAccount,
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              decoration: TextDecoration.underline,
-                              color: Color.fromARGB(255, 48, 48, 48))),
-                    ),
-                    const Spacer(flex: 4),
-                    GestureDetector(
-                      onTap: () {
-                        QR.to(LoginRouter.forgotPassword);
-                        controller?.forward();
-                      },
-                      child: const Text(LoginTextConstants.forgotPassword,
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              decoration: TextDecoration.underline,
-                              color: Color.fromARGB(255, 48, 48, 48))),
-                    ),
-                    const Spacer(),
-                  ],
-                ),
+            ),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  QR.to(LoginRouter.createAccount);
+                  controller?.forward();
+                },
+                child: const Text(LoginTextConstants.createAccount,
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                        color: Color.fromARGB(255, 48, 48, 48))),
               ),
-              const SizedBox(height: 50),
+              GestureDetector(
+                onTap: () {
+                  QR.to(LoginRouter.forgotPassword);
+                  controller?.forward();
+                },
+                child: const Text(LoginTextConstants.forgotPassword,
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                        color: Color.fromARGB(255, 48, 48, 48))),
+              ),
             ],
           ),
-        )
-      ],
+          const SizedBox(height: 50),
+        ],
+      ),
     );
   }
 }
