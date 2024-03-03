@@ -5,9 +5,9 @@ import 'package:url_launcher/url_launcher.dart';
 
 class CalendarDialogButton extends StatelessWidget {
   final String? uri;
-  final HeroIcons heroIcons;
+  final HeroIcons icon;
   const CalendarDialogButton(
-      {super.key, required this.uri, required this.heroIcons});
+      {super.key, required this.uri, required this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class CalendarDialogButton extends StatelessWidget {
           ],
         ),
         child: HeroIcon(
-          heroIcons,
+          icon,
           color: Colors.black,
         ),
       ),

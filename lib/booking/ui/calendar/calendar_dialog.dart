@@ -19,103 +19,102 @@ class CalendarDialog extends StatelessWidget {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          Container(
+          ListView(
+            shrinkWrap: true,
             padding: const EdgeInsets.all(20),
-            child: IntrinsicWidth(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
+            children: [
+              Text(
+                '${booking.room.name} - ${booking.reason}',
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                formatRecurrenceRule(
+                    booking.start, booking.end, booking.recurrenceRule, false),
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  color: Colors.grey.shade400,
+                  fontSize: 15,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                "${BookingTextConstants.bookedfor} ${booking.entity} ${BookingTextConstants.by} ${booking.applicant.getName()}",
+                style: const TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 15,
+                ),
+              ),
+              if (isManager) ...[
+                const SizedBox(height: 10),
+                const Divider(
+                  thickness: 3,
+                ),
+                const SizedBox(height: 10),
+                if (booking.note != null)
                   Text(
-                    '${booking.room.name} - ${booking.reason}',
+                    booking.note!,
                     style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    formatRecurrenceRule(booking.start, booking.end,
-                        booking.recurrenceRule, false),
-                    style: TextStyle(
                       fontWeight: FontWeight.w400,
-                      color: Colors.grey.shade400,
+                      color: Colors.grey,
                       fontSize: 15,
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  Text(
-                    "${BookingTextConstants.bookedfor} ${booking.entity} ${BookingTextConstants.by} ${booking.applicant.getName()}",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 15,
+                if (booking.note != null) const SizedBox(height: 20),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CalendarDialogButton(
+                      uri: 'mailto:${booking.applicant.email}',
+                      icon: HeroIcons.atSymbol,
                     ),
-                  ),
-                  if (isManager) ...[
-                    const SizedBox(height: 10),
-                    const Divider(
-                      thickness: 3,
+                    const SizedBox(
+                      width: 20,
                     ),
-                    const SizedBox(height: 10),
-                    if (booking.note != null)
-                      Text(
-                        booking.note!,
+                    Flexible(
+                      child: Text(
+                        booking.applicant.email.toString(),
                         style: const TextStyle(
                           fontWeight: FontWeight.w400,
-                          color: Colors.grey,
                           fontSize: 15,
                         ),
                       ),
-                    if (booking.note != null) const SizedBox(height: 20),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CalendarDialogButton(
-                          uri: 'mailto:${booking.applicant.email}',
-                          heroIcons: HeroIcons.atSymbol,
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          booking.applicant.email.toString(),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CalendarDialogButton(
+                      uri: (booking.applicant.phone != null)
+                          ? 'sms:${booking.applicant.phone}'
+                          : null,
+                      icon: HeroIcons.chatBubbleBottomCenterText,
                     ),
                     const SizedBox(
-                      height: 10,
+                      width: 20,
                     ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CalendarDialogButton(
-                          uri: (booking.applicant.phone != null)
-                              ? 'sms:${booking.applicant.phone}'
-                              : null,
-                          heroIcons: HeroIcons.chatBubbleBottomCenterText,
+                    Flexible(
+                      child: Text(
+                        booking.applicant.phone ??
+                            BookingTextConstants.noPhoneRegistered,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 15,
                         ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          booking.applicant.phone ??
-                              BookingTextConstants.noPhoneRegistered,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ]
-                ],
-              ),
-            ),
+                  ],
+                ),
+              ],
+            ],
           ),
           Positioned(
             top: -10,
