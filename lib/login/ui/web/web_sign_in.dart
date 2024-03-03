@@ -36,17 +36,15 @@ class WebSignIn extends StatelessWidget {
                         child: const RightPanel()),
                   ])
                 else
-                  Column(children: [
-                    const TitleBar(),
-                    SizedBox(
-                        height: MediaQuery.sizeOf(context).height - 140,
-                        width: MediaQuery.sizeOf(context).width,
-                        child: const LeftPanel()),
-                    SizedBox(
-                        height: MediaQuery.sizeOf(context).height,
-                        width: MediaQuery.sizeOf(context).width,
-                        child: const RightPanel()),
-                  ]),
+                  Column(
+                    children: [
+                      const TitleBar(),
+                      SizedBox(
+                          height: MediaQuery.sizeOf(context).height - 140,
+                          width: MediaQuery.sizeOf(context).width,
+                          child: const LeftPanel()),
+                    ],
+                  ),
               ],
             ),
             if (MediaQuery.sizeOf(context).width > 750)

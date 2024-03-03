@@ -57,8 +57,7 @@ class RightPanel extends HookConsumerWidget {
 
     return Stack(
       children: [
-        if (MediaQuery.sizeOf(context).width > 1000 ||
-            MediaQuery.sizeOf(context).width < 750)
+        if (MediaQuery.sizeOf(context).width > 1000)
           const Positioned(bottom: 30, right: 15, child: EclairLogo()),
         Positioned(
           left: 15,
