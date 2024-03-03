@@ -66,7 +66,7 @@ class RightPanel extends HookConsumerWidget {
             child: Row(
               children: [
                 SizedBox(
-                  width: 350,
+                  width: 300,
                   height: MediaQuery.sizeOf(context).height - 60,
                   child: PageView.builder(
                     controller: pageController,
@@ -182,7 +182,7 @@ class RightPanel extends HookConsumerWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 200.0),
+                  padding: const EdgeInsets.only(left: 15, bottom: 200.0),
                   child: SmoothPageIndicator(
                     axisDirection: Axis.vertical,
                     controller: pageController,
