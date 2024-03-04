@@ -69,37 +69,43 @@ class RecommendationCard extends HookConsumerWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Flexible(
-                        child: Text(
-                          recommendation.code == null
-                              ? recommendation.title
-                              : "${recommendation.title} - ${recommendation.code}",
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                  Text(
+                    recommendation.title,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  if (recommendation.code != null)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            recommendation.code!,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      if (recommendation.code != null)
-                        IconButton(
-                          onPressed: () async {
-                            await Clipboard.setData(
-                              ClipboardData(text: recommendation.code!),
-                            );
-
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              RecommendationTextConstants.copiedCode,
-                            );
-                          },
-                          icon: const Icon(Icons.copy),
-                        ),
-                    ],
-                  ),
+                        if (recommendation.code != null)
+                          IconButton(
+                            onPressed: () async {
+                              await Clipboard.setData(
+                                ClipboardData(text: recommendation.code!),
+                              );
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                RecommendationTextConstants.copiedCode,
+                              );
+                            },
+                            icon: const Icon(Icons.copy),
+                          ),
+                      ],
+                    ),
                   Text(
                     recommendation.summary,
                     textAlign: TextAlign.center,
