@@ -16,6 +16,7 @@ import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
 
 class EloCapsMainPage extends HookConsumerWidget {
   const EloCapsMainPage({super.key});
@@ -30,60 +31,65 @@ class EloCapsMainPage extends HookConsumerWidget {
     final modeChosenNotifier = ref.watch(modeChosenProvider.notifier);
 
     return ElocapsTemplate(
-        child: Stack(
-      children: [
-        Column(
-          children: [
-            const SizedBox(height: 20),
-            const AlignLeftText(ElocapsTextConstant.gameMode,
-                padding: EdgeInsets.symmetric(horizontal: 30)),
-            const SizedBox(height: 20),
-            HorizontalListView.builder(
-                items: CapsMode.values,
-                itemBuilder: (context, item, i) {
-                  final selected = item == modeChosen;
-                  return ItemChip(
-                      selected: selected,
-                      onTap: () {
-                        modeChosenNotifier.setMode(item);
-                      },
-                      child: Text(
-                        capsModeToString(item),
-                        style: TextStyle(
-                            color: selected ? Colors.white : Colors.black),
-                      ));
-                },
-                height: 40),
-            const SizedBox(height: 20),
-            AutoLoaderChild(
-              value: leaderBoardPlayerList,
-              mapKey: modeChosen,
-              notifier: leaderBoardPlayerListNotifier,
-              listLoader: leaderBoardPlayerNotifier.loadRanking,
-              dataBuilder: (context, players) => SingleChildScrollView(
-                child: Column(children: [
-                  Podium(players: players),
-                  LeaderBoard(players: players),
-                ]),
-              ),
-            ),
-          ],
-        ),
-        Positioned(
-          bottom: 20,
-          left: 0,
-          right: 0,
-          child: GestureDetector(
-            onTap: () {
-              modeChosenNotifier.setMode(CapsMode.values.first);
-              QR.to(ElocapsRouter.root + ElocapsRouter.game);
+        child: Refresher(
+            onRefresh: () async {
+              leaderBoardPlayerNotifier.loadRanking;
             },
-            child: const MyButton(
-              text: ElocapsTextConstant.play,
-            ),
-          ),
-        ),
-      ],
-    ));
+            child: Stack(
+              children: [
+                Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    const AlignLeftText(ElocapsTextConstant.gameMode,
+                        padding: EdgeInsets.symmetric(horizontal: 30)),
+                    const SizedBox(height: 20),
+                    HorizontalListView.builder(
+                        items: CapsMode.values,
+                        itemBuilder: (context, item, i) {
+                          final selected = item == modeChosen;
+                          return ItemChip(
+                              selected: selected,
+                              onTap: () {
+                                modeChosenNotifier.setMode(item);
+                              },
+                              child: Text(
+                                capsModeToString(item),
+                                style: TextStyle(
+                                    color:
+                                        selected ? Colors.white : Colors.black),
+                              ));
+                        },
+                        height: 40),
+                    const SizedBox(height: 20),
+                    AutoLoaderChild(
+                      value: leaderBoardPlayerList,
+                      mapKey: modeChosen,
+                      notifier: leaderBoardPlayerListNotifier,
+                      listLoader: leaderBoardPlayerNotifier.loadRanking,
+                      dataBuilder: (context, players) => SingleChildScrollView(
+                        child: Column(children: [
+                          Podium(players: players),
+                          LeaderBoard(players: players),
+                        ]),
+                      ),
+                    ),
+                  ],
+                ),
+                Positioned(
+                  bottom: 20,
+                  left: 0,
+                  right: 0,
+                  child: GestureDetector(
+                    onTap: () {
+                      modeChosenNotifier.setMode(CapsMode.values.first);
+                      QR.to(ElocapsRouter.root + ElocapsRouter.game);
+                    },
+                    child: const MyButton(
+                      text: ElocapsTextConstant.play,
+                    ),
+                  ),
+                ),
+              ],
+            )));
   }
 }

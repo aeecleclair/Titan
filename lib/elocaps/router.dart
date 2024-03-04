@@ -1,6 +1,5 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/elocaps/ui/pages/game_page/game_page.dart';
 import 'package:myecl/elocaps/ui/pages/history_page/history_page.dart';
@@ -17,8 +16,8 @@ class ElocapsRouter {
 
   static final Module module = Module(
       name: ElocapsTextConstant.elocaps,
-      icon: const Left(
-          HeroIcons.rss), // Mettre un icon venant d'un svg [plus tard]
+      icon: const Right(
+          '../../assets/images/beer.svg'), // Mettre un icon venant d'un svg [plus tard]
       root: ElocapsRouter.root,
       selected: false);
   ElocapsRouter(this.ref);
