@@ -91,19 +91,18 @@ class RecommendationCard extends HookConsumerWidget {
                             ),
                           ),
                         ),
-                        if (recommendation.code != null)
-                          IconButton(
-                            onPressed: () async {
-                              await Clipboard.setData(
-                                ClipboardData(text: recommendation.code!),
-                              );
-                              displayToastWithContext(
-                                TypeMsg.msg,
-                                RecommendationTextConstants.copiedCode,
-                              );
-                            },
-                            icon: const Icon(Icons.copy),
-                          ),
+                        IconButton(
+                          onPressed: () async {
+                            await Clipboard.setData(
+                              ClipboardData(text: recommendation.code!),
+                            );
+                            displayToastWithContext(
+                              TypeMsg.msg,
+                              RecommendationTextConstants.copiedCode,
+                            );
+                          },
+                          icon: const Icon(Icons.copy),
+                        ),
                       ],
                     ),
                   Text(
