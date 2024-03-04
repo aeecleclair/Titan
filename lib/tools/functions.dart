@@ -43,6 +43,7 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
         return FlashBar(
           position: FlashPosition.top,
           controller: controller,
+          surfaceTintColor: Colors.transparent,
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
           margin: const EdgeInsets.only(top: 30, left: 20, right: 20),

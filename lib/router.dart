@@ -15,6 +15,7 @@ import 'package:myecl/others/ui/no_internet_page.dart'
     deferred as no_internet_page;
 import 'package:myecl/others/ui/no_module.dart' deferred as no_module_page;
 import 'package:myecl/others/ui/update_page.dart' deferred as update_page;
+import 'package:myecl/recommendation/router.dart';
 import 'package:myecl/settings/router.dart';
 import 'package:myecl/raffle/router.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
@@ -80,6 +81,7 @@ class AppRouter {
       LoginRouter(ref).route(),
       LoginRouter(ref).passwordRoute(),
       RaffleRouter(ref).route(),
+      RecommendationRouter(ref).route(),
       SettingsRouter(ref).route(),
       VoteRouter(ref).route(),
     ];

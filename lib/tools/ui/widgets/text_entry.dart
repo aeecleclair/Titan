@@ -44,11 +44,13 @@ class TextEntry extends StatelessWidget {
       keyboardType: keyboardType,
       cursorColor: color,
       onChanged: onChanged,
-      textInputAction: TextInputAction.next,
+      textInputAction: (keyboardType == TextInputType.multiline)
+          ? TextInputAction.newline
+          : TextInputAction.next,
       enabled: enabled,
       decoration: InputDecoration(
         label: Text(
-          label,
+          canBeEmpty ? '$label (optionnel)' : label,
           style: TextStyle(color: color, height: 0.5),
         ),
         suffix: suffixIcon == null && suffix.isEmpty

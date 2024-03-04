@@ -12,6 +12,7 @@ import 'package:myecl/event/router.dart';
 import 'package:myecl/home/router.dart';
 import 'package:myecl/loan/router.dart';
 import 'package:myecl/raffle/router.dart';
+import 'package:myecl/recommendation/router.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -40,6 +41,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     LoanRouter.module,
     EventRouter.module,
     RaffleRouter.module,
+    RecommendationRouter.module,
   ];
   ModulesNotifier() : super([]);
 
