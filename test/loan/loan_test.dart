@@ -207,6 +207,7 @@ void main() {
           nickname: '',
         ),
         returned: true,
+        returnedDate: DateTime.parse('2020-01-01'),
         caution: '',
         end: DateTime.parse('2020-01-01'),
         loaner: Loaner.empty(),
@@ -215,7 +216,7 @@ void main() {
       );
       expect(
         loan.toString(),
-        'Loan(id: 1, loaner: Loaner(name: , groupManagerId: , id: ), borrower: SimpleUser {name: name, firstname: , nickname: , id: 1}, notes: , start: 2020-01-01 00:00:00.000, end: 2020-01-01 00:00:00.000, caution: , itemsQuantity: [ItemQuantity(itemSimple: ItemSimple(id: 1, name: name, quantity: 2)], returned: true)',
+        'Loan(id: 1, loaner: Loaner(name: , groupManagerId: , id: ), borrower: SimpleUser {name: name, firstname: , nickname: , id: 1}, notes: , start: 2020-01-01 00:00:00.000, end: 2020-01-01 00:00:00.000, caution: , itemsQuantity: [ItemQuantity(itemSimple: ItemSimple(id: 1, name: name, quantity: 2)], returned: true, returnedDate: 2020-01-01 00:00:00.000)',
       );
     });
 
@@ -275,6 +276,7 @@ void main() {
           nickname: '',
         ),
         returned: true,
+        returnedDate: DateTime.parse('2020-01-01'),
         caution: '',
         end: DateTime.parse('2020-01-01'),
         loaner: Loaner.empty(),
@@ -291,7 +293,8 @@ void main() {
         'caution': '',
         'items_borrowed': [
           {'item_id': '1', 'quantity': 2}
-        ]
+        ],
+        'returned_date': '2020-01-01',
       });
     });
   });
