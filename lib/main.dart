@@ -50,7 +50,7 @@ class MyApp extends HookConsumerWidget {
     final plausible = getPlausible();
     Future(() => animationNotifier.setController(animationController));
 
-    final myWillPopScope = PopScope(
+    final popScope = PopScope(
         canPop: false,
         onPopInvoked: (didPop) async {
           final topBarCallBack = ref.watch(topBarCallBackProvider);
@@ -102,12 +102,10 @@ class MyApp extends HookConsumerWidget {
         ));
 
     if (kIsWeb) {
-      return myWillPopScope;
+      return popScope;
     }
     return MaterialApp(
-        initialRoute: '/',
-        debugShowCheckedModeBanner: false,
-        home: myWillPopScope);
+        initialRoute: '/', debugShowCheckedModeBanner: false, home: popScope);
   }
 }
 
