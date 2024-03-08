@@ -45,21 +45,21 @@ class Event {
       required this.decision});
 
   Event.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    organizer = json['organizer'];
-    start = DateTime.parse(json['start']);
-    end = DateTime.parse(json['end']);
-    allDay = json['all_day'];
-    location = json['location'];
-    type = stringToCalendarEventType(json['type']);
-    description = json['description'];
-    recurrenceRule = json['recurrence_rule'] ?? "";
-    applicantId = json['applicant_id'];
+    id = json['id'] as String;
+    name = json['name'] as String;
+    organizer = json['organizer'] as String;
+    start = DateTime.parse(json['start'] as String);
+    end = DateTime.parse(json['end'] as String);
+    allDay = json['all_day'] as bool;
+    location = json['location'] as String;
+    type = stringToCalendarEventType(json['type'] as String);
+    description = json['description'] as String;
+    recurrenceRule = json['recurrence_rule'] as String? ?? "";
+    applicantId = json['applicant_id'] as String;
     applicant = json['applicant'] != null
-        ? Applicant.fromJson(json['applicant'])
+        ? Applicant.fromJson(json['applicant'] as Map<String, dynamic>)
         : Applicant.empty().copyWith(id: applicantId);
-    decision = stringToDecision(json['decision']);
+    decision = stringToDecision(json['decision'] as String);
   }
 
   Map<String, dynamic> toJson() {

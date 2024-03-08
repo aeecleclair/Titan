@@ -26,16 +26,17 @@ class Loan {
   late final bool returned;
 
   Loan.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    borrower = SimpleUser.fromJson(json['borrower']);
-    loaner = Loaner.fromJson(json['loaner']);
-    notes = json['notes'];
-    start = DateTime.parse(json['start']);
-    end = DateTime.parse(json['end']);
-    caution = json['caution'];
+    id = json['id'] as String;
+    borrower = SimpleUser.fromJson(json['borrower'] as Map<String, dynamic>);
+    loaner = Loaner.fromJson(json['loaner'] as Map<String, dynamic>);
+    notes = json['notes'] as String;
+    start = DateTime.parse(json['start'] as String);
+    end = DateTime.parse(json['end'] as String);
+    caution = json['caution'] as String;
     itemsQuantity = List<ItemQuantity>.from(
-        json['items_qty'].map((x) => ItemQuantity.fromJson(x)));
-    returned = json['returned'];
+        (json['items_qty'] as List<Map<String, dynamic>>)
+            .map((x) => ItemQuantity.fromJson(x)));
+    returned = json['returned'] as bool;
   }
 
   Map<String, dynamic> toJson() {

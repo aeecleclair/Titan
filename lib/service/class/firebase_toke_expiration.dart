@@ -5,9 +5,10 @@ class FirebaseTokenExpiration {
   FirebaseTokenExpiration(this.userId, this.expiration);
 
   FirebaseTokenExpiration.fromJson(Map<String, dynamic> json) {
-    userId = json['token'];
-    expiration =
-        json['expiration'] != null ? DateTime.parse(json['expiration']) : null;
+    userId = json['token'] as String;
+    expiration = json['expiration'] != null
+        ? DateTime.parse(json['expiration'] as String)
+        : null;
   }
 
   Map<String, dynamic> toJson() => {

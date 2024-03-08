@@ -24,15 +24,15 @@ class CreateAccount {
   });
 
   CreateAccount.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    firstname = json['firstname'];
-    nickname = json['nickname'];
-    password = json['password'];
-    birthday = DateTime.parse(json['birthday']);
-    phone = json['phone'] != "" ? json['phone'] : null;
-    floor = json['floor'];
-    promo = json['promo'];
-    activationToken = json['activation_token'];
+    name = json['name'] as String;
+    firstname = json['firstname'] as String;
+    nickname = json['nickname'] as String;
+    password = json['password'] as String;
+    birthday = DateTime.parse(json['birthday'] as String);
+    phone = json['phone'] != "" ? json['phone'] as String : null;
+    floor = json['floor'] as String;
+    promo = json['promo'] as int;
+    activationToken = json['activation_token'] as String;
   }
 
   Map<String, dynamic> toJson() {

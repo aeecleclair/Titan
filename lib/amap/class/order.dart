@@ -32,21 +32,22 @@ class Order {
   late final List<int> productsQuantity;
 
   Order.fromJson(Map<String, dynamic> json) {
-    id = json['order_id'];
-    deliveryId = json['delivery_id'];
-    amount = json['amount'];
+    id = json['order_id'] as String;
+    deliveryId = json['delivery_id'] as String;
+    amount = json['amount'] as double;
     lastAmount = amount;
-    products = List<Product>.from(
-        json['productsdetail'].map((x) => Product.fromJson(x)));
+    products = (json['productsdetail'] as List<Map<String, dynamic>>)
+        .map((x) => Product.fromJson(x)) as List<Product>;
     expanded = false;
     productsDetail =
         List<String>.from(products.map((element) => element.id).toList());
     productsQuantity =
         List<int>.from(products.map((element) => element.quantity).toList());
-    collectionSlot = apiStringToCollectionSlot(json['collection_slot']);
-    user = SimpleUser.fromJson(json['user']);
-    orderingDate = DateTime.parse(json['ordering_date']);
-    deliveryDate = DateTime.parse(json['delivery_date']);
+    collectionSlot =
+        apiStringToCollectionSlot(json['collection_slot'] as String);
+    user = SimpleUser.fromJson(json['user'] as Map<String, dynamic>);
+    orderingDate = DateTime.parse(json['ordering_date'] as String);
+    deliveryDate = DateTime.parse(json['delivery_date'] as String);
   }
 
   Map<String, dynamic> toJson() {

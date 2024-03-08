@@ -8,7 +8,7 @@ class SectionVoteCountRepository extends Repository {
   final ext = 'campaign/stats/';
 
   Future<int> getSectionVoteCount(String id) async {
-    return await getOne(id);
+    return await getValue(id) as int;
   }
 }
 

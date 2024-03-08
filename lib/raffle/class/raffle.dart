@@ -17,11 +17,11 @@ class Raffle {
   late final String? description;
 
   Raffle.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    group = SimpleGroup.fromJson(json['group']);
-    raffleStatusType = stringToRaffleStatusType(json['status']);
-    id = json['id'];
-    description = json['description'];
+    name = json['name'] as String;
+    group = SimpleGroup.fromJson(json['group'] as Map<String, dynamic>);
+    raffleStatusType = stringToRaffleStatusType(json['status'] as String);
+    id = json['id'] as String;
+    description = json['description'] as String;
   }
 
   Map<String, dynamic> toJson() {

@@ -10,7 +10,7 @@ class TextEntry extends StatelessWidget {
   final TextInputType keyboardType;
   final Color color, enabledColor, errorColor;
   final Widget? suffixIcon;
-  final Function(String)? onChanged;
+  final void Function(String)? onChanged;
   final String? Function(String)? validator;
   final int? minLines, maxLines;
 

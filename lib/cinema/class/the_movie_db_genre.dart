@@ -23,7 +23,7 @@ class TheMovieDBMovie {
     posterUrl = json['poster_path'] != null
         ? "https://image.tmdb.org/t/p/w500${json['poster_path']}"
         : "https://image.tmdb.org/t/p/w500${json['backdrop_path']}";
-    title = json['title'];
+    title = json['title'] as String;
     runtime = json['runtime'] as int;
     tagline = json['tagline'] as String;
   }

@@ -21,7 +21,9 @@ class ContenderRepository extends Repository {
   }
 
   Future<List<Contender>> getContenders() async {
-    return (await getList()).map((e) => Contender.fromJson(e)).toList();
+    return (await getList())
+        .map((e) => Contender.fromJson(e))
+        .toList();
   }
 
   Future<bool> deleteContenders(String type) {

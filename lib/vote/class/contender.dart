@@ -57,14 +57,14 @@ class Contender {
 
   factory Contender.fromJson(Map<String, dynamic> map) {
     return Contender(
-      id: map['id'],
-      name: map['name'],
-      description: map['description'],
-      listType: stringToListType(map['type']),
-      members:
-          List<Member>.from(map['members']?.map((x) => Member.fromJson(x))),
-      section: Section.fromJson(map['section']),
-      program: map['program'] ?? '',
+      id: map['id'] as String,
+      name: map['name'] as String,
+      description: map['description'] as String,
+      listType: stringToListType(map['type'] as String),
+      members: List<Member>.from((map['members'] as List<Map<String, dynamic>>)
+          .map((x) => Member.fromJson(x))),
+      section: Section.fromJson(map['section'] as Map<String, dynamic>),
+      program: (map['program'] as String?) ?? '',
     );
   }
 

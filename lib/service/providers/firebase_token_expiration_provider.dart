@@ -13,7 +13,8 @@ class FirebaseTokenExpirationNotifier
     final prefs = await SharedPreferences.getInstance();
     final savedDate = prefs.getString(dbDate);
     if (savedDate != null) {
-      state = FirebaseTokenExpiration.fromJson(json.decode(savedDate));
+      state = FirebaseTokenExpiration.fromJson(
+          json.decode(savedDate) as Map<String, dynamic>);
     } else {
       state = FirebaseTokenExpiration.empty().copyWith(
         expiration: DateTime.now(),

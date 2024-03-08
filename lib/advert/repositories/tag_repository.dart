@@ -7,7 +7,9 @@ class TagRepository extends Repository {
   final ext = "advert/tag/";
 
   Future<List<Tag>> getAllTag() async {
-    return (await getList()).map((e) => Tag.fromJson(e)).toList();
+    return (await getList())
+        .map((e) => Tag.fromJson(e))
+        .toList();
   }
 
   Future<Tag> getTag(String id) async {

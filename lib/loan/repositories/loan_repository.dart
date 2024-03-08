@@ -16,7 +16,8 @@ class LoanRepository extends Repository {
 
   Future<List<Loan>> getMyLoanList() async {
     return List<Loan>.from(
-        (await getList(suffix: "users/me")).map((x) => Loan.fromJson(x)));
+        (await getList(suffix: "users/me"))
+            .map((x) => Loan.fromJson(x)));
   }
 
   Future<Loan> getLoan(String id) async {
@@ -36,12 +37,12 @@ class LoanRepository extends Repository {
   }
 
   Future<bool> extendLoan(Loan loan, int newDate) async {
-    return await create({"duration": newDate * 24 * 60 * 60},
+    return await apply({"duration": newDate * 24 * 60 * 60},
         suffix: "${loan.id}/extend");
   }
 
   Future<bool> returnLoan(String loanId) async {
-    return await create({}, suffix: "$loanId/return");
+    return await apply({}, suffix: "$loanId/return");
   }
 
   Future<List<Loan>> getHistory(String loanerId) async {

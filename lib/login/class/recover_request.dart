@@ -8,8 +8,8 @@ class RecoverRequest {
   });
 
   RecoverRequest.fromJson(Map<String, dynamic> json) {
-    resetToken = json['reset_token'];
-    newPassword = json['new_password'];
+    resetToken = json['reset_token'] as String;
+    newPassword = json['new_password'] as String;
   }
 
   Map<String, dynamic> toJson() {

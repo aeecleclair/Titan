@@ -9,9 +9,9 @@ class Version {
   late final int minimalTitanVersion;
 
   Version.fromJson(Map<String, dynamic> json) {
-    ready = json['ready'];
-    version = json['version'];
-    minimalTitanVersion = json['minimal_titan_version_code'];
+    ready = json['ready'] as bool;
+    version = json['version'] as String;
+    minimalTitanVersion = json['minimal_titan_version_code'] as int;
   }
 
   Map<String, dynamic> toJson() {

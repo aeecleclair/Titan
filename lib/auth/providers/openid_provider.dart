@@ -90,7 +90,7 @@ final idProvider = FutureProvider<String>((ref) {
         data: (tokens) {
           final id = tokens["token"] == ""
               ? ""
-              : JwtDecoder.decode(tokens["token"] as String)["sub"];
+              : JwtDecoder.decode(tokens["token"] as String)["sub"] as String;
           cacheManager.writeCache("id", id);
           return id;
         },
@@ -206,7 +206,7 @@ class OpenIdTokenProvider
 
         html.window.onMessage.listen((event) {
           if (event.data.toString().contains('code=')) {
-            login(event.data);
+            login(event.data as String);
           }
         });
       } else {

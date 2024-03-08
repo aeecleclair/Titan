@@ -18,12 +18,12 @@ class Advert {
       required this.tags});
 
   Advert.fromJson(Map<String, dynamic> json) {
-    id = json["id"];
-    title = json["title"];
-    content = json["content"];
-    date = DateTime.parse(json["date"]);
-    announcer = Announcer.fromJson(json["advertiser"]);
-    tags = json["tags"].split(', ');
+    id = json["id"] as String;
+    title = json["title"] as String;
+    content = json["content"] as String;
+    date = DateTime.parse(json["date"] as String);
+    announcer = Announcer.fromJson(json["advertiser"] as Map<String, dynamic>);
+    tags = (json["tags"] as String).split(', ');
   }
 
   Map<String, dynamic> toJson() {
@@ -37,15 +37,21 @@ class Advert {
     return data;
   }
 
-  Advert copyWith({id, title, content, date, author, announcer, tags}) {
-    return Advert(
-        id: id ?? this.id,
-        title: title ?? this.title,
-        content: content ?? this.content,
-        date: date ?? this.date,
-        announcer: announcer ?? this.announcer,
-        tags: tags ?? this.tags);
-  }
+  Advert copyWith(
+          {String? id,
+          String? title,
+          String? content,
+          DateTime? date,
+          String? author,
+          Announcer? announcer,
+          List<String>? tags}) =>
+      Advert(
+          id: id ?? this.id,
+          title: title ?? this.title,
+          content: content ?? this.content,
+          date: date ?? this.date,
+          announcer: announcer ?? this.announcer,
+          tags: tags ?? this.tags);
 
   static Advert empty() {
     return Advert(

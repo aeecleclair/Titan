@@ -9,9 +9,9 @@ class Loaner {
   late final String id;
 
   Loaner.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    groupManagerId = json['group_manager_id'];
-    id = json['id'];
+    name = json['name'] as String;
+    groupManagerId = json['group_manager_id'] as String;
+    id = json['id'] as String;
   }
 
   Map<String, dynamic> toJson() {

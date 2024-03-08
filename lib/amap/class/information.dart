@@ -9,9 +9,9 @@ class Information {
   late final String description;
 
   Information.fromJson(Map<String, dynamic> json) {
-    manager = json['manager'];
-    link = json['link'];
-    description = json['description'];
+    manager = json['manager'] as String;
+    link = json['link'] as String;
+    description = json['description'] as String;
   }
 
   Map<String, dynamic> toJson() {

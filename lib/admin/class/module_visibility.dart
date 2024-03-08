@@ -7,8 +7,8 @@ class ModuleVisibility {
   late final List<String> allowedGroupIds;
 
   ModuleVisibility.fromJson(Map<String, dynamic> json) {
-    root = json['root'];
-    allowedGroupIds = List<String>.from(json['allowed_group_ids']);
+    root = json['root'] as String;
+    allowedGroupIds = json['allowed_group_ids'] as List<String>;
   }
 
   Map<String, dynamic> toJson() {

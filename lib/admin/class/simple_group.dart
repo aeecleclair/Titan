@@ -9,9 +9,9 @@ class SimpleGroup {
   late final String id;
 
   SimpleGroup.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    description = json['description'];
-    id = json['id'];
+    name = json['name'] as String;
+    description = json['description'] as String;
+    id = json['id'] as String;
   }
 
   Map<String, dynamic> toJson() {

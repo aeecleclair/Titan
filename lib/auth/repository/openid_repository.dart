@@ -25,8 +25,9 @@ class OpenIdRepository extends Repository {
           .post(Uri.parse("${host}auth/token"), headers: headers, body: body)
           .timeout(const Duration(seconds: 5));
       if (response.statusCode == 200) {
-        final token = jsonDecode(response.body)["access_token"];
-        final refreshToken = jsonDecode(response.body)["refresh_token"];
+        final token = jsonDecode(response.body)["access_token"] as String;
+        final refreshToken =
+            jsonDecode(response.body)["refresh_token"] as String;
         return {"token": token, "refresh_token": refreshToken};
       } else {
         throw Exception('Empty token');

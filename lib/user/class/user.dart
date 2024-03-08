@@ -31,21 +31,23 @@ class User {
   late final List<SimpleGroup> groups;
 
   User.fromJson(Map<String, dynamic> json) {
-    name = capitaliseAll(json['name']);
-    firstname = capitaliseAll(json['firstname']);
+    name = capitaliseAll(json['name'] as String);
+    firstname = capitaliseAll(json['firstname'] as String);
     nickname = (json['nickname'] != "" && json['nickname'] != null)
-        ? capitaliseAll(json['nickname'])
+        ? capitaliseAll(json['nickname'] as String)
         : null;
-    id = json['id'];
-    email = json['email'];
-    birthday = json['birthday'];
-    promo = json['promo'];
-    floor = json['floor'];
-    phone =
-        (json['phone'] != "" && json["phone"] != null) ? json['phone'] : null;
-    createdOn = json['created_on'];
-    groups =
-        List.from(json['groups']).map((e) => SimpleGroup.fromJson(e)).toList();
+    id = json['id'] as String;
+    email = json['email'] as String;
+    birthday = json['birthday'] as String;
+    promo = json['promo'] as int;
+    floor = json['floor'] as String;
+    phone = (json['phone'] != "" && json["phone"] != null)
+        ? json['phone'] as String
+        : null;
+    createdOn = json['created_on'] as String;
+    groups = (json['groups'] as List<SimpleGroup>)
+        .map((e) => SimpleGroup.fromJson(e as Map<String, dynamic>))
+        .toList();
   }
 
   Map<String, dynamic> toJson() {

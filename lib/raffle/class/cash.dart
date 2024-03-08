@@ -6,8 +6,8 @@ class Cash {
   late final SimpleUser user;
 
   Cash.fromJson(Map<String, dynamic> json) {
-    balance = json['balance'];
-    user = SimpleUser.fromJson(json['user']);
+    balance = json['balance'] as double;
+    user = SimpleUser.fromJson(json['user'] as Map<String, dynamic>);
   }
 
   Map<String, dynamic> toJson() {

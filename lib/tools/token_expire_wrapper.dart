@@ -3,8 +3,9 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/providers/asking_refresh_token_provider.dart';
 
-Future tokenExpireWrapper(WidgetRef ref, Future<dynamic> Function() f) async {
-  await f().catchError((error, stackTrace) async {
+Future<void> tokenExpireWrapper(
+    WidgetRef ref, Future<dynamic> Function() f) async {
+  await f().catchError((dynamic error, stackTrace) async {
     final tokenNotifier = ref.watch(authTokenProvider.notifier);
     final askingRefreshTokenNotifier =
         ref.watch(askingRefreshTokenProvider.notifier);
@@ -31,7 +32,7 @@ Future tokenExpireWrapper(WidgetRef ref, Future<dynamic> Function() f) async {
 }
 
 void tokenExpireWrapperAuth(Ref ref, Future<dynamic> Function() f) async {
-  f().catchError((error, stackTrace) async {
+  f().catchError((dynamic error, stackTrace) async {
     final tokenNotifier = ref.watch(authTokenProvider.notifier);
     final askingRefreshTokenNotifier =
         ref.watch(askingRefreshTokenProvider.notifier);

@@ -37,21 +37,21 @@ class Booking {
 
   static Booking fromJson(Map<String, dynamic> json) {
     Booking booking = Booking(
-      id: json["id"],
-      reason: json["reason"],
-      start: DateTime.parse(json["start"]),
-      end: DateTime.parse(json["end"]),
-      creation: DateTime.parse(json["creation"]),
-      note: json["note"],
-      room: Room.fromJson(json["room"]),
-      key: json["key"],
-      decision: stringToDecision(json["decision"]),
-      recurrenceRule: json["recurrence_rule"] ?? "",
-      entity: json["entity"] ?? "",
-      applicantId: json["applicant_id"],
+      id: json["id"] as String,
+      reason: json["reason"] as String,
+      start: DateTime.parse(json["start"] as String),
+      end: DateTime.parse(json["end"] as String),
+      creation: DateTime.parse(json["creation"] as String),
+      note: json["note"] as String,
+      room: Room.fromJson(json["room"] as Map<String, dynamic>),
+      key: json["key"] as bool,
+      decision: stringToDecision(json["decision"] as String),
+      recurrenceRule: json["recurrence_rule"] as String? ?? "",
+      entity: json["entity"] as String? ?? "",
+      applicantId: json["applicant_id"] as String,
       applicant: json["applicant"] != null
-          ? Applicant.fromJson(json["applicant"])
-          : Applicant.empty().copyWith(id: json["applicant_id"]),
+          ? Applicant.fromJson(json["applicant"] as Map<String, dynamic>)
+          : Applicant.empty().copyWith(id: json["applicant_id"] as String),
     );
     return booking;
   }

@@ -13,11 +13,11 @@ class Module {
   late final bool? liked;
 
   Module.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    description = json['description'];
-    icon = json['icon'];
-    url = json['url'];
-    liked = json['liked'];
+    name = json['name'] as String;
+    description = json['description'] as String;
+    icon = json['icon'] as String;
+    url = json['url'] as String;
+    liked = json['liked'] as bool;
   }
 
   Map<String, dynamic> toJson() {

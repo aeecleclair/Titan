@@ -39,13 +39,13 @@ class Member extends SimpleUser {
   factory Member.fromJson(Map<String, dynamic> map) {
     final user = map['user'];
     return Member(
-      name: capitaliseAll(user['name']),
-      firstname: capitaliseAll(user['firstname']),
+      name: capitaliseAll(user['name'] as String),
+      firstname: capitaliseAll(user['firstname'] as String),
       nickname: (user['nickname'] != "" && user['nickname'] != null)
-          ? capitaliseAll(user['nickname'])
+          ? capitaliseAll(user['nickname'] as String)
           : null,
-      id: user['id'],
-      role: capitaliseAll(map['role']),
+      id: user['id'] as String,
+      role: capitaliseAll(map['role'] as String),
     );
   }
 

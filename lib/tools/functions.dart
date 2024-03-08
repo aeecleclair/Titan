@@ -316,7 +316,8 @@ Future<DateTime?> _getDate(BuildContext context, DateTime now,
   );
 }
 
-getOnlyDayDate(BuildContext context, TextEditingController dateController,
+Future<void> getOnlyDayDate(
+    BuildContext context, TextEditingController dateController,
     {DateTime? initialDate, DateTime? firstDate, DateTime? lastDate}) async {
   final DateTime now = DateTime.now();
   final DateTime? date =
@@ -326,7 +327,8 @@ getOnlyDayDate(BuildContext context, TextEditingController dateController,
       DateFormat('dd/MM/yyyy').format(date ?? initialDate ?? now);
 }
 
-getOnlyDayDateFunction(BuildContext context, void Function(String) setDate,
+Future<void> getOnlyDayDateFunction(
+    BuildContext context, void Function(String) setDate,
     {DateTime? initialDate, DateTime? firstDate, DateTime? lastDate}) async {
   final DateTime now = DateTime.now();
   final DateTime? date =
@@ -335,7 +337,7 @@ getOnlyDayDateFunction(BuildContext context, void Function(String) setDate,
   setDate(DateFormat('dd/MM/yyyy').format(date ?? initialDate ?? now));
 }
 
-getOnlyHourDate(
+Future<void> getOnlyHourDate(
     BuildContext context, TextEditingController dateController) async {
   final DateTime now = DateTime.now();
   final TimeOfDay? time = await _getTime(context);
@@ -344,7 +346,8 @@ getOnlyHourDate(
       DateFormat('HH:mm').format(DateTimeField.combine(now, time));
 }
 
-getFullDate(BuildContext context, TextEditingController dateController,
+Future<void> getFullDate(
+    BuildContext context, TextEditingController dateController,
     {DateTime? initialDate, DateTime? firstDate, DateTime? lastDate}) async {
   final DateTime now = DateTime.now();
   _getDate(context, now, initialDate, firstDate, lastDate).then(

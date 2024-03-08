@@ -180,7 +180,8 @@ class LocalNotificationService {
       return;
     }
     final message = message_class.Message.fromJson(
-        jsonDecode(utf8.decode(payload.runes.toList())));
+        jsonDecode(utf8.decode(payload.runes.toList()))
+            as Map<String, dynamic>);
     onNotificationClick.add(message);
   }
 
@@ -201,7 +202,8 @@ class LocalNotificationService {
       return;
     }
     final message = message_class.Message.fromJson(
-        jsonDecode(utf8.decode(response.payload!.runes.toList())));
+        jsonDecode(utf8.decode(response.payload!.runes.toList()))
+            as Map<String, dynamic>);
     onNotificationClick.add(message);
   }
 
@@ -222,7 +224,8 @@ void onDidReceiveBackgroundNotificationResponse(
     return;
   }
   final message = message_class.Message.fromJson(
-      jsonDecode(utf8.decode(response.payload!.runes.toList())));
+      jsonDecode(utf8.decode(response.payload!.runes.toList()))
+          as Map<String, dynamic>);
   if (message.actionModule != null && message.actionTable != null) {
     final provider = providers[message.actionModule];
     if (provider == null) {

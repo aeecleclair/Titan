@@ -11,7 +11,7 @@ class StatusRepository extends Repository {
   final ext = 'campaign/status';
 
   Future<Status> getStatus() async {
-    return stringToStatus((await getOne(''))['status']);
+    return stringToStatus((await getOne(''))['status'] as String);
   }
 
   Future<bool> openVote() async {

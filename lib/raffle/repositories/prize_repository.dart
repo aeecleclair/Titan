@@ -8,7 +8,8 @@ class LotRepository extends Repository {
   final ext = "tombola/lots";
 
   Future<List<Prize>> getLotList(String raffle) async {
-    return List<Prize>.from((await getList()).map((x) => Prize.fromJson(x)));
+    return List<Prize>.from((await getList())
+        .map((x) => Prize.fromJson(x)));
   }
 
   Future<Prize> getLot(String userId) async {
@@ -29,7 +30,8 @@ class LotRepository extends Repository {
 
   Future<List<Ticket>> drawLot(Prize lot) async {
     return List<Ticket>.from(
-        (await create(lot.toJson(), suffix: "/${lot.id}/draw"))
+        (await create(lot.toJson(), suffix: "/${lot.id}/draw")
+                as List<Map<String, dynamic>>)
             .map((x) => Ticket.fromJson(x)));
   }
 }

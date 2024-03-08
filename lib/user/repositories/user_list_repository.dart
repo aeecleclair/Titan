@@ -9,8 +9,9 @@ class UserListRepository extends Repository {
   final ext = "users/";
 
   Future<List<SimpleUser>> getAllUsers() async {
-    return List<SimpleUser>.from(
-        (await getList()).map((x) => SimpleUser.fromJson(x)));
+    return (await getList())
+            .map((x) => SimpleUser.fromJson(x))
+        as List<SimpleUser>;
   }
 
   Future<List<SimpleUser>> searchUser(String query,
@@ -30,7 +31,8 @@ class UserListRepository extends Repository {
       }
     }
     return List<SimpleUser>.from(
-        (await getList(suffix: suffix)).map((x) => SimpleUser.fromJson(x)));
+        (await getList(suffix: suffix))
+            .map((x) => SimpleUser.fromJson(x)));
   }
 }
 

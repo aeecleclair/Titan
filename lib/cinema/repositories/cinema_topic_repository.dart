@@ -7,16 +7,18 @@ class CinemaTopicRepository extends Repository {
   final prefix = "cinema_";
 
   Future<bool> subscribeSession(String topic) async {
-    return await create({}, suffix: "topics/$prefix$topic/subscribe");
+    return await apply({}, suffix: "topics/$prefix$topic/subscribe");
   }
 
   Future<bool> unsubscribeSession(String topic) async {
-    return await create({}, suffix: "topics/$prefix$topic/unsubscribe");
+    return await apply({}, suffix: "topics/$prefix$topic/unsubscribe");
   }
 
   Future<List<String>> getCinemaTopics() async {
-    return List<String>.from((await getList(
-            suffix: "topics/${prefix.substring(0, prefix.length - 1)}"))
-        .map((x) => x.split(prefix)[1]));
+    return (await getList(
+                suffix: "topics/${prefix.substring(0, prefix.length - 1)}")
+            as List<String>)
+        .map((x) => x.split(prefix)[1])
+        .toList();
   }
 }

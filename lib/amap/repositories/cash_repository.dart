@@ -10,7 +10,8 @@ class CashRepository extends Repository {
 
   Future<List<Cash>> getCashList() async {
     return List<Cash>.from(
-        (await getList(suffix: "cash")).map((x) => Cash.fromJson(x)));
+        (await getList(suffix: "cash"))
+            .map((x) => Cash.fromJson(x)));
   }
 
   Future<Cash> getCash(String userId) async {

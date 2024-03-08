@@ -15,7 +15,8 @@ class GroupRepository extends Repository {
 
   Future<List<SimpleGroup>> getGroupList() async {
     return List<SimpleGroup>.from(
-        (await getList()).map((x) => SimpleGroup.fromJson(x)));
+        (await getList())
+            .map((x) => SimpleGroup.fromJson(x)));
   }
 
   Future<Group> getGroup(String groupId) async {

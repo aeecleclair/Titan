@@ -10,8 +10,9 @@ class AmapUserRepository extends Repository {
   final ext = "amap/users/";
 
   Future<List<Order>> getOrderList(String userId) async {
-    return List<Order>.from((await getList(suffix: "$userId/orders"))
-        .map((x) => Order.fromJson(x)));
+    return List<Order>.from(
+        (await getList(suffix: "$userId/orders"))
+            .map((x) => Order.fromJson(x)));
   }
 
   Future<Cash> getCashByUser(String userId) async {

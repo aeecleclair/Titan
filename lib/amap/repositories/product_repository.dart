@@ -9,8 +9,8 @@ class ProductListRepository extends Repository {
   final ext = "amap/products";
 
   Future<List<Product>> getProductList() async {
-    return List<Product>.from(
-        (await getList()).map((x) => Product.fromJson(x)));
+    return List<Product>.from((await getList())
+        .map((x) => Product.fromJson(x)));
   }
 
   Future<Product> getProduct(String productId) async {

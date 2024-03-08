@@ -7,8 +7,8 @@ class ItemSimple {
   late final String name;
 
   ItemSimple.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
+    id = json['id'] as String;
+    name = json['name'] as String;
   }
 
   Map<String, dynamic> toJson() {
@@ -18,7 +18,7 @@ class ItemSimple {
     return data;
   }
 
-  ItemSimple copyWith({id, name}) {
+  ItemSimple copyWith({String? id, String? name}) {
     return ItemSimple(
       id: id ?? this.id,
       name: name ?? this.name,

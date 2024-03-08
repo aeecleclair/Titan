@@ -6,8 +6,9 @@ class ItemQuantity {
   late final int quantity;
 
   ItemQuantity.fromJson(Map<String, dynamic> json) {
-    itemSimple = ItemSimple.fromJson(json['itemSimple']);
-    quantity = json['quantity'];
+    itemSimple =
+        ItemSimple.fromJson(json['itemSimple'] as Map<String, dynamic>);
+    quantity = json['quantity'] as int;
   }
 
   Map<String, dynamic> toJson() {

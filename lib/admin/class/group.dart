@@ -13,11 +13,11 @@ class Group {
   late final List<SimpleUser> members;
 
   Group.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    description = json['description'];
-    id = json['id'];
-    members = List<SimpleUser>.from(
-        json['members'].map((x) => SimpleUser.fromJson(x)));
+    name = json['name'] as String;
+    description = json['description'] as String;
+    id = json['id'] as String;
+    members = (json['members'] as List<Map<String, dynamic>>)
+        .map((x) => SimpleUser.fromJson(x)) as List<SimpleUser>;
   }
 
   Map<String, dynamic> toJson() {

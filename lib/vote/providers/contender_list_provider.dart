@@ -72,7 +72,11 @@ class ContenderListNotifier extends ListNotifier<Contender> {
         serious.shuffle();
         fakes.shuffle();
         blank.shuffle();
-        state = AsyncValue.data([...fakes, ...serious, ...blank]);
+        state = AsyncValue.data([
+          ...fakes as List<Contender>,
+          ...serious as List<Contender>,
+          ...blank as List<Contender>
+        ]);
       },
       orElse: () {},
     );
