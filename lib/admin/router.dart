@@ -10,13 +10,14 @@ import 'package:myecl/admin/ui/pages/edit_page/edit_page.dart'
     deferred as edit_page;
 import 'package:myecl/admin/ui/pages/main_page/main_page.dart'
     deferred as main_page;
+import 'package:myecl/router.dart';
 import 'package:myecl/tools/middlewares/admin_middleware.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdminRouter {
-  final ProviderRef ref;
+  final ProviderRef<AppRouter> ref;
   static const String root = '/admin';
   static const String addAssociation = '/add_association';
   static const String addLoaner = '/add_loaner';

@@ -9,13 +9,14 @@ import 'package:myecl/recommendation/ui/pages/information_page.dart'
     deferred as information_page;
 import 'package:myecl/recommendation/ui/pages/add_edit_page.dart'
     deferred as add_edit_page;
+import 'package:myecl/router.dart';
 import 'package:myecl/tools/middlewares/admin_middleware.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RecommendationRouter {
-  final ProviderRef ref;
+  final ProviderRef<AppRouter> ref;
 
   static const String root = '/recommendation';
   static const String information = '/information';

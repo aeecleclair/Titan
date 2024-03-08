@@ -2,6 +2,7 @@ import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
+import 'package:myecl/router.dart';
 import 'package:myecl/tools/middlewares/admin_middleware.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:myecl/tools/middlewares/deferred_middleware.dart';
@@ -19,7 +20,7 @@ import 'package:myecl/vote/ui/pages/section_pages/add_section.dart'
 import 'package:qlevar_router/qlevar_router.dart';
 
 class VoteRouter {
-  final ProviderRef ref;
+  final ProviderRef<AppRouter> ref;
   static const String root = '/vote';
   static const String admin = '/admin';
   static const String addEditContender = '/add_edit_contender';

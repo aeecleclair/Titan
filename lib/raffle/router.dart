@@ -15,13 +15,14 @@ import 'package:myecl/raffle/ui/pages/prize_page/add_edit_prize_page.dart'
     deferred as add_edit_prize_page;
 import 'package:myecl/raffle/ui/pages/raffle_page/raffle_page.dart'
     deferred as raffle_page;
+import 'package:myecl/router.dart';
 import 'package:myecl/tools/middlewares/admin_middleware.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RaffleRouter {
-  final ProviderRef ref;
+  final ProviderRef<AppRouter> ref;
   static const String root = '/tombola';
   static const String admin = '/admin';
   static const String detail = '/detail';

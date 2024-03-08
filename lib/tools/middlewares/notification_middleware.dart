@@ -1,9 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/router.dart';
 import 'package:myecl/service/provider_list.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class NotificationMiddleWare extends QMiddleware {
-  final ProviderRef ref;
+  final ProviderRef<AppRouter> ref;
 
   NotificationMiddleWare(this.ref);
 

@@ -5,12 +5,13 @@ import 'package:myecl/centralisation/tools/constants.dart';
 import 'package:myecl/centralisation/ui/pages/main_page.dart'
     deferred as main_page;
 import 'package:myecl/drawer/class/module.dart';
+import 'package:myecl/router.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class CentralisationRouter {
-  final ProviderRef ref;
+  final ProviderRef<AppRouter> ref;
   static const String root = '/centralisation';
   static final Module module = Module(
       name: CentralisationTextConstants.centralisation,

@@ -5,12 +5,13 @@ import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/event/ui/pages/detail_page/detail_page.dart'
     deferred as detail_page;
 import 'package:myecl/home/ui/home.dart' deferred as home_page;
+import 'package:myecl/router.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class HomeRouter {
-  final ProviderRef ref;
+  final ProviderRef<AppRouter> ref;
   static const String root = '/home';
   static const String detail = '/detail';
   static final Module module = Module(

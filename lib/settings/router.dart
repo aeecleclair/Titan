@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/router.dart';
 import 'package:myecl/settings/ui/pages/change_pass/change_pass.dart'
     deferred as change_pass;
 import 'package:myecl/settings/ui/pages/edit_user_page/edit_user_page.dart'
@@ -17,7 +18,7 @@ import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class SettingsRouter {
-  final ProviderRef ref;
+  final ProviderRef<AppRouter> ref;
   static const String root = '/settings';
   static const String editAccount = '/edit_account';
   static const String changePassword = '/change_password';
