@@ -15,8 +15,6 @@ class VoterRepository extends Repository {
   }
 
   Future<List<Voter>> getVoters() async {
-    return (await getList())
-        .map((e) => Voter.fromJson(e))
-        .toList();
+    return (await getList()).map((e) => Voter.fromJson(e)).toList();
   }
 }

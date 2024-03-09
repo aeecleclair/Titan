@@ -25,9 +25,7 @@ class SectionRepository extends Repository {
   }
 
   Future<List<Section>> getSections() async {
-    return (await getList())
-        .map((e) => Section.fromJson(e))
-        .toList();
+    return (await getList()).map((e) => Section.fromJson(e)).toList();
   }
 }
 

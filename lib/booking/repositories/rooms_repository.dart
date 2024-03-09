@@ -9,8 +9,7 @@ class RoomRepository extends Repository {
   final ext = 'booking/rooms';
 
   Future<List<Room>> getRoomList() async {
-    return List<Room>.from((await getList())
-        .map((x) => Room.fromJson(x)));
+    return List<Room>.from((await getList()).map((x) => Room.fromJson(x)));
   }
 
   Future<Room> createRoom(Room room) async {

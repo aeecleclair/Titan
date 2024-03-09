@@ -14,7 +14,6 @@ class UserDetailRepository extends Repository {
 
   Future<List<Prize>> getLotListByUserId(String userId) async {
     return List<Prize>.from(
-        (await getList(suffix: "/$userId/lot"))
-            .map((x) => Prize.fromJson(x)));
+        (await getList(suffix: "/$userId/lot")).map((x) => Prize.fromJson(x)));
   }
 }

@@ -7,8 +7,7 @@ class RaffleRepository extends Repository {
   final ext = "tombola/raffles";
 
   Future<List<Raffle>> getRaffleList() async {
-    return List<Raffle>.from((await getList())
-        .map((x) => Raffle.fromJson(x)));
+    return List<Raffle>.from((await getList()).map((x) => Raffle.fromJson(x)));
   }
 
   Future<Raffle> getRaffle(String raffleId) async {

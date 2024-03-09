@@ -10,8 +10,7 @@ class RecommendationRepository extends Repository {
 
   Future<List<Recommendation>> getRecommendationList() async {
     return List<Recommendation>.from(
-        (await getList())
-            .map((x) => Recommendation.fromJson(x)));
+        (await getList()).map((x) => Recommendation.fromJson(x)));
   }
 
   Future<Recommendation> createRecommendation(

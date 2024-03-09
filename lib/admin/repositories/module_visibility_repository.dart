@@ -8,8 +8,7 @@ class ModuleVisibilityRepository extends Repository {
 
   Future<List<ModuleVisibility>> getModuleVisibilityList() async {
     return List<ModuleVisibility>.from(
-        (await getList())
-            .map((x) => ModuleVisibility.fromJson(x)));
+        (await getList()).map((x) => ModuleVisibility.fromJson(x)));
   }
 
   Future<List<String>> getAccessibleModule() async {

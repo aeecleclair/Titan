@@ -10,8 +10,8 @@ class DeliveryListRepository extends Repository {
   final ext = "amap/deliveries";
 
   Future<List<Delivery>> getDeliveryList() async {
-    return List<Delivery>.from((await getList())
-        .map((x) => Delivery.fromJson(x)));
+    return List<Delivery>.from(
+        (await getList()).map((x) => Delivery.fromJson(x)));
   }
 
   Future<Delivery> createDelivery(Delivery delivery) async {

@@ -9,9 +9,7 @@ class SessionRepository extends Repository {
   final ext = 'cinema/sessions';
 
   Future<List<Session>> getAllSessions() async {
-    return (await getList())
-        .map((e) => Session.fromJson(e))
-        .toList();
+    return (await getList()).map((e) => Session.fromJson(e)).toList();
   }
 
   Future<Session> getSession(String id) async {

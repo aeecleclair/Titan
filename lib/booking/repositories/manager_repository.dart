@@ -7,14 +7,13 @@ class ManagerRepository extends Repository {
   final ext = "booking/managers";
 
   Future<List<Manager>> getManagerList() async {
-    return List<Manager>.from((await getList())
-        .map((x) => Manager.fromJson(x)));
+    return List<Manager>.from(
+        (await getList()).map((x) => Manager.fromJson(x)));
   }
 
   Future<List<Manager>> getUserManagerList() async {
     return List<Manager>.from(
-        (await getList(suffix: "/users/me"))
-            .map((x) => Manager.fromJson(x)));
+        (await getList(suffix: "/users/me")).map((x) => Manager.fromJson(x)));
   }
 
   Future<Manager> createManager(Manager manager) async {

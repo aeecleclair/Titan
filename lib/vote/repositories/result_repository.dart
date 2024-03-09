@@ -9,8 +9,7 @@ class ResultRepository extends Repository {
   final ext = 'campaign/results';
 
   Future<List<Result>> getResult() async {
-    return List<Result>.from((await getList())
-        .map((e) => Result.fromJson(e)));
+    return List<Result>.from((await getList()).map((e) => Result.fromJson(e)));
   }
 }
 

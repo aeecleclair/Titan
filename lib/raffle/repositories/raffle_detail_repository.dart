@@ -21,9 +21,8 @@ class RaffleDetailRepository extends Repository {
   }
 
   Future<List<Prize>> getLotListFromRaffle(String raffleId) async {
-    return List<Prize>.from(
-        (await getList(suffix: "$raffleId/lots"))
-            .map((x) => Prize.fromJson(x)));
+    return List<Prize>.from((await getList(suffix: "$raffleId/lots"))
+        .map((x) => Prize.fromJson(x)));
   }
 
   Future<RaffleStats> getRaffleStats(String raffleId) async {
