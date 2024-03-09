@@ -9,24 +9,21 @@ class EventRepository extends Repository {
   final ext = "calendar/events/";
 
   Future<List<Event>> getAllEvent() async {
-    return List<Event>.from((await getList())
-        .map((x) => Event.fromJson(x)));
+    return List<Event>.from((await getList()).map((x) => Event.fromJson(x)));
   }
 
   Future<List<Event>> getConfirmedEventList() async {
     return List<Event>.from(
-        (await getList(suffix: "confirmed"))
-            .map((x) => Event.fromJson(x)));
+        (await getList(suffix: "confirmed")).map((x) => Event.fromJson(x)));
   }
 
   Future<List<Event>> getUserEventList(String id) async {
     return List<Event>.from(
-        (await getList(suffix: "user/$id"))
-            .map((x) => Event.fromJson(x)));
+        (await getList(suffix: "user/$id")).map((x) => Event.fromJson(x)));
   }
 
   Future<bool> confirmEvent(Event event) async {
-    return await update({}, event.id,
+    return await update(<String, dynamic>{}, event.id,
         suffix: '/reply/${event.decision.toString().split('.')[1]}');
   }
 

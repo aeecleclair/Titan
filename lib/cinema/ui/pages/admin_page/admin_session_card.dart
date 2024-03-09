@@ -12,7 +12,7 @@ import 'package:myecl/tools/ui/builders/waiting_button.dart';
 class AdminSessionCard extends HookConsumerWidget {
   final Session session;
   final VoidCallback onTap, onEdit;
-  final Future Function() onDelete;
+  final Future<void> Function() onDelete;
   const AdminSessionCard(
       {super.key,
       required this.session,

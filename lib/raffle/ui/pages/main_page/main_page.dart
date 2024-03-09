@@ -30,7 +30,7 @@ class RaffleMainPage extends HookConsumerWidget {
     final userTicketListNotifier = ref.watch(userTicketListProvider.notifier);
     final isAdmin = ref.watch(isRaffleAdminProvider);
 
-    final rafflesStatus = {};
+    final rafflesStatus = <String, RaffleStatusType>{};
     raffleList.whenData(
       (raffles) {
         for (var raffle in raffles) {

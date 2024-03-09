@@ -9,7 +9,7 @@ import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 
 class LoanersBar extends HookConsumerWidget {
-  final Function(Loaner) onTap;
+  final void Function(Loaner) onTap;
   const LoanersBar({super.key, required this.onTap});
 
   @override

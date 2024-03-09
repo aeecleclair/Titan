@@ -28,7 +28,7 @@ class DeliveryHandler extends HookConsumerWidget {
             padding: EdgeInsets.symmetric(horizontal: 30),
             color: AMAPColorConstants.textDark),
         const SizedBox(height: 10),
-        HorizontalListView(
+        HorizontalListView<void>(
           height: 200,
           children: [
             const SizedBox(width: 15, height: 195),

@@ -16,8 +16,7 @@ class LoanRepository extends Repository {
 
   Future<List<Loan>> getMyLoanList() async {
     return List<Loan>.from(
-        (await getList(suffix: "users/me"))
-            .map((x) => Loan.fromJson(x)));
+        (await getList(suffix: "users/me")).map((x) => Loan.fromJson(x)));
   }
 
   Future<Loan> getLoan(String id) async {
@@ -42,7 +41,7 @@ class LoanRepository extends Repository {
   }
 
   Future<bool> returnLoan(String loanId) async {
-    return await apply({}, suffix: "$loanId/return");
+    return await apply(<String, dynamic>{}, suffix: "$loanId/return");
   }
 
   Future<List<Loan>> getHistory(String loanerId) async {

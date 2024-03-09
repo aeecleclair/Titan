@@ -132,7 +132,7 @@ class AdminPage extends HookConsumerWidget {
                                           title: VoteTextConstants.publish,
                                           descriptions: VoteTextConstants
                                               .publishVoteDescription,
-                                          onYes: () {
+                                          onYes: () async {
                                             statusNotifier.publishVote();
                                             ref
                                                 .watch(resultProvider.notifier)

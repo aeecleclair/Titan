@@ -107,7 +107,7 @@ class TicketHandler extends HookConsumerWidget {
                                             title: "Supprimer le ticket",
                                             descriptions:
                                                 "Voulez-vous vraiment supprimer ce ticket?",
-                                            onYes: () {
+                                            onYes: () async {
                                               tokenExpireWrapper(ref, () async {
                                                 final value =
                                                     await packTicketsNotifier

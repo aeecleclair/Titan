@@ -61,7 +61,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     });
   }
 
-  Future loadModules(List<String> roots) async {
+  Future<void> loadModules(List<String> roots) async {
     final prefs = await SharedPreferences.getInstance();
     List<String> modulesName = prefs.getStringList(dbModule) ?? [];
     List<String> allSavedModulesName = prefs.getStringList(dbAllModules) ?? [];

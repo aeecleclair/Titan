@@ -9,7 +9,7 @@ import 'package:myecl/tools/ui/layouts/card_button.dart';
 
 class AdminAdvertCard extends HookConsumerWidget {
   final VoidCallback onTap, onEdit;
-  final Future Function() onDelete;
+  final Future<void> Function() onDelete;
   final Advert advert;
 
   const AdminAdvertCard(

@@ -61,7 +61,7 @@ class AdminPage extends HookConsumerWidget {
                             return CustomDialogBox(
                               title: CinemaTextConstants.deleting,
                               descriptions: CinemaTextConstants.deleteSession,
-                              onYes: () {
+                              onYes: () async {
                                 sessionListNotifier.deleteSession(session);
                               },
                             );

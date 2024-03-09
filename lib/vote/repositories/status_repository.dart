@@ -16,7 +16,7 @@ class StatusRepository extends Repository {
 
   Future<bool> openVote() async {
     try {
-      await create({}, suffix: "/open");
+      await create(<String, dynamic>{}, suffix: "/open");
       return true;
     } catch (e) {
       return false;
@@ -25,7 +25,7 @@ class StatusRepository extends Repository {
 
   Future<bool> closeVote() async {
     try {
-      await create({}, suffix: '/close');
+      await create(<String, dynamic>{}, suffix: '/close');
       return true;
     } catch (e) {
       return false;
@@ -34,7 +34,7 @@ class StatusRepository extends Repository {
 
   Future<bool> countVote() async {
     try {
-      await create({}, suffix: '/counting');
+      await create(<String, dynamic>{}, suffix: '/counting');
       return true;
     } catch (e) {
       return false;
@@ -43,7 +43,7 @@ class StatusRepository extends Repository {
 
   Future<bool> resetVote() async {
     try {
-      await create({}, suffix: '/reset');
+      await create(<String, dynamic>{}, suffix: '/reset');
       return true;
     } catch (e) {
       return false;
@@ -52,7 +52,7 @@ class StatusRepository extends Repository {
 
   Future<bool> publishVote() async {
     try {
-      await create({}, suffix: '/published');
+      await create(<String, dynamic>{}, suffix: '/published');
       return true;
     } catch (e) {
       return false;

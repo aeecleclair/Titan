@@ -7,7 +7,7 @@ import 'package:myecl/loan/providers/loan_provider.dart';
 final selectedListProvider =
     StateNotifierProvider<SelectedListProvider, List<int>>((ref) {
   final itemsList = ref.watch(itemListProvider);
-  final items = [];
+  final items = List<Item>.empty(growable: true);
   itemsList.maybeWhen(
     data: (list) => items.addAll(list),
     orElse: () {},

@@ -96,7 +96,7 @@ class SectionContenderItems extends HookConsumerWidget {
                                   title: VoteTextConstants.deletePretendance,
                                   descriptions:
                                       VoteTextConstants.deletePretendanceDesc,
-                                  onYes: () {
+                                  onYes: () async {
                                     tokenExpireWrapper(ref, () async {
                                       final value = await contenderListNotifier
                                           .deleteContender(e);

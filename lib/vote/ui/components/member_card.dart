@@ -7,7 +7,7 @@ import 'package:myecl/vote/class/members.dart';
 
 class MemberCard extends StatelessWidget {
   final Member member;
-  final Function()? onEdit, onDelete;
+  final void Function()? onEdit, onDelete;
   final bool isAdmin;
   const MemberCard(
       {super.key,

@@ -164,7 +164,7 @@ class PrizeHandler extends HookConsumerWidget {
                                           title: "Supprimer le lot",
                                           descriptions:
                                               "Voulez-vous vraiment supprimer ce lot?",
-                                          onYes: () {
+                                          onYes: () async {
                                             tokenExpireWrapper(ref, () async {
                                               final value = await prizesNotifier
                                                   .deletePrize(e);
@@ -198,7 +198,7 @@ class PrizeHandler extends HookConsumerWidget {
                                           title: "Tirage",
                                           descriptions:
                                               "Tirer le gagnant de ce lot ?",
-                                          onYes: () {
+                                          onYes: () async {
                                             tokenExpireWrapper(ref, () async {
                                               final value =
                                                   await winningTicketListNotifier

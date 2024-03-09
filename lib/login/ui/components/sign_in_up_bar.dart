@@ -17,7 +17,7 @@ class SignInUpBar extends StatelessWidget {
       )});
 
   final String label;
-  final Future Function() onPressed;
+  final Future<void> Function() onPressed;
   final bool isLoading;
   final Color color;
   final HeroIcon icon;

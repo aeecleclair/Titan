@@ -4,7 +4,7 @@ import 'package:myecl/tools/ui/layouts/item_chip.dart';
 class VoterChip extends StatelessWidget {
   final bool selected;
   final String label;
-  final Function() onTap;
+  final void Function() onTap;
   const VoterChip(
       {super.key,
       required this.label,

@@ -8,8 +8,8 @@ class CustomDialogBox extends StatelessWidget {
   static const Color yesColor = ColorConstants.gradient2;
   static const Color noColor = ColorConstants.background2;
 
-  final Function() onYes;
-  final Function()? onNo;
+  final Future<void> Function() onYes;
+  final void Function()? onNo;
 
   static const double _padding = 20;
   static const double _avatarRadius = 45;

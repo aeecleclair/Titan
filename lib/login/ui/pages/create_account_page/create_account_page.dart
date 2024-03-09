@@ -39,7 +39,7 @@ class CreateAccountPage extends HookConsumerWidget {
     final phone = useTextEditingController();
     final promo = useTextEditingController();
     final lastIndex = useState(isCodeGiven ? 1 : 0);
-    List<DropdownMenuItem> items = Floors.values
+    List<DropdownMenuItem<String>> items = Floors.values
         .map((e) => DropdownMenuItem(
               value: capitalize(e.toString().split('.').last),
               child: Text(capitalize(e.toString().split('.').last)),

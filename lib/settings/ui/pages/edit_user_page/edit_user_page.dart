@@ -28,7 +28,7 @@ class EditUserPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final key = GlobalKey<FormFieldState>();
+    final key = GlobalKey<FormFieldState<dynamic>>();
     final asyncUserNotifier = ref.watch(asyncUserProvider.notifier);
     final user = ref.watch(userProvider);
     final profilePicture = ref.watch(profilePictureProvider);
@@ -45,7 +45,7 @@ class EditUserPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    List<DropdownMenuItem> items = Floors.values
+    List<DropdownMenuItem<String>> items = Floors.values
         .map((e) => DropdownMenuItem(
               value: capitalize(e.toString().split('.').last),
               child: Text(capitalize(e.toString().split('.').last)),

@@ -18,7 +18,7 @@ class UserListNotifier extends ListNotifier<SimpleUser> {
         excludeId: excludeGroup?.map((e) => e.id).toList()));
   }
 
-  Future clear() async {
+  Future<void> clear() async {
     state = const AsyncValue.data([]);
   }
 }

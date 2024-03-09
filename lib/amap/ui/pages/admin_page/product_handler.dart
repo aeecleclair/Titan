@@ -42,7 +42,7 @@ class ProductHandler extends HookConsumerWidget {
           color: AMAPColorConstants.textDark,
         ),
         const SizedBox(height: 10),
-        HorizontalListView(height: 185, children: [
+        HorizontalListView<void>(height: 185, children: [
           const SizedBox(width: 10),
           GestureDetector(
             onTap: () {
@@ -81,7 +81,7 @@ class ProductHandler extends HookConsumerWidget {
                                       title: AMAPTextConstants.deleteProduct,
                                       descriptions: AMAPTextConstants
                                           .deleteProductDescription,
-                                      onYes: () {
+                                      onYes: () async {
                                         tokenExpireWrapper(ref, () async {
                                           final value = await productsNotifier
                                               .deleteProduct(e);

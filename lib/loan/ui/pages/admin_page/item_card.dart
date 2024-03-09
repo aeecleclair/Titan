@@ -10,8 +10,8 @@ import 'package:myecl/tools/ui/builders/waiting_button.dart';
 class ItemCard extends StatelessWidget {
   final Item item;
   final bool showButtons;
-  final Function() onEdit;
-  final Future Function() onDelete;
+  final void Function() onEdit;
+  final Future<void> Function() onDelete;
   const ItemCard(
       {super.key,
       required this.item,

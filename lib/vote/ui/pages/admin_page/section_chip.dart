@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class SectionChip extends StatelessWidget {
   final bool selected, isAdmin;
   final String label;
-  final Function()? onTap, onDelete;
+  final void Function()? onTap, onDelete;
   const SectionChip(
       {super.key,
       required this.label,

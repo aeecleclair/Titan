@@ -102,7 +102,7 @@ class LoanersItems extends HookConsumerWidget {
                                     return CustomDialogBox(
                                         descriptions:
                                             LoanTextConstants.deletingItem,
-                                        onYes: () {
+                                        onYes: () async {
                                           tokenExpireWrapper(ref, () async {
                                             final value = await itemListNotifier
                                                 .deleteItem(e, loaner.id);

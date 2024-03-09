@@ -8,7 +8,7 @@ import 'package:myecl/tools/ui/builders/waiting_button.dart';
 class TicketUI extends HookConsumerWidget {
   final PackTicket packTicket;
   final VoidCallback onEdit;
-  final Future Function() onDelete;
+  final Future<void> Function() onDelete;
   final bool showButton;
   const TicketUI(
       {super.key,

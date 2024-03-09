@@ -8,6 +8,6 @@ final availableDeliveriesProvider = Provider((ref) {
     data: (deliveryList) => deliveryList
         .where((delivery) => delivery.status == DeliveryStatus.available)
         .toList(),
-    orElse: () => [],
+    orElse: () => List<Delivery>.empty(growable: true),
   );
 });

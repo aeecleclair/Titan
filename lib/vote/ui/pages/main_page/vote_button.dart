@@ -52,7 +52,7 @@ class VoteButton extends HookConsumerWidget {
                   return CustomDialogBox(
                     title: VoteTextConstants.vote,
                     descriptions: VoteTextConstants.confirmVote,
-                    onYes: () {
+                    onYes: () async {
                       tokenExpireWrapper(ref, () async {
                         final result = await votesNotifier
                             .addVote(Votes(id: selectedContender.id));

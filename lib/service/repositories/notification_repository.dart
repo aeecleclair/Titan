@@ -23,12 +23,14 @@ class NotificationRepository extends Repository {
 
   Future<bool> subscribeTopic(Topic topic) async {
     final String topicString = topic.toString().split('.').last;
-    return await apply({}, suffix: "topics/$topicString/subscribe");
+    return await apply(<String, dynamic>{},
+        suffix: "topics/$topicString/subscribe");
   }
 
   Future<bool> unsubscribeTopic(Topic topic) async {
     final String topicString = topic.toString().split('.').last;
-    return await apply({}, suffix: "topics/$topicString/unsubscribe");
+    return await apply(<String, dynamic>{},
+        suffix: "topics/$topicString/unsubscribe");
   }
 
   Future<List<Topic>> getTopics() async {

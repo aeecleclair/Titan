@@ -7,7 +7,7 @@ import 'package:myecl/tools/repository/repository.dart';
 class IsConnectedProvider extends StateNotifier<bool> {
   IsConnectedProvider() : super(false);
 
-  Future isInternet() async {
+  Future<void> isInternet() async {
     try {
       final result =
           await http.get(Uri.parse("${Repository.displayHost}information"));

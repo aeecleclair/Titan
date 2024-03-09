@@ -54,7 +54,7 @@ class LocalNotificationService {
         android: androidNotificationDetails, iOS: darwinNotificationDetails);
   }
 
-  Future showNotification(message_class.Message message) async {
+  Future<void> showNotification(message_class.Message message) async {
     final notificationDetails = getNotificationDetails();
     if (message.deliveryDateTime == null) {
       _localNotificationService.show(generateIntFromString(message.context),

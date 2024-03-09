@@ -45,7 +45,7 @@ class ListSideItem extends HookConsumerWidget {
                     builder: (context) => CustomDialogBox(
                           title: VoteTextConstants.warning,
                           descriptions: VoteTextConstants.warningMessage,
-                          onYes: () {
+                          onYes: () async {
                             selectedContenderNotifier.clear();
                             animation.forward(from: 0);
                             sectionIdNotifier.setId(e.id);

@@ -9,8 +9,8 @@ import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
-  final Function()? onEdit;
-  final Future Function()? onDelete;
+  final void Function()? onEdit;
+  final Future<void> Function()? onDelete;
   final bool showButton;
   const ProductCard(
       {super.key,

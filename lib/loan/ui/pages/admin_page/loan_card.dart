@@ -12,8 +12,8 @@ import 'package:myecl/tools/ui/builders/waiting_button.dart';
 class LoanCard extends StatelessWidget {
   final Loan loan;
   final bool isAdmin, isDetail, isHistory;
-  final Function()? onEdit, onInfo;
-  final Future Function()? onCalendar, onReturn;
+  final void Function()? onEdit, onInfo;
+  final Future<void> Function()? onCalendar, onReturn;
   const LoanCard(
       {super.key,
       required this.loan,

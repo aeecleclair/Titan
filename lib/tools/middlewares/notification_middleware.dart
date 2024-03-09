@@ -9,7 +9,7 @@ class NotificationMiddleWare extends QMiddleware {
   NotificationMiddleWare(this.ref);
 
   @override
-  Future onEnter() async {
+  Future<void> onEnter() async {
     final actionModule = QR.params['actionModule'];
     final actionTable = QR.params['actionTable'];
     if (actionModule == null || actionTable == null) {

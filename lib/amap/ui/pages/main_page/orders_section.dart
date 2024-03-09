@@ -39,7 +39,7 @@ class OrderSection extends HookConsumerWidget {
           padding: EdgeInsets.symmetric(horizontal: 30),
           color: AMAPColorConstants.textDark),
       const SizedBox(height: 10),
-      HorizontalListView(
+      HorizontalListView<void>(
         height: 195,
         children: [
           const SizedBox(width: 15),

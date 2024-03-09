@@ -11,8 +11,8 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class BookingCard extends StatelessWidget {
   final Booking booking;
-  final Function()? onEdit, onConfirm, onDecline, onCopy, onInfo;
-  final Future Function()? onDelete;
+  final void Function()? onEdit, onConfirm, onDecline, onCopy, onInfo;
+  final Future<void> Function()? onDelete;
   final bool isAdmin, isDetail;
   const BookingCard(
       {super.key,

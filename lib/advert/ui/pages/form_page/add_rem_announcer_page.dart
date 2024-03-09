@@ -109,7 +109,7 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                                         descriptions:
                                                             AdvertTextConstants
                                                                 .deleteAnnouncer,
-                                                        onYes: () {
+                                                        onYes: () async {
                                                           tokenExpireWrapper(
                                                               ref, () async {
                                                             final value = await announcerListNotifier

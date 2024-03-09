@@ -6,7 +6,7 @@ class DeferredLoadingMiddleware extends QMiddleware {
   DeferredLoadingMiddleware(this.loader);
 
   @override
-  Future onEnter() async {
+  Future<void> onEnter() async {
     await loader();
   }
 }

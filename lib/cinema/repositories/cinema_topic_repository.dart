@@ -7,11 +7,13 @@ class CinemaTopicRepository extends Repository {
   final prefix = "cinema_";
 
   Future<bool> subscribeSession(String topic) async {
-    return await apply({}, suffix: "topics/$prefix$topic/subscribe");
+    return await apply(<String, dynamic>{},
+        suffix: "topics/$prefix$topic/subscribe");
   }
 
   Future<bool> unsubscribeSession(String topic) async {
-    return await apply({}, suffix: "topics/$prefix$topic/unsubscribe");
+    return await apply(<String, dynamic>{},
+        suffix: "topics/$prefix$topic/unsubscribe");
   }
 
   Future<List<String>> getCinemaTopics() async {

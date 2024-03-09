@@ -16,7 +16,7 @@ class UserCashNotifier extends SingleNotifier<Cash> {
     return await load(() async => _cashRepository.getCash(userId));
   }
 
-  Future updateCash(double amount) async {
+  Future<void> updateCash(double amount) async {
     state.when(data: (cash) {
       final newCash = cash.copyWith(balance: cash.balance + amount);
       state = AsyncValue.data(newCash);

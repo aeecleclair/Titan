@@ -47,7 +47,7 @@ class UserRepository extends Repository {
 
   Future<bool> deletePersonalData() async {
     try {
-      return await apply({}, suffix: "me/ask-deletion");
+      return await apply(<String, dynamic>{}, suffix: "me/ask-deletion");
     } catch (e) {
       return false;
     }

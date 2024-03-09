@@ -22,7 +22,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 class AddEditButton extends HookConsumerWidget {
   final TextEditingController note;
   final bool isEdit;
-  final Future Function(Function) onAddEdit;
+  final Future<void> Function(Function) onAddEdit;
   const AddEditButton(
       {super.key,
       required this.note,

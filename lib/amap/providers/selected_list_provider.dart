@@ -1,10 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 
 final selectedListProvider =
     StateNotifierProvider<SelectedListProvider, List<bool>>((ref) {
   final productsList = ref.watch(productListProvider);
-  final products = [];
+  final products = List<Product>.empty(growable: true);
   productsList.when(
     data: (list) => products.addAll(list),
     error: (e, s) {},

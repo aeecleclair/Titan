@@ -57,9 +57,9 @@ class ContenderListNotifier extends ListNotifier<Contender> {
   void shuffle() {
     state.maybeWhen(
       data: (contenders) {
-        final serious = [];
-        final fakes = [];
-        final blank = [];
+        final serious = List<Contender>.empty(growable: true);
+        final fakes = List<Contender>.empty(growable: true);
+        final blank = List<Contender>.empty(growable: true);
         for (var contender in contenders) {
           if (contender.listType == ListType.serious) {
             serious.add(contender);
@@ -72,11 +72,7 @@ class ContenderListNotifier extends ListNotifier<Contender> {
         serious.shuffle();
         fakes.shuffle();
         blank.shuffle();
-        state = AsyncValue.data([
-          ...fakes as List<Contender>,
-          ...serious as List<Contender>,
-          ...blank as List<Contender>
-        ]);
+        state = AsyncValue.data([...fakes, ...serious, ...blank]);
       },
       orElse: () {},
     );

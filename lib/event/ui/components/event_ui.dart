@@ -20,7 +20,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 class EventUi extends ConsumerWidget {
   final Event event;
   final bool isDetailPage, isAdmin;
-  final Function()? onEdit, onConfirm, onDecline, onCopy, onInfo;
+  final void Function()? onEdit, onConfirm, onDecline, onCopy, onInfo;
   const EventUi(
       {super.key,
       required this.event,

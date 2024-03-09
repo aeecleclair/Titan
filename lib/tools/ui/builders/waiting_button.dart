@@ -6,7 +6,7 @@ class WaitingButton extends HookWidget {
   final Widget child;
   final Widget Function(Widget) builder;
   final Color waitingColor;
-  final Future Function()? onTap;
+  final Future<void> Function()? onTap;
 
   const WaitingButton(
       {super.key,

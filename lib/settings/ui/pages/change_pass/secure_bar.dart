@@ -187,7 +187,7 @@ class StrengthBarContainer extends AnimatedWidget {
       this.width,
       required this.height,
       required this.radius,
-      required Animation animation})
+      required Animation<void> animation})
       : super(listenable: animation);
 
   Animation<double> get _percent {
