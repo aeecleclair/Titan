@@ -26,7 +26,7 @@ class Calendar extends HookConsumerWidget {
       if (details.targetElement == CalendarElement.appointment ||
           details.targetElement == CalendarElement.agenda) {
         final Booking booking = details.appointments![0] as Booking;
-        showDialog(
+        showDialog<void>(
           context: context,
           builder: (context) => isManagerPage
               ? CalendarDialog(booking: booking, isManager: true)

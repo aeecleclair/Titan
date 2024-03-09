@@ -117,7 +117,7 @@ class OnGoingLoan extends HookConsumerWidget {
                                 loanersItemsNotifier.setTData(loaner, itemList);
                               },
                               onCalendar: () async {
-                                await showDialog<int>(
+                                showDialog<int>(
                                     context: context,
                                     builder: (BuildContext context) {
                                       return DelayDialog(
@@ -151,7 +151,7 @@ class OnGoingLoan extends HookConsumerWidget {
                                     });
                               },
                               onReturn: () async {
-                                await showDialog(
+                                showDialog<void>(
                                     context: context,
                                     builder: (context) => CustomDialogBox(
                                         title: LoanTextConstants.returnLoan,

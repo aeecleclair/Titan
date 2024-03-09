@@ -19,7 +19,7 @@ class TombolaHandler extends HookConsumerWidget {
     final groupChoosen = useState(SimpleGroup.empty());
 
     void displayWinningsDialog(List<SimpleGroup> groups, Function callback) {
-      showDialog(
+      showDialog<void>(
           context: context,
           builder: (context) {
             return Dialog(
@@ -126,7 +126,7 @@ class TombolaHandler extends HookConsumerWidget {
                                   displayWinningsDialog(data, () {
                                     if (groupChoosen.value.id !=
                                         SimpleGroup.empty().id) {
-                                      showDialog(
+                                      showDialog<void>(
                                         context: context,
                                         builder: (BuildContext context) {
                                           return ConfirmCreationDialog(

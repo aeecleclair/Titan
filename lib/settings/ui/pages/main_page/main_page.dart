@@ -222,7 +222,7 @@ class SettingsMainPage extends HookConsumerWidget {
                   SettingsItem(
                     icon: HeroIcons.circleStack,
                     onTap: () async {
-                      showDialog(
+                      showDialog<void>(
                           context: context,
                           builder: (BuildContext context) {
                             return CustomDialogBox(

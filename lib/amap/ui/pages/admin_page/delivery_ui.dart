@@ -157,7 +157,7 @@ class DeliveryUi extends HookConsumerWidget {
                 if (delivery.status == DeliveryStatus.creation)
                   WaitingButton(
                     onTap: () async {
-                      await showDialog(
+                      showDialog<void>(
                           context: context,
                           builder: ((context) => CustomDialogBox(
                               title: AMAPTextConstants.deleteDelivery,
@@ -191,7 +191,7 @@ class DeliveryUi extends HookConsumerWidget {
                   ),
                 WaitingButton(
                   onTap: () async {
-                    await showDialog(
+                    showDialog<void>(
                         context: context,
                         builder: ((context) => CustomDialogBox(
                             title: delivery.status == DeliveryStatus.creation

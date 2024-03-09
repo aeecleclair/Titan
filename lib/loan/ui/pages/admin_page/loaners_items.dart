@@ -96,7 +96,7 @@ class LoanersItems extends HookConsumerWidget {
                             item: e,
                             showButtons: true,
                             onDelete: () async {
-                              showDialog(
+                              showDialog<void>(
                                   context: context,
                                   builder: (BuildContext context) {
                                     return CustomDialogBox(

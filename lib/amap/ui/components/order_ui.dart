@@ -123,7 +123,7 @@ class OrderUI extends HookConsumerWidget {
                       const Spacer(),
                       WaitingButton(
                         onTap: () async {
-                          await showDialog(
+                          showDialog<void>(
                               context: context,
                               builder: ((context) => CustomDialogBox(
                                   title: AMAPTextConstants.delete,

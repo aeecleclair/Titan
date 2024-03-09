@@ -93,7 +93,7 @@ class ListEvent extends HookConsumerWidget {
                           EventRouter.detail);
                     },
                     onConfirm: () async {
-                      await showDialog(
+                      showDialog<void>(
                           context: context,
                           builder: (context) {
                             return CustomDialogBox(
@@ -115,7 +115,7 @@ class ListEvent extends HookConsumerWidget {
                           });
                     },
                     onDecline: () async {
-                      await showDialog(
+                      showDialog<void>(
                           context: context,
                           builder: (context) {
                             return CustomDialogBox(

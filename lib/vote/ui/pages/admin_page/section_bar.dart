@@ -64,7 +64,7 @@ class SectionBar extends HookConsumerWidget {
                   },
                   onDelete: () async {
                     tokenExpireWrapper(ref, () async {
-                      await showDialog(
+                      showDialog<void>(
                           context: context,
                           builder: (context) => CustomDialogBox(
                                 title: VoteTextConstants.deleteSection,

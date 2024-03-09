@@ -106,7 +106,7 @@ class SearchUser extends HookConsumerWidget {
                       ...g[0].members.map((x) => UserUi(
                           user: x,
                           onDelete: () {
-                            showDialog(
+                            showDialog<void>(
                                 context: context,
                                 builder: (BuildContext context) =>
                                     CustomDialogBox(

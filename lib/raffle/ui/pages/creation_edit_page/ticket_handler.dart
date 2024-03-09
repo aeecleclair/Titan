@@ -101,7 +101,7 @@ class TicketHandler extends HookConsumerWidget {
                                 showButton: raffle.raffleStatusType ==
                                     RaffleStatusType.creation,
                                 onDelete: () async {
-                                  await showDialog(
+                                  showDialog<void>(
                                       context: context,
                                       builder: (context) => CustomDialogBox(
                                             title: "Supprimer le ticket",

@@ -99,7 +99,7 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                     canRemove
                                         .map((e) => GestureDetector(
                                               onTap: () async {
-                                                await showDialog(
+                                                showDialog<void>(
                                                     context: context,
                                                     builder: (context) {
                                                       return CustomDialogBox(

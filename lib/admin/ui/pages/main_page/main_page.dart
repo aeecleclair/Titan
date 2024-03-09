@@ -121,7 +121,7 @@ class AdminMainPage extends HookConsumerWidget {
                                   AdminRouter.editAssociation);
                             },
                             onDelete: () async {
-                              await showDialog(
+                              showDialog<void>(
                                   context: context,
                                   builder: (context) {
                                     return CustomDialogBox(

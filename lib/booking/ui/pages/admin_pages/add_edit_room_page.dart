@@ -141,7 +141,7 @@ class AddEditRoomPage extends HookConsumerWidget {
                     AdminShrinkButton(
                       onTap: () async {
                         await tokenExpireWrapper(ref, () async {
-                          await showDialog(
+                          showDialog<void>(
                               context: context,
                               builder: (context) => CustomDialogBox(
                                     descriptions: BookingTextConstants

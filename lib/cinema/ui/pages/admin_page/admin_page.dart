@@ -55,7 +55,7 @@ class AdminPage extends HookConsumerWidget {
                           CinemaRouter.addEdit);
                     },
                     onDelete: () async {
-                      await showDialog(
+                      showDialog<void>(
                           context: context,
                           builder: (context) {
                             return CustomDialogBox(

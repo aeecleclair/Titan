@@ -156,7 +156,7 @@ class RecommendationCard extends HookConsumerWidget {
                                   await tokenExpireWrapper(
                                     ref,
                                     () async {
-                                      await showDialog(
+                                      showDialog<void>(
                                         context: context,
                                         builder: (context) => CustomDialogBox(
                                           descriptions: RecommendationTextConstants

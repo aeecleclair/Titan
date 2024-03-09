@@ -29,7 +29,7 @@ class Calendar extends HookConsumerWidget {
           details.targetElement == CalendarElement.agenda) {
         final Appointment appointmentDetails =
             details.appointments![0] as Appointment;
-        showDialog(
+        showDialog<Dialog>(
             context: context,
             builder: (BuildContext context) {
               return Dialog(

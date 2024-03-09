@@ -75,7 +75,7 @@ class ProductHandler extends HookConsumerWidget {
                         (e) => ProductCard(
                           product: e,
                           onDelete: () async {
-                            await showDialog(
+                            showDialog<void>(
                                 context: context,
                                 builder: (context) => CustomDialogBox(
                                       title: AMAPTextConstants.deleteProduct,

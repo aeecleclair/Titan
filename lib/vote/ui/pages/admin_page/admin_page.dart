@@ -126,7 +126,7 @@ class AdminPage extends HookConsumerWidget {
                               WaitingButton(
                                 builder: (child) => AdminButton(child: child),
                                 onTap: () async {
-                                  await showDialog(
+                                  showDialog<void>(
                                       context: context,
                                       builder: (context) => CustomDialogBox(
                                           title: VoteTextConstants.publish,
@@ -153,7 +153,7 @@ class AdminPage extends HookConsumerWidget {
                         WaitingButton(
                           builder: (child) => AdminButton(child: child),
                           onTap: () async {
-                            await showDialog(
+                            showDialog<void>(
                                 context: context,
                                 builder: (context) {
                                   return CustomDialogBox(
@@ -371,7 +371,7 @@ class AdminPage extends HookConsumerWidget {
                                                 borderColor: Colors.white,
                                                 child: child),
                                             onTap: () async {
-                                              await showDialog(
+                                              showDialog<void>(
                                                   context: context,
                                                   builder: (context) =>
                                                       CustomDialogBox(
@@ -438,7 +438,7 @@ class AdminPage extends HookConsumerWidget {
                                               borderColor: Colors.white,
                                               child: child),
                                           onTap: () async {
-                                            await showDialog(
+                                            showDialog<void>(
                                                 context: context,
                                                 builder: (context) =>
                                                     CustomDialogBox(

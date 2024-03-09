@@ -33,7 +33,7 @@ class PrizeHandler extends HookConsumerWidget {
     }
 
     void displayWinningsDialog(List<Ticket> winningTickets) {
-      showDialog(
+      showDialog<void>(
           context: context,
           builder: (context) {
             return Dialog(
@@ -158,7 +158,7 @@ class PrizeHandler extends HookConsumerWidget {
                             (e) => PrizeCard(
                               lot: e,
                               onDelete: () async {
-                                await showDialog(
+                                showDialog<void>(
                                     context: context,
                                     builder: (context) => CustomDialogBox(
                                           title: "Supprimer le lot",
@@ -192,7 +192,7 @@ class PrizeHandler extends HookConsumerWidget {
                               },
                               status: raffle.raffleStatusType,
                               onDraw: () async {
-                                await showDialog(
+                                showDialog<void>(
                                     context: context,
                                     builder: (context) => CustomDialogBox(
                                           title: "Tirage",

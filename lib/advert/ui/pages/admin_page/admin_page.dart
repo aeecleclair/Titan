@@ -103,7 +103,7 @@ class AdvertAdminPage extends HookConsumerWidget {
                                   .addAnnouncer(advert.announcer);
                             },
                             onDelete: () async {
-                              await showDialog(
+                              showDialog<void>(
                                   context: context,
                                   builder: (context) {
                                     return CustomDialogBox(

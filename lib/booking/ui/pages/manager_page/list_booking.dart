@@ -105,7 +105,7 @@ class ListBooking extends HookConsumerWidget {
                               BookingRouter.detail);
                         },
                         onConfirm: () async {
-                          await showDialog(
+                          showDialog<void>(
                               context: context,
                               builder: (context) {
                                 return CustomDialogBox(
@@ -136,7 +136,7 @@ class ListBooking extends HookConsumerWidget {
                               });
                         },
                         onDecline: () async {
-                          await showDialog(
+                          showDialog<void>(
                               context: context,
                               builder: (context) {
                                 return CustomDialogBox(

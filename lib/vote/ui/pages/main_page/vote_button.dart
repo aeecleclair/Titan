@@ -46,7 +46,7 @@ class VoteButton extends HookConsumerWidget {
           if (selectedContender.id != "" &&
               s == Status.open &&
               !alreadyVotedSection.contains(section.id)) {
-            showDialog(
+            showDialog<void>(
                 context: context,
                 builder: (context) {
                   return CustomDialogBox(

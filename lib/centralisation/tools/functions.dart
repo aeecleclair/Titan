@@ -4,7 +4,7 @@ import 'package:myecl/centralisation/tools/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void showLinkDetails(BuildContext context, Module module) {
-  showDialog(
+  showDialog<void>(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
