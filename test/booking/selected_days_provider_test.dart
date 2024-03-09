@@ -6,7 +6,7 @@ void main() {
   group('SelectedDaysProvider', () {
     test('initial state should be an empty list', () {
       final provider = SelectedDaysProvider();
-      expect(provider.state, []);
+      expect(provider.state, List<WeekDays>.empty());
     });
 
     test('toggle should add the week day to the list', () {
@@ -22,7 +22,7 @@ void main() {
       provider.toggle(WeekDays.monday);
       provider.toggle(WeekDays.thursday);
       provider.clear();
-      expect(provider.state, []);
+      expect(provider.state, List<WeekDays>.empty());
     });
 
     test('setSelectedDays should set the state to the given list', () {

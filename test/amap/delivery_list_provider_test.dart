@@ -27,7 +27,9 @@ void main() {
       // Assert
       expect(
           result.when(
-              data: (data) => data, error: (e, s) => [], loading: () => []),
+              data: (data) => data,
+              error: (e, s) => List<Delivery>.empty(),
+              loading: () => List<Delivery>.empty()),
           deliveries);
     });
 
@@ -69,7 +71,9 @@ void main() {
       expect(result, true);
       expect(
           notifier.state.when(
-              data: (data) => data, error: (e, s) => [], loading: () => []),
+              data: (data) => data,
+              error: (e, s) => List<Delivery>.empty(),
+              loading: () => List<Delivery>.empty()),
           [updatedDelivery]);
     });
 
@@ -93,7 +97,9 @@ void main() {
       expect(
           notifier.state
               .when(
-                  data: (data) => data, error: (e, s) => [], loading: () => [])
+                  data: (data) => data,
+                  error: (e, s) => List<Delivery>.empty(),
+                  loading: () => List<Delivery>.empty())
               .first
               .status,
           DeliveryStatus.available);
@@ -119,7 +125,9 @@ void main() {
       expect(
           notifier.state
               .when(
-                  data: (data) => data, error: (e, s) => [], loading: () => [])
+                  data: (data) => data,
+                  error: (e, s) => List<Delivery>.empty(),
+                  loading: () => List<Delivery>.empty())
               .first
               .status,
           DeliveryStatus.locked);
@@ -145,7 +153,9 @@ void main() {
       expect(
           notifier.state
               .when(
-                  data: (data) => data, error: (e, s) => [], loading: () => [])
+                  data: (data) => data,
+                  error: (e, s) => List<Delivery>.empty(),
+                  loading: () => List<Delivery>.empty())
               .first
               .status,
           DeliveryStatus.delivered);
@@ -169,8 +179,10 @@ void main() {
       expect(result, true);
       expect(
           notifier.state.when(
-              data: (data) => data, error: (e, s) => [], loading: () => []),
-          []);
+              data: (data) => data,
+              error: (e, s) => List<Delivery>.empty(),
+              loading: () => List<Delivery>.empty()),
+          List<Delivery>.empty());
     });
 
     test('deleteDelivery should remove a delivery from the list', () async {
@@ -192,7 +204,7 @@ void main() {
       expect(
           notifier.state.when(
               data: (data) => data, error: (e, s) => null, loading: () => null),
-          []);
+          List<Delivery>.empty());
     });
 
     test('toggleExpanded should toggle the expanded property of a delivery',
@@ -224,7 +236,9 @@ void main() {
       expect(
           notifier.state
               .when(
-                  data: (data) => data, error: (e, s) => [], loading: () => [])
+                  data: (data) => data,
+                  error: (e, s) => List<Delivery>.empty(),
+                  loading: () => List<Delivery>.empty())
               .first
               .expanded,
           isTrue);
@@ -239,13 +253,13 @@ void main() {
 
       // Act/Assert (loading state)
       final result1 = await notifier.copy();
-      expect(result1, []);
+      expect(result1, List<Delivery>.empty());
 
       // Act/Assert (error state)
       notifier.state =
           const AsyncValue<List<Delivery>>.error('Error', StackTrace.empty);
       final result2 = await notifier.copy();
-      expect(result2, []);
+      expect(result2, List<Delivery>.empty());
 
       // Act/Assert (data state)
       notifier.state = AsyncValue.data(deliveries);

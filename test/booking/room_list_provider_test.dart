@@ -23,7 +23,7 @@ void main() {
           rooms
               .maybeWhen(
                 data: (data) => data,
-                orElse: () => [],
+                orElse: () => List<Room>.empty(),
               )
               .length,
           1);

@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:myecl/admin/class/group.dart';
 import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/class/information.dart';
@@ -71,7 +72,7 @@ void main() {
           "created_on": "2021-01-01",
           "email": "email",
           "floor": "floor",
-          "groups": [],
+          "groups": List<Group>.empty(),
           "phone": "phone",
           "promo": null
         }

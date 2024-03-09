@@ -13,7 +13,7 @@ void main() {
       final repository = MockTheMovieDBRepository();
       final notifier =
           TheMovieDBResultNotifier(theMoviesDBRepository: repository);
-      expect(notifier.state, isA<AsyncLoading>());
+      expect(notifier.state, isA<AsyncLoading<TheMovieDBSearchResult>>());
     });
 
     test('loadMovies returns a list of search results', () async {

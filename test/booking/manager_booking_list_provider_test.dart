@@ -25,7 +25,7 @@ void main() {
           bookings
               .maybeWhen(
                 data: (data) => data,
-                orElse: () => [],
+                orElse: () => List<Booking>.empty(),
               )
               .length,
           2);

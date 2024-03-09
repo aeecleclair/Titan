@@ -164,7 +164,7 @@ void main() {
     test('empty should return an empty object', () {
       final movie = TheMovieDBMovie.empty();
 
-      expect(movie.genres, []);
+      expect(movie.genres, List<String>.empty());
       expect(movie.overview, '');
       expect(movie.posterUrl, '');
       expect(movie.title, '');
@@ -202,7 +202,7 @@ void main() {
       expect(result.posterUrl, 'https://image.tmdb.org/t/p/w500/poster.jpg');
       expect(result.overview, 'A great movie');
       expect(result.genreIds, [1, 2, 3]);
-      expect(result.genreNames, []);
+      expect(result.genreNames, List<String>.empty());
       expect(result.id, '123');
       expect(result.title, 'The Movie');
     });
@@ -233,8 +233,8 @@ void main() {
 
       expect(result.posterUrl, '');
       expect(result.overview, '');
-      expect(result.genreIds, []);
-      expect(result.genreNames, []);
+      expect(result.genreIds, List<int>.empty());
+      expect(result.genreNames, List<String>.empty());
       expect(result.id, '');
       expect(result.title, '');
     });

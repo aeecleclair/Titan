@@ -203,7 +203,7 @@ void main() {
       expect(contender.id, '');
       expect(contender.name, '');
       expect(contender.description, '');
-      expect(contender.members, []);
+      expect(contender.members, List<Member>.empty());
       expect(contender.listType, ListType.serious);
       expect(contender.section, isA<Section>());
       expect(contender.program, '');
@@ -223,7 +223,7 @@ void main() {
       expect(contender.id, 'id');
       expect(contender.name, 'name');
       expect(contender.description, 'description');
-      expect(contender.members, []);
+      expect(contender.members, List<Member>.empty());
       expect(contender.listType, ListType.fake);
       expect(contender.section, isA<Section>());
       expect(contender.program, 'program');
@@ -244,9 +244,9 @@ void main() {
       );
       expect(newContender.description, 'description2');
       newContender = contender.copyWith(
-        members: [],
+        members: List<Member>.empty(),
       );
-      expect(newContender.members, []);
+      expect(newContender.members, List<Member>.empty());
       newContender = contender.copyWith(
         listType: ListType.fake,
       );
@@ -266,7 +266,7 @@ void main() {
         id: 'id',
         name: 'name',
         description: 'description',
-        members: [],
+        members: List<Member>.empty(),
         listType: ListType.fake,
         section: Section.empty(),
         program: 'program',
@@ -280,13 +280,13 @@ void main() {
         "id": "id",
         "name": "name",
         "description": "description",
-        "members": [],
+        "members": List<Member>.empty(),
         "type": "Pipo",
         "section": {
           "id": "id",
           "name": "name",
           "description": "description",
-          "members": [],
+          "members": List<Member>.empty(),
         },
         "program": "program",
       });
@@ -294,7 +294,7 @@ void main() {
       expect(contender.id, 'id');
       expect(contender.name, 'name');
       expect(contender.description, 'description');
-      expect(contender.members, []);
+      expect(contender.members, List<Member>.empty());
       expect(contender.listType, ListType.fake);
       expect(contender.section, isA<Section>());
       expect(contender.program, 'program');
@@ -305,7 +305,7 @@ void main() {
         id: 'id',
         name: 'name',
         description: 'description',
-        members: [],
+        members: List<Member>.empty(),
         listType: ListType.fake,
         section: Section.empty(),
         program: 'program',
@@ -314,7 +314,7 @@ void main() {
         "id": "id",
         "name": "name",
         "description": "description",
-        "members": [],
+        "members": List<Member>.empty(),
         "type": "Pipo",
         "section_id": "",
         "program": "program",

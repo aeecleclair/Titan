@@ -40,7 +40,7 @@ void main() {
       const movieId = 'invalid_id';
       final result = await notifier.loadMovie(movieId);
 
-      expect(result, isA<AsyncError>());
+      expect(result, isA<AsyncError<dynamic>>());
     });
   });
 }

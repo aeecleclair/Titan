@@ -40,8 +40,8 @@ void main() {
       expect(
           result.when(
             data: (orders) => orders,
-            loading: () => [],
-            error: (error, stackTrace) => [],
+            loading: () => List<Order>.empty(),
+            error: (error, stackTrace) => List<Order>.empty(),
           ),
           orders);
     });
@@ -60,8 +60,8 @@ void main() {
       expect(
           result.when(
             data: (orders) => orders,
-            loading: () => [],
-            error: (error, stackTrace) => [],
+            loading: () => List<Order>.empty(),
+            error: (error, stackTrace) => List<Order>.empty(),
           ),
           orders);
     });

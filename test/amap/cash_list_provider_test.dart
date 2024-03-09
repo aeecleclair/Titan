@@ -27,8 +27,8 @@ void main() {
           result
               .when(
                 data: (cashList) => cashList,
-                loading: () => [],
-                error: (error, stackTrace) => [],
+                loading: () => List<Cash>.empty(),
+                error: (error, stackTrace) => List<Cash>.empty(),
               )
               .first
               .balance,
@@ -52,8 +52,8 @@ void main() {
           cashProvider.state
               .when(
                 data: (cashList) => cashList,
-                loading: () => [],
-                error: (error, stackTrace) => [],
+                loading: () => List<Cash>.empty(),
+                error: (error, stackTrace) => List<Cash>.empty(),
               )
               .first,
           cash);
@@ -76,8 +76,8 @@ void main() {
           cashProvider.state
               .when(
                 data: (cashList) => cashList,
-                loading: () => [],
-                error: (error, stackTrace) => [],
+                loading: () => List<Cash>.empty(),
+                error: (error, stackTrace) => List<Cash>.empty(),
               )
               .first
               .balance,
@@ -99,8 +99,8 @@ void main() {
           cashProvider.state
               .when(
                 data: (cashList) => cashList,
-                loading: () => [],
-                error: (error, stackTrace) => [],
+                loading: () => List<Cash>.empty(),
+                error: (error, stackTrace) => List<Cash>.empty(),
               )
               .first
               .balance,
@@ -145,8 +145,8 @@ void main() {
           result1
               .when(
                 data: (cashList) => cashList,
-                loading: () => [],
-                error: (error, stackTrace) => [],
+                loading: () => List<Cash>.empty(),
+                error: (error, stackTrace) => List<Cash>.empty(),
               )
               .length,
           2);
@@ -154,8 +154,8 @@ void main() {
           result2
               .when(
                 data: (cashList) => cashList,
-                loading: () => [],
-                error: (error, stackTrace) => [],
+                loading: () => List<Cash>.empty(),
+                error: (error, stackTrace) => List<Cash>.empty(),
               )
               .length,
           2);
@@ -163,8 +163,8 @@ void main() {
           result3
               .when(
                 data: (cashList) => cashList,
-                loading: () => [],
-                error: (error, stackTrace) => [],
+                loading: () => List<Cash>.empty(),
+                error: (error, stackTrace) => List<Cash>.empty(),
               )
               .length,
           2);
@@ -172,8 +172,8 @@ void main() {
           result4
               .when(
                 data: (cashList) => cashList,
-                loading: () => [],
-                error: (error, stackTrace) => [],
+                loading: () => List<Cash>.empty(),
+                error: (error, stackTrace) => List<Cash>.empty(),
               )
               .length,
           1);
@@ -181,8 +181,8 @@ void main() {
           result5
               .when(
                 data: (cashList) => cashList,
-                loading: () => [],
-                error: (error, stackTrace) => [],
+                loading: () => List<Cash>.empty(),
+                error: (error, stackTrace) => List<Cash>.empty(),
               )
               .length,
           0);
@@ -229,8 +229,8 @@ void main() {
           result
               .when(
                 data: (cashList) => cashList,
-                loading: () => [],
-                error: (error, stackTrace) => [],
+                loading: () => List<Cash>.empty(),
+                error: (error, stackTrace) => List<Cash>.empty(),
               )
               .length,
           1);
@@ -238,8 +238,8 @@ void main() {
           result4
               .when(
                 data: (cashList) => cashList,
-                loading: () => [],
-                error: (error, stackTrace) => [],
+                loading: () => List<Cash>.empty(),
+                error: (error, stackTrace) => List<Cash>.empty(),
               )
               .length,
           0);

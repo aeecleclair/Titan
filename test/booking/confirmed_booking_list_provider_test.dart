@@ -25,7 +25,7 @@ void main() {
       expect(
           result.maybeWhen(
             data: (data) => data,
-            orElse: () => [],
+            orElse: () => List<Booking>.empty(),
           ),
           bookings);
     });
@@ -49,7 +49,7 @@ void main() {
       expect(
           provider.state.maybeWhen(
             data: (data) => data,
-            orElse: () => [],
+            orElse: () => List<Booking>.empty(),
           ),
           [...bookings, newBooking]);
     });
@@ -73,7 +73,7 @@ void main() {
       expect(
           provider.state.maybeWhen(
             data: (data) => data,
-            orElse: () => [],
+            orElse: () => List<Booking>.empty(),
           ),
           bookings.skip(1));
     });
@@ -97,7 +97,7 @@ void main() {
       expect(
           provider.state.maybeWhen(
             data: (data) => data,
-            orElse: () => [],
+            orElse: () => List<Booking>.empty(),
           ),
           [booking, ...bookings.skip(1)]);
     });

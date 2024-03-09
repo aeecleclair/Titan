@@ -19,7 +19,7 @@ void main() {
 
   group('VersionVerifierNotifier', () {
     test('should return AsyncLoading when initialized', () {
-      expect(versionVerifierNotifier.state, isA<AsyncLoading>());
+      expect(versionVerifierNotifier.state, isA<AsyncLoading<Version>>());
     });
 
     test('should return AsyncValue<Version> when loadVersion is called',
@@ -41,7 +41,7 @@ void main() {
 
       final result = await versionVerifierNotifier.loadVersion();
 
-      expect(result, isA<AsyncError>());
+      expect(result, isA<AsyncError<dynamic>>());
     });
 
     test(

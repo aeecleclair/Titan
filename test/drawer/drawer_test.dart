@@ -22,7 +22,7 @@ void main() {
           root: '/test');
 
       expect(copiedModule.name, 'Settings');
-      expect(copiedModule.icon, const Left(HeroIcons.cog));
+      expect(copiedModule.icon, const Left<HeroIcons, String>(HeroIcons.cog));
       expect(copiedModule.root, '/test');
       expect(copiedModule.selected, false);
     });

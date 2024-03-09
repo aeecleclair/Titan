@@ -21,8 +21,8 @@ void main() {
           sessionList
               .when(
                   data: (data) => data,
-                  loading: () => [],
-                  error: (error, stackTrace) => [])
+                  loading: () => List<Session>.empty(),
+                  error: (error, stackTrace) => List<Session>.empty())
               .length,
           1);
     });

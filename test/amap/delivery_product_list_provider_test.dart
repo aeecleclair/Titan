@@ -48,7 +48,9 @@ void main() {
       expect(result, true);
       expect(
           notifier.state.when(
-              data: (data) => data, error: (e, s) => [], loading: () => []),
+              data: (data) => data,
+              error: (e, s) => List<Product>.empty(),
+              loading: () => List<Product>.empty()),
           [...products, product]);
     });
 
@@ -71,7 +73,9 @@ void main() {
       expect(result, true);
       expect(
           notifier.state.when(
-              data: (data) => data, error: (e, s) => [], loading: () => []),
+              data: (data) => data,
+              error: (e, s) => List<Product>.empty(),
+              loading: () => List<Product>.empty()),
           [product2]);
     });
 
@@ -94,7 +98,9 @@ void main() {
       expect(result, true);
       expect(
           notifier.state.when(
-              data: (data) => data, error: (e, s) => [], loading: () => []),
+              data: (data) => data,
+              error: (e, s) => List<Product>.empty(),
+              loading: () => List<Product>.empty()),
           [product2]);
     });
 
@@ -118,7 +124,9 @@ void main() {
       expect(
           notifier.state
               .when(
-                  data: (data) => data, error: (e, s) => [], loading: () => [])
+                  data: (data) => data,
+                  error: (e, s) => List<Product>.empty(),
+                  loading: () => List<Product>.empty())
               .first
               .quantity,
           3);

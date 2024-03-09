@@ -29,7 +29,9 @@ void main() {
 
       expect(
           result.when(
-              data: (data) => data, loading: () => [], error: (_, __) => []),
+              data: (data) => data,
+              loading: () => List<Event>.empty(),
+              error: (_, __) => List<Event>.empty()),
           events);
     });
 

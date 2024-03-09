@@ -34,7 +34,8 @@ void main() {
   group('Testing MapNotifier : loadTList', () {
     test('Should initiate to AsyncLoading', () {
       final notifier = MockMapNotifier();
-      expect(notifier.state, isA<AsyncLoading>());
+      expect(notifier.state,
+          isA<AsyncLoading<Map<MockT, AsyncValue<List<MockE>>?>>>());
     });
 
     test('Should state be AsyncData when loading data', () async {
@@ -46,8 +47,8 @@ void main() {
       expect(
           notifier.state.when(
               data: (d) => d.keys.toList(),
-              error: (Object error, StackTrace stackTrace) => [],
-              loading: () => []),
+              error: (Object error, StackTrace stackTrace) => List<MockT>.empty,
+              loading: () => List<MockT>.empty),
           data);
       expect(
           notifier.state.when(
@@ -72,13 +73,18 @@ void main() {
           isA<AsyncData<Map<MockT, AsyncValue<List<MockE>>?>>>());
       expect(
           notifier.state
-              .when(data: (d) => d, error: (e, s) => {}, loading: () => {})
+              .when(
+                  data: (d) => d,
+                  error: (e, s) => <MockT, AsyncValue<List<MockE>>?>{},
+                  loading: () => <MockT, AsyncValue<List<MockE>>?>{})
               .keys
               .contains(newData),
           isTrue);
       expect(
           notifier.state.when(
-              data: (d) => d, error: (e, s) => {}, loading: () => {})[newData],
+              data: (d) => d,
+              error: (e, s) => <MockT, AsyncValue<List<MockE>>?>{},
+              loading: () => <MockT, AsyncValue<List<MockE>>?>{})[newData],
           isNull);
     });
 
@@ -87,7 +93,8 @@ void main() {
       final notifier = MockMapNotifier();
       final newData = MockT();
       await notifier.testAddT(newData);
-      expect(notifier.state, isA<AsyncLoading>());
+      expect(notifier.state,
+          isA<AsyncLoading<Map<MockT, AsyncValue<List<MockE>>?>>>());
     });
 
     test(
@@ -97,7 +104,7 @@ void main() {
       notifier.state = AsyncValue.error("test", StackTrace.current);
       final newData = MockT();
       await notifier.testAddT(newData);
-      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state, isA<AsyncError<dynamic>>());
     });
   });
 
@@ -124,8 +131,8 @@ void main() {
                   data: (d) => d, error: (e, s) => {}, loading: () => {})[key]!
               .when(
                 data: (d) => d,
-                error: (e, s) => [],
-                loading: () => [],
+                error: (e, s) => List<MockE>.empty(),
+                loading: () => List<MockE>.empty(),
               ),
           newDataList);
     });
@@ -152,8 +159,8 @@ void main() {
                   data: (d) => d, error: (e, s) => {}, loading: () => {})[key]!
               .when(
                 data: (d) => d,
-                error: (e, s) => [],
-                loading: () => [],
+                error: (e, s) => List<MockE>.empty(),
+                loading: () => List<MockE>.empty(),
               ),
           newDataList);
     });
@@ -180,8 +187,8 @@ void main() {
                   data: (d) => d, error: (e, s) => {}, loading: () => {})[key]!
               .when(
                 data: (d) => d,
-                error: (e, s) => [],
-                loading: () => [],
+                error: (e, s) => List<MockE>.empty(),
+                loading: () => List<MockE>.empty(),
               ),
           newDataList);
     });
@@ -194,7 +201,7 @@ void main() {
       final newData = MockE();
       final result = await notifier.testAddE(key, newData);
       expect(result, isFalse);
-      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state, isA<AsyncError<dynamic>>());
       expect(notifier.state.error, "Cannot add while loading");
     });
 
@@ -207,7 +214,7 @@ void main() {
       final key = MockT();
       final result = await notifier.testAddE(key, newData);
       expect(result, isFalse);
-      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state, isA<AsyncError<dynamic>>());
       expect(notifier.state.error, "test");
     });
   });
@@ -262,7 +269,7 @@ void main() {
       final key = MockT();
       final result = await notifier.testDeleteT(key);
       expect(result, isFalse);
-      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state, isA<AsyncError<dynamic>>());
       expect(notifier.state.error, "Cannot delete while loading");
     });
 
@@ -274,7 +281,7 @@ void main() {
       final key = MockT();
       final result = await notifier.testDeleteT(key);
       expect(result, isFalse);
-      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state, isA<AsyncError<dynamic>>());
       expect(notifier.state.error, "test");
     });
   });
@@ -326,7 +333,7 @@ void main() {
       final newData = AsyncValue.data([MockE()]);
       final result = await notifier.testSetTData(key, newData);
       expect(result, isFalse);
-      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state, isA<AsyncError<dynamic>>());
       expect(notifier.state.error, "Cannot add while loading");
     });
 
@@ -339,7 +346,7 @@ void main() {
       final key = MockT();
       final result = await notifier.testSetTData(key, newData);
       expect(result, isFalse);
-      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state, isA<AsyncError<dynamic>>());
       expect(notifier.state.error, "test");
     });
   });

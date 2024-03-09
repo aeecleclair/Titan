@@ -34,7 +34,9 @@ void main() {
 
       expect(
           result.when(
-              data: (data) => data, loading: () => [], error: (_, __) => []),
+              data: (data) => data,
+              loading: () => List<Event>.empty(),
+              error: (_, __) => List<Event>.empty()),
           [event1, event2, event3]);
     });
 
@@ -47,7 +49,9 @@ void main() {
       expect(result, true);
       expect(
           provider.state.when(
-              data: (data) => data, loading: () => [], error: (_, __) => []),
+              data: (data) => data,
+              loading: () => List<Event>.empty(),
+              error: (_, __) => List<Event>.empty()),
           [event2, event3, event1]);
     });
 
@@ -63,7 +67,9 @@ void main() {
       expect(result, true);
       expect(
           provider.state.when(
-              data: (data) => data, loading: () => [], error: (_, __) => []),
+              data: (data) => data,
+              loading: () => List<Event>.empty(),
+              error: (_, __) => List<Event>.empty()),
           [event1, updatedEvent, event3]);
     });
 
@@ -77,7 +83,9 @@ void main() {
       expect(result, true);
       expect(
           provider.state.when(
-              data: (data) => data, loading: () => [], error: (_, __) => []),
+              data: (data) => data,
+              loading: () => List<Event>.empty(),
+              error: (_, __) => List<Event>.empty()),
           [event1, event3]);
     });
   });
