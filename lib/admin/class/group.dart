@@ -17,7 +17,8 @@ class Group {
     description = json['description'] as String;
     id = json['id'] as String;
     members = (json['members'] as List<Map<String, dynamic>>)
-        .map((x) => SimpleUser.fromJson(x)) as List<SimpleUser>;
+        .map((x) => SimpleUser.fromJson(x))
+        .toList();
   }
 
   Map<String, dynamic> toJson() {

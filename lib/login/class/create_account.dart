@@ -31,7 +31,7 @@ class CreateAccount {
     birthday = DateTime.parse(json['birthday'] as String);
     phone = json['phone'] != "" ? json['phone'] as String : null;
     floor = json['floor'] as String;
-    promo = json['promo'] as int;
+    promo = json['promo'] as int?;
     activationToken = json['activation_token'] as String;
   }
 

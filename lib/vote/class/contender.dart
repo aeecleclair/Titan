@@ -61,8 +61,9 @@ class Contender {
       name: map['name'] as String,
       description: map['description'] as String,
       listType: stringToListType(map['type'] as String),
-      members: List<Member>.from((map['members'] as List<Map<String, dynamic>>)
-          .map((x) => Member.fromJson(x))),
+      members: (map['members'] as List<Map<String, dynamic>>)
+          .map((x) => Member.fromJson(x))
+          .toList(),
       section: Section.fromJson(map['section'] as Map<String, dynamic>),
       program: (map['program'] as String?) ?? '',
     );

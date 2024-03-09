@@ -37,7 +37,8 @@ class Order {
     amount = json['amount'] as double;
     lastAmount = amount;
     products = (json['productsdetail'] as List<Map<String, dynamic>>)
-        .map((x) => Product.fromJson(x)) as List<Product>;
+        .map((x) => Product.fromJson(x))
+        .toList();
     expanded = false;
     productsDetail =
         List<String>.from(products.map((element) => element.id).toList());

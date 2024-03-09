@@ -39,7 +39,7 @@ class User {
     id = json['id'] as String;
     email = json['email'] as String;
     birthday = json['birthday'] as String;
-    promo = json['promo'] as int;
+    promo = json['promo'] as int?;
     floor = json['floor'] as String;
     phone = (json['phone'] != "" && json["phone"] != null)
         ? json['phone'] as String

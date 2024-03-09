@@ -280,13 +280,13 @@ void main() {
         "id": "id",
         "name": "name",
         "description": "description",
-        "members": List<Member>.empty(),
+        "members": List<Map<String, dynamic>>.empty(),
         "type": "Pipo",
         "section": {
           "id": "id",
           "name": "name",
           "description": "description",
-          "members": List<Member>.empty(),
+          "members": List<Map<String, dynamic>>.empty(),
         },
         "program": "program",
       });

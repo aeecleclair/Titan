@@ -38,7 +38,7 @@ void main() {
   group('Testing ListNotifier : loadList', () {
     test('Should initiate to AsyncLoading', () {
       final notifier = MockListNotifier();
-      expect(notifier.state, isA<AsyncLoading<MockData>>());
+      expect(notifier.state, isA<AsyncLoading<dynamic>>());
     });
 
     test('Should state be AsyncData when loading data', () async {

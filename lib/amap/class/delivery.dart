@@ -25,7 +25,8 @@ class Delivery {
   Delivery.fromJson(Map<String, dynamic> json) {
     deliveryDate = DateTime.parse(json['delivery_date'] as String);
     products = (json['products'] as List<Map<String, dynamic>>)
-        .map((x) => Product.fromJson(x)) as List<Product>;
+        .map((x) => Product.fromJson(x))
+        .toList();
     id = json['id'] as String;
     status = stringToDeliveryStatus(json['status'] as String);
     expanded = false;

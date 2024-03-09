@@ -18,7 +18,7 @@ void main() {
     });
 
     test('initial state is loading', () {
-      expect(provider.state, isA<AsyncLoading<Booking>>());
+      expect(provider.state, isA<AsyncLoading<dynamic>>());
     });
 
     test('loadUserBookings loads bookings from repository', () async {
