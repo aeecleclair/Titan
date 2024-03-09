@@ -31,7 +31,7 @@ class AdminPage extends HookConsumerWidget {
               GestureDetector(
                   onTap: () {
                     sessionNotifier.setSession(Session.empty());
-                    QR.to(CinemaRouter.root +
+                    QR.to<void>(CinemaRouter.root +
                         CinemaRouter.admin +
                         CinemaRouter.addEdit);
                   },
@@ -50,7 +50,7 @@ class AdminPage extends HookConsumerWidget {
                     session: session,
                     onEdit: () {
                       sessionNotifier.setSession(session);
-                      QR.to(CinemaRouter.root +
+                      QR.to<void>(CinemaRouter.root +
                           CinemaRouter.admin +
                           CinemaRouter.addEdit);
                     },
@@ -69,7 +69,7 @@ class AdminPage extends HookConsumerWidget {
                     },
                     onTap: () {
                       sessionNotifier.setSession(session);
-                      QR.to(CinemaRouter.root + CinemaRouter.detail);
+                      QR.to<void>(CinemaRouter.root + CinemaRouter.detail);
                     }),
               )
             ],

@@ -124,7 +124,7 @@ class RecommendationCard extends HookConsumerWidget {
                       onPressed: () {
                         recommendationNotifier
                             .setRecommendation(recommendation);
-                        QR.to(RecommendationRouter.root +
+                        QR.to<void>(RecommendationRouter.root +
                             RecommendationRouter.information);
                       },
                       icon: const HeroIcon(
@@ -140,7 +140,7 @@ class RecommendationCard extends HookConsumerWidget {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  QR.to(RecommendationRouter.root +
+                                  QR.to<void>(RecommendationRouter.root +
                                       RecommendationRouter.addEdit);
                                 },
                                 child: const CardButton(

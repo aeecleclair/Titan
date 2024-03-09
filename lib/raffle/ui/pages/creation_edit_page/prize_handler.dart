@@ -101,7 +101,7 @@ class PrizeHandler extends HookConsumerWidget {
               GestureDetector(
                 onTap: () {
                   prizeNotifier.setPrize(Prize.empty());
-                  QR.to(RaffleRouter.root +
+                  QR.to<void>(RaffleRouter.root +
                       RaffleRouter.detail +
                       RaffleRouter.creation +
                       RaffleRouter.addEditPrize);
@@ -185,7 +185,7 @@ class PrizeHandler extends HookConsumerWidget {
                               },
                               onEdit: () {
                                 prizeNotifier.setPrize(e);
-                                QR.to(RaffleRouter.root +
+                                QR.to<void>(RaffleRouter.root +
                                     RaffleRouter.detail +
                                     RaffleRouter.creation +
                                     RaffleRouter.addEditPrize);

@@ -111,7 +111,8 @@ class EventUi extends ConsumerWidget {
                           GestureDetector(
                             onTap: () {
                               eventNotifier.setEvent(event);
-                              QR.to(EventRouter.root + EventRouter.detail);
+                              QR.to<void>(
+                                  EventRouter.root + EventRouter.detail);
                             },
                             child: HeroIcon(
                               HeroIcons.informationCircle,
@@ -184,7 +185,7 @@ class EventUi extends ConsumerWidget {
                                 child: GestureDetector(
                                   onTap: () async {
                                     eventNotifier.setEvent(event);
-                                    QR.to(
+                                    QR.to<void>(
                                         EventRouter.root + EventRouter.addEdit);
                                   },
                                   child: EditDeleteButton(

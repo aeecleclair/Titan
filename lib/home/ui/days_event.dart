@@ -80,7 +80,7 @@ class DaysEvent extends HookConsumerWidget {
                         GestureDetector(
                           onTap: () {
                             eventNotifier.setEvent(event);
-                            QR.to(HomeRouter.root + HomeRouter.detail);
+                            QR.to<void>(HomeRouter.root + HomeRouter.detail);
                           },
                           child: HeroIcon(
                             HeroIcons.informationCircle,

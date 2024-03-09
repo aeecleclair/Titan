@@ -65,7 +65,7 @@ class AppSignIn extends HookConsumerWidget {
                               await authNotifier.getTokenFromRequest();
                               ref.watch(authTokenProvider).when(
                                   data: (token) {
-                                    QR.to(pathForwarding.path);
+                                    QR.to<void>(pathForwarding.path);
                                   },
                                   error: (e, s) {
                                     displayToast(context, TypeMsg.error,
@@ -96,7 +96,7 @@ class AppSignIn extends HookConsumerWidget {
                               splashColor:
                                   const Color.fromRGBO(255, 255, 255, 1),
                               onTap: () {
-                                QR.to(LoginRouter.createAccount);
+                                QR.to<void>(LoginRouter.createAccount);
                                 controller?.forward();
                               },
                               child: const Text(
@@ -116,7 +116,7 @@ class AppSignIn extends HookConsumerWidget {
                               splashColor:
                                   const Color.fromRGBO(255, 255, 255, 1),
                               onTap: () {
-                                QR.to(LoginRouter.forgotPassword);
+                                QR.to<void>(LoginRouter.forgotPassword);
                                 controller?.forward();
                               },
                               child: const Text(

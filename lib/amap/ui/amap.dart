@@ -20,7 +20,7 @@ class AmapTemplate extends StatelessWidget {
             rightIcon: QR.currentPath == AmapRouter.root
                 ? IconButton(
                     onPressed: () {
-                      QR.to(AmapRouter.root + AmapRouter.presentation);
+                      QR.to<void>(AmapRouter.root + AmapRouter.presentation);
                     },
                     icon: const HeroIcon(
                       HeroIcons.informationCircle,

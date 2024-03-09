@@ -39,7 +39,7 @@ class DrawerTopBar extends HookConsumerWidget {
             ref.watch(swipeControllerProvider(animation).notifier);
         controllerNotifier.toggle();
       }
-      QR.to(path);
+      QR.to<void>(path);
       pathForwardingNotifier.forward(path);
       hasScrolled.setHasScrolled(false);
     }

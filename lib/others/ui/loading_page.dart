@@ -24,23 +24,23 @@ class LoadingPage extends ConsumerWidget {
     check.when(
         data: (value) {
           if (!value) {
-            QR.to(AppRouter.update);
+            QR.to<void>(AppRouter.update);
           }
           if (!isLoggedIn) {
-            QR.to(LoginRouter.root);
+            QR.to<void>(LoginRouter.root);
           }
           final user = ref.watch(asyncUserProvider);
           user.when(
               data: (data) {
-                QR.to(pathForwarding.path);
+                QR.to<void>(pathForwarding.path);
               },
               error: (error, s) {
-                QR.to(LoginRouter.root);
+                QR.to<void>(LoginRouter.root);
               },
               loading: () {});
         },
         loading: () {},
-        error: (error, stack) => QR.to(AppRouter.noInternet));
+        error: (error, stack) => QR.to<void>(AppRouter.noInternet));
     return const Scaffold(body: Loader());
   }
 }

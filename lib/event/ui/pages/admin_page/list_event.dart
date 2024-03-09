@@ -82,13 +82,13 @@ class ListEvent extends HookConsumerWidget {
                     isAdmin: true,
                     onEdit: () {
                       eventNotifier.setEvent(e);
-                      QR.to(EventRouter.root +
+                      QR.to<void>(EventRouter.root +
                           EventRouter.admin +
                           EventRouter.addEdit);
                     },
                     onInfo: () {
                       eventNotifier.setEvent(e);
-                      QR.to(EventRouter.root +
+                      QR.to<void>(EventRouter.root +
                           EventRouter.admin +
                           EventRouter.detail);
                     },
@@ -139,7 +139,7 @@ class ListEvent extends HookConsumerWidget {
                     },
                     onCopy: () {
                       eventNotifier.setEvent(e.copyWith(id: ""));
-                      QR.to(EventRouter.root +
+                      QR.to<void>(EventRouter.root +
                           EventRouter.admin +
                           EventRouter.addEdit);
                     },

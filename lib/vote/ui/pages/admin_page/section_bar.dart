@@ -43,7 +43,7 @@ class SectionBar extends HookConsumerWidget {
               firstChild: (status == Status.waiting)
                   ? ItemChip(
                       onTap: () {
-                        QR.to(VoteRouter.root +
+                        QR.to<void>(VoteRouter.root +
                             VoteRouter.admin +
                             VoteRouter.addSection);
                       },

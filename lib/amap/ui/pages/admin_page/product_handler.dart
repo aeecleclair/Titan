@@ -47,7 +47,7 @@ class ProductHandler extends HookConsumerWidget {
           GestureDetector(
             onTap: () {
               productNotifier.setProduct(Product.empty());
-              QR.to(AmapRouter.root +
+              QR.to<void>(AmapRouter.root +
                   AmapRouter.admin +
                   AmapRouter.addEditProduct);
             },
@@ -102,7 +102,7 @@ class ProductHandler extends HookConsumerWidget {
                           },
                           onEdit: () {
                             productNotifier.setProduct(e);
-                            QR.to(AmapRouter.root +
+                            QR.to<void>(AmapRouter.root +
                                 AmapRouter.admin +
                                 AmapRouter.addEditProduct);
                           },

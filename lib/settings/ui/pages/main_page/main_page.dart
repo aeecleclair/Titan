@@ -146,7 +146,8 @@ class SettingsMainPage extends HookConsumerWidget {
                   SettingsItem(
                     icon: HeroIcons.pencil,
                     onTap: () {
-                      QR.to(SettingsRouter.root + SettingsRouter.editAccount);
+                      QR.to<void>(
+                          SettingsRouter.root + SettingsRouter.editAccount);
                     },
                     child: const Text(SettingsTextConstants.editAccount,
                         style: TextStyle(fontSize: 16, color: Colors.black)),
@@ -172,7 +173,7 @@ class SettingsMainPage extends HookConsumerWidget {
                   SettingsItem(
                     icon: HeroIcons.lockClosed,
                     onTap: () {
-                      QR.to(
+                      QR.to<void>(
                           SettingsRouter.root + SettingsRouter.changePassword);
                     },
                     child: const Text(SettingsTextConstants.editPassword,
@@ -186,7 +187,7 @@ class SettingsMainPage extends HookConsumerWidget {
                     SettingsItem(
                       icon: HeroIcons.clipboardDocumentList,
                       onTap: () {
-                        QR.to(SettingsRouter.root + SettingsRouter.logs);
+                        QR.to<void>(SettingsRouter.root + SettingsRouter.logs);
                       },
                       child: const Text(SettingsTextConstants.logs,
                           style: TextStyle(fontSize: 16, color: Colors.black)),
@@ -199,7 +200,7 @@ class SettingsMainPage extends HookConsumerWidget {
                   SettingsItem(
                     icon: HeroIcons.queueList,
                     onTap: () {
-                      QR.to(SettingsRouter.root + SettingsRouter.modules);
+                      QR.to<void>(SettingsRouter.root + SettingsRouter.modules);
                     },
                     child: const Text(SettingsTextConstants.modules,
                         style: TextStyle(fontSize: 16, color: Colors.black)),
@@ -208,7 +209,8 @@ class SettingsMainPage extends HookConsumerWidget {
                   SettingsItem(
                     icon: HeroIcons.bellAlert,
                     onTap: () {
-                      QR.to(SettingsRouter.root + SettingsRouter.notifications);
+                      QR.to<void>(
+                          SettingsRouter.root + SettingsRouter.notifications);
                     },
                     child: const Text(SettingsTextConstants.notifications,
                         style: TextStyle(fontSize: 16, color: Colors.black)),

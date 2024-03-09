@@ -211,7 +211,7 @@ class LocalNotificationService {
     if (message.actionModule != null && message.actionTable != null) {
       final path =
           await handleAction(message.actionModule!, message.actionTable!);
-      QR.to(
+      QR.to<void>(
           "fr.myecl.titan://$path?actionModule=${message.actionModule!}&actionTable=${message.actionTable!}");
     }
   }
@@ -236,7 +236,7 @@ void onDidReceiveBackgroundNotificationResponse(
       return;
     }
     final path = information.item1;
-    QR.to(
+    QR.to<void>(
         "fr.myecl.titan://$path?actionModule=${message.actionModule!}&actionTable=${message.actionTable!}");
   }
 }

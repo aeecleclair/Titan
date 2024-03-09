@@ -91,7 +91,7 @@ class AmapMainPage extends HookConsumerWidget {
                     if (isAdmin)
                       AdminButton(
                         onTap: () {
-                          QR.to(AmapRouter.root + AmapRouter.admin);
+                          QR.to<void>(AmapRouter.root + AmapRouter.admin);
                         },
                         colors: const [
                           AMAPColorConstants.greenGradient1,
@@ -112,7 +112,7 @@ class AmapMainPage extends HookConsumerWidget {
                           animation.forward();
                         },
                         onTap: () {
-                          QR.to(AmapRouter.root + AmapRouter.detailOrder);
+                          QR.to<void>(AmapRouter.root + AmapRouter.detailOrder);
                         },
                         addOrder: () {
                           balance.whenData(
@@ -217,7 +217,7 @@ class AmapMainPage extends HookConsumerWidget {
                                     await deliveryProductListNotifier
                                         .loadProductList(delivery.products);
                                   });
-                                  QR.to(
+                                  QR.to<void>(
                                       AmapRouter.root + AmapRouter.listProduct);
                                 } else {
                                   displayToastWithoutContext(TypeMsg.error,

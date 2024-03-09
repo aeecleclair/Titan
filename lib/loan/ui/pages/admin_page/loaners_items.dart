@@ -75,7 +75,7 @@ class LoanersItems extends HookConsumerWidget {
                       firstChild: GestureDetector(
                         onTap: () {
                           itemNotifier.setItem(Item.empty());
-                          QR.to(LoanRouter.root +
+                          QR.to<void>(LoanRouter.root +
                               LoanRouter.admin +
                               LoanRouter.addEditItem);
                         },
@@ -129,7 +129,7 @@ class LoanersItems extends HookConsumerWidget {
                                   });
                             },
                             onEdit: () {
-                              QR.to(LoanRouter.root +
+                              QR.to<void>(LoanRouter.root +
                                   LoanRouter.admin +
                                   LoanRouter.addEditItem);
                               itemNotifier.setItem(e);

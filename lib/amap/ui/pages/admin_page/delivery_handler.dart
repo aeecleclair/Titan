@@ -36,7 +36,7 @@ class DeliveryHandler extends HookConsumerWidget {
                 onTap: () {
                   selectedNotifier.clear();
                   deliveryIdNotifier.setId(Delivery.empty().id);
-                  QR.to(AmapRouter.root +
+                  QR.to<void>(AmapRouter.root +
                       AmapRouter.admin +
                       AmapRouter.addEditDelivery);
                 },

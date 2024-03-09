@@ -69,7 +69,7 @@ class HistoryLoan extends HookConsumerWidget {
                             loan: loan,
                             onInfo: () {
                               loanNotifier.setLoan(loan);
-                              QR.to(LoanRouter.root +
+                              QR.to<void>(LoanRouter.root +
                                   LoanRouter.admin +
                                   LoanRouter.detail);
                             },

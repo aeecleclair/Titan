@@ -46,7 +46,8 @@ class ListBooking extends HookConsumerWidget {
       final recurrentDays =
           SfCalendar.parseRRule(booking.recurrenceRule, booking.start).weekDays;
       selectedDaysNotifier.setSelectedDays(recurrentDays);
-      QR.to(BookingRouter.root + BookingRouter.manager + BookingRouter.addEdit);
+      QR.to<void>(
+          BookingRouter.root + BookingRouter.manager + BookingRouter.addEdit);
     }
 
     if (bookings.isNotEmpty) {
@@ -100,7 +101,7 @@ class ListBooking extends HookConsumerWidget {
                         },
                         onInfo: () {
                           bookingNotifier.setBooking(e);
-                          QR.to(BookingRouter.root +
+                          QR.to<void>(BookingRouter.root +
                               BookingRouter.manager +
                               BookingRouter.detail);
                         },
@@ -168,7 +169,7 @@ class ListBooking extends HookConsumerWidget {
                         },
                         onCopy: () {
                           bookingNotifier.setBooking(e.copyWith(id: ""));
-                          QR.to(BookingRouter.root +
+                          QR.to<void>(BookingRouter.root +
                               BookingRouter.manager +
                               BookingRouter.addEdit);
                         },

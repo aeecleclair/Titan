@@ -54,7 +54,7 @@ class TicketHandler extends HookConsumerWidget {
                 GestureDetector(
                     onTap: () {
                       packTicketNotifier.setPackTicket(PackTicket.empty());
-                      QR.to(RaffleRouter.root +
+                      QR.to<void>(RaffleRouter.root +
                           RaffleRouter.detail +
                           RaffleRouter.creation +
                           RaffleRouter.addEditPackTicket);
@@ -93,7 +93,7 @@ class TicketHandler extends HookConsumerWidget {
                                 packTicket: e,
                                 onEdit: () {
                                   packTicketNotifier.setPackTicket(e);
-                                  QR.to(RaffleRouter.root +
+                                  QR.to<void>(RaffleRouter.root +
                                       RaffleRouter.detail +
                                       RaffleRouter.creation +
                                       RaffleRouter.addEditPackTicket);

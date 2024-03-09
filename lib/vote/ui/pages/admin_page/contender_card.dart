@@ -78,7 +78,7 @@ class ContenderCard extends HookConsumerWidget {
                     : GestureDetector(
                         onTap: () {
                           contenderNotifier.setId(contender);
-                          QR.to(VoteRouter.root + VoteRouter.detail);
+                          QR.to<void>(VoteRouter.root + VoteRouter.detail);
                         },
                         child: const HeroIcon(
                           HeroIcons.informationCircle,

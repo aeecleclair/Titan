@@ -57,7 +57,7 @@ class RaffleMainPage extends HookConsumerWidget {
                   if (isAdmin)
                     AdminButton(
                       onTap: () {
-                        QR.to(RaffleRouter.root + RaffleRouter.admin);
+                        QR.to<void>(RaffleRouter.root + RaffleRouter.admin);
                       },
                     ),
                 ],

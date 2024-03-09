@@ -35,7 +35,7 @@ class RaffleWidget extends HookConsumerWidget {
             prizeListNotifier.loadPrizeList();
             ticketListNotifier.loadTicketList();
             packTicketListNotifier.loadPackTicketList();
-            QR.to(RaffleRouter.root + RaffleRouter.detail);
+            QR.to<void>(RaffleRouter.root + RaffleRouter.detail);
           },
           behavior: HitTestBehavior.opaque,
           child: Center(

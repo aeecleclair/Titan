@@ -72,7 +72,7 @@ class DeliveryUi extends HookConsumerWidget {
                           deliveryIdNotifier.setId(delivery.id);
                           deliveryProductListNotifier
                               .loadProductList(delivery.products);
-                          QR.to(AmapRouter.root +
+                          QR.to<void>(AmapRouter.root +
                               AmapRouter.admin +
                               AmapRouter.detailDelivery);
                         },
@@ -123,7 +123,7 @@ class DeliveryUi extends HookConsumerWidget {
                   GestureDetector(
                     onTap: () async {
                       deliveryIdNotifier.setId(delivery.id);
-                      QR.to(AmapRouter.root +
+                      QR.to<void>(AmapRouter.root +
                           AmapRouter.admin +
                           AmapRouter.addEditDelivery);
                       final deliveryProductsIds = delivery.products

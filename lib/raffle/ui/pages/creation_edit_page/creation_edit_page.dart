@@ -209,7 +209,8 @@ class CreationPage extends HookConsumerWidget {
                               if (logo.value != null) {
                                 raffleLogoNotifier.updateLogo(
                                     raffle.id, logo.value!);
-                                QR.to(RaffleRouter.root + RaffleRouter.detail);
+                                QR.to<void>(
+                                    RaffleRouter.root + RaffleRouter.detail);
                               }
                             },
                             error: (error, s) {},

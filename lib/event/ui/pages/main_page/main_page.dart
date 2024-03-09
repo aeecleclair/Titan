@@ -53,7 +53,7 @@ class EventMainPage extends HookConsumerWidget {
                       if (isAdmin)
                         AdminButton(
                           onTap: () {
-                            QR.to(EventRouter.root + EventRouter.admin);
+                            QR.to<void>(EventRouter.root + EventRouter.admin);
                           },
                         )
                     ],
@@ -64,7 +64,7 @@ class EventMainPage extends HookConsumerWidget {
               GestureDetector(
                 onTap: () {
                   eventNotifier.setEvent(Event.empty());
-                  QR.to(EventRouter.root + EventRouter.addEdit);
+                  QR.to<void>(EventRouter.root + EventRouter.addEdit);
                 },
                 child: CardLayout(
                     margin: const EdgeInsets.only(
