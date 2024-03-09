@@ -3,8 +3,8 @@ import 'package:myecl/advert/providers/advert_list_provider.dart';
 import 'package:myecl/advert/router.dart';
 import 'package:tuple/tuple.dart';
 
-final Map<String, Tuple2<String, List<StateNotifierProvider>>> advertProviders =
-    {
+final Map<String, Tuple2<String, List<StateNotifierProvider<dynamic, dynamic>>>>
+    advertProviders = {
   "advert": Tuple2(
     AdvertRouter.root,
     [advertListProvider],

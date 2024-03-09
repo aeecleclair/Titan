@@ -4,7 +4,8 @@ import 'package:myecl/loan/providers/user_loaner_list_provider.dart';
 import 'package:myecl/loan/router.dart';
 import 'package:tuple/tuple.dart';
 
-final Map<String, Tuple2<String, List<StateNotifierProvider>>> loanProviders = {
+final Map<String, Tuple2<String, List<StateNotifierProvider<dynamic, dynamic>>>>
+    loanProviders = {
   "userLoans": Tuple2(
     LoanRouter.root,
     [userLoanerListProvider],

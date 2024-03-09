@@ -6,8 +6,8 @@ import 'package:myecl/event/router.dart';
 import 'package:myecl/home/router.dart';
 import 'package:tuple/tuple.dart';
 
-final Map<String, Tuple2<String, List<StateNotifierProvider>>> eventProviders =
-    {
+final Map<String, Tuple2<String, List<StateNotifierProvider<dynamic, dynamic>>>>
+    eventProviders = {
   "userEvents": Tuple2(
     EventRouter.root,
     [eventEventListProvider, confirmedEventListProvider],

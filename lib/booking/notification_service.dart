@@ -5,7 +5,7 @@ import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:myecl/booking/router.dart';
 import 'package:tuple/tuple.dart';
 
-final Map<String, Tuple2<String, List<StateNotifierProvider>>>
+final Map<String, Tuple2<String, List<StateNotifierProvider<dynamic, dynamic>>>>
     bookingProviders = {
   "userBooking": Tuple2(
     BookingRouter.root,

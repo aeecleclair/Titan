@@ -5,7 +5,8 @@ import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:tuple/tuple.dart';
 
-final Map<String, Tuple2<String, List<StateNotifierProvider>>> voteProviders = {
+final Map<String, Tuple2<String, List<StateNotifierProvider<dynamic, dynamic>>>>
+    voteProviders = {
   "contender": Tuple2(
     VoteRouter.root,
     [contenderListProvider],
