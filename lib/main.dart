@@ -50,8 +50,9 @@ class MyApp extends HookConsumerWidget {
     final plausible = getPlausible();
     Future(() => animationNotifier.setController(animationController));
 
-    final myWillPopScope = WillPopScope(
-        onWillPop: () async {
+    final popScope = PopScope(
+        canPop: false,
+        onPopInvoked: (didPop) async {
           final topBarCallBack = ref.watch(topBarCallBackProvider);
           if (QR.currentPath.split('/').length <= 2) {
             final animation = ref.watch(animationProvider);
@@ -66,10 +67,10 @@ class MyApp extends HookConsumerWidget {
                 topBarCallBack.onMenu?.call();
               }
             }
-            return false;
+            return;
           }
+          QR.back();
           topBarCallBack.onBack?.call();
-          return true;
         },
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,
@@ -101,12 +102,10 @@ class MyApp extends HookConsumerWidget {
         ));
 
     if (kIsWeb) {
-      return myWillPopScope;
+      return popScope;
     }
     return MaterialApp(
-        initialRoute: '/',
-        debugShowCheckedModeBanner: false,
-        home: myWillPopScope);
+        initialRoute: '/', debugShowCheckedModeBanner: false, home: popScope);
   }
 }
 
