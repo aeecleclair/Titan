@@ -111,7 +111,7 @@ class ChangePassPage extends HookConsumerWidget {
                   ),
                   onTap: () async {
                     if (key.currentState!.validate()) {
-                      await showDialog(
+                      showDialog<void>(
                           context: context,
                           builder: (context) => CustomDialogBox(
                                 descriptions:

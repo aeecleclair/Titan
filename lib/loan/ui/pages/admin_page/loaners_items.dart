@@ -75,7 +75,7 @@ class LoanersItems extends HookConsumerWidget {
                       firstChild: GestureDetector(
                         onTap: () {
                           itemNotifier.setItem(Item.empty());
-                          QR.to(LoanRouter.root +
+                          QR.to<void>(LoanRouter.root +
                               LoanRouter.admin +
                               LoanRouter.addEditItem);
                         },
@@ -96,13 +96,13 @@ class LoanersItems extends HookConsumerWidget {
                             item: e,
                             showButtons: true,
                             onDelete: () async {
-                              showDialog(
+                              showDialog<void>(
                                   context: context,
                                   builder: (BuildContext context) {
                                     return CustomDialogBox(
                                         descriptions:
                                             LoanTextConstants.deletingItem,
-                                        onYes: () {
+                                        onYes: () async {
                                           tokenExpireWrapper(ref, () async {
                                             final value = await itemListNotifier
                                                 .deleteItem(e, loaner.id);
@@ -129,7 +129,7 @@ class LoanersItems extends HookConsumerWidget {
                                   });
                             },
                             onEdit: () {
-                              QR.to(LoanRouter.root +
+                              QR.to<void>(LoanRouter.root +
                                   LoanRouter.admin +
                                   LoanRouter.addEditItem);
                               itemNotifier.setItem(e);

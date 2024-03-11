@@ -90,7 +90,7 @@ final idProvider = FutureProvider<String>((ref) {
         data: (tokens) {
           final id = tokens["token"] == ""
               ? ""
-              : JwtDecoder.decode(tokens["token"] as String)["sub"];
+              : JwtDecoder.decode(tokens["token"] as String)["sub"] as String;
           cacheManager.writeCache("id", id);
           return id;
         },
@@ -135,7 +135,7 @@ class OpenIdTokenProvider
     return base64.encode(sha256.convert(utf8.encode(data)).bytes);
   }
 
-  Future getTokenFromRequest() async {
+  Future<void> getTokenFromRequest() async {
     html.WindowBase? popupWin;
 
     final redirectUri = Uri(
@@ -154,7 +154,7 @@ class OpenIdTokenProvider
         popupWin = html.window
             .open(authUrl, "Hyperion", "width=800, height=900, scrollbars=yes");
 
-        final completer = Completer();
+        final completer = Completer<void>();
         void checkWindowClosed() {
           if (popupWin != null && popupWin!.closed == true) {
             completer.complete();
@@ -206,7 +206,7 @@ class OpenIdTokenProvider
 
         html.window.onMessage.listen((event) {
           if (event.data.toString().contains('code=')) {
-            login(event.data);
+            login(event.data as String);
           }
         });
       } else {
@@ -234,7 +234,7 @@ class OpenIdTokenProvider
     }
   }
 
-  Future getTokenFromStorage() async {
+  Future<void> getTokenFromStorage() async {
     state = const AsyncValue.loading();
     _secureStorage.read(key: tokenName).then((token) async {
       if (token != null) {

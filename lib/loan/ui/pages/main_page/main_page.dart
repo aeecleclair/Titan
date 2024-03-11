@@ -74,7 +74,8 @@ class LoanMainPage extends HookConsumerWidget {
                                   loan: e,
                                   onInfo: () {
                                     loanNotifier.setLoan(e);
-                                    QR.to(LoanRouter.root + LoanRouter.detail);
+                                    QR.to<void>(
+                                        LoanRouter.root + LoanRouter.detail);
                                   },
                                 ))
                       ])
@@ -113,7 +114,8 @@ class LoanMainPage extends HookConsumerWidget {
                               loan: e,
                               onInfo: () {
                                 loanNotifier.setLoan(e);
-                                QR.to(LoanRouter.root + LoanRouter.detail);
+                                QR.to<void>(
+                                    LoanRouter.root + LoanRouter.detail);
                               },
                             ))
                   ])
@@ -124,7 +126,7 @@ class LoanMainPage extends HookConsumerWidget {
               right: 30,
               child: AdminButton(
                 onTap: () {
-                  QR.to(LoanRouter.root + LoanRouter.admin);
+                  QR.to<void>(LoanRouter.root + LoanRouter.admin);
                 },
               ),
             )

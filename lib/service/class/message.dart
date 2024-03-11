@@ -18,14 +18,14 @@ class Message {
   });
 
   Message.fromJson(Map<String, dynamic> json) {
-    title = json['title'];
-    content = json['content'];
-    actionModule = json['action_module'];
-    actionTable = json['action_table'];
-    context = json['context'];
-    isVisible = json['is_visible'];
+    title = json['title'] as String;
+    content = json['content'] as String;
+    actionModule = json['action_module'] as String;
+    actionTable = json['action_table'] as String;
+    context = json['context'] as String;
+    isVisible = json['is_visible'] as bool;
     deliveryDateTime = json['delivery_datetime'] != null
-        ? DateTime.parse(json['delivery_datetime'])
+        ? DateTime.parse(json['delivery_datetime'] as String)
         : null;
   }
 

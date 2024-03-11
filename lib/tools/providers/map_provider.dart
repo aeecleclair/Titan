@@ -14,7 +14,7 @@ class MapNotifier<T, E>
     state = AsyncValue.data(tMap);
   }
 
-  Future addT(T t) async {
+  Future<void> addT(T t) async {
     state.maybeWhen(
       data: (tList) async {
         tList[t] = null;

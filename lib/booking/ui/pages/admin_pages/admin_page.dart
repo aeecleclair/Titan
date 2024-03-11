@@ -75,7 +75,7 @@ class AdminPage extends HookConsumerWidget {
                           onTap: () {
                             roomNotifier.setRoom(Room.empty());
                             managerIdNotifier.setId("");
-                            QR.to(BookingRouter.root +
+                            QR.to<void>(BookingRouter.root +
                                 BookingRouter.admin +
                                 BookingRouter.room);
                           },
@@ -89,7 +89,7 @@ class AdminPage extends HookConsumerWidget {
                             onTap: () {
                               roomNotifier.setRoom(e);
                               managerIdNotifier.setId(e.managerId);
-                              QR.to(BookingRouter.root +
+                              QR.to<void>(BookingRouter.root +
                                   BookingRouter.admin +
                                   BookingRouter.room);
                             },
@@ -138,7 +138,7 @@ class AdminPage extends HookConsumerWidget {
                           onTap: () {
                             managerNotifier.setManager(Manager.empty());
                             groupIdNotifier.setId("");
-                            QR.to(BookingRouter.root +
+                            QR.to<void>(BookingRouter.root +
                                 BookingRouter.admin +
                                 BookingRouter.manager);
                           },
@@ -152,7 +152,7 @@ class AdminPage extends HookConsumerWidget {
                             onTap: () {
                               managerNotifier.setManager(e);
                               groupIdNotifier.setId(e.groupId);
-                              QR.to(BookingRouter.root +
+                              QR.to<void>(BookingRouter.root +
                                   BookingRouter.admin +
                                   BookingRouter.manager);
                             },

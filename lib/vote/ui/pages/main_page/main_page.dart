@@ -68,7 +68,7 @@ class VoteMainPage extends HookConsumerWidget {
                             margin: const EdgeInsets.only(right: 20),
                             child: AdminButton(
                               onTap: () {
-                                QR.to(VoteRouter.root + VoteRouter.admin);
+                                QR.to<void>(VoteRouter.root + VoteRouter.admin);
                               },
                             ),
                           ),
@@ -163,10 +163,11 @@ class VoteMainPage extends HookConsumerWidget {
                                                             .only(right: 20),
                                                         child: AdminButton(
                                                           onTap: () {
-                                                            QR.to(VoteRouter
-                                                                    .root +
+                                                            QR.to<void>(
                                                                 VoteRouter
-                                                                    .admin);
+                                                                        .root +
+                                                                    VoteRouter
+                                                                        .admin);
                                                           },
                                                         ),
                                                       )

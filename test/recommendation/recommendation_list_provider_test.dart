@@ -27,7 +27,7 @@ void main() {
             recommendations
                 .maybeWhen(
                   data: (data) => data,
-                  orElse: () => [],
+                  orElse: () => List<Recommendation>.empty(),
                 )
                 .length,
             1);

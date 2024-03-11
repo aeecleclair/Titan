@@ -59,7 +59,7 @@ class SectionContenderItems extends HookConsumerWidget {
                         onTap: () {
                           contenderNotifier.setId(Contender.empty());
                           membersNotifier.setMembers([]);
-                          QR.to(VoteRouter.root +
+                          QR.to<void>(VoteRouter.root +
                               VoteRouter.admin +
                               VoteRouter.addEditContender);
                         },
@@ -83,20 +83,20 @@ class SectionContenderItems extends HookConsumerWidget {
                         tokenExpireWrapper(ref, () async {
                           contenderNotifier.setId(e);
                           membersNotifier.setMembers(e.members);
-                          QR.to(VoteRouter.root +
+                          QR.to<void>(VoteRouter.root +
                               VoteRouter.admin +
                               VoteRouter.addEditContender);
                         });
                       },
                       onDelete: () async {
-                        await showDialog(
+                        showDialog<void>(
                             context: context,
                             builder: (context) {
                               return CustomDialogBox(
                                   title: VoteTextConstants.deletePretendance,
                                   descriptions:
                                       VoteTextConstants.deletePretendanceDesc,
-                                  onYes: () {
+                                  onYes: () async {
                                     tokenExpireWrapper(ref, () async {
                                       final value = await contenderListNotifier
                                           .deleteContender(e);

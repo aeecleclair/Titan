@@ -46,13 +46,13 @@ class VoteButton extends HookConsumerWidget {
           if (selectedContender.id != "" &&
               s == Status.open &&
               !alreadyVotedSection.contains(section.id)) {
-            showDialog(
+            showDialog<void>(
                 context: context,
                 builder: (context) {
                   return CustomDialogBox(
                     title: VoteTextConstants.vote,
                     descriptions: VoteTextConstants.confirmVote,
-                    onYes: () {
+                    onYes: () async {
                       tokenExpireWrapper(ref, () async {
                         final result = await votesNotifier
                             .addVote(Votes(id: selectedContender.id));

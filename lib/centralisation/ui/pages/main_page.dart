@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/centralisation/class/module.dart';
 import 'package:myecl/centralisation/providers/centralisation_section_provider.dart';
 import 'package:myecl/centralisation/providers/favorites_providers.dart';
 import 'package:myecl/centralisation/ui/centralisation.dart';
@@ -26,7 +27,7 @@ class CentralisationMainPage extends HookConsumerWidget {
             .map((name) => modules.firstWhere((module) => module.name == name))
             .toList();
       },
-      orElse: () => [],
+      orElse: () => List<Module>.empty(),
     );
 
     return CentralisationTemplate(

@@ -33,7 +33,7 @@ class PrizeHandler extends HookConsumerWidget {
     }
 
     void displayWinningsDialog(List<Ticket> winningTickets) {
-      showDialog(
+      showDialog<void>(
           context: context,
           builder: (context) {
             return Dialog(
@@ -101,7 +101,7 @@ class PrizeHandler extends HookConsumerWidget {
               GestureDetector(
                 onTap: () {
                   prizeNotifier.setPrize(Prize.empty());
-                  QR.to(RaffleRouter.root +
+                  QR.to<void>(RaffleRouter.root +
                       RaffleRouter.detail +
                       RaffleRouter.creation +
                       RaffleRouter.addEditPrize);
@@ -158,13 +158,13 @@ class PrizeHandler extends HookConsumerWidget {
                             (e) => PrizeCard(
                               lot: e,
                               onDelete: () async {
-                                await showDialog(
+                                showDialog<void>(
                                     context: context,
                                     builder: (context) => CustomDialogBox(
                                           title: "Supprimer le lot",
                                           descriptions:
                                               "Voulez-vous vraiment supprimer ce lot?",
-                                          onYes: () {
+                                          onYes: () async {
                                             tokenExpireWrapper(ref, () async {
                                               final value = await prizesNotifier
                                                   .deletePrize(e);
@@ -185,20 +185,20 @@ class PrizeHandler extends HookConsumerWidget {
                               },
                               onEdit: () {
                                 prizeNotifier.setPrize(e);
-                                QR.to(RaffleRouter.root +
+                                QR.to<void>(RaffleRouter.root +
                                     RaffleRouter.detail +
                                     RaffleRouter.creation +
                                     RaffleRouter.addEditPrize);
                               },
                               status: raffle.raffleStatusType,
                               onDraw: () async {
-                                await showDialog(
+                                showDialog<void>(
                                     context: context,
                                     builder: (context) => CustomDialogBox(
                                           title: "Tirage",
                                           descriptions:
                                               "Tirer le gagnant de ce lot ?",
-                                          onYes: () {
+                                          onYes: () async {
                                             tokenExpireWrapper(ref, () async {
                                               final value =
                                                   await winningTicketListNotifier

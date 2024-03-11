@@ -10,17 +10,18 @@ class AppointmentDataSource extends CalendarDataSource<Booking> {
   }
 
   @override
-  DateTime getStartTime(int index) => appointments![index].start;
+  DateTime getStartTime(int index) => appointments![index].start as DateTime;
 
   @override
-  DateTime getEndTime(int index) => appointments![index].end;
+  DateTime getEndTime(int index) => appointments![index].end as DateTime;
 
   @override
-  Color getColor(int index) => generateColor(appointments![index].room.name);
+  Color getColor(int index) =>
+      generateColor(appointments![index].room.name as String);
 
   @override
   String getSubject(int index) {
-    Booking booking = appointments![index];
+    Booking booking = appointments![index] as Booking;
     return '${booking.room.name} - ${booking.reason}';
   }
 
@@ -28,7 +29,7 @@ class AppointmentDataSource extends CalendarDataSource<Booking> {
   bool isAllDay(int index) => false;
 
   @override
-  String? getNotes(int index) => appointments![index].note;
+  String? getNotes(int index) => appointments![index].note as String;
 
   @override
   String? getStartTimeZone(int index) => "Europe/Paris";
@@ -38,7 +39,7 @@ class AppointmentDataSource extends CalendarDataSource<Booking> {
 
   @override
   String? getRecurrenceRule(int index) {
-    Booking booking = appointments![index];
+    Booking booking = appointments![index] as Booking;
     return booking.recurrenceRule.isNotEmpty ? booking.recurrenceRule : null;
   }
 

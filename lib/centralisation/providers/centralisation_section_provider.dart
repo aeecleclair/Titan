@@ -13,7 +13,7 @@ class SectionNotifier extends ListNotifier<Section> {
   late List<Module> allModules = [];
   late List<Module> modulesLiked = [];
 
-  initState() async {
+  Future<void> initState() async {
     allSections = await sectionRepository.getSectionList();
     allModules = allSections.expand((element) => element.moduleList).toList();
     state = AsyncValue.data(allSections);

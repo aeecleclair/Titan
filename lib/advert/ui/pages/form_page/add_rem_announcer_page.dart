@@ -99,7 +99,7 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                     canRemove
                                         .map((e) => GestureDetector(
                                               onTap: () async {
-                                                await showDialog(
+                                                showDialog<void>(
                                                     context: context,
                                                     builder: (context) {
                                                       return CustomDialogBox(
@@ -109,7 +109,7 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                                         descriptions:
                                                             AdvertTextConstants
                                                                 .deleteAnnouncer,
-                                                        onYes: () {
+                                                        onYes: () async {
                                                           tokenExpireWrapper(
                                                               ref, () async {
                                                             final value = await announcerListNotifier

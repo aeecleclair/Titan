@@ -11,10 +11,10 @@ class PackTicket {
   late final int packSize;
 
   PackTicket.fromJson(Map<String, dynamic> json) {
-    raffleId = json['raffle_id'];
-    price = json['price'];
-    packSize = json['pack_size'];
-    id = json['id'];
+    raffleId = json['raffle_id'] as String;
+    price = json['price'] as double;
+    packSize = json['pack_size'] as int;
+    id = json['id'] as String;
   }
 
   Map<String, dynamic> toJson() {

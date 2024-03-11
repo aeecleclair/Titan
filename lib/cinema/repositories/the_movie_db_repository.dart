@@ -17,7 +17,7 @@ class TheMovieDBRepository extends Repository {
         suffix:
             "find/$id?api_key=$apiKey&language=fr-FR&external_source=imdb_id");
     if (resp["movie_results"] != null) {
-      return (resp["movie_results"] as List<dynamic>)
+      return (resp["movie_results"] as List<Map<String, dynamic>>)
           .map((e) => TheMovieDBSearchResult.fromJson(e))
           .toList();
     }

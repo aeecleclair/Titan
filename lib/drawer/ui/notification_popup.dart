@@ -41,7 +41,7 @@ class NotificationPopup extends HookConsumerWidget {
         data: (data) {
           return data;
         },
-        orElse: () => []);
+        orElse: () => List<Topic>.empty());
     return GestureDetector(
         onTap: displayNotificationPopupNotifier.setDisplay,
         child: Container(

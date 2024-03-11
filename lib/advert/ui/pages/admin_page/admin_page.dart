@@ -66,7 +66,7 @@ class AdvertAdminPage extends HookConsumerWidget {
                       GestureDetector(
                         onTap: () {
                           advertNotifier.setAdvert(Advert.empty());
-                          QR.to(AdvertRouter.root +
+                          QR.to<void>(AdvertRouter.root +
                               AdvertRouter.admin +
                               AdvertRouter.addEditAdvert);
                         },
@@ -91,10 +91,11 @@ class AdvertAdminPage extends HookConsumerWidget {
                         (advert) => AdminAdvertCard(
                             onTap: () {
                               advertNotifier.setAdvert(advert);
-                              QR.to(AdvertRouter.root + AdvertRouter.detail);
+                              QR.to<void>(
+                                  AdvertRouter.root + AdvertRouter.detail);
                             },
                             onEdit: () {
-                              QR.to(AdvertRouter.root +
+                              QR.to<void>(AdvertRouter.root +
                                   AdvertRouter.admin +
                                   AdvertRouter.addEditAdvert);
                               advertNotifier.setAdvert(advert);
@@ -103,14 +104,14 @@ class AdvertAdminPage extends HookConsumerWidget {
                                   .addAnnouncer(advert.announcer);
                             },
                             onDelete: () async {
-                              await showDialog(
+                              showDialog<void>(
                                   context: context,
                                   builder: (context) {
                                     return CustomDialogBox(
                                       title: AdvertTextConstants.deleting,
                                       descriptions:
                                           AdvertTextConstants.deleteAdvert,
-                                      onYes: () {
+                                      onYes: () async {
                                         advertListNotifier.deleteAdvert(advert);
                                       },
                                     );

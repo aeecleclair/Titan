@@ -125,12 +125,12 @@ class ProductChoiceButton extends HookConsumerWidget {
             ),
             onTap: () {
               if (order.amount != 0.0 || order.id != Order.empty().id) {
-                showDialog(
+                showDialog<void>(
                     context: context,
                     builder: (BuildContext context) => CustomDialogBox(
                         descriptions: AMAPTextConstants.deletingOrder,
                         title: AMAPTextConstants.deleting,
-                        onYes: () {
+                        onYes: () async {
                           orderNotifier.setOrder(Order.empty());
                           QR.back();
                         }));

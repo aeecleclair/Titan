@@ -72,7 +72,7 @@ class DeliveryUi extends HookConsumerWidget {
                           deliveryIdNotifier.setId(delivery.id);
                           deliveryProductListNotifier
                               .loadProductList(delivery.products);
-                          QR.to(AmapRouter.root +
+                          QR.to<void>(AmapRouter.root +
                               AmapRouter.admin +
                               AmapRouter.detailDelivery);
                         },
@@ -123,7 +123,7 @@ class DeliveryUi extends HookConsumerWidget {
                   GestureDetector(
                     onTap: () async {
                       deliveryIdNotifier.setId(delivery.id);
-                      QR.to(AmapRouter.root +
+                      QR.to<void>(AmapRouter.root +
                           AmapRouter.admin +
                           AmapRouter.addEditDelivery);
                       final deliveryProductsIds = delivery.products
@@ -157,7 +157,7 @@ class DeliveryUi extends HookConsumerWidget {
                 if (delivery.status == DeliveryStatus.creation)
                   WaitingButton(
                     onTap: () async {
-                      await showDialog(
+                      showDialog<void>(
                           context: context,
                           builder: ((context) => CustomDialogBox(
                               title: AMAPTextConstants.deleteDelivery,
@@ -191,7 +191,7 @@ class DeliveryUi extends HookConsumerWidget {
                   ),
                 WaitingButton(
                   onTap: () async {
-                    await showDialog(
+                    showDialog<void>(
                         context: context,
                         builder: ((context) => CustomDialogBox(
                             title: delivery.status == DeliveryStatus.creation

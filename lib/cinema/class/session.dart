@@ -19,13 +19,13 @@ class Session {
       required this.tagline});
 
   Session.fromJson(Map<String, dynamic> json) {
-    id = json["id"];
-    name = json["name"];
-    start = DateTime.parse(json["start"]);
-    duration = json["duration"];
-    overview = json["overview"];
-    genre = json["genre"];
-    tagline = json["tagline"];
+    id = json["id"] as String;
+    name = json["name"] as String;
+    start = DateTime.parse(json["start"] as String);
+    duration = json["duration"] as int;
+    overview = json["overview"] as String?;
+    genre = json["genre"] as String?;
+    tagline = json["tagline"] as String?;
   }
 
   Map<String, dynamic> toJson() {

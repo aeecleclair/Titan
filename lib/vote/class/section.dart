@@ -31,9 +31,9 @@ class Section {
 
   factory Section.fromJson(Map<String, dynamic> map) {
     return Section(
-      id: map['id'],
-      name: map['name'],
-      description: map['description'],
+      id: map['id'] as String,
+      name: map['name'] as String,
+      description: map['description'] as String,
     );
   }
 

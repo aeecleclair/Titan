@@ -17,8 +17,8 @@ import 'package:qlevar_router/qlevar_router.dart';
 class ContenderCard extends HookConsumerWidget {
   final Contender contender;
   final bool isAdmin, isDetail;
-  final Function()? onEdit;
-  final Future Function()? onDelete;
+  final void Function()? onEdit;
+  final Future<void> Function()? onDelete;
   const ContenderCard(
       {super.key,
       required this.contender,
@@ -78,7 +78,7 @@ class ContenderCard extends HookConsumerWidget {
                     : GestureDetector(
                         onTap: () {
                           contenderNotifier.setId(contender);
-                          QR.to(VoteRouter.root + VoteRouter.detail);
+                          QR.to<void>(VoteRouter.root + VoteRouter.detail);
                         },
                         child: const HeroIcon(
                           HeroIcons.informationCircle,

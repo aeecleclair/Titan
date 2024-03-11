@@ -14,7 +14,7 @@ class NotificationRepository extends Repository {
   }
 
   Future<bool> registerDevice(String firebaseToken) async {
-    return await create({"firebase_token": firebaseToken}, suffix: "devices");
+    return await apply({"firebase_token": firebaseToken}, suffix: "devices");
   }
 
   Future<bool> forgetDevice(String firebaseToken) async {
@@ -23,16 +23,18 @@ class NotificationRepository extends Repository {
 
   Future<bool> subscribeTopic(Topic topic) async {
     final String topicString = topic.toString().split('.').last;
-    return await create({}, suffix: "topics/$topicString/subscribe");
+    return await apply(<String, dynamic>{},
+        suffix: "topics/$topicString/subscribe");
   }
 
   Future<bool> unsubscribeTopic(Topic topic) async {
     final String topicString = topic.toString().split('.').last;
-    return await create({}, suffix: "topics/$topicString/unsubscribe");
+    return await apply(<String, dynamic>{},
+        suffix: "topics/$topicString/unsubscribe");
   }
 
   Future<List<Topic>> getTopics() async {
-    return List<Topic>.from(
-        (await getList(suffix: "topics")).map((x) => stringToTopic(x)));
+    return List<Topic>.from((await getList(suffix: "topics") as List<String>)
+        .map((x) => stringToTopic(x)));
   }
 }

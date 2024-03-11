@@ -45,13 +45,13 @@ class AdvertMainPage extends HookConsumerWidget {
                       AdminButton(
                         onTap: () {
                           selectedNotifier.clearAnnouncer();
-                          QR.to(AdvertRouter.root + AdvertRouter.admin);
+                          QR.to<void>(AdvertRouter.root + AdvertRouter.admin);
                         },
                       ),
                     if (isAdmin)
                       AdminButton(
                           onTap: () {
-                            QR.to(AdvertRouter.root +
+                            QR.to<void>(AdvertRouter.root +
                                 AdvertRouter.addRemAnnouncer);
                           },
                           text: AdvertTextConstants.management),
@@ -85,7 +85,8 @@ class AdvertMainPage extends HookConsumerWidget {
                           (advert) => AdvertCard(
                               onTap: () {
                                 advertNotifier.setAdvert(advert);
-                                QR.to(AdvertRouter.root + AdvertRouter.detail);
+                                QR.to<void>(
+                                    AdvertRouter.root + AdvertRouter.detail);
                               },
                               advert: advert),
                         ),

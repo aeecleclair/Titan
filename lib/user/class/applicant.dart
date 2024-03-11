@@ -14,9 +14,9 @@ class Applicant extends SimpleUser {
       required this.phone});
 
   Applicant.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
-    email = json['email'];
-    promo = json['promo'];
-    phone = json['phone'];
+    email = json['email'] as String;
+    promo = json['promo'] as int?;
+    phone = json['phone'] as String?;
   }
 
   @override

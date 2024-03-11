@@ -19,11 +19,11 @@ class TheMovieDBSearchResult {
     posterUrl = json['poster_path'] != null
         ? "https://image.tmdb.org/t/p/w500${json['poster_path']}"
         : "https://image.tmdb.org/t/p/w500${json['backdrop_path']}";
-    overview = json['overview'];
-    genreIds = json['genre_ids'].cast<int>();
+    overview = json['overview'] as String;
+    genreIds = json['genre_ids'] as List<int>;
     genreNames = [];
     id = json['id'].toString();
-    title = json['title'];
+    title = json['title'] as String;
   }
 
   Map<String, dynamic> toJson() {

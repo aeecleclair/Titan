@@ -9,9 +9,9 @@ class Announcer {
   late final String id;
 
   Announcer.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    groupManagerId = json['group_manager_id'];
-    id = json['id'];
+    name = json['name'] as String;
+    groupManagerId = json['group_manager_id'] as String;
+    id = json['id'] as String;
   }
 
   Map<String, dynamic> toJson() {
@@ -22,13 +22,12 @@ class Announcer {
     return data;
   }
 
-  Announcer copyWith({name, groupManagerId, id}) {
-    return Announcer(
-      name: name ?? this.name,
-      groupManagerId: groupManagerId ?? this.groupManagerId,
-      id: id ?? this.id,
-    );
-  }
+  Announcer copyWith({String? name, String? groupManagerId, String? id}) =>
+      Announcer(
+        name: name ?? this.name,
+        groupManagerId: groupManagerId ?? this.groupManagerId,
+        id: id ?? this.id,
+      );
 
   Announcer.empty() {
     name = "";

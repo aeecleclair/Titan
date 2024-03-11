@@ -13,12 +13,12 @@ class SimpleUser {
   late final String id;
 
   SimpleUser.fromJson(Map<String, dynamic> json) {
-    name = capitaliseAll(json['name']);
-    firstname = capitaliseAll(json['firstname']);
+    name = capitaliseAll(json['name'] as String);
+    firstname = capitaliseAll(json['firstname'] as String);
     nickname = (json['nickname'] != "" && json['nickname'] != null)
-        ? capitaliseAll(json['nickname'])
+        ? capitaliseAll(json['nickname'] as String)
         : null;
-    id = json['id'];
+    id = json['id'] as String;
   }
 
   Map<String, dynamic> toJson() {

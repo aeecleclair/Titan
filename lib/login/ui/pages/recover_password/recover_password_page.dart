@@ -80,7 +80,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
               displayToastWithContext(
                   TypeMsg.msg, LoginTextConstants.resetedPassword);
               authTokenNotifier.deleteToken();
-              QR.to(LoginRouter.root);
+              QR.to<void>(LoginRouter.root);
             } else {
               displayToastWithContext(
                   TypeMsg.error, LoginTextConstants.invalidToken);
@@ -109,7 +109,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
               alignment: Alignment.centerLeft,
               child: GestureDetector(
                 onTap: () {
-                  QR.to(LoginRouter.forgotPassword);
+                  QR.to<void>(LoginRouter.forgotPassword);
                 },
                 child: const HeroIcon(
                   HeroIcons.chevronLeft,

@@ -35,7 +35,7 @@ class LogPage extends HookConsumerWidget {
                             color: Colors.grey)),
                     GestureDetector(
                       onTap: () {
-                        showDialog(
+                        showDialog<void>(
                             context: context,
                             builder: ((context) => CustomDialogBox(
                                 title: SettingsTextConstants.deleting,

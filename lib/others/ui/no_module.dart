@@ -15,7 +15,7 @@ class NoModulePage extends HookConsumerWidget {
     final pathForwarding = ref.read(pathForwardingProvider);
     moduleVisibilityList.maybeWhen(
         data: (data) {
-          QR.to(pathForwarding.path);
+          QR.to<void>(pathForwarding.path);
         },
         orElse: () {});
     return const Scaffold(

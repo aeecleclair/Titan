@@ -65,7 +65,8 @@ class CinemaMainPage extends HookConsumerWidget {
                         if (isAdmin)
                           AdminButton(
                             onTap: () {
-                              QR.to(CinemaRouter.root + CinemaRouter.admin);
+                              QR.to<void>(
+                                  CinemaRouter.root + CinemaRouter.admin);
                               initialPageNotifier.setMainPageIndex(currentPage);
                             },
                           )
@@ -112,7 +113,7 @@ class CinemaMainPage extends HookConsumerWidget {
                                   index: index,
                                   onTap: () {
                                     sessionNotifier.setSession(data[index]);
-                                    QR.to(CinemaRouter.root +
+                                    QR.to<void>(CinemaRouter.root +
                                         CinemaRouter.detail);
                                     initialPageNotifier.setMainPageIndex(index);
                                   },

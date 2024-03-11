@@ -134,11 +134,15 @@ void main() {
       groupListNotifier.setGroup(modifiedGroup);
       expect(
           groupListNotifier.state.when(
-              data: (data) => data, error: (e, s) => [], loading: () => []),
+              data: (data) => data,
+              error: (e, s) => List<SimpleGroup>.empty(),
+              loading: () => List<SimpleGroup>.empty()),
           contains(modifiedGroup));
       expect(
           groupListNotifier.state.when(
-              data: (data) => data, error: (e, s) => [], loading: () => []),
+              data: (data) => data,
+              error: (e, s) => List<SimpleGroup>.empty(),
+              loading: () => List<SimpleGroup>.empty()),
           isNot(contains(existingGroup)));
     });
   });

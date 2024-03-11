@@ -62,7 +62,7 @@ class ModuleUI extends HookConsumerWidget {
         ),
       ),
       onTap: () {
-        QR.to(module.root);
+        QR.to<void>(module.root);
         pathForwardingNotifier.forward(module.root);
         if (animation != null) {
           final controllerNotifier =

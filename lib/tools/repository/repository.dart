@@ -30,7 +30,7 @@ abstract class Repository {
   }
 
   /// GET ext/suffix
-  Future<List> getList({String suffix = ""}) async {
+  Future<List<dynamic>> getValueList({String suffix = ""}) async {
     try {
       final response =
           await http.get(Uri.parse(host + ext + suffix), headers: headers);
@@ -43,7 +43,7 @@ abstract class Repository {
           if (!kIsWeb) {
             cacheManager.writeCache(ext + suffix, toDecode);
           }
-          return jsonDecode(toDecode);
+          return jsonDecode(toDecode) as List<Map<String, dynamic>>;
         } catch (e) {
           logger.writeLog(Log(
               message: "GET ${ext + suffix}\nError while decoding response",
@@ -62,9 +62,10 @@ abstract class Repository {
           }
           final decoded = jsonDecode(toDecode);
           if (decoded["detail"] == expiredTokenDetail) {
-            throw AppException(ErrorType.tokenExpire, decoded["detail"]);
+            throw AppException(
+                ErrorType.tokenExpire, decoded["detail"] as String);
           } else {
-            throw AppException(ErrorType.notFound, decoded["detail"]);
+            throw AppException(ErrorType.notFound, decoded["detail"] as String);
           }
         } on AppException {
           rethrow;
@@ -93,7 +94,84 @@ abstract class Repository {
       }
       try {
         final toDecode = await cacheManager.readCache(ext + suffix);
-        return jsonDecode(toDecode);
+        return jsonDecode(toDecode) as List<Map<String, dynamic>>;
+      } catch (e) {
+        logger.writeLog(Log(
+            message:
+                "GET ${ext + suffix}\nError while decoding response from cache",
+            level: LogLevel.error));
+        cacheManager.deleteCache(ext + suffix);
+        return [];
+      }
+    }
+  }
+
+  /// GET ext/suffix
+  Future<List<Map<String, dynamic>>> getList({String suffix = ""}) async {
+    try {
+      final response =
+          await http.get(Uri.parse(host + ext + suffix), headers: headers);
+      if (response.statusCode == 200) {
+        try {
+          String toDecode = response.body;
+          if (host == displayHost) {
+            toDecode = utf8.decode(response.body.runes.toList());
+          }
+          if (!kIsWeb) {
+            cacheManager.writeCache(ext + suffix, toDecode);
+          }
+          return jsonDecode(toDecode) as List<Map<String, dynamic>>;
+        } catch (e) {
+          logger.writeLog(Log(
+              message: "GET ${ext + suffix}\nError while decoding response",
+              level: LogLevel.error));
+          return [];
+        }
+      } else if (response.statusCode == 403) {
+        logger.writeLog(Log(
+            message:
+                "GET ${ext + suffix}\n${response.statusCode} ${response.body}",
+            level: LogLevel.error));
+        try {
+          String toDecode = response.body;
+          if (host == displayHost) {
+            toDecode = utf8.decode(response.body.runes.toList());
+          }
+          final decoded = jsonDecode(toDecode);
+          if (decoded["detail"] == expiredTokenDetail) {
+            throw AppException(
+                ErrorType.tokenExpire, decoded["detail"] as String);
+          } else {
+            throw AppException(ErrorType.notFound, decoded["detail"] as String);
+          }
+        } on AppException {
+          rethrow;
+        } catch (e) {
+          logger.writeLog(Log(
+              message: "GET ${ext + suffix}\nError while decoding response",
+              level: LogLevel.error));
+
+          throw AppException(ErrorType.notFound, response.body);
+        }
+      } else {
+        logger.writeLog(Log(
+            message:
+                "GET ${ext + suffix}\n${response.statusCode} ${response.body}",
+            level: LogLevel.error));
+        throw AppException(ErrorType.notFound, response.body);
+      }
+    } on AppException {
+      rethrow;
+    } catch (e) {
+      if (kIsWeb) {
+        logger.writeLog(Log(
+            message: "GET ${ext + suffix}\nError while fetching response",
+            level: LogLevel.error));
+        return [];
+      }
+      try {
+        final toDecode = await cacheManager.readCache(ext + suffix);
+        return jsonDecode(toDecode) as List<Map<String, dynamic>>;
       } catch (e) {
         logger.writeLog(Log(
             message:
@@ -106,7 +184,7 @@ abstract class Repository {
   }
 
   /// Get ext/id/suffix
-  Future<dynamic> getOne(String id,
+  Future<dynamic> getValue(String id,
       {String suffix = "", bool decode = false}) async {
     try {
       final response =
@@ -120,7 +198,7 @@ abstract class Repository {
           if (!kIsWeb) {
             cacheManager.writeCache(ext + id + suffix, toDecode);
           }
-          return jsonDecode(toDecode);
+          return jsonDecode(toDecode) as Map<String, dynamic>;
         } catch (e) {
           logger.writeLog(Log(
               message:
@@ -140,9 +218,10 @@ abstract class Repository {
           }
           final decoded = jsonDecode(toDecode);
           if (decoded["detail"] == expiredTokenDetail) {
-            throw AppException(ErrorType.tokenExpire, decoded["detail"]);
+            throw AppException(
+                ErrorType.tokenExpire, decoded["detail"] as String);
           } else {
-            throw AppException(ErrorType.notFound, decoded["detail"]);
+            throw AppException(ErrorType.notFound, decoded["detail"] as String);
           }
         } on AppException {
           rethrow;
@@ -171,7 +250,7 @@ abstract class Repository {
       }
       try {
         final toDecode = await cacheManager.readCache(ext + id + suffix);
-        return jsonDecode(toDecode);
+        return jsonDecode(toDecode) as Map<String, dynamic>;
       } catch (e) {
         logger.writeLog(Log(
             message:
@@ -183,8 +262,87 @@ abstract class Repository {
     }
   }
 
-  /// POST ext/suffix
-  Future<dynamic> create(dynamic t, {String suffix = ""}) async {
+  /// Get ext/id/suffix
+  Future<Map<String, dynamic>> getOne(String id,
+      {String suffix = "", bool decode = false}) async {
+    try {
+      final response =
+          await http.get(Uri.parse(host + ext + id + suffix), headers: headers);
+      if (response.statusCode == 200) {
+        try {
+          String toDecode = response.body;
+          if (host == displayHost || decode) {
+            toDecode = utf8.decode(response.body.runes.toList());
+          }
+          if (!kIsWeb) {
+            cacheManager.writeCache(ext + id + suffix, toDecode);
+          }
+          return jsonDecode(toDecode) as Map<String, dynamic>;
+        } catch (e) {
+          logger.writeLog(Log(
+              message:
+                  "GET ${ext + id + suffix}\nError while decoding response",
+              level: LogLevel.error));
+          return <String, dynamic>{};
+        }
+      } else if (response.statusCode == 403) {
+        logger.writeLog(Log(
+            message:
+                "GET ${ext + id + suffix}\n${response.statusCode} ${response.body}",
+            level: LogLevel.error));
+        try {
+          String toDecode = response.body;
+          if (host == displayHost) {
+            toDecode = utf8.decode(response.body.runes.toList());
+          }
+          final decoded = jsonDecode(toDecode);
+          if (decoded["detail"] == expiredTokenDetail) {
+            throw AppException(
+                ErrorType.tokenExpire, decoded["detail"] as String);
+          } else {
+            throw AppException(ErrorType.notFound, decoded["detail"] as String);
+          }
+        } on AppException {
+          rethrow;
+        } catch (e) {
+          logger.writeLog(Log(
+              message:
+                  "GET ${ext + id + suffix}\nError while decoding response",
+              level: LogLevel.error));
+          throw AppException(ErrorType.notFound, response.body);
+        }
+      } else {
+        logger.writeLog(Log(
+            message:
+                "GET ${ext + id + suffix}\n${response.statusCode} ${response.body}",
+            level: LogLevel.error));
+        throw AppException(ErrorType.notFound, response.body);
+      }
+    } on AppException {
+      rethrow;
+    } catch (e) {
+      if (kIsWeb) {
+        logger.writeLog(Log(
+            message: "GET ${ext + suffix}\nError while fetching response",
+            level: LogLevel.error));
+        return <String, dynamic>{};
+      }
+      try {
+        final toDecode = await cacheManager.readCache(ext + id + suffix);
+        return jsonDecode(toDecode) as Map<String, dynamic>;
+      } catch (e) {
+        logger.writeLog(Log(
+            message:
+                "GET ${ext + id + suffix}\nError while decoding response from cache",
+            level: LogLevel.error));
+        cacheManager.deleteCache(ext + suffix);
+        return <String, dynamic>{};
+      }
+    }
+  }
+
+  /// POST ext/suffix : expect status code 201, return created element if successful
+  Future<Map<String, dynamic>> create(dynamic t, {String suffix = ""}) async {
     final response = await http.post(Uri.parse(host + ext + suffix),
         headers: headers, body: jsonEncode(t));
     if (response.statusCode == 201) {
@@ -193,14 +351,42 @@ abstract class Repository {
         if (host == displayHost) {
           toDecode = utf8.decode(response.body.runes.toList());
         }
-        return jsonDecode(toDecode);
+        return jsonDecode(toDecode) as Map<String, dynamic>;
       } catch (e) {
         logger.writeLog(Log(
             message: "POST ${ext + suffix}\nError while decoding response",
             level: LogLevel.error));
         throw AppException(ErrorType.invalidData, e.toString());
       }
-    } else if (response.statusCode == 204) {
+    } else if (response.statusCode == 403) {
+      logger.writeLog(Log(
+          message:
+              "POST ${ext + suffix}\n${response.statusCode} ${response.body}",
+          level: LogLevel.error));
+      String toDecode = response.body;
+      if (host == displayHost) {
+        toDecode = utf8.decode(response.body.runes.toList());
+      }
+      final decoded = jsonDecode(toDecode);
+      if (decoded["detail"] == expiredTokenDetail) {
+        throw AppException(ErrorType.tokenExpire, decoded["detail"] as String);
+      } else {
+        throw AppException(ErrorType.notFound, decoded["detail"] as String);
+      }
+    } else {
+      logger.writeLog(Log(
+          message:
+              "POST ${ext + suffix}\n${response.statusCode} ${response.body}",
+          level: LogLevel.error));
+      throw AppException(ErrorType.notFound, response.body);
+    }
+  }
+
+  /// POST ext/suffix : expect status code 200 or 204, return true if successful
+  Future<bool> apply(dynamic t, {String suffix = ""}) async {
+    final response = await http.post(Uri.parse(host + ext + suffix),
+        headers: headers, body: jsonEncode(t));
+    if (response.statusCode == 204 || response.statusCode == 200) {
       return true;
     } else if (response.statusCode == 403) {
       logger.writeLog(Log(
@@ -213,9 +399,9 @@ abstract class Repository {
       }
       final decoded = jsonDecode(toDecode);
       if (decoded["detail"] == expiredTokenDetail) {
-        throw AppException(ErrorType.tokenExpire, decoded["detail"]);
+        throw AppException(ErrorType.tokenExpire, decoded["detail"] as String);
       } else {
-        throw AppException(ErrorType.notFound, decoded["detail"]);
+        throw AppException(ErrorType.notFound, decoded["detail"] as String);
       }
     } else {
       logger.writeLog(Log(
@@ -243,9 +429,9 @@ abstract class Repository {
       }
       final decoded = jsonDecode(toDecode);
       if (decoded["detail"] == expiredTokenDetail) {
-        throw AppException(ErrorType.tokenExpire, decoded["detail"]);
+        throw AppException(ErrorType.tokenExpire, decoded["detail"] as String);
       } else {
-        throw AppException(ErrorType.notFound, decoded["detail"]);
+        throw AppException(ErrorType.notFound, decoded["detail"] as String);
       }
     } else {
       logger.writeLog(Log(
@@ -273,9 +459,9 @@ abstract class Repository {
       }
       final decoded = jsonDecode(toDecode);
       if (decoded["detail"] == expiredTokenDetail) {
-        throw AppException(ErrorType.tokenExpire, decoded["detail"]);
+        throw AppException(ErrorType.tokenExpire, decoded["detail"] as String);
       } else {
-        throw AppException(ErrorType.notFound, decoded["detail"]);
+        throw AppException(ErrorType.notFound, decoded["detail"] as String);
       }
     } else {
       logger.writeLog(Log(

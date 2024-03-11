@@ -20,7 +20,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 class EventUi extends ConsumerWidget {
   final Event event;
   final bool isDetailPage, isAdmin;
-  final Function()? onEdit, onConfirm, onDecline, onCopy, onInfo;
+  final void Function()? onEdit, onConfirm, onDecline, onCopy, onInfo;
   const EventUi(
       {super.key,
       required this.event,
@@ -111,7 +111,8 @@ class EventUi extends ConsumerWidget {
                           GestureDetector(
                             onTap: () {
                               eventNotifier.setEvent(event);
-                              QR.to(EventRouter.root + EventRouter.detail);
+                              QR.to<void>(
+                                  EventRouter.root + EventRouter.detail);
                             },
                             child: HeroIcon(
                               HeroIcons.informationCircle,
@@ -184,7 +185,7 @@ class EventUi extends ConsumerWidget {
                                 child: GestureDetector(
                                   onTap: () async {
                                     eventNotifier.setEvent(event);
-                                    QR.to(
+                                    QR.to<void>(
                                         EventRouter.root + EventRouter.addEdit);
                                   },
                                   child: EditDeleteButton(
@@ -215,7 +216,7 @@ class EventUi extends ConsumerWidget {
                               Expanded(
                                 child: WaitingButton(
                                   onTap: () async {
-                                    showDialog(
+                                    showDialog<void>(
                                         context: context,
                                         builder: (BuildContext context) {
                                           return CustomDialogBox(

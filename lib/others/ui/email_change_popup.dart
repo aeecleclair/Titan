@@ -35,7 +35,7 @@ class EmailChangeDialog extends HookConsumerWidget {
         duration: const Duration(milliseconds: 500), initialValue: 0);
     final checkAnimation = CurvedAnimation(
         parent: checkAnimationController, curve: Curves.bounceOut);
-    final ValueNotifier<AsyncValue> currentState =
+    final ValueNotifier<AsyncValue<dynamic>> currentState =
         useState(AsyncError("", StackTrace.current));
     final displayForm = useState(true);
     return Dialog(

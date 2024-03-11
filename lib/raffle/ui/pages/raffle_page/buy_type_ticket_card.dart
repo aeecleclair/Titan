@@ -24,7 +24,7 @@ class BuyPackTicket extends HookConsumerWidget {
     return GestureDetector(
         onTap: () {
           if (raffle.raffleStatusType == RaffleStatusType.open) {
-            showDialog(
+            showDialog<void>(
               context: context,
               builder: (BuildContext context) {
                 return ConfirmPaymentDialog(

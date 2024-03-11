@@ -41,7 +41,7 @@ class ForgetPassword extends HookConsumerWidget {
                 alignment: Alignment.centerLeft,
                 child: GestureDetector(
                   onTap: () {
-                    QR.to(LoginRouter.root);
+                    QR.to<void>(LoginRouter.root);
                   },
                   child: const HeroIcon(
                     HeroIcons.chevronLeft,
@@ -101,7 +101,7 @@ class ForgetPassword extends HookConsumerWidget {
                           displayToastWithContext(
                               TypeMsg.msg, LoginTextConstants.sendedResetMail);
                           email.clear();
-                          QR.to(LoginRouter.forgotPassword +
+                          QR.to<void>(LoginRouter.forgotPassword +
                               LoginRouter.mailReceived);
                         } else {
                           displayToastWithContext(TypeMsg.error,
@@ -120,7 +120,7 @@ class ForgetPassword extends HookConsumerWidget {
                               splashColor:
                                   const Color.fromRGBO(255, 255, 255, 1),
                               onTap: () {
-                                QR.to(LoginRouter.root);
+                                QR.to<void>(LoginRouter.root);
                               },
                               child: const Text(
                                 LoginTextConstants.signIn,
@@ -139,7 +139,7 @@ class ForgetPassword extends HookConsumerWidget {
                               splashColor:
                                   const Color.fromRGBO(255, 255, 255, 1),
                               onTap: () {
-                                QR.to(LoginRouter.forgotPassword +
+                                QR.to<void>(LoginRouter.forgotPassword +
                                     LoginRouter.mailReceived);
                               },
                               child: const Text(

@@ -55,7 +55,7 @@ class AdminMainPage extends HookConsumerWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          QR.to(AdminRouter.root +
+                          QR.to<void>(AdminRouter.root +
                               AdminRouter.editModuleVisibility);
                         },
                         child: CardUi(children: [
@@ -70,7 +70,8 @@ class AdminMainPage extends HookConsumerWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          QR.to(AdminRouter.root + AdminRouter.addAssociation);
+                          QR.to<void>(
+                              AdminRouter.root + AdminRouter.addAssociation);
                         },
                         child: CardUi(children: [
                           const Spacer(),
@@ -84,7 +85,7 @@ class AdminMainPage extends HookConsumerWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          QR.to(AdminRouter.root + AdminRouter.addLoaner);
+                          QR.to<void>(AdminRouter.root + AdminRouter.addLoaner);
                         },
                         child: CardUi(
                           children: [
@@ -117,11 +118,11 @@ class AdminMainPage extends HookConsumerWidget {
                             isLoaner: loanersId.contains(group.id),
                             onEdit: () {
                               groupIdNotifier.setId(group.id);
-                              QR.to(AdminRouter.root +
+                              QR.to<void>(AdminRouter.root +
                                   AdminRouter.editAssociation);
                             },
                             onDelete: () async {
-                              await showDialog(
+                              showDialog<void>(
                                   context: context,
                                   builder: (context) {
                                     return CustomDialogBox(

@@ -35,9 +35,10 @@ abstract class LogoRepository extends Repository {
         String resp = utf8.decode(response.body.runes.toList());
         final decoded = json.decode(resp);
         if (decoded["detail"] == expiredTokenDetail) {
-          throw AppException(ErrorType.tokenExpire, decoded["detail"]);
+          throw AppException(
+              ErrorType.tokenExpire, decoded["detail"] as String);
         } else {
-          throw AppException(ErrorType.notFound, decoded["detail"]);
+          throw AppException(ErrorType.notFound, decoded["detail"] as String);
         }
       } else {
         Repository.logger.writeLog(Log(
@@ -118,9 +119,9 @@ abstract class LogoRepository extends Repository {
       String resp = utf8.decode(response.body.runes.toList());
       final decoded = json.decode(resp);
       if (decoded["detail"] == expiredTokenDetail) {
-        throw AppException(ErrorType.tokenExpire, decoded["detail"]);
+        throw AppException(ErrorType.tokenExpire, decoded["detail"] as String);
       } else {
-        throw AppException(ErrorType.notFound, decoded["detail"]);
+        throw AppException(ErrorType.notFound, decoded["detail"] as String);
       }
     } else {
       Repository.logger.writeLog(Log(

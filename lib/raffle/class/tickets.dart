@@ -15,10 +15,13 @@ class Ticket {
   late final String id;
 
   Ticket.fromJson(Map<String, dynamic> json) {
-    packTicket = PackTicket.fromJson(json['type_ticket']);
-    user = SimpleUser.fromJson(json['user']);
-    prize = json['lot'] != null ? Prize.fromJson(json['lot']) : null;
-    id = json['id'];
+    packTicket =
+        PackTicket.fromJson(json['type_ticket'] as Map<String, dynamic>);
+    user = SimpleUser.fromJson(json['user'] as Map<String, dynamic>);
+    prize = json['lot'] != null
+        ? Prize.fromJson(json['lot'] as Map<String, dynamic>)
+        : null;
+    id = json['id'] as String;
   }
 
   Map<String, dynamic> toJson() {

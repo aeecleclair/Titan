@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class StyledSearchBar extends HookConsumerWidget {
-  final Future Function(String)? onChanged;
+  final Future<void> Function(String)? onChanged;
   final String label;
   final Widget? suffixIcon;
   final Color color;

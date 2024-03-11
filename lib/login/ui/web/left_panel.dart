@@ -73,7 +73,7 @@ class LeftPanel extends HookConsumerWidget {
                   await authNotifier.getTokenFromRequest();
                   ref.watch(authTokenProvider).when(
                       data: (token) {
-                        QR.to(pathForwarding.path);
+                        QR.to<void>(pathForwarding.path);
                       },
                       error: (e, s) {
                         displayToast(context, TypeMsg.error,
@@ -139,7 +139,7 @@ class LeftPanel extends HookConsumerWidget {
                     const Spacer(),
                     GestureDetector(
                       onTap: () {
-                        QR.to(LoginRouter.createAccount);
+                        QR.to<void>(LoginRouter.createAccount);
                         controller?.forward();
                       },
                       child: const Text(LoginTextConstants.createAccount,
@@ -152,7 +152,7 @@ class LeftPanel extends HookConsumerWidget {
                     const Spacer(flex: 4),
                     GestureDetector(
                       onTap: () {
-                        QR.to(LoginRouter.forgotPassword);
+                        QR.to<void>(LoginRouter.forgotPassword);
                         controller?.forward();
                       },
                       child: const Text(LoginTextConstants.forgotPassword,

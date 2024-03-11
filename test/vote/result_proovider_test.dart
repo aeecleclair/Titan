@@ -28,8 +28,8 @@ void main() {
       expect(
           resultState.when(
             data: (data) => data,
-            loading: () => [],
-            error: (_, __) => [],
+            loading: () => List<Result>.empty(),
+            error: (_, __) => List<Result>.empty(),
           ),
           [result]);
     });
@@ -39,7 +39,7 @@ void main() {
 
       final resultState = await resultNotifier.loadResult();
 
-      expect(resultState, isA<AsyncError>());
+      expect(resultState, isA<AsyncError<dynamic>>());
     });
   });
 }

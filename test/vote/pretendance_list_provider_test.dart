@@ -32,8 +32,8 @@ void main() {
       expect(
         contenderListNotifier.state.when(
           data: (contenders) => contenders,
-          loading: () => [],
-          error: (error, stackTrace) => [],
+          loading: () => List<Contender>.empty(),
+          error: (error, stackTrace) => List<Contender>.empty(),
         ),
         contenders,
       );
@@ -58,8 +58,8 @@ void main() {
       expect(
         contenderListNotifier.state.when(
           data: (contenders) => contenders,
-          loading: () => [],
-          error: (error, stackTrace) => [],
+          loading: () => List<Contender>.empty(),
+          error: (error, stackTrace) => List<Contender>.empty(),
         ),
         contenders + [newContender],
       );
@@ -84,8 +84,8 @@ void main() {
       expect(
         contenderListNotifier.state.when(
           data: (contenders) => contenders,
-          loading: () => [],
-          error: (error, stackTrace) => [],
+          loading: () => List<Contender>.empty(),
+          error: (error, stackTrace) => List<Contender>.empty(),
         ),
         contenders
             .map((contender) => contender.id == updatedContender.id
@@ -114,8 +114,8 @@ void main() {
       expect(
         contenderListNotifier.state.when(
           data: (contenders) => contenders,
-          loading: () => [],
-          error: (error, stackTrace) => [],
+          loading: () => List<Contender>.empty(),
+          error: (error, stackTrace) => List<Contender>.empty(),
         ),
         contenders
             .where((contender) => contender.id != deletedContender.id)
@@ -138,8 +138,8 @@ void main() {
       expect(
         result.when(
           data: (contenders) => contenders,
-          loading: () => [],
-          error: (error, stackTrace) => [],
+          loading: () => List<Contender>.empty(),
+          error: (error, stackTrace) => List<Contender>.empty(),
         ),
         contenders,
       );
@@ -161,8 +161,8 @@ void main() {
       expect(
         contenderListNotifier.state.when(
           data: (contenders) => contenders,
-          loading: () => [],
-          error: (error, stackTrace) => [],
+          loading: () => List<Contender>.empty(),
+          error: (error, stackTrace) => List<Contender>.empty(),
         ),
         isNot(contenders),
       );

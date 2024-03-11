@@ -8,8 +8,8 @@ import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class PrizeCard extends StatelessWidget {
   final Prize lot;
-  final Function() onEdit;
-  final Future Function() onDelete, onDraw;
+  final void Function() onEdit;
+  final Future<void> Function() onDelete, onDraw;
   final RaffleStatusType status;
   const PrizeCard(
       {super.key,

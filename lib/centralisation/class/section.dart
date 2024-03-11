@@ -10,9 +10,9 @@ class Section {
   late final List<Module> moduleList;
   late final bool? expanded;
 
-  Section.fromJson(k, v) {
-    name = k;
-    moduleList = List<Module>.from(v.map((e) => Module.fromJson(e)));
+  Section.fromJson(String name, List<Map<String, dynamic>> modulesJson) {
+    name = name;
+    moduleList = modulesJson.map((e) => Module.fromJson(e)) as List<Module>;
     expanded = true;
   }
 

@@ -12,7 +12,7 @@ class PrizeCard extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
         onTap: () {
-          showDialog(
+          showDialog<void>(
             context: context,
             builder: (BuildContext context) {
               return PrizeDialog(prize: prize);

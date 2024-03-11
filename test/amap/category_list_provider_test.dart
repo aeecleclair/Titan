@@ -58,7 +58,7 @@ void main() {
 
       final result = container.read(categoryListProvider);
 
-      expect(result, []);
+      expect(result, List<String>.empty());
     });
 
     test('returns an empty list when productListProvider has an error', () {
@@ -75,7 +75,7 @@ void main() {
 
       final result = container.read(categoryListProvider);
 
-      expect(result, []);
+      expect(result, List<String>.empty());
     });
   });
 }

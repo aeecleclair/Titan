@@ -23,11 +23,12 @@ class Delivery {
   late final String id;
 
   Delivery.fromJson(Map<String, dynamic> json) {
-    deliveryDate = DateTime.parse(json['delivery_date']);
-    products =
-        List<Product>.from(json['products'].map((x) => Product.fromJson(x)));
-    id = json['id'];
-    status = stringToDeliveryStatus(json['status']);
+    deliveryDate = DateTime.parse(json['delivery_date'] as String);
+    products = (json['products'] as List<Map<String, dynamic>>)
+        .map((x) => Product.fromJson(x))
+        .toList();
+    id = json['id'] as String;
+    status = stringToDeliveryStatus(json['status'] as String);
     expanded = false;
   }
 

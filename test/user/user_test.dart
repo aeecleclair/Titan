@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/user/class/applicant.dart';
 import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/class/user.dart';
@@ -31,7 +32,7 @@ void main() {
         "created_on": "2021-01-01",
         "email": "email",
         "floor": "autre",
-        "groups": [],
+        "groups": List<SimpleGroup>.empty(),
         "phone": null,
         "promo": null
       });
@@ -44,7 +45,7 @@ void main() {
       expect(user.createdOn, '2021-01-01');
       expect(user.email, 'email');
       expect(user.floor, 'autre');
-      expect(user.groups, []);
+      expect(user.groups, List<SimpleGroup>.empty());
       expect(user.phone, null);
       expect(user.promo, null);
     });
@@ -59,7 +60,7 @@ void main() {
         "created_on": "2021-01-01",
         "email": "email",
         "floor": "autre",
-        "groups": [],
+        "groups": List<SimpleGroup>.empty(),
         "phone": "phone",
         "promo": 1
       });
@@ -72,7 +73,7 @@ void main() {
       expect(user.createdOn, '2021-01-01');
       expect(user.email, 'email');
       expect(user.floor, 'autre');
-      expect(user.groups, []);
+      expect(user.groups, List<SimpleGroup>.empty());
       expect(user.phone, 'phone');
       expect(user.promo, 1);
     });
@@ -95,8 +96,8 @@ void main() {
       expect(newUser.email, 'email');
       newUser = user.copyWith(floor: 'floor');
       expect(newUser.floor, 'floor');
-      newUser = user.copyWith(groups: []);
-      expect(newUser.groups, []);
+      newUser = user.copyWith(groups: List<SimpleGroup>.empty());
+      expect(newUser.groups, List<SimpleGroup>.empty());
       newUser = user.copyWith(phone: 'phone');
       expect(newUser.phone, 'phone');
       newUser = user.copyWith(promo: 1);
@@ -113,7 +114,7 @@ void main() {
         createdOn: '2021-01-01',
         email: 'email',
         floor: 'floor',
-        groups: [],
+        groups: List<SimpleGroup>.empty(),
         phone: 'phone',
         promo: null,
       );
@@ -131,7 +132,7 @@ void main() {
         "created_on": "2021-01-01",
         "email": "email",
         "floor": "floor",
-        "groups": [],
+        "groups": List<SimpleGroup>.empty(),
         "phone": "phone",
         "promo": null
       });
@@ -144,7 +145,7 @@ void main() {
         "created_on": "2021-01-01",
         "email": "email",
         "floor": "floor",
-        "groups": [],
+        "groups": List<SimpleGroup>.empty(),
         "phone": "phone",
         "promo": null
       });
@@ -335,7 +336,7 @@ void main() {
       final mockUser = MockUserRepository();
       when(() => mockUser.getMe()).thenThrow(Exception('Error'));
       final UserNotifier userNotifier = UserNotifier(userRepository: mockUser);
-      expect(await userNotifier.loadMe(), isA<AsyncError>());
+      expect(await userNotifier.loadMe(), isA<AsyncError<dynamic>>());
     });
   });
 

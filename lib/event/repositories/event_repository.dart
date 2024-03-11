@@ -23,7 +23,7 @@ class EventRepository extends Repository {
   }
 
   Future<bool> confirmEvent(Event event) async {
-    return await update({}, event.id,
+    return await update(<String, dynamic>{}, event.id,
         suffix: '/reply/${event.decision.toString().split('.')[1]}');
   }
 

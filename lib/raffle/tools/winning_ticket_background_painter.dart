@@ -56,7 +56,7 @@ class Sphere {
 
 class AmapBackgroundPainter extends CustomPainter {
   List<Sphere> spheres = [];
-  final Animation animation;
+  final Animation<void> animation;
   AmapBackgroundPainter({required this.animation})
       : super(
           repaint: animation,

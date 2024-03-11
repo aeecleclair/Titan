@@ -28,7 +28,7 @@ class QuitDialog extends HookConsumerWidget {
               child: CustomDialogBox(
                   descriptions: DrawerTextConstants.loginOut,
                   title: DrawerTextConstants.logOut,
-                  onYes: () {
+                  onYes: () async {
                     auth.deleteToken();
                     if (!kIsWeb) {
                       ref.watch(messagesProvider.notifier).forgetDevice();

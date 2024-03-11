@@ -120,7 +120,7 @@ void main() {
       DateTime.parse("2021-01-04T00:00:00.000"),
       DateTime.parse("2021-01-11T00:00:00.000")
     ]);
-    expect(getDateInRecurrence(recurrenceRule2, date), []);
+    expect(getDateInRecurrence(recurrenceRule2, date), List<DateTime>.empty());
   });
 
   test('Testing normalzedDate', () {

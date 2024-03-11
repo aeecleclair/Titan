@@ -39,7 +39,7 @@ class UserRepository extends Repository {
         "old_password": oldPassword,
         "new_password": newPassword,
         "email": mail
-      }, suffix: "change-password"))["success"];
+      }, suffix: "change-password"))["success"] as bool;
     } catch (e) {
       return false;
     }
@@ -47,7 +47,7 @@ class UserRepository extends Repository {
 
   Future<bool> deletePersonalData() async {
     try {
-      return await create({}, suffix: "me/ask-deletion");
+      return await apply(<String, dynamic>{}, suffix: "me/ask-deletion");
     } catch (e) {
       return false;
     }
@@ -55,7 +55,7 @@ class UserRepository extends Repository {
 
   Future<bool> askMailMigration(String mail) async {
     try {
-      return await create({"new_email": mail}, suffix: "migrate-mail");
+      return await apply({"new_email": mail}, suffix: "migrate-mail");
     } catch (e) {
       return false;
     }

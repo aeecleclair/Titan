@@ -39,7 +39,7 @@ class CreateAccountPage extends HookConsumerWidget {
     final phone = useTextEditingController();
     final promo = useTextEditingController();
     final lastIndex = useState(isCodeGiven ? 1 : 0);
-    List<DropdownMenuItem> items = Floors.values
+    List<DropdownMenuItem<String>> items = Floors.values
         .map((e) => DropdownMenuItem(
               value: capitalize(e.toString().split('.').last),
               child: Text(capitalize(e.toString().split('.').last)),
@@ -267,7 +267,7 @@ class CreateAccountPage extends HookConsumerWidget {
                 displayToastWithContext(
                     TypeMsg.msg, LoginTextConstants.accountActivated);
                 authTokenNotifier.deleteToken();
-                QR.to(LoginRouter.root);
+                QR.to<void>(LoginRouter.root);
               } else {
                 displayToastWithContext(
                     TypeMsg.error, LoginTextConstants.accountNotActivated);
@@ -299,7 +299,7 @@ class CreateAccountPage extends HookConsumerWidget {
               alignment: Alignment.centerLeft,
               child: GestureDetector(
                 onTap: () {
-                  QR.to(LoginRouter.createAccount);
+                  QR.to<void>(LoginRouter.createAccount);
                 },
                 child: const HeroIcon(
                   HeroIcons.chevronLeft,

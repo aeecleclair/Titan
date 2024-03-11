@@ -27,8 +27,9 @@ class Calendar extends HookConsumerWidget {
     void calendarTapped(CalendarTapDetails details, BuildContext context) {
       if (details.targetElement == CalendarElement.appointment ||
           details.targetElement == CalendarElement.agenda) {
-        final Appointment appointmentDetails = details.appointments![0];
-        showDialog(
+        final Appointment appointmentDetails =
+            details.appointments![0] as Appointment;
+        showDialog<Dialog>(
             context: context,
             builder: (BuildContext context) {
               return Dialog(

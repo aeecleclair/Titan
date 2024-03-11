@@ -82,18 +82,18 @@ class ListEvent extends HookConsumerWidget {
                     isAdmin: true,
                     onEdit: () {
                       eventNotifier.setEvent(e);
-                      QR.to(EventRouter.root +
+                      QR.to<void>(EventRouter.root +
                           EventRouter.admin +
                           EventRouter.addEdit);
                     },
                     onInfo: () {
                       eventNotifier.setEvent(e);
-                      QR.to(EventRouter.root +
+                      QR.to<void>(EventRouter.root +
                           EventRouter.admin +
                           EventRouter.detail);
                     },
                     onConfirm: () async {
-                      await showDialog(
+                      showDialog<void>(
                           context: context,
                           builder: (context) {
                             return CustomDialogBox(
@@ -115,7 +115,7 @@ class ListEvent extends HookConsumerWidget {
                           });
                     },
                     onDecline: () async {
-                      await showDialog(
+                      showDialog<void>(
                           context: context,
                           builder: (context) {
                             return CustomDialogBox(
@@ -139,7 +139,7 @@ class ListEvent extends HookConsumerWidget {
                     },
                     onCopy: () {
                       eventNotifier.setEvent(e.copyWith(id: ""));
-                      QR.to(EventRouter.root +
+                      QR.to<void>(EventRouter.root +
                           EventRouter.admin +
                           EventRouter.addEdit);
                     },

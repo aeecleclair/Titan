@@ -45,7 +45,7 @@ class AccountHandler extends HookConsumerWidget {
         },
         editingController: editingController,
       ),
-      HorizontalListView(
+      HorizontalListView<void>(
         height: 135,
         children: [
           const SizedBox(width: 15),

@@ -54,7 +54,7 @@ class LocalNotificationService {
         android: androidNotificationDetails, iOS: darwinNotificationDetails);
   }
 
-  Future showNotification(message_class.Message message) async {
+  Future<void> showNotification(message_class.Message message) async {
     final notificationDetails = getNotificationDetails();
     if (message.deliveryDateTime == null) {
       _localNotificationService.show(generateIntFromString(message.context),
@@ -180,7 +180,8 @@ class LocalNotificationService {
       return;
     }
     final message = message_class.Message.fromJson(
-        jsonDecode(utf8.decode(payload.runes.toList())));
+        jsonDecode(utf8.decode(payload.runes.toList()))
+            as Map<String, dynamic>);
     onNotificationClick.add(message);
   }
 
@@ -201,7 +202,8 @@ class LocalNotificationService {
       return;
     }
     final message = message_class.Message.fromJson(
-        jsonDecode(utf8.decode(response.payload!.runes.toList())));
+        jsonDecode(utf8.decode(response.payload!.runes.toList()))
+            as Map<String, dynamic>);
     onNotificationClick.add(message);
   }
 
@@ -209,7 +211,7 @@ class LocalNotificationService {
     if (message.actionModule != null && message.actionTable != null) {
       final path =
           await handleAction(message.actionModule!, message.actionTable!);
-      QR.to(
+      QR.to<void>(
           "fr.myecl.titan://$path?actionModule=${message.actionModule!}&actionTable=${message.actionTable!}");
     }
   }
@@ -222,7 +224,8 @@ void onDidReceiveBackgroundNotificationResponse(
     return;
   }
   final message = message_class.Message.fromJson(
-      jsonDecode(utf8.decode(response.payload!.runes.toList())));
+      jsonDecode(utf8.decode(response.payload!.runes.toList()))
+          as Map<String, dynamic>);
   if (message.actionModule != null && message.actionTable != null) {
     final provider = providers[message.actionModule];
     if (provider == null) {
@@ -233,7 +236,7 @@ void onDidReceiveBackgroundNotificationResponse(
       return;
     }
     final path = information.item1;
-    QR.to(
+    QR.to<void>(
         "fr.myecl.titan://$path?actionModule=${message.actionModule!}&actionTable=${message.actionTable!}");
   }
 }

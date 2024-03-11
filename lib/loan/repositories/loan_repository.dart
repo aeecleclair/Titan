@@ -36,12 +36,12 @@ class LoanRepository extends Repository {
   }
 
   Future<bool> extendLoan(Loan loan, int newDate) async {
-    return await create({"duration": newDate * 24 * 60 * 60},
+    return await apply({"duration": newDate * 24 * 60 * 60},
         suffix: "${loan.id}/extend");
   }
 
   Future<bool> returnLoan(String loanId) async {
-    return await create({}, suffix: "$loanId/return");
+    return await apply(<String, dynamic>{}, suffix: "$loanId/return");
   }
 
   Future<List<Loan>> getHistory(String loanerId) async {

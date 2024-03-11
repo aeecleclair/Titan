@@ -10,7 +10,7 @@ import 'package:myecl/tools/ui/builders/waiting_button.dart';
 class AssociationUi extends HookConsumerWidget {
   final SimpleGroup group;
   final void Function() onEdit;
-  final Future Function() onDelete;
+  final Future<void> Function() onDelete;
   final bool isLoaner;
   const AssociationUi(
       {super.key,

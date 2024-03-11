@@ -26,7 +26,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 final appRouterProvider = Provider<AppRouter>((ref) => AppRouter(ref));
 
 class AppRouter {
-  final ProviderRef ref;
+  final ProviderRef<AppRouter> ref;
   late List<QRoute> routes = [];
   static const String root = '/';
   static const String loading = '/loading';

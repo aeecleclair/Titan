@@ -21,7 +21,7 @@ class Voter {
 
   factory Voter.fromJson(Map<String, dynamic> map) {
     return Voter(
-      groupId: map['group_id'],
+      groupId: map['group_id'] as String,
     );
   }
 

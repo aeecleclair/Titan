@@ -44,7 +44,7 @@ class Register extends HookConsumerWidget {
                 alignment: Alignment.centerLeft,
                 child: GestureDetector(
                   onTap: () {
-                    QR.to(LoginRouter.root);
+                    QR.to<void>(LoginRouter.root);
                   },
                   child: const HeroIcon(
                     HeroIcons.chevronLeft,
@@ -114,7 +114,7 @@ class Register extends HookConsumerWidget {
                             if (value) {
                               hidePass.value = true;
                               mail.clear();
-                              QR.to(LoginRouter.createAccount +
+                              QR.to<void>(LoginRouter.createAccount +
                                   LoginRouter.mailReceived);
                               displayToastWithContext(
                                   TypeMsg.msg, LoginTextConstants.sendedMail);
@@ -138,7 +138,7 @@ class Register extends HookConsumerWidget {
                               splashColor:
                                   const Color.fromRGBO(255, 255, 255, 1),
                               onTap: () {
-                                QR.to(LoginRouter.root);
+                                QR.to<void>(LoginRouter.root);
                               },
                               child: const Text(
                                 LoginTextConstants.signIn,
@@ -157,7 +157,7 @@ class Register extends HookConsumerWidget {
                               splashColor:
                                   const Color.fromRGBO(255, 255, 255, 1),
                               onTap: () {
-                                QR.to(LoginRouter.createAccount +
+                                QR.to<void>(LoginRouter.createAccount +
                                     LoginRouter.mailReceived);
                               },
                               child: const Text(

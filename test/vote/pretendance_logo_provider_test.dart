@@ -21,7 +21,7 @@ void main() {
 
   group('ContenderLogoProvider', () {
     test('initial state is loading', () {
-      expect(provider.state, isA<AsyncLoading>());
+      expect(provider.state, isA<AsyncLoading<Image>>());
     });
 
     test('getLogo returns Image', () async {

@@ -4,7 +4,7 @@ import 'package:myecl/login/class/create_account.dart';
 import 'package:myecl/login/class/recover_request.dart';
 import 'package:myecl/login/repositories/sign_up_repository.dart';
 
-class SignUpProvider extends StateNotifier {
+class SignUpProvider extends StateNotifier<void> {
   final SignUpRepository repository;
   SignUpProvider({required this.repository}) : super(null);
 

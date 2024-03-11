@@ -17,24 +17,25 @@ class SignUpRepository extends Repository {
         "email": email,
         "account_type": accountTypeToID(accountType),
       }, suffix: "create");
-      return value["success"];
+      return value["success"] as bool;
     } catch (e) {
       return false;
     }
   }
 
   Future<bool> recoverUser(String email) async {
-    return (await create({"email": email}, suffix: "recover"))["success"];
+    return (await create({"email": email}, suffix: "recover"))["success"]
+        as bool;
   }
 
   Future<bool> resetPasswordUser(String token, String password) async {
-    return await create({"reset_token": token, "new_password": password},
+    return await apply({"reset_token": token, "new_password": password},
         suffix: "reset-password");
   }
 
   Future<bool> changePasswordUser(
       String userId, String oldPassword, String newPassword) async {
-    return await create({
+    return await apply({
       "user_id": userId,
       "old_password": oldPassword,
       "new_password": newPassword
@@ -44,7 +45,7 @@ class SignUpRepository extends Repository {
   Future<bool> activateUser(CreateAccount createAccount) async {
     try {
       final value = await create(createAccount.toJson(), suffix: "activate");
-      return value["success"];
+      return value["success"] as bool;
     } catch (e) {
       return false;
     }
@@ -54,7 +55,7 @@ class SignUpRepository extends Repository {
     try {
       final value =
           await create(recoverRequest.toJson(), suffix: "reset-password");
-      return value["success"];
+      return value["success"] as bool;
     } catch (e) {
       return false;
     }

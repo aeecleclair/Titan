@@ -57,9 +57,9 @@ class ContenderListNotifier extends ListNotifier<Contender> {
   void shuffle() {
     state.maybeWhen(
       data: (contenders) {
-        final serious = [];
-        final fakes = [];
-        final blank = [];
+        final serious = List<Contender>.empty(growable: true);
+        final fakes = List<Contender>.empty(growable: true);
+        final blank = List<Contender>.empty(growable: true);
         for (var contender in contenders) {
           if (contender.listType == ListType.serious) {
             serious.add(contender);

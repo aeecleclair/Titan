@@ -5,8 +5,8 @@ class Result {
   Result({required this.id, required this.count});
 
   Result.fromJson(Map<String, dynamic> json) {
-    id = json['list_id'];
-    count = json['count'];
+    id = json['list_id'] as String;
+    count = json['count'] as int;
   }
 
   Map<String, dynamic> toJson() {

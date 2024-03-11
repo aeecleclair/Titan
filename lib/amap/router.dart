@@ -19,13 +19,14 @@ import 'package:myecl/amap/ui/pages/presentation_page/text.dart'
 import 'package:myecl/amap/ui/pages/product_pages/add_edit_product.dart'
     deferred as add_edit_product;
 import 'package:myecl/drawer/class/module.dart';
+import 'package:myecl/router.dart';
 import 'package:myecl/tools/middlewares/admin_middleware.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AmapRouter {
-  final ProviderRef ref;
+  final ProviderRef<AppRouter> ref;
   static const String root = '/amap';
   static const String admin = '/admin';
   static const String addEditDelivery = '/add_edit_delivery';

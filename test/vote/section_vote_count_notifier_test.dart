@@ -18,7 +18,7 @@ void main() {
 
   group('SectionVoteCountNotifier', () {
     test('initial state is AsyncLoading', () {
-      expect(notifier.state, isA<AsyncLoading>());
+      expect(notifier.state, isA<AsyncLoading<int>>());
     });
 
     test('loadCount returns AsyncValue<int>', () async {
@@ -39,7 +39,7 @@ void main() {
 
       final result = await notifier.loadCount(id);
 
-      expect(result, isA<AsyncError>());
+      expect(result, isA<AsyncError<dynamic>>());
     });
   });
 }

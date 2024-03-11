@@ -54,7 +54,7 @@ class TicketHandler extends HookConsumerWidget {
                 GestureDetector(
                     onTap: () {
                       packTicketNotifier.setPackTicket(PackTicket.empty());
-                      QR.to(RaffleRouter.root +
+                      QR.to<void>(RaffleRouter.root +
                           RaffleRouter.detail +
                           RaffleRouter.creation +
                           RaffleRouter.addEditPackTicket);
@@ -93,7 +93,7 @@ class TicketHandler extends HookConsumerWidget {
                                 packTicket: e,
                                 onEdit: () {
                                   packTicketNotifier.setPackTicket(e);
-                                  QR.to(RaffleRouter.root +
+                                  QR.to<void>(RaffleRouter.root +
                                       RaffleRouter.detail +
                                       RaffleRouter.creation +
                                       RaffleRouter.addEditPackTicket);
@@ -101,13 +101,13 @@ class TicketHandler extends HookConsumerWidget {
                                 showButton: raffle.raffleStatusType ==
                                     RaffleStatusType.creation,
                                 onDelete: () async {
-                                  await showDialog(
+                                  showDialog<void>(
                                       context: context,
                                       builder: (context) => CustomDialogBox(
                                             title: "Supprimer le ticket",
                                             descriptions:
                                                 "Voulez-vous vraiment supprimer ce ticket?",
-                                            onYes: () {
+                                            onYes: () async {
                                               tokenExpireWrapper(ref, () async {
                                                 final value =
                                                     await packTicketsNotifier

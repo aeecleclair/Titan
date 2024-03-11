@@ -33,7 +33,7 @@ void main() {
   group('Testing SingleNotifier : loadList', () {
     test('Should initiate to AsyncLoading', () {
       final notifier = MockSingleNotifier();
-      expect(notifier.state, isA<AsyncLoading>());
+      expect(notifier.state, isA<AsyncLoading<MockData>>());
     });
 
     test('Should state be AsyncData when loading data', () async {
@@ -50,10 +50,10 @@ void main() {
       final error = AppException(ErrorType.tokenExpire, 'test');
       try {
         await notifier.testLoadList(() => Future.error(error));
-        expect(notifier.state, isA<AsyncData>()); // not reached
+        expect(notifier.state, isA<AsyncData<MockData>>()); // not reached
       } catch (e) {
         expect(e, error);
-        expect(notifier.state, isA<AsyncError>());
+        expect(notifier.state, isA<AsyncError<dynamic>>());
       }
     });
 
@@ -90,7 +90,7 @@ void main() {
       expect(notifier.state, isA<AsyncData<MockData>>());
       expect(
           notifier.state
-              .when(data: (d) => d, error: (e, s) => [], loading: () => []),
+              .when(data: (d) => d, error: (e, s) => null, loading: () => null),
           newData);
     });
 
@@ -109,8 +109,8 @@ void main() {
         expect(e, error);
         expect(notifier.state, isA<AsyncData<MockData>>());
         expect(
-            notifier.state
-                .when(data: (d) => d, error: (e, s) => [], loading: () => []),
+            notifier.state.when(
+                data: (d) => d, error: (e, s) => null, loading: () => null),
             data);
       }
     });
@@ -128,7 +128,7 @@ void main() {
       expect(notifier.state, isA<AsyncData<MockData>>());
       expect(
           notifier.state
-              .when(data: (d) => d, error: (e, s) => [], loading: () => []),
+              .when(data: (d) => d, error: (e, s) => null, loading: () => null),
           data);
     });
 
@@ -139,7 +139,7 @@ void main() {
       final newData = MockData();
       final result = await notifier.testAdd((t) => Future.value(t), newData);
       expect(result, isFalse);
-      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state, isA<AsyncError<dynamic>>());
       expect(notifier.state.error, "Cannot add while loading");
     });
 
@@ -152,7 +152,7 @@ void main() {
       final error = AppException(ErrorType.notFound, 'test');
       final result = await notifier.testAdd((t) => throw error, newData);
       expect(result, isFalse);
-      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state, isA<AsyncError<dynamic>>());
       expect(notifier.state.error, "test");
     });
   });
@@ -169,7 +169,7 @@ void main() {
       expect(notifier.state, isA<AsyncData<MockData>>());
       expect(
           notifier.state
-              .when(data: (d) => d, error: (e, s) => [], loading: () => []),
+              .when(data: (d) => d, error: (e, s) => null, loading: () => null),
           newData);
     });
 
@@ -186,7 +186,7 @@ void main() {
       expect(notifier.state, isA<AsyncData<MockData>>());
       expect(
           notifier.state
-              .when(data: (d) => d, error: (e, s) => [], loading: () => []),
+              .when(data: (d) => d, error: (e, s) => null, loading: () => null),
           data);
     });
 
@@ -205,12 +205,14 @@ void main() {
         expect(e, error);
         expect(notifier.state, isA<AsyncData<MockData>>());
         expect(
-            notifier.state
-                .when(data: (d) => d, error: (e, s) => [], loading: () => []),
+            notifier.state.when(
+                data: (d) => d, error: (e, s) => null, loading: () => null),
             data);
         expect(
             notifier.state.when(
-                    data: (d) => d, error: (e, s) => [], loading: () => []) ==
+                    data: (d) => d,
+                    error: (e, s) => null,
+                    loading: () => null) ==
                 newData,
             isFalse);
       }
@@ -229,11 +231,11 @@ void main() {
       expect(notifier.state, isA<AsyncData<MockData>>());
       expect(
           notifier.state
-              .when(data: (d) => d, error: (e, s) => [], loading: () => []),
+              .when(data: (d) => d, error: (e, s) => null, loading: () => null),
           data);
       expect(
           notifier.state.when(
-                  data: (d) => d, error: (e, s) => [], loading: () => []) ==
+                  data: (d) => d, error: (e, s) => null, loading: () => null) ==
               newData,
           isFalse);
     });
@@ -246,7 +248,7 @@ void main() {
       final result =
           await notifier.testUpdate((t) => Future.value(true), newData);
       expect(result, isFalse);
-      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state, isA<AsyncError<dynamic>>());
       expect(notifier.state.error, "Cannot update while loading");
     });
 
@@ -259,7 +261,7 @@ void main() {
       final result =
           await notifier.testUpdate((t) => Future.value(true), newData);
       expect(result, isFalse);
-      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state, isA<AsyncError<dynamic>>());
       expect(notifier.state.error, "test");
     });
 
@@ -273,7 +275,7 @@ void main() {
       final result =
           await notifier.testUpdate((t) => Future.value(true), newData);
       expect(result, isFalse);
-      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state, isA<AsyncError<dynamic>>());
       expect(notifier.state.error, error);
     });
 
@@ -286,10 +288,10 @@ void main() {
       final newData = MockData();
       try {
         await notifier.testUpdate((t) => Future.value(true), newData);
-        expect(notifier.state, isA<AsyncError>()); // not reached
+        expect(notifier.state, isA<AsyncError<dynamic>>()); // not reached
       } catch (e) {
         expect(e, error);
-        expect(notifier.state, isA<AsyncError>());
+        expect(notifier.state, isA<AsyncError<dynamic>>());
         expect(notifier.state.error, error);
       }
     });
@@ -303,7 +305,7 @@ void main() {
       final result =
           await notifier.testDelete((id) => Future.value(true), 'id', data);
       expect(result, isTrue);
-      expect(notifier.state, isA<AsyncLoading>());
+      expect(notifier.state, isA<AsyncLoading<MockData>>());
     });
 
     test(
@@ -318,7 +320,7 @@ void main() {
       expect(notifier.state, isA<AsyncData<MockData>>());
       expect(
           notifier.state
-              .when(data: (d) => d, error: (e, s) => [], loading: () => []),
+              .when(data: (d) => d, error: (e, s) => null, loading: () => null),
           data);
     });
 
@@ -336,8 +338,8 @@ void main() {
         expect(e, error);
         expect(notifier.state, isA<AsyncData<MockData>>());
         expect(
-            notifier.state
-                .when(data: (d) => d, error: (e, s) => [], loading: () => []),
+            notifier.state.when(
+                data: (d) => d, error: (e, s) => null, loading: () => null),
             data);
       }
     });
@@ -354,7 +356,7 @@ void main() {
       expect(notifier.state, isA<AsyncData<MockData>>());
       expect(
           notifier.state
-              .when(data: (d) => d, error: (e, s) => [], loading: () => []),
+              .when(data: (d) => d, error: (e, s) => null, loading: () => null),
           data);
     });
 
@@ -366,7 +368,7 @@ void main() {
       final result =
           await notifier.testDelete((id) => Future.value(true), 'id', data);
       expect(result, isFalse);
-      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state, isA<AsyncError<dynamic>>());
       expect(notifier.state.error, "Cannot delete while loading");
     });
 
@@ -379,7 +381,7 @@ void main() {
       final result =
           await notifier.testDelete((id) => Future.value(true), 'id', data);
       expect(result, isFalse);
-      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state, isA<AsyncError<dynamic>>());
       expect(notifier.state.error, "test");
     });
 
@@ -393,7 +395,7 @@ void main() {
       final result =
           await notifier.testDelete((id) => Future.value(true), 'id', data);
       expect(result, isFalse);
-      expect(notifier.state, isA<AsyncError>());
+      expect(notifier.state, isA<AsyncError<dynamic>>());
       expect(notifier.state.error, error);
     });
 
@@ -406,10 +408,10 @@ void main() {
       final data = MockData();
       try {
         await notifier.testDelete((t) => Future.value(true), 'id', data);
-        expect(notifier.state, isA<AsyncError>()); // not reached
+        expect(notifier.state, isA<AsyncError<dynamic>>()); // not reached
       } catch (e) {
         expect(e, error);
-        expect(notifier.state, isA<AsyncError>());
+        expect(notifier.state, isA<AsyncError<dynamic>>());
         expect(notifier.state.error, error);
       }
     });

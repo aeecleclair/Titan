@@ -13,7 +13,7 @@ class AdminModulePage extends HookConsumerWidget {
     return RaffleTemplate(
       child: Refresher(
           onRefresh: () async {
-            () => {};
+            () {};
           },
           child: const Column(
             children: [

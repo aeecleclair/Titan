@@ -23,7 +23,9 @@ class TicketRepository extends Repository {
   }
 
   Future<List<Ticket>> buyTicket(String typeTicketId, String userId) async {
-    return List<Ticket>.from((await create({}, suffix: "/buy/$typeTicketId"))
-        .map((e) => Ticket.fromJson(e)));
+    return List<Ticket>.from(
+        (await create(<String, dynamic>{}, suffix: "/buy/$typeTicketId")
+                as List<Map<String, dynamic>>)
+            .map((e) => Ticket.fromJson(e)));
   }
 }

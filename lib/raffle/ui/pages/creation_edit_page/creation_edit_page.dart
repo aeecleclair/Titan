@@ -209,7 +209,8 @@ class CreationPage extends HookConsumerWidget {
                               if (logo.value != null) {
                                 raffleLogoNotifier.updateLogo(
                                     raffle.id, logo.value!);
-                                QR.to(RaffleRouter.root + RaffleRouter.detail);
+                                QR.to<void>(
+                                    RaffleRouter.root + RaffleRouter.detail);
                               }
                             },
                             error: (error, s) {},
@@ -244,7 +245,7 @@ class CreationPage extends HookConsumerWidget {
                         builder: (child) => BlueBtn(child: child),
                         onTap: () async {
                           await tokenExpireWrapper(ref, () async {
-                            await showDialog(
+                            showDialog<void>(
                                 context: context,
                                 builder: (context) => CustomDialogBox(
                                       title: raffle.raffleStatusType ==

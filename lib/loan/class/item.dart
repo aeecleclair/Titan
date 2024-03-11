@@ -17,12 +17,12 @@ class Item {
   late final double suggestedLendingDuration;
 
   Item.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    caution = json['suggested_caution'];
-    totalQuantity = json['total_quantity'];
-    loanedQuantity = json['loaned_quantity'];
-    suggestedLendingDuration = json['suggested_lending_duration'];
+    id = json['id'] as String;
+    name = json['name'] as String;
+    caution = json['suggested_caution'] as int;
+    totalQuantity = json['total_quantity'] as int;
+    loanedQuantity = json['loaned_quantity'] as int;
+    suggestedLendingDuration = json['suggested_lending_duration'] as double;
   }
 
   Map<String, dynamic> toJson() {

@@ -34,6 +34,6 @@ class CacheManager {
     if (bytes == "") {
       return Uint8List(0);
     }
-    return Uint8List.fromList(List<int>.from(json.decode(bytes)));
+    return Uint8List.fromList(json.decode(bytes) as List<int>);
   }
 }

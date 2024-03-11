@@ -24,7 +24,7 @@ void main() {
     test('provides a StartNotifier', () {
       final container = ProviderContainer();
       final start = container.read(startProvider);
-      expect(start, isA());
+      expect(start, isA<String>());
     });
   });
 }

@@ -14,17 +14,17 @@ class Product {
 
   Product.fromJson(Map<String, dynamic> json) {
     if (json.containsKey("product")) {
-      quantity = json["quantity"];
-      id = json["product"]['id'];
-      name = json["product"]['name'];
-      price = json["product"]['price'];
-      category = json["product"]['category'];
+      quantity = json["quantity"] as int;
+      id = json["product"]['id'] as String;
+      name = json["product"]['name'] as String;
+      price = json["product"]['price'] as double;
+      category = json["product"]['category'] as String;
     } else {
-      id = json['id'];
-      name = json['name'];
-      price = json['price'];
+      id = json['id'] as String;
+      name = json['name'] as String;
+      price = json['price'] as double;
       quantity = 0;
-      category = json['category'];
+      category = json['category'] as String;
     }
   }
 

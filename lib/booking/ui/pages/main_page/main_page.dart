@@ -52,7 +52,7 @@ class BookingMainPage extends HookConsumerWidget {
       final recurrentDays =
           SfCalendar.parseRRule(booking.recurrenceRule, booking.start).weekDays;
       selectedDaysNotifier.setSelectedDays(recurrentDays);
-      QR.to(BookingRouter.root + BookingRouter.addEdit);
+      QR.to<void>(BookingRouter.root + BookingRouter.addEdit);
     }
 
     return BookingTemplate(
@@ -76,14 +76,16 @@ class BookingMainPage extends HookConsumerWidget {
                       if (isManager)
                         AdminButton(
                           onTap: () {
-                            QR.to(BookingRouter.root + BookingRouter.manager);
+                            QR.to<void>(
+                                BookingRouter.root + BookingRouter.manager);
                           },
                         ),
                       if (isAdmin)
                         AdminButton(
                           text: "Gestion",
                           onTap: () {
-                            QR.to(BookingRouter.root + BookingRouter.admin);
+                            QR.to<void>(
+                                BookingRouter.root + BookingRouter.admin);
                           },
                         ),
                     ],
@@ -119,7 +121,8 @@ class BookingMainPage extends HookConsumerWidget {
                         onTap: () {
                           bookingNotifier.setBooking(Booking.empty());
                           selectedDaysNotifier.clear();
-                          QR.to(BookingRouter.root + BookingRouter.addEdit);
+                          QR.to<void>(
+                              BookingRouter.root + BookingRouter.addEdit);
                         },
                         child: const CardLayout(
                           width: 120,
@@ -141,11 +144,12 @@ class BookingMainPage extends HookConsumerWidget {
                         },
                         onInfo: () {
                           bookingNotifier.setBooking(e);
-                          QR.to(BookingRouter.root + BookingRouter.detail);
+                          QR.to<void>(
+                              BookingRouter.root + BookingRouter.detail);
                         },
                         onDelete: () async {
                           await tokenExpireWrapper(ref, () async {
-                            await showDialog(
+                            showDialog<void>(
                                 context: context,
                                 builder: (context) => CustomDialogBox(
                                       descriptions: BookingTextConstants

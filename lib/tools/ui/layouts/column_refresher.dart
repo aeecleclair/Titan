@@ -8,7 +8,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class ColumnRefresher extends ConsumerWidget {
   final List<Widget> children;
-  final Future Function() onRefresh;
+  final Future<void> Function() onRefresh;
   const ColumnRefresher(
       {super.key, required this.onRefresh, required this.children});
 

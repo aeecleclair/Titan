@@ -87,7 +87,7 @@ class OnGoingLoan extends HookConsumerWidget {
                             await loanNotifier.setLoan(Loan.empty());
                             startNotifier.setStart(processDate(DateTime.now()));
                             endNotifier.setEnd("");
-                            QR.to(LoanRouter.root +
+                            QR.to<void>(LoanRouter.root +
                                 LoanRouter.admin +
                                 LoanRouter.addEditLoan);
                             loanersItemsNotifier.setTData(loaner, itemList);
@@ -111,13 +111,13 @@ class OnGoingLoan extends HookConsumerWidget {
                                 await loanNotifier.setLoan(e);
                                 startNotifier.setStart(processDate(e.start));
                                 endNotifier.setEnd(processDate(e.end));
-                                QR.to(LoanRouter.root +
+                                QR.to<void>(LoanRouter.root +
                                     LoanRouter.admin +
                                     LoanRouter.addEditLoan);
                                 loanersItemsNotifier.setTData(loaner, itemList);
                               },
                               onCalendar: () async {
-                                await showDialog<int>(
+                                showDialog<int>(
                                     context: context,
                                     builder: (BuildContext context) {
                                       return DelayDialog(
@@ -151,7 +151,7 @@ class OnGoingLoan extends HookConsumerWidget {
                                     });
                               },
                               onReturn: () async {
-                                await showDialog(
+                                showDialog<void>(
                                     context: context,
                                     builder: (context) => CustomDialogBox(
                                         title: LoanTextConstants.returnLoan,
@@ -183,7 +183,7 @@ class OnGoingLoan extends HookConsumerWidget {
                                             final value = await loanListNotifier
                                                 .returnLoan(e);
                                             if (value) {
-                                              QR.to(LoanRouter.root +
+                                              QR.to<void>(LoanRouter.root +
                                                   LoanRouter.admin);
                                               await loanersItemsNotifier
                                                   .setTData(loaner,
@@ -208,7 +208,7 @@ class OnGoingLoan extends HookConsumerWidget {
                               },
                               onInfo: () {
                                 loanNotifier.setLoan(e);
-                                QR.to(LoanRouter.root +
+                                QR.to<void>(LoanRouter.root +
                                     LoanRouter.admin +
                                     LoanRouter.detail);
                               },

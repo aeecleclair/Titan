@@ -43,7 +43,7 @@ class SectionBar extends HookConsumerWidget {
               firstChild: (status == Status.waiting)
                   ? ItemChip(
                       onTap: () {
-                        QR.to(VoteRouter.root +
+                        QR.to<void>(VoteRouter.root +
                             VoteRouter.admin +
                             VoteRouter.addSection);
                       },
@@ -64,7 +64,7 @@ class SectionBar extends HookConsumerWidget {
                   },
                   onDelete: () async {
                     tokenExpireWrapper(ref, () async {
-                      await showDialog(
+                      showDialog<void>(
                           context: context,
                           builder: (context) => CustomDialogBox(
                                 title: VoteTextConstants.deleteSection,

@@ -13,11 +13,11 @@ class Prize {
   late final int quantity;
 
   Prize.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    raffleId = json['raffle_id'];
-    description = json['description'];
-    quantity = json['quantity'];
+    id = json['id'] as String;
+    name = json['name'] as String;
+    raffleId = json['raffle_id'] as String;
+    description = json['description'] as String;
+    quantity = json['quantity'] as int;
   }
 
   Map<String, dynamic> toJson() {

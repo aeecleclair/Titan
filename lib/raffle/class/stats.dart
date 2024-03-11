@@ -8,8 +8,8 @@ class RaffleStats {
   });
 
   RaffleStats.fromJson(Map<String, dynamic> json) {
-    ticketsSold = json['tickets_sold'];
-    amountRaised = json['amount_raised'];
+    ticketsSold = json['tickets_sold'] as int;
+    amountRaised = json['amount_raised'] as double;
   }
 
   Map<String, dynamic> toJson() {
