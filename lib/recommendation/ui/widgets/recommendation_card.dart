@@ -34,7 +34,8 @@ class RecommendationCard extends HookConsumerWidget {
     final recommendationNotifier = ref.watch(recommendationProvider.notifier);
     final recommendationListNotifier =
         ref.watch(recommendationListProvider.notifier);
-    final recommendationLogoMap = ref.watch(recommendationLogoMapProvider);
+    final logo = ref.watch(recommendationLogoMapProvider
+        .select((recommendations) => recommendations[recommendation]));
     final recommendationLogoMapNotifier =
         ref.watch(recommendationLogoMapProvider.notifier);
     final recommendationLogoNotifier =
@@ -45,7 +46,7 @@ class RecommendationCard extends HookConsumerWidget {
     }
 
     return AutoLoaderChild(
-      value: recommendationLogoMap,
+      group: logo,
       notifier: recommendationLogoMapNotifier,
       mapKey: recommendation,
       loader: (ref) =>
