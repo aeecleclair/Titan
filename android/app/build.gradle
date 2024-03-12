@@ -108,8 +108,10 @@ dependencies {
 }
 
 android {
+
+    namespace 'com.example.myecl'
     defaultConfig {
         targetSdkVersion 33
-        minSdkVersion 19
+        minSdkVersion flutter.minSdkVersion
     }
 }
