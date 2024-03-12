@@ -4,7 +4,6 @@ import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 
@@ -16,11 +15,9 @@ class LoanersBar extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final adminLoanList = ref.watch(adminLoanListProvider);
     final loaner = ref.watch(loanerProvider);
-    return AsyncChild(
-      value: adminLoanList,
-      builder: (context, loans) => HorizontalListView.builder(
+    return HorizontalListView.builder(
         height: 40,
-        items: loans.keys.toList(),
+        items: adminLoanList.keys.toList(),
         itemBuilder: (context, key, i) {
           final selected = loaner.id == key.id;
           return ItemChip(
@@ -35,8 +32,6 @@ class LoanersBar extends HookConsumerWidget {
                   fontWeight: FontWeight.bold),
             ),
           );
-        },
-      ),
-    );
+        });
   }
 }

@@ -12,10 +12,11 @@ class VoteCount extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final section = ref.watch(sectionProvider);
     final sectionVoteNotifier = ref.watch(sectionVoteCountProvider.notifier);
-    final stats = ref.watch(sectionsStatsProvider);
+    final stats =
+        ref.watch(sectionsStatsProvider.select((value) => value[section]));
     final statsNotifier = ref.read(sectionsStatsProvider.notifier);
     return AutoLoaderChild(
-      value: stats,
+      group: stats,
       notifier: statsNotifier,
       mapKey: section,
       loader: (section) async =>

@@ -24,7 +24,8 @@ class DetailPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final session = ref.watch(sessionProvider);
-    final sessionPosterMap = ref.watch(sessionPosterMapProvider);
+    final sessionPoster = ref
+        .watch(sessionPosterMapProvider.select((value) => value[session.id]));
     final sessionPosterMapNotifier =
         ref.watch(sessionPosterMapProvider.notifier);
     final sessionPosterNotifier = ref.watch(sessionPosterProvider.notifier);
@@ -55,10 +56,10 @@ class DetailPage extends HookConsumerWidget {
               ),
             ]),
             child: AutoLoaderChild(
-                value: sessionPosterMap,
+                group: sessionPoster,
                 notifier: sessionPosterMapNotifier,
-                mapKey: session,
-                loader: (session) => sessionPosterNotifier.getLogo(session.id),
+                mapKey: session.id,
+                loader: (sessionId) => sessionPosterNotifier.getLogo(sessionId),
                 dataBuilder: (context, data) => Image(
                       image: data.first.image,
                       fit: BoxFit.fill,

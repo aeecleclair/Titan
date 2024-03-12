@@ -10,7 +10,7 @@ class AdminDeliveryOrderListNotifier extends MapNotifier<String, Order> {
 
 final adminDeliveryOrderListProvider = StateNotifierProvider<
     AdminDeliveryOrderListNotifier,
-    AsyncValue<Map<String, AsyncValue<List<Order>>?>>>((ref) {
+    Map<String, AsyncValue<List<Order>>?>>((ref) {
   AdminDeliveryOrderListNotifier orderListNotifier =
       AdminDeliveryOrderListNotifier();
   tokenExpireWrapperAuth(ref, () async {

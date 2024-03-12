@@ -22,7 +22,8 @@ class AdminSessionCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sessionPosterMap = ref.watch(sessionPosterMapProvider);
+    final sessionPoster = ref
+        .watch(sessionPosterMapProvider.select((value) => value[session.id]));
     final sessionPosterMapNotifier =
         ref.read(sessionPosterMapProvider.notifier);
     final sessionPosterNotifier = ref.read(sessionPosterProvider.notifier);
@@ -52,11 +53,11 @@ class AdminSessionCard extends HookConsumerWidget {
                   height: 205,
                   width: double.infinity,
                   child: AutoLoaderChild(
-                    value: sessionPosterMap,
+                    group: sessionPoster,
                     notifier: sessionPosterMapNotifier,
-                    mapKey: session,
-                    loader: (session) =>
-                        sessionPosterNotifier.getLogo(session.id),
+                    mapKey: session.id,
+                    loader: (sessionId) =>
+                        sessionPosterNotifier.getLogo(sessionId),
                     dataBuilder: (context, data) => Image(
                       image: data.first.image,
                       fit: BoxFit.cover,

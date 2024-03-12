@@ -74,50 +74,42 @@ class BuyPackTicket extends HookConsumerWidget {
                           ],
                           borderRadius:
                               const BorderRadius.all(Radius.circular(15))),
-                      child: Container(
-                        child: tombolaLogos.when(
-                            data: (data) {
-                              if (data[raffle] != null) {
-                                return data[raffle]!.when(
-                                    data: (data) {
-                                      if (data.isNotEmpty) {
-                                        return ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(15.0),
-                                            child: data.first);
-                                      } else {
-                                        Future.delayed(
-                                            const Duration(milliseconds: 1),
-                                            () {
-                                          tombolaLogosNotifier.setTData(
-                                              raffle, const AsyncLoading());
-                                        });
-                                        tokenExpireWrapper(ref, () async {
-                                          tombolaLogoNotifier
-                                              .getLogo(raffle.id)
-                                              .then((value) {
-                                            tombolaLogosNotifier.setTData(
-                                                raffle, AsyncData([value]));
-                                          });
-                                        });
-                                        return const HeroIcon(
-                                            HeroIcons.cubeTransparent);
-                                      }
-                                    },
-                                    loading: () =>
-                                        const CircularProgressIndicator(),
-                                    error: (Object error,
-                                            StackTrace? stackTrace) =>
-                                        const HeroIcon(
-                                            HeroIcons.cubeTransparent));
-                              } else {
-                                return const HeroIcon(
-                                    HeroIcons.cubeTransparent);
-                              }
-                            },
-                            loading: () => const CircularProgressIndicator(),
-                            error: (Object error, StackTrace? stackTrace) =>
-                                const HeroIcon(HeroIcons.cubeTransparent)),
+                      child: Builder(
+                        builder: (context) {
+                          if (tombolaLogos[raffle.id] != null) {
+                            return tombolaLogos[raffle.id]!.when(
+                                data: (data) {
+                                  if (data.isNotEmpty) {
+                                    return ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                        child: data.first);
+                                  } else {
+                                    Future.delayed(
+                                        const Duration(milliseconds: 1), () {
+                                      tombolaLogosNotifier.setTData(
+                                          raffle.id, const AsyncLoading());
+                                    });
+                                    tokenExpireWrapper(ref, () async {
+                                      tombolaLogoNotifier
+                                          .getLogo(raffle.id)
+                                          .then((value) {
+                                        tombolaLogosNotifier.setTData(
+                                            raffle.id, AsyncData([value]));
+                                      });
+                                    });
+                                    return const HeroIcon(
+                                        HeroIcons.cubeTransparent);
+                                  }
+                                },
+                                loading: () =>
+                                    const CircularProgressIndicator(),
+                                error: (Object error, StackTrace? stackTrace) =>
+                                    const HeroIcon(HeroIcons.cubeTransparent));
+                          } else {
+                            return const HeroIcon(HeroIcons.cubeTransparent);
+                          }
+                        },
                       ),
                     ),
                     Text(

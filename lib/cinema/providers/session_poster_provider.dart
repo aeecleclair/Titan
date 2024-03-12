@@ -2,25 +2,34 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
 import 'package:myecl/cinema/repositories/session_poster_repository.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
 
 class SessionPosterProvider extends SingleNotifier<Image> {
   final SessionPosterRepository repository;
-  SessionPosterProvider({required this.repository})
+  final SessionLogoNotifier sessionLogoNotifier;
+  SessionPosterProvider(
+      {required this.repository, required this.sessionLogoNotifier})
       : super(const AsyncValue.loading());
 
   Future<Image> getLogo(String id) async {
-    return await repository.getSessionLogo(id);
+    final image = await repository.getSessionLogo(id);
+    sessionLogoNotifier.setTData(id, AsyncData([image]));
+    return image;
   }
 
   Future<Image> updateLogo(String id, Uint8List bytes) async {
-    return await repository.addSessionLogo(bytes, id);
+    final image = await repository.addSessionLogo(bytes, id);
+    sessionLogoNotifier.setTData(id, AsyncData([image]));
+    return image;
   }
 }
 
 final sessionPosterProvider =
     StateNotifierProvider<SessionPosterProvider, AsyncValue<Image>>((ref) {
   final sessionPoster = ref.watch(sessionPosterRepository);
-  return SessionPosterProvider(repository: sessionPoster);
+  final sessionPosterMapNotifier = ref.watch(sessionPosterMapProvider.notifier);
+  return SessionPosterProvider(
+      repository: sessionPoster, sessionLogoNotifier: sessionPosterMapNotifier);
 });

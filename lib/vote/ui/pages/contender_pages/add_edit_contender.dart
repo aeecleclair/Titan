@@ -59,15 +59,16 @@ class AddEditContenderPage extends HookConsumerWidget {
     final logo = useState<Uint8List?>(null);
     final logoFile = useState<Image?>(null);
     final showNotifier = ref.read(displayResult.notifier);
-    ref.watch(contenderLogosProvider).whenData((value) {
-      if (value[contender] != null) {
-        value[contender]!.whenData((data) {
-          if (data.isNotEmpty) {
-            logoFile.value = data.first;
-          }
-        });
-      }
-    });
+
+    final contenderLogos = ref.watch(contenderLogosProvider);
+    if (contenderLogos[contender.id] != null) {
+      contenderLogos[contender.id]!.whenData((data) {
+        if (data.isNotEmpty) {
+          logoFile.value = data.first;
+        }
+      });
+    }
+
     final ImagePicker picker = ImagePicker();
 
     void displayVoteToastWithContext(TypeMsg type, String msg) {
@@ -354,9 +355,10 @@ class AddEditContenderPage extends HookConsumerWidget {
                                   if (logoBytes != null) {
                                     contenderLogosNotifier.autoLoad(
                                         ref,
-                                        contender,
-                                        (contender) => logoNotifier.updateLogo(
-                                            contender.id, logoBytes));
+                                        contender.id,
+                                        (contenderId) =>
+                                            logoNotifier.updateLogo(
+                                                contenderId, logoBytes));
                                   }
                                 },
                                 orElse: () {});
@@ -370,15 +372,16 @@ class AddEditContenderPage extends HookConsumerWidget {
                                   if (logoBytes != null) {
                                     contenderLogosNotifier.autoLoad(
                                         ref,
-                                        newContender,
-                                        (contender) => logoNotifier.updateLogo(
-                                            contender.id, logoBytes));
+                                        newContender.id,
+                                        (contenderId) =>
+                                            logoNotifier.updateLogo(
+                                                contenderId, logoBytes));
                                   }
                                 },
                                 orElse: () {});
                           }
                           membersNotifier.clearMembers();
-                          await sectionsNotifier.setTData(section.value,
+                          sectionsNotifier.setTData(section.value,
                               await contenderListNotifier.copy());
                         } else {
                           displayVoteToastWithContext(

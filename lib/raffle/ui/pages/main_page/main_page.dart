@@ -6,6 +6,7 @@ import 'package:myecl/raffle/class/raffle_status_type.dart';
 import 'package:myecl/raffle/class/tickets.dart';
 import 'package:myecl/raffle/providers/is_raffle_admin.dart';
 import 'package:myecl/raffle/providers/raffle_list_provider.dart';
+import 'package:myecl/raffle/providers/tombola_logos_provider.dart';
 import 'package:myecl/raffle/providers/user_tickets_provider.dart';
 import 'package:myecl/raffle/router.dart';
 import 'package:myecl/raffle/tools/constants.dart';
@@ -29,6 +30,7 @@ class RaffleMainPage extends HookConsumerWidget {
     final userTicketList = ref.watch(userTicketListProvider);
     final userTicketListNotifier = ref.watch(userTicketListProvider.notifier);
     final isAdmin = ref.watch(isRaffleAdminProvider);
+    final tombolaLogosNotifier = ref.watch(tombolaLogosProvider.notifier);
 
     final rafflesStatus = {};
     raffleList.whenData(
@@ -44,6 +46,7 @@ class RaffleMainPage extends HookConsumerWidget {
         onRefresh: () async {
           await userTicketListNotifier.loadTicketList();
           await raffleListNotifier.loadRaffleList();
+          tombolaLogosNotifier.resetTData();
         },
         child: Column(
           children: [

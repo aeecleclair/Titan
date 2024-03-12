@@ -21,7 +21,8 @@ class SessionCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scroll = ref.watch(scrollProvider);
-    final sessionPosterMap = ref.watch(sessionPosterMapProvider);
+    final sessionPoster = ref
+        .watch(sessionPosterMapProvider.select((value) => value[session.id]));
     final sessionPosterMapNotifier =
         ref.watch(sessionPosterMapProvider.notifier);
     final sessionPosterNotifier = ref.watch(sessionPosterProvider.notifier);
@@ -105,11 +106,11 @@ class SessionCard extends HookConsumerWidget {
                 ],
               ),
               child: AutoLoaderChild(
-                  value: sessionPosterMap,
+                  group: sessionPoster,
                   notifier: sessionPosterMapNotifier,
-                  mapKey: session,
-                  loader: (session) =>
-                      sessionPosterNotifier.getLogo(session.id),
+                  mapKey: session.id,
+                  loader: (sessionId) =>
+                      sessionPosterNotifier.getLogo(sessionId),
                   dataBuilder: (context, data) {
                     return isWebFormat
                         ? Container(

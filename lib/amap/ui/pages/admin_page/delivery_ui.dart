@@ -28,7 +28,8 @@ class DeliveryUi extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final deliveryIdNotifier = ref.watch(deliveryIdProvider.notifier);
     final deliveryListNotifier = ref.watch(deliveryListProvider.notifier);
-    final deliveryOrders = ref.watch(adminDeliveryOrderListProvider);
+    final deliveryOrders = ref.watch(
+        adminDeliveryOrderListProvider.select((value) => value[delivery.id]));
     final deliveryProductListNotifier =
         ref.watch(deliveryProductListProvider.notifier);
     final deliveryOrdersNotifier =
@@ -84,7 +85,7 @@ class DeliveryUi extends HookConsumerWidget {
                     ],
                   ),
                   AutoLoaderChild(
-                    value: deliveryOrders,
+                    group: deliveryOrders,
                     notifier: deliveryOrdersNotifier,
                     mapKey: delivery.id,
                     listLoader: (deliveryId) => ordersByDeliveryListNotifier

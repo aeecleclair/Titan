@@ -19,7 +19,8 @@ class AdvertDetailPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final advert = ref.watch(advertProvider);
-    final advertPosters = ref.watch(advertPostersProvider);
+    final posters = ref.watch(advertPostersProvider
+        .select((advertPosters) => advertPosters[advert.id]));
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final logoNotifier = ref.watch(advertPosterProvider.notifier);
     final filteredTagList =
@@ -38,7 +39,7 @@ class AdvertDetailPage extends HookConsumerWidget {
             ),
           ]),
           child: AutoLoaderChild(
-            value: advertPosters,
+            group: posters,
             notifier: advertPostersNotifier,
             mapKey: advert,
             loader: (ref) => logoNotifier.getAdvertPoster(advert.id),

@@ -49,15 +49,13 @@ class AddEditSessionPage extends HookConsumerWidget {
     final posterUrl = useTextEditingController();
     final sessionPosterNotifier = ref.watch(sessionPosterProvider.notifier);
 
-    sessionPosterMap.whenData((value) {
-      if (value[session] != null) {
-        value[session]!.whenData((data) {
-          if (data.isNotEmpty) {
-            logoFile.value = data.first;
-          }
-        });
-      }
-    });
+    if (sessionPosterMap[session.id] != null) {
+      sessionPosterMap[session.id]!.whenData((data) {
+        if (data.isNotEmpty) {
+          logoFile.value = data.first;
+        }
+      });
+    }
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -244,9 +242,9 @@ class AddEditSessionPage extends HookConsumerWidget {
                                         sessionPosterMapProvider.notifier);
                                     sessionPosterMapNotifier.autoLoad(
                                         ref,
-                                        session,
-                                        (session) => sessionPosterNotifier
-                                            .updateLogo(session.id, logoBytes));
+                                        session.id,
+                                        (sessionId) => sessionPosterNotifier
+                                            .updateLogo(sessionId, logoBytes));
                                   }
                                 },
                                 orElse: () {});
@@ -262,9 +260,9 @@ class AddEditSessionPage extends HookConsumerWidget {
                                         sessionPosterMapProvider.notifier);
                                     sessionPosterMapNotifier.autoLoad(
                                         ref,
-                                        newSession,
-                                        (session) => sessionPosterNotifier
-                                            .updateLogo(session.id, logoBytes));
+                                        newSession.id,
+                                        (sessionId) => sessionPosterNotifier
+                                            .updateLogo(sessionId, logoBytes));
                                   }
                                 },
                                 orElse: () {});
