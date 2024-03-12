@@ -12,7 +12,7 @@ class PhonebookTextConstants {
   static const String admin = "Admin";
   static const String adminPage = "Page Administrateur";
   static const String all = "Toutes";
-  static const String apparentName = "Nom public du rôle:";
+  static const String apparentName = "Nom public du rôle :";
   static const String association = "Association :";
   static const String associationDetail = "Détail de l'association :";
   static const String associationKind = "Type d'association :";
