@@ -162,15 +162,15 @@ String processDateToAPI(DateTime date) {
 }
 
 String processDateToAPIWithoutHour(DateTime date) {
-  return processDateToAPI(date).split('T')[0];
+  return date.toIso8601String().split("T")[0];
 }
 
 DateTime processDateFromAPI(String date) {
-  return DateFormat("yyyy-MM-dd HH:mm:ss").parse(date, true).toLocal();
+  return DateTime.parse(date).toLocal();
 }
 
 DateTime processDateFromAPIWithoutHour(String date) {
-  return DateFormat("yyyy-MM-dd").parse(date, true).toLocal();
+  return DateTime.parse(date);
 }
 
 String formatDates(DateTime dateStart, DateTime dateEnd, bool allDay) {
