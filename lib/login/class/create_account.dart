@@ -28,7 +28,7 @@ class CreateAccount {
     firstname = json['firstname'];
     nickname = json['nickname'];
     password = json['password'];
-    birthday = DateTime.parse(json['birthday']);
+    birthday = processDateFromAPIWithoutHour(json["birthday"]);
     phone = json['phone'] != "" ? json['phone'] : null;
     floor = json['floor'];
     promo = json['promo'];

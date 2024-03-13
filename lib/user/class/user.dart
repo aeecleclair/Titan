@@ -23,11 +23,11 @@ class User {
   late final String? nickname;
   late final String id;
   late final String email;
-  late final String birthday;
+  late final DateTime birthday;
   late final int? promo;
   late final String floor;
   late final String? phone;
-  late final String createdOn;
+  late final DateTime createdOn;
   late final List<SimpleGroup> groups;
 
   User.fromJson(Map<String, dynamic> json) {
@@ -38,12 +38,12 @@ class User {
         : null;
     id = json['id'];
     email = json['email'];
-    birthday = json['birthday'];
+    birthday = processDateFromAPIWithoutHour(json['birthday']);
     promo = json['promo'];
     floor = json['floor'];
     phone =
         (json['phone'] != "" && json["phone"] != null) ? json['phone'] : null;
-    createdOn = json['created_on'];
+    createdOn = processDateFromAPI(json['created_on']);
     groups =
         List.from(json['groups']).map((e) => SimpleGroup.fromJson(e)).toList();
   }
@@ -55,11 +55,11 @@ class User {
     data['nickname'] = nickname;
     data['id'] = id;
     data['email'] = email;
-    data['birthday'] = birthday;
+    data['birthday'] = processDateToAPIWithoutHour(birthday);
     data['promo'] = promo;
     data['floor'] = floor;
     data['phone'] = phone;
-    data['created_on'] = createdOn;
+    data['created_on'] = processDateToAPI(createdOn);
     data['groups'] = groups.map((e) => e.toJson()).toList();
     return data;
   }
@@ -70,11 +70,11 @@ class User {
     nickname = null;
     id = '';
     email = 'empty@ecl.ec-lyon.fr';
-    birthday = DateTime.now().toIso8601String().split("T")[0];
+    birthday = normalizedDate(DateTime.now());
     promo = null;
     floor = capitalize(Floors.values.first.toString().split('.').last);
     phone = null;
-    createdOn = '';
+    createdOn = DateTime.now();
     groups = [];
   }
 
@@ -84,11 +84,11 @@ class User {
     String? nickname,
     String? id,
     String? email,
-    String? birthday,
+    DateTime? birthday,
     int? promo,
     String? floor,
     String? phone,
-    String? createdOn,
+    DateTime? createdOn,
     List<SimpleGroup>? groups,
   }) {
     return User(

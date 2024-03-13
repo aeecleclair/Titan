@@ -1,3 +1,5 @@
+import 'package:myecl/tools/functions.dart';
+
 class Message {
   late final String? title;
   late final String? content;
@@ -25,7 +27,7 @@ class Message {
     context = json['context'];
     isVisible = json['is_visible'];
     deliveryDateTime = json['delivery_datetime'] != null
-        ? DateTime.parse(json['delivery_datetime'])
+        ? processDateFromAPI(json['delivery_datetime'])
         : null;
   }
 
@@ -38,7 +40,7 @@ class Message {
     data['context'] = context;
     data['is_visible'] = isVisible;
     data['delivery_datetime'] =
-        deliveryDateTime?.toIso8601String().split('T')[0];
+        (deliveryDateTime != null) ? processDateToAPI(deliveryDateTime!) : null;
     return data;
   }
 

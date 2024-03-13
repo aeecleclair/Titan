@@ -34,7 +34,7 @@ class EditUserPage extends HookConsumerWidget {
     final profilePicture = ref.watch(profilePictureProvider);
     final profilePictureNotifier = ref.watch(profilePictureProvider.notifier);
     final dateController =
-        useTextEditingController(text: processDatePrint(user.birthday));
+        useTextEditingController(text: processDate(user.birthday));
     final nickNameController =
         useTextEditingController(text: user.nickname ?? '');
     final phoneController = useTextEditingController(text: user.phone ?? '');
@@ -236,7 +236,7 @@ class EditUserPage extends HookConsumerWidget {
                     ),
                     GestureDetector(
                         onTap: () => getOnlyDayDate(context, dateController,
-                            initialDate: DateTime.parse(user.birthday),
+                            initialDate: user.birthday,
                             firstDate: DateTime(1900),
                             lastDate: DateTime.now()),
                         child: Container(
@@ -319,7 +319,7 @@ class EditUserPage extends HookConsumerWidget {
                       await tokenExpireWrapper(ref, () async {
                         final value =
                             await asyncUserNotifier.updateMe(user.copyWith(
-                          birthday: processDateBack(dateController.value.text),
+                          birthday: DateTime.parse(dateController.value.text),
                           nickname: nickNameController.value.text.isEmpty
                               ? null
                               : nickNameController.value.text,

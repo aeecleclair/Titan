@@ -87,9 +87,9 @@ void main() {
       expect(newUser.nickname, 'nickname');
       newUser = user.copyWith(id: 'id');
       expect(newUser.id, 'id');
-      newUser = user.copyWith(birthday: 'birthday');
+      newUser = user.copyWith(birthday: DateTime(1999, 1, 1));
       expect(newUser.birthday, 'birthday');
-      newUser = user.copyWith(createdOn: 'createdOn');
+      newUser = user.copyWith(createdOn: DateTime(2001, 1, 1));
       expect(newUser.createdOn, 'createdOn');
       newUser = user.copyWith(email: 'email');
       expect(newUser.email, 'email');
@@ -109,8 +109,8 @@ void main() {
         firstname: 'firstname',
         nickname: null,
         id: 'id',
-        birthday: '1999-01-01',
-        createdOn: '2021-01-01',
+        birthday: DateTime(1999, 1, 1),
+        createdOn: DateTime(2021, 1, 1),
         email: 'email',
         floor: 'floor',
         groups: [],
