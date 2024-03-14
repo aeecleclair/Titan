@@ -44,19 +44,17 @@ class AddEditRecommendationPage extends HookConsumerWidget {
     final description =
         useTextEditingController(text: recommendation.description);
 
-    ref.watch(recommendationLogoMapProvider).whenData(
-      (value) {
-        if (value[recommendation] != null) {
-          value[recommendation]!.whenData(
-            (data) {
-              if (data.isNotEmpty) {
-                logo.value = data.first;
-              }
-            },
-          );
-        }
-      },
-    );
+    final recommendationLogoMap = ref.watch(recommendationLogoMapProvider);
+
+    if (recommendationLogoMap[recommendation] != null) {
+      recommendationLogoMap[recommendation]!.whenData(
+        (data) {
+          if (data.isNotEmpty) {
+            logo.value = data.first;
+          }
+        },
+      );
+    }
 
     void displayAdvertToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
