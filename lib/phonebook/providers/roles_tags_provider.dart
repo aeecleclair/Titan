@@ -21,29 +21,21 @@ class RolesTagsNotifier extends MapNotifier<String, bool> {
   }
 
   void resetChecked() {
-    state.whenData((d) {
-      for (int i = 0; i < d.length; i++) {
-        d[d.keys.toList()[i]] = const AsyncData([false]);
-      }
-      state = AsyncValue.data(d);
-    });
+    state.forEach((key, value) => state[key] = const AsyncData([false]));
+    state = Map.of(state);
   }
 
   void loadRoleTagsFromMember(CompleteMember member, Association association) {
     List<String> roleTags = member.getRolesTags(association.id);
-    state.maybeWhen(
-        data: (d) {
-          for (int i = 0; i < roleTags.length; i++) {
-            d[roleTags[i]] = const AsyncData([true]);
-          }
-          state = AsyncValue.data(d);
-        },
-        orElse: () {});
+    for (var value in roleTags) {
+      state[value] = const AsyncData([true]);
+    }
+    state = Map.of(state);
   }
 }
 
 final rolesTagsProvider = StateNotifierProvider<RolesTagsNotifier,
-    AsyncValue<Map<String, AsyncValue<List<bool>>?>>>((ref) {
+    Map<String, AsyncValue<List<bool>>?>>((ref) {
   final token = ref.watch(tokenProvider);
   RolesTagsNotifier notifier = RolesTagsNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {

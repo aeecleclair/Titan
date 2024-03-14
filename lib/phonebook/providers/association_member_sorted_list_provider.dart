@@ -12,13 +12,11 @@ final associationMemberSortedListProvider =
   final roleTagsProvider = ref.watch(rolesTagsProvider);
   return memberListProvider.maybeWhen(
       data: (members) {
-        return roleTagsProvider.maybeWhen(
-            data: (roleTags) => sortedMembers(
-                  members,
-                  association.id,
-                  roleTags.keys.toList(),
-                ),
-            orElse: () => members);
+        return sortedMembers(
+          members,
+          association.id,
+          roleTagsProvider.keys.toList(),
+        );
       },
-      orElse: () => []);
+      orElse: () => List<CompleteMember>.empty());
 });

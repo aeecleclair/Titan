@@ -14,7 +14,6 @@ import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
@@ -100,42 +99,37 @@ class MembershipEditorPage extends HookConsumerWidget {
               ),
               SizedBox(
                 width: min(MediaQuery.of(context).size.width, 300),
-                child: AsyncChild(
-                  value: rolesTagList,
-                  builder: (context, rolesTags) => Column(
-                    children: [
-                      ...rolesTags.keys.map(
-                        (tagKey) => Row(
-                          children: [
-                            Text(tagKey),
-                            const Spacer(),
-                            Checkbox(
-                              value: rolesTags[tagKey]!.maybeWhen(
-                                data: (rolesTag) => rolesTag[0],
-                                orElse: () => false,
-                              ),
-                              fillColor:
-                                  MaterialStateProperty.all(Colors.black),
-                              onChanged: (value) {
-                                rolesTags[tagKey] = AsyncData([value!]);
-                                memberRoleTagsNotifier
-                                    .setRoleTagsWithFilter(rolesTags);
-                                rolesTagsNotifier.setTData(
-                                    tagKey, AsyncData([value]));
-                                if (value &&
-                                    apparentNameController.text == "") {
-                                  apparentNameController.text = tagKey;
-                                } else if (!value &&
-                                    apparentNameController.text == tagKey) {
-                                  apparentNameController.text = "";
-                                }
-                              },
+                child: Column(
+                  children: [
+                    ...rolesTagList.keys.map(
+                      (tagKey) => Row(
+                        children: [
+                          Text(tagKey),
+                          const Spacer(),
+                          Checkbox(
+                            value: rolesTagList[tagKey]!.maybeWhen(
+                              data: (rolesTag) => rolesTag[0],
+                              orElse: () => false,
                             ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                            fillColor: MaterialStateProperty.all(Colors.black),
+                            onChanged: (value) {
+                              rolesTagList[tagKey] = AsyncData([value!]);
+                              memberRoleTagsNotifier
+                                  .setRoleTagsWithFilter(rolesTagList);
+                              rolesTagsNotifier.setTData(
+                                  tagKey, AsyncData([value]));
+                              if (value && apparentNameController.text == "") {
+                                apparentNameController.text = tagKey;
+                              } else if (!value &&
+                                  apparentNameController.text == tagKey) {
+                                apparentNameController.text = "";
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
               ),
               const SizedBox(height: 30),

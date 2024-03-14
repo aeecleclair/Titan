@@ -10,7 +10,7 @@ class MemberPicturesNotifier extends MapNotifier<CompleteMember, Image> {
 }
 
 final memberPicturesProvider = StateNotifierProvider<MemberPicturesNotifier,
-    AsyncValue<Map<CompleteMember, AsyncValue<List<Image>>?>>>((ref) {
+    Map<CompleteMember, AsyncValue<List<Image>>?>>((ref) {
   MemberPicturesNotifier memberPicturesNotifier = MemberPicturesNotifier();
   tokenExpireWrapperAuth(ref, () async {
     ref.watch(associationMemberListProvider).maybeWhen(data: (member) {

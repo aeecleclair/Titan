@@ -37,7 +37,7 @@ class MemberEditableCard extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    final memberPictures = ref.watch(memberPicturesProvider);
+    final memberPictures = ref.watch(memberPicturesProvider.select((value) => value[member]));
     final memberPicturesNotifier = ref.watch(memberPicturesProvider.notifier);
 
     Membership assoMembership = member.memberships.firstWhere(
@@ -70,7 +70,7 @@ class MemberEditableCard extends HookConsumerWidget {
                 ],
               ),
               child: AutoLoaderChild(
-                value: memberPictures,
+                group: memberPictures,
                 notifier: memberPicturesNotifier,
                 mapKey: member,
                 loader: (ref) =>
