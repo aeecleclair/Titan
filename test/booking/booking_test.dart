@@ -148,12 +148,13 @@ void main() {
     });
 
     test('Should parse a booking from json', () {
+      final datetime = DateTime.utc(2021, 1, 1);
       final booking = Booking.fromJson({
         "id": "1",
         "reason": "reason",
-        "start": "2021-01-01T00:00:00.000Z",
-        "end": "2021-01-01T00:00:00.000Z",
-        "creation": "2021-01-01T00:00:00.000Z",
+        "start": datetime.toIso8601String(),
+        "end": datetime.toIso8601String(),
+        "creation": datetime.toIso8601String(),
         "note": "note",
         "room": {
           "id": "1",
@@ -180,8 +181,8 @@ void main() {
       expect(booking.room, isA<Room>());
       expect(booking.id, "1");
       expect(booking.reason, "reason");
-      expect(booking.start, DateTime.parse("2021-01-01T00:00:00.000Z"));
-      expect(booking.end, DateTime.parse("2021-01-01T00:00:00.000Z"));
+      expect(booking.start, datetime.toLocal());
+      expect(booking.end, datetime.toLocal());
       expect(booking.note, "note");
       expect(booking.key, true);
       expect(booking.decision, Decision.approved);
@@ -191,12 +192,13 @@ void main() {
     });
 
     test('Should parse a booking from json with applicant_id', () {
+      final datetime = DateTime.utc(2021, 1, 1);
       final booking = Booking.fromJson({
         "id": "1",
         "reason": "reason",
-        "start": "2021-01-01T00:00:00.000Z",
-        "end": "2021-01-01T00:00:00.000Z",
-        "creation": "2021-01-01T00:00:00.000Z",
+        "start": datetime.toIso8601String(),
+        "end": datetime.toIso8601String(),
+        "creation": datetime.toIso8601String(),
         "note": "note",
         "room": {
           "id": "1",
@@ -214,8 +216,8 @@ void main() {
       expect(booking.room, isA<Room>());
       expect(booking.id, "1");
       expect(booking.reason, "reason");
-      expect(booking.start, DateTime.parse("2021-01-01T00:00:00.000Z"));
-      expect(booking.end, DateTime.parse("2021-01-01T00:00:00.000Z"));
+      expect(booking.start, datetime.toLocal());
+      expect(booking.end, datetime.toLocal());
       expect(booking.note, "note");
       expect(booking.key, true);
       expect(booking.decision, Decision.approved);
