@@ -16,13 +16,15 @@ class KindsBar extends HookConsumerWidget {
     final associationKinds = ref.watch(associationKindsProvider);
     useEffect(
       () {
-        Future(
-          () => Scrollable.ensureVisible(
-            dataKey.currentContext!,
-            duration: const Duration(milliseconds: 500),
-            alignment: 0.5,
-          ),
-        );
+        Future(() {
+          if (kind != "") {
+            Scrollable.ensureVisible(
+              dataKey.currentContext!,
+              duration: const Duration(milliseconds: 500),
+              alignment: 0.5,
+            );
+          }
+        });
         return;
       },
       [dataKey],
@@ -39,7 +41,7 @@ class KindsBar extends HookConsumerWidget {
             final item = kinds.kinds[index];
             final selected = kind == item;
             return ItemChip(
-              key: selected || (kind == "" && index == 0) ? dataKey : null,
+              key: selected ? dataKey : null,
               onTap: () {
                 kindNotifier.setKind(!selected ? item : "");
               },
