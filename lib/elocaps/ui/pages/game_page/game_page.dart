@@ -30,30 +30,25 @@ class GamePage extends HookConsumerWidget {
     final modeChosen = ref.watch(modeChosenProvider);
     final modeChosenNotifier = ref.read(modeChosenProvider.notifier);
     final gameNotifier = ref.watch(gameProvider.notifier);
-    final isFocused = useState(List.generate(4, (index) => false));
     final user = ref.watch(userProvider);
     final playersKey = GlobalKey<FormState>();
     final scoreKey = GlobalKey<FormState>();
     final playersForm = [
       PlayerForm(
           index: 0,
-          isFocused: isFocused,
           queryController:
               useTextEditingController(text: user.toSimpleUser().getName()),
           user: useState(user.toSimpleUser())),
       PlayerForm(
           index: 1,
-          isFocused: isFocused,
           queryController: useTextEditingController(text: ""),
           user: useState(SimpleUser.empty())),
       PlayerForm(
           index: 2,
-          isFocused: isFocused,
           queryController: useTextEditingController(text: ""),
           user: useState(SimpleUser.empty())),
       PlayerForm(
           index: 3,
-          isFocused: isFocused,
           queryController: useTextEditingController(text: ""),
           user: useState(SimpleUser.empty())),
     ];
@@ -220,6 +215,7 @@ class GamePage extends HookConsumerWidget {
                       id: '',
                       isConfirmed: false,
                       isCancelled: false,
+                      opponent: [],
                       mode: modeChosen);
                   final value = await gameNotifier.createGame(game);
                   if (value) {
