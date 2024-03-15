@@ -3,7 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/elocaps/providers/players_provider.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/user/providers/user_provider.dart';
 
 class SearchResult extends HookConsumerWidget {
   final TextEditingController queryController;
@@ -13,14 +12,16 @@ class SearchResult extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final me = ref.watch(userProvider);
     final users = ref.watch(userList);
     final usersNotifier = ref.watch(userList.notifier);
     final playersNotifier = ref.watch(playersProvider.notifier);
+    final players = ref.watch(playersProvider);
     return AsyncChild(
         value: users,
         builder: (context, u) => Column(
             children: u
+                .where((user) =>
+                    !players.values.map((e) => e.id).contains(user.id))
                 .map((user) => GestureDetector(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -33,11 +34,9 @@ class SearchResult extends HookConsumerWidget {
                             Expanded(
                               child: Text(
                                 user.getName(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 13,
-                                  fontWeight: (me.id == user.id)
-                                      ? FontWeight.bold
-                                      : FontWeight.w400,
+                                  fontWeight: FontWeight.w400,
                                 ),
                                 overflow: TextOverflow.ellipsis,
                               ),
