@@ -38,7 +38,7 @@ class ElocapsTextConstant {
   static const String result = "Résultat";
   static const String savedGame = "Partie enregistrée";
   static const String saveTheGame = "Enregistrer la partie";
-  static const String semiCapacks = "Semi Capacks";
+  static const String semiCapacks = "16 evolve";
   static const String apiSemiCapacks = "semi_capacks";
   static const String team_1 = "Equipe 1";
   static const String team_2 = "Equipe 2";

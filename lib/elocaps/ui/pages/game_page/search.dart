@@ -13,9 +13,9 @@ class SearchResult extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final me = ref.watch(userProvider);
     final users = ref.watch(userList);
     final usersNotifier = ref.watch(userList.notifier);
-    final me = ref.watch(userProvider);
     return AsyncChild(
         value: users,
         builder: (context, u) => Column(
@@ -34,7 +34,7 @@ class SearchResult extends HookConsumerWidget {
                                 e.getName(),
                                 style: TextStyle(
                                   fontSize: 13,
-                                  fontWeight: (user.value.id == e.id)
+                                  fontWeight: (me.id == e.id)
                                       ? FontWeight.bold
                                       : FontWeight.w400,
                                 ),
