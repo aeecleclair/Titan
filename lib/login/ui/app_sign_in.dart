@@ -52,9 +52,9 @@ class AppSignIn extends HookConsumerWidget {
                       flex: 2,
                       child: Column(
                         children: [
-                          const Expanded(
+                          Expanded(
                             child: Image(
-                              image: AssetImage('assets/images/logo.png'),
+                              image: AssetImage(getTitanLogo()),
                             ),
                           ),
                           SignInUpBar(

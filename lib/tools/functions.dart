@@ -396,3 +396,30 @@ Plausible? getPlausible() {
 
   return null;
 }
+
+String getTitanHost() {
+  var host = dotenv.env["${appFlavor!.toUpperCase()}_HOST"];
+
+  if (host == null || host == "") {
+    throw StateError("Could not find host corresponding to flavor");
+  }
+
+  return host;
+}
+
+String getTitanPackageName() {
+  switch (appFlavor) {
+    case "dev":
+      return "fr.myecl.titan.dev";
+    case "alpha":
+      return "fr.myecl.titan.alpha";
+    case "prod":
+      return "fr.myecl.titan";
+    default:
+      throw StateError("Invalid app flavor");
+  }
+}
+
+String getTitanLogo() {
+  return "assets/images/logo_${appFlavor!}.png";
+}

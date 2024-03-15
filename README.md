@@ -18,11 +18,11 @@ Titan is designed to be launched on Web, Android and iOS platforms.
 
 Update [`.env`](.env) to match your Hyperion's backend:
 
-`RELEASE_HOST = "<<Your Production Server Host>>"`
+`PROD_HOST = "<<Your Production Server Host>>`
 
 You can also specify an other host for debuging:
 
-`DEBUG_HOST = "<<Your Debbuging Server Host>>"`
+`DEV_HOST = "<<Your Debbuging Server Host>>`
 
 NB: a trailing slash is required.
 
@@ -43,12 +43,12 @@ Titan's tests follow the official [Flutter documentation](https://docs.flutter.d
 
 Tests can be run using:
 ```bash
-flutter test
+flutter test --flavor dev
 ```
 
 To run a specific test file :
 ```bash
-flutter test path/to/file.dart
+flutter test --flavor dev path/to/file.dart
 ```
 
 ### Flavors

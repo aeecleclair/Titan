@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/repository/logo_repository.dart';
 
 class ContenderLogoRepository extends LogoRepository {
@@ -13,7 +14,7 @@ class ContenderLogoRepository extends LogoRepository {
   Future<Image> getContenderLogo(String id) async {
     final bytes = await getLogo(id, suffix: "/logo");
     if (bytes.isEmpty) {
-      return Image.asset("assets/images/logo.png");
+      return Image.asset(getTitanLogo());
     }
     return Image.memory(bytes);
   }

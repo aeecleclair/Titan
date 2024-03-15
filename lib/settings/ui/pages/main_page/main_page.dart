@@ -66,7 +66,7 @@ class SettingsMainPage extends HookConsumerWidget {
                           child: CircleAvatar(
                             radius: 70,
                             backgroundImage: profile.isEmpty
-                                ? const AssetImage('assets/images/logo.png')
+                                ? AssetImage(getTitanLogo())
                                 : Image.memory(profile).image,
                           ),
                         ),

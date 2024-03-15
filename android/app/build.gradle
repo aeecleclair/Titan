@@ -58,9 +58,6 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
-        manifestPlaceholders += [
-            'appAuthRedirectScheme': 'fr.myecl.titan'
-        ]
     }
 
     signingConfigs {
@@ -83,16 +80,19 @@ android {
 		prod {
 			dimension "default"
 			resValue "string", "app_name", "MyECL"
+            manifestPlaceholders = ['appAuthRedirectScheme': 'fr.myecl.titan']
 		}
 		alpha {
 			dimension "default"
 			resValue "string", "app_name", "MyECL Alpha"
 			applicationIdSuffix ".alpha"
+            manifestPlaceholders = ['appAuthRedirectScheme': 'fr.myecl.titan.alpha']
 		}
 		dev {
 			dimension "default"
 			resValue "string", "app_name", "MyECL Dev"
 			applicationIdSuffix ".dev"
+            manifestPlaceholders = ['appAuthRedirectScheme': 'fr.myecl.titan.dev']
 		}
 	}
 }
