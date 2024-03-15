@@ -2,7 +2,6 @@ import 'package:myecl/elocaps/class/caps_mode.dart';
 import 'package:myecl/elocaps/class/game_player.dart';
 import 'package:myecl/elocaps/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/class/list_users.dart';
 
 class Game {
   Game(
@@ -11,15 +10,13 @@ class Game {
       required this.mode,
       required this.gamePlayers,
       required this.isConfirmed,
-      required this.isCancelled,
-      required this.opponent});
+      required this.isCancelled});
   late final String id;
   late final DateTime timestamp;
   late final CapsMode mode;
   late final List<GamePlayer> gamePlayers;
   late final bool isConfirmed;
   late final bool isCancelled;
-  late final List<SimpleUser> opponent;
 
   Game.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -63,8 +60,7 @@ class Game {
           id: id ?? this.id,
           gamePlayers: gamePlayers ?? this.gamePlayers,
           isConfirmed: isConfirmed ?? this.isConfirmed,
-          isCancelled: isCancelled ?? this.isCancelled,
-          opponent: opponent);
+          isCancelled: isCancelled ?? this.isCancelled);
 
   Game.empty() {
     id = '';
@@ -73,7 +69,6 @@ class Game {
     gamePlayers = [];
     isConfirmed = false;
     isCancelled = false;
-    opponent = [];
   }
 
   @override

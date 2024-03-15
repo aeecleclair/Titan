@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/elocaps/providers/players_provider.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 class SearchResult extends HookConsumerWidget {
-  final ValueNotifier<SimpleUser> user;
   final TextEditingController queryController;
+  final int index;
   const SearchResult(
-      {super.key, required this.user, required this.queryController});
+      {super.key, required this.index, required this.queryController});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final me = ref.watch(userProvider);
     final users = ref.watch(userList);
     final usersNotifier = ref.watch(userList.notifier);
+    final playersNotifier = ref.watch(playersProvider.notifier);
     return AsyncChild(
         value: users,
         builder: (context, u) => Column(
             children: u
-                .map((e) => GestureDetector(
+                .map((user) => GestureDetector(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -31,10 +32,10 @@ class SearchResult extends HookConsumerWidget {
                             ),
                             Expanded(
                               child: Text(
-                                e.getName(),
+                                user.getName(),
                                 style: TextStyle(
                                   fontSize: 13,
-                                  fontWeight: (me.id == e.id)
+                                  fontWeight: (me.id == user.id)
                                       ? FontWeight.bold
                                       : FontWeight.w400,
                                 ),
@@ -44,8 +45,8 @@ class SearchResult extends HookConsumerWidget {
                           ]),
                     ),
                     onTap: () {
-                      user.value = e;
-                      queryController.text = e.getName();
+                      playersNotifier.setPlayer(index, user);
+                      queryController.text = user.getName();
                       usersNotifier.clear();
                     }))
                 .toList()));

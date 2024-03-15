@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class IsFieldFocustNotifier extends StateNotifier<int> {
-  IsFieldFocustNotifier() : super(-1);
+class IsFieldFocusNotifier extends StateNotifier<int> {
+  IsFieldFocusNotifier() : super(-1);
 
   void setFocus(int index) {
     state = index;
@@ -9,6 +9,6 @@ class IsFieldFocustNotifier extends StateNotifier<int> {
 }
 
 final isFieldFocusProvider =
-    StateNotifierProvider<IsFieldFocustNotifier, int>((ref) {
-  return IsFieldFocustNotifier();
+    StateNotifierProvider<IsFieldFocusNotifier, int>((ref) {
+  return IsFieldFocusNotifier();
 });
