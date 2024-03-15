@@ -5,20 +5,15 @@ import 'package:myecl/elocaps/providers/is_field_focus_provider.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/elocaps/ui/pages/game_page/search.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
-import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/elocaps/tools/constants.dart';
 
 class PlayerForm extends HookConsumerWidget {
   const PlayerForm(
-      {super.key,
-      required this.index,
-      required this.queryController,
-      required this.user});
+      {super.key, required this.index, required this.queryController});
 
   final int index;
   final TextEditingController queryController;
-  final ValueNotifier<SimpleUser> user;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -50,7 +45,7 @@ class PlayerForm extends HookConsumerWidget {
             height: 10,
           ),
           if (index == isFocused)
-            SearchResult(user: user, queryController: queryController)
+            SearchResult(index: index, queryController: queryController)
         ],
       ),
     );

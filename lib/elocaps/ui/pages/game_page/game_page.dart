@@ -6,6 +6,7 @@ import 'package:myecl/elocaps/class/game.dart';
 import 'package:myecl/elocaps/class/game_player.dart';
 import 'package:myecl/elocaps/providers/game_provider.dart';
 import 'package:myecl/elocaps/providers/mode_chosen_provider.dart';
+import 'package:myecl/elocaps/providers/players_provider.dart';
 import 'package:myecl/elocaps/providers/scores_provider.dart';
 import 'package:myecl/elocaps/router.dart';
 import 'package:myecl/elocaps/ui/button.dart';
@@ -30,31 +31,31 @@ class GamePage extends HookConsumerWidget {
     final modeChosen = ref.watch(modeChosenProvider);
     final modeChosenNotifier = ref.read(modeChosenProvider.notifier);
     final gameNotifier = ref.watch(gameProvider.notifier);
-    final user = ref.watch(userProvider);
+    final me = ref.watch(userProvider);
+    final players = ref.watch(playersProvider);
     final playersKey = GlobalKey<FormState>();
     final scoreKey = GlobalKey<FormState>();
     final playersForm = [
       PlayerForm(
-          index: 0,
-          queryController:
-              useTextEditingController(text: user.toSimpleUser().getName()),
-          user: useState(user.toSimpleUser())),
+        index: 0,
+        queryController:
+            useTextEditingController(text: me.toSimpleUser().getName()),
+      ),
       PlayerForm(
-          index: 1,
-          queryController: useTextEditingController(text: ""),
-          user: useState(SimpleUser.empty())),
+        index: 1,
+        queryController: useTextEditingController(text: ""),
+      ),
       PlayerForm(
-          index: 2,
-          queryController: useTextEditingController(text: ""),
-          user: useState(SimpleUser.empty())),
+        index: 2,
+        queryController: useTextEditingController(text: ""),
+      ),
       PlayerForm(
-          index: 3,
-          queryController: useTextEditingController(text: ""),
-          user: useState(SimpleUser.empty())),
+        index: 3,
+        queryController: useTextEditingController(text: ""),
+      ),
     ];
     final scores = ref.watch(scoresProvider);
     final scoresNotifier = ref.read(scoresProvider.notifier);
-    final players = useState(<SimpleUser>[]);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -123,10 +124,6 @@ class GamePage extends HookConsumerWidget {
                 if (playersKey.currentState!.validate()) {
                   isGameCreated.value = true;
                 }
-                players.value = playersForm
-                    .map<SimpleUser>((e) => e.user.value)
-                    .where((user) => user.id != "")
-                    .toList();
               },
               child: const MyButton(text: ElocapsTextConstant.gameStart),
             ),
@@ -152,8 +149,8 @@ class GamePage extends HookConsumerWidget {
                           margin: const EdgeInsets.all(0),
                           enabled: scores[0] == 1,
                           text: modeChosen == CapsMode.cd
-                              ? '${players.value[0].nickname ?? players.value[0].firstname} et ${players.value[1].nickname ?? players.value[1].firstname} ${ElocapsTextConstant.wonCd}'
-                              : '${players.value[0].nickname ?? players.value[0].firstname} ${ElocapsTextConstant.won}',
+                              ? '${players[0]?.nickname ?? players[0]?.firstname} et ${players[1]?.nickname ?? players[1]?.firstname} ${ElocapsTextConstant.wonCd}'
+                              : '${players[0]?.nickname ?? players[0]?.firstname} ${ElocapsTextConstant.won}',
                         ),
                       ),
                     ),
@@ -181,8 +178,8 @@ class GamePage extends HookConsumerWidget {
                           margin: const EdgeInsets.all(0),
                           enabled: scores[1] == 1,
                           text: modeChosen == CapsMode.cd
-                              ? '${players.value[2].nickname ?? players.value[2].firstname} et ${players.value[3].nickname ?? players.value[3].firstname} ${ElocapsTextConstant.wonCd}'
-                              : '${players.value[1].nickname ?? players.value[1].firstname} ${ElocapsTextConstant.won}',
+                              ? '${players[2]?.nickname ?? players[2]?.firstname} et ${players[3]?.nickname ?? players[3]?.firstname} ${ElocapsTextConstant.wonCd}'
+                              : '${players[1]?.nickname ?? players[1]?.firstname} ${ElocapsTextConstant.won}',
                         ),
                       ),
                     ),
@@ -199,10 +196,10 @@ class GamePage extends HookConsumerWidget {
                   }
                   final game = Game(
                       timestamp: DateTime.now(),
-                      gamePlayers: players.value.asMap().entries.map((entry) {
+                      gamePlayers: players.entries.map((entry) {
                         int index = entry.key;
                         SimpleUser e = entry.value;
-                        final isTeamOne = index < players.value.length / 2;
+                        final isTeamOne = index < players.length / 2;
                         return GamePlayer(
                           user: e,
                           eloGain: 0,
@@ -215,7 +212,6 @@ class GamePage extends HookConsumerWidget {
                       id: '',
                       isConfirmed: false,
                       isCancelled: false,
-                      opponent: [],
                       mode: modeChosen);
                   final value = await gameNotifier.createGame(game);
                   if (value) {
