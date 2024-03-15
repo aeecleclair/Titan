@@ -24,10 +24,11 @@ class EloCapsMainPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final leaderBoardPlayerNotifier = ref.watch(playerListProvider.notifier);
-    final leaderBoardPlayerList = ref.watch(leaderBoardPlayerListProvider);
+    final modeChosen = ref.watch(modeChosenProvider);
+    final leaderBoardPlayerList = ref.watch(
+        leaderBoardPlayerListProvider.select((value) => value[modeChosen]));
     final leaderBoardPlayerListNotifier =
         ref.read(leaderBoardPlayerListProvider.notifier);
-    final modeChosen = ref.watch(modeChosenProvider);
     final modeChosenNotifier = ref.watch(modeChosenProvider.notifier);
 
     return ElocapsTemplate(
@@ -62,7 +63,7 @@ class EloCapsMainPage extends HookConsumerWidget {
                         height: 40),
                     const SizedBox(height: 20),
                     AutoLoaderChild(
-                      value: leaderBoardPlayerList,
+                      group: leaderBoardPlayerList,
                       mapKey: modeChosen,
                       notifier: leaderBoardPlayerListNotifier,
                       listLoader: leaderBoardPlayerNotifier.loadRanking,
