@@ -43,7 +43,8 @@ class ItemListNotifier extends ListNotifier<Item> {
     return state.whenData(
       (items) => items
           .where(
-              (item) => item.name.toLowerCase().contains(query.toLowerCase()),)
+            (item) => item.name.toLowerCase().contains(query.toLowerCase()),
+          )
           .toList(),
     );
   }

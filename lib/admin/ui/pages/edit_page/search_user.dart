@@ -123,7 +123,9 @@ class SearchUser extends HookConsumerWidget {
                                       .toList(),
                                 );
                                 final value = await groupNotifier.deleteMember(
-                                    newGroup, x,);
+                                  newGroup,
+                                  x,
+                                );
                                 if (value) {
                                   simpleGroupGroupsNotifier.setTData(
                                     newGroup.id,

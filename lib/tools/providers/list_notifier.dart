@@ -46,7 +46,9 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
       },
       loading: () {
         state = const AsyncValue.error(
-            "Cannot add while loading", StackTrace.empty,);
+          "Cannot add while loading",
+          StackTrace.empty,
+        );
         return false;
       },
     );

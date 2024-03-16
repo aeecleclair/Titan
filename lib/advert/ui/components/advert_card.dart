@@ -177,7 +177,10 @@ class AdvertCard extends HookConsumerWidget {
                         ),
                         Container(
                           padding: const EdgeInsets.only(
-                              top: 20, left: 10, right: 10,),
+                            top: 20,
+                            left: 10,
+                            right: 10,
+                          ),
                           width: width,
                           height: height - imageHeight,
                           child: Column(

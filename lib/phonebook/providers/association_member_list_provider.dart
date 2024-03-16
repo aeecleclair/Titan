@@ -21,7 +21,9 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
   ) async {
     return await loadList(
       () async => associationMemberRepository.getAssociationMemberList(
-          associationId, year,),
+        associationId,
+        year,
+      ),
     );
   }
 
