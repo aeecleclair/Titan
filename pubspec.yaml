@@ -59,6 +59,8 @@ dependencies:
   url_launcher: ^6.1.7
   vector_math: ^2.1.2
   zxcvbn: ^1.0.0
+  flutter_pdfview: ^1.2.5
+  pdf_render: ^1.4.6
 
 dev_dependencies:
   dependency_validator: ^3.2.2
@@ -85,6 +87,7 @@ flutter:
     - assets/web/Pret.webp
     - assets/web/Tombola.webp
     - assets/web/Vote.webp
+    - assets/my_document.pdf
     - assets/images/bird_2.png
     - assets/images/pipe.png
     - assets/images/flap.svg
