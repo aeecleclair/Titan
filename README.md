@@ -78,7 +78,7 @@ For iOS, add your `GoogleService-Info.plist` in `ios/config/<flavor/`.
 On mobile, using plaintext HTTP connexions may raise issues.
 
 #### Android
-Update [AndroidManifest.xml](./android/app/src/main/AndroidManifest.xml):
+Update [AndroidManifest.xml](./android/app/src/debug/AndroidManifest.xml):
 ```
 <application
     ...

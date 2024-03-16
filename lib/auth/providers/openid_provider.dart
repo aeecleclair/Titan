@@ -6,7 +6,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/foundation.dart' show kDebugMode, kIsWeb;
 import 'package:myecl/auth/providers/is_connected_provider.dart';
 import 'package:myecl/auth/repository/openid_repository.dart';
 import 'package:myecl/tools/cache/cache_manager.dart';
@@ -218,6 +218,7 @@ class OpenIdTokenProvider
             redirectUrl,
             discoveryUrl: discoveryUrl,
             scopes: scopes,
+            allowInsecureConnections: kDebugMode,
           ),
         );
         if (resp != null) {
@@ -257,6 +258,7 @@ class OpenIdTokenProvider
               discoveryUrl: discoveryUrl,
               scopes: scopes,
               refreshToken: token,
+              allowInsecureConnections: kDebugMode,
             ));
             if (resp != null) {
               state = AsyncValue.data({
@@ -285,6 +287,7 @@ class OpenIdTokenProvider
       discoveryUrl: discoveryUrl,
       scopes: scopes,
       authorizationCode: authorizationToken,
+      allowInsecureConnections: kDebugMode,
     ))
         .then((resp) {
       if (resp != null) {
@@ -309,6 +312,7 @@ class OpenIdTokenProvider
               discoveryUrl: discoveryUrl,
               scopes: scopes,
               refreshToken: token[refreshTokenKey] as String,
+              allowInsecureConnections: kDebugMode,
             ),
           );
           if (resp == null) {
