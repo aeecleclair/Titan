@@ -45,8 +45,8 @@ class Order {
         List<int>.from(products.map((element) => element.quantity).toList());
     collectionSlot = apiStringToCollectionSlot(json['collection_slot']);
     user = SimpleUser.fromJson(json['user']);
-    orderingDate = DateTime.parse(json['ordering_date']);
-    deliveryDate = DateTime.parse(json['delivery_date']);
+    orderingDate = processDateFromAPI(json['ordering_date']);
+    deliveryDate = processDateFromAPIWithoutHour(json['delivery_date']);
   }
 
   Map<String, dynamic> toJson() {
@@ -54,7 +54,7 @@ class Order {
     data['order_id'] = id;
     data['delivery_id'] = deliveryId;
     data['amount'] = amount;
-    data['ordering_date'] = processDateToAPIWithoutHour(orderingDate);
+    data['ordering_date'] = processDateToAPI(orderingDate);
     data['delivery_date'] = processDateToAPIWithoutHour(deliveryDate);
     data['products_ids'] = productsDetail;
     data['collection_slot'] = apiCollectionSlotToString(collectionSlot);

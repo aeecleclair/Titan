@@ -21,7 +21,7 @@ class Advert {
     id = json["id"];
     title = json["title"];
     content = json["content"];
-    date = DateTime.parse(json["date"]);
+    date = processDateFromAPI(json["date"]);
     announcer = Announcer.fromJson(json["advertiser"]);
     tags = json["tags"].split(', ');
   }

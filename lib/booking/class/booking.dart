@@ -39,9 +39,9 @@ class Booking {
     Booking booking = Booking(
       id: json["id"],
       reason: json["reason"],
-      start: DateTime.parse(json["start"]),
-      end: DateTime.parse(json["end"]),
-      creation: DateTime.parse(json["creation"]),
+      start: processDateFromAPI(json["start"]),
+      end: processDateFromAPI(json["end"]),
+      creation: processDateFromAPI(json["creation"]),
       note: json["note"],
       room: Room.fromJson(json["room"]),
       key: json["key"],

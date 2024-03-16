@@ -1,3 +1,5 @@
+import 'package:myecl/tools/functions.dart';
+
 class Recommendation {
   final String? id;
   final DateTime? creation;
@@ -17,7 +19,7 @@ class Recommendation {
 
   Recommendation.fromJson(Map<String, dynamic> json)
       : id = json["id"],
-        creation = DateTime.parse(json["creation"]),
+        creation = processDateFromAPI(json["creation"]),
         title = json["title"],
         code = json["code"],
         summary = json["summary"],

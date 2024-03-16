@@ -134,7 +134,7 @@ void main() {
     test('Should return a string', () {
       final date = DateTime.parse("2021-01-01");
       expect(processDateToAPI(date), isA<String>());
-      expect(processDateToAPI(date), "2021-01-01T00:00:00.000");
+      expect(processDateToAPI(date), date.toUtc().toIso8601String());
     });
   });
 

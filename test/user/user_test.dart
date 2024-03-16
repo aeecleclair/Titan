@@ -22,13 +22,15 @@ void main() {
     });
 
     test('Should parse an User from json', () async {
+      final birthday = DateTime(1999, 1, 1);
+      final createdOn = DateTime.utc(2021, 1, 1);
       final user = User.fromJson({
         "name": "name",
         "firstname": "firstname",
         "nickname": null,
         "id": "id",
         "birthday": "1999-01-01",
-        "created_on": "2021-01-01",
+        "created_on": createdOn.toIso8601String(),
         "email": "email",
         "floor": "autre",
         "groups": [],
@@ -40,8 +42,8 @@ void main() {
       expect(user.firstname, 'Firstname');
       expect(user.nickname, null);
       expect(user.id, 'id');
-      expect(user.birthday, '1999-01-01');
-      expect(user.createdOn, '2021-01-01');
+      expect(user.birthday, birthday);
+      expect(user.createdOn, createdOn.toLocal());
       expect(user.email, 'email');
       expect(user.floor, 'autre');
       expect(user.groups, []);
@@ -68,8 +70,8 @@ void main() {
       expect(user.firstname, 'Firstname');
       expect(user.nickname, 'Nickname');
       expect(user.id, 'id');
-      expect(user.birthday, '1999-01-01');
-      expect(user.createdOn, '2021-01-01');
+      expect(user.birthday, DateTime(1999, 1, 1));
+      expect(user.createdOn, DateTime(2021, 1, 1));
       expect(user.email, 'email');
       expect(user.floor, 'autre');
       expect(user.groups, []);
@@ -87,10 +89,10 @@ void main() {
       expect(newUser.nickname, 'nickname');
       newUser = user.copyWith(id: 'id');
       expect(newUser.id, 'id');
-      newUser = user.copyWith(birthday: 'birthday');
-      expect(newUser.birthday, 'birthday');
-      newUser = user.copyWith(createdOn: 'createdOn');
-      expect(newUser.createdOn, 'createdOn');
+      newUser = user.copyWith(birthday: DateTime(1999, 1, 1));
+      expect(newUser.birthday, DateTime(1999, 1, 1));
+      newUser = user.copyWith(createdOn: DateTime(2001, 1, 1));
+      expect(newUser.createdOn, DateTime(2001, 1, 1));
       newUser = user.copyWith(email: 'email');
       expect(newUser.email, 'email');
       newUser = user.copyWith(floor: 'floor');
@@ -109,8 +111,8 @@ void main() {
         firstname: 'firstname',
         nickname: null,
         id: 'id',
-        birthday: '1999-01-01',
-        createdOn: '2021-01-01',
+        birthday: DateTime(1999, 1, 1),
+        createdOn: DateTime(2021, 1, 1),
         email: 'email',
         floor: 'floor',
         groups: [],
@@ -118,17 +120,18 @@ void main() {
         promo: null,
       );
       expect(user.toString(),
-          'User {name: name, firstname: firstname, nickname: null, id: id, email: email, birthday: 1999-01-01, promo: null, floor: floor, phone: phone, createdOn: 2021-01-01, groups: []}');
+          'User {name: name, firstname: firstname, nickname: null, id: id, email: email, birthday: 1999-01-01 00:00:00.000, promo: null, floor: floor, phone: phone, createdOn: 2021-01-01 00:00:00.000, groups: []}');
     });
 
     test('Should return correct json', () async {
+      final createdOn = DateTime.utc(2021, 1, 1);
       final user = User.fromJson({
         "name": "name",
         "firstname": "firstname",
         "nickname": null,
         "id": "id",
         "birthday": "1999-01-01",
-        "created_on": "2021-01-01",
+        "created_on": createdOn.toIso8601String(),
         "email": "email",
         "floor": "floor",
         "groups": [],
@@ -141,7 +144,7 @@ void main() {
         "nickname": null,
         "id": "id",
         "birthday": "1999-01-01",
-        "created_on": "2021-01-01",
+        "created_on": createdOn.toIso8601String(),
         "email": "email",
         "floor": "floor",
         "groups": [],
@@ -322,13 +325,14 @@ void main() {
       when(() => mockUser.getMe()).thenAnswer((_) async => User.empty());
       final UserNotifier userNotifier = UserNotifier(userRepository: mockUser);
       final user = await userNotifier.loadMe();
+      final now = DateTime.now();
       expect(user, isA<AsyncData<User>>());
       expect(
           user.when(
-              data: (value) => value.toString(),
+              data: (value) => value.copyWith(createdOn: now).toString(),
               error: (Object error, StackTrace stackTrace) {},
               loading: () {}),
-          User.empty().toString());
+          User.empty().copyWith(createdOn: now).toString());
     });
 
     test('Should catch error when getMe fail', () async {

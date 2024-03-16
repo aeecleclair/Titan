@@ -48,8 +48,8 @@ class Event {
     id = json['id'];
     name = json['name'];
     organizer = json['organizer'];
-    start = DateTime.parse(json['start']);
-    end = DateTime.parse(json['end']);
+    start = processDateFromAPI(json['start']);
+    end = processDateFromAPI(json['end']);
     allDay = json['all_day'];
     location = json['location'];
     type = stringToCalendarEventType(json['type']);

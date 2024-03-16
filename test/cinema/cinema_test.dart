@@ -73,10 +73,11 @@ void main() {
     });
 
     test('Should parse a Session from json', () {
+      final start = DateTime.utc(2021, 1, 1);
       final session = Session.fromJson({
         "id": "1",
         "name": "Session 1",
-        "start": "2021-01-01T00:00:00.000Z",
+        "start": start.toIso8601String(),
         "duration": 120,
         "overview": "Overview",
         "genre": "Genre",
@@ -85,7 +86,7 @@ void main() {
       expect(session, isA<Session>());
       expect(session.id, equals("1"));
       expect(session.name, equals("Session 1"));
-      expect(session.start, equals(DateTime.parse("2021-01-01T00:00:00.000Z")));
+      expect(session.start, equals(start.toLocal()));
       expect(session.duration, equals(120));
       expect(session.overview, equals("Overview"));
       expect(session.genre, equals("Genre"));

@@ -275,6 +275,7 @@ void main() {
     });
 
     test('Should return correct json', () async {
+      final orderingDate = DateTime.utc(2021, 01, 01);
       final order = Order.fromJson({
         "order_id": "id",
         "delivery_id": "delivery_id",
@@ -295,7 +296,7 @@ void main() {
           "nickname": null,
           "id": "id",
         },
-        "ordering_date": "2021-01-01",
+        "ordering_date": orderingDate.toIso8601String(),
         "delivery_date": "2021-01-01",
       });
       expect(order.toJson(), {
@@ -306,7 +307,7 @@ void main() {
         "products_quantity": [0],
         "collection_slot": "midi",
         "user_id": "id",
-        "ordering_date": "2021-01-01",
+        "ordering_date": orderingDate.toUtc().toIso8601String(),
         "delivery_date": "2021-01-01",
       });
     });
