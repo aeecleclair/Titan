@@ -33,6 +33,7 @@ class GamePage extends HookConsumerWidget {
     final gameNotifier = ref.watch(gameProvider.notifier);
     final me = ref.watch(userProvider);
     final players = ref.watch(playersProvider);
+    final playersNotifier = ref.watch(playersProvider.notifier);
     final playersKey = GlobalKey<FormState>();
     final scoreKey = GlobalKey<FormState>();
     final playersForm = [
@@ -215,6 +216,7 @@ class GamePage extends HookConsumerWidget {
                       mode: modeChosen);
                   final value = await gameNotifier.createGame(game);
                   if (value) {
+                    playersNotifier.reset();
                     displayToastWithContext(
                         TypeMsg.msg, ElocapsTextConstant.savedGame);
                     QR.to(ElocapsRouter.root);
