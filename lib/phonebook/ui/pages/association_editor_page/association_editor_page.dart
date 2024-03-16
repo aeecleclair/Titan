@@ -57,6 +57,7 @@ class AssociationEditorPage extends HookConsumerWidget {
     return PhonebookTemplate(
         child: Refresher(
       onRefresh: () async {
+        await associationNotifier.loadAssociation(association.id);
         await associationMemberListNotifier.loadMembers(
           association.id,
           association.mandateYear.toString(),
