@@ -8,11 +8,13 @@ on:
         required: false
         type: string
   pull_request:
+    types: ["labeled"]
 
 jobs:
   build:
     name: Build ${{ matrix.name }}
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.name, 'build')
     strategy:
       matrix:
         include:
@@ -68,7 +70,7 @@ jobs:
       
       - name: Add Firebase configuration for Dev
         run: |
-          echo $GOOGLE_SERVICES_DEV_JSON_BASE64 | base64 -D -o android/app/src/dev/google-services.json
+          echo $GOOGLE_SERVICES_DEV_JSON_BASE64 | base64 -d > android/app/src/dev/google-services.json
         env:
           GOOGLE_SERVICES_DEV_JSON_BASE64: ${{ secrets.GOOGLE_SERVICES_DEV_JSON_BASE64 }}
 
