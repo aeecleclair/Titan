@@ -71,8 +71,8 @@ List<Color> scoreToColor(int score, bool gameConfirmed, bool gameCancelled) {
     ];
   } else if (gameCancelled) {
     return [
-      Color.fromARGB(255, 32, 31, 31),
-      Color.fromARGB(255, 201, 197, 196)
+      const Color.fromARGB(255, 32, 31, 31),
+      const Color.fromARGB(255, 201, 197, 196)
     ];
   }
   return [

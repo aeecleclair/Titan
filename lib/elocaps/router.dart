@@ -5,6 +5,7 @@ import 'package:myecl/elocaps/ui/pages/game_page/game_page.dart';
 import 'package:myecl/elocaps/ui/pages/history_page/history_page.dart';
 import 'package:myecl/elocaps/ui/pages/main_page/main_page.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
+import 'package:myecl/tools/middlewares/notification_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:myecl/elocaps/tools/constants.dart';
 
@@ -26,7 +27,8 @@ class ElocapsRouter {
           path: ElocapsRouter.root,
           builder: () => const EloCapsMainPage(),
           middleware: [
-            AuthenticatedMiddleware(ref)
+            AuthenticatedMiddleware(ref),
+            NotificationMiddleWare(ref)
           ],
           children: [
             QRoute(builder: () => const HistoryPage(), path: history),

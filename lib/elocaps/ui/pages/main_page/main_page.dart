@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/elocaps/class/caps_mode.dart';
+import 'package:myecl/elocaps/class/game.dart';
 import 'package:myecl/elocaps/providers/leader_board_player_map_notifier.dart';
 import 'package:myecl/elocaps/providers/mode_chosen_provider.dart';
 import 'package:myecl/elocaps/providers/player_histo_provider.dart';
@@ -35,13 +36,23 @@ class EloCapsMainPage extends HookConsumerWidget {
         ref.read(leaderBoardPlayerListProvider.notifier);
     final modeChosenNotifier = ref.watch(modeChosenProvider.notifier);
     final history = ref.watch(playerHistoProvider);
-    final displayBadge = history.maybeWhen(
-        data: (games) => !games.any((element) => element.gamePlayers
-            .where((user) => user.playerId == me.id)
-            .first
-            .hasConfirmed),
-        orElse: () => false);
+    void f(List<Game> games) {
+      print(games.map((e) => e.gamePlayers
+          .where((user) => user.playerId == me.id)
+          .first
+          .hasConfirmed));
+    }
 
+    final displayBadge = history.maybeWhen(
+        data: (games) {
+          f(games);
+          return games.where((e) => !e.isConfirmed && !e.isCancelled).any(
+              (element) => !element.gamePlayers
+                  .where((user) => user.playerId == me.id)
+                  .first
+                  .hasConfirmed);
+        },
+        orElse: () => false);
     return ElocapsTemplate(
         child: Refresher(
             onRefresh: () async {
