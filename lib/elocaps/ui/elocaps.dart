@@ -15,7 +15,8 @@ class ElocapsTemplate extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final history = ref.watch(playerHistoProvider);
     final displayBadge = history.maybeWhen(
-        data: (games) => games.any((element) => !element.isConfirmed),
+        data: (games) => games
+            .any((element) => !element.isConfirmed && !element.isCancelled),
         orElse: () => false);
     return Scaffold(
       body: Container(
@@ -32,13 +33,18 @@ class ElocapsTemplate extends HookConsumerWidget {
                             QR.to(ElocapsRouter.root + ElocapsRouter.history);
                           },
                           child: Center(
-                              child: Badge(
-                                  isLabelVisible: displayBadge,
-                                  smallSize: 10,
-                                  child: const HeroIcon(
-                                    HeroIcons.clipboardDocumentList,
-                                    size: 30,
-                                  ))))
+                              child: (displayBadge)
+                                  ? Badge(
+                                      isLabelVisible: displayBadge,
+                                      smallSize: 10,
+                                      child: const HeroIcon(
+                                        HeroIcons.clipboardDocumentList,
+                                        size: 30,
+                                      ))
+                                  : const HeroIcon(
+                                      HeroIcons.clipboardDocumentList,
+                                      size: 30,
+                                    )))
                       : null),
               Expanded(child: child),
             ],
