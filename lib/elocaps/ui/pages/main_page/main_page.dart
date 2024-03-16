@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/elocaps/class/caps_mode.dart';
 import 'package:myecl/elocaps/providers/leader_board_player_map_notifier.dart';
 import 'package:myecl/elocaps/providers/mode_chosen_provider.dart';
+import 'package:myecl/elocaps/providers/player_histo_provider.dart';
 import 'package:myecl/elocaps/providers/player_list_provider.dart';
 import 'package:myecl/elocaps/router.dart';
 import 'package:myecl/elocaps/tools/constants.dart';
@@ -15,6 +17,7 @@ import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 
@@ -25,11 +28,19 @@ class EloCapsMainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final leaderBoardPlayerNotifier = ref.watch(playerListProvider.notifier);
     final modeChosen = ref.watch(modeChosenProvider);
+    final me = ref.watch(userProvider);
     final leaderBoardPlayerList = ref.watch(
         leaderBoardPlayerListProvider.select((value) => value[modeChosen]));
     final leaderBoardPlayerListNotifier =
         ref.read(leaderBoardPlayerListProvider.notifier);
     final modeChosenNotifier = ref.watch(modeChosenProvider.notifier);
+    final history = ref.watch(playerHistoProvider);
+    final displayBadge = history.maybeWhen(
+        data: (games) => !games.any((element) => element.gamePlayers
+            .where((user) => user.playerId == me.id)
+            .first
+            .hasConfirmed),
+        orElse: () => false);
 
     return ElocapsTemplate(
         child: Refresher(
@@ -90,6 +101,27 @@ class EloCapsMainPage extends HookConsumerWidget {
                     ),
                   ),
                 ),
+                Positioned(
+                  top: 0,
+                  right: 10,
+                  child: GestureDetector(
+                      onTap: () {
+                        QR.to(ElocapsRouter.root + ElocapsRouter.history);
+                      },
+                      child: Center(
+                          child: (displayBadge)
+                              ? Badge(
+                                  isLabelVisible: displayBadge,
+                                  smallSize: 10,
+                                  child: const HeroIcon(
+                                    HeroIcons.clipboardDocumentList,
+                                    size: 30,
+                                  ))
+                              : const HeroIcon(
+                                  HeroIcons.clipboardDocumentList,
+                                  size: 30,
+                                ))),
+                )
               ],
             )));
   }

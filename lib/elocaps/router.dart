@@ -17,7 +17,7 @@ class ElocapsRouter {
   static final Module module = Module(
       name: ElocapsTextConstant.elocaps,
       icon: const Right(
-          '../../assets/images/beer.svg'), // Mettre un icon venant d'un svg [plus tard]
+          '/images/beer.svg'), // Mettre un icon venant d'un svg [plus tard]
       root: ElocapsRouter.root,
       selected: false);
   ElocapsRouter(this.ref);
