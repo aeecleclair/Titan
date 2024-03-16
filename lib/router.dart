@@ -15,6 +15,7 @@ import 'package:myecl/others/ui/no_internet_page.dart'
     deferred as no_internet_page;
 import 'package:myecl/others/ui/no_module.dart' deferred as no_module_page;
 import 'package:myecl/others/ui/update_page.dart' deferred as update_page;
+import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/recommendation/router.dart';
 import 'package:myecl/settings/router.dart';
 import 'package:myecl/raffle/router.dart';
@@ -84,6 +85,7 @@ class AppRouter {
       RecommendationRouter(ref).route(),
       SettingsRouter(ref).route(),
       VoteRouter(ref).route(),
+      PhonebookRouter(ref).route(),
     ];
   }
 }
