@@ -21,22 +21,34 @@ class SearchResult extends HookConsumerWidget {
                   .map((user) => GestureDetector(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                width: 20,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black,
+                                offset: Offset(2, 2),
+                                blurRadius: 10,
+                                spreadRadius: 2,
                               ),
-                              Expanded(
-                                child: Text(
-                                  user.getName(),
-                                  style: const TextStyle(
-                                    fontSize: 13,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
+                            ],
+                          ),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  width: 20,
                                 ),
-                              ),
-                            ]),
+                                Expanded(
+                                  child: Text(
+                                    user.getName(),
+                                    style: const TextStyle(
+                                      fontSize: 13,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ]),
+                        ),
                       ),
                       onTap: () {
                         memberNotifier.setMember(Member.fromUser(user));
