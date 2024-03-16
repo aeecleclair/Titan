@@ -11,13 +11,14 @@ class PrizeCard extends StatelessWidget {
   final Function() onEdit;
   final Future Function() onDelete, onDraw;
   final RaffleStatusType status;
-  const PrizeCard(
-      {super.key,
-      required this.lot,
-      required this.onEdit,
-      required this.onDelete,
-      required this.status,
-      required this.onDraw});
+  const PrizeCard({
+    super.key,
+    required this.lot,
+    required this.onEdit,
+    required this.onDelete,
+    required this.status,
+    required this.onDraw,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -52,24 +53,29 @@ class PrizeCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 10),
-              AutoSizeText(lot.name,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: RaffleColorConstants.textDark)),
+              AutoSizeText(
+                lot.name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: RaffleColorConstants.textDark,
+                ),
+              ),
               const SizedBox(height: 4),
               AutoSizeText(
-                  lot.quantity > 0
-                      ? "${RaffleTextConstants.quantity} : ${lot.quantity}"
-                      : "",
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white)),
+                lot.quantity > 0
+                    ? "${RaffleTextConstants.quantity} : ${lot.quantity}"
+                    : "",
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
               const Spacer(),
               status == RaffleStatusType.creation
                   ? Row(
@@ -93,44 +99,51 @@ class PrizeCard extends StatelessWidget {
                               borderRadius: BorderRadius.circular(15),
                               boxShadow: [
                                 BoxShadow(
-                                    color: RaffleColorConstants.textDark
-                                        .withOpacity(0.5),
-                                    blurRadius: 10,
-                                    offset: const Offset(2, 3))
+                                  color: RaffleColorConstants.textDark
+                                      .withOpacity(0.5),
+                                  blurRadius: 10,
+                                  offset: const Offset(2, 3),
+                                ),
                               ],
                             ),
-                            child: const HeroIcon(HeroIcons.pencil,
-                                color: Colors.white),
+                            child: const HeroIcon(
+                              HeroIcons.pencil,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                         WaitingButton(
                           builder: (child) => Container(
-                              width: 40,
-                              height: 40,
-                              padding: const EdgeInsets.all(7),
-                              decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    RaffleColorConstants.redGradient1,
-                                    RaffleColorConstants.redGradient2,
-                                  ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                ),
-                                borderRadius: BorderRadius.circular(15),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: RaffleColorConstants.redGradient2
-                                          .withOpacity(0.5),
-                                      blurRadius: 10,
-                                      offset: const Offset(2, 3))
+                            width: 40,
+                            height: 40,
+                            padding: const EdgeInsets.all(7),
+                            decoration: BoxDecoration(
+                              gradient: const LinearGradient(
+                                colors: [
+                                  RaffleColorConstants.redGradient1,
+                                  RaffleColorConstants.redGradient2,
                                 ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
                               ),
-                              child: child),
+                              borderRadius: BorderRadius.circular(15),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: RaffleColorConstants.redGradient2
+                                      .withOpacity(0.5),
+                                  blurRadius: 10,
+                                  offset: const Offset(2, 3),
+                                ),
+                              ],
+                            ),
+                            child: child,
+                          ),
                           onTap: onDelete,
-                          child: const HeroIcon(HeroIcons.trash,
-                              color: Colors.white),
-                        )
+                          child: const HeroIcon(
+                            HeroIcons.trash,
+                            color: Colors.white,
+                          ),
+                        ),
                       ],
                     )
                   : status == RaffleStatusType.lock
@@ -138,38 +151,45 @@ class PrizeCard extends StatelessWidget {
                           ? Center(
                               child: WaitingButton(
                                 builder: (child) => Container(
-                                    width: 40,
-                                    height: 40,
-                                    padding: const EdgeInsets.all(7),
-                                    decoration: BoxDecoration(
-                                      gradient: const LinearGradient(
-                                        colors: [
-                                          RaffleColorConstants.gradient2,
-                                          RaffleColorConstants.textDark,
-                                        ],
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                      ),
-                                      borderRadius: BorderRadius.circular(15),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: RaffleColorConstants.textDark
-                                                .withOpacity(0.5),
-                                            blurRadius: 10,
-                                            offset: const Offset(2, 3))
+                                  width: 40,
+                                  height: 40,
+                                  padding: const EdgeInsets.all(7),
+                                  decoration: BoxDecoration(
+                                    gradient: const LinearGradient(
+                                      colors: [
+                                        RaffleColorConstants.gradient2,
+                                        RaffleColorConstants.textDark,
                                       ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
                                     ),
-                                    child: child),
+                                    borderRadius: BorderRadius.circular(15),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: RaffleColorConstants.textDark
+                                            .withOpacity(0.5),
+                                        blurRadius: 10,
+                                        offset: const Offset(2, 3),
+                                      ),
+                                    ],
+                                  ),
+                                  child: child,
+                                ),
                                 onTap: onDraw,
                                 child: const Row(
                                   children: [
-                                    HeroIcon(HeroIcons.envelopeOpen,
-                                        color: Colors.white),
+                                    HeroIcon(
+                                      HeroIcons.envelopeOpen,
+                                      color: Colors.white,
+                                    ),
                                     SizedBox(width: 15),
-                                    Text("Tirer",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold)),
+                                    Text(
+                                      "Tirer",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -177,16 +197,23 @@ class PrizeCard extends StatelessWidget {
                           : Container(
                               height: 40,
                               padding: const EdgeInsets.symmetric(
-                                  vertical: 7, horizontal: 12),
+                                vertical: 7,
+                                horizontal: 12,
+                              ),
                               child: const Row(
                                 children: [
-                                  HeroIcon(HeroIcons.check,
-                                      color: Colors.white),
+                                  HeroIcon(
+                                    HeroIcons.check,
+                                    color: Colors.white,
+                                  ),
                                   SizedBox(width: 15),
-                                  Text("Tiré",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold)),
+                                  Text(
+                                    "Tiré",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ],
                               ),
                             )
@@ -194,11 +221,15 @@ class PrizeCard extends StatelessWidget {
                           child: Column(
                             children: [
                               Center(
-                                  child: Text("En Attente",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold))),
-                              Spacer()
+                                child: Text(
+                                  "En Attente",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Spacer(),
                             ],
                           ),
                         ),

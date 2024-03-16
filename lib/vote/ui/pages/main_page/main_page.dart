@@ -54,35 +54,37 @@ class VoteMainPage extends HookConsumerWidget {
     if (!canVote) {
       return VoteTemplate(
         child: SizedBox(
-            height: MediaQuery.of(context).size.height - 100,
-            child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: Column(
-                  children: [
-                    if (isAdmin)
-                      Row(
-                        children: [
-                          const Spacer(),
-                          Container(
-                            margin: const EdgeInsets.only(right: 20),
-                            child: AdminButton(
-                              onTap: () {
-                                QR.to(VoteRouter.root + VoteRouter.admin);
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    const Expanded(
-                      child: Center(
-                        child: Text(
-                          VoteTextConstants.canNotVote,
-                          style: TextStyle(fontSize: 20),
+          height: MediaQuery.of(context).size.height - 100,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30.0),
+            child: Column(
+              children: [
+                if (isAdmin)
+                  Row(
+                    children: [
+                      const Spacer(),
+                      Container(
+                        margin: const EdgeInsets.only(right: 20),
+                        child: AdminButton(
+                          onTap: () {
+                            QR.to(VoteRouter.root + VoteRouter.admin);
+                          },
                         ),
                       ),
+                    ],
+                  ),
+                const Expanded(
+                  child: Center(
+                    child: Text(
+                      VoteTextConstants.canNotVote,
+                      style: TextStyle(fontSize: 20),
                     ),
-                  ],
-                ))),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       );
     }
     return VoteTemplate(
@@ -104,89 +106,102 @@ class VoteMainPage extends HookConsumerWidget {
                 .loadTList(list.map((contender) => contender.id).toList());
             for (final l in value) {
               sectionContenderNotifier.setTData(
-                  l,
-                  AsyncValue.data(list
-                      .where((element) => element.section.id == l.id)
-                      .toList()));
+                l,
+                AsyncValue.data(
+                  list.where((element) => element.section.id == l.id).toList(),
+                ),
+              );
             }
             for (final contender in list) {
-              logosNotifier.getLogo(contender.id).then((value) =>
-                  contenderLogosNotifier.setTData(
-                      contender.id, AsyncValue.data([value])));
+              logosNotifier.getLogo(contender.id).then(
+                    (value) => contenderLogosNotifier.setTData(
+                      contender.id,
+                      AsyncValue.data([value]),
+                    ),
+                  );
             }
           });
         },
         child: SizedBox(
           height: MediaQuery.of(context).size.height - 100,
           child: Padding(
-              padding: const EdgeInsets.only(left: 30.0),
-              child: Column(children: [
+            padding: const EdgeInsets.only(left: 30.0),
+            child: Column(
+              children: [
                 SizedBox(
                   height: isAdmin ? 10 : 15,
                 ),
                 AsyncChild(
-                    value: sections,
-                    builder: (context, sectionList) => Column(
+                  value: sections,
+                  builder: (context, sectionList) => Column(
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height -
+                            (s == Status.open
+                                ? isAdmin
+                                    ? 215
+                                    : 220
+                                : isAdmin
+                                    ? 150
+                                    : 155),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height -
-                                  (s == Status.open
-                                      ? isAdmin
-                                          ? 215
-                                          : 220
-                                      : isAdmin
-                                          ? 150
-                                          : 155),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  ListSideItem(
-                                      sectionList: sectionList,
-                                      animation: animation),
-                                  Expanded(
-                                    child: SizedBox(
-                                      width: double.infinity,
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SectionTitle(
-                                                  sectionList: sectionList),
-                                              if (isAdmin)
-                                                Container(
-                                                  margin: const EdgeInsets.only(
-                                                      right: 20),
-                                                  child: AdminButton(
-                                                    onTap: () {
-                                                      QR.to(VoteRouter.root +
-                                                          VoteRouter.admin);
-                                                    },
-                                                  ),
-                                                )
-                                            ],
-                                          ),
-                                          const SizedBox(height: 15),
-                                          Expanded(
-                                            child: ListContenderCard(
-                                              animation: animation,
+                            ListSideItem(
+                              sectionList: sectionList,
+                              animation: animation,
+                            ),
+                            Expanded(
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        SectionTitle(
+                                          sectionList: sectionList,
+                                        ),
+                                        if (isAdmin)
+                                          Container(
+                                            margin: const EdgeInsets.only(
+                                              right: 20,
                                             ),
-                                          )
-                                        ],
+                                            child: AdminButton(
+                                              onTap: () {
+                                                QR.to(
+                                                  VoteRouter.root +
+                                                      VoteRouter.admin,
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 15),
+                                    Expanded(
+                                      child: ListContenderCard(
+                                        animation: animation,
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                            const SizedBox(height: 20),
-                            if (sectionList.isNotEmpty && s == Status.open)
-                              const VoteButton(),
-                            const SizedBox(height: 20),
                           ],
-                        )),
-              ])),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      if (sectionList.isNotEmpty && s == Status.open)
+                        const VoteButton(),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

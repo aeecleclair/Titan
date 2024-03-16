@@ -64,61 +64,66 @@ class DrawerTemplate extends HookConsumerWidget {
       body: Stack(
         children: [
           GestureDetector(
-              onHorizontalDragStart: controllerNotifier.onDragStart,
-              onHorizontalDragUpdate: controllerNotifier.onDragUpdate,
-              onHorizontalDragEnd: (details) => controllerNotifier.onDragEnd(
-                  details, MediaQuery.of(context).size.width),
-              onTap: () {},
-              child: AnimatedBuilder(
-                  animation: controller,
-                  builder: (BuildContext context, _) {
-                    double animationVal = controller.value;
-                    double translateVal = animationVal * maxSlide;
-                    double scaleVal =
-                        1 - (isWebFormat ? 0 : (animationVal * 0.3));
-                    double cornerVal = isWebFormat ? 0 : 30.0 * animationVal;
-                    return Stack(
-                      children: [
-                        const CustomDrawer(),
-                        Transform(
-                            alignment: Alignment.centerLeft,
-                            transform: Matrix4.identity()
-                              ..translate(translateVal)
-                              ..scale(scaleVal),
-                            child: GestureDetector(
-                              onTap: () {
-                                if (controller.isCompleted) {
-                                  controllerNotifier.close();
-                                }
-                              },
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(cornerVal),
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                        color: Colors.white,
-                                        child: IgnorePointer(
-                                          ignoring: controller.isCompleted,
-                                          child: child,
-                                        )),
-                                    MouseRegion(
-                                      cursor: SystemMouseCursors.click,
-                                      onEnter: (event) {
-                                        controllerNotifier.toggle();
-                                      },
-                                      child: Container(
-                                        color: Colors.transparent,
-                                        width: 20,
-                                        height: double.infinity,
-                                      ),
-                                    )
-                                  ],
+            onHorizontalDragStart: controllerNotifier.onDragStart,
+            onHorizontalDragUpdate: controllerNotifier.onDragUpdate,
+            onHorizontalDragEnd: (details) => controllerNotifier.onDragEnd(
+              details,
+              MediaQuery.of(context).size.width,
+            ),
+            onTap: () {},
+            child: AnimatedBuilder(
+              animation: controller,
+              builder: (BuildContext context, _) {
+                double animationVal = controller.value;
+                double translateVal = animationVal * maxSlide;
+                double scaleVal = 1 - (isWebFormat ? 0 : (animationVal * 0.3));
+                double cornerVal = isWebFormat ? 0 : 30.0 * animationVal;
+                return Stack(
+                  children: [
+                    const CustomDrawer(),
+                    Transform(
+                      alignment: Alignment.centerLeft,
+                      transform: Matrix4.identity()
+                        ..translate(translateVal)
+                        ..scale(scaleVal),
+                      child: GestureDetector(
+                        onTap: () {
+                          if (controller.isCompleted) {
+                            controllerNotifier.close();
+                          }
+                        },
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(cornerVal),
+                          child: Stack(
+                            children: [
+                              Container(
+                                color: Colors.white,
+                                child: IgnorePointer(
+                                  ignoring: controller.isCompleted,
+                                  child: child,
                                 ),
                               ),
-                            ))
-                      ],
-                    );
-                  })),
+                              MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                onEnter: (event) {
+                                  controllerNotifier.toggle();
+                                },
+                                child: Container(
+                                  color: Colors.transparent,
+                                  width: 20,
+                                  height: double.infinity,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
           if (displayNotificationPopup) const NotificationPopup(),
           if (isLoggedIn &&
               shouldNotify &&

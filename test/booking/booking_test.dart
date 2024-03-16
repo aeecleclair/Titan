@@ -143,8 +143,10 @@ void main() {
         applicant: Applicant.empty().copyWith(id: "1"),
         applicantId: "1",
       );
-      expect(booking.toString(),
-          "Booking{id: 1, reason: reason, start: 2021-01-01 00:00:00.000Z, end: 2021-01-01 00:00:00.000Z, creation: 2021-01-01 00:00:00.000Z, note: note, room: Room{name: , manager_id: , id: 1}, key: true, decision: Decision.approved, recurrenceRule: , entity: entity, applicant: Applicant{name: Nom, firstname: Prénom, nickname: null, id: 1, email: empty@ecl.ec-lyon.fr, promo: null, phone: null}, applicantId: 1}");
+      expect(
+        booking.toString(),
+        "Booking{id: 1, reason: reason, start: 2021-01-01 00:00:00.000Z, end: 2021-01-01 00:00:00.000Z, creation: 2021-01-01 00:00:00.000Z, note: note, room: Room{name: , manager_id: , id: 1}, key: true, decision: Decision.approved, recurrenceRule: , entity: entity, applicant: Applicant{name: Nom, firstname: Prénom, nickname: null, id: 1, email: empty@ecl.ec-lyon.fr, promo: null, phone: null}, applicantId: 1}",
+      );
     });
 
     test('Should parse a booking from json', () {
@@ -174,7 +176,7 @@ void main() {
           "email": "email",
           "phone": "phone",
           "promo": null,
-        }
+        },
       });
       expect(booking, isA<Booking>());
       expect(booking.applicant, isA<SimpleUser>());
@@ -209,7 +211,7 @@ void main() {
         "decision": "approved",
         "recurrence_rule": "",
         "entity": "entity",
-        "applicant_id": "1"
+        "applicant_id": "1",
       });
       expect(booking, isA<Booking>());
       expect(booking.applicant, isA<SimpleUser>());
@@ -252,7 +254,7 @@ void main() {
           "email": "email",
           "phone": "phone",
           "promo": null,
-        }
+        },
       });
       expect(booking.toJson(), {
         "id": "1",
@@ -315,8 +317,10 @@ void main() {
       DateTime dateEnd = DateTime(2022, 1, 1, 12, 0);
       String recurrenceRule = "";
       bool allDay = false;
-      expect(formatRecurrenceRule(dateStart, dateEnd, recurrenceRule, allDay),
-          "Le 01/01/2022 de 10:00 à 12:00");
+      expect(
+        formatRecurrenceRule(dateStart, dateEnd, recurrenceRule, allDay),
+        "Le 01/01/2022 de 10:00 à 12:00",
+      );
     });
 
     test(
@@ -327,8 +331,10 @@ void main() {
       String recurrenceRule =
           "FREQ=WEEKLY;BYDAY=MO,WE,FR;UNTIL=20220131T000000Z";
       bool allDay = false;
-      expect(formatRecurrenceRule(dateStart, dateEnd, recurrenceRule, allDay),
-          "Tous les Lundi, Mercredi et Vendredi de 10:00 à 12:00 jusqu'au 31/01/2022");
+      expect(
+        formatRecurrenceRule(dateStart, dateEnd, recurrenceRule, allDay),
+        "Tous les Lundi, Mercredi et Vendredi de 10:00 à 12:00 jusqu'au 31/01/2022",
+      );
     });
 
     test('formatRecurrenceRule returns correct string for allDay event', () {
@@ -336,8 +342,10 @@ void main() {
       DateTime dateEnd = DateTime(2022, 1, 3);
       String recurrenceRule = "";
       bool allDay = true;
-      expect(formatRecurrenceRule(dateStart, dateEnd, recurrenceRule, allDay),
-          "Du 01/01/2022 à 00:00 au 03/01/2022 à 00:00");
+      expect(
+        formatRecurrenceRule(dateStart, dateEnd, recurrenceRule, allDay),
+        "Du 01/01/2022 à 00:00 au 03/01/2022 à 00:00",
+      );
     });
 
     test('combineDate returns correct date', () {

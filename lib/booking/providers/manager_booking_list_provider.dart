@@ -15,18 +15,20 @@ class ManagerBookingListProvider extends ListNotifier<Booking> {
 
   Future<bool> updateBooking(Booking booking) async {
     return await update(
-        bookingRepository.updateBooking,
-        (bookings, booking) => bookings
-          ..[bookings.indexWhere((b) => b.id == booking.id)] = booking,
-        booking);
+      bookingRepository.updateBooking,
+      (bookings, booking) =>
+          bookings..[bookings.indexWhere((b) => b.id == booking.id)] = booking,
+      booking,
+    );
   }
 
   Future<bool> toggleConfirmed(Booking booking, Decision decision) async {
     return await update(
-        (booking) => bookingRepository.confirmBooking(booking, decision),
-        (bookings, booking) => bookings
-          ..[bookings.indexWhere((b) => b.id == booking.id)] = booking,
-        booking);
+      (booking) => bookingRepository.confirmBooking(booking, decision),
+      (bookings, booking) =>
+          bookings..[bookings.indexWhere((b) => b.id == booking.id)] = booking,
+      booking,
+    );
   }
 }
 

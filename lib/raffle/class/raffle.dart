@@ -42,11 +42,12 @@ class Raffle {
     String? description,
   }) =>
       Raffle(
-          name: name ?? this.name,
-          group: group ?? this.group,
-          raffleStatusType: raffleStatusType ?? this.raffleStatusType,
-          id: id ?? this.id,
-          description: description);
+        name: name ?? this.name,
+        group: group ?? this.group,
+        raffleStatusType: raffleStatusType ?? this.raffleStatusType,
+        id: id ?? this.id,
+        description: description,
+      );
 
   Raffle.empty() {
     name = '';

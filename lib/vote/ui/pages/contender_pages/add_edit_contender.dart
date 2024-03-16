@@ -77,10 +77,11 @@ class AddEditContenderPage extends HookConsumerWidget {
 
     return VoteTemplate(
       child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Form(
-            key: key,
-            child: Column(children: [
+        physics: const BouncingScrollPhysics(),
+        child: Form(
+          key: key,
+          child: Column(
+            children: [
               const AlignLeftText(
                 VoteTextConstants.addPretendance,
                 padding:
@@ -138,7 +139,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                         child: const CardButton(
                           colors: [
                             ColorConstants.gradient1,
-                            ColorConstants.gradient2
+                            ColorConstants.gradient2,
                           ],
                           child: HeroIcon(
                             HeroIcons.photo,
@@ -215,54 +216,64 @@ class AddEditContenderPage extends HookConsumerWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: Column(children: <Widget>[
-                            TextEntry(
-                              label: VoteTextConstants.members,
-                              onChanged: (newQuery) {
-                                showNotifier.setId(true);
-                                tokenExpireWrapper(ref, () async {
-                                  if (queryController.text.isNotEmpty) {
-                                    await usersNotifier
-                                        .filterUsers(queryController.text);
-                                  } else {
-                                    usersNotifier.clear();
-                                  }
-                                });
-                              },
-                              color: Colors.black,
-                              controller: queryController,
-                            ),
-                            const SizedBox(height: 10),
-                            SearchResult(
+                          child: Column(
+                            children: <Widget>[
+                              TextEntry(
+                                label: VoteTextConstants.members,
+                                onChanged: (newQuery) {
+                                  showNotifier.setId(true);
+                                  tokenExpireWrapper(ref, () async {
+                                    if (queryController.text.isNotEmpty) {
+                                      await usersNotifier
+                                          .filterUsers(queryController.text);
+                                    } else {
+                                      usersNotifier.clear();
+                                    }
+                                  });
+                                },
+                                color: Colors.black,
+                                controller: queryController,
+                              ),
+                              const SizedBox(height: 10),
+                              SearchResult(
                                 borrower: member,
-                                queryController: queryController),
-                            TextEntry(
+                                queryController: queryController,
+                              ),
+                              TextEntry(
                                 label: VoteTextConstants.role,
-                                controller: role),
-                            const SizedBox(height: 30),
-                            GestureDetector(
-                              onTap: () async {
-                                if (addMemberKey.currentState == null) {
-                                  return;
-                                }
-                                if (member.value.id == '' || role.text == '') {
-                                  return;
-                                }
-                                if (addMemberKey.currentState!.validate()) {
-                                  final value = await membersNotifier.addMember(
-                                      Member.fromSimpleUser(
-                                          member.value, role.text));
-                                  if (value) {
-                                    role.text = '';
-                                    member.value = SimpleUser.empty();
-                                    queryController.text = '';
-                                  } else {
-                                    displayVoteToastWithContext(TypeMsg.error,
-                                        VoteTextConstants.alreadyAddedMember);
+                                controller: role,
+                              ),
+                              const SizedBox(height: 30),
+                              GestureDetector(
+                                onTap: () async {
+                                  if (addMemberKey.currentState == null) {
+                                    return;
                                   }
-                                }
-                              },
-                              child: Container(
+                                  if (member.value.id == '' ||
+                                      role.text == '') {
+                                    return;
+                                  }
+                                  if (addMemberKey.currentState!.validate()) {
+                                    final value =
+                                        await membersNotifier.addMember(
+                                      Member.fromSimpleUser(
+                                        member.value,
+                                        role.text,
+                                      ),
+                                    );
+                                    if (value) {
+                                      role.text = '';
+                                      member.value = SimpleUser.empty();
+                                      queryController.text = '';
+                                    } else {
+                                      displayVoteToastWithContext(
+                                        TypeMsg.error,
+                                        VoteTextConstants.alreadyAddedMember,
+                                      );
+                                    }
+                                  }
+                                },
+                                child: Container(
                                   width: double.infinity,
                                   padding:
                                       const EdgeInsets.only(top: 8, bottom: 12),
@@ -276,17 +287,24 @@ class AddEditContenderPage extends HookConsumerWidget {
                                         spreadRadius: 5,
                                         blurRadius: 10,
                                         offset: const Offset(
-                                            3, 3), // changes position of shadow
+                                          3,
+                                          3,
+                                        ), // changes position of shadow
                                       ),
                                     ],
                                   ),
-                                  child: const Text(VoteTextConstants.add,
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.bold))),
-                            )
-                          ]),
+                                  child: const Text(
+                                    VoteTextConstants.add,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -307,22 +325,23 @@ class AddEditContenderPage extends HookConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: WaitingButton(
                   builder: (child) => Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.only(top: 8, bottom: 12),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 10,
-                            offset: const Offset(3, 3),
-                          ),
-                        ],
-                      ),
-                      child: child),
+                    width: double.infinity,
+                    padding: const EdgeInsets.only(top: 8, bottom: 12),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 10,
+                          offset: const Offset(3, 3),
+                        ),
+                      ],
+                    ),
+                    child: child,
+                  ),
                   onTap: () async {
                     if (key.currentState == null) {
                       return;
@@ -347,62 +366,84 @@ class AddEditContenderPage extends HookConsumerWidget {
                         if (value) {
                           QR.back();
                           if (isEdit) {
-                            displayVoteToastWithContext(TypeMsg.msg,
-                                VoteTextConstants.editedPretendance);
+                            displayVoteToastWithContext(
+                              TypeMsg.msg,
+                              VoteTextConstants.editedPretendance,
+                            );
                             contenderList.maybeWhen(
-                                data: (list) {
-                                  final logoBytes = logo.value;
-                                  if (logoBytes != null) {
-                                    contenderLogosNotifier.autoLoad(
-                                        ref,
-                                        contender.id,
-                                        (contenderId) =>
-                                            logoNotifier.updateLogo(
-                                                contenderId, logoBytes));
-                                  }
-                                },
-                                orElse: () {});
+                              data: (list) {
+                                final logoBytes = logo.value;
+                                if (logoBytes != null) {
+                                  contenderLogosNotifier.autoLoad(
+                                    ref,
+                                    contender.id,
+                                    (contenderId) => logoNotifier.updateLogo(
+                                      contenderId,
+                                      logoBytes,
+                                    ),
+                                  );
+                                }
+                              },
+                              orElse: () {},
+                            );
                           } else {
-                            displayVoteToastWithContext(TypeMsg.msg,
-                                VoteTextConstants.addedPretendance);
+                            displayVoteToastWithContext(
+                              TypeMsg.msg,
+                              VoteTextConstants.addedPretendance,
+                            );
                             contenderList.maybeWhen(
-                                data: (list) {
-                                  final newContender = list.last;
-                                  final logoBytes = logo.value;
-                                  if (logoBytes != null) {
-                                    contenderLogosNotifier.autoLoad(
-                                        ref,
-                                        newContender.id,
-                                        (contenderId) =>
-                                            logoNotifier.updateLogo(
-                                                contenderId, logoBytes));
-                                  }
-                                },
-                                orElse: () {});
+                              data: (list) {
+                                final newContender = list.last;
+                                final logoBytes = logo.value;
+                                if (logoBytes != null) {
+                                  contenderLogosNotifier.autoLoad(
+                                    ref,
+                                    newContender.id,
+                                    (contenderId) => logoNotifier.updateLogo(
+                                      contenderId,
+                                      logoBytes,
+                                    ),
+                                  );
+                                }
+                              },
+                              orElse: () {},
+                            );
                           }
                           membersNotifier.clearMembers();
-                          sectionsNotifier.setTData(section.value,
-                              await contenderListNotifier.copy());
+                          sectionsNotifier.setTData(
+                            section.value,
+                            await contenderListNotifier.copy(),
+                          );
                         } else {
                           displayVoteToastWithContext(
-                              TypeMsg.error, VoteTextConstants.editingError);
+                            TypeMsg.error,
+                            VoteTextConstants.editingError,
+                          );
                         }
                       });
                     } else {
-                      displayToast(context, TypeMsg.error,
-                          VoteTextConstants.incorrectOrMissingFields);
+                      displayToast(
+                        context,
+                        TypeMsg.error,
+                        VoteTextConstants.incorrectOrMissingFields,
+                      );
                     }
                   },
-                  child: const Text(VoteTextConstants.edit,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold)),
+                  child: const Text(
+                    VoteTextConstants.edit,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: 30),
-            ]),
-          )),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

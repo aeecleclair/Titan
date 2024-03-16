@@ -57,11 +57,12 @@ class ForgetPassword extends HookConsumerWidget {
                   child: Text(
                     LoginTextConstants.forgetPassword,
                     style: GoogleFonts.elMessiri(
-                        textStyle: const TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    )),
+                      textStyle: const TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -99,13 +100,19 @@ class ForgetPassword extends HookConsumerWidget {
                             await signUpNotifier.recoverUser(email.text);
                         if (value) {
                           displayToastWithContext(
-                              TypeMsg.msg, LoginTextConstants.sendedResetMail);
+                            TypeMsg.msg,
+                            LoginTextConstants.sendedResetMail,
+                          );
                           email.clear();
-                          QR.to(LoginRouter.forgotPassword +
-                              LoginRouter.mailReceived);
+                          QR.to(
+                            LoginRouter.forgotPassword +
+                                LoginRouter.mailReceived,
+                          );
                         } else {
-                          displayToastWithContext(TypeMsg.error,
-                              LoginTextConstants.mailSendingError);
+                          displayToastWithContext(
+                            TypeMsg.error,
+                            LoginTextConstants.mailSendingError,
+                          );
                         }
                       },
                     ),
@@ -114,44 +121,46 @@ class ForgetPassword extends HookConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                            height: 40,
-                            alignment: Alignment.centerLeft,
-                            child: InkWell(
-                              splashColor:
-                                  const Color.fromRGBO(255, 255, 255, 1),
-                              onTap: () {
-                                QR.to(LoginRouter.root);
-                              },
-                              child: const Text(
-                                LoginTextConstants.signIn,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w800,
-                                  decoration: TextDecoration.underline,
-                                  fontSize: 14,
-                                ),
+                          height: 40,
+                          alignment: Alignment.centerLeft,
+                          child: InkWell(
+                            splashColor: const Color.fromRGBO(255, 255, 255, 1),
+                            onTap: () {
+                              QR.to(LoginRouter.root);
+                            },
+                            child: const Text(
+                              LoginTextConstants.signIn,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800,
+                                decoration: TextDecoration.underline,
+                                fontSize: 14,
                               ),
-                            )),
+                            ),
+                          ),
+                        ),
                         Container(
-                            height: 40,
-                            alignment: Alignment.centerLeft,
-                            child: InkWell(
-                              splashColor:
-                                  const Color.fromRGBO(255, 255, 255, 1),
-                              onTap: () {
-                                QR.to(LoginRouter.forgotPassword +
-                                    LoginRouter.mailReceived);
-                              },
-                              child: const Text(
-                                LoginTextConstants.recievedMail,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w800,
-                                  decoration: TextDecoration.underline,
-                                  fontSize: 14,
-                                ),
+                          height: 40,
+                          alignment: Alignment.centerLeft,
+                          child: InkWell(
+                            splashColor: const Color.fromRGBO(255, 255, 255, 1),
+                            onTap: () {
+                              QR.to(
+                                LoginRouter.forgotPassword +
+                                    LoginRouter.mailReceived,
+                              );
+                            },
+                            child: const Text(
+                              LoginTextConstants.recievedMail,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800,
+                                decoration: TextDecoration.underline,
+                                fontSize: 14,
                               ),
-                            )),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ],

@@ -9,39 +9,44 @@ class DeliveryProductListNotifier extends ListNotifier<Product> {
       : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Product>>> loadProductList(
-      List<Product> products) async {
+    List<Product> products,
+  ) async {
     return state = AsyncValue.data(products);
   }
 
   Future<bool> addProduct(Product product, String deliveryId) async {
     return await add(
-        (p) async => productListRepository.createProduct(deliveryId, p),
-        product);
+      (p) async => productListRepository.createProduct(deliveryId, p),
+      product,
+    );
   }
 
   Future<bool> updateProduct(Product product, String deliveryId) async {
     return await update(
-        (p) async => productListRepository.updateProduct(deliveryId, p),
-        (products, product) => products
-          ..[products.indexWhere((p) => p.id == product.id)] = product,
-        product);
+      (p) async => productListRepository.updateProduct(deliveryId, p),
+      (products, product) =>
+          products..[products.indexWhere((p) => p.id == product.id)] = product,
+      product,
+    );
   }
 
   Future<bool> deleteProduct(Product product, String deliveryId) async {
     return await delete(
-        (id) async => productListRepository.deleteProduct(deliveryId, id),
-        (products, product) => products..removeWhere((i) => i.id == product.id),
-        product.id,
-        product);
+      (id) async => productListRepository.deleteProduct(deliveryId, id),
+      (products, product) => products..removeWhere((i) => i.id == product.id),
+      product.id,
+      product,
+    );
   }
 
   Future<bool> setQuantity(Product product, int i) async {
     return await update(
-        (p) async => true,
-        (products, product) => products
-          ..[products.indexWhere((p) => p.id == product.id)] =
-              product.copyWith(quantity: i),
-        product);
+      (p) async => true,
+      (products, product) => products
+        ..[products.indexWhere((p) => p.id == product.id)] =
+            product.copyWith(quantity: i),
+      product,
+    );
   }
 }
 
@@ -50,5 +55,6 @@ final deliveryProductListProvider = StateNotifierProvider<
   final deliveryProductListRepository =
       ref.watch(deliveryProductListRepositoryProvider);
   return DeliveryProductListNotifier(
-      productListRepository: deliveryProductListRepository);
+    productListRepository: deliveryProductListRepository,
+  );
 });

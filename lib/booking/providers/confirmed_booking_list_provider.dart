@@ -11,7 +11,8 @@ class ConfirmedBookingListProvider extends ListNotifier<Booking> {
 
   Future<AsyncValue<List<Booking>>> loadConfirmedBooking() async {
     return await loadList(
-        () async => bookingRepository.getConfirmedBookingList());
+      () async => bookingRepository.getConfirmedBookingList(),
+    );
   }
 
   Future<bool> addBooking(Booking booking) async {
@@ -20,19 +21,21 @@ class ConfirmedBookingListProvider extends ListNotifier<Booking> {
 
   Future<bool> deleteBooking(Booking booking) async {
     return await delete(
-        (_) async => true,
-        (bookings, booking) =>
-            bookings..removeWhere((element) => element.id == booking.id),
-        booking.id,
-        booking);
+      (_) async => true,
+      (bookings, booking) =>
+          bookings..removeWhere((element) => element.id == booking.id),
+      booking.id,
+      booking,
+    );
   }
 
   Future<bool> updateBooking(Booking booking) async {
     return await update(
-        (_) async => true,
-        (bookings, booking) => bookings
-          ..[bookings.indexWhere((b) => b.id == booking.id)] = booking,
-        booking);
+      (_) async => true,
+      (bookings, booking) =>
+          bookings..[bookings.indexWhere((b) => b.id == booking.id)] = booking,
+      booking,
+    );
   }
 }
 

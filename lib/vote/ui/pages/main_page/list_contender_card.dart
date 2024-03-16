@@ -23,7 +23,9 @@ class ListContenderCard extends HookConsumerWidget {
     final section = ref.watch(sectionProvider);
     final sectionsContender = ref.watch(sectionContenderProvider);
     final hideAnimation = useAnimationController(
-        duration: const Duration(milliseconds: 200), initialValue: 1);
+      duration: const Duration(milliseconds: 200),
+      initialValue: 1,
+    );
 
     final status = ref.watch(statusProvider);
     final s =
@@ -64,10 +66,11 @@ class ListContenderCard extends HookConsumerWidget {
     final votedSection = ref.watch(votedSectionProvider);
     List<String> alreadyVotedSection = [];
     votedSection.maybeWhen(
-        data: (voted) {
-          alreadyVotedSection = voted;
-        },
-        orElse: () {});
+      data: (voted) {
+        alreadyVotedSection = voted;
+      },
+      orElse: () {},
+    );
 
     final pageOpened = useState(false);
 
@@ -84,20 +87,20 @@ class ListContenderCard extends HookConsumerWidget {
               ? AsyncChild(
                   value: sectionsContender[section]!,
                   builder: (context, contenderList) => Column(
-                        children: contenderList.map((e) {
-                          final index = contenderList.indexOf(e);
-                          return ContenderCard(
-                            index: index,
-                            contender: e,
-                            animation: animation,
-                            enableVote:
-                                !alreadyVotedSection.contains(section.id),
-                            votesPercent: votesPercent.keys.contains(e.id)
-                                ? votesPercent[e.id]!
-                                : 0,
-                          );
-                        }).toList(),
-                      ))
+                    children: contenderList.map((e) {
+                      final index = contenderList.indexOf(e);
+                      return ContenderCard(
+                        index: index,
+                        contender: e,
+                        animation: animation,
+                        enableVote: !alreadyVotedSection.contains(section.id),
+                        votesPercent: votesPercent.keys.contains(e.id)
+                            ? votesPercent[e.id]!
+                            : 0,
+                      );
+                    }).toList(),
+                  ),
+                )
               : const SizedBox(
                   height: 150,
                   child: Center(
@@ -107,72 +110,80 @@ class ListContenderCard extends HookConsumerWidget {
         ),
         if (h > 0)
           Positioned(
-              bottom: 10,
-              right: MediaQuery.of(context).size.width / 2 - 100,
-              child: FadeTransition(
-                opacity: hideAnimation,
-                child: ScaleTransition(
-                  scale: hideAnimation,
-                  child: GestureDetector(
-                    onTap: (() {
-                      hideAnimation.animateTo(0);
-                      scrollController.animateTo(h + 25,
-                          duration: const Duration(milliseconds: 350),
-                          curve: Curves.decelerate);
-                    }),
-                    child: SlideTransition(
-                      position: Tween<Offset>(
-                        begin: const Offset(2, 0),
-                        end: const Offset(0, 0),
-                      ).animate(CurvedAnimation(
-                          parent: animation,
-                          curve:
-                              const Interval(0.2, 0.4, curve: Curves.easeOut))),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 8),
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [
-                                ColorConstants.background2.withOpacity(0.8),
-                                Colors.black.withOpacity(0.8)
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight),
-                          boxShadow: [
-                            BoxShadow(
-                                color:
-                                    ColorConstants.background2.withOpacity(0.4),
-                                offset: const Offset(2, 3),
-                                blurRadius: 5)
+            bottom: 10,
+            right: MediaQuery.of(context).size.width / 2 - 100,
+            child: FadeTransition(
+              opacity: hideAnimation,
+              child: ScaleTransition(
+                scale: hideAnimation,
+                child: GestureDetector(
+                  onTap: (() {
+                    hideAnimation.animateTo(0);
+                    scrollController.animateTo(
+                      h + 25,
+                      duration: const Duration(milliseconds: 350),
+                      curve: Curves.decelerate,
+                    );
+                  }),
+                  child: SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(2, 0),
+                      end: const Offset(0, 0),
+                    ).animate(
+                      CurvedAnimation(
+                        parent: animation,
+                        curve: const Interval(0.2, 0.4, curve: Curves.easeOut),
+                      ),
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            ColorConstants.background2.withOpacity(0.8),
+                            Colors.black.withOpacity(0.8),
                           ],
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(25)),
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
                         ),
-                        alignment: Alignment.center,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            HeroIcon(
-                              HeroIcons.chevronDoubleDown,
-                              size: 15,
+                        boxShadow: [
+                          BoxShadow(
+                            color: ColorConstants.background2.withOpacity(0.4),
+                            offset: const Offset(2, 3),
+                            blurRadius: 5,
+                          ),
+                        ],
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(25)),
+                      ),
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          HeroIcon(
+                            HeroIcons.chevronDoubleDown,
+                            size: 15,
+                            color: Colors.grey.shade100,
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            VoteTextConstants.seeMore,
+                            style: TextStyle(
+                              fontSize: 18,
                               color: Colors.grey.shade100,
                             ),
-                            const SizedBox(width: 10),
-                            Text(
-                              VoteTextConstants.seeMore,
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.grey.shade100,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                 ),
-              ))
+              ),
+            ),
+          ),
       ],
     );
   }

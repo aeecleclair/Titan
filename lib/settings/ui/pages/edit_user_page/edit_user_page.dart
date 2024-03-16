@@ -46,184 +46,203 @@ class EditUserPage extends HookConsumerWidget {
     }
 
     List<DropdownMenuItem> items = Floors.values
-        .map((e) => DropdownMenuItem(
-              value: capitalize(e.toString().split('.').last),
-              child: Text(capitalize(e.toString().split('.').last)),
-            ))
+        .map(
+          (e) => DropdownMenuItem(
+            value: capitalize(e.toString().split('.').last),
+            child: Text(capitalize(e.toString().split('.').last)),
+          ),
+        )
         .toList();
 
     return SettingsTemplate(
       child: Refresher(
-          onRefresh: () async {
-            await asyncUserNotifier.loadMe();
-          },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
-            child: Form(
-                key: key,
-                child: Column(children: [
-                  const SizedBox(height: 20),
-                  const AlignLeftText(
-                    SettingsTextConstants.editAccount,
-                    color: Colors.grey,
-                  ),
-                  const SizedBox(height: 40),
-                  AsyncChild(
-                      value: profilePicture,
-                      builder: (context, profile) {
-                        return Center(
-                          child: Stack(
-                            clipBehavior: Clip.none,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.1),
-                                      spreadRadius: 5,
-                                      blurRadius: 10,
-                                      offset: const Offset(2, 3),
-                                    ),
-                                  ],
+        onRefresh: () async {
+          await asyncUserNotifier.loadMe();
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child: Form(
+            key: key,
+            child: Column(
+              children: [
+                const SizedBox(height: 20),
+                const AlignLeftText(
+                  SettingsTextConstants.editAccount,
+                  color: Colors.grey,
+                ),
+                const SizedBox(height: 40),
+                AsyncChild(
+                  value: profilePicture,
+                  builder: (context, profile) {
+                    return Center(
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  spreadRadius: 5,
+                                  blurRadius: 10,
+                                  offset: const Offset(2, 3),
                                 ),
-                                child: CircleAvatar(
-                                  radius: 80,
-                                  backgroundImage: profile.isEmpty
-                                      ? const AssetImage(
-                                          'assets/images/profile.png')
-                                      : Image.memory(profile).image,
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 0,
-                                left: 0,
-                                child: GestureDetector(
-                                  onTap: () async {
-                                    final value = await profilePictureNotifier
-                                        .setProfilePicture(ImageSource.gallery);
-                                    if (value != null) {
-                                      if (value) {
-                                        displayToastWithContext(
-                                            TypeMsg.msg,
-                                            SettingsTextConstants
-                                                .updatedProfilePicture);
-                                      } else {
-                                        displayToastWithContext(
-                                            TypeMsg.error,
-                                            SettingsTextConstants
-                                                .tooHeavyProfilePicture);
-                                      }
-                                    } else {
-                                      displayToastWithContext(
-                                          TypeMsg.error,
-                                          SettingsTextConstants
-                                              .errorProfilePicture);
-                                    }
-                                  },
-                                  child: const PictureButton(
-                                      icon: HeroIcons.photo),
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 0,
-                                right: 0,
-                                child: GestureDetector(
-                                  onTap: () async {
-                                    final value = await profilePictureNotifier
-                                        .setProfilePicture(ImageSource.camera);
-                                    if (value != null) {
-                                      if (value) {
-                                        displayToastWithContext(
-                                            TypeMsg.msg,
-                                            SettingsTextConstants
-                                                .updatedProfilePicture);
-                                      } else {
-                                        displayToastWithContext(
-                                            TypeMsg.error,
-                                            SettingsTextConstants
-                                                .tooHeavyProfilePicture);
-                                      }
-                                    } else {
-                                      displayToastWithContext(
-                                          TypeMsg.error,
-                                          SettingsTextConstants
-                                              .errorProfilePicture);
-                                    }
-                                  },
-                                  child: const PictureButton(
-                                      icon: HeroIcons.camera),
-                                ),
-                              ),
-                              Positioned(
-                                bottom: -20,
-                                right: 60,
-                                child: GestureDetector(
-                                  onTap: () async {
-                                    final value = await profilePictureNotifier
-                                        .cropImage();
-                                    if (value != null) {
-                                      if (value) {
-                                        displayToastWithContext(
-                                            TypeMsg.msg,
-                                            SettingsTextConstants
-                                                .updatedProfilePicture);
-                                      } else {
-                                        displayToastWithContext(
-                                            TypeMsg.error,
-                                            SettingsTextConstants
-                                                .errorProfilePicture);
-                                      }
-                                    }
-                                  },
-                                  child: const PictureButton(
-                                      icon: HeroIcons.sparkles),
-                                ),
-                              )
-                            ],
+                              ],
+                            ),
+                            child: CircleAvatar(
+                              radius: 80,
+                              backgroundImage: profile.isEmpty
+                                  ? const AssetImage(
+                                      'assets/images/profile.png',
+                                    )
+                                  : Image.memory(profile).image,
+                            ),
                           ),
-                        );
-                      }),
-                  const SizedBox(height: 50),
-                  if (user.promo != null)
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 20),
-                      child: Text(
-                        '${SettingsTextConstants.promo} ${user.promo}',
-                        style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black),
+                          Positioned(
+                            bottom: 0,
+                            left: 0,
+                            child: GestureDetector(
+                              onTap: () async {
+                                final value = await profilePictureNotifier
+                                    .setProfilePicture(ImageSource.gallery);
+                                if (value != null) {
+                                  if (value) {
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
+                                      SettingsTextConstants
+                                          .updatedProfilePicture,
+                                    );
+                                  } else {
+                                    displayToastWithContext(
+                                      TypeMsg.error,
+                                      SettingsTextConstants
+                                          .tooHeavyProfilePicture,
+                                    );
+                                  }
+                                } else {
+                                  displayToastWithContext(
+                                    TypeMsg.error,
+                                    SettingsTextConstants.errorProfilePicture,
+                                  );
+                                }
+                              },
+                              child: const PictureButton(
+                                icon: HeroIcons.photo,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: GestureDetector(
+                              onTap: () async {
+                                final value = await profilePictureNotifier
+                                    .setProfilePicture(ImageSource.camera);
+                                if (value != null) {
+                                  if (value) {
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
+                                      SettingsTextConstants
+                                          .updatedProfilePicture,
+                                    );
+                                  } else {
+                                    displayToastWithContext(
+                                      TypeMsg.error,
+                                      SettingsTextConstants
+                                          .tooHeavyProfilePicture,
+                                    );
+                                  }
+                                } else {
+                                  displayToastWithContext(
+                                    TypeMsg.error,
+                                    SettingsTextConstants.errorProfilePicture,
+                                  );
+                                }
+                              },
+                              child: const PictureButton(
+                                icon: HeroIcons.camera,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: -20,
+                            right: 60,
+                            child: GestureDetector(
+                              onTap: () async {
+                                final value =
+                                    await profilePictureNotifier.cropImage();
+                                if (value != null) {
+                                  if (value) {
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
+                                      SettingsTextConstants
+                                          .updatedProfilePicture,
+                                    );
+                                  } else {
+                                    displayToastWithContext(
+                                      TypeMsg.error,
+                                      SettingsTextConstants.errorProfilePicture,
+                                    );
+                                  }
+                                }
+                              },
+                              child: const PictureButton(
+                                icon: HeroIcons.sparkles,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(height: 50),
+                if (user.promo != null)
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 20),
+                    child: Text(
+                      '${SettingsTextConstants.promo} ${user.promo}',
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
                       ),
                     ),
-                  AutoSizeText(
-                    '${SettingsTextConstants.email} : ${user.email}',
-                    maxLines: 1,
-                    style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black),
                   ),
-                  const SizedBox(height: 50),
-                  UserFieldModifier(
-                      label: SettingsTextConstants.nickname,
-                      keyboardType: TextInputType.text,
-                      controller: nickNameController),
-                  const SizedBox(height: 50),
-                  UserFieldModifier(
-                      label: SettingsTextConstants.phone,
-                      keyboardType: TextInputType.text,
-                      controller: phoneController),
-                  const SizedBox(height: 50),
-                  Row(children: [
+                AutoSizeText(
+                  '${SettingsTextConstants.email} : ${user.email}',
+                  maxLines: 1,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
+                ),
+                const SizedBox(height: 50),
+                UserFieldModifier(
+                  label: SettingsTextConstants.nickname,
+                  keyboardType: TextInputType.text,
+                  controller: nickNameController,
+                ),
+                const SizedBox(height: 50),
+                UserFieldModifier(
+                  label: SettingsTextConstants.phone,
+                  keyboardType: TextInputType.text,
+                  controller: phoneController,
+                ),
+                const SizedBox(height: 50),
+                Row(
+                  children: [
                     SizedBox(
                       width: 120,
                       child: Text(
                         SettingsTextConstants.birthday,
                         style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.grey.shade500),
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.grey.shade500,
+                        ),
                       ),
                     ),
                     Expanded(
@@ -235,92 +254,106 @@ class EditUserPage extends HookConsumerWidget {
                       ),
                     ),
                     GestureDetector(
-                        onTap: () => getOnlyDayDate(context, dateController,
-                            initialDate: user.birthday,
-                            firstDate: DateTime(1900),
-                            lastDate: DateTime.now()),
-                        child: Container(
-                            margin: const EdgeInsets.only(left: 30),
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    ColorConstants.gradient1,
-                                    ColorConstants.gradient2
-                                  ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: ColorConstants.gradient2
-                                        .withOpacity(0.5),
-                                    spreadRadius: 1,
-                                    blurRadius: 7,
-                                    offset: const Offset(0, 3),
-                                  ),
-                                ],
-                                borderRadius: BorderRadius.circular(10)),
-                            child: const HeroIcon(
-                              HeroIcons.calendar,
-                              size: 25,
-                              color: Colors.white,
-                            ))),
-                  ]),
-                  const SizedBox(height: 50),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 120,
-                        child: Text(
+                      onTap: () => getOnlyDayDate(
+                        context,
+                        dateController,
+                        initialDate: user.birthday,
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime.now(),
+                      ),
+                      child: Container(
+                        margin: const EdgeInsets.only(left: 30),
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [
+                              ColorConstants.gradient1,
+                              ColorConstants.gradient2,
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: ColorConstants.gradient2.withOpacity(0.5),
+                              spreadRadius: 1,
+                              blurRadius: 7,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: const HeroIcon(
+                          HeroIcons.calendar,
+                          size: 25,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 50),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 120,
+                      child: Text(
+                        SettingsTextConstants.floor,
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.grey.shade500,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: DropdownButtonFormField(
+                        items: items,
+                        value: floorController.text,
+                        hint: Text(
                           SettingsTextConstants.floor,
                           style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.grey.shade500),
-                        ),
-                      ),
-                      Expanded(
-                        child: DropdownButtonFormField(
-                          items: items,
-                          value: floorController.text,
-                          hint: Text(
-                            SettingsTextConstants.floor,
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.grey.shade500),
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.grey.shade500,
                           ),
-                          onChanged: (value) {
-                            floorController.text = value.toString();
-                          },
-                          style: TextStyle(
-                              fontSize: 20, color: Colors.grey.shade800),
-                          decoration: const InputDecoration(
-                              contentPadding: EdgeInsets.all(10),
-                              isDense: true,
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: ColorConstants.gradient1))),
+                        ),
+                        onChanged: (value) {
+                          floorController.text = value.toString();
+                        },
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.grey.shade800,
+                        ),
+                        decoration: const InputDecoration(
+                          contentPadding: EdgeInsets.all(10),
+                          isDense: true,
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: ColorConstants.gradient1,
+                            ),
+                          ),
                         ),
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 50),
-                  WaitingButton(
-                    builder: (child) => AddEditButtonLayout(
-                      colors: const [
-                        ColorConstants.gradient1,
-                        ColorConstants.gradient2
-                      ],
-                      child: child,
                     ),
-                    onTap: () async {
-                      await tokenExpireWrapper(ref, () async {
-                        final value =
-                            await asyncUserNotifier.updateMe(user.copyWith(
+                  ],
+                ),
+                const SizedBox(height: 50),
+                WaitingButton(
+                  builder: (child) => AddEditButtonLayout(
+                    colors: const [
+                      ColorConstants.gradient1,
+                      ColorConstants.gradient2,
+                    ],
+                    child: child,
+                  ),
+                  onTap: () async {
+                    await tokenExpireWrapper(ref, () async {
+                      final value = await asyncUserNotifier.updateMe(
+                        user.copyWith(
                           birthday: DateTime.parse(
-                              processDateBack(dateController.value.text)),
+                            processDateBack(dateController.value.text),
+                          ),
                           nickname: nickNameController.value.text.isEmpty
                               ? null
                               : nickNameController.value.text,
@@ -328,31 +361,41 @@ class EditUserPage extends HookConsumerWidget {
                               ? null
                               : phoneController.value.text,
                           floor: floorController.value.text,
-                        ));
-                        if (value) {
-                          displayToastWithContext(TypeMsg.msg,
-                              SettingsTextConstants.updatedProfile);
-                          QR.removeNavigator(
-                              SettingsRouter.root + SettingsRouter.editAccount);
-                        } else {
-                          displayToastWithContext(TypeMsg.error,
-                              SettingsTextConstants.updatingError);
-                        }
-                      });
-                    },
-                    child: const Center(
-                      child: Text(
-                        SettingsTextConstants.save,
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white),
+                        ),
+                      );
+                      if (value) {
+                        displayToastWithContext(
+                          TypeMsg.msg,
+                          SettingsTextConstants.updatedProfile,
+                        );
+                        QR.removeNavigator(
+                          SettingsRouter.root + SettingsRouter.editAccount,
+                        );
+                      } else {
+                        displayToastWithContext(
+                          TypeMsg.error,
+                          SettingsTextConstants.updatingError,
+                        );
+                      }
+                    });
+                  },
+                  child: const Center(
+                    child: Text(
+                      SettingsTextConstants.save,
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 30),
-                ])),
-          )),
+                ),
+                const SizedBox(height: 30),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

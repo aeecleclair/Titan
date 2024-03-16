@@ -15,11 +15,14 @@ class WinningTicketHandler extends HookConsumerWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           alignment: Alignment.centerLeft,
-          child: const Text("Tickets gagnants",
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: RaffleColorConstants.textDark)),
+          child: const Text(
+            "Tickets gagnants",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: RaffleColorConstants.textDark,
+            ),
+          ),
         ),
         const SizedBox(
           height: 10,
@@ -37,20 +40,26 @@ class WinningTicketHandler extends HookConsumerWidget {
                 data: (data) {
                   if (data.isEmpty) {
                     return const SizedBox(
-                        height: 150,
-                        child: Text("Il n'y a pas de ticket gagnant"));
+                      height: 150,
+                      child: Text("Il n'y a pas de ticket gagnant"),
+                    );
                   }
                   return Row(
-                      children: data
-                          .map((e) => WinningTicketUI(
-                                ticket: e,
-                                onEdit: () {},
-                                onDelete: () async {},
-                              ))
-                          .toList());
+                    children: data
+                        .map(
+                          (e) => WinningTicketUI(
+                            ticket: e,
+                            onEdit: () {},
+                            onDelete: () async {},
+                          ),
+                        )
+                        .toList(),
+                  );
                 },
                 error: (Object e, StackTrace? s) => SizedBox(
-                    height: 150, child: Text("Error: ${e.toString()}")),
+                  height: 150,
+                  child: Text("Error: ${e.toString()}"),
+                ),
                 loading: () => const SizedBox(
                   height: 150,
                   child: CircularProgressIndicator(

@@ -21,7 +21,7 @@ void main() {
     test('loadLoanerList', () async {
       final loanerList = [
         Loaner.empty().copyWith(id: '1', name: 'John'),
-        Loaner.empty().copyWith(id: '2', name: 'Jane')
+        Loaner.empty().copyWith(id: '2', name: 'Jane'),
       ];
       when(() => loanerRepository.getLoanerList())
           .thenAnswer((_) async => loanerList);
@@ -29,11 +29,13 @@ void main() {
       final result = await loanerListNotifier.loadLoanerList();
 
       expect(
-          result.when(
-              data: (d) => d,
-              error: (e, s) => throw e,
-              loading: () => throw Exception('loading')),
-          loanerList);
+        result.when(
+          data: (d) => d,
+          error: (e, s) => throw e,
+          loading: () => throw Exception('loading'),
+        ),
+        loanerList,
+      );
     });
 
     test('addLoaner', () async {

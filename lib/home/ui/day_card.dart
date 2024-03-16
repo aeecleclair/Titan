@@ -9,13 +9,14 @@ class DayCard extends HookConsumerWidget {
   final DateTime day;
   final int numberOfEvent, index;
   final void Function() onTap;
-  const DayCard(
-      {super.key,
-      required this.day,
-      required this.isToday,
-      required this.numberOfEvent,
-      required this.index,
-      required this.onTap});
+  const DayCard({
+    super.key,
+    required this.day,
+    required this.isToday,
+    required this.numberOfEvent,
+    required this.index,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,10 +34,11 @@ class DayCard extends HookConsumerWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(70),
           border: Border.all(
-              color: (selectedDay == index && !isToday)
-                  ? Colors.black
-                  : Colors.transparent,
-              width: 2),
+            color: (selectedDay == index && !isToday)
+                ? Colors.black
+                : Colors.transparent,
+            width: 2,
+          ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -72,9 +74,10 @@ class DayCard extends HookConsumerWidget {
                 day.day.toString(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    color: isToday ? Colors.white : Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30),
+                  color: isToday ? Colors.white : Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                ),
               ),
             ),
             SizedBox(
@@ -84,37 +87,41 @@ class DayCard extends HookConsumerWidget {
                     .translateDayShort[DateFormat('E').format(day)]!,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    color: isToday ? Colors.white : Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12),
+                  color: isToday ? Colors.white : Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                ),
               ),
             ),
             SizedBox(
-                height: 25,
-                child: numberOfEvent < 6
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                            for (int i = 0; i < numberOfEvent; i++)
-                              SizedBox(
-                                width: 7,
-                                child: Icon(
-                                  Icons.circle,
-                                  color: isToday ? Colors.white : Colors.black,
-                                  size: 5,
-                                ),
-                              ),
-                          ])
-                    : Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "$numberOfEvent",
-                          style: TextStyle(
+              height: 25,
+              child: numberOfEvent < 6
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        for (int i = 0; i < numberOfEvent; i++)
+                          SizedBox(
+                            width: 7,
+                            child: Icon(
+                              Icons.circle,
                               color: isToday ? Colors.white : Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12),
+                              size: 5,
+                            ),
+                          ),
+                      ],
+                    )
+                  : Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "$numberOfEvent",
+                        style: TextStyle(
+                          color: isToday ? Colors.white : Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
                         ),
-                      )),
+                      ),
+                    ),
+            ),
           ],
         ),
       ),

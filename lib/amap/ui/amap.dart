@@ -26,10 +26,11 @@ class AmapTemplate extends StatelessWidget {
                       HeroIcons.informationCircle,
                       color: Colors.black,
                       size: 40,
-                    ))
+                    ),
+                  )
                 : null,
           ),
-          Expanded(child: child)
+          Expanded(child: child),
         ],
       ),
     );

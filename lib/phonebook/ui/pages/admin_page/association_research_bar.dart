@@ -22,20 +22,22 @@ class AssociationResearchBar extends HookConsumerWidget {
       controller: editingController,
       cursorColor: PhonebookColorConstants.textDark,
       decoration: const InputDecoration(
-          isDense: true,
-          suffixIcon: Icon(
-            Icons.search,
+        isDense: true,
+        suffixIcon: Icon(
+          Icons.search,
+          color: PhonebookColorConstants.textDark,
+          size: 30,
+        ),
+        label: Text(
+          PhonebookTextConstants.research,
+          style: TextStyle(
             color: PhonebookColorConstants.textDark,
-            size: 30,
           ),
-          label: Text(
-            PhonebookTextConstants.research,
-            style: TextStyle(
-              color: PhonebookColorConstants.textDark,
-            ),
-          ),
-          focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: ColorConstants.gradient1))),
+        ),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: ColorConstants.gradient1),
+        ),
+      ),
     );
   }
 }

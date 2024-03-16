@@ -57,67 +57,90 @@ class AdminPage extends HookConsumerWidget {
           adminLoanListNotifier.setTData(loaner, await loanListNotifier.copy());
           historyLoanListNotifier.loadLoan(loaner.id);
           adminHistoryLoanListNotifier.setTData(
-              loaner, await historyLoanListNotifier.copy());
+            loaner,
+            await historyLoanListNotifier.copy(),
+          );
         },
         child: Padding(
           padding: const EdgeInsets.only(top: 10.0),
           child: Column(
             children: [
               const SizedBox(height: 30),
-              LoanersBar(onTap: (key) async {
-                tokenExpireWrapper(ref, () async {
-                  loanerIdNotifier.setId(key.id);
-                  final itemListNotifier = ref.read(itemListProvider.notifier);
-                  final loanersItemsNotifier =
-                      ref.read(loanersItemsProvider.notifier);
-                  final listItems = loanersItems[key];
-                  if (listItems == null) {
-                    loanersItemsNotifier.autoLoadList(ref, key,
-                        (key) => itemListNotifier.loadItemList(key.id));
-                  } else {
-                    listItems.whenData((loanersItems) async {
-                      if (loanersItems.isEmpty) {
-                        loanersItemsNotifier.autoLoadList(ref, key,
-                            (key) => itemListNotifier.loadItemList(key.id));
-                      }
-                    });
-                  }
-                  final loanListNotifier =
-                      ref.read(loanerLoanListProvider.notifier);
-                  final adminLoanListNotifier =
-                      ref.read(adminLoanListProvider.notifier);
-                  final listAdminItems = adminLoanList[key];
-                  if (listAdminItems == null) {
-                    adminLoanListNotifier.autoLoadList(
-                        ref, key, (key) => loanListNotifier.loadLoan(key.id));
-                  } else {
-                    listAdminItems.whenData((adminLoanList) async {
-                      if (adminLoanList.isEmpty) {
-                        adminLoanListNotifier.autoLoadList(ref, key,
-                            (key) => loanListNotifier.loadLoan(key.id));
-                      }
-                    });
-                  }
+              LoanersBar(
+                onTap: (key) async {
+                  tokenExpireWrapper(ref, () async {
+                    loanerIdNotifier.setId(key.id);
+                    final itemListNotifier =
+                        ref.read(itemListProvider.notifier);
+                    final loanersItemsNotifier =
+                        ref.read(loanersItemsProvider.notifier);
+                    final listItems = loanersItems[key];
+                    if (listItems == null) {
+                      loanersItemsNotifier.autoLoadList(
+                        ref,
+                        key,
+                        (key) => itemListNotifier.loadItemList(key.id),
+                      );
+                    } else {
+                      listItems.whenData((loanersItems) async {
+                        if (loanersItems.isEmpty) {
+                          loanersItemsNotifier.autoLoadList(
+                            ref,
+                            key,
+                            (key) => itemListNotifier.loadItemList(key.id),
+                          );
+                        }
+                      });
+                    }
+                    final loanListNotifier =
+                        ref.read(loanerLoanListProvider.notifier);
+                    final adminLoanListNotifier =
+                        ref.read(adminLoanListProvider.notifier);
+                    final listAdminItems = adminLoanList[key];
+                    if (listAdminItems == null) {
+                      adminLoanListNotifier.autoLoadList(
+                        ref,
+                        key,
+                        (key) => loanListNotifier.loadLoan(key.id),
+                      );
+                    } else {
+                      listAdminItems.whenData((adminLoanList) async {
+                        if (adminLoanList.isEmpty) {
+                          adminLoanListNotifier.autoLoadList(
+                            ref,
+                            key,
+                            (key) => loanListNotifier.loadLoan(key.id),
+                          );
+                        }
+                      });
+                    }
 
-                  final historyLoanListNotifier =
-                      ref.read(historyLoanerLoanListProvider.notifier);
-                  final adminHistoryLoanListNotifier =
-                      ref.read(adminHistoryLoanListProvider.notifier);
-                  final listAdminHistoryItems = adminHistoryLoanList[key];
-                  if (listAdminHistoryItems == null) {
-                    adminHistoryLoanListNotifier.autoLoadList(ref, key,
-                        (key) => historyLoanListNotifier.loadLoan(key.id));
-                  } else {
-                    listAdminHistoryItems
-                        .whenData((adminHistoryLoanList) async {
-                      if (adminHistoryLoanList.isEmpty) {
-                        adminHistoryLoanListNotifier.autoLoadList(ref, key,
-                            (key) => historyLoanListNotifier.loadLoan(key.id));
-                      }
-                    });
-                  }
-                });
-              }),
+                    final historyLoanListNotifier =
+                        ref.read(historyLoanerLoanListProvider.notifier);
+                    final adminHistoryLoanListNotifier =
+                        ref.read(adminHistoryLoanListProvider.notifier);
+                    final listAdminHistoryItems = adminHistoryLoanList[key];
+                    if (listAdminHistoryItems == null) {
+                      adminHistoryLoanListNotifier.autoLoadList(
+                        ref,
+                        key,
+                        (key) => historyLoanListNotifier.loadLoan(key.id),
+                      );
+                    } else {
+                      listAdminHistoryItems
+                          .whenData((adminHistoryLoanList) async {
+                        if (adminHistoryLoanList.isEmpty) {
+                          adminHistoryLoanListNotifier.autoLoadList(
+                            ref,
+                            key,
+                            (key) => historyLoanListNotifier.loadLoan(key.id),
+                          );
+                        }
+                      });
+                    }
+                  });
+                },
+              ),
               const Column(
                 children: [
                   SizedBox(height: 25),

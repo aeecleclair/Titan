@@ -34,46 +34,50 @@ class PrizeHandler extends HookConsumerWidget {
 
     void displayWinningsDialog(List<Ticket> winningTickets) {
       showDialog(
-          context: context,
-          builder: (context) {
-            return Dialog(
-              child: Container(
-                height: 100 + winningTickets.length * 35.0,
-                padding: const EdgeInsets.all(30.0),
-                child: Column(
-                  children: [
-                    Text(
-                      "Gagnant${winningTickets.length > 1 ? 's' : ''}",
-                      style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: RaffleColorConstants.textDark),
+        context: context,
+        builder: (context) {
+          return Dialog(
+            child: Container(
+              height: 100 + winningTickets.length * 35.0,
+              padding: const EdgeInsets.all(30.0),
+              child: Column(
+                children: [
+                  Text(
+                    "Gagnant${winningTickets.length > 1 ? 's' : ''}",
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: RaffleColorConstants.textDark,
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: winningTickets.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Center(
-                              child: Text(
-                                winningTickets[index].user.getName(),
-                                style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: RaffleColorConstants.textDark),
-                              ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: winningTickets.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Center(
+                          child: Text(
+                            winningTickets[index].user.getName(),
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: RaffleColorConstants.textDark,
                             ),
-                          );
-                        }),
-                  ],
-                ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
-            );
-          });
+            ),
+          );
+        },
+      );
     }
 
     return Column(
@@ -81,11 +85,14 @@ class PrizeHandler extends HookConsumerWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           alignment: Alignment.centerLeft,
-          child: const Text("Lots",
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: RaffleColorConstants.textDark)),
+          child: const Text(
+            "Lots",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: RaffleColorConstants.textDark,
+            ),
+          ),
         ),
         const SizedBox(
           height: 10,
@@ -93,20 +100,23 @@ class PrizeHandler extends HookConsumerWidget {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
-          child: Row(children: [
-            const SizedBox(
-              width: 10,
-            ),
-            if (raffle.raffleStatusType == RaffleStatusType.creation)
-              GestureDetector(
-                onTap: () {
-                  prizeNotifier.setPrize(Prize.empty());
-                  QR.to(RaffleRouter.root +
-                      RaffleRouter.detail +
-                      RaffleRouter.creation +
-                      RaffleRouter.addEditPrize);
-                },
-                child: Container(
+          child: Row(
+            children: [
+              const SizedBox(
+                width: 10,
+              ),
+              if (raffle.raffleStatusType == RaffleStatusType.creation)
+                GestureDetector(
+                  onTap: () {
+                    prizeNotifier.setPrize(Prize.empty());
+                    QR.to(
+                      RaffleRouter.root +
+                          RaffleRouter.detail +
+                          RaffleRouter.creation +
+                          RaffleRouter.addEditPrize,
+                    );
+                  },
+                  child: Container(
                     margin: const EdgeInsets.only(left: 5.0, bottom: 10),
                     padding: const EdgeInsets.all(12.0),
                     child: Container(
@@ -139,107 +149,123 @@ class PrizeHandler extends HookConsumerWidget {
                           size: 50,
                         ),
                       ),
-                    )),
+                    ),
+                  ),
+                ),
+              prizeList.when(
+                data: (lots) {
+                  lots = lots
+                      .where((element) => element.raffleId == raffle.id)
+                      .toList();
+                  return lots.isEmpty
+                      ? const SizedBox(
+                          height: 150,
+                          child: Center(
+                            child: Text("Aucun Lot"),
+                          ),
+                        )
+                      : Row(
+                          children: lots
+                              .map(
+                                (e) => PrizeCard(
+                                  lot: e,
+                                  onDelete: () async {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (context) => CustomDialogBox(
+                                        title: "Supprimer le lot",
+                                        descriptions:
+                                            "Voulez-vous vraiment supprimer ce lot?",
+                                        onYes: () {
+                                          tokenExpireWrapper(ref, () async {
+                                            final value = await prizesNotifier
+                                                .deletePrize(e);
+                                            if (value) {
+                                              displayToastWithContext(
+                                                TypeMsg.msg,
+                                                RaffleTextConstants.deletePrize,
+                                              );
+                                            } else {
+                                              displayToastWithContext(
+                                                TypeMsg.error,
+                                                RaffleTextConstants
+                                                    .deletingError,
+                                              );
+                                            }
+                                          });
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  onEdit: () {
+                                    prizeNotifier.setPrize(e);
+                                    QR.to(
+                                      RaffleRouter.root +
+                                          RaffleRouter.detail +
+                                          RaffleRouter.creation +
+                                          RaffleRouter.addEditPrize,
+                                    );
+                                  },
+                                  status: raffle.raffleStatusType,
+                                  onDraw: () async {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (context) => CustomDialogBox(
+                                        title: "Tirage",
+                                        descriptions:
+                                            "Tirer le gagnant de ce lot ?",
+                                        onYes: () {
+                                          tokenExpireWrapper(ref, () async {
+                                            final value =
+                                                await winningTicketListNotifier
+                                                    .drawPrize(e);
+                                            value.when(
+                                              data: (winningTicketList) {
+                                                prizesNotifier
+                                                    .setPrizeQuantityToZero(
+                                                  e.copyWith(
+                                                    quantity: 0,
+                                                  ),
+                                                );
+                                                displayWinningsDialog(
+                                                  winningTicketList,
+                                                );
+                                              },
+                                              error: (e, s) {
+                                                displayToastWithContext(
+                                                  TypeMsg.error,
+                                                  RaffleTextConstants
+                                                      .drawingError,
+                                                );
+                                              },
+                                              loading: () {},
+                                            );
+                                          });
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ),
+                              )
+                              .toList(),
+                        );
+                },
+                error: (Object error, StackTrace stackTrace) {
+                  return Center(
+                    child: Text("error : $error"),
+                  );
+                },
+                loading: () {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
               ),
-            prizeList.when(data: (lots) {
-              lots = lots
-                  .where((element) => element.raffleId == raffle.id)
-                  .toList();
-              return lots.isEmpty
-                  ? const SizedBox(
-                      height: 150,
-                      child: Center(
-                        child: Text("Aucun Lot"),
-                      ),
-                    )
-                  : Row(
-                      children: lots
-                          .map(
-                            (e) => PrizeCard(
-                              lot: e,
-                              onDelete: () async {
-                                await showDialog(
-                                    context: context,
-                                    builder: (context) => CustomDialogBox(
-                                          title: "Supprimer le lot",
-                                          descriptions:
-                                              "Voulez-vous vraiment supprimer ce lot?",
-                                          onYes: () {
-                                            tokenExpireWrapper(ref, () async {
-                                              final value = await prizesNotifier
-                                                  .deletePrize(e);
-                                              if (value) {
-                                                displayToastWithContext(
-                                                    TypeMsg.msg,
-                                                    RaffleTextConstants
-                                                        .deletePrize);
-                                              } else {
-                                                displayToastWithContext(
-                                                    TypeMsg.error,
-                                                    RaffleTextConstants
-                                                        .deletingError);
-                                              }
-                                            });
-                                          },
-                                        ));
-                              },
-                              onEdit: () {
-                                prizeNotifier.setPrize(e);
-                                QR.to(RaffleRouter.root +
-                                    RaffleRouter.detail +
-                                    RaffleRouter.creation +
-                                    RaffleRouter.addEditPrize);
-                              },
-                              status: raffle.raffleStatusType,
-                              onDraw: () async {
-                                await showDialog(
-                                    context: context,
-                                    builder: (context) => CustomDialogBox(
-                                          title: "Tirage",
-                                          descriptions:
-                                              "Tirer le gagnant de ce lot ?",
-                                          onYes: () {
-                                            tokenExpireWrapper(ref, () async {
-                                              final value =
-                                                  await winningTicketListNotifier
-                                                      .drawPrize(e);
-                                              value.when(
-                                                  data: (winningTicketList) {
-                                                    prizesNotifier
-                                                        .setPrizeQuantityToZero(
-                                                            e.copyWith(
-                                                                quantity: 0));
-                                                    displayWinningsDialog(
-                                                        winningTicketList);
-                                                  },
-                                                  error: (e, s) {
-                                                    displayToastWithContext(
-                                                        TypeMsg.error,
-                                                        RaffleTextConstants
-                                                            .drawingError);
-                                                  },
-                                                  loading: () {});
-                                            });
-                                          },
-                                        ));
-                              },
-                            ),
-                          )
-                          .toList(),
-                    );
-            }, error: (Object error, StackTrace stackTrace) {
-              return Center(
-                child: Text("error : $error"),
-              );
-            }, loading: () {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }),
-            const SizedBox(
-              width: 10,
-            )
-          ]),
+              const SizedBox(
+                width: 10,
+              ),
+            ],
+          ),
         ),
         const SizedBox(
           height: 10,

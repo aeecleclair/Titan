@@ -15,8 +15,11 @@ class CinemaTopicRepository extends Repository {
   }
 
   Future<List<String>> getCinemaTopics() async {
-    return List<String>.from((await getList(
-            suffix: "topics/${prefix.substring(0, prefix.length - 1)}"))
-        .map((x) => x.split(prefix)[1]));
+    return List<String>.from(
+      (await getList(
+        suffix: "topics/${prefix.substring(0, prefix.length - 1)}",
+      ))
+          .map((x) => x.split(prefix)[1]),
+    );
   }
 }

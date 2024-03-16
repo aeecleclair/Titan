@@ -2,7 +2,11 @@ import 'dart:ui';
 
 Color invert(Color color) {
   return Color.fromARGB(
-      color.alpha, 255 - color.red, 255 - color.green, 255 - color.blue);
+    color.alpha,
+    255 - color.red,
+    255 - color.green,
+    255 - color.blue,
+  );
 }
 
 Color generateColor(String uuid) {

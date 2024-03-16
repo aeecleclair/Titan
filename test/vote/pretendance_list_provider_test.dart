@@ -50,8 +50,10 @@ void main() {
       ];
       final newContender = Contender.empty()
           .copyWith(id: '4', name: 'Contender 4', listType: ListType.serious);
-      when(() => contenderListNotifier.contenderRepository
-          .createContender(newContender)).thenAnswer((_) async => newContender);
+      when(
+        () => contenderListNotifier.contenderRepository
+            .createContender(newContender),
+      ).thenAnswer((_) async => newContender);
       contenderListNotifier.state = AsyncValue.data(contenders.sublist(0));
       await contenderListNotifier.addContender(newContender);
 
@@ -75,9 +77,14 @@ void main() {
             .copyWith(id: '3', name: 'Contender 3', listType: ListType.blank),
       ];
       final updatedContender = Contender.empty().copyWith(
-          id: '2', name: 'Contender 2 updated', listType: ListType.fake);
-      when(() => contenderListNotifier.contenderRepository
-          .updateContender(updatedContender)).thenAnswer((_) async => true);
+        id: '2',
+        name: 'Contender 2 updated',
+        listType: ListType.fake,
+      );
+      when(
+        () => contenderListNotifier.contenderRepository
+            .updateContender(updatedContender),
+      ).thenAnswer((_) async => true);
       contenderListNotifier.state = AsyncValue.data(contenders);
       await contenderListNotifier.updateContender(updatedContender);
 
@@ -88,9 +95,11 @@ void main() {
           error: (error, stackTrace) => [],
         ),
         contenders
-            .map((contender) => contender.id == updatedContender.id
-                ? updatedContender
-                : contender)
+            .map(
+              (contender) => contender.id == updatedContender.id
+                  ? updatedContender
+                  : contender,
+            )
             .toList(),
       );
     });
@@ -106,8 +115,10 @@ void main() {
       ];
       final deletedContender = Contender.empty()
           .copyWith(id: '2', name: 'Contender 2', listType: ListType.fake);
-      when(() => contenderListNotifier.contenderRepository
-          .deleteContender(deletedContender.id)).thenAnswer((_) async => true);
+      when(
+        () => contenderListNotifier.contenderRepository
+            .deleteContender(deletedContender.id),
+      ).thenAnswer((_) async => true);
       contenderListNotifier.state = AsyncValue.data(contenders);
       await contenderListNotifier.deleteContender(deletedContender);
 

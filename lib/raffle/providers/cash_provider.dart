@@ -23,24 +23,29 @@ class CashProvider extends ListNotifier<Cash> {
 
   Future<bool> updateCash(Cash cash, int amount) async {
     return await update(
-        _cashRepository.updateCash,
-        (cashList, c) => cashList
-          ..[cashList.indexWhere((c) => c.user.id == cash.user.id)] =
-              cash.copyWith(balance: cash.balance + amount),
-        cash.copyWith(balance: amount.toDouble()));
+      _cashRepository.updateCash,
+      (cashList, c) => cashList
+        ..[cashList.indexWhere((c) => c.user.id == cash.user.id)] =
+            cash.copyWith(balance: cash.balance + amount),
+      cash.copyWith(balance: amount.toDouble()),
+    );
   }
 
   Future<AsyncValue<List<Cash>>> filterCashList(String filter) async {
     return state.when(
       data: (cashList) async {
         final lowerQuery = filter.toLowerCase();
-        return state = AsyncData(cashList
-            .where((cash) =>
-                cash.user.name.toLowerCase().contains(lowerQuery) ||
-                cash.user.firstname.toLowerCase().contains(lowerQuery) ||
-                (cash.user.nickname != null &&
-                    cash.user.nickname!.toLowerCase().contains(lowerQuery)))
-            .toList());
+        return state = AsyncData(
+          cashList
+              .where(
+                (cash) =>
+                    cash.user.name.toLowerCase().contains(lowerQuery) ||
+                    cash.user.firstname.toLowerCase().contains(lowerQuery) ||
+                    (cash.user.nickname != null &&
+                        cash.user.nickname!.toLowerCase().contains(lowerQuery)),
+              )
+              .toList(),
+        );
       },
       error: (error, stackTrace) {
         if (error is AppException && error.type == ErrorType.tokenExpire) {

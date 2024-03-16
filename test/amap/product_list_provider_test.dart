@@ -21,11 +21,13 @@ void main() {
       final productListLoaded = await productListNotifier.loadProductList();
       expect(productListLoaded, isA<AsyncData<List<Product>>>());
       expect(
-          productListLoaded.when(
-              data: (data) => data.length,
-              loading: () => 0,
-              error: (error, stackTrace) => 0),
-          1);
+        productListLoaded.when(
+          data: (data) => data.length,
+          loading: () => 0,
+          error: (error, stackTrace) => 0,
+        ),
+        1,
+      );
     });
 
     test('createProduct', () async {

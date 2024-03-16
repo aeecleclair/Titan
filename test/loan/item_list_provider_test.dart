@@ -21,7 +21,7 @@ void main() {
       const loanerId = '123';
       final items = [
         Item.empty().copyWith(id: '1', name: 'item1'),
-        Item.empty().copyWith(id: '2', name: 'item2')
+        Item.empty().copyWith(id: '2', name: 'item2'),
       ];
       when(() => itemRepository.getItemList(loanerId))
           .thenAnswer((_) async => items);
@@ -29,18 +29,20 @@ void main() {
       final result = await itemListNotifier.loadItemList(loanerId);
 
       expect(
-          result.when(
-              data: (d) => d,
-              error: (e, s) => throw e,
-              loading: () => throw Exception('loading')),
-          items);
+        result.when(
+          data: (d) => d,
+          error: (e, s) => throw e,
+          loading: () => throw Exception('loading'),
+        ),
+        items,
+      );
     });
 
     test('addItem should return true when successful', () async {
       const loanerId = '123';
       final items = [
         Item.empty().copyWith(id: '1', name: 'item1'),
-        Item.empty().copyWith(id: '2', name: 'item2')
+        Item.empty().copyWith(id: '2', name: 'item2'),
       ];
       final item = Item.empty().copyWith(id: '1', name: 'item1');
       when(() => itemRepository.createItem(loanerId, item))
@@ -56,7 +58,7 @@ void main() {
       const loanerId = '123';
       final items = [
         Item.empty().copyWith(id: '1', name: 'item1'),
-        Item.empty().copyWith(id: '2', name: 'item2')
+        Item.empty().copyWith(id: '2', name: 'item2'),
       ];
       final item = Item.empty().copyWith(id: '1', name: 'item1');
       when(() => itemRepository.updateItem(loanerId, item))
@@ -72,7 +74,7 @@ void main() {
       const loanerId = '123';
       final items = [
         Item.empty().copyWith(id: '1', name: 'item1'),
-        Item.empty().copyWith(id: '2', name: 'item2')
+        Item.empty().copyWith(id: '2', name: 'item2'),
       ];
       final item = Item.empty().copyWith(id: '1', name: 'item1');
       when(() => itemRepository.deleteItem(loanerId, item.id))
@@ -87,18 +89,20 @@ void main() {
     test('copy should return a copy of the current state', () async {
       final items = [
         Item.empty().copyWith(id: '1', name: 'item1'),
-        Item.empty().copyWith(id: '2', name: 'item2')
+        Item.empty().copyWith(id: '2', name: 'item2'),
       ];
       itemListNotifier.state = AsyncValue.data(items);
 
       final result = await itemListNotifier.copy();
 
       expect(
-          result.when(
-              data: (d) => d,
-              error: (e, s) => throw e,
-              loading: () => throw Exception('loading')),
-          items);
+        result.when(
+          data: (d) => d,
+          error: (e, s) => throw e,
+          loading: () => throw Exception('loading'),
+        ),
+        items,
+      );
     });
 
     test('copy should return a copy of the current state when error', () async {

@@ -4,8 +4,12 @@ class ItemChip extends StatelessWidget {
   final bool selected;
   final Function()? onTap;
   final Widget child;
-  const ItemChip(
-      {super.key, this.selected = false, this.onTap, required this.child});
+  const ItemChip({
+    super.key,
+    this.selected = false,
+    this.onTap,
+    required this.child,
+  });
 
   @override
   Widget build(BuildContext context) {

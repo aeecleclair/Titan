@@ -22,18 +22,20 @@ class AdvertListNotifier extends ListNotifier<Advert> {
 
   Future<bool> updateAdvert(Advert advert) async {
     return await update(
-        repository.updateAdvert,
-        (adverts, advert) =>
-            adverts..[adverts.indexWhere((b) => b.id == advert.id)] = advert,
-        advert);
+      repository.updateAdvert,
+      (adverts, advert) =>
+          adverts..[adverts.indexWhere((b) => b.id == advert.id)] = advert,
+      advert,
+    );
   }
 
   Future<bool> deleteAdvert(Advert advert) async {
     return await delete(
-        repository.deleteAdvert,
-        (adverts, advert) => adverts..removeWhere((b) => b.id == advert.id),
-        advert.id,
-        advert);
+      repository.deleteAdvert,
+      (adverts, advert) => adverts..removeWhere((b) => b.id == advert.id),
+      advert.id,
+      advert,
+    );
   }
 }
 

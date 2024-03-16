@@ -108,7 +108,11 @@ class User {
 
   SimpleUser toSimpleUser() {
     return SimpleUser(
-        name: name, firstname: firstname, nickname: nickname, id: id);
+      name: name,
+      firstname: firstname,
+      nickname: nickname,
+      id: id,
+    );
   }
 
   @override
@@ -118,12 +122,13 @@ class User {
 
   Applicant toApplicant() {
     return Applicant(
-        name: name,
-        firstname: firstname,
-        nickname: nickname,
-        id: id,
-        email: email,
-        promo: promo,
-        phone: '');
+      name: name,
+      firstname: firstname,
+      nickname: nickname,
+      id: id,
+      email: email,
+      promo: promo,
+      phone: '',
+    );
   }
 }

@@ -18,7 +18,7 @@ class AnnouncerCard extends StatelessWidget {
             e.name,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
           ),
-          HeroIcon(icon, size: 25, color: Colors.black)
+          HeroIcon(icon, size: 25, color: Colors.black),
         ],
       ),
     );

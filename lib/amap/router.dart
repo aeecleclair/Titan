@@ -48,55 +48,63 @@ class AmapRouter {
         builder: () => main_page.AmapMainPage(),
         middleware: [
           AuthenticatedMiddleware(ref),
-          DeferredLoadingMiddleware(main_page.loadLibrary)
+          DeferredLoadingMiddleware(main_page.loadLibrary),
         ],
         children: [
           QRoute(
-              path: admin,
-              builder: () => admin_page.AdminPage(),
-              middleware: [
-                AdminMiddleware(ref, isAmapAdminProvider),
-                DeferredLoadingMiddleware(admin_page.loadLibrary)
-              ],
-              children: [
-                QRoute(
-                    path: addEditDelivery,
-                    builder: () =>
-                        add_edit_delivery_cmd_page.AddEditDeliveryPage(),
-                    middleware: [
-                      DeferredLoadingMiddleware(
-                          add_edit_delivery_cmd_page.loadLibrary)
-                    ]),
-                QRoute(
-                    path: addEditProduct,
-                    builder: () => add_edit_product.AddEditProduct(),
-                    middleware: [
-                      DeferredLoadingMiddleware(add_edit_product.loadLibrary)
-                    ]),
-                QRoute(
-                    path: detailDelivery,
-                    builder: () => detail_delivery_page.DetailDeliveryPage(),
-                    middleware: [
-                      DeferredLoadingMiddleware(
-                          detail_delivery_page.loadLibrary)
-                    ]),
-              ]),
+            path: admin,
+            builder: () => admin_page.AdminPage(),
+            middleware: [
+              AdminMiddleware(ref, isAmapAdminProvider),
+              DeferredLoadingMiddleware(admin_page.loadLibrary),
+            ],
+            children: [
+              QRoute(
+                path: addEditDelivery,
+                builder: () => add_edit_delivery_cmd_page.AddEditDeliveryPage(),
+                middleware: [
+                  DeferredLoadingMiddleware(
+                    add_edit_delivery_cmd_page.loadLibrary,
+                  ),
+                ],
+              ),
+              QRoute(
+                path: addEditProduct,
+                builder: () => add_edit_product.AddEditProduct(),
+                middleware: [
+                  DeferredLoadingMiddleware(add_edit_product.loadLibrary),
+                ],
+              ),
+              QRoute(
+                path: detailDelivery,
+                builder: () => detail_delivery_page.DetailDeliveryPage(),
+                middleware: [
+                  DeferredLoadingMiddleware(
+                    detail_delivery_page.loadLibrary,
+                  ),
+                ],
+              ),
+            ],
+          ),
           QRoute(
-              path: listProduct,
-              builder: () => list_products_page.ListProductPage(),
-              middleware: [
-                DeferredLoadingMiddleware(list_products_page.loadLibrary)
-              ]),
+            path: listProduct,
+            builder: () => list_products_page.ListProductPage(),
+            middleware: [
+              DeferredLoadingMiddleware(list_products_page.loadLibrary),
+            ],
+          ),
           QRoute(
-              path: detailOrder,
-              builder: () => detail_page.DetailPage(),
-              middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)]),
+            path: detailOrder,
+            builder: () => detail_page.DetailPage(),
+            middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)],
+          ),
           QRoute(
-              path: presentation,
-              builder: () => presentation_page.PresentationPage(),
-              middleware: [
-                DeferredLoadingMiddleware(presentation_page.loadLibrary)
-              ]),
+            path: presentation,
+            builder: () => presentation_page.PresentationPage(),
+            middleware: [
+              DeferredLoadingMiddleware(presentation_page.loadLibrary),
+            ],
+          ),
         ],
       );
 }

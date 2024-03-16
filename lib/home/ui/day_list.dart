@@ -12,8 +12,11 @@ import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 
 class DayList extends HookConsumerWidget {
   final ScrollController scrollController, daysEventScrollController;
-  const DayList(this.scrollController, this.daysEventScrollController,
-      {super.key});
+  const DayList(
+    this.scrollController,
+    this.daysEventScrollController, {
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -50,19 +53,21 @@ class DayList extends HookConsumerWidget {
       length: numberDay,
       scrollController: scrollController,
       itemBuilder: (context, day, i) => DayCard(
-          isToday: i == 0,
-          day: day,
-          numberOfEvent: daySortedEventList.keys.contains(day)
-              ? daySortedEventList[day]!.length
-              : 0,
-          index: i - 1,
-          onTap: () {
-            needReload.value = true;
-            daysEventScrollController.animateTo(
-                widgetPositions[formatDelayToToday(day, now)] ?? 0.0,
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.decelerate);
-          }),
+        isToday: i == 0,
+        day: day,
+        numberOfEvent: daySortedEventList.keys.contains(day)
+            ? daySortedEventList[day]!.length
+            : 0,
+        index: i - 1,
+        onTap: () {
+          needReload.value = true;
+          daysEventScrollController.animateTo(
+            widgetPositions[formatDelayToToday(day, now)] ?? 0.0,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.decelerate,
+          );
+        },
+      ),
     );
   }
 }

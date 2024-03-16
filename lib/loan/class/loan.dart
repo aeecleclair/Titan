@@ -37,7 +37,8 @@ class Loan {
         end = processDateFromAPIWithoutHour(json['end']),
         caution = json['caution'],
         itemsQuantity = List<ItemQuantity>.from(
-            json['items_qty'].map((x) => ItemQuantity.fromJson(x))),
+          json['items_qty'].map((x) => ItemQuantity.fromJson(x)),
+        ),
         returned = json['returned'],
         returnedDate = json['returned_date'] != null
             ? DateTime.parse(json['returned_date'])

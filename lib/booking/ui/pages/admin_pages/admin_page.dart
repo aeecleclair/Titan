@@ -44,8 +44,10 @@ class AdminPage extends HookConsumerWidget {
                 .loadConfirmedBooking();
           },
           child: SizedBox(
-            height: max(constraints.maxHeight,
-                minCalendarHeight + sumOfHeightOfOthersWidgets),
+            height: max(
+              constraints.maxHeight,
+              minCalendarHeight + sumOfHeightOfOthersWidgets,
+            ),
             child: Column(
               children: [
                 const SizedBox(height: 20),
@@ -55,11 +57,14 @@ class AdminPage extends HookConsumerWidget {
                   padding: EdgeInsets.symmetric(horizontal: 30.0),
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(BookingTextConstants.room,
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 149, 149, 149))),
+                    child: Text(
+                      BookingTextConstants.room,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 149, 149, 149),
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -75,9 +80,11 @@ class AdminPage extends HookConsumerWidget {
                           onTap: () {
                             roomNotifier.setRoom(Room.empty());
                             managerIdNotifier.setId("");
-                            QR.to(BookingRouter.root +
-                                BookingRouter.admin +
-                                BookingRouter.room);
+                            QR.to(
+                              BookingRouter.root +
+                                  BookingRouter.admin +
+                                  BookingRouter.room,
+                            );
                           },
                           child: const HeroIcon(
                             HeroIcons.plus,
@@ -89,9 +96,11 @@ class AdminPage extends HookConsumerWidget {
                             onTap: () {
                               roomNotifier.setRoom(e);
                               managerIdNotifier.setId(e.managerId);
-                              QR.to(BookingRouter.root +
-                                  BookingRouter.admin +
-                                  BookingRouter.room);
+                              QR.to(
+                                BookingRouter.root +
+                                    BookingRouter.admin +
+                                    BookingRouter.room,
+                              );
                             },
                             child: Text(
                               capitalize(e.name),
@@ -118,11 +127,14 @@ class AdminPage extends HookConsumerWidget {
                   padding: EdgeInsets.symmetric(horizontal: 30.0),
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(BookingTextConstants.manager,
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 149, 149, 149))),
+                    child: Text(
+                      BookingTextConstants.manager,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 149, 149, 149),
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -138,9 +150,11 @@ class AdminPage extends HookConsumerWidget {
                           onTap: () {
                             managerNotifier.setManager(Manager.empty());
                             groupIdNotifier.setId("");
-                            QR.to(BookingRouter.root +
-                                BookingRouter.admin +
-                                BookingRouter.manager);
+                            QR.to(
+                              BookingRouter.root +
+                                  BookingRouter.admin +
+                                  BookingRouter.manager,
+                            );
                           },
                           child: const HeroIcon(
                             HeroIcons.plus,
@@ -152,15 +166,18 @@ class AdminPage extends HookConsumerWidget {
                             onTap: () {
                               managerNotifier.setManager(e);
                               groupIdNotifier.setId(e.groupId);
-                              QR.to(BookingRouter.root +
-                                  BookingRouter.admin +
-                                  BookingRouter.manager);
+                              QR.to(
+                                BookingRouter.root +
+                                    BookingRouter.admin +
+                                    BookingRouter.manager,
+                              );
                             },
                             child: Text(
                               e.name,
                               style: const TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),

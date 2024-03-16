@@ -10,12 +10,16 @@ class DeliveryProductListRepository extends Repository {
 
   Future<Product> createProduct(String deliveryId, Product product) async {
     return Product.fromJson(
-        await create(product.toJson(), suffix: "$deliveryId/products"));
+      await create(product.toJson(), suffix: "$deliveryId/products"),
+    );
   }
 
   Future<bool> updateProduct(String deliveryId, Product product) async {
-    return await update(product.toJson(), deliveryId,
-        suffix: "/products/${product.id}");
+    return await update(
+      product.toJson(),
+      deliveryId,
+      suffix: "/products/${product.id}",
+    );
   }
 
   Future<bool> deleteProduct(String deliveryId, String productId) async {

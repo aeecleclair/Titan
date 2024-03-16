@@ -47,8 +47,10 @@ void main() {
     test(
         'should call getVersion method of VersionRepository when loadVersion is called',
         () async {
-      when(() => versionRepository.getVersion()).thenAnswer((_) async =>
-          Version(version: '1.0.0', minimalTitanVersion: 1, ready: true));
+      when(() => versionRepository.getVersion()).thenAnswer(
+        (_) async =>
+            Version(version: '1.0.0', minimalTitanVersion: 1, ready: true),
+      );
 
       await versionVerifierNotifier.loadVersion();
 

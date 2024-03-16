@@ -30,34 +30,35 @@ class AuthenticatedMiddleware extends QMiddleware {
       pathForwardingNotifier.forward(path);
     }
     return check.when(
-        data: (value) {
-          if (!value) {
-            return AppRouter.update;
-          }
-          if (path == LoginRouter.root &&
-              !pathForwardingNotifier.state.isLoggedIn &&
-              !isLoggedIn) {
-            return null;
-          }
-          if (!isLoggedIn) {
-            return LoginRouter.root;
-          }
-          if (!pathForwardingNotifier.state.isLoggedIn) {
-            pathForwardingNotifier.login();
-          }
-          if (pathForwardingNotifier.state.path == "/") {
-            if (modules.isEmpty) {
-              return AppRouter.noModule;
-            }
-            pathForwardingNotifier.forward(modules.first.root);
-            return modules.first.root;
-          }
-          if (pathForwardingNotifier.state.path != path) {
-            return pathForwardingNotifier.state.path;
-          }
+      data: (value) {
+        if (!value) {
+          return AppRouter.update;
+        }
+        if (path == LoginRouter.root &&
+            !pathForwardingNotifier.state.isLoggedIn &&
+            !isLoggedIn) {
           return null;
-        },
-        loading: () => AppRouter.loading,
-        error: (error, stack) => AppRouter.noInternet);
+        }
+        if (!isLoggedIn) {
+          return LoginRouter.root;
+        }
+        if (!pathForwardingNotifier.state.isLoggedIn) {
+          pathForwardingNotifier.login();
+        }
+        if (pathForwardingNotifier.state.path == "/") {
+          if (modules.isEmpty) {
+            return AppRouter.noModule;
+          }
+          pathForwardingNotifier.forward(modules.first.root);
+          return modules.first.root;
+        }
+        if (pathForwardingNotifier.state.path != path) {
+          return pathForwardingNotifier.state.path;
+        }
+        return null;
+      },
+      loading: () => AppRouter.loading,
+      error: (error, stack) => AppRouter.noInternet,
+    );
   }
 }

@@ -37,15 +37,16 @@ class ListProductPage extends HookConsumerWidget {
               width: MediaQuery.of(context).size.width,
               height: 100,
               decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                colors: [
-                  Colors.white.withOpacity(1.0),
-                  Colors.white.withOpacity(0.8),
-                  Colors.white.withOpacity(0.0),
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              )),
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.white.withOpacity(1.0),
+                    Colors.white.withOpacity(0.8),
+                    Colors.white.withOpacity(0.0),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
             ),
             const Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

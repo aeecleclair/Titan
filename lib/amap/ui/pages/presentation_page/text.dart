@@ -21,17 +21,18 @@ class PresentationPage extends HookConsumerWidget {
 
     return AmapTemplate(
       child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Container(
-            padding: const EdgeInsets.only(bottom: 30, left: 20, right: 30),
-            child: Column(
-              children: [
-                const SizedBox(height: 30),
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(
-                    text: AMAPTextConstants.presentation1,
-                    style: TextStyle(
+        physics: const BouncingScrollPhysics(),
+        child: Container(
+          padding: const EdgeInsets.only(bottom: 30, left: 20, right: 30),
+          child: Column(
+            children: [
+              const SizedBox(height: 30),
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: AMAPTextConstants.presentation1,
+                      style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
                         foreground: Paint()
@@ -43,37 +44,47 @@ class PresentationPage extends HookConsumerWidget {
                             center: Alignment.topLeft,
                             radius: 10,
                           ).createShader(
-                              const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0))),
-                  ),
-                  information.when(
-                    data: (info) => TextSpan(
+                            const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0),
+                          ),
+                      ),
+                    ),
+                    information.when(
+                      data: (info) => TextSpan(
                         text: info.link,
                         style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                            decoration: TextDecoration.underline,
-                            color: Colors.blue),
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.underline,
+                          color: Colors.blue,
+                        ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () async {
                             try {
-                              await launchUrl(Uri.parse(info.link),
-                                  mode: LaunchMode.externalApplication);
+                              await launchUrl(
+                                Uri.parse(info.link),
+                                mode: LaunchMode.externalApplication,
+                              );
                             } catch (e) {
                               displayToastWithContext(
-                                  TypeMsg.msg, AMAPTextConstants.errorLink);
+                                TypeMsg.msg,
+                                AMAPTextConstants.errorLink,
+                              );
                             }
-                          }),
-                    error: (Object error, StackTrace stackTrace) =>
-                        const TextSpan(
-                            text: AMAPTextConstants.loadingError,
-                            style: TextStyle(color: Colors.red)),
-                    loading: () => const TextSpan(
+                          },
+                      ),
+                      error: (Object error, StackTrace stackTrace) =>
+                          const TextSpan(
+                        text: AMAPTextConstants.loadingError,
+                        style: TextStyle(color: Colors.red),
+                      ),
+                      loading: () => const TextSpan(
                         text: AMAPTextConstants.loading,
-                        style: TextStyle(color: Colors.red)),
-                  ),
-                  TextSpan(
-                    text: AMAPTextConstants.presentation2,
-                    style: TextStyle(
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                    TextSpan(
+                      text: AMAPTextConstants.presentation2,
+                      style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
                         foreground: Paint()
@@ -85,22 +96,29 @@ class PresentationPage extends HookConsumerWidget {
                             center: Alignment.topLeft,
                             radius: 10,
                           ).createShader(
-                              const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0))),
-                  )
-                ])),
-                const SizedBox(height: 15),
-                AsyncChild(
-                    value: information,
-                    builder: (context, info) => Text(
-                          "${AMAPTextConstants.contact} : ${info.manager}	",
-                          style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              color: AMAPColorConstants.textDark),
-                        ))
-              ],
-            ),
-          )),
+                            const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0),
+                          ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 15),
+              AsyncChild(
+                value: information,
+                builder: (context, info) => Text(
+                  "${AMAPTextConstants.contact} : ${info.manager}	",
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: AMAPColorConstants.textDark,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -12,12 +12,13 @@ class AdminAdvertCard extends HookConsumerWidget {
   final Future Function() onDelete;
   final Advert advert;
 
-  const AdminAdvertCard(
-      {super.key,
-      required this.advert,
-      required this.onTap,
-      required this.onEdit,
-      required this.onDelete});
+  const AdminAdvertCard({
+    super.key,
+    required this.advert,
+    required this.onTap,
+    required this.onEdit,
+    required this.onDelete,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -50,19 +51,20 @@ class AdminAdvertCard extends HookConsumerWidget {
                   WaitingButton(
                     onTap: onDelete,
                     builder: (child) => CardButton(
-                        colors: const [
-                          AdvertColorConstants.redGradient1,
-                          AdvertColorConstants.redGradient2,
-                        ],
-                        shadowColor:
-                            AdvertColorConstants.redGradient2.withOpacity(0.2),
-                        child: child),
+                      colors: const [
+                        AdvertColorConstants.redGradient1,
+                        AdvertColorConstants.redGradient2,
+                      ],
+                      shadowColor:
+                          AdvertColorConstants.redGradient2.withOpacity(0.2),
+                      child: child,
+                    ),
                     child: const HeroIcon(HeroIcons.trash, color: Colors.white),
                   ),
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );

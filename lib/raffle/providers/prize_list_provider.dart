@@ -36,13 +36,19 @@ class LotListNotifier extends ListNotifier<Prize> {
   }
 
   Future<bool> updatePrize(Prize lot) async {
-    return await update(_lotRepository.updateLot,
-        (lot, t) => lot..[lot.indexWhere((e) => e.id == t.id)] = t, lot);
+    return await update(
+      _lotRepository.updateLot,
+      (lot, t) => lot..[lot.indexWhere((e) => e.id == t.id)] = t,
+      lot,
+    );
   }
 
   Future<bool> setPrizeQuantityToZero(Prize lot) async {
-    return await update((_) async => true,
-        (lot, t) => lot..[lot.indexWhere((e) => e.id == t.id)] = t, lot);
+    return await update(
+      (_) async => true,
+      (lot, t) => lot..[lot.indexWhere((e) => e.id == t.id)] = t,
+      lot,
+    );
   }
 }
 

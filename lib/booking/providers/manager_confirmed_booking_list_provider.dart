@@ -11,7 +11,8 @@ class ManagerConfirmedBookingListProvider extends ListNotifier<Booking> {
 
   Future<AsyncValue<List<Booking>>> loadConfirmedBookingForManager() async {
     return await loadList(
-        () async => bookingRepository.getUserManageConfirmedBookingList());
+      () async => bookingRepository.getUserManageConfirmedBookingList(),
+    );
   }
 
   Future<bool> addBooking(Booking booking) async {
@@ -20,11 +21,12 @@ class ManagerConfirmedBookingListProvider extends ListNotifier<Booking> {
 
   Future<bool> deleteBooking(Booking booking) async {
     return await delete(
-        (_) async => true,
-        (bookings, booking) =>
-            bookings..removeWhere((element) => element.id == booking.id),
-        booking.id,
-        booking);
+      (_) async => true,
+      (bookings, booking) =>
+          bookings..removeWhere((element) => element.id == booking.id),
+      booking.id,
+      booking,
+    );
   }
 }
 
@@ -33,7 +35,8 @@ final managerConfirmedBookingListProvider = StateNotifierProvider<
   (ref) {
     final bookingRepository = ref.watch(bookingRepositoryProvider);
     final provider = ManagerConfirmedBookingListProvider(
-        bookingRepository: bookingRepository);
+      bookingRepository: bookingRepository,
+    );
     tokenExpireWrapperAuth(
       ref,
       () async {

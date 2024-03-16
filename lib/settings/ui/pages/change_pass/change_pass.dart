@@ -43,61 +43,69 @@ class ChangePassPage extends HookConsumerWidget {
             child: Column(
               children: [
                 const SizedBox(height: 30),
-                const AlignLeftText(SettingsTextConstants.changePassword,
-                    fontSize: 20),
+                const AlignLeftText(
+                  SettingsTextConstants.changePassword,
+                  fontSize: 20,
+                ),
                 const SizedBox(height: 30),
                 Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: TextFormField(
-                      cursorColor: ColorConstants.gradient1,
-                      decoration: changePassInputDecoration(
-                          hintText: SettingsTextConstants.oldPassword,
-                          notifier: hideOldPass),
-                      controller: oldPassword,
-                      obscureText: hideOldPass.value,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return SettingsTextConstants.emptyField;
-                        }
-                        return null;
-                      },
-                    )),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: TextFormField(
+                    cursorColor: ColorConstants.gradient1,
+                    decoration: changePassInputDecoration(
+                      hintText: SettingsTextConstants.oldPassword,
+                      notifier: hideOldPass,
+                    ),
+                    controller: oldPassword,
+                    obscureText: hideOldPass.value,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return SettingsTextConstants.emptyField;
+                      }
+                      return null;
+                    },
+                  ),
+                ),
                 const SizedBox(height: 30),
                 Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: TextFormField(
-                      cursorColor: ColorConstants.gradient1,
-                      decoration: changePassInputDecoration(
-                          hintText: SettingsTextConstants.newPassword,
-                          notifier: hideNewPass),
-                      controller: newPassword,
-                      obscureText: hideNewPass.value,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return SettingsTextConstants.emptyField;
-                        }
-                        return null;
-                      },
-                    )),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: TextFormField(
+                    cursorColor: ColorConstants.gradient1,
+                    decoration: changePassInputDecoration(
+                      hintText: SettingsTextConstants.newPassword,
+                      notifier: hideNewPass,
+                    ),
+                    controller: newPassword,
+                    obscureText: hideNewPass.value,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return SettingsTextConstants.emptyField;
+                      }
+                      return null;
+                    },
+                  ),
+                ),
                 const SizedBox(height: 30),
                 Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: TextFormField(
-                      cursorColor: ColorConstants.gradient1,
-                      decoration: changePassInputDecoration(
-                          hintText: SettingsTextConstants.confirmPassword,
-                          notifier: hideConfirmPass),
-                      controller: confirmPassword,
-                      obscureText: hideConfirmPass.value,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return SettingsTextConstants.emptyField;
-                        } else if (value != newPassword.text) {
-                          return SettingsTextConstants.passwordsNotMatch;
-                        }
-                        return null;
-                      },
-                    )),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: TextFormField(
+                    cursorColor: ColorConstants.gradient1,
+                    decoration: changePassInputDecoration(
+                      hintText: SettingsTextConstants.confirmPassword,
+                      notifier: hideConfirmPass,
+                    ),
+                    controller: confirmPassword,
+                    obscureText: hideConfirmPass.value,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return SettingsTextConstants.emptyField;
+                      } else if (value != newPassword.text) {
+                        return SettingsTextConstants.passwordsNotMatch;
+                      }
+                      return null;
+                    },
+                  ),
+                ),
                 const SizedBox(height: 40),
                 PasswordStrength(newPassword: newPassword),
                 const SizedBox(height: 60),
@@ -105,38 +113,40 @@ class ChangePassPage extends HookConsumerWidget {
                   builder: (child) => AddEditButtonLayout(
                     colors: const [
                       ColorConstants.gradient1,
-                      ColorConstants.gradient2
+                      ColorConstants.gradient2,
                     ],
                     child: child,
                   ),
                   onTap: () async {
                     if (key.currentState!.validate()) {
                       await showDialog(
-                          context: context,
-                          builder: (context) => CustomDialogBox(
-                                descriptions:
-                                    SettingsTextConstants.changingPassword,
-                                onYes: () async {
-                                  await tokenExpireWrapper(ref, () async {
-                                    final value =
-                                        await userNotifier.changePassword(
-                                            oldPassword.text,
-                                            newPassword.text,
-                                            user);
-                                    if (value) {
-                                      QR.back();
-                                      displayToastWithContext(
-                                          TypeMsg.msg,
-                                          SettingsTextConstants
-                                              .passwordChanged);
-                                    } else {
-                                      displayToastWithContext(TypeMsg.error,
-                                          SettingsTextConstants.updatingError);
-                                    }
-                                  });
-                                },
-                                title: SettingsTextConstants.edit,
-                              ));
+                        context: context,
+                        builder: (context) => CustomDialogBox(
+                          descriptions: SettingsTextConstants.changingPassword,
+                          onYes: () async {
+                            await tokenExpireWrapper(ref, () async {
+                              final value = await userNotifier.changePassword(
+                                oldPassword.text,
+                                newPassword.text,
+                                user,
+                              );
+                              if (value) {
+                                QR.back();
+                                displayToastWithContext(
+                                  TypeMsg.msg,
+                                  SettingsTextConstants.passwordChanged,
+                                );
+                              } else {
+                                displayToastWithContext(
+                                  TypeMsg.error,
+                                  SettingsTextConstants.updatingError,
+                                );
+                              }
+                            });
+                          },
+                          title: SettingsTextConstants.edit,
+                        ),
+                      );
                     }
                   },
                   child: const Center(

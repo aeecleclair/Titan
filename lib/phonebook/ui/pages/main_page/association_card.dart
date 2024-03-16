@@ -33,7 +33,7 @@ class AssociationCard extends HookConsumerWidget {
                   ),
                 ),
               ),
-              Text(association.kind)
+              Text(association.kind),
             ],
           ),
         ),

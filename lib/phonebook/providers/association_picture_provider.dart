@@ -28,8 +28,12 @@ class AssociationPictureNotifier extends SingleNotifier<Image> {
   }
 
   Future<Image> updateAssociationPicture(
-      String associationId, Uint8List bytes) async {
+    String associationId,
+    Uint8List bytes,
+  ) async {
     return await associationPictureRepository.addAssociationPicture(
-        bytes, associationId);
+      bytes,
+      associationId,
+    );
   }
 }

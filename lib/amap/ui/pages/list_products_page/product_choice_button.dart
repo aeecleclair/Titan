@@ -31,88 +31,114 @@ class ProductChoiceButton extends HookConsumerWidget {
     }
 
     return Container(
-        height: 60,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+      height: 60,
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
           Expanded(
             child: WaitingButton(
-                waitingColor: AMAPColorConstants.background,
-                builder: (child) => Container(
-                    margin: const EdgeInsets.only(right: 10),
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(colors: [
-                        AMAPColorConstants.greenGradient1,
-                        AMAPColorConstants.greenGradient2
-                      ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-                      boxShadow: [
-                        BoxShadow(
-                            color: AMAPColorConstants.greenGradient2
-                                .withOpacity(0.4),
-                            offset: const Offset(2, 3),
-                            blurRadius: 5)
-                      ],
-                      borderRadius: const BorderRadius.all(Radius.circular(15)),
+              waitingColor: AMAPColorConstants.background,
+              builder: (child) => Container(
+                margin: const EdgeInsets.only(right: 10),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [
+                      AMAPColorConstants.greenGradient1,
+                      AMAPColorConstants.greenGradient2,
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AMAPColorConstants.greenGradient2.withOpacity(0.4),
+                      offset: const Offset(2, 3),
+                      blurRadius: 5,
                     ),
-                    alignment: Alignment.center,
-                    child: child),
-                onTap: () async {
-                  if (order.amount == 0.0) {
-                    displayToast(
-                        context, TypeMsg.error, AMAPTextConstants.noProduct);
-                  } else {
-                    Order newOrder = order.copyWith(
-                        deliveryId: deliveryId,
-                        user: me.toSimpleUser(),
-                        lastAmount: order.amount);
-                    await tokenExpireWrapper(ref, () async {
-                      final value = isEdit
-                          ? await orderListNotifier.updateOrder(newOrder)
-                          : await orderListNotifier.addOrder(newOrder);
-                      if (value) {
-                        QR.back();
-                        userAmountNotifier
-                            .updateCash(order.lastAmount - order.amount);
-                        if (isEdit) {
-                          displayToastWithContext(
-                              TypeMsg.msg, AMAPTextConstants.updatedOrder);
-                        } else {
-                          displayToastWithContext(
-                              TypeMsg.msg, AMAPTextConstants.addedOrder);
-                        }
+                  ],
+                  borderRadius: const BorderRadius.all(Radius.circular(15)),
+                ),
+                alignment: Alignment.center,
+                child: child,
+              ),
+              onTap: () async {
+                if (order.amount == 0.0) {
+                  displayToast(
+                    context,
+                    TypeMsg.error,
+                    AMAPTextConstants.noProduct,
+                  );
+                } else {
+                  Order newOrder = order.copyWith(
+                    deliveryId: deliveryId,
+                    user: me.toSimpleUser(),
+                    lastAmount: order.amount,
+                  );
+                  await tokenExpireWrapper(ref, () async {
+                    final value = isEdit
+                        ? await orderListNotifier.updateOrder(newOrder)
+                        : await orderListNotifier.addOrder(newOrder);
+                    if (value) {
+                      QR.back();
+                      userAmountNotifier
+                          .updateCash(order.lastAmount - order.amount);
+                      if (isEdit) {
+                        displayToastWithContext(
+                          TypeMsg.msg,
+                          AMAPTextConstants.updatedOrder,
+                        );
                       } else {
-                        if (isEdit) {
-                          displayToastWithContext(
-                              TypeMsg.error, AMAPTextConstants.updatingError);
-                        } else {
-                          displayToastWithContext(
-                              TypeMsg.error, AMAPTextConstants.addingError);
-                        }
+                        displayToastWithContext(
+                          TypeMsg.msg,
+                          AMAPTextConstants.addedOrder,
+                        );
                       }
-                    });
-                  }
-                },
-                child: Text(
-                  "${AMAPTextConstants.confirm} (${order.amount.toStringAsFixed(2)}€)",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: AMAPColorConstants.background),
-                )),
+                    } else {
+                      if (isEdit) {
+                        displayToastWithContext(
+                          TypeMsg.error,
+                          AMAPTextConstants.updatingError,
+                        );
+                      } else {
+                        displayToastWithContext(
+                          TypeMsg.error,
+                          AMAPTextConstants.addingError,
+                        );
+                      }
+                    }
+                  });
+                }
+              },
+              child: Text(
+                "${AMAPTextConstants.confirm} (${order.amount.toStringAsFixed(2)}€)",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                  color: AMAPColorConstants.background,
+                ),
+              ),
+            ),
           ),
           GestureDetector(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               height: 70,
               decoration: BoxDecoration(
-                gradient: const LinearGradient(colors: [
-                  AMAPColorConstants.redGradient1,
-                  AMAPColorConstants.redGradient2
-                ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                gradient: const LinearGradient(
+                  colors: [
+                    AMAPColorConstants.redGradient1,
+                    AMAPColorConstants.redGradient2,
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
                 boxShadow: [
                   BoxShadow(
-                      color: AMAPColorConstants.redGradient2.withOpacity(0.4),
-                      offset: const Offset(2, 3),
-                      blurRadius: 5)
+                    color: AMAPColorConstants.redGradient2.withOpacity(0.4),
+                    offset: const Offset(2, 3),
+                    blurRadius: 5,
+                  ),
                 ],
                 borderRadius: const BorderRadius.all(Radius.circular(15)),
               ),
@@ -126,19 +152,23 @@ class ProductChoiceButton extends HookConsumerWidget {
             onTap: () {
               if (order.amount != 0.0 || order.id != Order.empty().id) {
                 showDialog(
-                    context: context,
-                    builder: (BuildContext context) => CustomDialogBox(
-                        descriptions: AMAPTextConstants.deletingOrder,
-                        title: AMAPTextConstants.deleting,
-                        onYes: () {
-                          orderNotifier.setOrder(Order.empty());
-                          QR.back();
-                        }));
+                  context: context,
+                  builder: (BuildContext context) => CustomDialogBox(
+                    descriptions: AMAPTextConstants.deletingOrder,
+                    title: AMAPTextConstants.deleting,
+                    onYes: () {
+                      orderNotifier.setOrder(Order.empty());
+                      QR.back();
+                    },
+                  ),
+                );
               } else {
                 QR.back();
               }
             },
           ),
-        ]));
+        ],
+      ),
+    );
   }
 }

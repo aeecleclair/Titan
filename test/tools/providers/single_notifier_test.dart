@@ -9,22 +9,30 @@ class MockSingleNotifier extends SingleNotifier<MockData> {
   MockSingleNotifier() : super(const AsyncLoading());
 
   Future<AsyncValue<MockData>> testLoadList(
-      Future<MockData> Function() f) async {
+    Future<MockData> Function() f,
+  ) async {
     return load(f);
   }
 
   Future<bool> testAdd(
-      Future<MockData> Function(MockData t) f, MockData t) async {
+    Future<MockData> Function(MockData t) f,
+    MockData t,
+  ) async {
     return add(f, t);
   }
 
   Future<bool> testUpdate(
-      Future<bool> Function(MockData t) f, MockData t) async {
+    Future<bool> Function(MockData t) f,
+    MockData t,
+  ) async {
     return update(f, t);
   }
 
   Future<bool> testDelete(
-      Future<bool> Function(String id) f, String id, MockData t) async {
+    Future<bool> Function(String id) f,
+    String id,
+    MockData t,
+  ) async {
     return delete(f, t, id);
   }
 }
@@ -89,9 +97,10 @@ void main() {
       expect(result, isTrue);
       expect(notifier.state, isA<AsyncData<MockData>>());
       expect(
-          notifier.state
-              .when(data: (d) => d, error: (e, s) => [], loading: () => []),
-          newData);
+        notifier.state
+            .when(data: (d) => d, error: (e, s) => [], loading: () => []),
+        newData,
+      );
     });
 
     test(
@@ -109,9 +118,10 @@ void main() {
         expect(e, error);
         expect(notifier.state, isA<AsyncData<MockData>>());
         expect(
-            notifier.state
-                .when(data: (d) => d, error: (e, s) => [], loading: () => []),
-            data);
+          notifier.state
+              .when(data: (d) => d, error: (e, s) => [], loading: () => []),
+          data,
+        );
       }
     });
 
@@ -127,9 +137,10 @@ void main() {
       expect(result, isFalse);
       expect(notifier.state, isA<AsyncData<MockData>>());
       expect(
-          notifier.state
-              .when(data: (d) => d, error: (e, s) => [], loading: () => []),
-          data);
+        notifier.state
+            .when(data: (d) => d, error: (e, s) => [], loading: () => []),
+        data,
+      );
     });
 
     test(
@@ -168,9 +179,10 @@ void main() {
       expect(result, isTrue);
       expect(notifier.state, isA<AsyncData<MockData>>());
       expect(
-          notifier.state
-              .when(data: (d) => d, error: (e, s) => [], loading: () => []),
-          newData);
+        notifier.state
+            .when(data: (d) => d, error: (e, s) => [], loading: () => []),
+        newData,
+      );
     });
 
     test(
@@ -185,9 +197,10 @@ void main() {
       expect(result, isFalse);
       expect(notifier.state, isA<AsyncData<MockData>>());
       expect(
-          notifier.state
-              .when(data: (d) => d, error: (e, s) => [], loading: () => []),
-          data);
+        notifier.state
+            .when(data: (d) => d, error: (e, s) => [], loading: () => []),
+        data,
+      );
     });
 
     test(
@@ -205,14 +218,19 @@ void main() {
         expect(e, error);
         expect(notifier.state, isA<AsyncData<MockData>>());
         expect(
-            notifier.state
-                .when(data: (d) => d, error: (e, s) => [], loading: () => []),
-            data);
+          notifier.state
+              .when(data: (d) => d, error: (e, s) => [], loading: () => []),
+          data,
+        );
         expect(
-            notifier.state.when(
-                    data: (d) => d, error: (e, s) => [], loading: () => []) ==
-                newData,
-            isFalse);
+          notifier.state.when(
+                data: (d) => d,
+                error: (e, s) => [],
+                loading: () => [],
+              ) ==
+              newData,
+          isFalse,
+        );
       }
     });
 
@@ -228,14 +246,19 @@ void main() {
       expect(result, isFalse);
       expect(notifier.state, isA<AsyncData<MockData>>());
       expect(
-          notifier.state
-              .when(data: (d) => d, error: (e, s) => [], loading: () => []),
-          data);
+        notifier.state
+            .when(data: (d) => d, error: (e, s) => [], loading: () => []),
+        data,
+      );
       expect(
-          notifier.state.when(
-                  data: (d) => d, error: (e, s) => [], loading: () => []) ==
-              newData,
-          isFalse);
+        notifier.state.when(
+              data: (d) => d,
+              error: (e, s) => [],
+              loading: () => [],
+            ) ==
+            newData,
+        isFalse,
+      );
     });
 
     test(
@@ -317,9 +340,10 @@ void main() {
       expect(result, isFalse);
       expect(notifier.state, isA<AsyncData<MockData>>());
       expect(
-          notifier.state
-              .when(data: (d) => d, error: (e, s) => [], loading: () => []),
-          data);
+        notifier.state
+            .when(data: (d) => d, error: (e, s) => [], loading: () => []),
+        data,
+      );
     });
 
     test(
@@ -336,9 +360,10 @@ void main() {
         expect(e, error);
         expect(notifier.state, isA<AsyncData<MockData>>());
         expect(
-            notifier.state
-                .when(data: (d) => d, error: (e, s) => [], loading: () => []),
-            data);
+          notifier.state
+              .when(data: (d) => d, error: (e, s) => [], loading: () => []),
+          data,
+        );
       }
     });
 
@@ -353,9 +378,10 @@ void main() {
       expect(result, isFalse);
       expect(notifier.state, isA<AsyncData<MockData>>());
       expect(
-          notifier.state
-              .when(data: (d) => d, error: (e, s) => [], loading: () => []),
-          data);
+        notifier.state
+            .when(data: (d) => d, error: (e, s) => [], loading: () => []),
+        data,
+      );
     });
 
     test(

@@ -70,6 +70,6 @@ class EventTextConstants {
     'Jeudi',
     'Vendredi',
     'Samedi',
-    'Dimanche'
+    'Dimanche',
   ];
 }

@@ -36,112 +36,133 @@ class AssociationCreationPage extends HookConsumerWidget {
     }
 
     return PhonebookTemplate(
-        child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(
-              parent: BouncingScrollPhysics(),
-            ),
-            child: Form(
-              key: key,
-              child: Column(children: [
-                const SizedBox(
-                  height: 30,
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(AdminTextConstants.addAssociation,
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            color: ColorConstants.gradient1)),
+      child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(
+          parent: BouncingScrollPhysics(),
+        ),
+        child: Form(
+          key: key,
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 30,
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30.0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    AdminTextConstants.addAssociation,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: ColorConstants.gradient1,
+                    ),
                   ),
                 ),
-                const SizedBox(
-                  height: 30,
-                ),
-                KindsBar(key: scrollKey),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                          vertical: 10,
-                        ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              KindsBar(key: scrollKey),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: Column(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 10,
                       ),
-                      TextEntry(
-                          controller: name,
-                          label: AdminTextConstants.name,
-                          canBeEmpty: false),
-                      const SizedBox(height: 30),
-                      TextEntry(
-                          controller: description,
-                          label: AdminTextConstants.description,
-                          canBeEmpty: true),
-                      const SizedBox(height: 50),
-                      WaitingButton(
-                        builder: (child) => AddEditButtonLayout(
-                          colors: const [
-                            ColorConstants.gradient1,
-                            ColorConstants.gradient2,
-                          ],
-                          child: child,
-                        ),
-                        onTap: () async {
-                          if (!key.currentState!.validate()) {
-                            displayToastWithContext(TypeMsg.error,
-                                PhonebookTextConstants.emptyFieldError);
-                            return;
-                          }
-                          if (kind == '') {
-                            displayToastWithContext(TypeMsg.error,
-                                PhonebookTextConstants.emptyKindError);
-                            return;
-                          }
-                          await tokenExpireWrapper(ref, () async {
-                            final value =
-                                await associationListNotifier.createAssociation(
-                              Association.empty().copyWith(
-                                  name: name.text,
-                                  description: description.text,
-                                  kind: kind,
-                                  mandateYear: DateTime.now().year),
+                    ),
+                    TextEntry(
+                      controller: name,
+                      label: AdminTextConstants.name,
+                      canBeEmpty: false,
+                    ),
+                    const SizedBox(height: 30),
+                    TextEntry(
+                      controller: description,
+                      label: AdminTextConstants.description,
+                      canBeEmpty: true,
+                    ),
+                    const SizedBox(height: 50),
+                    WaitingButton(
+                      builder: (child) => AddEditButtonLayout(
+                        colors: const [
+                          ColorConstants.gradient1,
+                          ColorConstants.gradient2,
+                        ],
+                        child: child,
+                      ),
+                      onTap: () async {
+                        if (!key.currentState!.validate()) {
+                          displayToastWithContext(
+                            TypeMsg.error,
+                            PhonebookTextConstants.emptyFieldError,
+                          );
+                          return;
+                        }
+                        if (kind == '') {
+                          displayToastWithContext(
+                            TypeMsg.error,
+                            PhonebookTextConstants.emptyKindError,
+                          );
+                          return;
+                        }
+                        await tokenExpireWrapper(ref, () async {
+                          final value =
+                              await associationListNotifier.createAssociation(
+                            Association.empty().copyWith(
+                              name: name.text,
+                              description: description.text,
+                              kind: kind,
+                              mandateYear: DateTime.now().year,
+                            ),
+                          );
+                          if (value) {
+                            displayToastWithContext(
+                              TypeMsg.msg,
+                              PhonebookTextConstants.addedAssociation,
                             );
-                            if (value) {
-                              displayToastWithContext(TypeMsg.msg,
-                                  PhonebookTextConstants.addedAssociation);
-                              associations.when(
-                                  data: (d) {
-                                    associationNotifier.setAssociation(d.last);
-                                    QR.to(PhonebookRouter.root +
-                                        PhonebookRouter.admin +
-                                        PhonebookRouter.editAssociation);
-                                  },
-                                  error: (e, s) => displayToastWithContext(
-                                      TypeMsg.error,
-                                      PhonebookTextConstants
-                                          .errorAssociationLoading),
-                                  loading: () {});
-                            } else {
-                              displayToastWithContext(TypeMsg.error,
-                                  AdminTextConstants.addingError);
-                            }
-                          });
-                        },
-                        child: const Text(
-                          AdminTextConstants.add,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: Color.fromARGB(255, 255, 255, 255),
-                          ),
+                            associations.when(
+                              data: (d) {
+                                associationNotifier.setAssociation(d.last);
+                                QR.to(
+                                  PhonebookRouter.root +
+                                      PhonebookRouter.admin +
+                                      PhonebookRouter.editAssociation,
+                                );
+                              },
+                              error: (e, s) => displayToastWithContext(
+                                TypeMsg.error,
+                                PhonebookTextConstants.errorAssociationLoading,
+                              ),
+                              loading: () {},
+                            );
+                          } else {
+                            displayToastWithContext(
+                              TypeMsg.error,
+                              AdminTextConstants.addingError,
+                            );
+                          }
+                        });
+                      },
+                      child: const Text(
+                        AdminTextConstants.add,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Color.fromARGB(255, 255, 255, 255),
                         ),
                       ),
-                    ],
-                  ),
-                )
-              ]),
-            )));
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

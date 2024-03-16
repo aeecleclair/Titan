@@ -27,12 +27,13 @@ void main() {
       final result = await statusNotifier.loadStatus();
 
       expect(
-          result.when(
-            data: (data) => data,
-            loading: () => Status.waiting,
-            error: (_, __) => Status.waiting,
-          ),
-          status);
+        result.when(
+          data: (data) => data,
+          loading: () => Status.waiting,
+          error: (_, __) => Status.waiting,
+        ),
+        status,
+      );
     });
 
     test('openVote updates state to open if successful', () async {

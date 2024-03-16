@@ -28,63 +28,66 @@ class MemberResults extends HookConsumerWidget {
     }
 
     return AsyncChild(
-        value: users,
-        builder: (context, value) => Column(
-              children: value
-                  .map((e) => Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                e.getName(),
-                                style: const TextStyle(fontSize: 15),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                WaitingButton(
-                                    onTap: () async {
-                                      if (!group.value!.members.contains(e)) {
-                                        Group newGroup = group.value!.copyWith(
-                                            members:
-                                                group.value!.members + [e]);
-                                        await tokenExpireWrapper(ref, () async {
-                                          groupNotifier
-                                              .addMember(newGroup, e)
-                                              .then((value) {
-                                            if (value) {
-                                              simpleGroupGroupsNotifier
-                                                  .setTData(
-                                                newGroup.id,
-                                                AsyncData([newGroup]),
-                                              );
-                                              displayToastWithContext(
-                                                  TypeMsg.msg,
-                                                  AdminTextConstants
-                                                      .addedMember);
-                                            } else {
-                                              displayToastWithContext(
-                                                  TypeMsg.error,
-                                                  AdminTextConstants
-                                                      .addingError);
-                                            }
-                                          });
-                                        });
-                                      }
-                                    },
-                                    waitingColor: ColorConstants.gradient1,
-                                    builder: (child) => child,
-                                    child: const HeroIcon(HeroIcons.plus))
-                              ],
-                            ),
-                          ],
+      value: users,
+      builder: (context, value) => Column(
+        children: value
+            .map(
+              (e) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        e.getName(),
+                        style: const TextStyle(fontSize: 15),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        WaitingButton(
+                          onTap: () async {
+                            if (!group.value!.members.contains(e)) {
+                              Group newGroup = group.value!.copyWith(
+                                members: group.value!.members + [e],
+                              );
+                              await tokenExpireWrapper(ref, () async {
+                                groupNotifier
+                                    .addMember(newGroup, e)
+                                    .then((value) {
+                                  if (value) {
+                                    simpleGroupGroupsNotifier.setTData(
+                                      newGroup.id,
+                                      AsyncData([newGroup]),
+                                    );
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
+                                      AdminTextConstants.addedMember,
+                                    );
+                                  } else {
+                                    displayToastWithContext(
+                                      TypeMsg.error,
+                                      AdminTextConstants.addingError,
+                                    );
+                                  }
+                                });
+                              });
+                            }
+                          },
+                          waitingColor: ColorConstants.gradient1,
+                          builder: (child) => child,
+                          child: const HeroIcon(HeroIcons.plus),
                         ),
-                      ))
-                  .toList(),
-            ),
-        loaderColor: ColorConstants.gradient1);
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            )
+            .toList(),
+      ),
+      loaderColor: ColorConstants.gradient1,
+    );
   }
 }

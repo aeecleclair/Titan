@@ -8,5 +8,5 @@ final Map<String, Tuple2<String, List<StateNotifierProvider>>> advertProviders =
   "advert": Tuple2(
     AdvertRouter.root,
     [advertListProvider],
-  )
+  ),
 };

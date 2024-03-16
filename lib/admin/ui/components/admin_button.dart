@@ -14,14 +14,15 @@ class AdminButton extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-            colors: [ColorConstants.gradient1, ColorConstants.gradient2]),
+          colors: [ColorConstants.gradient1, ColorConstants.gradient2],
+        ),
         boxShadow: [
           BoxShadow(
             color: ColorConstants.gradient2.withOpacity(0.5),
             blurRadius: 5,
             offset: const Offset(2, 2),
             spreadRadius: 2,
-          )
+          ),
         ],
         borderRadius: BorderRadius.circular(15),
       ),

@@ -11,9 +11,10 @@ import 'package:myecl/tools/providers/single_notifier.dart';
 class AdvertPosterNotifier extends SingleNotifier<Image> {
   final advertPosterRepository = AdvertPosterRepository();
   final AdvertPostersNotifier advertPostersNotifier;
-  AdvertPosterNotifier(
-      {required String token, required this.advertPostersNotifier})
-      : super(const AsyncValue.loading()) {
+  AdvertPosterNotifier({
+    required String token,
+    required this.advertPostersNotifier,
+  }) : super(const AsyncValue.loading()) {
     advertPosterRepository.setToken(token);
   }
 
@@ -36,5 +37,7 @@ final advertPosterProvider =
   final token = ref.watch(tokenProvider);
   final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
   return AdvertPosterNotifier(
-      token: token, advertPostersNotifier: advertPostersNotifier);
+    token: token,
+    advertPostersNotifier: advertPostersNotifier,
+  );
 });

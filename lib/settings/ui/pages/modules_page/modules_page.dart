@@ -70,7 +70,7 @@ class ModulesPage extends HookConsumerWidget {
                     const HeroIcon(
                       HeroIcons.chevronUpDown,
                       size: 30,
-                    )
+                    ),
                   ],
                 ),
               ),

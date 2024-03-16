@@ -29,12 +29,13 @@ void main() {
           .thenAnswer((_) async => expectedResults);
       final result = await notifier.loadMovies(query);
       expect(
-          result.when(
-            data: (data) => data,
-            loading: () => null,
-            error: (error, stack) => null,
-          ),
-          isA<List<TheMovieDBSearchResult>>());
+        result.when(
+          data: (data) => data,
+          loading: () => null,
+          error: (error, stack) => null,
+        ),
+        isA<List<TheMovieDBSearchResult>>(),
+      );
     });
 
     test('loadMovies returns an error when the repository throws an error',

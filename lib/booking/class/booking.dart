@@ -20,20 +20,21 @@ class Booking {
   final Applicant applicant;
   final String applicantId;
 
-  Booking(
-      {required this.id,
-      required this.reason,
-      required this.start,
-      required this.end,
-      required this.creation,
-      this.note,
-      required this.room,
-      required this.key,
-      required this.decision,
-      required this.recurrenceRule,
-      required this.entity,
-      required this.applicant,
-      required this.applicantId});
+  Booking({
+    required this.id,
+    required this.reason,
+    required this.start,
+    required this.end,
+    required this.creation,
+    this.note,
+    required this.room,
+    required this.key,
+    required this.decision,
+    required this.recurrenceRule,
+    required this.entity,
+    required this.applicant,
+    required this.applicantId,
+  });
 
   static Booking fromJson(Map<String, dynamic> json) {
     Booking booking = Booking(
@@ -73,51 +74,54 @@ class Booking {
     return data;
   }
 
-  Booking copyWith(
-      {String? id,
-      String? reason,
-      DateTime? start,
-      DateTime? end,
-      DateTime? creation,
-      String? note,
-      Room? room,
-      bool? key,
-      Decision? decision,
-      String? recurrenceRule,
-      String? entity,
-      Applicant? applicant,
-      String? applicantId}) {
+  Booking copyWith({
+    String? id,
+    String? reason,
+    DateTime? start,
+    DateTime? end,
+    DateTime? creation,
+    String? note,
+    Room? room,
+    bool? key,
+    Decision? decision,
+    String? recurrenceRule,
+    String? entity,
+    Applicant? applicant,
+    String? applicantId,
+  }) {
     return Booking(
-        id: id ?? this.id,
-        reason: reason ?? this.reason,
-        start: start ?? this.start,
-        end: end ?? this.end,
-        creation: creation ?? this.creation,
-        note: note ?? this.note,
-        room: room ?? this.room,
-        key: key ?? this.key,
-        decision: decision ?? this.decision,
-        recurrenceRule: recurrenceRule ?? this.recurrenceRule,
-        entity: entity ?? this.entity,
-        applicant: applicant ?? this.applicant,
-        applicantId: applicantId ?? this.applicantId);
+      id: id ?? this.id,
+      reason: reason ?? this.reason,
+      start: start ?? this.start,
+      end: end ?? this.end,
+      creation: creation ?? this.creation,
+      note: note ?? this.note,
+      room: room ?? this.room,
+      key: key ?? this.key,
+      decision: decision ?? this.decision,
+      recurrenceRule: recurrenceRule ?? this.recurrenceRule,
+      entity: entity ?? this.entity,
+      applicant: applicant ?? this.applicant,
+      applicantId: applicantId ?? this.applicantId,
+    );
   }
 
   static Booking empty() {
     return Booking(
-        id: "",
-        reason: "",
-        start: DateTime.now(),
-        end: DateTime.now(),
-        creation: DateTime.now(),
-        note: "",
-        room: Room.empty(),
-        key: false,
-        decision: Decision.pending,
-        recurrenceRule: '',
-        entity: '',
-        applicant: Applicant.empty(),
-        applicantId: '');
+      id: "",
+      reason: "",
+      start: DateTime.now(),
+      end: DateTime.now(),
+      creation: DateTime.now(),
+      note: "",
+      room: Room.empty(),
+      key: false,
+      decision: Decision.pending,
+      recurrenceRule: '',
+      entity: '',
+      applicant: Applicant.empty(),
+      applicantId: '',
+    );
   }
 
   @override

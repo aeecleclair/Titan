@@ -18,55 +18,61 @@ class DeliveryListNotifier extends ListNotifier<Delivery> {
 
   Future<bool> updateDelivery(Delivery delivery) async {
     return await update(
-        deliveriesListRepository.updateDelivery,
-        (deliveries, delivery) => deliveries
-          ..[deliveries.indexWhere((d) => d.id == delivery.id)] = delivery,
-        delivery);
+      deliveriesListRepository.updateDelivery,
+      (deliveries, delivery) => deliveries
+        ..[deliveries.indexWhere((d) => d.id == delivery.id)] = delivery,
+      delivery,
+    );
   }
 
   Future<bool> openDelivery(Delivery delivery) async {
     return await update(
-        deliveriesListRepository.openDelivery,
-        (deliveries, delivery) => deliveries
-          ..[deliveries.indexWhere((d) => d.id == delivery.id)] =
-              delivery.copyWith(status: DeliveryStatus.available),
-        delivery);
+      deliveriesListRepository.openDelivery,
+      (deliveries, delivery) => deliveries
+        ..[deliveries.indexWhere((d) => d.id == delivery.id)] =
+            delivery.copyWith(status: DeliveryStatus.available),
+      delivery,
+    );
   }
 
   Future<bool> lockDelivery(Delivery delivery) async {
     return await update(
-        deliveriesListRepository.lockDelivery,
-        (deliveries, delivery) => deliveries
-          ..[deliveries.indexWhere((d) => d.id == delivery.id)] =
-              delivery.copyWith(status: DeliveryStatus.locked),
-        delivery);
+      deliveriesListRepository.lockDelivery,
+      (deliveries, delivery) => deliveries
+        ..[deliveries.indexWhere((d) => d.id == delivery.id)] =
+            delivery.copyWith(status: DeliveryStatus.locked),
+      delivery,
+    );
   }
 
   Future<bool> deliverDelivery(Delivery delivery) async {
     return await update(
-        deliveriesListRepository.deliverDelivery,
-        (deliveries, delivery) => deliveries
-          ..[deliveries.indexWhere((d) => d.id == delivery.id)] =
-              delivery.copyWith(status: DeliveryStatus.delivered),
-        delivery);
+      deliveriesListRepository.deliverDelivery,
+      (deliveries, delivery) => deliveries
+        ..[deliveries.indexWhere((d) => d.id == delivery.id)] =
+            delivery.copyWith(status: DeliveryStatus.delivered),
+      delivery,
+    );
   }
 
   Future<bool> archiveDelivery(Delivery delivery) async {
     return await delete(
-        deliveriesListRepository.archiveDelivery,
-        (deliveries, delivery) =>
-            deliveries..removeWhere((i) => i.id == delivery.id),
-        delivery.id,
-        delivery);
+      deliveriesListRepository.archiveDelivery,
+      (deliveries, delivery) =>
+          deliveries..removeWhere((i) => i.id == delivery.id),
+      delivery.id,
+      delivery,
+    );
   }
 
   Future<bool> deleteDelivery(Delivery delivery) async {
     return await delete(
-        deliveriesListRepository.deleteDelivery,
-        (deliveries, delivery) =>
-            deliveries..removeWhere((i) => i.id == delivery.id),
-        delivery.id,
-        delivery);
+      deliveriesListRepository.deleteDelivery,
+      (deliveries, delivery) =>
+          deliveries..removeWhere((i) => i.id == delivery.id),
+      delivery.id,
+      delivery,
+    );
   }
 
   void toggleExpanded(String deliveryId) {
@@ -83,7 +89,9 @@ class DeliveryListNotifier extends ListNotifier<Delivery> {
       },
       loading: () {
         state = const AsyncValue.error(
-            "Cannot toggle expanded while loading", StackTrace.empty);
+          "Cannot toggle expanded while loading",
+          StackTrace.empty,
+        );
       },
     );
   }

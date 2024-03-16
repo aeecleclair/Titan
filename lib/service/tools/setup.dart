@@ -38,10 +38,15 @@ void setUpNotification(WidgetRef ref) {
           messageNotifier.setFirebaseToken(value);
           messageNotifier.registerDevice();
           firebaseTokenExpirationNotifier.saveDate(
-              user.id, now.add(const Duration(days: 30)));
-          logger.writeLog(Log(
+            user.id,
+            now.add(const Duration(days: 30)),
+          );
+          logger.writeLog(
+            Log(
               message: "Firebase messaging token registered",
-              level: LogLevel.info));
+              level: LogLevel.info,
+            ),
+          );
           topicsNotifier.getTopics();
         });
       }

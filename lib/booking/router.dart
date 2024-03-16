@@ -32,10 +32,11 @@ class BookingRouter {
   static const String detail = '/detail';
   static const String room = '/room';
   static final Module module = Module(
-      name: "Réservation",
-      icon: const Left(HeroIcons.tableCells),
-      root: BookingRouter.root,
-      selected: false);
+    name: "Réservation",
+    icon: const Left(HeroIcons.tableCells),
+    root: BookingRouter.root,
+    selected: false,
+  );
   BookingRouter(this.ref);
 
   QRoute route() => QRoute(
@@ -44,7 +45,7 @@ class BookingRouter {
         builder: () => main_page.BookingMainPage(),
         middleware: [
           AuthenticatedMiddleware(ref),
-          DeferredLoadingMiddleware(main_page.loadLibrary)
+          DeferredLoadingMiddleware(main_page.loadLibrary),
         ],
         children: [
           QRoute(
@@ -52,7 +53,7 @@ class BookingRouter {
             builder: () => admin_page.AdminPage(),
             middleware: [
               AdminMiddleware(ref, isAdminProvider),
-              DeferredLoadingMiddleware(admin_page.loadLibrary)
+              DeferredLoadingMiddleware(admin_page.loadLibrary),
             ],
             children: [
               QRoute(
@@ -60,7 +61,7 @@ class BookingRouter {
                 builder: () => add_edit_room_page.AddEditRoomPage(),
                 middleware: [
                   AdminMiddleware(ref, isAdminProvider),
-                  DeferredLoadingMiddleware(add_edit_room_page.loadLibrary)
+                  DeferredLoadingMiddleware(add_edit_room_page.loadLibrary),
                 ],
               ),
               QRoute(
@@ -68,9 +69,9 @@ class BookingRouter {
                 builder: () => add_edit_manager_page.AddEditManagerPage(),
                 middleware: [
                   AdminMiddleware(ref, isAdminProvider),
-                  DeferredLoadingMiddleware(add_edit_manager_page.loadLibrary)
+                  DeferredLoadingMiddleware(add_edit_manager_page.loadLibrary),
                 ],
-              )
+              ),
             ],
           ),
           QRoute(
@@ -78,24 +79,26 @@ class BookingRouter {
             builder: () => manager_page.ManagerPage(),
             middleware: [
               AdminMiddleware(ref, isManagerProvider),
-              DeferredLoadingMiddleware(manager_page.loadLibrary)
+              DeferredLoadingMiddleware(manager_page.loadLibrary),
             ],
             children: [
               QRoute(
-                  path: detail,
-                  builder: () =>
-                      detail_booking_page.DetailBookingPage(isAdmin: true),
-                  middleware: [
-                    AdminMiddleware(ref, isManagerProvider),
-                    DeferredLoadingMiddleware(detail_booking_page.loadLibrary)
-                  ]),
+                path: detail,
+                builder: () =>
+                    detail_booking_page.DetailBookingPage(isAdmin: true),
+                middleware: [
+                  AdminMiddleware(ref, isManagerProvider),
+                  DeferredLoadingMiddleware(detail_booking_page.loadLibrary),
+                ],
+              ),
               QRoute(
                 path: addEdit,
                 builder: () => add_edit_booking_page.AddEditBookingPage(
-                    isManagerPage: true),
+                  isManagerPage: true,
+                ),
                 middleware: [
                   AdminMiddleware(ref, isManagerProvider),
-                  DeferredLoadingMiddleware(add_edit_booking_page.loadLibrary)
+                  DeferredLoadingMiddleware(add_edit_booking_page.loadLibrary),
                 ],
               ),
             ],
@@ -105,7 +108,7 @@ class BookingRouter {
             builder: () =>
                 add_edit_booking_page.AddEditBookingPage(isManagerPage: false),
             middleware: [
-              DeferredLoadingMiddleware(add_edit_booking_page.loadLibrary)
+              DeferredLoadingMiddleware(add_edit_booking_page.loadLibrary),
             ],
           ),
           QRoute(
@@ -113,7 +116,7 @@ class BookingRouter {
             builder: () =>
                 detail_booking_page.DetailBookingPage(isAdmin: false),
             middleware: [
-              DeferredLoadingMiddleware(detail_booking_page.loadLibrary)
+              DeferredLoadingMiddleware(detail_booking_page.loadLibrary),
             ],
           ),
         ],

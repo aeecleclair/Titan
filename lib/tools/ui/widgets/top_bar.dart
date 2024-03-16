@@ -14,13 +14,14 @@ class TopBar extends HookConsumerWidget {
   final VoidCallback? onMenu;
   final VoidCallback? onBack;
   final Widget? rightIcon;
-  const TopBar(
-      {super.key,
-      required this.title,
-      required this.root,
-      this.onMenu,
-      this.onBack,
-      this.rightIcon});
+  const TopBar({
+    super.key,
+    required this.title,
+    required this.root,
+    this.onMenu,
+    this.onBack,
+    this.rightIcon,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,7 +29,8 @@ class TopBar extends HookConsumerWidget {
     final topBarCallBackNotifier = ref.watch(topBarCallBackProvider.notifier);
     Future(() {
       topBarCallBackNotifier.setCallBacks(
-          TopBarCallback(moduleRoot: root, onMenu: onMenu, onBack: onBack));
+        TopBarCallback(moduleRoot: root, onMenu: onMenu, onBack: onBack),
+      );
     });
     return Column(
       children: [
@@ -40,37 +42,42 @@ class TopBar extends HookConsumerWidget {
               child: Builder(
                 builder: (BuildContext appBarContext) {
                   return IconButton(
-                      onPressed: () {
-                        if (QR.currentPath == root) {
-                          if (animation != null) {
-                            final controllerNotifier = ref.watch(
-                                swipeControllerProvider(animation).notifier);
-                            controllerNotifier.toggle();
-                            onMenu?.call();
-                          }
-                        } else {
-                          QR.back();
-                          onBack?.call();
+                    onPressed: () {
+                      if (QR.currentPath == root) {
+                        if (animation != null) {
+                          final controllerNotifier = ref.watch(
+                            swipeControllerProvider(animation).notifier,
+                          );
+                          controllerNotifier.toggle();
+                          onMenu?.call();
                         }
-                      },
-                      icon: HeroIcon(
-                        QR.currentPath == root
-                            ? HeroIcons.bars3BottomLeft
-                            : HeroIcons.chevronLeft,
-                        color: Colors.black,
-                        size: 30,
-                      ));
+                      } else {
+                        QR.back();
+                        onBack?.call();
+                      }
+                    },
+                    icon: HeroIcon(
+                      QR.currentPath == root
+                          ? HeroIcons.bars3BottomLeft
+                          : HeroIcons.chevronLeft,
+                      color: Colors.black,
+                      size: 30,
+                    ),
+                  );
                 },
               ),
             ),
             Expanded(
               child: Center(
-                child: AutoSizeText(title,
-                    maxLines: 1,
-                    style: const TextStyle(
-                        fontSize: 40,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black)),
+                child: AutoSizeText(
+                  title,
+                  maxLines: 1,
+                  style: const TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black,
+                  ),
+                ),
               ),
             ),
             SizedBox(width: 70, child: rightIcon),

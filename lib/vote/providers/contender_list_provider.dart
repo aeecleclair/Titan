@@ -22,28 +22,31 @@ class ContenderListNotifier extends ListNotifier<Contender> {
 
   Future<bool> updateContender(Contender contender) async {
     return await update(
-        contenderRepository.updateContender,
-        (contenders, contender) => contenders
-          ..[contenders.indexWhere((p) => p.id == contender.id)] = contender,
-        contender);
+      contenderRepository.updateContender,
+      (contenders, contender) => contenders
+        ..[contenders.indexWhere((p) => p.id == contender.id)] = contender,
+      contender,
+    );
   }
 
   Future<bool> deleteContender(Contender contender) async {
     return await delete(
-        contenderRepository.deleteContender,
-        (contenders, contender) =>
-            contenders..removeWhere((p) => p.id == contender.id),
-        contender.id,
-        contender);
+      contenderRepository.deleteContender,
+      (contenders, contender) =>
+          contenders..removeWhere((p) => p.id == contender.id),
+      contender.id,
+      contender,
+    );
   }
 
   Future<bool> deleteContenders({ListType? type}) async {
     return await delete(
-        contenderRepository.deleteContenders,
-        (contenders, contender) => contenders
-          ..removeWhere((p) => type != null ? p.listType == type : true),
-        listTypeToString(type),
-        Contender.empty());
+      contenderRepository.deleteContenders,
+      (contenders, contender) => contenders
+        ..removeWhere((p) => type != null ? p.listType == type : true),
+      listTypeToString(type),
+      Contender.empty(),
+    );
   }
 
   Future<AsyncValue<List<Contender>>> copy() async {

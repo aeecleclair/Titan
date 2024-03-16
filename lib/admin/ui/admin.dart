@@ -23,14 +23,15 @@ class AdminTemplate extends HookConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               TopBar(
-                  title: AdminTextConstants.administration,
-                  root: AdminRouter.root,
-                  onMenu: () {
-                    tokenExpireWrapper(ref, () async {
-                      await meNotifier.loadMe();
-                    });
-                  }),
-              Expanded(child: child)
+                title: AdminTextConstants.administration,
+                root: AdminRouter.root,
+                onMenu: () {
+                  tokenExpireWrapper(ref, () async {
+                    await meNotifier.loadMe();
+                  });
+                },
+              ),
+              Expanded(child: child),
             ],
           ),
         ),

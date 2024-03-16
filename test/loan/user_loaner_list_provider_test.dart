@@ -29,11 +29,13 @@ void main() {
       final result = await userLoanerListNotifier.loadMyLoanerList();
 
       expect(
-          result.when(
-              data: (d) => d,
-              error: (e, s) => throw e,
-              loading: () => throw Exception('loading')),
-          [loaner1, loaner2, loaner3]);
+        result.when(
+          data: (d) => d,
+          error: (e, s) => throw e,
+          loading: () => throw Exception('loading'),
+        ),
+        [loaner1, loaner2, loaner3],
+      );
     });
 
     test('addLoaner adds loaner to list', () async {
@@ -45,11 +47,13 @@ void main() {
 
       expect(result, true);
       expect(
-          userLoanerListNotifier.state.when(
-              data: (d) => d,
-              error: (e, s) => throw e,
-              loading: () => throw Exception('loading')),
-          [loaner2, loaner1]);
+        userLoanerListNotifier.state.when(
+          data: (d) => d,
+          error: (e, s) => throw e,
+          loading: () => throw Exception('loading'),
+        ),
+        [loaner2, loaner1],
+      );
     });
 
     test('updateLoaner updates loaner in list', () async {
@@ -63,11 +67,13 @@ void main() {
 
       expect(result, true);
       expect(
-          userLoanerListNotifier.state.when(
-              data: (d) => d,
-              error: (e, s) => throw e,
-              loading: () => throw Exception('loading')),
-          [loaner1, updatedLoaner2, loaner3]);
+        userLoanerListNotifier.state.when(
+          data: (d) => d,
+          error: (e, s) => throw e,
+          loading: () => throw Exception('loading'),
+        ),
+        [loaner1, updatedLoaner2, loaner3],
+      );
     });
 
     test('deleteLoaner deletes loaner from list', () async {
@@ -80,11 +86,13 @@ void main() {
 
       expect(result, true);
       expect(
-          userLoanerListNotifier.state.when(
-              data: (d) => d,
-              error: (e, s) => throw e,
-              loading: () => throw Exception('loading')),
-          [loaner1, loaner3]);
+        userLoanerListNotifier.state.when(
+          data: (d) => d,
+          error: (e, s) => throw e,
+          loading: () => throw Exception('loading'),
+        ),
+        [loaner1, loaner3],
+      );
     });
   });
 }

@@ -19,8 +19,9 @@ class ItemQuantity {
 
   ItemQuantity copyWith({ItemSimple? itemSimple, int? quantity}) {
     return ItemQuantity(
-        itemSimple: itemSimple ?? this.itemSimple,
-        quantity: quantity ?? this.quantity);
+      itemSimple: itemSimple ?? this.itemSimple,
+      quantity: quantity ?? this.quantity,
+    );
   }
 
   ItemQuantity.empty() {

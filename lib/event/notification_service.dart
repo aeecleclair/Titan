@@ -19,5 +19,5 @@ final Map<String, Tuple2<String, List<StateNotifierProvider>>> eventProviders =
   "events": Tuple2(
     EventRouter.root + EventRouter.admin,
     [eventListProvider],
-  )
+  ),
 };

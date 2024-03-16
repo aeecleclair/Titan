@@ -19,18 +19,19 @@ class RoomListNotifier extends ListNotifier<Room> {
 
   Future<bool> updateRoom(Room room) async {
     return await update(
-        roomRepository.updateRoom,
-        (rooms, room) =>
-            rooms..[rooms.indexWhere((r) => r.id == room.id)] = room,
-        room);
+      roomRepository.updateRoom,
+      (rooms, room) => rooms..[rooms.indexWhere((r) => r.id == room.id)] = room,
+      room,
+    );
   }
 
   Future<bool> deleteRoom(Room room) async {
     return await delete(
-        roomRepository.deleteRoom,
-        (rooms, room) => rooms..removeWhere((i) => i.id == room.id),
-        room.id,
-        room);
+      roomRepository.deleteRoom,
+      (rooms, room) => rooms..removeWhere((i) => i.id == room.id),
+      room.id,
+      room,
+    );
   }
 }
 

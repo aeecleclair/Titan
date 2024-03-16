@@ -18,8 +18,12 @@ class VotesProvider extends ListNotifier<Votes> {
   }
 
   Future<bool> removeVote() async {
-    return await delete((_) => votesRepository.removeVote(),
-        (listVotes, votes) => [], "", Votes.empty());
+    return await delete(
+      (_) => votesRepository.removeVote(),
+      (listVotes, votes) => [],
+      "",
+      Votes.empty(),
+    );
   }
 
   Future<AsyncValue<List<Votes>>> copy() async {

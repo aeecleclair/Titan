@@ -161,20 +161,23 @@ class OpenIdTokenProvider
             completer.complete();
           } else {
             Future.delayed(
-                const Duration(milliseconds: 100), checkWindowClosed);
+              const Duration(milliseconds: 100),
+              checkWindowClosed,
+            );
           }
         }
 
         checkWindowClosed();
         completer.future.then((_) {
           state.maybeWhen(
-              loading: () {
-                state = AsyncValue.data({
-                  tokenKey: "",
-                  refreshTokenKey: "",
-                });
-              },
-              orElse: () {});
+            loading: () {
+              state = AsyncValue.data({
+                tokenKey: "",
+                refreshTokenKey: "",
+              });
+            },
+            orElse: () {},
+          );
         });
 
         void login(String data) async {
@@ -186,8 +189,13 @@ class OpenIdTokenProvider
           }
           try {
             if (token != null && token.isNotEmpty) {
-              final resp = await openIdRepository.getToken(token, clientId,
-                  redirectUri.toString(), codeVerifier, "authorization_code");
+              final resp = await openIdRepository.getToken(
+                token,
+                clientId,
+                redirectUri.toString(),
+                codeVerifier,
+                "authorization_code",
+              );
               final accessToken = resp[tokenKey]!;
               final refreshToken = resp[refreshTokenKey]!;
               await _secureStorage.write(key: tokenName, value: refreshToken);
@@ -243,7 +251,12 @@ class OpenIdTokenProvider
         try {
           if (kIsWeb) {
             final resp = await openIdRepository.getToken(
-                token, clientId, "", "", refreshTokenKey);
+              token,
+              clientId,
+              "",
+              "",
+              refreshTokenKey,
+            );
             final accessToken = resp[tokenKey]!;
             final refreshToken = resp[refreshTokenKey]!;
             await _secureStorage.write(key: tokenName, value: refreshToken);
@@ -252,14 +265,16 @@ class OpenIdTokenProvider
               refreshTokenKey: refreshToken,
             });
           } else {
-            final resp = await appAuth.token(TokenRequest(
-              clientId,
-              redirectUrl,
-              discoveryUrl: discoveryUrl,
-              scopes: scopes,
-              refreshToken: token,
-              allowInsecureConnections: kDebugMode,
-            ));
+            final resp = await appAuth.token(
+              TokenRequest(
+                clientId,
+                redirectUrl,
+                discoveryUrl: discoveryUrl,
+                scopes: scopes,
+                refreshToken: token,
+                allowInsecureConnections: kDebugMode,
+              ),
+            );
             if (resp != null) {
               state = AsyncValue.data({
                 tokenKey: resp.accessToken!,
@@ -281,14 +296,16 @@ class OpenIdTokenProvider
 
   Future<void> getAuthToken(String authorizationToken) async {
     appAuth
-        .token(TokenRequest(
-      clientId,
-      redirectUrl,
-      discoveryUrl: discoveryUrl,
-      scopes: scopes,
-      authorizationCode: authorizationToken,
-      allowInsecureConnections: kDebugMode,
-    ))
+        .token(
+      TokenRequest(
+        clientId,
+        redirectUrl,
+        discoveryUrl: discoveryUrl,
+        scopes: scopes,
+        authorizationCode: authorizationToken,
+        allowInsecureConnections: kDebugMode,
+      ),
+    )
         .then((resp) {
       if (resp != null) {
         state = AsyncValue.data({
@@ -341,14 +358,17 @@ class OpenIdTokenProvider
 
   void storeToken() {
     state.when(
-        data: (tokens) => _secureStorage.write(
-            key: tokenName, value: tokens[refreshTokenKey]),
-        error: (e, s) {
-          throw e;
-        },
-        loading: () {
-          throw Exception("Token is not loaded");
-        });
+      data: (tokens) => _secureStorage.write(
+        key: tokenName,
+        value: tokens[refreshTokenKey],
+      ),
+      error: (e, s) {
+        throw e;
+      },
+      loading: () {
+        throw Exception("Token is not loaded");
+      },
+    );
   }
 
   void deleteToken() {

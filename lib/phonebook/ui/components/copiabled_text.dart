@@ -4,8 +4,12 @@ import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 
 class CopiabledText extends StatelessWidget {
-  const CopiabledText(this.data,
-      {super.key, required this.style, this.maxLines = 1});
+  const CopiabledText(
+    this.data, {
+    super.key,
+    required this.style,
+    this.maxLines = 1,
+  });
 
   final String data;
   final TextStyle style;

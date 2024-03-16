@@ -26,10 +26,11 @@ class VoteRouter {
   static const String addSection = '/add_edit_section';
   static const String detail = '/detail';
   static final Module module = Module(
-      name: "Vote",
-      icon: const Left(HeroIcons.envelopeOpen),
-      root: VoteRouter.root,
-      selected: false);
+    name: "Vote",
+    icon: const Left(HeroIcons.envelopeOpen),
+    root: VoteRouter.root,
+    selected: false,
+  );
   VoteRouter(this.ref);
 
   QRoute route() => QRoute(
@@ -38,40 +39,45 @@ class VoteRouter {
         builder: () => main_page.VoteMainPage(),
         middleware: [
           AuthenticatedMiddleware(ref),
-          DeferredLoadingMiddleware(main_page.loadLibrary)
+          DeferredLoadingMiddleware(main_page.loadLibrary),
         ],
         children: [
           QRoute(
-              path: admin,
-              builder: () => admin_page.AdminPage(),
-              middleware: [
-                AdminMiddleware(ref, isVoteAdminProvider),
-                DeferredLoadingMiddleware(admin_page.loadLibrary)
-              ],
-              children: [
-                QRoute(
-                    path: detail,
-                    builder: () => detail_page.DetailPage(),
-                    middleware: [
-                      DeferredLoadingMiddleware(detail_page.loadLibrary)
-                    ]),
-                QRoute(
-                    path: addEditContender,
-                    builder: () => add_edit_contender.AddEditContenderPage(),
-                    middleware: [
-                      DeferredLoadingMiddleware(add_edit_contender.loadLibrary)
-                    ]),
-                QRoute(
-                    path: addSection,
-                    builder: () => add_section.AddSectionPage(),
-                    middleware: [
-                      DeferredLoadingMiddleware(add_section.loadLibrary)
-                    ]),
-              ]),
+            path: admin,
+            builder: () => admin_page.AdminPage(),
+            middleware: [
+              AdminMiddleware(ref, isVoteAdminProvider),
+              DeferredLoadingMiddleware(admin_page.loadLibrary),
+            ],
+            children: [
+              QRoute(
+                path: detail,
+                builder: () => detail_page.DetailPage(),
+                middleware: [
+                  DeferredLoadingMiddleware(detail_page.loadLibrary),
+                ],
+              ),
+              QRoute(
+                path: addEditContender,
+                builder: () => add_edit_contender.AddEditContenderPage(),
+                middleware: [
+                  DeferredLoadingMiddleware(add_edit_contender.loadLibrary),
+                ],
+              ),
+              QRoute(
+                path: addSection,
+                builder: () => add_section.AddSectionPage(),
+                middleware: [
+                  DeferredLoadingMiddleware(add_section.loadLibrary),
+                ],
+              ),
+            ],
+          ),
           QRoute(
-              path: detail,
-              builder: () => detail_page.DetailPage(),
-              middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)]),
+            path: detail,
+            builder: () => detail_page.DetailPage(),
+            middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)],
+          ),
         ],
       );
 }

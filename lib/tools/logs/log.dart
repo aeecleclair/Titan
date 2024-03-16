@@ -15,9 +15,10 @@ class Log {
 
   Log copyWith({String? message, LogLevel? level, DateTime? time}) {
     return Log(
-        message: message ?? this.message,
-        level: level ?? this.level,
-        time: time ?? this.time);
+      message: message ?? this.message,
+      level: level ?? this.level,
+      time: time ?? this.time,
+    );
   }
 
   @override

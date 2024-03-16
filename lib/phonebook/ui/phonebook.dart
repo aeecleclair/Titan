@@ -31,9 +31,9 @@ class PhonebookTemplate extends HookConsumerWidget {
                   PhonebookRouter.root +
                       PhonebookRouter.admin +
                       PhonebookRouter.editAssociation) {
-                QR.to(PhonebookRouter.root +
-                    PhonebookRouter
-                        .admin); // Used on back after adding an association
+                QR.to(
+                  PhonebookRouter.root + PhonebookRouter.admin,
+                ); // Used on back after adding an association
               }
             },
           ),

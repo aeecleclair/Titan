@@ -55,121 +55,128 @@ class AccountHandler extends HookConsumerWidget {
             controller: editingController,
             cursorColor: RaffleColorConstants.textDark,
             decoration: const InputDecoration(
-                labelText: RaffleTextConstants.accounts,
-                labelStyle: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: RaffleColorConstants.textDark),
-                suffixIcon: Icon(
-                  Icons.search,
+              labelText: RaffleTextConstants.accounts,
+              labelStyle: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: RaffleColorConstants.textDark,
+              ),
+              suffixIcon: Icon(
+                Icons.search,
+                color: RaffleColorConstants.textDark,
+                size: 30,
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.transparent,
+                ),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
                   color: RaffleColorConstants.textDark,
-                  size: 30,
                 ),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.transparent,
-                  ),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: RaffleColorConstants.textDark,
-                  ),
-                )),
+              ),
+            ),
           ),
         ),
         SizedBox(
-            height: 135,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              physics: const BouncingScrollPhysics(),
-              child: Row(
-                children: [
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                      child: Container(
-                        height: 100,
-                        decoration: BoxDecoration(
-                          gradient: const RadialGradient(
-                            colors: [
-                              RaffleColorConstants.gradient1,
-                              RaffleColorConstants.gradient2,
-                            ],
-                            center: Alignment.topLeft,
-                            radius: 1.8,
-                          ),
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                              color: RaffleColorConstants.textDark
-                                  .withOpacity(0.2),
-                              spreadRadius: 5,
-                              blurRadius: 10,
-                              offset: const Offset(3, 3),
-                            ),
-                          ],
+          height: 135,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+            child: Row(
+              children: [
+                const SizedBox(
+                  width: 15,
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: Container(
+                    height: 100,
+                    decoration: BoxDecoration(
+                      gradient: const RadialGradient(
+                        colors: [
+                          RaffleColorConstants.gradient1,
+                          RaffleColorConstants.gradient2,
+                        ],
+                        center: Alignment.topLeft,
+                        radius: 1.8,
+                      ),
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: [
+                        BoxShadow(
+                          color: RaffleColorConstants.textDark.withOpacity(0.2),
+                          spreadRadius: 5,
+                          blurRadius: 10,
+                          offset: const Offset(3, 3),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 17.0),
-                          child: !searchingAmapUser
-                              ? Row(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        searchingAmapUserNotifier
-                                            .setProduct(true);
-                                        FocusScope.of(context)
-                                            .requestFocus(FocusNode());
-                                        focusNotifier.setFocus(false);
-                                        editingController.clear();
-                                      },
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 12.0),
-                                        child: const HeroIcon(
-                                          HeroIcons.xMark,
-                                          color: Colors.white,
-                                          size: 50,
-                                        ),
-                                      ),
-                                    ),
-                                    AddingUserContainer(onAdd: () async {
-                                      searchingAmapUserNotifier
-                                          .setProduct(true);
-                                      FocusScope.of(context)
-                                          .requestFocus(FocusNode());
-                                      focusNotifier.setFocus(false);
-                                      await cashNotifier.filterCashList(
-                                          editingController.text);
-                                      editingController.clear();
-                                    })
-                                  ],
-                                )
-                              : GestureDetector(
+                      ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 17.0),
+                      child: !searchingAmapUser
+                          ? Row(
+                              children: [
+                                GestureDetector(
                                   onTap: () {
-                                    searchingAmapUserNotifier.setProduct(false);
-                                    focusNotifier.setFocus(true);
+                                    searchingAmapUserNotifier.setProduct(true);
+                                    FocusScope.of(context)
+                                        .requestFocus(FocusNode());
+                                    focusNotifier.setFocus(false);
+                                    editingController.clear();
                                   },
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 12.0),
+                                      horizontal: 12.0,
+                                    ),
                                     child: const HeroIcon(
-                                      HeroIcons.plus,
+                                      HeroIcons.xMark,
                                       color: Colors.white,
                                       size: 50,
                                     ),
-                                  )),
-                        ),
-                      )),
-                  const CashContainer(),
-                  const SizedBox(
-                    width: 10,
+                                  ),
+                                ),
+                                AddingUserContainer(
+                                  onAdd: () async {
+                                    searchingAmapUserNotifier.setProduct(true);
+                                    FocusScope.of(context)
+                                        .requestFocus(FocusNode());
+                                    focusNotifier.setFocus(false);
+                                    await cashNotifier.filterCashList(
+                                      editingController.text,
+                                    );
+                                    editingController.clear();
+                                  },
+                                ),
+                              ],
+                            )
+                          : GestureDetector(
+                              onTap: () {
+                                searchingAmapUserNotifier.setProduct(false);
+                                focusNotifier.setFocus(true);
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12.0,
+                                ),
+                                child: const HeroIcon(
+                                  HeroIcons.plus,
+                                  color: Colors.white,
+                                  size: 50,
+                                ),
+                              ),
+                            ),
+                    ),
                   ),
-                ],
-              ),
-            )),
+                ),
+                const CashContainer(),
+                const SizedBox(
+                  width: 10,
+                ),
+              ],
+            ),
+          ),
+        ),
         const SizedBox(
           height: 10,
         ),

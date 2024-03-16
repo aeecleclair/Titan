@@ -9,7 +9,8 @@ class AssociationRepository extends Repository {
 
   Future<List<Association>> getAssociationList() async {
     return List<Association>.from(
-        (await getList()).map((x) => Association.fromJson(x)));
+      (await getList()).map((x) => Association.fromJson(x)),
+    );
   }
 
   Future<Association> getAssociation(String associationId) async {

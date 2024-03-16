@@ -8,8 +8,11 @@ import 'package:myecl/vote/providers/display_results.dart';
 class SearchResult extends HookConsumerWidget {
   final ValueNotifier<SimpleUser> borrower;
   final TextEditingController queryController;
-  const SearchResult(
-      {super.key, required this.borrower, required this.queryController});
+  const SearchResult({
+    super.key,
+    required this.borrower,
+    required this.queryController,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,36 +23,42 @@ class SearchResult extends HookConsumerWidget {
         ? AsyncChild(
             value: users,
             builder: (context, u) => Column(
-                children: u
-                    .map((e) => GestureDetector(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  width: 20,
+              children: u
+                  .map(
+                    (e) => GestureDetector(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: 20,
+                            ),
+                            Expanded(
+                              child: Text(
+                                e.getName(),
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: (borrower.value.id == e.id)
+                                      ? FontWeight.bold
+                                      : FontWeight.w400,
                                 ),
-                                Expanded(
-                                  child: Text(
-                                    e.getName(),
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: (borrower.value.id == e.id)
-                                          ? FontWeight.bold
-                                          : FontWeight.w400,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ]),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
                         ),
-                        onTap: () {
-                          borrower.value = e;
-                          queryController.text = e.getName();
-                          showNotifier.setId(false);
-                        }))
-                    .toList()))
+                      ),
+                      onTap: () {
+                        borrower.value = e;
+                        queryController.text = e.getName();
+                        showNotifier.setId(false);
+                      },
+                    ),
+                  )
+                  .toList(),
+            ),
+          )
         : const SizedBox();
   }
 }

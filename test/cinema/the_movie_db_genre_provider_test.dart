@@ -22,19 +22,21 @@ void main() {
       final result = await notifier.loadMovie(movieId);
 
       expect(
-          result.when(
-            data: (data) => data,
-            loading: () => null,
-            error: (error, stack) => null,
-          ),
-          isA<TheMovieDBMovie>());
+        result.when(
+          data: (data) => data,
+          loading: () => null,
+          error: (error, stack) => null,
+        ),
+        isA<TheMovieDBMovie>(),
+      );
     });
 
     test('loadMovie returns AsyncValue with error when movie not found',
         () async {
       theMovieDBRepository = MockTheMovieDBRepository();
       when(() => theMovieDBRepository.getMovie(any())).thenThrow(
-          (_) async => AppException(ErrorType.notFound, 'Not found'));
+        (_) async => AppException(ErrorType.notFound, 'Not found'),
+      );
       notifier =
           TheMovieDBGenreNotifier(theMoviesDBRepository: theMovieDBRepository);
       const movieId = 'invalid_id';

@@ -14,17 +14,22 @@ class EventRepository extends Repository {
 
   Future<List<Event>> getConfirmedEventList() async {
     return List<Event>.from(
-        (await getList(suffix: "confirmed")).map((x) => Event.fromJson(x)));
+      (await getList(suffix: "confirmed")).map((x) => Event.fromJson(x)),
+    );
   }
 
   Future<List<Event>> getUserEventList(String id) async {
     return List<Event>.from(
-        (await getList(suffix: "user/$id")).map((x) => Event.fromJson(x)));
+      (await getList(suffix: "user/$id")).map((x) => Event.fromJson(x)),
+    );
   }
 
   Future<bool> confirmEvent(Event event) async {
-    return await update({}, event.id,
-        suffix: '/reply/${event.decision.toString().split('.')[1]}');
+    return await update(
+      {},
+      event.id,
+      suffix: '/reply/${event.decision.toString().split('.')[1]}',
+    );
   }
 
   Future<Event> getEvent(String id) async {

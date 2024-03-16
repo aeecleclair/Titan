@@ -44,6 +44,8 @@ class AppointmentDataSource extends CalendarDataSource<Booking> {
 
   @override
   Booking? convertAppointmentToObject(
-          Booking customData, Appointment appointment) =>
+    Booking customData,
+    Appointment appointment,
+  ) =>
       customData;
 }

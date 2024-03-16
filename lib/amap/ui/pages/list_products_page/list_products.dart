@@ -17,7 +17,9 @@ class ListProducts extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final hideAnimation = useAnimationController(
-        duration: const Duration(milliseconds: 200), initialValue: 1);
+      duration: const Duration(milliseconds: 200),
+      initialValue: 1,
+    );
     final scrollController = ref.watch(scrollControllerProvider(hideAnimation));
     final sortedDeliveryProductsList =
         ref.watch(sortedByCategoryDeliveryProductsProvider);
@@ -56,11 +58,14 @@ class ListProducts extends HookConsumerWidget {
                     ),
                   ]
                 : sortedDeliveryProductsList.keys
-                    .map((c) => CategoryPage(
+                    .map(
+                      (c) => CategoryPage(
                         index:
                             sortedDeliveryProductsList.keys.toList().indexOf(c),
                         hideAnimation: hideAnimation,
-                        category: c))
+                        category: c,
+                      ),
+                    )
                     .toList(),
           ),
         ),
@@ -71,8 +76,9 @@ class ListProducts extends HookConsumerWidget {
             child: WebPageNavigationButton(
               onPressed: () {
                 pageController.nextPage(
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.decelerate);
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.decelerate,
+                );
               },
               icon: HeroIcons.arrowRight,
             ),
@@ -84,8 +90,9 @@ class ListProducts extends HookConsumerWidget {
             child: WebPageNavigationButton(
               onPressed: () {
                 pageController.previousPage(
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.decelerate);
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.decelerate,
+                );
               },
               icon: HeroIcons.arrowLeft,
             ),

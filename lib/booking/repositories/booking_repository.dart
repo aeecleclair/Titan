@@ -10,12 +10,15 @@ class BookingRepository extends Repository {
 
   Future<List<Booking>> getUserBookingList() async {
     return List<Booking>.from(
-        (await getList(suffix: "/users/me")).map((x) => Booking.fromJson(x)));
+      (await getList(suffix: "/users/me")).map((x) => Booking.fromJson(x)),
+    );
   }
 
   Future<List<Booking>> getUserManageBookingList() async {
-    return List<Booking>.from((await getList(suffix: "/users/me/manage"))
-        .map((x) => Booking.fromJson(x)));
+    return List<Booking>.from(
+      (await getList(suffix: "/users/me/manage"))
+          .map((x) => Booking.fromJson(x)),
+    );
   }
 
   Future<Booking> createBooking(Booking booking) async {
@@ -27,8 +30,11 @@ class BookingRepository extends Repository {
   }
 
   Future<bool> confirmBooking(Booking booking, Decision value) async {
-    return await update({}, "/${booking.id}",
-        suffix: '/reply/${value.toString().split('.')[1]}');
+    return await update(
+      {},
+      "/${booking.id}",
+      suffix: '/reply/${value.toString().split('.')[1]}',
+    );
   }
 
   Future<bool> deleteBooking(String bookingId) async {
@@ -37,13 +43,15 @@ class BookingRepository extends Repository {
 
   Future<List<Booking>> getConfirmedBookingList() async {
     return List<Booking>.from(
-        (await getList(suffix: "/confirmed")).map((x) => Booking.fromJson(x)));
+      (await getList(suffix: "/confirmed")).map((x) => Booking.fromJson(x)),
+    );
   }
 
   Future<List<Booking>> getUserManageConfirmedBookingList() async {
     return List<Booking>.from(
-        (await getList(suffix: "/confirmed/users/me/manage"))
-            .map((x) => Booking.fromJson(x)));
+      (await getList(suffix: "/confirmed/users/me/manage"))
+          .map((x) => Booking.fromJson(x)),
+    );
   }
 }
 

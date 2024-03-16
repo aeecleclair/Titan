@@ -28,12 +28,13 @@ class Product {
     }
   }
 
-  Product copyWith(
-          {String? id,
-          String? name,
-          double? price,
-          int? quantity,
-          String? category}) =>
+  Product copyWith({
+    String? id,
+    String? name,
+    double? price,
+    int? quantity,
+    String? category,
+  }) =>
       Product(
         id: id ?? this.id,
         name: name ?? this.name,

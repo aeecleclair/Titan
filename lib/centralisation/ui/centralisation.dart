@@ -17,9 +17,10 @@ class CentralisationTemplate extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const TopBar(
-                  title: CentralisationTextConstants.centralisation,
-                  root: CentralisationRouter.root),
-              Expanded(child: child)
+                title: CentralisationTextConstants.centralisation,
+                root: CentralisationRouter.root,
+              ),
+              Expanded(child: child),
             ],
           ),
         ),

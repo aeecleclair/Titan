@@ -23,19 +23,27 @@ class Sphere {
   final double livingTime;
   final Curve opacityCurve;
   final Paint paint = Paint()..style = PaintingStyle.fill;
-  Sphere(this.x, this.y, this.radius, this.speed, this.angle, this.livingTime,
-      this.opacityCurve);
+  Sphere(
+    this.x,
+    this.y,
+    this.radius,
+    this.speed,
+    this.angle,
+    this.livingTime,
+    this.opacityCurve,
+  );
 
   static Sphere generateNextSphere(double width, double height) {
     final livingTime = 1 + Random().nextDouble() * 2;
     Sphere newSphere = Sphere(
-        Random().nextDouble() * 2 * width / 3 + width / 6,
-        Random().nextDouble() * 2 * height / 3 + height / 6,
-        7 + Random().nextDouble() * 10,
-        Random().nextDouble(),
-        Random().nextDouble() * 2 * pi,
-        livingTime,
-        SineCurve(livingTime));
+      Random().nextDouble() * 2 * width / 3 + width / 6,
+      Random().nextDouble() * 2 * height / 3 + height / 6,
+      7 + Random().nextDouble() * 10,
+      Random().nextDouble(),
+      Random().nextDouble() * 2 * pi,
+      livingTime,
+      SineCurve(livingTime),
+    );
     int green = Random().nextInt(100) + 150;
     newSphere.paint.color = Color.fromARGB(
       255,
@@ -76,7 +84,10 @@ class AmapBackgroundPainter extends CustomPainter {
         i++;
         sphere.move();
         canvas.drawCircle(
-            Offset(sphere.x, sphere.y), sphere.radius, sphere.paint);
+          Offset(sphere.x, sphere.y),
+          sphere.radius,
+          sphere.paint,
+        );
       }
     }
   }

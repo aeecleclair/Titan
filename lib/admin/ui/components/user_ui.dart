@@ -13,43 +13,45 @@ class UserUi extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
-        height: 55,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Text(
-                user.getName(),
-                style: const TextStyle(fontSize: 15),
-                overflow: TextOverflow.ellipsis,
-              ),
+      height: 55,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Text(
+              user.getName(),
+              style: const TextStyle(fontSize: 15),
+              overflow: TextOverflow.ellipsis,
             ),
-            GestureDetector(
-              onTap: onDelete,
-              child: Container(
-                padding: const EdgeInsets.all(7),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [ColorConstants.background2, Colors.black],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+          ),
+          GestureDetector(
+            onTap: onDelete,
+            child: Container(
+              padding: const EdgeInsets.all(7),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [ColorConstants.background2, Colors.black],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: ColorConstants.background2.withOpacity(0.4),
+                    offset: const Offset(2, 3),
+                    blurRadius: 5,
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                        color: ColorConstants.background2.withOpacity(0.4),
-                        offset: const Offset(2, 3),
-                        blurRadius: 5)
-                  ],
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                ),
-                child: const HeroIcon(
-                  HeroIcons.trash,
-                  size: 20,
-                  color: Colors.white,
-                ),
+                ],
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+              ),
+              child: const HeroIcon(
+                HeroIcons.trash,
+                size: 20,
+                color: Colors.white,
               ),
             ),
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
   }
 }

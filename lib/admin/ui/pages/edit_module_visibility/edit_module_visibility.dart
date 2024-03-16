@@ -28,11 +28,14 @@ class EditModulesVisibilityPage extends HookConsumerWidget {
                   children: [
                     const Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(AdminTextConstants.modifyModuleVisibility,
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
-                              color: ColorConstants.gradient1)),
+                      child: Text(
+                        AdminTextConstants.modifyModuleVisibility,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: ColorConstants.gradient1,
+                        ),
+                      ),
                     ),
                     const SizedBox(
                       height: 30,

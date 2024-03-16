@@ -18,13 +18,14 @@ class OrderUI extends HookConsumerWidget {
   final Order order;
   final void Function()? onTap, onEdit;
   final bool showButton, isDetail;
-  const OrderUI(
-      {super.key,
-      required this.order,
-      this.onTap,
-      this.onEdit,
-      this.showButton = true,
-      this.isDetail = false});
+  const OrderUI({
+    super.key,
+    required this.order,
+    this.onTap,
+    this.onEdit,
+    this.showButton = true,
+    this.isDetail = false,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -52,11 +53,13 @@ class OrderUI extends HookConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                  '${AMAPTextConstants.the} ${processDate(order.deliveryDate)}',
-                  style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: AMAPColorConstants.textDark)),
+                '${AMAPTextConstants.the} ${processDate(order.deliveryDate)}',
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AMAPColorConstants.textDark,
+                ),
+              ),
               if (!isDetail)
                 GestureDetector(
                   onTap: () {
@@ -77,17 +80,19 @@ class OrderUI extends HookConsumerWidget {
               Text(
                 "${order.products.length} ${AMAPTextConstants.product}${order.products.length != 1 ? "s" : ""}",
                 style: const TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white),
+                  fontSize: 17,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
               ),
               const Spacer(),
               Text(
                 "${order.amount.toStringAsFixed(2)}€",
                 style: const TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white),
+                  fontSize: 17,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
               ),
             ],
           ),
@@ -95,9 +100,10 @@ class OrderUI extends HookConsumerWidget {
           Text(
             uiCollectionSlotToString(order.collectionSlot),
             style: const TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.w700,
-                color: AMAPColorConstants.textDark),
+              fontSize: 17,
+              fontWeight: FontWeight.w700,
+              color: AMAPColorConstants.textDark,
+            ),
           ),
           const Spacer(),
           if (!isDetail)
@@ -112,7 +118,7 @@ class OrderUI extends HookConsumerWidget {
                         child: const CardButton(
                           colors: [
                             AMAPColorConstants.greenGradient1,
-                            AMAPColorConstants.greenGradient2
+                            AMAPColorConstants.greenGradient2,
                           ],
                           child: HeroIcon(
                             HeroIcons.pencil,
@@ -124,8 +130,8 @@ class OrderUI extends HookConsumerWidget {
                       WaitingButton(
                         onTap: () async {
                           await showDialog(
-                              context: context,
-                              builder: ((context) => CustomDialogBox(
+                            context: context,
+                            builder: ((context) => CustomDialogBox(
                                   title: AMAPTextConstants.delete,
                                   descriptions: AMAPTextConstants.deletingOrder,
                                   onYes: () async {
@@ -136,20 +142,29 @@ class OrderUI extends HookConsumerWidget {
                                         if (value) {
                                           balanceNotifier
                                               .updateCash(order.amount);
-                                          displayToastWithContext(TypeMsg.msg,
-                                              AMAPTextConstants.deletedOrder);
+                                          displayToastWithContext(
+                                            TypeMsg.msg,
+                                            AMAPTextConstants.deletedOrder,
+                                          );
                                         } else {
-                                          displayToastWithContext(TypeMsg.error,
-                                              AMAPTextConstants.deletingError);
+                                          displayToastWithContext(
+                                            TypeMsg.error,
+                                            AMAPTextConstants.deletingError,
+                                          );
                                         }
                                       });
                                     });
-                                  })));
+                                  },
+                                )),
+                          );
                         },
-                        builder: (child) => CardButton(colors: const [
-                          AMAPColorConstants.redGradient1,
-                          AMAPColorConstants.redGradient2
-                        ], child: child),
+                        builder: (child) => CardButton(
+                          colors: const [
+                            AMAPColorConstants.redGradient1,
+                            AMAPColorConstants.redGradient2,
+                          ],
+                          child: child,
+                        ),
                         child: const HeroIcon(
                           HeroIcons.trash,
                           color: Colors.white,
@@ -160,10 +175,11 @@ class OrderUI extends HookConsumerWidget {
                 : const Text(
                     AMAPTextConstants.locked,
                     style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w700,
-                        color: AMAPColorConstants.textDark),
-                  )
+                      fontSize: 17,
+                      fontWeight: FontWeight.w700,
+                      color: AMAPColorConstants.textDark,
+                    ),
+                  ),
         ],
       ),
     );

@@ -19,12 +19,14 @@ class ProfilePictureNotifier extends SingleNotifier<Uint8List> {
 
   Future<AsyncValue<Uint8List>> getProfilePicture(String userId) async {
     return await load(
-        () async => profilePictureRepository.getProfilePicture(userId));
+      () async => profilePictureRepository.getProfilePicture(userId),
+    );
   }
 
   Future<AsyncValue<Uint8List>> getMyProfilePicture() async {
     return await load(
-        () async => profilePictureRepository.getProfilePicture("me"));
+      () async => profilePictureRepository.getProfilePicture("me"),
+    );
   }
 
   Future<bool?> setProfilePicture(ImageSource source) async {
@@ -52,8 +54,8 @@ class ProfilePictureNotifier extends SingleNotifier<Uint8List> {
     state.whenData((value) async {
       Directory tempDir = await getTemporaryDirectory();
       File file = await File(
-              '${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.png')
-          .create();
+        '${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.png',
+      ).create();
       final File newImage = await file.writeAsBytes(value);
       CroppedFile? croppedFile = await ImageCropper().cropImage(
         sourcePath: newImage.path,
@@ -62,15 +64,16 @@ class ProfilePictureNotifier extends SingleNotifier<Uint8List> {
           CropAspectRatioPreset.ratio3x2,
           CropAspectRatioPreset.original,
           CropAspectRatioPreset.ratio4x3,
-          CropAspectRatioPreset.ratio16x9
+          CropAspectRatioPreset.ratio16x9,
         ],
         uiSettings: [
           AndroidUiSettings(
-              toolbarTitle: 'Recadrer',
-              toolbarColor: ColorConstants.gradient1,
-              toolbarWidgetColor: Colors.grey[100],
-              initAspectRatio: CropAspectRatioPreset.original,
-              lockAspectRatio: false),
+            toolbarTitle: 'Recadrer',
+            toolbarColor: ColorConstants.gradient1,
+            toolbarWidgetColor: Colors.grey[100],
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false,
+          ),
           IOSUiSettings(
             title: 'Recadrer',
           ),
@@ -100,7 +103,8 @@ final profilePictureProvider =
     StateNotifierProvider<ProfilePictureNotifier, AsyncValue<Uint8List>>((ref) {
   final profilePictureRepository = ref.watch(profilePictureRepositoryProvider);
   ProfilePictureNotifier notifier = ProfilePictureNotifier(
-      profilePictureRepository: profilePictureRepository);
+    profilePictureRepository: profilePictureRepository,
+  );
   tokenExpireWrapperAuth(ref, () async {
     notifier.getMyProfilePicture();
   });

@@ -10,8 +10,10 @@ final sessionListPageControllerProvider = StateNotifierProvider.family<
 
 class SessionListPageControllerNotifier extends StateNotifier<PageController> {
   SessionListPageControllerNotifier(int i)
-      : super(PageController(
-          viewportFraction: 0.8,
-          initialPage: i,
-        ));
+      : super(
+          PageController(
+            viewportFraction: 0.8,
+            initialPage: i,
+          ),
+        );
 }

@@ -29,49 +29,57 @@ class AdminPage extends HookConsumerWidget {
           child: Wrap(
             children: [
               GestureDetector(
-                  onTap: () {
-                    sessionNotifier.setSession(Session.empty());
-                    QR.to(CinemaRouter.root +
+                onTap: () {
+                  sessionNotifier.setSession(Session.empty());
+                  QR.to(
+                    CinemaRouter.root +
                         CinemaRouter.admin +
-                        CinemaRouter.addEdit);
-                  },
-                  child: const CardLayout(
-                    width: 155,
-                    height: 300,
-                    margin: EdgeInsets.all(8),
-                    child: Center(
-                        child: HeroIcon(
+                        CinemaRouter.addEdit,
+                  );
+                },
+                child: const CardLayout(
+                  width: 155,
+                  height: 300,
+                  margin: EdgeInsets.all(8),
+                  child: Center(
+                    child: HeroIcon(
                       HeroIcons.plus,
                       size: 50,
-                    )),
-                  )),
+                    ),
+                  ),
+                ),
+              ),
               ...data.map(
                 (session) => AdminSessionCard(
-                    session: session,
-                    onEdit: () {
-                      sessionNotifier.setSession(session);
-                      QR.to(CinemaRouter.root +
+                  session: session,
+                  onEdit: () {
+                    sessionNotifier.setSession(session);
+                    QR.to(
+                      CinemaRouter.root +
                           CinemaRouter.admin +
-                          CinemaRouter.addEdit);
-                    },
-                    onDelete: () async {
-                      await showDialog(
-                          context: context,
-                          builder: (context) {
-                            return CustomDialogBox(
-                              title: CinemaTextConstants.deleting,
-                              descriptions: CinemaTextConstants.deleteSession,
-                              onYes: () {
-                                sessionListNotifier.deleteSession(session);
-                              },
-                            );
-                          });
-                    },
-                    onTap: () {
-                      sessionNotifier.setSession(session);
-                      QR.to(CinemaRouter.root + CinemaRouter.detail);
-                    }),
-              )
+                          CinemaRouter.addEdit,
+                    );
+                  },
+                  onDelete: () async {
+                    await showDialog(
+                      context: context,
+                      builder: (context) {
+                        return CustomDialogBox(
+                          title: CinemaTextConstants.deleting,
+                          descriptions: CinemaTextConstants.deleteSession,
+                          onYes: () {
+                            sessionListNotifier.deleteSession(session);
+                          },
+                        );
+                      },
+                    );
+                  },
+                  onTap: () {
+                    sessionNotifier.setSession(session);
+                    QR.to(CinemaRouter.root + CinemaRouter.detail);
+                  },
+                ),
+              ),
             ],
           ),
         ),

@@ -19,12 +19,13 @@ void main() {
       final result = await groupNotifier.loadGroup('1');
 
       expect(
-          result.when(
-            data: (data) => data,
-            loading: () => null,
-            error: (e, s) => null,
-          ),
-          group);
+        result.when(
+          data: (data) => data,
+          loading: () => null,
+          error: (e, s) => null,
+        ),
+        group,
+      );
     });
 
     test('addMember', () async {
@@ -64,12 +65,13 @@ void main() {
       groupNotifier.setGroup(group);
 
       expect(
-          groupNotifier.state.when(
-            data: (data) => data,
-            loading: () => null,
-            error: (e, s) => null,
-          ),
-          group);
+        groupNotifier.state.when(
+          data: (data) => data,
+          loading: () => null,
+          error: (e, s) => null,
+        ),
+        group,
+      );
     });
   });
 }

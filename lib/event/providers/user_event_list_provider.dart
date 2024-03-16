@@ -24,18 +24,20 @@ class EventEventListProvider extends ListNotifier<Event> {
 
   Future<bool> updateEvent(Event event) async {
     return await update(
-        eventRepository.updateEvent,
-        (events, event) =>
-            events..[events.indexWhere((e) => e.id == event.id)] = event,
-        event);
+      eventRepository.updateEvent,
+      (events, event) =>
+          events..[events.indexWhere((e) => e.id == event.id)] = event,
+      event,
+    );
   }
 
   Future<bool> deleteEvent(Event event) async {
     return await delete(
-        eventRepository.deleteEvent,
-        (events, event) => events..removeWhere((e) => e.id == event.id),
-        event.id,
-        event);
+      eventRepository.deleteEvent,
+      (events, event) => events..removeWhere((e) => e.id == event.id),
+      event.id,
+      event,
+    );
   }
 }
 

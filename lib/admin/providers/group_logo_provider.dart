@@ -21,7 +21,8 @@ class GroupLogoNotifier extends SingleNotifier<Image> {
 
   Future<Image> updateLogo(String id, Uint8List bytes) async {
     return Image.memory(
-        await groupLogoRepository.addLogo(bytes, id, suffix: "/logo"));
+      await groupLogoRepository.addLogo(bytes, id, suffix: "/logo"),
+    );
   }
 }
 

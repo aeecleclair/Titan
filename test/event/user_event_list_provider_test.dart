@@ -33,9 +33,13 @@ void main() {
       final result = await provider.loadConfirmedEvent();
 
       expect(
-          result.when(
-              data: (data) => data, loading: () => [], error: (_, __) => []),
-          [event1, event2, event3]);
+        result.when(
+          data: (data) => data,
+          loading: () => [],
+          error: (_, __) => [],
+        ),
+        [event1, event2, event3],
+      );
     });
 
     test('addEvent adds event to list', () async {
@@ -46,9 +50,13 @@ void main() {
 
       expect(result, true);
       expect(
-          provider.state.when(
-              data: (data) => data, loading: () => [], error: (_, __) => []),
-          [event2, event3, event1]);
+        provider.state.when(
+          data: (data) => data,
+          loading: () => [],
+          error: (_, __) => [],
+        ),
+        [event2, event3, event1],
+      );
     });
 
     test('updateEvent updates event in list', () async {
@@ -62,9 +70,13 @@ void main() {
 
       expect(result, true);
       expect(
-          provider.state.when(
-              data: (data) => data, loading: () => [], error: (_, __) => []),
-          [event1, updatedEvent, event3]);
+        provider.state.when(
+          data: (data) => data,
+          loading: () => [],
+          error: (_, __) => [],
+        ),
+        [event1, updatedEvent, event3],
+      );
     });
 
     test('deleteEvent deletes event from list', () async {
@@ -76,9 +88,13 @@ void main() {
 
       expect(result, true);
       expect(
-          provider.state.when(
-              data: (data) => data, loading: () => [], error: (_, __) => []),
-          [event1, event3]);
+        provider.state.when(
+          data: (data) => data,
+          loading: () => [],
+          error: (_, __) => [],
+        ),
+        [event1, event3],
+      );
     });
   });
 }

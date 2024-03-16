@@ -118,7 +118,7 @@ void main() {
     final date = DateTime.parse("2021-01-01T00:00:00.000Z");
     expect(getDateInRecurrence(recurrenceRule, date), [
       DateTime.parse("2021-01-04T00:00:00.000"),
-      DateTime.parse("2021-01-11T00:00:00.000")
+      DateTime.parse("2021-01-11T00:00:00.000"),
     ]);
     expect(getDateInRecurrence(recurrenceRule2, date), []);
   });
@@ -148,26 +148,32 @@ void main() {
       final scaffoldKey = GlobalKey<ScaffoldState>();
 
       // Act
-      await tester.pumpWidget(MaterialApp(
-        home: Scaffold(
-          key: scaffoldKey,
-          body: Builder(
-            builder: (context) => ElevatedButton(
-              onPressed: () => displayToast(context, type, text),
-              child: const Text('Show Toast'),
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            key: scaffoldKey,
+            body: Builder(
+              builder: (context) => ElevatedButton(
+                onPressed: () => displayToast(context, type, text),
+                child: const Text('Show Toast'),
+              ),
             ),
           ),
         ),
-      ));
+      );
       await tester.tap(find.byType(ElevatedButton));
       await tester.pump(const Duration(milliseconds: 500));
 
       // Assert
-      expect(find.text(text),
-          findsOneWidget); // Check that the toast message is still visible
+      expect(
+        find.text(text),
+        findsOneWidget,
+      ); // Check that the toast message is still visible
       await tester.pump(const Duration(milliseconds: 2000));
-      expect(find.text(text),
-          findsNothing); // Check that the toast message has disappeared
+      expect(
+        find.text(text),
+        findsNothing,
+      ); // Check that the toast message has disappeared
     });
 
     testWidgets(
@@ -179,26 +185,32 @@ void main() {
       final scaffoldKey = GlobalKey<ScaffoldState>();
 
       // Act
-      await tester.pumpWidget(MaterialApp(
-        home: Scaffold(
-          key: scaffoldKey,
-          body: Builder(
-            builder: (context) => ElevatedButton(
-              onPressed: () => displayToast(context, type, text),
-              child: const Text('Show Toast'),
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            key: scaffoldKey,
+            body: Builder(
+              builder: (context) => ElevatedButton(
+                onPressed: () => displayToast(context, type, text),
+                child: const Text('Show Toast'),
+              ),
             ),
           ),
         ),
-      ));
+      );
       await tester.tap(find.byType(ElevatedButton));
       await tester.pump(const Duration(milliseconds: 500));
 
       // Assert
-      expect(find.text(text),
-          findsOneWidget); // Check that the toast message is still visible
+      expect(
+        find.text(text),
+        findsOneWidget,
+      ); // Check that the toast message is still visible
       await tester.pump(const Duration(milliseconds: 3000));
-      expect(find.text(text),
-          findsNothing); // Check that the toast message has disappeared
+      expect(
+        find.text(text),
+        findsNothing,
+      ); // Check that the toast message has disappeared
     });
 
     // testWidgets(

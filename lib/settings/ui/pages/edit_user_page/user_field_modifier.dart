@@ -6,11 +6,12 @@ class UserFieldModifier extends StatelessWidget {
   final String label;
   final TextInputType keyboardType;
   final TextEditingController controller;
-  const UserFieldModifier(
-      {super.key,
-      required this.label,
-      required this.keyboardType,
-      required this.controller});
+  const UserFieldModifier({
+    super.key,
+    required this.label,
+    required this.keyboardType,
+    required this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +22,10 @@ class UserFieldModifier extends StatelessWidget {
           child: Text(
             label,
             style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w400,
-                color: Colors.grey.shade500),
+              fontSize: 15,
+              fontWeight: FontWeight.w400,
+              color: Colors.grey.shade500,
+            ),
           ),
         ),
         Expanded(

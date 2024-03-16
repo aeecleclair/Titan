@@ -19,18 +19,20 @@ class ProductListNotifier extends ListNotifier<Product> {
 
   Future<bool> updateProduct(Product product) async {
     return await update(
-        productListRepository.updateProduct,
-        (products, product) => products
-          ..[products.indexWhere((p) => p.id == product.id)] = product,
-        product);
+      productListRepository.updateProduct,
+      (products, product) =>
+          products..[products.indexWhere((p) => p.id == product.id)] = product,
+      product,
+    );
   }
 
   Future<bool> deleteProduct(Product product) async {
     return await delete(
-        productListRepository.deleteProduct,
-        (products, product) => products..removeWhere((i) => i.id == product.id),
-        product.id,
-        product);
+      productListRepository.deleteProduct,
+      (products, product) => products..removeWhere((i) => i.id == product.id),
+      product.id,
+      product,
+    );
   }
 }
 

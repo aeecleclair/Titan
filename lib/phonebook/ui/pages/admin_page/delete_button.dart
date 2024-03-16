@@ -12,26 +12,27 @@ class DeleteButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return WaitingButton(
       builder: (child) => Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [
-                ColorConstants.gradient1,
-                ColorConstants.gradient2,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: ColorConstants.gradient2.withOpacity(0.2),
-                blurRadius: 10,
-                offset: const Offset(2, 3),
-              ),
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [
+              ColorConstants.gradient1,
+              ColorConstants.gradient2,
             ],
-            borderRadius: BorderRadius.circular(10),
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
-          child: child),
+          boxShadow: [
+            BoxShadow(
+              color: ColorConstants.gradient2.withOpacity(0.2),
+              blurRadius: 10,
+              offset: const Offset(2, 3),
+            ),
+          ],
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: child,
+      ),
       onTap: onDelete,
       child: const HeroIcon(
         HeroIcons.xMark,

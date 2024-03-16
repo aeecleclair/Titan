@@ -52,15 +52,19 @@ class LogCard extends StatelessWidget {
               Text(
                 log.time.toString(),
                 style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
+                  fontSize: 16,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               GestureDetector(
                 onTap: () {
                   Clipboard.setData(ClipboardData(text: log.message));
                   displayToast(
-                      context, TypeMsg.msg, SettingsTextConstants.copied);
+                    context,
+                    TypeMsg.msg,
+                    SettingsTextConstants.copied,
+                  );
                 },
                 child: const HeroIcon(
                   HeroIcons.clipboard,

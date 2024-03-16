@@ -26,9 +26,13 @@ void main() {
 
       // Assert
       expect(
-          result.when(
-              data: (data) => data, error: (e, s) => [], loading: () => []),
-          deliveries);
+        result.when(
+          data: (data) => data,
+          error: (e, s) => [],
+          loading: () => [],
+        ),
+        deliveries,
+      );
     });
 
     test('addDelivery should add a new delivery to the list', () async {
@@ -68,9 +72,13 @@ void main() {
       // Assert
       expect(result, true);
       expect(
-          notifier.state.when(
-              data: (data) => data, error: (e, s) => [], loading: () => []),
-          [updatedDelivery]);
+        notifier.state.when(
+          data: (data) => data,
+          error: (e, s) => [],
+          loading: () => [],
+        ),
+        [updatedDelivery],
+      );
     });
 
     test('openDelivery should update the status of a delivery to orderable',
@@ -91,12 +99,16 @@ void main() {
       // Assert
       expect(result, true);
       expect(
-          notifier.state
-              .when(
-                  data: (data) => data, error: (e, s) => [], loading: () => [])
-              .first
-              .status,
-          DeliveryStatus.available);
+        notifier.state
+            .when(
+              data: (data) => data,
+              error: (e, s) => [],
+              loading: () => [],
+            )
+            .first
+            .status,
+        DeliveryStatus.available,
+      );
     });
 
     test('lockDelivery should update the status of a delivery to locked',
@@ -117,12 +129,16 @@ void main() {
       // Assert
       expect(result, true);
       expect(
-          notifier.state
-              .when(
-                  data: (data) => data, error: (e, s) => [], loading: () => [])
-              .first
-              .status,
-          DeliveryStatus.locked);
+        notifier.state
+            .when(
+              data: (data) => data,
+              error: (e, s) => [],
+              loading: () => [],
+            )
+            .first
+            .status,
+        DeliveryStatus.locked,
+      );
     });
 
     test('deliverDelivery should update the status of a delivery to delivered',
@@ -143,12 +159,16 @@ void main() {
       // Assert
       expect(result, true);
       expect(
-          notifier.state
-              .when(
-                  data: (data) => data, error: (e, s) => [], loading: () => [])
-              .first
-              .status,
-          DeliveryStatus.delivered);
+        notifier.state
+            .when(
+              data: (data) => data,
+              error: (e, s) => [],
+              loading: () => [],
+            )
+            .first
+            .status,
+        DeliveryStatus.delivered,
+      );
     });
 
     test('archiveDelivery should remove a delivery from the list', () async {
@@ -168,9 +188,13 @@ void main() {
       // Assert
       expect(result, true);
       expect(
-          notifier.state.when(
-              data: (data) => data, error: (e, s) => [], loading: () => []),
-          []);
+        notifier.state.when(
+          data: (data) => data,
+          error: (e, s) => [],
+          loading: () => [],
+        ),
+        [],
+      );
     });
 
     test('deleteDelivery should remove a delivery from the list', () async {
@@ -190,9 +214,13 @@ void main() {
       // Assert
       expect(result, true);
       expect(
-          notifier.state.when(
-              data: (data) => data, error: (e, s) => null, loading: () => null),
-          []);
+        notifier.state.when(
+          data: (data) => data,
+          error: (e, s) => null,
+          loading: () => null,
+        ),
+        [],
+      );
     });
 
     test('toggleExpanded should toggle the expanded property of a delivery',
@@ -202,32 +230,42 @@ void main() {
       final delivery2 = Delivery.empty().copyWith(id: '2');
       final deliveries = [delivery1, delivery2];
       final notifier = DeliveryListNotifier(
-          deliveriesListRepository: MockDeliveryListRepository());
+        deliveriesListRepository: MockDeliveryListRepository(),
+      );
 
       // Act/Assert (loading state)
       notifier.toggleExpanded('1');
       expect(
-          notifier.state,
-          const AsyncValue<List<Delivery>>.error(
-              "Cannot toggle expanded while loading", StackTrace.empty));
+        notifier.state,
+        const AsyncValue<List<Delivery>>.error(
+          "Cannot toggle expanded while loading",
+          StackTrace.empty,
+        ),
+      );
 
       // Act/Assert (error state)
       notifier.state =
           const AsyncValue<List<Delivery>>.error('Error', StackTrace.empty);
       notifier.toggleExpanded('1');
-      expect(notifier.state,
-          const AsyncValue<List<Delivery>>.error('Error', StackTrace.empty));
+      expect(
+        notifier.state,
+        const AsyncValue<List<Delivery>>.error('Error', StackTrace.empty),
+      );
 
       // Act/Assert (data state)
       notifier.state = AsyncValue.data(deliveries);
       notifier.toggleExpanded('1');
       expect(
-          notifier.state
-              .when(
-                  data: (data) => data, error: (e, s) => [], loading: () => [])
-              .first
-              .expanded,
-          isTrue);
+        notifier.state
+            .when(
+              data: (data) => data,
+              error: (e, s) => [],
+              loading: () => [],
+            )
+            .first
+            .expanded,
+        isTrue,
+      );
     });
     test('copy should return a copy of the list of deliveries', () async {
       // Arrange
@@ -235,7 +273,8 @@ void main() {
       final delivery2 = Delivery.empty().copyWith(id: '2');
       final deliveries = [delivery1, delivery2];
       final notifier = DeliveryListNotifier(
-          deliveriesListRepository: MockDeliveryListRepository());
+        deliveriesListRepository: MockDeliveryListRepository(),
+      );
 
       // Act/Assert (loading state)
       final result1 = await notifier.copy();

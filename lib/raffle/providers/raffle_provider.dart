@@ -8,8 +8,9 @@ final raffleProvider = Provider<Raffle>((ref) {
   final raffleList = ref.watch(raffleListProvider);
   return raffleList.maybeWhen(
     data: (raffleList) => raffleList.firstWhere(
-        (raffle) => raffle.id == raffleId,
-        orElse: () => Raffle.empty()),
+      (raffle) => raffle.id == raffleId,
+      orElse: () => Raffle.empty(),
+    ),
     orElse: () => Raffle.empty(),
   );
 });

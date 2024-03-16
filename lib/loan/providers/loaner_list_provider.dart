@@ -19,18 +19,20 @@ class LoanerListNotifier extends ListNotifier<Loaner> {
 
   Future<bool> updateLoaner(Loaner loaner) async {
     return await update(
-        loanerRepository.updateLoaner,
-        (loaners, loaner) =>
-            loaners..[loaners.indexWhere((i) => i.id == loaner.id)] = loaner,
-        loaner);
+      loanerRepository.updateLoaner,
+      (loaners, loaner) =>
+          loaners..[loaners.indexWhere((i) => i.id == loaner.id)] = loaner,
+      loaner,
+    );
   }
 
   Future<bool> deleteLoaner(Loaner loaner) async {
     return await delete(
-        loanerRepository.deleteLoaner,
-        (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
-        loaner.id,
-        loaner);
+      loanerRepository.deleteLoaner,
+      (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
+      loaner.id,
+      loaner,
+    );
   }
 }
 

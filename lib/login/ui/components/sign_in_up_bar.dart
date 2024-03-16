@@ -4,17 +4,18 @@ import 'package:myecl/tools/ui/widgets/loader.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class SignInUpBar extends StatelessWidget {
-  const SignInUpBar(
-      {super.key,
-      required this.label,
-      required this.onPressed,
-      required this.isLoading,
-      this.color = Colors.white,
-      this.icon = const HeroIcon(
-        HeroIcons.arrowRight,
-        color: Colors.white,
-        size: 35.0,
-      )});
+  const SignInUpBar({
+    super.key,
+    required this.label,
+    required this.onPressed,
+    required this.isLoading,
+    this.color = Colors.white,
+    this.icon = const HeroIcon(
+      HeroIcons.arrowRight,
+      color: Colors.white,
+      size: 35.0,
+    ),
+  });
 
   final String label;
   final Future Function() onPressed;
@@ -25,31 +26,34 @@ class SignInUpBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Container(
-            height: 50,
-            width: double.infinity,
-            alignment:
-                color == Colors.white ? Alignment.centerLeft : Alignment.center,
-            child: WaitingButton(
-              onTap: onPressed,
-              builder: (child) => Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    label,
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w800,
-                        color: color),
-                  ),
-                  child,
-                ],
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Container(
+        height: 50,
+        width: double.infinity,
+        alignment:
+            color == Colors.white ? Alignment.centerLeft : Alignment.center,
+        child: WaitingButton(
+          onTap: onPressed,
+          builder: (child) => Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w800,
+                  color: color,
+                ),
               ),
-              child: Container(
-                margin: const EdgeInsets.only(left: 20),
-                child: isLoading ? Loader(color: color) : icon,
-              ),
-            )));
+              child,
+            ],
+          ),
+          child: Container(
+            margin: const EdgeInsets.only(left: 20),
+            child: isLoading ? Loader(color: color) : icon,
+          ),
+        ),
+      ),
+    );
   }
 }

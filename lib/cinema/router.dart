@@ -24,10 +24,11 @@ class CinemaRouter {
   static const String addEdit = '/add_edit';
   static const String detail = '/detail';
   static final Module module = Module(
-      name: "Cinéma",
-      icon: const Left(HeroIcons.ticket),
-      root: CinemaRouter.root,
-      selected: false);
+    name: "Cinéma",
+    icon: const Left(HeroIcons.ticket),
+    root: CinemaRouter.root,
+    selected: false,
+  );
   CinemaRouter(this.ref);
 
   QRoute route() => QRoute(
@@ -37,35 +38,40 @@ class CinemaRouter {
         middleware: [
           AuthenticatedMiddleware(ref),
           NotificationMiddleWare(ref),
-          DeferredLoadingMiddleware(main_page.loadLibrary)
+          DeferredLoadingMiddleware(main_page.loadLibrary),
         ],
         children: [
           QRoute(
-              path: detail,
-              builder: () => detail_page.DetailPage(),
-              middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)]),
+            path: detail,
+            builder: () => detail_page.DetailPage(),
+            middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)],
+          ),
           QRoute(
-              path: admin,
-              builder: () => admin_page.AdminPage(),
-              middleware: [
-                AdminMiddleware(ref, isCinemaAdminProvider),
-                DeferredLoadingMiddleware(admin_page.loadLibrary)
-              ],
-              children: [
-                QRoute(
-                    path: detail,
-                    builder: () => detail_page.DetailPage(),
-                    middleware: [
-                      DeferredLoadingMiddleware(detail_page.loadLibrary)
-                    ]),
-                QRoute(
-                    path: addEdit,
-                    builder: () => add_edit_session_page.AddEditSessionPage(),
-                    middleware: [
-                      DeferredLoadingMiddleware(
-                          add_edit_session_page.loadLibrary)
-                    ]),
-              ]),
+            path: admin,
+            builder: () => admin_page.AdminPage(),
+            middleware: [
+              AdminMiddleware(ref, isCinemaAdminProvider),
+              DeferredLoadingMiddleware(admin_page.loadLibrary),
+            ],
+            children: [
+              QRoute(
+                path: detail,
+                builder: () => detail_page.DetailPage(),
+                middleware: [
+                  DeferredLoadingMiddleware(detail_page.loadLibrary),
+                ],
+              ),
+              QRoute(
+                path: addEdit,
+                builder: () => add_edit_session_page.AddEditSessionPage(),
+                middleware: [
+                  DeferredLoadingMiddleware(
+                    add_edit_session_page.loadLibrary,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ],
       );
 }

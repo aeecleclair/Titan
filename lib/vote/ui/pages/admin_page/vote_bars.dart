@@ -37,35 +37,38 @@ class VoteBars extends HookConsumerWidget {
 
     if (sectionsContender[section] != null) {
       sectionsContender[section]!.maybeWhen(
-          data: ((data) {
-            sectionNames = data.map((e) => e.name).toList();
-            sectionIds.addAll({for (var e in data) data.indexOf(e): e.id});
-            total = data.map((e) => voteValue[e.id]).reduce(
-                    (value, element) => (value ?? 0) + (element ?? 0)) ??
-                0;
-            contenderBars = data
-                .map((x) => BarChartGroupData(
-                      x: data.indexOf(x),
-                      barRods: [
-                        BarChartRodData(
-                          toY: (voteValue[sectionIds[data.indexOf(x)]] ?? 0)
-                              .toDouble(),
-                          color:
-                              isTouched.value ? Colors.grey.shade800 : barColor,
-                          width: 40,
-                          borderSide: isTouched.value
-                              ? const BorderSide(color: Colors.white, width: 2)
-                              : const BorderSide(color: Colors.white, width: 0),
-                          backDrawRodData: BackgroundBarChartRodData(
-                            show: true,
-                            color: barBackgroundColor,
-                          ),
-                        ),
-                      ],
-                    ))
-                .toList();
-          }),
-          orElse: () {});
+        data: ((data) {
+          sectionNames = data.map((e) => e.name).toList();
+          sectionIds.addAll({for (var e in data) data.indexOf(e): e.id});
+          total = data.map((e) => voteValue[e.id]).reduce(
+                    (value, element) => (value ?? 0) + (element ?? 0),
+                  ) ??
+              0;
+          contenderBars = data
+              .map(
+                (x) => BarChartGroupData(
+                  x: data.indexOf(x),
+                  barRods: [
+                    BarChartRodData(
+                      toY: (voteValue[sectionIds[data.indexOf(x)]] ?? 0)
+                          .toDouble(),
+                      color: isTouched.value ? Colors.grey.shade800 : barColor,
+                      width: 40,
+                      borderSide: isTouched.value
+                          ? const BorderSide(color: Colors.white, width: 2)
+                          : const BorderSide(color: Colors.white, width: 0),
+                      backDrawRodData: BackgroundBarChartRodData(
+                        show: true,
+                        color: barBackgroundColor,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+              .toList();
+        }),
+        orElse: () {},
+      );
     }
 
     return Expanded(
@@ -78,7 +81,11 @@ class VoteBars extends HookConsumerWidget {
               touchTooltipData: BarTouchTooltipData(
                 tooltipRoundedRadius: 20,
                 tooltipPadding: const EdgeInsets.only(
-                    left: 10, right: 10, top: 12, bottom: 5),
+                  left: 10,
+                  right: 10,
+                  top: 12,
+                  bottom: 5,
+                ),
                 tooltipMargin: 10,
                 tooltipBgColor: Colors.grey.shade200,
                 getTooltipItem: (group, groupIndex, rod, rodIndex) {

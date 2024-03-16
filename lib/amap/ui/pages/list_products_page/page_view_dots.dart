@@ -17,14 +17,17 @@ class Dots extends HookConsumerWidget {
             controller: pageController,
             count: len,
             effect: WormEffect(
-                dotColor: AMAPColorConstants.background3,
-                activeDotColor: AMAPColorConstants.enabled,
-                dotWidth: 7,
-                dotHeight: 7),
+              dotColor: AMAPColorConstants.background3,
+              activeDotColor: AMAPColorConstants.enabled,
+              dotWidth: 7,
+              dotHeight: 7,
+            ),
             onDotClicked: (index) {
-              pageController.animateToPage(index,
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.decelerate);
+              pageController.animateToPage(
+                index,
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.decelerate,
+              );
             },
           )
         : const SizedBox();

@@ -28,18 +28,20 @@ class AddLoanerPage extends HookConsumerWidget {
 
     return AdminTemplate(
       child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(
-              parent: BouncingScrollPhysics(),
-            ),
-            child: Column(
-              children: [
-                SizedBox(
-                    child: Column(children: [
-                  const AlignLeftText(AdminTextConstants.addLoaningAssociation),
-                  const SizedBox(height: 30),
-                  AsyncChild(
+        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(
+            parent: BouncingScrollPhysics(),
+          ),
+          child: Column(
+            children: [
+              SizedBox(
+                child: Column(
+                  children: [
+                    const AlignLeftText(
+                        AdminTextConstants.addLoaningAssociation),
+                    const SizedBox(height: 30),
+                    AsyncChild(
                       value: associations,
                       builder: (context, associationList) {
                         final canAdd = associationList
@@ -48,60 +50,71 @@ class AddLoanerPage extends HookConsumerWidget {
                         return canAdd.isNotEmpty
                             ? Column(
                                 children: canAdd
-                                    .map((e) => GestureDetector(
-                                          onTap: () {
-                                            Loaner newLoaner = Loaner(
-                                                groupManagerId: e.id,
-                                                id: '',
-                                                name: e.name);
-                                            tokenExpireWrapper(ref, () async {
-                                              final value =
-                                                  await loanerListNotifier
-                                                      .addLoaner(newLoaner);
-                                              if (value) {
-                                                QR.back();
-                                                displayToastWithContext(
-                                                    TypeMsg.msg,
-                                                    AdminTextConstants
-                                                        .addedLoaner);
-                                              } else {
-                                                displayToastWithContext(
-                                                    TypeMsg.error,
-                                                    AdminTextConstants
-                                                        .addingError);
-                                              }
-                                            });
-                                          },
-                                          child: Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 20),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  e.name,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.w500),
-                                                ),
-                                                const HeroIcon(HeroIcons.plus,
-                                                    size: 25,
-                                                    color: Colors.black)
-                                              ],
-                                            ),
+                                    .map(
+                                      (e) => GestureDetector(
+                                        onTap: () {
+                                          Loaner newLoaner = Loaner(
+                                            groupManagerId: e.id,
+                                            id: '',
+                                            name: e.name,
+                                          );
+                                          tokenExpireWrapper(ref, () async {
+                                            final value =
+                                                await loanerListNotifier
+                                                    .addLoaner(newLoaner);
+                                            if (value) {
+                                              QR.back();
+                                              displayToastWithContext(
+                                                TypeMsg.msg,
+                                                AdminTextConstants.addedLoaner,
+                                              );
+                                            } else {
+                                              displayToastWithContext(
+                                                TypeMsg.error,
+                                                AdminTextConstants.addingError,
+                                              );
+                                            }
+                                          });
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 20,
                                           ),
-                                        ))
-                                    .toList())
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                e.name,
+                                                style: const TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                              const HeroIcon(
+                                                HeroIcons.plus,
+                                                size: 25,
+                                                color: Colors.black,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                              )
                             : const Center(
-                                child: Text(AdminTextConstants.noMoreLoaner));
-                      })
-                ]))
-              ],
-            ),
-          )),
+                                child: Text(AdminTextConstants.noMoreLoaner),
+                              );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

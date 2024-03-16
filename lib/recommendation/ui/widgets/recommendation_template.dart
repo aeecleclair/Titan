@@ -17,7 +17,7 @@ class RecommendationTemplate extends StatelessWidget {
             title: RecommendationTextConstants.recommendation,
             root: RecommendationRouter.root,
           ),
-          Expanded(child: child)
+          Expanded(child: child),
         ],
       ),
     );

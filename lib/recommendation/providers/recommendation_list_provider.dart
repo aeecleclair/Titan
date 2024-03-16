@@ -16,7 +16,9 @@ class RecommendationListNotifier extends ListNotifier<Recommendation> {
 
   Future<bool> addRecommendation(Recommendation recommendation) async {
     return await add(
-        recommendationRepository.createRecommendation, recommendation);
+      recommendationRepository.createRecommendation,
+      recommendation,
+    );
   }
 
   Future<bool> updateRecommendation(Recommendation recommendation) async {
@@ -45,7 +47,8 @@ final recommendationListProvider = StateNotifierProvider<
   (ref) {
     final recommendatioRepository = ref.watch(recommendationRepositoryProvider);
     final provider = RecommendationListNotifier(
-        recommendationRepository: recommendatioRepository);
+      recommendationRepository: recommendatioRepository,
+    );
     tokenExpireWrapperAuth(
       ref,
       () async {

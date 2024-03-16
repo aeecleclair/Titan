@@ -54,30 +54,35 @@ class LoanMainPage extends HookConsumerWidget {
       child: Stack(
         children: [
           Refresher(
-              onRefresh: () async {
-                await loanListNotifier.loadLoanList();
-              },
-              child: Column(children: [
+            onRefresh: () async {
+              await loanListNotifier.loadLoanList();
+            },
+            child: Column(
+              children: [
                 const SizedBox(height: 40),
                 (onGoingLoan.isNotEmpty)
-                    ? Column(children: [
-                        AlignLeftText(
-                          '${onGoingLoan.length} ${LoanTextConstants.loan.toLowerCase()}${onGoingLoan.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
-                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                          color: Colors.grey,
-                        ),
-                        const SizedBox(height: 30),
-                        HorizontalListView.builder(
+                    ? Column(
+                        children: [
+                          AlignLeftText(
+                            '${onGoingLoan.length} ${LoanTextConstants.loan.toLowerCase()}${onGoingLoan.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 30.0),
+                            color: Colors.grey,
+                          ),
+                          const SizedBox(height: 30),
+                          HorizontalListView.builder(
                             height: 170,
                             items: onGoingLoan,
                             itemBuilder: (context, e, i) => LoanCard(
-                                  loan: e,
-                                  onInfo: () {
-                                    loanNotifier.setLoan(e);
-                                    QR.to(LoanRouter.root + LoanRouter.detail);
-                                  },
-                                ))
-                      ])
+                              loan: e,
+                              onInfo: () {
+                                loanNotifier.setLoan(e);
+                                QR.to(LoanRouter.root + LoanRouter.detail);
+                              },
+                            ),
+                          ),
+                        ],
+                      )
                     : (returnedLoan.isEmpty)
                         ? SizedBox(
                             height: MediaQuery.of(context).size.height * 0.7,
@@ -86,38 +91,47 @@ class LoanMainPage extends HookConsumerWidget {
                               children: [
                                 Expanded(
                                   child: Center(
-                                      child: Text(LoanTextConstants.noLoan,
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.grey.shade300))),
+                                    child: Text(
+                                      LoanTextConstants.noLoan,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey.shade300,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                                const Spacer()
+                                const Spacer(),
                               ],
                             ),
                           )
                         : Container(),
                 if (returnedLoan.isNotEmpty)
-                  Column(children: [
-                    const SizedBox(height: 30),
-                    AlignLeftText(
-                      '${returnedLoan.length} ${LoanTextConstants.loan.toLowerCase()}${returnedLoan.length > 1 ? 's' : ''} ${LoanTextConstants.returned.toLowerCase()}${returnedLoan.length > 1 ? 's' : ''}',
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      color: Colors.grey,
-                    ),
-                    const SizedBox(height: 30),
-                    HorizontalListView.builder(
+                  Column(
+                    children: [
+                      const SizedBox(height: 30),
+                      AlignLeftText(
+                        '${returnedLoan.length} ${LoanTextConstants.loan.toLowerCase()}${returnedLoan.length > 1 ? 's' : ''} ${LoanTextConstants.returned.toLowerCase()}${returnedLoan.length > 1 ? 's' : ''}',
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        color: Colors.grey,
+                      ),
+                      const SizedBox(height: 30),
+                      HorizontalListView.builder(
                         height: 190,
                         items: returnedLoan,
                         itemBuilder: (context, e, i) => LoanCard(
-                              loan: e,
-                              onInfo: () {
-                                loanNotifier.setLoan(e);
-                                QR.to(LoanRouter.root + LoanRouter.detail);
-                              },
-                            ))
-                  ])
-              ])),
+                          loan: e,
+                          onInfo: () {
+                            loanNotifier.setLoan(e);
+                            QR.to(LoanRouter.root + LoanRouter.detail);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+              ],
+            ),
+          ),
           if (isAdmin)
             Positioned(
               top: 30,
@@ -127,7 +141,7 @@ class LoanMainPage extends HookConsumerWidget {
                   QR.to(LoanRouter.root + LoanRouter.admin);
                 },
               ),
-            )
+            ),
         ],
       ),
     );

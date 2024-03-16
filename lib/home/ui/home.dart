@@ -28,51 +28,66 @@ class HomePage extends HookConsumerWidget {
       color: Colors.white,
       child: SafeArea(
         child: Refresher(
-            onRefresh: () async {
-              await confirmedEventListNotifier.loadConfirmedEvent();
-              now = DateTime.now();
-            },
-            child: Column(children: [
+          onRefresh: () async {
+            await confirmedEventListNotifier.loadConfirmedEvent();
+            now = DateTime.now();
+          },
+          child: Column(
+            children: [
               const TopBar(
                 title: HomeTextConstants.calendar,
                 root: HomeRouter.root,
               ),
               const SizedBox(height: 20),
               MonthBar(
-                  scrollController: scrollController,
-                  width: MediaQuery.of(context).size.width),
+                scrollController: scrollController,
+                width: MediaQuery.of(context).size.width,
+              ),
               const SizedBox(height: 10),
               DayList(scrollController, daysEventScrollController),
               const SizedBox(height: 15),
-              const AlignLeftText(HomeTextConstants.incomingEvents,
-                  padding: EdgeInsets.symmetric(horizontal: 30.0),
-                  fontSize: 25),
+              const AlignLeftText(
+                HomeTextConstants.incomingEvents,
+                padding: EdgeInsets.symmetric(horizontal: 30.0),
+                fontSize: 25,
+              ),
               const SizedBox(height: 10),
               SizedBox(
-                  height: MediaQuery.of(context).size.height - 320,
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    controller: daysEventScrollController,
-                    child: sortedEventList.keys.isNotEmpty
-                        ? Column(
-                            children: sortedEventList
-                                .map((key, value) => MapEntry(
-                                    key,
-                                    DaysEvent(
-                                        day: key, now: now, events: value)))
-                                .values
-                                .toList())
-                        : const Center(
-                            child: Text(
-                              HomeTextConstants.noEvents,
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey),
+                height: MediaQuery.of(context).size.height - 320,
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  controller: daysEventScrollController,
+                  child: sortedEventList.keys.isNotEmpty
+                      ? Column(
+                          children: sortedEventList
+                              .map(
+                                (key, value) => MapEntry(
+                                  key,
+                                  DaysEvent(
+                                    day: key,
+                                    now: now,
+                                    events: value,
+                                  ),
+                                ),
+                              )
+                              .values
+                              .toList(),
+                        )
+                      : const Center(
+                          child: Text(
+                            HomeTextConstants.noEvents,
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey,
                             ),
                           ),
-                  ))
-            ])),
+                        ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

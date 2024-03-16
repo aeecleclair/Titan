@@ -21,17 +21,21 @@ void main() {
       final groupList = await groupNotifier.loadGroups();
       expect(groupList, isA<AsyncData<List<SimpleGroup>>>());
       expect(
-          groupList.when(
-              data: (liste) => liste,
-              error: (e, s) => null,
-              loading: () => null),
-          isA<List<SimpleGroup>>());
+        groupList.when(
+          data: (liste) => liste,
+          error: (e, s) => null,
+          loading: () => null,
+        ),
+        isA<List<SimpleGroup>>(),
+      );
       expect(
-          groupList.when(
-              data: (liste) => liste.length,
-              error: (e, s) => 0,
-              loading: () => 0),
-          1);
+        groupList.when(
+          data: (liste) => liste.length,
+          error: (e, s) => 0,
+          loading: () => 0,
+        ),
+        1,
+      );
     });
 
     test('Should return a group', () async {
@@ -59,17 +63,21 @@ void main() {
       final groupList = await groupNotifier.loadGroupsFromUser(user);
       expect(groupList, isA<AsyncData<List<SimpleGroup>>>());
       expect(
-          groupList.when(
-              data: (liste) => liste,
-              error: (e, s) => null,
-              loading: () => null),
-          isA<List<SimpleGroup>>());
+        groupList.when(
+          data: (liste) => liste,
+          error: (e, s) => null,
+          loading: () => null,
+        ),
+        isA<List<SimpleGroup>>(),
+      );
       expect(
-          groupList.when(
-              data: (liste) => liste.length,
-              error: (e, s) => 0,
-              loading: () => 0),
-          1);
+        groupList.when(
+          data: (liste) => liste.length,
+          error: (e, s) => 0,
+          loading: () => 0,
+        ),
+        1,
+      );
     });
 
     test('Should create a group', () async {
@@ -127,19 +135,33 @@ void main() {
       final mockGroup = MockGroupRepository();
       final groupListNotifier = GroupListNotifier(groupRepository: mockGroup);
       final existingGroup = SimpleGroup(
-          id: '1', name: 'Existing Group', description: 'Existing Description');
+        id: '1',
+        name: 'Existing Group',
+        description: 'Existing Description',
+      );
       groupListNotifier.state = AsyncValue.data([existingGroup]);
       final modifiedGroup = SimpleGroup(
-          id: '1', name: 'Modified Group', description: 'Modified Description');
+        id: '1',
+        name: 'Modified Group',
+        description: 'Modified Description',
+      );
       groupListNotifier.setGroup(modifiedGroup);
       expect(
-          groupListNotifier.state.when(
-              data: (data) => data, error: (e, s) => [], loading: () => []),
-          contains(modifiedGroup));
+        groupListNotifier.state.when(
+          data: (data) => data,
+          error: (e, s) => [],
+          loading: () => [],
+        ),
+        contains(modifiedGroup),
+      );
       expect(
-          groupListNotifier.state.when(
-              data: (data) => data, error: (e, s) => [], loading: () => []),
-          isNot(contains(existingGroup)));
+        groupListNotifier.state.when(
+          data: (data) => data,
+          error: (e, s) => [],
+          loading: () => [],
+        ),
+        isNot(contains(existingGroup)),
+      );
     });
   });
 }

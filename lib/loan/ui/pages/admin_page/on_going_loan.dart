@@ -57,139 +57,162 @@ class OnGoingLoan extends HookConsumerWidget {
       return const Loader();
     }
     return AsyncChild(
-        value: adminLoanList[loaner]!,
-        builder: (context, data) {
-          if (data.isNotEmpty) {
-            data.sort((a, b) => a.end.compareTo(b.end));
-          }
-          return Column(
-            children: [
-              StyledSearchBar(
-                label:
-                    '${data.isEmpty ? LoanTextConstants.none : data.length} ${LoanTextConstants.loan.toLowerCase()}${data.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
-                onChanged: (value) async {
-                  if (value.isNotEmpty) {
-                    adminLoanListNotifier.setTData(
-                        loaner, await loanListNotifier.filterLoans(value));
-                  } else {
-                    adminLoanListNotifier.setTData(loaner, loanList);
-                  }
+      value: adminLoanList[loaner]!,
+      builder: (context, data) {
+        if (data.isNotEmpty) {
+          data.sort((a, b) => a.end.compareTo(b.end));
+        }
+        return Column(
+          children: [
+            StyledSearchBar(
+              label:
+                  '${data.isEmpty ? LoanTextConstants.none : data.length} ${LoanTextConstants.loan.toLowerCase()}${data.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
+              onChanged: (value) async {
+                if (value.isNotEmpty) {
+                  adminLoanListNotifier.setTData(
+                    loaner,
+                    await loanListNotifier.filterLoans(value),
+                  );
+                } else {
+                  adminLoanListNotifier.setTData(loaner, loanList);
+                }
+              },
+            ),
+            const SizedBox(height: 10),
+            HorizontalListView.builder(
+              height: 170,
+              firstChild: GestureDetector(
+                onTap: () async {
+                  await loanNotifier.setLoan(Loan.empty());
+                  startNotifier.setStart(processDate(DateTime.now()));
+                  endNotifier.setEnd("");
+                  QR.to(
+                    LoanRouter.root + LoanRouter.admin + LoanRouter.addEditLoan,
+                  );
+                  loanersItemsNotifier.setTData(loaner, itemList);
                 },
-              ),
-              const SizedBox(height: 10),
-              HorizontalListView.builder(
+                child: const CardLayout(
+                  width: 100,
                   height: 170,
-                  firstChild: GestureDetector(
-                    onTap: () async {
-                      await loanNotifier.setLoan(Loan.empty());
-                      startNotifier.setStart(processDate(DateTime.now()));
-                      endNotifier.setEnd("");
-                      QR.to(LoanRouter.root +
-                          LoanRouter.admin +
-                          LoanRouter.addEditLoan);
-                      loanersItemsNotifier.setTData(loaner, itemList);
-                    },
-                    child: const CardLayout(
-                      width: 100,
-                      height: 170,
-                      child: Center(
-                          child: HeroIcon(
-                        HeroIcons.plus,
-                        size: 40.0,
-                        color: Colors.black,
-                      )),
+                  child: Center(
+                    child: HeroIcon(
+                      HeroIcons.plus,
+                      size: 40.0,
+                      color: Colors.black,
                     ),
                   ),
-                  items: data,
-                  itemBuilder: (context, e, i) => LoanCard(
-                        loan: e,
-                        isAdmin: true,
-                        onEdit: () async {
-                          await loanNotifier.setLoan(e);
-                          startNotifier.setStart(processDate(e.start));
-                          endNotifier.setEnd(processDate(e.end));
-                          QR.to(LoanRouter.root +
-                              LoanRouter.admin +
-                              LoanRouter.addEditLoan);
-                          loanersItemsNotifier.setTData(loaner, itemList);
+                ),
+              ),
+              items: data,
+              itemBuilder: (context, e, i) => LoanCard(
+                loan: e,
+                isAdmin: true,
+                onEdit: () async {
+                  await loanNotifier.setLoan(e);
+                  startNotifier.setStart(processDate(e.start));
+                  endNotifier.setEnd(processDate(e.end));
+                  QR.to(
+                    LoanRouter.root + LoanRouter.admin + LoanRouter.addEditLoan,
+                  );
+                  loanersItemsNotifier.setTData(loaner, itemList);
+                },
+                onCalendar: () async {
+                  await showDialog<int>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return DelayDialog(
+                        onYes: (i) async {
+                          Loan newLoan = e.copyWith(
+                            end: e.end.add(Duration(days: i)),
+                          );
+                          await loanNotifier.setLoan(newLoan);
+                          tokenExpireWrapper(ref, () async {
+                            final value =
+                                await loanListNotifier.extendLoan(newLoan, i);
+                            if (value) {
+                              adminLoanListNotifier.setTData(
+                                loaner,
+                                await loanListNotifier.copy(),
+                              );
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                LoanTextConstants.extendedLoan,
+                              );
+                            } else {
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                LoanTextConstants.extendingError,
+                              );
+                            }
+                          });
                         },
-                        onCalendar: () async {
-                          await showDialog<int>(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return DelayDialog(
-                                  onYes: (i) async {
-                                    Loan newLoan = e.copyWith(
-                                        end: e.end.add(Duration(days: i)));
-                                    await loanNotifier.setLoan(newLoan);
-                                    tokenExpireWrapper(ref, () async {
-                                      final value = await loanListNotifier
-                                          .extendLoan(newLoan, i);
-                                      if (value) {
-                                        adminLoanListNotifier.setTData(loaner,
-                                            await loanListNotifier.copy());
-                                        displayToastWithContext(TypeMsg.msg,
-                                            LoanTextConstants.extendedLoan);
-                                      } else {
-                                        displayToastWithContext(TypeMsg.error,
-                                            LoanTextConstants.extendingError);
-                                      }
-                                    });
-                                  },
-                                );
-                              });
-                        },
-                        onReturn: () async {
-                          await showDialog(
-                              context: context,
-                              builder: (context) => CustomDialogBox(
-                                  title: LoanTextConstants.returnLoan,
-                                  descriptions:
-                                      LoanTextConstants.returnLoanDescription,
-                                  onYes: () async {
-                                    await tokenExpireWrapper(ref, () async {
-                                      final loanItemsId = e.itemsQuantity
-                                          .map((e) => e.itemSimple.id)
-                                          .toList();
-                                      final updatedItems = loanersItems[loaner]!
-                                          .maybeWhen<List<Item>>(
-                                              data: (items) => items,
-                                              orElse: () => [])
-                                          .map(
-                                        (item) {
-                                          if (loanItemsId.contains(item.id)) {
-                                            return item.copyWith();
-                                          }
-                                          return item;
-                                        },
-                                      ).toList();
-                                      final value =
-                                          await loanListNotifier.returnLoan(e);
-                                      if (value) {
-                                        QR.to(
-                                            LoanRouter.root + LoanRouter.admin);
-                                        loanersItemsNotifier.setTData(
-                                            loaner, AsyncData(updatedItems));
-                                        adminLoanListNotifier.setTData(loaner,
-                                            await loanListNotifier.copy());
-                                        displayToastWithContext(TypeMsg.msg,
-                                            LoanTextConstants.returnedLoan);
-                                      } else {
-                                        displayToastWithContext(TypeMsg.msg,
-                                            LoanTextConstants.returningError);
-                                      }
-                                    });
-                                  }));
-                        },
-                        onInfo: () {
-                          loanNotifier.setLoan(e);
-                          QR.to(LoanRouter.root +
-                              LoanRouter.admin +
-                              LoanRouter.detail);
-                        },
-                      ))
-            ],
-          );
-        });
+                      );
+                    },
+                  );
+                },
+                onReturn: () async {
+                  await showDialog(
+                    context: context,
+                    builder: (context) => CustomDialogBox(
+                      title: LoanTextConstants.returnLoan,
+                      descriptions: LoanTextConstants.returnLoanDescription,
+                      onYes: () async {
+                        await tokenExpireWrapper(ref, () async {
+                          final loanItemsId = e.itemsQuantity
+                              .map((e) => e.itemSimple.id)
+                              .toList();
+                          final updatedItems = loanersItems[loaner]!
+                              .maybeWhen<List<Item>>(
+                            data: (items) => items,
+                            orElse: () => [],
+                          )
+                              .map(
+                            (item) {
+                              if (loanItemsId.contains(item.id)) {
+                                return item.copyWith();
+                              }
+                              return item;
+                            },
+                          ).toList();
+                          final value = await loanListNotifier.returnLoan(e);
+                          if (value) {
+                            QR.to(
+                              LoanRouter.root + LoanRouter.admin,
+                            );
+                            loanersItemsNotifier.setTData(
+                              loaner,
+                              AsyncData(updatedItems),
+                            );
+                            adminLoanListNotifier.setTData(
+                              loaner,
+                              await loanListNotifier.copy(),
+                            );
+                            displayToastWithContext(
+                              TypeMsg.msg,
+                              LoanTextConstants.returnedLoan,
+                            );
+                          } else {
+                            displayToastWithContext(
+                              TypeMsg.msg,
+                              LoanTextConstants.returningError,
+                            );
+                          }
+                        });
+                      },
+                    ),
+                  );
+                },
+                onInfo: () {
+                  loanNotifier.setLoan(e);
+                  QR.to(
+                    LoanRouter.root + LoanRouter.admin + LoanRouter.detail,
+                  );
+                },
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

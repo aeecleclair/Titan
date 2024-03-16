@@ -9,7 +9,8 @@ class TheMovieDBResultNotifier extends ListNotifier<TheMovieDBSearchResult> {
       : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<TheMovieDBSearchResult>>> loadMovies(
-      String query) async {
+    String query,
+  ) async {
     return await loadList(() => theMoviesDBRepository.searchMovie(query));
   }
 }

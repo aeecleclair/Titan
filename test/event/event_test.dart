@@ -93,8 +93,10 @@ void main() {
         applicant: Applicant.empty().copyWith(id: "1"),
         decision: Decision.approved,
       );
-      expect(event.toString(),
-          'Event{id: 1, name: Event 1, organizer: 1, start: 2021-01-01 00:00:00.000Z, end: 2021-01-01 00:00:00.000Z, allDay: false, location: Location 1, type: CalendarEventType.eventAE, description: Description 1, recurrenceRule: , applicantId: 1, applicant: Applicant{name: Nom, firstname: Prénom, nickname: null, id: 1, email: empty@ecl.ec-lyon.fr, promo: null, phone: null}, decision: Decision.approved');
+      expect(
+        event.toString(),
+        'Event{id: 1, name: Event 1, organizer: 1, start: 2021-01-01 00:00:00.000Z, end: 2021-01-01 00:00:00.000Z, allDay: false, location: Location 1, type: CalendarEventType.eventAE, description: Description 1, recurrenceRule: , applicantId: 1, applicant: Applicant{name: Nom, firstname: Prénom, nickname: null, id: 1, email: empty@ecl.ec-lyon.fr, promo: null, phone: null}, decision: Decision.approved',
+      );
     });
 
     test('Should parse an event from json', () {
@@ -169,7 +171,9 @@ void main() {
     test('Testing calendarEventTypeToString', () {
       expect(calendarEventTypeToString(CalendarEventType.eventAE), "Event AE");
       expect(
-          calendarEventTypeToString(CalendarEventType.eventUSE), "Event USE");
+        calendarEventTypeToString(CalendarEventType.eventUSE),
+        "Event USE",
+      );
       expect(calendarEventTypeToString(CalendarEventType.happyHour), "HH");
       expect(calendarEventTypeToString(CalendarEventType.direction), "Strass");
       expect(calendarEventTypeToString(CalendarEventType.nightParty), "Rewass");
@@ -179,7 +183,9 @@ void main() {
     test('Testing stringToCalendarEventType', () {
       expect(stringToCalendarEventType("Event AE"), CalendarEventType.eventAE);
       expect(
-          stringToCalendarEventType("Event USE"), CalendarEventType.eventUSE);
+        stringToCalendarEventType("Event USE"),
+        CalendarEventType.eventUSE,
+      );
       expect(stringToCalendarEventType("HH"), CalendarEventType.happyHour);
       expect(stringToCalendarEventType("Strass"), CalendarEventType.direction);
       expect(stringToCalendarEventType("Rewass"), CalendarEventType.nightParty);
@@ -250,37 +256,63 @@ void main() {
           "FREQ=WEEKLY;BYMONTH=1;BYDAY=MO;WKST=MO;UNTIL=20211231T235959Z";
       const allDay = false;
       const allDay2 = true;
-      expect(formatRecurrenceRule(start, end, recurrenceRule, allDay),
-          "Tous les Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi et Dimanche de 00:00 à 01:00 jusqu'au 31/12/2021");
-      expect(formatRecurrenceRule(start, end2, recurrenceRule, allDay),
-          "Tous les Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi et Dimanche de 00:00 à 00:00 jusqu'au 31/12/2021");
-      expect(formatRecurrenceRule(start, end, recurrenceRule2, allDay),
-          "Le 01/01/2021 de 00:00 à 01:00");
-      expect(formatRecurrenceRule(start, end2, recurrenceRule2, allDay),
-          "Du 01/01/2021 à 00:00 au 02/01/2021 à 00:00");
-      expect(formatRecurrenceRule(start, end, recurrenceRule, allDay2),
-          "Tous les Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi et Dimanche toute la journée jusqu'au 31/12/2021");
-      expect(formatRecurrenceRule(start, end2, recurrenceRule, allDay2),
-          "Tous les Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi et Dimanche toute la journée jusqu'au 31/12/2021");
-      expect(formatRecurrenceRule(start, end, recurrenceRule2, allDay2),
-          "Le 01/01/2021 toute la journée");
-      expect(formatRecurrenceRule(start, end2, recurrenceRule2, allDay2),
-          "Du 01/01/2021 à 00:00 au 02/01/2021 à 00:00");
-      expect(formatRecurrenceRule(start, end, recurrenceRule3, allDay),
-          "Tous les Lundi de 00:00 à 01:00 jusqu'au 31/12/2021");
-      expect(formatRecurrenceRule(start, end2, recurrenceRule3, allDay),
-          "Tous les Lundi de 00:00 à 00:00 jusqu'au 31/12/2021");
-      expect(formatRecurrenceRule(start, end, recurrenceRule3, allDay2),
-          "Tous les Lundi toute la journée jusqu'au 31/12/2021");
-      expect(formatRecurrenceRule(start, end2, recurrenceRule3, allDay2),
-          "Tous les Lundi toute la journée jusqu'au 31/12/2021");
+      expect(
+        formatRecurrenceRule(start, end, recurrenceRule, allDay),
+        "Tous les Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi et Dimanche de 00:00 à 01:00 jusqu'au 31/12/2021",
+      );
+      expect(
+        formatRecurrenceRule(start, end2, recurrenceRule, allDay),
+        "Tous les Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi et Dimanche de 00:00 à 00:00 jusqu'au 31/12/2021",
+      );
+      expect(
+        formatRecurrenceRule(start, end, recurrenceRule2, allDay),
+        "Le 01/01/2021 de 00:00 à 01:00",
+      );
+      expect(
+        formatRecurrenceRule(start, end2, recurrenceRule2, allDay),
+        "Du 01/01/2021 à 00:00 au 02/01/2021 à 00:00",
+      );
+      expect(
+        formatRecurrenceRule(start, end, recurrenceRule, allDay2),
+        "Tous les Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi et Dimanche toute la journée jusqu'au 31/12/2021",
+      );
+      expect(
+        formatRecurrenceRule(start, end2, recurrenceRule, allDay2),
+        "Tous les Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi et Dimanche toute la journée jusqu'au 31/12/2021",
+      );
+      expect(
+        formatRecurrenceRule(start, end, recurrenceRule2, allDay2),
+        "Le 01/01/2021 toute la journée",
+      );
+      expect(
+        formatRecurrenceRule(start, end2, recurrenceRule2, allDay2),
+        "Du 01/01/2021 à 00:00 au 02/01/2021 à 00:00",
+      );
+      expect(
+        formatRecurrenceRule(start, end, recurrenceRule3, allDay),
+        "Tous les Lundi de 00:00 à 01:00 jusqu'au 31/12/2021",
+      );
+      expect(
+        formatRecurrenceRule(start, end2, recurrenceRule3, allDay),
+        "Tous les Lundi de 00:00 à 00:00 jusqu'au 31/12/2021",
+      );
+      expect(
+        formatRecurrenceRule(start, end, recurrenceRule3, allDay2),
+        "Tous les Lundi toute la journée jusqu'au 31/12/2021",
+      );
+      expect(
+        formatRecurrenceRule(start, end2, recurrenceRule3, allDay2),
+        "Tous les Lundi toute la journée jusqu'au 31/12/2021",
+      );
     });
 
     test('Testing mergeDates', () {
       final date = DateTime.parse("2021-01-01T00:00:00.000Z");
       final date2 = DateTime.parse("2021-02-03T01:00:00.000Z");
       expect(
-          mergeDates(date, date2), DateTime.parse("2021-01-01T01:00:00.000"));
+        mergeDates(date, date2),
+        DateTime.parse("2021-01-01T01:00:00.000"),
+      );
     });
 
     test('Testing dayDifference', () {

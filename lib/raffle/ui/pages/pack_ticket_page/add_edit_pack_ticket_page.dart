@@ -23,9 +23,11 @@ class AddEditPackTicketPage extends HookConsumerWidget {
     final packTicket = ref.watch(packTicketProvider);
     final isEdit = packTicket.id != PackTicket.empty().id;
     final packSize = useTextEditingController(
-        text: isEdit ? packTicket.packSize.toString() : "");
+      text: isEdit ? packTicket.packSize.toString() : "",
+    );
     final price = useTextEditingController(
-        text: isEdit ? packTicket.price.toString() : "");
+      text: isEdit ? packTicket.price.toString() : "",
+    );
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -34,136 +36,165 @@ class AddEditPackTicketPage extends HookConsumerWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 30),
       child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Form(
-              key: formKey,
-              child: Container(
-                  alignment: Alignment.center,
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        const Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            RaffleTextConstants.addTypeTicketSimple,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w800,
-                              fontSize: 25,
-                              color: RaffleColorConstants.gradient1,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 35,
-                        ),
-                        const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text("Nombre de ticket",
-                                style: TextStyle(
-                                    color: RaffleColorConstants.gradient2,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20))),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        TextEntry(
-                            label: "Nombre de ticket",
-                            isInt: true,
-                            validator: (value) {
-                              if (int.parse(value) < 1) {
-                                return RaffleTextConstants.mustBePositive;
-                              }
-                              return null;
-                            },
-                            controller: packSize,
-                            keyboardType: TextInputType.number),
-                        const SizedBox(
-                          height: 50,
-                        ),
-                        const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text("Prix",
-                                style: TextStyle(
-                                    color: RaffleColorConstants.gradient2,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20))),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        TextEntry(
-                            label: "Prix",
-                            isDouble: true,
-                            suffix: "€",
-                            controller: price,
-                            keyboardType: TextInputType.number),
-                        const SizedBox(
-                          height: 50,
-                        ),
-                        WaitingButton(
-                            builder: (child) => BlueBtn(child: child),
-                            onTap: () async {
-                              if (formKey.currentState!.validate()) {
-                                final ticketPrice = double.tryParse(
-                                    price.text.replaceAll(',', '.'));
-                                if (ticketPrice != null && ticketPrice > 0) {
-                                  await tokenExpireWrapper(ref, () async {
-                                    final newPackTicket = packTicket.copyWith(
-                                        price: double.parse(price.text),
-                                        packSize: int.parse(packSize.text),
-                                        raffleId: isEdit
-                                            ? packTicket.raffleId
-                                            : raffle.id,
-                                        id: isEdit ? packTicket.id : "");
-                                    final typeTicketNotifier = ref
-                                        .watch(packTicketListProvider.notifier);
-                                    final value = isEdit
-                                        ? await typeTicketNotifier
-                                            .updatePackTicket(newPackTicket)
-                                        : await typeTicketNotifier
-                                            .addPackTicket(newPackTicket);
-                                    if (value) {
-                                      QR.back();
-                                      if (isEdit) {
-                                        displayToastWithContext(TypeMsg.msg,
-                                            RaffleTextConstants.editedTicket);
-                                      } else {
-                                        displayToastWithContext(TypeMsg.msg,
-                                            RaffleTextConstants.addedTicket);
-                                      }
-                                    } else {
-                                      if (isEdit) {
-                                        displayToastWithContext(TypeMsg.error,
-                                            RaffleTextConstants.editingError);
-                                      } else {
-                                        displayToastWithContext(
-                                            TypeMsg.error,
-                                            RaffleTextConstants
-                                                .alreadyExistTicket);
-                                      }
-                                    }
-                                  });
-                                } else {
-                                  displayToast(context, TypeMsg.error,
-                                      RaffleTextConstants.invalidPrice);
-                                }
-                              } else {
-                                displayToast(context, TypeMsg.error,
-                                    RaffleTextConstants.addingError);
-                              }
-                            },
-                            child: Text(isEdit
-                                ? RaffleTextConstants.editTypeTicketSimple
-                                : RaffleTextConstants.addTypeTicketSimple)),
-                        const SizedBox(
-                          height: 40,
-                        ),
-                      ],
+        physics: const BouncingScrollPhysics(),
+        child: Form(
+          key: formKey,
+          child: Container(
+            alignment: Alignment.center,
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      RaffleTextConstants.addTypeTicketSimple,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 25,
+                        color: RaffleColorConstants.gradient1,
+                      ),
                     ),
-                  )))),
+                  ),
+                  const SizedBox(
+                    height: 35,
+                  ),
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Nombre de ticket",
+                      style: TextStyle(
+                        color: RaffleColorConstants.gradient2,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  TextEntry(
+                    label: "Nombre de ticket",
+                    isInt: true,
+                    validator: (value) {
+                      if (int.parse(value) < 1) {
+                        return RaffleTextConstants.mustBePositive;
+                      }
+                      return null;
+                    },
+                    controller: packSize,
+                    keyboardType: TextInputType.number,
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Prix",
+                      style: TextStyle(
+                        color: RaffleColorConstants.gradient2,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  TextEntry(
+                    label: "Prix",
+                    isDouble: true,
+                    suffix: "€",
+                    controller: price,
+                    keyboardType: TextInputType.number,
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  WaitingButton(
+                    builder: (child) => BlueBtn(child: child),
+                    onTap: () async {
+                      if (formKey.currentState!.validate()) {
+                        final ticketPrice = double.tryParse(
+                          price.text.replaceAll(',', '.'),
+                        );
+                        if (ticketPrice != null && ticketPrice > 0) {
+                          await tokenExpireWrapper(ref, () async {
+                            final newPackTicket = packTicket.copyWith(
+                              price: double.parse(price.text),
+                              packSize: int.parse(packSize.text),
+                              raffleId:
+                                  isEdit ? packTicket.raffleId : raffle.id,
+                              id: isEdit ? packTicket.id : "",
+                            );
+                            final typeTicketNotifier =
+                                ref.watch(packTicketListProvider.notifier);
+                            final value = isEdit
+                                ? await typeTicketNotifier
+                                    .updatePackTicket(newPackTicket)
+                                : await typeTicketNotifier
+                                    .addPackTicket(newPackTicket);
+                            if (value) {
+                              QR.back();
+                              if (isEdit) {
+                                displayToastWithContext(
+                                  TypeMsg.msg,
+                                  RaffleTextConstants.editedTicket,
+                                );
+                              } else {
+                                displayToastWithContext(
+                                  TypeMsg.msg,
+                                  RaffleTextConstants.addedTicket,
+                                );
+                              }
+                            } else {
+                              if (isEdit) {
+                                displayToastWithContext(
+                                  TypeMsg.error,
+                                  RaffleTextConstants.editingError,
+                                );
+                              } else {
+                                displayToastWithContext(
+                                  TypeMsg.error,
+                                  RaffleTextConstants.alreadyExistTicket,
+                                );
+                              }
+                            }
+                          });
+                        } else {
+                          displayToast(
+                            context,
+                            TypeMsg.error,
+                            RaffleTextConstants.invalidPrice,
+                          );
+                        }
+                      } else {
+                        displayToast(
+                          context,
+                          TypeMsg.error,
+                          RaffleTextConstants.addingError,
+                        );
+                      }
+                    },
+                    child: Text(
+                      isEdit
+                          ? RaffleTextConstants.editTypeTicketSimple
+                          : RaffleTextConstants.addTypeTicketSimple,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

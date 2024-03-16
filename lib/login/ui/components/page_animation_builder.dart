@@ -4,8 +4,11 @@ import 'package:myecl/login/ui/components/background_painter.dart';
 class PageAnimationBuilder extends StatelessWidget {
   final Widget child;
   final Animation<double> animation;
-  const PageAnimationBuilder(
-      {super.key, required this.child, required this.animation});
+  const PageAnimationBuilder({
+    super.key,
+    required this.child,
+    required this.animation,
+  });
 
   @override
   Widget build(BuildContext context) {

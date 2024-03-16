@@ -30,189 +30,217 @@ class ItemBar extends HookConsumerWidget {
     final itemListForSelected = ref.watch(itemListProvider);
     final cautionNotifier = ref.watch(cautionProvider.notifier);
     return SizedBox(
-        height: 180,
-        child: AsyncChild(
-            value: itemListForSelected,
+      height: 180,
+      child: AsyncChild(
+        value: itemListForSelected,
+        loaderColor: ColorConstants.background2,
+        builder: (context, data) {
+          final sortedAvailableData = data
+              .where(
+                (element) => element.loanedQuantity < element.totalQuantity,
+              )
+              .toList()
+            ..sort((a, b) => a.name.compareTo(b.name));
+          final sortedUnavailableData = data
+              .where(
+                (element) => element.loanedQuantity >= element.totalQuantity,
+              )
+              .toList()
+            ..sort((a, b) => a.name.compareTo(b.name));
+          data = sortedAvailableData + sortedUnavailableData;
+          if (loanersItems[loaner] == null) {
+            return const SizedBox(
+              height: 180,
+              child: Center(
+                child: Text(
+                  LoanTextConstants.noItems,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            );
+          }
+          return AsyncChild(
+            value: loanersItems[loaner]!,
             loaderColor: ColorConstants.background2,
-            builder: (context, data) {
-              final sortedAvailableData = data
-                  .where((element) =>
-                      element.loanedQuantity < element.totalQuantity)
-                  .toList()
-                ..sort((a, b) => a.name.compareTo(b.name));
-              final sortedUnavailableData = data
-                  .where((element) =>
-                      element.loanedQuantity >= element.totalQuantity)
-                  .toList()
-                ..sort((a, b) => a.name.compareTo(b.name));
-              data = sortedAvailableData + sortedUnavailableData;
-              if (loanersItems[loaner] == null) {
+            builder: (context, itemList) {
+              if (itemList.isEmpty) {
                 return const SizedBox(
                   height: 180,
                   child: Center(
-                      child: Text(LoanTextConstants.noItems,
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w500))),
+                    child: Text(
+                      LoanTextConstants.noItems,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
                 );
               }
-              return AsyncChild(
-                  value: loanersItems[loaner]!,
-                  loaderColor: ColorConstants.background2,
-                  builder: (context, itemList) {
-                    if (itemList.isEmpty) {
-                      return const SizedBox(
-                        height: 180,
-                        child: Center(
-                            child: Text(LoanTextConstants.noItems,
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500))),
-                      );
-                    }
-                    final sortedAvailable = itemList
-                        .where((element) =>
-                            element.loanedQuantity < element.totalQuantity)
-                        .toList()
-                      ..sort((a, b) => a.name.compareTo(b.name));
-                    final sortedUnavailable = itemList
-                        .where((element) =>
-                            element.loanedQuantity >= element.totalQuantity)
-                        .toList()
-                      ..sort((a, b) => a.name.compareTo(b.name));
-                    itemList = sortedAvailable + sortedUnavailable;
-                    return HorizontalListView.builder(
-                        height: 180,
-                        items: itemList,
-                        itemBuilder: (context, e, i) {
-                          var currentValue = selectedItems[data.indexOf(e)];
-                          return Column(
-                            children: [
-                              CheckItemCard(
-                                item: e,
-                                isSelected: currentValue != 0,
+              final sortedAvailable = itemList
+                  .where(
+                    (element) => element.loanedQuantity < element.totalQuantity,
+                  )
+                  .toList()
+                ..sort((a, b) => a.name.compareTo(b.name));
+              final sortedUnavailable = itemList
+                  .where(
+                    (element) =>
+                        element.loanedQuantity >= element.totalQuantity,
+                  )
+                  .toList()
+                ..sort((a, b) => a.name.compareTo(b.name));
+              itemList = sortedAvailable + sortedUnavailable;
+              return HorizontalListView.builder(
+                height: 180,
+                items: itemList,
+                itemBuilder: (context, e, i) {
+                  var currentValue = selectedItems[data.indexOf(e)];
+                  return Column(
+                    children: [
+                      CheckItemCard(
+                        item: e,
+                        isSelected: currentValue != 0,
+                      ),
+                      const SizedBox(height: 10),
+                      SizedBox(
+                        width: 120,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                              const SizedBox(height: 10),
-                              SizedBox(
-                                width: 120,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.all(5),
-                                      decoration: BoxDecoration(
-                                        color: Colors.black,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: GestureDetector(
-                                        child: HeroIcon(
-                                          HeroIcons.minus,
-                                          color: currentValue == 0
-                                              ? Colors.grey.shade400
-                                              : Colors.white,
-                                        ),
-                                        onTap: () {
-                                          if (currentValue > 0) {
-                                            selectedItemsNotifier.set(
-                                                data.indexOf(e),
-                                                currentValue - 1);
-                                            Map<Item, int>
-                                                selectedItemsWithQuantity =
-                                                Map.fromIterables(
-                                                    data, selectedItems);
-                                            selectedItemsWithQuantity[e] =
-                                                currentValue - 1;
-                                            List<Item> selected =
-                                                selectedItemsWithQuantity.keys
-                                                    .where((element) =>
-                                                        selectedItemsWithQuantity[
-                                                            element] !=
-                                                        0)
-                                                    .toList();
-                                            if (selected.isNotEmpty) {
-                                              endNotifier.setEndFromSelected(
-                                                  start, selected);
-                                              cautionNotifier
-                                                  .setCautionFromSelected(
-                                                      selectedItemsWithQuantity);
-                                            } else {
-                                              endNotifier.setEnd("");
-                                              cautionNotifier.setCaution("");
-                                            }
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 6),
-                                      child: Text(
-                                        currentValue.toString(),
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: currentValue == 0
-                                              ? Colors.grey.shade400
-                                              : Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                        padding: const EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                          color: Colors.black,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        child: GestureDetector(
-                                          child: HeroIcon(
-                                            HeroIcons.plus,
-                                            color: currentValue ==
-                                                    e.totalQuantity -
-                                                        e.loanedQuantity
-                                                ? Colors.grey.shade400
-                                                : Colors.white,
-                                          ),
-                                          onTap: () {
-                                            if (currentValue <
-                                                e.totalQuantity -
-                                                    e.loanedQuantity) {
-                                              selectedItemsNotifier.set(
-                                                  data.indexOf(e),
-                                                  currentValue + 1);
-                                              Map<Item, int>
-                                                  selectedItemsWithQuantity =
-                                                  Map.fromIterables(
-                                                      data, selectedItems);
-                                              selectedItemsWithQuantity[e] =
-                                                  currentValue + 1;
-                                              List<Item> selected =
-                                                  selectedItemsWithQuantity.keys
-                                                      .where((element) =>
-                                                          selectedItemsWithQuantity[
-                                                              element] !=
-                                                          0)
-                                                      .toList();
-                                              if (selected.isNotEmpty) {
-                                                endNotifier.setEndFromSelected(
-                                                    start, selected);
-                                                cautionNotifier
-                                                    .setCautionFromSelected(
-                                                        selectedItemsWithQuantity);
-                                              } else {
-                                                endNotifier.setEnd("");
-                                                cautionNotifier.setCaution("");
-                                              }
-                                            }
-                                          },
-                                        ))
-                                  ],
+                              child: GestureDetector(
+                                child: HeroIcon(
+                                  HeroIcons.minus,
+                                  color: currentValue == 0
+                                      ? Colors.grey.shade400
+                                      : Colors.white,
+                                ),
+                                onTap: () {
+                                  if (currentValue > 0) {
+                                    selectedItemsNotifier.set(
+                                      data.indexOf(e),
+                                      currentValue - 1,
+                                    );
+                                    Map<Item, int> selectedItemsWithQuantity =
+                                        Map.fromIterables(
+                                      data,
+                                      selectedItems,
+                                    );
+                                    selectedItemsWithQuantity[e] =
+                                        currentValue - 1;
+                                    List<Item> selected =
+                                        selectedItemsWithQuantity.keys
+                                            .where(
+                                              (element) =>
+                                                  selectedItemsWithQuantity[
+                                                      element] !=
+                                                  0,
+                                            )
+                                            .toList();
+                                    if (selected.isNotEmpty) {
+                                      endNotifier.setEndFromSelected(
+                                        start,
+                                        selected,
+                                      );
+                                      cautionNotifier.setCautionFromSelected(
+                                        selectedItemsWithQuantity,
+                                      );
+                                    } else {
+                                      endNotifier.setEnd("");
+                                      cautionNotifier.setCaution("");
+                                    }
+                                  }
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 6,
+                              ),
+                              child: Text(
+                                currentValue.toString(),
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: currentValue == 0
+                                      ? Colors.grey.shade400
+                                      : Colors.black,
                                 ),
                               ),
-                            ],
-                          );
-                        });
-                  });
-            }));
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: GestureDetector(
+                                child: HeroIcon(
+                                  HeroIcons.plus,
+                                  color: currentValue ==
+                                          e.totalQuantity - e.loanedQuantity
+                                      ? Colors.grey.shade400
+                                      : Colors.white,
+                                ),
+                                onTap: () {
+                                  if (currentValue <
+                                      e.totalQuantity - e.loanedQuantity) {
+                                    selectedItemsNotifier.set(
+                                      data.indexOf(e),
+                                      currentValue + 1,
+                                    );
+                                    Map<Item, int> selectedItemsWithQuantity =
+                                        Map.fromIterables(
+                                      data,
+                                      selectedItems,
+                                    );
+                                    selectedItemsWithQuantity[e] =
+                                        currentValue + 1;
+                                    List<Item> selected =
+                                        selectedItemsWithQuantity.keys
+                                            .where(
+                                              (element) =>
+                                                  selectedItemsWithQuantity[
+                                                      element] !=
+                                                  0,
+                                            )
+                                            .toList();
+                                    if (selected.isNotEmpty) {
+                                      endNotifier.setEndFromSelected(
+                                        start,
+                                        selected,
+                                      );
+                                      cautionNotifier.setCautionFromSelected(
+                                        selectedItemsWithQuantity,
+                                      );
+                                    } else {
+                                      endNotifier.setEnd("");
+                                      cautionNotifier.setCaution("");
+                                    }
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          );
+        },
+      ),
+    );
   }
 }

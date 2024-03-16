@@ -12,12 +12,13 @@ class AssociationUi extends HookConsumerWidget {
   final void Function() onEdit;
   final Future Function() onDelete;
   final bool isLoaner;
-  const AssociationUi(
-      {super.key,
-      required this.group,
-      required this.onEdit,
-      required this.onDelete,
-      required this.isLoaner});
+  const AssociationUi({
+    super.key,
+    required this.group,
+    required this.onEdit,
+    required this.onDelete,
+    required this.isLoaner,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -38,7 +39,10 @@ class AssociationUi extends HookConsumerWidget {
           child: Text(
             group.name,
             style: const TextStyle(
-                color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+              color: Colors.black,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         const SizedBox(width: 10),
@@ -57,16 +61,17 @@ class AssociationUi extends HookConsumerWidget {
             ),
             const SizedBox(width: 10),
             WaitingButton(
-                onTap: onDelete,
-                builder: (child) => AssociationButton(
-                      gradient1: ColorConstants.gradient1,
-                      gradient2: ColorConstants.gradient2,
-                      child: child,
-                    ),
-                child: const HeroIcon(
-                  HeroIcons.xMark,
-                  color: Colors.white,
-                )),
+              onTap: onDelete,
+              builder: (child) => AssociationButton(
+                gradient1: ColorConstants.gradient1,
+                gradient2: ColorConstants.gradient2,
+                child: child,
+              ),
+              child: const HeroIcon(
+                HeroIcons.xMark,
+                color: Colors.white,
+              ),
+            ),
           ],
         ),
       ],

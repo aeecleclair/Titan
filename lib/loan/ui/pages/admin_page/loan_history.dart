@@ -39,39 +39,44 @@ class HistoryLoan extends HookConsumerWidget {
       return const Loader();
     }
     return AsyncChild(
-        value: loan,
-        builder: (context, data) {
-          if (data.isNotEmpty) {
-            data.sort((a, b) => b.returnedDate!.compareTo(a.returnedDate!));
-          }
-          return Column(
-            children: [
-              StyledSearchBar(
-                label: LoanTextConstants.history,
-                onChanged: (value) async {
-                  if (value.isNotEmpty) {
-                    adminHistoryLoanListNotifier.setTData(loaner,
-                        await historyLoanListNotifier.filterLoans(value));
-                  } else {
-                    adminHistoryLoanListNotifier.setTData(loaner, loanList);
-                  }
+      value: loan,
+      builder: (context, data) {
+        if (data.isNotEmpty) {
+          data.sort((a, b) => b.returnedDate!.compareTo(a.returnedDate!));
+        }
+        return Column(
+          children: [
+            StyledSearchBar(
+              label: LoanTextConstants.history,
+              onChanged: (value) async {
+                if (value.isNotEmpty) {
+                  adminHistoryLoanListNotifier.setTData(
+                    loaner,
+                    await historyLoanListNotifier.filterLoans(value),
+                  );
+                } else {
+                  adminHistoryLoanListNotifier.setTData(loaner, loanList);
+                }
+              },
+            ),
+            const SizedBox(height: 10),
+            HorizontalListView.builder(
+              height: 120,
+              items: data,
+              itemBuilder: (context, loan, i) => LoanCard(
+                loan: loan,
+                onInfo: () {
+                  loanNotifier.setLoan(loan);
+                  QR.to(
+                    LoanRouter.root + LoanRouter.admin + LoanRouter.detail,
+                  );
                 },
+                isHistory: true,
               ),
-              const SizedBox(height: 10),
-              HorizontalListView.builder(
-                  height: 120,
-                  items: data,
-                  itemBuilder: (context, loan, i) => LoanCard(
-                      loan: loan,
-                      onInfo: () {
-                        loanNotifier.setLoan(loan);
-                        QR.to(LoanRouter.root +
-                            LoanRouter.admin +
-                            LoanRouter.detail);
-                      },
-                      isHistory: true))
-            ],
-          );
-        });
+            ),
+          ],
+        );
+      },
+    );
   }
 }

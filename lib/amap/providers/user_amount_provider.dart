@@ -15,15 +15,21 @@ class UserCashNotifier extends SingleNotifier<Cash> {
   }
 
   Future updateCash(double amount) async {
-    state.when(data: (cash) {
-      final newCash = cash.copyWith(balance: cash.balance + amount);
-      state = AsyncValue.data(newCash);
-    }, error: (error, stackTrace) {
-      state = AsyncValue.error(error, stackTrace);
-    }, loading: () {
-      state = const AsyncValue.error(
-          "Cannot update cash while loading", StackTrace.empty);
-    });
+    state.when(
+      data: (cash) {
+        final newCash = cash.copyWith(balance: cash.balance + amount);
+        state = AsyncValue.data(newCash);
+      },
+      error: (error, stackTrace) {
+        state = AsyncValue.error(error, stackTrace);
+      },
+      loading: () {
+        state = const AsyncValue.error(
+          "Cannot update cash while loading",
+          StackTrace.empty,
+        );
+      },
+    );
   }
 }
 
@@ -36,7 +42,8 @@ final userAmountProvider =
   tokenExpireWrapperAuth(ref, () async {
     final userId = ref.watch(idProvider);
     userId.whenData(
-        (value) async => await userCashNotifier.loadCashByUser(value));
+      (value) async => await userCashNotifier.loadCashByUser(value),
+    );
   });
   return userCashNotifier;
 });

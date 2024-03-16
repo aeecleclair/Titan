@@ -13,10 +13,15 @@ class LogsProvider extends ListNotifier<Log> {
   }
 
   Future<bool> deleteLogs() async {
-    return await delete((id) async => true, (listT, t) {
-      logger.clearLogs();
-      return [];
-    }, "", Log.empty());
+    return await delete(
+      (id) async => true,
+      (listT, t) {
+        logger.clearLogs();
+        return [];
+      },
+      "",
+      Log.empty(),
+    );
   }
 }
 

@@ -29,36 +29,41 @@ class StyledSearchBar extends HookConsumerWidget {
     final editingController =
         this.editingController ?? useTextEditingController();
     return Container(
-        padding: padding ?? const EdgeInsets.symmetric(horizontal: 30),
-        alignment: Alignment.centerLeft,
-        child: TextField(
-          focusNode: focusNode,
-          onChanged: (_) {
-            tokenExpireWrapper(ref, () async {
-              await onChanged?.call(editingController.text);
-            });
-          },
-          controller: editingController,
-          cursorColor: color,
-          decoration: InputDecoration(
-              labelText: label,
-              labelStyle: TextStyle(
-                  fontSize: 18, fontWeight: FontWeight.bold, color: color),
-              suffixIcon: onSuffixIconTap == null
-                  ? suffixIcon ?? Icon(Icons.search, color: color, size: 30)
-                  : GestureDetector(
-                      onTap: () {
-                        onSuffixIconTap!(focusNode, editingController);
-                      },
-                      child: suffixIcon ??
-                          Icon(Icons.search, color: color, size: 30),
-                    ),
-              enabledBorder: const UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
-              ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: color),
-              )),
-        ));
+      padding: padding ?? const EdgeInsets.symmetric(horizontal: 30),
+      alignment: Alignment.centerLeft,
+      child: TextField(
+        focusNode: focusNode,
+        onChanged: (_) {
+          tokenExpireWrapper(ref, () async {
+            await onChanged?.call(editingController.text);
+          });
+        },
+        controller: editingController,
+        cursorColor: color,
+        decoration: InputDecoration(
+          labelText: label,
+          labelStyle: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: color,
+          ),
+          suffixIcon: onSuffixIconTap == null
+              ? suffixIcon ?? Icon(Icons.search, color: color, size: 30)
+              : GestureDetector(
+                  onTap: () {
+                    onSuffixIconTap!(focusNode, editingController);
+                  },
+                  child:
+                      suffixIcon ?? Icon(Icons.search, color: color, size: 30),
+                ),
+          enabledBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.transparent),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: color),
+          ),
+        ),
+      ),
+    );
   }
 }

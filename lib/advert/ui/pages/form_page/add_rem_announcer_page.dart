@@ -30,27 +30,31 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
 
     return AdvertTemplate(
       child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(
-              parent: BouncingScrollPhysics(),
-            ),
-            child: Column(
-              children: [
-                SizedBox(
-                    child: Column(children: [
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(AdvertTextConstants.modifyAnnouncingGroup,
+        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(
+            parent: BouncingScrollPhysics(),
+          ),
+          child: Column(
+            children: [
+              SizedBox(
+                child: Column(
+                  children: [
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        AdvertTextConstants.modifyAnnouncingGroup,
                         style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            color: ColorConstants.gradient1)),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  AsyncChild(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: ColorConstants.gradient1,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    AsyncChild(
                       value: groups,
                       builder: (context, groupList) {
                         final canAdd = groupList
@@ -62,97 +66,114 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                         return (canAdd + canRemove).isNotEmpty
                             ? Column(
                                 children: canAdd
-                                        .map((e) => GestureDetector(
-                                              onTap: () {
-                                                Announcer newAnnouncer =
-                                                    Announcer(
-                                                        groupManagerId: e.id,
-                                                        id: '',
-                                                        name: e.name);
-                                                tokenExpireWrapper(ref,
-                                                    () async {
-                                                  final value =
-                                                      await announcerListNotifier
-                                                          .addAnnouncer(
-                                                              newAnnouncer);
-                                                  if (value) {
-                                                    displayToastWithContext(
-                                                        TypeMsg.msg,
-                                                        AdvertTextConstants
-                                                            .addedAnnouncer);
-                                                  } else {
-                                                    displayToastWithContext(
-                                                        TypeMsg.error,
-                                                        AdvertTextConstants
-                                                            .addingError);
-                                                  }
-                                                  announcerListNotifier
-                                                      .loadAllAnnouncerList();
-                                                });
-                                              },
-                                              child: AnnouncerCard(
-                                                e: e,
-                                                icon: HeroIcons.plus,
-                                              ),
-                                            ))
+                                        .map(
+                                          (e) => GestureDetector(
+                                            onTap: () {
+                                              Announcer newAnnouncer =
+                                                  Announcer(
+                                                groupManagerId: e.id,
+                                                id: '',
+                                                name: e.name,
+                                              );
+                                              tokenExpireWrapper(ref, () async {
+                                                final value =
+                                                    await announcerListNotifier
+                                                        .addAnnouncer(
+                                                  newAnnouncer,
+                                                );
+                                                if (value) {
+                                                  displayToastWithContext(
+                                                    TypeMsg.msg,
+                                                    AdvertTextConstants
+                                                        .addedAnnouncer,
+                                                  );
+                                                } else {
+                                                  displayToastWithContext(
+                                                    TypeMsg.error,
+                                                    AdvertTextConstants
+                                                        .addingError,
+                                                  );
+                                                }
+                                                announcerListNotifier
+                                                    .loadAllAnnouncerList();
+                                              });
+                                            },
+                                            child: AnnouncerCard(
+                                              e: e,
+                                              icon: HeroIcons.plus,
+                                            ),
+                                          ),
+                                        )
                                         .toList() +
                                     canRemove
-                                        .map((e) => GestureDetector(
-                                              onTap: () async {
-                                                await showDialog(
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return CustomDialogBox(
-                                                        title:
-                                                            AdvertTextConstants
-                                                                .deleting,
-                                                        descriptions:
-                                                            AdvertTextConstants
-                                                                .deleteAnnouncer,
-                                                        onYes: () {
-                                                          tokenExpireWrapper(
-                                                              ref, () async {
-                                                            final value = await announcerListNotifier
+                                        .map(
+                                          (e) => GestureDetector(
+                                            onTap: () async {
+                                              await showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return CustomDialogBox(
+                                                    title: AdvertTextConstants
+                                                        .deleting,
+                                                    descriptions:
+                                                        AdvertTextConstants
+                                                            .deleteAnnouncer,
+                                                    onYes: () {
+                                                      tokenExpireWrapper(ref,
+                                                          () async {
+                                                        final value =
+                                                            await announcerListNotifier
                                                                 .deleteAnnouncer(
-                                                                    announcers
-                                                                        .where(
-                                                                          (element) =>
-                                                                              e.id ==
-                                                                              e.id,
-                                                                        )
-                                                                        .toList()[0]);
-                                                            if (value) {
-                                                              displayToastWithContext(
-                                                                  TypeMsg.msg,
-                                                                  AdvertTextConstants
-                                                                      .removedAnnouncer);
-                                                            } else {
-                                                              displayToastWithContext(
-                                                                  TypeMsg.error,
-                                                                  AdvertTextConstants
-                                                                      .removingError);
-                                                            }
-                                                            announcerListNotifier
-                                                                .loadAllAnnouncerList();
-                                                          });
-                                                        },
-                                                      );
-                                                    });
-                                              },
-                                              child: AnnouncerCard(
-                                                e: e,
-                                                icon: HeroIcons.minus,
-                                              ),
-                                            ))
-                                        .toList())
+                                                          announcers
+                                                              .where(
+                                                                (element) =>
+                                                                    e.id ==
+                                                                    e.id,
+                                                              )
+                                                              .toList()[0],
+                                                        );
+                                                        if (value) {
+                                                          displayToastWithContext(
+                                                            TypeMsg.msg,
+                                                            AdvertTextConstants
+                                                                .removedAnnouncer,
+                                                          );
+                                                        } else {
+                                                          displayToastWithContext(
+                                                            TypeMsg.error,
+                                                            AdvertTextConstants
+                                                                .removingError,
+                                                          );
+                                                        }
+                                                        announcerListNotifier
+                                                            .loadAllAnnouncerList();
+                                                      });
+                                                    },
+                                                  );
+                                                },
+                                              );
+                                            },
+                                            child: AnnouncerCard(
+                                              e: e,
+                                              icon: HeroIcons.minus,
+                                            ),
+                                          ),
+                                        )
+                                        .toList(),
+                              )
                             : const Center(
                                 child:
-                                    Text(AdvertTextConstants.noMoreAnnouncer));
-                      })
-                ]))
-              ],
-            ),
-          )),
+                                    Text(AdvertTextConstants.noMoreAnnouncer),
+                              );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

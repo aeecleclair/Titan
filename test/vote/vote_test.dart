@@ -68,8 +68,10 @@ void main() {
         nickname: 'nickname',
         role: 'role',
       );
-      expect(member.toString(),
-          'Member{id: id, name: name, firstname: firstname, nickname: nickname, role: role}');
+      expect(
+        member.toString(),
+        'Member{id: id, name: name, firstname: firstname, nickname: nickname, role: role}',
+      );
     });
 
     test('Should return a Member from a SimpleUser', () {
@@ -166,8 +168,10 @@ void main() {
         name: 'name',
         description: 'description',
       );
-      expect(section.toString(),
-          'Section{id: id, name: name, description: description}');
+      expect(
+        section.toString(),
+        'Section{id: id, name: name, description: description}',
+      );
     });
 
     test('Should parse a Section', () {
@@ -271,8 +275,10 @@ void main() {
         section: Section.empty(),
         program: 'program',
       );
-      expect(contender.toString(),
-          'Contender{id: id, name: name, description: description, listType: ListType.fake, members: [], section: Section{id: , name: , description: }, program: program}');
+      expect(
+        contender.toString(),
+        'Contender{id: id, name: name, description: description, listType: ListType.fake, members: [], section: Section{id: , name: , description: }, program: program}',
+      );
     });
 
     test('Should parse a Contender', () {

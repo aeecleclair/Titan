@@ -18,32 +18,36 @@ class QuitDialog extends HookConsumerWidget {
     final isCachingNotifier = ref.watch(isCachingProvider.notifier);
     final displayQuitNotifier = ref.watch(displayQuitProvider.notifier);
     return GestureDetector(
-        onTap: () {
-          displayQuitNotifier.setDisplay(false);
-        },
-        child: Container(
-            color: Colors.black54,
-            child: GestureDetector(
-              onTap: () {},
-              child: CustomDialogBox(
-                  descriptions: DrawerTextConstants.loginOut,
-                  title: DrawerTextConstants.logOut,
-                  onYes: () {
-                    auth.deleteToken();
-                    if (!kIsWeb) {
-                      ref.watch(messagesProvider.notifier).forgetDevice();
-                      ref
-                          .watch(firebaseTokenExpirationProvider.notifier)
-                          .reset();
-                    }
-                    isCachingNotifier.set(false);
-                    displayToast(
-                        context, TypeMsg.msg, DrawerTextConstants.logOut);
-                    displayQuitNotifier.setDisplay(false);
-                  },
-                  onNo: () {
-                    displayQuitNotifier.setDisplay(false);
-                  }),
-            )));
+      onTap: () {
+        displayQuitNotifier.setDisplay(false);
+      },
+      child: Container(
+        color: Colors.black54,
+        child: GestureDetector(
+          onTap: () {},
+          child: CustomDialogBox(
+            descriptions: DrawerTextConstants.loginOut,
+            title: DrawerTextConstants.logOut,
+            onYes: () {
+              auth.deleteToken();
+              if (!kIsWeb) {
+                ref.watch(messagesProvider.notifier).forgetDevice();
+                ref.watch(firebaseTokenExpirationProvider.notifier).reset();
+              }
+              isCachingNotifier.set(false);
+              displayToast(
+                context,
+                TypeMsg.msg,
+                DrawerTextConstants.logOut,
+              );
+              displayQuitNotifier.setDisplay(false);
+            },
+            onNo: () {
+              displayQuitNotifier.setDisplay(false);
+            },
+          ),
+        ),
+      ),
+    );
   }
 }

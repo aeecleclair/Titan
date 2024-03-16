@@ -25,6 +25,7 @@ final recommendationLogoProvider =
     final recommendationLogoRepository =
         ref.watch(recommendationLogoRepositoryProvider);
     return RecommendationLogoNotifier(
-        recommendationLogoRepository: recommendationLogoRepository);
+      recommendationLogoRepository: recommendationLogoRepository,
+    );
   },
 );

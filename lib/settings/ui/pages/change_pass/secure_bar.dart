@@ -27,16 +27,17 @@ class FlutterPasswordStrength extends StatefulWidget {
   //Strength callback
   final void Function(double strength)? strengthCallback;
 
-  const FlutterPasswordStrength(
-      {super.key,
-      required this.password,
-      this.width,
-      this.height = 5,
-      required this.strengthColors,
-      this.backgroundColor = Colors.grey,
-      this.radius = 0,
-      this.duration,
-      this.strengthCallback});
+  const FlutterPasswordStrength({
+    super.key,
+    required this.password,
+    this.width,
+    this.height = 5,
+    required this.strengthColors,
+    this.backgroundColor = Colors.grey,
+    this.radius = 0,
+    this.duration,
+    this.strengthCallback,
+  });
 
   /*
     default strength bar colors
@@ -164,12 +165,13 @@ class FlutterPasswordStrengthState extends State<FlutterPasswordStrength>
   @override
   Widget build(BuildContext context) {
     return StrengthBarContainer(
-        barColor: _strengthBarColor,
-        backgroundColor: _backgroundColor,
-        width: _width,
-        height: _height,
-        radius: _radius,
-        animation: _strengthBarAnimation);
+      barColor: _strengthBarColor,
+      backgroundColor: _backgroundColor,
+      width: _width,
+      height: _height,
+      radius: _radius,
+      animation: _strengthBarAnimation,
+    );
   }
 }
 
@@ -180,15 +182,15 @@ class StrengthBarContainer extends AnimatedWidget {
   final double height;
   final double radius;
 
-  const StrengthBarContainer(
-      {super.key,
-      required this.barColor,
-      required this.backgroundColor,
-      this.width,
-      required this.height,
-      required this.radius,
-      required Animation animation})
-      : super(listenable: animation);
+  const StrengthBarContainer({
+    super.key,
+    required this.barColor,
+    required this.backgroundColor,
+    this.width,
+    required this.height,
+    required this.radius,
+    required Animation animation,
+  }) : super(listenable: animation);
 
   Animation<double> get _percent {
     return listenable as Animation<double>;
@@ -197,14 +199,21 @@ class StrengthBarContainer extends AnimatedWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-      return CustomPaint(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return CustomPaint(
           size: Size(width ?? constraints.maxWidth, height),
           painter: StrengthBarBackground(
-              backgroundColor: backgroundColor, backgroundRadius: radius),
+            backgroundColor: backgroundColor,
+            backgroundRadius: radius,
+          ),
           foregroundPainter: StrengthBar(
-              barColor: barColor, barRadius: radius, percent: _percent.value));
-    });
+            barColor: barColor,
+            barRadius: radius,
+            percent: _percent.value,
+          ),
+        );
+      },
+    );
   }
 }
 
@@ -213,8 +222,11 @@ class StrengthBar extends CustomPainter {
   double barRadius;
   double percent;
 
-  StrengthBar(
-      {required this.barColor, required this.barRadius, required this.percent});
+  StrengthBar({
+    required this.barColor,
+    required this.barRadius,
+    required this.percent,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -238,11 +250,12 @@ class StrengthBar extends CustomPainter {
     }
 
     canvas.drawRRect(
-        RRect.fromRectAndRadius(
-          Rect.fromLTRB(left, top, right, bottom),
-          Radius.circular(barRadius),
-        ),
-        paint);
+      RRect.fromRectAndRadius(
+        Rect.fromLTRB(left, top, right, bottom),
+        Radius.circular(barRadius),
+      ),
+      paint,
+    );
   }
 
   @override
@@ -274,11 +287,12 @@ class StrengthBarBackground extends CustomPainter {
     double bottom = size.height;
 
     canvas.drawRRect(
-        RRect.fromRectAndRadius(
-          Rect.fromLTRB(left, top, right, bottom),
-          Radius.circular(backgroundRadius ?? 0),
-        ),
-        paint);
+      RRect.fromRectAndRadius(
+        Rect.fromLTRB(left, top, right, bottom),
+        Radius.circular(backgroundRadius ?? 0),
+      ),
+      paint,
+    );
   }
 
   @override

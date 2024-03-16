@@ -7,6 +7,7 @@ final canVoteProvider = StateProvider<bool>((ref) {
   final votingGroupList = ref.watch(voterListProvider);
   final myGroupIds = me.groups.map((e) => e.id).toList();
   return votingGroupList.maybeWhen(
-      data: (voters) => voters.any((e) => myGroupIds.contains(e.groupId)),
-      orElse: () => false);
+    data: (voters) => voters.any((e) => myGroupIds.contains(e.groupId)),
+    orElse: () => false,
+  );
 });

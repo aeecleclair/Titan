@@ -5,11 +5,12 @@ class CardField extends StatelessWidget {
   final String label;
   final String value;
   final bool showLabel;
-  const CardField(
-      {super.key,
-      required this.label,
-      required this.value,
-      this.showLabel = true});
+  const CardField({
+    super.key,
+    required this.label,
+    required this.value,
+    this.showLabel = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class CardField extends StatelessWidget {
               ),
               const SizedBox(
                 width: 5,
-              )
+              ),
             ],
             CopiabledText(
               value,

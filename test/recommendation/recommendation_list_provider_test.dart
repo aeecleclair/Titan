@@ -24,13 +24,14 @@ void main() {
             await recommendationListProvider.loadRecommendation();
         expect(recommendations, isA<AsyncData<List<Recommendation>>>());
         expect(
-            recommendations
-                .maybeWhen(
-                  data: (data) => data,
-                  orElse: () => [],
-                )
-                .length,
-            1);
+          recommendations
+              .maybeWhen(
+                data: (data) => data,
+                orElse: () => [],
+              )
+              .length,
+          1,
+        );
       });
 
       test('Should add a recommendation', () async {
@@ -38,8 +39,11 @@ void main() {
         final newRecommendation = Recommendation.empty().copyWith(id: "1");
         when(() => mockRecommendationRepository.getRecommendationList())
             .thenAnswer((_) async => [Recommendation.empty()]);
-        when(() => mockRecommendationRepository.createRecommendation(
-            newRecommendation)).thenAnswer((_) async => newRecommendation);
+        when(
+          () => mockRecommendationRepository.createRecommendation(
+            newRecommendation,
+          ),
+        ).thenAnswer((_) async => newRecommendation);
         final recommendationListProvider = RecommendationListNotifier(
           recommendationRepository: mockRecommendationRepository,
         );
@@ -54,9 +58,13 @@ void main() {
         final newRecommendation = Recommendation.empty().copyWith(id: "1");
         when(() => mockRecommendationRepository.getRecommendationList())
             .thenAnswer(
-                (_) async => [Recommendation.empty(), newRecommendation]);
-        when(() => mockRecommendationRepository.updateRecommendation(
-            newRecommendation)).thenAnswer((_) async => true);
+          (_) async => [Recommendation.empty(), newRecommendation],
+        );
+        when(
+          () => mockRecommendationRepository.updateRecommendation(
+            newRecommendation,
+          ),
+        ).thenAnswer((_) async => true);
         final recommendationListProvider = RecommendationListNotifier(
           recommendationRepository: mockRecommendationRepository,
         );
@@ -73,9 +81,13 @@ void main() {
           final newRecommendation = Recommendation.empty().copyWith(id: "1");
           when(() => mockRecommendationRepository.getRecommendationList())
               .thenAnswer(
-                  (_) async => [Recommendation.empty(), newRecommendation]);
-          when(() => mockRecommendationRepository.deleteRecommendation(
-              newRecommendation.id!)).thenAnswer((_) async => true);
+            (_) async => [Recommendation.empty(), newRecommendation],
+          );
+          when(
+            () => mockRecommendationRepository.deleteRecommendation(
+              newRecommendation.id!,
+            ),
+          ).thenAnswer((_) async => true);
           final roomListProvider = RecommendationListNotifier(
             recommendationRepository: mockRecommendationRepository,
           );

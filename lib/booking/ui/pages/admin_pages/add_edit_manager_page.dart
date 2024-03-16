@@ -45,15 +45,18 @@ class AddEditManagerPage extends HookConsumerWidget {
               height: 50,
             ),
             Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                    isEdit
-                        ? BookingTextConstants.editManager
-                        : BookingTextConstants.addManager,
-                    style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 149, 149, 149)))),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                isEdit
+                    ? BookingTextConstants.editManager
+                    : BookingTextConstants.addManager,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 149, 149, 149),
+                ),
+              ),
+            ),
             Form(
               key: key,
               child: Column(
@@ -85,8 +88,9 @@ class AddEditManagerPage extends HookConsumerWidget {
                           child: Text(
                             e.name,
                             style: TextStyle(
-                                color: selected ? Colors.white : Colors.black,
-                                fontWeight: FontWeight.bold),
+                              color: selected ? Colors.white : Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         );
                       },
@@ -105,9 +109,10 @@ class AddEditManagerPage extends HookConsumerWidget {
                     onTap: () async {
                       await tokenExpireWrapper(ref, () async {
                         Manager newManager = Manager(
-                            id: isEdit ? manager.id : '',
-                            name: name.text,
-                            groupId: groupId);
+                          id: isEdit ? manager.id : '',
+                          name: name.text,
+                          groupId: groupId,
+                        );
                         final value = isEdit
                             ? await managerListNotifier
                                 .updateManager(newManager)
@@ -115,16 +120,24 @@ class AddEditManagerPage extends HookConsumerWidget {
                         if (value) {
                           QR.back();
                           isEdit
-                              ? displayToastWithContext(TypeMsg.msg,
-                                  BookingTextConstants.editedManager)
-                              : displayToastWithContext(TypeMsg.msg,
-                                  BookingTextConstants.addedManager);
+                              ? displayToastWithContext(
+                                  TypeMsg.msg,
+                                  BookingTextConstants.editedManager,
+                                )
+                              : displayToastWithContext(
+                                  TypeMsg.msg,
+                                  BookingTextConstants.addedManager,
+                                );
                         } else {
                           isEdit
-                              ? displayToastWithContext(TypeMsg.error,
-                                  BookingTextConstants.editionError)
-                              : displayToastWithContext(TypeMsg.error,
-                                  BookingTextConstants.addingError);
+                              ? displayToastWithContext(
+                                  TypeMsg.error,
+                                  BookingTextConstants.editionError,
+                                )
+                              : displayToastWithContext(
+                                  TypeMsg.error,
+                                  BookingTextConstants.addingError,
+                                );
                         }
                       });
                     },
@@ -140,35 +153,38 @@ class AddEditManagerPage extends HookConsumerWidget {
                       onTap: () async {
                         await tokenExpireWrapper(ref, () async {
                           await showDialog(
-                              context: context,
-                              builder: (context) => CustomDialogBox(
-                                    descriptions: BookingTextConstants
-                                        .deleteManagerConfirmation,
-                                    onYes: () async {
-                                      final value = await managerListNotifier
-                                          .deleteManager(manager);
-                                      if (value) {
-                                        QR.back();
-                                        displayToastWithContext(
-                                            TypeMsg.msg,
-                                            BookingTextConstants
-                                                .deletedManager);
-                                      } else {
-                                        displayToastWithContext(TypeMsg.error,
-                                            BookingTextConstants.deletingError);
-                                      }
-                                    },
-                                    title: BookingTextConstants.deleting,
-                                  ));
+                            context: context,
+                            builder: (context) => CustomDialogBox(
+                              descriptions: BookingTextConstants
+                                  .deleteManagerConfirmation,
+                              onYes: () async {
+                                final value = await managerListNotifier
+                                    .deleteManager(manager);
+                                if (value) {
+                                  QR.back();
+                                  displayToastWithContext(
+                                    TypeMsg.msg,
+                                    BookingTextConstants.deletedManager,
+                                  );
+                                } else {
+                                  displayToastWithContext(
+                                    TypeMsg.error,
+                                    BookingTextConstants.deletingError,
+                                  );
+                                }
+                              },
+                              title: BookingTextConstants.deleting,
+                            ),
+                          );
                         });
                       },
                       buttonText: BookingTextConstants.delete,
-                    )
+                    ),
                   ],
                   const SizedBox(height: 30),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

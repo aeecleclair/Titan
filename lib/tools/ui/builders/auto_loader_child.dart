@@ -15,18 +15,19 @@ class AutoLoaderChild<MapKey, MapValue> extends ConsumerWidget {
   final Widget Function(BuildContext context)? loadingBuilder;
   final Widget Function(BuildContext context, Widget child)? orElseBuilder;
   final Color? loaderColor;
-  const AutoLoaderChild(
-      {super.key,
-      required this.group,
-      required this.notifier,
-      required this.mapKey,
-      required this.dataBuilder,
-      this.loader,
-      this.listLoader,
-      this.errorBuilder,
-      this.loaderColor,
-      this.orElseBuilder,
-      this.loadingBuilder});
+  const AutoLoaderChild({
+    super.key,
+    required this.group,
+    required this.notifier,
+    required this.mapKey,
+    required this.dataBuilder,
+    this.loader,
+    this.listLoader,
+    this.errorBuilder,
+    this.loaderColor,
+    this.orElseBuilder,
+    this.loadingBuilder,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,13 +41,14 @@ class AutoLoaderChild<MapKey, MapValue> extends ConsumerWidget {
       return nonNullLoadingBuilder(context);
     }
     return AsyncChild(
-        value: group!,
-        builder: (context, list) {
-          return dataBuilder(context, list);
-        },
-        orElseBuilder: orElseBuilder,
-        errorBuilder: errorBuilder,
-        loadingBuilder: loadingBuilder,
-        loaderColor: loaderColor);
+      value: group!,
+      builder: (context, list) {
+        return dataBuilder(context, list);
+      },
+      orElseBuilder: orElseBuilder,
+      errorBuilder: errorBuilder,
+      loadingBuilder: loadingBuilder,
+      loaderColor: loaderColor,
+    );
   }
 }

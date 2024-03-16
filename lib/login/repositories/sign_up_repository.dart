@@ -13,10 +13,13 @@ class SignUpRepository extends Repository {
 
   Future<bool> createUser(String email, AccountType accountType) async {
     try {
-      final value = await create({
-        "email": email,
-        "account_type": accountTypeToID(accountType),
-      }, suffix: "create");
+      final value = await create(
+        {
+          "email": email,
+          "account_type": accountTypeToID(accountType),
+        },
+        suffix: "create",
+      );
       return value["success"];
     } catch (e) {
       return false;
@@ -28,17 +31,25 @@ class SignUpRepository extends Repository {
   }
 
   Future<bool> resetPasswordUser(String token, String password) async {
-    return await create({"reset_token": token, "new_password": password},
-        suffix: "reset-password");
+    return await create(
+      {"reset_token": token, "new_password": password},
+      suffix: "reset-password",
+    );
   }
 
   Future<bool> changePasswordUser(
-      String userId, String oldPassword, String newPassword) async {
-    return await create({
-      "user_id": userId,
-      "old_password": oldPassword,
-      "new_password": newPassword
-    }, suffix: "change-password");
+    String userId,
+    String oldPassword,
+    String newPassword,
+  ) async {
+    return await create(
+      {
+        "user_id": userId,
+        "old_password": oldPassword,
+        "new_password": newPassword,
+      },
+      suffix: "change-password",
+    );
   }
 
   Future<bool> activateUser(CreateAccount createAccount) async {

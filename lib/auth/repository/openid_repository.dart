@@ -5,8 +5,13 @@ import 'package:http/http.dart' as http;
 import 'package:myecl/tools/repository/repository.dart';
 
 class OpenIdRepository extends Repository {
-  Future<Map<String, String>> getToken(String token, String clientId,
-      String redirectUri, String codeVerifier, String grantType) async {
+  Future<Map<String, String>> getToken(
+    String token,
+    String clientId,
+    String redirectUri,
+    String codeVerifier,
+    String grantType,
+  ) async {
     var body = {
       "client_id": clientId,
       "code": token,

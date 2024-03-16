@@ -13,9 +13,10 @@ class TheMovieDBRepository extends Repository {
   final String apiKey = dotenv.env['THE_MOVIE_DB_API']!;
 
   Future<List<TheMovieDBSearchResult>> searchMovie(String id) async {
-    final resp = await getOne("",
-        suffix:
-            "find/$id?api_key=$apiKey&language=fr-FR&external_source=imdb_id");
+    final resp = await getOne(
+      "",
+      suffix: "find/$id?api_key=$apiKey&language=fr-FR&external_source=imdb_id",
+    );
     if (resp["movie_results"] != null) {
       return (resp["movie_results"] as List<dynamic>)
           .map((e) => TheMovieDBSearchResult.fromJson(e))
@@ -26,7 +27,8 @@ class TheMovieDBRepository extends Repository {
 
   Future<TheMovieDBMovie> getMovie(String id) async {
     return TheMovieDBMovie.fromJson(
-        await getOne("movie/$id", suffix: "?api_key=$apiKey&language=fr-FR"));
+      await getOne("movie/$id", suffix: "?api_key=$apiKey&language=fr-FR"),
+    );
   }
 }
 

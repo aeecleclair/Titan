@@ -101,7 +101,7 @@ void main() {
         'suggested_caution': 1,
         'total_quantity': 1,
         'loaned_quantity': 1,
-        'suggested_lending_duration': 1.0
+        'suggested_lending_duration': 1.0,
       });
     });
   });
@@ -117,7 +117,9 @@ void main() {
         id: '1',
         itemsQuantity: [
           ItemQuantity(
-              itemSimple: ItemSimple(id: '1', name: 'name'), quantity: 2)
+            itemSimple: ItemSimple(id: '1', name: 'name'),
+            quantity: 2,
+          ),
         ],
         borrower: SimpleUser(
           id: '1',
@@ -144,9 +146,12 @@ void main() {
         id: '2',
       );
       expect(newLoan.id, '2');
-      newLoan = loan.copyWith(itemsQuantity: [
-        ItemQuantity(itemSimple: ItemSimple(id: '2', name: 'name'), quantity: 2)
-      ]);
+      newLoan = loan.copyWith(
+        itemsQuantity: [
+          ItemQuantity(
+              itemSimple: ItemSimple(id: '2', name: 'name'), quantity: 2),
+        ],
+      );
       expect(newLoan.itemsQuantity[0].itemSimple.id, '2');
       newLoan = loan.copyWith(
         borrower: SimpleUser(
@@ -198,7 +203,9 @@ void main() {
         id: '1',
         itemsQuantity: [
           ItemQuantity(
-              itemSimple: ItemSimple(id: '1', name: 'name'), quantity: 2)
+            itemSimple: ItemSimple(id: '1', name: 'name'),
+            quantity: 2,
+          ),
         ],
         borrower: SimpleUser(
           id: '1',
@@ -233,7 +240,7 @@ void main() {
               'loaned_quantity': 1,
               'suggested_lending_duration': 1.0,
             },
-            'quantity': 2
+            'quantity': 2,
           }
         ],
         'borrower': {
@@ -267,7 +274,9 @@ void main() {
         id: '1',
         itemsQuantity: [
           ItemQuantity(
-              itemSimple: ItemSimple(id: '1', name: 'name'), quantity: 2)
+            itemSimple: ItemSimple(id: '1', name: 'name'),
+            quantity: 2,
+          ),
         ],
         borrower: SimpleUser(
           id: '1',
@@ -292,7 +301,7 @@ void main() {
         'end': '2020-01-01',
         'caution': '',
         'items_borrowed': [
-          {'item_id': '1', 'quantity': 2}
+          {'item_id': '1', 'quantity': 2},
         ],
         'returned_date': '2020-01-01',
       });

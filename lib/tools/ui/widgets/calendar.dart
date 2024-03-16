@@ -29,72 +29,85 @@ class Calendar extends HookConsumerWidget {
           details.targetElement == CalendarElement.agenda) {
         final Appointment appointmentDetails = details.appointments![0];
         showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return Dialog(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Container(
-                        height: 220 +
-                            (appointmentDetails.notes!.length / 30 - 5) * 15,
-                        padding: const EdgeInsets.all(20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AutoSizeText(appointmentDetails.subject,
-                                maxLines: 2,
-                                style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black)),
-                            const SizedBox(height: 10),
-                            Text(
-                              formatDates(
-                                  appointmentDetails.startTime,
-                                  appointmentDetails.endTime,
-                                  appointmentDetails.isAllDay),
-                              style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                color: Colors.grey.shade400,
-                                fontSize: 15,
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Text(appointmentDetails.notes ?? "",
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w400, fontSize: 15)),
-                          ],
+          context: context,
+          builder: (BuildContext context) {
+            return Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    height:
+                        220 + (appointmentDetails.notes!.length / 30 - 5) * 15,
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AutoSizeText(
+                          appointmentDetails.subject,
+                          maxLines: 2,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          formatDates(
+                            appointmentDetails.startTime,
+                            appointmentDetails.endTime,
+                            appointmentDetails.isAllDay,
+                          ),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            color: Colors.grey.shade400,
+                            fontSize: 15,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          appointmentDetails.notes ?? "",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    top: -10,
+                    right: -10,
+                    child: GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: CardButton(
+                        color: Colors.white,
+                        shadowColor: Colors.grey.shade500.withOpacity(0.3),
+                        child: const HeroIcon(
+                          HeroIcons.xMark,
+                          size: 20,
                         ),
                       ),
-                      Positioned(
-                          top: -10,
-                          right: -10,
-                          child: GestureDetector(
-                              onTap: () => Navigator.pop(context),
-                              child: CardButton(
-                                  color: Colors.white,
-                                  shadowColor:
-                                      Colors.grey.shade500.withOpacity(0.3),
-                                  child: const HeroIcon(
-                                    HeroIcons.xMark,
-                                    size: 20,
-                                  ))))
-                    ],
-                  ));
-            });
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
       }
     }
 
     return LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-      final CalendarController calendarController = CalendarController();
-      return SizedBox(
-        height: constraints.maxHeight,
-        width: constraints.maxWidth,
-        child: AsyncChild(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final CalendarController calendarController = CalendarController();
+        return SizedBox(
+          height: constraints.maxHeight,
+          width: constraints.maxWidth,
+          child: AsyncChild(
             value: items,
             builder: (context, res) {
               return Container(
@@ -115,23 +128,26 @@ class Calendar extends HookConsumerWidget {
                       ),
                       todayHighlightColor: Colors.black,
                       todayTextStyle: const TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                       firstDayOfWeek: 1,
                       timeZone: 'Europe/Paris',
                       timeSlotViewSettings: const TimeSlotViewSettings(
                         timeFormat: 'HH:mm',
                       ),
                       viewHeaderStyle: const ViewHeaderStyle(
-                          dayTextStyle: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          dateTextStyle: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                          )),
+                        dayTextStyle: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        dateTextStyle: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                       headerStyle: const CalendarHeaderStyle(
                         textAlign: TextAlign.center,
                         textStyle: TextStyle(
@@ -148,15 +164,16 @@ class Calendar extends HookConsumerWidget {
                           height: 50,
                           width: 50,
                           decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                    color:
-                                        Colors.grey.shade700.withOpacity(0.3),
-                                    blurRadius: 5,
-                                    spreadRadius: 1)
-                              ]),
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.shade700.withOpacity(0.3),
+                                blurRadius: 5,
+                                spreadRadius: 1,
+                              ),
+                            ],
+                          ),
                           child: IconButton(
                             onPressed: () {
                               calendarController.forward!();
@@ -176,15 +193,16 @@ class Calendar extends HookConsumerWidget {
                           height: 50,
                           width: 50,
                           decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                    color:
-                                        Colors.grey.shade700.withOpacity(0.3),
-                                    blurRadius: 5,
-                                    spreadRadius: 1)
-                              ]),
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.shade700.withOpacity(0.3),
+                                blurRadius: 5,
+                                spreadRadius: 1,
+                              ),
+                            ],
+                          ),
                           child: IconButton(
                             onPressed: () {
                               calendarController.backward!();
@@ -201,8 +219,10 @@ class Calendar extends HookConsumerWidget {
                 ),
               );
             },
-            loaderColor: ColorConstants.background2),
-      );
-    });
+            loaderColor: ColorConstants.background2,
+          ),
+        );
+      },
+    );
   }
 }

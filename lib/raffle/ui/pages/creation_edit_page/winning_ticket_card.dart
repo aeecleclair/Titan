@@ -16,13 +16,14 @@ class WinningTicketUI extends HookConsumerWidget {
   });
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Stack(children: [
-      Container(
-        width: 120,
-        height: 120,
-        margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 10),
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 17),
-        decoration: BoxDecoration(
+    return Stack(
+      children: [
+        Container(
+          width: 120,
+          height: 120,
+          margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 10),
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 17),
+          decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
                 color: RaffleColorConstants.ticketBack.withOpacity(0.3),
@@ -31,52 +32,57 @@ class WinningTicketUI extends HookConsumerWidget {
               ),
             ],
             color: RaffleColorConstants.ticketBack,
-            borderRadius: const BorderRadius.all(Radius.circular(30))),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            AutoSizeText(
-              ticket.prize == null ? "Lot" : ticket.prize!.name,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
+            borderRadius: const BorderRadius.all(Radius.circular(30)),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              AutoSizeText(
+                ticket.prize == null ? "Lot" : ticket.prize!.name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 20,
-                  fontWeight: FontWeight.bold),
-            ),
-            Column(
-              children: [
-                AutoSizeText(
-                  ticket.user.nickname ?? ticket.user.firstname,
-                  maxLines: 2,
-                  style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Column(
+                children: [
+                  AutoSizeText(
+                    ticket.user.nickname ?? ticket.user.firstname,
+                    maxLines: 2,
+                    style: TextStyle(
                       color: Colors.white.withOpacity(0.8),
                       fontSize: 16,
-                      fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 6,
-                ),
-                AutoSizeText(
-                  ticket.user.nickname != null
-                      ? "${ticket.user.firstname} ${ticket.user.name}"
-                      : ticket.user.name,
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
-                  minFontSize: 10,
-                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 6,
+                  ),
+                  AutoSizeText(
+                    ticket.user.nickname != null
+                        ? "${ticket.user.firstname} ${ticket.user.name}"
+                        : ticket.user.name,
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                    minFontSize: 10,
+                    style: TextStyle(
                       color: Colors.white.withOpacity(0.8),
                       fontSize: 12,
-                      fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
-              ],
-            ),
-          ],
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-      )
-    ]);
+      ],
+    );
   }
 }

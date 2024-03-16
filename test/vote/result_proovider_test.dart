@@ -26,12 +26,13 @@ void main() {
       final resultState = await resultNotifier.loadResult();
 
       expect(
-          resultState.when(
-            data: (data) => data,
-            loading: () => [],
-            error: (_, __) => [],
-          ),
-          [result]);
+        resultState.when(
+          data: (data) => data,
+          loading: () => [],
+          error: (_, __) => [],
+        ),
+        [result],
+      );
     });
 
     test('should return error when loading result fails', () async {

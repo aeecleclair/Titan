@@ -4,8 +4,11 @@ import 'package:myecl/tools/constants.dart';
 class AdminEntry extends StatelessWidget {
   final String name;
   final TextEditingController nameController;
-  const AdminEntry(
-      {super.key, required this.name, required this.nameController});
+  const AdminEntry({
+    super.key,
+    required this.name,
+    required this.nameController,
+  });
 
   @override
   Widget build(BuildContext context) {

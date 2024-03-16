@@ -19,10 +19,12 @@ class WebSignIn extends StatelessWidget {
                 ),
               ),
             ),
-            const Row(children: [
-              Expanded(child: LeftPanel()),
-              Expanded(child: RightPanel()),
-            ]),
+            const Row(
+              children: [
+                Expanded(child: LeftPanel()),
+                Expanded(child: RightPanel()),
+              ],
+            ),
           ],
         ),
       ),

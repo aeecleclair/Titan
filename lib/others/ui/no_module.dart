@@ -14,40 +14,42 @@ class NoModulePage extends HookConsumerWidget {
     final moduleVisibilityList = ref.watch(moduleRootListProvider);
     final pathForwarding = ref.read(pathForwardingProvider);
     moduleVisibilityList.maybeWhen(
-        data: (data) {
-          QR.to(pathForwarding.path);
-        },
-        orElse: () {});
+      data: (data) {
+        QR.to(pathForwarding.path);
+      },
+      orElse: () {},
+    );
     return const Scaffold(
       body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30),
-          child: Column(
-            children: [
-              Spacer(
-                flex: 2,
+        padding: EdgeInsets.symmetric(horizontal: 30),
+        child: Column(
+          children: [
+            Spacer(
+              flex: 2,
+            ),
+            HeroIcon(
+              HeroIcons.cubeTransparent,
+              size: 100,
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            Center(
+              child: Text(
+                OthersTextConstants.noModule,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20),
               ),
-              HeroIcon(
-                HeroIcons.cubeTransparent,
-                size: 100,
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Center(
-                child: Text(
-                  OthersTextConstants.noModule,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-              Spacer(
-                flex: 3,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-            ],
-          )),
+            ),
+            Spacer(
+              flex: 3,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

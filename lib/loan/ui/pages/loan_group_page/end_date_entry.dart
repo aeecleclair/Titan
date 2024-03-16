@@ -16,8 +16,11 @@ class EndDateEntry extends HookConsumerWidget {
     final initialDate = ref.watch(initialDateProvider);
 
     return DateEntry(
-      onTap: () => getOnlyDayDateFunction(context, endNotifier.setEnd,
-          initialDate: initialDate),
+      onTap: () => getOnlyDayDateFunction(
+        context,
+        endNotifier.setEnd,
+        initialDate: initialDate,
+      ),
       controller: TextEditingController(text: end),
       label: LoanTextConstants.endDate,
     );

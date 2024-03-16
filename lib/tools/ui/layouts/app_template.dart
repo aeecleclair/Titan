@@ -18,15 +18,16 @@ class AppTemplate extends HookConsumerWidget {
         .whenData((value) => value.minimalTitanVersion <= titanVersion);
 
     return check.maybeWhen(
-        data: (value) {
-          if (!value) {
-            return child;
-          }
-          if (!isLoggedIn) {
-            return child;
-          }
-          return DrawerTemplate(child: child);
-        },
-        orElse: () => child);
+      data: (value) {
+        if (!value) {
+          return child;
+        }
+        if (!isLoggedIn) {
+          return child;
+        }
+        return DrawerTemplate(child: child);
+      },
+      orElse: () => child,
+    );
   }
 }

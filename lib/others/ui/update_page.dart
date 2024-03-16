@@ -12,39 +12,43 @@ class UpdatePage extends HookConsumerWidget {
     final titanVersion = ref.watch(titanVersionProvider);
     return Scaffold(
       body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Column(
-            children: [
-              const Spacer(
-                flex: 2,
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        child: Column(
+          children: [
+            const Spacer(
+              flex: 2,
+            ),
+            const HeroIcon(
+              HeroIcons.bellAlert,
+              size: 100,
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            const Center(
+              child: Text(
+                OthersTextConstants.tooOldVersion,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20),
               ),
-              const HeroIcon(
-                HeroIcons.bellAlert,
-                size: 100,
+            ),
+            const Spacer(
+              flex: 3,
+            ),
+            Text(
+              "${OthersTextConstants.version} $titanVersion",
+              style: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
               ),
-              const SizedBox(
-                height: 50,
-              ),
-              const Center(
-                child: Text(
-                  OthersTextConstants.tooOldVersion,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-              const Spacer(
-                flex: 3,
-              ),
-              Text("${OthersTextConstants.version} $titanVersion",
-                  style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black)),
-              const SizedBox(
-                height: 20,
-              ),
-            ],
-          )),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -22,7 +22,9 @@ void main() {
     repository = MockContenderLogoRepository();
     notifier = MockContenderLogoNotifier();
     provider = ContenderLogoProvider(
-        contenderLogoRepository: repository, contenderLogosNotifier: notifier);
+      contenderLogoRepository: repository,
+      contenderLogosNotifier: notifier,
+    );
   });
 
   group('ContenderLogoProvider', () {

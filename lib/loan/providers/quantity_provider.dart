@@ -8,7 +8,8 @@ class QuantityNotifier extends StateNotifier<TextEditingController> {
     state.value = state.value.copyWith(
       text: quantity.toString(),
       selection: TextSelection.fromPosition(
-          TextPosition(offset: quantity.toString().length)),
+        TextPosition(offset: quantity.toString().length),
+      ),
     );
   }
 }

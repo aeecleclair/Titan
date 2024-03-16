@@ -19,13 +19,16 @@ class MapNotifier<T, E> extends StateNotifier<Map<T, AsyncValue<List<E>>?>> {
   }
 
   void addE(T t, E e) {
-    return state[t]!.maybeWhen(data: (eList) {
-      state[t] = AsyncValue.data(eList + [e]);
-      state = state;
-    }, orElse: () {
-      state[t] = AsyncValue.data([e]);
-      state = Map.of(state);
-    });
+    return state[t]!.maybeWhen(
+      data: (eList) {
+        state[t] = AsyncValue.data(eList + [e]);
+        state = state;
+      },
+      orElse: () {
+        state[t] = AsyncValue.data([e]);
+        state = Map.of(state);
+      },
+    );
   }
 
   void deleteT(T t) {
@@ -49,17 +52,21 @@ class MapNotifier<T, E> extends StateNotifier<Map<T, AsyncValue<List<E>>?>> {
 
   bool deleteE(T t, int index) {
     return state[t]!.maybeWhen(
-        data: (eList) {
-          eList.removeAt(index);
-          state[t] = AsyncValue.data(eList);
-          state = state;
-          return true;
-        },
-        orElse: () => false);
+      data: (eList) {
+        eList.removeAt(index);
+        state[t] = AsyncValue.data(eList);
+        state = state;
+        return true;
+      },
+      orElse: () => false,
+    );
   }
 
   Future<void> autoLoad(
-      WidgetRef ref, T t, Future<E> Function(T t) loader) async {
+    WidgetRef ref,
+    T t,
+    Future<E> Function(T t) loader,
+  ) async {
     setTData(t, const AsyncLoading());
     tokenExpireWrapper(ref, () async {
       loader(t).then((value) {
@@ -70,8 +77,11 @@ class MapNotifier<T, E> extends StateNotifier<Map<T, AsyncValue<List<E>>?>> {
     });
   }
 
-  Future<void> autoLoadList(WidgetRef ref, T t,
-      Future<AsyncValue<List<E>>> Function(T t) loader) async {
+  Future<void> autoLoadList(
+    WidgetRef ref,
+    T t,
+    Future<AsyncValue<List<E>>> Function(T t) loader,
+  ) async {
     setTData(t, const AsyncLoading());
     tokenExpireWrapper(ref, () async {
       loader(t).then((value) {

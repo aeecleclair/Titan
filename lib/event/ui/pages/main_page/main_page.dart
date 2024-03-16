@@ -43,19 +43,21 @@ class EventMainPage extends HookConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                          eventList.isEmpty
-                              ? EventTextConstants.noEvent
-                              : EventTextConstants.myEvents,
-                          style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey)),
+                        eventList.isEmpty
+                            ? EventTextConstants.noEvent
+                            : EventTextConstants.myEvents,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                        ),
+                      ),
                       if (isAdmin)
                         AdminButton(
                           onTap: () {
                             QR.to(EventRouter.root + EventRouter.admin);
                           },
-                        )
+                        ),
                     ],
                   ),
                 ),
@@ -67,22 +69,30 @@ class EventMainPage extends HookConsumerWidget {
                   QR.to(EventRouter.root + EventRouter.addEdit);
                 },
                 child: CardLayout(
-                    margin: const EdgeInsets.only(
-                        bottom: 10, top: 20, left: 40, right: 40),
-                    width: double.infinity,
-                    height: 100,
-                    color: Colors.white,
-                    child: Center(
-                        child: HeroIcon(
+                  margin: const EdgeInsets.only(
+                    bottom: 10,
+                    top: 20,
+                    left: 40,
+                    right: 40,
+                  ),
+                  width: double.infinity,
+                  height: 100,
+                  color: Colors.white,
+                  child: Center(
+                    child: HeroIcon(
                       HeroIcons.plus,
                       size: 40,
                       color: Colors.grey.shade500,
-                    ))),
+                    ),
+                  ),
+                ),
               ),
-              ...eventList.map((event) => EventUi(
-                    event: event,
-                  )),
-              const SizedBox(height: 80)
+              ...eventList.map(
+                (event) => EventUi(
+                  event: event,
+                ),
+              ),
+              const SizedBox(height: 80),
             ],
           );
         },

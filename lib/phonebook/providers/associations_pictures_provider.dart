@@ -15,16 +15,19 @@ final associationPicturesProvider = StateNotifierProvider<
   AssociationPictureNotifier associationPictureNotifier =
       AssociationPictureNotifier();
   tokenExpireWrapperAuth(ref, () async {
-    ref.watch(associationListProvider).maybeWhen(data: (association) {
-      associationPictureNotifier.loadTList(association);
-      for (final l in association) {
-        associationPictureNotifier.setTData(l, const AsyncValue.data([]));
-      }
-      return associationPictureNotifier;
-    }, orElse: () {
-      associationPictureNotifier.loadTList([]);
-      return associationPictureNotifier;
-    });
+    ref.watch(associationListProvider).maybeWhen(
+      data: (association) {
+        associationPictureNotifier.loadTList(association);
+        for (final l in association) {
+          associationPictureNotifier.setTData(l, const AsyncValue.data([]));
+        }
+        return associationPictureNotifier;
+      },
+      orElse: () {
+        associationPictureNotifier.loadTList([]);
+        return associationPictureNotifier;
+      },
+    );
   });
   return associationPictureNotifier;
 });

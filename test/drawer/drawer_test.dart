@@ -16,10 +16,11 @@ void main() {
       );
 
       final copiedModule = module.copy(
-          name: 'Settings',
-          icon: const Left(HeroIcons.cog),
-          selected: false,
-          root: '/test');
+        name: 'Settings',
+        icon: const Left(HeroIcons.cog),
+        selected: false,
+        root: '/test',
+      );
 
       expect(copiedModule.name, 'Settings');
       expect(copiedModule.icon, const Left(HeroIcons.cog));

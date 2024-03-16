@@ -13,15 +13,16 @@ final sortedByCategoryProductsProvider =
   final products = ref.watch(productListProvider);
   final sortedByCategoryProducts = <String, List<Product>>{};
   products.maybeWhen(
-      data: (products) {
-        for (var product in products) {
-          if (sortedByCategoryProducts.containsKey(product.category)) {
-            sortedByCategoryProducts[product.category]!.add(product);
-          } else {
-            sortedByCategoryProducts[product.category] = [product];
-          }
+    data: (products) {
+      for (var product in products) {
+        if (sortedByCategoryProducts.containsKey(product.category)) {
+          sortedByCategoryProducts[product.category]!.add(product);
+        } else {
+          sortedByCategoryProducts[product.category] = [product];
         }
-      },
-      orElse: () {});
+      }
+    },
+    orElse: () {},
+  );
   return SortedByCategoryProvider(sortedByCategoryProducts);
 });

@@ -23,7 +23,9 @@ void main() {
       repository = MockSessionPosterRepository();
       notifier = MockSessionLogoNotifier();
       provider = SessionPosterProvider(
-          repository: repository, sessionLogoNotifier: notifier);
+        repository: repository,
+        sessionLogoNotifier: notifier,
+      );
     });
 
     test('initial state is loading', () {

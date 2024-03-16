@@ -13,12 +13,13 @@ class AdminSessionCard extends HookConsumerWidget {
   final Session session;
   final VoidCallback onTap, onEdit;
   final Future Function() onDelete;
-  const AdminSessionCard(
-      {super.key,
-      required this.session,
-      required this.onTap,
-      required this.onEdit,
-      required this.onDelete});
+  const AdminSessionCard({
+    super.key,
+    required this.session,
+    required this.onTap,
+    required this.onEdit,
+    required this.onDelete,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -50,22 +51,23 @@ class AdminSessionCard extends HookConsumerWidget {
           child: Column(
             children: [
               SizedBox(
-                  height: 205,
-                  width: double.infinity,
-                  child: AutoLoaderChild(
-                    group: sessionPoster,
-                    notifier: sessionPosterMapNotifier,
-                    mapKey: session.id,
-                    loader: (sessionId) =>
-                        sessionPosterNotifier.getLogo(sessionId),
-                    dataBuilder: (context, data) => Image(
-                      image: data.first.image,
-                      fit: BoxFit.cover,
-                    ),
-                    errorBuilder: (error, stack) => const Center(
-                      child: HeroIcon(HeroIcons.exclamationCircle),
-                    ),
-                  )),
+                height: 205,
+                width: double.infinity,
+                child: AutoLoaderChild(
+                  group: sessionPoster,
+                  notifier: sessionPosterMapNotifier,
+                  mapKey: session.id,
+                  loader: (sessionId) =>
+                      sessionPosterNotifier.getLogo(sessionId),
+                  dataBuilder: (context, data) => Image(
+                    image: data.first.image,
+                    fit: BoxFit.cover,
+                  ),
+                  errorBuilder: (error, stack) => const Center(
+                    child: HeroIcon(HeroIcons.exclamationCircle),
+                  ),
+                ),
+              ),
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
@@ -91,22 +93,26 @@ class AdminSessionCard extends HookConsumerWidget {
                           child: CardButton(
                             color: Colors.grey.shade200,
                             shadowColor: Colors.grey.withOpacity(0.2),
-                            child: const HeroIcon(HeroIcons.pencil,
-                                color: Colors.black),
+                            child: const HeroIcon(
+                              HeroIcons.pencil,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                         WaitingButton(
                           onTap: onDelete,
                           builder: (child) =>
                               CardButton(color: Colors.black, child: child),
-                          child: const HeroIcon(HeroIcons.trash,
-                              color: Colors.white),
+                          child: const HeroIcon(
+                            HeroIcons.trash,
+                            color: Colors.white,
+                          ),
                         ),
                       ],
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),

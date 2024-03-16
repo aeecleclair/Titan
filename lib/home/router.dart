@@ -14,26 +14,29 @@ class HomeRouter {
   static const String root = '/home';
   static const String detail = '/detail';
   static final Module module = Module(
-      name: "Calendrier",
-      icon: const Left(HeroIcons.calendarDays),
-      root: HomeRouter.root,
-      selected: false);
+    name: "Calendrier",
+    icon: const Left(HeroIcons.calendarDays),
+    root: HomeRouter.root,
+    selected: false,
+  );
   HomeRouter(this.ref);
 
   QRoute route() => QRoute(
-          name: "home",
-          path: HomeRouter.root,
-          builder: () => home_page.HomePage(),
-          middleware: [
-            AuthenticatedMiddleware(ref),
-            DeferredLoadingMiddleware(home_page.loadLibrary)
-          ],
-          children: [
-            QRoute(
-                path: detail,
-                builder: () => detail_page.DetailPage(isAdmin: false),
-                middleware: [
-                  DeferredLoadingMiddleware(detail_page.loadLibrary)
-                ]),
-          ]);
+        name: "home",
+        path: HomeRouter.root,
+        builder: () => home_page.HomePage(),
+        middleware: [
+          AuthenticatedMiddleware(ref),
+          DeferredLoadingMiddleware(home_page.loadLibrary),
+        ],
+        children: [
+          QRoute(
+            path: detail,
+            builder: () => detail_page.DetailPage(isAdmin: false),
+            middleware: [
+              DeferredLoadingMiddleware(detail_page.loadLibrary),
+            ],
+          ),
+        ],
+      );
 }

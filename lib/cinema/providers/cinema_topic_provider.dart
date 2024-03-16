@@ -16,24 +16,31 @@ class CinemaTopicsProvider extends ListNotifier<String> {
   }
 
   Future<bool> subscribeSession(String topic) async {
-    return await update(cinemaTopicRepository.subscribeSession,
-        (listT, t) => listT..add(t), topic);
+    return await update(
+      cinemaTopicRepository.subscribeSession,
+      (listT, t) => listT..add(t),
+      topic,
+    );
   }
 
   Future<bool> unsubscribeSession(String topic) async {
-    return await update(cinemaTopicRepository.unsubscribeSession,
-        (listT, t) => listT..remove(t), topic);
+    return await update(
+      cinemaTopicRepository.unsubscribeSession,
+      (listT, t) => listT..remove(t),
+      topic,
+    );
   }
 
   Future<bool> toggleSubscription(String topic) async {
     return state.maybeWhen(
-        data: (data) {
-          if (data.contains(topic)) {
-            return unsubscribeSession(topic);
-          }
-          return subscribeSession(topic);
-        },
-        orElse: () => false);
+      data: (data) {
+        if (data.contains(topic)) {
+          return unsubscribeSession(topic);
+        }
+        return subscribeSession(topic);
+      },
+      orElse: () => false,
+    );
   }
 }
 

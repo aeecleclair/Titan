@@ -23,11 +23,12 @@ class AddEditButton extends HookConsumerWidget {
   final TextEditingController note;
   final bool isEdit;
   final Future Function(Function) onAddEdit;
-  const AddEditButton(
-      {super.key,
-      required this.note,
-      required this.isEdit,
-      required this.onAddEdit});
+  const AddEditButton({
+    super.key,
+    required this.note,
+    required this.isEdit,
+    required this.onAddEdit,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -52,7 +53,10 @@ class AddEditButton extends HookConsumerWidget {
         await onAddEdit(() async {
           if (processDateBack(start).compareTo(processDateBack(end)) > 0) {
             displayToast(
-                context, TypeMsg.error, LoanTextConstants.invalidDates);
+              context,
+              TypeMsg.error,
+              LoanTextConstants.invalidDates,
+            );
           } else if (borrower.id.isEmpty) {
             displayToast(context, TypeMsg.error, LoanTextConstants.noBorrower);
           } else {
@@ -60,22 +64,31 @@ class AddEditButton extends HookConsumerWidget {
               data: (itemList) async {
                 await tokenExpireWrapper(ref, () async {
                   final sortedAvailable = itemList
-                      .where((element) =>
-                          element.loanedQuantity < element.totalQuantity)
+                      .where(
+                        (element) =>
+                            element.loanedQuantity < element.totalQuantity,
+                      )
                       .toList()
                     ..sort((a, b) => a.name.compareTo(b.name));
                   final sortedUnavailable = itemList
-                      .where((element) =>
-                          element.loanedQuantity >= element.totalQuantity)
+                      .where(
+                        (element) =>
+                            element.loanedQuantity >= element.totalQuantity,
+                      )
                       .toList()
                     ..sort((a, b) => a.name.compareTo(b.name));
                   itemList = sortedAvailable + sortedUnavailable;
                   List<ItemQuantity> selected = itemList
-                      .where((element) =>
-                          selectedItems[itemList.indexOf(element)] != 0)
-                      .map((e) => ItemQuantity(
+                      .where(
+                        (element) =>
+                            selectedItems[itemList.indexOf(element)] != 0,
+                      )
+                      .map(
+                        (e) => ItemQuantity(
                           itemSimple: e.toItemSimple(),
-                          quantity: selectedItems[itemList.indexOf(e)]))
+                          quantity: selectedItems[itemList.indexOf(e)],
+                        ),
+                      )
                       .toList();
                   if (selected.isNotEmpty) {
                     Loan newLoan = Loan(
@@ -94,28 +107,39 @@ class AddEditButton extends HookConsumerWidget {
                         : await loanListNotifier.addLoan(newLoan);
                     if (value) {
                       adminLoanListNotifier.setTData(
-                          isEdit ? loan.loaner : loaner,
-                          await loanListNotifier.copy());
+                        isEdit ? loan.loaner : loaner,
+                        await loanListNotifier.copy(),
+                      );
                       QR.back();
                       if (isEdit) {
                         displayToastWithContext(
-                            TypeMsg.msg, LoanTextConstants.updatedLoan);
+                          TypeMsg.msg,
+                          LoanTextConstants.updatedLoan,
+                        );
                       } else {
                         displayToastWithContext(
-                            TypeMsg.msg, LoanTextConstants.addedLoan);
+                          TypeMsg.msg,
+                          LoanTextConstants.addedLoan,
+                        );
                       }
                     } else {
                       if (isEdit) {
                         displayToastWithContext(
-                            TypeMsg.error, LoanTextConstants.updatingError);
+                          TypeMsg.error,
+                          LoanTextConstants.updatingError,
+                        );
                       } else {
                         displayToastWithContext(
-                            TypeMsg.error, LoanTextConstants.addingError);
+                          TypeMsg.error,
+                          LoanTextConstants.addingError,
+                        );
                       }
                     }
                   } else {
                     displayToastWithContext(
-                        TypeMsg.error, LoanTextConstants.noItemSelected);
+                      TypeMsg.error,
+                      LoanTextConstants.noItemSelected,
+                    );
                   }
                 });
               },
@@ -124,15 +148,23 @@ class AddEditButton extends HookConsumerWidget {
               },
               loading: () {
                 displayToast(
-                    context, TypeMsg.error, LoanTextConstants.addingError);
+                  context,
+                  TypeMsg.error,
+                  LoanTextConstants.addingError,
+                );
               },
             );
           }
         });
       },
-      child: Text(isEdit ? LoanTextConstants.edit : LoanTextConstants.add,
-          style: const TextStyle(
-              color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold)),
+      child: Text(
+        isEdit ? LoanTextConstants.edit : LoanTextConstants.add,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 25,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 }

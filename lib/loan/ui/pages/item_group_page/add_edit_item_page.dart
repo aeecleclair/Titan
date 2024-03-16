@@ -33,7 +33,8 @@ class AddEditItemPage extends HookConsumerWidget {
     final caution =
         useTextEditingController(text: isEdit ? item.caution.toString() : '');
     final lendingDuration = useTextEditingController(
-        text: isEdit ? (item.suggestedLendingDuration.toInt()).toString() : '');
+      text: isEdit ? (item.suggestedLendingDuration.toInt()).toString() : '',
+    );
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -41,10 +42,11 @@ class AddEditItemPage extends HookConsumerWidget {
 
     return LoanTemplate(
       child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Form(
-            key: key,
-            child: Column(children: [
+        physics: const BouncingScrollPhysics(),
+        child: Form(
+          key: key,
+          child: Column(
+            children: [
               const SizedBox(height: 30),
               AlignLeftText(
                 isEdit
@@ -55,39 +57,42 @@ class AddEditItemPage extends HookConsumerWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: Column(children: [
-                  const SizedBox(height: 30),
-                  TextEntry(
-                    label: LoanTextConstants.name,
-                    controller: name,
-                  ),
-                  const SizedBox(height: 30),
-                  TextEntry(
-                    keyboardType: TextInputType.number,
-                    label: LoanTextConstants.quantity,
-                    isInt: true,
-                    controller: quantity,
-                  ),
-                  const SizedBox(height: 30),
-                  TextEntry(
-                    keyboardType: TextInputType.number,
-                    controller: caution,
-                    isInt: true,
-                    label: LoanTextConstants.caution,
-                    suffix: '€',
-                  ),
-                  const SizedBox(height: 30),
-                  TextEntry(
-                    keyboardType: TextInputType.number,
-                    controller: lendingDuration,
-                    isInt: true,
-                    label: LoanTextConstants.lendingDuration,
-                    suffix: LoanTextConstants.days,
-                  ),
-                  const SizedBox(height: 50),
-                  WaitingButton(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 30),
+                    TextEntry(
+                      label: LoanTextConstants.name,
+                      controller: name,
+                    ),
+                    const SizedBox(height: 30),
+                    TextEntry(
+                      keyboardType: TextInputType.number,
+                      label: LoanTextConstants.quantity,
+                      isInt: true,
+                      controller: quantity,
+                    ),
+                    const SizedBox(height: 30),
+                    TextEntry(
+                      keyboardType: TextInputType.number,
+                      controller: caution,
+                      isInt: true,
+                      label: LoanTextConstants.caution,
+                      suffix: '€',
+                    ),
+                    const SizedBox(height: 30),
+                    TextEntry(
+                      keyboardType: TextInputType.number,
+                      controller: lendingDuration,
+                      isInt: true,
+                      label: LoanTextConstants.lendingDuration,
+                      suffix: LoanTextConstants.days,
+                    ),
+                    const SizedBox(height: 50),
+                    WaitingButton(
                       builder: (child) => AddEditButtonLayout(
-                          color: Colors.black, child: child),
+                        color: Colors.black,
+                        child: child,
+                      ),
                       onTap: () async {
                         if (key.currentState == null) {
                           return;
@@ -95,56 +100,78 @@ class AddEditItemPage extends HookConsumerWidget {
                         if (key.currentState!.validate()) {
                           await tokenExpireWrapper(ref, () async {
                             Item newItem = Item(
-                                id: isEdit ? item.id : '',
-                                name: name.text,
-                                caution: int.parse(caution.text),
-                                suggestedLendingDuration:
-                                    double.parse(lendingDuration.text),
-                                loanedQuantity: 1,
-                                totalQuantity: int.parse(quantity.text));
+                              id: isEdit ? item.id : '',
+                              name: name.text,
+                              caution: int.parse(caution.text),
+                              suggestedLendingDuration:
+                                  double.parse(lendingDuration.text),
+                              loanedQuantity: 1,
+                              totalQuantity: int.parse(quantity.text),
+                            );
                             final value = isEdit
                                 ? await itemListNotifier.updateItem(
-                                    newItem, loaner.id)
+                                    newItem,
+                                    loaner.id,
+                                  )
                                 : await itemListNotifier.addItem(
-                                    newItem, loaner.id);
+                                    newItem,
+                                    loaner.id,
+                                  );
                             if (value) {
                               QR.back();
                               loanersItemsNotifier.setTData(
-                                  loaner, await itemListNotifier.copy());
+                                loaner,
+                                await itemListNotifier.copy(),
+                              );
                               if (isEdit) {
                                 displayToastWithContext(
-                                    TypeMsg.msg, LoanTextConstants.updatedItem);
+                                  TypeMsg.msg,
+                                  LoanTextConstants.updatedItem,
+                                );
                               } else {
                                 displayToastWithContext(
-                                    TypeMsg.msg, LoanTextConstants.addedObject);
+                                  TypeMsg.msg,
+                                  LoanTextConstants.addedObject,
+                                );
                               }
                             } else {
                               if (isEdit) {
-                                displayToastWithContext(TypeMsg.error,
-                                    LoanTextConstants.updatingError);
+                                displayToastWithContext(
+                                  TypeMsg.error,
+                                  LoanTextConstants.updatingError,
+                                );
                               } else {
-                                displayToastWithContext(TypeMsg.error,
-                                    LoanTextConstants.addingError);
+                                displayToastWithContext(
+                                  TypeMsg.error,
+                                  LoanTextConstants.addingError,
+                                );
                               }
                             }
                           });
                         } else {
-                          displayToast(context, TypeMsg.error,
-                              LoanTextConstants.incorrectOrMissingFields);
+                          displayToast(
+                            context,
+                            TypeMsg.error,
+                            LoanTextConstants.incorrectOrMissingFields,
+                          );
                         }
                       },
                       child: Text(
-                          isEdit
-                              ? LoanTextConstants.edit
-                              : LoanTextConstants.add,
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold))),
-                ]),
-              )
-            ]),
-          )),
+                        isEdit ? LoanTextConstants.edit : LoanTextConstants.add,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -26,18 +26,20 @@ class AnnouncerListNotifier extends ListNotifier<Announcer> {
 
   Future<bool> updateAnnouncer(Announcer announcer) async {
     return await update(
-        _announcerRepository.updateAnnouncer,
-        (announcers, announcer) => announcers
-          ..[announcers.indexWhere((i) => i.id == announcer.id)] = announcer,
-        announcer);
+      _announcerRepository.updateAnnouncer,
+      (announcers, announcer) => announcers
+        ..[announcers.indexWhere((i) => i.id == announcer.id)] = announcer,
+      announcer,
+    );
   }
 
   Future<bool> deleteAnnouncer(Announcer announcer) async {
     return await delete(
-        _announcerRepository.deleteAnnouncer,
-        (adverts, advert) => adverts..removeWhere((i) => i.id == advert.id),
-        announcer.id,
-        announcer);
+      _announcerRepository.deleteAnnouncer,
+      (adverts, advert) => adverts..removeWhere((i) => i.id == advert.id),
+      announcer.id,
+      announcer,
+    );
   }
 }
 

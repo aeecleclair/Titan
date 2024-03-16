@@ -12,12 +12,13 @@ class ItemCard extends StatelessWidget {
   final bool showButtons;
   final Function() onEdit;
   final Future Function() onDelete;
-  const ItemCard(
-      {super.key,
-      required this.item,
-      required this.showButtons,
-      required this.onEdit,
-      required this.onDelete});
+  const ItemCard({
+    super.key,
+    required this.item,
+    required this.showButtons,
+    required this.onEdit,
+    required this.onDelete,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,32 +33,40 @@ class ItemCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 15),
-          AutoSizeText(item.name,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black)),
+          AutoSizeText(
+            item.name,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
           const SizedBox(height: 5),
           Text(
-              availableQuantity > 0
-                  ? '$availableQuantity ${availableQuantity <= 1 ? LoanTextConstants.available : LoanTextConstants.availableMultiple}'
-                  : LoanTextConstants.unavailable,
-              style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                  color: availableQuantity > 0
-                      ? Colors.grey.shade400
-                      : LoanColorConstants.redGradient2)),
+            availableQuantity > 0
+                ? '$availableQuantity ${availableQuantity <= 1 ? LoanTextConstants.available : LoanTextConstants.availableMultiple}'
+                : LoanTextConstants.unavailable,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+              color: availableQuantity > 0
+                  ? Colors.grey.shade400
+                  : LoanColorConstants.redGradient2,
+            ),
+          ),
           const SizedBox(height: 5),
-          AutoSizeText('${item.caution.toStringAsFixed(2)} €',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black)),
+          AutoSizeText(
+            '${item.caution.toStringAsFixed(2)} €',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
           const Spacer(),
           if (showButtons)
             Row(

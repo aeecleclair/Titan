@@ -26,7 +26,7 @@ class CinemaTemplate extends HookConsumerWidget {
               scrollNotifier.reset();
             },
           ),
-          Expanded(child: child)
+          Expanded(child: child),
         ],
       ),
     );

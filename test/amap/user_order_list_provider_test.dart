@@ -30,7 +30,7 @@ void main() {
       const userId = '123';
       final orders = [
         Order.empty().copyWith(id: '1'),
-        Order.empty().copyWith(id: '2')
+        Order.empty().copyWith(id: '2'),
       ];
       when(() => userRepository.getOrderList(userId))
           .thenAnswer((_) async => orders);
@@ -38,19 +38,20 @@ void main() {
       final result = await notifier.loadOrderList(userId);
 
       expect(
-          result.when(
-            data: (orders) => orders,
-            loading: () => [],
-            error: (error, stackTrace) => [],
-          ),
-          orders);
+        result.when(
+          data: (orders) => orders,
+          loading: () => [],
+          error: (error, stackTrace) => [],
+        ),
+        orders,
+      );
     });
 
     test('loadDeliveryOrderList should return a list of orders', () async {
       const deliveryId = '123';
       final orders = [
         Order.empty().copyWith(id: '1'),
-        Order.empty().copyWith(id: '2')
+        Order.empty().copyWith(id: '2'),
       ];
       when(() => orderListRepository.getDeliveryOrderList(deliveryId))
           .thenAnswer((_) async => orders);
@@ -58,12 +59,13 @@ void main() {
       final result = await notifier.loadDeliveryOrderList(deliveryId);
 
       expect(
-          result.when(
-            data: (orders) => orders,
-            loading: () => [],
-            error: (error, stackTrace) => [],
-          ),
-          orders);
+        result.when(
+          data: (orders) => orders,
+          loading: () => [],
+          error: (error, stackTrace) => [],
+        ),
+        orders,
+      );
     });
 
     test('addOrder', () async {

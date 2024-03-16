@@ -9,9 +9,11 @@ class OrderByDeliveryListNotifier extends ListNotifier<Order> {
       : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Order>>> loadDeliveryOrderList(
-      String deliveryId) async {
+    String deliveryId,
+  ) async {
     return await loadList(
-        () async => orderListRepository.getDeliveryOrderList(deliveryId));
+      () async => orderListRepository.getDeliveryOrderList(deliveryId),
+    );
   }
 }
 

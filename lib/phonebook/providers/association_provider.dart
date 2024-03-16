@@ -13,7 +13,8 @@ class AssociationNotifier extends SingleNotifier<Association> {
 
   Future<AsyncValue<Association>> loadAssociation(String associationId) async {
     return await load(
-        () async => associationRepository.getAssociation(associationId));
+      () async => associationRepository.getAssociation(associationId),
+    );
   }
 
   void setAssociation(Association association) {
@@ -30,5 +31,7 @@ final asyncAssociationProvider =
 final associationProvider = Provider<Association>((ref) {
   final association = ref.watch(asyncAssociationProvider);
   return association.maybeWhen(
-      data: (association) => association, orElse: () => Association.empty());
+    data: (association) => association,
+    orElse: () => Association.empty(),
+  );
 });

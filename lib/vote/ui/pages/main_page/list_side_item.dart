@@ -13,8 +13,11 @@ import 'package:myecl/vote/ui/pages/main_page/side_item.dart';
 class ListSideItem extends HookConsumerWidget {
   final List<Section> sectionList;
   final AnimationController animation;
-  const ListSideItem(
-      {super.key, required this.sectionList, required this.animation});
+  const ListSideItem({
+    super.key,
+    required this.sectionList,
+    required this.animation,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,16 +44,17 @@ class ListSideItem extends HookConsumerWidget {
                 sectionIdNotifier.setId(e.id);
               } else {
                 showDialog(
-                    context: context,
-                    builder: (context) => CustomDialogBox(
-                          title: VoteTextConstants.warning,
-                          descriptions: VoteTextConstants.warningMessage,
-                          onYes: () {
-                            selectedContenderNotifier.clear();
-                            animation.forward(from: 0);
-                            sectionIdNotifier.setId(e.id);
-                          },
-                        ));
+                  context: context,
+                  builder: (context) => CustomDialogBox(
+                    title: VoteTextConstants.warning,
+                    descriptions: VoteTextConstants.warningMessage,
+                    onYes: () {
+                      selectedContenderNotifier.clear();
+                      animation.forward(from: 0);
+                      sectionIdNotifier.setId(e.id);
+                    },
+                  ),
+                );
               }
             },
           );

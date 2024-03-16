@@ -22,25 +22,27 @@ class LoadingPage extends ConsumerWidget {
         .whenData((value) => value.minimalTitanVersion <= titanVersion);
     final pathForwarding = ref.read(pathForwardingProvider);
     check.when(
-        data: (value) {
-          if (!value) {
-            QR.to(AppRouter.update);
-          }
-          if (!isLoggedIn) {
+      data: (value) {
+        if (!value) {
+          QR.to(AppRouter.update);
+        }
+        if (!isLoggedIn) {
+          QR.to(LoginRouter.root);
+        }
+        final user = ref.watch(asyncUserProvider);
+        user.when(
+          data: (data) {
+            QR.to(pathForwarding.path);
+          },
+          error: (error, s) {
             QR.to(LoginRouter.root);
-          }
-          final user = ref.watch(asyncUserProvider);
-          user.when(
-              data: (data) {
-                QR.to(pathForwarding.path);
-              },
-              error: (error, s) {
-                QR.to(LoginRouter.root);
-              },
-              loading: () {});
-        },
-        loading: () {},
-        error: (error, stack) => QR.to(AppRouter.noInternet));
+          },
+          loading: () {},
+        );
+      },
+      loading: () {},
+      error: (error, stack) => QR.to(AppRouter.noInternet),
+    );
     return const Scaffold(body: Loader());
   }
 }

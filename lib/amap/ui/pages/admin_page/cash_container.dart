@@ -12,9 +12,10 @@ class CashContainer extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final cash = ref.watch(cashListProvider);
     return AsyncChild(
-        value: cash,
-        builder: (context, cash) =>
-            Row(children: cash.map((e) => UserCashUi(cash: e)).toList()),
-        loaderColor: AMAPColorConstants.greenGradient2);
+      value: cash,
+      builder: (context, cash) =>
+          Row(children: cash.map((e) => UserCashUi(cash: e)).toList()),
+      loaderColor: AMAPColorConstants.greenGradient2,
+    );
   }
 }

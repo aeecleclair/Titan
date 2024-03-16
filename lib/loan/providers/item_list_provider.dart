@@ -20,18 +20,19 @@ class ItemListNotifier extends ListNotifier<Item> {
 
   Future<bool> updateItem(Item item, String loanerId) async {
     return await update(
-        (i) async => itemrepository.updateItem(loanerId, i),
-        (items, item) =>
-            items..[items.indexWhere((i) => i.id == item.id)] = item,
-        item);
+      (i) async => itemrepository.updateItem(loanerId, i),
+      (items, item) => items..[items.indexWhere((i) => i.id == item.id)] = item,
+      item,
+    );
   }
 
   Future<bool> deleteItem(Item item, String loanerId) async {
     return await delete(
-        (id) async => itemrepository.deleteItem(loanerId, id),
-        (items, item) => items..removeWhere((i) => i.id == item.id),
-        item.id,
-        item);
+      (id) async => itemrepository.deleteItem(loanerId, id),
+      (items, item) => items..removeWhere((i) => i.id == item.id),
+      item.id,
+      item,
+    );
   }
 
   Future<AsyncValue<List<Item>>> copy() async {
@@ -39,9 +40,12 @@ class ItemListNotifier extends ListNotifier<Item> {
   }
 
   Future<AsyncValue<List<Item>>> filterItems(String query) async {
-    return state.whenData((items) => items
-        .where((item) => item.name.toLowerCase().contains(query.toLowerCase()))
-        .toList());
+    return state.whenData(
+      (items) => items
+          .where(
+              (item) => item.name.toLowerCase().contains(query.toLowerCase()))
+          .toList(),
+    );
   }
 }
 

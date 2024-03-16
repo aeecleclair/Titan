@@ -22,18 +22,20 @@ class ManagerListNotifier extends ListNotifier<Manager> {
 
   Future<bool> updateManager(Manager manager) async {
     return await update(
-        _repository.updateManager,
-        (managers, manager) => managers
-          ..[managers.indexWhere((m) => m.id == manager.id)] = manager,
-        manager);
+      _repository.updateManager,
+      (managers, manager) =>
+          managers..[managers.indexWhere((m) => m.id == manager.id)] = manager,
+      manager,
+    );
   }
 
   Future<bool> deleteManager(Manager manager) async {
     return await delete(
-        _repository.deleteManager,
-        (managers, manager) => managers..removeWhere((m) => m.id == manager.id),
-        manager.id,
-        manager);
+      _repository.deleteManager,
+      (managers, manager) => managers..removeWhere((m) => m.id == manager.id),
+      manager.id,
+      manager,
+    );
   }
 }
 

@@ -28,50 +28,61 @@ class AddAssociationPage extends HookConsumerWidget {
 
     return AdminTemplate(
       child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(
-                parent: BouncingScrollPhysics(),
-              ),
-              child: Form(
-                key: key,
-                child: Column(children: [
-                  const AlignLeftText(AdminTextConstants.addAssociation),
-                  const SizedBox(height: 30),
-                  TextEditing(controller: name, label: AdminTextConstants.name),
-                  TextEditing(
-                      controller: description,
-                      label: AdminTextConstants.description),
-                  WaitingButton(
-                    onTap: () async {
-                      await tokenExpireWrapper(ref, () async {
-                        final value = await groupListNotifier.createGroup(
-                            SimpleGroup(
-                                name: name.text,
-                                description: description.text,
-                                id: ''));
-                        if (value) {
-                          QR.back();
-                          displayToastWithContext(
-                              TypeMsg.msg, AdminTextConstants.addedAssociation);
-                        } else {
-                          displayToastWithContext(
-                              TypeMsg.error, AdminTextConstants.addingError);
-                        }
-                      });
-                    },
-                    builder: (child) => AdminButton(child: child),
-                    child: const Text(
-                      AdminTextConstants.add,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
+        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(
+            parent: BouncingScrollPhysics(),
+          ),
+          child: Form(
+            key: key,
+            child: Column(
+              children: [
+                const AlignLeftText(AdminTextConstants.addAssociation),
+                const SizedBox(height: 30),
+                TextEditing(controller: name, label: AdminTextConstants.name),
+                TextEditing(
+                  controller: description,
+                  label: AdminTextConstants.description,
+                ),
+                WaitingButton(
+                  onTap: () async {
+                    await tokenExpireWrapper(ref, () async {
+                      final value = await groupListNotifier.createGroup(
+                        SimpleGroup(
+                          name: name.text,
+                          description: description.text,
+                          id: '',
+                        ),
+                      );
+                      if (value) {
+                        QR.back();
+                        displayToastWithContext(
+                          TypeMsg.msg,
+                          AdminTextConstants.addedAssociation,
+                        );
+                      } else {
+                        displayToastWithContext(
+                          TypeMsg.error,
+                          AdminTextConstants.addingError,
+                        );
+                      }
+                    });
+                  },
+                  builder: (child) => AdminButton(child: child),
+                  child: const Text(
+                    AdminTextConstants.add,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
                     ),
-                  )
-                ]),
-              ))),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

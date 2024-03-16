@@ -41,93 +41,114 @@ class SearchUser extends HookConsumerWidget {
       return const Loader();
     }
     return AsyncChild(
-        value: simpleGroup,
-        builder: (context, g) {
-          return Column(
-            children: [
-              StyledSearchBar(
-                label: AdminTextConstants.members,
-                color: ColorConstants.gradient1,
-                padding: const EdgeInsets.all(0),
-                onChanged: (value) async {
-                  if (value.isNotEmpty) {
-                    await usersNotifier.filterUsers(value,
-                        excludeGroup: [group.value!.toSimpleGroup()]);
-                  } else {
-                    usersNotifier.clear();
-                  }
-                },
-                onSuffixIconTap: (focusNode, editingController) {
-                  add.value = !add.value;
-                  if (!add.value) {
-                    editingController.clear();
-                    usersNotifier.clear();
-                    focusNode.unfocus();
-                  } else {
-                    focusNode.requestFocus();
-                  }
-                },
-                suffixIcon: Padding(
-                  padding: const EdgeInsets.all(7.0),
-                  child: Container(
-                    padding: const EdgeInsets.all(7),
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(colors: [
+      value: simpleGroup,
+      builder: (context, g) {
+        return Column(
+          children: [
+            StyledSearchBar(
+              label: AdminTextConstants.members,
+              color: ColorConstants.gradient1,
+              padding: const EdgeInsets.all(0),
+              onChanged: (value) async {
+                if (value.isNotEmpty) {
+                  await usersNotifier.filterUsers(
+                    value,
+                    excludeGroup: [group.value!.toSimpleGroup()],
+                  );
+                } else {
+                  usersNotifier.clear();
+                }
+              },
+              onSuffixIconTap: (focusNode, editingController) {
+                add.value = !add.value;
+                if (!add.value) {
+                  editingController.clear();
+                  usersNotifier.clear();
+                  focusNode.unfocus();
+                } else {
+                  focusNode.requestFocus();
+                }
+              },
+              suffixIcon: Padding(
+                padding: const EdgeInsets.all(7.0),
+                child: Container(
+                  padding: const EdgeInsets.all(7),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [
                         ColorConstants.gradient1,
-                        ColorConstants.gradient2
-                      ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-                      boxShadow: [
-                        BoxShadow(
-                            color: ColorConstants.gradient2.withOpacity(0.4),
-                            offset: const Offset(2, 3),
-                            blurRadius: 5)
+                        ColorConstants.gradient2,
                       ],
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                     ),
-                    child: HeroIcon(
-                      !add.value ? HeroIcons.plus : HeroIcons.xMark,
-                      size: 20,
-                      color: Colors.white,
-                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: ColorConstants.gradient2.withOpacity(0.4),
+                        offset: const Offset(2, 3),
+                        blurRadius: 5,
+                      ),
+                    ],
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  ),
+                  child: HeroIcon(
+                    !add.value ? HeroIcons.plus : HeroIcons.xMark,
+                    size: 20,
+                    color: Colors.white,
                   ),
                 ),
               ),
-              if (add.value) const SizedBox(height: 10),
-              if (add.value) const MemberResults(),
-              if (!add.value)
-                ...g[0].members.map((x) => UserUi(
-                    user: x,
-                    onDelete: () {
-                      showDialog(
+            ),
+            if (add.value) const SizedBox(height: 10),
+            if (add.value) const MemberResults(),
+            if (!add.value)
+              ...g[0].members.map(
+                    (x) => UserUi(
+                      user: x,
+                      onDelete: () {
+                        showDialog(
                           context: context,
                           builder: (BuildContext context) => CustomDialogBox(
-                              descriptions:
-                                  AdminTextConstants.removeAssociationMember,
-                              title: AdminTextConstants.deleting,
-                              onYes: () async {
-                                await tokenExpireWrapper(ref, () async {
-                                  Group newGroup = g[0].copyWith(
-                                      members: g[0]
-                                          .members
-                                          .where(
-                                              (element) => element.id != x.id)
-                                          .toList());
-                                  final value = await groupNotifier
-                                      .deleteMember(newGroup, x);
-                                  if (value) {
-                                    simpleGroupGroupsNotifier.setTData(
-                                        newGroup.id, AsyncData([newGroup]));
-                                    displayToastWithContext(TypeMsg.msg,
-                                        AdminTextConstants.updatedAssociation);
-                                  } else {
-                                    displayToastWithContext(TypeMsg.msg,
-                                        AdminTextConstants.updatingError);
-                                  }
-                                });
-                              }));
-                    })),
-            ],
-          );
-        });
+                            descriptions:
+                                AdminTextConstants.removeAssociationMember,
+                            title: AdminTextConstants.deleting,
+                            onYes: () async {
+                              await tokenExpireWrapper(ref, () async {
+                                Group newGroup = g[0].copyWith(
+                                  members: g[0]
+                                      .members
+                                      .where(
+                                        (element) => element.id != x.id,
+                                      )
+                                      .toList(),
+                                );
+                                final value = await groupNotifier.deleteMember(
+                                    newGroup, x);
+                                if (value) {
+                                  simpleGroupGroupsNotifier.setTData(
+                                    newGroup.id,
+                                    AsyncData([newGroup]),
+                                  );
+                                  displayToastWithContext(
+                                    TypeMsg.msg,
+                                    AdminTextConstants.updatedAssociation,
+                                  );
+                                } else {
+                                  displayToastWithContext(
+                                    TypeMsg.msg,
+                                    AdminTextConstants.updatingError,
+                                  );
+                                }
+                              });
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+          ],
+        );
+      },
+    );
   }
 }

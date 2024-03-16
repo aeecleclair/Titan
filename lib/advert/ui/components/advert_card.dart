@@ -24,8 +24,9 @@ class AdvertCard extends HookConsumerWidget {
     double height = 300;
     double imageHeight = 175;
     double maxHeight = MediaQuery.of(context).size.height - 344;
-    final posters = ref.watch(advertPostersProvider
-        .select((advertPosters) => advertPosters[advert.id]));
+    final posters = ref.watch(
+      advertPostersProvider.select((advertPosters) => advertPosters[advert.id]),
+    );
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final posterNotifier = ref.watch(advertPosterProvider.notifier);
     final isWebFormat = ref.watch(isWebFormatProvider);
@@ -101,11 +102,13 @@ class AdvertCard extends HookConsumerWidget {
                           ),
                           Expanded(
                             child: SingleChildScrollView(
-                              child: TextWithHyperLink(advert.content,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                  )),
+                              child: TextWithHyperLink(
+                                advert.content,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
                             ),
                           ),
                         ],
@@ -129,103 +132,109 @@ class AdvertCard extends HookConsumerWidget {
                       color: Color(0x33000000),
                       offset: Offset(2, 2),
                       spreadRadius: 3,
-                    )
+                    ),
                   ],
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Stack(
                   children: [
-                    Column(children: [
-                      AutoLoaderChild(
-                        group: posters,
-                        notifier: advertPostersNotifier,
-                        mapKey: advert.id,
-                        loader: (advertId) =>
-                            posterNotifier.getAdvertPoster(advertId),
-                        loadingBuilder: (context) => Container(
-                          width: width,
-                          height: imageHeight,
-                          decoration: const BoxDecoration(
+                    Column(
+                      children: [
+                        AutoLoaderChild(
+                          group: posters,
+                          notifier: advertPostersNotifier,
+                          mapKey: advert.id,
+                          loader: (advertId) =>
+                              posterNotifier.getAdvertPoster(advertId),
+                          loadingBuilder: (context) => Container(
+                            width: width,
+                            height: imageHeight,
+                            decoration: const BoxDecoration(
                               borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20))),
-                          child: HeroIcon(
-                            HeroIcons.photo,
-                            size: width,
-                          ),
-                        ),
-                        dataBuilder: (context, value) => Container(
-                          width: width,
-                          height: imageHeight,
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.only(
                                 topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20)),
-                            image: DecorationImage(
-                              image: value.first.image,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        padding:
-                            const EdgeInsets.only(top: 20, left: 10, right: 10),
-                        width: width,
-                        height: height - imageHeight,
-                        child: Column(
-                          children: [
-                            Column(
-                              children: [
-                                Container(
-                                  width: width,
-                                  margin: const EdgeInsets.only(bottom: 5),
-                                  child: AutoSizeText(
-                                    advert.title.trim(),
-                                    textAlign: TextAlign.left,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    minFontSize: 15,
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            TextWithHyperLink(
-                              advert.content.trim(),
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.justify,
-                              maxLines: 3,
-                              minFontSize: 13,
-                              maxFontSize: 15,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
+                                topRight: Radius.circular(20),
                               ),
                             ),
-                          ],
+                            child: HeroIcon(
+                              HeroIcons.photo,
+                              size: width,
+                            ),
+                          ),
+                          dataBuilder: (context, value) => Container(
+                            width: width,
+                            height: imageHeight,
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20),
+                              ),
+                              image: DecorationImage(
+                                image: value.first.image,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ]),
+                        Container(
+                          padding: const EdgeInsets.only(
+                              top: 20, left: 10, right: 10),
+                          width: width,
+                          height: height - imageHeight,
+                          child: Column(
+                            children: [
+                              Column(
+                                children: [
+                                  Container(
+                                    width: width,
+                                    margin: const EdgeInsets.only(bottom: 5),
+                                    child: AutoSizeText(
+                                      advert.title.trim(),
+                                      textAlign: TextAlign.left,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      minFontSize: 15,
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              TextWithHyperLink(
+                                advert.content.trim(),
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.justify,
+                                maxLines: 3,
+                                minFontSize: 13,
+                                maxFontSize: 15,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                     Positioned(
                       top: imageHeight - 40,
                       left: 15,
                       child: Container(
                         decoration: BoxDecoration(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(8)),
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 5,
-                                color: Colors.black.withOpacity(0.3),
-                                offset: const Offset(2, 2),
-                                spreadRadius: 3,
-                              )
-                            ]),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(8)),
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 5,
+                              color: Colors.black.withOpacity(0.3),
+                              offset: const Offset(2, 2),
+                              spreadRadius: 3,
+                            ),
+                          ],
+                        ),
                         child: ClipRRect(
                           borderRadius:
                               const BorderRadius.all(Radius.circular(8)),
@@ -234,7 +243,9 @@ class AdvertCard extends HookConsumerWidget {
                             height: 50,
                             width: 50,
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 5, vertical: 5),
+                              horizontal: 5,
+                              vertical: 5,
+                            ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -251,8 +262,8 @@ class AdvertCard extends HookConsumerWidget {
                                 ),
                                 AutoSizeText(
                                   AdvertTextConstants.months[int.parse(
-                                          DateFormat('MM')
-                                              .format(advert.date)) -
+                                        DateFormat('MM').format(advert.date),
+                                      ) -
                                       1],
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
@@ -273,16 +284,17 @@ class AdvertCard extends HookConsumerWidget {
                       right: 15,
                       child: Container(
                         decoration: BoxDecoration(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(8)),
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 5,
-                                color: Colors.black.withOpacity(0.3),
-                                offset: const Offset(2, 2),
-                                spreadRadius: 3,
-                              )
-                            ]),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(8)),
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 5,
+                              color: Colors.black.withOpacity(0.3),
+                              offset: const Offset(2, 2),
+                              spreadRadius: 3,
+                            ),
+                          ],
+                        ),
                         child: ClipRRect(
                           borderRadius:
                               const BorderRadius.all(Radius.circular(8)),
@@ -290,7 +302,9 @@ class AdvertCard extends HookConsumerWidget {
                             color: Colors.white,
                             height: 30,
                             padding: const EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 10),
+                              vertical: 5,
+                              horizontal: 10,
+                            ),
                             alignment: Alignment.center,
                             child: AutoSizeText(
                               advert.announcer.name,

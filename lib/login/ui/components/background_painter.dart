@@ -162,14 +162,17 @@ class BackgroundPainter extends CustomPainter {
       Point(
         w,
         lerpDouble(0, h / 10.2, blueAnim.value)!,
-      )
+      ),
     ]);
 
     var colors = [ColorConstants.gradient1, ColorConstants.gradient2];
 
     Rect rectShape = Rect.fromLTWH(0, 0, w, h);
     final Gradient gradient = LinearGradient(
-        colors: colors, begin: Alignment.topLeft, end: Alignment.topRight);
+      colors: colors,
+      begin: Alignment.topLeft,
+      end: Alignment.topRight,
+    );
 
     paint = Paint()..color = ColorConstants.background2;
 
@@ -180,7 +183,11 @@ class BackgroundPainter extends CustomPainter {
     canvas.drawPath(path, paint);
 
     canvas.drawShadow(
-        path, ColorConstants.background2.withAlpha(125), 10.0, false);
+      path,
+      ColorConstants.background2.withAlpha(125),
+      10.0,
+      false,
+    );
     canvas.drawPath(path2, paint2);
     canvas.drawPath(path4, paint4);
   }
@@ -203,9 +210,10 @@ class BackgroundPainter extends CustomPainter {
 
     // connect the last two points
     path.quadraticBezierTo(
-        points[points.length - 2].x,
-        points[points.length - 2].y,
-        points[points.length - 1].x,
-        points[points.length - 1].y);
+      points[points.length - 2].x,
+      points[points.length - 2].y,
+      points[points.length - 1].x,
+      points[points.length - 1].y,
+    );
   }
 }

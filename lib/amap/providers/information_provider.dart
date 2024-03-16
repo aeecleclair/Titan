@@ -22,7 +22,10 @@ class InformationNotifier extends SingleNotifier<Information> {
 
   Future<bool> deleteInformation(Information information) async {
     return await delete(
-        informationRepository.deleteInformation, information, "");
+      informationRepository.deleteInformation,
+      information,
+      "",
+    );
   }
 }
 

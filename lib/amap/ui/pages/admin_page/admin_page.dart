@@ -19,20 +19,21 @@ class AdminPage extends HookConsumerWidget {
     final productListNotifier = ref.read(productListProvider.notifier);
     return AmapTemplate(
       child: Refresher(
-          onRefresh: () async {
-            await cashNotifier.loadCashList();
-            await deliveryListNotifier.loadDeliveriesList();
-            await productListNotifier.loadProductList();
-          },
-          child: const Column(
-            children: [
-              AccountHandler(),
-              SizedBox(height: 12),
-              DeliveryHandler(),
-              SizedBox(height: 12),
-              ProductHandler(),
-            ],
-          )),
+        onRefresh: () async {
+          await cashNotifier.loadCashList();
+          await deliveryListNotifier.loadDeliveriesList();
+          await productListNotifier.loadProductList();
+        },
+        child: const Column(
+          children: [
+            AccountHandler(),
+            SizedBox(height: 12),
+            DeliveryHandler(),
+            SizedBox(height: 12),
+            ProductHandler(),
+          ],
+        ),
+      ),
     );
   }
 }

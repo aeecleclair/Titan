@@ -21,6 +21,7 @@ class ProfilePictureNotifier extends SingleNotifier<Image> {
 
   Future<Image> getProfilePicture(String profileId) async {
     return Image.memory(
-        await profilePictureRepository.getProfilePicture(profileId));
+      await profilePictureRepository.getProfilePicture(profileId),
+    );
   }
 }
