@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/elocaps/class/caps_mode.dart';
-import 'package:myecl/elocaps/class/game.dart';
 import 'package:myecl/elocaps/providers/leader_board_player_map_notifier.dart';
 import 'package:myecl/elocaps/providers/mode_chosen_provider.dart';
 import 'package:myecl/elocaps/providers/player_histo_provider.dart';
@@ -36,104 +36,100 @@ class EloCapsMainPage extends HookConsumerWidget {
         ref.read(leaderBoardPlayerListProvider.notifier);
     final modeChosenNotifier = ref.watch(modeChosenProvider.notifier);
     final history = ref.watch(playerHistoProvider);
-    void f(List<Game> games) {
-      print(games.map((e) => e.gamePlayers
-          .where((user) => user.playerId == me.id)
-          .first
-          .hasConfirmed));
-    }
 
     final displayBadge = history.maybeWhen(
-        data: (games) {
-          f(games);
-          return games.where((e) => !e.isConfirmed && !e.isCancelled).any(
-              (element) => !element.gamePlayers
-                  .where((user) => user.playerId == me.id)
-                  .first
-                  .hasConfirmed);
-        },
+        data: ((games) => games
+            .where((e) => !e.isConfirmed && !e.isCancelled)
+            .any((element) => !element.gamePlayers
+                .where((user) => user.playerId == me.id)
+                .first
+                .hasConfirmed)),
         orElse: () => false);
     return ElocapsTemplate(
-        child: Refresher(
+        child: Stack(
+      children: [
+        Refresher(
             onRefresh: () async {
               leaderBoardPlayerNotifier.loadRanking;
             },
-            child: Stack(
+            child: Column(
               children: [
-                Column(
+                const SizedBox(height: 5),
+                const SizedBox(height: 10),
+                Row(
                   children: [
-                    const SizedBox(height: 20),
-                    const AlignLeftText(ElocapsTextConstant.gameMode,
-                        padding: EdgeInsets.symmetric(horizontal: 30)),
-                    const SizedBox(height: 20),
-                    HorizontalListView.builder(
-                        items: CapsMode.values,
-                        itemBuilder: (context, item, i) {
-                          final selected = item == modeChosen;
-                          return ItemChip(
-                              selected: selected,
-                              onTap: () {
-                                modeChosenNotifier.setMode(item);
-                              },
-                              child: Text(
-                                capsModeToString(item),
-                                style: TextStyle(
-                                    color:
-                                        selected ? Colors.white : Colors.black),
-                              ));
-                        },
-                        height: 40),
-                    const SizedBox(height: 20),
-                    AutoLoaderChild(
-                      group: leaderBoardPlayerList,
-                      mapKey: modeChosen,
-                      notifier: leaderBoardPlayerListNotifier,
-                      listLoader: leaderBoardPlayerNotifier.loadRanking,
-                      dataBuilder: (context, players) => SingleChildScrollView(
-                        child: Column(children: [
-                          Podium(players: players),
-                          LeaderBoard(players: players),
-                        ]),
-                      ),
+                    Expanded(
+                      child: HorizontalListView.builder(
+                          items: CapsMode.values,
+                          itemBuilder: (context, item, i) {
+                            final selected = item == modeChosen;
+                            return ItemChip(
+                                selected: selected,
+                                onTap: () {
+                                  modeChosenNotifier.setMode(item);
+                                },
+                                child: Text(
+                                  capsModeToString(item),
+                                  style: TextStyle(
+                                      color: selected
+                                          ? Colors.white
+                                          : Colors.black),
+                                ));
+                          },
+                          height: 40),
                     ),
+                    GestureDetector(
+                        onTap: () {
+                          QR.to(ElocapsRouter.root + ElocapsRouter.history);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Center(
+                              child: (displayBadge)
+                                  ? Badge(
+                                      isLabelVisible: displayBadge,
+                                      smallSize: 10,
+                                      child: const HeroIcon(
+                                        HeroIcons.clipboardDocumentList,
+                                        size: 30,
+                                      ))
+                                  : const HeroIcon(
+                                      HeroIcons.clipboardDocumentList,
+                                      size: 30,
+                                    )),
+                        )),
                   ],
                 ),
-                Positioned(
-                  bottom: 20,
-                  left: 0,
-                  right: 0,
-                  child: GestureDetector(
-                    onTap: () {
-                      modeChosenNotifier.setMode(CapsMode.values.first);
-                      QR.to(ElocapsRouter.root + ElocapsRouter.game);
-                    },
-                    child: const MyButton(
-                      text: ElocapsTextConstant.play,
-                    ),
+                const SizedBox(height: 20),
+                AutoLoaderChild(
+                  group: leaderBoardPlayerList,
+                  mapKey: modeChosen,
+                  notifier: leaderBoardPlayerListNotifier,
+                  listLoader: leaderBoardPlayerNotifier.loadRanking,
+                  dataBuilder: (context, players) => SingleChildScrollView(
+                    child: Column(children: [
+                      Podium(players: players),
+                      LeaderBoard(players: players),
+                    ]),
                   ),
                 ),
-                Positioned(
-                  top: 0,
-                  right: 10,
-                  child: GestureDetector(
-                      onTap: () {
-                        QR.to(ElocapsRouter.root + ElocapsRouter.history);
-                      },
-                      child: Center(
-                          child: (displayBadge)
-                              ? Badge(
-                                  isLabelVisible: displayBadge,
-                                  smallSize: 10,
-                                  child: const HeroIcon(
-                                    HeroIcons.clipboardDocumentList,
-                                    size: 30,
-                                  ))
-                              : const HeroIcon(
-                                  HeroIcons.clipboardDocumentList,
-                                  size: 30,
-                                ))),
-                )
               ],
-            )));
+            )),
+        Positioned(
+          bottom: 10,
+          left: 0,
+          right: 0,
+          child: GestureDetector(
+            onTap: () {
+              modeChosenNotifier.setMode(CapsMode.values.first);
+              QR.to(ElocapsRouter.root + ElocapsRouter.game);
+            },
+            child: const MyButton(
+              text: ElocapsTextConstant.play,
+            ),
+          ),
+        ),
+      ],
+    ));
   }
 }
