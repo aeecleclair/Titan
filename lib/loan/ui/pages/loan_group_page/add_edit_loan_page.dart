@@ -49,10 +49,11 @@ class AddEditLoanPage extends HookConsumerWidget {
 
     return LoanTemplate(
       child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Form(
-            key: key,
-            child: Column(children: [
+        physics: const BouncingScrollPhysics(),
+        child: Form(
+          key: key,
+          child: Column(
+            children: [
               const SizedBox(height: 30),
               StyledSearchBar(
                 label: isEdit
@@ -61,7 +62,9 @@ class AddEditLoanPage extends HookConsumerWidget {
                 onChanged: (value) async {
                   if (value.isNotEmpty) {
                     loanersItemsNotifier.setTData(
-                        loaner, await itemListNotifier.filterItems(value));
+                      loaner,
+                      await itemListNotifier.filterItems(value),
+                    );
                   } else {
                     loanersItemsNotifier.setTData(loaner, itemList);
                   }
@@ -71,59 +74,69 @@ class AddEditLoanPage extends HookConsumerWidget {
               ItemBar(isEdit: isEdit),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: Column(children: [
-                  const SizedBox(height: 20),
-                  const NumberSelectedText(),
-                  const SizedBox(height: 20),
-                  TextEntry(
-                    label: LoanTextConstants.borrower,
-                    onChanged: (value) {
-                      tokenExpireWrapper(ref, () async {
-                        if (queryController.text.isNotEmpty) {
-                          await usersNotifier.filterUsers(queryController.text);
-                        } else {
-                          usersNotifier.clear();
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    const NumberSelectedText(),
+                    const SizedBox(height: 20),
+                    TextEntry(
+                      label: LoanTextConstants.borrower,
+                      onChanged: (value) {
+                        tokenExpireWrapper(ref, () async {
+                          if (queryController.text.isNotEmpty) {
+                            await usersNotifier
+                                .filterUsers(queryController.text);
+                          } else {
+                            usersNotifier.clear();
+                          }
+                        });
+                      },
+                      canBeEmpty: true,
+                      controller: queryController,
+                    ),
+                    const SizedBox(height: 10),
+                    SearchResult(queryController: queryController),
+                    const SizedBox(height: 30),
+                    const StartDateEntry(),
+                    const SizedBox(height: 30),
+                    const EndDateEntry(),
+                    const SizedBox(height: 30),
+                    TextEntry(
+                      label: LoanTextConstants.note,
+                      controller: note,
+                    ),
+                    const SizedBox(height: 30),
+                    TextEntry(
+                      label: LoanTextConstants.caution,
+                      controller: caution,
+                    ),
+                    const SizedBox(height: 50),
+                    AddEditButton(
+                      isEdit: isEdit,
+                      note: note,
+                      onAddEdit: (processingData) async {
+                        if (key.currentState == null) {
+                          return;
                         }
-                      });
-                    },
-                    canBeEmpty: true,
-                    controller: queryController,
-                  ),
-                  const SizedBox(height: 10),
-                  SearchResult(queryController: queryController),
-                  const SizedBox(height: 30),
-                  const StartDateEntry(),
-                  const SizedBox(height: 30),
-                  const EndDateEntry(),
-                  const SizedBox(height: 30),
-                  TextEntry(
-                    label: LoanTextConstants.note,
-                    controller: note,
-                  ),
-                  const SizedBox(height: 30),
-                  TextEntry(
-                      label: LoanTextConstants.caution, controller: caution),
-                  const SizedBox(height: 50),
-                  AddEditButton(
-                    isEdit: isEdit,
-                    note: note,
-                    onAddEdit: (processingData) async {
-                      if (key.currentState == null) {
-                        return;
-                      }
-                      if (key.currentState!.validate()) {
-                        processingData();
-                      } else {
-                        displayToast(context, TypeMsg.error,
-                            LoanTextConstants.incorrectOrMissingFields);
-                      }
-                    },
-                  ),
-                  const SizedBox(height: 30),
-                ]),
+                        if (key.currentState!.validate()) {
+                          processingData();
+                        } else {
+                          displayToast(
+                            context,
+                            TypeMsg.error,
+                            LoanTextConstants.incorrectOrMissingFields,
+                          );
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 30),
+                  ],
+                ),
               ),
-            ]),
-          )),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

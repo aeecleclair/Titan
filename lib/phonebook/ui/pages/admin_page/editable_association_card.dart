@@ -8,11 +8,12 @@ class EditableAssociationCard extends HookConsumerWidget {
   final Association association;
   final void Function() onEdit;
   final Future Function() onDelete;
-  const EditableAssociationCard(
-      {super.key,
-      required this.association,
-      required this.onEdit,
-      required this.onDelete});
+  const EditableAssociationCard({
+    super.key,
+    required this.association,
+    required this.onEdit,
+    required this.onDelete,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,14 +21,16 @@ class EditableAssociationCard extends HookConsumerWidget {
       margin: const EdgeInsets.symmetric(vertical: 5),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
-          boxShadow: [
-            BoxShadow(
-                color: Colors.grey.withOpacity(0.2),
-                blurRadius: 5,
-                spreadRadius: 2)
-          ]),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            blurRadius: 5,
+            spreadRadius: 2,
+          ),
+        ],
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -36,17 +39,21 @@ class EditableAssociationCard extends HookConsumerWidget {
             child: Text(
               association.name,
               style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
+                color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           Expanded(
-            child: Text(association.kind,
-                style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold)),
+            child: Text(
+              association.kind,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
           Row(
             children: [

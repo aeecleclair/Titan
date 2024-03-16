@@ -8,11 +8,15 @@ class SectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(
-        alignment: Alignment.centerLeft,
-        child: Text(text,
-            style: const TextStyle(
-                color: RaffleColorConstants.gradient2,
-                fontWeight: FontWeight.bold,
-                fontSize: 20)));
+      alignment: Alignment.centerLeft,
+      child: Text(
+        text,
+        style: const TextStyle(
+          color: RaffleColorConstants.gradient2,
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+      ),
+    );
   }
 }

@@ -16,37 +16,49 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
   }
 
   Future<AsyncValue<List<CompleteMember>>> loadMembers(
-      String associationId, String year) async {
-    return await loadList(() async => associationMemberRepository
-        .getAssociationMemberList(associationId, year));
+    String associationId,
+    String year,
+  ) async {
+    return await loadList(
+      () async => associationMemberRepository.getAssociationMemberList(
+          associationId, year),
+    );
   }
 
   Future<bool> addMember(CompleteMember member, Membership membership) async {
-    return await add((member) async {
-      member.memberships
-          .add(await associationMemberRepository.addMember(membership));
-      return member;
-    }, member);
+    return await add(
+      (member) async {
+        member.memberships
+            .add(await associationMemberRepository.addMember(membership));
+        return member;
+      },
+      member,
+    );
   }
 
   Future<bool> updateMember(
-      CompleteMember member, Membership membership) async {
+    CompleteMember member,
+    Membership membership,
+  ) async {
     return await update(
-        (member) => associationMemberRepository.updateMember(membership),
-        (members, member) => members
-          ..[members.indexWhere((e) => e.member.id == member.member.id)] =
-              member,
-        member);
+      (member) => associationMemberRepository.updateMember(membership),
+      (members, member) => members
+        ..[members.indexWhere((e) => e.member.id == member.member.id)] = member,
+      member,
+    );
   }
 
   Future<bool> deleteMember(
-      CompleteMember member, Membership membership) async {
+    CompleteMember member,
+    Membership membership,
+  ) async {
     return await delete(
-        associationMemberRepository.deleteMember,
-        (members, member) =>
-            members..removeWhere((i) => i.member.id == member.member.id),
-        membership.id,
-        member);
+      associationMemberRepository.deleteMember,
+      (members, member) =>
+          members..removeWhere((i) => i.member.id == member.member.id),
+      membership.id,
+      member,
+    );
   }
 }
 
@@ -58,7 +70,9 @@ final associationMemberListProvider = StateNotifierProvider<
   tokenExpireWrapperAuth(ref, () async {
     final association = ref.watch(associationProvider);
     await provider.loadMembers(
-        association.id, association.mandateYear.toString());
+      association.id,
+      association.mandateYear.toString(),
+    );
   });
   return provider;
 });

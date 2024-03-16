@@ -4,8 +4,12 @@ class AddEditButtonLayout extends StatelessWidget {
   final Widget child;
   final Color color;
   final List<Color>? colors;
-  const AddEditButtonLayout(
-      {super.key, required this.child, this.color = Colors.black, this.colors});
+  const AddEditButtonLayout({
+    super.key,
+    required this.child,
+    this.color = Colors.black,
+    this.colors,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -13,15 +13,20 @@ class BlueBtn extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
       height: 60,
       decoration: BoxDecoration(
-        gradient: const LinearGradient(colors: [
-          RaffleColorConstants.gradient1,
-          RaffleColorConstants.gradient2
-        ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+        gradient: const LinearGradient(
+          colors: [
+            RaffleColorConstants.gradient1,
+            RaffleColorConstants.gradient2,
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
         boxShadow: [
           BoxShadow(
-              color: RaffleColorConstants.gradient2.withOpacity(0.4),
-              offset: const Offset(2, 3),
-              blurRadius: 5)
+            color: RaffleColorConstants.gradient2.withOpacity(0.4),
+            offset: const Offset(2, 3),
+            blurRadius: 5,
+          ),
         ],
         borderRadius: const BorderRadius.all(Radius.circular(15)),
       ),

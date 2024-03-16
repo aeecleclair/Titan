@@ -21,7 +21,8 @@ class TicketsListNotifier extends ListNotifier<Ticket> {
 
   Future<AsyncValue<List<Ticket>>> loadTicketList() async {
     return await loadList(
-        () async => _raffleDetailRepository.getTicketListFromRaffle(raffleId));
+      () async => _raffleDetailRepository.getTicketListFromRaffle(raffleId),
+    );
   }
 }
 

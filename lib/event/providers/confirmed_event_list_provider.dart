@@ -19,11 +19,12 @@ class ConfirmedEventListProvider extends ListNotifier<Event> {
 
   Future<bool> deleteEvent(Event booking) async {
     return await delete(
-        (_) async => true,
-        (bookings, booking) =>
-            bookings..removeWhere((element) => element.id == booking.id),
-        booking.id,
-        booking);
+      (_) async => true,
+      (bookings, booking) =>
+          bookings..removeWhere((element) => element.id == booking.id),
+      booking.id,
+      booking,
+    );
   }
 }
 

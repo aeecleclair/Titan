@@ -10,12 +10,13 @@ enum DeliveryStatus {
 }
 
 class Delivery {
-  Delivery(
-      {required this.deliveryDate,
-      required this.products,
-      required this.id,
-      required this.status,
-      this.expanded = false});
+  Delivery({
+    required this.deliveryDate,
+    required this.products,
+    required this.id,
+    required this.status,
+    this.expanded = false,
+  });
   late final bool expanded;
   late final DeliveryStatus status;
   late final DateTime deliveryDate;
@@ -40,26 +41,29 @@ class Delivery {
     return data;
   }
 
-  Delivery copyWith(
-      {DateTime? deliveryDate,
-      List<Product>? products,
-      bool? expanded,
-      String? id,
-      DeliveryStatus? status}) {
+  Delivery copyWith({
+    DateTime? deliveryDate,
+    List<Product>? products,
+    bool? expanded,
+    String? id,
+    DeliveryStatus? status,
+  }) {
     return Delivery(
-        deliveryDate: deliveryDate ?? this.deliveryDate,
-        products: products ?? this.products,
-        expanded: expanded ?? this.expanded,
-        status: status ?? this.status,
-        id: id ?? this.id);
+      deliveryDate: deliveryDate ?? this.deliveryDate,
+      products: products ?? this.products,
+      expanded: expanded ?? this.expanded,
+      status: status ?? this.status,
+      id: id ?? this.id,
+    );
   }
 
   static Delivery empty() => Delivery(
-      deliveryDate: DateTime.now(),
-      products: [],
-      expanded: false,
-      status: DeliveryStatus.creation,
-      id: '');
+        deliveryDate: DateTime.now(),
+        products: [],
+        expanded: false,
+        status: DeliveryStatus.creation,
+        id: '',
+      );
 
   @override
   String toString() {

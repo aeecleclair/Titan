@@ -7,8 +7,11 @@ import 'package:myecl/tools/ui/layouts/card_layout.dart';
 class CheckItemCard extends StatelessWidget {
   final Item item;
   final bool isSelected;
-  const CheckItemCard(
-      {super.key, required this.item, required this.isSelected});
+  const CheckItemCard({
+    super.key,
+    required this.item,
+    required this.isSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,38 +28,48 @@ class CheckItemCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 15),
-          AutoSizeText(item.name,
-              maxLines: 1,
-              style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black)),
+          AutoSizeText(
+            item.name,
+            maxLines: 1,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
           const SizedBox(height: 5),
           Text(
-              item.loanedQuantity < item.totalQuantity
-                  ? '${item.totalQuantity - item.loanedQuantity} ${LoanTextConstants.available}'
-                  : LoanTextConstants.unavailable,
-              style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                  color: item.loanedQuantity < item.totalQuantity
-                      ? Colors.grey.shade400
-                      : LoanColorConstants.redGradient2)),
-          const SizedBox(height: 5),
-          AutoSizeText('${item.caution.toStringAsFixed(2)} €',
-              maxLines: 1,
-              style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black)),
+            item.loanedQuantity < item.totalQuantity
+                ? '${item.totalQuantity - item.loanedQuantity} ${LoanTextConstants.available}'
+                : LoanTextConstants.unavailable,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+              color: item.loanedQuantity < item.totalQuantity
+                  ? Colors.grey.shade400
+                  : LoanColorConstants.redGradient2,
+            ),
+          ),
           const SizedBox(height: 5),
           AutoSizeText(
-              '${LoanTextConstants.duration} : ${item.suggestedLendingDuration.toInt()} ${LoanTextConstants.days}',
-              maxLines: 1,
-              style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey.shade400)),
+            '${item.caution.toStringAsFixed(2)} €',
+            maxLines: 1,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
+          const SizedBox(height: 5),
+          AutoSizeText(
+            '${LoanTextConstants.duration} : ${item.suggestedLendingDuration.toInt()} ${LoanTextConstants.days}',
+            maxLines: 1,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey.shade400,
+            ),
+          ),
           const SizedBox(height: 10),
         ],
       ),

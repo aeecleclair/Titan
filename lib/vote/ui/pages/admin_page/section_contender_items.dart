@@ -50,19 +50,22 @@ class SectionContenderItems extends HookConsumerWidget {
                 onTap: () {
                   contenderNotifier.setId(Contender.empty());
                   membersNotifier.setMembers([]);
-                  QR.to(VoteRouter.root +
-                      VoteRouter.admin +
-                      VoteRouter.addEditContender);
+                  QR.to(
+                    VoteRouter.root +
+                        VoteRouter.admin +
+                        VoteRouter.addEditContender,
+                  );
                 },
                 child: const CardLayout(
                   width: 120,
                   height: 180,
                   child: Center(
-                      child: HeroIcon(
-                    HeroIcons.plus,
-                    size: 40.0,
-                    color: Colors.black,
-                  )),
+                    child: HeroIcon(
+                      HeroIcons.plus,
+                      size: 40.0,
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
               )
             : null,
@@ -74,36 +77,46 @@ class SectionContenderItems extends HookConsumerWidget {
             tokenExpireWrapper(ref, () async {
               contenderNotifier.setId(e);
               membersNotifier.setMembers(e.members);
-              QR.to(VoteRouter.root +
-                  VoteRouter.admin +
-                  VoteRouter.addEditContender);
+              QR.to(
+                VoteRouter.root +
+                    VoteRouter.admin +
+                    VoteRouter.addEditContender,
+              );
             });
           },
           onDelete: () async {
             await showDialog(
-                context: context,
-                builder: (context) {
-                  return CustomDialogBox(
-                      title: VoteTextConstants.deletePretendance,
-                      descriptions: VoteTextConstants.deletePretendanceDesc,
-                      onYes: () {
-                        tokenExpireWrapper(ref, () async {
-                          final value =
-                              await contenderListNotifier.deleteContender(e);
-                          if (value) {
-                            displayVoteToastWithContext(TypeMsg.msg,
-                                VoteTextConstants.pretendanceDeleted);
-                            contenderListNotifier.copy().then((value) {
-                              sectionContenderListNotifier.setTData(
-                                  section, value);
-                            });
-                          } else {
-                            displayVoteToastWithContext(TypeMsg.error,
-                                VoteTextConstants.pretendanceNotDeleted);
-                          }
+              context: context,
+              builder: (context) {
+                return CustomDialogBox(
+                  title: VoteTextConstants.deletePretendance,
+                  descriptions: VoteTextConstants.deletePretendanceDesc,
+                  onYes: () {
+                    tokenExpireWrapper(ref, () async {
+                      final value =
+                          await contenderListNotifier.deleteContender(e);
+                      if (value) {
+                        displayVoteToastWithContext(
+                          TypeMsg.msg,
+                          VoteTextConstants.pretendanceDeleted,
+                        );
+                        contenderListNotifier.copy().then((value) {
+                          sectionContenderListNotifier.setTData(
+                            section,
+                            value,
+                          );
                         });
-                      });
-                });
+                      } else {
+                        displayVoteToastWithContext(
+                          TypeMsg.error,
+                          VoteTextConstants.pretendanceNotDeleted,
+                        );
+                      }
+                    });
+                  },
+                );
+              },
+            );
           },
         ),
       ),

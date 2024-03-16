@@ -4,11 +4,12 @@ class CheckBoxEntry extends StatelessWidget {
   final String title;
   final ValueNotifier<bool> valueNotifier;
   final VoidCallback onChanged;
-  const CheckBoxEntry(
-      {super.key,
-      required this.title,
-      required this.valueNotifier,
-      required this.onChanged});
+  const CheckBoxEntry({
+    super.key,
+    required this.title,
+    required this.valueNotifier,
+    required this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {

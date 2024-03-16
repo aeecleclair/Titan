@@ -118,7 +118,8 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   const BorderRadius.all(
-                                                      Radius.circular(5)),
+                                                Radius.circular(5),
+                                              ),
                                               image: DecorationImage(
                                                 image: poster.value != null
                                                     ? Image.memory(
@@ -136,7 +137,8 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                                 decoration: BoxDecoration(
                                                   borderRadius:
                                                       const BorderRadius.all(
-                                                          Radius.circular(5)),
+                                                    Radius.circular(5),
+                                                  ),
                                                   color: Colors.white
                                                       .withOpacity(0.4),
                                                 ),
@@ -203,87 +205,104 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                 ),
               ),
               Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Column(
-                    children: [
-                      TextEntry(
-                        maxLines: 1,
-                        label: AdvertTextConstants.tags,
-                        canBeEmpty: true,
-                        controller: textTagsController,
-                      ),
-                      const SizedBox(
-                        height: 50,
-                      ),
-                      WaitingButton(
-                        onTap: () async {
-                          if (key.currentState == null) {
-                            return;
-                          }
-                          if (key.currentState!.validate() &&
-                              selectedAnnouncers.isNotEmpty &&
-                              (poster.value != null || isEdit)) {
-                            await tokenExpireWrapper(ref, () async {
-                              final advertList = ref.watch(advertListProvider);
-                              Advert newAdvert = Advert(
-                                  id: isEdit ? advert.id : '',
-                                  announcer: selectedAnnouncers[0],
-                                  content: content.text,
-                                  date: isEdit ? advert.date : DateTime.now(),
-                                  tags: textTagsController.text.split(', '),
-                                  title: title.text);
-                              final value = isEdit
-                                  ? await advertListNotifier
-                                      .updateAdvert(newAdvert)
-                                  : await advertListNotifier
-                                      .addAdvert(newAdvert);
-                              if (value) {
-                                QR.back();
-                                if (isEdit) {
-                                  displayAdvertToastWithContext(TypeMsg.msg,
-                                      AdvertTextConstants.editedAdvert);
-                                  advertList.maybeWhen(
-                                    data: (list) {
-                                      if (poster.value != null) {
-                                        posterNotifier.updateAdvertPoster(
-                                            advert.id, poster.value!);
-                                      }
-                                    },
-                                    orElse: () {},
-                                  );
-                                } else {
-                                  displayAdvertToastWithContext(TypeMsg.msg,
-                                      AdvertTextConstants.addedAdvert);
-                                  advertList.maybeWhen(
-                                      data: (list) {
-                                        final newAdvert = list.last;
-                                        posterNotifier.updateAdvertPoster(
-                                            newAdvert.id, poster.value!);
-                                      },
-                                      orElse: () {});
-                                }
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Column(
+                  children: [
+                    TextEntry(
+                      maxLines: 1,
+                      label: AdvertTextConstants.tags,
+                      canBeEmpty: true,
+                      controller: textTagsController,
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    WaitingButton(
+                      onTap: () async {
+                        if (key.currentState == null) {
+                          return;
+                        }
+                        if (key.currentState!.validate() &&
+                            selectedAnnouncers.isNotEmpty &&
+                            (poster.value != null || isEdit)) {
+                          await tokenExpireWrapper(ref, () async {
+                            final advertList = ref.watch(advertListProvider);
+                            Advert newAdvert = Advert(
+                              id: isEdit ? advert.id : '',
+                              announcer: selectedAnnouncers[0],
+                              content: content.text,
+                              date: isEdit ? advert.date : DateTime.now(),
+                              tags: textTagsController.text.split(', '),
+                              title: title.text,
+                            );
+                            final value = isEdit
+                                ? await advertListNotifier
+                                    .updateAdvert(newAdvert)
+                                : await advertListNotifier.addAdvert(newAdvert);
+                            if (value) {
+                              QR.back();
+                              if (isEdit) {
+                                displayAdvertToastWithContext(
+                                  TypeMsg.msg,
+                                  AdvertTextConstants.editedAdvert,
+                                );
+                                advertList.maybeWhen(
+                                  data: (list) {
+                                    if (poster.value != null) {
+                                      posterNotifier.updateAdvertPoster(
+                                        advert.id,
+                                        poster.value!,
+                                      );
+                                    }
+                                  },
+                                  orElse: () {},
+                                );
                               } else {
-                                displayAdvertToastWithContext(TypeMsg.error,
-                                    AdvertTextConstants.editingError);
+                                displayAdvertToastWithContext(
+                                  TypeMsg.msg,
+                                  AdvertTextConstants.addedAdvert,
+                                );
+                                advertList.maybeWhen(
+                                  data: (list) {
+                                    final newAdvert = list.last;
+                                    posterNotifier.updateAdvertPoster(
+                                      newAdvert.id,
+                                      poster.value!,
+                                    );
+                                  },
+                                  orElse: () {},
+                                );
                               }
-                            });
-                          } else {
-                            displayToast(context, TypeMsg.error,
-                                AdvertTextConstants.incorrectOrMissingFields);
-                          }
-                        },
-                        child: Text(
-                            isEdit
-                                ? AdvertTextConstants.edit
-                                : AdvertTextConstants.add,
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold)),
-                        builder: (child) => AddEditButtonLayout(child: child),
+                            } else {
+                              displayAdvertToastWithContext(
+                                TypeMsg.error,
+                                AdvertTextConstants.editingError,
+                              );
+                            }
+                          });
+                        } else {
+                          displayToast(
+                            context,
+                            TypeMsg.error,
+                            AdvertTextConstants.incorrectOrMissingFields,
+                          );
+                        }
+                      },
+                      child: Text(
+                        isEdit
+                            ? AdvertTextConstants.edit
+                            : AdvertTextConstants.add,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ],
-                  )),
+                      builder: (child) => AddEditButtonLayout(child: child),
+                    ),
+                  ],
+                ),
+              ),
               const SizedBox(height: 20),
             ],
           ),

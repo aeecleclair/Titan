@@ -24,35 +24,38 @@ class HistoryLoanerLoanListNotifier extends ListNotifier<Loan> {
 
   Future<bool> updateLoan(Loan loan) async {
     return await update(
-        loanRepository.updateLoan,
-        (loans, loan) =>
-            loans..[loans.indexWhere((l) => l.id == loan.id)] = loan,
-        loan);
+      loanRepository.updateLoan,
+      (loans, loan) => loans..[loans.indexWhere((l) => l.id == loan.id)] = loan,
+      loan,
+    );
   }
 
   Future<bool> deleteLoan(Loan loan) async {
     return await delete(
-        loanRepository.deleteLoan,
-        (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
-        loan.id,
-        loan);
+      loanRepository.deleteLoan,
+      (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
+      loan.id,
+      loan,
+    );
   }
 
   Future<bool> returnLoan(Loan loan) async {
     return await delete(
-        loanRepository.returnLoan,
-        (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
-        loan.id,
-        loan);
+      loanRepository.returnLoan,
+      (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
+      loan.id,
+      loan,
+    );
   }
 
   Future<bool> extendLoan(Loan loan, int delay) async {
-    return await update((l) async {
-      return loanRepository.extendLoan(l, delay);
-    },
-        (loans, loan) =>
-            loans..[loans.indexWhere((l) => l.id == loan.id)] = loan,
-        loan);
+    return await update(
+      (l) async {
+        return loanRepository.extendLoan(l, delay);
+      },
+      (loans, loan) => loans..[loans.indexWhere((l) => l.id == loan.id)] = loan,
+      loan,
+    );
   }
 
   Future<AsyncValue<List<Loan>>> copy() async {
@@ -74,18 +77,24 @@ class HistoryLoanerLoanListNotifier extends ListNotifier<Loan> {
   }
 
   Future<AsyncValue<List<Loan>>> filterLoans(String query) async {
-    return state.whenData((loans) => loans
-        .where((loan) =>
-            loan.borrower
-                .getName()
-                .toLowerCase()
-                .contains(query.toLowerCase()) ||
-            loan.itemsQuantity
-                .map((e) => e.itemSimple.name
+    return state.whenData(
+      (loans) => loans
+          .where(
+            (loan) =>
+                loan.borrower
+                    .getName()
                     .toLowerCase()
-                    .contains(query.toLowerCase()))
-                .contains(true))
-        .toList());
+                    .contains(query.toLowerCase()) ||
+                loan.itemsQuantity
+                    .map(
+                      (e) => e.itemSimple.name
+                          .toLowerCase()
+                          .contains(query.toLowerCase()),
+                    )
+                    .contains(true),
+          )
+          .toList(),
+    );
   }
 }
 

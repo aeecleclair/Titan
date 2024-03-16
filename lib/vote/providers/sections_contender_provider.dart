@@ -17,19 +17,25 @@ final sectionContenderProvider = StateNotifierProvider<SectionContender,
     final loaners = ref.watch(sectionList);
     final contenders = ref.watch(contenderListProvider);
     List<Contender> list = [];
-    contenders.when(data: (contender) {
-      list = contender;
-    }, error: (error, stackTrace) {
-      list = [];
-    }, loading: () {
-      list = [];
-    });
+    contenders.when(
+      data: (contender) {
+        list = contender;
+      },
+      error: (error, stackTrace) {
+        list = [];
+      },
+      loading: () {
+        list = [];
+      },
+    );
     adminLoanListNotifier.loadTList(loaners);
     for (final l in loaners) {
       adminLoanListNotifier.setTData(
-          l,
-          AsyncValue.data(
-              list.where((element) => element.section.id == l.id).toList()));
+        l,
+        AsyncValue.data(
+          list.where((element) => element.section.id == l.id).toList(),
+        ),
+      );
     }
   });
   return adminLoanListNotifier;

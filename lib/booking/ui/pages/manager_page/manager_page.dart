@@ -20,27 +20,28 @@ class ManagerPage extends HookConsumerWidget {
         confirmedBookings = [],
         canceledBookings = [];
     bookings.maybeWhen(
-        data: (
-          bookings,
-        ) {
-          for (Booking b in bookings) {
-            switch (b.decision) {
-              case Decision.approved:
-                confirmedBookings.add(b);
-                break;
-              case Decision.declined:
-                canceledBookings.add(b);
-                break;
-              case Decision.pending:
-                pendingBookings.add(b);
-                break;
-            }
+      data: (
+        bookings,
+      ) {
+        for (Booking b in bookings) {
+          switch (b.decision) {
+            case Decision.approved:
+              confirmedBookings.add(b);
+              break;
+            case Decision.declined:
+              canceledBookings.add(b);
+              break;
+            case Decision.pending:
+              pendingBookings.add(b);
+              break;
           }
-          confirmedBookings.sort((a, b) => b.creation.compareTo(a.creation));
-          canceledBookings.sort((a, b) => b.creation.compareTo(a.creation));
-          pendingBookings.sort((a, b) => b.creation.compareTo(a.creation));
-        },
-        orElse: () {});
+        }
+        confirmedBookings.sort((a, b) => b.creation.compareTo(a.creation));
+        canceledBookings.sort((a, b) => b.creation.compareTo(a.creation));
+        pendingBookings.sort((a, b) => b.creation.compareTo(a.creation));
+      },
+      orElse: () {},
+    );
     return BookingTemplate(
       child: Refresher(
         onRefresh: () async {
@@ -56,18 +57,22 @@ class ManagerPage extends HookConsumerWidget {
           children: [
             const SizedBox(height: 20),
             SizedBox(
-                height: MediaQuery.of(context).size.height - 380,
-                child: const Calendar(isManagerPage: true)),
+              height: MediaQuery.of(context).size.height - 380,
+              child: const Calendar(isManagerPage: true),
+            ),
             const SizedBox(height: 30),
             if (pendingBookings.isEmpty &&
                 confirmedBookings.isEmpty &&
                 canceledBookings.isEmpty)
               const Center(
-                child: Text(BookingTextConstants.noCurrentBooking,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold)),
+                child: Text(
+                  BookingTextConstants.noCurrentBooking,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ListBooking(
               title: BookingTextConstants.pending,

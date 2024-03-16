@@ -12,12 +12,13 @@ class ProductCard extends StatelessWidget {
   final Function()? onEdit;
   final Future Function()? onDelete;
   final bool showButton;
-  const ProductCard(
-      {super.key,
-      required this.product,
-      this.onEdit,
-      this.onDelete,
-      this.showButton = true});
+  const ProductCard({
+    super.key,
+    required this.product,
+    this.onEdit,
+    this.onDelete,
+    this.showButton = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,30 +36,39 @@ class ProductCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 10),
-          AutoSizeText(product.category,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: AMAPColorConstants.darkGreen)),
+          AutoSizeText(
+            product.category,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: AMAPColorConstants.darkGreen,
+            ),
+          ),
           const SizedBox(height: 4),
-          AutoSizeText(product.name,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white)),
+          AutoSizeText(
+            product.name,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
           const SizedBox(height: 4),
-          AutoSizeText('${product.price.toStringAsFixed(2)} €',
-              maxLines: 1,
-              minFontSize: 10,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: AMAPColorConstants.darkGreen)),
+          AutoSizeText(
+            '${product.price.toStringAsFixed(2)} €',
+            maxLines: 1,
+            minFontSize: 10,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: AMAPColorConstants.darkGreen,
+            ),
+          ),
           const Spacer(),
           showButton
               ? Row(
@@ -69,30 +79,35 @@ class ProductCard extends StatelessWidget {
                       child: const CardButton(
                         colors: [
                           AMAPColorConstants.greenGradient2,
-                          AMAPColorConstants.textDark
+                          AMAPColorConstants.textDark,
                         ],
                         child: HeroIcon(HeroIcons.pencil, color: Colors.white),
                       ),
                     ),
                     WaitingButton(
                       onTap: onDelete,
-                      builder: (child) => CardButton(colors: const [
-                        AMAPColorConstants.redGradient1,
-                        AMAPColorConstants.redGradient2
-                      ], child: child),
+                      builder: (child) => CardButton(
+                        colors: const [
+                          AMAPColorConstants.redGradient1,
+                          AMAPColorConstants.redGradient2,
+                        ],
+                        child: child,
+                      ),
                       child:
                           const HeroIcon(HeroIcons.trash, color: Colors.white),
-                    )
+                    ),
                   ],
                 )
               : Container(
                   margin: const EdgeInsets.only(bottom: 5),
                   child: Text(
-                      "${AMAPTextConstants.quantity} : ${product.quantity}",
-                      style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: AMAPColorConstants.darkGreen)),
+                    "${AMAPTextConstants.quantity} : ${product.quantity}",
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: AMAPColorConstants.darkGreen,
+                    ),
+                  ),
                 ),
           const SizedBox(height: 10),
         ],

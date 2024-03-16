@@ -8,8 +8,11 @@ import 'package:myecl/tools/functions.dart';
 class MonthBar extends HookConsumerWidget {
   final ScrollController scrollController;
   final double width;
-  const MonthBar(
-      {super.key, required this.scrollController, required this.width});
+  const MonthBar({
+    super.key,
+    required this.scrollController,
+    required this.width,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -37,55 +40,68 @@ class MonthBar extends HookConsumerWidget {
             const SizedBox(width: 30),
             GestureDetector(
               onTap: () {
-                final deltaDay = DateTime(currentDay.value.year,
-                            currentDay.value.month - 1, 0)
-                        .day -
+                final deltaDay = DateTime(
+                      currentDay.value.year,
+                      currentDay.value.month - 1,
+                      0,
+                    ).day -
                     currentDay.value.day;
                 scrollController.animateTo(
-                    scrollController.position.pixels -
-                        deltaDay * 86 -
-                        width / 2,
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeInOut);
+                  scrollController.position.pixels - deltaDay * 86 - width / 2,
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.easeInOut,
+                );
               },
-              child: Text(getMonth((currentMonth.value - 1) % 12),
-                  style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey)),
+              child: Text(
+                getMonth((currentMonth.value - 1) % 12),
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey,
+                ),
+              ),
             ),
           ],
         ),
         Text(
           getMonth(currentMonth.value % 12),
           style: const TextStyle(
-              fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
+            fontSize: 20,
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         Row(
           children: [
             GestureDetector(
               onTap: () {
-                final deltaDay = DateTime(currentDay.value.year,
-                            currentDay.value.month + 1, 0)
-                        .day -
+                final deltaDay = DateTime(
+                      currentDay.value.year,
+                      currentDay.value.month + 1,
+                      0,
+                    ).day -
                     currentDay.value.day;
                 scrollController.animateTo(
-                    scrollController.position.pixels +
-                        (deltaDay - 1) * 86 -
-                        5 +
-                        width / 2,
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeInOut);
+                  scrollController.position.pixels +
+                      (deltaDay - 1) * 86 -
+                      5 +
+                      width / 2,
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.easeInOut,
+                );
               },
-              child: Text(getMonth((currentMonth.value + 1) % 12),
-                  style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey)),
+              child: Text(
+                getMonth((currentMonth.value + 1) % 12),
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey,
+                ),
+              ),
             ),
             const SizedBox(width: 30),
           ],
-        )
+        ),
       ],
     );
   }

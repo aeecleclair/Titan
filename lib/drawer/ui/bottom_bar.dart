@@ -32,18 +32,20 @@ class BottomBar extends ConsumerWidget {
                       size: 27,
                     ),
                     const SizedBox(width: 15),
-                    Text(DrawerTextConstants.logOut,
-                        style: TextStyle(
-                          color: DrawerColorConstants.lightText,
-                          fontSize: 18,
-                        ))
+                    Text(
+                      DrawerTextConstants.logOut,
+                      style: TextStyle(
+                        color: DrawerColorConstants.lightText,
+                        fontSize: 18,
+                      ),
+                    ),
                   ],
                 ),
               ),
             ],
           ),
         ),
-        const SizedBox(height: 30)
+        const SizedBox(height: 30),
       ],
     );
   }

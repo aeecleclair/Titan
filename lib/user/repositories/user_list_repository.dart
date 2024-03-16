@@ -10,11 +10,15 @@ class UserListRepository extends Repository {
 
   Future<List<SimpleUser>> getAllUsers() async {
     return List<SimpleUser>.from(
-        (await getList()).map((x) => SimpleUser.fromJson(x)));
+      (await getList()).map((x) => SimpleUser.fromJson(x)),
+    );
   }
 
-  Future<List<SimpleUser>> searchUser(String query,
-      {List<String>? includeId, List<String>? excludeId}) async {
+  Future<List<SimpleUser>> searchUser(
+    String query, {
+    List<String>? includeId,
+    List<String>? excludeId,
+  }) async {
     String suffix = "search";
     if (query.isNotEmpty) {
       suffix += "?query=$query";
@@ -30,7 +34,8 @@ class UserListRepository extends Repository {
       }
     }
     return List<SimpleUser>.from(
-        (await getList(suffix: suffix)).map((x) => SimpleUser.fromJson(x)));
+      (await getList(suffix: suffix)).map((x) => SimpleUser.fromJson(x)),
+    );
   }
 }
 

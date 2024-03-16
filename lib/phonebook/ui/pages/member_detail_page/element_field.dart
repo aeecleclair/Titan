@@ -19,10 +19,11 @@ class ElementField extends StatelessWidget {
       child: Column(
         children: [
           Center(
-              child: Text(
-            label,
-            style: const TextStyle(fontSize: 16),
-          )),
+            child: Text(
+              label,
+              style: const TextStyle(fontSize: 16),
+            ),
+          ),
           Center(
             child: SelectableText(
               value,
@@ -31,10 +32,12 @@ class ElementField extends StatelessWidget {
               onTap: () {
                 Clipboard.setData(ClipboardData(text: value));
                 displayToastWithContext(
-                    TypeMsg.msg, PhonebookTextConstants.copied);
+                  TypeMsg.msg,
+                  PhonebookTextConstants.copied,
+                );
               },
             ),
-          )
+          ),
         ],
       ),
     );

@@ -11,24 +11,26 @@ void main() {
   group('BookingListProvider', () {
     test('Should load manager bookings', () async {
       final mockBookingRepository = MockBookingRepository();
-      when(() => mockBookingRepository.getUserManageBookingList())
-          .thenAnswer((_) async => [
-                Booking.empty(),
-                Booking.empty(),
-              ]);
+      when(() => mockBookingRepository.getUserManageBookingList()).thenAnswer(
+        (_) async => [
+          Booking.empty(),
+          Booking.empty(),
+        ],
+      );
       final managerBookingListProvider =
           ManagerBookingListProvider(bookingRepository: mockBookingRepository);
       final bookings =
           await managerBookingListProvider.loadUserManageBookings();
       expect(bookings, isA<AsyncData<List<Booking>>>());
       expect(
-          bookings
-              .maybeWhen(
-                data: (data) => data,
-                orElse: () => [],
-              )
-              .length,
-          2);
+        bookings
+            .maybeWhen(
+              data: (data) => data,
+              orElse: () => [],
+            )
+            .length,
+        2,
+      );
     });
 
     test('Should update a booking', () async {
@@ -52,13 +54,19 @@ void main() {
       final newBooking = Booking.empty().copyWith(id: "1");
       when(() => mockBookingRepository.getUserManageBookingList())
           .thenAnswer((_) async => [Booking.empty(), newBooking]);
-      when(() => mockBookingRepository.confirmBooking(
-          newBooking, Decision.approved)).thenAnswer((_) async => true);
+      when(
+        () => mockBookingRepository.confirmBooking(
+          newBooking,
+          Decision.approved,
+        ),
+      ).thenAnswer((_) async => true);
       final bookingListProvider =
           ManagerBookingListProvider(bookingRepository: mockBookingRepository);
       await bookingListProvider.loadUserManageBookings();
       final result = await bookingListProvider.toggleConfirmed(
-          newBooking, Decision.approved);
+        newBooking,
+        Decision.approved,
+      );
       expect(result, true);
     });
   });

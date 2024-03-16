@@ -39,21 +39,24 @@ class AdvertAdminPage extends HookConsumerWidget {
         builder: (context, advertData) => AsyncChild(
           value: userAnnouncerList,
           builder: (context, userAnnouncerData) {
-            final userAnnouncerAdvert = advertData.where((advert) =>
-                userAnnouncerData
-                    .where((element) => advert.announcer.id == element.id)
-                    .isNotEmpty);
+            final userAnnouncerAdvert = advertData.where(
+              (advert) => userAnnouncerData
+                  .where((element) => advert.announcer.id == element.id)
+                  .isNotEmpty,
+            );
             final sortedUserAnnouncerAdverts = userAnnouncerAdvert
                 .toList()
                 .sortedBy((element) => element.date)
                 .reversed;
             final filteredSortedUserAnnouncerAdverts =
                 sortedUserAnnouncerAdverts
-                    .where((advert) =>
-                        selectedAnnouncers
-                            .where((e) => advert.announcer.id == e.id)
-                            .isNotEmpty ||
-                        selectedAnnouncers.isEmpty)
+                    .where(
+                      (advert) =>
+                          selectedAnnouncers
+                              .where((e) => advert.announcer.id == e.id)
+                              .isNotEmpty ||
+                          selectedAnnouncers.isEmpty,
+                    )
                     .toList();
             return ColumnRefresher(
               onRefresh: () async {
@@ -69,58 +72,68 @@ class AdvertAdminPage extends HookConsumerWidget {
                 GestureDetector(
                   onTap: () {
                     advertNotifier.setAdvert(Advert.empty());
-                    QR.to(AdvertRouter.root +
-                        AdvertRouter.admin +
-                        AdvertRouter.addEditAdvert);
+                    QR.to(
+                      AdvertRouter.root +
+                          AdvertRouter.admin +
+                          AdvertRouter.addEditAdvert,
+                    );
                   },
                   child: CardLayout(
-                      margin: const EdgeInsets.only(
-                          bottom: 10, top: 20, left: 30, right: 30),
-                      width: 300,
-                      height: 100,
-                      colors: [
-                        Colors.white,
-                        Colors.grey.shade100,
-                      ],
-                      shadowColor: Colors.grey.withOpacity(0.2),
-                      child: Center(
-                          child: HeroIcon(
+                    margin: const EdgeInsets.only(
+                      bottom: 10,
+                      top: 20,
+                      left: 30,
+                      right: 30,
+                    ),
+                    width: 300,
+                    height: 100,
+                    colors: [
+                      Colors.white,
+                      Colors.grey.shade100,
+                    ],
+                    shadowColor: Colors.grey.withOpacity(0.2),
+                    child: Center(
+                      child: HeroIcon(
                         HeroIcons.plus,
                         size: 40,
                         color: Colors.grey.shade500,
-                      ))),
+                      ),
+                    ),
+                  ),
                 ),
                 ...filteredSortedUserAnnouncerAdverts.map(
                   (advert) => AdminAdvertCard(
-                      onTap: () {
-                        advertNotifier.setAdvert(advert);
-                        QR.to(AdvertRouter.root + AdvertRouter.detail);
-                      },
-                      onEdit: () {
-                        QR.to(AdvertRouter.root +
+                    onTap: () {
+                      advertNotifier.setAdvert(advert);
+                      QR.to(AdvertRouter.root + AdvertRouter.detail);
+                    },
+                    onEdit: () {
+                      QR.to(
+                        AdvertRouter.root +
                             AdvertRouter.admin +
-                            AdvertRouter.addEditAdvert);
-                        advertNotifier.setAdvert(advert);
-                        selectedAnnouncersNotifier.clearAnnouncer();
-                        selectedAnnouncersNotifier
-                            .addAnnouncer(advert.announcer);
-                      },
-                      onDelete: () async {
-                        await showDialog(
-                          context: context,
-                          builder: (context) {
-                            return CustomDialogBox(
-                              title: AdvertTextConstants.deleting,
-                              descriptions: AdvertTextConstants.deleteAdvert,
-                              onYes: () {
-                                advertListNotifier.deleteAdvert(advert);
-                                advertPostersNotifier.deleteE(advert.id, 0);
-                              },
-                            );
-                          },
-                        );
-                      },
-                      advert: advert),
+                            AdvertRouter.addEditAdvert,
+                      );
+                      advertNotifier.setAdvert(advert);
+                      selectedAnnouncersNotifier.clearAnnouncer();
+                      selectedAnnouncersNotifier.addAnnouncer(advert.announcer);
+                    },
+                    onDelete: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (context) {
+                          return CustomDialogBox(
+                            title: AdvertTextConstants.deleting,
+                            descriptions: AdvertTextConstants.deleteAdvert,
+                            onYes: () {
+                              advertListNotifier.deleteAdvert(advert);
+                              advertPostersNotifier.deleteE(advert.id, 0);
+                            },
+                          );
+                        },
+                      );
+                    },
+                    advert: advert,
+                  ),
                 ),
               ],
             );

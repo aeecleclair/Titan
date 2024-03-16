@@ -17,25 +17,33 @@ class ModuleVisibilityListNotifier extends ListNotifier<ModuleVisibility> {
   }
 
   Future<bool> addGroupToModule(
-      ModuleVisibility moduleVisibility, String allowedGroupId) async {
+    ModuleVisibility moduleVisibility,
+    String allowedGroupId,
+  ) async {
     return await update(
-        (moduleVisibility) async =>
-            repository.addGroupToModule(moduleVisibility.root, allowedGroupId),
-        (list, moduleVisibility) => list
-          ..[list.indexWhere((m) => m.root == moduleVisibility.root)] =
-              moduleVisibility,
-        moduleVisibility);
+      (moduleVisibility) async =>
+          repository.addGroupToModule(moduleVisibility.root, allowedGroupId),
+      (list, moduleVisibility) => list
+        ..[list.indexWhere((m) => m.root == moduleVisibility.root)] =
+            moduleVisibility,
+      moduleVisibility,
+    );
   }
 
   Future<bool> deleteGroupAccessForModule(
-      ModuleVisibility moduleVisibility, String allowedGroupId) async {
+    ModuleVisibility moduleVisibility,
+    String allowedGroupId,
+  ) async {
     return await update(
-        (moduleVisibility) async => repository.deleteGroupAccessForModule(
-            moduleVisibility.root, allowedGroupId),
-        (list, moduleVisibility) => list
-          ..[list.indexWhere((m) => m.root == moduleVisibility.root)] =
-              moduleVisibility,
-        moduleVisibility);
+      (moduleVisibility) async => repository.deleteGroupAccessForModule(
+        moduleVisibility.root,
+        allowedGroupId,
+      ),
+      (list, moduleVisibility) => list
+        ..[list.indexWhere((m) => m.root == moduleVisibility.root)] =
+            moduleVisibility,
+      moduleVisibility,
+    );
   }
 
   void setState(List<ModuleVisibility> modules) {

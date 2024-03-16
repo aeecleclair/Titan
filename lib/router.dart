@@ -42,33 +42,37 @@ class AppRouter {
         builder: () => home_page.HomePage(),
         middleware: [
           AuthenticatedMiddleware(ref),
-          DeferredLoadingMiddleware(home_page.loadLibrary)
+          DeferredLoadingMiddleware(home_page.loadLibrary),
         ],
       ),
       QRoute(
-          path: loading,
-          builder: () => loading_page.LoadingPage(),
-          middleware: [
-            DeferredLoadingMiddleware(loading_page.loadLibrary),
-          ]),
+        path: loading,
+        builder: () => loading_page.LoadingPage(),
+        middleware: [
+          DeferredLoadingMiddleware(loading_page.loadLibrary),
+        ],
+      ),
       QRoute(
-          path: noInternet,
-          builder: () => no_internet_page.NoInternetPage(),
-          middleware: [
-            DeferredLoadingMiddleware(no_internet_page.loadLibrary),
-          ]),
+        path: noInternet,
+        builder: () => no_internet_page.NoInternetPage(),
+        middleware: [
+          DeferredLoadingMiddleware(no_internet_page.loadLibrary),
+        ],
+      ),
       QRoute(
-          path: update,
-          builder: () => update_page.UpdatePage(),
-          middleware: [
-            DeferredLoadingMiddleware(update_page.loadLibrary),
-          ]),
+        path: update,
+        builder: () => update_page.UpdatePage(),
+        middleware: [
+          DeferredLoadingMiddleware(update_page.loadLibrary),
+        ],
+      ),
       QRoute(
-          path: noModule,
-          builder: () => no_module_page.NoModulePage(),
-          middleware: [
-            DeferredLoadingMiddleware(no_module_page.loadLibrary),
-          ]),
+        path: noModule,
+        builder: () => no_module_page.NoModulePage(),
+        middleware: [
+          DeferredLoadingMiddleware(no_module_page.loadLibrary),
+        ],
+      ),
       AdminRouter(ref).route(),
       AdvertRouter(ref).route(),
       AmapRouter(ref).route(),

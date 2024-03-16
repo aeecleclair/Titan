@@ -20,18 +20,20 @@ class SectionNotifier extends ListNotifier<Section> {
 
   Future<bool> updateSection(Section section) async {
     return await update(
-        sectionRepository.updateSection,
-        (sections, section) => sections
-          ..[sections.indexWhere((s) => s.id == section.id)] = section,
-        section);
+      sectionRepository.updateSection,
+      (sections, section) =>
+          sections..[sections.indexWhere((s) => s.id == section.id)] = section,
+      section,
+    );
   }
 
   Future<bool> deleteSection(Section section) async {
     return await delete(
-        sectionRepository.deleteSection,
-        (sections, section) => sections..removeWhere((s) => s.id == section.id),
-        section.id,
-        section);
+      sectionRepository.deleteSection,
+      (sections, section) => sections..removeWhere((s) => s.id == section.id),
+      section.id,
+      section,
+    );
   }
 }
 
@@ -48,11 +50,14 @@ final sectionsProvider =
 
 final sectionList = Provider<List<Section>>((ref) {
   final sections = ref.watch(sectionsProvider);
-  return sections.maybeWhen(data: (section) {
-    return section;
-  }, orElse: () {
-    return [];
-  });
+  return sections.maybeWhen(
+    data: (section) {
+      return section;
+    },
+    orElse: () {
+      return [];
+    },
+  );
 });
 
 final sectionProvider = Provider<Section>((ref) {

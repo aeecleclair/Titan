@@ -9,8 +9,11 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 class ColumnRefresher extends ConsumerWidget {
   final List<Widget> children;
   final Future Function() onRefresh;
-  const ColumnRefresher(
-      {super.key, required this.onRefresh, required this.children});
+  const ColumnRefresher({
+    super.key,
+    required this.onRefresh,
+    required this.children,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,7 +22,8 @@ class ColumnRefresher extends ConsumerWidget {
         itemCount: children.length,
         itemBuilder: (BuildContext context, int index) => children[index],
         physics: const AlwaysScrollableScrollPhysics(
-            parent: BouncingScrollPhysics()),
+          parent: BouncingScrollPhysics(),
+        ),
       );
     }
     return Platform.isAndroid ? buildAndroidList(ref) : buildIOSList(ref);
@@ -33,7 +37,8 @@ class ColumnRefresher extends ConsumerWidget {
           itemCount: children.length,
           itemBuilder: (BuildContext context, int index) => children[index],
           physics: const AlwaysScrollableScrollPhysics(
-              parent: BouncingScrollPhysics()),
+            parent: BouncingScrollPhysics(),
+          ),
         ),
       );
   Widget buildIOSList(WidgetRef ref) => CustomScrollView(
@@ -47,9 +52,10 @@ class ColumnRefresher extends ConsumerWidget {
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
-                (context, index) => children[index],
-                childCount: children.length),
-          )
+              (context, index) => children[index],
+              childCount: children.length,
+            ),
+          ),
         ],
       );
 }

@@ -10,16 +10,17 @@ class DateEntry extends StatelessWidget {
   final Color color, enabledColor, errorColor;
   final Widget? suffixIcon;
 
-  const DateEntry(
-      {super.key,
-      required this.label,
-      required this.controller,
-      required this.onTap,
-      this.enabled = true,
-      this.color = Colors.black,
-      this.enabledColor = Colors.black,
-      this.errorColor = Colors.red,
-      this.suffixIcon});
+  const DateEntry({
+    super.key,
+    required this.label,
+    required this.controller,
+    required this.onTap,
+    this.enabled = true,
+    this.color = Colors.black,
+    this.enabledColor = Colors.black,
+    this.errorColor = Colors.red,
+    this.suffixIcon,
+  });
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

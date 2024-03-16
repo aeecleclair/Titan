@@ -100,7 +100,7 @@ class DetailLoanPage extends HookConsumerWidget {
                   isDetail: true,
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

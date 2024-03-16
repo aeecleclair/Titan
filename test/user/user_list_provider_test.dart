@@ -26,25 +26,35 @@ void main() {
     test('filterUsers returns list of users', () async {
       const query = 'test';
       final includeGroup = [
-        SimpleGroup.empty().copyWith(id: '1', name: 'Group 1')
+        SimpleGroup.empty().copyWith(id: '1', name: 'Group 1'),
       ];
       final excludeGroup = [
-        SimpleGroup.empty().copyWith(id: '2', name: 'Group 2')
+        SimpleGroup.empty().copyWith(id: '2', name: 'Group 2'),
       ];
       final users = [SimpleUser.empty().copyWith(id: '1', name: 'User 1')];
 
-      when(() => userListRepository.searchUser(query,
-              includeId: includeGroup.map((e) => e.id).toList(),
-              excludeId: excludeGroup.map((e) => e.id).toList()))
-          .thenAnswer((_) async => users);
+      when(
+        () => userListRepository.searchUser(
+          query,
+          includeId: includeGroup.map((e) => e.id).toList(),
+          excludeId: excludeGroup.map((e) => e.id).toList(),
+        ),
+      ).thenAnswer((_) async => users);
 
-      final result = await userListNotifier.filterUsers(query,
-          includeGroup: includeGroup, excludeGroup: excludeGroup);
+      final result = await userListNotifier.filterUsers(
+        query,
+        includeGroup: includeGroup,
+        excludeGroup: excludeGroup,
+      );
 
       expect(
-          result.when(
-              data: (data) => data, loading: () => [], error: (_, __) => []),
-          users);
+        result.when(
+          data: (data) => data,
+          loading: () => [],
+          error: (_, __) => [],
+        ),
+        users,
+      );
     });
 
     test('clear sets state to empty list', () async {

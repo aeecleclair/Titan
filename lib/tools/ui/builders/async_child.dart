@@ -10,14 +10,15 @@ class AsyncChild<T> extends StatelessWidget {
   final Widget Function(BuildContext context)? loadingBuilder;
   final Widget Function(BuildContext context, Widget child)? orElseBuilder;
   final Color? loaderColor;
-  const AsyncChild(
-      {super.key,
-      required this.value,
-      required this.builder,
-      this.errorBuilder,
-      this.loaderColor,
-      this.orElseBuilder,
-      this.loadingBuilder});
+  const AsyncChild({
+    super.key,
+    required this.value,
+    required this.builder,
+    this.errorBuilder,
+    this.loaderColor,
+    this.orElseBuilder,
+    this.loadingBuilder,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +27,17 @@ class AsyncChild<T> extends StatelessWidget {
         loadingBuilder ?? (context) => Loader(color: loaderColor);
     final nonNullErrorBuilder = errorBuilder ??
         (error, stack) => Center(
-            child: Text("${TextConstants.error}:$error",
-                style: TextStyle(color: loaderColor)));
+              child: Text(
+                "${TextConstants.error}:$error",
+                style: TextStyle(color: loaderColor),
+              ),
+            );
     return value.when(
-        data: (value) => builder(context, value),
-        loading: () =>
-            nonNullOrElseBuilder(context, nonNullLoadingBuilder(context)),
-        error: (error, stack) =>
-            nonNullOrElseBuilder(context, nonNullErrorBuilder(error, stack)));
+      data: (value) => builder(context, value),
+      loading: () =>
+          nonNullOrElseBuilder(context, nonNullLoadingBuilder(context)),
+      error: (error, stack) =>
+          nonNullOrElseBuilder(context, nonNullErrorBuilder(error, stack)),
+    );
   }
 }

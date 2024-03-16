@@ -45,25 +45,31 @@ class AddEditBookingPage extends HookConsumerWidget {
     final booking = ref.watch(bookingProvider);
     final isEdit = booking.id != Booking.empty().id;
     final room = useState(booking.room);
-    final recurrent = useState(booking.recurrenceRule != ""
-        ? booking.recurrenceRule.contains("BYDAY")
-        : false);
-    final allDay = useState(booking.start.hour == 0 &&
-        booking.end.hour == 23 &&
-        booking.start.minute == 0 &&
-        booking.end.minute == 59);
+    final recurrent = useState(
+      booking.recurrenceRule != ""
+          ? booking.recurrenceRule.contains("BYDAY")
+          : false,
+    );
+    final allDay = useState(
+      booking.start.hour == 0 &&
+          booking.end.hour == 23 &&
+          booking.start.minute == 0 &&
+          booking.end.minute == 59,
+    );
     final start = useTextEditingController(
-        text: isEdit
-            ? recurrent.value
-                ? processDateOnlyHour(booking.start)
-                : processDateWithHour(booking.start)
-            : "");
+      text: isEdit
+          ? recurrent.value
+              ? processDateOnlyHour(booking.start)
+              : processDateWithHour(booking.start)
+          : "",
+    );
     final end = useTextEditingController(
-        text: isEdit
-            ? recurrent.value
-                ? processDateOnlyHour(booking.end)
-                : processDateWithHour(booking.end)
-            : "");
+      text: isEdit
+          ? recurrent.value
+              ? processDateOnlyHour(booking.end)
+              : processDateWithHour(booking.end)
+          : "",
+    );
     final motif = useTextEditingController(text: booking.reason);
     final note = useTextEditingController(text: booking.note);
     final entity = useTextEditingController(text: booking.entity);
@@ -71,14 +77,19 @@ class AddEditBookingPage extends HookConsumerWidget {
     final selectedDays = ref.watch(selectedDaysProvider);
     final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
     final interval = useTextEditingController(
-        text: booking.recurrenceRule != ""
-            ? booking.recurrenceRule.split(";INTERVAL=")[1].split(";")[0]
-            : "1");
+      text: booking.recurrenceRule != ""
+          ? booking.recurrenceRule.split(";INTERVAL=")[1].split(";")[0]
+          : "1",
+    );
     final recurrenceEndDate = useTextEditingController(
-        text: booking.recurrenceRule != ""
-            ? processDate(DateTime.parse(
-                booking.recurrenceRule.split(";UNTIL=")[1].split(";")[0]))
-            : "");
+      text: booking.recurrenceRule != ""
+          ? processDate(
+              DateTime.parse(
+                booking.recurrenceRule.split(";UNTIL=")[1].split(";")[0],
+              ),
+            )
+          : "",
+    );
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -94,10 +105,11 @@ class AddEditBookingPage extends HookConsumerWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: AlignLeftText(
-                    isEdit
-                        ? BookingTextConstants.editBooking
-                        : BookingTextConstants.addBooking,
-                    color: Colors.grey),
+                  isEdit
+                      ? BookingTextConstants.editBooking
+                      : BookingTextConstants.addBooking,
+                  color: Colors.grey,
+                ),
               ),
               const SizedBox(height: 20),
               AsyncChild(
@@ -128,8 +140,9 @@ class AddEditBookingPage extends HookConsumerWidget {
                       child: Text(
                         e.name,
                         style: TextStyle(
-                            color: selected ? Colors.white : Colors.black,
-                            fontWeight: FontWeight.bold),
+                          color: selected ? Colors.white : Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     );
                   },
@@ -184,45 +197,49 @@ class AddEditBookingPage extends HookConsumerWidget {
                     recurrent.value
                         ? Column(
                             children: [
-                              const Text(BookingTextConstants.recurrenceDays,
-                                  style: TextStyle(color: Colors.black)),
+                              const Text(
+                                BookingTextConstants.recurrenceDays,
+                                style: TextStyle(color: Colors.black),
+                              ),
                               const SizedBox(height: 10),
                               Column(
-                                  children: BookingTextConstants.weekDaysOrdered
-                                      .map((e) => GestureDetector(
-                                            onTap: () {
-                                              selectedDaysNotifier.toggle(e);
-                                            },
-                                            behavior: HitTestBehavior.opaque,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  weekDayToString(e),
-                                                  style: TextStyle(
-                                                    color: Colors.grey.shade700,
-                                                    fontSize: 16,
-                                                  ),
-                                                ),
-                                                Checkbox(
-                                                  checkColor: Colors.white,
-                                                  activeColor: Colors.black,
-                                                  value:
-                                                      selectedDays.contains(e),
-                                                  onChanged: (value) {
-                                                    selectedDaysNotifier
-                                                        .toggle(e);
-                                                  },
-                                                ),
-                                              ],
+                                children: BookingTextConstants.weekDaysOrdered
+                                    .map(
+                                      (e) => GestureDetector(
+                                        onTap: () {
+                                          selectedDaysNotifier.toggle(e);
+                                        },
+                                        behavior: HitTestBehavior.opaque,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              weekDayToString(e),
+                                              style: TextStyle(
+                                                color: Colors.grey.shade700,
+                                                fontSize: 16,
+                                              ),
                                             ),
-                                          ))
-                                      .toList()),
+                                            Checkbox(
+                                              checkColor: Colors.white,
+                                              activeColor: Colors.black,
+                                              value: selectedDays.contains(e),
+                                              onChanged: (value) {
+                                                selectedDaysNotifier.toggle(e);
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
                               const SizedBox(height: 20),
-                              const Text(BookingTextConstants.interval,
-                                  style: TextStyle(color: Colors.black)),
+                              const Text(
+                                BookingTextConstants.interval,
+                                style: TextStyle(color: Colors.black),
+                              ),
                               const SizedBox(height: 10),
                               TextEntry(
                                 label: BookingTextConstants.interval,
@@ -236,10 +253,11 @@ class AddEditBookingPage extends HookConsumerWidget {
                                 Column(
                                   children: [
                                     DateEntry(
-                                        onTap: () =>
-                                            getOnlyHourDate(context, start),
-                                        controller: start,
-                                        label: BookingTextConstants.startHour),
+                                      onTap: () =>
+                                          getOnlyHourDate(context, start),
+                                      controller: start,
+                                      label: BookingTextConstants.startHour,
+                                    ),
                                     const SizedBox(height: 30),
                                     DateEntry(
                                       onTap: () =>
@@ -261,11 +279,12 @@ class AddEditBookingPage extends HookConsumerWidget {
                         : Column(
                             children: [
                               DateEntry(
-                                  onTap: () => allDay.value
-                                      ? getOnlyDayDate(context, start)
-                                      : getFullDate(context, start),
-                                  controller: start,
-                                  label: BookingTextConstants.startDate),
+                                onTap: () => allDay.value
+                                    ? getOnlyDayDate(context, start)
+                                    : getFullDate(context, start),
+                                controller: start,
+                                label: BookingTextConstants.startDate,
+                              ),
                               const SizedBox(height: 30),
                               DateEntry(
                                 onTap: () => allDay.value
@@ -289,16 +308,27 @@ class AddEditBookingPage extends HookConsumerWidget {
                             end.text = "${end.text} 23:59";
                           }
                           if (end.text.contains("/") &&
-                              isDateBefore(processDateBack(end.text),
-                                  processDateBack(start.text))) {
-                            displayToast(context, TypeMsg.error,
-                                BookingTextConstants.invalidDates);
+                              isDateBefore(
+                                processDateBack(end.text),
+                                processDateBack(start.text),
+                              )) {
+                            displayToast(
+                              context,
+                              TypeMsg.error,
+                              BookingTextConstants.invalidDates,
+                            );
                           } else if (room.value.id.isEmpty) {
-                            displayToast(context, TypeMsg.error,
-                                BookingTextConstants.invalidRoom);
+                            displayToast(
+                              context,
+                              TypeMsg.error,
+                              BookingTextConstants.invalidRoom,
+                            );
                           } else if (recurrent.value && selectedDays.isEmpty) {
-                            displayToast(context, TypeMsg.error,
-                                BookingTextConstants.noDaySelected);
+                            displayToast(
+                              context,
+                              TypeMsg.error,
+                              BookingTextConstants.noDaySelected,
+                            );
                           } else {
                             String recurrenceRule = "";
                             String startString = start.text;
@@ -316,18 +346,24 @@ class AddEditBookingPage extends HookConsumerWidget {
                               recurrence.recurrenceRange =
                                   RecurrenceRange.endDate;
                               recurrence.endDate = DateTime.parse(
-                                  processDateBack(recurrenceEndDate.text));
+                                processDateBack(recurrenceEndDate.text),
+                              );
                               recurrence.weekDays = selectedDays;
                               recurrence.interval = int.parse(interval.text);
                               recurrenceRule = SfCalendar.generateRRule(
-                                  recurrence,
-                                  DateTime.parse(
-                                      processDateBackWithHour(startString)),
-                                  DateTime.parse(
-                                      processDateBackWithHour(endString)));
+                                recurrence,
+                                DateTime.parse(
+                                  processDateBackWithHour(startString),
+                                ),
+                                DateTime.parse(
+                                  processDateBackWithHour(endString),
+                                ),
+                              );
                               try {
                                 SfCalendar.getRecurrenceDateTimeCollection(
-                                    recurrenceRule, recurrence.startDate);
+                                  recurrenceRule,
+                                  recurrence.startDate,
+                                );
                               } catch (e) {
                                 displayToast(
                                   context,
@@ -342,38 +378,44 @@ class AddEditBookingPage extends HookConsumerWidget {
                               ref,
                               () async {
                                 Booking newBooking = Booking(
-                                    id: isEdit ? booking.id : "",
-                                    reason: motif.text,
-                                    start: DateTime.parse(
-                                        processDateBackWithHour(startString)),
-                                    end: DateTime.parse(
-                                        processDateBackWithHour(endString)),
-                                    creation: DateTime.now(),
-                                    note: note.text.isEmpty ? null : note.text,
-                                    room: room.value,
-                                    key: keyRequired.value,
-                                    decision: booking.decision,
-                                    recurrenceRule: recurrenceRule,
-                                    entity: entity.text,
-                                    applicant: isManagerPage
-                                        ? booking.applicant
-                                        : user.toApplicant(),
-                                    applicantId: isManagerPage
-                                        ? booking.applicantId
-                                        : user.id);
+                                  id: isEdit ? booking.id : "",
+                                  reason: motif.text,
+                                  start: DateTime.parse(
+                                    processDateBackWithHour(startString),
+                                  ),
+                                  end: DateTime.parse(
+                                    processDateBackWithHour(endString),
+                                  ),
+                                  creation: DateTime.now(),
+                                  note: note.text.isEmpty ? null : note.text,
+                                  room: room.value,
+                                  key: keyRequired.value,
+                                  decision: booking.decision,
+                                  recurrenceRule: recurrenceRule,
+                                  entity: entity.text,
+                                  applicant: isManagerPage
+                                      ? booking.applicant
+                                      : user.toApplicant(),
+                                  applicantId: isManagerPage
+                                      ? booking.applicantId
+                                      : user.id,
+                                );
                                 final value = isManagerPage
                                     ? await ref
                                         .read(
-                                            managerBookingListProvider.notifier)
+                                          managerBookingListProvider.notifier,
+                                        )
                                         .updateBooking(newBooking)
                                     : isEdit
                                         ? await ref
-                                            .read(userBookingListProvider
-                                                .notifier)
+                                            .read(
+                                              userBookingListProvider.notifier,
+                                            )
                                             .updateBooking(newBooking)
                                         : await ref
-                                            .read(userBookingListProvider
-                                                .notifier)
+                                            .read(
+                                              userBookingListProvider.notifier,
+                                            )
                                             .addBooking(newBooking);
                                 if (value) {
                                   QR.back();
@@ -382,52 +424,68 @@ class AddEditBookingPage extends HookConsumerWidget {
                                       .loadUserBookings();
                                   ref
                                       .read(
-                                          confirmedBookingListProvider.notifier)
+                                        confirmedBookingListProvider.notifier,
+                                      )
                                       .loadConfirmedBooking();
                                   ref
                                       .read(managerBookingListProvider.notifier)
                                       .loadUserManageBookings();
                                   ref
-                                      .read(managerConfirmedBookingListProvider
-                                          .notifier)
+                                      .read(
+                                        managerConfirmedBookingListProvider
+                                            .notifier,
+                                      )
                                       .loadConfirmedBookingForManager();
                                   if (isEdit) {
-                                    displayToastWithContext(TypeMsg.msg,
-                                        BookingTextConstants.editedBooking);
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
+                                      BookingTextConstants.editedBooking,
+                                    );
                                   } else {
-                                    displayToastWithContext(TypeMsg.msg,
-                                        BookingTextConstants.addedBooking);
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
+                                      BookingTextConstants.addedBooking,
+                                    );
                                   }
                                 } else {
                                   if (isEdit) {
-                                    displayToastWithContext(TypeMsg.error,
-                                        BookingTextConstants.editionError);
+                                    displayToastWithContext(
+                                      TypeMsg.error,
+                                      BookingTextConstants.editionError,
+                                    );
                                   } else {
-                                    displayToastWithContext(TypeMsg.error,
-                                        BookingTextConstants.addingError);
+                                    displayToastWithContext(
+                                      TypeMsg.error,
+                                      BookingTextConstants.addingError,
+                                    );
                                   }
                                 }
                               },
                             );
                           }
                         } else {
-                          displayToast(context, TypeMsg.error,
-                              BookingTextConstants.incorrectOrMissingFields);
+                          displayToast(
+                            context,
+                            TypeMsg.error,
+                            BookingTextConstants.incorrectOrMissingFields,
+                          );
                         }
                       },
                       child: Text(
-                          isEdit
-                              ? BookingTextConstants.edit
-                              : BookingTextConstants.add,
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold)),
+                        isEdit
+                            ? BookingTextConstants.edit
+                            : BookingTextConstants.add,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 30),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),

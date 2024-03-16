@@ -41,7 +41,7 @@ class RecommendationRouter {
             path: information,
             builder: () => information_page.InformationRecommendationPage(),
             middleware: [
-              DeferredLoadingMiddleware(information_page.loadLibrary)
+              DeferredLoadingMiddleware(information_page.loadLibrary),
             ],
           ),
           QRoute(
@@ -49,7 +49,7 @@ class RecommendationRouter {
             builder: () => add_edit_page.AddEditRecommendationPage(),
             middleware: [
               AdminMiddleware(ref, isRecommendationAdminProvider),
-              DeferredLoadingMiddleware(add_edit_page.loadLibrary)
+              DeferredLoadingMiddleware(add_edit_page.loadLibrary),
             ],
           ),
         ],

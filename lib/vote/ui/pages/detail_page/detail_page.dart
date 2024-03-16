@@ -67,7 +67,9 @@ class DetailPage extends HookConsumerWidget {
                                             .getLogo(contender.id)
                                             .then((value) {
                                           contenderLogosNotifier.setTData(
-                                              contender.id, AsyncData([value]));
+                                            contender.id,
+                                            AsyncData([value]),
+                                          );
                                         });
                                         return const HeroIcon(
                                           HeroIcons.userCircle,
@@ -97,8 +99,9 @@ class DetailPage extends HookConsumerWidget {
                                     errorBuilder: (error, stack) =>
                                         const Center(
                                       child: HeroIcon(
-                                          HeroIcons.exclamationCircle,
-                                          size: 40),
+                                        HeroIcons.exclamationCircle,
+                                        size: 40,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -125,7 +128,8 @@ class DetailPage extends HookConsumerWidget {
                                   children: contender.members
                                       .map((e) => MemberCard(member: e))
                                       .toList(),
-                                ))
+                                ),
+                              )
                             : const SizedBox(),
                         const SizedBox(height: 20),
                         Padding(
@@ -150,7 +154,7 @@ class DetailPage extends HookConsumerWidget {
               child: Center(
                 child: ContenderCard(contender: contender),
               ),
-            )
+            ),
           ],
         ),
       ),

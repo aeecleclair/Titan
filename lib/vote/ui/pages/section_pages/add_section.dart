@@ -32,11 +32,14 @@ class AddSectionPage extends HookConsumerWidget {
 
     return VoteTemplate(
       child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Column(children: [
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        child: Column(
+          children: [
             const SizedBox(height: 50),
-            const AlignLeftText(VoteTextConstants.addSection,
-                color: Colors.grey),
+            const AlignLeftText(
+              VoteTextConstants.addSection,
+              color: Colors.grey,
+            ),
             Form(
               key: key,
               child: Column(
@@ -57,34 +60,45 @@ class AddSectionPage extends HookConsumerWidget {
                     onTap: () async {
                       await tokenExpireWrapper(ref, () async {
                         final value = await sectionListNotifier.addSection(
-                            Section(
-                                name: name.text,
-                                id: '',
-                                description: description.text));
+                          Section(
+                            name: name.text,
+                            id: '',
+                            description: description.text,
+                          ),
+                        );
                         if (value) {
                           QR.back();
                           sections.whenData((value) {
                             sectionContenderNotifier.addT(value.last);
                           });
                           displayVoteToastWithContext(
-                              TypeMsg.msg, VoteTextConstants.addedSection);
+                            TypeMsg.msg,
+                            VoteTextConstants.addedSection,
+                          );
                         } else {
                           displayVoteToastWithContext(
-                              TypeMsg.error, VoteTextConstants.addingError);
+                            TypeMsg.error,
+                            VoteTextConstants.addingError,
+                          );
                         }
                       });
                     },
-                    child: const Text(VoteTextConstants.add,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold)),
+                    child: const Text(
+                      VoteTextConstants.add,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 30),
                 ],
               ),
-            )
-          ])),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

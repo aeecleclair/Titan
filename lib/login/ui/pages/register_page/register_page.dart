@@ -84,8 +84,9 @@ class Register extends HookConsumerWidget {
                             color: Colors.white,
                           ),
                           decoration: signInRegisterInputDecoration(
-                              isSignIn: false,
-                              hintText: LoginTextConstants.email),
+                            isSignIn: false,
+                            hintText: LoginTextConstants.email,
+                          ),
                           keyboardType: TextInputType.emailAddress,
                           autofillHints: const [AutofillHints.email],
                           validator: (value) {
@@ -104,72 +105,87 @@ class Register extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 30),
                     SignInUpBar(
-                        label: LoginTextConstants.create,
-                        isLoading: ref.watch(loadingProvider).maybeWhen(
-                            data: (data) => data, orElse: () => false),
-                        onPressed: () async {
-                          if (key.currentState!.validate()) {
-                            final value = await signUpNotifier.createUser(
-                                mail.text, AccountType.student);
-                            if (value) {
-                              hidePass.value = true;
-                              mail.clear();
-                              QR.to(LoginRouter.createAccount +
-                                  LoginRouter.mailReceived);
-                              displayToastWithContext(
-                                  TypeMsg.msg, LoginTextConstants.sendedMail);
-                            } else {
-                              displayToastWithContext(TypeMsg.error,
-                                  LoginTextConstants.mailSendingError);
-                            }
+                      label: LoginTextConstants.create,
+                      isLoading: ref.watch(loadingProvider).maybeWhen(
+                            data: (data) => data,
+                            orElse: () => false,
+                          ),
+                      onPressed: () async {
+                        if (key.currentState!.validate()) {
+                          final value = await signUpNotifier.createUser(
+                            mail.text,
+                            AccountType.student,
+                          );
+                          if (value) {
+                            hidePass.value = true;
+                            mail.clear();
+                            QR.to(
+                              LoginRouter.createAccount +
+                                  LoginRouter.mailReceived,
+                            );
+                            displayToastWithContext(
+                              TypeMsg.msg,
+                              LoginTextConstants.sendedMail,
+                            );
                           } else {
                             displayToastWithContext(
-                                TypeMsg.error, LoginTextConstants.emailInvalid);
+                              TypeMsg.error,
+                              LoginTextConstants.mailSendingError,
+                            );
                           }
-                        }),
+                        } else {
+                          displayToastWithContext(
+                            TypeMsg.error,
+                            LoginTextConstants.emailInvalid,
+                          );
+                        }
+                      },
+                    ),
                     const Spacer(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                            height: 40,
-                            alignment: Alignment.centerLeft,
-                            child: InkWell(
-                              splashColor:
-                                  const Color.fromRGBO(255, 255, 255, 1),
-                              onTap: () {
-                                QR.to(LoginRouter.root);
-                              },
-                              child: const Text(
-                                LoginTextConstants.signIn,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w800,
-                                  decoration: TextDecoration.underline,
-                                  fontSize: 14,
-                                ),
+                          height: 40,
+                          alignment: Alignment.centerLeft,
+                          child: InkWell(
+                            splashColor: const Color.fromRGBO(255, 255, 255, 1),
+                            onTap: () {
+                              QR.to(LoginRouter.root);
+                            },
+                            child: const Text(
+                              LoginTextConstants.signIn,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800,
+                                decoration: TextDecoration.underline,
+                                fontSize: 14,
                               ),
-                            )),
+                            ),
+                          ),
+                        ),
                         Container(
-                            height: 40,
-                            alignment: Alignment.centerLeft,
-                            child: InkWell(
-                              splashColor:
-                                  const Color.fromRGBO(255, 255, 255, 1),
-                              onTap: () {
-                                QR.to(LoginRouter.createAccount +
-                                    LoginRouter.mailReceived);
-                              },
-                              child: const Text(
-                                LoginTextConstants.recievedMail,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w800,
-                                  decoration: TextDecoration.underline,
-                                  fontSize: 14,
-                                ),
+                          height: 40,
+                          alignment: Alignment.centerLeft,
+                          child: InkWell(
+                            splashColor: const Color.fromRGBO(255, 255, 255, 1),
+                            onTap: () {
+                              QR.to(
+                                LoginRouter.createAccount +
+                                    LoginRouter.mailReceived,
+                              );
+                            },
+                            child: const Text(
+                              LoginTextConstants.recievedMail,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800,
+                                decoration: TextDecoration.underline,
+                                fontSize: 14,
                               ),
-                            )),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ],

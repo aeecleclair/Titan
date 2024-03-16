@@ -29,7 +29,8 @@ class DeliveryUi extends HookConsumerWidget {
     final deliveryIdNotifier = ref.watch(deliveryIdProvider.notifier);
     final deliveryListNotifier = ref.watch(deliveryListProvider.notifier);
     final deliveryOrders = ref.watch(
-        adminDeliveryOrderListProvider.select((value) => value[delivery.id]));
+      adminDeliveryOrderListProvider.select((value) => value[delivery.id]),
+    );
     final deliveryProductListNotifier =
         ref.watch(deliveryProductListProvider.notifier);
     final deliveryOrdersNotifier =
@@ -63,19 +64,23 @@ class DeliveryUi extends HookConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                          '${AMAPTextConstants.the} ${processDate(delivery.deliveryDate)}',
-                          style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: AMAPColorConstants.textDark)),
+                        '${AMAPTextConstants.the} ${processDate(delivery.deliveryDate)}',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: AMAPColorConstants.textDark,
+                        ),
+                      ),
                       GestureDetector(
                         onTap: () {
                           deliveryIdNotifier.setId(delivery.id);
                           deliveryProductListNotifier
                               .loadProductList(delivery.products);
-                          QR.to(AmapRouter.root +
-                              AmapRouter.admin +
-                              AmapRouter.detailDelivery);
+                          QR.to(
+                            AmapRouter.root +
+                                AmapRouter.admin +
+                                AmapRouter.detailDelivery,
+                          );
                         },
                         child: const HeroIcon(
                           HeroIcons.arrowTopRightOnSquare,
@@ -92,21 +97,24 @@ class DeliveryUi extends HookConsumerWidget {
                         .loadDeliveryOrderList(deliveryId),
                     dataBuilder: (context, orders) {
                       return Text(
-                          orders.isEmpty
-                              ? AMAPTextConstants.noCurrentOrder
-                              : '${orders.length} ${AMAPTextConstants.oneOrder}${orders.length != 1 ? "s" : ""}',
-                          style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: AMAPColorConstants.textDark));
+                        orders.isEmpty
+                            ? AMAPTextConstants.noCurrentOrder
+                            : '${orders.length} ${AMAPTextConstants.oneOrder}${orders.length != 1 ? "s" : ""}',
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: AMAPColorConstants.textDark,
+                        ),
+                      );
                     },
                   ),
                   Text(
                     "${delivery.products.length} ${AMAPTextConstants.product}${delivery.products.length != 1 ? "s" : ""}",
                     style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
-                        color: AMAPColorConstants.textLight),
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      color: AMAPColorConstants.textLight,
+                    ),
                   ),
                 ],
               ),
@@ -124,9 +132,11 @@ class DeliveryUi extends HookConsumerWidget {
                   GestureDetector(
                     onTap: () async {
                       deliveryIdNotifier.setId(delivery.id);
-                      QR.to(AmapRouter.root +
-                          AmapRouter.admin +
-                          AmapRouter.addEditDelivery);
+                      QR.to(
+                        AmapRouter.root +
+                            AmapRouter.admin +
+                            AmapRouter.addEditDelivery,
+                      );
                       final deliveryProductsIds = delivery.products
                           .map((e) => e.id)
                           .toList(growable: false);
@@ -134,19 +144,20 @@ class DeliveryUi extends HookConsumerWidget {
                       final selectedNotifier =
                           ref.watch(selectedListProvider.notifier);
                       products.maybeWhen(
-                          data: (data) {
-                            for (int i = 0; i < data.length; i++) {
-                              if (!deliveryProductsIds.contains(data[i].id)) {
-                                selectedNotifier.toggle(i);
-                              }
+                        data: (data) {
+                          for (int i = 0; i < data.length; i++) {
+                            if (!deliveryProductsIds.contains(data[i].id)) {
+                              selectedNotifier.toggle(i);
                             }
-                          },
-                          orElse: () {});
+                          }
+                        },
+                        orElse: () {},
+                      );
                     },
                     child: const CardButton(
                       colors: [
                         AMAPColorConstants.greenGradient1,
-                        AMAPColorConstants.greenGradient1
+                        AMAPColorConstants.greenGradient1,
                       ],
                       child: HeroIcon(
                         HeroIcons.pencil,
@@ -159,8 +170,8 @@ class DeliveryUi extends HookConsumerWidget {
                   WaitingButton(
                     onTap: () async {
                       await showDialog(
-                          context: context,
-                          builder: ((context) => CustomDialogBox(
+                        context: context,
+                        builder: ((context) => CustomDialogBox(
                               title: AMAPTextConstants.deleteDelivery,
                               descriptions:
                                   AMAPTextConstants.deleteDeliveryDescription,
@@ -170,20 +181,29 @@ class DeliveryUi extends HookConsumerWidget {
                                       .deleteDelivery(delivery)
                                       .then((value) {
                                     if (value) {
-                                      displayVoteWithContext(TypeMsg.msg,
-                                          AMAPTextConstants.deletedDelivery);
+                                      displayVoteWithContext(
+                                        TypeMsg.msg,
+                                        AMAPTextConstants.deletedDelivery,
+                                      );
                                     } else {
-                                      displayVoteWithContext(TypeMsg.error,
-                                          AMAPTextConstants.deletingError);
+                                      displayVoteWithContext(
+                                        TypeMsg.error,
+                                        AMAPTextConstants.deletingError,
+                                      );
                                     }
                                   });
                                 });
-                              })));
+                              },
+                            )),
+                      );
                     },
-                    builder: (child) => CardButton(colors: const [
-                      AMAPColorConstants.redGradient1,
-                      AMAPColorConstants.redGradient2
-                    ], child: child),
+                    builder: (child) => CardButton(
+                      colors: const [
+                        AMAPColorConstants.redGradient1,
+                        AMAPColorConstants.redGradient2,
+                      ],
+                      child: child,
+                    ),
                     child: const HeroIcon(
                       HeroIcons.trash,
                       color: Colors.white,
@@ -193,8 +213,8 @@ class DeliveryUi extends HookConsumerWidget {
                 WaitingButton(
                   onTap: () async {
                     await showDialog(
-                        context: context,
-                        builder: ((context) => CustomDialogBox(
+                      context: context,
+                      builder: ((context) => CustomDialogBox(
                             title: delivery.status == DeliveryStatus.creation
                                 ? AMAPTextConstants.openDelivery
                                 : delivery.status == DeliveryStatus.available
@@ -217,85 +237,101 @@ class DeliveryUi extends HookConsumerWidget {
                                     final value = await deliveryListNotifier
                                         .openDelivery(delivery);
                                     if (value) {
-                                      displayVoteWithContext(TypeMsg.msg,
-                                          AMAPTextConstants.deliveryOpened);
+                                      displayVoteWithContext(
+                                        TypeMsg.msg,
+                                        AMAPTextConstants.deliveryOpened,
+                                      );
                                     } else {
-                                      displayVoteWithContext(TypeMsg.error,
-                                          AMAPTextConstants.deliveryNotOpened);
+                                      displayVoteWithContext(
+                                        TypeMsg.error,
+                                        AMAPTextConstants.deliveryNotOpened,
+                                      );
                                     }
                                     break;
                                   case DeliveryStatus.available:
                                     final value = await deliveryListNotifier
                                         .lockDelivery(delivery);
                                     if (value) {
-                                      displayVoteWithContext(TypeMsg.msg,
-                                          AMAPTextConstants.deliveryLocked);
+                                      displayVoteWithContext(
+                                        TypeMsg.msg,
+                                        AMAPTextConstants.deliveryLocked,
+                                      );
                                     } else {
-                                      displayVoteWithContext(TypeMsg.error,
-                                          AMAPTextConstants.deliveryNotLocked);
+                                      displayVoteWithContext(
+                                        TypeMsg.error,
+                                        AMAPTextConstants.deliveryNotLocked,
+                                      );
                                     }
                                     break;
                                   case DeliveryStatus.locked:
                                     final value = await deliveryListNotifier
                                         .deliverDelivery(delivery);
                                     if (value) {
-                                      displayVoteWithContext(TypeMsg.msg,
-                                          AMAPTextConstants.deliveryDelivered);
+                                      displayVoteWithContext(
+                                        TypeMsg.msg,
+                                        AMAPTextConstants.deliveryDelivered,
+                                      );
                                     } else {
                                       displayVoteWithContext(
-                                          TypeMsg.error,
-                                          AMAPTextConstants
-                                              .deliveryNotDelivered);
+                                        TypeMsg.error,
+                                        AMAPTextConstants.deliveryNotDelivered,
+                                      );
                                     }
                                     break;
                                   case DeliveryStatus.delivered:
                                     final value = await deliveryListNotifier
                                         .archiveDelivery(delivery);
                                     if (value) {
-                                      displayVoteWithContext(TypeMsg.msg,
-                                          AMAPTextConstants.deliveryArchived);
+                                      displayVoteWithContext(
+                                        TypeMsg.msg,
+                                        AMAPTextConstants.deliveryArchived,
+                                      );
                                     } else {
                                       displayVoteWithContext(
-                                          TypeMsg.error,
-                                          AMAPTextConstants
-                                              .deliveryNotArchived);
+                                        TypeMsg.error,
+                                        AMAPTextConstants.deliveryNotArchived,
+                                      );
                                     }
                                     break;
                                 }
                               });
-                            })));
+                            },
+                          )),
+                    );
                   },
                   builder: (child) => Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 15),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        gradient: LinearGradient(
-                          colors: !(delivery.status == DeliveryStatus.creation)
-                              ? [
-                                  AMAPColorConstants.redGradient1,
-                                  AMAPColorConstants.redGradient2,
-                                ]
-                              : [
-                                  AMAPColorConstants.greenGradient1,
-                                  AMAPColorConstants.greenGradient2,
-                                ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                              color:
-                                  !(delivery.status == DeliveryStatus.creation)
-                                      ? AMAPColorConstants.redGradient2
-                                          .withOpacity(0.5)
-                                      : AMAPColorConstants.greenGradient2
-                                          .withOpacity(0.5),
-                              blurRadius: 10,
-                              offset: const Offset(2, 3))
-                        ],
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 8,
+                      horizontal: 15,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      gradient: LinearGradient(
+                        colors: !(delivery.status == DeliveryStatus.creation)
+                            ? [
+                                AMAPColorConstants.redGradient1,
+                                AMAPColorConstants.redGradient2,
+                              ]
+                            : [
+                                AMAPColorConstants.greenGradient1,
+                                AMAPColorConstants.greenGradient2,
+                              ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
                       ),
-                      child: child),
+                      boxShadow: [
+                        BoxShadow(
+                          color: !(delivery.status == DeliveryStatus.creation)
+                              ? AMAPColorConstants.redGradient2.withOpacity(0.5)
+                              : AMAPColorConstants.greenGradient2
+                                  .withOpacity(0.5),
+                          blurRadius: 10,
+                          offset: const Offset(2, 3),
+                        ),
+                      ],
+                    ),
+                    child: child,
+                  ),
                   child: Row(
                     children: [
                       Container(
@@ -309,7 +345,9 @@ class DeliveryUi extends HookConsumerWidget {
                                       ? AMAPTextConstants.endingDelivery
                                       : AMAPTextConstants.archiveDelivery,
                           style: const TextStyle(
-                              color: Colors.white, fontSize: 20),
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
                         ),
                       ),
                       const SizedBox(width: 10),

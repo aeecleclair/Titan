@@ -12,8 +12,11 @@ import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class WebMemberCard extends HookConsumerWidget {
-  const WebMemberCard(
-      {super.key, required this.member, required this.association});
+  const WebMemberCard({
+    super.key,
+    required this.member,
+    required this.association,
+  });
 
   final CompleteMember member;
   final Association association;
@@ -22,9 +25,10 @@ class WebMemberCard extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final memberNotifier = ref.watch(completeMemberProvider.notifier);
     Membership? assoMembership = member.memberships.firstWhereOrNull(
-        (memberships) =>
-            memberships.associationId == association.id &&
-            memberships.mandateYear == association.mandateYear);
+      (memberships) =>
+          memberships.associationId == association.id &&
+          memberships.mandateYear == association.mandateYear,
+    );
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
@@ -48,27 +52,28 @@ class WebMemberCard extends HookConsumerWidget {
                         children: [
                           if (member.member.nickname != null) ...[
                             Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SelectableText(
-                                    member.member.nickname!,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                    ),
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SelectableText(
+                                  member.member.nickname!,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
                                   ),
-                                  const SizedBox(
-                                    width: 10,
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                SelectableText(
+                                  "(${member.member.name} ${member.member.firstname})",
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    color: Color.fromARGB(255, 115, 115, 115),
                                   ),
-                                  SelectableText(
-                                    "(${member.member.name} ${member.member.firstname})",
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                      color: Color.fromARGB(255, 115, 115, 115),
-                                    ),
-                                  ),
-                                ]),
+                                ),
+                              ],
+                            ),
                           ] else
                             SelectableText(
                               "${member.member.name} ${member.member.firstname}",
@@ -86,23 +91,25 @@ class WebMemberCard extends HookConsumerWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 CardField(
-                                    label: PhonebookTextConstants.promotion,
-                                    value: member.member.promotion == 0
-                                        ? PhonebookTextConstants.promoNotGiven
-                                        : member.member.promotion < 100
-                                            ? "20${member.member.promotion}"
-                                            : member.member.promotion
-                                                .toString()),
+                                  label: PhonebookTextConstants.promotion,
+                                  value: member.member.promotion == 0
+                                      ? PhonebookTextConstants.promoNotGiven
+                                      : member.member.promotion < 100
+                                          ? "20${member.member.promotion}"
+                                          : member.member.promotion.toString(),
+                                ),
                                 CardField(
-                                    label: PhonebookTextConstants.email,
-                                    value: member.member.email),
+                                  label: PhonebookTextConstants.email,
+                                  value: member.member.email,
+                                ),
                                 if (member.member.phone != null)
                                   CardField(
-                                      label: PhonebookTextConstants.phone,
-                                      value: member.member.phone!),
+                                    label: PhonebookTextConstants.phone,
+                                    value: member.member.phone!,
+                                  ),
                               ],
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -120,7 +127,7 @@ class WebMemberCard extends HookConsumerWidget {
                           ),
                         ),
                       ],
-                    )
+                    ),
                   ],
                 );
               }
@@ -133,27 +140,28 @@ class WebMemberCard extends HookConsumerWidget {
                     children: [
                       if (member.member.nickname != null) ...[
                         Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SelectableText(
-                                member.member.nickname!,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SelectableText(
+                              member.member.nickname!,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
                               ),
-                              const SizedBox(
-                                width: 10,
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            SelectableText(
+                              "(${member.member.name} ${member.member.firstname})",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Color.fromARGB(255, 115, 115, 115),
                               ),
-                              SelectableText(
-                                "(${member.member.name} ${member.member.firstname})",
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  color: Color.fromARGB(255, 115, 115, 115),
-                                ),
-                              ),
-                            ]),
+                            ),
+                          ],
+                        ),
                       ] else
                         SelectableText(
                           "${member.member.name} ${member.member.firstname}",
@@ -166,12 +174,13 @@ class WebMemberCard extends HookConsumerWidget {
                         height: 5,
                       ),
                       CardField(
-                          label: PhonebookTextConstants.promotion,
-                          value: member.member.promotion == 0
-                              ? PhonebookTextConstants.promoNotGiven
-                              : member.member.promotion < 100
-                                  ? "20${member.member.promotion}"
-                                  : member.member.promotion.toString()),
+                        label: PhonebookTextConstants.promotion,
+                        value: member.member.promotion == 0
+                            ? PhonebookTextConstants.promoNotGiven
+                            : member.member.promotion < 100
+                                ? "20${member.member.promotion}"
+                                : member.member.promotion.toString(),
+                      ),
                       if (constraints.maxWidth > 500)
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
@@ -193,16 +202,18 @@ class WebMemberCard extends HookConsumerWidget {
                         Column(
                           children: [
                             CardField(
-                                label: PhonebookTextConstants.email,
-                                value: member.member.email,
-                                showLabel: false),
+                              label: PhonebookTextConstants.email,
+                              value: member.member.email,
+                              showLabel: false,
+                            ),
                             if (member.member.phone != null)
                               CardField(
-                                  label: PhonebookTextConstants.phone,
-                                  value: member.member.phone!,
-                                  showLabel: false),
+                                label: PhonebookTextConstants.phone,
+                                value: member.member.phone!,
+                                showLabel: false,
+                              ),
                           ],
-                        )
+                        ),
                     ],
                   ),
                   Column(
@@ -218,7 +229,7 @@ class WebMemberCard extends HookConsumerWidget {
                         ),
                       ),
                     ],
-                  )
+                  ),
                 ],
               );
             },

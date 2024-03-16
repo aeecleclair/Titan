@@ -37,7 +37,8 @@ class FavoritesNameNotifier extends StateNotifier<List<String>> {
   }
 
   Future<void> saveFavoritesToSharedPreferences(
-      List<String> favoritesList) async {
+    List<String> favoritesList,
+  ) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setStringList(key, state);
   }

@@ -29,9 +29,13 @@ void main() {
       final result = await confirmedEventListProvider.loadConfirmedEvent();
 
       expect(
-          result.when(
-              data: (data) => data, loading: () => [], error: (_, __) => []),
-          [event1, event2, event3]);
+        result.when(
+          data: (data) => data,
+          loading: () => [],
+          error: (_, __) => [],
+        ),
+        [event1, event2, event3],
+      );
     });
 
     test('addEvent adds event to list', () async {
@@ -42,9 +46,13 @@ void main() {
 
       expect(result, true);
       expect(
-          confirmedEventListProvider.state.when(
-              data: (data) => data, loading: () => [], error: (_, __) => []),
-          [event1, event2, newEvent]);
+        confirmedEventListProvider.state.when(
+          data: (data) => data,
+          loading: () => [],
+          error: (_, __) => [],
+        ),
+        [event1, event2, newEvent],
+      );
     });
 
     test('deleteEvent removes event from list', () async {
@@ -55,9 +63,13 @@ void main() {
 
       expect(result, true);
       expect(
-          confirmedEventListProvider.state.when(
-              data: (data) => data, loading: () => [], error: (_, __) => []),
-          [event1, event3]);
+        confirmedEventListProvider.state.when(
+          data: (data) => data,
+          loading: () => [],
+          error: (_, __) => [],
+        ),
+        [event1, event3],
+      );
     });
   });
 }

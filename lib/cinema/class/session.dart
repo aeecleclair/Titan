@@ -9,14 +9,15 @@ class Session {
   late final String? genre;
   late final String? tagline;
 
-  Session(
-      {required this.id,
-      required this.name,
-      required this.start,
-      required this.duration,
-      required this.overview,
-      required this.genre,
-      required this.tagline});
+  Session({
+    required this.id,
+    required this.name,
+    required this.start,
+    required this.duration,
+    required this.overview,
+    required this.genre,
+    required this.tagline,
+  });
 
   Session.fromJson(Map<String, dynamic> json) {
     id = json["id"];
@@ -40,33 +41,36 @@ class Session {
     return data;
   }
 
-  Session copyWith(
-      {String? id,
-      String? name,
-      DateTime? start,
-      int? duration,
-      String? overview,
-      String? genre,
-      String? tagline}) {
+  Session copyWith({
+    String? id,
+    String? name,
+    DateTime? start,
+    int? duration,
+    String? overview,
+    String? genre,
+    String? tagline,
+  }) {
     return Session(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        start: start ?? this.start,
-        duration: duration ?? this.duration,
-        overview: overview ?? this.overview,
-        genre: genre ?? this.genre,
-        tagline: tagline ?? this.tagline);
+      id: id ?? this.id,
+      name: name ?? this.name,
+      start: start ?? this.start,
+      duration: duration ?? this.duration,
+      overview: overview ?? this.overview,
+      genre: genre ?? this.genre,
+      tagline: tagline ?? this.tagline,
+    );
   }
 
   static Session empty() {
     return Session(
-        id: "",
-        name: "",
-        start: DateTime.now(),
-        duration: 0,
-        overview: "",
-        genre: "",
-        tagline: "");
+      id: "",
+      name: "",
+      start: DateTime.now(),
+      duration: 0,
+      overview: "",
+      genre: "",
+      tagline: "",
+    );
   }
 
   @override

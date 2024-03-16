@@ -9,12 +9,13 @@ class MemberCard extends StatelessWidget {
   final Member member;
   final Function()? onEdit, onDelete;
   final bool isAdmin;
-  const MemberCard(
-      {super.key,
-      required this.member,
-      this.onEdit,
-      this.onDelete,
-      this.isAdmin = false});
+  const MemberCard({
+    super.key,
+    required this.member,
+    this.onEdit,
+    this.onDelete,
+    this.isAdmin = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,34 +30,42 @@ class MemberCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 10),
-          AutoSizeText(member.nickname ?? member.firstname,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black)),
+          AutoSizeText(
+            member.nickname ?? member.firstname,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
           const SizedBox(height: 2),
           AutoSizeText(
-              member.nickname != null
-                  ? '${member.firstname} ${member.name}'
-                  : member.name,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey.shade400)),
+            member.nickname != null
+                ? '${member.firstname} ${member.name}'
+                : member.name,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey.shade400,
+            ),
+          ),
           const SizedBox(height: 2),
           if (!isAdmin) const Spacer(),
-          AutoSizeText(member.role,
-              maxLines: 1,
-              minFontSize: 10,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black)),
+          AutoSizeText(
+            member.role,
+            maxLines: 1,
+            minFontSize: 10,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
           if (isAdmin) const Spacer(),
           if (isAdmin)
             Row(

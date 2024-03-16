@@ -24,41 +24,46 @@ class DeliveryHandler extends HookConsumerWidget {
     final selectedNotifier = ref.watch(selectedListProvider.notifier);
     return Column(
       children: [
-        const AlignLeftText(AMAPTextConstants.deliveries,
-            padding: EdgeInsets.symmetric(horizontal: 30),
-            color: AMAPColorConstants.textDark),
+        const AlignLeftText(
+          AMAPTextConstants.deliveries,
+          padding: EdgeInsets.symmetric(horizontal: 30),
+          color: AMAPColorConstants.textDark,
+        ),
         const SizedBox(height: 10),
         HorizontalListView(
           height: 200,
           children: [
             const SizedBox(width: 15, height: 195),
             GestureDetector(
-                onTap: () {
-                  selectedNotifier.clear();
-                  deliveryIdNotifier.setId(Delivery.empty().id);
-                  QR.to(AmapRouter.root +
+              onTap: () {
+                selectedNotifier.clear();
+                deliveryIdNotifier.setId(Delivery.empty().id);
+                QR.to(
+                  AmapRouter.root +
                       AmapRouter.admin +
-                      AmapRouter.addEditDelivery);
-                },
-                child: CardLayout(
-                  height: 160,
-                  width: 100,
-                  shadowColor: AMAPColorConstants.textDark.withOpacity(0.2),
-                  child: const Center(
-                    child: HeroIcon(
-                      HeroIcons.plus,
-                      color: AMAPColorConstants.textDark,
-                      size: 50,
-                    ),
+                      AmapRouter.addEditDelivery,
+                );
+              },
+              child: CardLayout(
+                height: 160,
+                width: 100,
+                shadowColor: AMAPColorConstants.textDark.withOpacity(0.2),
+                child: const Center(
+                  child: HeroIcon(
+                    HeroIcons.plus,
+                    color: AMAPColorConstants.textDark,
+                    size: 50,
                   ),
-                )),
+                ),
+              ),
+            ),
             AsyncChild(
               value: deliveries,
               builder: (context, data) {
                 data.sort((a, b) => a.deliveryDate.compareTo(b.deliveryDate));
                 return Row(
-                    children:
-                        data.map((e) => DeliveryUi(delivery: e)).toList());
+                  children: data.map((e) => DeliveryUi(delivery: e)).toList(),
+                );
               },
               loaderColor: AMAPColorConstants.greenGradient2,
             ),

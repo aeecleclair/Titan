@@ -3,6 +3,9 @@ class ScreenShot {
   final String description;
   final String title;
 
-  ScreenShot(
-      {required this.path, required this.description, required this.title});
+  ScreenShot({
+    required this.path,
+    required this.description,
+    required this.title,
+  });
 }

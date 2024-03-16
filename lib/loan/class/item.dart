@@ -36,21 +36,23 @@ class Item {
     return data;
   }
 
-  Item copyWith(
-      {String? id,
-      String? name,
-      int? caution,
-      int? totalQuantity,
-      int? loanedQuantity,
-      double? suggestedLendingDuration}) {
+  Item copyWith({
+    String? id,
+    String? name,
+    int? caution,
+    int? totalQuantity,
+    int? loanedQuantity,
+    double? suggestedLendingDuration,
+  }) {
     return Item(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        caution: caution ?? this.caution,
-        totalQuantity: totalQuantity ?? this.totalQuantity,
-        loanedQuantity: loanedQuantity ?? this.loanedQuantity,
-        suggestedLendingDuration:
-            suggestedLendingDuration ?? this.suggestedLendingDuration);
+      id: id ?? this.id,
+      name: name ?? this.name,
+      caution: caution ?? this.caution,
+      totalQuantity: totalQuantity ?? this.totalQuantity,
+      loanedQuantity: loanedQuantity ?? this.loanedQuantity,
+      suggestedLendingDuration:
+          suggestedLendingDuration ?? this.suggestedLendingDuration,
+    );
   }
 
   ItemSimple toItemSimple() {

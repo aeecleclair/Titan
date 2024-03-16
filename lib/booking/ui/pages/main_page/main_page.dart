@@ -63,8 +63,10 @@ class BookingMainPage extends HookConsumerWidget {
             await bookingsNotifier.loadUserBookings();
           },
           child: SizedBox(
-            height: max(constraints.maxHeight,
-                minCalendarHeight + sumOfHeightOfOthersWidgets),
+            height: max(
+              constraints.maxHeight,
+              minCalendarHeight + sumOfHeightOfOthersWidgets,
+            ),
             child: Column(
               children: [
                 if (isAdmin | isManager) const SizedBox(height: 10),
@@ -146,31 +148,33 @@ class BookingMainPage extends HookConsumerWidget {
                         onDelete: () async {
                           await tokenExpireWrapper(ref, () async {
                             await showDialog(
-                                context: context,
-                                builder: (context) => CustomDialogBox(
-                                      descriptions: BookingTextConstants
-                                          .deleteBookingConfirmation,
-                                      onYes: () async {
-                                        final value = await bookingsNotifier
-                                            .deleteBooking(e);
-                                        if (value) {
-                                          ref
-                                              .read(managerBookingListProvider
-                                                  .notifier)
-                                              .loadUserManageBookings;
-                                          displayToastWithContext(
-                                              TypeMsg.msg,
-                                              BookingTextConstants
-                                                  .deleteBooking);
-                                        } else {
-                                          displayToastWithContext(
-                                              TypeMsg.error,
-                                              BookingTextConstants
-                                                  .deletingError);
-                                        }
-                                      },
-                                      title: BookingTextConstants.deleteBooking,
-                                    ));
+                              context: context,
+                              builder: (context) => CustomDialogBox(
+                                descriptions: BookingTextConstants
+                                    .deleteBookingConfirmation,
+                                onYes: () async {
+                                  final value =
+                                      await bookingsNotifier.deleteBooking(e);
+                                  if (value) {
+                                    ref
+                                        .read(
+                                          managerBookingListProvider.notifier,
+                                        )
+                                        .loadUserManageBookings;
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
+                                      BookingTextConstants.deleteBooking,
+                                    );
+                                  } else {
+                                    displayToastWithContext(
+                                      TypeMsg.error,
+                                      BookingTextConstants.deletingError,
+                                    );
+                                  }
+                                },
+                                title: BookingTextConstants.deleteBooking,
+                              ),
+                            );
                           });
                         },
                         onCopy: () {
@@ -180,7 +184,7 @@ class BookingMainPage extends HookConsumerWidget {
                     );
                   },
                 ),
-                const SizedBox(height: 20)
+                const SizedBox(height: 20),
               ],
             ),
           ),

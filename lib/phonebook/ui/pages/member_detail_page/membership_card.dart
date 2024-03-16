@@ -35,7 +35,7 @@ class MembershipCard extends HookConsumerWidget {
                 ),
               ),
               const Spacer(flex: 1),
-              Text(membership.apparentName)
+              Text(membership.apparentName),
             ],
           ),
         ),

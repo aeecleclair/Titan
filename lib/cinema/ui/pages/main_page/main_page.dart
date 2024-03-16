@@ -43,91 +43,101 @@ class CinemaMainPage extends HookConsumerWidget {
 
     return CinemaTemplate(
       child: Refresher(
-          onRefresh: () async {
-            await sessionListNotifier.loadSessions();
-            ref.watch(mainPageIndexProvider.notifier).reset();
-            ref.read(cinemaTopicsProvider.notifier).getTopics();
-            sessionPosterMapNotifier.resetTData();
-          },
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height - 85,
-            child: Column(
-              children: [
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(CinemaTextConstants.incomingSession,
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey)),
-                        if (isAdmin)
-                          AdminButton(
-                            onTap: () {
-                              QR.to(CinemaRouter.root + CinemaRouter.admin);
-                              initialPageNotifier.setMainPageIndex(currentPage);
-                            },
-                          )
-                      ],
-                    ),
+        onRefresh: () async {
+          await sessionListNotifier.loadSessions();
+          ref.watch(mainPageIndexProvider.notifier).reset();
+          ref.read(cinemaTopicsProvider.notifier).getTopics();
+          sessionPosterMapNotifier.resetTData();
+        },
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height - 85,
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        CinemaTextConstants.incomingSession,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      if (isAdmin)
+                        AdminButton(
+                          onTap: () {
+                            QR.to(CinemaRouter.root + CinemaRouter.admin);
+                            initialPageNotifier.setMainPageIndex(currentPage);
+                          },
+                        ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 20),
-                AsyncChild(
-                  value: sessionList,
-                  builder: (context, data) {
-                    data.sort((a, b) => a.start.compareTo(b.start));
-                    if (data.isEmpty) {
-                      return const SizedBox(
-                        height: 200,
-                        child: Center(
-                          child: Text(CinemaTextConstants.noSession,
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black)),
+              ),
+              const SizedBox(height: 20),
+              AsyncChild(
+                value: sessionList,
+                builder: (context, data) {
+                  data.sort((a, b) => a.start.compareTo(b.start));
+                  if (data.isEmpty) {
+                    return const SizedBox(
+                      height: 200,
+                      child: Center(
+                        child: Text(
+                          CinemaTextConstants.noSession,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
                         ),
-                      );
-                    }
-                    return Expanded(
-                      child: isWebFormat
-                          ? ListView.builder(
-                              physics: const BouncingScrollPhysics(),
-                              controller: pageController,
-                              itemCount: data.length,
-                              itemBuilder: (context, index) {
-                                return SessionCard(
-                                  session: data[index],
-                                  index: index,
-                                );
-                              })
-                          : PageView.builder(
-                              physics: const BouncingScrollPhysics(),
-                              controller: pageController,
-                              itemCount: data.length,
-                              itemBuilder: (context, index) {
-                                return SessionCard(
-                                  session: data[index],
-                                  index: index,
-                                  onTap: () {
-                                    sessionNotifier.setSession(data[index]);
-                                    QR.to(CinemaRouter.root +
-                                        CinemaRouter.detail);
-                                    initialPageNotifier.setMainPageIndex(index);
-                                  },
-                                );
-                              }),
+                      ),
                     );
-                  },
-                ),
-              ],
-            ),
-          )),
+                  }
+                  return Expanded(
+                    child: isWebFormat
+                        ? ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            controller: pageController,
+                            itemCount: data.length,
+                            itemBuilder: (context, index) {
+                              return SessionCard(
+                                session: data[index],
+                                index: index,
+                              );
+                            },
+                          )
+                        : PageView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            controller: pageController,
+                            itemCount: data.length,
+                            itemBuilder: (context, index) {
+                              return SessionCard(
+                                session: data[index],
+                                index: index,
+                                onTap: () {
+                                  sessionNotifier.setSession(data[index]);
+                                  QR.to(
+                                    CinemaRouter.root + CinemaRouter.detail,
+                                  );
+                                  initialPageNotifier.setMainPageIndex(index);
+                                },
+                              );
+                            },
+                          ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -8,13 +8,14 @@ class AdminButton extends StatelessWidget {
   final Color? color;
   final List<Color>? colors;
   final String text;
-  const AdminButton(
-      {super.key,
-      required this.onTap,
-      this.textColor = Colors.white,
-      this.color = Colors.black,
-      this.text = TextConstants.admin,
-      this.colors});
+  const AdminButton({
+    super.key,
+    required this.onTap,
+    this.textColor = Colors.white,
+    this.color = Colors.black,
+    this.text = TextConstants.admin,
+    this.colors,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,30 +25,35 @@ class AdminButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-            gradient: useColors
-                ? RadialGradient(
-                    colors: colors!,
-                    center: Alignment.topLeft,
-                    radius: 2,
-                  )
-                : null,
-            color: color,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                  color: (useColors ? colors!.last : color)!.withOpacity(0.2),
-                  blurRadius: 10,
-                  offset: const Offset(0, 5))
-            ]),
+          gradient: useColors
+              ? RadialGradient(
+                  colors: colors!,
+                  center: Alignment.topLeft,
+                  radius: 2,
+                )
+              : null,
+          color: color,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: (useColors ? colors!.last : color)!.withOpacity(0.2),
+              blurRadius: 10,
+              offset: const Offset(0, 5),
+            ),
+          ],
+        ),
         child: Row(
           children: [
             HeroIcon(HeroIcons.userGroup, color: textColor),
             const SizedBox(width: 10),
-            Text(text,
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: textColor)),
+            Text(
+              text,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: textColor,
+              ),
+            ),
           ],
         ),
       ),

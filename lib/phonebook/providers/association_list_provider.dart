@@ -23,20 +23,22 @@ class AssociationListNotifier extends ListNotifier<Association> {
 
   Future<bool> updateAssociation(Association association) async {
     return await update(
-        associationRepository.updateAssociation,
-        (associations, association) => associations
-          ..[associations.indexWhere((g) => g.id == association.id)] =
-              association,
-        association);
+      associationRepository.updateAssociation,
+      (associations, association) => associations
+        ..[associations.indexWhere((g) => g.id == association.id)] =
+            association,
+      association,
+    );
   }
 
   Future<bool> deleteAssociation(Association association) async {
     return await delete(
-        associationRepository.deleteAssociation,
-        (associations, association) =>
-            associations..removeWhere((i) => i.id == association.id),
-        association.id,
-        association);
+      associationRepository.deleteAssociation,
+      (associations, association) =>
+          associations..removeWhere((i) => i.id == association.id),
+      association.id,
+      association,
+    );
   }
 }
 

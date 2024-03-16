@@ -21,7 +21,7 @@ class SettingsTemplate extends StatelessWidget {
               title: SettingsTextConstants.settings,
               root: SettingsRouter.root,
             ),
-            Expanded(child: child)
+            Expanded(child: child),
           ],
         ),
       ),

@@ -21,14 +21,16 @@ class OrderListRepository extends Repository {
   }
 
   Future<List<Order>> getOrder(String orderId) async {
-    return List<Order>.from((await getList(suffix: "orders/$orderId"))
-        .map((x) => Order.fromJson(x)));
+    return List<Order>.from(
+      (await getList(suffix: "orders/$orderId")).map((x) => Order.fromJson(x)),
+    );
   }
 
   Future<List<Order>> getDeliveryOrderList(String deliveryId) async {
     return List<Order>.from(
-        (await getList(suffix: "deliveries/$deliveryId/orders"))
-            .map((x) => Order.fromJson(x)));
+      (await getList(suffix: "deliveries/$deliveryId/orders"))
+          .map((x) => Order.fromJson(x)),
+    );
   }
 }
 

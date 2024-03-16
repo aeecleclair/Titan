@@ -43,7 +43,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     EventRouter.module,
     RaffleRouter.module,
     RecommendationRouter.module,
-    PhonebookRouter.module
+    PhonebookRouter.module,
   ];
   ModulesNotifier() : super([]);
 
@@ -51,7 +51,9 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     SharedPreferences.getInstance().then((prefs) {
       prefs.remove(dbModule);
       prefs.setStringList(
-          dbModule, state.map((e) => e.root.toString()).toList());
+        dbModule,
+        state.map((e) => e.root.toString()).toList(),
+      );
     });
   }
 
@@ -59,7 +61,9 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     SharedPreferences.getInstance().then((prefs) {
       prefs.remove(dbAllModules);
       prefs.setStringList(
-          dbAllModules, allModules.map((e) => e.root.toString()).toList());
+        dbAllModules,
+        allModules.map((e) => e.root.toString()).toList(),
+      );
     });
   }
 
@@ -79,12 +83,16 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
       saveAllModules();
       saveModules();
     } else {
-      allModules.sort((a, b) => allSavedModulesName
-          .indexOf(a.root.toString())
-          .compareTo(allSavedModulesName.indexOf(b.root.toString())));
-      modulesName.sort((a, b) => allSavedModulesName
-          .indexOf(a)
-          .compareTo(allSavedModulesName.indexOf(b)));
+      allModules.sort(
+        (a, b) => allSavedModulesName
+            .indexOf(a.root.toString())
+            .compareTo(allSavedModulesName.indexOf(b.root.toString())),
+      );
+      modulesName.sort(
+        (a, b) => allSavedModulesName
+            .indexOf(a)
+            .compareTo(allSavedModulesName.indexOf(b)),
+      );
     }
     List<Module> modules = [];
     List<Module> toDelete = [];
@@ -107,9 +115,11 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
   void sortModules() {
     final allModulesName = allModules.map((e) => e.root.toString()).toList();
     final sorted = state.sublist(0)
-      ..sort((a, b) => allModulesName
-          .indexOf(a.root.toString())
-          .compareTo(allModulesName.indexOf(b.root.toString())));
+      ..sort(
+        (a, b) => allModulesName
+            .indexOf(a.root.toString())
+            .compareTo(allModulesName.indexOf(b.root.toString())),
+      );
     state = sorted;
     saveModules();
   }

@@ -14,16 +14,17 @@ class LoanCard extends StatelessWidget {
   final bool isAdmin, isDetail, isHistory;
   final Function()? onEdit, onInfo;
   final Future Function()? onCalendar, onReturn;
-  const LoanCard(
-      {super.key,
-      required this.loan,
-      this.onEdit,
-      this.onCalendar,
-      this.onReturn,
-      this.onInfo,
-      this.isAdmin = false,
-      this.isDetail = false,
-      this.isHistory = false});
+  const LoanCard({
+    super.key,
+    required this.loan,
+    this.onEdit,
+    this.onCalendar,
+    this.onReturn,
+    this.onInfo,
+    this.isAdmin = false,
+    this.isDetail = false,
+    this.isHistory = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -58,68 +59,86 @@ class LoanCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (!isAdmin && !isHistory)
-              Column(children: [
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(width: 25),
-                    AutoSizeText(capitalize(loan.loaner.name),
+              Column(
+                children: [
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(width: 25),
+                      AutoSizeText(
+                        capitalize(loan.loaner.name),
                         maxLines: 1,
                         style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            color: shouldReturn ? Colors.white : Colors.black)),
-                    !isDetail
-                        ? GestureDetector(
-                            onTap: onInfo,
-                            child: HeroIcon(HeroIcons.informationCircle,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: shouldReturn ? Colors.white : Colors.black,
+                        ),
+                      ),
+                      !isDetail
+                          ? GestureDetector(
+                              onTap: onInfo,
+                              child: HeroIcon(
+                                HeroIcons.informationCircle,
                                 color:
                                     shouldReturn ? Colors.white : Colors.black,
-                                size: 25),
-                          )
-                        : Container(width: 25),
-                  ],
-                ),
-                const SizedBox(height: 5),
-              ]),
+                                size: 25,
+                              ),
+                            )
+                          : Container(width: 25),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                ],
+              ),
             SizedBox(height: !isAdmin && !isHistory ? 5 : 10),
-            AutoSizeText(loan.borrower.getName(),
-                maxLines: 1,
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: shouldReturn ? Colors.white : Colors.black)),
+            AutoSizeText(
+              loan.borrower.getName(),
+              maxLines: 1,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: shouldReturn ? Colors.white : Colors.black,
+              ),
+            ),
             const SizedBox(height: 7),
-            Text(formatItems(loan.itemsQuantity),
-                style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                    color: shouldReturn
-                        ? Colors.white.withOpacity(0.8)
-                        : Colors.grey.shade400)),
+            Text(
+              formatItems(loan.itemsQuantity),
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.bold,
+                color: shouldReturn
+                    ? Colors.white.withOpacity(0.8)
+                    : Colors.grey.shade400,
+              ),
+            ),
             const SizedBox(height: 5),
-            Text(loan.caution,
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: shouldReturn ? Colors.white : Colors.black)),
+            Text(
+              loan.caution,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: shouldReturn ? Colors.white : Colors.black,
+              ),
+            ),
             const SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                    loan.returned
-                        ? LoanTextConstants.returned
-                        : shouldReturn
-                            ? LoanTextConstants.toReturn
-                            : LoanTextConstants.onGoing,
-                    style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold,
-                        color: shouldReturn
-                            ? LoanColorConstants.urgentRed
-                            : Colors.grey.shade400)),
+                  loan.returned
+                      ? LoanTextConstants.returned
+                      : shouldReturn
+                          ? LoanTextConstants.toReturn
+                          : LoanTextConstants.onGoing,
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                    color: shouldReturn
+                        ? LoanColorConstants.urgentRed
+                        : Colors.grey.shade400,
+                  ),
+                ),
                 Text(
                   (loan.returned)
                       ? loan.returnedDate != null
@@ -127,11 +146,12 @@ class LoanCard extends StatelessWidget {
                           : LoanTextConstants.noReturnedDate
                       : processDate(loan.end),
                   style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                      color: shouldReturn
-                          ? Colors.white.withOpacity(0.8)
-                          : Colors.grey.shade400),
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                    color: shouldReturn
+                        ? Colors.white.withOpacity(0.8)
+                        : Colors.grey.shade400,
+                  ),
                 ),
               ],
             ),
@@ -146,10 +166,12 @@ class LoanCard extends StatelessWidget {
                       color: shouldReturn
                           ? Colors.white.withOpacity(0.7)
                           : Colors.grey.shade200,
-                      child: HeroIcon(HeroIcons.pencil,
-                          color: shouldReturn
-                              ? LoanColorConstants.urgentRed
-                              : Colors.black),
+                      child: HeroIcon(
+                        HeroIcons.pencil,
+                        color: shouldReturn
+                            ? LoanColorConstants.urgentRed
+                            : Colors.black,
+                      ),
                     ),
                   ),
                   WaitingButton(
@@ -157,22 +179,26 @@ class LoanCard extends StatelessWidget {
                         ? LoanColorConstants.urgentRed
                         : Colors.black,
                     builder: (child) => CardButton(
-                        color: shouldReturn
-                            ? Colors.white.withOpacity(0.7)
-                            : Colors.grey.shade200,
-                        child: child),
+                      color: shouldReturn
+                          ? Colors.white.withOpacity(0.7)
+                          : Colors.grey.shade200,
+                      child: child,
+                    ),
                     onTap: onCalendar,
-                    child: HeroIcon(HeroIcons.calendarDays,
-                        color: shouldReturn
-                            ? LoanColorConstants.urgentRed
-                            : Colors.black),
+                    child: HeroIcon(
+                      HeroIcons.calendarDays,
+                      color: shouldReturn
+                          ? LoanColorConstants.urgentRed
+                          : Colors.black,
+                    ),
                   ),
                   WaitingButton(
                     builder: (child) => CardButton(
-                        color: shouldReturn
-                            ? LoanColorConstants.urgentRed
-                            : Colors.black,
-                        child: child),
+                      color: shouldReturn
+                          ? LoanColorConstants.urgentRed
+                          : Colors.black,
+                      child: child,
+                    ),
                     onTap: onReturn,
                     child: const HeroIcon(HeroIcons.check, color: Colors.white),
                   ),

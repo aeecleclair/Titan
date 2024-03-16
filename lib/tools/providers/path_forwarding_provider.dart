@@ -19,4 +19,5 @@ class PathForwardingProvider extends StateNotifier<PathForwarding> {
 
 final pathForwardingProvider =
     StateNotifierProvider<PathForwardingProvider, PathForwarding>(
-        (ref) => PathForwardingProvider());
+  (ref) => PathForwardingProvider(),
+);

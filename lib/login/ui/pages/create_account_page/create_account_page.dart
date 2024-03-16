@@ -40,10 +40,12 @@ class CreateAccountPage extends HookConsumerWidget {
     final promo = useTextEditingController();
     final lastIndex = useState(isCodeGiven ? 1 : 0);
     List<DropdownMenuItem> items = Floors.values
-        .map((e) => DropdownMenuItem(
-              value: capitalize(e.toString().split('.').last),
-              child: Text(capitalize(e.toString().split('.').last)),
-            ))
+        .map(
+          (e) => DropdownMenuItem(
+            value: capitalize(e.toString().split('.').last),
+            child: Text(capitalize(e.toString().split('.').last)),
+          ),
+        )
         .toList();
 
     final floor = useTextEditingController(text: items[0].value.toString());
@@ -150,33 +152,39 @@ class CreateAccountPage extends HookConsumerWidget {
         canBeEmpty: true,
         hint: LoginTextConstants.canBeEmpty,
       ),
-      Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-        const SizedBox(height: 9),
-        const AlignLeftText(
-          LoginTextConstants.birthday,
-          fontSize: 20,
-          color: ColorConstants.background2,
-        ),
-        const SizedBox(height: 1),
-        Form(
-          key: formKeys[6],
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          child: DateEntry(
-            onTap: () {
-              DateTime now = DateTime.now();
-              getOnlyDayDate(context, birthday,
+      Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const SizedBox(height: 9),
+          const AlignLeftText(
+            LoginTextConstants.birthday,
+            fontSize: 20,
+            color: ColorConstants.background2,
+          ),
+          const SizedBox(height: 1),
+          Form(
+            key: formKeys[6],
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            child: DateEntry(
+              onTap: () {
+                DateTime now = DateTime.now();
+                getOnlyDayDate(
+                  context,
+                  birthday,
                   firstDate: DateTime(now.year - 110, now.month, now.day),
                   initialDate: DateTime(now.year - 21, now.month, now.day),
-                  lastDate: DateTime.now());
-            },
-            label: LoginTextConstants.birthday,
-            controller: birthday,
-            color: Colors.white,
-            enabledColor: ColorConstants.background2,
-            errorColor: Colors.white,
+                  lastDate: DateTime.now(),
+                );
+              },
+              label: LoginTextConstants.birthday,
+              controller: birthday,
+              color: Colors.white,
+              enabledColor: ColorConstants.background2,
+              errorColor: Colors.white,
+            ),
           ),
-        ),
-      ]),
+        ],
+      ),
       CreateAccountField(
         controller: phone,
         label: LoginTextConstants.phone,
@@ -205,8 +213,11 @@ class CreateAccountPage extends HookConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const SizedBox(height: 8),
-          const AlignLeftText(LoginTextConstants.floor,
-              fontSize: 20, color: ColorConstants.background2),
+          const AlignLeftText(
+            LoginTextConstants.floor,
+            fontSize: 20,
+            color: ColorConstants.background2,
+          ),
           const SizedBox(height: 8),
           AutofillGroup(
             child: DropdownButtonFormField(
@@ -219,20 +230,23 @@ class CreateAccountPage extends HookConsumerWidget {
               iconEnabledColor: Colors.grey.shade100.withOpacity(.8),
               style: const TextStyle(fontSize: 20, color: Colors.white),
               decoration: const InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(vertical: 10),
-                  isDense: true,
-                  enabledBorder: UnderlineInputBorder(
-                      borderSide:
-                          BorderSide(color: ColorConstants.background2)),
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
+                contentPadding: EdgeInsets.symmetric(vertical: 10),
+                isDense: true,
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: ColorConstants.background2),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
                     color: Colors.white,
-                  )),
-                  errorBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
+                  ),
+                ),
+                errorBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
                     color: Colors.white,
-                  )),
-                  errorStyle: TextStyle(color: Colors.white)),
+                  ),
+                ),
+                errorStyle: TextStyle(color: Colors.white),
+              ),
             ),
           ),
         ],
@@ -265,19 +279,25 @@ class CreateAccountPage extends HookConsumerWidget {
                   await signUpNotifier.activateUser(finalCreateAccount);
               if (value) {
                 displayToastWithContext(
-                    TypeMsg.msg, LoginTextConstants.accountActivated);
+                  TypeMsg.msg,
+                  LoginTextConstants.accountActivated,
+                );
                 authTokenNotifier.deleteToken();
                 QR.to(LoginRouter.root);
               } else {
                 displayToastWithContext(
-                    TypeMsg.error, LoginTextConstants.accountNotActivated);
+                  TypeMsg.error,
+                  LoginTextConstants.accountNotActivated,
+                );
               }
             } catch (e) {
               displayToastWithContext(TypeMsg.error, e.toString());
             }
           } else {
             displayToastWithContext(
-                TypeMsg.error, LoginTextConstants.fillAllFields);
+              TypeMsg.error,
+              LoginTextConstants.fillAllFields,
+            );
           }
         },
       ),
@@ -315,11 +335,12 @@ class CreateAccountPage extends HookConsumerWidget {
                 child: Text(
                   LoginTextConstants.createAccountTitle,
                   style: GoogleFonts.elMessiri(
-                      textStyle: const TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  )),
+                    textStyle: const TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -329,16 +350,18 @@ class CreateAccountPage extends HookConsumerWidget {
                 children: [
                   const Spacer(),
                   Expanded(
-                      flex: 6,
-                      child: PageView(
-                          physics: const NeverScrollableScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          controller: pageController,
-                          onPageChanged: (value) {
-                            lastIndex.value = currentPage.value;
-                            currentPage.value = value;
-                          },
-                          children: steps)),
+                    flex: 6,
+                    child: PageView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      controller: pageController,
+                      onPageChanged: (value) {
+                        lastIndex.value = currentPage.value;
+                        currentPage.value = value;
+                      },
+                      children: steps,
+                    ),
+                  ),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -351,14 +374,16 @@ class CreateAccountPage extends HookConsumerWidget {
                                 currentPage.value--;
                                 lastIndex.value = currentPage.value;
                                 pageController.previousPage(
-                                    duration: const Duration(milliseconds: 500),
-                                    curve: Curves.decelerate);
+                                  duration: const Duration(milliseconds: 500),
+                                  curve: Curves.decelerate,
+                                );
                               }),
                               child: const HeroIcon(
                                 HeroIcons.arrowLeft,
                                 color: Colors.white,
                                 size: 30,
-                              ))
+                              ),
+                            )
                           : Container(),
                       currentPage.value != len - 1
                           ? GestureDetector(
@@ -370,9 +395,9 @@ class CreateAccountPage extends HookConsumerWidget {
                                   FocusScope.of(context)
                                       .requestFocus(FocusNode());
                                   pageController.nextPage(
-                                      duration:
-                                          const Duration(milliseconds: 500),
-                                      curve: Curves.decelerate);
+                                    duration: const Duration(milliseconds: 500),
+                                    curve: Curves.decelerate,
+                                  );
                                   currentPage.value++;
                                   lastIndex.value = currentPage.value;
                                 }
@@ -381,7 +406,8 @@ class CreateAccountPage extends HookConsumerWidget {
                                 HeroIcons.arrowRight,
                                 color: Colors.white,
                                 size: 30,
-                              ))
+                              ),
+                            )
                           : Container(),
                     ],
                   ),
@@ -390,10 +416,11 @@ class CreateAccountPage extends HookConsumerWidget {
                     controller: pageController,
                     count: len,
                     effect: const WormEffect(
-                        dotColor: ColorConstants.background2,
-                        activeDotColor: Colors.white,
-                        dotWidth: 12,
-                        dotHeight: 12),
+                      dotColor: ColorConstants.background2,
+                      activeDotColor: Colors.white,
+                      dotWidth: 12,
+                      dotHeight: 12,
+                    ),
                     onDotClicked: (index) {
                       if (index < lastIndex.value ||
                           currentPage.value >= steps.length - 2 ||
@@ -401,9 +428,11 @@ class CreateAccountPage extends HookConsumerWidget {
                         FocusScope.of(context).requestFocus(FocusNode());
                         currentPage.value = index;
                         lastIndex.value = index;
-                        pageController.animateToPage(index,
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.decelerate);
+                        pageController.animateToPage(
+                          index,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.decelerate,
+                        );
                       }
                     },
                   ),

@@ -19,18 +19,20 @@ class SessionListNotifier extends ListNotifier<Session> {
 
   Future<bool> updateSession(Session session) async {
     return await update(
-        sessionRepository.updateSession,
-        (sessions, session) => sessions
-          ..[sessions.indexWhere((b) => b.id == session.id)] = session,
-        session);
+      sessionRepository.updateSession,
+      (sessions, session) =>
+          sessions..[sessions.indexWhere((b) => b.id == session.id)] = session,
+      session,
+    );
   }
 
   Future<bool> deleteSession(Session session) async {
     return await delete(
-        sessionRepository.deleteSession,
-        (sessions, session) => sessions..removeWhere((b) => b.id == session.id),
-        session.id,
-        session);
+      sessionRepository.deleteSession,
+      (sessions, session) => sessions..removeWhere((b) => b.id == session.id),
+      session.id,
+      session,
+    );
   }
 }
 

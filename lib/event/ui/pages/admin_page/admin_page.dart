@@ -22,49 +22,54 @@ class AdminPage extends HookConsumerWidget {
         confirmedEvents = [],
         canceledEvents = [];
     events.maybeWhen(
-        data: (events) {
-          for (Event b in events) {
-            switch (b.decision) {
-              case Decision.approved:
-                confirmedEvents.add(b);
-                break;
-              case Decision.declined:
-                canceledEvents.add(b);
-                break;
-              case Decision.pending:
-                pendingEvents.add(b);
-                break;
-            }
+      data: (events) {
+        for (Event b in events) {
+          switch (b.decision) {
+            case Decision.approved:
+              confirmedEvents.add(b);
+              break;
+            case Decision.declined:
+              canceledEvents.add(b);
+              break;
+            case Decision.pending:
+              pendingEvents.add(b);
+              break;
           }
-        },
-        orElse: () {});
+        }
+      },
+      orElse: () {},
+    );
     List<Appointment> appointments = <Appointment>[];
     confirmedEvents.map((e) {
       if (e.recurrenceRule != "") {
         final dates = getDateInRecurrence(e.recurrenceRule, e.start);
         dates.map((data) {
-          appointments.add(Appointment(
-            startTime: combineDate(data, e.start),
-            endTime: combineDate(data, e.end),
+          appointments.add(
+            Appointment(
+              startTime: combineDate(data, e.start),
+              endTime: combineDate(data, e.end),
+              subject: '${e.name} - ${e.organizer}',
+              isAllDay: e.allDay,
+              startTimeZone: "Europe/Paris",
+              endTimeZone: "Europe/Paris",
+              notes: e.description,
+              color: generateColor(e.location),
+            ),
+          );
+        }).toList();
+      } else {
+        appointments.add(
+          Appointment(
+            startTime: e.start,
+            endTime: e.end,
             subject: '${e.name} - ${e.organizer}',
             isAllDay: e.allDay,
             startTimeZone: "Europe/Paris",
             endTimeZone: "Europe/Paris",
             notes: e.description,
             color: generateColor(e.location),
-          ));
-        }).toList();
-      } else {
-        appointments.add(Appointment(
-          startTime: e.start,
-          endTime: e.end,
-          subject: '${e.name} - ${e.organizer}',
-          isAllDay: e.allDay,
-          startTimeZone: "Europe/Paris",
-          endTimeZone: "Europe/Paris",
-          notes: e.description,
-          color: generateColor(e.location),
-        ));
+          ),
+        );
       }
     }).toList();
     return EventTemplate(
@@ -76,20 +81,25 @@ class AdminPage extends HookConsumerWidget {
           children: [
             const SizedBox(height: 10),
             SizedBox(
-                height: MediaQuery.of(context).size.height - 415,
-                child: Calendar(
-                    items: events,
-                    dataSource: AppointmentDataSource(appointments))),
+              height: MediaQuery.of(context).size.height - 415,
+              child: Calendar(
+                items: events,
+                dataSource: AppointmentDataSource(appointments),
+              ),
+            ),
             const SizedBox(height: 30),
             if (pendingEvents.isEmpty &&
                 confirmedEvents.isEmpty &&
                 canceledEvents.isEmpty)
               const Center(
-                child: Text(EventTextConstants.noCurrentEvent,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold)),
+                child: Text(
+                  EventTextConstants.noCurrentEvent,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ListEvent(
               title: EventTextConstants.pending,

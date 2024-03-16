@@ -17,24 +17,31 @@ class TopicsProvider extends ListNotifier<Topic> {
   }
 
   Future<bool> subscribeTopic(Topic topic) async {
-    return await update(notificationRepository.subscribeTopic,
-        (listT, t) => listT..add(t), topic);
+    return await update(
+      notificationRepository.subscribeTopic,
+      (listT, t) => listT..add(t),
+      topic,
+    );
   }
 
   Future<bool> unsubscribeTopic(Topic topic) async {
-    return await update(notificationRepository.unsubscribeTopic,
-        (listT, t) => listT..remove(t), topic);
+    return await update(
+      notificationRepository.unsubscribeTopic,
+      (listT, t) => listT..remove(t),
+      topic,
+    );
   }
 
   Future<bool> toggleSubscription(Topic topic) async {
     return state.maybeWhen(
-        data: (data) {
-          if (data.contains(topic)) {
-            return unsubscribeTopic(topic);
-          }
-          return subscribeTopic(topic);
-        },
-        orElse: () => false);
+      data: (data) {
+        if (data.contains(topic)) {
+          return unsubscribeTopic(topic);
+        }
+        return subscribeTopic(topic);
+      },
+      orElse: () => false,
+    );
   }
 
   Future<bool> fakeSubscribeTopic(Topic topic) async {
@@ -43,28 +50,33 @@ class TopicsProvider extends ListNotifier<Topic> {
 
   Future<bool> fakeUnsubscribeTopic(Topic topic) async {
     return await update(
-        (_) async => true, (listT, t) => listT..remove(t), topic);
+      (_) async => true,
+      (listT, t) => listT..remove(t),
+      topic,
+    );
   }
 
   Future<bool> fakeToggleSubscription(Topic topic) async {
     return state.maybeWhen(
-        data: (data) {
-          if (data.contains(topic)) {
-            return fakeUnsubscribeTopic(topic);
-          }
-          return fakeSubscribeTopic(topic);
-        },
-        orElse: () => false);
+      data: (data) {
+        if (data.contains(topic)) {
+          return fakeUnsubscribeTopic(topic);
+        }
+        return fakeSubscribeTopic(topic);
+      },
+      orElse: () => false,
+    );
   }
 
   Future subscribeAll() async {
     return await state.maybeWhen(
-        data: (value) {
-          for (var i = 0; i < value.length; i++) {
-            subscribeTopic(value[i]);
-          }
-        },
-        orElse: () {});
+      data: (value) {
+        for (var i = 0; i < value.length; i++) {
+          subscribeTopic(value[i]);
+        }
+      },
+      orElse: () {},
+    );
   }
 }
 

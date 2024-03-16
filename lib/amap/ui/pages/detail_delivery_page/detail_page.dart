@@ -47,7 +47,9 @@ class DetailDeliveryPage extends HookConsumerWidget {
                   Text(
                     "${AMAPTextConstants.deliveryDate} : ${processDate(delivery.deliveryDate)}",
                     style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold),
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 20),
                   const AlignLeftText(
@@ -90,14 +92,15 @@ class DetailDeliveryPage extends HookConsumerWidget {
                     const SizedBox(height: 5),
                     Wrap(
                       children: value
-                          .map((e) => Container(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 5),
-                                child: ProductDetailCard(
-                                  product: e,
-                                  quantity: productsQuantity[e.id] ?? 0,
-                                ),
-                              ))
+                          .map(
+                            (e) => Container(
+                              padding: const EdgeInsets.symmetric(vertical: 5),
+                              child: ProductDetailCard(
+                                product: e,
+                                quantity: productsQuantity[e.id] ?? 0,
+                              ),
+                            ),
+                          )
                           .toList(),
                     ),
                     const SizedBox(height: 10),
@@ -122,31 +125,36 @@ class DetailDeliveryPage extends HookConsumerWidget {
                       builder: (context, data) {
                         if (data.isEmpty) {
                           return Container(
-                              margin: const EdgeInsets.only(bottom: 50),
-                              child: const Center(
-                                  child: Text(AMAPTextConstants.noOrder)));
+                            margin: const EdgeInsets.only(bottom: 50),
+                            child: const Center(
+                              child: Text(AMAPTextConstants.noOrder),
+                            ),
+                          );
                         }
                         return AsyncChild(
-                            value: cash,
-                            loaderColor: AMAPColorConstants.greenGradient2,
-                            builder: (context, cash) {
-                              return Wrap(
-                                spacing: 20,
-                                runSpacing: 20,
-                                children: data.map((e) {
-                                  final userCash = cash.firstWhere((element) =>
-                                      element.user.id == e.user.id);
-                                  return DetailOrderUI(
-                                    order: e,
-                                    userCash: userCash,
-                                    deliveryId: delivery.id,
-                                  );
-                                }).toList(),
-                              );
-                            });
-                      }),
+                          value: cash,
+                          loaderColor: AMAPColorConstants.greenGradient2,
+                          builder: (context, cash) {
+                            return Wrap(
+                              spacing: 20,
+                              runSpacing: 20,
+                              children: data.map((e) {
+                                final userCash = cash.firstWhere(
+                                  (element) => element.user.id == e.user.id,
+                                );
+                                return DetailOrderUI(
+                                  order: e,
+                                  userCash: userCash,
+                                  deliveryId: delivery.id,
+                                );
+                              }).toList(),
+                            );
+                          },
+                        );
+                      },
+                    ),
             ),
-            const SizedBox(height: 20)
+            const SizedBox(height: 20),
           ],
         ),
       ),

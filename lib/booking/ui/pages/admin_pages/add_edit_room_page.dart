@@ -45,15 +45,18 @@ class AddEditRoomPage extends HookConsumerWidget {
               height: 50,
             ),
             Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                    isEdit
-                        ? BookingTextConstants.editRoom
-                        : BookingTextConstants.addRoom,
-                    style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 149, 149, 149)))),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                isEdit
+                    ? BookingTextConstants.editRoom
+                    : BookingTextConstants.addRoom,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 149, 149, 149),
+                ),
+              ),
+            ),
             Form(
               key: key,
               child: Column(
@@ -85,8 +88,9 @@ class AddEditRoomPage extends HookConsumerWidget {
                           child: Text(
                             e.name,
                             style: TextStyle(
-                                color: selected ? Colors.white : Colors.black,
-                                fontWeight: FontWeight.bold),
+                              color: selected ? Colors.white : Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         );
                       },
@@ -107,25 +111,34 @@ class AddEditRoomPage extends HookConsumerWidget {
                         ref,
                         () async {
                           Room newRoom = Room(
-                              id: isEdit ? room.id : '',
-                              name: name.text,
-                              managerId: managerId);
+                            id: isEdit ? room.id : '',
+                            name: name.text,
+                            managerId: managerId,
+                          );
                           final value = isEdit
                               ? await roomListNotifier.updateRoom(newRoom)
                               : await roomListNotifier.addRoom(newRoom);
                           if (value) {
                             QR.back();
                             isEdit
-                                ? displayToastWithContext(TypeMsg.msg,
-                                    BookingTextConstants.editedRoom)
-                                : displayToastWithContext(TypeMsg.msg,
-                                    BookingTextConstants.addedRoom);
+                                ? displayToastWithContext(
+                                    TypeMsg.msg,
+                                    BookingTextConstants.editedRoom,
+                                  )
+                                : displayToastWithContext(
+                                    TypeMsg.msg,
+                                    BookingTextConstants.addedRoom,
+                                  );
                           } else {
                             isEdit
-                                ? displayToastWithContext(TypeMsg.error,
-                                    BookingTextConstants.editionError)
-                                : displayToastWithContext(TypeMsg.error,
-                                    BookingTextConstants.addingError);
+                                ? displayToastWithContext(
+                                    TypeMsg.error,
+                                    BookingTextConstants.editionError,
+                                  )
+                                : displayToastWithContext(
+                                    TypeMsg.error,
+                                    BookingTextConstants.addingError,
+                                  );
                           }
                         },
                       );
@@ -142,33 +155,38 @@ class AddEditRoomPage extends HookConsumerWidget {
                       onTap: () async {
                         await tokenExpireWrapper(ref, () async {
                           await showDialog(
-                              context: context,
-                              builder: (context) => CustomDialogBox(
-                                    descriptions: BookingTextConstants
-                                        .deleteRoomConfirmation,
-                                    onYes: () async {
-                                      final value = await roomListNotifier
-                                          .deleteRoom(room);
-                                      if (value) {
-                                        QR.back();
-                                        displayToastWithContext(TypeMsg.msg,
-                                            BookingTextConstants.deletedRoom);
-                                      } else {
-                                        displayToastWithContext(TypeMsg.error,
-                                            BookingTextConstants.deletingError);
-                                      }
-                                    },
-                                    title: BookingTextConstants.deleteBooking,
-                                  ));
+                            context: context,
+                            builder: (context) => CustomDialogBox(
+                              descriptions:
+                                  BookingTextConstants.deleteRoomConfirmation,
+                              onYes: () async {
+                                final value =
+                                    await roomListNotifier.deleteRoom(room);
+                                if (value) {
+                                  QR.back();
+                                  displayToastWithContext(
+                                    TypeMsg.msg,
+                                    BookingTextConstants.deletedRoom,
+                                  );
+                                } else {
+                                  displayToastWithContext(
+                                    TypeMsg.error,
+                                    BookingTextConstants.deletingError,
+                                  );
+                                }
+                              },
+                              title: BookingTextConstants.deleteBooking,
+                            ),
+                          );
                         });
                       },
                       buttonText: BookingTextConstants.delete,
-                    )
+                    ),
                   ],
                   const SizedBox(height: 30),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

@@ -19,10 +19,13 @@ class RaffleStatsNotifier extends SingleNotifier<RaffleStats> {
     this.raffleId = raffleId;
   }
 
-  Future<AsyncValue<RaffleStats>> loadRaffleStats(
-      {String? customRaffleId}) async {
-    return await load(() async =>
-        _raffleDetailRepository.getRaffleStats(customRaffleId ?? raffleId));
+  Future<AsyncValue<RaffleStats>> loadRaffleStats({
+    String? customRaffleId,
+  }) async {
+    return await load(
+      () async =>
+          _raffleDetailRepository.getRaffleStats(customRaffleId ?? raffleId),
+    );
   }
 }
 

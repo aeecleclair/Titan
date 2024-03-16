@@ -12,11 +12,11 @@ class AddingUserContainer extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final users = ref.watch(userList);
     return AsyncChild(
-        value: users,
-        builder: (context, users) => Row(
-              children: users
-                  .map((e) => AddingUserCard(user: e, onAdd: onAdd))
-                  .toList(),
-            ));
+      value: users,
+      builder: (context, users) => Row(
+        children:
+            users.map((e) => AddingUserCard(user: e, onAdd: onAdd)).toList(),
+      ),
+    );
   }
 }

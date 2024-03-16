@@ -2,11 +2,12 @@ import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/user/class/list_users.dart';
 
 class Group {
-  Group(
-      {required this.name,
-      required this.description,
-      required this.id,
-      required this.members});
+  Group({
+    required this.name,
+    required this.description,
+    required this.id,
+    required this.members,
+  });
   late final String name;
   late final String description;
   late final String id;
@@ -17,7 +18,8 @@ class Group {
     description = json['description'];
     id = json['id'];
     members = List<SimpleUser>.from(
-        json['members'].map((x) => SimpleUser.fromJson(x)));
+      json['members'].map((x) => SimpleUser.fromJson(x)),
+    );
   }
 
   Map<String, dynamic> toJson() {

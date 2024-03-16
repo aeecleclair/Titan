@@ -74,20 +74,23 @@ class NoInternetPage extends HookConsumerWidget {
                     padding: const EdgeInsets.only(top: 12, bottom: 15),
                     width: double.infinity,
                     decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                            colors: [
-                              ColorConstants.gradient1,
-                              ColorConstants.gradient2
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight),
-                        boxShadow: [
-                          BoxShadow(
-                              color: ColorConstants.gradient1.withOpacity(0.2),
-                              blurRadius: 10,
-                              offset: const Offset(0, 5))
+                      gradient: const LinearGradient(
+                        colors: [
+                          ColorConstants.gradient1,
+                          ColorConstants.gradient2,
                         ],
-                        borderRadius: BorderRadius.circular(15)),
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: ColorConstants.gradient1.withOpacity(0.2),
+                          blurRadius: 10,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -96,15 +99,18 @@ class NoInternetPage extends HookConsumerWidget {
                           size: 35,
                           color: Colors.white,
                         ),
-                        Text(OthersTextConstants.retry,
-                            style: TextStyle(
-                                fontSize: 25,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold)),
+                        Text(
+                          OthersTextConstants.retry,
+                          style: TextStyle(
+                            fontSize: 25,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),

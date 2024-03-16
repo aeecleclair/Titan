@@ -16,48 +16,58 @@ class AddingUserCard extends HookConsumerWidget {
     final cashNotifier = ref.watch(cashProvider.notifier);
     return GestureDetector(
       onTap: () {
-        cashNotifier.addCash(Cash(
-          balance: 0,
-          user: user,
-        ));
+        cashNotifier.addCash(
+          Cash(
+            balance: 0,
+            user: user,
+          ),
+        );
         onAdd();
       },
       child: Container(
-          padding: const EdgeInsets.all(12.0),
-          child: Container(
-              width: 140,
-              height: 75,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(25),
-              ),
-              child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AutoSizeText(user.nickname ?? user.firstname,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: RaffleColorConstants.gradient2)),
-                      const SizedBox(height: 2),
-                      AutoSizeText(
-                          user.nickname != null
-                              ? '${user.firstname} ${user.name}'
-                              : user.name,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
-                              color: RaffleColorConstants.textDark)),
-                      const SizedBox(height: 3),
-                    ],
-                  )))),
+        padding: const EdgeInsets.all(12.0),
+        child: Container(
+          width: 140,
+          height: 75,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(25),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AutoSizeText(
+                  user.nickname ?? user.firstname,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: RaffleColorConstants.gradient2,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                AutoSizeText(
+                  user.nickname != null
+                      ? '${user.firstname} ${user.name}'
+                      : user.name,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                    color: RaffleColorConstants.textDark,
+                  ),
+                ),
+                const SizedBox(height: 3),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

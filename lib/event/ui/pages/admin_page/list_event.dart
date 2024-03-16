@@ -21,12 +21,13 @@ class ListEvent extends HookConsumerWidget {
   final bool canToggle;
   final String title;
   final bool isHistory;
-  const ListEvent(
-      {super.key,
-      required this.events,
-      required this.title,
-      this.canToggle = true,
-      this.isHistory = false});
+  const ListEvent({
+    super.key,
+    required this.events,
+    required this.title,
+    this.canToggle = true,
+    this.isHistory = false,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -44,8 +45,9 @@ class ListEvent extends HookConsumerWidget {
     if (filteredEvents.isEmpty) {
       return const SizedBox();
     }
-    return Column(children: [
-      GestureDetector(
+    return Column(
+      children: [
+        GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {
             if (canToggle) {
@@ -69,82 +71,92 @@ class ListEvent extends HookConsumerWidget {
                   ),
               ],
             ),
-          )),
-      if (toggle.value)
-        Container(
-          margin: const EdgeInsets.only(top: 10),
-          child: HorizontalListView.builder(
+          ),
+        ),
+        if (toggle.value)
+          Container(
+            margin: const EdgeInsets.only(top: 10),
+            child: HorizontalListView.builder(
               height: 235,
               items: filteredEvents,
               itemBuilder: (context, e, i) => EventUi(
-                    event: e,
-                    isDetailPage: true,
-                    isAdmin: true,
-                    onEdit: () {
-                      eventNotifier.setEvent(e);
-                      QR.to(EventRouter.root +
-                          EventRouter.admin +
-                          EventRouter.addEdit);
-                    },
-                    onInfo: () {
-                      eventNotifier.setEvent(e);
-                      QR.to(EventRouter.root +
-                          EventRouter.admin +
-                          EventRouter.detail);
-                    },
-                    onConfirm: () async {
-                      await showDialog(
-                          context: context,
-                          builder: (context) {
-                            return CustomDialogBox(
-                                title: BookingTextConstants.confirm,
-                                descriptions:
-                                    BookingTextConstants.confirmBooking,
-                                onYes: () async {
-                                  await tokenExpireWrapper(ref, () async {
-                                    eventListNotifier
-                                        .toggleConfirmed(e.copyWith(
-                                            decision: Decision.approved))
-                                        .then((value) {
-                                      if (value) {
-                                        confirmedEventListNotifier.addEvent(e);
-                                      }
-                                    });
-                                  });
-                                });
+                event: e,
+                isDetailPage: true,
+                isAdmin: true,
+                onEdit: () {
+                  eventNotifier.setEvent(e);
+                  QR.to(
+                    EventRouter.root + EventRouter.admin + EventRouter.addEdit,
+                  );
+                },
+                onInfo: () {
+                  eventNotifier.setEvent(e);
+                  QR.to(
+                    EventRouter.root + EventRouter.admin + EventRouter.detail,
+                  );
+                },
+                onConfirm: () async {
+                  await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return CustomDialogBox(
+                        title: BookingTextConstants.confirm,
+                        descriptions: BookingTextConstants.confirmBooking,
+                        onYes: () async {
+                          await tokenExpireWrapper(ref, () async {
+                            eventListNotifier
+                                .toggleConfirmed(
+                              e.copyWith(
+                                decision: Decision.approved,
+                              ),
+                            )
+                                .then((value) {
+                              if (value) {
+                                confirmedEventListNotifier.addEvent(e);
+                              }
+                            });
                           });
+                        },
+                      );
                     },
-                    onDecline: () async {
-                      await showDialog(
-                          context: context,
-                          builder: (context) {
-                            return CustomDialogBox(
-                                title: BookingTextConstants.decline,
-                                descriptions:
-                                    BookingTextConstants.declineBooking,
-                                onYes: () async {
-                                  await tokenExpireWrapper(ref, () async {
-                                    eventListNotifier
-                                        .toggleConfirmed(e.copyWith(
-                                            decision: Decision.declined))
-                                        .then((value) {
-                                      if (value) {
-                                        confirmedEventListNotifier
-                                            .deleteEvent(e);
-                                      }
-                                    });
-                                  });
-                                });
+                  );
+                },
+                onDecline: () async {
+                  await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return CustomDialogBox(
+                        title: BookingTextConstants.decline,
+                        descriptions: BookingTextConstants.declineBooking,
+                        onYes: () async {
+                          await tokenExpireWrapper(ref, () async {
+                            eventListNotifier
+                                .toggleConfirmed(
+                              e.copyWith(
+                                decision: Decision.declined,
+                              ),
+                            )
+                                .then((value) {
+                              if (value) {
+                                confirmedEventListNotifier.deleteEvent(e);
+                              }
+                            });
                           });
+                        },
+                      );
                     },
-                    onCopy: () {
-                      eventNotifier.setEvent(e.copyWith(id: ""));
-                      QR.to(EventRouter.root +
-                          EventRouter.admin +
-                          EventRouter.addEdit);
-                    },
-                  )),
-        ),
-    ]);
+                  );
+                },
+                onCopy: () {
+                  eventNotifier.setEvent(e.copyWith(id: ""));
+                  QR.to(
+                    EventRouter.root + EventRouter.admin + EventRouter.addEdit,
+                  );
+                },
+              ),
+            ),
+          ),
+      ],
+    );
   }
 }

@@ -54,8 +54,10 @@ class Logger {
       String level = split[1].split(": ").first;
       return Log(
         message: message,
-        level: LogLevel.values.firstWhere((element) =>
-            element.toString().split(".").last.toUpperCase() == level),
+        level: LogLevel.values.firstWhere(
+          (element) =>
+              element.toString().split(".").last.toUpperCase() == level,
+        ),
         time: DateTime.parse(split[0]),
       );
     }).toList();

@@ -16,10 +16,11 @@ void main() {
         () async {
       final productListRepository = MockDeliveryProductListRepository();
       final notifier = DeliveryProductListNotifier(
-          productListRepository: productListRepository);
+        productListRepository: productListRepository,
+      );
       final products = [
         Product.empty().copyWith(id: '1', name: 'Product 1'),
-        Product.empty().copyWith(id: '2', name: 'Product 2')
+        Product.empty().copyWith(id: '2', name: 'Product 2'),
       ];
 
       final result = await notifier.loadProductList(products);
@@ -30,7 +31,8 @@ void main() {
     test('addProduct should add product to list and return true', () async {
       final productListRepository = MockDeliveryProductListRepository();
       final notifier = DeliveryProductListNotifier(
-          productListRepository: productListRepository);
+        productListRepository: productListRepository,
+      );
 
       final product =
           Product.empty().copyWith(name: 'New Product', quantity: 1);
@@ -47,16 +49,21 @@ void main() {
 
       expect(result, true);
       expect(
-          notifier.state.when(
-              data: (data) => data, error: (e, s) => [], loading: () => []),
-          [...products, product]);
+        notifier.state.when(
+          data: (data) => data,
+          error: (e, s) => [],
+          loading: () => [],
+        ),
+        [...products, product],
+      );
     });
 
     test('updateProduct should update product in list and return true',
         () async {
       final productListRepository = MockDeliveryProductListRepository();
       final notifier = DeliveryProductListNotifier(
-          productListRepository: productListRepository);
+        productListRepository: productListRepository,
+      );
 
       final product1 = Product.empty().copyWith(id: '1', name: 'Product 1');
       final product2 = Product.empty().copyWith(id: '1', name: 'Product 2');
@@ -70,16 +77,21 @@ void main() {
 
       expect(result, true);
       expect(
-          notifier.state.when(
-              data: (data) => data, error: (e, s) => [], loading: () => []),
-          [product2]);
+        notifier.state.when(
+          data: (data) => data,
+          error: (e, s) => [],
+          loading: () => [],
+        ),
+        [product2],
+      );
     });
 
     test('deleteProduct should remove product from list and return true',
         () async {
       final productListRepository = MockDeliveryProductListRepository();
       final notifier = DeliveryProductListNotifier(
-          productListRepository: productListRepository);
+        productListRepository: productListRepository,
+      );
 
       final product1 = Product.empty().copyWith(id: '1', name: 'Product 1');
       final product2 = Product.empty().copyWith(id: '2', name: 'Product 2');
@@ -93,9 +105,13 @@ void main() {
 
       expect(result, true);
       expect(
-          notifier.state.when(
-              data: (data) => data, error: (e, s) => [], loading: () => []),
-          [product2]);
+        notifier.state.when(
+          data: (data) => data,
+          error: (e, s) => [],
+          loading: () => [],
+        ),
+        [product2],
+      );
     });
 
     test(
@@ -103,7 +119,8 @@ void main() {
         () async {
       final productListRepository = MockDeliveryProductListRepository();
       final notifier = DeliveryProductListNotifier(
-          productListRepository: productListRepository);
+        productListRepository: productListRepository,
+      );
 
       final product1 =
           Product.empty().copyWith(id: '1', name: 'Product 1', quantity: 1);
@@ -116,12 +133,16 @@ void main() {
 
       expect(result, true);
       expect(
-          notifier.state
-              .when(
-                  data: (data) => data, error: (e, s) => [], loading: () => [])
-              .first
-              .quantity,
-          3);
+        notifier.state
+            .when(
+              data: (data) => data,
+              error: (e, s) => [],
+              loading: () => [],
+            )
+            .first
+            .quantity,
+        3,
+      );
     });
   });
 }

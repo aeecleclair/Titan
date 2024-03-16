@@ -29,20 +29,21 @@ class Event {
   late final Applicant applicant;
   late final Decision decision;
 
-  Event(
-      {required this.id,
-      required this.name,
-      required this.organizer,
-      required this.start,
-      required this.end,
-      required this.location,
-      required this.type,
-      required this.description,
-      required this.allDay,
-      required this.recurrenceRule,
-      required this.applicantId,
-      required this.applicant,
-      required this.decision});
+  Event({
+    required this.id,
+    required this.name,
+    required this.organizer,
+    required this.start,
+    required this.end,
+    required this.location,
+    required this.type,
+    required this.description,
+    required this.allDay,
+    required this.recurrenceRule,
+    required this.applicantId,
+    required this.applicant,
+    required this.decision,
+  });
 
   Event.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -79,35 +80,37 @@ class Event {
     return data;
   }
 
-  Event copyWith(
-      {String? id,
-      String? name,
-      String? organizer,
-      DateTime? start,
-      DateTime? end,
-      String? location,
-      CalendarEventType? type,
-      String? description,
-      bool? allDay,
-      String? recurrenceRule,
-      String? applicantId,
-      Applicant? applicant,
-      Decision? decision,
-      bool? hasRoom}) {
+  Event copyWith({
+    String? id,
+    String? name,
+    String? organizer,
+    DateTime? start,
+    DateTime? end,
+    String? location,
+    CalendarEventType? type,
+    String? description,
+    bool? allDay,
+    String? recurrenceRule,
+    String? applicantId,
+    Applicant? applicant,
+    Decision? decision,
+    bool? hasRoom,
+  }) {
     return Event(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        organizer: organizer ?? this.organizer,
-        start: start ?? this.start,
-        end: end ?? this.end,
-        location: location ?? this.location,
-        type: type ?? this.type,
-        description: description ?? this.description,
-        recurrenceRule: recurrenceRule ?? this.recurrenceRule,
-        allDay: allDay ?? this.allDay,
-        applicantId: applicantId ?? this.applicantId,
-        applicant: applicant ?? this.applicant,
-        decision: decision ?? this.decision);
+      id: id ?? this.id,
+      name: name ?? this.name,
+      organizer: organizer ?? this.organizer,
+      start: start ?? this.start,
+      end: end ?? this.end,
+      location: location ?? this.location,
+      type: type ?? this.type,
+      description: description ?? this.description,
+      recurrenceRule: recurrenceRule ?? this.recurrenceRule,
+      allDay: allDay ?? this.allDay,
+      applicantId: applicantId ?? this.applicantId,
+      applicant: applicant ?? this.applicant,
+      decision: decision ?? this.decision,
+    );
   }
 
   Event.empty() {

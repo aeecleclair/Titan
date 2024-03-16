@@ -36,7 +36,7 @@ void main() {
       ]);
       final container = ProviderContainer(
         overrides: [
-          productListProvider.overrideWith((ref) => productListNotifier)
+          productListProvider.overrideWith((ref) => productListNotifier),
         ],
       );
 
@@ -52,7 +52,7 @@ void main() {
       productListNotifier.state = const AsyncValue.loading();
       final container = ProviderContainer(
         overrides: [
-          productListProvider.overrideWith((ref) => productListNotifier)
+          productListProvider.overrideWith((ref) => productListNotifier),
         ],
       );
 
@@ -69,7 +69,7 @@ void main() {
           const AsyncValue.error("test", StackTrace.empty);
       final container = ProviderContainer(
         overrides: [
-          productListProvider.overrideWith((ref) => productListNotifier)
+          productListProvider.overrideWith((ref) => productListNotifier),
         ],
       );
 

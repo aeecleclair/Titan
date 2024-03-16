@@ -15,7 +15,8 @@ class GroupRepository extends Repository {
 
   Future<List<SimpleGroup>> getGroupList() async {
     return List<SimpleGroup>.from(
-        (await getList()).map((x) => SimpleGroup.fromJson(x)));
+      (await getList()).map((x) => SimpleGroup.fromJson(x)),
+    );
   }
 
   Future<Group> getGroup(String groupId) async {
@@ -35,15 +36,19 @@ class GroupRepository extends Repository {
   }
 
   Future<bool> addMember(Group group, SimpleUser user) async {
-    await create({"user_id": user.id, "group_id": group.id},
-        suffix: "membership");
+    await create(
+      {"user_id": user.id, "group_id": group.id},
+      suffix: "membership",
+    );
     return true;
   }
 
   Future<bool> deleteMember(Group group, SimpleUser user) async {
-    final response = await http.delete(Uri.parse("$host${ext}membership"),
-        headers: headers,
-        body: json.encode({"user_id": user.id, "group_id": group.id}));
+    final response = await http.delete(
+      Uri.parse("$host${ext}membership"),
+      headers: headers,
+      body: json.encode({"user_id": user.id, "group_id": group.id}),
+    );
     if (response.statusCode == 204) {
       return true;
     } else if (response.statusCode == 403) {

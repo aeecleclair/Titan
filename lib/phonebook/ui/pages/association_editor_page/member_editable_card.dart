@@ -19,8 +19,11 @@ import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class MemberEditableCard extends HookConsumerWidget {
-  const MemberEditableCard(
-      {super.key, required this.member, required this.association});
+  const MemberEditableCard({
+    super.key,
+    required this.member,
+    required this.association,
+  });
 
   final CompleteMember member;
   final Association association;
@@ -49,98 +52,114 @@ class MemberEditableCard extends HookConsumerWidget {
     );
 
     return Container(
-        padding: const EdgeInsets.all(5),
-        margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-        decoration: BoxDecoration(
-          border: Border.all(),
-          color: Colors.white,
-          borderRadius: const BorderRadius.all(Radius.circular(20)),
-        ),
-        child: Row(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    spreadRadius: 5,
-                    blurRadius: 10,
-                    offset: const Offset(2, 3),
+      padding: const EdgeInsets.all(5),
+      margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+      decoration: BoxDecoration(
+        border: Border.all(),
+        color: Colors.white,
+        borderRadius: const BorderRadius.all(Radius.circular(20)),
+      ),
+      child: Row(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  spreadRadius: 5,
+                  blurRadius: 10,
+                  offset: const Offset(2, 3),
+                ),
+              ],
+            ),
+            child: AutoLoaderChild(
+              group: memberPictures,
+              notifier: memberPicturesNotifier,
+              mapKey: member,
+              loader: (ref) =>
+                  profilePictureNotifier.getProfilePicture(member.member.id),
+              loadingBuilder: (context) => const CircleAvatar(
+                radius: 20,
+                child: CircularProgressIndicator(),
+              ),
+              dataBuilder: (context, data) =>
+                  CircleAvatar(radius: 20, backgroundImage: data.first.image),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AutoSizeText(
+                  "${(member.member.nickname ?? member.member.firstname)} - ${member.memberships.firstWhere((element) => element.associationId == association.id).apparentName}",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
                   ),
-                ],
-              ),
-              child: AutoLoaderChild(
-                group: memberPictures,
-                notifier: memberPicturesNotifier,
-                mapKey: member,
-                loader: (ref) =>
-                    profilePictureNotifier.getProfilePicture(member.member.id),
-                loadingBuilder: (context) => const CircleAvatar(
-                    radius: 20, child: CircularProgressIndicator()),
-                dataBuilder: (context, data) =>
-                    CircleAvatar(radius: 20, backgroundImage: data.first.image),
-              ),
+                  minFontSize: 10,
+                  maxFontSize: 15,
+                ),
+                const SizedBox(height: 3),
+                AutoSizeText(
+                  member.member.nickname != null
+                      ? "${member.member.firstname} ${member.member.name}"
+                      : member.member.name,
+                  minFontSize: 10,
+                  maxFontSize: 15,
+                ),
+              ],
             ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AutoSizeText(
-                      "${(member.member.nickname ?? member.member.firstname)} - ${member.memberships.firstWhere((element) => element.associationId == association.id).apparentName}",
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                      minFontSize: 10,
-                      maxFontSize: 15,
-                    ),
-                    const SizedBox(height: 3),
-                    AutoSizeText(
-                      member.member.nickname != null
-                          ? "${member.member.firstname} ${member.member.name}"
-                          : member.member.name,
-                      minFontSize: 10,
-                      maxFontSize: 15,
-                    ),
-                  ]),
-            ),
-            EditionButton(onEdition: () async {
+          ),
+          EditionButton(
+            onEdition: () async {
               roleTagsNotifier.resetChecked();
               roleTagsNotifier.loadRoleTagsFromMember(member, association);
               completeMemberNotifier.setCompleteMember(member);
               membershipNotifier.setMembership(assoMembership);
               if (QR.currentPath.contains(PhonebookRouter.admin)) {
-                QR.to(PhonebookRouter.root +
-                    PhonebookRouter.admin +
-                    PhonebookRouter.editAssociation +
-                    PhonebookRouter.addEditMember);
-              } else {
-                QR.to(PhonebookRouter.root +
-                    PhonebookRouter.associationDetail +
-                    PhonebookRouter.editAssociation +
-                    PhonebookRouter.addEditMember);
-              }
-            }),
-            const SizedBox(width: 10),
-            DeleteButton(
-              onDelete: () async {
-                final result = await associationMemberListNotifier.deleteMember(
-                  member,
-                  member.memberships.firstWhere((element) =>
-                      element.associationId == association.id &&
-                      element.mandateYear == association.mandateYear),
+                QR.to(
+                  PhonebookRouter.root +
+                      PhonebookRouter.admin +
+                      PhonebookRouter.editAssociation +
+                      PhonebookRouter.addEditMember,
                 );
-                if (result) {
-                  displayToastWithContext(
-                      TypeMsg.msg, PhonebookTextConstants.deletedMember);
-                } else {
-                  displayToastWithContext(
-                      TypeMsg.error, PhonebookTextConstants.deletingError);
-                }
-              },
-            )
-          ],
-        ));
+              } else {
+                QR.to(
+                  PhonebookRouter.root +
+                      PhonebookRouter.associationDetail +
+                      PhonebookRouter.editAssociation +
+                      PhonebookRouter.addEditMember,
+                );
+              }
+            },
+          ),
+          const SizedBox(width: 10),
+          DeleteButton(
+            onDelete: () async {
+              final result = await associationMemberListNotifier.deleteMember(
+                member,
+                member.memberships.firstWhere(
+                  (element) =>
+                      element.associationId == association.id &&
+                      element.mandateYear == association.mandateYear,
+                ),
+              );
+              if (result) {
+                displayToastWithContext(
+                  TypeMsg.msg,
+                  PhonebookTextConstants.deletedMember,
+                );
+              } else {
+                displayToastWithContext(
+                  TypeMsg.error,
+                  PhonebookTextConstants.deletingError,
+                );
+              }
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

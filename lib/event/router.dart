@@ -23,10 +23,11 @@ class EventRouter {
   static const String addEdit = '/add_edit';
   static const String detail = '/detail';
   static final Module module = Module(
-      name: "Évenements",
-      icon: const Left(HeroIcons.calendar),
-      root: EventRouter.root,
-      selected: false);
+    name: "Évenements",
+    icon: const Left(HeroIcons.calendar),
+    root: EventRouter.root,
+    selected: false,
+  );
   EventRouter(this.ref);
 
   QRoute route() => QRoute(
@@ -35,40 +36,45 @@ class EventRouter {
         builder: () => main_page.EventMainPage(),
         middleware: [
           AuthenticatedMiddleware(ref),
-          DeferredLoadingMiddleware(main_page.loadLibrary)
+          DeferredLoadingMiddleware(main_page.loadLibrary),
         ],
         children: [
           QRoute(
-              path: admin,
-              builder: () => admin_page.AdminPage(),
-              middleware: [
-                AdminMiddleware(ref, isEventAdminProvider),
-                DeferredLoadingMiddleware(admin_page.loadLibrary)
-              ],
-              children: [
-                QRoute(
-                    path: detail,
-                    builder: () => detail_page.DetailPage(isAdmin: true),
-                    middleware: [
-                      DeferredLoadingMiddleware(detail_page.loadLibrary)
-                    ]),
-                QRoute(
-                    path: addEdit,
-                    builder: () => add_edit_event_page.AddEditEventPage(),
-                    middleware: [
-                      DeferredLoadingMiddleware(add_edit_event_page.loadLibrary)
-                    ]),
-              ]),
+            path: admin,
+            builder: () => admin_page.AdminPage(),
+            middleware: [
+              AdminMiddleware(ref, isEventAdminProvider),
+              DeferredLoadingMiddleware(admin_page.loadLibrary),
+            ],
+            children: [
+              QRoute(
+                path: detail,
+                builder: () => detail_page.DetailPage(isAdmin: true),
+                middleware: [
+                  DeferredLoadingMiddleware(detail_page.loadLibrary),
+                ],
+              ),
+              QRoute(
+                path: addEdit,
+                builder: () => add_edit_event_page.AddEditEventPage(),
+                middleware: [
+                  DeferredLoadingMiddleware(add_edit_event_page.loadLibrary),
+                ],
+              ),
+            ],
+          ),
           QRoute(
-              path: addEdit,
-              builder: () => add_edit_event_page.AddEditEventPage(),
-              middleware: [
-                DeferredLoadingMiddleware(add_edit_event_page.loadLibrary)
-              ]),
+            path: addEdit,
+            builder: () => add_edit_event_page.AddEditEventPage(),
+            middleware: [
+              DeferredLoadingMiddleware(add_edit_event_page.loadLibrary),
+            ],
+          ),
           QRoute(
-              path: detail,
-              builder: () => detail_page.DetailPage(isAdmin: false),
-              middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)]),
+            path: detail,
+            builder: () => detail_page.DetailPage(isAdmin: false),
+            middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)],
+          ),
         ],
       );
 }

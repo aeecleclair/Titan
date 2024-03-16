@@ -18,9 +18,10 @@ class Section {
 
   Section copyWith({String? name, List<Module>? moduleList, bool? expanded}) =>
       Section(
-          name: name ?? this.name,
-          moduleList: moduleList ?? this.moduleList,
-          expanded: expanded ?? this.expanded);
+        name: name ?? this.name,
+        moduleList: moduleList ?? this.moduleList,
+        expanded: expanded ?? this.expanded,
+      );
 
   Section.empty() {
     name = '';

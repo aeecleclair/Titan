@@ -18,25 +18,28 @@ class ModuleCard extends HookConsumerWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 7),
       decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(20)),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.3),
-              blurRadius: 8,
-              spreadRadius: 2,
-              offset: const Offset(2, 3),
-            ),
-          ]),
+        borderRadius: const BorderRadius.all(Radius.circular(20)),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            blurRadius: 8,
+            spreadRadius: 2,
+            offset: const Offset(2, 3),
+          ),
+        ],
+      ),
       height: 70,
       child: TextButton(
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          )),
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+          ),
           overlayColor: MaterialStateProperty.all<Color>(
-              const Color.fromARGB(37, 0, 0, 0)),
+            const Color.fromARGB(37, 0, 0, 0),
+          ),
         ),
         onLongPress: () {
           showLinkDetails(context, module);

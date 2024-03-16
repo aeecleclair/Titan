@@ -14,26 +14,27 @@ class TextEntry extends StatelessWidget {
   final String? Function(String)? validator;
   final int? minLines, maxLines;
 
-  const TextEntry(
-      {super.key,
-      required this.label,
-      required this.controller,
-      this.onChanged,
-      this.validator,
-      this.minLines,
-      this.maxLines,
-      this.prefix = '',
-      this.suffix = '',
-      this.enabled = true,
-      this.isInt = false,
-      this.isDouble = false,
-      this.keyboardType = TextInputType.text,
-      this.canBeEmpty = false,
-      this.color = Colors.black,
-      this.enabledColor = Colors.black,
-      this.errorColor = ColorConstants.error,
-      this.noValueError = TextConstants.noValue,
-      this.suffixIcon});
+  const TextEntry({
+    super.key,
+    required this.label,
+    required this.controller,
+    this.onChanged,
+    this.validator,
+    this.minLines,
+    this.maxLines,
+    this.prefix = '',
+    this.suffix = '',
+    this.enabled = true,
+    this.isInt = false,
+    this.isDouble = false,
+    this.keyboardType = TextInputType.text,
+    this.canBeEmpty = false,
+    this.color = Colors.black,
+    this.enabledColor = Colors.black,
+    this.errorColor = ColorConstants.error,
+    this.noValueError = TextConstants.noValue,
+    this.suffixIcon,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +74,8 @@ class TextEntry extends StatelessWidget {
         enabledBorder:
             UnderlineInputBorder(borderSide: BorderSide(color: enabledColor)),
         errorBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: errorColor, width: 2.0)),
+          borderSide: BorderSide(color: errorColor, width: 2.0),
+        ),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: color, width: 2.0),
         ),

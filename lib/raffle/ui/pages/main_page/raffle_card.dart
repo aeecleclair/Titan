@@ -31,51 +31,54 @@ class RaffleWidget extends HookConsumerWidget {
     final rafflesStatsNotifier = ref.watch(raffleStatsMapProvider.notifier);
     return RaffleTemplate(
       child: GestureDetector(
-          onTap: () {
-            raffleIdNotifier.setId(raffle.id);
-            prizeListNotifier.loadPrizeList();
-            ticketListNotifier.loadTicketList();
-            packTicketListNotifier.loadPackTicketList();
-            QR.to(RaffleRouter.root + RaffleRouter.detail);
-          },
-          behavior: HitTestBehavior.opaque,
-          child: Center(
-              child: Container(
+        onTap: () {
+          raffleIdNotifier.setId(raffle.id);
+          prizeListNotifier.loadPrizeList();
+          ticketListNotifier.loadTicketList();
+          packTicketListNotifier.loadPackTicketList();
+          QR.to(RaffleRouter.root + RaffleRouter.detail);
+        },
+        behavior: HitTestBehavior.opaque,
+        child: Center(
+          child: Container(
             margin: const EdgeInsets.symmetric(vertical: 15),
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
             decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(25)),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
-                    blurRadius: 8,
-                    spreadRadius: 2,
-                    offset: const Offset(2, 3),
-                  ),
-                ]),
+              borderRadius: const BorderRadius.all(Radius.circular(25)),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  blurRadius: 8,
+                  spreadRadius: 2,
+                  offset: const Offset(2, 3),
+                ),
+              ],
+            ),
             child: Column(
               children: [
                 SizedBox(
                   height: 100,
                   child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Image.asset("assets/images/soli.png"),
-                        Expanded(
-                          child: Container(
-                            margin: const EdgeInsets.only(left: 10),
-                            child: AutoSizeText(
-                              raffle.name,
-                              maxLines: 2,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                  color: RaffleColorConstants.textDark,
-                                  fontSize: 30),
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Image.asset("assets/images/soli.png"),
+                      Expanded(
+                        child: Container(
+                          margin: const EdgeInsets.only(left: 10),
+                          child: AutoSizeText(
+                            raffle.name,
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: RaffleColorConstants.textDark,
+                              fontSize: 30,
                             ),
                           ),
                         ),
-                      ]),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 20),
                 AutoLoaderChild(
@@ -98,15 +101,17 @@ class RaffleWidget extends HookConsumerWidget {
                             Text(
                               stat.ticketsSold.toString(),
                               style: const TextStyle(
-                                  color: RaffleColorConstants.textDark,
-                                  fontSize: 30),
+                                color: RaffleColorConstants.textDark,
+                                fontSize: 30,
+                              ),
                             ),
                             const Text(
                               RaffleTextConstants.tickets,
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  color: RaffleColorConstants.textDark,
-                                  fontSize: 20),
+                                color: RaffleColorConstants.textDark,
+                                fontSize: 20,
+                              ),
                             ),
                           ],
                         ),
@@ -116,15 +121,17 @@ class RaffleWidget extends HookConsumerWidget {
                             Text(
                               "${stat.amountRaised.toStringAsFixed(2)} €",
                               style: const TextStyle(
-                                  color: RaffleColorConstants.textDark,
-                                  fontSize: 30),
+                                color: RaffleColorConstants.textDark,
+                                fontSize: 30,
+                              ),
                             ),
                             const Text(
                               RaffleTextConstants.gathered,
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  color: RaffleColorConstants.textDark,
-                                  fontSize: 20),
+                                color: RaffleColorConstants.textDark,
+                                fontSize: 20,
+                              ),
                             ),
                           ],
                         ),
@@ -135,7 +142,9 @@ class RaffleWidget extends HookConsumerWidget {
                 ),
               ],
             ),
-          ))),
+          ),
+        ),
+      ),
     );
   }
 }

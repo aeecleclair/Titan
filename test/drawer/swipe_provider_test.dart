@@ -15,7 +15,9 @@ void main() {
   group('SwipeControllerNotifier', () {
     test('SwipeControllerNotifier can close animation controller', () {
       final controller = AnimationController(
-          vsync: MockTicker(), duration: const Duration(microseconds: 1));
+        vsync: MockTicker(),
+        duration: const Duration(microseconds: 1),
+      );
       final swipeController = SwipeControllerNotifier(controller);
       swipeController.close();
       Future.delayed(const Duration(milliseconds: 1), () {
@@ -25,7 +27,9 @@ void main() {
 
     test('SwipeControllerNotifier can detect drag start from left', () {
       final controller = AnimationController(
-          vsync: MockTicker(), duration: const Duration(seconds: 1));
+        vsync: MockTicker(),
+        duration: const Duration(seconds: 1),
+      );
       final swipeController = SwipeControllerNotifier(controller);
       final startDetails = DragStartDetails(
         globalPosition: const Offset(50, 0),

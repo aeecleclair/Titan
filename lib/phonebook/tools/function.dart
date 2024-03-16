@@ -6,7 +6,10 @@ import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/membership.dart';
 
 int getPosition(
-    CompleteMember member, String associationId, List<String> rolesTags) {
+  CompleteMember member,
+  String associationId,
+  List<String> rolesTags,
+) {
   Membership membership = member.memberships
       .firstWhere((element) => element.associationId == associationId);
   if (membership.rolesTags.isEmpty || membership.rolesTags.first == "") {
@@ -17,15 +20,22 @@ int getPosition(
       .reduce((value, element) => min(value, element));
 }
 
-List<CompleteMember> sortedMembers(List<CompleteMember> members,
-    String associationId, List<String> rolesTags) {
+List<CompleteMember> sortedMembers(
+  List<CompleteMember> members,
+  String associationId,
+  List<String> rolesTags,
+) {
   return members
-    ..sort((a, b) => getPosition(a, associationId, rolesTags)
-        .compareTo(getPosition(b, associationId, rolesTags)));
+    ..sort(
+      (a, b) => getPosition(a, associationId, rolesTags)
+          .compareTo(getPosition(b, associationId, rolesTags)),
+    );
 }
 
 List<Association> sortedAssociationByKind(
-    List<Association> associations, AssociationKinds kinds) {
+  List<Association> associations,
+  AssociationKinds kinds,
+) {
   List<Association> sorted = [];
   List<List<Association>> sortedByKind =
       List.generate(kinds.kinds.length, (index) => []);

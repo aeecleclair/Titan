@@ -4,12 +4,13 @@ import 'package:myecl/user/class/list_users.dart';
 class Member extends SimpleUser {
   late String role;
 
-  Member(
-      {required super.name,
-      required super.firstname,
-      required super.nickname,
-      required super.id,
-      required this.role});
+  Member({
+    required super.name,
+    required super.firstname,
+    required super.nickname,
+    required super.id,
+    required this.role,
+  });
 
   @override
   Member copyWith({

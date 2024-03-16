@@ -1,11 +1,12 @@
 class Membership {
-  Membership(
-      {required this.id,
-      required this.associationId,
-      required this.memberId,
-      required this.rolesTags,
-      required this.apparentName,
-      required this.mandateYear});
+  Membership({
+    required this.id,
+    required this.associationId,
+    required this.memberId,
+    required this.rolesTags,
+    required this.apparentName,
+    required this.mandateYear,
+  });
 
   late final String id;
   late final String associationId;
@@ -30,7 +31,7 @@ class Membership {
       'user_id': memberId,
       'role_tags': rolesTags.join(";"),
       'role_name': apparentName,
-      'mandate_year': mandateYear
+      'mandate_year': mandateYear,
     };
     return data;
   }
@@ -44,12 +45,13 @@ class Membership {
     int? mandateYear,
   }) {
     return Membership(
-        id: id ?? this.id,
-        associationId: associationId ?? this.associationId,
-        memberId: memberId ?? this.memberId,
-        rolesTags: rolesTags ?? this.rolesTags,
-        apparentName: apparentName ?? this.apparentName,
-        mandateYear: mandateYear ?? this.mandateYear);
+      id: id ?? this.id,
+      associationId: associationId ?? this.associationId,
+      memberId: memberId ?? this.memberId,
+      rolesTags: rolesTags ?? this.rolesTags,
+      apparentName: apparentName ?? this.apparentName,
+      mandateYear: mandateYear ?? this.mandateYear,
+    );
   }
 
   Membership.empty() {

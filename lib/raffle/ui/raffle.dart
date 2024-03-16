@@ -17,7 +17,7 @@ class RaffleTemplate extends HookConsumerWidget {
             title: RaffleTextConstants.raffle,
             root: RaffleRouter.root,
           ),
-          Expanded(child: child)
+          Expanded(child: child),
         ],
       ),
     );

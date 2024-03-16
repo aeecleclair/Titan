@@ -73,11 +73,13 @@ class RaffleMainPage extends HookConsumerWidget {
                 value: userTicketList,
                 builder: (context, tickets) {
                   tickets = tickets
-                      .where((t) =>
-                          t.prize != null ||
-                          (rafflesStatus.containsKey(t.packTicket.raffleId) &&
-                              rafflesStatus[t.packTicket.raffleId] !=
-                                  RaffleStatusType.lock))
+                      .where(
+                        (t) =>
+                            t.prize != null ||
+                            (rafflesStatus.containsKey(t.packTicket.raffleId) &&
+                                rafflesStatus[t.packTicket.raffleId] !=
+                                    RaffleStatusType.lock),
+                      )
                       .toList();
                   final ticketSum = <String, List<Ticket>>{};
                   final ticketPrice = <String, double>{};
@@ -107,81 +109,100 @@ class RaffleMainPage extends HookConsumerWidget {
                           height: 135,
                           items: ticketSum.keys.toList(),
                           itemBuilder: (context, key, index) => Container(
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 10),
-                              child: TicketWidget(
-                                ticket: ticketSum[key]!,
-                                price: ticketPrice[key]!,
-                              )));
+                            margin: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 10,
+                            ),
+                            child: TicketWidget(
+                              ticket: ticketSum[key]!,
+                              price: ticketPrice[key]!,
+                            ),
+                          ),
+                        );
                 },
               ),
             ),
             Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: AsyncChild(
-                    value: raffleList,
-                    builder: (context, raffles) {
-                      final incomingRaffles = <Raffle>[];
-                      final pastRaffles = <Raffle>[];
-                      final onGoingRaffles = <Raffle>[];
-                      for (final raffle in raffles) {
-                        switch (raffle.raffleStatusType) {
-                          case RaffleStatusType.creation:
-                            incomingRaffles.add(raffle);
-                            break;
-                          case RaffleStatusType.open:
-                            onGoingRaffles.add(raffle);
-                            break;
-                          case RaffleStatusType.lock:
-                            pastRaffles.add(raffle);
-                            break;
-                        }
-                      }
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (onGoingRaffles.isNotEmpty)
-                            Container(
-                              margin: const EdgeInsets.only(
-                                  bottom: 10, top: 20, left: 5),
-                              child: const SectionTitle(
-                                  text: RaffleTextConstants.actualRaffles),
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: AsyncChild(
+                value: raffleList,
+                builder: (context, raffles) {
+                  final incomingRaffles = <Raffle>[];
+                  final pastRaffles = <Raffle>[];
+                  final onGoingRaffles = <Raffle>[];
+                  for (final raffle in raffles) {
+                    switch (raffle.raffleStatusType) {
+                      case RaffleStatusType.creation:
+                        incomingRaffles.add(raffle);
+                        break;
+                      case RaffleStatusType.open:
+                        onGoingRaffles.add(raffle);
+                        break;
+                      case RaffleStatusType.lock:
+                        pastRaffles.add(raffle);
+                        break;
+                    }
+                  }
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (onGoingRaffles.isNotEmpty)
+                        Container(
+                          margin: const EdgeInsets.only(
+                            bottom: 10,
+                            top: 20,
+                            left: 5,
+                          ),
+                          child: const SectionTitle(
+                            text: RaffleTextConstants.actualRaffles,
+                          ),
+                        ),
+                      ...onGoingRaffles.map((e) => RaffleWidget(raffle: e)),
+                      if (incomingRaffles.isNotEmpty)
+                        Container(
+                          margin: const EdgeInsets.only(
+                            bottom: 10,
+                            top: 20,
+                            left: 5,
+                          ),
+                          child: const SectionTitle(
+                            text: RaffleTextConstants.nextRaffles,
+                          ),
+                        ),
+                      ...incomingRaffles.map((e) => RaffleWidget(raffle: e)),
+                      if (pastRaffles.isNotEmpty)
+                        Container(
+                          margin: const EdgeInsets.only(
+                            bottom: 10,
+                            top: 20,
+                            left: 5,
+                          ),
+                          child: const SectionTitle(
+                            text: RaffleTextConstants.pastRaffles,
+                          ),
+                        ),
+                      ...pastRaffles.map((e) => RaffleWidget(raffle: e)),
+                      if (onGoingRaffles.isEmpty &&
+                          incomingRaffles.isEmpty &&
+                          pastRaffles.isEmpty)
+                        const SizedBox(
+                          height: 100,
+                          child: Center(
+                            child: Text(
+                              RaffleTextConstants.noCurrentRaffle,
+                              style: TextStyle(fontSize: 20),
                             ),
-                          ...onGoingRaffles.map((e) => RaffleWidget(raffle: e)),
-                          if (incomingRaffles.isNotEmpty)
-                            Container(
-                                margin: const EdgeInsets.only(
-                                    bottom: 10, top: 20, left: 5),
-                                child: const SectionTitle(
-                                    text: RaffleTextConstants.nextRaffles)),
-                          ...incomingRaffles
-                              .map((e) => RaffleWidget(raffle: e)),
-                          if (pastRaffles.isNotEmpty)
-                            Container(
-                                margin: const EdgeInsets.only(
-                                    bottom: 10, top: 20, left: 5),
-                                child: const SectionTitle(
-                                    text: RaffleTextConstants.pastRaffles)),
-                          ...pastRaffles.map((e) => RaffleWidget(raffle: e)),
-                          if (onGoingRaffles.isEmpty &&
-                              incomingRaffles.isEmpty &&
-                              pastRaffles.isEmpty)
-                            const SizedBox(
-                              height: 100,
-                              child: Center(
-                                child: Text(
-                                  RaffleTextConstants.noCurrentRaffle,
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                              ),
-                            )
-                        ],
-                      );
-                    },
-                    orElseBuilder: (context, child) => SizedBox(
-                          height: 120,
-                          child: child,
-                        ))),
+                          ),
+                        ),
+                    ],
+                  );
+                },
+                orElseBuilder: (context, child) => SizedBox(
+                  height: 120,
+                  child: child,
+                ),
+              ),
+            ),
           ],
         ),
       ),

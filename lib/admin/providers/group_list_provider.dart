@@ -25,18 +25,20 @@ class GroupListNotifier extends ListNotifier<SimpleGroup> {
 
   Future<bool> updateGroup(SimpleGroup group) async {
     return await update(
-        groupRepository.updateGroup,
-        (groups, group) =>
-            groups..[groups.indexWhere((g) => g.id == group.id)] = group,
-        group);
+      groupRepository.updateGroup,
+      (groups, group) =>
+          groups..[groups.indexWhere((g) => g.id == group.id)] = group,
+      group,
+    );
   }
 
   Future<bool> deleteGroup(SimpleGroup group) async {
     return await delete(
-        groupRepository.deleteGroup,
-        (groups, group) => groups..removeWhere((i) => i.id == group.id),
-        group.id,
-        group);
+      groupRepository.deleteGroup,
+      (groups, group) => groups..removeWhere((i) => i.id == group.id),
+      group.id,
+      group,
+    );
   }
 
   void setGroup(SimpleGroup group) {

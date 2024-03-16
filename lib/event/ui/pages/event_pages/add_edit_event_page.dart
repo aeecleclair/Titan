@@ -48,38 +48,47 @@ class AddEditEventPage extends HookConsumerWidget {
     final isRoom = useState(false);
     final location = useTextEditingController(text: event.location);
 
-    final recurrent = useState(event.recurrenceRule != ""
-        ? event.recurrenceRule.contains("BYDAY")
-        : false);
+    final recurrent = useState(
+      event.recurrenceRule != ""
+          ? event.recurrenceRule.contains("BYDAY")
+          : false,
+    );
     final start = useTextEditingController(
-        text: isEdit
-            ? recurrent.value
-                ? allDay.value
-                    ? ""
-                    : processDateOnlyHour(event.start)
-                : allDay.value
-                    ? processDate(event.start)
-                    : processDateWithHour(event.start)
-            : "");
+      text: isEdit
+          ? recurrent.value
+              ? allDay.value
+                  ? ""
+                  : processDateOnlyHour(event.start)
+              : allDay.value
+                  ? processDate(event.start)
+                  : processDateWithHour(event.start)
+          : "",
+    );
     final end = useTextEditingController(
-        text: isEdit
-            ? recurrent.value
-                ? allDay.value
-                    ? ""
-                    : processDateOnlyHour(event.end)
-                : allDay.value
-                    ? processDate(event.end)
-                    : processDateWithHour(event.end)
-            : "");
+      text: isEdit
+          ? recurrent.value
+              ? allDay.value
+                  ? ""
+                  : processDateOnlyHour(event.end)
+              : allDay.value
+                  ? processDate(event.end)
+                  : processDateWithHour(event.end)
+          : "",
+    );
     final interval = useTextEditingController(
-        text: event.recurrenceRule != ""
-            ? event.recurrenceRule.split(";INTERVAL=")[1].split(";")[0]
-            : "1");
+      text: event.recurrenceRule != ""
+          ? event.recurrenceRule.split(";INTERVAL=")[1].split(";")[0]
+          : "1",
+    );
     final recurrenceEndDate = useTextEditingController(
-        text: event.recurrenceRule != ""
-            ? processDate(DateTime.parse(
-                event.recurrenceRule.split(";UNTIL=")[1].split(";")[0]))
-            : "");
+      text: event.recurrenceRule != ""
+          ? processDate(
+              DateTime.parse(
+                event.recurrenceRule.split(";UNTIL=")[1].split(";")[0],
+              ),
+            )
+          : "",
+    );
     final selectedDays = ref.watch(selectedDaysProvider);
     final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
 
@@ -89,38 +98,43 @@ class AddEditEventPage extends HookConsumerWidget {
 
     return EventTemplate(
       child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Form(
-              key: key,
-              child: Column(children: [
-                const SizedBox(height: 40),
-                AlignLeftText(
-                  isEdit
-                      ? EventTextConstants.editEvent
-                      : EventTextConstants.addEvent,
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  color: Colors.grey,
-                ),
-                const SizedBox(height: 30),
-                HorizontalListView.builder(
-                    key: eventTypeScrollKey,
-                    height: 40,
-                    items: CalendarEventType.values,
-                    itemBuilder: (context, value, index) {
-                      final selected = eventType.value == value;
-                      return ItemChip(
-                          selected: selected,
-                          onTap: () async {
-                            eventType.value = value;
-                          },
-                          child: Text(
-                            calendarEventTypeToString(value),
-                            style: TextStyle(
-                                color: selected ? Colors.white : Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ));
-                    }),
-                Column(children: [
+        physics: const BouncingScrollPhysics(),
+        child: Form(
+          key: key,
+          child: Column(
+            children: [
+              const SizedBox(height: 40),
+              AlignLeftText(
+                isEdit
+                    ? EventTextConstants.editEvent
+                    : EventTextConstants.addEvent,
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                color: Colors.grey,
+              ),
+              const SizedBox(height: 30),
+              HorizontalListView.builder(
+                key: eventTypeScrollKey,
+                height: 40,
+                items: CalendarEventType.values,
+                itemBuilder: (context, value, index) {
+                  final selected = eventType.value == value;
+                  return ItemChip(
+                    selected: selected,
+                    onTap: () async {
+                      eventType.value = value;
+                    },
+                    child: Text(
+                      calendarEventTypeToString(value),
+                      style: TextStyle(
+                        color: selected ? Colors.white : Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              Column(
+                children: [
                   const SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -137,22 +151,24 @@ class AddEditEventPage extends HookConsumerWidget {
                         ),
                         const SizedBox(height: 30),
                         CheckBoxEntry(
-                            title: EventTextConstants.recurrence,
-                            valueNotifier: recurrent,
-                            onChanged: () {
-                              start.text = "";
-                              end.text = "";
-                              recurrenceEndDate.text = "";
-                            }),
+                          title: EventTextConstants.recurrence,
+                          valueNotifier: recurrent,
+                          onChanged: () {
+                            start.text = "";
+                            end.text = "";
+                            recurrenceEndDate.text = "";
+                          },
+                        ),
                         const SizedBox(height: 20),
                         CheckBoxEntry(
-                            title: EventTextConstants.allDay,
-                            valueNotifier: allDay,
-                            onChanged: () {
-                              start.text = "";
-                              end.text = "";
-                              recurrenceEndDate.text = "";
-                            }),
+                          title: EventTextConstants.allDay,
+                          valueNotifier: allDay,
+                          onChanged: () {
+                            start.text = "";
+                            end.text = "";
+                            recurrenceEndDate.text = "";
+                          },
+                        ),
                         const SizedBox(height: 30),
                         recurrent.value
                             ? Column(
@@ -160,61 +176,64 @@ class AddEditEventPage extends HookConsumerWidget {
                                   Column(
                                     children: [
                                       const Text(
-                                          EventTextConstants.recurrenceDays,
-                                          style:
-                                              TextStyle(color: Colors.black)),
+                                        EventTextConstants.recurrenceDays,
+                                        style: TextStyle(color: Colors.black),
+                                      ),
                                       const SizedBox(height: 10),
                                       Column(
-                                          children: EventTextConstants.dayList
-                                              .map((e) => GestureDetector(
-                                                    onTap: () {
-                                                      selectedDaysNotifier
-                                                          .toggle(
-                                                              EventTextConstants
-                                                                  .dayList
-                                                                  .indexOf(e));
-                                                    },
-                                                    behavior:
-                                                        HitTestBehavior.opaque,
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Text(
-                                                          e,
-                                                          style: TextStyle(
-                                                            color: Colors
-                                                                .grey.shade700,
-                                                            fontSize: 16,
-                                                          ),
-                                                        ),
-                                                        Checkbox(
-                                                          checkColor:
-                                                              Colors.white,
-                                                          activeColor:
-                                                              Colors.black,
-                                                          value: selectedDays[
-                                                              EventTextConstants
-                                                                  .dayList
-                                                                  .indexOf(e)],
-                                                          onChanged: (value) {
-                                                            selectedDaysNotifier
-                                                                .toggle(
-                                                                    EventTextConstants
-                                                                        .dayList
-                                                                        .indexOf(
-                                                                            e));
-                                                          },
-                                                        ),
-                                                      ],
+                                        children: EventTextConstants.dayList
+                                            .map(
+                                              (e) => GestureDetector(
+                                                onTap: () {
+                                                  selectedDaysNotifier.toggle(
+                                                    EventTextConstants.dayList
+                                                        .indexOf(e),
+                                                  );
+                                                },
+                                                behavior:
+                                                    HitTestBehavior.opaque,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      e,
+                                                      style: TextStyle(
+                                                        color: Colors
+                                                            .grey.shade700,
+                                                        fontSize: 16,
+                                                      ),
                                                     ),
-                                                  ))
-                                              .toList()),
+                                                    Checkbox(
+                                                      checkColor: Colors.white,
+                                                      activeColor: Colors.black,
+                                                      value: selectedDays[
+                                                          EventTextConstants
+                                                              .dayList
+                                                              .indexOf(e)],
+                                                      onChanged: (value) {
+                                                        selectedDaysNotifier
+                                                            .toggle(
+                                                          EventTextConstants
+                                                              .dayList
+                                                              .indexOf(
+                                                            e,
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            )
+                                            .toList(),
+                                      ),
                                       const SizedBox(height: 20),
-                                      const Text(EventTextConstants.interval,
-                                          style:
-                                              TextStyle(color: Colors.black)),
+                                      const Text(
+                                        EventTextConstants.interval,
+                                        style: TextStyle(color: Colors.black),
+                                      ),
                                       const SizedBox(height: 10),
                                       TextEntry(
                                         label: EventTextConstants.interval,
@@ -229,27 +248,35 @@ class AddEditEventPage extends HookConsumerWidget {
                                         Column(
                                           children: [
                                             DateEntry(
-                                                onTap: () => getOnlyHourDate(
-                                                    context, start),
-                                                controller: start,
-                                                label: EventTextConstants
-                                                    .startHour),
+                                              onTap: () => getOnlyHourDate(
+                                                context,
+                                                start,
+                                              ),
+                                              controller: start,
+                                              label:
+                                                  EventTextConstants.startHour,
+                                            ),
                                             const SizedBox(height: 30),
                                             DateEntry(
-                                                onTap: () => getOnlyHourDate(
-                                                    context, end),
-                                                controller: end,
-                                                label:
-                                                    EventTextConstants.endHour),
+                                              onTap: () => getOnlyHourDate(
+                                                context,
+                                                end,
+                                              ),
+                                              controller: end,
+                                              label: EventTextConstants.endHour,
+                                            ),
                                             const SizedBox(height: 30),
                                           ],
                                         ),
                                       DateEntry(
-                                          onTap: () => getOnlyDayDate(
-                                              context, recurrenceEndDate),
-                                          controller: recurrenceEndDate,
-                                          label: EventTextConstants
-                                              .recurrenceEndDate),
+                                        onTap: () => getOnlyDayDate(
+                                          context,
+                                          recurrenceEndDate,
+                                        ),
+                                        controller: recurrenceEndDate,
+                                        label: EventTextConstants
+                                            .recurrenceEndDate,
+                                      ),
                                     ],
                                   ),
                                 ],
@@ -257,18 +284,20 @@ class AddEditEventPage extends HookConsumerWidget {
                             : Column(
                                 children: [
                                   DateEntry(
-                                      onTap: () => allDay.value
-                                          ? getOnlyDayDate(context, start)
-                                          : getFullDate(context, start),
-                                      controller: start,
-                                      label: EventTextConstants.startDate),
+                                    onTap: () => allDay.value
+                                        ? getOnlyDayDate(context, start)
+                                        : getFullDate(context, start),
+                                    controller: start,
+                                    label: EventTextConstants.startDate,
+                                  ),
                                   const SizedBox(height: 30),
                                   DateEntry(
-                                      onTap: () => allDay.value
-                                          ? getOnlyDayDate(context, end)
-                                          : getFullDate(context, end),
-                                      controller: end,
-                                      label: EventTextConstants.endDate),
+                                    onTap: () => allDay.value
+                                        ? getOnlyDayDate(context, end)
+                                        : getFullDate(context, end),
+                                    controller: end,
+                                    label: EventTextConstants.endDate,
+                                  ),
                                 ],
                               ),
                       ],
@@ -276,33 +305,36 @@ class AddEditEventPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 30),
                   Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ItemChip(
-                            onTap: () {
-                              isRoom.value = true;
-                            },
-                            selected: isRoom.value,
-                            child: Text(EventTextConstants.room,
-                                style: TextStyle(
-                                  color: isRoom.value
-                                      ? Colors.white
-                                      : Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ))),
-                        ItemChip(
-                          onTap: () {
-                            isRoom.value = false;
-                          },
-                          selected: !isRoom.value,
-                          child: Text(EventTextConstants.other,
-                              style: TextStyle(
-                                color:
-                                    isRoom.value ? Colors.black : Colors.white,
-                                fontWeight: FontWeight.bold,
-                              )),
-                        )
-                      ]),
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ItemChip(
+                        onTap: () {
+                          isRoom.value = true;
+                        },
+                        selected: isRoom.value,
+                        child: Text(
+                          EventTextConstants.room,
+                          style: TextStyle(
+                            color: isRoom.value ? Colors.white : Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      ItemChip(
+                        onTap: () {
+                          isRoom.value = false;
+                        },
+                        selected: !isRoom.value,
+                        child: Text(
+                          EventTextConstants.other,
+                          style: TextStyle(
+                            color: isRoom.value ? Colors.black : Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   const SizedBox(height: 20),
                   isRoom.value
                       ? SizedBox(
@@ -311,28 +343,31 @@ class AddEditEventPage extends HookConsumerWidget {
                             value: rooms,
                             builder: (context, rooms) =>
                                 HorizontalListView.builder(
-                                    key: eventRoomScrollKey,
-                                    height: 40,
-                                    items: rooms,
-                                    itemBuilder: (context, room, index) {
-                                      final selected =
-                                          room.name == event.location;
-                                      return ItemChip(
-                                        onTap: () {
-                                          eventNotifier.setRoom(room.name);
-                                          location.text = room.name;
-                                        },
-                                        selected: selected,
-                                        child: Text(room.name,
-                                            style: TextStyle(
-                                              color: selected
-                                                  ? Colors.white
-                                                  : Colors.black,
-                                              fontWeight: FontWeight.bold,
-                                            )),
-                                      );
-                                    }),
-                          ))
+                              key: eventRoomScrollKey,
+                              height: 40,
+                              items: rooms,
+                              itemBuilder: (context, room, index) {
+                                final selected = room.name == event.location;
+                                return ItemChip(
+                                  onTap: () {
+                                    eventNotifier.setRoom(room.name);
+                                    location.text = room.name;
+                                  },
+                                  selected: selected,
+                                  child: Text(
+                                    room.name,
+                                    style: TextStyle(
+                                      color: selected
+                                          ? Colors.white
+                                          : Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        )
                       : Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 30),
                           child: TextEntry(
@@ -364,16 +399,24 @@ class AddEditEventPage extends HookConsumerWidget {
                                     "${!recurrent.value ? "${end.text} " : ""}23:59";
                               }
                               if (end.text.contains("/") &&
-                                  isDateBefore(processDateBack(end.text),
-                                      processDateBack(start.text))) {
-                                displayToast(context, TypeMsg.error,
-                                    EventTextConstants.invalidDates);
+                                  isDateBefore(
+                                    processDateBack(end.text),
+                                    processDateBack(start.text),
+                                  )) {
+                                displayToast(
+                                  context,
+                                  TypeMsg.error,
+                                  EventTextConstants.invalidDates,
+                                );
                               } else if (recurrent.value &&
                                   selectedDays
                                       .where((element) => element)
                                       .isEmpty) {
-                                displayToast(context, TypeMsg.error,
-                                    EventTextConstants.noDaySelected);
+                                displayToast(
+                                  context,
+                                  TypeMsg.error,
+                                  EventTextConstants.noDaySelected,
+                                );
                               } else {
                                 await tokenExpireWrapper(ref, () async {
                                   String recurrenceRule = "";
@@ -395,39 +438,54 @@ class AddEditEventPage extends HookConsumerWidget {
                                     recurrence.recurrenceRange =
                                         RecurrenceRange.endDate;
                                     recurrence.endDate = DateTime.parse(
-                                        processDateBack(
-                                            recurrenceEndDate.text));
+                                      processDateBack(
+                                        recurrenceEndDate.text,
+                                      ),
+                                    );
                                     recurrence.weekDays = WeekDays.values
-                                        .where((element) => selectedDays[
-                                            (WeekDays.values.indexOf(element) -
-                                                    1) %
-                                                7])
+                                        .where(
+                                          (element) => selectedDays[(WeekDays
+                                                      .values
+                                                      .indexOf(element) -
+                                                  1) %
+                                              7],
+                                        )
                                         .toList();
                                     recurrence.interval =
                                         int.parse(interval.text);
                                     recurrenceRule = SfCalendar.generateRRule(
-                                        recurrence,
-                                        DateTime.parse(processDateBackWithHour(
-                                            startString)),
-                                        DateTime.parse(processDateBackWithHour(
-                                            endString)));
+                                      recurrence,
+                                      DateTime.parse(
+                                        processDateBackWithHour(
+                                          startString,
+                                        ),
+                                      ),
+                                      DateTime.parse(
+                                        processDateBackWithHour(
+                                          endString,
+                                        ),
+                                      ),
+                                    );
                                   }
                                   Event newEvent = Event(
-                                      id: isEdit ? event.id : "",
-                                      description: description.text,
-                                      end: DateTime.parse(
-                                          processDateBack(endString)),
-                                      name: name.text,
-                                      organizer: organizer.text,
-                                      allDay: allDay.value,
-                                      location: location.text,
-                                      start: DateTime.parse(
-                                          processDateBack(startString)),
-                                      type: eventType.value,
-                                      recurrenceRule: recurrenceRule,
-                                      applicantId: user.id,
-                                      applicant: user.toApplicant(),
-                                      decision: Decision.pending);
+                                    id: isEdit ? event.id : "",
+                                    description: description.text,
+                                    end: DateTime.parse(
+                                      processDateBack(endString),
+                                    ),
+                                    name: name.text,
+                                    organizer: organizer.text,
+                                    allDay: allDay.value,
+                                    location: location.text,
+                                    start: DateTime.parse(
+                                      processDateBack(startString),
+                                    ),
+                                    type: eventType.value,
+                                    recurrenceRule: recurrenceRule,
+                                    applicantId: user.id,
+                                    applicant: user.toApplicant(),
+                                    decision: Decision.pending,
+                                  );
                                   final value = isEdit
                                       ? await eventListNotifier
                                           .updateEvent(newEvent)
@@ -436,19 +494,27 @@ class AddEditEventPage extends HookConsumerWidget {
                                   if (value) {
                                     QR.back();
                                     if (isEdit) {
-                                      displayToastWithContext(TypeMsg.msg,
-                                          EventTextConstants.editedEvent);
+                                      displayToastWithContext(
+                                        TypeMsg.msg,
+                                        EventTextConstants.editedEvent,
+                                      );
                                     } else {
-                                      displayToastWithContext(TypeMsg.msg,
-                                          EventTextConstants.addedEvent);
+                                      displayToastWithContext(
+                                        TypeMsg.msg,
+                                        EventTextConstants.addedEvent,
+                                      );
                                     }
                                   } else {
                                     if (isEdit) {
-                                      displayToastWithContext(TypeMsg.error,
-                                          EventTextConstants.editingError);
+                                      displayToastWithContext(
+                                        TypeMsg.error,
+                                        EventTextConstants.editingError,
+                                      );
                                     } else {
-                                      displayToastWithContext(TypeMsg.error,
-                                          EventTextConstants.addingError);
+                                      displayToastWithContext(
+                                        TypeMsg.error,
+                                        EventTextConstants.addingError,
+                                      );
                                     }
                                   }
                                 });
@@ -456,20 +522,26 @@ class AddEditEventPage extends HookConsumerWidget {
                             }
                           },
                           child: Text(
-                              isEdit
-                                  ? EventTextConstants.edit
-                                  : EventTextConstants.add,
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold)),
+                            isEdit
+                                ? EventTextConstants.edit
+                                : EventTextConstants.add,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ],
                     ),
                   ),
                   const SizedBox(height: 30),
-                ]),
-              ]))),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

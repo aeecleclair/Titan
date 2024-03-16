@@ -18,62 +18,79 @@ class LogPage extends HookConsumerWidget {
     final logsNotifier = ref.watch(logsProvider.notifier);
     return SettingsTemplate(
       child: Refresher(
-          onRefresh: () async {
-            await logsNotifier.getLogs();
-          },
-          child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Column(children: [
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(SettingsTextConstants.logs,
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey)),
-                    GestureDetector(
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: ((context) => CustomDialogBox(
-                                title: SettingsTextConstants.deleting,
-                                descriptions: SettingsTextConstants.deleteLogs,
-                                onYes: (() async {
-                                  logsNotifier.deleteLogs();
-                                }))));
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 12),
-                        decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  blurRadius: 10,
-                                  offset: const Offset(0, 5))
-                            ]),
-                        child: const Row(
-                          children: [
-                            HeroIcon(HeroIcons.trash,
-                                color: Colors.white, size: 20),
-                          ],
-                        ),
+        onRefresh: () async {
+          await logsNotifier.getLogs();
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    SettingsTextConstants.logs,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: ((context) => CustomDialogBox(
+                              title: SettingsTextConstants.deleting,
+                              descriptions: SettingsTextConstants.deleteLogs,
+                              onYes: (() async {
+                                logsNotifier.deleteLogs();
+                              }),
+                            )),
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 12,
                       ),
-                    )
-                  ],
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            blurRadius: 10,
+                            offset: const Offset(0, 5),
+                          ),
+                        ],
+                      ),
+                      child: const Row(
+                        children: [
+                          HeroIcon(
+                            HeroIcons.trash,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              AsyncChild(
+                value: logs,
+                builder: (context, data) => Column(
+                  children: data.map((e) => LogCard(log: e)).toList(),
                 ),
-                const SizedBox(height: 20),
-                AsyncChild(
-                  value: logs,
-                  builder: (context, data) => Column(
-                      children: data.map((e) => LogCard(log: e)).toList()),
-                ),
-                const SizedBox(height: 20),
-              ]))),
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

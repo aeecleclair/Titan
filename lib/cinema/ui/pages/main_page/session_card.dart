@@ -15,8 +15,12 @@ class SessionCard extends HookConsumerWidget {
   final Session session;
   final int index;
   final VoidCallback? onTap;
-  const SessionCard(
-      {super.key, required this.session, required this.index, this.onTap});
+  const SessionCard({
+    super.key,
+    required this.session,
+    required this.index,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,7 +33,9 @@ class SessionCard extends HookConsumerWidget {
     final isWebFormat = ref.watch(isWebFormatProvider);
     final cinemaTopics = ref.watch(cinemaTopicsProvider);
     final selected = cinemaTopics.maybeWhen(
-        data: (data) => data.contains(session.id), orElse: () => false);
+      data: (data) => data.contains(session.id),
+      orElse: () => false,
+    );
 
     double minScale = 0.8;
     double scale = 1;
@@ -106,122 +112,135 @@ class SessionCard extends HookConsumerWidget {
                 ],
               ),
               child: AutoLoaderChild(
-                  group: sessionPoster,
-                  notifier: sessionPosterMapNotifier,
-                  mapKey: session.id,
-                  loader: (sessionId) =>
-                      sessionPosterNotifier.getLogo(sessionId),
-                  dataBuilder: (context, data) {
-                    return isWebFormat
-                        ? Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(30),
-                                  child: AspectRatio(
-                                    aspectRatio: 2 / 3,
-                                    child: Image(
-                                      image: data.first.image,
-                                      fit: BoxFit.cover, // use this
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 50),
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      Text(session.name,
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          )),
-                                      const SizedBox(height: 10),
-                                      Text(formatDate(session.start),
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                          )),
-                                      const SizedBox(height: 10),
-                                      Text(formatDuration(session.duration),
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                          )),
-                                      const SizedBox(height: 10),
-                                      Text(
-                                          session.overview ??
-                                              CinemaTextConstants.noOverview,
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                          )),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(width: 50),
-                              ],
-                            ),
-                          )
-                        : Stack(
+                group: sessionPoster,
+                notifier: sessionPosterMapNotifier,
+                mapKey: session.id,
+                loader: (sessionId) => sessionPosterNotifier.getLogo(sessionId),
+                dataBuilder: (context, data) {
+                  return isWebFormat
+                      ? Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    image: DecorationImage(
-                                        image: data.first.image,
-                                        fit: BoxFit.cover),
-                                    border: (selected &&
-                                            session.start
-                                                .isAfter(DateTime.now()))
-                                        ? Border.all(
-                                            color: Colors.black, width: 3)
-                                        : null),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(30),
+                                child: AspectRatio(
+                                  aspectRatio: 2 / 3,
+                                  child: Image(
+                                    image: data.first.image,
+                                    fit: BoxFit.cover, // use this
+                                  ),
+                                ),
                               ),
-                              if (selected &&
-                                  session.start.isAfter(DateTime.now()))
-                                Positioned(
-                                  top: 0,
-                                  right: 0,
-                                  child: Container(
-                                    width: 80,
-                                    height: 60,
-                                    decoration: const BoxDecoration(
-                                        color: Colors.black,
-                                        borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(30),
-                                          bottomLeft: Radius.circular(30),
-                                        )),
-                                    child: const Center(
-                                      child: HeroIcon(
-                                        HeroIcons.bell,
-                                        size: 30,
-                                        color: Colors.red,
+                              const SizedBox(width: 50),
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      session.name,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      formatDate(session.start),
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      formatDuration(session.duration),
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      session.overview ??
+                                          CinemaTextConstants.noOverview,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 50),
+                            ],
+                          ),
+                        )
+                      : Stack(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                image: DecorationImage(
+                                  image: data.first.image,
+                                  fit: BoxFit.cover,
+                                ),
+                                border: (selected &&
+                                        session.start.isAfter(DateTime.now()))
+                                    ? Border.all(
+                                        color: Colors.black,
+                                        width: 3,
+                                      )
+                                    : null,
+                              ),
+                            ),
+                            if (selected &&
+                                session.start.isAfter(DateTime.now()))
+                              Positioned(
+                                top: 0,
+                                right: 0,
+                                child: Container(
+                                  width: 80,
+                                  height: 60,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(30),
+                                      bottomLeft: Radius.circular(30),
+                                    ),
+                                  ),
+                                  child: const Center(
+                                    child: HeroIcon(
+                                      HeroIcons.bell,
+                                      size: 30,
+                                      color: Colors.red,
+                                    ),
                                   ),
                                 ),
-                            ],
-                          );
-                  },
-                  errorBuilder: (error, stack) => const Center(
-                        child: HeroIcon(HeroIcons.exclamationCircle),
-                      )),
+                              ),
+                          ],
+                        );
+                },
+                errorBuilder: (error, stack) => const Center(
+                  child: HeroIcon(HeroIcons.exclamationCircle),
+                ),
+              ),
             ),
             const SizedBox(height: 15),
             if (!isWebFormat)
               Column(
                 children: [
-                  Text(session.name,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      )),
+                  Text(
+                    session.name,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -231,8 +250,10 @@ class SessionCard extends HookConsumerWidget {
                         size: 20,
                       ),
                       const SizedBox(width: 7),
-                      Text(formatDate(session.start),
-                          style: const TextStyle(fontSize: 16)),
+                      Text(
+                        formatDate(session.start),
+                        style: const TextStyle(fontSize: 16),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 5),
@@ -244,8 +265,10 @@ class SessionCard extends HookConsumerWidget {
                         size: 20,
                       ),
                       const SizedBox(width: 7),
-                      Text(formatDuration(session.duration),
-                          style: const TextStyle(fontSize: 16)),
+                      Text(
+                        formatDuration(session.duration),
+                        style: const TextStyle(fontSize: 16),
+                      ),
                     ],
                   ),
                 ],

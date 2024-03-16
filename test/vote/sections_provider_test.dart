@@ -25,12 +25,13 @@ void main() {
       final result = await sectionNotifier.loadSectionList();
 
       expect(
-          result.when(
-            data: (data) => data,
-            loading: () => [],
-            error: (_, __) => [],
-          ),
-          sections);
+        result.when(
+          data: (data) => data,
+          loading: () => [],
+          error: (_, __) => [],
+        ),
+        sections,
+      );
     });
 
     test('addSection should return true', () async {

@@ -26,7 +26,7 @@ class AdvertTemplate extends HookConsumerWidget {
                 },
               ),
               const SizedBox(height: 30),
-              Expanded(child: child)
+              Expanded(child: child),
             ],
           ),
         ),

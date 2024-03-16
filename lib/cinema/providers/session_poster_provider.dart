@@ -9,9 +9,10 @@ import 'package:myecl/tools/providers/single_notifier.dart';
 class SessionPosterProvider extends SingleNotifier<Image> {
   final SessionPosterRepository repository;
   final SessionLogoNotifier sessionLogoNotifier;
-  SessionPosterProvider(
-      {required this.repository, required this.sessionLogoNotifier})
-      : super(const AsyncValue.loading());
+  SessionPosterProvider({
+    required this.repository,
+    required this.sessionLogoNotifier,
+  }) : super(const AsyncValue.loading());
 
   Future<Image> getLogo(String id) async {
     final image = await repository.getSessionLogo(id);
@@ -31,5 +32,7 @@ final sessionPosterProvider =
   final sessionPoster = ref.watch(sessionPosterRepository);
   final sessionPosterMapNotifier = ref.watch(sessionPosterMapProvider.notifier);
   return SessionPosterProvider(
-      repository: sessionPoster, sessionLogoNotifier: sessionPosterMapNotifier);
+    repository: sessionPoster,
+    sessionLogoNotifier: sessionPosterMapNotifier,
+  );
 });

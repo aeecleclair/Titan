@@ -14,11 +14,12 @@ class Sphere {
 
   static Sphere generateNextSphere(double width, double height) {
     Sphere newSphere = Sphere(
-        Random().nextDouble() * width,
-        height + 20,
-        7 + Random().nextDouble() * 10,
-        1 + Random().nextDouble() * 2,
-        -5 * pi / 8 + Random().nextDouble() * pi / 4);
+      Random().nextDouble() * width,
+      height + 20,
+      7 + Random().nextDouble() * 10,
+      1 + Random().nextDouble() * 2,
+      -5 * pi / 8 + Random().nextDouble() * pi / 4,
+    );
     int green = Random().nextInt(100) + 100;
     int red = 60 + Random().nextInt(green - 99);
     newSphere.paint.color = Color.fromARGB(
@@ -62,7 +63,10 @@ class AmapBackgroundPainter extends CustomPainter {
         i++;
         sphere.move();
         canvas.drawCircle(
-            Offset(sphere.x, sphere.y), sphere.radius, sphere.paint);
+          Offset(sphere.x, sphere.y),
+          sphere.radius,
+          sphere.paint,
+        );
       }
     }
   }

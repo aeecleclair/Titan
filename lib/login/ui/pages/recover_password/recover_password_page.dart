@@ -78,16 +78,22 @@ class RecoverPasswordPage extends HookConsumerWidget {
             final value = await signUpNotifier.resetPassword(recoverRequest);
             if (value) {
               displayToastWithContext(
-                  TypeMsg.msg, LoginTextConstants.resetedPassword);
+                TypeMsg.msg,
+                LoginTextConstants.resetedPassword,
+              );
               authTokenNotifier.deleteToken();
               QR.to(LoginRouter.root);
             } else {
               displayToastWithContext(
-                  TypeMsg.error, LoginTextConstants.invalidToken);
+                TypeMsg.error,
+                LoginTextConstants.invalidToken,
+              );
             }
           } else {
             displayToastWithContext(
-                TypeMsg.error, LoginTextConstants.fillAllFields);
+              TypeMsg.error,
+              LoginTextConstants.fillAllFields,
+            );
           }
         },
       ),
@@ -125,11 +131,12 @@ class RecoverPasswordPage extends HookConsumerWidget {
                 child: Text(
                   LoginTextConstants.resetPasswordTitle,
                   style: GoogleFonts.elMessiri(
-                      textStyle: const TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  )),
+                    textStyle: const TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -139,16 +146,18 @@ class RecoverPasswordPage extends HookConsumerWidget {
                 children: [
                   const Spacer(),
                   Expanded(
-                      flex: 4,
-                      child: PageView(
-                          scrollDirection: Axis.horizontal,
-                          controller: pageController,
-                          onPageChanged: (index) {
-                            lastIndex.value = currentPage.value;
-                            currentPage.value = index;
-                          },
-                          physics: const BouncingScrollPhysics(),
-                          children: steps)),
+                    flex: 4,
+                    child: PageView(
+                      scrollDirection: Axis.horizontal,
+                      controller: pageController,
+                      onPageChanged: (index) {
+                        lastIndex.value = currentPage.value;
+                        currentPage.value = index;
+                      },
+                      physics: const BouncingScrollPhysics(),
+                      children: steps,
+                    ),
+                  ),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -161,14 +170,16 @@ class RecoverPasswordPage extends HookConsumerWidget {
                                 currentPage.value--;
                                 lastIndex.value = currentPage.value;
                                 pageController.previousPage(
-                                    duration: const Duration(milliseconds: 500),
-                                    curve: Curves.decelerate);
+                                  duration: const Duration(milliseconds: 500),
+                                  curve: Curves.decelerate,
+                                );
                               }),
                               child: const HeroIcon(
                                 HeroIcons.arrowLeft,
                                 color: Colors.white,
                                 size: 30,
-                              ))
+                              ),
+                            )
                           : Container(),
                       currentPage.value != len - 1
                           ? GestureDetector(
@@ -180,9 +191,9 @@ class RecoverPasswordPage extends HookConsumerWidget {
                                   FocusScope.of(context)
                                       .requestFocus(FocusNode());
                                   pageController.nextPage(
-                                      duration:
-                                          const Duration(milliseconds: 500),
-                                      curve: Curves.decelerate);
+                                    duration: const Duration(milliseconds: 500),
+                                    curve: Curves.decelerate,
+                                  );
                                   currentPage.value++;
                                   lastIndex.value = currentPage.value;
                                 }
@@ -191,7 +202,8 @@ class RecoverPasswordPage extends HookConsumerWidget {
                                 HeroIcons.arrowRight,
                                 color: Colors.white,
                                 size: 30,
-                              ))
+                              ),
+                            )
                           : Container(),
                     ],
                   ),
@@ -200,10 +212,11 @@ class RecoverPasswordPage extends HookConsumerWidget {
                     controller: pageController,
                     count: len,
                     effect: const WormEffect(
-                        dotColor: ColorConstants.background2,
-                        activeDotColor: Colors.white,
-                        dotWidth: 12,
-                        dotHeight: 12),
+                      dotColor: ColorConstants.background2,
+                      activeDotColor: Colors.white,
+                      dotWidth: 12,
+                      dotHeight: 12,
+                    ),
                     onDotClicked: (index) {
                       if (index < lastIndex.value ||
                           index == steps.length - 1 ||
@@ -211,9 +224,11 @@ class RecoverPasswordPage extends HookConsumerWidget {
                         FocusScope.of(context).requestFocus(FocusNode());
                         currentPage.value = index;
                         lastIndex.value = index;
-                        pageController.animateToPage(index,
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.decelerate);
+                        pageController.animateToPage(
+                          index,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.decelerate,
+                        );
                       }
                     },
                   ),

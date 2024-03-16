@@ -5,11 +5,12 @@ class VoterChip extends StatelessWidget {
   final bool selected;
   final String label;
   final Function() onTap;
-  const VoterChip(
-      {super.key,
-      required this.label,
-      required this.selected,
-      required this.onTap});
+  const VoterChip({
+    super.key,
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +22,9 @@ class VoterChip extends StatelessWidget {
         child: Text(
           label,
           style: TextStyle(
-              color: selected ? Colors.white : Colors.black,
-              fontWeight: FontWeight.bold),
+            color: selected ? Colors.white : Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );

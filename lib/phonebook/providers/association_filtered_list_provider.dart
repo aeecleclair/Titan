@@ -13,21 +13,23 @@ final associationFilteredListProvider = Provider<List<Association>>((ref) {
   final kindFilter = ref.watch(associationKindProvider);
   final searchFilter = ref.watch(filterProvider);
   return associationsProvider.maybeWhen(
-      data: (associations) {
-        List<Association> filteredAssociations = associations
-            .where((association) =>
-                removeDiacritics(association.name.toLowerCase())
-                    .contains(removeDiacritics(searchFilter.toLowerCase())))
+    data: (associations) {
+      List<Association> filteredAssociations = associations
+          .where(
+            (association) => removeDiacritics(association.name.toLowerCase())
+                .contains(removeDiacritics(searchFilter.toLowerCase())),
+          )
+          .toList();
+      if (kindFilter != "") {
+        filteredAssociations = filteredAssociations
+            .where((association) => association.kind == kindFilter)
             .toList();
-        if (kindFilter != "") {
-          filteredAssociations = filteredAssociations
-              .where((association) => association.kind == kindFilter)
-              .toList();
-        }
-        return associationKinds.maybeWhen(
-            data: (kinds) =>
-                sortedAssociationByKind(filteredAssociations, kinds),
-            orElse: () => filteredAssociations);
-      },
-      orElse: () => []);
+      }
+      return associationKinds.maybeWhen(
+        data: (kinds) => sortedAssociationByKind(filteredAssociations, kinds),
+        orElse: () => filteredAssociations,
+      );
+    },
+    orElse: () => [],
+  );
 });

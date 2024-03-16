@@ -17,7 +17,7 @@ class BookingTemplate extends StatelessWidget {
             title: BookingTextConstants.booking,
             root: BookingRouter.root,
           ),
-          Expanded(child: child)
+          Expanded(child: child),
         ],
       ),
     );

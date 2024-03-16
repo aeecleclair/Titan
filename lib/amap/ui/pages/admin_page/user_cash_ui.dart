@@ -68,50 +68,59 @@ class UserCashUi extends HookConsumerWidget {
             child: isFrontImage(angle.abs())
                 ? UserCashUiLayout(
                     child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 8),
-                      AutoSizeText(cash.user.nickname ?? cash.user.firstname,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 8),
+                        AutoSizeText(
+                          cash.user.nickname ?? cash.user.firstname,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: AMAPColorConstants.green3)),
-                      const SizedBox(height: 5),
-                      AutoSizeText(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: AMAPColorConstants.green3,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        AutoSizeText(
                           cash.user.nickname != null
                               ? '${cash.user.firstname} ${cash.user.name}'
                               : cash.user.name,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
-                              color: AMAPColorConstants.textDark)),
-                      const SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          AutoSizeText('${cash.balance.toStringAsFixed(2)} €',
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                            color: AMAPColorConstants.textDark,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            AutoSizeText(
+                              '${cash.balance.toStringAsFixed(2)} €',
                               maxLines: 1,
                               minFontSize: 10,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: AMAPColorConstants.green3)),
-                          const HeroIcon(
-                            HeroIcons.plus,
-                            color: AMAPColorConstants.green3,
-                            size: 20,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                    ],
-                  ))
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: AMAPColorConstants.green3,
+                              ),
+                            ),
+                            const HeroIcon(
+                              HeroIcons.plus,
+                              color: AMAPColorConstants.green3,
+                              size: 20,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                      ],
+                    ),
+                  )
                 : Transform(
                     transform: Matrix4.identity()..rotateX(pi),
                     alignment: Alignment.center,
@@ -145,20 +154,26 @@ class UserCashUi extends HookConsumerWidget {
                                     await ref
                                         .read(cashListProvider.notifier)
                                         .updateCash(
-                                            cash.copyWith(
-                                              balance: double.parse(amount.text
-                                                  .replaceAll(',', '.')),
+                                          cash.copyWith(
+                                            balance: double.parse(
+                                              amount.text.replaceAll(',', '.'),
                                             ),
-                                            cash.balance)
+                                          ),
+                                          cash.balance,
+                                        )
                                         .then((value) {
                                       if (value) {
                                         key.currentState!.reset();
                                         toggle();
-                                        displayVoteWithContext(TypeMsg.msg,
-                                            AMAPTextConstants.updatedAmount);
+                                        displayVoteWithContext(
+                                          TypeMsg.msg,
+                                          AMAPTextConstants.updatedAmount,
+                                        );
                                       } else {
-                                        displayVoteWithContext(TypeMsg.error,
-                                            AMAPTextConstants.updatingError);
+                                        displayVoteWithContext(
+                                          TypeMsg.error,
+                                          AMAPTextConstants.updatingError,
+                                        );
                                       }
                                     });
                                   });

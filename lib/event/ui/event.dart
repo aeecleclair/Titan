@@ -17,7 +17,7 @@ class EventTemplate extends StatelessWidget {
             title: EventTextConstants.title,
             root: EventRouter.root,
           ),
-          Expanded(child: child)
+          Expanded(child: child),
         ],
       ),
     );

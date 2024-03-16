@@ -11,18 +11,22 @@ class RaffleDetailRepository extends Repository {
 
   Future<List<PackTicket>> getPackTicketListFromRaffle(String raffleId) async {
     return List<PackTicket>.from(
-        (await getList(suffix: "$raffleId/type_tickets"))
-            .map((x) => PackTicket.fromJson(x)));
+      (await getList(suffix: "$raffleId/type_tickets"))
+          .map((x) => PackTicket.fromJson(x)),
+    );
   }
 
   Future<List<Ticket>> getTicketListFromRaffle(String raffleId) async {
-    return List<Ticket>.from((await getList(suffix: "$raffleId/tickets"))
-        .map((x) => Ticket.fromJson(x)));
+    return List<Ticket>.from(
+      (await getList(suffix: "$raffleId/tickets"))
+          .map((x) => Ticket.fromJson(x)),
+    );
   }
 
   Future<List<Prize>> getLotListFromRaffle(String raffleId) async {
-    return List<Prize>.from((await getList(suffix: "$raffleId/lots"))
-        .map((x) => Prize.fromJson(x)));
+    return List<Prize>.from(
+      (await getList(suffix: "$raffleId/lots")).map((x) => Prize.fromJson(x)),
+    );
   }
 
   Future<RaffleStats> getRaffleStats(String raffleId) async {

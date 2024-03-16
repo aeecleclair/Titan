@@ -19,26 +19,29 @@ class EventListNotifier extends ListNotifier<Event> {
 
   Future<bool> updateEvent(Event event) async {
     return await update(
-        eventRepository.updateEvent,
-        (events, event) =>
-            events..[events.indexWhere((e) => e.id == event.id)] = event,
-        event);
+      eventRepository.updateEvent,
+      (events, event) =>
+          events..[events.indexWhere((e) => e.id == event.id)] = event,
+      event,
+    );
   }
 
   Future<bool> deleteEvent(Event event) async {
     return await delete(
-        eventRepository.deleteEvent,
-        (events, event) => events..removeWhere((e) => e.id == event.id),
-        event.id,
-        event);
+      eventRepository.deleteEvent,
+      (events, event) => events..removeWhere((e) => e.id == event.id),
+      event.id,
+      event,
+    );
   }
 
   Future<bool> toggleConfirmed(Event event) async {
     return await update(
-        (event) => eventRepository.confirmEvent(event),
-        (events, event) =>
-            events..[events.indexWhere((b) => b.id == event.id)] = event,
-        event);
+      (event) => eventRepository.confirmEvent(event),
+      (events, event) =>
+          events..[events.indexWhere((b) => b.id == event.id)] = event,
+      event,
+    );
   }
 }
 

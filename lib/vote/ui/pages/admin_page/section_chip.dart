@@ -4,13 +4,14 @@ class SectionChip extends StatelessWidget {
   final bool selected, isAdmin;
   final String label;
   final Function()? onTap, onDelete;
-  const SectionChip(
-      {super.key,
-      required this.label,
-      this.isAdmin = false,
-      this.selected = false,
-      this.onTap,
-      this.onDelete});
+  const SectionChip({
+    super.key,
+    required this.label,
+    this.isAdmin = false,
+    this.selected = false,
+    this.onTap,
+    this.onDelete,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +29,10 @@ class SectionChip extends StatelessWidget {
             Text(
               label,
               style: TextStyle(
-                  color: selected ? Colors.white : Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18.0),
+                color: selected ? Colors.white : Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 18.0,
+              ),
             ),
             if (isAdmin && selected)
               Container(
@@ -44,7 +46,7 @@ class SectionChip extends StatelessWidget {
                     size: 20,
                   ),
                 ),
-              )
+              ),
           ],
         ),
       ),

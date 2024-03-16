@@ -26,9 +26,13 @@ void main() {
       final result = await informationNotifier.loadInformation();
 
       expect(
-          result.when(
-              data: (data) => data, error: (e, s) => null, loading: () => null),
-          information);
+        result.when(
+          data: (data) => data,
+          error: (e, s) => null,
+          loading: () => null,
+        ),
+        information,
+      );
     });
 
     test('createInformation', () async {

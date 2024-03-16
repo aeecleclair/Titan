@@ -15,9 +15,11 @@ class Refresher extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     if (kIsWeb) {
       return SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(
-              parent: BouncingScrollPhysics()),
-          child: child);
+        physics: const AlwaysScrollableScrollPhysics(
+          parent: BouncingScrollPhysics(),
+        ),
+        child: child,
+      );
     }
     return Platform.isAndroid ? buildAndroidList(ref) : buildIOSList(ref);
   }
@@ -29,10 +31,12 @@ class Refresher extends HookConsumerWidget {
           },
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(
-                parent: BouncingScrollPhysics()),
+              parent: BouncingScrollPhysics(),
+            ),
             child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                child: child),
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: child,
+            ),
           ),
         ),
       );
@@ -47,10 +51,11 @@ class Refresher extends HookConsumerWidget {
               },
             ),
             SliverToBoxAdapter(
-                child: ConstrainedBox(
-                    constraints:
-                        BoxConstraints(minHeight: constraints.maxHeight),
-                    child: child)),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: child,
+              ),
+            ),
           ],
         ),
       );

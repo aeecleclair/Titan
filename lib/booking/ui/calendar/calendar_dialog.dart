@@ -9,8 +9,11 @@ class CalendarDialog extends StatelessWidget {
   final Booking booking;
   final bool isManager;
 
-  const CalendarDialog(
-      {super.key, required this.booking, required this.isManager});
+  const CalendarDialog({
+    super.key,
+    required this.booking,
+    required this.isManager,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +37,11 @@ class CalendarDialog extends StatelessWidget {
               const SizedBox(height: 10),
               Text(
                 formatRecurrenceRule(
-                    booking.start, booking.end, booking.recurrenceRule, false),
+                  booking.start,
+                  booking.end,
+                  booking.recurrenceRule,
+                  false,
+                ),
                 style: TextStyle(
                   fontWeight: FontWeight.w400,
                   color: Colors.grey.shade400,
@@ -132,7 +139,7 @@ class CalendarDialog extends StatelessWidget {
                       color: Colors.grey.shade500.withOpacity(0.3),
                       blurRadius: 5,
                       spreadRadius: 1,
-                    )
+                    ),
                   ],
                   borderRadius: BorderRadius.circular(15),
                 ),
@@ -142,7 +149,7 @@ class CalendarDialog extends StatelessWidget {
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

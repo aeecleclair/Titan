@@ -24,42 +24,47 @@ class VotersBar extends HookConsumerWidget {
     return SizedBox(
       height: 40,
       child: groups.when(
-          data: (data) => SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(width: 15),
-                    ...data.map(
-                      (e) => VoterChip(
-                        label: capitalize(e.name),
-                        selected: votersGroupId.contains(e.id),
-                        onTap: () async {
-                          if (status == Status.waiting) {
-                            if (votersGroupId.contains(e.id)) {
-                              await votersNotifier.deleteVoter(Voter(
-                                groupId: e.id,
-                              ));
-                            } else {
-                              await votersNotifier.addVoter(Voter(
-                                groupId: e.id,
-                              ));
-                            }
-                          }
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 15),
-                  ],
+        data: (data) => SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          physics: const BouncingScrollPhysics(),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(width: 15),
+              ...data.map(
+                (e) => VoterChip(
+                  label: capitalize(e.name),
+                  selected: votersGroupId.contains(e.id),
+                  onTap: () async {
+                    if (status == Status.waiting) {
+                      if (votersGroupId.contains(e.id)) {
+                        await votersNotifier.deleteVoter(
+                          Voter(
+                            groupId: e.id,
+                          ),
+                        );
+                      } else {
+                        await votersNotifier.addVoter(
+                          Voter(
+                            groupId: e.id,
+                          ),
+                        );
+                      }
+                    }
+                  },
                 ),
               ),
-          error: (Object error, StackTrace? stackTrace) => Center(
-                child: Text("Error : $error"),
-              ),
-          loading: () => const Center(
-                child: CircularProgressIndicator(),
-              )),
+              const SizedBox(width: 15),
+            ],
+          ),
+        ),
+        error: (Object error, StackTrace? stackTrace) => Center(
+          child: Text("Error : $error"),
+        ),
+        loading: () => const Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
     );
   }
 }

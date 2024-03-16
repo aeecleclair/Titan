@@ -35,7 +35,7 @@ void main() {
         "floor": "autre",
         "groups": [],
         "phone": null,
-        "promo": null
+        "promo": null,
       });
       expect(user, isA<User>());
       expect(user.name, 'Name');
@@ -63,7 +63,7 @@ void main() {
         "floor": "autre",
         "groups": [],
         "phone": "phone",
-        "promo": 1
+        "promo": 1,
       });
       expect(user, isA<User>());
       expect(user.name, 'Name');
@@ -119,8 +119,10 @@ void main() {
         phone: 'phone',
         promo: null,
       );
-      expect(user.toString(),
-          'User {name: name, firstname: firstname, nickname: null, id: id, email: email, birthday: 1999-01-01 00:00:00.000, promo: null, floor: floor, phone: phone, createdOn: 2021-01-01 00:00:00.000, groups: []}');
+      expect(
+        user.toString(),
+        'User {name: name, firstname: firstname, nickname: null, id: id, email: email, birthday: 1999-01-01 00:00:00.000, promo: null, floor: floor, phone: phone, createdOn: 2021-01-01 00:00:00.000, groups: []}',
+      );
     });
 
     test('Should return correct json', () async {
@@ -136,7 +138,7 @@ void main() {
         "floor": "floor",
         "groups": [],
         "phone": "phone",
-        "promo": null
+        "promo": null,
       });
       expect(user.toJson(), {
         "name": "Name",
@@ -149,7 +151,7 @@ void main() {
         "floor": "floor",
         "groups": [],
         "phone": "phone",
-        "promo": null
+        "promo": null,
       });
     });
   });
@@ -179,8 +181,10 @@ void main() {
 
     test('Should print properly', () {
       final applicant = Applicant.empty();
-      expect(applicant.toString(),
-          'Applicant{name: Nom, firstname: Prénom, nickname: null, id: , email: empty@ecl.ec-lyon.fr, promo: null, phone: null}');
+      expect(
+        applicant.toString(),
+        'Applicant{name: Nom, firstname: Prénom, nickname: null, id: , email: empty@ecl.ec-lyon.fr, promo: null, phone: null}',
+      );
     });
 
     test('Should parse an Applicant from json', () async {
@@ -191,7 +195,7 @@ void main() {
         "id": "id",
         "email": "email",
         "phone": "phone",
-        "promo": null
+        "promo": null,
       });
       expect(applicant, isA<Applicant>());
     });
@@ -204,7 +208,7 @@ void main() {
         "id": "id",
         "email": "email",
         "phone": "phone",
-        "promo": null
+        "promo": null,
       });
       expect(applicant.toJson(), {
         "name": "Name",
@@ -252,8 +256,10 @@ void main() {
 
     test('Should print properly', () {
       final simpleUser = SimpleUser.empty();
-      expect(simpleUser.toString(),
-          'SimpleUser {name: Nom, firstname: Prénom, nickname: null, id: }');
+      expect(
+        simpleUser.toString(),
+        'SimpleUser {name: Nom, firstname: Prénom, nickname: null, id: }',
+      );
     });
 
     test('Should parse an SimpleUser from json', () async {
@@ -305,8 +311,9 @@ void main() {
       final UserNotifier userNotifier = UserNotifier(userRepository: mockUser);
       await userNotifier.loadMe();
       expect(
-          await userNotifier.setUser(User.empty().copyWith(name: 'New Name')),
-          true);
+        await userNotifier.setUser(User.empty().copyWith(name: 'New Name')),
+        true,
+      );
     });
 
     test('Should fail if user if not loaded', () async {
@@ -314,8 +321,9 @@ void main() {
       when(() => mockUser.getMe()).thenAnswer((_) async => User.empty());
       final UserNotifier userNotifier = UserNotifier(userRepository: mockUser);
       expect(
-          await userNotifier.setUser(User.empty().copyWith(name: 'New Name')),
-          false);
+        await userNotifier.setUser(User.empty().copyWith(name: 'New Name')),
+        false,
+      );
     });
   });
 
@@ -328,11 +336,13 @@ void main() {
       final now = DateTime.now();
       expect(user, isA<AsyncData<User>>());
       expect(
-          user.when(
-              data: (value) => value.copyWith(createdOn: now).toString(),
-              error: (Object error, StackTrace stackTrace) {},
-              loading: () {}),
-          User.empty().copyWith(createdOn: now).toString());
+        user.when(
+          data: (value) => value.copyWith(createdOn: now).toString(),
+          error: (Object error, StackTrace stackTrace) {},
+          loading: () {},
+        ),
+        User.empty().copyWith(createdOn: now).toString(),
+      );
     });
 
     test('Should catch error when getMe fail', () async {

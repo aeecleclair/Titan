@@ -12,25 +12,29 @@ class CustomButton extends HookConsumerWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: RaffleColorConstants.gradient2.withOpacity(0.3),
-              blurRadius: 5,
-              spreadRadius: 2,
-              offset: const Offset(2, 3),
-            ),
-          ],
-          color: RaffleColorConstants.gradient2,
-          borderRadius: const BorderRadius.all(Radius.circular(10))),
+        boxShadow: [
+          BoxShadow(
+            color: RaffleColorConstants.gradient2.withOpacity(0.3),
+            blurRadius: 5,
+            spreadRadius: 2,
+            offset: const Offset(2, 3),
+          ),
+        ],
+        color: RaffleColorConstants.gradient2,
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+      ),
       child: Row(
         children: [
           const HeroIcon(HeroIcons.userGroup, color: Colors.white, size: 20),
           const SizedBox(width: 10),
-          Text(text,
-              style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white)),
+          Text(
+            text,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
         ],
       ),
     );

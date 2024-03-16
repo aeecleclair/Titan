@@ -22,11 +22,11 @@ class VoterListNotifier extends ListNotifier<Voter> {
 
   Future<bool> deleteVoter(Voter voter) async {
     return await delete(
-        _voterRepository.deleteVoter,
-        (voters, voter) =>
-            voters..removeWhere((p) => p.groupId == voter.groupId),
-        voter.groupId,
-        voter);
+      _voterRepository.deleteVoter,
+      (voters, voter) => voters..removeWhere((p) => p.groupId == voter.groupId),
+      voter.groupId,
+      voter,
+    );
   }
 }
 

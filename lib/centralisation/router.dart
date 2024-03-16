@@ -13,10 +13,11 @@ class CentralisationRouter {
   final ProviderRef ref;
   static const String root = '/centralisation';
   static final Module module = Module(
-      name: CentralisationTextConstants.centralisation,
-      icon: const Left(HeroIcons.link),
-      root: CentralisationRouter.root,
-      selected: false);
+    name: CentralisationTextConstants.centralisation,
+    icon: const Left(HeroIcons.link),
+    root: CentralisationRouter.root,
+    selected: false,
+  );
   CentralisationRouter(this.ref);
 
   QRoute route() => QRoute(
@@ -25,7 +26,7 @@ class CentralisationRouter {
         builder: () => main_page.CentralisationMainPage(),
         middleware: [
           AuthenticatedMiddleware(ref),
-          DeferredLoadingMiddleware(main_page.loadLibrary)
+          DeferredLoadingMiddleware(main_page.loadLibrary),
         ],
       );
 }

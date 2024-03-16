@@ -20,7 +20,8 @@ void main() {
     setUp(() {
       profilePictureRepository = MockProfilePictureRepository();
       profilePictureNotifier = ProfilePictureNotifier(
-          profilePictureRepository: profilePictureRepository);
+        profilePictureRepository: profilePictureRepository,
+      );
     });
 
     test('getProfilePicture returns AsyncValue<Uint8List>', () async {
@@ -32,12 +33,13 @@ void main() {
       final result = await profilePictureNotifier.getProfilePicture(userId);
 
       expect(
-          result.when(
-            data: (data) => data,
-            loading: () => null,
-            error: (_, __) => null,
-          ),
-          expected);
+        result.when(
+          data: (data) => data,
+          loading: () => null,
+          error: (_, __) => null,
+        ),
+        expected,
+      );
     });
 
     test('getMyProfilePicture returns AsyncValue<Uint8List>', () async {
@@ -48,12 +50,13 @@ void main() {
       final result = await profilePictureNotifier.getMyProfilePicture();
 
       expect(
-          result.when(
-            data: (data) => data,
-            loading: () => null,
-            error: (_, __) => null,
-          ),
-          expected);
+        result.when(
+          data: (data) => data,
+          loading: () => null,
+          error: (_, __) => null,
+        ),
+        expected,
+      );
     });
   });
 }

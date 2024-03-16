@@ -8,16 +8,21 @@ import 'package:myecl/user/providers/user_provider.dart';
 void main() {
   group('isBookingAdminProvider', () {
     test('should return true if user is a booking admin', () {
-      final container = ProviderContainer(overrides: [
-        userProvider.overrideWithValue(User.empty().copyWith(
-          groups: [
-            SimpleGroup.empty().copyWith(
-                id: '0a25cb76-4b63-4fd3-b939-da6d9feabf28',
-                name: 'Booking Admin'),
-            SimpleGroup.empty().copyWith(id: '123', name: 'Other Group'),
-          ],
-        )),
-      ]);
+      final container = ProviderContainer(
+        overrides: [
+          userProvider.overrideWithValue(
+            User.empty().copyWith(
+              groups: [
+                SimpleGroup.empty().copyWith(
+                  id: '0a25cb76-4b63-4fd3-b939-da6d9feabf28',
+                  name: 'Booking Admin',
+                ),
+                SimpleGroup.empty().copyWith(id: '123', name: 'Other Group'),
+              ],
+            ),
+          ),
+        ],
+      );
 
       final result = container.read(isAdminProvider);
 
@@ -25,13 +30,17 @@ void main() {
     });
 
     test('should return false if user is not a booking admin', () {
-      final container = ProviderContainer(overrides: [
-        userProvider.overrideWithValue(User.empty().copyWith(
-          groups: [
-            SimpleGroup.empty().copyWith(id: '123', name: 'Other Group'),
-          ],
-        )),
-      ]);
+      final container = ProviderContainer(
+        overrides: [
+          userProvider.overrideWithValue(
+            User.empty().copyWith(
+              groups: [
+                SimpleGroup.empty().copyWith(id: '123', name: 'Other Group'),
+              ],
+            ),
+          ),
+        ],
+      );
 
       final result = container.read(isAdminProvider);
 

@@ -53,7 +53,7 @@ class PhonebookMainPage extends HookConsumerWidget {
                           QR.to(PhonebookRouter.root + PhonebookRouter.admin);
                         },
                       ),
-                    )
+                    ),
                 ],
               ),
             ),
@@ -75,11 +75,13 @@ class PhonebookMainPage extends HookConsumerWidget {
                           association: association,
                           onClicked: () {
                             associationNotifier.setAssociation(association);
-                            QR.to(PhonebookRouter.root +
-                                PhonebookRouter.associationDetail);
+                            QR.to(
+                              PhonebookRouter.root +
+                                  PhonebookRouter.associationDetail,
+                            );
                           },
                         ),
-                      )
+                      ),
                   ],
                 );
               },

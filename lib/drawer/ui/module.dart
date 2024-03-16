@@ -36,9 +36,12 @@ class ModuleUI extends HookConsumerWidget {
                   width: 25,
                 ),
                 Center(
-                    child: module.getIcon(module.root == pathForwarding.path
+                  child: module.getIcon(
+                    module.root == pathForwarding.path
                         ? DrawerColorConstants.selectedText
-                        : DrawerColorConstants.lightText)),
+                        : DrawerColorConstants.lightText,
+                  ),
+                ),
                 Container(
                   width: 20,
                 ),

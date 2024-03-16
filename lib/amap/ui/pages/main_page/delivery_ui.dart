@@ -9,11 +9,12 @@ class DeliveryUi extends HookConsumerWidget {
   final Delivery delivery;
   final VoidCallback onTap;
   final bool showSelected;
-  const DeliveryUi(
-      {super.key,
-      required this.delivery,
-      required this.onTap,
-      this.showSelected = true});
+  const DeliveryUi({
+    super.key,
+    required this.delivery,
+    required this.onTap,
+    this.showSelected = true,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -54,22 +55,25 @@ class DeliveryUi extends HookConsumerWidget {
             children: [
               const SizedBox(width: 10),
               Text(
-                  '${AMAPTextConstants.the} ${processDate(delivery.deliveryDate)}',
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: (selected && showSelected)
-                          ? Colors.white
-                          : AMAPColorConstants.textDark)),
+                '${AMAPTextConstants.the} ${processDate(delivery.deliveryDate)}',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: (selected && showSelected)
+                      ? Colors.white
+                      : AMAPColorConstants.textDark,
+                ),
+              ),
               const Spacer(),
               Text(
                 "${delivery.products.length} ${AMAPTextConstants.product}${delivery.products.length != 1 ? "s" : ""}",
                 style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    color: (selected && showSelected)
-                        ? Colors.white
-                        : AMAPColorConstants.textLight),
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: (selected && showSelected)
+                      ? Colors.white
+                      : AMAPColorConstants.textLight,
+                ),
               ),
               const SizedBox(width: 10),
             ],

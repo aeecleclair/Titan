@@ -20,18 +20,20 @@ void main() {
     test('loadLoanList returns AsyncValue<List<Loan>>', () async {
       final loans = [
         Loan.empty().copyWith(id: '1'),
-        Loan.empty().copyWith(id: '2')
+        Loan.empty().copyWith(id: '2'),
       ];
       when(() => loanRepository.getMyLoanList()).thenAnswer((_) async => loans);
 
       final result = await loanListNotifier.loadLoanList();
 
       expect(
-          result.when(
-              data: (d) => d,
-              error: (e, s) => throw e,
-              loading: () => throw Exception('loading')),
-          loans);
+        result.when(
+          data: (d) => d,
+          error: (e, s) => throw e,
+          loading: () => throw Exception('loading'),
+        ),
+        loans,
+      );
     });
 
     test('addLoan returns true', () async {

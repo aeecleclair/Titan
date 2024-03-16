@@ -10,8 +10,12 @@ class NumberSelectedText extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedItems = ref.watch(editSelectedListProvider);
     return Text(
-      formatNumberItems(selectedItems.fold(
-          0, (previousValue, element) => previousValue + element)),
+      formatNumberItems(
+        selectedItems.fold(
+          0,
+          (previousValue, element) => previousValue + element,
+        ),
+      ),
     );
   }
 }

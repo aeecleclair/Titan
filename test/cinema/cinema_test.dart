@@ -16,15 +16,18 @@ void main() {
 
     test('Should print properly with toString()', () {
       final session = Session(
-          id: "1",
-          name: "Session 1",
-          start: DateTime.parse("2021-01-01T00:00:00.000Z"),
-          duration: 120,
-          overview: "Overview",
-          genre: "Genre",
-          tagline: "Tagline");
-      expect(session.toString(),
-          "Session{id: 1, name: Session 1, start: 2021-01-01 00:00:00.000Z, duration: 120, overview: Overview, genre: Genre, tagline: Tagline}");
+        id: "1",
+        name: "Session 1",
+        start: DateTime.parse("2021-01-01T00:00:00.000Z"),
+        duration: 120,
+        overview: "Overview",
+        genre: "Genre",
+        tagline: "Tagline",
+      );
+      expect(
+        session.toString(),
+        "Session{id: 1, name: Session 1, start: 2021-01-01 00:00:00.000Z, duration: 120, overview: Overview, genre: Genre, tagline: Tagline}",
+      );
     });
 
     test('Should return a Session with the correct values', () {
@@ -53,7 +56,9 @@ void main() {
         start: DateTime.parse("2021-01-01T00:00:00.000Z"),
       );
       expect(
-          newSession.start, equals(DateTime.parse("2021-01-01T00:00:00.000Z")));
+        newSession.start,
+        equals(DateTime.parse("2021-01-01T00:00:00.000Z")),
+      );
       newSession = session.copyWith(
         duration: 120,
       );
@@ -81,7 +86,7 @@ void main() {
         "duration": 120,
         "overview": "Overview",
         "genre": "Genre",
-        "tagline": "Tagline"
+        "tagline": "Tagline",
       });
       expect(session, isA<Session>());
       expect(session.id, equals("1"));
@@ -101,19 +106,20 @@ void main() {
         "duration": 120,
         "overview": "Overview",
         "genre": "Genre",
-        "tagline": "Tagline"
+        "tagline": "Tagline",
       });
       expect(
-          session.toJson(),
-          equals({
-            "id": "1",
-            "name": "Session 1",
-            "start": "2021-01-01T00:00:00.000Z",
-            "duration": 120,
-            "overview": "Overview",
-            "genre": "Genre",
-            "tagline": "Tagline"
-          }));
+        session.toJson(),
+        equals({
+          "id": "1",
+          "name": "Session 1",
+          "start": "2021-01-01T00:00:00.000Z",
+          "duration": 120,
+          "overview": "Overview",
+          "genre": "Genre",
+          "tagline": "Tagline",
+        }),
+      );
     });
   });
 
@@ -183,8 +189,10 @@ void main() {
         tagline: 'The best movie ever',
       );
 
-      expect(movie.toString(),
-          'TheMovieDBMovie{genres: [Action, Adventure, Sci-Fi], overview: A great movie, posterUrl: https://image.tmdb.org/t/p/w500/poster.jpg, title: The Movie, runtime: 120, tagline: The best movie ever}');
+      expect(
+        movie.toString(),
+        'TheMovieDBMovie{genres: [Action, Adventure, Sci-Fi], overview: A great movie, posterUrl: https://image.tmdb.org/t/p/w500/poster.jpg, title: The Movie, runtime: 120, tagline: The best movie ever}',
+      );
     });
   });
 
@@ -195,7 +203,7 @@ void main() {
         'overview': 'A great movie',
         'genre_ids': [1, 2, 3],
         'id': 123,
-        'title': 'The Movie'
+        'title': 'The Movie',
       };
 
       final result = TheMovieDBSearchResult.fromJson(json);
@@ -250,8 +258,10 @@ void main() {
         title: 'The Movie',
       );
 
-      expect(result.toString(),
-          'TheMovieDBSearchResult(posterUrl: https://image.tmdb.org/t/p/w500/poster.jpg, overview: A great movie, genreIds: [1, 2, 3], genreNames: [], id: 123, title: The Movie)');
+      expect(
+        result.toString(),
+        'TheMovieDBSearchResult(posterUrl: https://image.tmdb.org/t/p/w500/poster.jpg, overview: A great movie, genreIds: [1, 2, 3], genreNames: [], id: 123, title: The Movie)',
+      );
     });
   });
 }

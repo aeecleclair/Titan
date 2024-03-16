@@ -32,9 +32,15 @@ class UserNotifier extends SingleNotifier<User> {
   }
 
   Future<bool> changePassword(
-      String oldPassword, String newPassword, User user) async {
+    String oldPassword,
+    String newPassword,
+    User user,
+  ) async {
     return await userRepository.changePassword(
-        oldPassword, newPassword, user.email);
+      oldPassword,
+      newPassword,
+      user.email,
+    );
   }
 
   Future<bool> deletePersonal() async {

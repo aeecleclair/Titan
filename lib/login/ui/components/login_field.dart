@@ -50,33 +50,36 @@ class CreateAccountField extends HookConsumerWidget {
         ),
         const SizedBox(height: 12),
         AutofillGroup(
-            child: Form(
-          key: formKey,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          child: TextFormField(
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-            keyboardType: keyboardType,
-            autofillHints: autofillHints,
-            onFieldSubmitted: (_) {
-              FocusScope.of(context).requestFocus(FocusNode());
-              pageController.animateToPage(index,
+          child: Form(
+            key: formKey,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            child: TextFormField(
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+              keyboardType: keyboardType,
+              autofillHints: autofillHints,
+              onFieldSubmitted: (_) {
+                FocusScope.of(context).requestFocus(FocusNode());
+                pageController.animateToPage(
+                  index,
                   duration: const Duration(milliseconds: 500),
-                  curve: Curves.decelerate);
-              currentPage.value = index;
-            },
-            obscureText: hidePassword.value,
-            controller: controller,
-            cursorColor: Colors.white,
-            decoration: InputDecoration(
+                  curve: Curves.decelerate,
+                );
+                currentPage.value = index;
+              },
+              obscureText: hidePassword.value,
+              controller: controller,
+              cursorColor: Colors.white,
+              decoration: InputDecoration(
                 hintText: hint,
                 hintStyle: TextStyle(
-                    color: Colors.white.withOpacity(0.5),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20),
+                  color: Colors.white.withOpacity(0.5),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
                 suffixIcon: (keyboardType == TextInputType.visiblePassword)
                     ? IconButton(
                         icon: Icon(
@@ -91,32 +94,37 @@ class CreateAccountField extends HookConsumerWidget {
                       )
                     : null,
                 enabledBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: ColorConstants.background2)),
+                  borderSide: BorderSide(color: ColorConstants.background2),
+                ),
                 focusedBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(
-                  color: Colors.white,
-                )),
+                  borderSide: BorderSide(
+                    color: Colors.white,
+                  ),
+                ),
                 errorBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(
-                  color: Colors.white,
-                )),
-                errorStyle: const TextStyle(color: Colors.white)),
-            validator: (value) {
-              if (canBeEmpty) {
-                return null;
-              }
-              if (value == null || value.isEmpty) {
-                return LoginTextConstants.emptyFieldError;
-              } else if (isPassword && value.length < 6) {
-                return LoginTextConstants.passwordLengthError;
-              }
-              if (mustBeInt && int.tryParse(value) == null) {
-                return LoginTextConstants.mustBeIntError;
-              }
-              return validator?.call(value);
-            },
+                  borderSide: BorderSide(
+                    color: Colors.white,
+                  ),
+                ),
+                errorStyle: const TextStyle(color: Colors.white),
+              ),
+              validator: (value) {
+                if (canBeEmpty) {
+                  return null;
+                }
+                if (value == null || value.isEmpty) {
+                  return LoginTextConstants.emptyFieldError;
+                } else if (isPassword && value.length < 6) {
+                  return LoginTextConstants.passwordLengthError;
+                }
+                if (mustBeInt && int.tryParse(value) == null) {
+                  return LoginTextConstants.mustBeIntError;
+                }
+                return validator?.call(value);
+              },
+            ),
           ),
-        )),
+        ),
       ],
     );
   }

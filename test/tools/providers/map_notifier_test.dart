@@ -78,7 +78,7 @@ void main() {
       final key = MockT();
       final data = <MockT, AsyncValue<List<MockE>>>{
         MockT(): const AsyncLoading(),
-        key: const AsyncValue.data(<MockE>[])
+        key: const AsyncValue.data(<MockE>[]),
       };
       notifier.state = data;
       final newData = MockE();
@@ -86,12 +86,13 @@ void main() {
       notifier.testAddE(key, newData);
       expect(notifier.state, isA<Map<MockT, AsyncValue<List<MockE>>?>>());
       expect(
-          notifier.state[key]!.when(
-            data: (d) => d,
-            error: (e, s) => [],
-            loading: () => [],
-          ),
-          newDataList);
+        notifier.state[key]!.when(
+          data: (d) => d,
+          error: (e, s) => [],
+          loading: () => [],
+        ),
+        newDataList,
+      );
     });
 
     test(
@@ -101,7 +102,7 @@ void main() {
       final key = MockT();
       final data = <MockT, AsyncValue<List<MockE>>>{
         MockT(): const AsyncLoading(),
-        key: const AsyncLoading()
+        key: const AsyncLoading(),
       };
       notifier.state = data;
       final newData = MockE();
@@ -109,12 +110,13 @@ void main() {
       notifier.testAddE(key, newData);
       expect(notifier.state, isA<Map<MockT, AsyncValue<List<MockE>>?>>());
       expect(
-          notifier.state[key]!.when(
-            data: (d) => d,
-            error: (e, s) => [],
-            loading: () => [],
-          ),
-          newDataList);
+        notifier.state[key]!.when(
+          data: (d) => d,
+          error: (e, s) => [],
+          loading: () => [],
+        ),
+        newDataList,
+      );
     });
 
     test(
@@ -124,7 +126,7 @@ void main() {
       final key = MockT();
       final data = <MockT, AsyncValue<List<MockE>>>{
         MockT(): const AsyncLoading(),
-        key: AsyncError("test", StackTrace.current)
+        key: AsyncError("test", StackTrace.current),
       };
       notifier.state = data;
       final newData = MockE();
@@ -132,12 +134,13 @@ void main() {
       notifier.testAddE(key, newData);
       expect(notifier.state, isA<Map<MockT, AsyncValue<List<MockE>>?>>());
       expect(
-          notifier.state[key]!.when(
-            data: (d) => d,
-            error: (e, s) => [],
-            loading: () => [],
-          ),
-          newDataList);
+        notifier.state[key]!.when(
+          data: (d) => d,
+          error: (e, s) => [],
+          loading: () => [],
+        ),
+        newDataList,
+      );
     });
   });
 
@@ -147,7 +150,7 @@ void main() {
       final key = MockT();
       final data = <MockT, AsyncValue<List<MockE>>>{
         MockT(): const AsyncLoading(),
-        key: const AsyncValue.data(<MockE>[])
+        key: const AsyncValue.data(<MockE>[]),
       };
       notifier.state = data;
       notifier.testDeleteT(key);
@@ -161,7 +164,7 @@ void main() {
       final key = MockT();
       final data = <MockT, AsyncValue<List<MockE>>>{
         MockT(): const AsyncLoading(),
-        key: const AsyncLoading()
+        key: const AsyncLoading(),
       };
       notifier.state = data;
       notifier.testDeleteT(MockT());
@@ -176,7 +179,7 @@ void main() {
       final key = MockT();
       final data = <MockT, AsyncValue<List<MockE>>>{
         MockT(): const AsyncLoading(),
-        key: const AsyncValue.data(<MockE>[])
+        key: const AsyncValue.data(<MockE>[]),
       };
       final newData = AsyncValue.data([MockE()]);
       notifier.state = data;

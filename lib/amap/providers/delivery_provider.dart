@@ -8,8 +8,9 @@ final deliveryProvider = Provider<Delivery>((ref) {
   final deliveryList = ref.watch(deliveryListProvider);
   return deliveryList.maybeWhen(
     data: (deliveryList) => deliveryList.firstWhere(
-        (delivery) => delivery.id == deliveryId,
-        orElse: () => Delivery.empty()),
+      (delivery) => delivery.id == deliveryId,
+      orElse: () => Delivery.empty(),
+    ),
     orElse: () => Delivery.empty(),
   );
 });

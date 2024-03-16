@@ -54,8 +54,9 @@ class AnnouncerBar extends HookConsumerWidget {
             child: Text(
               e.name,
               style: TextStyle(
-                  color: selectedId.contains(e.id) ? Colors.white : darkerColor,
-                  fontWeight: FontWeight.bold),
+                color: selectedId.contains(e.id) ? Colors.white : darkerColor,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),

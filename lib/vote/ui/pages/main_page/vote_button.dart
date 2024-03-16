@@ -26,10 +26,11 @@ class VoteButton extends HookConsumerWidget {
     final votedSection = ref.watch(votedSectionProvider);
     List<String> alreadyVotedSection = [];
     votedSection.maybeWhen(
-        data: (voted) {
-          alreadyVotedSection = voted;
-        },
-        orElse: () {});
+      data: (voted) {
+        alreadyVotedSection = voted;
+      },
+      orElse: () {},
+    );
 
     final status = ref.watch(statusProvider);
     final s =
@@ -47,54 +48,60 @@ class VoteButton extends HookConsumerWidget {
               s == Status.open &&
               !alreadyVotedSection.contains(section.id)) {
             showDialog(
-                context: context,
-                builder: (context) {
-                  return CustomDialogBox(
-                    title: VoteTextConstants.vote,
-                    descriptions: VoteTextConstants.confirmVote,
-                    onYes: () {
-                      tokenExpireWrapper(ref, () async {
-                        final result = await votesNotifier
-                            .addVote(Votes(id: selectedContender.id));
-                        if (result) {
-                          votedSectionNotifier.addVote(section.id);
-                          selectedContenderNotifier.clear();
-                          displayVoteToastWithContext(
-                              TypeMsg.msg, VoteTextConstants.voteSuccess);
-                        } else {
-                          displayVoteToastWithContext(
-                              TypeMsg.error, VoteTextConstants.voteError);
-                        }
-                      });
-                    },
-                  );
-                });
+              context: context,
+              builder: (context) {
+                return CustomDialogBox(
+                  title: VoteTextConstants.vote,
+                  descriptions: VoteTextConstants.confirmVote,
+                  onYes: () {
+                    tokenExpireWrapper(ref, () async {
+                      final result = await votesNotifier
+                          .addVote(Votes(id: selectedContender.id));
+                      if (result) {
+                        votedSectionNotifier.addVote(section.id);
+                        selectedContenderNotifier.clear();
+                        displayVoteToastWithContext(
+                          TypeMsg.msg,
+                          VoteTextConstants.voteSuccess,
+                        );
+                      } else {
+                        displayVoteToastWithContext(
+                          TypeMsg.error,
+                          VoteTextConstants.voteError,
+                        );
+                      }
+                    });
+                  },
+                );
+              },
+            );
           }
         },
         child: Container(
           padding: const EdgeInsets.only(top: 10, bottom: 12),
           width: double.infinity,
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: (selectedContender.id == "" && s != Status.open) ||
-                        alreadyVotedSection.contains(section.id)
-                    ? [
-                        Colors.white,
-                        Colors.grey.shade50,
-                      ]
-                    : [Colors.grey.shade900, Colors.black],
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: (selectedContender.id == "" && s != Status.open) ||
+                      alreadyVotedSection.contains(section.id)
+                  ? [
+                      Colors.white,
+                      Colors.grey.shade50,
+                    ]
+                  : [Colors.grey.shade900, Colors.black],
+            ),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.2),
+                spreadRadius: 5,
+                blurRadius: 10,
+                offset: const Offset(3, 3),
               ),
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  spreadRadius: 5,
-                  blurRadius: 10,
-                  offset: const Offset(3, 3),
-                )
-              ]),
+            ],
+          ),
           child: Center(
             child: Text(
               selectedContender.id != ""
@@ -109,12 +116,13 @@ class VoteButton extends HookConsumerWidget {
                                   ? VoteTextConstants.closedVote
                                   : VoteTextConstants.onGoingCount,
               style: TextStyle(
-                  color: (selectedContender.id == "" && s != Status.open) ||
-                          alreadyVotedSection.contains(section.id)
-                      ? Colors.black
-                      : Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700),
+                color: (selectedContender.id == "" && s != Status.open) ||
+                        alreadyVotedSection.contains(section.id)
+                    ? Colors.black
+                    : Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
         ),

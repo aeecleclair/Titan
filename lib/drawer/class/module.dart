@@ -9,17 +9,19 @@ class Module {
   String root;
   bool selected;
 
-  Module(
-      {required this.name,
-      required this.icon,
-      required this.root,
-      required this.selected});
+  Module({
+    required this.name,
+    required this.icon,
+    required this.root,
+    required this.selected,
+  });
 
-  Module copy(
-          {String? name,
-          Either<HeroIcons, String>? icon,
-          String? root,
-          bool? selected}) =>
+  Module copy({
+    String? name,
+    Either<HeroIcons, String>? icon,
+    String? root,
+    bool? selected,
+  }) =>
       Module(
         name: name ?? this.name,
         icon: icon ?? this.icon,
@@ -29,12 +31,13 @@ class Module {
 
   Widget getIcon(Color color, {double size = 30}) {
     return icon.fold(
-        (heroIcon) => HeroIcon(heroIcon, color: color, size: size),
-        (svgPath) => SvgPicture.asset(
-              svgPath,
-              width: size,
-              height: size,
-              colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
-            ));
+      (heroIcon) => HeroIcon(heroIcon, color: color, size: size),
+      (svgPath) => SvgPicture.asset(
+        svgPath,
+        width: size,
+        height: size,
+        colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+      ),
+    );
   }
 }

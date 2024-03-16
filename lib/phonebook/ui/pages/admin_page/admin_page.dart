@@ -55,22 +55,30 @@ class AdminPage extends HookConsumerWidget {
                     KindsBar(),
                     GestureDetector(
                       onTap: () {
-                        QR.to(PhonebookRouter.root +
-                            PhonebookRouter.admin +
-                            PhonebookRouter.createAssociaiton);
+                        QR.to(
+                          PhonebookRouter.root +
+                              PhonebookRouter.admin +
+                              PhonebookRouter.createAssociaiton,
+                        );
                       },
                       child: CardLayout(
-                          margin: const EdgeInsets.only(
-                              bottom: 10, top: 20, left: 40, right: 40),
-                          width: double.infinity,
-                          height: 100,
-                          color: Colors.white,
-                          child: Center(
-                              child: HeroIcon(
+                        margin: const EdgeInsets.only(
+                          bottom: 10,
+                          top: 20,
+                          left: 40,
+                          right: 40,
+                        ),
+                        width: double.infinity,
+                        height: 100,
+                        color: Colors.white,
+                        child: Center(
+                          child: HeroIcon(
                             HeroIcons.plus,
                             size: 40,
                             color: Colors.grey.shade500,
-                          ))),
+                          ),
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 30),
                     if (associations.isEmpty)
@@ -86,9 +94,11 @@ class AdminPage extends HookConsumerWidget {
                             onEdit: () {
                               kindNotifier.setKind(association.kind);
                               associationNotifier.setAssociation(association);
-                              QR.to(PhonebookRouter.root +
-                                  PhonebookRouter.admin +
-                                  PhonebookRouter.editAssociation);
+                              QR.to(
+                                PhonebookRouter.root +
+                                    PhonebookRouter.admin +
+                                    PhonebookRouter.editAssociation,
+                              );
                             },
                             onDelete: () async {
                               await showDialog(
@@ -104,14 +114,15 @@ class AdminPage extends HookConsumerWidget {
                                               .deleteAssociation(association);
                                       if (result) {
                                         displayToastWithContext(
-                                            TypeMsg.msg,
-                                            PhonebookTextConstants
-                                                .deletedAssociation);
+                                          TypeMsg.msg,
+                                          PhonebookTextConstants
+                                              .deletedAssociation,
+                                        );
                                       } else {
                                         displayToastWithContext(
-                                            TypeMsg.error,
-                                            PhonebookTextConstants
-                                                .deletingError);
+                                          TypeMsg.error,
+                                          PhonebookTextConstants.deletingError,
+                                        );
                                       }
                                     },
                                   );

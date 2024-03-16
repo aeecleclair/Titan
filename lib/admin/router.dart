@@ -25,37 +25,41 @@ class AdminRouter {
   AdminRouter(this.ref);
 
   QRoute route() => QRoute(
-          name: "admin",
-          path: AdminRouter.root,
-          builder: () => main_page.AdminMainPage(),
-          middleware: [
-            AuthenticatedMiddleware(ref),
-            AdminMiddleware(ref, isAdminProvider),
-            DeferredLoadingMiddleware(main_page.loadLibrary)
-          ],
-          children: [
-            QRoute(
-                path: addAssociation,
-                builder: () => add_association_page.AddAssociationPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(add_association_page.loadLibrary)
-                ]),
-            QRoute(
-                path: addLoaner,
-                builder: () => add_loaner_page.AddLoanerPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(add_loaner_page.loadLibrary)
-                ]),
-            QRoute(
-                path: editAssociation,
-                builder: () => edit_page.EditAssociationPage(),
-                middleware: [DeferredLoadingMiddleware(edit_page.loadLibrary)]),
-            QRoute(
-                path: editModuleVisibility,
-                builder: () =>
-                    edit_module_visibility.EditModulesVisibilityPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(edit_module_visibility.loadLibrary)
-                ]),
-          ]);
+        name: "admin",
+        path: AdminRouter.root,
+        builder: () => main_page.AdminMainPage(),
+        middleware: [
+          AuthenticatedMiddleware(ref),
+          AdminMiddleware(ref, isAdminProvider),
+          DeferredLoadingMiddleware(main_page.loadLibrary),
+        ],
+        children: [
+          QRoute(
+            path: addAssociation,
+            builder: () => add_association_page.AddAssociationPage(),
+            middleware: [
+              DeferredLoadingMiddleware(add_association_page.loadLibrary),
+            ],
+          ),
+          QRoute(
+            path: addLoaner,
+            builder: () => add_loaner_page.AddLoanerPage(),
+            middleware: [
+              DeferredLoadingMiddleware(add_loaner_page.loadLibrary),
+            ],
+          ),
+          QRoute(
+            path: editAssociation,
+            builder: () => edit_page.EditAssociationPage(),
+            middleware: [DeferredLoadingMiddleware(edit_page.loadLibrary)],
+          ),
+          QRoute(
+            path: editModuleVisibility,
+            builder: () => edit_module_visibility.EditModulesVisibilityPage(),
+            middleware: [
+              DeferredLoadingMiddleware(edit_module_visibility.loadLibrary),
+            ],
+          ),
+        ],
+      );
 }

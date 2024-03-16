@@ -45,7 +45,9 @@ class AmapMainPage extends HookConsumerWidget {
     final deliveryProductListNotifier =
         ref.watch(deliveryProductListProvider.notifier);
     final animation = useAnimationController(
-        duration: const Duration(milliseconds: 500), initialValue: 0);
+      duration: const Duration(milliseconds: 500),
+      initialValue: 0,
+    );
     final popAnimation = Tween(
       begin: 0.0,
       end: 1.0,
@@ -62,212 +64,234 @@ class AmapMainPage extends HookConsumerWidget {
 
     return AmapTemplate(
       child: Refresher(
-          onRefresh: () async {
-            await ordersNotifier.loadOrderList(me.id);
-            await balanceNotifier.loadCashByUser(me.id);
-            await deliveriesNotifier.loadDeliveriesList();
-          },
-          child: Column(
-            children: [
-              const SizedBox(height: 15),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: AsyncChild(
-                        value: balance,
-                        builder: (context, s) => Text(
-                            "${AMAPTextConstants.amount} : ${s.balance.toStringAsFixed(2)}€",
-                            style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: AMAPColorConstants.greenGradient1)),
-                        loaderColor: AMAPColorConstants.greenGradient1,
+        onRefresh: () async {
+          await ordersNotifier.loadOrderList(me.id);
+          await balanceNotifier.loadCashByUser(me.id);
+          await deliveriesNotifier.loadDeliveriesList();
+        },
+        child: Column(
+          children: [
+            const SizedBox(height: 15),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: AsyncChild(
+                      value: balance,
+                      builder: (context, s) => Text(
+                        "${AMAPTextConstants.amount} : ${s.balance.toStringAsFixed(2)}€",
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: AMAPColorConstants.greenGradient1,
+                        ),
                       ),
+                      loaderColor: AMAPColorConstants.greenGradient1,
                     ),
-                    if (isAdmin)
-                      AdminButton(
-                        onTap: () {
-                          QR.to(AmapRouter.root + AmapRouter.admin);
-                        },
-                        colors: const [
-                          AMAPColorConstants.greenGradient1,
-                          AMAPColorConstants.greenGradient2
-                        ],
-                      ),
+                  ),
+                  if (isAdmin)
+                    AdminButton(
+                      onTap: () {
+                        QR.to(AmapRouter.root + AmapRouter.admin);
+                      },
+                      colors: const [
+                        AMAPColorConstants.greenGradient1,
+                        AMAPColorConstants.greenGradient2,
+                      ],
+                    ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            Stack(
+              children: [
+                Column(
+                  children: [
+                    OrderSection(
+                      onEdit: () {
+                        showPanel.value = true;
+                        animation.forward();
+                      },
+                      onTap: () {
+                        QR.to(AmapRouter.root + AmapRouter.detailOrder);
+                      },
+                      addOrder: () {
+                        balance.whenData(
+                          (s) {
+                            orderNotifier.setOrder(Order.empty());
+                            animation.forward();
+                            showPanel.value = true;
+                          },
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    const DeliverySection(showSelected: false),
                   ],
                 ),
-              ),
-              const SizedBox(height: 20),
-              Stack(
-                children: [
-                  Column(
-                    children: [
-                      OrderSection(
-                        onEdit: () {
-                          showPanel.value = true;
-                          animation.forward();
-                        },
-                        onTap: () {
-                          QR.to(AmapRouter.root + AmapRouter.detailOrder);
-                        },
-                        addOrder: () {
-                          balance.whenData(
-                            (s) {
-                              orderNotifier.setOrder(Order.empty());
-                              animation.forward();
-                              showPanel.value = true;
-                            },
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 20),
-                      const DeliverySection(showSelected: false),
-                    ],
-                  ),
-                  AnimatedBuilder(
-                    builder: (context, child) {
-                      return Opacity(
-                          opacity: popAnimation.value,
-                          child: Transform.translate(
-                              offset: Offset(
-                                  0,
-                                  (1 - popAnimation.value) *
-                                      (MediaQuery.of(context).size.height)),
-                              child: child));
-                    },
-                    animation: animation,
-                    child: Container(
-                      width: double.infinity,
-                      height: MediaQuery.of(context).size.height - 150,
-                      decoration: BoxDecoration(
-                        gradient: const RadialGradient(
-                          colors: [
-                            AMAPColorConstants.textLight,
-                            AMAPColorConstants.greenGradient1,
-                          ],
-                          center: Alignment.topRight,
-                          radius: 1.5,
+                AnimatedBuilder(
+                  builder: (context, child) {
+                    return Opacity(
+                      opacity: popAnimation.value,
+                      child: Transform.translate(
+                        offset: Offset(
+                          0,
+                          (1 - popAnimation.value) *
+                              (MediaQuery.of(context).size.height),
                         ),
-                        borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(50),
-                            topRight: Radius.circular(50)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AMAPColorConstants.textDark.withOpacity(0.3),
-                            spreadRadius: 5,
-                            blurRadius: 10,
-                            offset: const Offset(3, 3),
-                          ),
-                        ],
+                        child: child,
                       ),
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 20),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                    );
+                  },
+                  animation: animation,
+                  child: Container(
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height - 150,
+                    decoration: BoxDecoration(
+                      gradient: const RadialGradient(
+                        colors: [
+                          AMAPColorConstants.textLight,
+                          AMAPColorConstants.greenGradient1,
+                        ],
+                        center: Alignment.topRight,
+                        radius: 1.5,
+                      ),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(50),
+                        topRight: Radius.circular(50),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AMAPColorConstants.textDark.withOpacity(0.3),
+                          spreadRadius: 5,
+                          blurRadius: 10,
+                          offset: const Offset(3, 3),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const AlignLeftText(
+                                AMAPTextConstants.addOrder,
+                                color: Colors.white,
+                              ),
+                              IconButton(
+                                icon: const HeroIcon(
+                                  HeroIcons.xMark,
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
+                                onPressed: () {
+                                  animation.reverse();
+                                  showPanel.value = false;
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 30),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 50),
+                          child: Container(
+                            height: 70,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              border: Border.all(color: Colors.white, width: 2),
+                            ),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const AlignLeftText(AMAPTextConstants.addOrder,
-                                    color: Colors.white),
-                                IconButton(
-                                  icon: const HeroIcon(
-                                    HeroIcons.xMark,
-                                    color: Colors.white,
-                                    size: 30,
-                                  ),
-                                  onPressed: () {
-                                    animation.reverse();
-                                    showPanel.value = false;
-                                  },
+                              children: CollectionSlot.values
+                                  .map(
+                                    (e) => CollectionSlotSelector(
+                                      collectionSlot: e,
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 30),
+                        DeliverySection(
+                          editable: order.id == Order.empty().id,
+                        ),
+                        const SizedBox(height: 20),
+                        WaitingButton(
+                          onTap: () async {
+                            if (availableDeliveriesIds.contains(delivery.id)) {
+                              await tokenExpireWrapper(ref, () async {
+                                await deliveryProductListNotifier
+                                    .loadProductList(delivery.products);
+                              });
+                              QR.to(
+                                AmapRouter.root + AmapRouter.listProduct,
+                              );
+                            } else {
+                              displayToastWithoutContext(
+                                TypeMsg.error,
+                                AMAPTextConstants.noSelectedDelivery,
+                              );
+                            }
+                          },
+                          builder: (child) => Container(
+                            margin: const EdgeInsets.symmetric(
+                              horizontal: 30,
+                            ),
+                            height: 70,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              gradient: const LinearGradient(
+                                colors: [
+                                  AMAPColorConstants.greenGradient2,
+                                  AMAPColorConstants.textDark,
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AMAPColorConstants.textDark
+                                      .withOpacity(0.3),
+                                  spreadRadius: 2,
+                                  blurRadius: 10,
+                                  offset: const Offset(2, 5),
                                 ),
                               ],
                             ),
+                            child: child,
                           ),
-                          const SizedBox(height: 30),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 50),
-                            child: Container(
-                                height: 70,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  border:
-                                      Border.all(color: Colors.white, width: 2),
+                          child: Container(
+                            padding: const EdgeInsets.only(bottom: 5),
+                            width: double.infinity,
+                            child: const Center(
+                              child: Text(
+                                AMAPTextConstants.nextStep,
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w900,
+                                  color: Colors.white,
                                 ),
-                                child: Row(
-                                    children: CollectionSlot.values
-                                        .map((e) => CollectionSlotSelector(
-                                            collectionSlot: e))
-                                        .toList())),
+                              ),
+                            ),
                           ),
-                          const SizedBox(height: 30),
-                          DeliverySection(
-                              editable: order.id == Order.empty().id),
-                          const SizedBox(height: 20),
-                          WaitingButton(
-                              onTap: () async {
-                                if (availableDeliveriesIds
-                                    .contains(delivery.id)) {
-                                  await tokenExpireWrapper(ref, () async {
-                                    await deliveryProductListNotifier
-                                        .loadProductList(delivery.products);
-                                  });
-                                  QR.to(
-                                      AmapRouter.root + AmapRouter.listProduct);
-                                } else {
-                                  displayToastWithoutContext(TypeMsg.error,
-                                      AMAPTextConstants.noSelectedDelivery);
-                                }
-                              },
-                              builder: (child) => Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 30),
-                                  height: 70,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
-                                    gradient: const LinearGradient(
-                                      colors: [
-                                        AMAPColorConstants.greenGradient2,
-                                        AMAPColorConstants.textDark,
-                                      ],
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                    ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: AMAPColorConstants.textDark
-                                            .withOpacity(0.3),
-                                        spreadRadius: 2,
-                                        blurRadius: 10,
-                                        offset: const Offset(2, 5),
-                                      ),
-                                    ],
-                                  ),
-                                  child: child),
-                              child: Container(
-                                padding: const EdgeInsets.only(bottom: 5),
-                                width: double.infinity,
-                                child: const Center(
-                                  child: Text(AMAPTextConstants.nextStep,
-                                      style: TextStyle(
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.w900,
-                                          color: Colors.white)),
-                                ),
-                              ))
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ],
-          )),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -27,10 +27,11 @@ class AdvertRouter {
   static const String addRemAnnouncer = '/add_remove_announcer';
   static const String detail = '/detail';
   static final Module module = Module(
-      name: "Annonce",
-      icon: const Left(HeroIcons.megaphone),
-      root: AdvertRouter.root,
-      selected: false);
+    name: "Annonce",
+    icon: const Left(HeroIcons.megaphone),
+    root: AdvertRouter.root,
+    selected: false,
+  );
   AdvertRouter(this.ref);
 
   QRoute route() => QRoute(
@@ -39,36 +40,39 @@ class AdvertRouter {
         builder: () => main_page.AdvertMainPage(),
         middleware: [
           AuthenticatedMiddleware(ref),
-          DeferredLoadingMiddleware(main_page.loadLibrary)
+          DeferredLoadingMiddleware(main_page.loadLibrary),
         ],
         children: [
           QRoute(
-              path: admin,
-              builder: () => admin_page.AdvertAdminPage(),
-              middleware: [
-                AdminMiddleware(ref, isAdvertAdminProvider),
-                DeferredLoadingMiddleware(admin_page.loadLibrary)
-              ],
-              children: [
-                QRoute(
-                    path: addEditAdvert,
-                    builder: () =>
-                        add_edit_advert_page.AdvertAddEditAdvertPage(),
-                    middleware: [
-                      DeferredLoadingMiddleware(
-                          add_edit_advert_page.loadLibrary)
-                    ]),
-              ]),
+            path: admin,
+            builder: () => admin_page.AdvertAdminPage(),
+            middleware: [
+              AdminMiddleware(ref, isAdvertAdminProvider),
+              DeferredLoadingMiddleware(admin_page.loadLibrary),
+            ],
+            children: [
+              QRoute(
+                path: addEditAdvert,
+                builder: () => add_edit_advert_page.AdvertAddEditAdvertPage(),
+                middleware: [
+                  DeferredLoadingMiddleware(
+                    add_edit_advert_page.loadLibrary,
+                  ),
+                ],
+              ),
+            ],
+          ),
           QRoute(
-              path: detail,
-              builder: () => detail_page.AdvertDetailPage(),
-              middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)]),
+            path: detail,
+            builder: () => detail_page.AdvertDetailPage(),
+            middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)],
+          ),
           QRoute(
             path: addRemAnnouncer,
             builder: () => add_rem_announcer_page.AddRemAnnouncerPage(),
             middleware: [
               AdminMiddleware(ref, isAdminProvider),
-              DeferredLoadingMiddleware(add_rem_announcer_page.loadLibrary)
+              DeferredLoadingMiddleware(add_rem_announcer_page.loadLibrary),
             ],
           ),
         ],

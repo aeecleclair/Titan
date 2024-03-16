@@ -26,11 +26,15 @@ class VoteCount extends HookConsumerWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50),
           child: Center(
-              child: Text(
-            '$data votes',
-            style: const TextStyle(
-                color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700),
-          )),
+            child: Text(
+              '$data votes',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
         );
       },
     );

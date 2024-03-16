@@ -161,27 +161,35 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                         if (isEdit) {
                           recommendationNotifier
                               .setRecommendation(newRecommendation);
-                          displayAdvertToastWithContext(TypeMsg.msg,
-                              RecommendationTextConstants.editedRecommendation);
+                          displayAdvertToastWithContext(
+                            TypeMsg.msg,
+                            RecommendationTextConstants.editedRecommendation,
+                          );
                           recommendationList.maybeWhen(
                             data: (list) {
                               if (logoBytes.value != null) {
                                 recommendationLogoNotifier
                                     .updateRecommendationLogo(
-                                        recommendation.id!, logoBytes.value!);
+                                  recommendation.id!,
+                                  logoBytes.value!,
+                                );
                               }
                             },
                             orElse: () {},
                           );
                         } else {
-                          displayAdvertToastWithContext(TypeMsg.msg,
-                              RecommendationTextConstants.addedRecommendation);
+                          displayAdvertToastWithContext(
+                            TypeMsg.msg,
+                            RecommendationTextConstants.addedRecommendation,
+                          );
                           recommendationList.maybeWhen(
                             data: (list) {
                               final newRecommendation = list.last;
                               recommendationLogoNotifier
                                   .updateRecommendationLogo(
-                                      newRecommendation.id!, logoBytes.value!);
+                                newRecommendation.id!,
+                                logoBytes.value!,
+                              );
                             },
                             orElse: () {},
                           );
@@ -196,8 +204,11 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                         );
                       }
                     } else {
-                      displayToast(context, TypeMsg.error,
-                          RecommendationTextConstants.incorrectOrMissingFields);
+                      displayToast(
+                        context,
+                        TypeMsg.error,
+                        RecommendationTextConstants.incorrectOrMissingFields,
+                      );
                     }
                   },
                   builder: (child) => AddEditButtonLayout(child: child),

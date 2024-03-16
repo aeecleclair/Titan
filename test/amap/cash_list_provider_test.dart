@@ -24,15 +24,16 @@ void main() {
 
       expect(result, isA<AsyncData<List<Cash>>>());
       expect(
-          result
-              .when(
-                data: (cashList) => cashList,
-                loading: () => [],
-                error: (error, stackTrace) => [],
-              )
-              .first
-              .balance,
-          100);
+        result
+            .when(
+              data: (cashList) => cashList,
+              loading: () => [],
+              error: (error, stackTrace) => [],
+            )
+            .first
+            .balance,
+        100,
+      );
       expect(cashProvider.state, result);
     });
 
@@ -49,14 +50,15 @@ void main() {
       expect(result, true);
       expect(cashProvider.state, isA<AsyncData<List<Cash>>>());
       expect(
-          cashProvider.state
-              .when(
-                data: (cashList) => cashList,
-                loading: () => [],
-                error: (error, stackTrace) => [],
-              )
-              .first,
-          cash);
+        cashProvider.state
+            .when(
+              data: (cashList) => cashList,
+              loading: () => [],
+              error: (error, stackTrace) => [],
+            )
+            .first,
+        cash,
+      );
     });
 
     test('updateCash should update cash in repository and update state',
@@ -73,15 +75,16 @@ void main() {
       expect(result, true);
       expect(cashProvider.state, isA<AsyncData<List<Cash>>>());
       expect(
-          cashProvider.state
-              .when(
-                data: (cashList) => cashList,
-                loading: () => [],
-                error: (error, stackTrace) => [],
-              )
-              .first
-              .balance,
-          150);
+        cashProvider.state
+            .when(
+              data: (cashList) => cashList,
+              loading: () => [],
+              error: (error, stackTrace) => [],
+            )
+            .first
+            .balance,
+        150,
+      );
     });
 
     test('fakeUpdateCash should update cash in state only', () async {
@@ -96,15 +99,16 @@ void main() {
       expect(result, true);
       expect(cashProvider.state, isA<AsyncData<List<Cash>>>());
       expect(
-          cashProvider.state
-              .when(
-                data: (cashList) => cashList,
-                loading: () => [],
-                error: (error, stackTrace) => [],
-              )
-              .first
-              .balance,
-          50);
+        cashProvider.state
+            .when(
+              data: (cashList) => cashList,
+              loading: () => [],
+              error: (error, stackTrace) => [],
+            )
+            .first
+            .balance,
+        50,
+      );
     });
 
     test(
@@ -114,17 +118,20 @@ void main() {
       final cashProvider = CashListProvider(cashRepository: mockRepository);
       final cashList = [
         Cash.empty().copyWith(
-            user: SimpleUser.empty()
-                .copyWith(name: 'John', firstname: 'Doe', nickname: 'JD'),
-            balance: 100),
+          user: SimpleUser.empty()
+              .copyWith(name: 'John', firstname: 'Doe', nickname: 'JD'),
+          balance: 100,
+        ),
         Cash.empty().copyWith(
-            user: SimpleUser.empty()
-                .copyWith(name: 'Jane', firstname: 'Doe', nickname: 'JD'),
-            balance: 200),
+          user: SimpleUser.empty()
+              .copyWith(name: 'Jane', firstname: 'Doe', nickname: 'JD'),
+          balance: 200,
+        ),
         Cash.empty().copyWith(
-            user: SimpleUser.empty()
-                .copyWith(name: 'Bob', firstname: 'Smith', nickname: null),
-            balance: 300),
+          user: SimpleUser.empty()
+              .copyWith(name: 'Bob', firstname: 'Smith', nickname: null),
+          balance: 300,
+        ),
       ];
 
       when(() => mockRepository.getCashList())
@@ -142,50 +149,55 @@ void main() {
       final result5 = await cashProvider.filterCashList('foo');
 
       expect(
-          result1
-              .when(
-                data: (cashList) => cashList,
-                loading: () => [],
-                error: (error, stackTrace) => [],
-              )
-              .length,
-          2);
+        result1
+            .when(
+              data: (cashList) => cashList,
+              loading: () => [],
+              error: (error, stackTrace) => [],
+            )
+            .length,
+        2,
+      );
       expect(
-          result2
-              .when(
-                data: (cashList) => cashList,
-                loading: () => [],
-                error: (error, stackTrace) => [],
-              )
-              .length,
-          2);
+        result2
+            .when(
+              data: (cashList) => cashList,
+              loading: () => [],
+              error: (error, stackTrace) => [],
+            )
+            .length,
+        2,
+      );
       expect(
-          result3
-              .when(
-                data: (cashList) => cashList,
-                loading: () => [],
-                error: (error, stackTrace) => [],
-              )
-              .length,
-          2);
+        result3
+            .when(
+              data: (cashList) => cashList,
+              loading: () => [],
+              error: (error, stackTrace) => [],
+            )
+            .length,
+        2,
+      );
       expect(
-          result4
-              .when(
-                data: (cashList) => cashList,
-                loading: () => [],
-                error: (error, stackTrace) => [],
-              )
-              .length,
-          1);
+        result4
+            .when(
+              data: (cashList) => cashList,
+              loading: () => [],
+              error: (error, stackTrace) => [],
+            )
+            .length,
+        1,
+      );
       expect(
-          result5
-              .when(
-                data: (cashList) => cashList,
-                loading: () => [],
-                error: (error, stackTrace) => [],
-              )
-              .length,
-          0);
+        result5
+            .when(
+              data: (cashList) => cashList,
+              loading: () => [],
+              error: (error, stackTrace) => [],
+            )
+            .length,
+        0,
+      );
     });
 
     test(
@@ -195,7 +207,9 @@ void main() {
       final cashProvider = CashListProvider(cashRepository: mockRepository);
 
       cashProvider.state = AsyncError(
-          AppException(ErrorType.notFound, "test"), StackTrace.empty);
+        AppException(ErrorType.notFound, "test"),
+        StackTrace.empty,
+      );
 
       final result = await cashProvider.filterCashList('j');
 
@@ -226,23 +240,25 @@ void main() {
       await cashProvider.refreshCashList();
 
       expect(
-          result
-              .when(
-                data: (cashList) => cashList,
-                loading: () => [],
-                error: (error, stackTrace) => [],
-              )
-              .length,
-          1);
+        result
+            .when(
+              data: (cashList) => cashList,
+              loading: () => [],
+              error: (error, stackTrace) => [],
+            )
+            .length,
+        1,
+      );
       expect(
-          result4
-              .when(
-                data: (cashList) => cashList,
-                loading: () => [],
-                error: (error, stackTrace) => [],
-              )
-              .length,
-          0);
+        result4
+            .when(
+              data: (cashList) => cashList,
+              loading: () => [],
+              error: (error, stackTrace) => [],
+            )
+            .length,
+        0,
+      );
 
       expect(cashProvider.state, AsyncData(cashList));
     });

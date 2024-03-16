@@ -39,8 +39,10 @@ void main() {
     test('Should print a recoverRequest', () {
       final recoverRequest =
           RecoverRequest(resetToken: 'token', newPassword: 'password');
-      expect(recoverRequest.toString(),
-          'RecoverRequest{resetToken: token, newPassword: password}');
+      expect(
+        recoverRequest.toString(),
+        'RecoverRequest{resetToken: token, newPassword: password}',
+      );
     });
 
     test('Should parse a recoverRequest', () {
@@ -81,15 +83,16 @@ void main() {
 
     test('Should return a CreateAccount', () {
       final createAccount = CreateAccount(
-          password: 'password',
-          phone: 'phone',
-          activationToken: '',
-          birthday: DateTime.parse('2021-01-01'),
-          firstname: '',
-          floor: '',
-          name: '',
-          nickname: '',
-          promo: 1);
+        password: 'password',
+        phone: 'phone',
+        activationToken: '',
+        birthday: DateTime.parse('2021-01-01'),
+        firstname: '',
+        floor: '',
+        name: '',
+        nickname: '',
+        promo: 1,
+      );
       expect(createAccount, isA<CreateAccount>());
       expect(createAccount.password, 'password');
       expect(createAccount.phone, 'phone');
@@ -104,15 +107,16 @@ void main() {
 
     test('Should update with new values', () {
       final createAccount = CreateAccount(
-          password: 'password',
-          phone: 'phone',
-          activationToken: '',
-          birthday: DateTime.parse('2021-01-01'),
-          firstname: '',
-          floor: '',
-          name: '',
-          nickname: '',
-          promo: 1);
+        password: 'password',
+        phone: 'phone',
+        activationToken: '',
+        birthday: DateTime.parse('2021-01-01'),
+        firstname: '',
+        floor: '',
+        name: '',
+        nickname: '',
+        promo: 1,
+      );
       CreateAccount newCreateAccount = createAccount.copyWith(
         password: 'newPassword',
       );
@@ -153,17 +157,20 @@ void main() {
 
     test('Should print a createAccount', () {
       final createAccount = CreateAccount(
-          password: 'password',
-          phone: 'phone',
-          activationToken: '',
-          birthday: DateTime.parse('2021-01-01'),
-          firstname: '',
-          floor: '',
-          name: '',
-          nickname: '',
-          promo: 1);
-      expect(createAccount.toString(),
-          'CreateAccount {name: , firstname: , nickname: , password: password, birthday: 2021-01-01 00:00:00.000, phone: phone, promo: 1, floor: , activationToken: }');
+        password: 'password',
+        phone: 'phone',
+        activationToken: '',
+        birthday: DateTime.parse('2021-01-01'),
+        firstname: '',
+        floor: '',
+        name: '',
+        nickname: '',
+        promo: 1,
+      );
+      expect(
+        createAccount.toString(),
+        'CreateAccount {name: , firstname: , nickname: , password: password, birthday: 2021-01-01 00:00:00.000, phone: phone, promo: 1, floor: , activationToken: }',
+      );
     });
 
     test('Should parse a createAccount', () {
@@ -208,30 +215,38 @@ void main() {
         'phone': 'phone',
         'floor': '',
         'promo': null,
-        'activation_token': ''
+        'activation_token': '',
       });
     });
   });
 
   group('Account Type Utils', () {
     test('Account Type to ID - Student', () {
-      expect(accountTypeToID(AccountType.student),
-          '39691052-2ae5-4e12-99d0-7a9f5f2b0136');
+      expect(
+        accountTypeToID(AccountType.student),
+        '39691052-2ae5-4e12-99d0-7a9f5f2b0136',
+      );
     });
 
     test('Account Type to ID - Staff', () {
-      expect(accountTypeToID(AccountType.staff),
-          '703056c4-be9d-475c-aa51-b7fc62a96aaa');
+      expect(
+        accountTypeToID(AccountType.staff),
+        '703056c4-be9d-475c-aa51-b7fc62a96aaa',
+      );
     });
 
     test('Account Type to ID - Admin', () {
-      expect(accountTypeToID(AccountType.admin),
-          '0a25cb76-4b63-4fd3-b939-da6d9feabf28');
+      expect(
+        accountTypeToID(AccountType.admin),
+        '0a25cb76-4b63-4fd3-b939-da6d9feabf28',
+      );
     });
 
     test('Account Type to ID - Association', () {
-      expect(accountTypeToID(AccountType.association),
-          '29751438-103c-42f2-b09b-33fbb20758a7');
+      expect(
+        accountTypeToID(AccountType.association),
+        '29751438-103c-42f2-b09b-33fbb20758a7',
+      );
     });
   });
 }

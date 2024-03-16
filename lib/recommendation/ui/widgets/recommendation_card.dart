@@ -34,8 +34,10 @@ class RecommendationCard extends HookConsumerWidget {
     final recommendationNotifier = ref.watch(recommendationProvider.notifier);
     final recommendationListNotifier =
         ref.watch(recommendationListProvider.notifier);
-    final logo = ref.watch(recommendationLogoMapProvider
-        .select((recommendations) => recommendations[recommendation]));
+    final logo = ref.watch(
+      recommendationLogoMapProvider
+          .select((recommendations) => recommendations[recommendation]),
+    );
     final recommendationLogoMapNotifier =
         ref.watch(recommendationLogoMapProvider.notifier);
     final recommendationLogoNotifier =
@@ -125,8 +127,10 @@ class RecommendationCard extends HookConsumerWidget {
                       onPressed: () {
                         recommendationNotifier
                             .setRecommendation(recommendation);
-                        QR.to(RecommendationRouter.root +
-                            RecommendationRouter.information);
+                        QR.to(
+                          RecommendationRouter.root +
+                              RecommendationRouter.information,
+                        );
                       },
                       icon: const HeroIcon(
                         HeroIcons.informationCircle,
@@ -141,8 +145,10 @@ class RecommendationCard extends HookConsumerWidget {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  QR.to(RecommendationRouter.root +
-                                      RecommendationRouter.addEdit);
+                                  QR.to(
+                                    RecommendationRouter.root +
+                                        RecommendationRouter.addEdit,
+                                  );
                                 },
                                 child: const CardButton(
                                   child: HeroIcon(
@@ -166,18 +172,21 @@ class RecommendationCard extends HookConsumerWidget {
                                             final value =
                                                 await recommendationListNotifier
                                                     .deleteRecommendation(
-                                                        recommendation);
+                                              recommendation,
+                                            );
                                             if (value) {
                                               displayToastWithContext(
-                                                  TypeMsg.msg,
-                                                  RecommendationTextConstants
-                                                      .deletedRecommendation);
+                                                TypeMsg.msg,
+                                                RecommendationTextConstants
+                                                    .deletedRecommendation,
+                                              );
                                               QR.back();
                                             } else {
                                               displayToastWithContext(
-                                                  TypeMsg.error,
-                                                  RecommendationTextConstants
-                                                      .deletingRecommendationError);
+                                                TypeMsg.error,
+                                                RecommendationTextConstants
+                                                    .deletingRecommendationError,
+                                              );
                                             }
                                           },
                                           title: RecommendationTextConstants

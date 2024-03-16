@@ -11,24 +11,25 @@ class TextEditing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: const EdgeInsets.symmetric(vertical: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AlignLeftText(
-              padding: const EdgeInsets.only(bottom: 3),
-              label,
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: Colors.grey.shade500,
-            ),
-            TextEntry(
-              label: label,
-              controller: controller,
-              color: ColorConstants.gradient1,
-            ),
-          ],
-        ));
+      margin: const EdgeInsets.symmetric(vertical: 20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AlignLeftText(
+            padding: const EdgeInsets.only(bottom: 3),
+            label,
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            color: Colors.grey.shade500,
+          ),
+          TextEntry(
+            label: label,
+            controller: controller,
+            color: ColorConstants.gradient1,
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -32,18 +32,25 @@ class EmailChangeDialog extends HookConsumerWidget {
     final emailController = useTextEditingController(text: newEmail);
     final formKey = GlobalKey<FormState>();
     final checkAnimationController = useAnimationController(
-        duration: const Duration(milliseconds: 500), initialValue: 0);
+      duration: const Duration(milliseconds: 500),
+      initialValue: 0,
+    );
     final checkAnimation = CurvedAnimation(
-        parent: checkAnimationController, curve: Curves.bounceOut);
+      parent: checkAnimationController,
+      curve: Curves.bounceOut,
+    );
     final ValueNotifier<AsyncValue> currentState =
         useState(AsyncError("", StackTrace.current));
     final displayForm = useState(true);
     return Dialog(
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20.0))),
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-        child: Stack(clipBehavior: Clip.none, children: [
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+      ),
+      elevation: 0.0,
+      backgroundColor: Colors.transparent,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
           Container(
             height: 500,
             padding: const EdgeInsets.only(
@@ -101,7 +108,9 @@ class EmailChangeDialog extends HookConsumerWidget {
                                 ),
                                 focusedBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
-                                      color: Colors.black, width: 2.0),
+                                    color: Colors.black,
+                                    width: 2.0,
+                                  ),
                                 ),
                               ),
                               validator: (value) {
@@ -117,93 +126,97 @@ class EmailChangeDialog extends HookConsumerWidget {
                             ),
                             const SizedBox(height: 72.0),
                             Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Container(
-                                      width: 100,
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 16),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        gradient: const LinearGradient(
-                                          colors: [
-                                            Colors.black87,
-                                            Colors.black,
-                                          ],
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                        ),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color:
-                                                Colors.black.withOpacity(0.3),
-                                            blurRadius: 2.0,
-                                            offset: const Offset(1.0, 2.0),
-                                          ),
-                                        ],
-                                      ),
-                                      child: const Center(
-                                          child: Text(
-                                        "Annuler",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
-                                      )),
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Container(
+                                    width: 100,
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 16,
                                     ),
-                                  ),
-                                  WaitingButton(
-                                    onTap: () async {
-                                      if (formKey.currentState!.validate()) {
-                                        currentState.value =
-                                            const AsyncLoading();
-                                        final result =
-                                            await userNotifier.askMailMigration(
-                                                emailController.text);
-                                        if (result) {
-                                          currentState.value =
-                                              const AsyncData("");
-                                          checkAnimationController.forward();
-                                          displayForm.value = false;
-                                        } else {
-                                          currentState.value = AsyncError(
-                                              "Une erreur est survenue",
-                                              StackTrace.current);
-                                        }
-                                      }
-                                    },
-                                    builder: (child) => Container(
-                                        width: 100,
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 16),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: Colors.grey.shade300,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Colors.grey.withOpacity(0.3),
-                                              blurRadius: 2.0,
-                                              offset: const Offset(1.0, 2.0),
-                                            ),
-                                          ],
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      gradient: const LinearGradient(
+                                        colors: [
+                                          Colors.black87,
+                                          Colors.black,
+                                        ],
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.3),
+                                          blurRadius: 2.0,
+                                          offset: const Offset(1.0, 2.0),
                                         ),
-                                        child: child),
-                                    waitingColor: Colors.black,
+                                      ],
+                                    ),
                                     child: const Center(
                                       child: Text(
-                                        "Confirmer",
+                                        "Annuler",
                                         style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ]),
+                                ),
+                                WaitingButton(
+                                  onTap: () async {
+                                    if (formKey.currentState!.validate()) {
+                                      currentState.value = const AsyncLoading();
+                                      final result =
+                                          await userNotifier.askMailMigration(
+                                        emailController.text,
+                                      );
+                                      if (result) {
+                                        currentState.value =
+                                            const AsyncData("");
+                                        checkAnimationController.forward();
+                                        displayForm.value = false;
+                                      } else {
+                                        currentState.value = AsyncError(
+                                          "Une erreur est survenue",
+                                          StackTrace.current,
+                                        );
+                                      }
+                                    }
+                                  },
+                                  builder: (child) => Container(
+                                    width: 100,
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 16,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.grey.shade300,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.3),
+                                          blurRadius: 2.0,
+                                          offset: const Offset(1.0, 2.0),
+                                        ),
+                                      ],
+                                    ),
+                                    child: child,
+                                  ),
+                                  waitingColor: Colors.black,
+                                  child: const Center(
+                                    child: Text(
+                                      "Confirmer",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       )
@@ -248,9 +261,13 @@ class EmailChangeDialog extends HookConsumerWidget {
                                     ],
                                   ),
                                   child: const Center(
-                                      child: Text("Fermer",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold))),
+                                    child: Text(
+                                      "Fermer",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
@@ -261,69 +278,76 @@ class EmailChangeDialog extends HookConsumerWidget {
             ),
           ),
           Positioned(
-              left: Consts.padding,
-              right: Consts.padding,
-              child: AsyncChild(
-                  value: currentState.value,
-                  builder: (context, data) => AnimatedBuilder(
-                      animation: checkAnimationController,
-                      builder: (context, child) {
-                        return Container(
-                            width: Consts.avatarRadius * 2,
-                            height: Consts.avatarRadius * 2,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              gradient: const LinearGradient(
-                                colors: [
-                                  Consts.greenGradient1,
-                                  Consts.greenGradient2,
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Consts.greenGradient2.withOpacity(0.3),
-                                  blurRadius: 10.0,
-                                  offset: const Offset(0.0, 10.0),
-                                ),
-                              ],
-                            ),
-                            child: Center(
-                              child: Icon(
-                                Icons.check,
-                                color: Colors.white,
-                                size: 60 * checkAnimation.value,
-                              ),
-                            ));
-                      }),
-                  orElseBuilder: (context, child) => Container(
-                      width: Consts.avatarRadius * 2,
-                      height: Consts.avatarRadius * 2,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: const LinearGradient(
-                          colors: [
-                            Consts.redGradient1,
-                            Consts.redGradient2,
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Consts.redGradient2.withOpacity(0.3),
-                            blurRadius: 10.0,
-                            offset: const Offset(0.0, 10.0),
-                          ),
+            left: Consts.padding,
+            right: Consts.padding,
+            child: AsyncChild(
+              value: currentState.value,
+              builder: (context, data) => AnimatedBuilder(
+                animation: checkAnimationController,
+                builder: (context, child) {
+                  return Container(
+                    width: Consts.avatarRadius * 2,
+                    height: Consts.avatarRadius * 2,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: const LinearGradient(
+                        colors: [
+                          Consts.greenGradient1,
+                          Consts.greenGradient2,
                         ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
                       ),
-                      child: Center(child: child)),
-                  errorBuilder: (error, stack) => const HeroIcon(
-                        HeroIcons.exclamationCircle,
-                        size: 60,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Consts.greenGradient2.withOpacity(0.3),
+                          blurRadius: 10.0,
+                          offset: const Offset(0.0, 10.0),
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: Icon(
+                        Icons.check,
                         color: Colors.white,
-                      ))),
-        ]));
+                        size: 60 * checkAnimation.value,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              orElseBuilder: (context, child) => Container(
+                width: Consts.avatarRadius * 2,
+                height: Consts.avatarRadius * 2,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: const LinearGradient(
+                    colors: [
+                      Consts.redGradient1,
+                      Consts.redGradient2,
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Consts.redGradient2.withOpacity(0.3),
+                      blurRadius: 10.0,
+                      offset: const Offset(0.0, 10.0),
+                    ),
+                  ],
+                ),
+                child: Center(child: child),
+              ),
+              errorBuilder: (error, stack) => const HeroIcon(
+                HeroIcons.exclamationCircle,
+                size: 60,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

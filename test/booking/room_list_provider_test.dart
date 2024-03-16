@@ -20,13 +20,14 @@ void main() {
       final rooms = await roomListProvider.loadRooms();
       expect(rooms, isA<AsyncData<List<Room>>>());
       expect(
-          rooms
-              .maybeWhen(
-                data: (data) => data,
-                orElse: () => [],
-              )
-              .length,
-          1);
+        rooms
+            .maybeWhen(
+              data: (data) => data,
+              orElse: () => [],
+            )
+            .length,
+        1,
+      );
     });
 
     test('Should add a room', () async {

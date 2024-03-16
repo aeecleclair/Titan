@@ -14,16 +14,17 @@ class AdminModulePage extends HookConsumerWidget {
     final tombolaLogosNotifier = ref.watch(tombolaLogosProvider.notifier);
     return RaffleTemplate(
       child: Refresher(
-          onRefresh: () async {
-            tombolaLogosNotifier.resetTData();
-          },
-          child: const Column(
-            children: [
-              AccountHandler(),
-              SizedBox(height: 12),
-              TombolaHandler()
-            ],
-          )),
+        onRefresh: () async {
+          tombolaLogosNotifier.resetTData();
+        },
+        child: const Column(
+          children: [
+            AccountHandler(),
+            SizedBox(height: 12),
+            TombolaHandler(),
+          ],
+        ),
+      ),
     );
   }
 }

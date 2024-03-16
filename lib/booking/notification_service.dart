@@ -14,5 +14,5 @@ final Map<String, Tuple2<String, List<StateNotifierProvider>>>
   "bookings": Tuple2(
     BookingRouter.root + BookingRouter.admin,
     [managerBookingListProvider],
-  )
+  ),
 };

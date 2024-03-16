@@ -19,18 +19,21 @@ class CollectionSlotSelector extends HookConsumerWidget {
     return Expanded(
       child: GestureDetector(
         onTap: () {
-          orderNotifier.setOrder(order.copyWith(
-            collectionSlot: collectionSlot,
-          ));
+          orderNotifier.setOrder(
+            order.copyWith(
+              collectionSlot: collectionSlot,
+            ),
+          );
         },
         child: Container(
           height: 70,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(isFirst ? 22 : 0),
-                bottomLeft: Radius.circular(isFirst ? 22 : 0),
-                topRight: Radius.circular(!isFirst ? 22 : 0),
-                bottomRight: Radius.circular(!isFirst ? 22 : 0)),
+              topLeft: Radius.circular(isFirst ? 22 : 0),
+              bottomLeft: Radius.circular(isFirst ? 22 : 0),
+              topRight: Radius.circular(!isFirst ? 22 : 0),
+              bottomRight: Radius.circular(!isFirst ? 22 : 0),
+            ),
             color:
                 isSelected ? Colors.white.withOpacity(0.7) : Colors.transparent,
           ),
@@ -38,11 +41,12 @@ class CollectionSlotSelector extends HookConsumerWidget {
             child: Text(
               capitalize(uiCollectionSlotToString(collectionSlot)),
               style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: isSelected
-                      ? AMAPColorConstants.greenGradient2
-                      : Colors.white),
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: isSelected
+                    ? AMAPColorConstants.greenGradient2
+                    : Colors.white,
+              ),
             ),
           ),
         ),

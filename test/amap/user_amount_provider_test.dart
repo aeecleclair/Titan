@@ -27,11 +27,13 @@ void main() {
       final result = await notifier.loadCashByUser(user.id);
 
       expect(
-          result.when(
-              data: (value) => value.balance,
-              loading: () => 0.0,
-              error: (error, stackTrace) => 0.0),
-          equals(100.0));
+        result.when(
+          data: (value) => value.balance,
+          loading: () => 0.0,
+          error: (error, stackTrace) => 0.0,
+        ),
+        equals(100.0),
+      );
       verify(() => mockRepository.getCashByUser('123')).called(1);
     });
 
@@ -54,11 +56,13 @@ void main() {
       await notifier.updateCash(50.0);
 
       expect(
-          notifier.state.when(
-              data: (value) => value.balance,
-              loading: () => 0.0,
-              error: (error, stackTrace) => 0.0),
-          equals(150.0));
+        notifier.state.when(
+          data: (value) => value.balance,
+          loading: () => 0.0,
+          error: (error, stackTrace) => 0.0,
+        ),
+        equals(150.0),
+      );
     });
 
     test('returns error when loading', () async {
@@ -67,9 +71,12 @@ void main() {
       await notifier.updateCash(50.0);
 
       expect(
-          notifier.state,
-          const AsyncValue<Cash>.error(
-              "Cannot update cash while loading", StackTrace.empty));
+        notifier.state,
+        const AsyncValue<Cash>.error(
+          "Cannot update cash while loading",
+          StackTrace.empty,
+        ),
+      );
     });
 
     test('returns error when error', () async {

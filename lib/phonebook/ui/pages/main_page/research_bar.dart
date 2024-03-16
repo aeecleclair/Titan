@@ -15,14 +15,14 @@ class ResearchBar extends HookConsumerWidget {
     final filterNotifier = ref.watch(filterProvider.notifier);
 
     return Expanded(
-        child: TextField(
-      onChanged: (value) {
-        filterNotifier.setFilter(value);
-      },
-      focusNode: focusNode,
-      controller: editingController,
-      cursorColor: PhonebookColorConstants.textDark,
-      decoration: const InputDecoration(
+      child: TextField(
+        onChanged: (value) {
+          filterNotifier.setFilter(value);
+        },
+        focusNode: focusNode,
+        controller: editingController,
+        cursorColor: PhonebookColorConstants.textDark,
+        decoration: const InputDecoration(
           isDense: true,
           suffixIcon: Icon(
             Icons.search,
@@ -36,7 +36,10 @@ class ResearchBar extends HookConsumerWidget {
             ),
           ),
           focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: ColorConstants.gradient1))),
-    ));
+            borderSide: BorderSide(color: ColorConstants.gradient1),
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -11,18 +11,21 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 class UserOrderListNotifier extends ListNotifier<Order> {
   final OrderListRepository orderListRepository;
   final AmapUserRepository userRepository;
-  UserOrderListNotifier(
-      {required this.userRepository, required this.orderListRepository})
-      : super(const AsyncValue.loading());
+  UserOrderListNotifier({
+    required this.userRepository,
+    required this.orderListRepository,
+  }) : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Order>>> loadOrderList(String userId) async {
     return await loadList(() async => userRepository.getOrderList(userId));
   }
 
   Future<AsyncValue<List<Order>>> loadDeliveryOrderList(
-      String deliveryId) async {
+    String deliveryId,
+  ) async {
     return await loadList(
-        () async => orderListRepository.getDeliveryOrderList(deliveryId));
+      () async => orderListRepository.getDeliveryOrderList(deliveryId),
+    );
   }
 
   Future<bool> addOrder(Order order) async {
@@ -31,28 +34,37 @@ class UserOrderListNotifier extends ListNotifier<Order> {
 
   Future<bool> updateOrder(Order order) async {
     return await update(
-        orderListRepository.updateOrder,
-        (orders, order) =>
-            orders..[orders.indexWhere((o) => o.id == order.id)] = order,
-        order);
+      orderListRepository.updateOrder,
+      (orders, order) =>
+          orders..[orders.indexWhere((o) => o.id == order.id)] = order,
+      order,
+    );
   }
 
   Future<bool> deleteOrder(Order order) async {
     return await delete(
-        orderListRepository.deleteOrder,
-        (orders, order) => orders..removeWhere((i) => i.id == order.id),
-        order.id,
-        order);
+      orderListRepository.deleteOrder,
+      (orders, order) => orders..removeWhere((i) => i.id == order.id),
+      order.id,
+      order,
+    );
   }
 
   void setProductQuantity(
-      int indexOrder, Product product, int newQuantity) async {
+    int indexOrder,
+    Product product,
+    int newQuantity,
+  ) async {
     state.when(
       data: (orders) async {
         orders[indexOrder] = orders[indexOrder].copyWith(
-            products: orders[indexOrder].products
-              ..replaceRange(orders[indexOrder].products.indexOf(product), 1,
-                  [product.copyWith(quantity: newQuantity)]));
+          products: orders[indexOrder].products
+            ..replaceRange(
+              orders[indexOrder].products.indexOf(product),
+              1,
+              [product.copyWith(quantity: newQuantity)],
+            ),
+        );
         state = AsyncValue.data(orders);
       },
       error: (error, stackTrace) {
@@ -60,7 +72,9 @@ class UserOrderListNotifier extends ListNotifier<Order> {
       },
       loading: () {
         state = const AsyncValue.error(
-            "Cannot update product while loading", StackTrace.empty);
+          "Cannot update product while loading",
+          StackTrace.empty,
+        );
       },
     );
   }
@@ -77,13 +91,19 @@ class UserOrderListNotifier extends ListNotifier<Order> {
       },
       loading: () {
         state = const AsyncValue.error(
-            "Cannot toggle expanded while loading", StackTrace.empty);
+          "Cannot toggle expanded while loading",
+          StackTrace.empty,
+        );
       },
     );
   }
 
-  Future<bool> setProducts(int indexOrder, List<Product> newListProduct,
-      String deliveryId, String userId) async {
+  Future<bool> setProducts(
+    int indexOrder,
+    List<Product> newListProduct,
+    String deliveryId,
+    String userId,
+  ) async {
     return state.when(
       data: (orders) async {
         try {
@@ -108,7 +128,9 @@ class UserOrderListNotifier extends ListNotifier<Order> {
       },
       loading: () {
         state = const AsyncValue.error(
-            "Cannot update product while loading", StackTrace.empty);
+          "Cannot update product while loading",
+          StackTrace.empty,
+        );
         return false;
       },
     );
@@ -128,7 +150,9 @@ class UserOrderListNotifier extends ListNotifier<Order> {
         },
         loading: () {
           state = const AsyncValue.error(
-              "Cannot get price while loading", StackTrace.empty);
+            "Cannot get price while loading",
+            StackTrace.empty,
+          );
         },
       );
     } catch (e) {
@@ -148,12 +172,14 @@ final userOrderListProvider =
   final amapUserRepository = ref.watch(amapUserRepositoryProvider);
   final orderListRepository = ref.watch(orderListRepositoryProvider);
   UserOrderListNotifier userOrderListNotifier = UserOrderListNotifier(
-      userRepository: amapUserRepository,
-      orderListRepository: orderListRepository);
+    userRepository: amapUserRepository,
+    orderListRepository: orderListRepository,
+  );
   tokenExpireWrapperAuth(ref, () async {
     final userId = ref.watch(idProvider);
     userId.whenData(
-        (value) async => await userOrderListNotifier.loadOrderList(value));
+      (value) async => await userOrderListNotifier.loadOrderList(value),
+    );
   });
   return userOrderListNotifier;
 });

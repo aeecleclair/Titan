@@ -10,12 +10,15 @@ class LoanerRepository extends Repository {
 
   Future<List<Loaner>> getLoanerList() async {
     return List<Loaner>.from(
-        (await getList(suffix: "loaners/")).map((x) => Loaner.fromJson(x)));
+      (await getList(suffix: "loaners/")).map((x) => Loaner.fromJson(x)),
+    );
   }
 
   Future<List<Loaner>> getMyLoaner() async {
-    return List<Loaner>.from((await getList(suffix: "users/me/loaners"))
-        .map((x) => Loaner.fromJson(x)));
+    return List<Loaner>.from(
+      (await getList(suffix: "users/me/loaners"))
+          .map((x) => Loaner.fromJson(x)),
+    );
   }
 
   Future<Loaner> getLoaner(String id) async {

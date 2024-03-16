@@ -39,8 +39,9 @@ class RecommendationMainPage extends HookConsumerWidget {
                   onTap: () {
                     recommendationNotifier
                         .setRecommendation(Recommendation.empty());
-                    QR.to(RecommendationRouter.root +
-                        RecommendationRouter.addEdit);
+                    QR.to(
+                      RecommendationRouter.root + RecommendationRouter.addEdit,
+                    );
                   },
                   child: const RecommendationCardLayout(
                     child: Center(

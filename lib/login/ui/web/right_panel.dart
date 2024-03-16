@@ -17,43 +17,54 @@ class RightPanel extends HookConsumerWidget {
     final pageController = PageController(initialPage: initialPage);
     final offset = useState(Offset.zero);
     final resetAnimation = useAnimationController(
-        duration: const Duration(milliseconds: 800),
-        reverseDuration: const Duration(milliseconds: 1));
+      duration: const Duration(milliseconds: 800),
+      reverseDuration: const Duration(milliseconds: 1),
+    );
     resetAnimation.addListener(() {
-      offset.value = Offset.lerp(offset.value, Offset.zero,
-          Curves.easeInOut.transform(resetAnimation.value))!;
+      offset.value = Offset.lerp(
+        offset.value,
+        Offset.zero,
+        Curves.easeInOut.transform(resetAnimation.value),
+      )!;
     });
     final isHovering = useState(false);
 
     final screenShots = [
       ScreenShot(
-          path: 'assets/web/Calendrier.webp',
-          title: 'BDE - BDS - BDA',
-          description: 'Les évènements à venir'),
+        path: 'assets/web/Calendrier.webp',
+        title: 'BDE - BDS - BDA',
+        description: 'Les évènements à venir',
+      ),
       ScreenShot(
-          path: 'assets/web/AMAP.webp',
-          title: 'Planet&Co',
-          description: 'Commande de fruit et légumes'),
+        path: 'assets/web/AMAP.webp',
+        title: 'Planet&Co',
+        description: 'Commande de fruit et légumes',
+      ),
       ScreenShot(
-          path: 'assets/web/Ciné.webp',
-          title: 'Club Cinéma',
-          description: 'Les projections à venir'),
+        path: 'assets/web/Ciné.webp',
+        title: 'Club Cinéma',
+        description: 'Les projections à venir',
+      ),
       ScreenShot(
-          path: 'assets/web/Parametres.webp',
-          title: 'Éclair',
-          description: 'Personnalisation de l\'interface'),
+        path: 'assets/web/Parametres.webp',
+        title: 'Éclair',
+        description: 'Personnalisation de l\'interface',
+      ),
       ScreenShot(
-          path: 'assets/web/Pret.webp',
-          title: '',
-          description: 'Gestion des prêts de matériel'),
+        path: 'assets/web/Pret.webp',
+        title: '',
+        description: 'Gestion des prêts de matériel',
+      ),
       ScreenShot(
-          path: 'assets/web/Tombola.webp',
-          title: '',
-          description: 'Les tombolas proposé par plusieurs associations'),
+        path: 'assets/web/Tombola.webp',
+        title: '',
+        description: 'Les tombolas proposé par plusieurs associations',
+      ),
       ScreenShot(
-          path: 'assets/web/Vote.webp',
-          title: 'CAA',
-          description: "L'éléction des nouveaux mandats"),
+        path: 'assets/web/Vote.webp',
+        title: 'CAA',
+        description: "L'éléction des nouveaux mandats",
+      ),
     ];
 
     return Row(
@@ -80,26 +91,29 @@ class RightPanel extends HookConsumerWidget {
                         Text(
                           screenShot.title,
                           style: const TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
                       if (screenShot.title.isNotEmpty)
                         const Text(
                           " - ",
                           style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
                       Expanded(
                         child: AutoSizeText(
                           screenShot.description,
                           maxLines: 1,
                           style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ],
@@ -107,14 +121,18 @@ class RightPanel extends HookConsumerWidget {
                   Expanded(
                     child: Container(
                       margin: const EdgeInsets.symmetric(
-                          vertical: 20, horizontal: 15),
+                        vertical: 20,
+                        horizontal: 15,
+                      ),
                       child: LayoutBuilder(
                         builder: (context, constraints) => MouseRegion(
                           onHover: (event) {
                             if (isHovering.value) {
                               offset.value = event.localPosition -
-                                  Offset(constraints.maxWidth / 2,
-                                      constraints.maxHeight / 2);
+                                  Offset(
+                                    constraints.maxWidth / 2,
+                                    constraints.maxHeight / 2,
+                                  );
                             }
                           },
                           onExit: (event) {
@@ -145,8 +163,9 @@ class RightPanel extends HookConsumerWidget {
                                         Colors.grey.shade200.withOpacity(0.2),
                                     borderRadius: BorderRadius.circular(20),
                                     border: Border.all(
-                                        color: Colors.white.withOpacity(0.2),
-                                        width: 2),
+                                      color: Colors.white.withOpacity(0.2),
+                                      width: 2,
+                                    ),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(10),
@@ -170,8 +189,9 @@ class RightPanel extends HookConsumerWidget {
           ),
         ),
         Expanded(
-            flex: 5,
-            child: Column(children: [
+          flex: 5,
+          child: Column(
+            children: [
               const SizedBox(height: 50),
               Row(
                 children: [
@@ -181,14 +201,17 @@ class RightPanel extends HookConsumerWidget {
                     controller: pageController,
                     count: screenShots.length,
                     effect: const WormEffect(
-                        dotColor: Colors.white,
-                        activeDotColor: Color.fromARGB(255, 48, 48, 48),
-                        dotWidth: 20,
-                        dotHeight: 20),
+                      dotColor: Colors.white,
+                      activeDotColor: Color.fromARGB(255, 48, 48, 48),
+                      dotWidth: 20,
+                      dotHeight: 20,
+                    ),
                     onDotClicked: (index) {
-                      pageController.animateToPage(index,
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeInOut);
+                      pageController.animateToPage(
+                        index,
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.easeInOut,
+                      );
                     },
                   ),
                   const Spacer(),
@@ -204,7 +227,9 @@ class RightPanel extends HookConsumerWidget {
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 50),
-            ])),
+            ],
+          ),
+        ),
       ],
     );
   }

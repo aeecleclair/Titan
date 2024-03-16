@@ -29,10 +29,11 @@ class RaffleRouter {
   static const String addEditPackTicket = '/add_edit_pack_ticket';
   static const String creation = '/creation';
   static final Module module = Module(
-      name: "Tombola",
-      icon: const Left(HeroIcons.gift),
-      root: RaffleRouter.root,
-      selected: false);
+    name: "Tombola",
+    icon: const Left(HeroIcons.gift),
+    root: RaffleRouter.root,
+    selected: false,
+  );
   RaffleRouter(this.ref);
   QRoute route() => QRoute(
         name: "raffle",
@@ -40,48 +41,55 @@ class RaffleRouter {
         builder: () => main_page.RaffleMainPage(),
         middleware: [
           AuthenticatedMiddleware(ref),
-          DeferredLoadingMiddleware(main_page.loadLibrary)
+          DeferredLoadingMiddleware(main_page.loadLibrary),
         ],
         children: [
           QRoute(
-              path: admin,
-              builder: () => admin_module_page.AdminModulePage(),
-              middleware: [
-                AdminMiddleware(ref, isRaffleAdminProvider),
-                DeferredLoadingMiddleware(admin_module_page.loadLibrary)
-              ]),
+            path: admin,
+            builder: () => admin_module_page.AdminModulePage(),
+            middleware: [
+              AdminMiddleware(ref, isRaffleAdminProvider),
+              DeferredLoadingMiddleware(admin_module_page.loadLibrary),
+            ],
+          ),
           QRoute(
-              path: detail,
-              builder: () => raffle_page.RaffleInfoPage(),
-              middleware: [
-                AdminMiddleware(ref, isRaffleAdminProvider),
-                DeferredLoadingMiddleware(raffle_page.loadLibrary)
-              ],
-              children: [
-                QRoute(
-                    path: creation,
-                    builder: () => creation_edit_page.CreationPage(),
+            path: detail,
+            builder: () => raffle_page.RaffleInfoPage(),
+            middleware: [
+              AdminMiddleware(ref, isRaffleAdminProvider),
+              DeferredLoadingMiddleware(raffle_page.loadLibrary),
+            ],
+            children: [
+              QRoute(
+                path: creation,
+                builder: () => creation_edit_page.CreationPage(),
+                middleware: [
+                  DeferredLoadingMiddleware(creation_edit_page.loadLibrary),
+                ],
+                children: [
+                  QRoute(
+                    path: addEditPrize,
+                    builder: () => add_edit_prize_page.AddEditPrizePage(),
                     middleware: [
-                      DeferredLoadingMiddleware(creation_edit_page.loadLibrary)
+                      DeferredLoadingMiddleware(
+                        add_edit_prize_page.loadLibrary,
+                      ),
                     ],
-                    children: [
-                      QRoute(
-                          path: addEditPrize,
-                          builder: () => add_edit_prize_page.AddEditPrizePage(),
-                          middleware: [
-                            DeferredLoadingMiddleware(
-                                add_edit_prize_page.loadLibrary)
-                          ]),
-                      QRoute(
-                          path: addEditPackTicket,
-                          builder: () =>
-                              add_edit_pack_ticket_page.AddEditPackTicketPage(),
-                          middleware: [
-                            DeferredLoadingMiddleware(
-                                add_edit_pack_ticket_page.loadLibrary)
-                          ]),
-                    ]),
-              ]),
+                  ),
+                  QRoute(
+                    path: addEditPackTicket,
+                    builder: () =>
+                        add_edit_pack_ticket_page.AddEditPackTicketPage(),
+                    middleware: [
+                      DeferredLoadingMiddleware(
+                        add_edit_pack_ticket_page.loadLibrary,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ],
       );
 }

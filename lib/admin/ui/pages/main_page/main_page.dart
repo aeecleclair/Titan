@@ -34,8 +34,9 @@ class AdminMainPage extends HookConsumerWidget {
     }
 
     final List<String> loanersId = loans.maybeWhen(
-        data: (value) => value.map((e) => e.groupManagerId).toList(),
-        orElse: () => []);
+      data: (value) => value.map((e) => e.groupManagerId).toList(),
+      orElse: () => [],
+    );
 
     return AdminTemplate(
       child: Refresher(
@@ -46,41 +47,48 @@ class AdminMainPage extends HookConsumerWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
           child: AsyncChild(
-              value: groups,
-              builder: (context, g) {
-                g.sort((a, b) =>
-                    a.name.toLowerCase().compareTo(b.name.toLowerCase()));
-                return Column(children: [
+            value: groups,
+            builder: (context, g) {
+              g.sort(
+                (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()),
+              );
+              return Column(
+                children: [
                   Column(
                     children: [
                       GestureDetector(
                         onTap: () {
-                          QR.to(AdminRouter.root +
-                              AdminRouter.editModuleVisibility);
+                          QR.to(
+                            AdminRouter.root + AdminRouter.editModuleVisibility,
+                          );
                         },
-                        child: CardUi(children: [
-                          const Spacer(),
-                          HeroIcon(
-                            HeroIcons.eye,
-                            color: Colors.grey.shade700,
-                            size: 40,
-                          ),
-                          const Spacer(),
-                        ]),
+                        child: CardUi(
+                          children: [
+                            const Spacer(),
+                            HeroIcon(
+                              HeroIcons.eye,
+                              color: Colors.grey.shade700,
+                              size: 40,
+                            ),
+                            const Spacer(),
+                          ],
+                        ),
                       ),
                       GestureDetector(
                         onTap: () {
                           QR.to(AdminRouter.root + AdminRouter.addAssociation);
                         },
-                        child: CardUi(children: [
-                          const Spacer(),
-                          HeroIcon(
-                            HeroIcons.plus,
-                            color: Colors.grey.shade700,
-                            size: 40,
-                          ),
-                          const Spacer(),
-                        ]),
+                        child: CardUi(
+                          children: [
+                            const Spacer(),
+                            HeroIcon(
+                              HeroIcons.plus,
+                              color: Colors.grey.shade700,
+                              size: 40,
+                            ),
+                            const Spacer(),
+                          ],
+                        ),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -105,56 +113,62 @@ class AdminMainPage extends HookConsumerWidget {
                                     size: 15,
                                     color: Colors.grey.shade700,
                                   ),
-                                )
+                                ),
                               ],
                             ),
                             const Spacer(),
                           ],
                         ),
                       ),
-                      ...g.map((group) => AssociationUi(
-                            group: group,
-                            isLoaner: loanersId.contains(group.id),
-                            onEdit: () {
-                              groupIdNotifier.setId(group.id);
-                              QR.to(AdminRouter.root +
-                                  AdminRouter.editAssociation);
-                            },
-                            onDelete: () async {
-                              await showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return CustomDialogBox(
-                                      title: AdminTextConstants.deleting,
-                                      descriptions:
-                                          AdminTextConstants.deleteAssociation,
-                                      onYes: () async {
-                                        tokenExpireWrapper(ref, () async {
-                                          final value = await groupsNotifier
-                                              .deleteGroup(group);
-                                          if (value) {
-                                            displayToastWithContext(
-                                                TypeMsg.msg,
-                                                AdminTextConstants
-                                                    .deletedAssociation);
-                                          } else {
-                                            displayToastWithContext(
-                                                TypeMsg.error,
-                                                AdminTextConstants
-                                                    .deletingError);
-                                          }
-                                        });
-                                      },
-                                    );
-                                  });
-                            },
-                          )),
-                      const SizedBox(height: 20)
+                      ...g.map(
+                        (group) => AssociationUi(
+                          group: group,
+                          isLoaner: loanersId.contains(group.id),
+                          onEdit: () {
+                            groupIdNotifier.setId(group.id);
+                            QR.to(
+                              AdminRouter.root + AdminRouter.editAssociation,
+                            );
+                          },
+                          onDelete: () async {
+                            await showDialog(
+                              context: context,
+                              builder: (context) {
+                                return CustomDialogBox(
+                                  title: AdminTextConstants.deleting,
+                                  descriptions:
+                                      AdminTextConstants.deleteAssociation,
+                                  onYes: () async {
+                                    tokenExpireWrapper(ref, () async {
+                                      final value = await groupsNotifier
+                                          .deleteGroup(group);
+                                      if (value) {
+                                        displayToastWithContext(
+                                          TypeMsg.msg,
+                                          AdminTextConstants.deletedAssociation,
+                                        );
+                                      } else {
+                                        displayToastWithContext(
+                                          TypeMsg.error,
+                                          AdminTextConstants.deletingError,
+                                        );
+                                      }
+                                    });
+                                  },
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 20),
                     ],
                   ),
-                ]);
-              },
-              loaderColor: ColorConstants.gradient1),
+                ],
+              );
+            },
+            loaderColor: ColorConstants.gradient1,
+          ),
         ),
       ),
     );

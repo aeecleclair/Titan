@@ -13,8 +13,11 @@ import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class MemberCard extends HookConsumerWidget {
-  const MemberCard(
-      {super.key, required this.member, required this.association});
+  const MemberCard({
+    super.key,
+    required this.member,
+    required this.association,
+  });
 
   final CompleteMember member;
   final Association association;
@@ -24,9 +27,10 @@ class MemberCard extends HookConsumerWidget {
     final memberNotifier = ref.watch(completeMemberProvider.notifier);
 
     Membership? assoMembership = member.memberships.firstWhereOrNull(
-        (memberships) =>
-            memberships.associationId == association.id &&
-            memberships.mandateYear == association.mandateYear);
+      (memberships) =>
+          memberships.associationId == association.id &&
+          memberships.mandateYear == association.mandateYear,
+    );
 
     return GestureDetector(
       onTap: () {
@@ -41,23 +45,26 @@ class MemberCard extends HookConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               if (member.member.nickname != null) ...[
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text(
-                    member.member.nickname!,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      member.member.nickname!,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
-                  ),
-                  Text(
-                    "(${member.member.name} ${member.member.firstname})",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: Color.fromARGB(255, 115, 115, 115),
+                    Text(
+                      "(${member.member.name} ${member.member.firstname})",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Color.fromARGB(255, 115, 115, 115),
+                      ),
                     ),
-                  ),
-                ]),
+                  ],
+                ),
               ] else
                 Text(
                   "${member.member.name} ${member.member.firstname}",

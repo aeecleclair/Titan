@@ -21,16 +21,20 @@ void main() {
     test('loadEventList should return AsyncValue<List<Event>>', () async {
       final events = [
         Event.empty().copyWith(id: '1', name: 'Event 1'),
-        Event.empty().copyWith(id: '2', name: 'Event 2')
+        Event.empty().copyWith(id: '2', name: 'Event 2'),
       ];
       when(() => eventRepository.getAllEvent()).thenAnswer((_) async => events);
 
       final result = await eventListNotifier.loadEventList();
 
       expect(
-          result.when(
-              data: (data) => data, loading: () => [], error: (_, __) => []),
-          events);
+        result.when(
+          data: (data) => data,
+          loading: () => [],
+          error: (_, __) => [],
+        ),
+        events,
+      );
     });
 
     test('addEvent should return true', () async {

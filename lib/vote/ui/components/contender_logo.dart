@@ -16,20 +16,21 @@ class ContenderLogo extends HookConsumerWidget {
     final contenderLogosNotifier = ref.read(contenderLogosProvider.notifier);
     final logoNotifier = ref.read(contenderLogoProvider.notifier);
     return AutoLoaderChild(
-        group: contenderLogos,
-        notifier: contenderLogosNotifier,
-        mapKey: contender.id,
-        loader: (contenderId) => logoNotifier.getLogo(contenderId),
-        dataBuilder: (context, logo) => Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  image: logo.first.image,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ));
+      group: contenderLogos,
+      notifier: contenderLogosNotifier,
+      mapKey: contender.id,
+      loader: (contenderId) => logoNotifier.getLogo(contenderId),
+      dataBuilder: (context, logo) => Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          image: DecorationImage(
+            image: logo.first.image,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+    );
   }
 }

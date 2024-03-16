@@ -21,13 +21,14 @@ class ContenderCard extends HookConsumerWidget {
   final int index;
   final bool enableVote;
   final double votesPercent;
-  const ContenderCard(
-      {super.key,
-      required this.contender,
-      required this.animation,
-      required this.index,
-      required this.enableVote,
-      required this.votesPercent});
+  const ContenderCard({
+    super.key,
+    required this.contender,
+    required this.animation,
+    required this.index,
+    required this.enableVote,
+    required this.votesPercent,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -46,194 +47,225 @@ class ContenderCard extends HookConsumerWidget {
             position: Tween<Offset>(
               begin: const Offset(1, 0),
               end: const Offset(0, 0),
-            ).animate(CurvedAnimation(
+            ).animate(
+              CurvedAnimation(
                 parent: animation,
-                curve: Interval(0.08 + 0.05 * index, 0.28 + 0.05 * index,
-                    curve: Curves.easeOut))),
+                curve: Interval(
+                  0.08 + 0.05 * index,
+                  0.28 + 0.05 * index,
+                  curve: Curves.easeOut,
+                ),
+              ),
+            ),
             child: SizedBox(
               height: 175,
-              child: Row(children: [
-                Expanded(
-                  child: (votesPercent) < 0.3
-                      ? Container(
-                          padding: const EdgeInsets.all(10.0),
-                          margin: const EdgeInsets.only(bottom: 15),
-                          child: Align(
-                            alignment: Alignment.bottomRight,
-                            child: Text(
-                              '${(votesPercent * 100).toStringAsFixed(1)}%',
-                              style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ))
-                      : Container(),
-                ),
-                Column(
-                  children: [
-                    const Spacer(),
-                    Container(
-                      padding: const EdgeInsets.all(10.0),
-                      margin: const EdgeInsets.only(bottom: 15),
-                      height: 70,
-                      width: (MediaQuery.of(context).size.width - 92) *
-                          votesPercent,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            bottomLeft: Radius.circular(20)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.shade500.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 10,
-                            offset: const Offset(3, 3),
-                          ),
-                        ],
-                      ),
-                      child: (votesPercent >= 0.3)
-                          ? Align(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: (votesPercent) < 0.3
+                        ? Container(
+                            padding: const EdgeInsets.all(10.0),
+                            margin: const EdgeInsets.only(bottom: 15),
+                            child: Align(
                               alignment: Alignment.bottomRight,
                               child: Text(
                                 '${(votesPercent * 100).toStringAsFixed(1)}%',
                                 style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          )
+                        : Container(),
+                  ),
+                  Column(
+                    children: [
+                      const Spacer(),
+                      Container(
+                        padding: const EdgeInsets.all(10.0),
+                        margin: const EdgeInsets.only(bottom: 15),
+                        height: 70,
+                        width: (MediaQuery.of(context).size.width - 92) *
+                            votesPercent,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            bottomLeft: Radius.circular(20),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.shade500.withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 10,
+                              offset: const Offset(3, 3),
+                            ),
+                          ],
+                        ),
+                        child: (votesPercent >= 0.3)
+                            ? Align(
+                                alignment: Alignment.bottomRight,
+                                child: Text(
+                                  '${(votesPercent * 100).toStringAsFixed(1)}%',
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            )
-                          : const SizedBox(),
-                    ),
-                  ],
-                ),
-              ]),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         SlideTransition(
           position: Tween<Offset>(
             begin: const Offset(1, 0),
             end: const Offset(0, 0),
-          ).animate(CurvedAnimation(
+          ).animate(
+            CurvedAnimation(
               parent: animation,
-              curve: Interval(0.05 + 0.05 * index, 0.25 + 0.05 * index,
-                  curve: Curves.easeOut))),
-          child: Container(
-              padding: const EdgeInsets.all(10.0),
-              margin: const EdgeInsets.only(bottom: 15, left: 10),
-              height: (s == Status.open && enableVote) ? 160 : 120,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    bottomLeft: Radius.circular(20)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade500.withOpacity(0.1),
-                    spreadRadius: 5,
-                    blurRadius: 10,
-                    offset: const Offset(3, 3),
-                  ),
-                ],
+              curve: Interval(
+                0.05 + 0.05 * index,
+                0.25 + 0.05 * index,
+                curve: Curves.easeOut,
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        contender.listType != ListType.blank
-                            ? ContenderLogo(contender)
-                            : const HeroIcon(
-                                HeroIcons.cubeTransparent,
-                                size: 40,
+            ),
+          ),
+          child: Container(
+            padding: const EdgeInsets.all(10.0),
+            margin: const EdgeInsets.only(bottom: 15, left: 10),
+            height: (s == Status.open && enableVote) ? 160 : 120,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(20),
+                bottomLeft: Radius.circular(20),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.shade500.withOpacity(0.1),
+                  spreadRadius: 5,
+                  blurRadius: 10,
+                  offset: const Offset(3, 3),
+                ),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      contender.listType != ListType.blank
+                          ? ContenderLogo(contender)
+                          : const HeroIcon(
+                              HeroIcons.cubeTransparent,
+                              size: 40,
+                            ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            AutoSizeText(
+                              contender.name,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
                               ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: Column(
-                            children: [
-                              AutoSizeText(contender.name,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black)),
-                              Text(
-                                  capitalize(contender.listType
-                                      .toString()
-                                      .split('.')
-                                      .last),
-                                  style: const TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black)),
-                              const SizedBox(height: 3),
-                            ],
-                          ),
+                            ),
+                            Text(
+                              capitalize(
+                                contender.listType.toString().split('.').last,
+                              ),
+                              style: const TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            const SizedBox(height: 3),
+                          ],
                         ),
-                        const SizedBox(width: 5),
-                        contender.listType != ListType.blank
+                      ),
+                      const SizedBox(width: 5),
+                      contender.listType != ListType.blank
+                          ? GestureDetector(
+                              onTap: () {
+                                contenderNotifier.setId(contender);
+                                QR.to(VoteRouter.root + VoteRouter.detail);
+                              },
+                              child: const HeroIcon(
+                                HeroIcons.informationCircle,
+                                color: Colors.black,
+                                size: 25,
+                              ),
+                            )
+                          : const SizedBox(width: 25),
+                    ],
+                  ),
+                  Center(
+                    child: Text(
+                      contender.description,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey.shade400,
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  if (s == Status.open && enableVote)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        selectedContender.id != contender.id
                             ? GestureDetector(
                                 onTap: () {
-                                  contenderNotifier.setId(contender);
-                                  QR.to(VoteRouter.root + VoteRouter.detail);
+                                  sections.maybeWhen(
+                                    data: (data) {
+                                      selectedContenderNotifier
+                                          .changeSelection(contender);
+                                    },
+                                    orElse: () {},
+                                  );
                                 },
-                                child: const HeroIcon(
-                                  HeroIcons.informationCircle,
+                                child: const CardButton(
                                   color: Colors.black,
-                                  size: 25,
+                                  child: HeroIcon(
+                                    HeroIcons.envelopeOpen,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               )
-                            : const SizedBox(width: 25),
+                            : const Text(
+                                VoteTextConstants.selected,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
                       ],
                     ),
-                    Center(
-                      child: Text(contender.description,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey.shade400)),
-                    ),
-                    const Spacer(),
-                    if (s == Status.open && enableVote)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          selectedContender.id != contender.id
-                              ? GestureDetector(
-                                  onTap: () {
-                                    sections.maybeWhen(
-                                        data: (data) {
-                                          selectedContenderNotifier
-                                              .changeSelection(contender);
-                                        },
-                                        orElse: () {});
-                                  },
-                                  child: const CardButton(
-                                    color: Colors.black,
-                                    child: HeroIcon(HeroIcons.envelopeOpen,
-                                        color: Colors.white),
-                                  ),
-                                )
-                              : const Text(
-                                  VoteTextConstants.selected,
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black),
-                                )
-                        ],
-                      ),
-                  ],
-                ),
-              )),
+                ],
+              ),
+            ),
+          ),
         ),
       ],
     );

@@ -22,6 +22,9 @@ class Version {
     return data;
   }
 
-  Version.empty(
-      {this.ready = false, this.version = '', this.minimalTitanVersion = 0});
+  Version.empty({
+    this.ready = false,
+    this.version = '',
+    this.minimalTitanVersion = 0,
+  });
 }

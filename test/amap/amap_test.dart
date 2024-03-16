@@ -55,8 +55,10 @@ void main() {
 
     test('Should print properly', () async {
       final cash = Cash.empty();
-      expect(cash.toString(),
-          'Cash{balance: 0.0, user: SimpleUser {name: Nom, firstname: Prénom, nickname: null, id: }}');
+      expect(
+        cash.toString(),
+        'Cash{balance: 0.0, user: SimpleUser {name: Nom, firstname: Prénom, nickname: null, id: }}',
+      );
     });
 
     test('Should parse a Cash from json', () async {
@@ -73,8 +75,8 @@ void main() {
           "floor": "floor",
           "groups": [],
           "phone": "phone",
-          "promo": null
-        }
+          "promo": null,
+        },
       });
       expect(cash, isA<Cash>());
       expect(cash.balance, 0);
@@ -90,7 +92,7 @@ void main() {
           "firstname": "Firstname",
           "nickname": null,
           "id": "id",
-        }
+        },
       });
       expect(cash.toJson(), {
         "balance": 0.0,
@@ -156,8 +158,10 @@ void main() {
         id: 'id',
         status: DeliveryStatus.creation,
       );
-      expect(delivery.toString(),
-          'Delivery{deliveryDate: 2021-01-01 00:00:00.000, products: [Product{id: , name: Name, price: 0.0, quantity: 0, category: }], id: id, status: DeliveryStatus.creation, expanded: false}');
+      expect(
+        delivery.toString(),
+        'Delivery{deliveryDate: 2021-01-01 00:00:00.000, products: [Product{id: , name: Name, price: 0.0, quantity: 0, category: }], id: id, status: DeliveryStatus.creation, expanded: false}',
+      );
     });
 
     test('Should return correct json', () async {
@@ -243,8 +247,10 @@ void main() {
         orderingDate: DateTime.parse('2021-01-01'),
         deliveryDate: DateTime.parse('2021-01-01'),
       );
-      expect(order.toString(),
-          'Order{id: id, orderingDate: 2021-01-01 00:00:00.000, deliveryDate: 2021-01-01 00:00:00.000, productsDetail: [id], productsQuantity: [0], deliveryId: delivery_id, products: [Product{id: id, name: name, price: 0.0, quantity: 0, category: }], amount: 0.0, lastAmount: 0.0, collectionSlot: CollectionSlot.midDay, user: SimpleUser {name: Name, firstname: Prénom, nickname: null, id: }, expanded: false}');
+      expect(
+        order.toString(),
+        'Order{id: id, orderingDate: 2021-01-01 00:00:00.000, deliveryDate: 2021-01-01 00:00:00.000, productsDetail: [id], productsQuantity: [0], deliveryId: delivery_id, products: [Product{id: id, name: name, price: 0.0, quantity: 0, category: }], amount: 0.0, lastAmount: 0.0, collectionSlot: CollectionSlot.midDay, user: SimpleUser {name: Name, firstname: Prénom, nickname: null, id: }, expanded: false}',
+      );
     });
 
     test('Should parse an Order from json', () async {
@@ -350,8 +356,10 @@ void main() {
         link: "Link",
         description: "Description",
       );
-      expect(information.toString(),
-          'Information{manager: Manager, link: Link, description: Description}');
+      expect(
+        information.toString(),
+        'Information{manager: Manager, link: Link, description: Description}',
+      );
     });
 
     test('Should return correct json', () async {
@@ -392,7 +400,7 @@ void main() {
           "name": "name",
           "price": 0.0,
           "category": "category",
-        }
+        },
       });
       expect(product, isA<Product>());
     });
@@ -429,8 +437,10 @@ void main() {
         category: "category",
         quantity: 0,
       );
-      expect(product.toString(),
-          'Product{id: id, name: name, price: 0.0, quantity: 0, category: category}');
+      expect(
+        product.toString(),
+        'Product{id: id, name: name, price: 0.0, quantity: 0, category: category}',
+      );
     });
 
     test('Should return correct json', () async {
@@ -453,10 +463,14 @@ void main() {
 
   group('Testing functions', () {
     test('Should return the correct string', () async {
-      expect(uiCollectionSlotToString(CollectionSlot.midDay),
-          AMAPTextConstants.midDay);
-      expect(uiCollectionSlotToString(CollectionSlot.evening),
-          AMAPTextConstants.evening);
+      expect(
+        uiCollectionSlotToString(CollectionSlot.midDay),
+        AMAPTextConstants.midDay,
+      );
+      expect(
+        uiCollectionSlotToString(CollectionSlot.evening),
+        AMAPTextConstants.evening,
+      );
     });
     test('Should return a string', () async {
       expect(apiCollectionSlotToString(CollectionSlot.midDay), "midi");

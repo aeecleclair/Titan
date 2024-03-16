@@ -20,20 +20,23 @@ class CashListProvider extends ListNotifier<Cash> {
 
   Future<bool> updateCash(Cash addedCash, double previousCashAmount) async {
     return await update(
-        cashRepository.updateCash,
-        (cashList, c) => cashList
-          ..[cashList.indexWhere((c) => c.user.id == addedCash.user.id)] =
-              addedCash.copyWith(
-                  balance: addedCash.balance + previousCashAmount),
-        addedCash);
+      cashRepository.updateCash,
+      (cashList, c) => cashList
+        ..[cashList.indexWhere((c) => c.user.id == addedCash.user.id)] =
+            addedCash.copyWith(
+          balance: addedCash.balance + previousCashAmount,
+        ),
+      addedCash,
+    );
   }
 
   Future<bool> fakeUpdateCash(Cash cash) async {
     return await update(
-        (_) async => true,
-        (cashList, c) => cashList
-          ..[cashList.indexWhere((c) => c.user.id == cash.user.id)] = cash,
-        cash);
+      (_) async => true,
+      (cashList, c) => cashList
+        ..[cashList.indexWhere((c) => c.user.id == cash.user.id)] = cash,
+      cash,
+    );
   }
 
   Future<AsyncValue<List<Cash>>> filterCashList(String filter) async {
@@ -41,11 +44,13 @@ class CashListProvider extends ListNotifier<Cash> {
       (cashList) {
         final lowerQuery = filter.toLowerCase();
         return cashList
-            .where((cash) =>
-                cash.user.name.toLowerCase().contains(lowerQuery) ||
-                cash.user.firstname.toLowerCase().contains(lowerQuery) ||
-                (cash.user.nickname != null &&
-                    cash.user.nickname!.toLowerCase().contains(lowerQuery)))
+            .where(
+              (cash) =>
+                  cash.user.name.toLowerCase().contains(lowerQuery) ||
+                  cash.user.firstname.toLowerCase().contains(lowerQuery) ||
+                  (cash.user.nickname != null &&
+                      cash.user.nickname!.toLowerCase().contains(lowerQuery)),
+            )
             .toList();
       },
     );

@@ -20,68 +20,72 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
   switch (type) {
     case TypeMsg.msg:
       linearGradient = const LinearGradient(
-          colors: [ColorConstants.gradient1, ColorConstants.gradient2],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight);
+        colors: [ColorConstants.gradient1, ColorConstants.gradient2],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      );
       icon = HeroIcons.check;
       duration = 1500;
       break;
     case TypeMsg.error:
       linearGradient = const LinearGradient(
-          colors: [ColorConstants.background2, Colors.black],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight);
+        colors: [ColorConstants.background2, Colors.black],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      );
       icon = HeroIcons.exclamationTriangle;
       duration = 3000;
       break;
   }
 
   showFlash(
-      context: context,
-      duration: Duration(milliseconds: duration),
-      builder: (context, controller) {
-        return FlashBar(
-          position: FlashPosition.top,
-          controller: controller,
-          surfaceTintColor: Colors.transparent,
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          margin: const EdgeInsets.only(top: 30, left: 20, right: 20),
-          content: Container(
-            alignment: Alignment.topCenter,
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(15)),
-              gradient: linearGradient,
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            height: 50 + text.length / 2,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: 40,
-                  alignment: Alignment.center,
-                  child: HeroIcon(icon, color: Colors.white),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Center(
-                    child: AutoSizeText(
-                      text,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                      maxLines: 8,
+    context: context,
+    duration: Duration(milliseconds: duration),
+    builder: (context, controller) {
+      return FlashBar(
+        position: FlashPosition.top,
+        controller: controller,
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        margin: const EdgeInsets.only(top: 30, left: 20, right: 20),
+        content: Container(
+          alignment: Alignment.topCenter,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(15)),
+            gradient: linearGradient,
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          height: 50 + text.length / 2,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                width: 40,
+                alignment: Alignment.center,
+                child: HeroIcon(icon, color: Colors.white),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Center(
+                  child: AutoSizeText(
+                    text,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
+                    maxLines: 8,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        );
-      });
+        ),
+      );
+    },
+  );
 }
 
 String capitalize(String s) {
@@ -97,8 +101,11 @@ String capitaliseAll(String s) {
     return s;
   }
   return s
-      .splitMapJoin(RegExp('(${splitters.join('|')})'),
-          onMatch: (m) => m.group(0) ?? '', onNonMatch: (n) => capitalize(n))
+      .splitMapJoin(
+        RegExp('(${splitters.join('|')})'),
+        onMatch: (m) => m.group(0) ?? '',
+        onNonMatch: (n) => capitalize(n),
+      )
       .trim();
 }
 
@@ -186,12 +193,16 @@ String formatDates(DateTime dateStart, DateTime dateEnd, bool allDay) {
 List<String> parseDate(DateTime date) {
   return [
     "${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}",
-    "${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}"
+    "${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}",
   ];
 }
 
 String formatRecurrenceRule(
-    DateTime dateStart, DateTime dateEnd, String recurrenceRule, bool allDay) {
+  DateTime dateStart,
+  DateTime dateEnd,
+  String recurrenceRule,
+  bool allDay,
+) {
   final start = parseDate(dateStart);
   final end = parseDate(dateEnd);
   final displayYear = dateEnd.year != DateTime.now().year;
@@ -211,7 +222,7 @@ String formatRecurrenceRule(
     "Jeudi",
     "Vendredi",
     "Samedi",
-    "Dimanche"
+    "Dimanche",
   ];
   final listDayShort = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
 
@@ -275,33 +286,39 @@ String getMonth(int m) {
     "Août",
     "Septembre",
     "Octobre",
-    "Novembre"
+    "Novembre",
   ];
   return months[m % 12];
 }
 
 Future<TimeOfDay?> _getTime(BuildContext context) async {
   return await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: ThemeData.light().copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: ColorConstants.gradient1,
-              onPrimary: Colors.white,
-              surface: Colors.white,
-              onSurface: Colors.black,
-            ),
-            dialogBackgroundColor: Colors.white,
+    context: context,
+    initialTime: TimeOfDay.now(),
+    builder: (BuildContext context, Widget? child) {
+      return Theme(
+        data: ThemeData.light().copyWith(
+          colorScheme: const ColorScheme.light(
+            primary: ColorConstants.gradient1,
+            onPrimary: Colors.white,
+            surface: Colors.white,
+            onSurface: Colors.black,
           ),
-          child: child!,
-        );
-      });
+          dialogBackgroundColor: Colors.white,
+        ),
+        child: child!,
+      );
+    },
+  );
 }
 
-Future<DateTime?> _getDate(BuildContext context, DateTime now,
-    DateTime? initialDate, DateTime? firstDate, DateTime? lastDate) async {
+Future<DateTime?> _getDate(
+  BuildContext context,
+  DateTime now,
+  DateTime? initialDate,
+  DateTime? firstDate,
+  DateTime? lastDate,
+) async {
   return await showDatePicker(
     context: context,
     initialDate: initialDate ?? now,
@@ -324,8 +341,13 @@ Future<DateTime?> _getDate(BuildContext context, DateTime now,
   );
 }
 
-getOnlyDayDate(BuildContext context, TextEditingController dateController,
-    {DateTime? initialDate, DateTime? firstDate, DateTime? lastDate}) async {
+getOnlyDayDate(
+  BuildContext context,
+  TextEditingController dateController, {
+  DateTime? initialDate,
+  DateTime? firstDate,
+  DateTime? lastDate,
+}) async {
   final DateTime now = DateTime.now();
   final DateTime? date =
       await _getDate(context, now, initialDate, firstDate, lastDate);
@@ -334,8 +356,13 @@ getOnlyDayDate(BuildContext context, TextEditingController dateController,
       DateFormat('dd/MM/yyyy').format(date ?? initialDate ?? now);
 }
 
-getOnlyDayDateFunction(BuildContext context, void Function(String) setDate,
-    {DateTime? initialDate, DateTime? firstDate, DateTime? lastDate}) async {
+getOnlyDayDateFunction(
+  BuildContext context,
+  void Function(String) setDate, {
+  DateTime? initialDate,
+  DateTime? firstDate,
+  DateTime? lastDate,
+}) async {
   final DateTime now = DateTime.now();
   final DateTime? date =
       await _getDate(context, now, initialDate, firstDate, lastDate);
@@ -344,7 +371,9 @@ getOnlyDayDateFunction(BuildContext context, void Function(String) setDate,
 }
 
 getOnlyHourDate(
-    BuildContext context, TextEditingController dateController) async {
+  BuildContext context,
+  TextEditingController dateController,
+) async {
   final DateTime now = DateTime.now();
   final TimeOfDay? time = await _getTime(context);
 
@@ -352,8 +381,13 @@ getOnlyHourDate(
       DateFormat('HH:mm').format(DateTimeField.combine(now, time));
 }
 
-getFullDate(BuildContext context, TextEditingController dateController,
-    {DateTime? initialDate, DateTime? firstDate, DateTime? lastDate}) async {
+getFullDate(
+  BuildContext context,
+  TextEditingController dateController, {
+  DateTime? initialDate,
+  DateTime? firstDate,
+  DateTime? lastDate,
+}) async {
   final DateTime now = DateTime.now();
   _getDate(context, now, initialDate, firstDate, lastDate).then(
     (DateTime? date) {

@@ -14,17 +14,18 @@ class BookingCard extends StatelessWidget {
   final Function()? onEdit, onConfirm, onDecline, onCopy, onInfo;
   final Future Function()? onDelete;
   final bool isAdmin, isDetail;
-  const BookingCard(
-      {super.key,
-      required this.booking,
-      this.onEdit,
-      this.onConfirm,
-      this.onDecline,
-      this.onInfo,
-      this.onCopy,
-      this.onDelete,
-      this.isAdmin = false,
-      this.isDetail = false});
+  const BookingCard({
+    super.key,
+    required this.booking,
+    this.onEdit,
+    this.onConfirm,
+    this.onDecline,
+    this.onInfo,
+    this.onCopy,
+    this.onDelete,
+    this.isAdmin = false,
+    this.isDetail = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +116,7 @@ class BookingCard extends StatelessWidget {
                     color: informationCircleColor,
                     size: 25,
                   ),
-                )
+                ),
             ],
           ),
           const SizedBox(height: 6),
@@ -125,12 +126,17 @@ class BookingCard extends StatelessWidget {
               radius: const Radius.circular(8),
               child: SingleChildScrollView(
                 child: Text(
-                  formatRecurrenceRule(booking.start, booking.end,
-                      booking.recurrenceRule, false),
+                  formatRecurrenceRule(
+                    booking.start,
+                    booking.end,
+                    booking.recurrenceRule,
+                    false,
+                  ),
                   style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                      color: smallTextColor),
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                    color: smallTextColor,
+                  ),
                 ),
               ),
             ),
@@ -151,21 +157,25 @@ class BookingCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                  booking.decision == Decision.pending
-                      ? BookingTextConstants.pending
-                      : booking.decision == Decision.approved
-                          ? BookingTextConstants.confirmed
-                          : BookingTextConstants.declined,
-                  style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                      color: smallTextColor)),
+                booking.decision == Decision.pending
+                    ? BookingTextConstants.pending
+                    : booking.decision == Decision.approved
+                        ? BookingTextConstants.confirmed
+                        : BookingTextConstants.declined,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                  color: smallTextColor,
+                ),
+              ),
               Text(
-                  '${BookingTextConstants.keys}: ${booking.key ? BookingTextConstants.yes : BookingTextConstants.no}',
-                  style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                      color: smallTextColor)),
+                '${BookingTextConstants.keys}: ${booking.key ? BookingTextConstants.yes : BookingTextConstants.no}',
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                  color: smallTextColor,
+                ),
+              ),
             ],
           ),
           const Spacer(),
@@ -209,8 +219,10 @@ class BookingCard extends StatelessWidget {
                               : Colors.transparent
                           : Colors.transparent,
                       shadowColor: Colors.grey.withOpacity(0.2),
-                      child: HeroIcon(HeroIcons.check,
-                          color: darkIconBackgroundColor),
+                      child: HeroIcon(
+                        HeroIcons.check,
+                        color: darkIconBackgroundColor,
+                      ),
                     ),
                   ),
                 if (isAdmin) const Spacer(),
@@ -234,9 +246,10 @@ class BookingCard extends StatelessWidget {
                   WaitingButton(
                     onTap: onDelete,
                     builder: (child) => CardButton(
-                        color: darkIconBackgroundColor,
-                        shadowColor: darkIconBackgroundColor.withOpacity(0.2),
-                        child: child),
+                      color: darkIconBackgroundColor,
+                      shadowColor: darkIconBackgroundColor.withOpacity(0.2),
+                      child: child,
+                    ),
                     child: const HeroIcon(HeroIcons.trash, color: Colors.white),
                   ),
               ],

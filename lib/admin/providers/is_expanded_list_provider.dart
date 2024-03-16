@@ -17,8 +17,9 @@ final isExpandedListProvider =
     StateNotifierProvider<IsExpandedListProvider, List<bool>>((ref) {
   final modules = ref.read(moduleVisibilityListProvider);
   return modules.maybeWhen(
-      data: (data) => IsExpandedListProvider(data),
-      orElse: () {
-        return IsExpandedListProvider([]);
-      });
+    data: (data) => IsExpandedListProvider(data),
+    orElse: () {
+      return IsExpandedListProvider([]);
+    },
+  );
 });

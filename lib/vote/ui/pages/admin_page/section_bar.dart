@@ -41,7 +41,8 @@ class SectionBar extends HookConsumerWidget {
           ? ItemChip(
               onTap: () {
                 QR.to(
-                    VoteRouter.root + VoteRouter.admin + VoteRouter.addSection);
+                  VoteRouter.root + VoteRouter.admin + VoteRouter.addSection,
+                );
               },
               child: const HeroIcon(
                 HeroIcons.plus,
@@ -50,36 +51,41 @@ class SectionBar extends HookConsumerWidget {
             )
           : null,
       itemBuilder: (context, key, i) => SectionChip(
-          label: key.name,
-          selected: section.id == key.id,
-          isAdmin: status == Status.waiting,
-          onTap: () async {
-            tokenExpireWrapper(ref, () async {
-              sectionIdNotifier.setId(key.id);
-            });
-          },
-          onDelete: () async {
-            tokenExpireWrapper(ref, () async {
-              await showDialog(
-                context: context,
-                builder: (context) => CustomDialogBox(
-                  title: VoteTextConstants.deleteSection,
-                  descriptions: VoteTextConstants.deleteSectionDescription,
-                  onYes: () async {
-                    final result = await sectionsNotifier.deleteSection(key);
-                    if (result) {
-                      sectionContenderListNotifier.deleteT(key);
-                      displayVoteToastWithContext(
-                          TypeMsg.msg, VoteTextConstants.deletedSection);
-                    } else {
-                      displayVoteToastWithContext(
-                          TypeMsg.error, VoteTextConstants.deletingError);
-                    }
-                  },
-                ),
-              );
-            });
-          }),
+        label: key.name,
+        selected: section.id == key.id,
+        isAdmin: status == Status.waiting,
+        onTap: () async {
+          tokenExpireWrapper(ref, () async {
+            sectionIdNotifier.setId(key.id);
+          });
+        },
+        onDelete: () async {
+          tokenExpireWrapper(ref, () async {
+            await showDialog(
+              context: context,
+              builder: (context) => CustomDialogBox(
+                title: VoteTextConstants.deleteSection,
+                descriptions: VoteTextConstants.deleteSectionDescription,
+                onYes: () async {
+                  final result = await sectionsNotifier.deleteSection(key);
+                  if (result) {
+                    sectionContenderListNotifier.deleteT(key);
+                    displayVoteToastWithContext(
+                      TypeMsg.msg,
+                      VoteTextConstants.deletedSection,
+                    );
+                  } else {
+                    displayVoteToastWithContext(
+                      TypeMsg.error,
+                      VoteTextConstants.deletingError,
+                    );
+                  }
+                },
+              ),
+            );
+          });
+        },
+      ),
     );
   }
 }

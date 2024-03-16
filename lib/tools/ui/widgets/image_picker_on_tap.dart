@@ -29,12 +29,16 @@ class ImagePickerOnTap extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         final crossFile = await picker.pickImage(
-            source: ImageSource.gallery, imageQuality: imageQuality);
+          source: ImageSource.gallery,
+          imageQuality: imageQuality,
+        );
         if (crossFile != null) {
           final size = await crossFile.length();
           if (size > maxHyperionFileSize) {
             displayToastWithContext(
-                TypeMsg.error, TextConstants.imageSizeTooBig);
+              TypeMsg.error,
+              TextConstants.imageSizeTooBig,
+            );
           } else {
             if (kIsWeb) {
               imageBytesNotifier.value = await crossFile.readAsBytes();

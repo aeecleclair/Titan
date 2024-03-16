@@ -18,13 +18,15 @@ void main() {
       final sessionList = await sessionListNotifier.loadSessions();
       expect(sessionList, isA<AsyncData<List<Session>>>());
       expect(
-          sessionList
-              .when(
-                  data: (data) => data,
-                  loading: () => [],
-                  error: (error, stackTrace) => [])
-              .length,
-          1);
+        sessionList
+            .when(
+              data: (data) => data,
+              loading: () => [],
+              error: (error, stackTrace) => [],
+            )
+            .length,
+        1,
+      );
     });
 
     test('Should create a Session', () async {

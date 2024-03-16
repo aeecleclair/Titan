@@ -10,9 +10,10 @@ import 'package:myecl/raffle/repositories/tombola_logo_repository.dart';
 class TombolaLogoProvider extends SingleNotifier<Image> {
   final repository = TombolaLogoRepository();
   final TombolaLogosNotifier tombolaLogosNotifier;
-  TombolaLogoProvider(
-      {required String token, required this.tombolaLogosNotifier})
-      : super(const AsyncValue.loading()) {
+  TombolaLogoProvider({
+    required String token,
+    required this.tombolaLogosNotifier,
+  }) : super(const AsyncValue.loading()) {
     repository.setToken(token);
   }
 
@@ -42,5 +43,7 @@ final tombolaLogoProvider =
   final token = ref.watch(tokenProvider);
   final tombolaLogosNotifier = ref.watch(tombolaLogosProvider.notifier);
   return TombolaLogoProvider(
-      token: token, tombolaLogosNotifier: tombolaLogosNotifier);
+    token: token,
+    tombolaLogosNotifier: tombolaLogosNotifier,
+  );
 });

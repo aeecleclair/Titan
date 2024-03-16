@@ -19,8 +19,12 @@ void main() {
 
   group('createUser', () {
     test('returns true when repository returns true', () async {
-      when(() => mockSignUpRepository.createUser(
-          'test@test.com', AccountType.student)).thenAnswer((_) async => true);
+      when(
+        () => mockSignUpRepository.createUser(
+          'test@test.com',
+          AccountType.student,
+        ),
+      ).thenAnswer((_) async => true);
 
       final result =
           await signUpProvider.createUser('test@test.com', AccountType.student);
@@ -29,8 +33,12 @@ void main() {
     });
 
     test('returns false when repository returns false', () async {
-      when(() => mockSignUpRepository.createUser(
-          'test@test.com', AccountType.student)).thenAnswer((_) async => false);
+      when(
+        () => mockSignUpRepository.createUser(
+          'test@test.com',
+          AccountType.student,
+        ),
+      ).thenAnswer((_) async => false);
 
       final result =
           await signUpProvider.createUser('test@test.com', AccountType.student);

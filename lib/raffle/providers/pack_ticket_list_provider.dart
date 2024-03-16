@@ -24,8 +24,9 @@ class PackTicketsListNotifier extends ListNotifier<PackTicket> {
   }
 
   Future<AsyncValue<List<PackTicket>>> loadPackTicketList() async {
-    return await loadList(() async =>
-        _raffleDetailRepository.getPackTicketListFromRaffle(raffleId));
+    return await loadList(
+      () async => _raffleDetailRepository.getPackTicketListFromRaffle(raffleId),
+    );
   }
 
   Future<bool> addPackTicket(PackTicket packTicket) async {
@@ -43,10 +44,11 @@ class PackTicketsListNotifier extends ListNotifier<PackTicket> {
 
   Future<bool> updatePackTicket(PackTicket packTicket) async {
     return update(
-        _packTicketsRepository.updatePackTicket,
-        (packTickets, t) =>
-            packTickets..[packTickets.indexWhere((e) => e.id == t.id)] = t,
-        packTicket);
+      _packTicketsRepository.updatePackTicket,
+      (packTickets, t) =>
+          packTickets..[packTickets.indexWhere((e) => e.id == t.id)] = t,
+      packTicket,
+    );
   }
 }
 

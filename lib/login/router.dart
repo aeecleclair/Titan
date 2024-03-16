@@ -24,40 +24,42 @@ class LoginRouter {
   LoginRouter(this.ref);
 
   QRoute accountRoute() => QRoute(
-          path: createAccount,
-          builder: () => register_page.Register(),
-          pageType: const QMaterialPage(),
-          middleware: [
-            DeferredLoadingMiddleware(register_page.loadLibrary)
-          ],
-          children: [
-            QRoute(
-              path: mailReceived,
-              pageType: const QMaterialPage(),
-              builder: () => create_account_page.CreateAccountPage(),
-              middleware: [
-                DeferredLoadingMiddleware(create_account_page.loadLibrary)
-              ],
-            ),
-          ]);
+        path: createAccount,
+        builder: () => register_page.Register(),
+        pageType: const QMaterialPage(),
+        middleware: [
+          DeferredLoadingMiddleware(register_page.loadLibrary),
+        ],
+        children: [
+          QRoute(
+            path: mailReceived,
+            pageType: const QMaterialPage(),
+            builder: () => create_account_page.CreateAccountPage(),
+            middleware: [
+              DeferredLoadingMiddleware(create_account_page.loadLibrary),
+            ],
+          ),
+        ],
+      );
 
   QRoute passwordRoute() => QRoute(
-          path: forgotPassword,
-          builder: () => forget_page.ForgetPassword(),
-          pageType: const QMaterialPage(),
-          middleware: [
-            DeferredLoadingMiddleware(forget_page.loadLibrary)
-          ],
-          children: [
-            QRoute(
-              path: mailReceived,
-              pageType: const QMaterialPage(),
-              builder: () => recover_password_page.RecoverPasswordPage(),
-              middleware: [
-                DeferredLoadingMiddleware(recover_password_page.loadLibrary)
-              ],
-            ),
-          ]);
+        path: forgotPassword,
+        builder: () => forget_page.ForgetPassword(),
+        pageType: const QMaterialPage(),
+        middleware: [
+          DeferredLoadingMiddleware(forget_page.loadLibrary),
+        ],
+        children: [
+          QRoute(
+            path: mailReceived,
+            pageType: const QMaterialPage(),
+            builder: () => recover_password_page.RecoverPasswordPage(),
+            middleware: [
+              DeferredLoadingMiddleware(recover_password_page.loadLibrary),
+            ],
+          ),
+        ],
+      );
 
   QRoute route() => QRoute(
         path: LoginRouter.root,
@@ -67,9 +69,11 @@ class LoginRouter {
         pageType: const QMaterialPage(),
         middleware: [
           AuthenticatedMiddleware(ref),
-          DeferredLoadingMiddleware((kIsWeb && ref.watch(isWebFormatProvider))
-              ? web_sign_in.loadLibrary
-              : app_sign_in.loadLibrary),
+          DeferredLoadingMiddleware(
+            (kIsWeb && ref.watch(isWebFormatProvider))
+                ? web_sign_in.loadLibrary
+                : app_sign_in.loadLibrary,
+          ),
         ],
       );
 }

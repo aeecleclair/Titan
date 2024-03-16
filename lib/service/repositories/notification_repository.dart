@@ -9,8 +9,10 @@ class NotificationRepository extends Repository {
   final ext = 'notification/';
 
   Future<List<Message>> getMessages(String firebaseToken) async {
-    return List<Message>.from((await getList(suffix: "messages/$firebaseToken"))
-        .map((x) => Message.fromJson(x)));
+    return List<Message>.from(
+      (await getList(suffix: "messages/$firebaseToken"))
+          .map((x) => Message.fromJson(x)),
+    );
   }
 
   Future<bool> registerDevice(String firebaseToken) async {
@@ -33,6 +35,7 @@ class NotificationRepository extends Repository {
 
   Future<List<Topic>> getTopics() async {
     return List<Topic>.from(
-        (await getList(suffix: "topics")).map((x) => stringToTopic(x)));
+      (await getList(suffix: "topics")).map((x) => stringToTopic(x)),
+    );
   }
 }

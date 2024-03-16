@@ -13,7 +13,9 @@ class LoginTemplate extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     AnimationController? controller = ref.watch(backgroundAnimationProvider);
     controller ??= useAnimationController(
-        duration: const Duration(milliseconds: 500), initialValue: 0.0);
+      duration: const Duration(milliseconds: 500),
+      initialValue: 0.0,
+    );
     callback(controller);
     return Scaffold(
       body: Stack(

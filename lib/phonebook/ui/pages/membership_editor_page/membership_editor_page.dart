@@ -56,9 +56,11 @@ class MembershipEditorPage extends HookConsumerWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              AlignLeftText(isEdit
-                  ? PhonebookTextConstants.editMembership
-                  : PhonebookTextConstants.addMember),
+              AlignLeftText(
+                isEdit
+                    ? PhonebookTextConstants.editMembership
+                    : PhonebookTextConstants.addMember,
+              ),
               if (!isEdit) ...[
                 StyledSearchBar(
                   padding: EdgeInsets.zero,
@@ -117,7 +119,9 @@ class MembershipEditorPage extends HookConsumerWidget {
                               memberRoleTagsNotifier
                                   .setRoleTagsWithFilter(rolesTagList);
                               rolesTagsNotifier.setTData(
-                                  tagKey, AsyncData([value]));
+                                tagKey,
+                                AsyncData([value]),
+                              );
                               if (value && apparentNameController.text == "") {
                                 apparentNameController.text = tagKey;
                               } else if (!value &&
@@ -128,7 +132,7 @@ class MembershipEditorPage extends HookConsumerWidget {
                           ),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -139,10 +143,13 @@ class MembershipEditorPage extends HookConsumerWidget {
               ),
               const SizedBox(height: 50),
               WaitingButton(
-                builder: (child) => AddEditButtonLayout(colors: const [
-                  ColorConstants.gradient1,
-                  ColorConstants.gradient2,
-                ], child: child),
+                builder: (child) => AddEditButtonLayout(
+                  colors: const [
+                    ColorConstants.gradient1,
+                    ColorConstants.gradient2,
+                  ],
+                  child: child,
+                ),
                 child: Text(
                   !isEdit
                       ? PhonebookTextConstants.add
@@ -156,12 +163,16 @@ class MembershipEditorPage extends HookConsumerWidget {
                 onTap: () async {
                   if (member.member.id == "") {
                     displayToastWithContext(
-                        TypeMsg.msg, PhonebookTextConstants.emptyMember);
+                      TypeMsg.msg,
+                      PhonebookTextConstants.emptyMember,
+                    );
                     return;
                   }
                   if (apparentNameController.text == "") {
                     displayToastWithContext(
-                        TypeMsg.msg, PhonebookTextConstants.emptyApparentName);
+                      TypeMsg.msg,
+                      PhonebookTextConstants.emptyApparentName,
+                    );
                     return;
                   }
 
@@ -178,9 +189,8 @@ class MembershipEditorPage extends HookConsumerWidget {
                           mandateYear: membership.mandateYear,
                         );
                         member.memberships[member.memberships.indexWhere(
-                                (membership) =>
-                                    membership.id == membershipEdit.id)] =
-                            membershipEdit;
+                          (membership) => membership.id == membershipEdit.id,
+                        )] = membershipEdit;
                         final value =
                             await associationMemberListNotifier.updateMember(
                           member,
@@ -191,26 +201,36 @@ class MembershipEditorPage extends HookConsumerWidget {
                             association.id,
                             association.mandateYear.toString(),
                           );
-                          displayToastWithContext(TypeMsg.msg,
-                              PhonebookTextConstants.updatedMember);
+                          displayToastWithContext(
+                            TypeMsg.msg,
+                            PhonebookTextConstants.updatedMember,
+                          );
                           QR.back();
                         } else {
-                          displayToastWithContext(TypeMsg.error,
-                              PhonebookTextConstants.updatingError);
+                          displayToastWithContext(
+                            TypeMsg.error,
+                            PhonebookTextConstants.updatingError,
+                          );
                         }
                       } else {
                         // Test if the membership already exists with (association_id,member_id,mandate_year)
-                        final memberAssociationMemberships = member.memberships
-                            .where((membership) =>
-                                membership.associationId == association.id);
+                        final memberAssociationMemberships =
+                            member.memberships.where(
+                          (membership) =>
+                              membership.associationId == association.id,
+                        );
 
                         if (memberAssociationMemberships
-                            .where((membership) =>
-                                membership.mandateYear ==
-                                association.mandateYear)
+                            .where(
+                              (membership) =>
+                                  membership.mandateYear ==
+                                  association.mandateYear,
+                            )
                             .isNotEmpty) {
-                          displayToastWithContext(TypeMsg.msg,
-                              PhonebookTextConstants.existingMembership);
+                          displayToastWithContext(
+                            TypeMsg.msg,
+                            PhonebookTextConstants.existingMembership,
+                          );
                           return;
                         }
 
@@ -226,11 +246,15 @@ class MembershipEditorPage extends HookConsumerWidget {
                             .addMember(member, membershipAdd);
                         if (value) {
                           displayToastWithContext(
-                              TypeMsg.msg, PhonebookTextConstants.addedMember);
+                            TypeMsg.msg,
+                            PhonebookTextConstants.addedMember,
+                          );
                           QR.back();
                         } else {
-                          displayToastWithContext(TypeMsg.error,
-                              PhonebookTextConstants.addingError);
+                          displayToastWithContext(
+                            TypeMsg.error,
+                            PhonebookTextConstants.addingError,
+                          );
                         }
                       }
                     },

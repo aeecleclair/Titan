@@ -37,11 +37,13 @@ class AddEditSessionPage extends HookConsumerWidget {
     final sessionList = ref.watch(sessionListProvider);
     final name = useTextEditingController(text: session.name);
     final duration = useTextEditingController(
-        text: isEdit ? parseDurationBack(session.duration) : '');
+      text: isEdit ? parseDurationBack(session.duration) : '',
+    );
     final genre = useTextEditingController(text: session.genre ?? '');
     final overview = useTextEditingController(text: session.overview ?? '');
     final start = useTextEditingController(
-        text: isEdit ? processDateWithHour(session.start) : '');
+      text: isEdit ? processDateWithHour(session.start) : '',
+    );
     final tagline = useTextEditingController(text: session.tagline ?? '');
     final sessionPosterMap = ref.watch(sessionPosterMapProvider);
     final logo = useState<Uint8List?>(null);
@@ -65,15 +67,17 @@ class AddEditSessionPage extends HookConsumerWidget {
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Form(
-              key: key,
-              child: Column(children: [
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: Form(
+            key: key,
+            child: Column(
+              children: [
                 AlignLeftText(
-                    isEdit
-                        ? CinemaTextConstants.editSession
-                        : CinemaTextConstants.addSession,
-                    color: Colors.grey),
+                  isEdit
+                      ? CinemaTextConstants.editSession
+                      : CinemaTextConstants.addSession,
+                  color: Colors.grey,
+                ),
                 const SizedBox(height: 30),
                 TextField(
                   controller: imdbUrl,
@@ -88,12 +92,16 @@ class AddEditSessionPage extends HookConsumerWidget {
                         onTap: () async {
                           if (imdbUrl.text.isEmpty) {
                             displayToastWithContext(
-                                TypeMsg.error, CinemaTextConstants.emptyUrl);
+                              TypeMsg.error,
+                              CinemaTextConstants.emptyUrl,
+                            );
                             return;
                           }
                           if (!imdbUrl.text.contains('imdb.com/title/')) {
                             displayToastWithContext(
-                                TypeMsg.error, CinemaTextConstants.invalidUrl);
+                              TypeMsg.error,
+                              CinemaTextConstants.invalidUrl,
+                            );
                             return;
                           }
                           final movieId = imdbUrl.text
@@ -117,7 +125,9 @@ class AddEditSessionPage extends HookConsumerWidget {
                                 loading: () {},
                                 error: (e, s) {
                                   displayToastWithContext(
-                                      TypeMsg.error, e.toString());
+                                    TypeMsg.error,
+                                    e.toString(),
+                                  );
                                 },
                               );
                             });
@@ -147,10 +157,13 @@ class AddEditSessionPage extends HookConsumerWidget {
                     ? logoFile.value == null
                         ? Container(
                             padding: const EdgeInsets.symmetric(
-                                vertical: 50, horizontal: 30),
+                              vertical: 50,
+                              horizontal: 30,
+                            ),
                             decoration: BoxDecoration(
-                                color: Colors.grey[200],
-                                borderRadius: BorderRadius.circular(20)),
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(20),
+                            ),
                             child: HeroIcon(
                               HeroIcons.camera,
                               size: 100,
@@ -181,9 +194,10 @@ class AddEditSessionPage extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 30),
                 DateEntry(
-                    onTap: () => getOnlyHourDate(context, duration),
-                    label: CinemaTextConstants.duration,
-                    controller: duration),
+                  onTap: () => getOnlyHourDate(context, duration),
+                  label: CinemaTextConstants.duration,
+                  controller: duration,
+                ),
                 const SizedBox(height: 30),
                 TextEntry(
                   label: CinemaTextConstants.genre,
@@ -212,7 +226,9 @@ class AddEditSessionPage extends HookConsumerWidget {
                     if (key.currentState!.validate()) {
                       if (logo.value == null && logoFile.value == null) {
                         displayToastWithContext(
-                            TypeMsg.error, CinemaTextConstants.noPoster);
+                          TypeMsg.error,
+                          CinemaTextConstants.noPoster,
+                        );
                         return;
                       }
                       await tokenExpireWrapper(ref, () async {
@@ -224,7 +240,8 @@ class AddEditSessionPage extends HookConsumerWidget {
                           overview:
                               overview.text.isEmpty ? null : overview.text,
                           start: DateTime.parse(
-                              processDateBackWithHour(start.text)),
+                            processDateBackWithHour(start.text),
+                          ),
                           tagline: tagline.text.isEmpty ? null : tagline.text,
                         );
                         final value = isEdit
@@ -235,67 +252,86 @@ class AddEditSessionPage extends HookConsumerWidget {
                           QR.back();
                           if (isEdit) {
                             sessionList.maybeWhen(
-                                data: (list) async {
-                                  final logoBytes = logo.value;
-                                  if (logoBytes != null) {
-                                    final sessionPosterMapNotifier = ref.read(
-                                        sessionPosterMapProvider.notifier);
-                                    sessionPosterMapNotifier.autoLoad(
-                                        ref,
-                                        session.id,
-                                        (sessionId) => sessionPosterNotifier
-                                            .updateLogo(sessionId, logoBytes));
-                                  }
-                                },
-                                orElse: () {});
+                              data: (list) async {
+                                final logoBytes = logo.value;
+                                if (logoBytes != null) {
+                                  final sessionPosterMapNotifier = ref.read(
+                                    sessionPosterMapProvider.notifier,
+                                  );
+                                  sessionPosterMapNotifier.autoLoad(
+                                    ref,
+                                    session.id,
+                                    (sessionId) => sessionPosterNotifier
+                                        .updateLogo(sessionId, logoBytes),
+                                  );
+                                }
+                              },
+                              orElse: () {},
+                            );
                             displayToastWithContext(
-                                TypeMsg.msg, CinemaTextConstants.editedSession);
+                              TypeMsg.msg,
+                              CinemaTextConstants.editedSession,
+                            );
                           } else {
                             sessionList.maybeWhen(
-                                data: (list) async {
-                                  final newSession = list.last;
-                                  final logoBytes = logo.value;
-                                  if (logoBytes != null) {
-                                    final sessionPosterMapNotifier = ref.read(
-                                        sessionPosterMapProvider.notifier);
-                                    sessionPosterMapNotifier.autoLoad(
-                                        ref,
-                                        newSession.id,
-                                        (sessionId) => sessionPosterNotifier
-                                            .updateLogo(sessionId, logoBytes));
-                                  }
-                                },
-                                orElse: () {});
+                              data: (list) async {
+                                final newSession = list.last;
+                                final logoBytes = logo.value;
+                                if (logoBytes != null) {
+                                  final sessionPosterMapNotifier = ref.read(
+                                    sessionPosterMapProvider.notifier,
+                                  );
+                                  sessionPosterMapNotifier.autoLoad(
+                                    ref,
+                                    newSession.id,
+                                    (sessionId) => sessionPosterNotifier
+                                        .updateLogo(sessionId, logoBytes),
+                                  );
+                                }
+                              },
+                              orElse: () {},
+                            );
                             displayToastWithContext(
-                                TypeMsg.msg, CinemaTextConstants.addedSession);
+                              TypeMsg.msg,
+                              CinemaTextConstants.addedSession,
+                            );
                           }
                         } else {
                           if (isEdit) {
-                            displayToastWithContext(TypeMsg.error,
-                                CinemaTextConstants.editingError);
+                            displayToastWithContext(
+                              TypeMsg.error,
+                              CinemaTextConstants.editingError,
+                            );
                           } else {
                             displayToastWithContext(
-                                TypeMsg.error, CinemaTextConstants.addingError);
+                              TypeMsg.error,
+                              CinemaTextConstants.addingError,
+                            );
                           }
                         }
                       });
                     } else {
-                      displayToast(context, TypeMsg.error,
-                          CinemaTextConstants.incorrectOrMissingFields);
+                      displayToast(
+                        context,
+                        TypeMsg.error,
+                        CinemaTextConstants.incorrectOrMissingFields,
+                      );
                     }
                   },
                   child: Text(
-                      isEdit
-                          ? CinemaTextConstants.edit
-                          : CinemaTextConstants.add,
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold)),
+                    isEdit ? CinemaTextConstants.edit : CinemaTextConstants.add,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 20),
-              ]),
-            )),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

@@ -74,11 +74,16 @@ class DetailPage extends HookConsumerWidget {
                                     GestureDetector(
                                       onTap: () async {
                                         try {
-                                          await launchUrl(Uri.parse(
-                                              'mailto:${event.applicant.email}'));
+                                          await launchUrl(
+                                            Uri.parse(
+                                              'mailto:${event.applicant.email}',
+                                            ),
+                                          );
                                         } catch (e) {
                                           displayToastWithoutContext(
-                                              TypeMsg.error, e.toString());
+                                            TypeMsg.error,
+                                            e.toString(),
+                                          );
                                         }
                                       },
                                       child: Text(
@@ -103,12 +108,16 @@ class DetailPage extends HookConsumerWidget {
                                           onTap: () async {
                                             if (event.applicant.phone != null) {
                                               try {
-                                                await launchUrl(Uri.parse(
-                                                    'tel:${event.applicant.phone}'));
+                                                await launchUrl(
+                                                  Uri.parse(
+                                                    'tel:${event.applicant.phone}',
+                                                  ),
+                                                );
                                               } catch (e) {
                                                 displayToastWithoutContext(
-                                                    TypeMsg.error,
-                                                    e.toString());
+                                                  TypeMsg.error,
+                                                  e.toString(),
+                                                );
                                               }
                                             }
                                           },
@@ -146,12 +155,16 @@ class DetailPage extends HookConsumerWidget {
                                           onTap: () async {
                                             if (event.applicant.phone != null) {
                                               try {
-                                                await launchUrl(Uri.parse(
-                                                    'sms:${event.applicant.phone}'));
+                                                await launchUrl(
+                                                  Uri.parse(
+                                                    'sms:${event.applicant.phone}',
+                                                  ),
+                                                );
                                               } catch (e) {
                                                 displayToastWithoutContext(
-                                                    TypeMsg.error,
-                                                    e.toString());
+                                                  TypeMsg.error,
+                                                  e.toString(),
+                                                );
                                               }
                                             }
                                           },
@@ -203,7 +216,7 @@ class DetailPage extends HookConsumerWidget {
               child: Center(
                 child: EventUi(event: event, isDetailPage: true),
               ),
-            )
+            ),
           ],
         ),
       ),

@@ -3,13 +3,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 
 class TextInputDialog extends HookConsumerWidget {
-  const TextInputDialog(
-      {super.key,
-      required this.controller,
-      required this.title,
-      required this.text,
-      required this.defaultText,
-      required this.onConfirm});
+  const TextInputDialog({
+    super.key,
+    required this.controller,
+    required this.title,
+    required this.text,
+    required this.defaultText,
+    required this.onConfirm,
+  });
 
   final String title;
   final String text;
@@ -22,27 +23,30 @@ class TextInputDialog extends HookConsumerWidget {
     controller.text = defaultText;
     return AlertDialog(
       title: Center(
-          child: Container(
-              decoration: const BoxDecoration(
-                border: Border(bottom: BorderSide(color: Colors.black)),
-                color: Colors.white,
-              ),
-              child: Text(title, style: const TextStyle(fontSize: 20)))),
+        child: Container(
+          decoration: const BoxDecoration(
+            border: Border(bottom: BorderSide(color: Colors.black)),
+            color: Colors.white,
+          ),
+          child: Text(title, style: const TextStyle(fontSize: 20)),
+        ),
+      ),
       content: SizedBox(
-          height: 100,
-          child: Column(
-            children: [
-              const SizedBox(height: 25),
-              Text(text),
-              const SizedBox(height: 5),
-              SizedBox(
-                width: 200,
-                child: TextField(
-                  controller: controller,
-                ),
-              )
-            ],
-          )),
+        height: 100,
+        child: Column(
+          children: [
+            const SizedBox(height: 25),
+            Text(text),
+            const SizedBox(height: 5),
+            SizedBox(
+              width: 200,
+              child: TextField(
+                controller: controller,
+              ),
+            ),
+          ],
+        ),
+      ),
       actions: [
         TextButton(
           onPressed: () {

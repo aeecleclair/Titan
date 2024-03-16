@@ -6,13 +6,14 @@ class CardButton extends StatelessWidget {
   final List<Color>? colors;
   final Color shadowColor;
   final Color? borderColor;
-  const CardButton(
-      {super.key,
-      required this.child,
-      this.color = const Color(0xFFEEEEEE),
-      this.colors,
-      this.shadowColor = const Color(0x339E9E9E),
-      this.borderColor});
+  const CardButton({
+    super.key,
+    required this.child,
+    this.color = const Color(0xFFEEEEEE),
+    this.colors,
+    this.shadowColor = const Color(0x339E9E9E),
+    this.borderColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +38,12 @@ class CardButton extends StatelessWidget {
             : null,
         boxShadow: [
           BoxShadow(
-              color: (useShadow || !useColors)
-                  ? shadowColor
-                  : colors!.last.withOpacity(0.5),
-              blurRadius: 10,
-              offset: const Offset(2, 3))
+            color: (useShadow || !useColors)
+                ? shadowColor
+                : colors!.last.withOpacity(0.5),
+            blurRadius: 10,
+            offset: const Offset(2, 3),
+          ),
         ],
       ),
       child: child,

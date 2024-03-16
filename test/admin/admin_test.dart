@@ -35,8 +35,10 @@ void main() {
 
     test('Should return correct toString', () async {
       final group = SimpleGroup.empty();
-      expect(group.toString(),
-          'SimpleGroup(name: Nom, description: Description, id: )');
+      expect(
+        group.toString(),
+        'SimpleGroup(name: Nom, description: Description, id: )',
+      );
     });
 
     test('Should parse a group from json', () async {
@@ -97,8 +99,10 @@ void main() {
 
     test('Should print a group', () async {
       final group = Group.empty();
-      expect(group.toString(),
-          'Group(id: , name: Nom, description: Description, members: [])');
+      expect(
+        group.toString(),
+        'Group(id: , name: Nom, description: Description, members: [])',
+      );
     });
 
     test('Should parse a group from json', () async {
@@ -113,7 +117,7 @@ void main() {
             "firstname": "firstname",
             "nickname": "nickname",
           }
-        ]
+        ],
       });
       expect(group.name, 'name');
       expect(group.members, isA<List<SimpleUser>>());
@@ -132,7 +136,7 @@ void main() {
             name: "name",
             firstname: "firstname",
             nickname: null,
-          )
+          ),
         ],
       );
       expect(group.toJson(), {
@@ -146,7 +150,7 @@ void main() {
             "firstname": "firstname",
             "nickname": null,
           }
-        ]
+        ],
       });
     });
   });

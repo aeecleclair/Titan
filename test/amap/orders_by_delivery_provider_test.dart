@@ -17,16 +17,19 @@ void main() {
       when(() => mockOrderByDeliveryListRepository.getDeliveryOrderList(""))
           .thenAnswer((_) async => orderByDeliveryList);
       final orderByDeliveryListNotifier = OrderByDeliveryListNotifier(
-          orderListRepository: mockOrderByDeliveryListRepository);
+        orderListRepository: mockOrderByDeliveryListRepository,
+      );
       final deliveryOrderList =
           await orderByDeliveryListNotifier.loadDeliveryOrderList("");
       expect(deliveryOrderList, isA<AsyncData<List<Order>>>());
       expect(
-          deliveryOrderList.when(
-              data: (data) => data.length,
-              loading: () => 0,
-              error: (error, stackTrace) => 0),
-          1);
+        deliveryOrderList.when(
+          data: (data) => data.length,
+          loading: () => 0,
+          error: (error, stackTrace) => 0,
+        ),
+        1,
+      );
     });
   });
 }

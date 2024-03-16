@@ -19,18 +19,20 @@ class UserBookingListProvider extends ListNotifier<Booking> {
 
   Future<bool> updateBooking(Booking booking) async {
     return await update(
-        bookingRepository.updateBooking,
-        (bookings, booking) => bookings
-          ..[bookings.indexWhere((b) => b.id == booking.id)] = booking,
-        booking);
+      bookingRepository.updateBooking,
+      (bookings, booking) =>
+          bookings..[bookings.indexWhere((b) => b.id == booking.id)] = booking,
+      booking,
+    );
   }
 
   Future<bool> deleteBooking(Booking booking) async {
     return await delete(
-        bookingRepository.deleteBooking,
-        (bookings, booking) => bookings..removeWhere((i) => i.id == booking.id),
-        booking.id,
-        booking);
+      bookingRepository.deleteBooking,
+      (bookings, booking) => bookings..removeWhere((i) => i.id == booking.id),
+      booking.id,
+      booking,
+    );
   }
 }
 

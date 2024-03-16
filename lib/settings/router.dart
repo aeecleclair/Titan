@@ -27,44 +27,50 @@ class SettingsRouter {
   SettingsRouter(this.ref);
 
   QRoute route() => QRoute(
-          name: "settings",
-          path: SettingsRouter.root,
-          builder: () => main_page.SettingsMainPage(),
-          middleware: [
-            AuthenticatedMiddleware(ref),
-            DeferredLoadingMiddleware(main_page.loadLibrary)
-          ],
-          children: [
+        name: "settings",
+        path: SettingsRouter.root,
+        builder: () => main_page.SettingsMainPage(),
+        middleware: [
+          AuthenticatedMiddleware(ref),
+          DeferredLoadingMiddleware(main_page.loadLibrary),
+        ],
+        children: [
+          QRoute(
+            path: editAccount,
+            builder: () => edit_user_page.EditUserPage(),
+            middleware: [
+              DeferredLoadingMiddleware(edit_user_page.loadLibrary),
+            ],
+          ),
+          QRoute(
+            path: changePassword,
+            builder: () => change_pass.ChangePassPage(),
+            middleware: [
+              DeferredLoadingMiddleware(change_pass.loadLibrary),
+            ],
+          ),
+          if (!kIsWeb)
             QRoute(
-                path: editAccount,
-                builder: () => edit_user_page.EditUserPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(edit_user_page.loadLibrary)
-                ]),
-            QRoute(
-                path: changePassword,
-                builder: () => change_pass.ChangePassPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(change_pass.loadLibrary)
-                ]),
-            if (!kIsWeb)
-              QRoute(
-                  path: logs,
-                  builder: () => log_page.LogPage(),
-                  middleware: [
-                    DeferredLoadingMiddleware(log_page.loadLibrary)
-                  ]),
-            QRoute(
-                path: modules,
-                builder: () => modules_page.ModulesPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(modules_page.loadLibrary)
-                ]),
-            QRoute(
-                path: notifications,
-                builder: () => notification_page.NotificationPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(notification_page.loadLibrary)
-                ]),
-          ]);
+              path: logs,
+              builder: () => log_page.LogPage(),
+              middleware: [
+                DeferredLoadingMiddleware(log_page.loadLibrary),
+              ],
+            ),
+          QRoute(
+            path: modules,
+            builder: () => modules_page.ModulesPage(),
+            middleware: [
+              DeferredLoadingMiddleware(modules_page.loadLibrary),
+            ],
+          ),
+          QRoute(
+            path: notifications,
+            builder: () => notification_page.NotificationPage(),
+            middleware: [
+              DeferredLoadingMiddleware(notification_page.loadLibrary),
+            ],
+          ),
+        ],
+      );
 }

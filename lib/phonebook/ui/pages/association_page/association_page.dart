@@ -55,8 +55,10 @@ class AssociationPage extends HookConsumerWidget {
                   style: const TextStyle(fontSize: 40, color: Colors.black),
                 ),
                 const SizedBox(height: 10),
-                Text(association.kind,
-                    style: const TextStyle(fontSize: 20, color: Colors.black)),
+                Text(
+                  association.kind,
+                  style: const TextStyle(fontSize: 20, color: Colors.black),
+                ),
                 const SizedBox(height: 10),
                 Text(
                   association.description,
@@ -77,18 +79,20 @@ class AssociationPage extends HookConsumerWidget {
                           ? const Text(PhonebookTextConstants.noMember)
                           : Column(
                               children: associationMemberSortedList
-                                  .map((member) => kIsWeb
-                                      ? WebMemberCard(
-                                          member: member,
-                                          association: association,
-                                        )
-                                      : MemberCard(
-                                          member: member,
-                                          association: association,
-                                        ))
+                                  .map(
+                                    (member) => kIsWeb
+                                        ? WebMemberCard(
+                                            member: member,
+                                            association: association,
+                                          )
+                                        : MemberCard(
+                                            member: member,
+                                            association: association,
+                                          ),
+                                  )
                                   .toList(),
                             ),
-                )
+                ),
               ],
             ),
             if (isPresident)
@@ -98,9 +102,11 @@ class AssociationPage extends HookConsumerWidget {
                 child: GestureDetector(
                   onTap: () {
                     kindNotifier.setKind(association.kind);
-                    QR.to(PhonebookRouter.root +
-                        PhonebookRouter.associationDetail +
-                        PhonebookRouter.editAssociation);
+                    QR.to(
+                      PhonebookRouter.root +
+                          PhonebookRouter.associationDetail +
+                          PhonebookRouter.editAssociation,
+                    );
                   },
                   child: Container(
                     padding:

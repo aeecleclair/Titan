@@ -6,12 +6,13 @@ class SideItem extends HookConsumerWidget {
   final Section section;
   final bool isSelected, alreadyVoted;
   final void Function() onTap;
-  const SideItem(
-      {super.key,
-      required this.section,
-      required this.isSelected,
-      required this.alreadyVoted,
-      required this.onTap});
+  const SideItem({
+    super.key,
+    required this.section,
+    required this.isSelected,
+    required this.alreadyVoted,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -24,13 +25,16 @@ class SideItem extends HookConsumerWidget {
           margin: const EdgeInsets.only(left: 25, bottom: 15, right: 25),
           child: Column(
             children: [
-              Text(section.name,
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: !alreadyVoted || isSelected
-                          ? Colors.black
-                          : Colors.grey.shade500)),
+              Text(
+                section.name,
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: !alreadyVoted || isSelected
+                      ? Colors.black
+                      : Colors.grey.shade500,
+                ),
+              ),
               const SizedBox(height: 7),
               isSelected
                   ? Container(

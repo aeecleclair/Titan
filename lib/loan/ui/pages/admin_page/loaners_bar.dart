@@ -16,22 +16,24 @@ class LoanersBar extends HookConsumerWidget {
     final adminLoanList = ref.watch(adminLoanListProvider);
     final loaner = ref.watch(loanerProvider);
     return HorizontalListView.builder(
-        height: 40,
-        items: adminLoanList.keys.toList(),
-        itemBuilder: (context, key, i) {
-          final selected = loaner.id == key.id;
-          return ItemChip(
-            selected: selected,
-            onTap: () async {
-              onTap(key);
-            },
-            child: Text(
-              capitalize(key.name),
-              style: TextStyle(
-                  color: selected ? Colors.white : Colors.black,
-                  fontWeight: FontWeight.bold),
+      height: 40,
+      items: adminLoanList.keys.toList(),
+      itemBuilder: (context, key, i) {
+        final selected = loaner.id == key.id;
+        return ItemChip(
+          selected: selected,
+          onTap: () async {
+            onTap(key);
+          },
+          child: Text(
+            capitalize(key.name),
+            style: TextStyle(
+              color: selected ? Colors.white : Colors.black,
+              fontWeight: FontWeight.bold,
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }

@@ -23,9 +23,10 @@ final moduleRootListProvider =
   final userProvider = ref.watch(asyncUserProvider);
   ModuleListNotifier notifier = ModuleListNotifier(token: token);
   userProvider.maybeWhen(
-      data: (data) => tokenExpireWrapperAuth(ref, () async {
-            await notifier.loadMyModuleRoots();
-          }),
-      orElse: () {});
+    data: (data) => tokenExpireWrapperAuth(ref, () async {
+      await notifier.loadMyModuleRoots();
+    }),
+    orElse: () {},
+  );
   return notifier;
 });

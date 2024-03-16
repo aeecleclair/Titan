@@ -42,7 +42,7 @@ class DetailOrderUI extends HookConsumerWidget {
       height: 145 + (20.0 * order.products.length),
       colors: const [
         AMAPColorConstants.lightGradient1,
-        AMAPColorConstants.greenGradient1
+        AMAPColorConstants.greenGradient1,
       ],
       padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 17.0),
       child: Column(
@@ -51,12 +51,15 @@ class DetailOrderUI extends HookConsumerWidget {
         children: [
           SizedBox(
             width: 216,
-            child: AutoSizeText(order.user.getName(),
-                maxLines: 1,
-                style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: AMAPColorConstants.textDark)),
+            child: AutoSizeText(
+              order.user.getName(),
+              maxLines: 1,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: AMAPColorConstants.textDark,
+              ),
+            ),
           ),
           const SizedBox(height: 10),
           ...order.products.map(
@@ -69,9 +72,10 @@ class DetailOrderUI extends HookConsumerWidget {
                     minFontSize: 10,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white),
+                      fontSize: 17,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -80,36 +84,41 @@ class DetailOrderUI extends HookConsumerWidget {
                     "${product.quantity} (${(product.quantity * product.price).toStringAsFixed(2)}€)",
                     textAlign: TextAlign.right,
                     style: const TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white),
+                      fontSize: 17,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ],
             ),
           ),
           Container(
-              height: 3,
-              decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
-              margin: const EdgeInsets.symmetric(vertical: 7)),
+            height: 3,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            margin: const EdgeInsets.symmetric(vertical: 7),
+          ),
           Row(
             children: [
               Text(
                 "${order.products.fold<int>(0, (value, product) => value + product.quantity)} ${AMAPTextConstants.product}${order.products.fold<int>(0, (value, product) => value + product.quantity) != 1 ? "s" : ""}",
                 style: const TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white),
+                  fontSize: 17,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
               ),
               const Spacer(),
               Text(
                 "${order.amount.toStringAsFixed(2)}€",
                 style: const TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white),
+                  fontSize: 17,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
               ),
             ],
           ),
@@ -119,50 +128,65 @@ class DetailOrderUI extends HookConsumerWidget {
               Text(
                 "${AMAPTextConstants.amount} : ${userCash.balance.toStringAsFixed(2)}€",
                 style: const TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w700,
-                    color: AMAPColorConstants.textDark),
+                  fontSize: 17,
+                  fontWeight: FontWeight.w700,
+                  color: AMAPColorConstants.textDark,
+                ),
               ),
               const Spacer(),
               WaitingButton(
                 onTap: () async {
                   await showDialog(
-                      context: context,
-                      builder: ((context) => CustomDialogBox(
+                    context: context,
+                    builder: ((context) => CustomDialogBox(
                           title: AMAPTextConstants.delete,
                           descriptions: AMAPTextConstants.deletingOrder,
                           onYes: () async {
                             await tokenExpireWrapper(ref, () async {
                               final index = orderList.maybeWhen(
-                                  data: (data) => data.indexWhere(
-                                      (element) => element.id == order.id),
-                                  orElse: () => -1);
+                                data: (data) => data.indexWhere(
+                                  (element) => element.id == order.id,
+                                ),
+                                orElse: () => -1,
+                              );
                               await orderListNotifier
                                   .deleteOrder(order)
                                   .then((value) {
                                 if (value) {
                                   if (index != -1) {
                                     deliveryOrdersNotifier.deleteE(
-                                        deliveryId, index);
+                                      deliveryId,
+                                      index,
+                                    );
                                   }
                                   cashListNotifier.fakeUpdateCash(
-                                      userCash.copyWith(
-                                          balance:
-                                              userCash.balance + order.amount));
-                                  displayToastWithContext(TypeMsg.msg,
-                                      AMAPTextConstants.deletedOrder);
+                                    userCash.copyWith(
+                                      balance: userCash.balance + order.amount,
+                                    ),
+                                  );
+                                  displayToastWithContext(
+                                    TypeMsg.msg,
+                                    AMAPTextConstants.deletedOrder,
+                                  );
                                 } else {
-                                  displayToastWithContext(TypeMsg.error,
-                                      AMAPTextConstants.deletingError);
+                                  displayToastWithContext(
+                                    TypeMsg.error,
+                                    AMAPTextConstants.deletingError,
+                                  );
                                 }
                               });
                             });
-                          })));
+                          },
+                        )),
+                  );
                 },
-                builder: (child) => CardButton(colors: const [
-                  AMAPColorConstants.redGradient1,
-                  AMAPColorConstants.redGradient2
-                ], child: child),
+                builder: (child) => CardButton(
+                  colors: const [
+                    AMAPColorConstants.redGradient1,
+                    AMAPColorConstants.redGradient2,
+                  ],
+                  child: child,
+                ),
                 child: const HeroIcon(
                   HeroIcons.trash,
                   color: Colors.white,
@@ -170,7 +194,7 @@ class DetailOrderUI extends HookConsumerWidget {
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
     );

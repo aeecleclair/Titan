@@ -6,19 +6,20 @@ import 'package:myecl/user/class/list_users.dart';
 enum CollectionSlot { midDay, evening }
 
 class Order {
-  Order(
-      {required this.id,
-      required this.deliveryId,
-      required this.orderingDate,
-      required this.deliveryDate,
-      required this.productsDetail,
-      required this.amount,
-      required this.lastAmount,
-      required this.collectionSlot,
-      required this.user,
-      this.productsQuantity = const <int>[],
-      this.products = const [],
-      this.expanded = false});
+  Order({
+    required this.id,
+    required this.deliveryId,
+    required this.orderingDate,
+    required this.deliveryDate,
+    required this.productsDetail,
+    required this.amount,
+    required this.lastAmount,
+    required this.collectionSlot,
+    required this.user,
+    this.productsQuantity = const <int>[],
+    this.products = const [],
+    this.expanded = false,
+  });
   late final SimpleUser user;
   late final CollectionSlot collectionSlot;
   late final String id;
@@ -37,7 +38,8 @@ class Order {
     amount = json['amount'];
     lastAmount = amount;
     products = List<Product>.from(
-        json['productsdetail'].map((x) => Product.fromJson(x)));
+      json['productsdetail'].map((x) => Product.fromJson(x)),
+    );
     expanded = false;
     productsDetail =
         List<String>.from(products.map((element) => element.id).toList());
@@ -63,51 +65,55 @@ class Order {
     return data;
   }
 
-  Order copyWith(
-      {String? id,
-      DateTime? orderingDate,
-      DateTime? deliveryDate,
-      List<Product>? products,
-      bool? expanded,
-      String? deliveryId,
-      double? amount,
-      double? lastAmount,
-      CollectionSlot? collectionSlot,
-      SimpleUser? user}) {
+  Order copyWith({
+    String? id,
+    DateTime? orderingDate,
+    DateTime? deliveryDate,
+    List<Product>? products,
+    bool? expanded,
+    String? deliveryId,
+    double? amount,
+    double? lastAmount,
+    CollectionSlot? collectionSlot,
+    SimpleUser? user,
+  }) {
     return Order(
-        id: id ?? this.id,
-        orderingDate: orderingDate ?? this.orderingDate,
-        deliveryDate: deliveryDate ?? this.deliveryDate,
-        productsDetail: products != null
-            ? List<String>.from(products.map((element) => element.id).toList())
-            : productsDetail,
-        productsQuantity: products != null
-            ? List<int>.from(
-                products.map((element) => element.quantity).toList())
-            : productsQuantity,
-        deliveryId: deliveryId ?? this.deliveryId,
-        products: products ?? this.products,
-        amount: amount ?? this.amount,
-        lastAmount: lastAmount ?? this.lastAmount,
-        collectionSlot: collectionSlot ?? this.collectionSlot,
-        expanded: expanded ?? this.expanded,
-        user: user ?? this.user);
+      id: id ?? this.id,
+      orderingDate: orderingDate ?? this.orderingDate,
+      deliveryDate: deliveryDate ?? this.deliveryDate,
+      productsDetail: products != null
+          ? List<String>.from(products.map((element) => element.id).toList())
+          : productsDetail,
+      productsQuantity: products != null
+          ? List<int>.from(
+              products.map((element) => element.quantity).toList(),
+            )
+          : productsQuantity,
+      deliveryId: deliveryId ?? this.deliveryId,
+      products: products ?? this.products,
+      amount: amount ?? this.amount,
+      lastAmount: lastAmount ?? this.lastAmount,
+      collectionSlot: collectionSlot ?? this.collectionSlot,
+      expanded: expanded ?? this.expanded,
+      user: user ?? this.user,
+    );
   }
 
   static Order empty() {
     return Order(
-        id: '',
-        orderingDate: DateTime.now(),
-        deliveryDate: DateTime.now(),
-        productsDetail: [],
-        productsQuantity: [],
-        deliveryId: '',
-        products: [],
-        amount: 0,
-        lastAmount: 0,
-        collectionSlot: CollectionSlot.midDay,
-        expanded: false,
-        user: SimpleUser.empty());
+      id: '',
+      orderingDate: DateTime.now(),
+      deliveryDate: DateTime.now(),
+      productsDetail: [],
+      productsQuantity: [],
+      deliveryId: '',
+      products: [],
+      amount: 0,
+      lastAmount: 0,
+      collectionSlot: CollectionSlot.midDay,
+      expanded: false,
+      user: SimpleUser.empty(),
+    );
   }
 
   @override

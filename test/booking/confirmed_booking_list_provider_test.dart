@@ -13,7 +13,7 @@ void main() {
       final mockRepository = MockBookingRepository();
       final bookings = [
         Booking.empty().copyWith(id: '1'),
-        Booking.empty().copyWith(id: '2')
+        Booking.empty().copyWith(id: '2'),
       ];
       when(() => mockRepository.getConfirmedBookingList())
           .thenAnswer((_) async => bookings);
@@ -23,18 +23,19 @@ void main() {
       final result = await provider.loadConfirmedBooking();
 
       expect(
-          result.maybeWhen(
-            data: (data) => data,
-            orElse: () => [],
-          ),
-          bookings);
+        result.maybeWhen(
+          data: (data) => data,
+          orElse: () => [],
+        ),
+        bookings,
+      );
     });
 
     test('addBooking adds a booking to the list', () async {
       final mockRepository = MockBookingRepository();
       final bookings = [
         Booking.empty().copyWith(id: '1'),
-        Booking.empty().copyWith(id: '2')
+        Booking.empty().copyWith(id: '2'),
       ];
       final newBooking = Booking.empty().copyWith(id: '3');
       when(() => mockRepository.getConfirmedBookingList())
@@ -47,18 +48,19 @@ void main() {
 
       expect(result, true);
       expect(
-          provider.state.maybeWhen(
-            data: (data) => data,
-            orElse: () => [],
-          ),
-          [...bookings, newBooking]);
+        provider.state.maybeWhen(
+          data: (data) => data,
+          orElse: () => [],
+        ),
+        [...bookings, newBooking],
+      );
     });
 
     test('deleteBooking removes a booking from the list', () async {
       final mockRepository = MockBookingRepository();
       final bookings = [
         Booking.empty().copyWith(id: '1'),
-        Booking.empty().copyWith(id: '2')
+        Booking.empty().copyWith(id: '2'),
       ];
       final booking = bookings.first;
       when(() => mockRepository.getConfirmedBookingList())
@@ -71,18 +73,19 @@ void main() {
 
       expect(result, true);
       expect(
-          provider.state.maybeWhen(
-            data: (data) => data,
-            orElse: () => [],
-          ),
-          bookings.skip(1));
+        provider.state.maybeWhen(
+          data: (data) => data,
+          orElse: () => [],
+        ),
+        bookings.skip(1),
+      );
     });
 
     test('updateBooking updates a booking in the list', () async {
       final mockRepository = MockBookingRepository();
       final bookings = [
         Booking.empty().copyWith(id: '1'),
-        Booking.empty().copyWith(id: '2')
+        Booking.empty().copyWith(id: '2'),
       ];
       final booking = bookings.first.copyWith(reason: 'Updated');
       when(() => mockRepository.getConfirmedBookingList())
@@ -95,11 +98,12 @@ void main() {
 
       expect(result, true);
       expect(
-          provider.state.maybeWhen(
-            data: (data) => data,
-            orElse: () => [],
-          ),
-          [booking, ...bookings.skip(1)]);
+        provider.state.maybeWhen(
+          data: (data) => data,
+          orElse: () => [],
+        ),
+        [booking, ...bookings.skip(1)],
+      );
     });
   });
 }

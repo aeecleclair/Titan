@@ -48,10 +48,12 @@ class DetailPage extends HookConsumerWidget {
                         if (order.products.isNotEmpty)
                           Wrap(
                             children: order.products
-                                .map((product) => ProductCard(
-                                      product: product,
-                                      showButton: false,
-                                    ))
+                                .map(
+                                  (product) => ProductCard(
+                                    product: product,
+                                    showButton: false,
+                                  ),
+                                )
                                 .toList(),
                           ),
                         const SizedBox(height: 20),
@@ -66,7 +68,7 @@ class DetailPage extends HookConsumerWidget {
               child: Center(
                 child: OrderUI(order: order, showButton: false, isDetail: true),
               ),
-            )
+            ),
           ],
         ),
       ),

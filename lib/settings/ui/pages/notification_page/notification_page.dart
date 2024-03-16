@@ -20,96 +20,104 @@ class NotificationPage extends HookConsumerWidget {
     final topicsNotifier = ref.read(topicsProvider.notifier);
     return SettingsTemplate(
       child: Refresher(
-          onRefresh: () async {
-            await topicsNotifier.getTopics();
-          },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
-            child: Column(children: [
+        onRefresh: () async {
+          await topicsNotifier.getTopics();
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child: Column(
+            children: [
               const AlignLeftText(
                 SettingsTextConstants.updateNotification,
                 padding: EdgeInsets.symmetric(vertical: 30),
                 color: Colors.grey,
               ),
               AsyncChild(
-                  value: topics,
-                  builder: (context, topic) => Column(
-                      children: Topic.values
-                          .map((e) => Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 12),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(topicToFrenchString(e),
-                                        style: const TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w700,
-                                            color: ColorConstants.background2)),
-                                    LoadSwitch(
-                                      value: topic.contains(e),
-                                      future: () =>
-                                          topicsNotifier.toggleSubscription(e),
-                                      height: 30,
-                                      width: 60,
-                                      curveIn: Curves.easeInBack,
-                                      curveOut: Curves.easeOutBack,
-                                      animationDuration:
-                                          const Duration(milliseconds: 500),
-                                      switchDecoration: (value, _) =>
-                                          BoxDecoration(
-                                        color: value
-                                            ? ColorConstants.gradient1
-                                                .withOpacity(0.3)
-                                            : Colors.grey.shade200,
-                                        borderRadius: BorderRadius.circular(30),
-                                        shape: BoxShape.rectangle,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: value
-                                                ? ColorConstants.gradient1
-                                                    .withOpacity(0.2)
-                                                : Colors.grey.withOpacity(0.2),
-                                            spreadRadius: 1,
-                                            blurRadius: 3,
-                                            offset: const Offset(0, 1),
-                                          ),
-                                        ],
-                                      ),
-                                      spinColor: (value) => value
+                value: topics,
+                builder: (context, topic) => Column(
+                  children: Topic.values
+                      .map(
+                        (e) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                topicToFrenchString(e),
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                  color: ColorConstants.background2,
+                                ),
+                              ),
+                              LoadSwitch(
+                                value: topic.contains(e),
+                                future: () =>
+                                    topicsNotifier.toggleSubscription(e),
+                                height: 30,
+                                width: 60,
+                                curveIn: Curves.easeInBack,
+                                curveOut: Curves.easeOutBack,
+                                animationDuration:
+                                    const Duration(milliseconds: 500),
+                                switchDecoration: (value, _) => BoxDecoration(
+                                  color: value
+                                      ? ColorConstants.gradient1
+                                          .withOpacity(0.3)
+                                      : Colors.grey.shade200,
+                                  borderRadius: BorderRadius.circular(30),
+                                  shape: BoxShape.rectangle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: value
                                           ? ColorConstants.gradient1
-                                          : Colors.grey,
-                                      spinStrokeWidth: 2,
-                                      thumbDecoration: (value, _) =>
-                                          BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(30),
-                                        shape: BoxShape.rectangle,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: value
-                                                ? ColorConstants.gradient1
-                                                    .withOpacity(0.2)
-                                                : Colors.grey.shade200
-                                                    .withOpacity(0.2),
-                                            spreadRadius: 5,
-                                            blurRadius: 7,
-                                            offset: const Offset(0,
-                                                3), // changes position of shadow
-                                          ),
-                                        ],
-                                      ),
-                                      onChange: (v) {},
-                                      onTap: (v) {},
+                                              .withOpacity(0.2)
+                                          : Colors.grey.withOpacity(0.2),
+                                      spreadRadius: 1,
+                                      blurRadius: 3,
+                                      offset: const Offset(0, 1),
                                     ),
                                   ],
                                 ),
-                              ))
-                          .toList()),
-                  loaderColor: ColorConstants.gradient1),
-            ]),
-          )),
+                                spinColor: (value) => value
+                                    ? ColorConstants.gradient1
+                                    : Colors.grey,
+                                spinStrokeWidth: 2,
+                                thumbDecoration: (value, _) => BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(30),
+                                  shape: BoxShape.rectangle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: value
+                                          ? ColorConstants.gradient1
+                                              .withOpacity(0.2)
+                                          : Colors.grey.shade200
+                                              .withOpacity(0.2),
+                                      spreadRadius: 5,
+                                      blurRadius: 7,
+                                      offset: const Offset(
+                                        0,
+                                        3,
+                                      ), // changes position of shadow
+                                    ),
+                                  ],
+                                ),
+                                onChange: (v) {},
+                                onTap: (v) {},
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+                loaderColor: ColorConstants.gradient1,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
