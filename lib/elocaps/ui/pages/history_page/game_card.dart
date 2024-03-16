@@ -43,7 +43,7 @@ class GameCard extends HookConsumerWidget {
         child: Column(children: [
           const SizedBox(height: 10),
           Text(
-              "${game.mode.name} - ${processDatePrint(game.timestamp.toString().split(" ")[0])}",
+              "${capsModeToString(game.mode)} - ${processDatePrint(game.timestamp.toString().split(" ")[0])}",
               style: const TextStyle(color: Colors.white)),
           const SizedBox(height: 10),
           Row(

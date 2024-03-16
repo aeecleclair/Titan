@@ -31,9 +31,11 @@ class HistoryPage extends HookConsumerWidget {
           const SizedBox(height: 20),
           AsyncChild(
               value: history,
-              builder: (context, games) => Column(
-                  children:
-                      games.reversed.map((e) => GameCard(game: e)).toList())),
+              builder: (context, games) {
+                games.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+                return Column(
+                    children: games.map((e) => GameCard(game: e)).toList());
+              })
         ],
       ),
     ));
