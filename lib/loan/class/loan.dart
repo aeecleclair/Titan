@@ -53,8 +53,9 @@ class Loan {
     data['end'] = processDateToAPIWithoutHour(end);
     data['caution'] = caution;
     data['items_borrowed'] = itemsQuantity.map((x) => x.toJson()).toList();
-    data['returned_date'] =
-        returnedDate != null ? processDateToAPIWithoutHour(end) : null;
+    data['returned_date'] = returnedDate != null
+        ? processDateToAPIWithoutHour(returnedDate!)
+        : null;
     return data;
   }
 
