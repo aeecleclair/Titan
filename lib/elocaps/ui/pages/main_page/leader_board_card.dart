@@ -5,11 +5,12 @@ class LeaderBoardCard extends StatelessWidget {
   final Player player;
   final int index;
   final bool isMe;
-  const LeaderBoardCard(
-      {super.key,
-      required this.player,
-      required this.index,
-      required this.isMe});
+  const LeaderBoardCard({
+    super.key,
+    required this.player,
+    required this.index,
+    required this.isMe,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +69,8 @@ class LeaderBoardCard extends StatelessWidget {
                                 fit: BoxFit.cover,
                               ),
                             ),
-                          ))
+                          ),
+                        )
                       : CircleAvatar(
                           radius: 20,
                           backgroundColor: Colors.white,
@@ -85,7 +87,7 @@ class LeaderBoardCard extends StatelessWidget {
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );

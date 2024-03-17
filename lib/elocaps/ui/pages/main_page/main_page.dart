@@ -77,25 +77,28 @@ class EloCapsMainPage extends HookConsumerWidget {
                           height: 40),
                     ),
                     GestureDetector(
-                        onTap: () {
-                          QR.to(ElocapsRouter.root + ElocapsRouter.history);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Center(
-                              child: (displayBadge)
-                                  ? Badge(
-                                      isLabelVisible: displayBadge,
-                                      smallSize: 10,
-                                      child: const HeroIcon(
-                                        HeroIcons.clipboardDocumentList,
-                                        size: 30,
-                                      ))
-                                  : const HeroIcon(
-                                      HeroIcons.clipboardDocumentList,
-                                      size: 30,
-                                    )),
-                        )),
+                      onTap: () {
+                        QR.to(ElocapsRouter.root + ElocapsRouter.history);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Center(
+                          child: (displayBadge)
+                              ? Badge(
+                                  isLabelVisible: displayBadge,
+                                  smallSize: 10,
+                                  child: const HeroIcon(
+                                    HeroIcons.clipboardDocumentList,
+                                    size: 30,
+                                  ),
+                                )
+                              : const HeroIcon(
+                                  HeroIcons.clipboardDocumentList,
+                                  size: 30,
+                                ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 20),
