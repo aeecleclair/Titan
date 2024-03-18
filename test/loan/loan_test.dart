@@ -49,7 +49,7 @@ void main() {
       newItem = item.copyWith(loanedQuantity: 1);
       expect(newItem.loanedQuantity, 1);
       newItem = item.copyWith(
-        suggestedLendingDuration: 2.0,
+        suggestedLendingDuration: 2,
       );
       expect(newItem.suggestedLendingDuration, 2.0);
     });
