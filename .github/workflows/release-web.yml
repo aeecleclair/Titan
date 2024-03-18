@@ -93,7 +93,7 @@ jobs:
           cp -f web/Prod/icons/* web/icons/
       
       - name: Build 🔧
-        run: flutter build web --release
+        run: flutter build web --release --dart-define=flavor=alpha
       
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
