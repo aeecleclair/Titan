@@ -76,22 +76,23 @@ class GamePage extends HookConsumerWidget {
               padding: EdgeInsets.symmetric(horizontal: 30)),
           const SizedBox(height: 20),
           HorizontalListView.builder(
-              items: CapsMode.values,
-              itemBuilder: (context, item, i) {
-                final selected = item == modeChosen;
-                return ItemChip(
-                    selected: selected,
-                    onTap: () {
-                      modeChosenNotifier.setMode(item);
-                    },
-                    child: Text(
-                      capsModeToString(item),
-                      style: TextStyle(
-                        color: selected ? Colors.white : Colors.black,
-                      ),
-                    ));
-              },
-              height: 40),
+            items: CapsMode.values,
+            itemBuilder: (context, item, i) {
+              final selected = item == modeChosen;
+              return ItemChip(
+                  selected: selected,
+                  onTap: () {
+                    modeChosenNotifier.setMode(item);
+                  },
+                  child: Text(
+                    capsModeToString(item),
+                    style: TextStyle(
+                      color: selected ? Colors.white : Colors.black,
+                    ),
+                  ));
+            },
+            height: 40,
+          ),
           const SizedBox(height: 30),
           Form(
             key: playersKey,
@@ -111,13 +112,17 @@ class GamePage extends HookConsumerWidget {
                       playersForm[3],
                     ]
                   : [
-                      const AlignLeftText(ElocapsTextConstant.player_1,
-                          padding: EdgeInsets.symmetric(horizontal: 30)),
+                      const AlignLeftText(
+                        ElocapsTextConstant.player_1,
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                      ),
                       const SizedBox(height: 20),
                       playersForm[0],
                       const SizedBox(height: 20),
-                      const AlignLeftText(ElocapsTextConstant.player_2,
-                          padding: EdgeInsets.symmetric(horizontal: 30)),
+                      const AlignLeftText(
+                        ElocapsTextConstant.player_2,
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                      ),
                       const SizedBox(height: 20),
                       playersForm[1],
                     ],
@@ -195,42 +200,48 @@ class GamePage extends HookConsumerWidget {
             }),
             const SizedBox(height: 30),
             GestureDetector(
-                onTap: () async {
-                  if (!scoreKey.currentState!.validate() ||
-                      !playersKey.currentState!.validate()) {
-                    return;
-                  }
-                  final game = Game(
-                      timestamp: DateTime.now(),
-                      gamePlayers: players.entries.map((entry) {
-                        int index = entry.key;
-                        SimpleUser e = entry.value;
-                        final isTeamOne = index < players.length / 2;
-                        return GamePlayer(
-                          user: e,
-                          eloGain: 0,
-                          playerId: e.id,
-                          score: isTeamOne ? scores[0] : scores[1],
-                          team: isTeamOne ? 1 : 2,
-                          hasConfirmed: false,
-                        );
-                      }).toList(),
-                      id: '',
-                      isConfirmed: false,
-                      isCancelled: false,
-                      mode: modeChosen);
-                  final value = await gameNotifier.createGame(game);
-                  if (value) {
-                    playersNotifier.reset();
-                    displayToastWithContext(
-                        TypeMsg.msg, ElocapsTextConstant.savedGame);
-                    QR.to(ElocapsRouter.root);
-                  } else {
-                    displayToastWithContext(
-                        TypeMsg.error, ElocapsTextConstant.errorSavingGame);
-                  }
-                },
-                child: const MyButton(text: ElocapsTextConstant.saveTheGame))
+              onTap: () async {
+                if (!scoreKey.currentState!.validate() ||
+                    !playersKey.currentState!.validate()) {
+                  return;
+                }
+                final game = Game(
+                  timestamp: DateTime.now(),
+                  gamePlayers: players.entries.map((entry) {
+                    int index = entry.key;
+                    SimpleUser e = entry.value;
+                    final isTeamOne = index < players.length / 2;
+                    return GamePlayer(
+                      user: e,
+                      eloGain: 0,
+                      playerId: e.id,
+                      score: isTeamOne ? scores[0] : scores[1],
+                      team: isTeamOne ? 1 : 2,
+                      hasConfirmed: false,
+                    );
+                  }).toList(),
+                  id: '',
+                  isConfirmed: false,
+                  isCancelled: false,
+                  mode: modeChosen,
+                );
+                final value = await gameNotifier.createGame(game);
+                if (value) {
+                  playersNotifier.reset();
+                  displayToastWithContext(
+                    TypeMsg.msg,
+                    ElocapsTextConstant.savedGame,
+                  );
+                  QR.to(ElocapsRouter.root);
+                } else {
+                  displayToastWithContext(
+                    TypeMsg.error,
+                    ElocapsTextConstant.errorSavingGame,
+                  );
+                }
+              },
+              child: const MyButton(text: ElocapsTextConstant.saveTheGame),
+            )
           ],
           const SizedBox(height: 20),
         ],
