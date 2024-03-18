@@ -30,6 +30,7 @@ class RecommendationRouter {
   RecommendationRouter(this.ref);
 
   QRoute route() => QRoute(
+        name: "recommendation",
         path: RecommendationRouter.root,
         builder: () => main_page.RecommendationMainPage(),
         middleware: [
