@@ -39,19 +39,23 @@ class GamePage extends HookConsumerWidget {
     final playersForm = [
       PlayerForm(
         index: 0,
+        enable: false,
         queryController:
             useTextEditingController(text: me.toSimpleUser().getName()),
       ),
       PlayerForm(
         index: 1,
+        enable: true,
         queryController: useTextEditingController(text: ""),
       ),
       PlayerForm(
         index: 2,
+        enable: true,
         queryController: useTextEditingController(text: ""),
       ),
       PlayerForm(
         index: 3,
+        enable: true,
         queryController: useTextEditingController(text: ""),
       ),
     ];
@@ -83,7 +87,8 @@ class GamePage extends HookConsumerWidget {
                     child: Text(
                       capsModeToString(item),
                       style: TextStyle(
-                          color: selected ? Colors.white : Colors.black),
+                        color: selected ? Colors.white : Colors.black,
+                      ),
                     ));
               },
               height: 40),

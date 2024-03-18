@@ -9,11 +9,16 @@ import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/elocaps/tools/constants.dart';
 
 class PlayerForm extends HookConsumerWidget {
-  const PlayerForm(
-      {super.key, required this.index, required this.queryController});
+  const PlayerForm({
+    super.key,
+    required this.index,
+    required this.queryController,
+    required this.enable,
+  });
 
   final int index;
   final TextEditingController queryController;
+  final bool enable;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,6 +31,7 @@ class PlayerForm extends HookConsumerWidget {
       child: Column(
         children: [
           TextEntry(
+            enabled: enable,
             label: "${ElocapsTextConstant.player} ${index + 1}",
             onChanged: (value) {
               if (index != isFocused) {
