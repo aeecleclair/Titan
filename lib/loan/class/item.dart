@@ -22,7 +22,7 @@ class Item {
     caution = json['suggested_caution'];
     totalQuantity = json['total_quantity'];
     loanedQuantity = json['loaned_quantity'];
-    suggestedLendingDuration = json['suggested_lending_duration'];
+    suggestedLendingDuration = json['suggested_lending_duration'].toDouble();
   }
 
   Map<String, dynamic> toJson() {
