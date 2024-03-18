@@ -22,14 +22,15 @@ class ModeDialog extends HookConsumerWidget {
     return Dialog(
       child: Container(
         decoration: const BoxDecoration(
-            gradient: RadialGradient(
-          colors: [
-            Color.fromARGB(255, 255, 255, 255),
-            Color.fromARGB(255, 251, 209, 206),
-          ],
-          radius: 2,
-          center: Alignment.topLeft,
-        )),
+          gradient: RadialGradient(
+            colors: [
+              Color.fromARGB(255, 255, 255, 255),
+              Color.fromARGB(255, 251, 209, 206),
+            ],
+            radius: 2,
+            center: Alignment.topLeft,
+          ),
+        ),
         height: 80 + capsModeList.length * 35.0,
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -60,9 +61,10 @@ class ModeDialog extends HookConsumerWidget {
                         child: Text(
                           capsModeToString(capsModeList[index]),
                           style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 17, 16, 16)),
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 17, 16, 16),
+                          ),
                         ),
                       ),
                     ),
