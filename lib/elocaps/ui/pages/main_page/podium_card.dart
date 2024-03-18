@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/elocaps/class/player.dart';
 import 'package:myecl/elocaps/tools/constants.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/user/providers/profile_picture_provider.dart';
 
-class PodiumCard extends StatelessWidget {
+class PodiumCard extends HookConsumerWidget {
   const PodiumCard(
       {super.key,
       required this.player,
@@ -14,42 +17,47 @@ class PodiumCard extends StatelessWidget {
   final bool isMe;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final profilePicture = ref.watch(profilePictureProvider);
     final Color color = ElocapsColorConstant.podium_color[index];
 
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          isMe
-              ? CircleAvatar(
-                  radius: 27,
-                  backgroundColor: Colors.black,
-                  child: CircleAvatar(
-                    radius: 25,
-                    backgroundColor: Colors.white,
-                    child: ClipOval(
-                      child: Image.network(
-                        "https://www.gravatar.com/avatar/${player.user.id}?d=identicon",
-                        width: 50,
-                        height: 50,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                )
-              : CircleAvatar(
-                  radius: 25,
-                  backgroundColor: Colors.white,
-                  child: ClipOval(
-                    child: Image.network(
-                      "https://www.gravatar.com/avatar/${player.user.id}?d=identicon",
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
+          AsyncChild(
+              value: profilePicture,
+              builder: (context, profile) {
+                return isMe
+                    ? CircleAvatar(
+                        radius: 27,
+                        backgroundColor: Colors.black,
+                        child: CircleAvatar(
+                          radius: 25,
+                          backgroundColor: Colors.white,
+                          child: ClipOval(
+                            child: Image.memory(
+                              profile,
+                              width: 50,
+                              height: 50,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      )
+                    : CircleAvatar(
+                        radius: 25,
+                        backgroundColor: Colors.white,
+                        child: ClipOval(
+                          child: Image.memory(
+                            profile,
+                            width: 50,
+                            height: 50,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+              }),
           const SizedBox(height: 7),
           Text(player.user.nickname ?? player.user.firstname,
               textAlign: TextAlign.center,

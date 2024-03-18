@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/elocaps/class/player.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/user/providers/profile_picture_provider.dart';
 
-class LeaderBoardCard extends StatelessWidget {
+class LeaderBoardCard extends HookConsumerWidget {
   final Player player;
   final int index;
   final bool isMe;
@@ -13,7 +16,8 @@ class LeaderBoardCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final profilePicture = ref.watch(profilePictureProvider);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 7),
       child: Row(
@@ -41,9 +45,10 @@ class LeaderBoardCard extends StatelessWidget {
                       Text(
                         player.user.nickname ?? player.user.firstname,
                         style: const TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       Text(
                         "${player.elo}",
@@ -54,35 +59,40 @@ class LeaderBoardCard extends StatelessWidget {
                   ),
                   const Spacer(),
                   const SizedBox(width: 20),
-                  isMe
-                      ? CircleAvatar(
-                          radius: 22,
-                          backgroundColor: Colors.black,
-                          child: CircleAvatar(
-                            radius: 20,
-                            backgroundColor: Colors.white,
-                            child: ClipOval(
-                              child: Image.network(
-                                "https://www.gravatar.com/avatar/${player.user.id}?d=identicon",
-                                width: 40,
-                                height: 40,
-                                fit: BoxFit.cover,
+                  AsyncChild(
+                    value: profilePicture,
+                    builder: (context, profile) {
+                      return isMe
+                          ? CircleAvatar(
+                              radius: 22,
+                              backgroundColor: Colors.black,
+                              child: CircleAvatar(
+                                radius: 20,
+                                backgroundColor: Colors.white,
+                                child: ClipOval(
+                                  child: Image.memory(
+                                    profile,
+                                    width: 40,
+                                    height: 40,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        )
-                      : CircleAvatar(
-                          radius: 20,
-                          backgroundColor: Colors.white,
-                          child: ClipOval(
-                            child: Image.network(
-                              "https://www.gravatar.com/avatar/${player.user.id}?d=identicon",
-                              width: 40,
-                              height: 40,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
+                            )
+                          : CircleAvatar(
+                              radius: 20,
+                              backgroundColor: Colors.white,
+                              child: ClipOval(
+                                child: Image.memory(
+                                  profile,
+                                  width: 40,
+                                  height: 40,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            );
+                    },
+                  ),
                   const SizedBox(width: 20),
                 ],
               ),
