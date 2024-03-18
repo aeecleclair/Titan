@@ -45,7 +45,9 @@ abstract class SingleNotifier<T> extends StateNotifier<AsyncValue<T>> {
       },
       loading: () {
         state = const AsyncValue.error(
-            "Cannot add while loading", StackTrace.empty);
+          "Cannot add while loading",
+          StackTrace.empty,
+        );
         return false;
       },
     );

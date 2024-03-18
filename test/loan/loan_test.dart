@@ -149,7 +149,9 @@ void main() {
       newLoan = loan.copyWith(
         itemsQuantity: [
           ItemQuantity(
-              itemSimple: ItemSimple(id: '2', name: 'name'), quantity: 2),
+            itemSimple: ItemSimple(id: '2', name: 'name'),
+            quantity: 2,
+          ),
         ],
       );
       expect(newLoan.itemsQuantity[0].itemSimple.id, '2');
