@@ -29,9 +29,11 @@ NB: a trailing slash is required.
 ## Development
 
 ### Linting
+
 Titan support linting according to the official [Flutter static analysis options](https://dart.dev/guides/language/analysis-options).
 
 The linter can be launched using:
+
 ```
 dart format .
 flutter analyze --fix
@@ -42,11 +44,13 @@ flutter analyze --fix
 Titan's tests follow the official [Flutter documentation](https://docs.flutter.dev/testing).
 
 Tests can be run using:
+
 ```bash
 flutter test --flavor dev
 ```
 
 To run a specific test file :
+
 ```bash
 flutter test --flavor dev path/to/file.dart
 ```
@@ -55,7 +59,23 @@ flutter test --flavor dev path/to/file.dart
 
 Titan supports [flavors](https://docs.flutter.dev/deployment/flavors), which allows to easily switch between several versions of Titan for several use cases.
 
-Titan includes 3 flavors: dev, alpha, prod. On VSCode, dev flavor is launched by default.
+Titan includes 3 flavors: `dev`, `alpha`, `prod`. On VSCode, you can choose which flavor to use when launching the debugger
+
+Each flavor is associated with a specific app package name (`fr.myecl.titan.dev`, `fr.myecl.titan.alpha`, `fr.myecl.titan`) allowing the three app to be installed on the same device. Each flavor use its own Hyperion url defined in the [dotenv](/.env)
+
+#### Build with a flavor
+
+To build Titan with a specific flavor use:
+
+```
+flutter build {target} --flavor={flavor}
+```
+
+Currently flavor are not supported for Flutter for web, you should use:
+
+```
+flutter build web --dart-define=flavor={flavor}
+```
 
 ### Notifications setup
 
@@ -66,9 +86,11 @@ Please refer to the [documentation](https://pub.dev/packages/firebase_messaging)
 Please follow [Android](https://firebase.google.com/docs/cloud-messaging/android/client) or [iOS](https://firebase.google.com/docs/cloud-messaging/ios/client) Firebase documentation to setup notifications.
 
 #### Android FCM config file
+
 For Android, add your `google-services.json` in `android/app/src/<flavor>/`.
 
 #### iOS FCM config file
+
 For iOS, add your `GoogleService-Info.plist` in `ios/config/<flavor/`.
 
 ## Advanced
@@ -78,7 +100,9 @@ For iOS, add your `GoogleService-Info.plist` in `ios/config/<flavor/`.
 On mobile, using plaintext HTTP connexions may raise issues.
 
 #### Android
+
 Update [AndroidManifest.xml](./android/app/src/debug/AndroidManifest.xml):
+
 ```
 <application
     ...
@@ -87,6 +111,7 @@ Update [AndroidManifest.xml](./android/app/src/debug/AndroidManifest.xml):
 ```
 
 #### iOS
+
 Update [Info.plist](ios/Runner/Info.plist):
 
 ```
@@ -114,6 +139,7 @@ Update [Info.plist](ios/Runner/Info.plist):
 First update the icon's file and update [pubspec.yaml](./pubspec.yaml).
 
 Then, `flutter_launcher_icons` must be updated:
+
 ```bash
 flutter pub get
 flutter pub run flutter_launcher_icons
