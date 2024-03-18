@@ -49,7 +49,7 @@ void main() {
       newItem = item.copyWith(loanedQuantity: 1);
       expect(newItem.loanedQuantity, 1);
       newItem = item.copyWith(
-        suggestedLendingDuration: 2.0,
+        suggestedLendingDuration: 2,
       );
       expect(newItem.suggestedLendingDuration, 2.0);
     });
@@ -149,7 +149,9 @@ void main() {
       newLoan = loan.copyWith(
         itemsQuantity: [
           ItemQuantity(
-              itemSimple: ItemSimple(id: '2', name: 'name'), quantity: 2),
+            itemSimple: ItemSimple(id: '2', name: 'name'),
+            quantity: 2,
+          ),
         ],
       );
       expect(newLoan.itemsQuantity[0].itemSimple.id, '2');

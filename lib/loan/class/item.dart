@@ -14,7 +14,7 @@ class Item {
   late final int caution;
   late final int totalQuantity;
   late final int loanedQuantity;
-  late final double suggestedLendingDuration;
+  late final int suggestedLendingDuration;
 
   Item.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -22,7 +22,7 @@ class Item {
     caution = json['suggested_caution'];
     totalQuantity = json['total_quantity'];
     loanedQuantity = json['loaned_quantity'];
-    suggestedLendingDuration = json['suggested_lending_duration'].toDouble();
+    suggestedLendingDuration = json['suggested_lending_duration'];
   }
 
   Map<String, dynamic> toJson() {
@@ -42,7 +42,7 @@ class Item {
     int? caution,
     int? totalQuantity,
     int? loanedQuantity,
-    double? suggestedLendingDuration,
+    int? suggestedLendingDuration,
   }) {
     return Item(
       id: id ?? this.id,

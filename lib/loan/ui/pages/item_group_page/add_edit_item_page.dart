@@ -33,7 +33,7 @@ class AddEditItemPage extends HookConsumerWidget {
     final caution =
         useTextEditingController(text: isEdit ? item.caution.toString() : '');
     final lendingDuration = useTextEditingController(
-      text: isEdit ? (item.suggestedLendingDuration.toInt()).toString() : '',
+      text: isEdit ? item.suggestedLendingDuration.toString() : '',
     );
 
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -104,7 +104,7 @@ class AddEditItemPage extends HookConsumerWidget {
                               name: name.text,
                               caution: int.parse(caution.text),
                               suggestedLendingDuration:
-                                  double.parse(lendingDuration.text),
+                                  int.parse(lendingDuration.text),
                               loanedQuantity: 1,
                               totalQuantity: int.parse(quantity.text),
                             );
