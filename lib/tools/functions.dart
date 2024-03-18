@@ -429,6 +429,10 @@ String getAppFlavor() {
     return appFlavor!;
   }
 
+  if (const String.fromEnvironment("flavor") != "") {
+    return const String.fromEnvironment("flavor");
+  }
+
   throw StateError("App flavor not set");
 }
 
