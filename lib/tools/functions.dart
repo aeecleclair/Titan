@@ -424,6 +424,14 @@ bool isStudent(String email) {
   return regex.hasMatch(email);
 }
 
+String getAppFlavor() {
+  if (appFlavor != null) {
+    return appFlavor!;
+  }
+
+  throw StateError("App flavor not set");
+}
+
 Plausible? getPlausible() {
   final serverUrl = dotenv.env["PLAUSIBLE_HOST"];
   final domain = dotenv.env["PLAUSIBLE_DOMAIN"];
@@ -432,7 +440,7 @@ Plausible? getPlausible() {
     return null;
   }
 
-  if (appFlavor == "prod" || appFlavor == "alpha") {
+  if (getAppFlavor() == "prod" || getAppFlavor() == "alpha") {
     return Plausible(serverUrl, domain);
   }
 
@@ -440,7 +448,7 @@ Plausible? getPlausible() {
 }
 
 String getTitanHost() {
-  var host = dotenv.env["${appFlavor!.toUpperCase()}_HOST"];
+  var host = dotenv.env["${getAppFlavor().toUpperCase()}_HOST"];
 
   if (host == null || host == "") {
     throw StateError("Could not find host corresponding to flavor");
@@ -450,7 +458,7 @@ String getTitanHost() {
 }
 
 String getTitanPackageName() {
-  switch (appFlavor) {
+  switch (getAppFlavor()) {
     case "dev":
       return "fr.myecl.titan.dev";
     case "alpha":
@@ -463,5 +471,5 @@ String getTitanPackageName() {
 }
 
 String getTitanLogo() {
-  return "assets/images/logo_${appFlavor!}.png";
+  return "assets/images/logo_${getAppFlavor()}.png";
 }
