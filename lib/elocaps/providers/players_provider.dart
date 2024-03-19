@@ -7,6 +7,7 @@ class PlayersNotifier extends StateNotifier<Map<int, SimpleUser>> {
 
   void setPlayer(int playerIndex, SimpleUser user) {
     state[playerIndex] = user;
+    print(playerIndex);
   }
 
   void reset() {

@@ -66,30 +66,34 @@ class GamePage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
+    print("ouiii");
     return ElocapsTemplate(
         child: SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Column(
         children: [
           const SizedBox(height: 20),
-          const AlignLeftText(ElocapsTextConstant.gameMode,
-              padding: EdgeInsets.symmetric(horizontal: 30)),
+          const AlignLeftText(
+            ElocapsTextConstant.gameMode,
+            padding: EdgeInsets.symmetric(horizontal: 30),
+          ),
           const SizedBox(height: 20),
           HorizontalListView.builder(
             items: CapsMode.values,
             itemBuilder: (context, item, i) {
               final selected = item == modeChosen;
               return ItemChip(
-                  selected: selected,
-                  onTap: () {
-                    modeChosenNotifier.setMode(item);
-                  },
-                  child: Text(
-                    capsModeToString(item),
-                    style: TextStyle(
-                      color: selected ? Colors.white : Colors.black,
-                    ),
-                  ));
+                selected: selected,
+                onTap: () {
+                  modeChosenNotifier.setMode(item);
+                },
+                child: Text(
+                  capsModeToString(item),
+                  style: TextStyle(
+                    color: selected ? Colors.white : Colors.black,
+                  ),
+                ),
+              );
             },
             height: 40,
           ),
@@ -105,8 +109,10 @@ class GamePage extends HookConsumerWidget {
                       playersForm[0],
                       playersForm[1],
                       const SizedBox(height: 20),
-                      const AlignLeftText(ElocapsTextConstant.team_2,
-                          padding: EdgeInsets.symmetric(horizontal: 30)),
+                      const AlignLeftText(
+                        ElocapsTextConstant.team_2,
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                      ),
                       const SizedBox(height: 10),
                       playersForm[2],
                       playersForm[3],
@@ -136,68 +142,74 @@ class GamePage extends HookConsumerWidget {
                   isGameCreated.value = true;
                 }
               },
-              child: const MyButton(text: ElocapsTextConstant.gameStart),
+              child: const MyButton(
+                text: ElocapsTextConstant.gameStart,
+              ),
             ),
           const SizedBox(height: 20),
           if (isGameCreated.value) ...[
-            const AlignLeftText(ElocapsTextConstant.result,
-                padding: EdgeInsets.symmetric(horizontal: 30)),
+            const AlignLeftText(
+              ElocapsTextConstant.result,
+              padding: EdgeInsets.symmetric(horizontal: 30),
+            ),
             const SizedBox(height: 20),
-            Builder(builder: (context) {
-              isGameCreated.value = false;
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: Form(
-                  key: scoreKey,
-                  child: Row(children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          scoresNotifier.oneWin();
-                          isGameCreated.value = true;
-                        },
-                        child: MyButton(
-                          margin: const EdgeInsets.all(0),
-                          enabled: scores[0] == 1,
-                          text: modeChosen == CapsMode.cd
-                              ? '${players[0]?.nickname ?? players[0]?.firstname} et ${players[1]?.nickname ?? players[1]?.firstname} ${ElocapsTextConstant.wonCd}'
-                              : '${players[0]?.nickname ?? players[0]?.firstname} ${ElocapsTextConstant.won}',
+            Builder(
+              builder: (context) {
+                isGameCreated.value = false;
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Form(
+                    key: scoreKey,
+                    child: Row(children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            scoresNotifier.oneWin();
+                            isGameCreated.value = true;
+                          },
+                          child: MyButton(
+                            margin: const EdgeInsets.all(0),
+                            enabled: scores[0] == 1,
+                            text: modeChosen == CapsMode.cd
+                                ? '${players[0]?.nickname ?? players[0]?.firstname} et ${players[1]?.nickname ?? players[1]?.firstname} ${ElocapsTextConstant.wonCd}'
+                                : '${players[0]?.nickname ?? players[0]?.firstname} ${ElocapsTextConstant.won}',
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 90,
-                      child: GestureDetector(
-                        onTap: () {
-                          scoresNotifier.equality();
-                          isGameCreated.value = true;
-                        },
-                        child: MyButton(
-                          enabled: scores[0] == 0,
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
-                          text: ElocapsTextConstant.draw,
+                      SizedBox(
+                        width: 90,
+                        child: GestureDetector(
+                          onTap: () {
+                            scoresNotifier.equality();
+                            isGameCreated.value = true;
+                          },
+                          child: MyButton(
+                            enabled: scores[0] == 0,
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                            text: ElocapsTextConstant.draw,
+                          ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          scoresNotifier.twoWin();
-                          isGameCreated.value = true;
-                        },
-                        child: MyButton(
-                          margin: const EdgeInsets.all(0),
-                          enabled: scores[1] == 1,
-                          text: modeChosen == CapsMode.cd
-                              ? '${players[2]?.nickname ?? players[2]?.firstname} et ${players[3]?.nickname ?? players[3]?.firstname} ${ElocapsTextConstant.wonCd}'
-                              : '${players[1]?.nickname ?? players[1]?.firstname} ${ElocapsTextConstant.won}',
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            scoresNotifier.twoWin();
+                            isGameCreated.value = true;
+                          },
+                          child: MyButton(
+                            margin: const EdgeInsets.all(0),
+                            enabled: scores[1] == 1,
+                            text: modeChosen == CapsMode.cd
+                                ? '${players[2]?.nickname ?? players[2]?.firstname} et ${players[3]?.nickname ?? players[3]?.firstname} ${ElocapsTextConstant.wonCd}'
+                                : '${players[1]?.nickname ?? players[1]?.firstname} ${ElocapsTextConstant.won}',
+                          ),
                         ),
                       ),
-                    ),
-                  ]),
-                ),
-              );
-            }),
+                    ]),
+                  ),
+                );
+              },
+            ),
             const SizedBox(height: 30),
             GestureDetector(
               onTap: () async {
@@ -241,7 +253,7 @@ class GamePage extends HookConsumerWidget {
                 }
               },
               child: const MyButton(text: ElocapsTextConstant.saveTheGame),
-            )
+            ),
           ],
           const SizedBox(height: 20),
         ],

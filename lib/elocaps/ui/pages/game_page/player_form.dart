@@ -51,7 +51,7 @@ class PlayerForm extends HookConsumerWidget {
             height: 10,
           ),
           if (index == isFocused)
-            SearchResult(index: index, queryController: queryController)
+            SearchResult(index: index, queryController: queryController),
         ],
       ),
     );
