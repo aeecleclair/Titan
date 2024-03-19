@@ -40,17 +40,17 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
-      
+
       - name: Setup Flutter SDK
         uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
-          flutter-version: '3.19.1'
+          channel: "stable"
+          flutter-version: "3.19.1"
           cache: true
-      
+
       - name: Cleanup 🧹
         run: flutter clean
-      
+
       - name: Get Packages
         run: flutter pub get
 
@@ -67,7 +67,18 @@ jobs:
           ALPHA_HOST: ${{ vars.ALPHA_HOST }}
           PLAUSIBLE_HOST: ${{ secrets.PLAUSIBLE_HOST }}
           PLAUSIBLE_DOMAIN: ${{ secrets.PLAUSIBLE_DOMAIN }}
-      
+
+      - name: Set Alpha icons
+        if: needs.extract-version.outputs.isAlpha == 'true'
+        run: |
+          cp -f web/Alpha/favicon.png web/favicon.png
+          cp -f web/Alpha/icons/* web/icons/
+
+      - name: Set Prod icons
+        if: needs.extract-version.outputs.isAlpha == 'false'
+        run: |
+          cp -f web/Prod/favicon.png web/favicon.png
+          cp -f web/Prod/icons/* web/icons/
 
       - name: Build Alpha 🔧
         if: needs.extract-version.outputs.isAlpha == 'true'
@@ -79,14 +90,14 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      
+
       - name: Login to Docker Registry
         uses: docker/login-action@v3
         with:
           registry: ${{ secrets.DOCKER_REGISTRY_URL }}
           username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
           password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
-      
+
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
