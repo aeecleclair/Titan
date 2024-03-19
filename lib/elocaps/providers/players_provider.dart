@@ -8,7 +8,7 @@ class PlayersNotifier extends StateNotifier<Map<int, SimpleUser>> {
   void setPlayer(int playerIndex, SimpleUser user) {
     final copy = Map<int, SimpleUser>.from(state);
     copy[playerIndex] = user;
-    state = Map<int, SimpleUser>.from(copy);
+    state = copy;
   }
 
   void reset() {
