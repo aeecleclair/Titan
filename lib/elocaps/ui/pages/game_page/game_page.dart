@@ -66,7 +66,6 @@ class GamePage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    print("ouiii");
     return ElocapsTemplate(
         child: SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
@@ -139,7 +138,14 @@ class GamePage extends HookConsumerWidget {
             GestureDetector(
               onTap: () {
                 if (playersKey.currentState!.validate()) {
-                  isGameCreated.value = true;
+                  if (modeChosen == CapsMode.cd &&
+                      players[1] != null &&
+                      players[2] != null &&
+                      players[3] != null) {
+                    isGameCreated.value = true;
+                  } else if (modeChosen != CapsMode.cd && players[1] != null) {
+                    isGameCreated.value = true;
+                  }
                 }
               },
               child: const MyButton(
