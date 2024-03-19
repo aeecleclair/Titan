@@ -53,48 +53,30 @@ jobs:
       
       - name: Get Packages
         run: flutter pub get
-      
-      - name: Configure Alpha env
-        if: needs.extract-version.outputs.isAlpha == 'true'
+
+      - name: Configure env
         run: |
           echo THE_MOVIE_DB_API=$THE_MOVIE_DB_API >> .env
+          echo PROD_HOST=$PROD_HOST >> .env
           echo ALPHA_HOST=$ALPHA_HOST >> .env
           echo PLAUSIBLE_HOST=$PLAUSIBLE_HOST >> .env
           echo PLAUSIBLE_DOMAIN=$PLAUSIBLE_DOMAIN >> .env
         env:
           THE_MOVIE_DB_API: ${{ secrets.THE_MOVIE_DB_API }}
-          ALPHA_HOST: ${{ vars.ALPHA_HOST }}
-          PLAUSIBLE_HOST: ${{ secrets.PLAUSIBLE_ALPHA_HOST }}
-          PLAUSIBLE_DOMAIN: ${{ secrets.PLAUSIBLE_ALPHA_DOMAIN }}
-      
-      - name: Configure production env
-        if: needs.extract-version.outputs.isAlpha == 'false'
-        run: |
-          echo THE_MOVIE_DB_API=$THE_MOVIE_DB_API >> .env
-          echo PROD_HOST=$PROD_HOST >> .env
-          echo PLAUSIBLE_HOST=$PLAUSIBLE_HOST >> .env
-          echo PLAUSIBLE_DOMAIN=$PLAUSIBLE_DOMAIN >> .env
-        env:
-          THE_MOVIE_DB_API: ${{ secrets.THE_MOVIE_DB_API }}
           PROD_HOST: ${{ vars.PROD_HOST }}
+          ALPHA_HOST: ${{ vars.ALPHA_HOST }}
           PLAUSIBLE_HOST: ${{ secrets.PLAUSIBLE_HOST }}
           PLAUSIBLE_DOMAIN: ${{ secrets.PLAUSIBLE_DOMAIN }}
       
-      - name: Set Alpha icons
+
+      - name: Build Alpha 🔧
         if: needs.extract-version.outputs.isAlpha == 'true'
-        run: |
-          cp -f web/Alpha/favicon.png web/favicon.png
-          cp -f web/Alpha/icons/* web/icons/
-      
-      - name: Set production icons
-        if: needs.extract-version.outputs.isAlpha == 'false'
-        run: |
-          cp -f web/Prod/favicon.png web/favicon.png
-          cp -f web/Prod/icons/* web/icons/
-      
-      - name: Build 🔧
         run: flutter build web --release --dart-define=flavor=alpha
-      
+
+      - name: Build Prod 🔧
+        if: needs.extract-version.outputs.isAlpha == 'false'
+        run: flutter build web --release --dart-define=flavor=prod
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       
