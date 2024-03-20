@@ -32,6 +32,7 @@ class PhonebookRouter {
   PhonebookRouter(this.ref);
 
   QRoute route() => QRoute(
+        name: "phonebook",
         path: PhonebookRouter.root,
         builder: () => const PhonebookMainPage(),
         middleware: [AuthenticatedMiddleware(ref)],
