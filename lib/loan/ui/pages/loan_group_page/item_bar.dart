@@ -6,6 +6,7 @@ import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/providers/caution_provider.dart';
 import 'package:myecl/loan/providers/end_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
+import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/loan/providers/selected_loaner_provider.dart';
 import 'package:myecl/loan/providers/loaners_items_map_provider.dart';
 import 'package:myecl/loan/providers/item_quantities_provider.dart';
@@ -24,6 +25,8 @@ class ItemBar extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedLoaner = ref.watch(selectedLoanerProvider);
+
+    final loan = ref.watch(loanProvider);
 
     final selectedLoanerItems =
         ref.watch(loanersItemsMapProvider.select((map) => map[selectedLoaner]));
@@ -91,16 +94,27 @@ class ItemBar extends HookConsumerWidget {
                 height: 180,
                 items: filteredItems(sortedLoanerItems, filterQuery.value),
                 itemBuilder: (context, item, _) {
-                  final currentValue = loanItemQuantities[item.id] ?? 0;
+                  final loanItemQuantity = loan.itemsQuantity.where(
+                    (itemQuantity) => itemQuantity.itemSimple.id == item.id,
+                  );
+
+                  final currentItemQuantity = loanItemQuantities[item.id] ?? 0;
+                  final changeInItemQuantity = loanItemQuantity.isNotEmpty
+                      ? currentItemQuantity - loanItemQuantity.first.quantity
+                      : currentItemQuantity;
+                  final newItemLoanedQuantity =
+                      item.loanedQuantity + changeInItemQuantity;
                   return Column(
                     children: [
                       CheckItemCard(
-                        item: item,
-                        isSelected: currentValue != 0,
+                        item: item.copyWith(
+                          loanedQuantity: newItemLoanedQuantity,
+                        ),
+                        isSelected: currentItemQuantity != 0,
                       ),
                       const SizedBox(height: 10),
                       SizedBox(
-                        width: 120,
+                        width: 125,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -113,15 +127,15 @@ class ItemBar extends HookConsumerWidget {
                               child: GestureDetector(
                                 child: HeroIcon(
                                   HeroIcons.minus,
-                                  color: currentValue == 0
+                                  color: currentItemQuantity == 0
                                       ? Colors.grey.shade400
                                       : Colors.white,
                                 ),
                                 onTap: () {
-                                  if (currentValue > 0) {
+                                  if (currentItemQuantity > 0) {
                                     loanItemQuantitiesNotifier.set(
                                       item.id,
-                                      currentValue - 1,
+                                      currentItemQuantity - 1,
                                     );
                                     List<Item> selected = items
                                         .where(
@@ -156,11 +170,11 @@ class ItemBar extends HookConsumerWidget {
                                 horizontal: 6,
                               ),
                               child: Text(
-                                currentValue.toString(),
+                                currentItemQuantity.toString(),
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
-                                  color: currentValue == 0
+                                  color: currentItemQuantity == 0
                                       ? Colors.grey.shade400
                                       : Colors.black,
                                 ),
@@ -175,19 +189,18 @@ class ItemBar extends HookConsumerWidget {
                               child: GestureDetector(
                                 child: HeroIcon(
                                   HeroIcons.plus,
-                                  color: currentValue ==
+                                  color: changeInItemQuantity ==
                                           item.totalQuantity -
                                               item.loanedQuantity
                                       ? Colors.grey.shade400
                                       : Colors.white,
                                 ),
                                 onTap: () {
-                                  if (currentValue <
-                                      item.totalQuantity -
-                                          item.loanedQuantity) {
+                                  if (newItemLoanedQuantity <
+                                      item.totalQuantity) {
                                     loanItemQuantitiesNotifier.set(
                                       item.id,
-                                      currentValue + 1,
+                                      currentItemQuantity + 1,
                                     );
                                     List<Item> selected = items
                                         .where(
