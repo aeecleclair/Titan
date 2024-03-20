@@ -12,44 +12,23 @@ class UserLoanerListNotifier extends ListNotifier<Loaner> {
   Future<AsyncValue<List<Loaner>>> loadMyLoanerList() async {
     return await loadList(loanerRepository.getMyLoaner);
   }
-
-  Future<bool> addLoaner(Loaner loaner) async {
-    return await add(loanerRepository.createLoaner, loaner);
-  }
-
-  Future<bool> updateLoaner(Loaner loaner) async {
-    return await update(
-      loanerRepository.updateLoaner,
-      (loaners, loaner) =>
-          loaners..[loaners.indexWhere((i) => i.id == loaner.id)] = loaner,
-      loaner,
-    );
-  }
-
-  Future<bool> deleteLoaner(Loaner loaner) async {
-    return await delete(
-      loanerRepository.deleteLoaner,
-      (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
-      loaner.id,
-      loaner,
-    );
-  }
 }
 
 final userLoanerListProvider =
     StateNotifierProvider<UserLoanerListNotifier, AsyncValue<List<Loaner>>>(
   (ref) {
     final loanerRepository = ref.watch(loanerRepositoryProvider);
-    UserLoanerListNotifier orderListNotifier =
+    UserLoanerListNotifier userLoanerListNotifier =
         UserLoanerListNotifier(loanerRepository: loanerRepository);
     tokenExpireWrapperAuth(ref, () async {
-      await orderListNotifier.loadMyLoanerList();
+      await userLoanerListNotifier.loadMyLoanerList();
     });
-    return orderListNotifier;
+    return userLoanerListNotifier;
   },
 );
 
-final loanerList = Provider<List<Loaner>>((ref) {
-  final deliveryProvider = ref.watch(userLoanerListProvider);
-  return deliveryProvider.maybeWhen(data: (loans) => loans, orElse: () => []);
+final userLoanerList = Provider<List<Loaner>>((ref) {
+  final userLoanerListAsync = ref.watch(userLoanerListProvider);
+  return userLoanerListAsync.maybeWhen(
+      data: (loans) => loans, orElse: () => []);
 });

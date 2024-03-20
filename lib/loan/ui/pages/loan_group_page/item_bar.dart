@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/providers/caution_provider.dart';
 import 'package:myecl/loan/providers/end_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
-import 'package:myecl/loan/providers/loaner_provider.dart';
-import 'package:myecl/loan/providers/loaners_items_provider.dart';
-import 'package:myecl/loan/providers/selected_items_provider.dart';
+import 'package:myecl/loan/providers/selected_loaner_provider.dart';
+import 'package:myecl/loan/providers/loaners_items_map_provider.dart';
+import 'package:myecl/loan/providers/item_quantities_provider.dart';
 import 'package:myecl/loan/providers/start_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
+import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/check_item_card.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/widgets/styled_search_bar.dart';
 
 class ItemBar extends HookConsumerWidget {
   final bool isEdit;
@@ -21,52 +23,42 @@ class ItemBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final loaner = ref.watch(loanerProvider);
-    final loanersItems = ref.watch(loanersItemsProvider);
-    final selectedItems = ref.watch(editSelectedListProvider);
-    final selectedItemsNotifier = ref.watch(editSelectedListProvider.notifier);
+    final selectedLoaner = ref.watch(selectedLoanerProvider);
+
+    final selectedLoanerItems =
+        ref.watch(loanersItemsMapProvider.select((map) => map[selectedLoaner]));
+    final loanersItemsMapNotifier = ref.read(loanersItemsMapProvider.notifier);
+    final itemListNotifier = ref.watch(itemListProvider.notifier);
+    final loanItemQuantities = ref.watch(loanItemQuantitiesMapProvider);
+    final loanItemQuantitiesNotifier =
+        ref.watch(loanItemQuantitiesMapProvider.notifier);
+
+    final ValueNotifier<String> filterQuery = useState("");
+
     final endNotifier = ref.watch(endProvider.notifier);
     final start = ref.watch(startProvider);
-    final itemListForSelected = ref.watch(itemListProvider);
     final cautionNotifier = ref.watch(cautionProvider.notifier);
-    return SizedBox(
-      height: 180,
-      child: AsyncChild(
-        value: itemListForSelected,
-        loaderColor: ColorConstants.background2,
-        builder: (context, data) {
-          final sortedAvailableData = data
-              .where(
-                (element) => element.loanedQuantity < element.totalQuantity,
-              )
-              .toList()
-            ..sort((a, b) => a.name.compareTo(b.name));
-          final sortedUnavailableData = data
-              .where(
-                (element) => element.loanedQuantity >= element.totalQuantity,
-              )
-              .toList()
-            ..sort((a, b) => a.name.compareTo(b.name));
-          data = sortedAvailableData + sortedUnavailableData;
-          if (loanersItems[loaner] == null) {
-            return const SizedBox(
-              height: 180,
-              child: Center(
-                child: Text(
-                  LoanTextConstants.noItems,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            );
-          }
-          return AsyncChild(
-            value: loanersItems[loaner]!,
-            loaderColor: ColorConstants.background2,
-            builder: (context, itemList) {
-              if (itemList.isEmpty) {
+    return Column(
+      children: [
+        StyledSearchBar(
+          label:
+              isEdit ? LoanTextConstants.editLoan : LoanTextConstants.addLoan,
+          onChanged: (query) async {
+            filterQuery.value = query;
+          },
+        ),
+        const SizedBox(height: 10),
+        SizedBox(
+          height: 180,
+          child: AutoLoaderChild(
+            group: selectedLoanerItems,
+            notifier: loanersItemsMapNotifier,
+            mapKey: selectedLoaner,
+            listLoader: (loaner) {
+              return itemListNotifier.loadItemList(loaner.id);
+            },
+            dataBuilder: (context, items) {
+              if (items.isEmpty) {
                 return const SizedBox(
                   height: 180,
                   child: Center(
@@ -80,29 +72,30 @@ class ItemBar extends HookConsumerWidget {
                   ),
                 );
               }
-              final sortedAvailable = itemList
+              final sortedAvailableItems = items
                   .where(
                     (element) => element.loanedQuantity < element.totalQuantity,
                   )
                   .toList()
                 ..sort((a, b) => a.name.compareTo(b.name));
-              final sortedUnavailable = itemList
+              final sortedUnavailableItems = items
                   .where(
                     (element) =>
                         element.loanedQuantity >= element.totalQuantity,
                   )
                   .toList()
                 ..sort((a, b) => a.name.compareTo(b.name));
-              itemList = sortedAvailable + sortedUnavailable;
+              final sortedLoanerItems =
+                  sortedAvailableItems + sortedUnavailableItems;
               return HorizontalListView.builder(
                 height: 180,
-                items: itemList,
-                itemBuilder: (context, e, i) {
-                  var currentValue = selectedItems[data.indexOf(e)];
+                items: filteredItems(sortedLoanerItems, filterQuery.value),
+                itemBuilder: (context, item, _) {
+                  final currentValue = loanItemQuantities[item.id] ?? 0;
                   return Column(
                     children: [
                       CheckItemCard(
-                        item: e,
+                        item: item,
                         isSelected: currentValue != 0,
                       ),
                       const SizedBox(height: 10),
@@ -126,33 +119,29 @@ class ItemBar extends HookConsumerWidget {
                                 ),
                                 onTap: () {
                                   if (currentValue > 0) {
-                                    selectedItemsNotifier.set(
-                                      data.indexOf(e),
+                                    loanItemQuantitiesNotifier.set(
+                                      item.id,
                                       currentValue - 1,
                                     );
-                                    Map<Item, int> selectedItemsWithQuantity =
-                                        Map.fromIterables(
-                                      data,
-                                      selectedItems,
-                                    );
-                                    selectedItemsWithQuantity[e] =
-                                        currentValue - 1;
-                                    List<Item> selected =
-                                        selectedItemsWithQuantity.keys
-                                            .where(
-                                              (element) =>
-                                                  selectedItemsWithQuantity[
-                                                      element] !=
-                                                  0,
-                                            )
-                                            .toList();
+                                    List<Item> selected = items
+                                        .where(
+                                          (item) =>
+                                              loanItemQuantities[item.id] !=
+                                                  null &&
+                                              loanItemQuantities[item.id]! > 0,
+                                        )
+                                        .toList();
                                     if (selected.isNotEmpty) {
                                       endNotifier.setEndFromSelected(
                                         start,
                                         selected,
                                       );
                                       cautionNotifier.setCautionFromSelected(
-                                        selectedItemsWithQuantity,
+                                        {
+                                          for (var item in items)
+                                            item: loanItemQuantities[item.id] ??
+                                                0,
+                                        },
                                       );
                                     } else {
                                       endNotifier.setEnd("");
@@ -187,40 +176,38 @@ class ItemBar extends HookConsumerWidget {
                                 child: HeroIcon(
                                   HeroIcons.plus,
                                   color: currentValue ==
-                                          e.totalQuantity - e.loanedQuantity
+                                          item.totalQuantity -
+                                              item.loanedQuantity
                                       ? Colors.grey.shade400
                                       : Colors.white,
                                 ),
                                 onTap: () {
                                   if (currentValue <
-                                      e.totalQuantity - e.loanedQuantity) {
-                                    selectedItemsNotifier.set(
-                                      data.indexOf(e),
+                                      item.totalQuantity -
+                                          item.loanedQuantity) {
+                                    loanItemQuantitiesNotifier.set(
+                                      item.id,
                                       currentValue + 1,
                                     );
-                                    Map<Item, int> selectedItemsWithQuantity =
-                                        Map.fromIterables(
-                                      data,
-                                      selectedItems,
-                                    );
-                                    selectedItemsWithQuantity[e] =
-                                        currentValue + 1;
-                                    List<Item> selected =
-                                        selectedItemsWithQuantity.keys
-                                            .where(
-                                              (element) =>
-                                                  selectedItemsWithQuantity[
-                                                      element] !=
-                                                  0,
-                                            )
-                                            .toList();
+                                    List<Item> selected = items
+                                        .where(
+                                          (item) =>
+                                              loanItemQuantities[item.id] !=
+                                                  null &&
+                                              loanItemQuantities[item.id]! > 0,
+                                        )
+                                        .toList();
                                     if (selected.isNotEmpty) {
                                       endNotifier.setEndFromSelected(
                                         start,
                                         selected,
                                       );
                                       cautionNotifier.setCautionFromSelected(
-                                        selectedItemsWithQuantity,
+                                        {
+                                          for (var item in items)
+                                            item: loanItemQuantities[item.id] ??
+                                                0,
+                                        },
                                       );
                                     } else {
                                       endNotifier.setEnd("");
@@ -238,9 +225,9 @@ class ItemBar extends HookConsumerWidget {
                 },
               );
             },
-          );
-        },
-      ),
+          ),
+        ),
+      ],
     );
   }
 }

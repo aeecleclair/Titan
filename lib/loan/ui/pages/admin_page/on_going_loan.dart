@@ -2,28 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/class/loan.dart';
-import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/end_provider.dart';
 import 'package:myecl/loan/providers/loan_focus_provider.dart';
-import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
-import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
-import 'package:myecl/loan/providers/loaner_provider.dart';
-import 'package:myecl/loan/providers/loaners_items_provider.dart';
+import 'package:myecl/loan/providers/loan_list_provider.dart';
+import 'package:myecl/loan/providers/loaners_loans_map_provider.dart';
+import 'package:myecl/loan/providers/selected_loaner_provider.dart';
+import 'package:myecl/loan/providers/loaners_items_map_provider.dart';
 import 'package:myecl/loan/providers/start_provider.dart';
 import 'package:myecl/loan/router.dart';
 import 'package:myecl/loan/tools/constants.dart';
+import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/loan/ui/pages/admin_page/loan_card.dart';
 import 'package:myecl/loan/ui/pages/admin_page/delay_dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/widgets/loader.dart';
 import 'package:myecl/tools/ui/widgets/styled_search_bar.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -32,18 +30,23 @@ class OnGoingLoan extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final loaner = ref.watch(loanerProvider);
-    final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
-    final loanList = ref.watch(loanerLoanListProvider);
-    final loanersItemsNotifier = ref.watch(loanersItemsProvider.notifier);
-    final loanersItems = ref.watch(loanersItemsProvider);
+    final selectedLoaner = ref.watch(selectedLoanerProvider);
+
+    final loanListNotifier = ref.read(loanListProvider.notifier);
+
+    final loanersItemsMapNotifier = ref.read(loanersItemsMapProvider.notifier);
+
+    final loanersLoansMapNotifier = ref.watch(loanersLoansMapProvider.notifier);
+    final selectedLoanerLoans =
+        ref.watch(loanersLoansMapProvider.select((map) => map[selectedLoaner]));
+
     final loanNotifier = ref.watch(loanProvider.notifier);
-    final adminLoanListNotifier = ref.watch(adminLoanListProvider.notifier);
-    final adminLoanList = ref.watch(adminLoanListProvider);
     final startNotifier = ref.watch(startProvider.notifier);
     final endNotifier = ref.watch(endProvider.notifier);
+
+    final ValueNotifier<String> filterQuery = useState("");
+
     final focus = ref.watch(loanFocusProvider);
-    final itemList = ref.watch(itemListProvider);
     final focusNode = useFocusNode();
     if (focus) {
       focusNode.requestFocus();
@@ -53,29 +56,27 @@ class OnGoingLoan extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    if (adminLoanList[loaner] == null) {
-      return const Loader();
-    }
-    return AsyncChild(
-      value: adminLoanList[loaner]!,
-      builder: (context, data) {
-        if (data.isNotEmpty) {
-          data.sort((a, b) => a.end.compareTo(b.end));
+    return AutoLoaderChild(
+      group: selectedLoanerLoans,
+      notifier: loanersLoansMapNotifier,
+      mapKey: selectedLoaner,
+      listLoader: (loaner) {
+        return loanListNotifier.loadLoanList(loaner.id);
+      },
+      dataBuilder: (context, loans) {
+        if (loans.isEmpty) {
+          return const Center(
+            child: Text(LoanTextConstants.noLoan),
+          );
         }
+        loans.sort((a, b) => a.end.compareTo(b.end));
         return Column(
           children: [
             StyledSearchBar(
               label:
-                  '${data.isEmpty ? LoanTextConstants.none : data.length} ${LoanTextConstants.loan.toLowerCase()}${data.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
-              onChanged: (value) async {
-                if (value.isNotEmpty) {
-                  adminLoanListNotifier.setTData(
-                    loaner,
-                    await loanListNotifier.filterLoans(value),
-                  );
-                } else {
-                  adminLoanListNotifier.setTData(loaner, loanList);
-                }
+                  '${loans.isEmpty ? LoanTextConstants.none : loans.length} ${LoanTextConstants.loan.toLowerCase()}${loans.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
+              onChanged: (query) async {
+                filterQuery.value = query;
               },
             ),
             const SizedBox(height: 10),
@@ -89,7 +90,6 @@ class OnGoingLoan extends HookConsumerWidget {
                   QR.to(
                     LoanRouter.root + LoanRouter.admin + LoanRouter.addEditLoan,
                   );
-                  loanersItemsNotifier.setTData(loaner, itemList);
                 },
                 child: const CardLayout(
                   width: 100,
@@ -103,18 +103,17 @@ class OnGoingLoan extends HookConsumerWidget {
                   ),
                 ),
               ),
-              items: data,
-              itemBuilder: (context, e, i) => LoanCard(
-                loan: e,
+              items: filteredLoans(loans, filterQuery.value),
+              itemBuilder: (context, loan, _) => LoanCard(
+                loan: loan,
                 isAdmin: true,
                 onEdit: () async {
-                  await loanNotifier.setLoan(e);
-                  startNotifier.setStart(processDate(e.start));
-                  endNotifier.setEnd(processDate(e.end));
+                  await loanNotifier.setLoan(loan);
+                  startNotifier.setStart(processDate(loan.start));
+                  endNotifier.setEnd(processDate(loan.end));
                   QR.to(
                     LoanRouter.root + LoanRouter.admin + LoanRouter.addEditLoan,
                   );
-                  loanersItemsNotifier.setTData(loaner, itemList);
                 },
                 onCalendar: () async {
                   await showDialog<int>(
@@ -122,17 +121,17 @@ class OnGoingLoan extends HookConsumerWidget {
                     builder: (BuildContext context) {
                       return DelayDialog(
                         onYes: (i) async {
-                          Loan newLoan = e.copyWith(
-                            end: e.end.add(Duration(days: i)),
+                          Loan newLoan = loan.copyWith(
+                            end: loan.end.add(Duration(days: i)),
                           );
                           await loanNotifier.setLoan(newLoan);
                           tokenExpireWrapper(ref, () async {
-                            final value =
+                            final isLoandExtended =
                                 await loanListNotifier.extendLoan(newLoan, i);
-                            if (value) {
-                              adminLoanListNotifier.setTData(
-                                loaner,
-                                await loanListNotifier.copy(),
+                            if (isLoandExtended) {
+                              loanersLoansMapNotifier.updateLoanForLoaner(
+                                selectedLoaner,
+                                newLoan,
                               );
                               displayToastWithContext(
                                 TypeMsg.msg,
@@ -158,34 +157,20 @@ class OnGoingLoan extends HookConsumerWidget {
                       descriptions: LoanTextConstants.returnLoanDescription,
                       onYes: () async {
                         await tokenExpireWrapper(ref, () async {
-                          final loanItemsId = e.itemsQuantity
-                              .map((e) => e.itemSimple.id)
-                              .toList();
-                          final updatedItems = loanersItems[loaner]!
-                              .maybeWhen<List<Item>>(
-                            data: (items) => items,
-                            orElse: () => [],
-                          )
-                              .map(
-                            (item) {
-                              if (loanItemsId.contains(item.id)) {
-                                return item.copyWith();
-                              }
-                              return item;
-                            },
-                          ).toList();
-                          final value = await loanListNotifier.returnLoan(e);
-                          if (value) {
+                          final isLoanReturned =
+                              await loanListNotifier.returnLoan(loan);
+                          if (isLoanReturned) {
                             QR.to(
                               LoanRouter.root + LoanRouter.admin,
                             );
-                            loanersItemsNotifier.setTData(
-                              loaner,
-                              AsyncData(updatedItems),
+                            loanersItemsMapNotifier
+                                .updateItemsFromLoanReturnForLoaner(
+                              selectedLoaner,
+                              loan.itemsQuantity,
                             );
-                            adminLoanListNotifier.setTData(
-                              loaner,
-                              await loanListNotifier.copy(),
+                            loanersLoansMapNotifier.removeLoanForLoaner(
+                              selectedLoaner,
+                              loan,
                             );
                             displayToastWithContext(
                               TypeMsg.msg,
@@ -203,7 +188,7 @@ class OnGoingLoan extends HookConsumerWidget {
                   );
                 },
                 onInfo: () {
-                  loanNotifier.setLoan(e);
+                  loanNotifier.setLoan(loan);
                   QR.to(
                     LoanRouter.root + LoanRouter.admin + LoanRouter.detail,
                   );

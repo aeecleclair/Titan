@@ -4,8 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/item_provider.dart';
-import 'package:myecl/loan/providers/loaner_provider.dart';
-import 'package:myecl/loan/providers/loaners_items_provider.dart';
+import 'package:myecl/loan/providers/selected_loaner_provider.dart';
+import 'package:myecl/loan/providers/loaners_items_map_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan.dart';
 import 'package:myecl/tools/functions.dart';
@@ -22,9 +22,9 @@ class AddEditItemPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final key = GlobalKey<FormState>();
-    final loaner = ref.watch(loanerProvider);
+    final selectedLoaner = ref.watch(selectedLoanerProvider);
     final itemListNotifier = ref.watch(itemListProvider.notifier);
-    final loanersItemsNotifier = ref.watch(loanersItemsProvider.notifier);
+    final loanersItemsMapNotifier = ref.read(loanersItemsMapProvider.notifier);
     final item = ref.watch(itemProvider);
     final isEdit = item.id != Item.empty().id;
     final name = useTextEditingController(text: item.name);
@@ -108,27 +108,31 @@ class AddEditItemPage extends HookConsumerWidget {
                               loanedQuantity: 1,
                               totalQuantity: int.parse(quantity.text),
                             );
-                            final value = isEdit
+                            final isItemProcessed = isEdit
                                 ? await itemListNotifier.updateItem(
                                     newItem,
-                                    loaner.id,
+                                    selectedLoaner.id,
                                   )
                                 : await itemListNotifier.addItem(
                                     newItem,
-                                    loaner.id,
+                                    selectedLoaner.id,
                                   );
-                            if (value) {
+                            if (isItemProcessed) {
                               QR.back();
-                              loanersItemsNotifier.setTData(
-                                loaner,
-                                await itemListNotifier.copy(),
-                              );
                               if (isEdit) {
+                                loanersItemsMapNotifier.updateItemForLoaner(
+                                  selectedLoaner,
+                                  item,
+                                );
                                 displayToastWithContext(
                                   TypeMsg.msg,
                                   LoanTextConstants.updatedItem,
                                 );
                               } else {
+                                loanersItemsMapNotifier.addItemForLoaner(
+                                  selectedLoaner,
+                                  item,
+                                );
                                 displayToastWithContext(
                                   TypeMsg.msg,
                                   LoanTextConstants.addedObject,

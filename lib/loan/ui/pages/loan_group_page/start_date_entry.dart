@@ -4,7 +4,7 @@ import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/providers/end_provider.dart';
 import 'package:myecl/loan/providers/initial_date_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
-import 'package:myecl/loan/providers/selected_items_provider.dart';
+import 'package:myecl/loan/providers/item_quantities_provider.dart';
 import 'package:myecl/loan/providers/start_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
@@ -16,7 +16,7 @@ class StartDateEntry extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final items = ref.watch(itemListProvider);
-    final selectedItems = ref.watch(editSelectedListProvider);
+    final loanItemQuantities = ref.watch(loanItemQuantitiesMapProvider);
     final endNotifier = ref.watch(endProvider.notifier);
     final start = ref.watch(startProvider);
     final startNotifier = ref.watch(startProvider.notifier);
@@ -44,7 +44,9 @@ class StartDateEntry extends HookConsumerWidget {
             itemList = sortedAvailable + sortedUnavailable;
             List<Item> selected = itemList
                 .where(
-                  (element) => selectedItems[itemList.indexOf(element)] != 0,
+                  (item) =>
+                      loanItemQuantities[item.id] != null &&
+                      loanItemQuantities[item.id]! > 0,
                 )
                 .toList();
             if (selected.isNotEmpty) {

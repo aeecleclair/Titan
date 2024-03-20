@@ -40,11 +40,11 @@ final loanerListProvider =
     StateNotifierProvider<LoanerListNotifier, AsyncValue<List<Loaner>>>(
   (ref) {
     final loanerRepository = ref.watch(loanerRepositoryProvider);
-    LoanerListNotifier orderListNotifier =
+    LoanerListNotifier loanerListNotifier =
         LoanerListNotifier(loanerRepository: loanerRepository);
     tokenExpireWrapperAuth(ref, () async {
-      await orderListNotifier.loadLoanerList();
+      await loanerListNotifier.loadLoanerList();
     });
-    return orderListNotifier;
+    return loanerListNotifier;
   },
 );

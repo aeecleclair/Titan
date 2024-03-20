@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/providers/item_list_provider.dart';
-import 'package:myecl/loan/providers/loaner_provider.dart';
-import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/router.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/tools/ui/widgets/top_bar.dart';
@@ -22,13 +19,9 @@ class LoanTemplate extends HookConsumerWidget {
             root: LoanRouter.root,
             onBack: () {
               if (QR.currentPath ==
-                  LoanRouter.root + LoanRouter.admin + LoanRouter.addEditLoan) {
-                final loanersItemsNotifier =
-                    ref.watch(loanersItemsProvider.notifier);
-                final loaner = ref.watch(loanerProvider);
-                final itemList = ref.watch(itemListProvider);
-                loanersItemsNotifier.setTData(loaner, itemList);
-              }
+                  LoanRouter.root +
+                      LoanRouter.admin +
+                      LoanRouter.addEditLoan) {}
             },
           ),
           Expanded(child: child),

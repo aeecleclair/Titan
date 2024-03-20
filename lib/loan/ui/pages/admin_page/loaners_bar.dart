@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/loaner.dart';
-import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
-import 'package:myecl/loan/providers/loaner_provider.dart';
+import 'package:myecl/loan/providers/all_loaner_list_provider.dart';
+import 'package:myecl/loan/providers/selected_loaner_provider.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
@@ -13,20 +13,20 @@ class LoanersBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final adminLoanList = ref.watch(adminLoanListProvider);
-    final loaner = ref.watch(loanerProvider);
+    final loaners = ref.watch(allLoanerListProvider);
+    final selectedLoaner = ref.watch(selectedLoanerProvider);
     return HorizontalListView.builder(
       height: 40,
-      items: adminLoanList.keys.toList(),
-      itemBuilder: (context, key, i) {
-        final selected = loaner.id == key.id;
+      items: loaners,
+      itemBuilder: (context, loaner, i) {
+        final selected = selectedLoaner.id == loaner.id;
         return ItemChip(
           selected: selected,
           onTap: () async {
-            onTap(key);
+            onTap(loaner);
           },
           child: Text(
-            capitalize(key.name),
+            capitalize(loaner.name),
             style: TextStyle(
               color: selected ? Colors.white : Colors.black,
               fontWeight: FontWeight.bold,

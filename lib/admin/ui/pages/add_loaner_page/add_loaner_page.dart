@@ -19,7 +19,7 @@ class AddLoanerPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final loanerListNotifier = ref.watch(loanerListProvider.notifier);
-    final loaners = ref.watch(allLoanerList);
+    final loaners = ref.watch(allLoanerListProvider);
     final associations = ref.watch(allGroupListProvider);
     final loanersId = loaners.map((x) => x.groupManagerId).toList();
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -39,7 +39,8 @@ class AddLoanerPage extends HookConsumerWidget {
                 child: Column(
                   children: [
                     const AlignLeftText(
-                        AdminTextConstants.addLoaningAssociation),
+                      AdminTextConstants.addLoaningAssociation,
+                    ),
                     const SizedBox(height: 30),
                     AsyncChild(
                       value: associations,

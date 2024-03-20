@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/loan/providers/selected_items_provider.dart';
+import 'package:myecl/loan/providers/item_quantities_provider.dart';
 
 void main() {
   group('SelectedListProvider', () {

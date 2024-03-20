@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/loan.dart';
-import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/is_loan_admin_provider.dart';
-import 'package:myecl/loan/providers/item_list_provider.dart';
-import 'package:myecl/loan/providers/loan_list_provider.dart';
+import 'package:myecl/loan/providers/user_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
-import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
 import 'package:myecl/loan/router.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan.dart';
@@ -22,18 +19,15 @@ class LoanMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final loanList = ref.watch(loanListProvider);
+    final userLoanList = ref.watch(userLoanListProvider);
     final loanNotifier = ref.watch(loanProvider.notifier);
-    final loanListNotifier = ref.watch(loanListProvider.notifier);
+    final userLoanListNotifier = ref.watch(userLoanListProvider.notifier);
     final isAdmin = ref.watch(isLoanAdminProvider);
 
-    ref.watch(adminLoanListProvider);
-    ref.watch(itemListProvider);
-    ref.watch(loanerLoanListProvider);
     List<Loan> onGoingLoan = [];
     List<Loan> returnedLoan = [];
 
-    loanList.maybeWhen(
+    userLoanList.maybeWhen(
       data: (data) {
         if (data.isNotEmpty) {
           for (Loan l in data) {
@@ -55,7 +49,7 @@ class LoanMainPage extends HookConsumerWidget {
         children: [
           Refresher(
             onRefresh: () async {
-              await loanListNotifier.loadLoanList();
+              await userLoanListNotifier.loadMyLoanList();
             },
             child: Column(
               children: [

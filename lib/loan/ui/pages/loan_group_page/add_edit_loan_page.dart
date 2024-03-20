@@ -4,10 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/providers/caution_provider.dart';
 import 'package:myecl/loan/providers/item_focus_provider.dart';
-import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
-import 'package:myecl/loan/providers/loaner_provider.dart';
-import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/add_edit_button.dart';
@@ -18,7 +15,6 @@ import 'package:myecl/loan/ui/pages/loan_group_page/search_result.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/start_date_entry.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/widgets/styled_search_bar.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
@@ -35,10 +31,6 @@ class AddEditLoanPage extends HookConsumerWidget {
     final cautionNotifier = ref.watch(cautionProvider.notifier);
     cautionNotifier.setCaution(loan.caution);
     final usersNotifier = ref.watch(userList.notifier);
-    final loaner = ref.watch(loanerProvider);
-    final loanersItemsNotifier = ref.watch(loanersItemsProvider.notifier);
-    final itemList = ref.watch(itemListProvider);
-    final itemListNotifier = ref.watch(itemListProvider.notifier);
     final queryController =
         useTextEditingController(text: isEdit ? loan.borrower.getName() : "");
     final focus = ref.watch(itemFocusProvider);
@@ -55,22 +47,6 @@ class AddEditLoanPage extends HookConsumerWidget {
           child: Column(
             children: [
               const SizedBox(height: 30),
-              StyledSearchBar(
-                label: isEdit
-                    ? LoanTextConstants.editLoan
-                    : LoanTextConstants.addLoan,
-                onChanged: (value) async {
-                  if (value.isNotEmpty) {
-                    loanersItemsNotifier.setTData(
-                      loaner,
-                      await itemListNotifier.filterItems(value),
-                    );
-                  } else {
-                    loanersItemsNotifier.setTData(loaner, itemList);
-                  }
-                },
-              ),
-              const SizedBox(height: 10),
               ItemBar(isEdit: isEdit),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),

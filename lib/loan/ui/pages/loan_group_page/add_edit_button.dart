@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/item_quantity.dart';
 import 'package:myecl/loan/class/loan.dart';
-import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/borrower_provider.dart';
 import 'package:myecl/loan/providers/caution_provider.dart';
 import 'package:myecl/loan/providers/end_provider.dart';
-import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
-import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
-import 'package:myecl/loan/providers/loaner_provider.dart';
-import 'package:myecl/loan/providers/selected_items_provider.dart';
+import 'package:myecl/loan/providers/loan_list_provider.dart';
+import 'package:myecl/loan/providers/loaners_items_map_provider.dart';
+import 'package:myecl/loan/providers/loaners_loans_map_provider.dart';
+import 'package:myecl/loan/providers/selected_loaner_provider.dart';
+import 'package:myecl/loan/providers/item_quantities_provider.dart';
 import 'package:myecl/loan/providers/start_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
@@ -32,12 +32,16 @@ class AddEditButton extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final adminLoanListNotifier = ref.watch(adminLoanListProvider.notifier);
-    final items = ref.watch(itemListProvider);
-    final selectedItems = ref.watch(editSelectedListProvider);
-    final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
+    final selectedLoaner = ref.watch(selectedLoanerProvider);
+
+    final loanersLoansMapNotifier = ref.read(loanersLoansMapProvider.notifier);
+
+    final loanerItems =
+        ref.read(loanersItemsMapProvider.select((map) => map[selectedLoaner]));
+    final loanItemQuantities = ref.watch(loanItemQuantitiesMapProvider);
+    final loanListNotifier = ref.watch(loanListProvider.notifier);
+
     final loan = ref.watch(loanProvider);
-    final loaner = ref.watch(loanerProvider);
     final caution = ref.watch(cautionProvider);
     final end = ref.watch(endProvider);
     final start = ref.watch(startProvider);
@@ -50,6 +54,9 @@ class AddEditButton extends HookConsumerWidget {
     return WaitingButton(
       builder: (child) => AddEditButtonLayout(child: child),
       onTap: () async {
+        if (loanerItems == null) {
+          displayToast(context, TypeMsg.error, LoanTextConstants.noItems);
+        }
         await onAddEdit(() async {
           if (processDateBack(start).compareTo(processDateBack(end)) > 0) {
             displayToast(
@@ -60,40 +67,27 @@ class AddEditButton extends HookConsumerWidget {
           } else if (borrower.id.isEmpty) {
             displayToast(context, TypeMsg.error, LoanTextConstants.noBorrower);
           } else {
-            await items.when(
+            await loanerItems!.when(
               data: (itemList) async {
                 await tokenExpireWrapper(ref, () async {
-                  final sortedAvailable = itemList
+                  List<ItemQuantity> selectedLoanItemQuantities = itemList
                       .where(
-                        (element) =>
-                            element.loanedQuantity < element.totalQuantity,
-                      )
-                      .toList()
-                    ..sort((a, b) => a.name.compareTo(b.name));
-                  final sortedUnavailable = itemList
-                      .where(
-                        (element) =>
-                            element.loanedQuantity >= element.totalQuantity,
-                      )
-                      .toList()
-                    ..sort((a, b) => a.name.compareTo(b.name));
-                  itemList = sortedAvailable + sortedUnavailable;
-                  List<ItemQuantity> selected = itemList
-                      .where(
-                        (element) =>
-                            selectedItems[itemList.indexOf(element)] != 0,
+                        (item) =>
+                            loanItemQuantities[item.id] != null &&
+                            loanItemQuantities[item.id]! > 0,
                       )
                       .map(
-                        (e) => ItemQuantity(
-                          itemSimple: e.toItemSimple(),
-                          quantity: selectedItems[itemList.indexOf(e)],
+                        (itemWithPositiveQuantity) => ItemQuantity(
+                          itemSimple: itemWithPositiveQuantity.toItemSimple(),
+                          quantity:
+                              loanItemQuantities[itemWithPositiveQuantity.id]!,
                         ),
                       )
                       .toList();
-                  if (selected.isNotEmpty) {
+                  if (selectedLoanItemQuantities.isNotEmpty) {
                     Loan newLoan = Loan(
-                      loaner: isEdit ? loan.loaner : loaner,
-                      itemsQuantity: selected,
+                      loaner: isEdit ? loan.loaner : selectedLoaner,
+                      itemsQuantity: selectedLoanItemQuantities,
                       borrower: borrower,
                       caution: caution.text,
                       end: DateTime.parse(processDateBack(end)),
@@ -106,17 +100,25 @@ class AddEditButton extends HookConsumerWidget {
                         ? await loanListNotifier.updateLoan(newLoan)
                         : await loanListNotifier.addLoan(newLoan);
                     if (value) {
-                      adminLoanListNotifier.setTData(
-                        isEdit ? loan.loaner : loaner,
-                        await loanListNotifier.copy(),
-                      );
                       QR.back();
                       if (isEdit) {
+                        loanersLoansMapNotifier.updateLoanForLoaner(
+                          selectedLoaner,
+                          newLoan,
+                        );
                         displayToastWithContext(
                           TypeMsg.msg,
                           LoanTextConstants.updatedLoan,
                         );
                       } else {
+                        loanersLoansMapNotifier.addLoanForLoaner(
+                          selectedLoaner,
+                          newLoan,
+                        );
+                        displayToastWithContext(
+                          TypeMsg.msg,
+                          LoanTextConstants.updatedLoan,
+                        );
                         displayToastWithContext(
                           TypeMsg.msg,
                           LoanTextConstants.addedLoan,

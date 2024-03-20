@@ -6,12 +6,13 @@ import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/providers/item_focus_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/item_provider.dart';
-import 'package:myecl/loan/providers/loaner_provider.dart';
-import 'package:myecl/loan/providers/loaners_items_provider.dart';
+import 'package:myecl/loan/providers/selected_loaner_provider.dart';
+import 'package:myecl/loan/providers/loaners_items_map_provider.dart';
 import 'package:myecl/loan/router.dart';
 import 'package:myecl/loan/tools/constants.dart';
+import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/loan/ui/pages/admin_page/item_card.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
@@ -25,12 +26,17 @@ class LoanersItems extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final loaner = ref.watch(loanerProvider);
-    final loanersItemsNotifier = ref.watch(loanersItemsProvider.notifier);
-    final loanersItems = ref.watch(loanersItemsProvider);
+    final selectedLoaner = ref.watch(selectedLoanerProvider);
+
+    final selectedLoanerItems =
+        ref.watch(loanersItemsMapProvider.select((map) => map[selectedLoaner]));
+    final loanersItemsMapNotifier = ref.read(loanersItemsMapProvider.notifier);
     final itemListNotifier = ref.watch(itemListProvider.notifier);
-    final itemList = ref.watch(itemListProvider);
+
     final itemNotifier = ref.watch(itemProvider.notifier);
+
+    final ValueNotifier<String> filterQuery = useState("");
+
     final focus = ref.watch(itemFocusProvider);
     final focusNode = useFocusNode();
     if (focus) {
@@ -41,31 +47,26 @@ class LoanersItems extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    final item = loanersItems[loaner];
-    if (item == null) {
-      return const Center(
-        child: Text(LoanTextConstants.noItems),
-      );
-    }
-    return AsyncChild(
-      value: item,
-      builder: (context, data) {
-        if (data.isNotEmpty) {
-          data.sort((a, b) => a.name.compareTo(b.name));
+    return AutoLoaderChild(
+      group: selectedLoanerItems,
+      notifier: loanersItemsMapNotifier,
+      mapKey: selectedLoaner,
+      listLoader: (loaner) {
+        return itemListNotifier.loadItemList(loaner.id);
+      },
+      dataBuilder: (context, items) {
+        if (items.isEmpty) {
+          return const Center(
+            child: Text(LoanTextConstants.noItems),
+          );
         }
+        items.sort((a, b) => a.name.compareTo(b.name));
         return Column(
           children: [
             StyledSearchBar(
               label: LoanTextConstants.itemHandling,
-              onChanged: (value) async {
-                if (value.isNotEmpty) {
-                  loanersItemsNotifier.setTData(
-                    loaner,
-                    await itemListNotifier.filterItems(value),
-                  );
-                } else {
-                  loanersItemsNotifier.setTData(loaner, itemList);
-                }
+              onChanged: (query) async {
+                filterQuery.value = query;
               },
             ),
             const SizedBox(height: 10),
@@ -90,9 +91,9 @@ class LoanersItems extends HookConsumerWidget {
                   ),
                 ),
               ),
-              items: data,
-              itemBuilder: (context, e, i) => ItemCard(
-                item: e,
+              items: filteredItems(items, filterQuery.value),
+              itemBuilder: (context, item, _) => ItemCard(
+                item: item,
                 showButtons: true,
                 onDelete: () async {
                   showDialog(
@@ -102,15 +103,13 @@ class LoanersItems extends HookConsumerWidget {
                         descriptions: LoanTextConstants.deletingItem,
                         onYes: () {
                           tokenExpireWrapper(ref, () async {
-                            final value =
-                                await itemListNotifier.deleteItem(e, loaner.id);
-                            if (value) {
-                              itemListNotifier.copy().then((value) {
-                                loanersItemsNotifier.setTData(
-                                  loaner,
-                                  value,
-                                );
-                              });
+                            final isItemDeleted = await itemListNotifier
+                                .deleteItem(item, selectedLoaner.id);
+                            if (isItemDeleted) {
+                              loanersItemsMapNotifier.removeItemForLoaner(
+                                selectedLoaner,
+                                item,
+                              );
                               displayToastWithContext(
                                 TypeMsg.msg,
                                 LoanTextConstants.deletedItem,
@@ -132,7 +131,7 @@ class LoanersItems extends HookConsumerWidget {
                   QR.to(
                     LoanRouter.root + LoanRouter.admin + LoanRouter.addEditItem,
                   );
-                  itemNotifier.setItem(e);
+                  itemNotifier.setItem(item);
                 },
               ),
             ),

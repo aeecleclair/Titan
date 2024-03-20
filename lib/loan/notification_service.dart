@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
+import 'package:myecl/loan/providers/loan_list_provider.dart';
 import 'package:myecl/loan/providers/user_loaner_list_provider.dart';
 import 'package:myecl/loan/router.dart';
 import 'package:tuple/tuple.dart';
@@ -15,6 +15,6 @@ final Map<String, Tuple2<String, List<StateNotifierProvider>>> loanProviders = {
   ),
   "loans": Tuple2(
     LoanRouter.root,
-    [loanerLoanListProvider],
+    [loanListProvider],
   ),
 };
