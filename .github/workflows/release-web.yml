@@ -40,71 +40,78 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
-      
+
       - name: Setup Flutter SDK
         uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
-          flutter-version: '3.19.1'
+          channel: "stable"
+          flutter-version: "3.19.1"
           cache: true
-      
+
       - name: Cleanup 🧹
         run: flutter clean
-      
+
       - name: Get Packages
         run: flutter pub get
-      
-      - name: Configure Alpha env
-        if: needs.extract-version.outputs.isAlpha == 'true'
-        run: |
-          echo THE_MOVIE_DB_API=$THE_MOVIE_DB_API >> .env
-          echo ALPHA_HOST=$ALPHA_HOST >> .env
-          echo PLAUSIBLE_HOST=$PLAUSIBLE_HOST >> .env
-          echo PLAUSIBLE_DOMAIN=$PLAUSIBLE_DOMAIN >> .env
-        env:
-          THE_MOVIE_DB_API: ${{ secrets.THE_MOVIE_DB_API }}
-          ALPHA_HOST: ${{ vars.ALPHA_HOST }}
-          PLAUSIBLE_HOST: ${{ secrets.PLAUSIBLE_ALPHA_HOST }}
-          PLAUSIBLE_DOMAIN: ${{ secrets.PLAUSIBLE_ALPHA_DOMAIN }}
-      
-      - name: Configure production env
-        if: needs.extract-version.outputs.isAlpha == 'false'
+
+      - name: Configure env
         run: |
           echo THE_MOVIE_DB_API=$THE_MOVIE_DB_API >> .env
           echo PROD_HOST=$PROD_HOST >> .env
-          echo PLAUSIBLE_HOST=$PLAUSIBLE_HOST >> .env
-          echo PLAUSIBLE_DOMAIN=$PLAUSIBLE_DOMAIN >> .env
+          echo ALPHA_HOST=$ALPHA_HOST >> .env
         env:
           THE_MOVIE_DB_API: ${{ secrets.THE_MOVIE_DB_API }}
           PROD_HOST: ${{ vars.PROD_HOST }}
-          PLAUSIBLE_HOST: ${{ secrets.PLAUSIBLE_HOST }}
-          PLAUSIBLE_DOMAIN: ${{ secrets.PLAUSIBLE_DOMAIN }}
-      
+          ALPHA_HOST: ${{ vars.ALPHA_HOST }}
+          
+      - name: Configure Alpha env
+        if: needs.extract-version.outputs.isAlpha == 'true'
+        run: |
+          echo PLAUSIBLE_HOST=$PLAUSIBLE_ALPHA_HOST >> .env
+          echo PLAUSIBLE_DOMAIN=$PLAUSIBLE_ALPHA_DOMAIN >> .env
+        env:
+          PLAUSIBLE_ALPHA_HOST: ${{ secrets.PLAUSIBLE_ALPHA_HOST }}
+          PLAUSIBLE_ALPHA_DOMAIN: ${{ secrets.PLAUSIBLE_ALPHA_DOMAIN }}
+
+      - name: Configure Prod env
+        if: needs.extract-version.outputs.isAlpha == 'false'
+        run: |
+          echo PLAUSIBLE_HOST=$PLAUSIBLE_PROD_HOST >> .env
+          echo PLAUSIBLE_DOMAIN=$PLAUSIBLE_PROD_DOMAIN >> .env
+        env:
+          PLAUSIBLE_PROD_HOST: ${{ secrets.PLAUSIBLE_HOST  }}
+          PLAUSIBLE_PROD_DOMAIN: ${{ secrets.PLAUSIBLE_DOMAIN  }}
+
       - name: Set Alpha icons
         if: needs.extract-version.outputs.isAlpha == 'true'
         run: |
           cp -f web/Alpha/favicon.png web/favicon.png
           cp -f web/Alpha/icons/* web/icons/
-      
-      - name: Set production icons
+
+      - name: Set Prod icons
         if: needs.extract-version.outputs.isAlpha == 'false'
         run: |
           cp -f web/Prod/favicon.png web/favicon.png
           cp -f web/Prod/icons/* web/icons/
-      
-      - name: Build 🔧
-        run: flutter build web --release
-      
+
+      - name: Build Alpha 🔧
+        if: needs.extract-version.outputs.isAlpha == 'true'
+        run: flutter build web --release --dart-define=flavor=alpha
+
+      - name: Build Prod 🔧
+        if: needs.extract-version.outputs.isAlpha == 'false'
+        run: flutter build web --release --dart-define=flavor=prod
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      
+
       - name: Login to Docker Registry
         uses: docker/login-action@v3
         with:
           registry: ${{ secrets.DOCKER_REGISTRY_URL }}
           username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
           password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
-      
+
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
