@@ -19,25 +19,29 @@ class HistoryPage extends HookConsumerWidget {
     final historyNotifier = ref.read(playerHistoProvider.notifier);
 
     return ElocapsTemplate(
-        child: Refresher(
-      onRefresh: () async {
-        historyNotifier.loadHisto(user.id);
-      },
-      child: Column(
-        children: [
-          const SizedBox(height: 20),
-          const AlignLeftText(ElocapsTextConstant.history,
-              padding: EdgeInsets.symmetric(horizontal: 30)),
-          const SizedBox(height: 20),
-          AsyncChild(
+      child: Refresher(
+        onRefresh: () async {
+          await historyNotifier.loadHisto(user.id);
+        },
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+            const AlignLeftText(
+              ElocapsTextConstant.history,
+              padding: EdgeInsets.symmetric(horizontal: 30),
+            ),
+            const SizedBox(height: 20),
+            AsyncChild(
               value: history,
               builder: (context, games) {
                 games.sort((a, b) => b.timestamp.compareTo(a.timestamp));
                 return Column(
                     children: games.map((e) => GameCard(game: e)).toList());
-              })
-        ],
+              },
+            ),
+          ],
+        ),
       ),
-    ));
+    );
   }
 }
