@@ -49,7 +49,7 @@ void main() {
       newItem = item.copyWith(loanedQuantity: 1);
       expect(newItem.loanedQuantity, 1);
       newItem = item.copyWith(
-        suggestedLendingDuration: 2.0,
+        suggestedLendingDuration: 2,
       );
       expect(newItem.suggestedLendingDuration, 2.0);
     });
@@ -65,7 +65,7 @@ void main() {
       );
       expect(
         item.toString(),
-        'Item(id: 1, name: name, caution: 1, totalQuantity: 1, loanedQuantity: 1, suggestedLendingDuration: 1.0)',
+        'Item(id: 1, name: name, caution: 1, totalQuantity: 1, loanedQuantity: 1, suggestedLendingDuration: 1)',
       );
     });
 
@@ -76,7 +76,7 @@ void main() {
         'suggested_caution': 1,
         'total_quantity': 1,
         'loaned_quantity': 1,
-        'suggested_lending_duration': 1.0,
+        'suggested_lending_duration': 1,
       });
       expect(item.id, '1');
       expect(item.name, 'name');
