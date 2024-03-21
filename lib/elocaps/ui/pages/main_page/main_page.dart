@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/elocaps/class/caps_mode.dart';
-import 'package:myecl/elocaps/providers/leader_board_player_map_notifier.dart';
 import 'package:myecl/elocaps/providers/mode_chosen_provider.dart';
 import 'package:myecl/elocaps/providers/player_histo_provider.dart';
 import 'package:myecl/elocaps/providers/player_list_provider.dart';
@@ -13,7 +12,7 @@ import 'package:myecl/elocaps/ui/button.dart';
 import 'package:myecl/elocaps/ui/elocaps.dart';
 import 'package:myecl/elocaps/ui/pages/main_page/leader_board.dart';
 import 'package:myecl/elocaps/ui/pages/main_page/podium.dart';
-import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/user/providers/user_provider.dart';
@@ -25,15 +24,11 @@ class EloCapsMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final leaderBoardPlayerNotifier = ref.watch(playerListProvider.notifier);
     final modeChosen = ref.watch(modeChosenProvider);
-    final me = ref.watch(userProvider);
-    final leaderBoardPlayerList = ref.watch(
-      leaderBoardPlayerListProvider.select((value) => value[modeChosen]),
-    );
-    final leaderBoardPlayerListNotifier =
-        ref.read(leaderBoardPlayerListProvider.notifier);
     final modeChosenNotifier = ref.watch(modeChosenProvider.notifier);
+    final leaderBoardPlayer = ref.watch(playerListProvider);
+    final leaderBoardPlayerNotifier = ref.watch(playerListProvider.notifier);
+    final me = ref.watch(userProvider);
     final history = ref.watch(playerHistoProvider);
 
     final displayBadge = history.maybeWhen(
@@ -106,12 +101,9 @@ class EloCapsMainPage extends HookConsumerWidget {
                   ],
                 ),
                 const SizedBox(height: 20),
-                AutoLoaderChild(
-                  group: leaderBoardPlayerList,
-                  mapKey: modeChosen,
-                  notifier: leaderBoardPlayerListNotifier,
-                  listLoader: leaderBoardPlayerNotifier.loadRanking,
-                  dataBuilder: (context, players) => SingleChildScrollView(
+                AsyncChild(
+                  value: leaderBoardPlayer,
+                  builder: (context, players) => SingleChildScrollView(
                     child: Column(
                       children: [
                         Podium(players: players),
