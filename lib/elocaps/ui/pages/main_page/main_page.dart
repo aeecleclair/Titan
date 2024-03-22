@@ -30,6 +30,7 @@ class EloCapsMainPage extends HookConsumerWidget {
     final leaderBoardPlayerNotifier = ref.watch(playerListProvider.notifier);
     final me = ref.watch(userProvider);
     final history = ref.watch(playerHistoProvider);
+    final historyNotifier = ref.read(playerHistoProvider.notifier);
 
     final displayBadge = history.maybeWhen(
       data: ((games) =>
@@ -47,6 +48,7 @@ class EloCapsMainPage extends HookConsumerWidget {
           Refresher(
             onRefresh: () async {
               await leaderBoardPlayerNotifier.loadRanking(modeChosen);
+              await historyNotifier.loadHisto(me.id);
             },
             child: Column(
               children: [
