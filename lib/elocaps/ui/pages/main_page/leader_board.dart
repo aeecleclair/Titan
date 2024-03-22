@@ -1,0 +1,37 @@
+import 'dart:math';
+
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/elocaps/class/player.dart';
+import 'package:myecl/elocaps/ui/pages/main_page/leader_board_card.dart';
+import 'package:myecl/user/providers/user_provider.dart';
+
+class LeaderBoard extends HookConsumerWidget {
+  final List<Player> players;
+  const LeaderBoard({super.key, required this.players});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final me = ref.watch(userProvider);
+    return Container(
+        padding: const EdgeInsets.only(top: 20),
+        height: max(MediaQuery.of(context).size.height - 400,
+            (players.length - 3) * 80.0),
+        width: double.infinity,
+        decoration: const BoxDecoration(
+            color: Color.fromARGB(255, 246, 246, 246),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(50),
+              topRight: Radius.circular(50),
+            )),
+        child: Column(
+          children: players
+              .skip(3)
+              .map((e) => LeaderBoardCard(
+                  player: e,
+                  index: players.indexOf(e) + 1,
+                  isMe: e.user.id == me.id))
+              .toList(),
+        ));
+  }
+}

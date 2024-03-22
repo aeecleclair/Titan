@@ -8,6 +8,7 @@ import 'package:myecl/centralisation/router.dart';
 import 'package:myecl/cinema/router.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:collection/collection.dart';
+import 'package:myecl/elocaps/router.dart';
 import 'package:myecl/event/router.dart';
 import 'package:myecl/home/router.dart';
 import 'package:myecl/loan/router.dart';
@@ -41,6 +42,9 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     BookingRouter.module,
     LoanRouter.module,
     EventRouter.module,
+    ElocapsRouter.module,
+    HomeRouter.module,
+    LoanRouter.module,
     RaffleRouter.module,
     RecommendationRouter.module,
     PhonebookRouter.module,

@@ -84,5 +84,6 @@ flutter:
     - assets/web/Pret.webp
     - assets/web/Tombola.webp
     - assets/web/Vote.webp
+    - assets/images/beer.svg
 
   uses-material-design: true
