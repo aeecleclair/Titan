@@ -28,13 +28,15 @@ NB: a trailing slash is required.
 
 ## Development
 
-### Linting
+### Formatting
 
 To format code use `dart format .`
 
 ```
 dart format .
 ```
+
+### Linting
 
 Titan support linting according to the official [Flutter static analysis options](https://dart.dev/guides/language/analysis-options).
 
@@ -44,7 +46,7 @@ The linter can be launched using:
 dart analyze
 ```
 
-Dart allows you to fix issues in your code with the `dart command`.
+Dart allows you to fix issues in your code with the dart command `dart fix`.
 
 To preview proposed changes, use the `--dry-run` flag:
 
