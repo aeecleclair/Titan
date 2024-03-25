@@ -9,8 +9,8 @@ import '../../auth/providers/openid_provider.dart';
 class TheMovieDBRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final String host = 'https://api.themoviedb.org/3/';
   final String apiKey = dotenv.env['THE_MOVIE_DB_API']!;
+  final ext = 'cinema/movie';
 
   Future<List<TheMovieDBSearchResult>> searchMovie(String id) async {
     final resp = await getOne(
@@ -25,10 +25,8 @@ class TheMovieDBRepository extends Repository {
     return <TheMovieDBSearchResult>[];
   }
 
-  Future<TheMovieDBMovie> getMovie(String id) async {
-    return TheMovieDBMovie.fromJson(
-      await getOne("movie/$id", suffix: "?api_key=$apiKey&language=fr-FR"),
-    );
+  Future<TheMovieDBMovie> getMovie(String movieId) async {
+    return TheMovieDBMovie.fromJson(await getOne(movieId));
   }
 }
 
