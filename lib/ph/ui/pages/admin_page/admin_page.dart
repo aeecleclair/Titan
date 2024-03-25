@@ -9,12 +9,7 @@ class AdminPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return PhTemplate(
         child: Column(
-      children: [
-        HorizontalListView.builder(
-          height: 50,
-          items: data,
-        )
-      ],
+      children: [],
     ));
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/ph/providers/is_ph_admin_provider.dart';
 import 'package:myecl/ph/router.dart';
 import 'package:myecl/ph/ui/button.dart';
 import 'package:myecl/ph/ui/pages/ph.dart';
@@ -14,7 +13,7 @@ class PhMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isAdmin = ref.watch(isPhAdminProvider);
+    //final isAdmin = ref.watch(isPhAdminProvider);
     return PhTemplate(
         child: Column(
       children: [
