@@ -11,11 +11,8 @@ class PhMainPage extends StatelessWidget {
       onTap: () {
         QR.to(PhRouter.root + PhRouter.last_ph);
       },
-      child: Container(
-        color: Colors.blue,
-        child: const Center(
-          child: Text('Open PDF'),
-        ),
+      child: const MyButton(
+        text: "Open Last Ph",
       ),
     );
   }
