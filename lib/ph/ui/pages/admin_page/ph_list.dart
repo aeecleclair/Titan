@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/ph/class/ph.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 
-class PhList extends StatelessWidget {
+class PhList extends HookConsumerWidget {
   final Ph ph;
   const PhList({
     super.key,
@@ -10,7 +11,7 @@ class PhList extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return AsyncChild(value: ph, builder: (context, data))
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Column();
   }
 }
