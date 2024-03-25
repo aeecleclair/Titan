@@ -45,7 +45,7 @@ dependencies:
   load_switch: ^2.0.5
   mocktail: ^1.0.3
   numberpicker: ^2.1.1
-  package_info_plus: ^5.0.1
+  package_info_plus: ^6.0.0
   path: ^1.8.2
   path_provider: ^2.0.11
   rxdart: ^0.27.7
@@ -61,6 +61,8 @@ dependencies:
   zxcvbn: ^1.0.0
   flutter_pdfview: ^1.2.5
   pdf_render: ^1.4.6
+  pdfrx: ^1.0.50
+  syncfusion_flutter_pdfviewer: ^23.2.7
 
 dev_dependencies:
   dependency_validator: ^3.2.2
