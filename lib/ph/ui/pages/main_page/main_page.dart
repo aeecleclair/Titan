@@ -18,7 +18,7 @@ class PhMainPage extends HookConsumerWidget {
     return PhTemplate(
         child: Column(
       children: [
-        if (isAdmin)
+        if (true)
           SizedBox(
             width: 116.7,
             child: AdminButton(
@@ -36,9 +36,11 @@ class PhMainPage extends HookConsumerWidget {
             text: "Voir les anciens journaux",
           ),
         ),
+        const SizedBox(height: 10),
         SizedBox(
-            height: MediaQuery.sizeOf(context).height - 204,
-            child: SfPdfViewer.asset('assets/my_document.pdf')),
+            height: MediaQuery.sizeOf(context).height - 320,
+            child: SfPdfViewer.asset('assets/my_document.pdf',
+                pageLayoutMode: PdfPageLayoutMode.single)),
       ],
     ));
   }
