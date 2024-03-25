@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/ph/router.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/ph/ui/pages/ph.dart';
-import 'package:pdf_render/pdf_render_widgets.dart';
-
-class PhMainPage extends HookConsumerWidget {
+class PhMainPage extends StatelessWidget {
   const PhMainPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return PhTemplate(child: PdfViewer.openAsset('assets/my_document.pdf'));
+  GestureDetector build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        QR.to(PhRouter.root + PhRouter.last_ph);
+      },
+      child: Container(
+        color: Colors.blue,
+        child: const Center(
+          child: Text('Open PDF'),
+        ),
+      ),
+    );
   }
 }
