@@ -6,6 +6,7 @@ import 'package:myecl/booking/router.dart';
 import 'package:myecl/centralisation/router.dart';
 import 'package:myecl/cinema/router.dart';
 import 'package:myecl/event/router.dart';
+import 'package:myecl/sdec/router.dart';
 import 'package:myecl/home/router.dart';
 import 'package:myecl/home/ui/home.dart' deferred as home_page;
 import 'package:myecl/loan/router.dart';
@@ -84,6 +85,7 @@ class AppRouter {
       RecommendationRouter(ref).route(),
       SettingsRouter(ref).route(),
       VoteRouter(ref).route(),
+      SdecRouter(ref).route(),
     ];
   }
 }
