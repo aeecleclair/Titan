@@ -3,42 +3,39 @@ import 'package:myecl/ph/class/ph_admin.dart';
 class Ph {
   Ph({
     required this.id,
-    required this.phAdmin,
+    required this.date,
     required this.title,
   });
   late final String id;
-  late final PhAdmin phAdmin;
+  late final DateTime date;
   late final String title;
 
   Ph.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    phAdmin = PhAdmin.fromJson(json['ph_admin']);
+    date = json['date'];
     title = json['title'];
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['id'] = id;
-    data['phAdmin'] = phAdmin;
+    data['date'] = date;
     data['title'] = title;
     return data;
   }
 
   Ph copyWith({String? id, PhAdmin? phAdmin, String? title}) {
-    return Ph(
-        id: id ?? this.id,
-        phAdmin: phAdmin ?? this.phAdmin,
-        title: title ?? this.title);
+    return Ph(id: id ?? this.id, date: date, title: title ?? this.title);
   }
 
   Ph.empty() {
     id = '';
-    phAdmin = PhAdmin.empty();
+    date = DateTime.now();
     title = '';
   }
 
   @override
   String toString() {
-    return 'Ph(id: $id, ph_admin: $phAdmin, title : $title)';
+    return 'Ph(id: $id, date: $date, title : $title)';
   }
 }

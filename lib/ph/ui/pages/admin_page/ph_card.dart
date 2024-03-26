@@ -15,7 +15,7 @@ class PhCard extends StatelessWidget {
       onTap: () {},
       child: CardLayout(
         id: ph.id,
-        child: Column(),
+        child: Text(ph.title),
       ),
     );
   }
