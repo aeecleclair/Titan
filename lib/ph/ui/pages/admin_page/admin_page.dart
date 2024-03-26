@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/ph/ui/pages/admin_page/ph_list.dart';
 import 'package:myecl/ph/ui/pages/ph.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 
 class AdminPage extends StatelessWidget {
   const AdminPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return PhTemplate(
-        child: Column(
-      children: [],
-    ));
+    return const PhTemplate(child: PhList());
   }
 }
