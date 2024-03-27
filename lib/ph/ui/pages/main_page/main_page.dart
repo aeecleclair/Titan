@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/class/simple_group.dart';
+import 'package:myecl/ph/providers/is_ph_admin_provider.dart';
 import 'package:myecl/ph/router.dart';
 import 'package:myecl/ph/ui/button.dart';
 import 'package:myecl/ph/ui/pages/ph.dart';
 import 'package:myecl/tools/ui/widgets/admin_button.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -13,11 +16,11 @@ class PhMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //final isAdmin = ref.watch(isPhAdminProvider);
+    final isAdmin = ref.watch(isPhAdminProvider);
     return PhTemplate(
         child: Column(
       children: [
-        if (true)
+        if (isAdmin)
           SizedBox(
             width: 116.7,
             child: AdminButton(

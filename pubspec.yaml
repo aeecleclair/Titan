@@ -63,6 +63,7 @@ dependencies:
   pdf_render: ^1.4.6
   pdfrx: ^1.0.50
   syncfusion_flutter_pdfviewer: ^23.2.7
+  file_picker: ^8.0.0+1
 
 dev_dependencies:
   dependency_validator: ^3.2.2
