@@ -12,6 +12,10 @@ class PhRepository extends Repository {
     return List<Ph>.from(
         (await getList(suffix: "")).map((x) => Ph.fromJson(x)));
   }
+
+  Future<Ph> createPh(Ph ph) async {
+    return Ph.fromJson(await create(ph.toJson(), suffix: ""));
+  }
 }
 
 final phRepositoryProvider = Provider<PhRepository>((ref) {

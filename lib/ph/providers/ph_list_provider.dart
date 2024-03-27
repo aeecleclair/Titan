@@ -16,7 +16,7 @@ class PhListNotifier extends ListNotifier<Ph> {
   }
 }
 
-final phProvider =
+final phListProvider =
     StateNotifierProvider<PhListNotifier, AsyncValue<List<Ph>>>((ref) {
   final token = ref.watch(tokenProvider);
   PhListNotifier notifier = PhListNotifier(token: token);

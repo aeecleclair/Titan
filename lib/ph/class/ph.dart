@@ -7,7 +7,7 @@ class Ph {
     required this.title,
   });
   late final String id;
-  late final DateTime date;
+  late final String date;
   late final String title;
 
   Ph.fromJson(Map<String, dynamic> json) {
@@ -30,7 +30,7 @@ class Ph {
 
   Ph.empty() {
     id = '';
-    date = DateTime.now();
+    date = '';
     title = '';
   }
 

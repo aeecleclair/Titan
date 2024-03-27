@@ -11,7 +11,7 @@ class PhList extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final phList = ref.watch(phProvider);
+    final phList = ref.watch(phListProvider);
     return AsyncChild(
         value: phList,
         builder: (context, phList) {
