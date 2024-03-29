@@ -12,7 +12,11 @@ class PhListNotifier extends ListNotifier<Ph> {
   }
 
   Future<AsyncValue<List<Ph>>> loadPhList() async {
-    return await loadList(() async => _phRepository.getPhList());
+    return await loadList(() async => _phRepository.getAllPh());
+  }
+
+  Future<bool> addPh(Ph ph) async {
+    return await add(_phRepository.addPh, ph);
   }
 }
 

@@ -14,8 +14,7 @@ class PhCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {},
       child: CardLayout(
-        id: ph.id,
-        child: Text(ph.title),
+        child: Text(ph.name),
       ),
     );
   }

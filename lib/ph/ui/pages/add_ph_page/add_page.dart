@@ -12,7 +12,6 @@ class PdfPicker extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final result = useState<FilePickerResult?>(null);
-    final ph = ref.watch(phProvider.notifier);
     return SizedBox(
       height: 40,
       child: GestureDetector(
@@ -24,7 +23,7 @@ class PdfPicker extends HookConsumerWidget {
             if (result.value == null) {
               print("No file selected");
             } else {
-              ph.createPh(result.value);
+              print("oui");
             }
           },
           child: const MyButton(

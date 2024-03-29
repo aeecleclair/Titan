@@ -8,13 +8,12 @@ class PhRepository extends Repository {
   // ignore: overridden_fields
   final ext = "ph/";
 
-  Future<List<Ph>> getPhList() async {
-    return List<Ph>.from(
-        (await getList(suffix: "")).map((x) => Ph.fromJson(x)));
+  Future<List<Ph>> getAllPh() async {
+    return (await getList(suffix: '')).map((e) => Ph.fromJson(e)).toList();
   }
 
-  Future<Ph> createPh(Ph ph) async {
-    return Ph.fromJson(await create(ph.toJson(), suffix: ""));
+  Future<Ph> addPh(Ph ph) async {
+    return Ph.fromJson(await create(ph.toJson(), suffix: ''));
   }
 }
 
