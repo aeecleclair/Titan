@@ -23,7 +23,6 @@ class AssociationPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final association = ref.watch(associationProvider);
-    final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
     final associationMemberList = ref.watch(associationMemberListProvider);
     final associationMemberSortedList =
         ref.watch(associationMemberSortedListProvider);
@@ -37,7 +36,6 @@ class AssociationPage extends HookConsumerWidget {
     return PhonebookTemplate(
       child: Refresher(
         onRefresh: () async {
-          await associationNotifier.loadAssociation(association.id);
           await associationMemberListNotifier.loadMembers(
             association.id,
             association.mandateYear.toString(),

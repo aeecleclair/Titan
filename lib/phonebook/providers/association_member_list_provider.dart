@@ -71,6 +71,7 @@ final associationMemberListProvider = StateNotifierProvider<
       AssociationMemberListNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {
     final association = ref.watch(associationProvider);
+
     await provider.loadMembers(
       association.id,
       association.mandateYear.toString(),

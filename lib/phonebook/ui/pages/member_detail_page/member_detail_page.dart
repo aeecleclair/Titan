@@ -18,7 +18,7 @@ class MemberDetailPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final memberProvider = ref.watch(completeMemberProvider);
-    final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
+    final associationNotifier = ref.watch(associationProvider.notifier);
     final associationList = ref.watch(associationListProvider);
     return PhonebookTemplate(
       child: Column(

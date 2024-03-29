@@ -13,10 +13,6 @@ class AssociationRepository extends Repository {
     );
   }
 
-  Future<Association> getAssociation(String associationId) async {
-    return Association.fromJson(await getOne(associationId));
-  }
-
   Future<bool> deleteAssociation(String associationId) async {
     return await delete(associationId);
   }

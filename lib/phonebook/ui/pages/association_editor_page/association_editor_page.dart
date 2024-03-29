@@ -35,7 +35,7 @@ class AssociationEditorPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final key = GlobalKey<FormState>();
     final association = ref.watch(associationProvider);
-    final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
+    final associationNotifier = ref.watch(associationProvider.notifier);
     final associationMemberListNotifier =
         ref.watch(associationMemberListProvider.notifier);
     final associationMemberList = ref.watch(associationMemberListProvider);
@@ -57,7 +57,6 @@ class AssociationEditorPage extends HookConsumerWidget {
     return PhonebookTemplate(
       child: Refresher(
         onRefresh: () async {
-          await associationNotifier.loadAssociation(association.id);
           await associationMemberListNotifier.loadMembers(
             association.id,
             association.mandateYear.toString(),
