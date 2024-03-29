@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/tools/functions.dart';
@@ -13,13 +15,8 @@ class EndNotifier extends StateNotifier<String> {
     state = processDate(
       DateTime.parse(processDateBack(start)).add(
         Duration(
-          days: (selected.fold<double>(
-            double.infinity,
-            (previousValue, element) =>
-                previousValue > element.suggestedLendingDuration
-                    ? element.suggestedLendingDuration
-                    : previousValue,
-          )).toInt(),
+          days:
+              selected.map((item) => item.suggestedLendingDuration).reduce(min),
         ),
       ),
     );
