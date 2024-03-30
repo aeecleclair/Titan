@@ -3,9 +3,9 @@ import 'package:myecl/loan/providers/item_quantities_provider.dart';
 
 void main() {
   group('SelectedListProvider', () {
-    test('should initialize with false values', () {
-      final provider = SelectedListProvider([1, 2, 3]);
-      expect(provider.state, [0, 0, 0]);
+    test('should initialize with empty map', () {
+      final notifier = ItemQuantitiesMapNotifier();
+      expect(notifier.state, <String, int>{});
     });
 
     // test('should toggle value at index', () async {

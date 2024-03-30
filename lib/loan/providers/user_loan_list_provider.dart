@@ -5,21 +5,21 @@ import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class UserLoanListNotifier extends ListNotifier<Loan> {
-  final LoanRepository loanrepository;
-  UserLoanListNotifier({required this.loanrepository})
+  final LoanRepository loanRepository;
+  UserLoanListNotifier({required this.loanRepository})
       : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Loan>>> loadMyLoanList() async {
-    return await loadList(loanrepository.getMyLoanList);
+    return await loadList(loanRepository.getMyLoanList);
   }
 
   Future<bool> addLoan(Loan loan) async {
-    return await add(loanrepository.createLoan, loan);
+    return await add(loanRepository.createLoan, loan);
   }
 
   Future<bool> updateLoan(Loan loan) async {
     return await update(
-      loanrepository.updateLoan,
+      loanRepository.updateLoan,
       (loans, loan) {
         final index = loans.indexWhere((l) => l.id == loan.id);
         loans[index] = loan;
@@ -31,7 +31,7 @@ class UserLoanListNotifier extends ListNotifier<Loan> {
 
   Future<bool> deleteLoan(Loan loan) async {
     return await delete(
-      loanrepository.deleteLoan,
+      loanRepository.deleteLoan,
       (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
       loan.id,
       loan,
@@ -40,7 +40,7 @@ class UserLoanListNotifier extends ListNotifier<Loan> {
 
   Future<bool> returnLoan(Loan loan) async {
     return await delete(
-      loanrepository.returnLoan,
+      loanRepository.returnLoan,
       (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
       loan.id,
       loan,
@@ -52,7 +52,7 @@ final userLoanListProvider =
     StateNotifierProvider<UserLoanListNotifier, AsyncValue<List<Loan>>>((ref) {
   final loanRepository = ref.watch(loanRepositoryProvider);
   UserLoanListNotifier userLoanListNotifier =
-      UserLoanListNotifier(loanrepository: loanRepository);
+      UserLoanListNotifier(loanRepository: loanRepository);
   tokenExpireWrapperAuth(ref, () async {
     await userLoanListNotifier.loadMyLoanList();
   });

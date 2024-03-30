@@ -36,8 +36,8 @@ class AutoLoaderChild<MapKey, MapValue> extends ConsumerWidget {
         loadingBuilder ?? (context) => Loader(color: loaderColor);
     if (group == null) {
       loader == null
-          ? notifier.autoLoadList(ref, mapKey, listLoader!)
-          : notifier.autoLoad(ref, mapKey, loader!);
+          ? Future(() => notifier.autoLoadList(ref, mapKey, listLoader!))
+          : Future(() => notifier.autoLoad(ref, mapKey, loader!));
       return nonNullLoadingBuilder(context);
     }
     return AsyncChild(

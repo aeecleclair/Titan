@@ -28,12 +28,12 @@ class LoanersItems extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedLoaner = ref.watch(selectedLoanerProvider);
 
-    final selectedLoanerItems =
-        ref.watch(loanersItemsMapProvider.select((map) => map[selectedLoaner]));
+    final selectedLoanerItems = ref
+        .watch(loanersItemsMapProvider.select((map) => map[selectedLoaner.id]));
     final loanersItemsMapNotifier = ref.read(loanersItemsMapProvider.notifier);
-    final itemListNotifier = ref.watch(itemListProvider.notifier);
+    final itemListNotifier = ref.read(itemListProvider.notifier);
 
-    final itemNotifier = ref.watch(itemProvider.notifier);
+    final itemNotifier = ref.read(itemProvider.notifier);
 
     final ValueNotifier<String> filterQuery = useState("");
 
@@ -50,9 +50,9 @@ class LoanersItems extends HookConsumerWidget {
     return AutoLoaderChild(
       group: selectedLoanerItems,
       notifier: loanersItemsMapNotifier,
-      mapKey: selectedLoaner,
-      listLoader: (loaner) {
-        return itemListNotifier.loadItemList(loaner.id);
+      mapKey: selectedLoaner.id,
+      listLoader: (loanerId) async {
+        return itemListNotifier.loadItemList(loanerId);
       },
       dataBuilder: (context, items) {
         if (items.isEmpty) {

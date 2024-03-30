@@ -60,7 +60,7 @@ class OnGoingLoan extends HookConsumerWidget {
       group: selectedLoanerLoans,
       notifier: loanersLoansMapNotifier,
       mapKey: selectedLoaner,
-      listLoader: (loaner) {
+      listLoader: (loaner) async {
         return loanListNotifier.loadLoanList(loaner.id);
       },
       dataBuilder: (context, loans) {

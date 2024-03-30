@@ -36,8 +36,8 @@ class AddEditButton extends HookConsumerWidget {
 
     final loanersLoansMapNotifier = ref.read(loanersLoansMapProvider.notifier);
 
-    final loanerItems =
-        ref.read(loanersItemsMapProvider.select((map) => map[selectedLoaner]));
+    final loanerItems = ref
+        .read(loanersItemsMapProvider.select((map) => map[selectedLoaner.id]));
     final loanItemQuantities = ref.watch(loanItemQuantitiesMapProvider);
     final loanListNotifier = ref.watch(loanListProvider.notifier);
 

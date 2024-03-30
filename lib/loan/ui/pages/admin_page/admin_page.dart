@@ -14,7 +14,7 @@ class AdminPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedLoanerNotifier = ref.watch(selectedLoanerProvider.notifier);
+    final selectedLoanerNotifier = ref.read(selectedLoanerProvider.notifier);
 
     return LoanTemplate(
       child: Refresher(

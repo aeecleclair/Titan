@@ -43,7 +43,7 @@ class HistoryLoan extends HookConsumerWidget {
       group: loanerHistoryLoans,
       notifier: loanersHistoryLoansMapNotifier,
       mapKey: selectedLoaner,
-      listLoader: (loaner) {
+      listLoader: (loaner) async {
         return loanListNotifier.loadHistory(loaner.id);
       },
       dataBuilder: (context, loans) {

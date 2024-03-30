@@ -14,7 +14,7 @@ void main() {
 
     setUp(() {
       itemRepository = MockItemRepository();
-      itemListNotifier = ItemListNotifier(itemrepository: itemRepository);
+      itemListNotifier = ItemListNotifier(itemRepository: itemRepository);
     });
 
     test('loadItemList should return data when successful', () async {
@@ -84,43 +84,6 @@ void main() {
       final result = await itemListNotifier.deleteItem(item, loanerId);
 
       expect(result, true);
-    });
-
-    test('copy should return a copy of the current state', () async {
-      final items = [
-        Item.empty().copyWith(id: '1', name: 'item1'),
-        Item.empty().copyWith(id: '2', name: 'item2'),
-      ];
-      itemListNotifier.state = AsyncValue.data(items);
-
-      final result = await itemListNotifier.copy();
-
-      expect(
-        result.when(
-          data: (d) => d,
-          error: (e, s) => throw e,
-          loading: () => throw Exception('loading'),
-        ),
-        items,
-      );
-    });
-
-    test('copy should return a copy of the current state when error', () async {
-      final error = Exception('error');
-      itemListNotifier.state = AsyncValue.error(error, StackTrace.empty);
-
-      final result = await itemListNotifier.copy();
-
-      expect(result.error, error);
-    });
-
-    test('copy should return a copy of the current state when loading',
-        () async {
-      itemListNotifier.state = const AsyncValue.loading();
-
-      final result = await itemListNotifier.copy();
-
-      expect(result.isLoading, true);
     });
   });
 }

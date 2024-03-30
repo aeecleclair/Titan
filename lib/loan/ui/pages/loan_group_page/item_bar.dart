@@ -28,8 +28,8 @@ class ItemBar extends HookConsumerWidget {
 
     final loan = ref.watch(loanProvider);
 
-    final selectedLoanerItems =
-        ref.watch(loanersItemsMapProvider.select((map) => map[selectedLoaner]));
+    final selectedLoanerItems = ref
+        .watch(loanersItemsMapProvider.select((map) => map[selectedLoaner.id]));
     final loanersItemsMapNotifier = ref.read(loanersItemsMapProvider.notifier);
     final itemListNotifier = ref.watch(itemListProvider.notifier);
     final loanItemQuantities = ref.watch(loanItemQuantitiesMapProvider);
@@ -56,9 +56,9 @@ class ItemBar extends HookConsumerWidget {
           child: AutoLoaderChild(
             group: selectedLoanerItems,
             notifier: loanersItemsMapNotifier,
-            mapKey: selectedLoaner,
-            listLoader: (loaner) {
-              return itemListNotifier.loadItemList(loaner.id);
+            mapKey: selectedLoaner.id,
+            listLoader: (loanerId) {
+              return itemListNotifier.loadItemList(loanerId);
             },
             dataBuilder: (context, items) {
               if (items.isEmpty) {

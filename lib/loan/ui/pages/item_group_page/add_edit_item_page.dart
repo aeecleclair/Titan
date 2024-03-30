@@ -105,7 +105,7 @@ class AddEditItemPage extends HookConsumerWidget {
                               caution: int.parse(caution.text),
                               suggestedLendingDuration:
                                   double.parse(lendingDuration.text),
-                              loanedQuantity: 1,
+                              loanedQuantity: 0,
                               totalQuantity: int.parse(quantity.text),
                             );
                             final isItemProcessed = isEdit
@@ -118,11 +118,10 @@ class AddEditItemPage extends HookConsumerWidget {
                                     selectedLoaner.id,
                                   );
                             if (isItemProcessed) {
-                              QR.back();
                               if (isEdit) {
                                 loanersItemsMapNotifier.updateItemForLoaner(
                                   selectedLoaner,
-                                  item,
+                                  newItem,
                                 );
                                 displayToastWithContext(
                                   TypeMsg.msg,
@@ -131,13 +130,14 @@ class AddEditItemPage extends HookConsumerWidget {
                               } else {
                                 loanersItemsMapNotifier.addItemForLoaner(
                                   selectedLoaner,
-                                  item,
+                                  newItem,
                                 );
                                 displayToastWithContext(
                                   TypeMsg.msg,
                                   LoanTextConstants.addedObject,
                                 );
                               }
+                              QR.back();
                             } else {
                               if (isEdit) {
                                 displayToastWithContext(

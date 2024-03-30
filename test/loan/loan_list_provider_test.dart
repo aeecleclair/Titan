@@ -10,11 +10,11 @@ class MockLoanRepository extends Mock implements LoanRepository {}
 void main() {
   group('LoanListNotifier', () {
     late LoanRepository loanRepository;
-    late LoanListNotifier loanListNotifier;
+    late UserLoanListNotifier loanListNotifier;
 
     setUp(() {
       loanRepository = MockLoanRepository();
-      loanListNotifier = LoanListNotifier(loanrepository: loanRepository);
+      loanListNotifier = UserLoanListNotifier(loanRepository: loanRepository);
     });
 
     test('loadLoanList returns AsyncValue<List<Loan>>', () async {
@@ -24,7 +24,7 @@ void main() {
       ];
       when(() => loanRepository.getMyLoanList()).thenAnswer((_) async => loans);
 
-      final result = await loanListNotifier.loadLoanList();
+      final result = await loanListNotifier.loadMyLoanList();
 
       expect(
         result.when(
