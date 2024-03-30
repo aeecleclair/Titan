@@ -324,7 +324,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                     builder: (context) => AlertDialog(
                       title: const Text(PhonebookTextConstants.newMandate),
                       content: const Text(
-                          PhonebookTextConstants.changeMandateConfirm),
+                          PhonebookTextConstants.changeMandateConfirm,),
                       actions: [
                         TextButton(
                           onPressed: () {

@@ -30,5 +30,5 @@ final userLoanerListProvider =
 final userLoanerList = Provider<List<Loaner>>((ref) {
   final userLoanerListAsync = ref.watch(userLoanerListProvider);
   return userLoanerListAsync.maybeWhen(
-      data: (loans) => loans, orElse: () => []);
+      data: (loans) => loans, orElse: () => [],);
 });
