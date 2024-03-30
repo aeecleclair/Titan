@@ -24,7 +24,7 @@ class AdminPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
+    final associationNotifier = ref.watch(associationProvider.notifier);
     final kindNotifier = ref.watch(associationKindProvider.notifier);
     final associationListNotifier = ref.watch(associationListProvider.notifier);
     final associationList = ref.watch(associationListProvider);

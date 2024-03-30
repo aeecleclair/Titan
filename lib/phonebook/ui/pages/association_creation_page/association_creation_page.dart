@@ -29,7 +29,7 @@ class AssociationCreationPage extends HookConsumerWidget {
     final description = useTextEditingController();
     final associationListNotifier = ref.watch(associationListProvider.notifier);
     final associations = ref.watch(associationListProvider);
-    final associationNotifier = ref.watch(asyncAssociationProvider.notifier);
+    final associationNotifier = ref.watch(associationProvider.notifier);
     final kind = ref.watch(associationKindProvider);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
