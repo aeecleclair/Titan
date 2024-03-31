@@ -12,10 +12,13 @@ class PhList extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final phList = ref.watch(phListProvider);
-    return AsyncChild(
-        value: phList,
-        builder: (context, phList) {
-          return Column(children: phList.map((ph) => PhCard(ph: ph)).toList());
-        });
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: AsyncChild(
+          value: phList,
+          builder: (context, phList) {
+            return Row(children: phList.map((ph) => PhCard(ph: ph)).toList());
+          }),
+    );
   }
 }

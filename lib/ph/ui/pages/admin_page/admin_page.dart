@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/ph/router.dart';
 import 'package:myecl/ph/ui/button.dart';
+import 'package:myecl/ph/ui/pages/admin_page/ph_list.dart';
 import 'package:myecl/ph/ui/pages/ph.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -13,6 +14,8 @@ class AdminPage extends HookConsumerWidget {
     return PhTemplate(
       child: Column(
         children: [
+          const PhList(),
+          const SizedBox(height: 30),
           GestureDetector(
             onTap: () {
               QR.to(PhRouter.root + PhRouter.admin + PhRouter.add_ph);

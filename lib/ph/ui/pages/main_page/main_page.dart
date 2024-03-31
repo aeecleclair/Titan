@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -38,9 +39,14 @@ class PhMainPage extends HookConsumerWidget {
         ),
         const SizedBox(height: 10),
         SizedBox(
-            height: MediaQuery.sizeOf(context).height - 320,
+            height: kIsWeb
+                ? MediaQuery.sizeOf(context).height - 177
+                : MediaQuery.sizeOf(context).height - 320,
+            width: kIsWeb ? 800 : MediaQuery.sizeOf(context).width - 20,
             child: SfPdfViewer.asset('assets/my_document.pdf',
-                pageLayoutMode: PdfPageLayoutMode.single)),
+                pageLayoutMode: kIsWeb
+                    ? PdfPageLayoutMode.continuous
+                    : PdfPageLayoutMode.single)),
       ],
     ));
   }

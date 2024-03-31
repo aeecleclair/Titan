@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/ph/class/ph.dart';
 import 'package:myecl/ph/providers/ph_list_provider.dart';
 import 'package:myecl/ph/providers/ph_pdf_provider.dart';
-import 'package:myecl/ph/providers/ph_pdf_test_provider.dart';
+import 'package:myecl/ph/providers/ph_pdf_sent_provider.dart';
 import 'package:myecl/ph/providers/ph_provider.dart';
 import 'package:myecl/ph/ui/pages/add_ph_page/add_page.dart';
 import 'package:myecl/ph/ui/pages/ph.dart';
@@ -54,13 +54,8 @@ class PhAddEditPhPage extends HookConsumerWidget {
                       height: 20,
                     ),
                     Center(
-                      child: Stack(
-                        clipBehavior: Clip.none,
+                      child: Column(
                         children: [
-                          const PdfPicker(),
-                          const SizedBox(
-                            height: 40,
-                          ),
                           DateEntry(
                               label: "Date",
                               controller: dateController,
@@ -70,6 +65,10 @@ class PhAddEditPhPage extends HookConsumerWidget {
                                   dateController,
                                 );
                               }),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const PdfPicker(),
                         ],
                       ),
                     ),
