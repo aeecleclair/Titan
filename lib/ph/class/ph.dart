@@ -1,4 +1,3 @@
-import 'package:myecl/ph/class/ph_admin.dart';
 import 'package:myecl/tools/functions.dart';
 
 class Ph {
@@ -12,28 +11,31 @@ class Ph {
   late final String name;
 
   Ph.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     date = processDateFromAPIWithoutHour(json['release_date']);
     name = json['name'];
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
+    data['id'] = id;
     data['release_date'] = processDateToAPIWithoutHour(date);
     data['name'] = name;
     return data;
   }
 
-  Ph copyWith({String? id, PhAdmin? phAdmin, String? title}) {
+  Ph copyWith({id, date, name}) {
     return Ph(id: id, date: date, name: name);
   }
 
   Ph.empty() {
+    id = '';
     date = DateTime.now();
     name = '';
   }
 
   @override
   String toString() {
-    return 'Ph(date: $date, name : $name)';
+    return 'Ph{phId : $id, date: $date, name : $name}';
   }
 }

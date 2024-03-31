@@ -4,6 +4,8 @@ import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
+import 'package:myecl/ph/ui/pages/form_page/add_edit_ph_page.dart'
+    deferred as add_edit_ph_page;
 import 'package:myecl/ph/ui/pages/past_ph_page/past_ph_page.dart';
 import 'package:myecl/ph/ui/pages/past_ph_selection_page/past_ph_selection_page.dart';
 import 'package:myecl/tools/middlewares/deferred_middleware.dart';
@@ -19,6 +21,7 @@ class PhRouter {
   static const String past_ph_selection = '/past_ph_selection';
   static const String past_ph = '/past_ph';
   static const String admin = '/admin';
+  static const String add_ph = '/add_ph';
   static final Module module = Module(
       name: "Ph",
       icon: const Left(HeroIcons.documentText),
@@ -49,6 +52,14 @@ class PhRouter {
                 builder: () => admin_page.AdminPage(),
                 middleware: [
                   DeferredLoadingMiddleware(admin_page.loadLibrary)
+                ],
+                children: [
+                  QRoute(
+                      path: add_ph,
+                      builder: () => add_edit_ph_page.PhAddEditPhPage(),
+                      middleware: [
+                        DeferredLoadingMiddleware(add_edit_ph_page.loadLibrary)
+                      ])
                 ]),
           ]);
 }
