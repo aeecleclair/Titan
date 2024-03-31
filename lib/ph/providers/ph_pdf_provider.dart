@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
@@ -15,9 +18,16 @@ class PhPdfNotifier extends SingleNotifier<SfPdfViewer> {
   }
 
   Future<SfPdfViewer> getPhPdf(String id) async {
-    final pdf = await phPdfRepository.getPhPdf(id);
-    phPdfsNotifier.setTData(id, AsyncData([pdf]));
-    return pdf;
+    final image = await phPdfRepository.getPhPdf(id);
+    phPdfsNotifier.setTData(id, AsyncData([image]));
+    return image;
+  }
+
+  Future<SfPdfViewer> updatePhPdf(String id, Uint8List bytes) async {
+    phPdfsNotifier.setTData(id, const AsyncLoading());
+    final image = await phPdfRepository.addPhPdf(bytes, id);
+    phPdfsNotifier.setTData(id, AsyncData([image]));
+    return image;
   }
 }
 
