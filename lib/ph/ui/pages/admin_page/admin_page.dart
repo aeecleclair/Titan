@@ -11,13 +11,17 @@ class AdminPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return PhTemplate(
-      child: GestureDetector(
-        onTap: () {
-          QR.to(PhRouter.root + PhRouter.admin + PhRouter.add_ph);
-        },
-        child: const MyButton(
-          text: "Add Ph",
-        ),
+      child: Column(
+        children: [
+          GestureDetector(
+            onTap: () {
+              QR.to(PhRouter.root + PhRouter.admin + PhRouter.add_ph);
+            },
+            child: const MyButton(
+              text: "Add Ph",
+            ),
+          ),
+        ],
       ),
     );
   }

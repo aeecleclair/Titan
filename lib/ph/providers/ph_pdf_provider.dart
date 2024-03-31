@@ -25,9 +25,9 @@ class PhPdfNotifier extends SingleNotifier<SfPdfViewer> {
 
   Future<SfPdfViewer> updatePhPdf(String id, Uint8List bytes) async {
     phPdfsNotifier.setTData(id, const AsyncLoading());
-    final image = await phPdfRepository.addPhPdf(bytes, id);
-    phPdfsNotifier.setTData(id, AsyncData([image]));
-    return image;
+    final pdf = await phPdfRepository.addPhPdf(bytes, id);
+    phPdfsNotifier.setTData(id, AsyncData([pdf]));
+    return pdf;
   }
 }
 

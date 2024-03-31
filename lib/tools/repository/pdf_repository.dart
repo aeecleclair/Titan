@@ -68,7 +68,7 @@ abstract class PdfRepository extends Repository {
         http.MultipartRequest('POST', Uri.parse("$host$ext$id$suffix"))
           ..headers.addAll(headers)
           ..files.add(http.MultipartFile.fromBytes('pdf', bytes,
-              filename: 'pdf', contentType: MediaType('pdf', 'pdf')));
+              filename: 'pdf', contentType: MediaType('application', 'pdf')));
     final response = await request.send();
     response.stream.transform(utf8.decoder).listen((value) async {
       if (response.statusCode == 201) {
