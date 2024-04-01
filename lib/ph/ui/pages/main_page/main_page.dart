@@ -16,7 +16,6 @@ class PhMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final phList = ref.watch(phListProvider);
     final isAdmin = ref.watch(isPhAdminProvider);
     return PhTemplate(
         child: Column(

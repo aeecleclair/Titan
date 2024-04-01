@@ -34,7 +34,7 @@ class PhCard extends StatelessWidget {
                       style: TextStyle(fontWeight: FontWeight.bold),
                       textAlign: TextAlign.left,
                     ),
-                    Text(shortenText(ph.name, 38)),
+                    Text(shortenText(ph.name, 28)),
                   ],
                 ),
                 Row(
