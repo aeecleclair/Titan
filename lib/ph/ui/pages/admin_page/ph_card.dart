@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/ph/class/ph.dart';
 import 'package:myecl/ph/tools/functions.dart';
@@ -6,12 +7,13 @@ import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 
 class PhCard extends StatelessWidget {
-  final VoidCallback onEdit;
+  final VoidCallback onEdit, onDelete;
   final Ph ph;
   const PhCard({
     super.key,
     required this.ph,
     required this.onEdit,
+    required this.onDelete,
   });
 
   @override
@@ -58,6 +60,17 @@ class PhCard extends StatelessWidget {
                 shadowColor: Colors.grey.shade300.withOpacity(0.2),
                 child: const HeroIcon(HeroIcons.pencil, color: Colors.black),
               ),
+            ),
+            const SizedBox(width: 20),
+            GestureDetector(
+              onTap: onDelete,
+              child: CardButton(
+                  colors: const [
+                    Color(0xFF9E131F),
+                    Color(0xFF590512),
+                  ],
+                  shadowColor: const Color(0xFF590512).withOpacity(0.2),
+                  child: const HeroIcon(HeroIcons.trash, color: Colors.white)),
             ),
           ],
         ),

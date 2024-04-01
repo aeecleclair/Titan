@@ -19,6 +19,10 @@ class PhRepository extends Repository {
   Future<bool> editPh(Ph ph) async {
     return await update(ph.toJson(), ph.id);
   }
+
+  Future<bool> deletePh(String id) async {
+    return await delete(id);
+  }
 }
 
 final phRepositoryProvider = Provider<PhRepository>((ref) {

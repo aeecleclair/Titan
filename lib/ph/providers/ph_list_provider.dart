@@ -23,6 +23,11 @@ class PhListNotifier extends ListNotifier<Ph> {
     return await update(_phRepository.editPh,
         (phs, ph) => phs..[phs.indexWhere((b) => b.id == ph.id)] = ph, ph);
   }
+
+  Future<bool> deletePh(Ph ph) async {
+    return await delete(_phRepository.deletePh,
+        (phs, ph) => phs..removeWhere((b) => b.id == ph.id), ph.id, ph);
+  }
 }
 
 final phListProvider =
