@@ -18,6 +18,11 @@ class PhListNotifier extends ListNotifier<Ph> {
   Future<bool> addPh(Ph ph) async {
     return await add(_phRepository.addPh, ph);
   }
+
+  Future<bool> editPh(Ph ph) async {
+    return await update(_phRepository.editPh,
+        (phs, ph) => phs..[phs.indexWhere((b) => b.id == ph.id)] = ph, ph);
+  }
 }
 
 final phListProvider =

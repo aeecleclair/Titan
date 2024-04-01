@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/ph/providers/is_ph_admin_provider.dart';
+import 'package:myecl/ph/providers/ph_list_provider.dart';
 import 'package:myecl/ph/router.dart';
 import 'package:myecl/ph/ui/button.dart';
 import 'package:myecl/ph/ui/pages/ph.dart';
@@ -15,6 +16,7 @@ class PhMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final phList = ref.watch(phListProvider);
     final isAdmin = ref.watch(isPhAdminProvider);
     return PhTemplate(
         child: Column(
@@ -40,8 +42,10 @@ class PhMainPage extends HookConsumerWidget {
         const SizedBox(height: 10),
         SizedBox(
             height: kIsWeb
-                ? MediaQuery.sizeOf(context).height - 177
-                : MediaQuery.sizeOf(context).height - 320,
+                ? isAdmin
+                    ? MediaQuery.sizeOf(context).height - 177
+                    : MediaQuery.sizeOf(context).height - 132
+                : MediaQuery.sizeOf(context).height - 340,
             width: kIsWeb ? 800 : MediaQuery.sizeOf(context).width - 20,
             child: SfPdfViewer.asset('assets/my_document.pdf',
                 pageLayoutMode: kIsWeb

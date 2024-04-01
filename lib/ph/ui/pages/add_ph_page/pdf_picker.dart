@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/ph/providers/ph_pdf_sent_provider.dart';
+import 'package:myecl/ph/providers/ph_send_pdf_provider.dart';
 import 'package:myecl/ph/ui/button.dart';
 
 class PdfPicker extends HookConsumerWidget {
-  const PdfPicker({super.key});
+  final bool isEdit;
+  const PdfPicker({super.key, required this.isEdit});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final testNotifier = ref.watch(phTestProvider.notifier);
+    final testNotifier = ref.watch(phSendPdfProvider.notifier);
     final result = useState<FilePickerResult?>(null);
     return SizedBox(
       height: 40,
@@ -27,8 +28,8 @@ class PdfPicker extends HookConsumerWidget {
               testNotifier.set(result.value!.files.single.bytes!);
             }
           },
-          child: const MyButton(
-            text: "Ajouter un fichier PDF",
+          child: MyButton(
+            text: isEdit ? "Modifier le fichier" : "Ajouter un fichier PDF",
           )),
     );
   }

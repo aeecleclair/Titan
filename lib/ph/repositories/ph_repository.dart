@@ -15,6 +15,10 @@ class PhRepository extends Repository {
   Future<Ph> addPh(Ph ph) async {
     return Ph.fromJson(await create(ph.toJson(), suffix: ''));
   }
+
+  Future<bool> editPh(Ph ph) async {
+    return await update(ph.toJson(), ph.id);
+  }
 }
 
 final phRepositoryProvider = Provider<PhRepository>((ref) {
