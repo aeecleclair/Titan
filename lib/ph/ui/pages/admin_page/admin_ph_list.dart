@@ -3,13 +3,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/ph/providers/ph_list_provider.dart';
 import 'package:myecl/ph/providers/ph_provider.dart';
 import 'package:myecl/ph/router.dart';
-import 'package:myecl/ph/ui/pages/admin_page/ph_card.dart';
+import 'package:myecl/ph/ui/pages/admin_page/admin_ph_card.dart';
+import 'package:myecl/ph/ui/pages/ph.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class PhList extends HookConsumerWidget {
-  const PhList({
+class AdminPhList extends HookConsumerWidget {
+  const AdminPhList({
     super.key,
   });
 
@@ -17,13 +19,13 @@ class PhList extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final phNotifier = ref.watch(phProvider.notifier);
     final phList = ref.watch(phListProvider);
-    final phListNotifier = ref.read(phListProvider.notifier);
+    final phListNotifier = ref.watch(phListProvider.notifier);
     return AsyncChild(
         value: phList,
         builder: (context, phList) {
           return Column(
               children: phList
-                  .map((ph) => PhCard(
+                  .map((ph) => AdminPhCard(
                         ph: ph,
                         onEdit: () {
                           QR.to(
