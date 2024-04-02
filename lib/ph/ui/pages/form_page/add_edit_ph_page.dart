@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -64,9 +62,10 @@ class PhAddEditPhPage extends HookConsumerWidget {
                             label: "Date",
                             controller: dateController,
                             onTap: () {
-                              getOnlyDayDate(context, dateController,
-                                  initialDate: DateTime(2000),
-                                  lastDate: DateTime(2050));
+                              getOnlyDayDate(
+                                context,
+                                dateController,
+                              );
                             }),
                         const SizedBox(
                           height: 20,
@@ -96,7 +95,7 @@ class PhAddEditPhPage extends HookConsumerWidget {
                             await tokenExpireWrapper(ref, () async {
                               final phList = ref.watch(phListProvider);
                               Ph newPh = Ph(
-                                  id: '',
+                                  id: isEdit ? ph.id : '',
                                   date: DateTime.parse(
                                       processDateBack(dateController.text)),
                                   name: name.text);
