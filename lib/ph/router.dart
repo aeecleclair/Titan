@@ -6,7 +6,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/ph/ui/pages/form_page/add_edit_ph_page.dart'
     deferred as add_edit_ph_page;
-import 'package:myecl/ph/ui/pages/past_ph_page/past_ph_page.dart';
+import 'package:myecl/ph/ui/pages/view_ph/view_ph.dart';
 import 'package:myecl/ph/ui/pages/past_ph_selection_page/past_ph_selection_page.dart';
 import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -14,12 +14,14 @@ import 'package:myecl/ph/ui/pages/main_page/main_page.dart'
     deferred as main_page;
 import 'package:myecl/ph/ui/pages/admin_page/admin_page.dart'
     deferred as admin_page;
+import 'package:myecl/ph/ui/pages/view_ph/view_ph.dart'
+    deferred as view_ph_page;
 
 class PhRouter {
   final ProviderRef ref;
   static const String root = '/ph';
   static const String past_ph_selection = '/past_ph_selection';
-  static const String past_ph = '/past_ph';
+  static const String view_ph = '/view_ph';
   static const String admin = '/admin';
   static const String add_ph = '/add_ph';
   static final Module module = Module(
@@ -41,10 +43,10 @@ class PhRouter {
                 builder: () => const PastPhSelectionPage(),
                 children: [
                   QRoute(
-                      path: past_ph,
-                      builder: () => const PastPhPage(),
+                      path: view_ph,
+                      builder: () => const ViewPhPage(),
                       middleware: [
-                        DeferredLoadingMiddleware(admin_page.loadLibrary)
+                        DeferredLoadingMiddleware(view_ph_page.loadLibrary)
                       ]),
                 ]),
             QRoute(

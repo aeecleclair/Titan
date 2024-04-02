@@ -7,7 +7,7 @@ import 'package:myecl/ph/router.dart';
 import 'package:myecl/ph/ui/button.dart';
 import 'package:myecl/ph/ui/pages/ph.dart';
 import 'package:myecl/tools/ui/widgets/admin_button.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:pdfx/pdfx.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class PhMainPage extends HookConsumerWidget {
@@ -15,6 +15,8 @@ class PhMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final pdfController = PdfController(
+        document: PdfDocument.openAsset('assets/my_document.pdf'));
     final isAdmin = ref.watch(isPhAdminProvider);
     return PhTemplate(
         child: Column(
@@ -38,17 +40,7 @@ class PhMainPage extends HookConsumerWidget {
           ),
         ),
         const SizedBox(height: 10),
-        SizedBox(
-            height: kIsWeb
-                ? isAdmin
-                    ? MediaQuery.sizeOf(context).height - 177
-                    : MediaQuery.sizeOf(context).height - 132
-                : MediaQuery.sizeOf(context).height - 340,
-            width: kIsWeb ? 800 : MediaQuery.sizeOf(context).width - 20,
-            child: SfPdfViewer.asset('assets/my_document.pdf',
-                pageLayoutMode: kIsWeb
-                    ? PdfPageLayoutMode.continuous
-                    : PdfPageLayoutMode.single)),
+        PdfView(controller: pdfController)
       ],
     ));
   }

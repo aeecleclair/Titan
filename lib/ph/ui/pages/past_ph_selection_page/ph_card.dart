@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:myecl/ph/class/ph.dart';
 import 'package:myecl/ph/tools/functions.dart';
+import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 
 class PhCard extends StatelessWidget {
   final Ph ph;
+  final VoidCallback onView;
   const PhCard({
     super.key,
     required this.ph,
+    required this.onView,
   });
 
   @override
@@ -42,6 +46,18 @@ class PhCard extends StatelessWidget {
                   ],
                 ),
               ],
+            ),
+            const Spacer(),
+            GestureDetector(
+              onTap: onView,
+              child: CardButton(
+                colors: [
+                  Colors.grey.shade100,
+                  Colors.grey.shade400,
+                ],
+                shadowColor: Colors.grey.shade300.withOpacity(0.2),
+                child: const HeroIcon(HeroIcons.eye, color: Colors.black),
+              ),
             ),
           ],
         ),

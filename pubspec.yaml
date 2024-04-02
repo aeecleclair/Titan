@@ -56,14 +56,14 @@ dependencies:
   timezone: ^0.9.0
   tuple: ^2.0.0
   universal_html: ^2.0.8
-  url_launcher: ^6.1.7
   vector_math: ^2.1.2
   zxcvbn: ^1.0.0
-  flutter_pdfview: ^1.2.5
-  pdf_render: ^1.4.6
-  pdfrx: ^1.0.50
-  syncfusion_flutter_pdfviewer: ^23.2.7
   file_picker: ^8.0.0+1
+  url_launcher: ^6.2.5
+  pdfx: ^2.6.0
+  syncfusion_flutter_pdfviewer: ^23.2.7
+  
+  
 
 dev_dependencies:
   dependency_validator: ^3.2.2

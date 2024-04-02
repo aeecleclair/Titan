@@ -89,7 +89,7 @@ class PhAddEditPhPage extends HookConsumerWidget {
                           if (key.currentState == null) {
                             return;
                           }
-                          if (key.currentState!.validate() &&
+                          if (true &&
                               (!listEquals(phSendPdf, Uint8List(0)) ||
                                   isEdit)) {
                             await tokenExpireWrapper(ref, () async {
