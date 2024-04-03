@@ -1,4 +1,4 @@
-package com.example.myecl
+package fr.myecl.titan
 
 import io.flutter.embedding.android.FlutterActivity
 

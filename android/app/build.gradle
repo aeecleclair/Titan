@@ -35,7 +35,7 @@ def keystoreProperties = new Properties()
 android {
     compileSdkVersion 34
     ndkVersion "25.1.8937393"
-    namespace 'com.example.myecl'
+    namespace 'fr.myecl.titan'
 
     compileOptions {
         coreLibraryDesugaringEnabled true
