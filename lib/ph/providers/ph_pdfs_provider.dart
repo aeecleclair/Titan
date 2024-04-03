@@ -1,13 +1,14 @@
+import 'dart:typed_data';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/tools/providers/map_provider.dart';
-import 'package:pdfx/pdfx.dart';
 
-class PhPdfsNotifier extends MapNotifier<String, PdfView> {
+class PhPdfsNotifier extends MapNotifier<String, Uint8List> {
   PhPdfsNotifier() : super();
 }
 
 final phPdfsProvider = StateNotifierProvider<PhPdfsNotifier,
-    Map<String, AsyncValue<List<PdfView>>?>>((ref) {
-  PhPdfsNotifier phPdfsNotifier = PhPdfsNotifier();
+    Map<String, AsyncValue<List<Uint8List>>?>>((ref) {
+  final phPdfsNotifier = PhPdfsNotifier();
   return phPdfsNotifier;
 });

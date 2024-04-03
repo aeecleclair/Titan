@@ -7,7 +7,7 @@ import 'package:myecl/ph/repositories/ph_pdf_repository.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
 import 'package:pdfx/pdfx.dart';
 
-class PhPdfNotifier extends SingleNotifier<PdfView> {
+class PhPdfNotifier extends SingleNotifier<Uint8List> {
   final phPdfRepository = PhPdfRepository();
   final PhPdfsNotifier phPdfsNotifier;
   PhPdfNotifier({required String token, required this.phPdfsNotifier})
@@ -15,13 +15,13 @@ class PhPdfNotifier extends SingleNotifier<PdfView> {
     phPdfRepository.setToken(token);
   }
 
-  Future<PdfView> loadPhPdf(String id) async {
+  Future<Uint8List> loadPhPdf(String id) async {
     final pdf = await phPdfRepository.getPhPdf(id);
     phPdfsNotifier.setTData(id, AsyncData([pdf]));
     return pdf;
   }
 
-  Future<PdfView> updatePhPdf(String id, Uint8List bytes) async {
+  Future<Uint8List> updatePhPdf(String id, Uint8List bytes) async {
     phPdfsNotifier.setTData(id, const AsyncLoading());
     final pdf = await phPdfRepository.updatePhPdf(bytes, id);
     phPdfsNotifier.setTData(id, AsyncData([pdf]));
@@ -30,7 +30,7 @@ class PhPdfNotifier extends SingleNotifier<PdfView> {
 }
 
 final phPdfProvider =
-    StateNotifierProvider<PhPdfNotifier, AsyncValue<PdfView>>((ref) {
+    StateNotifierProvider<PhPdfNotifier, AsyncValue<Uint8List>>((ref) {
   final token = ref.watch(tokenProvider);
   final phPdfsNotifier = ref.watch(phPdfsProvider.notifier);
   return PhPdfNotifier(token: token, phPdfsNotifier: phPdfsNotifier);

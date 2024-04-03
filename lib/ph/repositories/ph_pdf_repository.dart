@@ -1,26 +1,19 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:myecl/tools/repository/pdf_repository.dart';
-import 'package:pdfx/pdfx.dart';
 
 class PhPdfRepository extends PdfRepository {
   @override
   // ignore: overridden_fields
   final ext = "ph/";
 
-  Future<PdfView> getPhPdf(String id) async {
+  Future<Uint8List> getPhPdf(String id) async {
     final uint8List = await getPdf("", suffix: "$id/pdf");
-    final pdfController =
-        PdfController(document: PdfDocument.openData(uint8List));
-
-    return PdfView(controller: pdfController);
+    return uint8List;
   }
 
-  Future<PdfView> updatePhPdf(Uint8List bytes, String id) async {
+  Future<Uint8List> updatePhPdf(Uint8List bytes, String id) async {
     final uint8List = await addPdf(bytes, "", suffix: "$id/pdf");
-    final pdfController =
-        PdfController(document: PdfDocument.openData(uint8List));
-
-    return PdfView(controller: pdfController);
+    return uint8List;
   }
 }

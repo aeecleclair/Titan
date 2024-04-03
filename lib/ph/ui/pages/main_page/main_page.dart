@@ -1,11 +1,15 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/ph/providers/is_ph_admin_provider.dart';
+import 'package:myecl/ph/providers/ph_list_provider.dart';
+import 'package:myecl/ph/providers/ph_pdf_provider.dart';
+import 'package:myecl/ph/providers/ph_pdfs_provider.dart';
 import 'package:myecl/ph/router.dart';
 import 'package:myecl/ph/ui/button.dart';
 import 'package:myecl/ph/ui/pages/ph.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:myecl/tools/ui/widgets/admin_button.dart';
 import 'package:pdfx/pdfx.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -15,9 +19,9 @@ class PhMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pdfController = PdfController(
-        document: PdfDocument.openAsset('assets/my_document.pdf'));
     final isAdmin = ref.watch(isPhAdminProvider);
+    final phList = ref.watch(phListProvider);
+    final phPdfNotifier = ref.watch(phPdfProvider.notifier);
     return PhTemplate(
         child: Column(
       children: [
@@ -40,7 +44,26 @@ class PhMainPage extends HookConsumerWidget {
           ),
         ),
         const SizedBox(height: 10),
-        PdfView(controller: pdfController)
+        AsyncChild(
+            value: phList,
+            builder: (context, phs) {
+              phs.sort((b, a) => a.date.compareTo(b.date));
+              final id = phs.last.id;
+              final lastPdf =
+                  ref.watch(phPdfsProvider.select((map) => map[id]));
+              final pdfNotifier = ref.read(phPdfsProvider.notifier);
+              return SizedBox(
+                height: MediaQuery.of(context).size.height - 259,
+                child: AutoLoaderChild(
+                    group: lastPdf,
+                    notifier: pdfNotifier,
+                    mapKey: id,
+                    loader: (id) => phPdfNotifier.loadPhPdf(id),
+                    dataBuilder: (context, pdf) => PdfView(
+                        controller: PdfController(
+                            document: PdfDocument.openData(pdf.last)))),
+              );
+            })
       ],
     ));
   }

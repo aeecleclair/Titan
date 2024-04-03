@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/ph/providers/ph_list_provider.dart';
+import 'package:myecl/ph/providers/ph_pdf_provider.dart';
+import 'package:myecl/ph/providers/ph_pdfs_provider.dart';
+import 'package:myecl/ph/providers/ph_provider.dart';
 import 'package:myecl/ph/ui/pages/ph.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:pdfx/pdfx.dart';
 
 class ViewPhPage extends HookConsumerWidget {
@@ -9,18 +15,34 @@ class ViewPhPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const PhTemplate(child: Pdf());
-  }
-}
-
-class Pdf extends StatelessWidget {
-  const Pdf({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final pdfController = PdfController(
-        document: PdfDocument.openAsset('assets/my_document.pdf'));
-    return RotatedBox(
-        quarterTurns: 3, child: PdfView(controller: pdfController));
+    final ph = ref.watch(phProvider);
+    final id = ph.id;
+    final phList = ref.watch(phListProvider);
+    final phPdfNotifier = ref.watch(phPdfProvider.notifier);
+    return PhTemplate(
+      child: Column(
+        children: [
+          const SizedBox(height: 10),
+          AsyncChild(
+              value: phList,
+              builder: (context, phs) {
+                final choosenPdf =
+                    ref.watch(phPdfsProvider.select((map) => map[id]));
+                final pdfNotifier = ref.read(phPdfsProvider.notifier);
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height - 259,
+                  child: AutoLoaderChild(
+                      group: choosenPdf,
+                      notifier: pdfNotifier,
+                      mapKey: id,
+                      loader: (id) => phPdfNotifier.loadPhPdf(id),
+                      dataBuilder: (context, pdf) => PdfView(
+                          controller: PdfController(
+                              document: PdfDocument.openData(pdf.last)))),
+                );
+              })
+        ],
+      ),
+    );
   }
 }

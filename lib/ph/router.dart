@@ -6,7 +6,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/ph/ui/pages/form_page/add_edit_ph_page.dart'
     deferred as add_edit_ph_page;
-import 'package:myecl/ph/ui/pages/view_ph/view_ph.dart';
 import 'package:myecl/ph/ui/pages/past_ph_selection_page/past_ph_selection_page.dart';
 import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -44,7 +43,7 @@ class PhRouter {
                 children: [
                   QRoute(
                       path: view_ph,
-                      builder: () => const ViewPhPage(),
+                      builder: () => view_ph_page.ViewPhPage(),
                       middleware: [
                         DeferredLoadingMiddleware(view_ph_page.loadLibrary)
                       ]),

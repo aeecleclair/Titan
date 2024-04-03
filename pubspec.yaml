@@ -61,7 +61,6 @@ dependencies:
   file_picker: ^8.0.0+1
   url_launcher: ^6.2.5
   pdfx: ^2.6.0
-  syncfusion_flutter_pdfviewer: ^23.2.7
   
   
 
