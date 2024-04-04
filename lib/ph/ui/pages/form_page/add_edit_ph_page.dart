@@ -8,7 +8,7 @@ import 'package:myecl/ph/providers/ph_pdf_provider.dart';
 import 'package:myecl/ph/providers/ph_send_pdf_provider.dart';
 import 'package:myecl/ph/providers/ph_provider.dart';
 import 'package:myecl/ph/tools/functions.dart';
-import 'package:myecl/ph/ui/pages/add_ph_page/pdf_picker.dart';
+import 'package:myecl/ph/ui/pages/file_picker/pdf_picker.dart';
 import 'package:myecl/ph/ui/pages/ph.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';

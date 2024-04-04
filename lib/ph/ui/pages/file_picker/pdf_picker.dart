@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -12,20 +15,27 @@ class PdfPicker extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final testNotifier = ref.watch(phSendPdfProvider.notifier);
+    final phSendPdfNotifier = ref.watch(phSendPdfProvider.notifier);
     final result = useState<FilePickerResult?>(null);
     return SizedBox(
       height: 40,
       child: GestureDetector(
           onTap: () async {
             result.value = await FilePicker.platform.pickFiles(
+              allowMultiple: false,
               type: FileType.custom,
               allowedExtensions: ['pdf'],
             );
-            if (result.value == null) {
-              print("No file selected");
-            } else {
-              testNotifier.set(result.value!.files.single.bytes!);
+            if (result.value != null) {
+              final Uint8List bytes;
+              if (result.value!.files.single.bytes != null) {
+                bytes = result.value!.files.single.bytes!;
+              } else {
+                //Text(result.value!.files.first.name);
+                bytes =
+                    await File(result.value!.files.first.path!).readAsBytes();
+              }
+              phSendPdfNotifier.set(bytes);
             }
           },
           child: MyButton(

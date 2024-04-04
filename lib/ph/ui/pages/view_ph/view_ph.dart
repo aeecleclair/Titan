@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -30,13 +31,16 @@ class ViewPhPage extends HookConsumerWidget {
                     ref.watch(phPdfsProvider.select((map) => map[id]));
                 final pdfNotifier = ref.read(phPdfsProvider.notifier);
                 return SizedBox(
-                  height: MediaQuery.of(context).size.height - 259,
+                  height: MediaQuery.of(context).size.height - 82,
                   child: AutoLoaderChild(
                       group: choosenPdf,
                       notifier: pdfNotifier,
                       mapKey: id,
                       loader: (id) => phPdfNotifier.loadPhPdf(id),
                       dataBuilder: (context, pdf) => PdfView(
+                          pageSnapping: false,
+                          scrollDirection:
+                              kIsWeb ? Axis.vertical : Axis.horizontal,
                           controller: PdfController(
                               document: PdfDocument.openData(pdf.last)))),
                 );

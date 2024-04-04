@@ -5,7 +5,6 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/ph/providers/ph_pdfs_provider.dart';
 import 'package:myecl/ph/repositories/ph_pdf_repository.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:pdfx/pdfx.dart';
 
 class PhPdfNotifier extends SingleNotifier<Uint8List> {
   final phPdfRepository = PhPdfRepository();

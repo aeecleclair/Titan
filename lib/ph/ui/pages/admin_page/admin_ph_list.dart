@@ -36,7 +36,7 @@ class AdminPhList extends HookConsumerWidget {
                             builder: (context) {
                               return CustomDialogBox(
                                 title: "Delete",
-                                descriptions: "Ddelete",
+                                descriptions: "Delete",
                                 onYes: () {
                                   phListNotifier.deletePh(ph);
                                 },

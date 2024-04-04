@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/ph/class/ph.dart';
 import 'package:myecl/ph/providers/is_ph_admin_provider.dart';
 import 'package:myecl/ph/providers/ph_list_provider.dart';
 import 'package:myecl/ph/providers/ph_pdf_provider.dart';
@@ -51,18 +53,26 @@ class PhMainPage extends HookConsumerWidget {
               final id = phs.last.id;
               final lastPdf =
                   ref.watch(phPdfsProvider.select((map) => map[id]));
-              final pdfNotifier = ref.read(phPdfsProvider.notifier);
-              return SizedBox(
-                height: MediaQuery.of(context).size.height - 259,
-                child: AutoLoaderChild(
-                    group: lastPdf,
-                    notifier: pdfNotifier,
-                    mapKey: id,
-                    loader: (id) => phPdfNotifier.loadPhPdf(id),
-                    dataBuilder: (context, pdf) => PdfView(
-                        controller: PdfController(
-                            document: PdfDocument.openData(pdf.last)))),
-              );
+              final pdfsNotifier = ref.read(phPdfsProvider.notifier);
+              if (id != Ph.empty().id) {
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height - 259,
+                  child: AutoLoaderChild(
+                      group: lastPdf,
+                      notifier: pdfsNotifier,
+                      mapKey: id,
+                      loader: (id) => phPdfNotifier.loadPhPdf(id),
+                      dataBuilder: (context, pdf) => PdfView(
+                            pageSnapping: false,
+                            controller: PdfController(
+                                document: PdfDocument.openData(pdf.last)),
+                            scrollDirection:
+                                kIsWeb ? Axis.vertical : Axis.horizontal,
+                          )),
+                );
+              } else {
+                return const Text("Pas encore de Ph dans la base de donnée");
+              }
             })
       ],
     ));
