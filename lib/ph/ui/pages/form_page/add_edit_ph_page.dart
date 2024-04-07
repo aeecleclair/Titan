@@ -62,10 +62,9 @@ class PhAddEditPhPage extends HookConsumerWidget {
                             label: "Date",
                             controller: dateController,
                             onTap: () {
-                              getOnlyDayDate(
-                                context,
-                                dateController,
-                              );
+                              getOnlyDayDate(context, dateController,
+                                  firstDate: DateTime.utc(1990),
+                                  lastDate: DateTime.now());
                             }),
                         const SizedBox(
                           height: 20,

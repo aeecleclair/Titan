@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/ph/ui/components/year_bar.dart';
 import 'package:myecl/ph/ui/pages/past_ph_selection_page/ph_list.dart';
 import 'package:myecl/ph/ui/pages/ph.dart';
 
@@ -12,7 +13,12 @@ class PastPhSelectionPage extends StatelessWidget {
         children: [
           SizedBox(
               height: MediaQuery.sizeOf(context).height - 224,
-              child: const SingleChildScrollView(child: PhList())),
+              child: const Column(
+                children: [
+                  YearBar(),
+                  SingleChildScrollView(child: PhList()),
+                ],
+              )),
         ],
       ),
     );

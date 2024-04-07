@@ -33,26 +33,11 @@ class PhCard extends HookConsumerWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    const Text(
-                      "Nom : ",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.left,
-                    ),
-                    Text(shortenText(ph.name, 28)),
-                  ],
+                Text(
+                  shortenText(ph.name, 28),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Row(
-                  children: [
-                    const Text(
-                      "Date de publication : ",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.left,
-                    ),
-                    Text(phFormatDate(ph.date)),
-                  ],
-                ),
+                Text(phFormatDate(ph.date)),
               ],
             ),
             const Spacer(),
