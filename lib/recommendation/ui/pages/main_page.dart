@@ -6,61 +6,70 @@ import 'package:myecl/recommendation/providers/is_recommendation_admin_provider.
 import 'package:myecl/recommendation/providers/recommendation_list_provider.dart';
 import 'package:myecl/recommendation/providers/recommendation_provider.dart';
 import 'package:myecl/recommendation/router.dart';
-import 'package:myecl/recommendation/ui/widgets/recommendation_card.dart';
 import 'package:myecl/recommendation/ui/widgets/recommendation_card_layout.dart';
+import 'package:myecl/recommendation/ui/widgets/recommendation_card_list.dart';
 import 'package:myecl/recommendation/ui/widgets/recommendation_template.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/recommendation/ui/widgets/shimmer.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+
+const _shimmerGradient = LinearGradient(
+  colors: [
+    Color(0xFFEBEBF4),
+    Color(0xFFF4F4F4),
+    Color(0xFFEBEBF4),
+  ],
+  stops: [
+    0.1,
+    0.3,
+    0.4,
+  ],
+  begin: Alignment(-1.0, -0.3),
+  end: Alignment(1.0, 0.3),
+  tileMode: TileMode.clamp,
+);
 
 class RecommendationMainPage extends HookConsumerWidget {
   const RecommendationMainPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isRecommendationAdmin = ref.watch(isRecommendationAdminProvider);
     final recommendationNotifier = ref.watch(recommendationProvider.notifier);
     final recommendationList = ref.watch(recommendationListProvider);
-    final recommendationListNotifier =
-        ref.watch(recommendationListProvider.notifier);
+    final shimmerRecommendation =
+        List.generate(10, (index) => Recommendation.empty());
 
     return RecommendationTemplate(
-      child: Refresher(
-        onRefresh: () async {
-          await recommendationListNotifier.loadRecommendation();
+      child: recommendationList.when(
+        data: (data) {
+          final recommendations = data
+            ..sort((a, b) => b.creation!.compareTo(a.creation!));
+          return RecommendationCardList(
+            plusButtonOnTap: () {
+              recommendationNotifier.setRecommendation(Recommendation.empty());
+              QR.to(
+                RecommendationRouter.root + RecommendationRouter.addEdit,
+              );
+            },
+            recommendations: recommendations,
+            isLoading: false,
+          );
         },
-        child: AsyncChild(
-          value: recommendationList,
-          builder: (context, data) => Column(
-            children: [
-              const SizedBox(height: 30),
-              if (isRecommendationAdmin)
-                GestureDetector(
-                  onTap: () {
-                    recommendationNotifier
-                        .setRecommendation(Recommendation.empty());
-                    QR.to(
-                      RecommendationRouter.root + RecommendationRouter.addEdit,
-                    );
-                  },
-                  child: const RecommendationCardLayout(
-                    child: Center(
-                      child: HeroIcon(
-                        HeroIcons.plus,
-                        size: 50,
-                      ),
-                    ),
-                  ),
-                ),
-              ...(data..sort((a, b) => b.creation!.compareTo(a.creation!))).map(
-                (e) => RecommendationCard(
-                  recommendation: e,
-                  isMainPage: true,
-                ),
-              ),
-              const SizedBox(height: 30),
-            ],
+        loading: () => Shimmer(
+          linearGradient: _shimmerGradient,
+          child: RecommendationCardList(
+            plusButtonOnTap: () {
+              recommendationNotifier.setRecommendation(Recommendation.empty());
+              QR.to(
+                RecommendationRouter.root + RecommendationRouter.addEdit,
+              );
+            },
+            recommendations: shimmerRecommendation,
+            isLoading: true,
           ),
+        ),
+        error: (error, stack) => Center(
+          child: Text("Error: $error"),
         ),
       ),
     );

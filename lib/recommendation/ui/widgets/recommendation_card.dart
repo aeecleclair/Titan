@@ -11,12 +11,29 @@ import 'package:myecl/recommendation/providers/recommendation_provider.dart';
 import 'package:myecl/recommendation/router.dart';
 import 'package:myecl/recommendation/tools/constants.dart';
 import 'package:myecl/recommendation/ui/widgets/recommendation_card_layout.dart';
+import 'package:myecl/recommendation/ui/widgets/shimmer.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+
+const _shimmerGradient = LinearGradient(
+  colors: [
+    Color(0xFFEBEBF4),
+    Color(0xFFF4F4F4),
+    Color(0xFFEBEBF4),
+  ],
+  stops: [
+    0.1,
+    0.3,
+    0.4,
+  ],
+  begin: Alignment(-1.0, -0.3),
+  end: Alignment(1.0, 0.3),
+  tileMode: TileMode.clamp,
+);
 
 class RecommendationCard extends HookConsumerWidget {
   final Recommendation recommendation;
@@ -34,12 +51,6 @@ class RecommendationCard extends HookConsumerWidget {
     final recommendationNotifier = ref.watch(recommendationProvider.notifier);
     final recommendationListNotifier =
         ref.watch(recommendationListProvider.notifier);
-    final logo = ref.watch(
-      recommendationLogoMapProvider
-          .select((recommendations) => recommendations[recommendation]),
-    );
-    final recommendationLogoMapNotifier =
-        ref.watch(recommendationLogoMapProvider.notifier);
     final recommendationLogoNotifier =
         ref.watch(recommendationLogoProvider.notifier);
 
@@ -47,26 +58,35 @@ class RecommendationCard extends HookConsumerWidget {
       displayToast(context, type, message);
     }
 
-    return AutoLoaderChild(
-      group: logo,
-      notifier: recommendationLogoMapNotifier,
-      mapKey: recommendation,
-      loader: (ref) =>
+    return FutureBuilder(
+      future:
           recommendationLogoNotifier.getRecommendationLogo(recommendation.id!),
-      loadingBuilder: (context) => const HeroIcon(
-        HeroIcons.photo,
-      ),
-      dataBuilder: (context, data) => RecommendationCardLayout(
+      builder: (context, images) => RecommendationCardLayout(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20.0),
-              child: Image(
-                width: 50,
-                image: data.first.image,
-              ),
-            ),
+            (images.data == null)
+                ? Shimmer(
+                    linearGradient: _shimmerGradient,
+                    child: ShimmerLoading(
+                      isLoading: true,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: Colors.black,
+                        ),
+                        width: 50,
+                        height: 50,
+                      ),
+                    ),
+                  )
+                : ClipRRect(
+                    borderRadius: BorderRadius.circular(20.0),
+                    child: Image(
+                      width: 50,
+                      image: images.data!.image,
+                    ),
+                  ),
             const SizedBox(width: 20),
             Expanded(
               child: Column(
