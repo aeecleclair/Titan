@@ -8,6 +8,7 @@ import 'package:myecl/ph/providers/ph_provider.dart';
 import 'package:myecl/ph/providers/ph_send_pdf_provider.dart';
 import 'package:myecl/ph/router.dart';
 import 'package:myecl/ph/ui/button.dart';
+import 'package:myecl/ph/ui/components/year_bar.dart';
 import 'package:myecl/ph/ui/pages/admin_page/admin_ph_list.dart';
 import 'package:myecl/ph/ui/pages/ph.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
@@ -28,6 +29,7 @@ class AdminPage extends HookConsumerWidget {
         },
         child: Column(
           children: [
+            const YearBar(),
             SizedBox(
                 height: MediaQuery.sizeOf(context).height - 224,
                 child: const SingleChildScrollView(child: AdminPhList())),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/ph/providers/ph_list_provider.dart';
 import 'package:myecl/ph/providers/ph_provider.dart';
+import 'package:myecl/ph/providers/selected_year_list_provider.dart';
 import 'package:myecl/ph/router.dart';
 import 'package:myecl/ph/ui/pages/admin_page/admin_ph_card.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
@@ -18,11 +19,14 @@ class AdminPhList extends HookConsumerWidget {
     final phNotifier = ref.watch(phProvider.notifier);
     final phList = ref.watch(phListProvider);
     final phListNotifier = ref.watch(phListProvider.notifier);
+    final selectedYear = ref.watch(selectedYearListProvider);
     return AsyncChild(
         value: phList,
         builder: (context, phList) {
+          final list =
+              phList.where((ph) => selectedYear.contains(ph.date.year));
           return Column(
-              children: phList
+              children: list
                   .map((ph) => AdminPhCard(
                         ph: ph,
                         onEdit: () {
