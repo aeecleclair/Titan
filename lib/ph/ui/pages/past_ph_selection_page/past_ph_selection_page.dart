@@ -8,17 +8,15 @@ class PastPhSelectionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PhTemplate(
+    return const PhTemplate(
       child: Column(
         children: [
-          SizedBox(
-              height: MediaQuery.sizeOf(context).height - 224,
-              child: const Column(
-                children: [
-                  YearBar(),
-                  SingleChildScrollView(child: PhList()),
-                ],
-              )),
+          Column(
+            children: [
+              YearBar(),
+              SingleChildScrollView(child: PhList()),
+            ],
+          ),
         ],
       ),
     );

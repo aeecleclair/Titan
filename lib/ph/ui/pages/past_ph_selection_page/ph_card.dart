@@ -28,30 +28,36 @@ class PhCard extends HookConsumerWidget {
       },
       child: CardLayout(
         margin: const EdgeInsets.all(5),
-        child: Row(
+        child: Column(
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            const Image(
+                image: AssetImage("assets/images/eclair.png"), height: 100),
+            Row(
               children: [
-                Text(
-                  shortenText(ph.name, 28),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      shortenText(ph.name, 28),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(phFormatDate(ph.date)),
+                  ],
                 ),
-                Text(phFormatDate(ph.date)),
+                const Spacer(),
+                GestureDetector(
+                  onTap: onDownload,
+                  child: CardButton(
+                    colors: [
+                      Colors.grey.shade100,
+                      Colors.grey.shade400,
+                    ],
+                    shadowColor: Colors.grey.shade300.withOpacity(0.2),
+                    child: const HeroIcon(HeroIcons.arrowDownTray,
+                        color: Colors.black),
+                  ),
+                ),
               ],
-            ),
-            const Spacer(),
-            GestureDetector(
-              onTap: onDownload,
-              child: CardButton(
-                colors: [
-                  Colors.grey.shade100,
-                  Colors.grey.shade400,
-                ],
-                shadowColor: Colors.grey.shade300.withOpacity(0.2),
-                child: const HeroIcon(HeroIcons.arrowDownTray,
-                    color: Colors.black),
-              ),
             ),
           ],
         ),

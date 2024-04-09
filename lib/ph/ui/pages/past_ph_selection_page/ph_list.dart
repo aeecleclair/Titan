@@ -29,8 +29,9 @@ class PhList extends HookConsumerWidget {
     return AsyncChild(
         value: phList,
         builder: (context, phList) {
-          final list =
-              phList.where((ph) => selectedYear.contains(ph.date.year));
+          final list = phList.where((ph) =>
+              selectedYear.contains(ph.date.year) &&
+              ph.date.isBefore(DateTime.now()));
           return Column(
               children: list.map((ph) {
             final thePdf =
