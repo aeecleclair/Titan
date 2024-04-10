@@ -6,6 +6,7 @@ class Membership {
     required this.rolesTags,
     required this.apparentName,
     required this.mandateYear,
+    required this.order,
   });
 
   late final String id;
@@ -14,6 +15,7 @@ class Membership {
   late final List<String> rolesTags;
   late final String apparentName;
   late final int mandateYear;
+  late final int order;
 
   Membership.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -22,6 +24,7 @@ class Membership {
     rolesTags = json['role_tags'].split(";");
     apparentName = json['role_name'];
     mandateYear = json['mandate_year'];
+    order = json['order'];
   }
 
   Map<String, dynamic> toJson() {
@@ -32,6 +35,7 @@ class Membership {
       'role_tags': rolesTags.join(";"),
       'role_name': apparentName,
       'mandate_year': mandateYear,
+      'order': order,
     };
     return data;
   }
@@ -43,6 +47,7 @@ class Membership {
     List<String>? rolesTags,
     String? apparentName,
     int? mandateYear,
+    int? order,
   }) {
     return Membership(
       id: id ?? this.id,
@@ -51,6 +56,7 @@ class Membership {
       rolesTags: rolesTags ?? this.rolesTags,
       apparentName: apparentName ?? this.apparentName,
       mandateYear: mandateYear ?? this.mandateYear,
+      order: order ?? this.order,
     );
   }
 
@@ -61,10 +67,11 @@ class Membership {
     rolesTags = [];
     apparentName = "";
     mandateYear = 0;
+    order = 0;
   }
 
   @override
   String toString() {
-    return 'Membership(id: $id, associationId: $associationId, memberId: $memberId, rolesTags: ${rolesTags.join(";")}, apparentName: $apparentName,mandateYear: $mandateYear)';
+    return 'Membership(id: $id, associationId: $associationId, memberId: $memberId, rolesTags: ${rolesTags.join(";")}, apparentName: $apparentName,mandateYear: $mandateYear, order: $order)';
   }
 }
