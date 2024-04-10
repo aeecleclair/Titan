@@ -293,7 +293,28 @@ class AssociationEditorPage extends HookConsumerWidget {
               builder: (context, associationMembers) =>
                   associationMembers.isEmpty
                       ? const Text(PhonebookTextConstants.noMember)
-                      : Column(
+                      : ReorderableListView(
+                          physics: const BouncingScrollPhysics(),
+                          proxyDecorator: (child, index, animation) {
+                            return Material(
+                              child: FadeTransition(
+                                opacity: animation,
+                                child: child,
+                              ),
+                            );
+                          },
+                          onReorder: (int oldIndex, int newIndex) {
+                            associationMemberListNotifier.updateMember(
+                              associationMemberSortedList[oldIndex],
+                              associationMemberSortedList[oldIndex]
+                                  .memberships
+                                  .firstWhere((element) =>
+                                      element.associationId == association.id &&
+                                      element.mandateYear ==
+                                          association.mandateYear)
+                                  .copyWith(order: newIndex),
+                            );
+                          },
                           children: associationMemberSortedList
                               .map(
                                 (member) => MemberEditableCard(

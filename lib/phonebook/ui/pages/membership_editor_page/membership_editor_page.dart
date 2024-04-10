@@ -45,6 +45,7 @@ class MembershipEditorPage extends HookConsumerWidget {
     final memberRoleTags = ref.watch(memberRoleTagsProvider);
     final apparentNameController =
         useTextEditingController(text: membership.apparentName);
+    final associationMembers = ref.watch(associationMemberListProvider);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -187,6 +188,7 @@ class MembershipEditorPage extends HookConsumerWidget {
                           rolesTags: memberRoleTags,
                           apparentName: apparentNameController.text,
                           mandateYear: membership.mandateYear,
+                          order: membership.order,
                         );
                         member.memberships[member.memberships.indexWhere(
                           (membership) => membership.id == membershipEdit.id,
@@ -241,6 +243,10 @@ class MembershipEditorPage extends HookConsumerWidget {
                           rolesTags: memberRoleTags,
                           apparentName: apparentNameController.text,
                           mandateYear: association.mandateYear,
+                          order: associationMembers.maybeWhen(
+                            data: (members) => members.length,
+                            orElse: () => 0,
+                          ),
                         );
                         final value = await associationMemberListNotifier
                             .addMember(member, membershipAdd);
