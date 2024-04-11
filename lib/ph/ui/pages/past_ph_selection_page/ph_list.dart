@@ -1,4 +1,5 @@
 import 'package:file_saver/file_saver.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -41,7 +42,7 @@ class PhList extends HookConsumerWidget {
                 const YearBar(),
                 Expanded(
                   child: GridView.count(
-                      crossAxisCount: 2,
+                      crossAxisCount: kIsWeb ? 5 : 2,
                       children: list.map((ph) {
                         final thePdf = ref
                             .watch(phPdfsProvider.select((map) => map[ph.id]));

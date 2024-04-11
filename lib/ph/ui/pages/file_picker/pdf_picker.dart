@@ -8,6 +8,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/ph/providers/ph_send_pdf_provider.dart';
 import 'package:myecl/ph/ui/button.dart';
+import 'package:myecl/tools/functions.dart';
 
 class PdfPicker extends HookConsumerWidget {
   final bool isEdit;
@@ -35,7 +36,11 @@ class PdfPicker extends HookConsumerWidget {
                 bytes =
                     await File(result.value!.files.first.path!).readAsBytes();
               }
-              phSendPdfNotifier.set(bytes);
+              if (bytes.length < 10000000) {
+                phSendPdfNotifier.set(bytes);
+              } else {
+                displayToast(context, TypeMsg.error, "Fichier trop volumineux");
+              }
             }
           },
           child: MyButton(

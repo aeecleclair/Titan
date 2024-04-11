@@ -8,7 +8,7 @@ class PhPdfFirstPageRepository extends LogoRepository {
   final ext = "ph/";
 
   Future<Uint8List> getPhPdfFirstPage(String id) async {
-    final uint8List = await getLogo("", suffix: "$id/pdf_first_page");
+    final uint8List = await getLogo("", suffix: "$id/cover");
     return uint8List;
   }
 }

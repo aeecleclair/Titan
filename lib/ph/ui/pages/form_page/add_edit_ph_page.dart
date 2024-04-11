@@ -79,7 +79,7 @@ class PhAddEditPhPage extends HookConsumerWidget {
             Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: SizedBox(
-                  height: MediaQuery.of(context).size.height - 362,
+                  height: MediaQuery.of(context).size.height - 373,
                   child: Column(
                     children: [
                       const Spacer(),
@@ -132,9 +132,6 @@ class PhAddEditPhPage extends HookConsumerWidget {
                                 fontWeight: FontWeight.bold)),
                         builder: (child) => AddEditButtonLayout(child: child),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      )
                     ],
                   ),
                 )),
