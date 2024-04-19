@@ -1,6 +1,7 @@
 import 'package:myecl/service/class/message.dart';
 import 'package:myecl/service/class/topic.dart';
 import 'package:myecl/service/tools/functions.dart';
+import 'package:myecl/tools/logs/log.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class NotificationRepository extends Repository {
@@ -9,10 +10,16 @@ class NotificationRepository extends Repository {
   final ext = 'notification/';
 
   Future<List<Message>> getMessages(String firebaseToken) async {
-    return List<Message>.from(
-      (await getList(suffix: "messages/$firebaseToken"))
-          .map((x) => Message.fromJson(x)),
-    );
+    final messages = List<Message>.from(
+        (await getList(suffix: "messages/$firebaseToken"))
+            .map((x) => Message.fromJson(x)));
+    for (final message in messages) {
+      Repository.logger.writeLog(Log(
+          message: "Received notification messages ${message.toString()}",
+          level: LogLevel.info));
+    }
+
+    return messages;
   }
 
   Future<bool> registerDevice(String firebaseToken) async {
