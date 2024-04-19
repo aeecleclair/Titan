@@ -18,8 +18,8 @@ class Logger {
       final path = '${root.path}/$logFileName';
       if (!(await File(path).exists())) {
         await File(path).create();
-        logFile = File(path);
       }
+      logFile = File(path);
     }
   }
 
