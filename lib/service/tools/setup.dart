@@ -72,10 +72,14 @@ void setUpNotification(WidgetRef ref) {
   }
 
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    Repository.logger
+        .writeLog(Log(message: "GOT trigger onMessage", level: LogLevel.error));
     handleMessages();
   });
 
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    Repository.logger.writeLog(
+        Log(message: "GOT trigger onMessageOpenedApp", level: LogLevel.error));
     handleMessages();
   });
 }
