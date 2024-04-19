@@ -23,6 +23,7 @@ class Log {
 
   @override
   String toString() {
-    return "${time.toIso8601String()} - ${level.toString().split(".").last.toUpperCase()}: $message;";
+    final escapedMessage = message.replaceAll(" - ", "-").replaceAll(":", "->");
+    return "${time.toIso8601String()} - ${level.toString().split(".").last.toUpperCase()}: $escapedMessage;";
   }
 }
