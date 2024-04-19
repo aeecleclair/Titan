@@ -4,6 +4,7 @@ import 'package:myecl/amap/notification_service.dart';
 import 'package:myecl/booking/notification_service.dart';
 import 'package:myecl/event/notification_service.dart';
 import 'package:myecl/loan/notification_service.dart';
+import 'package:myecl/ph/notification_service.dart';
 import 'package:myecl/raffle/notification_service.dart';
 import 'package:myecl/vote/notification_service.dart';
 
@@ -16,4 +17,5 @@ final providers = {
   "loan": loanProviders,
   "raffle": raffleProviders,
   "vote": voteProviders,
+  "ph": phProviders,
 };

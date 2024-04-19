@@ -18,6 +18,8 @@ Topic stringToTopic(String string) {
       return Topic.raffle;
     case "vote":
       return Topic.vote;
+    case "ph":
+      return Topic.ph;
     default:
       return Topic.cinema;
   }
@@ -41,6 +43,8 @@ String topicToFrenchString(Topic topic) {
       return "Tombola";
     case Topic.vote:
       return "Vote";
+    case Topic.ph:
+      return "PH";
     default:
       return "Cinéma";
   }
