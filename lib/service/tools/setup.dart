@@ -41,11 +41,8 @@ void setUpNotification(WidgetRef ref) {
             user.id,
             now.add(const Duration(days: 30)),
           );
-          logger.writeLog(
-            Log(
-              message: "Firebase messaging token registered",
-              level: LogLevel.info,
-            ),
+          logger.info(
+            "Firebase messaging token registered",
           );
           topicsNotifier.getTopics();
         });

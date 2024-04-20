@@ -22,21 +22,14 @@ abstract class LogoRepository extends Repository {
           await cacheManager.writeImage(ext + id + suffix, response.bodyBytes);
           return response.bodyBytes;
         } catch (e) {
-          Repository.logger.writeLog(
-            Log(
-              message: "GET $ext$id$suffix\nError while decoding response",
-              level: LogLevel.error,
-            ),
+          Repository.logger.error(
+            "GET $ext$id$suffix\nError while decoding response",
           );
           rethrow;
         }
       } else if (response.statusCode == 403) {
-        Repository.logger.writeLog(
-          Log(
-            message:
-                "GET $ext$id$suffix\n${response.statusCode} ${response.body}",
-            level: LogLevel.error,
-          ),
+        Repository.logger.error(
+          "GET $ext$id$suffix\n${response.statusCode} ${response.body}",
         );
         String resp = utf8.decode(response.body.runes.toList());
         final decoded = json.decode(resp);
@@ -46,12 +39,8 @@ abstract class LogoRepository extends Repository {
           throw AppException(ErrorType.notFound, decoded["detail"]);
         }
       } else {
-        Repository.logger.writeLog(
-          Log(
-            message:
-                "GET $ext$id$suffix\n${response.statusCode} ${response.body}",
-            level: LogLevel.error,
-          ),
+        Repository.logger.error(
+          "GET $ext$id$suffix\n${response.statusCode} ${response.body}",
         );
         throw AppException(ErrorType.notFound, response.body);
       }
@@ -61,12 +50,8 @@ abstract class LogoRepository extends Repository {
       try {
         return await cacheManager.readImage(ext + id + suffix);
       } catch (e) {
-        Repository.logger.writeLog(
-          Log(
-            message:
-                "GET $ext$id$suffix\nError while decoding response from cache",
-            level: LogLevel.error,
-          ),
+        Repository.logger.error(
+          "GET $ext$id$suffix\nError while decoding response from cache",
         );
         cacheManager.deleteCache(ext + id + suffix);
         rethrow;
@@ -96,30 +81,19 @@ abstract class LogoRepository extends Repository {
         try {
           return json.decode(value)["success"];
         } catch (e) {
-          Repository.logger.writeLog(
-            Log(
-              message: "POST $ext$id$suffix\nError while decoding response",
-              level: LogLevel.error,
-            ),
+          Repository.logger.error(
+            "POST $ext$id$suffix\nError while decoding response",
           );
           throw AppException(ErrorType.invalidData, e.toString());
         }
       } else if (response.statusCode == 403) {
-        Repository.logger.writeLog(
-          Log(
-            message:
-                "POST $ext$id$suffix\n${response.statusCode} ${response.reasonPhrase}",
-            level: LogLevel.error,
-          ),
+        Repository.logger.error(
+          "POST $ext$id$suffix\n${response.statusCode} ${response.reasonPhrase}",
         );
         throw AppException(ErrorType.tokenExpire, value);
       } else {
-        Repository.logger.writeLog(
-          Log(
-            message:
-                "POST $ext$id$suffix\n${response.statusCode} ${response.reasonPhrase}",
-            level: LogLevel.error,
-          ),
+        Repository.logger.error(
+          "POST $ext$id$suffix\n${response.statusCode} ${response.reasonPhrase}",
         );
         throw AppException(ErrorType.notFound, value);
       }
@@ -136,20 +110,14 @@ abstract class LogoRepository extends Repository {
         await file.writeAsBytes(response.bodyBytes);
         return file;
       } catch (e) {
-        Repository.logger.writeLog(
-          Log(
-            message: "GET $path\nError while decoding response",
-            level: LogLevel.error,
-          ),
+        Repository.logger.error(
+          "GET $path\nError while decoding response",
         );
         rethrow;
       }
     } else if (response.statusCode == 403) {
-      Repository.logger.writeLog(
-        Log(
-          message: "GET $path\n${response.statusCode} ${response.body}",
-          level: LogLevel.error,
-        ),
+      Repository.logger.error(
+        "GET $path\n${response.statusCode} ${response.body}",
       );
       String resp = utf8.decode(response.body.runes.toList());
       final decoded = json.decode(resp);
@@ -159,11 +127,8 @@ abstract class LogoRepository extends Repository {
         throw AppException(ErrorType.notFound, decoded["detail"]);
       }
     } else {
-      Repository.logger.writeLog(
-        Log(
-          message: "GET $path\n${response.statusCode} ${response.body}",
-          level: LogLevel.error,
-        ),
+      Repository.logger.error(
+        "GET $path\n${response.statusCode} ${response.body}",
       );
       throw AppException(ErrorType.notFound, response.body);
     }
