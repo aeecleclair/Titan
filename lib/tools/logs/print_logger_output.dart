@@ -8,7 +8,7 @@ class PrintLoggerOutput implements LoggerOutput {
 
   @override
   void writeLog(Log log) {
-    print(log.toString());
+    print(log.toString()); // ignore: avoid_print
   }
 
   /// Get the logs from the file

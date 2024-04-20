@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import 'package:myecl/tools/cache/cache_manager.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/logs/log.dart';
 import 'package:myecl/tools/logs/logger.dart';
 
 abstract class Repository {
@@ -216,7 +215,8 @@ abstract class Repository {
       }
     } else {
       logger.error(
-          "POST ${ext + suffix}\n${response.statusCode} ${response.body}");
+        "POST ${ext + suffix}\n${response.statusCode} ${response.body}",
+      );
 
       throw AppException(ErrorType.notFound, response.body);
     }

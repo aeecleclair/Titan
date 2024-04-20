@@ -38,7 +38,7 @@ class FileLoggerOutput implements LoggerOutput {
     try {
       logFile.writeAsStringSync(logToEscapedString(log), mode: FileMode.append);
     } catch (e) {
-      print("Error writing log: $e");
+      print("Error writing log: $e"); // ignore: avoid_print
     }
   }
 

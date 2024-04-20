@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:myecl/tools/exception.dart';
-import 'package:myecl/tools/logs/log.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' show join;
