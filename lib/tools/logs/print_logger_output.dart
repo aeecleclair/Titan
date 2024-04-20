@@ -1,0 +1,24 @@
+import 'package:myecl/tools/logs/log.dart';
+import 'package:myecl/tools/logs/logger_output.dart';
+
+/// A logger output that writes logs to a file
+class PrintLoggerOutput implements LoggerOutput {
+  @override
+  Future<void> init() async {}
+
+  @override
+  void writeLog(Log log) {
+    print(log.toString());
+  }
+
+  /// Get the logs from the file
+  /// The logs will be returned in reverse order, the most recent at the beginning
+  @override
+  List<Log> getLogs() {
+    return [];
+  }
+
+  /// Delete the content of the log file
+  @override
+  void clearLogs() {}
+}

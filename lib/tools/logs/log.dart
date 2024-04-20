@@ -21,9 +21,10 @@ class Log {
     );
   }
 
+  /// The string will be formatted as follows:
+  /// [time] | [level] | [message]
   @override
   String toString() {
-    final escapedMessage = message.replaceAll(" - ", "-").replaceAll(":", "->");
-    return "${time.toIso8601String()} - ${level.toString().split(".").last.toUpperCase()}: $escapedMessage;";
+    return "${time.toIso8601String()} | ${level.name.toUpperCase()} | $message";
   }
 }
