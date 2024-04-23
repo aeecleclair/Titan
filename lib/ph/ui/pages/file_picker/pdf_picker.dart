@@ -41,24 +41,12 @@ class PdfPicker extends HookConsumerWidget {
             } else {
               bytes = await File(selectedFile.files.first.path!).readAsBytes();
             }
-            if (bytes.length < 10000000) {
-              phSendPdfNotifier.set(bytes);
-            } else {
-              displayToastWithContext(
-                TypeMsg.error,
-                PhTextConstants.toHeavyFile,
-              );
-            }
-          }
-        },
-        child: MyButton(
-          text: isEdit
-              ? PhTextConstants.editPdfFile
-              : (result != null)
-                  ? result.files.single.name
-                  : PhTextConstants.addPdfFile,
-        ),
-      ),
+          },
+          child: MyButton(
+            text: (result.value != null)
+                ? result.value!.files.single.name
+                : "Ajouter un fichier PDF",
+          )),
     );
   }
 }
