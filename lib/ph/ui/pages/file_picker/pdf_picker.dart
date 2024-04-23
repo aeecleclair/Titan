@@ -44,7 +44,9 @@ class PdfPicker extends HookConsumerWidget {
             }
           },
           child: MyButton(
-            text: isEdit ? "Modifier le fichier" : "Ajouter un fichier PDF",
+            text: (result.value != null)
+                ? result.value!.files.single.name
+                : "Ajouter un fichier PDF",
           )),
     );
   }
