@@ -22,27 +22,24 @@ class ViewPhPage extends HookConsumerWidget {
     final phPdfNotifier = ref.watch(phPdfProvider.notifier);
     return PhTemplate(
       child: AsyncChild(
-        value: phList,
-        builder: (context, phs) {
-          final choosenPdf = ref.watch(phPdfsProvider.select((map) => map[id]));
-          final pdfNotifier = ref.read(phPdfsProvider.notifier);
-          return Expanded(
-            child: AutoLoaderChild(
-              group: choosenPdf,
-              notifier: pdfNotifier,
-              mapKey: id,
-              loader: (id) => phPdfNotifier.loadPhPdf(id),
-              dataBuilder: (context, pdf) => PdfView(
-                pageSnapping: false,
-                scrollDirection: kIsWeb ? Axis.vertical : Axis.horizontal,
-                controller: PdfController(
-                  document: PdfDocument.openData(pdf.last),
-                ),
-              ),
-            ),
-          );
-        },
-      ),
+          value: phList,
+          builder: (context, phs) {
+            final choosenPdf =
+                ref.watch(phPdfsProvider.select((map) => map[id]));
+            final pdfNotifier = ref.read(phPdfsProvider.notifier);
+            return Expanded(
+              child: AutoLoaderChild(
+                  group: choosenPdf,
+                  notifier: pdfNotifier,
+                  mapKey: id,
+                  loader: (id) => phPdfNotifier.loadPhPdf(id),
+                  dataBuilder: (context, pdf) => PdfView(
+                      pageSnapping: false,
+                      scrollDirection: kIsWeb ? Axis.vertical : Axis.horizontal,
+                      controller: PdfController(
+                          document: PdfDocument.openData(pdf.last)))),
+            );
+          }),
     );
   }
 }
