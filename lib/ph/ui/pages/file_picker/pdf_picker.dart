@@ -4,8 +4,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/ph/providers/file_picker_result_provider.dart';
 import 'package:myecl/ph/providers/ph_send_pdf_provider.dart';
 import 'package:myecl/ph/ui/button.dart';
 import 'package:myecl/tools/functions.dart';
@@ -17,24 +17,25 @@ class PdfPicker extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final phSendPdfNotifier = ref.watch(phSendPdfProvider.notifier);
-    final result = useState<FilePickerResult?>(null);
+    final resultNotifier = ref.watch(filePickerResultProvider.notifier);
+    final result = ref.watch(filePickerResultProvider);
     return SizedBox(
       height: 40,
       child: GestureDetector(
           onTap: () async {
-            result.value = await FilePicker.platform.pickFiles(
+            final selectedFile = await FilePicker.platform.pickFiles(
               allowMultiple: false,
               type: FileType.custom,
               allowedExtensions: ['pdf'],
             );
-            if (result.value != null) {
+            resultNotifier.setFilePickerResult(selectedFile);
+            if (selectedFile != null) {
               final Uint8List bytes;
-              if (result.value!.files.single.bytes != null) {
-                bytes = result.value!.files.single.bytes!;
+              if (selectedFile.files.single.bytes != null) {
+                bytes = selectedFile.files.single.bytes!;
               } else {
-                //Text(result.value!.files.first.name);
                 bytes =
-                    await File(result.value!.files.first.path!).readAsBytes();
+                    await File(selectedFile.files.first.path!).readAsBytes();
               }
               if (bytes.length < 10000000) {
                 phSendPdfNotifier.set(bytes);
@@ -44,9 +45,11 @@ class PdfPicker extends HookConsumerWidget {
             }
           },
           child: MyButton(
-            text: (result.value != null)
-                ? result.value!.files.single.name
-                : "Ajouter un fichier PDF",
+            text: isEdit
+                ? "Modifier le fichier PDF"
+                : (result != null)
+                    ? result.files.single.name
+                    : "Ajouter un fichier PDF",
           )),
     );
   }
