@@ -13,28 +13,29 @@ class TextEntry extends StatelessWidget {
   final Function(String)? onChanged;
   final String? Function(String)? validator;
   final int? minLines, maxLines;
+  final TextInputAction textInputAction;
 
-  const TextEntry({
-    super.key,
-    required this.label,
-    required this.controller,
-    this.onChanged,
-    this.validator,
-    this.minLines,
-    this.maxLines,
-    this.prefix = '',
-    this.suffix = '',
-    this.enabled = true,
-    this.isInt = false,
-    this.isDouble = false,
-    this.keyboardType = TextInputType.text,
-    this.canBeEmpty = false,
-    this.color = Colors.black,
-    this.enabledColor = Colors.black,
-    this.errorColor = ColorConstants.error,
-    this.noValueError = TextConstants.noValue,
-    this.suffixIcon,
-  });
+  const TextEntry(
+      {super.key,
+      required this.label,
+      required this.controller,
+      this.onChanged,
+      this.validator,
+      this.minLines,
+      this.maxLines,
+      this.prefix = '',
+      this.suffix = '',
+      this.enabled = true,
+      this.isInt = false,
+      this.isDouble = false,
+      this.keyboardType = TextInputType.text,
+      this.canBeEmpty = false,
+      this.color = Colors.black,
+      this.enabledColor = Colors.black,
+      this.errorColor = ColorConstants.error,
+      this.noValueError = TextConstants.noValue,
+      this.suffixIcon,
+      this.textInputAction = TextInputAction.next});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,7 @@ class TextEntry extends StatelessWidget {
       onChanged: onChanged,
       textInputAction: (keyboardType == TextInputType.multiline)
           ? TextInputAction.newline
-          : TextInputAction.next,
+          : textInputAction,
       enabled: enabled,
       decoration: InputDecoration(
         label: Text(
@@ -74,8 +75,7 @@ class TextEntry extends StatelessWidget {
         enabledBorder:
             UnderlineInputBorder(borderSide: BorderSide(color: enabledColor)),
         errorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: errorColor, width: 2.0),
-        ),
+            borderSide: BorderSide(color: errorColor, width: 2.0)),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: color, width: 2.0),
         ),
