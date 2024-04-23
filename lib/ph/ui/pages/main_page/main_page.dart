@@ -56,8 +56,7 @@ class PhMainPage extends HookConsumerWidget {
                   ref.watch(phPdfsProvider.select((map) => map[id]));
               final pdfsNotifier = ref.read(phPdfsProvider.notifier);
               if (id != "") {
-                return SizedBox(
-                  height: MediaQuery.of(context).size.height - 289,
+                return Expanded(
                   child: AutoLoaderChild(
                       group: lastPdf,
                       notifier: pdfsNotifier,

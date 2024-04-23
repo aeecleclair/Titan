@@ -35,36 +35,34 @@ class PhList extends HookConsumerWidget {
           final list = phList.where((ph) =>
               selectedYear.contains(ph.date.year) &&
               ph.date.isBefore(DateTime.now()));
-          return SizedBox(
-            height: MediaQuery.of(context).size.height - 82,
-            child: Column(
-              children: [
-                const YearBar(),
-                Expanded(
-                  child: GridView.count(
-                      crossAxisCount: kIsWeb ? 5 : 2,
-                      children: list.map((ph) {
-                        final thePdf = ref
-                            .watch(phPdfsProvider.select((map) => map[ph.id]));
-                        return AutoLoaderChild(
-                          group: thePdf,
-                          notifier: pdfsNotifier,
-                          mapKey: ph.id,
-                          loader: (id) => phPdfNotifier.loadPhPdf(ph.id),
-                          dataBuilder: (context, pdf) => PhCard(
-                            ph: ph,
-                            onDownload: () async {
-                              await FileSaver.instance.saveFile(
-                                  name: ph.name, bytes: pdf.last, ext: "pdf");
-                              displayPhToastWithContext(
-                                  TypeMsg.msg, "Téléchargé avec succès");
-                            },
-                          ),
-                        );
-                      }).toList()),
-                ),
-              ],
-            ),
+          return Column(
+            children: [
+              const YearBar(),
+              const SizedBox(height: 10),
+              Expanded(
+                child: GridView.count(
+                    crossAxisCount: kIsWeb ? 5 : 2,
+                    children: list.map((ph) {
+                      final thePdf =
+                          ref.watch(phPdfsProvider.select((map) => map[ph.id]));
+                      return AutoLoaderChild(
+                        group: thePdf,
+                        notifier: pdfsNotifier,
+                        mapKey: ph.id,
+                        loader: (id) => phPdfNotifier.loadPhPdf(ph.id),
+                        dataBuilder: (context, pdf) => PhCard(
+                          ph: ph,
+                          onDownload: () async {
+                            await FileSaver.instance.saveFile(
+                                name: ph.name, bytes: pdf.last, ext: "pdf");
+                            displayPhToastWithContext(
+                                TypeMsg.msg, "Téléchargé avec succès");
+                          },
+                        ),
+                      );
+                    }).toList()),
+              ),
+            ],
           );
         });
   }

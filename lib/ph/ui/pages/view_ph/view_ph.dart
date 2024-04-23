@@ -27,8 +27,7 @@ class ViewPhPage extends HookConsumerWidget {
             final choosenPdf =
                 ref.watch(phPdfsProvider.select((map) => map[id]));
             final pdfNotifier = ref.read(phPdfsProvider.notifier);
-            return SizedBox(
-              height: MediaQuery.of(context).size.height - 82,
+            return Expanded(
               child: AutoLoaderChild(
                   group: choosenPdf,
                   notifier: pdfNotifier,

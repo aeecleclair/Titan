@@ -23,9 +23,9 @@ class AdminPage extends HookConsumerWidget {
       child: Column(
         children: [
           const YearBar(),
-          SizedBox(
-              height: MediaQuery.sizeOf(context).height - 254,
-              child: const SingleChildScrollView(child: AdminPhList())),
+          const SingleChildScrollView(child: AdminPhList()),
+          const Spacer(),
+          const SizedBox(height: 20),
           GestureDetector(
             onTap: () {
               phNotifier.setPh(Ph.empty());
