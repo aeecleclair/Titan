@@ -3,7 +3,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/recommendation/class/recommendation.dart';
 import 'package:myecl/recommendation/ui/widgets/recommendation_card.dart';
 import 'package:myecl/recommendation/ui/widgets/recommendation_card_layout.dart';
-import 'package:myecl/recommendation/ui/widgets/shimmer.dart';
+import 'package:myecl/tools/ui/layouts/shimmer.dart';
 
 const _shimmerGradient = LinearGradient(
   colors: [
@@ -48,6 +48,7 @@ class RecommendationCardList extends StatelessWidget {
     return Shimmer(
       linearGradient: _shimmerGradient,
       child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
         itemCount: itemCount,
         itemBuilder: (context, index) {
           if (isAdmin && index == 0) {

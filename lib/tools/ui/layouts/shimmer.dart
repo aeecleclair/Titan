@@ -1,5 +1,23 @@
 import 'package:flutter/material.dart';
 
+// Code taken from https://docs.flutter.dev/cookbook/effects/shimmer-loading#paint-one-big-shimmer
+
+const _shimmerGradient = LinearGradient(
+  colors: [
+    Color(0xFFEBEBF4),
+    Color(0xFFF4F4F4),
+    Color(0xFFEBEBF4),
+  ],
+  stops: [
+    0.1,
+    0.3,
+    0.4,
+  ],
+  begin: Alignment(-1.0, -0.3),
+  end: Alignment(1.0, 0.3),
+  tileMode: TileMode.clamp,
+);
+
 class Shimmer extends StatefulWidget {
   static ShimmerState? of(BuildContext context) {
     return context.findAncestorStateOfType<ShimmerState>();
@@ -7,7 +25,7 @@ class Shimmer extends StatefulWidget {
 
   const Shimmer({
     super.key,
-    required this.linearGradient,
+    this.linearGradient = _shimmerGradient,
     this.child,
   });
 
