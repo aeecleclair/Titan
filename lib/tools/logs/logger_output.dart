@@ -1,0 +1,15 @@
+import 'package:myecl/tools/logs/log.dart';
+
+abstract class LoggerOutput {
+  /// Initialize the logger output
+  Future<void> init();
+
+  /// Write a log to the output
+  void writeLog(Log log);
+
+  /// Get the logs from the output
+  List<Log> getLogs();
+
+  /// Clear the logs from the output
+  void clearLogs();
+}

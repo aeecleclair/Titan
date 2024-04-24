@@ -8,7 +8,6 @@ import 'package:myecl/service/providers/firebase_token_provider.dart';
 import 'package:myecl/service/providers/messages_provider.dart';
 import 'package:myecl/service/providers/topic_provider.dart';
 import 'package:myecl/service/repositories/notification_repository.dart';
-import 'package:myecl/tools/logs/log.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_provider.dart';
@@ -41,11 +40,8 @@ void setUpNotification(WidgetRef ref) {
             user.id,
             now.add(const Duration(days: 30)),
           );
-          logger.writeLog(
-            Log(
-              message: "Firebase messaging token registered",
-              level: LogLevel.info,
-            ),
+          logger.info(
+            "Firebase messaging token registered",
           );
           topicsNotifier.getTopics();
         });

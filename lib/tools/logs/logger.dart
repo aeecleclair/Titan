@@ -1,72 +1,61 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
+import 'package:myecl/tools/logs/file_logger_output.dart';
 import 'package:myecl/tools/logs/log.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:myecl/tools/logs/logger_output.dart';
+import 'package:myecl/tools/logs/print_logger_output.dart';
 
 class Logger {
-  final String logFileName = 'myecl.log';
-  late File logFile;
+  LoggerOutput? loggerOutput;
+
+  /// The log level of the logger
+  /// Only logs with a level equal to or higher than this level will be written
+  LogLevel minimalLogLevel = LogLevel.warning;
 
   Logger() {
     init();
   }
 
   void init() async {
-    if (!kIsWeb) {
-      Directory root = await getApplicationDocumentsDirectory();
-      final path = '${root.path}/$logFileName';
-      if (!(await File(path).exists())) {
-        await File(path).create();
-        logFile = File(path);
-      }
+    if (kIsWeb) {
+      loggerOutput = PrintLoggerOutput();
+      await loggerOutput!.init();
+    } else {
+      loggerOutput = FileLoggerOutput();
+      await loggerOutput!.init();
     }
   }
 
-  bool writeLog(Log log) {
-    if (kIsWeb) {
-      return false;
-    }
-    try {
-      logFile.writeAsStringSync(log.toString(), mode: FileMode.append);
-      return true;
-    } catch (e) {
-      return false;
+  void writeLog(Log log) {
+    if (log.level.index >= minimalLogLevel.index) {
+      loggerOutput?.writeLog(log);
     }
   }
 
   List<Log> getLogs() {
-    if (kIsWeb) {
-      return [];
-    }
-    return logFile
-        .readAsStringSync()
-        .split(";")
-        .reversed
-        .toList()
-        .sublist(1)
-        .map((e) {
-      final split = e.split(" - ");
-      if (split.length < 2) {
-        return Log.empty().copyWith(message: e);
-      }
-      String message = split[1].split(": ").last;
-      String level = split[1].split(": ").first;
-      return Log(
-        message: message,
-        level: LogLevel.values.firstWhere(
-          (element) =>
-              element.toString().split(".").last.toUpperCase() == level,
-        ),
-        time: DateTime.parse(split[0]),
-      );
-    }).toList();
+    return loggerOutput?.getLogs() ?? [];
   }
 
   void clearLogs() {
-    if (kIsWeb) {
-      return;
-    }
-    logFile.writeAsStringSync("");
+    loggerOutput?.clearLogs();
+  }
+
+  void debug(String message) {
+    writeLog(Log(message: message, level: LogLevel.debug));
+  }
+
+  void info(String message) {
+    writeLog(Log(message: message, level: LogLevel.info));
+  }
+
+  void warning(String message) {
+    writeLog(Log(message: message, level: LogLevel.warning));
+  }
+
+  void error(String message) {
+    writeLog(Log(message: message, level: LogLevel.error));
+  }
+
+  void logException(Exception e) {
+    error(e.toString());
   }
 }
