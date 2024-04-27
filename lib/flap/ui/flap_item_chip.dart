@@ -1,0 +1,46 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myecl/flap/router.dart';
+import 'package:myecl/tools/ui/layouts/item_chip.dart';
+import 'package:qlevar_router/qlevar_router.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'dart:math' as math;
+
+class FlapItemChip extends HookWidget {
+  const FlapItemChip({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final AnimationController controller = useAnimationController(
+      duration: const Duration(seconds: 1),
+    )..repeat();
+    return GestureDetector(
+      onTap: () {
+        QR.switchTo(FlapRouter.root);
+      },
+      child: ItemChip(
+          selected: true,
+          child: AnimatedBuilder(
+            animation: controller,
+            builder: (context, child) {
+              return Transform.rotate(
+                  angle: math.pi * (-70 + controller.value * 160) / 360,
+                  child: Transform.translate(
+                    offset: Offset(-1 + controller.value * 5, -2),
+                    child: SvgPicture.asset(
+                      "assets/images/flap.svg",
+                      width: 20,
+                      height: 20,
+                      colorFilter: const ColorFilter.mode(
+                        Colors.white,
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                  ));
+            },
+          )),
+    );
+  }
+}
