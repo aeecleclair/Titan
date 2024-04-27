@@ -15,7 +15,7 @@ class Logger {
     init();
   }
 
-  void init() async {
+  Future<Logger> init() async {
     if (kIsWeb) {
       loggerOutput = PrintLoggerOutput();
       await loggerOutput!.init();
@@ -23,6 +23,7 @@ class Logger {
       loggerOutput = FileLoggerOutput();
       await loggerOutput!.init();
     }
+    return this;
   }
 
   void writeLog(Log log) {
