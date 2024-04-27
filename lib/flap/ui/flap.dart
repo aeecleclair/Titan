@@ -27,16 +27,18 @@ class FlapTemplate extends HookConsumerWidget {
                   color: Colors.white,
                 ),
               ),
-              rightIcon: IconButton(
-                onPressed: () {
-                  QR.to(FlapRouter.root + FlapRouter.leaderBoard);
-                },
-                icon: const HeroIcon(
-                  HeroIcons.trophy,
-                  color: Colors.white,
-                  size: 40,
-                ),
-              ),
+              rightIcon: QR.currentPath == FlapRouter.root
+                  ? IconButton(
+                      onPressed: () {
+                        QR.to(FlapRouter.root + FlapRouter.leaderBoard);
+                      },
+                      icon: const HeroIcon(
+                        HeroIcons.trophy,
+                        color: Colors.white,
+                        size: 40,
+                      ),
+                    )
+                  : null,
             ),
             Expanded(child: child),
           ],
