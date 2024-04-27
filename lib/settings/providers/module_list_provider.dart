@@ -9,6 +9,7 @@ import 'package:myecl/cinema/router.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:collection/collection.dart';
 import 'package:myecl/event/router.dart';
+import 'package:myecl/flap/router.dart';
 import 'package:myecl/home/router.dart';
 import 'package:myecl/loan/router.dart';
 import 'package:myecl/phonebook/router.dart';
@@ -44,11 +45,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     RaffleRouter.module,
     RecommendationRouter.module,
     PhonebookRouter.module,
-    Module(
-        name: "Flap",
-        icon: HeroIcons.bookmark,
-        page: ModuleType.flap,
-        selected: false),
+    FlapRouter.module,
   ];
   ModulesNotifier() : super([]);
 

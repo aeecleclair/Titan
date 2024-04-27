@@ -1,44 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/drawer/providers/swipe_provider.dart';
-import 'package:myecl/flap/ui/page_switcher.dart';
-import 'package:myecl/flap/ui/top_bar.dart';
+import 'package:myecl/flap/router.dart';
+import 'package:myecl/tools/ui/widgets/top_bar.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
-class FlapHomePage extends HookConsumerWidget {
-  final SwipeControllerNotifier controllerNotifier;
-  final AnimationController controller;
-  const FlapHomePage(
-      {Key? key, required this.controllerNotifier, required this.controller})
-      : super(key: key);
+class FlapTemplate extends HookConsumerWidget {
+  final Widget child;
+  const FlapTemplate({super.key, required this.child});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-        body: WillPopScope(
-      onWillPop: () async {
-        if (!controller.isCompleted) {
-          controllerNotifier.toggle();
-        } else {
-          return true;
-        }
-        return false;
-      },
-      child: Container(
-        color: Colors.blue,
-        child: SafeArea(
-          child: IgnorePointer(
-            ignoring: controller.isCompleted,
-            child: Stack(
-              children: [
-                const PageSwitcher(),
-                TopBar(
-                  controllerNotifier: controllerNotifier,
+    return Container(
+      color: Colors.blue,
+      child: SafeArea(
+        child: Column(
+          children: [
+            TopBar(
+              title: "Flappy Bird",
+              root: FlapRouter.root,
+              textStyle: GoogleFonts.silkscreen(
+                textStyle: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
-              ],
+              ),
+              rightIcon: IconButton(
+                onPressed: () {
+                  QR.to(FlapRouter.root + FlapRouter.leaderBoard);
+                },
+                icon: const HeroIcon(
+                  HeroIcons.trophy,
+                  color: Colors.white,
+                  size: 40,
+                ),
+              ),
             ),
-          ),
+            Expanded(child: child),
+          ],
         ),
       ),
-    ));
+    );
   }
 }

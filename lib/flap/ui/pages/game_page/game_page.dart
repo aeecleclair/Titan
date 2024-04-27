@@ -9,9 +9,10 @@ import 'package:myecl/flap/providers/current_best_score.dart';
 import 'package:myecl/flap/providers/game_loop_provider.dart';
 import 'package:myecl/flap/providers/game_state_provider.dart';
 import 'package:myecl/flap/providers/pipe_list_provider.dart';
-import 'package:myecl/flap/ui/game_page/pipe_handler.dart';
-import 'package:myecl/flap/ui/game_page/score.dart';
-import 'package:myecl/flap/ui/game_page/start_screen.dart';
+import 'package:myecl/flap/ui/flap.dart';
+import 'package:myecl/flap/ui/pages/game_page/pipe_handler.dart';
+import 'package:myecl/flap/ui/pages/game_page/score.dart';
+import 'package:myecl/flap/ui/pages/game_page/start_screen.dart';
 
 import 'bird.dart';
 
@@ -104,7 +105,8 @@ class GamePage extends HookConsumerWidget {
       }
     }
 
-    return Column(
+    return FlapTemplate(
+        child: Column(
       children: [
         Expanded(
           flex: 4,
@@ -135,6 +137,6 @@ class GamePage extends HookConsumerWidget {
         ),
         const GameScore(),
       ],
-    );
+    ));
   }
 }

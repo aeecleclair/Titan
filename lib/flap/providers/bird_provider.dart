@@ -64,7 +64,7 @@ final birdProvider = StateNotifierProvider<BirdNotifier, Bird>((ref) {
   final birdImageNotifier = ref.watch(birdImageProvider.notifier);
   notifier.setUser(user.toSimpleUser());
   if (birdImage.isNotEmpty) {
-    // ignore: invalid_use_of_protected_member
+    // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
     birdImageNotifier.switchColor(notifier.state.color).then((value) {
       notifier.setBirdImage(Image.memory(value));
       return notifier;

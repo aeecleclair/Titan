@@ -3,7 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/flap/providers/score_list_provider.dart';
 import 'package:myecl/flap/providers/user_score_provider.dart';
-import 'package:myecl/flap/ui/leaderboard_page/leaderboard_item.dart';
+import 'package:myecl/flap/ui/flap.dart';
+import 'package:myecl/flap/ui/pages/leaderboard_page/leaderboard_item.dart';
 
 class LeaderBoardPage extends HookConsumerWidget {
   const LeaderBoardPage({super.key});
@@ -12,7 +13,8 @@ class LeaderBoardPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final leaderBoard = ref.watch(scoreListProvider);
     final bestUserScore = ref.watch(userScoreProvider);
-    return Column(
+    return FlapTemplate(
+        child: Column(
       children: [
         Expanded(
           flex: 4,
@@ -23,7 +25,7 @@ class LeaderBoardPage extends HookConsumerWidget {
             padding: const EdgeInsets.only(top: 90, left: 30, right: 30),
             child: leaderBoard.when(
               data: (scoreList) => ListView.builder(
-                physics: const BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   itemCount: scoreList.length + 1,
                   itemBuilder: (context, index) {
                     if (index == 0) {
@@ -50,18 +52,18 @@ class LeaderBoardPage extends HookConsumerWidget {
             child: Container(
           color: Colors.brown,
           child: Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(horizontal: 30),
               child: bestUserScore.when(
-            data: (score) => LeaderBoardItem(
-              score: score,
-            ),
-            error: (e, s) =>
-                Text(e.toString(), style: GoogleFonts.silkscreen()),
-            loading: () => Text("Loading", style: GoogleFonts.silkscreen()),
-          )),
+                data: (score) => LeaderBoardItem(
+                  score: score,
+                ),
+                error: (e, s) =>
+                    Text(e.toString(), style: GoogleFonts.silkscreen()),
+                loading: () => Text("Loading", style: GoogleFonts.silkscreen()),
+              )),
         )),
       ],
-    );
+    ));
   }
 }
