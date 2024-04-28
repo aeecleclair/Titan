@@ -7,7 +7,6 @@ class BirdDisplay extends HookConsumerWidget {
     Key? key,
   }) : super(key: key);
 
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bird = ref.watch(birdProvider);

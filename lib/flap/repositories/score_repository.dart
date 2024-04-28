@@ -14,7 +14,7 @@ class ScoreRepository extends Repository {
 
   Future<List<Score>> getHistory() async {
     return List<Score>.from(
-      (await getList(suffix:"scores/me")).map((e) => Score.fromJson(e)),
+      (await getList(suffix: "scores/me")).map((e) => Score.fromJson(e)),
     );
   }
 

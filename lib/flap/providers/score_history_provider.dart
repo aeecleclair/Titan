@@ -7,7 +7,8 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class HistoryScoreListNotifier extends ListNotifier<Score> {
   final ScoreRepository _scoreRepository = ScoreRepository();
-  HistoryScoreListNotifier({required String token}) : super(const AsyncLoading()) {
+  HistoryScoreListNotifier({required String token})
+      : super(const AsyncLoading()) {
     _scoreRepository.setToken(token);
   }
 
@@ -16,7 +17,9 @@ class HistoryScoreListNotifier extends ListNotifier<Score> {
   }
 }
 
-final historyScoreListProvider = StateNotifierProvider<HistoryScoreListNotifier, AsyncValue<List<Score>>>((ref) {
+final historyScoreListProvider =
+    StateNotifierProvider<HistoryScoreListNotifier, AsyncValue<List<Score>>>(
+        (ref) {
   final token = ref.watch(tokenProvider);
   final notifier = HistoryScoreListNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {
