@@ -35,7 +35,8 @@ class LeaderBoardItem extends StatelessWidget {
                 ),
                 Expanded(
                   child: AutoSizeText(
-                    score.user.nickname ?? ("${score.user.firstname} ${score.user.name}"),
+                    score.user.nickname ??
+                        ("${score.user.firstname} ${score.user.name}"),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: style,
