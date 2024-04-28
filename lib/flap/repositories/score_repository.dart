@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:myecl/flap/class/score.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -8,7 +9,8 @@ class ScoreRepository extends Repository {
 
   Future<List<Score>> getLeaderboard() async {
     return List<Score>.from(
-      (await getList(suffix: "scores")).map((e) => Score.fromJson(e)),
+      (await getList(suffix: "scores"))
+          .mapIndexed((index, e) => Score.fromJson(e, index: index + 1)),
     );
   }
 

@@ -12,11 +12,11 @@ class Score {
       required this.date,
       required this.position});
 
-  Score.fromJson(Map<String, dynamic> json) {
+  Score.fromJson(Map<String, dynamic> json, {int? index = 0}) {
     user = SimpleUser.fromJson(json['user']);
     value = json['value'];
     date = DateTime.parse(json['creation_time']);
-    position = json['position'] ?? 0;
+    position = json['position'] ?? index;
   }
 
   Map<String, dynamic> toJson() {
