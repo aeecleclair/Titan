@@ -12,18 +12,14 @@ class ScoreRepository extends Repository {
     );
   }
 
-  Future<List<Score>> getHistory() async {
-    return List<Score>.from(
-      (await getList(suffix: "scores/me")).map((e) => Score.fromJson(e)),
-    );
-  }
-
   Future<Score> createScore(Score score) async {
-    return Score.fromJson(await create(score.toJson(), suffix: "scores/me"));
+    final w = await create(score.toJson(), suffix: "scores");
+    print(w);
+    return Score.fromJson(w);
   }
 
   Future<Score> getLeaderBoardPosition() async {
-    final response = await getOne("scores/me");
+    final response = await getOne("leaderboard/me");
     if (response == null) {
       return Score.empty();
     }

@@ -3,18 +3,20 @@ import 'dart:math';
 class Pipe {
   final double position;
   final double height;
+  final bool isPassed;
 
-  Pipe({required this.position, required this.height});
+  Pipe({required this.position, required this.height, this.isPassed = false});
 
-  Pipe copyWith({double? position, double? height}) {
+  Pipe copyWith({double? position, double? height, bool? isPassed}) {
     return Pipe(
       position: position ?? this.position,
       height: height ?? this.height,
+      isPassed: isPassed ?? this.isPassed,
     );
   }
 
   static Pipe empty() {
-    return Pipe(position: 0, height: 0);
+    return Pipe(position: 0, height: 0, isPassed: false);
   }
 
   static Pipe random({required double position}) {
@@ -28,6 +30,6 @@ class Pipe {
 
   @override
   String toString() {
-    return 'Pipe{position: $position, height: $height}';
+    return 'Pipe{position: $position, height: $height, isPassed: $isPassed}';
   }
 }

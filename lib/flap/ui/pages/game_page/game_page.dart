@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/flap/class/score.dart';
 import 'package:myecl/flap/providers/bird_provider.dart';
 import 'package:myecl/flap/providers/current_best_score.dart';
 import 'package:myecl/flap/providers/game_loop_provider.dart';
 import 'package:myecl/flap/providers/game_state_provider.dart';
 import 'package:myecl/flap/providers/pipe_list_provider.dart';
+import 'package:myecl/flap/providers/score_list_provider.dart';
 import 'package:myecl/flap/ui/flap.dart';
 import 'package:myecl/flap/ui/pages/game_page/pipe_handler.dart';
 import 'package:myecl/flap/ui/pages/game_page/score.dart';
@@ -23,9 +25,11 @@ class GamePage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final gameStarted = ref.watch(gameStateProvider);
     final gameStartNotifier = ref.read(gameStateProvider.notifier);
+    final bird = ref.watch(birdProvider);
     final birdNotifier = ref.watch(birdProvider.notifier);
     final pipeListNotifier = ref.read(pipeListProvider.notifier);
     final timerNotifier = ref.watch(timerProvider.notifier);
+    final scoreListNotifier = ref.read(scoreListProvider.notifier);
 
     final pipePassed = useState(false);
     final bestScore = ref.watch(bestScoreProvider);
@@ -78,28 +82,31 @@ class GamePage extends HookConsumerWidget {
     void gameLoop(Timer timer, double height) {
       final newBird = birdNotifier.update();
       final newPipes = pipeListNotifier.update();
-      if (!pipePassed.value) {
-        for (int i = 0; i < newPipes.length; i++) {
-          if (newPipes[i].position < -0.37 && newPipes[i].position > -0.63) {
-            birdNotifier.increaseScore();
-            if (newBird.score + 1 > bestScore) {
-              bestScoreNotifier.setBest(newBird.score + 1);
-            }
-            pipePassed.value = true;
-            break;
-          }
-        }
-      }
       for (int i = 0; i < newPipes.length; i++) {
-        if (newPipes[i].position < -.7 && newPipes[i].position > -.8) {
-          pipePassed.value = false;
+        if (newPipes[i].position < -0.37 &&
+            newPipes[i].position > -0.63 &&
+            !newPipes[i].isPassed) {
+          birdNotifier.increaseScore();
+          if (newBird.score + 1 > bestScore) {
+            bestScoreNotifier.setBest(newBird.score + 1);
+          }
+          pipeListNotifier.setIsPassed(i);
           break;
         }
       }
+
       pipeListNotifier.resetPipe();
       if ((newBird.birdPosition).abs() > 1 ||
           pipeListNotifier.birdHitPipe(width, height, newBird)) {
         timerNotifier.stop();
+        if (newBird.score > bestScore) {
+          scoreListNotifier.createScore(Score(
+            user: newBird.user,
+            value: newBird.score,
+            date: DateTime.now(),
+            position: 0,
+          ));
+        }
         showGameOverDialog();
         gameStartNotifier.setState(false);
       }

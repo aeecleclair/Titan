@@ -19,9 +19,18 @@ class PipeListNotifier extends StateNotifier<List<Pipe>> {
     state = state.map((e) {
       if (e.position < -2) {
         return Pipe.random(position: e.position + 3.5);
-      } else {
-        return e;
       }
+      return e;
+    }).toList();
+  }
+
+  void setIsPassed(i) {
+    state = state.map((e) {
+      final index = state.indexOf(e);
+      if (index == i) {
+        return e.copyWith(isPassed: true);
+      }
+      return e;
     }).toList();
   }
 
