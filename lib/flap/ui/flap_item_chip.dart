@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/flap/router.dart';
+import 'package:myecl/tools/providers/path_forwarding_provider.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'dart:math' as math;
 
-class FlapItemChip extends HookWidget {
+class FlapItemChip extends HookConsumerWidget {
   const FlapItemChip({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final AnimationController controller = useAnimationController(
       duration: const Duration(seconds: 1),
     )..repeat();
+    final pathForwardingNotifier = ref.watch(pathForwardingProvider.notifier);
     return GestureDetector(
       onTap: () {
-        QR.switchTo(FlapRouter.root);
+        pathForwardingNotifier.forward(FlapRouter.root);
+        QR.to(FlapRouter.root);
       },
       child: ItemChip(
           selected: true,
