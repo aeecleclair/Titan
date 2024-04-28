@@ -13,9 +13,7 @@ class ScoreRepository extends Repository {
   }
 
   Future<Score> createScore(Score score) async {
-    final w = await create(score.toJson(), suffix: "scores");
-    print(w);
-    return Score.fromJson(w);
+    return Score.fromJson(await create(score.toJson(), suffix: "scores"));
   }
 
   Future<Score> getLeaderBoardPosition() async {
