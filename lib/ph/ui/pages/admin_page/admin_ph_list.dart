@@ -4,6 +4,7 @@ import 'package:myecl/ph/providers/ph_list_provider.dart';
 import 'package:myecl/ph/providers/ph_provider.dart';
 import 'package:myecl/ph/providers/selected_year_list_provider.dart';
 import 'package:myecl/ph/router.dart';
+import 'package:myecl/ph/tools/constants.dart';
 import 'package:myecl/ph/ui/pages/admin_page/admin_ph_card.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
@@ -39,8 +40,9 @@ class AdminPhList extends HookConsumerWidget {
                             context: context,
                             builder: (context) {
                               return CustomDialogBox(
-                                title: "Delete",
-                                descriptions: "Delete",
+                                title: PhTextConstants.delete,
+                                descriptions:
+                                    PhTextConstants.irreversibleAction,
                                 onYes: () {
                                   phListNotifier.deletePh(ph);
                                 },

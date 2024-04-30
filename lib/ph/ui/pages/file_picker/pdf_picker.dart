@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/ph/providers/file_picker_result_provider.dart';
 import 'package:myecl/ph/providers/ph_send_pdf_provider.dart';
+import 'package:myecl/ph/tools/constants.dart';
 import 'package:myecl/ph/ui/button.dart';
 import 'package:myecl/tools/functions.dart';
 
@@ -40,16 +41,17 @@ class PdfPicker extends HookConsumerWidget {
               if (bytes.length < 10000000) {
                 phSendPdfNotifier.set(bytes);
               } else {
-                displayToast(context, TypeMsg.error, "Fichier trop volumineux");
+                displayToast(
+                    context, TypeMsg.error, PhTextConstants.toHeavyFile);
               }
             }
           },
           child: MyButton(
             text: isEdit
-                ? "Modifier le fichier PDF"
+                ? PhTextConstants.editPdfFile
                 : (result != null)
                     ? result.files.single.name
-                    : "Ajouter un fichier PDF",
+                    : PhTextConstants.addPdfFile,
           )),
     );
   }

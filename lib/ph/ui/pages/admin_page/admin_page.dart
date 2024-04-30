@@ -6,6 +6,7 @@ import 'package:myecl/ph/class/ph.dart';
 import 'package:myecl/ph/providers/ph_provider.dart';
 import 'package:myecl/ph/providers/ph_send_pdf_provider.dart';
 import 'package:myecl/ph/router.dart';
+import 'package:myecl/ph/tools/constants.dart';
 import 'package:myecl/ph/ui/button.dart';
 import 'package:myecl/ph/ui/components/year_bar.dart';
 import 'package:myecl/ph/ui/pages/admin_page/admin_ph_list.dart';
@@ -33,7 +34,7 @@ class AdminPage extends HookConsumerWidget {
               QR.to(PhRouter.root + PhRouter.admin + PhRouter.add_ph);
             },
             child: const MyButton(
-              text: "Ajouter un nouveau journal",
+              text: PhTextConstants.addNewJournal,
             ),
           ),
         ],

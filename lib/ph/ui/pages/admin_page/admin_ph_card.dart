@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/ph/class/ph.dart';
+import 'package:myecl/ph/tools/constants.dart';
 import 'package:myecl/ph/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
@@ -29,7 +30,7 @@ class AdminPhCard extends StatelessWidget {
                 Row(
                   children: [
                     const Text(
-                      "Nom : ",
+                      PhTextConstants.nameField,
                       style: TextStyle(fontWeight: FontWeight.bold),
                       textAlign: TextAlign.left,
                     ),
@@ -39,7 +40,7 @@ class AdminPhCard extends StatelessWidget {
                 Row(
                   children: [
                     const Text(
-                      "Date de publication : ",
+                      PhTextConstants.dateField,
                       style: TextStyle(fontWeight: FontWeight.bold),
                       textAlign: TextAlign.left,
                     ),

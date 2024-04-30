@@ -6,6 +6,7 @@ import 'package:myecl/ph/providers/ph_list_provider.dart';
 import 'package:myecl/ph/providers/ph_pdf_provider.dart';
 import 'package:myecl/ph/providers/ph_pdfs_provider.dart';
 import 'package:myecl/ph/router.dart';
+import 'package:myecl/ph/tools/constants.dart';
 import 'package:myecl/ph/ui/button.dart';
 import 'package:myecl/ph/ui/pages/ph.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
@@ -42,7 +43,7 @@ class PhMainPage extends HookConsumerWidget {
               QR.to(PhRouter.root + PhRouter.past_ph_selection);
             },
             child: const MyButton(
-              text: "Voir les anciens journaux",
+              text: PhTextConstants.seePreviousJournal,
             ),
           ),
         ),
@@ -71,7 +72,7 @@ class PhMainPage extends HookConsumerWidget {
                           )),
                 );
               } else {
-                return const Text("Pas encore de Ph dans la base de donnée");
+                return const Text(PhTextConstants.noJournalInDatabase);
               }
             })
       ],

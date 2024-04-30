@@ -7,6 +7,7 @@ import 'package:myecl/ph/providers/ph_list_provider.dart';
 import 'package:myecl/ph/providers/ph_pdf_provider.dart';
 import 'package:myecl/ph/providers/ph_send_pdf_provider.dart';
 import 'package:myecl/ph/providers/ph_provider.dart';
+import 'package:myecl/ph/tools/constants.dart';
 import 'package:myecl/ph/tools/functions.dart';
 import 'package:myecl/ph/ui/pages/file_picker/pdf_picker.dart';
 import 'package:myecl/ph/ui/pages/ph.dart';
@@ -50,7 +51,7 @@ class PhAddEditPhPage extends HookConsumerWidget {
                   children: [
                     TextEntry(
                       maxLines: 1,
-                      label: "Nom du PH",
+                      label: PhTextConstants.phName,
                       controller: name,
                       textInputAction: TextInputAction.done,
                     ),
@@ -61,7 +62,7 @@ class PhAddEditPhPage extends HookConsumerWidget {
                       child: Column(
                         children: [
                           DateEntry(
-                              label: "Date",
+                              label: PhTextConstants.date,
                               controller: dateController,
                               onTap: () {
                                 getOnlyDayDate(context, dateController,
@@ -107,8 +108,11 @@ class PhAddEditPhPage extends HookConsumerWidget {
                               if (value) {
                                 QR.back();
                                 {
-                                  displayPhToastWithContext(TypeMsg.msg,
-                                      isEdit ? "Modifié" : "Ajouté");
+                                  displayPhToastWithContext(
+                                      TypeMsg.msg,
+                                      isEdit
+                                          ? PhTextConstants.edited
+                                          : PhTextConstants.added);
                                   phList.maybeWhen(
                                       data: (list) {
                                         final newPh = list.last;
@@ -118,16 +122,17 @@ class PhAddEditPhPage extends HookConsumerWidget {
                                       orElse: () {});
                                 }
                               } else {
-                                displayPhToastWithContext(
-                                    TypeMsg.error, "Erreur d'ajout");
+                                displayPhToastWithContext(TypeMsg.error,
+                                    PhTextConstants.addingFileError);
                               }
                             });
                           } else {
                             displayToast(context, TypeMsg.error,
-                                "Informations manquantes ou fichier PDF manquant");
+                                PhTextConstants.missingInformatonsOrPdf);
                           }
                         },
-                        child: Text(isEdit ? "Modifier" : "Ajouter",
+                        child: Text(
+                            isEdit ? PhTextConstants.edit : PhTextConstants.add,
                             style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 25,
