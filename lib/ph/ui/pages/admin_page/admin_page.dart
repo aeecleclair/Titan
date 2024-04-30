@@ -37,6 +37,7 @@ class AdminPage extends HookConsumerWidget {
               text: PhTextConstants.addNewJournal,
             ),
           ),
+          const SizedBox(height: 20),
         ],
       ),
     );
