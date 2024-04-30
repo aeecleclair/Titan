@@ -52,11 +52,14 @@ class PhMainPage extends HookConsumerWidget {
             value: phList,
             builder: (context, phs) {
               phs.sort((b, a) => a.date.compareTo(b.date));
-              final id = phs.last.id;
-              final lastPdf =
-                  ref.watch(phPdfsProvider.select((map) => map[id]));
-              final pdfsNotifier = ref.read(phPdfsProvider.notifier);
-              if (id != "") {
+              if (phs.isEmpty) {
+                return const Text(PhTextConstants.noJournalInDatabase);
+              } else {
+                final id = phs.last.id;
+                final lastPdf =
+                    ref.watch(phPdfsProvider.select((map) => map[id]));
+                final pdfsNotifier = ref.read(phPdfsProvider.notifier);
+
                 return Expanded(
                   child: AutoLoaderChild(
                       group: lastPdf,
@@ -71,8 +74,6 @@ class PhMainPage extends HookConsumerWidget {
                                 kIsWeb ? Axis.vertical : Axis.horizontal,
                           )),
                 );
-              } else {
-                return const Text(PhTextConstants.noJournalInDatabase);
               }
             })
       ],
