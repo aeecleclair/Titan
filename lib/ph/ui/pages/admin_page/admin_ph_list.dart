@@ -22,39 +22,36 @@ class AdminPhList extends HookConsumerWidget {
     final phListNotifier = ref.watch(phListProvider.notifier);
     final selectedYear = ref.watch(selectedYearListProvider);
     return AsyncChild(
-      value: phList,
-      builder: (context, phList) {
-        final list = phList.where((ph) => selectedYear.contains(ph.date.year));
-        return Column(
-          children: list
-              .map(
-                (ph) => AdminPhCard(
-                  ph: ph,
-                  onEdit: () {
-                    QR.to(
-                      PhRouter.root + PhRouter.admin + PhRouter.add_ph,
-                    );
-                    phNotifier.setPh(ph);
-                  },
-                  onDelete: () async {
-                    await showDialog(
-                      context: context,
-                      builder: (context) {
-                        return CustomDialogBox(
-                          title: PhTextConstants.delete,
-                          descriptions: PhTextConstants.irreversibleAction,
-                          onYes: () {
-                            phListNotifier.deletePh(ph);
-                          },
-                        );
-                      },
-                    );
-                  },
-                ),
-              )
-              .toList(),
-        );
-      },
-    );
+        value: phList,
+        builder: (context, phList) {
+          final list =
+              phList.where((ph) => selectedYear.contains(ph.date.year));
+          return Column(
+              children: list
+                  .map((ph) => AdminPhCard(
+                        ph: ph,
+                        onEdit: () {
+                          QR.to(
+                              PhRouter.root + PhRouter.admin + PhRouter.add_ph);
+                          phNotifier.setPh(ph);
+                        },
+                        onDelete: () async {
+                          await showDialog(
+                            context: context,
+                            builder: (context) {
+                              return CustomDialogBox(
+                                title: PhTextConstants.delete,
+                                descriptions:
+                                    PhTextConstants.irreversibleAction,
+                                onYes: () {
+                                  phListNotifier.deletePh(ph);
+                                },
+                              );
+                            },
+                          );
+                        },
+                      ))
+                  .toList());
+        });
   }
 }
