@@ -35,6 +35,7 @@ def keystoreProperties = new Properties()
 android {
     compileSdkVersion 34
     ndkVersion "25.1.8937393"
+    namespace 'fr.myecl.titan'
 
     compileOptions {
         coreLibraryDesugaringEnabled true
@@ -103,13 +104,4 @@ flutter {
 dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
     implementation platform('com.google.firebase:firebase-bom:32.7.4')
-}
-
-android {
-
-    namespace 'com.example.myecl'
-    defaultConfig {
-        targetSdkVersion 34
-        minSdkVersion flutter.minSdkVersion
-    }
 }
