@@ -945,10 +945,10 @@ packages:
     dependency: "direct main"
     description:
       name: qlevar_router
-      sha256: "22fd556e143d931d44537285be76029fbf62c387c9c92c01f8c5899f1651a4bd"
+      sha256: "55ee7a822b9f7311eea292bd6d348336b03ffd1b85c44427987b72072591a84c"
       url: "https://pub.dev"
     source: hosted
-    version: "1.10.2"
+    version: "1.10.3"
   riverpod:
     dependency: transitive
     description:
