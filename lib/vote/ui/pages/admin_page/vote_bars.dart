@@ -87,7 +87,8 @@ class VoteBars extends HookConsumerWidget {
                   bottom: 5,
                 ),
                 tooltipMargin: 10,
-                tooltipBgColor: Colors.grey.shade200,
+                getTooltipColor: (BarChartGroupData group) =>
+                    Colors.grey.shade200,
                 getTooltipItem: (group, groupIndex, rod, rodIndex) {
                   return BarTooltipItem(
                     rod.toY.toInt().toString(),
