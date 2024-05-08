@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:myecl/service/class/message.dart';
 import 'package:myecl/tools/logs/file_logger_output.dart';
 import 'package:myecl/tools/logs/log.dart';
 import 'package:myecl/tools/logs/logger_output.dart';
@@ -61,5 +62,10 @@ class Logger {
 
   void logException(Exception e) {
     error(e.toString());
+  }
+
+  void logNotification(Message message) {
+    final messageString = message.toJson().toString();
+    writeLog(Log(message: messageString, level: LogLevel.notification));
   }
 }

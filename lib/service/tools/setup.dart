@@ -55,6 +55,7 @@ void setUpNotification(WidgetRef ref) {
       messages.maybeWhen(
         data: (messageList) async {
           for (final message in messageList) {
+            Repository.logger.logNotification(message);
             final actionModule = message.actionModule;
             final actionTable = message.actionTable;
             if (!message.isVisible &&
