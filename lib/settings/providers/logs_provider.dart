@@ -43,6 +43,18 @@ class NotificationLogsProvider extends ListNotifier<Log> {
   Future<AsyncValue<List<Log>>> getLogs() async {
     return await loadList(() async => logger.getNotificationLogs());
   }
+
+  Future<bool> deleteLogs() async {
+    return await delete(
+      (id) async => true,
+      (listT, t) {
+        logger.clearNotificationLogs();
+        return [];
+      },
+      "",
+      Log.empty(),
+    );
+  }
 }
 
 final notificationLogsProvider =

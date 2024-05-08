@@ -44,6 +44,10 @@ class Logger {
     loggerOutput?.clearLogs();
   }
 
+  void clearNotificationLogs() {
+    loggerOutput?.clearNotificationLogs();
+  }
+
   void debug(String message) {
     writeLog(Log(message: message, level: LogLevel.debug));
   }

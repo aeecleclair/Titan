@@ -15,4 +15,7 @@ abstract class LoggerOutput {
 
   /// Clear the logs from the output
   void clearLogs();
+
+  /// Clear the notification logs from the output
+  void clearNotificationLogs();
 }

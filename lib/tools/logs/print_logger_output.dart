@@ -28,4 +28,8 @@ class PrintLoggerOutput implements LoggerOutput {
   /// Delete the content of the log file
   @override
   void clearLogs() {}
+
+  /// Delete the content of the log file
+  @override
+  void clearNotificationLogs() {}
 }
