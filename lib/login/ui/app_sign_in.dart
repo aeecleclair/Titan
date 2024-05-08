@@ -79,7 +79,7 @@ class AppSignIn extends HookConsumerWidget {
                                     displayToast(
                                       context,
                                       TypeMsg.error,
-                                      LoginTextConstants.loginFailed,
+                                      "${LoginTextConstants.loginFailed} : $e",
                                     );
                                   },
                                   loading: () {},
