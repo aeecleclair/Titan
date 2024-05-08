@@ -35,6 +35,10 @@ class Logger {
     return loggerOutput?.getLogs() ?? [];
   }
 
+  List<Log> getNotificationLogs() {
+    return loggerOutput?.getNotificationLogs() ?? [];
+  }
+
   void clearLogs() {
     loggerOutput?.clearLogs();
   }

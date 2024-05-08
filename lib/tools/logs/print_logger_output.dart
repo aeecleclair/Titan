@@ -18,6 +18,13 @@ class PrintLoggerOutput implements LoggerOutput {
     return [];
   }
 
+  /// Get the logs from the file
+  /// The logs will be returned in reverse order, the most recent at the beginning
+  @override
+  List<Log> getNotificationLogs() {
+    return [];
+  }
+
   /// Delete the content of the log file
   @override
   void clearLogs() {}
