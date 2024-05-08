@@ -14,6 +14,7 @@ class SettingsTextConstants {
   static const String darkMode = "Mode sombre";
   static const String darkModeOff = "Désactivé";
   static const String deleteLogs = "Supprimer les logs ?";
+  static const String deleteNotificationLogs = "Supprimer les logs des notifications ?";
   static const String detelePersonalData = "Supprimer mes données personnelles";
   static const String detelePersonalDataDesc =
       "Cette action notifie l'administrateur que vous souhaitez supprimer vos données personnelles.";
