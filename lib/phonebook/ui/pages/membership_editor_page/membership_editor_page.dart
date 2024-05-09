@@ -8,6 +8,7 @@ import 'package:myecl/phonebook/providers/association_member_list_provider.dart'
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/member_role_tags_provider.dart';
 import 'package:myecl/phonebook/providers/membership_provider.dart';
+import 'package:myecl/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
@@ -46,6 +47,7 @@ class MembershipEditorPage extends HookConsumerWidget {
     final apparentNameController =
         useTextEditingController(text: membership.apparentName);
     final associationMembers = ref.watch(associationMemberListProvider);
+    final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -114,22 +116,29 @@ class MembershipEditorPage extends HookConsumerWidget {
                               data: (rolesTag) => rolesTag[0],
                               orElse: () => false,
                             ),
-                            fillColor: WidgetStateProperty.all(Colors.black),
-                            onChanged: (value) {
-                              rolesTagList[tagKey] = AsyncData([value!]);
-                              memberRoleTagsNotifier
-                                  .setRoleTagsWithFilter(rolesTagList);
-                              rolesTagsNotifier.setTData(
-                                tagKey,
-                                AsyncData([value]),
-                              );
-                              if (value && apparentNameController.text == "") {
-                                apparentNameController.text = tagKey;
-                              } else if (!value &&
-                                  apparentNameController.text == tagKey) {
-                                apparentNameController.text = "";
-                              }
-                            },
+                            fillColor: rolesTagList.keys.first == tagKey &&
+                                    !isPhonebookAdmin
+                                ? MaterialStateProperty.all(Colors.black)
+                                : MaterialStateProperty.all(Colors.grey),
+                            onChanged: rolesTagList.keys.first == tagKey &&
+                                    !isPhonebookAdmin
+                                ? null
+                                : (value) {
+                                    rolesTagList[tagKey] = AsyncData([value!]);
+                                    memberRoleTagsNotifier
+                                        .setRoleTagsWithFilter(rolesTagList);
+                                    rolesTagsNotifier.setTData(
+                                      tagKey,
+                                      AsyncData([value]),
+                                    );
+                                    if (value &&
+                                        apparentNameController.text == "") {
+                                      apparentNameController.text = tagKey;
+                                    } else if (!value &&
+                                        apparentNameController.text == tagKey) {
+                                      apparentNameController.text = "";
+                                    }
+                                  },
                           ),
                         ],
                       ),
