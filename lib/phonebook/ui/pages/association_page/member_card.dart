@@ -79,7 +79,8 @@ class MemberCard extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(width: 10),
-              if (member.member.nickname != null) ...[
+              if ((member.member.nickname != null) &&
+                  (member.member.nickname != "")) ...[
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
