@@ -65,7 +65,7 @@ class MemberEditableCard extends HookConsumerWidget {
                   .firstWhere((element) =>
                       element.associationId == association.id &&
                       element.mandateYear == association.mandateYear)
-                  .rolesTags),,
+                  .rolesTags),
         borderRadius: const BorderRadius.all(Radius.circular(20)),
       ),
       child: Row(
