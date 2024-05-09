@@ -12,6 +12,7 @@ import 'package:myecl/phonebook/providers/membership_provider.dart';
 import 'package:myecl/phonebook/providers/profile_picture_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/router.dart';
+import 'package:myecl/phonebook/tools/function.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/delete_button.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/edition_button.dart';
 import 'package:myecl/tools/functions.dart';
@@ -58,7 +59,13 @@ class MemberEditableCard extends HookConsumerWidget {
       margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
       decoration: BoxDecoration(
         border: Border.all(),
-        color: Colors.white,
+        color: getColorFromTagList(
+              ref,
+              member.memberships
+                  .firstWhere((element) =>
+                      element.associationId == association.id &&
+                      element.mandateYear == association.mandateYear)
+                  .rolesTags),,
         borderRadius: const BorderRadius.all(Radius.circular(20)),
       ),
       child: Row(
