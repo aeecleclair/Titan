@@ -11,6 +11,7 @@ import 'package:myecl/phonebook/providers/association_member_sorted_list_provide
 import 'package:myecl/phonebook/providers/association_picture_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
+import 'package:myecl/phonebook/providers/member_role_tags_provider.dart';
 import 'package:myecl/phonebook/providers/membership_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/router.dart';
@@ -50,6 +51,7 @@ class AssociationEditorPage extends HookConsumerWidget {
     final rolesTagsNotifier = ref.watch(rolesTagsProvider.notifier);
     final membershipNotifier = ref.watch(membershipProvider.notifier);
     final completeMemberNotifier = ref.watch(completeMemberProvider.notifier);
+    final memberRoleTagsNotifier = ref.watch(memberRoleTagsProvider.notifier);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -254,6 +256,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                     ),
                     onTap: () async {
                       rolesTagsNotifier.resetChecked();
+                      memberRoleTagsNotifier.reset();
                       completeMemberNotifier
                           .setCompleteMember(CompleteMember.empty());
                       membershipNotifier.setMembership(

@@ -7,6 +7,7 @@ import 'package:myecl/phonebook/class/membership.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
 import 'package:myecl/phonebook/providers/member_pictures_provider.dart';
+import 'package:myecl/phonebook/providers/member_role_tags_provider.dart';
 import 'package:myecl/phonebook/providers/membership_provider.dart';
 import 'package:myecl/phonebook/providers/profile_picture_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
@@ -36,6 +37,7 @@ class MemberEditableCard extends HookConsumerWidget {
     final roleTagsNotifier = ref.watch(rolesTagsProvider.notifier);
     final membershipNotifier = ref.watch(membershipProvider.notifier);
     final completeMemberNotifier = ref.watch(completeMemberProvider.notifier);
+    final memberRoleTagsNotifier = ref.watch(memberRoleTagsProvider.notifier);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -117,6 +119,7 @@ class MemberEditableCard extends HookConsumerWidget {
               roleTagsNotifier.loadRoleTagsFromMember(member, association);
               completeMemberNotifier.setCompleteMember(member);
               membershipNotifier.setMembership(assoMembership);
+              memberRoleTagsNotifier.reset();
               if (QR.currentPath.contains(PhonebookRouter.admin)) {
                 QR.to(
                   PhonebookRouter.root +
