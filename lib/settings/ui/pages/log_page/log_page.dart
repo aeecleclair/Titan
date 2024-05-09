@@ -39,6 +39,9 @@ class LogPage extends HookConsumerWidget {
         child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: Column(children: [
+              const SizedBox(
+                height: 20,
+              ),
               HorizontalListView.builder(
                   height: 40,
                   items: LogTabs.values,
@@ -47,18 +50,19 @@ class LogPage extends HookConsumerWidget {
                           logTabNotifier.setLogTabs(item);
                         },
                         child: ItemChip(
-                          selected: true,
+                          selected: logTab == item,
                           child: Text(
                             capitalize(item.name),
-                            style: const TextStyle(
-                              color: Colors.white,
+                            style: TextStyle(
+                              color:
+                                  logTab == item ? Colors.white : Colors.black,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                       )),
               const SizedBox(
-                height: 30,
+                height: 10,
               ),
               getTab(logTab),
             ])),

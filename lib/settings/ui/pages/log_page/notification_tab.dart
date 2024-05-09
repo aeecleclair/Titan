@@ -21,7 +21,7 @@ class NotificationTab extends HookConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text(
-              SettingsTextConstants.logs,
+              SettingsTextConstants.notifications,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
