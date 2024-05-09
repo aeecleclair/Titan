@@ -60,12 +60,12 @@ class MemberEditableCard extends HookConsumerWidget {
       decoration: BoxDecoration(
         border: Border.all(),
         color: getColorFromTagList(
-              ref,
-              member.memberships
-                  .firstWhere((element) =>
-                      element.associationId == association.id &&
-                      element.mandateYear == association.mandateYear)
-                  .rolesTags),
+            ref,
+            member.memberships
+                .firstWhere((element) =>
+                    element.associationId == association.id &&
+                    element.mandateYear == association.mandateYear)
+                .rolesTags),
         borderRadius: const BorderRadius.all(Radius.circular(20)),
       ),
       child: Row(
