@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/ph/class/ph.dart';
+import 'package:myecl/ph/providers/file_picker_result_provider.dart';
 import 'package:myecl/ph/providers/ph_provider.dart';
 import 'package:myecl/ph/providers/ph_send_pdf_provider.dart';
 import 'package:myecl/ph/router.dart';
@@ -20,6 +21,7 @@ class AdminPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final phNotifier = ref.watch(phProvider.notifier);
     final phSendPdfNotifier = ref.watch(phSendPdfProvider.notifier);
+    final resultNotifier = ref.watch(filePickerResultProvider.notifier);
     return PhTemplate(
       child: Column(
         children: [
@@ -31,6 +33,7 @@ class AdminPage extends HookConsumerWidget {
             onTap: () {
               phNotifier.setPh(Ph.empty());
               phSendPdfNotifier.set(Uint8List(0));
+              resultNotifier.setFilePickerResult(null);
               QR.to(PhRouter.root + PhRouter.admin + PhRouter.add_ph);
             },
             child: const MyButton(
