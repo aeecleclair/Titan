@@ -44,8 +44,38 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
   ) async {
     return await update(
       (member) => associationMemberRepository.updateMember(membership),
-      (members, member) => members
-        ..[members.indexWhere((e) => e.member.id == member.member.id)] = member,
+      (members, member) {
+        members.sort(
+          (a, b) => a.memberships
+              .firstWhere((e) => e.associationId == membership.associationId)
+              .order
+              .compareTo(b.memberships
+                  .firstWhere(
+                      (e) => e.associationId == membership.associationId)
+                  .order),
+        );
+        int oldIndex =
+            members.indexWhere((e) => e.member.id == member.member.id);
+        int newIndex = member.memberships
+            .indexWhere((e) => e.associationId == membership.associationId);
+        if (oldIndex < newIndex) {
+          for (int i = oldIndex + 1; i <= newIndex; i++) {
+            members[i]
+                .memberships
+                .firstWhere((e) => e.associationId == membership.associationId)
+                .order--;
+          }
+        } else if (oldIndex > newIndex) {
+          for (int i = newIndex; i < oldIndex; i++) {
+            members[i]
+                .memberships
+                .firstWhere((e) => e.associationId == membership.associationId)
+                .order++;
+          }
+        }
+        members[oldIndex] = member;
+        return members;
+      },
       member,
     );
   }
