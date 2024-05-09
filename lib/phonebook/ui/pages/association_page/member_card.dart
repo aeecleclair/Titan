@@ -11,6 +11,7 @@ import 'package:myecl/phonebook/providers/profile_picture_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
+import 'package:myecl/phonebook/tools/function.dart';
 import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -48,6 +49,13 @@ class MemberCard extends HookConsumerWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
         child: CardLayout(
+          color: getColorFromTagList(
+              ref,
+              member.memberships
+                  .firstWhere((element) =>
+                      element.associationId == association.id &&
+                      element.mandateYear == association.mandateYear)
+                  .rolesTags),
           margin: EdgeInsets.zero,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

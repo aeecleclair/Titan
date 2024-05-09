@@ -1,8 +1,11 @@
 import 'package:diacritic/diacritic.dart';
+import 'package:flutter/material.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/association_kinds.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/membership.dart';
+import 'package:myecl/phonebook/class/roles_tags.dart';
+import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 
 int getPosition(
   CompleteMember member,
@@ -43,4 +46,23 @@ List<Association> sortedAssociationByKind(
     sorted.addAll(list);
   }
   return sorted;
+}
+
+Color getColorFromTagList(ref, List<String> tags) {
+  final rolesTags = ref.watch(rolesTagsProvider).keys.toList();
+  int index = 3;
+  for (String tag in tags) {
+    if (rolesTags.indexOf(tag) < index) {
+      index = rolesTags.indexOf(tag);
+    }
+  }
+  switch (index) {
+    case 0:
+      return const Color.fromARGB(255, 255, 75, 62);
+    case 1:
+      return const Color.fromARGB(255, 255, 124, 124);
+    case 2:
+      return const Color.fromARGB(255, 255, 186, 186);
+  }
+  return Colors.white;
 }
