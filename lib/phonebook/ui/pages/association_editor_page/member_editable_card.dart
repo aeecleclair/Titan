@@ -93,7 +93,7 @@ class MemberEditableCard extends HookConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AutoSizeText(
-                  "${(member.member.nickname ?? member.member.firstname)} - ${member.memberships.firstWhere((element) => element.associationId == association.id).apparentName}",
+                  "${(member.member.nickname ?? member.member.firstname)} - ${member.memberships.firstWhere((element) => element.associationId == association.id && element.mandateYear == association.mandateYear).apparentName}",
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
