@@ -304,7 +304,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                             );
                           },
                           onReorder: (int oldIndex, int newIndex) {
-                            associationMemberListNotifier.updateMember(
+                            associationMemberListNotifier.reorderMember(
                               associationMemberSortedList[oldIndex],
                               associationMemberSortedList[oldIndex]
                                   .memberships
@@ -313,6 +313,8 @@ class AssociationEditorPage extends HookConsumerWidget {
                                       element.mandateYear ==
                                           association.mandateYear)
                                   .copyWith(order: newIndex),
+                              oldIndex,
+                              newIndex,
                             );
                           },
                           children: associationMemberSortedList

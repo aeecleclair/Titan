@@ -44,36 +44,60 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
   ) async {
     return await update(
       (member) => associationMemberRepository.updateMember(membership),
+      (members, member) => members
+        ..[members.indexWhere((i) => i.member.id == member.member.id)] = member,
+      member,
+    );
+  }
+
+  Future<bool> reorderMember(
+    CompleteMember member,
+    Membership membership,
+    int oldIndex,
+    int newIndex,
+  ) async {
+    return await update(
+      (member) => associationMemberRepository.updateMember(membership),
       (members, member) {
         members.sort(
           (a, b) => a.memberships
-              .firstWhere((e) => e.associationId == membership.associationId)
+              .firstWhere((e) =>
+                  e.associationId == membership.associationId &&
+                  e.mandateYear == membership.mandateYear)
               .order
-              .compareTo(b.memberships
-                  .firstWhere(
-                      (e) => e.associationId == membership.associationId)
-                  .order),
+              .compareTo(
+                b.memberships
+                    .firstWhere((e) =>
+                        e.associationId == membership.associationId &&
+                        e.mandateYear == membership.mandateYear)
+                    .order,
+              ),
         );
-        int oldIndex =
-            members.indexWhere((e) => e.member.id == member.member.id);
-        int newIndex = member.memberships
-            .indexWhere((e) => e.associationId == membership.associationId);
         if (oldIndex < newIndex) {
           for (int i = oldIndex + 1; i <= newIndex; i++) {
             members[i]
                 .memberships
-                .firstWhere((e) => e.associationId == membership.associationId)
+                .firstWhere((e) =>
+                    e.associationId == membership.associationId &&
+                    e.mandateYear == membership.mandateYear)
                 .order--;
           }
-        } else if (oldIndex > newIndex) {
+        } else {
           for (int i = newIndex; i < oldIndex; i++) {
             members[i]
                 .memberships
-                .firstWhere((e) => e.associationId == membership.associationId)
+                .firstWhere((e) =>
+                    e.associationId == membership.associationId &&
+                    e.mandateYear == membership.mandateYear)
                 .order++;
           }
         }
-        members[oldIndex] = member;
+        members[oldIndex]
+            .memberships
+            .firstWhere((e) =>
+                e.associationId == membership.associationId &&
+                e.mandateYear == membership.mandateYear)
+            .order = newIndex;
         return members;
       },
       member,
