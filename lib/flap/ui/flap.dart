@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/flap/providers/score_list_provider.dart';
+import 'package:myecl/flap/providers/user_score_provider.dart';
 import 'package:myecl/flap/router.dart';
 import 'package:myecl/tools/ui/widgets/top_bar.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -12,6 +14,8 @@ class FlapTemplate extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final leaderBoardNotifier = ref.watch(scoreListProvider.notifier);
+    final bestUserScoreNotifier = ref.watch(userScoreProvider.notifier);
     return Container(
       color: Colors.blue,
       child: SafeArea(
@@ -30,6 +34,8 @@ class FlapTemplate extends HookConsumerWidget {
               rightIcon: QR.currentPath == FlapRouter.root
                   ? IconButton(
                       onPressed: () {
+                        leaderBoardNotifier.getLeaderboard();
+                        bestUserScoreNotifier.getLeaderBoardPosition();
                         QR.to(FlapRouter.root + FlapRouter.leaderBoard);
                       },
                       icon: const HeroIcon(
