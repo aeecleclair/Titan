@@ -21,4 +21,8 @@ class MemberRoleTagsProvider extends StateNotifier<List<String>> {
     });
     state = newRoleTags;
   }
+
+  void reset() {
+    state = [];
+  }
 }
