@@ -52,6 +52,7 @@ class AssociationEditorPage extends HookConsumerWidget {
     final membershipNotifier = ref.watch(membershipProvider.notifier);
     final completeMemberNotifier = ref.watch(completeMemberProvider.notifier);
     final memberRoleTagsNotifier = ref.watch(memberRoleTagsProvider.notifier);
+
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -293,42 +294,58 @@ class AssociationEditorPage extends HookConsumerWidget {
             ),
             AsyncChild(
               value: associationMemberList,
-              builder: (context, associationMembers) =>
-                  associationMembers.isEmpty
-                      ? const Text(PhonebookTextConstants.noMember)
-                      : ReorderableListView(
-                          physics: const BouncingScrollPhysics(),
-                          proxyDecorator: (child, index, animation) {
-                            return Material(
-                              child: FadeTransition(
-                                opacity: animation,
-                                child: child,
-                              ),
-                            );
-                          },
-                          onReorder: (int oldIndex, int newIndex) {
+              builder: (context, associationMembers) => associationMembers
+                      .isEmpty
+                  ? const Text(PhonebookTextConstants.noMember)
+                  : ReorderableListView(
+                      physics: const BouncingScrollPhysics(),
+                      proxyDecorator: (child, index, animation) {
+                        return Material(
+                          child: FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          ),
+                        );
+                      },
+                      onReorder: (int oldIndex, int newIndex) {
+                        final result =
                             associationMemberListNotifier.reorderMember(
-                              associationMemberSortedList[oldIndex],
-                              associationMemberSortedList[oldIndex]
-                                  .memberships
-                                  .firstWhere((element) =>
-                                      element.associationId == association.id &&
-                                      element.mandateYear ==
-                                          association.mandateYear)
-                                  .copyWith(order: newIndex),
-                              oldIndex,
-                              newIndex,
-                            );
-                          },
-                          children: associationMemberSortedList
-                              .map(
-                                (member) => MemberEditableCard(
-                                  member: member,
-                                  association: association,
-                                ),
+                          associationMemberSortedList[oldIndex],
+                          associationMemberSortedList[oldIndex]
+                              .memberships
+                              .firstWhere(
+                                (element) =>
+                                    element.associationId == association.id &&
+                                    element.mandateYear ==
+                                        association.mandateYear,
                               )
-                              .toList(),
-                        ),
+                              .copyWith(order: newIndex),
+                          oldIndex,
+                          newIndex,
+                        );
+                        result.then((value) {
+                          if (value) {
+                            displayToastWithContext(
+                              TypeMsg.msg,
+                              PhonebookTextConstants.memberReordered,
+                            );
+                          } else {
+                            displayToastWithContext(
+                              TypeMsg.error,
+                              PhonebookTextConstants.reorderingError,
+                            );
+                          }
+                        });
+                      },
+                      children: associationMemberSortedList
+                          .map(
+                            (member) => MemberEditableCard(
+                              member: member,
+                              association: association,
+                            ),
+                          )
+                          .toList(),
+                    ),
             ),
             const SizedBox(
               height: 10,

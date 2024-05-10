@@ -1,7 +1,5 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
@@ -50,12 +48,15 @@ class MemberCard extends HookConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
         child: CardLayout(
           color: getColorFromTagList(
-              ref,
-              member.memberships
-                  .firstWhere((element) =>
+            ref,
+            member.memberships
+                .firstWhere(
+                  (element) =>
                       element.associationId == association.id &&
-                      element.mandateYear == association.mandateYear)
-                  .rolesTags),
+                      element.mandateYear == association.mandateYear,
+                )
+                .rolesTags,
+          ),
           margin: EdgeInsets.zero,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -83,7 +84,9 @@ class MemberCard extends HookConsumerWidget {
                     child: CircularProgressIndicator(),
                   ),
                   dataBuilder: (context, data) => CircleAvatar(
-                      radius: 20, backgroundImage: data.first.image),
+                    radius: 20,
+                    backgroundImage: data.first.image,
+                  ),
                 ),
               ),
               const SizedBox(width: 10),
