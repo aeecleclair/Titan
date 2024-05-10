@@ -61,15 +61,19 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
       (members, member) {
         members.sort(
           (a, b) => a.memberships
-              .firstWhere((e) =>
-                  e.associationId == membership.associationId &&
-                  e.mandateYear == membership.mandateYear)
+              .firstWhere(
+                (e) =>
+                    e.associationId == membership.associationId &&
+                    e.mandateYear == membership.mandateYear,
+              )
               .order
               .compareTo(
                 b.memberships
-                    .firstWhere((e) =>
-                        e.associationId == membership.associationId &&
-                        e.mandateYear == membership.mandateYear)
+                    .firstWhere(
+                      (e) =>
+                          e.associationId == membership.associationId &&
+                          e.mandateYear == membership.mandateYear,
+                    )
                     .order,
               ),
         );
@@ -77,26 +81,32 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
           for (int i = oldIndex + 1; i <= newIndex; i++) {
             members[i]
                 .memberships
-                .firstWhere((e) =>
-                    e.associationId == membership.associationId &&
-                    e.mandateYear == membership.mandateYear)
+                .firstWhere(
+                  (e) =>
+                      e.associationId == membership.associationId &&
+                      e.mandateYear == membership.mandateYear,
+                )
                 .order--;
           }
         } else {
           for (int i = newIndex; i < oldIndex; i++) {
             members[i]
                 .memberships
-                .firstWhere((e) =>
-                    e.associationId == membership.associationId &&
-                    e.mandateYear == membership.mandateYear)
+                .firstWhere(
+                  (e) =>
+                      e.associationId == membership.associationId &&
+                      e.mandateYear == membership.mandateYear,
+                )
                 .order++;
           }
         }
         members[oldIndex]
             .memberships
-            .firstWhere((e) =>
-                e.associationId == membership.associationId &&
-                e.mandateYear == membership.mandateYear)
+            .firstWhere(
+              (e) =>
+                  e.associationId == membership.associationId &&
+                  e.mandateYear == membership.mandateYear,
+            )
             .order = newIndex;
         return members;
       },

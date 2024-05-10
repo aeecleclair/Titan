@@ -4,7 +4,6 @@ import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/association_kinds.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/membership.dart';
-import 'package:myecl/phonebook/class/roles_tags.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 
 int getPosition(
