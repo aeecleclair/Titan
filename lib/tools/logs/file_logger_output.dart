@@ -48,9 +48,11 @@ class FileLoggerOutput implements LoggerOutput {
   List<Log> getLogs() {
     final String logsString = logFile.readAsStringSync();
 
-    return logsFromEscapedString(logsString).where(
-      (element) => element.level != LogLevel.notification,
-    ).toList();
+    return logsFromEscapedString(logsString)
+        .where(
+          (element) => element.level != LogLevel.notification,
+        )
+        .toList();
   }
 
   /// Get the logs from the file
@@ -59,18 +61,22 @@ class FileLoggerOutput implements LoggerOutput {
   List<Log> getNotificationLogs() {
     final String logsString = logFile.readAsStringSync();
 
-    return logsFromEscapedString(logsString).where(
-      (element) => element.level == LogLevel.notification,
-    ).toList();
+    return logsFromEscapedString(logsString)
+        .where(
+          (element) => element.level == LogLevel.notification,
+        )
+        .toList();
   }
 
   /// Delete the non notification logs
   @override
   void clearLogs() {
     final String logsString = logFile.readAsStringSync();
-    final notificationLogs = logsFromEscapedString(logsString).where(
-      (element) => element.level == LogLevel.notification,
-    ).toList();
+    final notificationLogs = logsFromEscapedString(logsString)
+        .where(
+          (element) => element.level == LogLevel.notification,
+        )
+        .toList();
     logFile.writeAsStringSync("");
     for (Log log in notificationLogs) {
       writeLog(log);
@@ -81,9 +87,11 @@ class FileLoggerOutput implements LoggerOutput {
   @override
   void clearNotificationLogs() {
     final String logsString = logFile.readAsStringSync();
-    final logs = logsFromEscapedString(logsString).where(
-      (element) => element.level != LogLevel.notification,
-    ).toList();
+    final logs = logsFromEscapedString(logsString)
+        .where(
+          (element) => element.level != LogLevel.notification,
+        )
+        .toList();
     logFile.writeAsStringSync("");
     for (Log log in logs) {
       writeLog(log);
