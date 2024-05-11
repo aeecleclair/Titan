@@ -19,7 +19,7 @@ class ScoreRepository extends Repository {
   }
 
   Future<Score> getLeaderBoardPosition() async {
-    final response = await getOne("leaderboard/me");
+    final response = await getOne("scores/me");
     if (response == null) {
       return Score.empty();
     }
