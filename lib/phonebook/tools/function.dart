@@ -57,11 +57,11 @@ Color getColorFromTagList(ref, List<String> tags) {
   }
   switch (index) {
     case 0:
-      return const Color.fromARGB(255, 255, 75, 62);
+      return const Color.fromARGB(255, 255, 141, 132);
     case 1:
-      return const Color.fromARGB(255, 255, 124, 124);
+      return const Color.fromARGB(255, 255, 175, 157);
     case 2:
-      return const Color.fromARGB(255, 255, 186, 186);
+      return const Color.fromARGB(255, 255, 205, 205);
   }
   return Colors.white;
 }
