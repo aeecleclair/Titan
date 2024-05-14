@@ -9,9 +9,10 @@ import 'package:myecl/tools/providers/single_notifier.dart';
 class PhPdfFirstPageNotifier extends SingleNotifier<Uint8List> {
   final phPdfFirstPageRepository = PhPdfFirstPageRepository();
   final PhPdfsFirstPageNotifier phPdfsFirstPageNotifier;
-  PhPdfFirstPageNotifier(
-      {required String token, required this.phPdfsFirstPageNotifier,})
-      : super(const AsyncValue.loading()) {
+  PhPdfFirstPageNotifier({
+    required String token,
+    required this.phPdfsFirstPageNotifier,
+  }) : super(const AsyncValue.loading()) {
     phPdfFirstPageRepository.setToken(token);
   }
 
@@ -27,5 +28,7 @@ final phPdfFirstPageProvider =
   final token = ref.watch(tokenProvider);
   final phPdfsFirstPageNotifier = ref.watch(phPdfsFirstPageProvider.notifier);
   return PhPdfFirstPageNotifier(
-      token: token, phPdfsFirstPageNotifier: phPdfsFirstPageNotifier,);
+    token: token,
+    phPdfsFirstPageNotifier: phPdfsFirstPageNotifier,
+  );
 });

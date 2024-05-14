@@ -11,12 +11,16 @@ class NotificationRepository extends Repository {
 
   Future<List<Message>> getMessages(String firebaseToken) async {
     final messages = List<Message>.from(
-        (await getList(suffix: "messages/$firebaseToken"))
-            .map((x) => Message.fromJson(x)),);
+      (await getList(suffix: "messages/$firebaseToken"))
+          .map((x) => Message.fromJson(x)),
+    );
     for (final message in messages) {
-      Repository.logger.writeLog(Log(
+      Repository.logger.writeLog(
+        Log(
           message: "Received notification messages ${message.toString()}",
-          level: LogLevel.info,),);
+          level: LogLevel.info,
+        ),
+      );
     }
 
     return messages;
