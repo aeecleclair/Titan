@@ -21,18 +21,20 @@ class PhListNotifier extends ListNotifier<Ph> {
 
   Future<bool> editPh(Ph ph) async {
     return await update(
-        _phRepository.editPh,
-        (phs, ph) =>
-            phs..[phs.indexWhere((phToCheck) => phToCheck.id == ph.id)] = ph,
-        ph,);
+      _phRepository.editPh,
+      (phs, ph) =>
+          phs..[phs.indexWhere((phToCheck) => phToCheck.id == ph.id)] = ph,
+      ph,
+    );
   }
 
   Future<bool> deletePh(Ph ph) async {
     return await delete(
-        _phRepository.deletePh,
-        (phs, ph) => phs..removeWhere((phToCheck) => phToCheck.id == ph.id),
-        ph.id,
-        ph,);
+      _phRepository.deletePh,
+      (phs, ph) => phs..removeWhere((phToCheck) => phToCheck.id == ph.id),
+      ph.id,
+      ph,
+    );
   }
 }
 

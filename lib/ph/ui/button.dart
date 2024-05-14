@@ -6,8 +6,12 @@ class MyButton extends StatelessWidget {
   final bool enabled;
   final EdgeInsets? margin;
 
-  const MyButton(
-      {super.key, required this.text, this.enabled = true, this.margin,});
+  const MyButton({
+    super.key,
+    required this.text,
+    this.enabled = true,
+    this.margin,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,17 +21,18 @@ class MyButton extends StatelessWidget {
       height: 40,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-            colors: enabled
-                ? [
-                    const Color.fromARGB(255, 115, 3, 3),
-                    const Color.fromARGB(255, 231, 84, 31),
-                  ]
-                : [
-                    Colors.grey.shade200,
-                    Colors.grey.shade200,
-                  ],
-            begin: Alignment.bottomRight,
-            end: Alignment.topLeft,),
+          colors: enabled
+              ? [
+                  const Color.fromARGB(255, 115, 3, 3),
+                  const Color.fromARGB(255, 231, 84, 31),
+                ]
+              : [
+                  Colors.grey.shade200,
+                  Colors.grey.shade200,
+                ],
+          begin: Alignment.bottomRight,
+          end: Alignment.topLeft,
+        ),
         borderRadius: const BorderRadius.all(Radius.circular(15)),
       ),
       child: Center(

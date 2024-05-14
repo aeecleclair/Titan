@@ -63,13 +63,17 @@ class PhAddEditPhPage extends HookConsumerWidget {
                       child: Column(
                         children: [
                           DateEntry(
-                              label: PhTextConstants.date,
-                              controller: dateController,
-                              onTap: () {
-                                getOnlyDayDate(context, dateController,
-                                    firstDate: DateTime.utc(1890),
-                                    lastDate: DateTime.utc(2100),);
-                              },),
+                            label: PhTextConstants.date,
+                            controller: dateController,
+                            onTap: () {
+                              getOnlyDayDate(
+                                context,
+                                dateController,
+                                firstDate: DateTime.utc(1890),
+                                lastDate: DateTime.utc(2100),
+                              );
+                            },
+                          ),
                           const SizedBox(
                             height: 20,
                           ),
@@ -83,70 +87,83 @@ class PhAddEditPhPage extends HookConsumerWidget {
             ),
             Expanded(
               child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Column(
-                    children: [
-                      const Spacer(),
-                      WaitingButton(
-                        onTap: () async {
-                          if (key.currentState == null) {
-                            return;
-                          }
-                          if (true &&
-                              (!listEquals(phSendPdf, Uint8List(0)) ||
-                                  isEdit)) {
-                            await tokenExpireWrapper(ref, () async {
-                              final phList = ref.watch(phListProvider);
-                              Ph newPh = Ph(
-                                  id: isEdit ? ph.id : '',
-                                  date: DateTime.parse(
-                                      processDateBack(dateController.text),),
-                                  name: name.text,);
-                              final value = isEdit
-                                  ? await phListNotifier.editPh(newPh)
-                                  : await phListNotifier.addPh(newPh);
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Column(
+                  children: [
+                    const Spacer(),
+                    WaitingButton(
+                      onTap: () async {
+                        if (key.currentState == null) {
+                          return;
+                        }
+                        if (true &&
+                            (!listEquals(phSendPdf, Uint8List(0)) || isEdit)) {
+                          await tokenExpireWrapper(ref, () async {
+                            final phList = ref.watch(phListProvider);
+                            Ph newPh = Ph(
+                              id: isEdit ? ph.id : '',
+                              date: DateTime.parse(
+                                processDateBack(dateController.text),
+                              ),
+                              name: name.text,
+                            );
+                            final value = isEdit
+                                ? await phListNotifier.editPh(newPh)
+                                : await phListNotifier.addPh(newPh);
 
-                              if (value) {
-                                SystemChannels.textInput
-                                    .invokeMethod('TextInput.hide');
-                                QR.back();
-                                {
-                                  displayPhToastWithContext(
-                                      TypeMsg.msg,
-                                      isEdit
-                                          ? PhTextConstants.edited
-                                          : PhTextConstants.added,);
-                                  phList.maybeWhen(
-                                      data: (list) {
-                                        final newPh = list.last;
-                                        phPdfNotifier.updatePhPdf(
-                                            newPh.id, phSendPdf,);
-                                      },
-                                      orElse: () {},);
-                                }
-                              } else {
-                                displayPhToastWithContext(TypeMsg.error,
-                                    PhTextConstants.addingFileError,);
+                            if (value) {
+                              SystemChannels.textInput
+                                  .invokeMethod('TextInput.hide');
+                              QR.back();
+                              {
+                                displayPhToastWithContext(
+                                  TypeMsg.msg,
+                                  isEdit
+                                      ? PhTextConstants.edited
+                                      : PhTextConstants.added,
+                                );
+                                phList.maybeWhen(
+                                  data: (list) {
+                                    final newPh = list.last;
+                                    phPdfNotifier.updatePhPdf(
+                                      newPh.id,
+                                      phSendPdf,
+                                    );
+                                  },
+                                  orElse: () {},
+                                );
                               }
-                            });
-                          } else {
-                            displayToast(context, TypeMsg.error,
-                                PhTextConstants.missingInformatonsOrPdf,);
-                          }
-                        },
-                        child: Text(
-                            isEdit ? PhTextConstants.edit : PhTextConstants.add,
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,),),
-                        builder: (child) => AddEditButtonLayout(child: child),
+                            } else {
+                              displayPhToastWithContext(
+                                TypeMsg.error,
+                                PhTextConstants.addingFileError,
+                              );
+                            }
+                          });
+                        } else {
+                          displayToast(
+                            context,
+                            TypeMsg.error,
+                            PhTextConstants.missingInformatonsOrPdf,
+                          );
+                        }
+                      },
+                      child: Text(
+                        isEdit ? PhTextConstants.edit : PhTextConstants.add,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                    ],
-                  ),),
+                      builder: (child) => AddEditButtonLayout(child: child),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),

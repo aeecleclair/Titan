@@ -24,31 +24,31 @@ class PhMainPage extends HookConsumerWidget {
     final phList = ref.watch(phListProvider);
     final phPdfNotifier = ref.watch(phPdfProvider.notifier);
     return PhTemplate(
-        child: Column(
-      children: [
-        if (isAdmin)
+      child: Column(
+        children: [
+          if (isAdmin)
+            SizedBox(
+              width: 116.7,
+              child: AdminButton(
+                onTap: () {
+                  QR.to(PhRouter.root + PhRouter.admin);
+                },
+              ),
+            ),
+          const SizedBox(height: 10),
           SizedBox(
-            width: 116.7,
-            child: AdminButton(
+            width: MediaQuery.of(context).size.width - 60,
+            child: GestureDetector(
               onTap: () {
-                QR.to(PhRouter.root + PhRouter.admin);
+                QR.to(PhRouter.root + PhRouter.past_ph_selection);
               },
+              child: const MyButton(
+                text: PhTextConstants.seePreviousJournal,
+              ),
             ),
           ),
-        const SizedBox(height: 10),
-        SizedBox(
-          width: MediaQuery.of(context).size.width - 60,
-          child: GestureDetector(
-            onTap: () {
-              QR.to(PhRouter.root + PhRouter.past_ph_selection);
-            },
-            child: const MyButton(
-              text: PhTextConstants.seePreviousJournal,
-            ),
-          ),
-        ),
-        const SizedBox(height: 10),
-        AsyncChild(
+          const SizedBox(height: 10),
+          AsyncChild(
             value: phList,
             builder: (context, phs) {
               phs.sort((b, a) => a.date.compareTo(b.date));
@@ -62,21 +62,24 @@ class PhMainPage extends HookConsumerWidget {
 
                 return Expanded(
                   child: AutoLoaderChild(
-                      group: lastPdf,
-                      notifier: pdfsNotifier,
-                      mapKey: id,
-                      loader: (id) => phPdfNotifier.loadPhPdf(id),
-                      dataBuilder: (context, pdf) => PdfView(
-                            pageSnapping: false,
-                            controller: PdfController(
-                                document: PdfDocument.openData(pdf.last),),
-                            scrollDirection:
-                                kIsWeb ? Axis.vertical : Axis.horizontal,
-                          ),),
+                    group: lastPdf,
+                    notifier: pdfsNotifier,
+                    mapKey: id,
+                    loader: (id) => phPdfNotifier.loadPhPdf(id),
+                    dataBuilder: (context, pdf) => PdfView(
+                      pageSnapping: false,
+                      controller: PdfController(
+                        document: PdfDocument.openData(pdf.last),
+                      ),
+                      scrollDirection: kIsWeb ? Axis.vertical : Axis.horizontal,
+                    ),
+                  ),
                 );
               }
-            },),
-      ],
-    ),);
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

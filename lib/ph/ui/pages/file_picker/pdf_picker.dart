@@ -45,7 +45,9 @@ class PdfPicker extends HookConsumerWidget {
               phSendPdfNotifier.set(bytes);
             } else {
               displayToastWithContext(
-                  TypeMsg.error, PhTextConstants.toHeavyFile,);
+                TypeMsg.error,
+                PhTextConstants.toHeavyFile,
+              );
             }
           }
         },
