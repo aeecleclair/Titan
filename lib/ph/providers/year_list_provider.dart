@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/ph/providers/ph_list_provider.dart';
 
 class YearListNotifier extends StateNotifier<List<int>> {
-  YearListNotifier() : super([]);
+  YearListNotifier(super.year);
 
   void addYear(int year) {
     state.add(year);
@@ -11,10 +11,10 @@ class YearListNotifier extends StateNotifier<List<int>> {
 
 final yearListProvider =
     StateNotifierProvider<YearListNotifier, List<int>>((ref) {
-  final phListNotifier = ref.watch(phListProvider);
-  final notifier = phListNotifier.whenData((phList) {
+  final phList = ref.watch(phListProvider);
+  final notifier = phList.whenData((phList) {
     final yearList = phList.map((ph) => ph.date.year).toSet().toList();
-    return YearListNotifier()..state = yearList;
+    return YearListNotifier(yearList);
   });
-  return notifier.value ?? YearListNotifier();
+  return notifier.value ?? YearListNotifier([]);
 });
