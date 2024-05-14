@@ -44,7 +44,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     EventRouter.module,
     RaffleRouter.module,
     RecommendationRouter.module,
-    PhRouter.module
+    PhRouter.module,
     PhonebookRouter.module,
   ];
   ModulesNotifier() : super([]);
