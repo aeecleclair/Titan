@@ -41,7 +41,7 @@ class PhCard extends HookConsumerWidget {
               phNotifier.setPh(ph);
               QR.to(PhRouter.root +
                   PhRouter.past_ph_selection +
-                  PhRouter.view_ph);
+                  PhRouter.view_ph,);
             },
             child: CardLayout(
               margin: const EdgeInsets.all(4),
@@ -50,7 +50,7 @@ class PhCard extends HookConsumerWidget {
                   SizedBox(
                       height:
                           kIsWeb ? MediaQuery.of(context).size.width / 7 : 115,
-                      child: Image.memory(cover.first)),
+                      child: Image.memory(cover.first),),
                   Row(
                     children: [
                       Column(
@@ -73,7 +73,7 @@ class PhCard extends HookConsumerWidget {
                           ],
                           shadowColor: Colors.grey.shade300.withOpacity(0.2),
                           child: const HeroIcon(HeroIcons.arrowDownTray,
-                              color: Colors.black),
+                              color: Colors.black,),
                         ),
                       ),
                     ],
@@ -82,6 +82,6 @@ class PhCard extends HookConsumerWidget {
               ),
             ),
           );
-        });
+        },);
   }
 }

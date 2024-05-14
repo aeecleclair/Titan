@@ -17,7 +17,7 @@ class PhTemplate extends HookConsumerWidget {
             title: "Ph",
             root: PhRouter.root,
           ),
-          Expanded(child: child)
+          Expanded(child: child),
         ],
       ),
     );

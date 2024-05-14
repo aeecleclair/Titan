@@ -70,7 +70,7 @@ class AdminPhCard extends StatelessWidget {
                     Color(0xFF590512),
                   ],
                   shadowColor: const Color(0xFF590512).withOpacity(0.2),
-                  child: const HeroIcon(HeroIcons.trash, color: Colors.white)),
+                  child: const HeroIcon(HeroIcons.trash, color: Colors.white),),
             ),
           ],
         ),

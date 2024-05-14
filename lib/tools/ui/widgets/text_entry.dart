@@ -35,7 +35,7 @@ class TextEntry extends StatelessWidget {
       this.errorColor = ColorConstants.error,
       this.noValueError = TextConstants.noValue,
       this.suffixIcon,
-      this.textInputAction = TextInputAction.next});
+      this.textInputAction = TextInputAction.next,});
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +75,7 @@ class TextEntry extends StatelessWidget {
         enabledBorder:
             UnderlineInputBorder(borderSide: BorderSide(color: enabledColor)),
         errorBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: errorColor, width: 2.0)),
+            borderSide: BorderSide(color: errorColor, width: 2.0),),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: color, width: 2.0),
         ),

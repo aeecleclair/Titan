@@ -20,39 +20,43 @@ class PdfPicker extends HookConsumerWidget {
     final phSendPdfNotifier = ref.watch(phSendPdfProvider.notifier);
     final resultNotifier = ref.watch(filePickerResultProvider.notifier);
     final result = ref.watch(filePickerResultProvider);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
+
     return SizedBox(
       height: 40,
       child: GestureDetector(
-          onTap: () async {
-            final selectedFile = await FilePicker.platform.pickFiles(
-              allowMultiple: false,
-              type: FileType.custom,
-              allowedExtensions: ['pdf'],
-            );
-            resultNotifier.setFilePickerResult(selectedFile);
-            if (selectedFile != null) {
-              final Uint8List bytes;
-              if (selectedFile.files.single.bytes != null) {
-                bytes = selectedFile.files.single.bytes!;
-              } else {
-                bytes =
-                    await File(selectedFile.files.first.path!).readAsBytes();
-              }
-              if (bytes.length < 10000000) {
-                phSendPdfNotifier.set(bytes);
-              } else {
-                displayToast(
-                    context, TypeMsg.error, PhTextConstants.toHeavyFile);
-              }
+        onTap: () async {
+          final selectedFile = await FilePicker.platform.pickFiles(
+            allowMultiple: false,
+            type: FileType.custom,
+            allowedExtensions: ['pdf'],
+          );
+          resultNotifier.setFilePickerResult(selectedFile);
+          if (selectedFile != null) {
+            final Uint8List bytes;
+            if (selectedFile.files.single.bytes != null) {
+              bytes = selectedFile.files.single.bytes!;
+            } else {
+              bytes = await File(selectedFile.files.first.path!).readAsBytes();
             }
-          },
-          child: MyButton(
-            text: isEdit
-                ? PhTextConstants.editPdfFile
-                : (result != null)
-                    ? result.files.single.name
-                    : PhTextConstants.addPdfFile,
-          )),
+            if (bytes.length < 10000000) {
+              phSendPdfNotifier.set(bytes);
+            } else {
+              displayToastWithContext(
+                  TypeMsg.error, PhTextConstants.toHeavyFile,);
+            }
+          }
+        },
+        child: MyButton(
+          text: isEdit
+              ? PhTextConstants.editPdfFile
+              : (result != null)
+                  ? result.files.single.name
+                  : PhTextConstants.addPdfFile,
+        ),
+      ),
     );
   }
 }

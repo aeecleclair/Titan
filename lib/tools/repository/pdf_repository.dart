@@ -24,14 +24,14 @@ abstract class PdfRepository extends Repository {
         } catch (e) {
           Repository.logger.writeLog(Log(
               message: "GET $ext$id$suffix\nError while decoding response",
-              level: LogLevel.error));
+              level: LogLevel.error,),);
           rethrow;
         }
       } else if (response.statusCode == 403) {
         Repository.logger.writeLog(Log(
             message:
                 "GET $ext$id$suffix\n${response.statusCode} ${response.body}",
-            level: LogLevel.error));
+            level: LogLevel.error,),);
         String resp = utf8.decode(response.body.runes.toList());
         final decoded = json.decode(resp);
         if (decoded["detail"] == expiredTokenDetail) {
@@ -43,7 +43,7 @@ abstract class PdfRepository extends Repository {
         Repository.logger.writeLog(Log(
             message:
                 "GET $ext$id$suffix\n${response.statusCode} ${response.body}",
-            level: LogLevel.error));
+            level: LogLevel.error,),);
         throw AppException(ErrorType.notFound, response.body);
       }
     } on AppException {
@@ -55,7 +55,7 @@ abstract class PdfRepository extends Repository {
         Repository.logger.writeLog(Log(
             message:
                 "GET $ext$id$suffix\nError while decoding response from cache",
-            level: LogLevel.error));
+            level: LogLevel.error,),);
         cacheManager.deleteCache(ext + id + suffix);
         rethrow;
       }
@@ -63,12 +63,12 @@ abstract class PdfRepository extends Repository {
   }
 
   Future<Uint8List> addPdf(Uint8List bytes, String id,
-      {String suffix = ""}) async {
+      {String suffix = "",}) async {
     final request =
         http.MultipartRequest('POST', Uri.parse("$host$ext$id$suffix"))
           ..headers.addAll(headers)
           ..files.add(http.MultipartFile.fromBytes('pdf', bytes,
-              filename: 'pdf', contentType: MediaType('application', 'pdf')));
+              filename: 'pdf', contentType: MediaType('application', 'pdf'),),);
     final response = await request.send();
     response.stream.transform(utf8.decoder).listen((value) async {
       if (response.statusCode == 201) {
@@ -77,20 +77,20 @@ abstract class PdfRepository extends Repository {
         } catch (e) {
           Repository.logger.writeLog(Log(
               message: "POST $ext$id$suffix\nError while decoding response",
-              level: LogLevel.error));
+              level: LogLevel.error,),);
           throw AppException(ErrorType.invalidData, e.toString());
         }
       } else if (response.statusCode == 403) {
         Repository.logger.writeLog(Log(
             message:
                 "POST $ext$id$suffix\n${response.statusCode} ${response.reasonPhrase}",
-            level: LogLevel.error));
+            level: LogLevel.error,),);
         throw AppException(ErrorType.tokenExpire, value);
       } else {
         Repository.logger.writeLog(Log(
             message:
                 "POST $ext$id$suffix\n${response.statusCode} ${response.reasonPhrase}",
-            level: LogLevel.error));
+            level: LogLevel.error,),);
         throw AppException(ErrorType.notFound, value);
       }
     });
@@ -108,13 +108,13 @@ abstract class PdfRepository extends Repository {
       } catch (e) {
         Repository.logger.writeLog(Log(
             message: "GET $path\nError while decoding response",
-            level: LogLevel.error));
+            level: LogLevel.error,),);
         rethrow;
       }
     } else if (response.statusCode == 403) {
       Repository.logger.writeLog(Log(
           message: "GET $path\n${response.statusCode} ${response.body}",
-          level: LogLevel.error));
+          level: LogLevel.error,),);
       String resp = utf8.decode(response.body.runes.toList());
       final decoded = json.decode(resp);
       if (decoded["detail"] == expiredTokenDetail) {
@@ -125,7 +125,7 @@ abstract class PdfRepository extends Repository {
     } else {
       Repository.logger.writeLog(Log(
           message: "GET $path\n${response.statusCode} ${response.body}",
-          level: LogLevel.error));
+          level: LogLevel.error,),);
       throw AppException(ErrorType.notFound, response.body);
     }
   }

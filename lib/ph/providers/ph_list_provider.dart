@@ -24,7 +24,7 @@ class PhListNotifier extends ListNotifier<Ph> {
         _phRepository.editPh,
         (phs, ph) =>
             phs..[phs.indexWhere((phToCheck) => phToCheck.id == ph.id)] = ph,
-        ph);
+        ph,);
   }
 
   Future<bool> deletePh(Ph ph) async {
@@ -32,7 +32,7 @@ class PhListNotifier extends ListNotifier<Ph> {
         _phRepository.deletePh,
         (phs, ph) => phs..removeWhere((phToCheck) => phToCheck.id == ph.id),
         ph.id,
-        ph);
+        ph,);
   }
 }
 

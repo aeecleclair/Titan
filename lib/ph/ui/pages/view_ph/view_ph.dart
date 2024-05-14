@@ -37,9 +37,9 @@ class ViewPhPage extends HookConsumerWidget {
                       pageSnapping: false,
                       scrollDirection: kIsWeb ? Axis.vertical : Axis.horizontal,
                       controller: PdfController(
-                          document: PdfDocument.openData(pdf.last)))),
+                          document: PdfDocument.openData(pdf.last),),),),
             );
-          }),
+          },),
     );
   }
 }

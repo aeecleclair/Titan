@@ -7,7 +7,7 @@ class MyButton extends StatelessWidget {
   final EdgeInsets? margin;
 
   const MyButton(
-      {super.key, required this.text, this.enabled = true, this.margin});
+      {super.key, required this.text, this.enabled = true, this.margin,});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class MyButton extends StatelessWidget {
                     Colors.grey.shade200,
                   ],
             begin: Alignment.bottomRight,
-            end: Alignment.topLeft),
+            end: Alignment.topLeft,),
         borderRadius: const BorderRadius.all(Radius.circular(15)),
       ),
       child: Center(

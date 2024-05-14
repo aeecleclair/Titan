@@ -8,5 +8,5 @@ final Map<String, Tuple2<String, List<StateNotifierProvider>>> phProviders = {
     // L'actionTable de la notification est "session"
     PhRouter.root, // La page principale du module ciné
     [phListProvider], // Le provider de la liste des sessions
-  )
+  ),
 };

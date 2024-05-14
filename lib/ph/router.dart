@@ -27,14 +27,14 @@ class PhRouter {
       name: "Ph",
       icon: const Left(HeroIcons.documentText),
       root: PhRouter.root,
-      selected: false);
+      selected: false,);
   PhRouter(this.ref);
   QRoute route() => QRoute(
           name: "ph",
           path: PhRouter.root,
           builder: () => main_page.PhMainPage(),
           middleware: [
-            DeferredLoadingMiddleware(main_page.loadLibrary)
+            DeferredLoadingMiddleware(main_page.loadLibrary),
           ],
           children: [
             QRoute(
@@ -45,22 +45,22 @@ class PhRouter {
                       path: view_ph,
                       builder: () => view_ph_page.ViewPhPage(),
                       middleware: [
-                        DeferredLoadingMiddleware(view_ph_page.loadLibrary)
-                      ]),
-                ]),
+                        DeferredLoadingMiddleware(view_ph_page.loadLibrary),
+                      ],),
+                ],),
             QRoute(
                 path: admin,
                 builder: () => admin_page.AdminPage(),
                 middleware: [
-                  DeferredLoadingMiddleware(admin_page.loadLibrary)
+                  DeferredLoadingMiddleware(admin_page.loadLibrary),
                 ],
                 children: [
                   QRoute(
                       path: add_ph,
                       builder: () => add_edit_ph_page.PhAddEditPhPage(),
                       middleware: [
-                        DeferredLoadingMiddleware(add_edit_ph_page.loadLibrary)
-                      ])
-                ]),
-          ]);
+                        DeferredLoadingMiddleware(add_edit_ph_page.loadLibrary),
+                      ],),
+                ],),
+          ],);
 }

@@ -35,7 +35,7 @@ class YearBar extends HookConsumerWidget {
             e.toString(),
             style: TextStyle(
                 color: selected.contains(e) ? Colors.white : Colors.black,
-                fontWeight: FontWeight.bold),
+                fontWeight: FontWeight.bold,),
           ),
         ),
       ),

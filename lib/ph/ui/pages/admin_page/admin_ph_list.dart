@@ -32,7 +32,7 @@ class AdminPhList extends HookConsumerWidget {
                         ph: ph,
                         onEdit: () {
                           QR.to(
-                              PhRouter.root + PhRouter.admin + PhRouter.add_ph);
+                              PhRouter.root + PhRouter.admin + PhRouter.add_ph,);
                           phNotifier.setPh(ph);
                         },
                         onDelete: () async {
@@ -50,8 +50,8 @@ class AdminPhList extends HookConsumerWidget {
                             },
                           );
                         },
-                      ))
-                  .toList());
-        });
+                      ),)
+                  .toList(),);
+        },);
   }
 }
