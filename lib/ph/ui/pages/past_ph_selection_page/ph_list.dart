@@ -35,7 +35,7 @@ class PhList extends HookConsumerWidget {
         builder: (context, phList) {
           final list = phList.where((ph) =>
               selectedYear.contains(ph.date.year) &&
-              ph.date.isBefore(DateTime.now()));
+              ph.date.isBefore(DateTime.now()),);
           return Column(
             children: [
               const YearBar(),
@@ -55,16 +55,16 @@ class PhList extends HookConsumerWidget {
                           ph: ph,
                           onDownload: () async {
                             await FileSaver.instance.saveFile(
-                                name: ph.name, bytes: pdf.last, ext: "pdf");
+                                name: ph.name, bytes: pdf.last, ext: "pdf",);
                             displayPhToastWithContext(
-                                TypeMsg.msg, PhTextConstants.succesDowloading);
+                                TypeMsg.msg, PhTextConstants.succesDowloading,);
                           },
                         ),
                       );
-                    }).toList()),
+                    }).toList(),),
               ),
             ],
           );
-        });
+        },);
   }
 }

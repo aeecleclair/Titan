@@ -68,8 +68,8 @@ class PhAddEditPhPage extends HookConsumerWidget {
                               onTap: () {
                                 getOnlyDayDate(context, dateController,
                                     firstDate: DateTime.utc(1890),
-                                    lastDate: DateTime.utc(2100));
-                              }),
+                                    lastDate: DateTime.utc(2100),);
+                              },),
                           const SizedBox(
                             height: 20,
                           ),
@@ -100,8 +100,8 @@ class PhAddEditPhPage extends HookConsumerWidget {
                               Ph newPh = Ph(
                                   id: isEdit ? ph.id : '',
                                   date: DateTime.parse(
-                                      processDateBack(dateController.text)),
-                                  name: name.text);
+                                      processDateBack(dateController.text),),
+                                  name: name.text,);
                               final value = isEdit
                                   ? await phListNotifier.editPh(newPh)
                                   : await phListNotifier.addPh(newPh);
@@ -115,23 +115,23 @@ class PhAddEditPhPage extends HookConsumerWidget {
                                       TypeMsg.msg,
                                       isEdit
                                           ? PhTextConstants.edited
-                                          : PhTextConstants.added);
+                                          : PhTextConstants.added,);
                                   phList.maybeWhen(
                                       data: (list) {
                                         final newPh = list.last;
                                         phPdfNotifier.updatePhPdf(
-                                            newPh.id, phSendPdf);
+                                            newPh.id, phSendPdf,);
                                       },
-                                      orElse: () {});
+                                      orElse: () {},);
                                 }
                               } else {
                                 displayPhToastWithContext(TypeMsg.error,
-                                    PhTextConstants.addingFileError);
+                                    PhTextConstants.addingFileError,);
                               }
                             });
                           } else {
                             displayToast(context, TypeMsg.error,
-                                PhTextConstants.missingInformatonsOrPdf);
+                                PhTextConstants.missingInformatonsOrPdf,);
                           }
                         },
                         child: Text(
@@ -139,14 +139,14 @@ class PhAddEditPhPage extends HookConsumerWidget {
                             style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 25,
-                                fontWeight: FontWeight.bold)),
+                                fontWeight: FontWeight.bold,),),
                         builder: (child) => AddEditButtonLayout(child: child),
                       ),
                       const SizedBox(
                         height: 20,
-                      )
+                      ),
                     ],
-                  )),
+                  ),),
             ),
           ],
         ),

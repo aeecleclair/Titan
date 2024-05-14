@@ -24,49 +24,43 @@ class PhRouter {
   static const String admin = '/admin';
   static const String add_ph = '/add_ph';
   static final Module module = Module(
-    name: "Ph",
-    icon: const Left(HeroIcons.documentText),
-    root: PhRouter.root,
-    selected: false,
-  );
+      name: "Ph",
+      icon: const Left(HeroIcons.documentText),
+      root: PhRouter.root,
+      selected: false,);
   PhRouter(this.ref);
   QRoute route() => QRoute(
-        name: "ph",
-        path: PhRouter.root,
-        builder: () => main_page.PhMainPage(),
-        middleware: [
-          DeferredLoadingMiddleware(main_page.loadLibrary),
-        ],
-        children: [
-          QRoute(
-            path: past_ph_selection,
-            builder: () => const PastPhSelectionPage(),
-            children: [
-              QRoute(
-                path: view_ph,
-                builder: () => view_ph_page.ViewPhPage(),
+          name: "ph",
+          path: PhRouter.root,
+          builder: () => main_page.PhMainPage(),
+          middleware: [
+            DeferredLoadingMiddleware(main_page.loadLibrary),
+          ],
+          children: [
+            QRoute(
+                path: past_ph_selection,
+                builder: () => const PastPhSelectionPage(),
+                children: [
+                  QRoute(
+                      path: view_ph,
+                      builder: () => view_ph_page.ViewPhPage(),
+                      middleware: [
+                        DeferredLoadingMiddleware(view_ph_page.loadLibrary),
+                      ],),
+                ],),
+            QRoute(
+                path: admin,
+                builder: () => admin_page.AdminPage(),
                 middleware: [
-                  DeferredLoadingMiddleware(view_ph_page.loadLibrary),
+                  DeferredLoadingMiddleware(admin_page.loadLibrary),
                 ],
-              ),
-            ],
-          ),
-          QRoute(
-            path: admin,
-            builder: () => admin_page.AdminPage(),
-            middleware: [
-              DeferredLoadingMiddleware(admin_page.loadLibrary),
-            ],
-            children: [
-              QRoute(
-                path: add_ph,
-                builder: () => add_edit_ph_page.PhAddEditPhPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(add_edit_ph_page.loadLibrary),
-                ],
-              ),
-            ],
-          ),
-        ],
-      );
+                children: [
+                  QRoute(
+                      path: add_ph,
+                      builder: () => add_edit_ph_page.PhAddEditPhPage(),
+                      middleware: [
+                        DeferredLoadingMiddleware(add_edit_ph_page.loadLibrary),
+                      ],),
+                ],),
+          ],);
 }

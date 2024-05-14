@@ -69,14 +69,14 @@ class PhMainPage extends HookConsumerWidget {
                       dataBuilder: (context, pdf) => PdfView(
                             pageSnapping: false,
                             controller: PdfController(
-                                document: PdfDocument.openData(pdf.last)),
+                                document: PdfDocument.openData(pdf.last),),
                             scrollDirection:
                                 kIsWeb ? Axis.vertical : Axis.horizontal,
-                          )),
+                          ),),
                 );
               }
-            })
+            },),
       ],
-    ));
+    ),);
   }
 }
