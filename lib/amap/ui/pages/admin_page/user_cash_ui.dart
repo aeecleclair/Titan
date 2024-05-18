@@ -140,6 +140,7 @@ class UserCashUi extends HookConsumerWidget {
                                 color: AMAPColorConstants.textDark,
                                 enabledColor: AMAPColorConstants.green3,
                                 suffix: '€',
+                                isNegative: true,
                               ),
                             ),
                             const SizedBox(width: 20),
