@@ -19,7 +19,7 @@ import 'package:myecl/flap/ui/pages/game_page/start_screen.dart';
 import 'bird.dart';
 
 class GamePage extends HookConsumerWidget {
-  const GamePage({Key? key}) : super(key: key);
+  const GamePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -37,45 +37,47 @@ class GamePage extends HookConsumerWidget {
 
     void showGameOverDialog() {
       showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) {
-            return GestureDetector(
-              onTap: () {
-                birdNotifier.resetBird();
-                pipeListNotifier.clearPipe();
-                Navigator.of(context).pop();
-              },
-              child: AlertDialog(
-                backgroundColor: Colors.brown,
-                title: Center(
-                  child: Text(
-                    'Game over!'.toUpperCase(),
-                    style: GoogleFonts.silkscreen(
-                        textStyle: const TextStyle(color: Colors.white)),
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return GestureDetector(
+            onTap: () {
+              birdNotifier.resetBird();
+              pipeListNotifier.clearPipe();
+              Navigator.of(context).pop();
+            },
+            child: AlertDialog(
+              backgroundColor: Colors.brown,
+              title: Center(
+                child: Text(
+                  'Game over!'.toUpperCase(),
+                  style: GoogleFonts.silkscreen(
+                    textStyle: const TextStyle(color: Colors.white),
                   ),
                 ),
-                actions: [
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 10),
-                    child: MaterialButton(
-                      color: Colors.grey[100],
-                      onPressed: () {
-                        birdNotifier.resetBird();
-                        pipeListNotifier.clearPipe();
-                        Navigator.pop(context);
-                      },
-                      child: const Icon(
-                        Icons.refresh,
-                        color: Colors.brown,
-                      ),
-                    ),
-                  )
-                ],
-                actionsAlignment: MainAxisAlignment.center,
               ),
-            );
-          });
+              actions: [
+                Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  child: MaterialButton(
+                    color: Colors.grey[100],
+                    onPressed: () {
+                      birdNotifier.resetBird();
+                      pipeListNotifier.clearPipe();
+                      Navigator.pop(context);
+                    },
+                    child: const Icon(
+                      Icons.refresh,
+                      color: Colors.brown,
+                    ),
+                  ),
+                ),
+              ],
+              actionsAlignment: MainAxisAlignment.center,
+            ),
+          );
+        },
+      );
     }
 
     void gameLoop(Timer timer, double height) {
@@ -99,12 +101,14 @@ class GamePage extends HookConsumerWidget {
           pipeListNotifier.birdHitPipe(width, height, newBird)) {
         timerNotifier.stop();
         if (newBird.score > bestScore) {
-          scoreListNotifier.createScore(Score(
-            user: newBird.user,
-            value: newBird.score,
-            date: DateTime.now(),
-            position: 0,
-          ));
+          scoreListNotifier.createScore(
+            Score(
+              user: newBird.user,
+              value: newBird.score,
+              date: DateTime.now(),
+              position: 0,
+            ),
+          );
         }
         showGameOverDialog();
         gameStartNotifier.setState(false);
@@ -112,37 +116,41 @@ class GamePage extends HookConsumerWidget {
     }
 
     return FlapTemplate(
-        child: Column(
-      children: [
-        Expanded(
-          flex: 4,
-          child: LayoutBuilder(builder: (context, constraints) {
-            return GestureDetector(
-              onTap: () {
-                if (!gameStarted) {
-                  gameStartNotifier.setState(true);
-                  pipePassed.value = false;
-                  timerNotifier
-                      .start((timer) => gameLoop(timer, constraints.maxHeight));
-                } else {
-                  birdNotifier.jump();
-                }
+      child: Column(
+        children: [
+          Expanded(
+            flex: 4,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return GestureDetector(
+                  onTap: () {
+                    if (!gameStarted) {
+                      gameStartNotifier.setState(true);
+                      pipePassed.value = false;
+                      timerNotifier.start(
+                        (timer) => gameLoop(timer, constraints.maxHeight),
+                      );
+                    } else {
+                      birdNotifier.jump();
+                    }
+                  },
+                  child: Container(
+                    color: Colors.blue,
+                    child: Stack(
+                      children: [
+                        const BirdDisplay(),
+                        PipeHandler(constraints: constraints.maxHeight),
+                        const StartScreen(),
+                      ],
+                    ),
+                  ),
+                );
               },
-              child: Container(
-                color: Colors.blue,
-                child: Stack(
-                  children: [
-                    const BirdDisplay(),
-                    PipeHandler(constraints: constraints.maxHeight),
-                    const StartScreen()
-                  ],
-                ),
-              ),
-            );
-          }),
-        ),
-        const GameScore(),
-      ],
-    ));
+            ),
+          ),
+          const GameScore(),
+        ],
+      ),
+    );
   }
 }

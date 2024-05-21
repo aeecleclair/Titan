@@ -11,20 +11,23 @@ class PipeHandler extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pipes = ref.watch(pipeListProvider);
     return Stack(
-        children: pipes
-            .map((e) => Stack(
-                  children: [
-                    PipeDisplay(
-                      pipeHeight: e.height,
-                      isBottomPipe: true,
-                      xPipeAlignment: e.position,
-                    ),
-                    PipeDisplay(
-                      pipeHeight: constraints - e.height - 200,
-                      xPipeAlignment: e.position,
-                    )
-                  ],
-                ))
-            .toList());
+      children: pipes
+          .map(
+            (e) => Stack(
+              children: [
+                PipeDisplay(
+                  pipeHeight: e.height,
+                  isBottomPipe: true,
+                  xPipeAlignment: e.position,
+                ),
+                PipeDisplay(
+                  pipeHeight: constraints - e.height - 200,
+                  xPipeAlignment: e.position,
+                ),
+              ],
+            ),
+          )
+          .toList(),
+    );
   }
 }

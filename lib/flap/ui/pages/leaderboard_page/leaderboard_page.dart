@@ -14,17 +14,17 @@ class LeaderBoardPage extends HookConsumerWidget {
     final leaderBoard = ref.watch(scoreListProvider);
     final bestUserScore = ref.watch(userScoreProvider);
     return FlapTemplate(
-        child: Column(
-      children: [
-        Expanded(
-          flex: 4,
-          child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            color: Colors.blue,
-            padding: const EdgeInsets.only(top: 90, left: 30, right: 30),
-            child: leaderBoard.when(
-              data: (scoreList) => ListView.builder(
+      child: Column(
+        children: [
+          Expanded(
+            flex: 4,
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: Colors.blue,
+              padding: const EdgeInsets.only(top: 90, left: 30, right: 30),
+              child: leaderBoard.when(
+                data: (scoreList) => ListView.builder(
                   physics: const BouncingScrollPhysics(),
                   itemCount: scoreList.length + 1,
                   itemBuilder: (context, index) {
@@ -35,35 +35,43 @@ class LeaderBoardPage extends HookConsumerWidget {
                           "LeaderBoard",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.silkscreen(
-                              textStyle: const TextStyle(
-                                  fontSize: 30, fontWeight: FontWeight.bold)),
+                            textStyle: const TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       );
                     }
                     return LeaderBoardItem(score: scoreList[index - 1]);
-                  }),
-              error: (e, s) =>
-                  Text(e.toString(), style: GoogleFonts.silkscreen()),
-              loading: () => Text("Loading", style: GoogleFonts.silkscreen()),
-            ),
-          ),
-        ),
-        Expanded(
-            child: Container(
-          color: Colors.brown,
-          child: Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: bestUserScore.when(
-                data: (score) => LeaderBoardItem(
-                  score: score,
+                  },
                 ),
                 error: (e, s) =>
                     Text(e.toString(), style: GoogleFonts.silkscreen()),
                 loading: () => Text("Loading", style: GoogleFonts.silkscreen()),
-              )),
-        )),
-      ],
-    ));
+              ),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              color: Colors.brown,
+              child: Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: bestUserScore.when(
+                  data: (score) => LeaderBoardItem(
+                    score: score,
+                  ),
+                  error: (e, s) =>
+                      Text(e.toString(), style: GoogleFonts.silkscreen()),
+                  loading: () =>
+                      Text("Loading", style: GoogleFonts.silkscreen()),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

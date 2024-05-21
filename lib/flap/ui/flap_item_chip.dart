@@ -25,26 +25,28 @@ class FlapItemChip extends HookConsumerWidget {
         QR.to(FlapRouter.root);
       },
       child: ItemChip(
-          selected: true,
-          child: AnimatedBuilder(
-            animation: controller,
-            builder: (context, child) {
-              return Transform.rotate(
-                  angle: math.pi * (-70 + controller.value * 160) / 360,
-                  child: Transform.translate(
-                    offset: Offset(-1 + controller.value * 5, -2),
-                    child: SvgPicture.asset(
-                      "assets/images/flap.svg",
-                      width: 20,
-                      height: 20,
-                      colorFilter: const ColorFilter.mode(
-                        Colors.white,
-                        BlendMode.srcIn,
-                      ),
-                    ),
-                  ));
-            },
-          )),
+        selected: true,
+        child: AnimatedBuilder(
+          animation: controller,
+          builder: (context, child) {
+            return Transform.rotate(
+              angle: math.pi * (-70 + controller.value * 160) / 360,
+              child: Transform.translate(
+                offset: Offset(-1 + controller.value * 5, -2),
+                child: SvgPicture.asset(
+                  "assets/images/flap.svg",
+                  width: 20,
+                  height: 20,
+                  colorFilter: const ColorFilter.mode(
+                    Colors.white,
+                    BlendMode.srcIn,
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }

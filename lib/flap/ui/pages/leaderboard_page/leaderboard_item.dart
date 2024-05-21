@@ -10,16 +10,18 @@ class LeaderBoardItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = GoogleFonts.silkscreen(
-        textStyle: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            color: score.position == 1
-                ? Colors.yellow.shade700
-                : score.position == 2
-                    ? Colors.grey.shade400
-                    : score.position == 3
-                        ? Colors.brown.shade400
-                        : Colors.white));
+      textStyle: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w700,
+        color: score.position == 1
+            ? Colors.yellow.shade700
+            : score.position == 2
+                ? Colors.grey.shade400
+                : score.position == 3
+                    ? Colors.brown.shade400
+                    : Colors.white,
+      ),
+    );
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 10),
@@ -41,7 +43,7 @@ class LeaderBoardItem extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: style,
                   ),
-                )
+                ),
               ],
             ),
           ),

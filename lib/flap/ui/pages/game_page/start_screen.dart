@@ -20,7 +20,8 @@ class StartScreen extends HookConsumerWidget {
                   fontSize: 20,
                 ),
               ),
-            ))
+            ),
+          )
         : Container();
   }
 }

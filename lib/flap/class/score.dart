@@ -6,11 +6,12 @@ class Score {
   late final DateTime date;
   late final int position;
 
-  Score(
-      {required this.user,
-      required this.value,
-      required this.date,
-      required this.position});
+  Score({
+    required this.user,
+    required this.value,
+    required this.date,
+    required this.position,
+  });
 
   Score.fromJson(Map<String, dynamic> json, {int? index = 0}) {
     user = SimpleUser.fromJson(json['user']);
