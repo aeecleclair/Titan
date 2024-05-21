@@ -113,7 +113,7 @@ class MembershipEditorPage extends HookConsumerWidget {
                               data: (rolesTag) => rolesTag[0],
                               orElse: () => false,
                             ),
-                            fillColor: MaterialStateProperty.all(Colors.black),
+                            fillColor: WidgetStateProperty.all(Colors.black),
                             onChanged: (value) {
                               rolesTagList[tagKey] = AsyncData([value!]);
                               memberRoleTagsNotifier

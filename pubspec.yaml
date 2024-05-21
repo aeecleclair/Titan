@@ -37,6 +37,7 @@ dependencies:
   hooks_riverpod: ^2.1.1
   http: ^1.0.0
   http_parser: ^4.0.2
+  image: ^4.0.15
   image_cropper: ^5.0.0
   image_picker: ^1.0.0
   intl: ^0.19.0
@@ -84,5 +85,8 @@ flutter:
     - assets/web/Pret.webp
     - assets/web/Tombola.webp
     - assets/web/Vote.webp
+    - assets/images/bird_2.png
+    - assets/images/pipe.png
+    - assets/images/flap.svg
 
   uses-material-design: true

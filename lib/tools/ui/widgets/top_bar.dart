@@ -14,6 +14,7 @@ class TopBar extends HookConsumerWidget {
   final VoidCallback? onMenu;
   final VoidCallback? onBack;
   final Widget? rightIcon;
+  final TextStyle? textStyle;
   const TopBar({
     super.key,
     required this.title,
@@ -21,6 +22,7 @@ class TopBar extends HookConsumerWidget {
     this.onMenu,
     this.onBack,
     this.rightIcon,
+    this.textStyle,
   });
 
   @override
@@ -60,7 +62,7 @@ class TopBar extends HookConsumerWidget {
                       QR.currentPath == root
                           ? HeroIcons.bars3BottomLeft
                           : HeroIcons.chevronLeft,
-                      color: Colors.black,
+                      color: textStyle?.color ?? Colors.black,
                       size: 30,
                     ),
                   );
@@ -72,11 +74,12 @@ class TopBar extends HookConsumerWidget {
                 child: AutoSizeText(
                   title,
                   maxLines: 1,
-                  style: const TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black,
-                  ),
+                  style: textStyle ??
+                      const TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black,
+                      ),
                 ),
               ),
             ),
