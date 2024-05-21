@@ -15,7 +15,7 @@ class Score {
   Score.fromJson(Map<String, dynamic> json, {int? index = 0}) {
     user = SimpleUser.fromJson(json['user']);
     value = json['value'];
-    date = DateTime.parse(json['creation_time']);
+    date = processDateFromAPI(json['creation_time']);
     position = json['position'] ?? index;
   }
 
