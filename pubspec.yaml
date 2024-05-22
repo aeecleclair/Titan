@@ -45,7 +45,7 @@ dependencies:
   load_switch: ^2.0.5
   mocktail: ^1.0.3
   numberpicker: ^2.1.1
-  package_info_plus: ^5.0.1
+  package_info_plus: ^6.0.0
   path: ^1.8.2
   path_provider: ^2.0.11
   rxdart: ^0.27.7
@@ -56,9 +56,12 @@ dependencies:
   timezone: ^0.9.0
   tuple: ^2.0.0
   universal_html: ^2.0.8
-  url_launcher: ^6.1.7
   vector_math: ^2.1.2
   zxcvbn: ^1.0.0
+  file_picker: ^8.0.0+1
+  url_launcher: ^6.2.5
+  pdfx: ^2.6.0
+  file_saver: ^0.2.12
 
 dev_dependencies:
   dependency_validator: ^3.2.2
@@ -85,6 +88,7 @@ flutter:
     - assets/web/Pret.webp
     - assets/web/Tombola.webp
     - assets/web/Vote.webp
+    - assets/my_document.pdf
     - assets/images/bird_2.png
     - assets/images/pipe.png
     - assets/images/flap.svg

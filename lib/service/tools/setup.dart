@@ -8,6 +8,7 @@ import 'package:myecl/service/providers/firebase_token_provider.dart';
 import 'package:myecl/service/providers/messages_provider.dart';
 import 'package:myecl/service/providers/topic_provider.dart';
 import 'package:myecl/service/repositories/notification_repository.dart';
+import 'package:myecl/tools/logs/log.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_provider.dart';
@@ -72,10 +73,15 @@ void setUpNotification(WidgetRef ref) {
   }
 
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    Repository.logger
+        .writeLog(Log(message: "GOT trigger onMessage", level: LogLevel.error));
     handleMessages();
   });
 
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    Repository.logger.writeLog(
+      Log(message: "GOT trigger onMessageOpenedApp", level: LogLevel.error),
+    );
     handleMessages();
   });
 }
