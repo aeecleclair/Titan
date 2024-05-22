@@ -18,6 +18,6 @@ class PhTextConstants {
   static const String edit = "Modifier";
   static const String seePreviousJournal = "Voir les anciens journaux";
   static const String noJournalInDatabase =
-      "Pas encore de Ph dans la base de donnée";
+      "Pas encore de PH dans la base de donnée";
   static const String succesDowloading = "Téléchargé avec succès";
 }

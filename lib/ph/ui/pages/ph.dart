@@ -14,7 +14,7 @@ class PhTemplate extends HookConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const TopBar(
-            title: "Ph",
+            title: "PH",
             root: PhRouter.root,
           ),
           Expanded(child: child),
