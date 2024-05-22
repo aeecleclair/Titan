@@ -24,7 +24,7 @@ class Membership {
     rolesTags = json['role_tags'].split(";");
     apparentName = json['role_name'];
     mandateYear = json['mandate_year'];
-    order = json['order'];
+    order = json['member_order'];
   }
 
   Map<String, dynamic> toJson() {
@@ -35,7 +35,7 @@ class Membership {
       'role_tags': rolesTags.join(";"),
       'role_name': apparentName,
       'mandate_year': mandateYear,
-      'order': order,
+      'member_order': order,
     };
     return data;
   }
