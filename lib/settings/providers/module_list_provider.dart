@@ -34,18 +34,18 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
   final eq = const DeepCollectionEquality.unordered();
   List<Module> allModules = [
     HomeRouter.module,
-    AdvertRouter.module,
-    VoteRouter.module,
     CentralisationRouter.module,
-    AmapRouter.module,
+    PhRouter.module,
     CinemaRouter.module,
+    AmapRouter.module,
     BookingRouter.module,
     LoanRouter.module,
-    EventRouter.module,
-    RaffleRouter.module,
-    RecommendationRouter.module,
-    PhRouter.module,
     PhonebookRouter.module,
+    RecommendationRouter.module,
+    AdvertRouter.module,
+    EventRouter.module,
+    VoteRouter.module,
+    RaffleRouter.module,
   ];
   ModulesNotifier() : super([]);
 
