@@ -77,37 +77,27 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
                     .order,
               ),
         );
-        if (oldIndex < newIndex) {
-          for (int i = oldIndex + 1; i <= newIndex; i++) {
-            members[i]
-                .memberships
-                .firstWhere(
-                  (e) =>
-                      e.associationId == membership.associationId &&
-                      e.mandateYear == membership.mandateYear,
-                )
-                .order--;
-          }
-        } else {
-          for (int i = newIndex; i < oldIndex; i++) {
-            members[i]
-                .memberships
-                .firstWhere(
-                  (e) =>
-                      e.associationId == membership.associationId &&
-                      e.mandateYear == membership.mandateYear,
-                )
-                .order++;
-          }
-        }
-        members[oldIndex]
-            .memberships
-            .firstWhere(
+        members.remove(member);
+        if (oldIndex < newIndex) newIndex--;
+        members.insert(newIndex, member);
+
+        for (int i = 0; i < members.length; i++) {
+          List<Membership> memberships = members[i].memberships;
+          Membership oldMembership = memberships.firstWhere(
+            (e) =>
+                e.associationId == membership.associationId &&
+                e.mandateYear == membership.mandateYear,
+          );
+          memberships.remove(
+            memberships.firstWhere(
               (e) =>
                   e.associationId == membership.associationId &&
                   e.mandateYear == membership.mandateYear,
-            )
-            .order = newIndex;
+            ),
+          );
+          memberships.add(oldMembership.copyWith(order: i));
+          members[i].copyWith(membership: memberships);
+        }
         return members;
       },
       member,
