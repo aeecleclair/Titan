@@ -140,61 +140,66 @@ class AssociationEditorPage extends HookConsumerWidget {
             ),
             AsyncChild(
               value: associationMemberList,
-              builder: (context, associationMembers) => associationMembers
-                      .isEmpty
-                  ? const Text(PhonebookTextConstants.noMember)
-                  : SizedBox(
-                      height: 400,
-                      child: ReorderableListView(
-                        proxyDecorator: (child, index, animation) {
-                          return Material(
-                            child: FadeTransition(
-                              opacity: animation,
-                              child: child,
-                            ),
-                          );
-                        },
-                        onReorder: (int oldIndex, int newIndex) {
-                          final result =
-                              associationMemberListNotifier.reorderMember(
-                            associationMemberSortedList[oldIndex],
-                            associationMemberSortedList[oldIndex]
-                                .memberships
-                                .firstWhere(
-                                  (element) =>
-                                      element.associationId == association.id &&
-                                      element.mandateYear ==
-                                          association.mandateYear,
+              builder: (context, associationMembers) =>
+                  associationMembers.isEmpty
+                      ? const Text(PhonebookTextConstants.noMember)
+                      : SizedBox(
+                          height: 400,
+                          child: ReorderableListView(
+                            proxyDecorator: (child, index, animation) {
+                              return Material(
+                                child: FadeTransition(
+                                  opacity: animation,
+                                  child: child,
+                                ),
+                              );
+                            },
+                            onReorder: (int oldIndex, int newIndex) async {
+                              await tokenExpireWrapper(
+                                ref,
+                                () async {
+                                  final result =
+                                      await associationMemberListNotifier
+                                          .reorderMember(
+                                    associationMemberSortedList[oldIndex],
+                                    associationMemberSortedList[oldIndex]
+                                        .memberships
+                                        .firstWhere(
+                                          (element) =>
+                                              element.associationId ==
+                                                  association.id &&
+                                              element.mandateYear ==
+                                                  association.mandateYear,
+                                        )
+                                        .copyWith(order: newIndex),
+                                    oldIndex,
+                                    newIndex,
+                                  );
+                                  if (result) {
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
+                                      PhonebookTextConstants.memberReordered,
+                                    );
+                                  } else {
+                                    displayToastWithContext(
+                                      TypeMsg.error,
+                                      PhonebookTextConstants.reorderingError,
+                                    );
+                                  }
+                                },
+                              );
+                            },
+                            children: associationMemberSortedList
+                                .map(
+                                  (member) => MemberEditableCard(
+                                    key: ValueKey(member.member.id),
+                                    member: member,
+                                    association: association,
+                                  ),
                                 )
-                                .copyWith(order: newIndex),
-                            oldIndex,
-                            newIndex,
-                          );
-                          result.then((value) {
-                            if (value) {
-                              displayToastWithContext(
-                                TypeMsg.msg,
-                                PhonebookTextConstants.memberReordered,
-                              );
-                            } else {
-                              displayToastWithContext(
-                                TypeMsg.error,
-                                PhonebookTextConstants.reorderingError,
-                              );
-                            }
-                          });
-                        },
-                        children: associationMemberSortedList
-                            .map(
-                              (member) => MemberEditableCard(
-                                key: ValueKey(member.member.id),
-                                member: member,
-                                association: association,
-                              ),
-                            )
-                            .toList(),
-                      ),
-                    ),
+                                .toList(),
+                          ),
+                        ),
             ),
             const SizedBox(
               height: 10,
