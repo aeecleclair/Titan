@@ -25,7 +25,7 @@ class PhRouter {
   static const String add_ph = '/add_ph';
   static final Module module = Module(
     name: "PH",
-    icon: const Left(HeroIcons.documentText),
+    icon: const Left(HeroIcons.newspaper),
     root: PhRouter.root,
     selected: false,
   );

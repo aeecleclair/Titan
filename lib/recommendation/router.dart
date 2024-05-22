@@ -22,7 +22,7 @@ class RecommendationRouter {
   static const String addEdit = '/add_edit';
   static final Module module = Module(
     name: "Bons plans",
-    icon: const Left(HeroIcons.newspaper),
+    icon: const Left(HeroIcons.currencyEuro),
     root: RecommendationRouter.root,
     selected: false,
   );
