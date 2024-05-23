@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/settings/providers/logs_provider.dart';
-import 'package:myecl/settings/tools/constants.dart';
-import 'package:myecl/settings/ui/pages/log_page/log_card.dart';
+import 'package:myecl/settings/providers/logs_tab_provider.dart';
+import 'package:myecl/settings/ui/pages/log_page/log_tab.dart';
+import 'package:myecl/settings/ui/pages/log_page/notification_tab.dart';
 import 'package:myecl/settings/ui/settings.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/widgets/dialog.dart';
+import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 
 class LogPage extends HookConsumerWidget {
@@ -14,82 +15,57 @@ class LogPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final logs = ref.watch(logsProvider);
     final logsNotifier = ref.watch(logsProvider.notifier);
+    final notificationLogsNotifier =
+        ref.watch(notificationLogsProvider.notifier);
+    final logTab = ref.watch(logTabProvider);
+    final logTabNotifier = ref.read(logTabProvider.notifier);
+
+    Widget getTab(LogTabs tab) {
+      switch (tab) {
+        case LogTabs.log:
+          return const LogTab();
+        case LogTabs.notification:
+          return const NotificationTab();
+      }
+    }
+
     return SettingsTemplate(
       child: Refresher(
         onRefresh: () async {
           await logsNotifier.getLogs();
+          await notificationLogsNotifier.getLogs();
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: Column(
-            children: [
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    SettingsTextConstants.logs,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: ((context) => CustomDialogBox(
-                              title: SettingsTextConstants.deleting,
-                              descriptions: SettingsTextConstants.deleteLogs,
-                              onYes: (() async {
-                                logsNotifier.deleteLogs();
-                              }),
-                            )),
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 12,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
-                            blurRadius: 10,
-                            offset: const Offset(0, 5),
-                          ),
-                        ],
-                      ),
-                      child: const Row(
-                        children: [
-                          HeroIcon(
-                            HeroIcons.trash,
-                            color: Colors.white,
-                            size: 20,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+            padding: const EdgeInsets.symmetric(horizontal: 30.0),
+            child: Column(children: [
+              const SizedBox(
+                height: 20,
               ),
-              const SizedBox(height: 20),
-              AsyncChild(
-                value: logs,
-                builder: (context, data) => Column(
-                  children: data.map((e) => LogCard(log: e)).toList(),
-                ),
+              HorizontalListView.builder(
+                  height: 40,
+                  items: LogTabs.values,
+                  itemBuilder: (context, item, i) => GestureDetector(
+                        onTap: () {
+                          logTabNotifier.setLogTabs(item);
+                        },
+                        child: ItemChip(
+                          selected: logTab == item,
+                          child: Text(
+                            capitalize(item.name),
+                            style: TextStyle(
+                              color:
+                                  logTab == item ? Colors.white : Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      )),
+              const SizedBox(
+                height: 10,
               ),
-              const SizedBox(height: 20),
-            ],
-          ),
-        ),
+              getTab(logTab),
+            ])),
       ),
     );
   }

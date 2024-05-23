@@ -48,13 +48,54 @@ class FileLoggerOutput implements LoggerOutput {
   List<Log> getLogs() {
     final String logsString = logFile.readAsStringSync();
 
-    return logsFromEscapedString(logsString);
+    return logsFromEscapedString(logsString)
+        .where(
+          (element) => element.level != LogLevel.notification,
+        )
+        .toList();
   }
 
-  /// Delete the content of the log file
+  /// Get the logs from the file
+  /// The logs will be returned in reverse order, the most recent at the beginning
+  @override
+  List<Log> getNotificationLogs() {
+    final String logsString = logFile.readAsStringSync();
+
+    return logsFromEscapedString(logsString)
+        .where(
+          (element) => element.level == LogLevel.notification,
+        )
+        .toList();
+  }
+
+  /// Delete the non notification logs
   @override
   void clearLogs() {
+    final String logsString = logFile.readAsStringSync();
+    final notificationLogs = logsFromEscapedString(logsString)
+        .where(
+          (element) => element.level == LogLevel.notification,
+        )
+        .toList();
     logFile.writeAsStringSync("");
+    for (Log log in notificationLogs) {
+      writeLog(log);
+    }
+  }
+
+  /// Delete the notification logs
+  @override
+  void clearNotificationLogs() {
+    final String logsString = logFile.readAsStringSync();
+    final logs = logsFromEscapedString(logsString)
+        .where(
+          (element) => element.level != LogLevel.notification,
+        )
+        .toList();
+    logFile.writeAsStringSync("");
+    for (Log log in logs) {
+      writeLog(log);
+    }
   }
 
   /// Escapes the message to be saved in a file.

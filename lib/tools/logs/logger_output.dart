@@ -10,6 +10,12 @@ abstract class LoggerOutput {
   /// Get the logs from the output
   List<Log> getLogs();
 
+  // Get the notification logs from the output
+  List<Log> getNotificationLogs();
+
   /// Clear the logs from the output
   void clearLogs();
+
+  /// Clear the notification logs from the output
+  void clearNotificationLogs();
 }

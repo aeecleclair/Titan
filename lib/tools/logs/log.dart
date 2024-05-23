@@ -1,4 +1,4 @@
-enum LogLevel { debug, info, warning, error }
+enum LogLevel { debug, info, warning, error, notification }
 
 class Log {
   late final String message;
