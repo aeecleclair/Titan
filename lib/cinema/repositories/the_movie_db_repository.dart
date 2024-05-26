@@ -6,7 +6,7 @@ import 'package:myecl/tools/repository/repository.dart';
 class TheMovieDBRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = 'cinema/movie/';
+  final ext = 'cinema/themoviedb/';
 
   Future<TheMovieDBMovie> getMovie(String movieId) async {
     return TheMovieDBMovie.fromJson(await getOne(movieId));
