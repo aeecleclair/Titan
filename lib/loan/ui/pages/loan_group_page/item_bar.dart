@@ -35,19 +35,6 @@ class ItemBar extends HookConsumerWidget {
         value: itemListForSelected,
         loaderColor: ColorConstants.background2,
         builder: (context, data) {
-          final sortedAvailableData = data
-              .where(
-                (element) => element.loanedQuantity < element.totalQuantity,
-              )
-              .toList()
-            ..sort((a, b) => a.name.compareTo(b.name));
-          final sortedUnavailableData = data
-              .where(
-                (element) => element.loanedQuantity >= element.totalQuantity,
-              )
-              .toList()
-            ..sort((a, b) => a.name.compareTo(b.name));
-          data = sortedAvailableData + sortedUnavailableData;
           if (loanersItems[loaner] == null) {
             return const SizedBox(
               height: 180,
@@ -80,20 +67,6 @@ class ItemBar extends HookConsumerWidget {
                   ),
                 );
               }
-              final sortedAvailable = itemList
-                  .where(
-                    (element) => element.loanedQuantity < element.totalQuantity,
-                  )
-                  .toList()
-                ..sort((a, b) => a.name.compareTo(b.name));
-              final sortedUnavailable = itemList
-                  .where(
-                    (element) =>
-                        element.loanedQuantity >= element.totalQuantity,
-                  )
-                  .toList()
-                ..sort((a, b) => a.name.compareTo(b.name));
-              itemList = sortedAvailable + sortedUnavailable;
               return HorizontalListView.builder(
                 height: 180,
                 items: itemList,

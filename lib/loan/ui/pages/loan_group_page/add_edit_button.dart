@@ -63,21 +63,6 @@ class AddEditButton extends HookConsumerWidget {
             await items.when(
               data: (itemList) async {
                 await tokenExpireWrapper(ref, () async {
-                  final sortedAvailable = itemList
-                      .where(
-                        (element) =>
-                            element.loanedQuantity < element.totalQuantity,
-                      )
-                      .toList()
-                    ..sort((a, b) => a.name.compareTo(b.name));
-                  final sortedUnavailable = itemList
-                      .where(
-                        (element) =>
-                            element.loanedQuantity >= element.totalQuantity,
-                      )
-                      .toList()
-                    ..sort((a, b) => a.name.compareTo(b.name));
-                  itemList = sortedAvailable + sortedUnavailable;
                   List<ItemQuantity> selected = itemList
                       .where(
                         (element) =>
