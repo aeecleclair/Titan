@@ -263,63 +263,35 @@ class CreateAccountPage extends HookConsumerWidget {
               activationCode.text.isNotEmpty &&
               passwordConfirmation.text.isNotEmpty &&
               password.text == passwordConfirmation.text) {
-            if (password.text.length < 6) {
-              displayToastWithContext(
-                TypeMsg.error,
-                LoginTextConstants.passwordLengthError,
-              );
-            } else if (!password.text.contains(RegExp(r'[A-Z]'))) {
-              displayToastWithContext(
-                TypeMsg.error,
-                LoginTextConstants.passwordUppercaseError,
-              );
-            } else if (!password.text.contains(RegExp(r'[a-z]'))) {
-              displayToastWithContext(
-                TypeMsg.error,
-                LoginTextConstants.passwordLowercaseError,
-              );
-            } else if (!password.text.contains(RegExp(r'[0-9]'))) {
-              displayToastWithContext(
-                TypeMsg.error,
-                LoginTextConstants.passwordNumberError,
-              );
-            } else if (!password.text
-                .contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-              displayToastWithContext(
-                TypeMsg.error,
-                LoginTextConstants.passwordSpecialCaracterError,
-              );
-            } else {
-              CreateAccount finalCreateAccount = CreateAccount(
-                name: name.text,
-                firstname: firstname.text,
-                nickname: nickname.text.isEmpty ? null : nickname.text,
-                birthday: DateTime.parse(processDateBack(birthday.text)),
-                phone: phone.text.isEmpty ? null : phone.text,
-                promo: promo.text.isEmpty ? null : int.parse(promo.text),
-                floor: floor.text,
-                activationToken: activationCode.text.trim(),
-                password: password.text,
-              );
-              try {
-                final value =
-                    await signUpNotifier.activateUser(finalCreateAccount);
-                if (value) {
-                  displayToastWithContext(
-                    TypeMsg.msg,
-                    LoginTextConstants.accountActivated,
-                  );
-                  authTokenNotifier.deleteToken();
-                  QR.to(LoginRouter.root);
-                } else {
-                  displayToastWithContext(
-                    TypeMsg.error,
-                    LoginTextConstants.accountNotActivated,
-                  );
-                }
-              } catch (e) {
-                displayToastWithContext(TypeMsg.error, e.toString());
+            CreateAccount finalCreateAccount = CreateAccount(
+              name: name.text,
+              firstname: firstname.text,
+              nickname: nickname.text.isEmpty ? null : nickname.text,
+              birthday: DateTime.parse(processDateBack(birthday.text)),
+              phone: phone.text.isEmpty ? null : phone.text,
+              promo: promo.text.isEmpty ? null : int.parse(promo.text),
+              floor: floor.text,
+              activationToken: activationCode.text.trim(),
+              password: password.text,
+            );
+            try {
+              final value =
+                  await signUpNotifier.activateUser(finalCreateAccount);
+              if (value) {
+                displayToastWithContext(
+                  TypeMsg.msg,
+                  LoginTextConstants.accountActivated,
+                );
+                authTokenNotifier.deleteToken();
+                QR.to(LoginRouter.root);
+              } else {
+                displayToastWithContext(
+                  TypeMsg.error,
+                  LoginTextConstants.accountNotActivated,
+                );
               }
+            } catch (e) {
+              displayToastWithContext(TypeMsg.error, e.toString());
             }
           } else {
             displayToastWithContext(

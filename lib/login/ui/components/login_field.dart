@@ -19,7 +19,14 @@ class CreateAccountField extends HookConsumerWidget {
   final bool isPassword;
   final bool mustBeInt;
   final String? Function(String?)? validator;
-  const CreateAccountField({
+  final dict = {
+    RegExp(r'[A-Z]'): LoginTextConstants.passwordUppercaseError,
+    RegExp(r'[a-z]'): LoginTextConstants.passwordLowercaseError,
+    RegExp(r'[0-9]'): LoginTextConstants.passwordNumberError,
+    RegExp(r'[!@#$%^&*(),.?":{}|<>]'):
+        LoginTextConstants.passwordSpecialCaracterError,
+  };
+  CreateAccountField({
     super.key,
     required this.controller,
     required this.label,
@@ -116,6 +123,11 @@ class CreateAccountField extends HookConsumerWidget {
                   return LoginTextConstants.emptyFieldError;
                 } else if (isPassword && value.length < 6) {
                   return LoginTextConstants.passwordLengthError;
+                }
+                for (var key in dict.keys) {
+                  if (isPassword && !value.contains(key)) {
+                    return dict[key];
+                  }
                 }
                 if (mustBeInt && int.tryParse(value) == null) {
                   return LoginTextConstants.mustBeIntError;
