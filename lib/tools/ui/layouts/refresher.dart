@@ -42,8 +42,10 @@ class Refresher extends HookConsumerWidget {
       );
   Widget buildIOSList(WidgetRef ref) => LayoutBuilder(
         builder: (context, constraints) => CustomScrollView(
-          shrinkWrap: true,
-          physics: const BouncingScrollPhysics(),
+          shrinkWrap: false,
+          physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
+          ),
           slivers: [
             CupertinoSliverRefreshControl(
               onRefresh: () async {
