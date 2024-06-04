@@ -91,7 +91,7 @@ class AddEditLoanPage extends HookConsumerWidget {
                           }
                         });
                       },
-                      canBeEmpty: true,
+                      canBeEmpty: false,
                       controller: queryController,
                     ),
                     const SizedBox(height: 10),
@@ -104,11 +104,13 @@ class AddEditLoanPage extends HookConsumerWidget {
                     TextEntry(
                       label: LoanTextConstants.note,
                       controller: note,
+                      canBeEmpty: true,
                     ),
                     const SizedBox(height: 30),
                     TextEntry(
                       label: LoanTextConstants.caution,
                       controller: caution,
+                      canBeEmpty: true,
                     ),
                     const SizedBox(height: 50),
                     AddEditButton(

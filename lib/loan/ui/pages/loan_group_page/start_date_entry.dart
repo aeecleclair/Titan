@@ -29,19 +29,6 @@ class StartDateEntry extends HookConsumerWidget {
         (date) {
           startNotifier.setStart(date);
           items.whenData((itemList) {
-            final sortedAvailable = itemList
-                .where(
-                  (element) => element.loanedQuantity < element.totalQuantity,
-                )
-                .toList()
-              ..sort((a, b) => a.name.compareTo(b.name));
-            final sortedUnavailable = itemList
-                .where(
-                  (element) => element.loanedQuantity >= element.totalQuantity,
-                )
-                .toList()
-              ..sort((a, b) => a.name.compareTo(b.name));
-            itemList = sortedAvailable + sortedUnavailable;
             List<Item> selected = itemList
                 .where(
                   (element) => selectedItems[itemList.indexOf(element)] != 0,
