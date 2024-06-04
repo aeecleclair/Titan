@@ -33,6 +33,14 @@ class LoginTextConstants {
   static const String password = 'Mot de passe';
   static const String passwordLengthError =
       'Le mot de passe doit faire au moins 6 caractères';
+  static const String passwordUppercaseError =
+      'Le mot de passe doit contenir au moins une majuscule';
+  static const String passwordLowercaseError =
+      'Le mot de passe doit contenir au moins une minucule';
+  static const String passwordNumberError =
+      'Le mot de passe doit contenir au moins un chiffre';
+  static const String passwordSpecialCaracterError =
+      'Le mot de passe doit contenir au moins un caractère spécial';
   static const String passwordMustMatch =
       'Les mots de passe doivent correspondre';
   static const String passwordStrengthVeryWeak = 'Très faible';
