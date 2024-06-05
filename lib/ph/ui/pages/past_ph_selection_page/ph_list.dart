@@ -56,15 +56,18 @@ class PhList extends HookConsumerWidget {
                     dataBuilder: (context, pdf) => PhCard(
                       ph: ph,
                       onDownload: () async {
-                        await FileSaver.instance.saveFile(
+                        final path = await FileSaver.instance.saveAs(
                           name: ph.name,
                           bytes: pdf.last,
                           ext: "pdf",
-                        );
-                        displayPhToastWithContext(
-                          TypeMsg.msg,
-                          PhTextConstants.succesDowloading,
-                        );
+                          mimeType: MimeType.pdf,
+                        ); // Not yet possible to save directly the file to Download folder
+                        if (path != null) {
+                          displayPhToastWithContext(
+                            TypeMsg.msg,
+                            PhTextConstants.succesDowloading,
+                          );
+                        }
                       },
                     ),
                   );
