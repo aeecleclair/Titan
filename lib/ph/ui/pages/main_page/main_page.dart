@@ -37,7 +37,7 @@ class PhMainPage extends HookConsumerWidget {
             ),
           const SizedBox(height: 10),
           SizedBox(
-            width: MediaQuery.of(context).size.width - 60,
+            width: 250,
             child: GestureDetector(
               onTap: () {
                 QR.to(PhRouter.root + PhRouter.past_ph_selection);
