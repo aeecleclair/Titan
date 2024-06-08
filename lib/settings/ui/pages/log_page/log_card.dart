@@ -20,8 +20,8 @@ class LogCard extends StatelessWidget {
                 : log.level == LogLevel.error
                     ? [const Color(0xffc72c41), const Color(0xff801336)]
                     : [
-                        Color.fromARGB(255, 198, 190, 21),
-                        Color.fromARGB(255, 187, 178, 14)
+                        const Color.fromARGB(255, 198, 190, 21),
+                        const Color.fromARGB(255, 187, 178, 14),
                       ];
 
     Color color = colors[0];

@@ -37,35 +37,38 @@ class LogPage extends HookConsumerWidget {
           await notificationLogsNotifier.getLogs();
         },
         child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
-            child: Column(children: [
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child: Column(
+            children: [
               const SizedBox(
                 height: 20,
               ),
               HorizontalListView.builder(
-                  height: 40,
-                  items: LogTabs.values,
-                  itemBuilder: (context, item, i) => GestureDetector(
-                        onTap: () {
-                          logTabNotifier.setLogTabs(item);
-                        },
-                        child: ItemChip(
-                          selected: logTab == item,
-                          child: Text(
-                            capitalize(item.name),
-                            style: TextStyle(
-                              color:
-                                  logTab == item ? Colors.white : Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      )),
+                height: 40,
+                items: LogTabs.values,
+                itemBuilder: (context, item, i) => GestureDetector(
+                  onTap: () {
+                    logTabNotifier.setLogTabs(item);
+                  },
+                  child: ItemChip(
+                    selected: logTab == item,
+                    child: Text(
+                      capitalize(item.name),
+                      style: TextStyle(
+                        color: logTab == item ? Colors.white : Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               const SizedBox(
                 height: 10,
               ),
               getTab(logTab),
-            ])),
+            ],
+          ),
+        ),
       ),
     );
   }
