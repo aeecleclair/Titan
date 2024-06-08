@@ -73,12 +73,10 @@ jobs:
       - name: Configure Alpha env
         if: needs.extract-version.outputs.isAlpha == 'true'
         run: |
-          echo THE_MOVIE_DB_API=$THE_MOVIE_DB_API >> .env
           echo ALPHA_HOST=$ALPHA_HOST >> .env
           echo PLAUSIBLE_HOST=$PLAUSIBLE_HOST >> .env
           echo PLAUSIBLE_DOMAIN=$PLAUSIBLE_DOMAIN >> .env
         env:
-          THE_MOVIE_DB_API: ${{ secrets.THE_MOVIE_DB_API }}
           ALPHA_HOST: ${{ vars.ALPHA_HOST }}
           PLAUSIBLE_HOST: ${{ secrets.PLAUSIBLE_ALPHA_HOST }}
           PLAUSIBLE_DOMAIN: ${{ secrets.PLAUSIBLE_ALPHA_DOMAIN }}
@@ -86,12 +84,10 @@ jobs:
       - name: Configure production env
         if: needs.extract-version.outputs.isAlpha == 'false'
         run: |
-          echo THE_MOVIE_DB_API=$THE_MOVIE_DB_API >> .env
           echo PROD_HOST=$PROD_HOST >> .env
           echo PLAUSIBLE_HOST=$PLAUSIBLE_HOST >> .env
           echo PLAUSIBLE_DOMAIN=$PLAUSIBLE_DOMAIN >> .env
         env:
-          THE_MOVIE_DB_API: ${{ secrets.THE_MOVIE_DB_API }}
           PROD_HOST: ${{ vars.PROD_HOST }}
           PLAUSIBLE_HOST: ${{ secrets.PLAUSIBLE_HOST }}
           PLAUSIBLE_DOMAIN: ${{ secrets.PLAUSIBLE_DOMAIN }}
