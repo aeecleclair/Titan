@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/flap/providers/score_list_provider.dart';
-import 'package:myecl/flap/providers/user_score_provider.dart';
-import 'package:myecl/flap/ui/flap.dart';
-import 'package:myecl/flap/ui/pages/leaderboard_page/leaderboard_item.dart';
+import 'package:myecl/flappybird/providers/score_list_provider.dart';
+import 'package:myecl/flappybird/providers/user_score_provider.dart';
+import 'package:myecl/flappybird/ui/flappybird_template.dart';
+import 'package:myecl/flappybird/ui/pages/leaderboard_page/leaderboard_item.dart';
 
 class LeaderBoardPage extends HookConsumerWidget {
   const LeaderBoardPage({super.key});
@@ -13,7 +13,7 @@ class LeaderBoardPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final leaderBoard = ref.watch(scoreListProvider);
     final bestUserScore = ref.watch(userScoreProvider);
-    return FlapTemplate(
+    return FlappyBirdTemplate(
       child: Column(
         children: [
           Expanded(

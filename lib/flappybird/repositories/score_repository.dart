@@ -1,5 +1,5 @@
 import 'package:collection/collection.dart';
-import 'package:myecl/flap/class/score.dart';
+import 'package:myecl/flappybird/class/score.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class ScoreRepository extends Repository {

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/flap/class/pipe.dart';
+import 'package:myecl/flappybird/class/pipe.dart';
 
 class PipeListNotifier extends StateNotifier<List<Pipe>> {
   PipeListNotifier()

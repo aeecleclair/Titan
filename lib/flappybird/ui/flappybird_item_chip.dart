@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/flap/router.dart';
+import 'package:myecl/flappybird/router.dart';
 import 'package:myecl/tools/providers/path_forwarding_provider.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'dart:math' as math;
 
-class FlapItemChip extends HookConsumerWidget {
-  const FlapItemChip({
+class FlappyBirdItemChip extends HookConsumerWidget {
+  const FlappyBirdItemChip({
     super.key,
   });
 
@@ -21,8 +21,8 @@ class FlapItemChip extends HookConsumerWidget {
     final pathForwardingNotifier = ref.watch(pathForwardingProvider.notifier);
     return GestureDetector(
       onTap: () {
-        pathForwardingNotifier.forward(FlapRouter.root);
-        QR.to(FlapRouter.root);
+        pathForwardingNotifier.forward(FlappyBirdRouter.root);
+        QR.to(FlappyBirdRouter.root);
       },
       child: ItemChip(
         selected: true,
@@ -34,7 +34,7 @@ class FlapItemChip extends HookConsumerWidget {
               child: Transform.translate(
                 offset: Offset(-1 + controller.value * 5, -2),
                 child: SvgPicture.asset(
-                  "assets/images/flap.svg",
+                  "assets/images/logo_flappybird.svg",
                   width: 20,
                   height: 20,
                   colorFilter: const ColorFilter.mode(

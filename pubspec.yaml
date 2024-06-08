@@ -90,8 +90,8 @@ flutter:
     - assets/web/Tombola.webp
     - assets/web/Vote.webp
     - assets/my_document.pdf
-    - assets/images/bird_2.png
+    - assets/images/bird.png
     - assets/images/pipe.png
-    - assets/images/flap.svg
+    - assets/images/logo_flappybird.svg
 
   uses-material-design: true

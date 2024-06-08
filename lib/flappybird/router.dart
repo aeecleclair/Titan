@@ -1,29 +1,29 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/drawer/class/module.dart';
-import 'package:myecl/flap/ui/pages/game_page/game_page.dart'
+import 'package:myecl/flappybird/ui/pages/game_page/game_page.dart'
     deferred as play_page;
-import 'package:myecl/flap/ui/pages/leaderboard_page/leaderboard_page.dart'
+import 'package:myecl/flappybird/ui/pages/leaderboard_page/leaderboard_page.dart'
     deferred as main_page;
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class FlapRouter {
+class FlappyBirdRouter {
   final ProviderRef ref;
-  static const String root = '/flap';
+  static const String root = '/flappybird';
   static const String leaderBoard = '/leaderboard';
   static final Module module = Module(
     name: "FlappyBird",
-    icon: const Right("assets/images/flap.svg"),
-    root: FlapRouter.root,
+    icon: const Right("assets/images/logo_flappybird.svg"),
+    root: FlappyBirdRouter.root,
     selected: false,
   );
-  FlapRouter(this.ref);
+  FlappyBirdRouter(this.ref);
 
   QRoute route() => QRoute(
-        name: "flap",
-        path: FlapRouter.root,
+        name: "flappybird",
+        path: FlappyBirdRouter.root,
         builder: () => play_page.GamePage(),
         middleware: [
           AuthenticatedMiddleware(ref),
