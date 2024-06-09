@@ -61,11 +61,8 @@ jobs:
         run: flutter pub get
       
       - name: Configure Dev env
-        run: |
-          echo THE_MOVIE_DB_API=$THE_MOVIE_DB_API >> .env
-          echo DEV_HOST=$DEV_HOST >> .env
+        run: echo DEV_HOST=$DEV_HOST >> .env
         env:
-          THE_MOVIE_DB_API: ${{ secrets.THE_MOVIE_DB_API }}
           DEV_HOST: ${{ vars.DEV_HOST }}
       
       - name: Add Firebase configuration for Dev

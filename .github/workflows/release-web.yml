@@ -56,11 +56,9 @@ jobs:
 
       - name: Configure env
         run: |
-          echo THE_MOVIE_DB_API=$THE_MOVIE_DB_API >> .env
           echo PROD_HOST=$PROD_HOST >> .env
           echo ALPHA_HOST=$ALPHA_HOST >> .env
         env:
-          THE_MOVIE_DB_API: ${{ secrets.THE_MOVIE_DB_API }}
           PROD_HOST: ${{ vars.PROD_HOST }}
           ALPHA_HOST: ${{ vars.ALPHA_HOST }}
           
