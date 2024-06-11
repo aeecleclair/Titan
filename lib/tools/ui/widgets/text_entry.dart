@@ -50,7 +50,7 @@ class TextEntry extends StatelessWidget {
       onChanged: onChanged,
       textInputAction: (keyboardType == TextInputType.multiline)
           ? TextInputAction.newline
-          : textInputAction.next,
+          : TextInputAction.next,
       enabled: enabled,
       decoration: InputDecoration(
         label: Text(
