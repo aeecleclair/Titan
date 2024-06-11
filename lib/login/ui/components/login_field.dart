@@ -23,7 +23,7 @@ class CreateAccountField extends HookConsumerWidget {
     RegExp(r'[A-Z]'): LoginTextConstants.passwordUppercaseError,
     RegExp(r'[a-z]'): LoginTextConstants.passwordLowercaseError,
     RegExp(r'[0-9]'): LoginTextConstants.passwordNumberError,
-    RegExp(r'[!@#$%^&*(),.?":{}|<>]-_'):
+    RegExp(r'[!@#$%^&*(),.?":{}|<>\-_[\]+=;]'):
         LoginTextConstants.passwordSpecialCaracterError,
   };
   CreateAccountField({
