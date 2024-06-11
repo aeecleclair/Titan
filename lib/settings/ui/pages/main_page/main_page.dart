@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/flap/ui/flap_item_chip.dart';
+import 'package:myecl/flappybird/ui/flappybird_item_chip.dart';
 import 'package:myecl/settings/providers/logs_provider.dart';
 import 'package:myecl/settings/router.dart';
 import 'package:myecl/settings/tools/constants.dart';
@@ -140,7 +140,7 @@ class SettingsMainPage extends HookConsumerWidget {
                   ),
                 ),
               ),
-              lastChild: const FlapItemChip(),
+              lastChild: const FlappyBirdItemChip(),
             ),
             const SizedBox(height: 30),
             Padding(

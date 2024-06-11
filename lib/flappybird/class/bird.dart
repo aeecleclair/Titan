@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:myecl/flap/tools/functions.dart';
+import 'package:myecl/flappybird/tools/functions.dart';
 import 'package:myecl/user/class/list_users.dart';
 
 class Bird {
@@ -55,7 +55,7 @@ class Bird {
     return Bird(
       user: SimpleUser.empty(),
       color: MaterialColor(color.value, getSwatch(color)),
-      birdImage: Image.asset('images/bird_2.png'),
+      birdImage: Image.asset('images/bird.png'),
     );
   }
 }

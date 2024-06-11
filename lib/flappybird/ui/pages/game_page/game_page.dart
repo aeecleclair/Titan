@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/flap/class/score.dart';
-import 'package:myecl/flap/providers/bird_provider.dart';
-import 'package:myecl/flap/providers/current_best_score.dart';
-import 'package:myecl/flap/providers/game_loop_provider.dart';
-import 'package:myecl/flap/providers/game_state_provider.dart';
-import 'package:myecl/flap/providers/pipe_list_provider.dart';
-import 'package:myecl/flap/providers/score_list_provider.dart';
-import 'package:myecl/flap/ui/flap.dart';
-import 'package:myecl/flap/ui/pages/game_page/pipe_handler.dart';
-import 'package:myecl/flap/ui/pages/game_page/score.dart';
-import 'package:myecl/flap/ui/pages/game_page/start_screen.dart';
+import 'package:myecl/flappybird/class/score.dart';
+import 'package:myecl/flappybird/providers/bird_provider.dart';
+import 'package:myecl/flappybird/providers/current_best_score.dart';
+import 'package:myecl/flappybird/providers/game_loop_provider.dart';
+import 'package:myecl/flappybird/providers/game_state_provider.dart';
+import 'package:myecl/flappybird/providers/pipe_list_provider.dart';
+import 'package:myecl/flappybird/providers/score_list_provider.dart';
+import 'package:myecl/flappybird/ui/flappybird_template.dart';
+import 'package:myecl/flappybird/ui/pages/game_page/pipe_handler.dart';
+import 'package:myecl/flappybird/ui/pages/game_page/score.dart';
+import 'package:myecl/flappybird/ui/pages/game_page/start_screen.dart';
 
 import 'bird.dart';
 
@@ -115,7 +115,7 @@ class GamePage extends HookConsumerWidget {
       }
     }
 
-    return FlapTemplate(
+    return FlappyBirdTemplate(
       child: Column(
         children: [
           Expanded(
