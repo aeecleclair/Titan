@@ -3,7 +3,7 @@ import 'package:myecl/tools/constants.dart';
 
 class TextEntry extends StatelessWidget {
   final String label, suffix, prefix, noValueError;
-  final bool isInt, isDouble;
+  final bool isInt, isDouble, isNegative;
   final bool canBeEmpty;
   final bool enabled;
   final TextEditingController controller;
@@ -35,6 +35,7 @@ class TextEntry extends StatelessWidget {
     this.errorColor = ColorConstants.error,
     this.noValueError = TextConstants.noValue,
     this.suffixIcon,
+    this.isNegative = false,
     this.textInputAction = TextInputAction.next,
   });
 
@@ -49,7 +50,7 @@ class TextEntry extends StatelessWidget {
       onChanged: onChanged,
       textInputAction: (keyboardType == TextInputType.multiline)
           ? TextInputAction.newline
-          : textInputAction,
+          : TextInputAction.next,
       enabled: enabled,
       decoration: InputDecoration(
         label: Text(
@@ -86,30 +87,28 @@ class TextEntry extends StatelessWidget {
         if (value == null || value.isEmpty) {
           if (canBeEmpty) {
             return null;
-          } else {
-            return noValueError;
           }
+          return noValueError;
         }
 
         if (isInt) {
           final intValue = int.tryParse(value);
-          if (intValue == null || intValue < 0) {
+          if (intValue == null || (intValue < 0 && !isNegative)) {
             return TextConstants.invalidNumber;
           }
         }
 
         if (isDouble) {
           final doubleValue = double.tryParse(value.replaceAll(',', '.'));
-          if (doubleValue == null || doubleValue < 0) {
+          if (doubleValue == null || (doubleValue < 0 && !isNegative)) {
             return TextConstants.invalidNumber;
           }
         }
 
         if (validator == null) {
           return null;
-        } else {
-          return validator!(value);
         }
+        return validator!(value);
       },
     );
   }

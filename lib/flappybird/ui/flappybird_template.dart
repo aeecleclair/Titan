@@ -36,8 +36,9 @@ class FlappyBirdTemplate extends HookConsumerWidget {
                       onPressed: () {
                         leaderBoardNotifier.getLeaderboard();
                         bestUserScoreNotifier.getLeaderBoardPosition();
-                        QR.to(FlappyBirdRouter.root +
-                            FlappyBirdRouter.leaderBoard);
+                        QR.to(
+                          FlappyBirdRouter.root + FlappyBirdRouter.leaderBoard,
+                        );
                       },
                       icon: const HeroIcon(
                         HeroIcons.trophy,
