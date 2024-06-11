@@ -44,7 +44,6 @@ class PhCard extends HookConsumerWidget {
             );
           },
           child: CardLayout(
-            margin: const EdgeInsets.all(4),
             child: Column(
               children: [
                 SizedBox(
@@ -57,7 +56,7 @@ class PhCard extends HookConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          shortenText(ph.name, 28),
+                          shortenText(ph.name, 13),
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Text(phFormatDate(ph.date)),
