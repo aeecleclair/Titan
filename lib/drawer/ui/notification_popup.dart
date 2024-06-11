@@ -19,7 +19,7 @@ class Consts {
   static const double avatarRadius = 50.0;
   static const String title = 'Notifications';
   static const String description =
-      "MyECL propose désormais des notifications que vous pouvez activer dès maintenant.\nVous pourrez toujours modifier votre choix dans les paramètres.";
+      "MyECL propose désormais des notifications. \n Choisissez dès maintenant les sujets que vous souhaitez recevoir.";
   static const String button = 'Valider';
 }
 
