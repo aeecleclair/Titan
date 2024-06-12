@@ -9,7 +9,7 @@ class ScoreRepository extends Repository {
 
   Future<List<Score>> getLeaderboard() async {
     return List<Score>.from(
-      (await getList(suffix: "scores"))
+      (await getList(suffix: "scores?limit=1000"))
           .mapIndexed((index, e) => Score.fromJson(e, index: index + 1)),
     );
   }
