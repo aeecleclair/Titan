@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CinemaColorConstants {
-  static const Color imdbColor = Color(0xffe2b616);
+  static const Color tmdbColor = Color(0xffe2b616);
 }
 
 class CinemaTextConstants {
@@ -18,7 +18,7 @@ class CinemaTextConstants {
   static const String editingError = "Erreur lors de la modification";
   static const String editSession = "Modifier la séance";
   static const String emptyUrl = "Veuillez entrer une URL";
-  static const String importFromIMDB = "Importer depuis IMDB";
+  static const String importFromTMDB = "Importer depuis TMDB";
   static const String incomingSession = "A l'affiche";
   static const String incorrectOrMissingFields =
       "Champs incorrects ou manquants";
