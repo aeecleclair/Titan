@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/cinema/tools/constants.dart';
 
-class ImdbButton extends StatelessWidget {
+class TmdbButton extends StatelessWidget {
   final Widget child;
-  const ImdbButton({super.key, required this.child});
+  const TmdbButton({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class ImdbButton extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: CinemaColorConstants.imdbColor,
+        color: CinemaColorConstants.tmdbColor,
       ),
       child: child,
     );
