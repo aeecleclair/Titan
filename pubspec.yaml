@@ -46,7 +46,7 @@ dependencies:
   load_switch: ^2.0.5
   mocktail: ^1.0.3
   numberpicker: ^2.1.1
-  package_info_plus: ^6.0.0
+  package_info_plus: ^8.0.0
   path: ^1.8.2
   path_provider: ^2.0.11
   rxdart: ^0.27.7
