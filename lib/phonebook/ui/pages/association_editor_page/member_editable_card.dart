@@ -7,10 +7,12 @@ import 'package:myecl/phonebook/class/membership.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
 import 'package:myecl/phonebook/providers/member_pictures_provider.dart';
+import 'package:myecl/phonebook/providers/member_role_tags_provider.dart';
 import 'package:myecl/phonebook/providers/membership_provider.dart';
 import 'package:myecl/phonebook/providers/profile_picture_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/router.dart';
+import 'package:myecl/phonebook/tools/function.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/delete_button.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/edition_button.dart';
 import 'package:myecl/tools/functions.dart';
@@ -36,6 +38,7 @@ class MemberEditableCard extends HookConsumerWidget {
     final roleTagsNotifier = ref.watch(rolesTagsProvider.notifier);
     final membershipNotifier = ref.watch(membershipProvider.notifier);
     final completeMemberNotifier = ref.watch(completeMemberProvider.notifier);
+    final memberRoleTagsNotifier = ref.watch(memberRoleTagsProvider.notifier);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -56,7 +59,16 @@ class MemberEditableCard extends HookConsumerWidget {
       margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
       decoration: BoxDecoration(
         border: Border.all(),
-        color: Colors.white,
+        color: getColorFromTagList(
+          ref,
+          member.memberships
+              .firstWhere(
+                (element) =>
+                    element.associationId == association.id &&
+                    element.mandateYear == association.mandateYear,
+              )
+              .rolesTags,
+        ),
         borderRadius: const BorderRadius.all(Radius.circular(20)),
       ),
       child: Row(
@@ -93,7 +105,7 @@ class MemberEditableCard extends HookConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AutoSizeText(
-                  "${(member.member.nickname ?? member.member.firstname)} - ${member.memberships.firstWhere((element) => element.associationId == association.id).apparentName}",
+                  "${(member.member.nickname ?? member.member.firstname)} - ${member.memberships.firstWhere((element) => element.associationId == association.id && element.mandateYear == association.mandateYear).apparentName}",
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
@@ -117,6 +129,7 @@ class MemberEditableCard extends HookConsumerWidget {
               roleTagsNotifier.loadRoleTagsFromMember(member, association);
               completeMemberNotifier.setCompleteMember(member);
               membershipNotifier.setMembership(assoMembership);
+              memberRoleTagsNotifier.reset();
               if (QR.currentPath.contains(PhonebookRouter.admin)) {
                 QR.to(
                   PhonebookRouter.root +
