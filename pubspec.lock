@@ -57,14 +57,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
-  build_config:
-    dependency: transitive
-    description:
-      name: build_config
-      sha256: bf80fcfb46a29945b423bd9aad884590fb1dc69b330a4d4700cac476af1708d1
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.1"
   characters:
     dependency: transitive
     description:
@@ -153,14 +145,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.10"
-  dependency_validator:
-    dependency: "direct dev"
-    description:
-      name: dependency_validator
-      sha256: f727a5627aa405965fab4aef4f468e50a9b632ba0737fd2f98c932fec6d712b9
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.2.3"
   device_info_plus:
     dependency: "direct main"
     description:
@@ -541,14 +525,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  glob:
-    dependency: transitive
-    description:
-      name: glob
-      sha256: "0e7014b3b7d4dac1ca4d6114f82bf1782ee86745b9b42a92c9289c23d8a0ab63"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.2"
   google_fonts:
     dependency: "direct main"
     description:
@@ -709,14 +685,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.19.0"
-  io:
-    dependency: transitive
-    description:
-      name: io
-      sha256: "2ec25704aba361659e10e3e5f5d672068d332fc8ac516421d483a11e5cbd061e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.4"
   js:
     dependency: transitive
     description:
@@ -781,14 +749,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
-  logging:
-    dependency: transitive
-    description:
-      name: logging
-      sha256: "623a88c9594aa774443aa3eb2d41807a48486b5613e67599fb4c41c0ad47c340"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.0"
   matcher:
     dependency: transitive
     description:
@@ -837,14 +797,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
-  package_config:
-    dependency: transitive
-    description:
-      name: package_config
-      sha256: "1c5b77ccc91e4823a5af61ee74e6b972db1ef98c2ff5a18d3161c982a55448bd"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.0"
   package_info_plus:
     dependency: "direct main"
     description:
@@ -965,22 +917,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
-  pub_semver:
-    dependency: transitive
-    description:
-      name: pub_semver
-      sha256: "40d3ab1bbd474c4c2328c91e3a7df8c6dd629b79ece4c4bd04bee496a224fb0c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.4"
-  pubspec_parse:
-    dependency: transitive
-    description:
-      name: pubspec_parse
-      sha256: c63b2876e58e194e4b0828fcb080ad0e06d051cb607a6be51a9e084f47cb9367
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.3"
   qlevar_router:
     dependency: "direct main"
     description:
