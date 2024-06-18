@@ -3,16 +3,20 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/ph/providers/is_ph_admin_provider.dart';
 import 'package:myecl/ph/providers/ph_list_provider.dart';
 import 'package:myecl/ph/providers/ph_pdf_provider.dart';
 import 'package:myecl/ph/providers/ph_pdfs_provider.dart';
 import 'package:myecl/ph/providers/selected_year_list_provider.dart';
+import 'package:myecl/ph/router.dart';
 import 'package:myecl/ph/tools/constants.dart';
 import 'package:myecl/ph/ui/components/year_bar.dart';
 import 'package:myecl/ph/ui/pages/past_ph_selection_page/ph_card.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
+import 'package:myecl/tools/ui/widgets/admin_button.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class PhList extends HookConsumerWidget {
   const PhList({
@@ -21,6 +25,7 @@ class PhList extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isAdmin = ref.watch(isPhAdminProvider);
     final phList = ref.watch(phListProvider);
     final phPdfNotifier = ref.watch(phPdfProvider.notifier);
     final pdfsNotifier = ref.read(phPdfsProvider.notifier);
@@ -40,6 +45,15 @@ class PhList extends HookConsumerWidget {
         );
         return Column(
           children: [
+            if (isAdmin)
+              SizedBox(
+                width: 116.7,
+                child: AdminButton(
+                  onTap: () {
+                    QR.to(PhRouter.root + PhRouter.admin);
+                  },
+                ),
+              ),
             const YearBar(),
             const SizedBox(height: 10),
             Expanded(
