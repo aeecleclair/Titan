@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:myecl/tools/cache/cache_manager.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/logs/logger.dart';
@@ -17,7 +15,6 @@ abstract class Repository {
     "Content-Type": "application/json; charset=UTF-8",
     "Accept": "application/json",
   };
-  final cacheManager = CacheManager();
   static final Logger logger = Logger();
 
   void initLogger() {
@@ -38,9 +35,6 @@ abstract class Repository {
           String toDecode = response.body;
           if (host == displayHost) {
             toDecode = utf8.decode(response.body.runes.toList());
-          }
-          if (!kIsWeb) {
-            cacheManager.writeCache(ext + suffix, toDecode);
           }
           return jsonDecode(toDecode);
         } catch (e) {
@@ -82,22 +76,10 @@ abstract class Repository {
     } on AppException {
       rethrow;
     } catch (e) {
-      if (kIsWeb) {
-        logger.error(
-          "GET ${ext + suffix}\nError while fetching response",
-        );
-        return [];
-      }
-      try {
-        final toDecode = await cacheManager.readCache(ext + suffix);
-        return jsonDecode(toDecode);
-      } catch (e) {
-        logger.error(
-          "GET ${ext + suffix}\nError while decoding response from cache",
-        );
-        cacheManager.deleteCache(ext + suffix);
-        return [];
-      }
+      logger.error(
+        "GET ${ext + suffix}\nError while fetching response",
+      );
+      return [];
     }
   }
 
@@ -115,9 +97,6 @@ abstract class Repository {
           String toDecode = response.body;
           if (host == displayHost || decode) {
             toDecode = utf8.decode(response.body.runes.toList());
-          }
-          if (!kIsWeb) {
-            cacheManager.writeCache(ext + id + suffix, toDecode);
           }
           return jsonDecode(toDecode);
         } catch (e) {
@@ -158,22 +137,10 @@ abstract class Repository {
     } on AppException {
       rethrow;
     } catch (e) {
-      if (kIsWeb) {
-        logger.error(
-          "GET ${ext + suffix}\nError while fetching response",
-        );
-        return <String, dynamic>{};
-      }
-      try {
-        final toDecode = await cacheManager.readCache(ext + id + suffix);
-        return jsonDecode(toDecode);
-      } catch (e) {
-        logger.error(
-          "GET ${ext + id + suffix}\nError while decoding response from cache",
-        );
-        cacheManager.deleteCache(ext + suffix);
-        return <String, dynamic>{};
-      }
+      logger.error(
+        "GET ${ext + suffix}\nError while fetching response",
+      );
+      return <String, dynamic>{};
     }
   }
 
