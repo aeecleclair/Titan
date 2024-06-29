@@ -4,13 +4,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/ph/providers/is_ph_admin_provider.dart';
 import 'package:myecl/ph/providers/ph_list_provider.dart';
 import 'package:myecl/ph/providers/ph_pdf_provider.dart';
-import 'package:myecl/ph/providers/ph_pdfs_provider.dart';
 import 'package:myecl/ph/router.dart';
 import 'package:myecl/ph/tools/constants.dart';
 import 'package:myecl/ph/ui/button.dart';
 import 'package:myecl/ph/ui/pages/ph.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:myecl/tools/ui/widgets/admin_button.dart';
 import 'package:pdfx/pdfx.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -22,7 +20,7 @@ class PhMainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isAdmin = ref.watch(isPhAdminProvider);
     final phList = ref.watch(phListProvider);
-    final phPdfNotifier = ref.watch(phPdfProvider.notifier);
+
     return PhTemplate(
       child: Column(
         children: [
@@ -55,21 +53,16 @@ class PhMainPage extends HookConsumerWidget {
               if (phs.isEmpty) {
                 return const Text(PhTextConstants.noJournalInDatabase);
               } else {
-                final id = phs.last.id;
-                final lastPdf =
-                    ref.watch(phPdfsProvider.select((map) => map[id]));
-                final pdfsNotifier = ref.read(phPdfsProvider.notifier);
+                final idLastPh = phs.last.id;
+                final lastPhPdf = ref.watch(phPdfProvider(idLastPh));
 
-                return Expanded(
-                  child: AutoLoaderChild(
-                    group: lastPdf,
-                    notifier: pdfsNotifier,
-                    mapKey: id,
-                    loader: (id) => phPdfNotifier.loadPhPdf(id),
-                    dataBuilder: (context, pdf) => PdfView(
+                return AsyncChild(
+                  value: lastPhPdf,
+                  builder: (context, value) => Expanded(
+                    child: PdfView(
                       pageSnapping: false,
                       controller: PdfController(
-                        document: PdfDocument.openData(pdf.last),
+                        document: PdfDocument.openData(value),
                       ),
                       scrollDirection: kIsWeb ? Axis.vertical : Axis.horizontal,
                     ),
