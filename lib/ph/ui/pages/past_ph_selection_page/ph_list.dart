@@ -33,11 +33,14 @@ class PhList extends HookConsumerWidget {
     return AsyncChild(
       value: phList,
       builder: (context, phList) {
-        final list = phList.where(
-          (ph) =>
-              selectedYear.contains(ph.date.year) &&
-              ph.date.isBefore(DateTime.now()),
-        );
+        final list = phList
+            .where(
+              (ph) =>
+                  selectedYear.contains(ph.date.year) &&
+                  ph.date.isBefore(DateTime.now()),
+            )
+            .toList()
+          ..sort((b, a) => a.date.compareTo(b.date));
         return Column(
           children: [
             const YearBar(),
