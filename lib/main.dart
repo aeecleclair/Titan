@@ -19,6 +19,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/plausible/plausible_observer.dart';
 import 'package:myecl/tools/ui/layouts/app_template.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:myecl/drawer/providers/theme_provider.dart';
 
 void main() async {
   await dotenv.load();
@@ -49,6 +50,7 @@ class MyApp extends HookConsumerWidget {
     final navigatorKey = GlobalKey<NavigatorState>();
     final plausible = getPlausible();
     Future(() => animationNotifier.setController(animationController));
+    final isDarkTheme = ref.watch(themeProvider);
 
     final popScope = PopScope(
       canPop: false,
@@ -83,10 +85,16 @@ class MyApp extends HookConsumerWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         theme: ThemeData(
+          brightness: Brightness.light,
           primarySwatch: Colors.orange,
           textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
-          brightness: Brightness.light,
         ),
+        darkTheme: ThemeData(
+          brightness: Brightness.dark,
+          primarySwatch: Colors.purple,
+          textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
+        ),
+        themeMode: isDarkTheme ? ThemeMode.dark : ThemeMode.light,
         routeInformationParser: const QRouteInformationParser(),
         builder: (context, child) {
           if (child == null) {
