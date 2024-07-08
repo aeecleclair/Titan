@@ -1,13 +1,20 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/scheduler.dart';
 
 final themeProvider = StateNotifierProvider<ThemeNotifier, bool>((ref) {
   ThemeNotifier themeNotifier = ThemeNotifier();
+  themeNotifier.loadTheme();
   return themeNotifier;
 });
 
 class ThemeNotifier extends StateNotifier<bool> {
-  ThemeNotifier() : super(false);
+  ThemeNotifier()
+      : super(
+          SchedulerBinding.instance.platformDispatcher.platformBrightness ==
+              Brightness.dark,
+        ); // System-based default theme
 
   void saveTheme() {
     SharedPreferences.getInstance().then((pref) {
@@ -20,7 +27,9 @@ class ThemeNotifier extends StateNotifier<bool> {
 
   void loadTheme() {
     SharedPreferences.getInstance().then((pref) {
-      state = pref.getBool("isDarkMode") ?? false;
+      state = pref.getBool('isDarkMode') ??
+          (SchedulerBinding.instance.platformDispatcher.platformBrightness ==
+              Brightness.dark);
     });
   }
 
@@ -29,15 +38,3 @@ class ThemeNotifier extends StateNotifier<bool> {
     saveTheme();
   }
 }
-
-/*
-void loadFromPrefs() async {
-    final prefs = await SharedPreferences.getInstance();
-    state = prefs.getBool('isDark') ?? false;
-  }
-
-  void saveToPrefs() async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setBool('isDark', state);
-  }
-*/

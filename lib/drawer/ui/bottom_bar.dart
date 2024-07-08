@@ -13,7 +13,7 @@ class BottomBar extends HookConsumerWidget {
     final displayQuitNotifier = ref.watch(displayQuitProvider.notifier);
     final isDarkTheme = ref.watch(themeProvider);
     final themeNotifier = ref.watch(themeProvider.notifier);
-    //bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       children: [
         SizedBox(
