@@ -46,7 +46,7 @@ abstract class LogoRepository extends Repository {
       rethrow;
     } catch (e) {
       Repository.logger.error(
-        "GET $ext$id$suffix\nError while decoding response from cache",
+        "GET $ext$id$suffix\nCould not load the logo",
       );
       rethrow;
     }

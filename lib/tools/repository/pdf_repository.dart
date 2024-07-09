@@ -59,8 +59,7 @@ abstract class PdfRepository extends Repository {
     } catch (e) {
       Repository.logger.writeLog(
         Log(
-          message:
-              "GET $ext$id$suffix\nError while decoding response from cache",
+          message: "GET $ext$id$suffix\nCould not load the pdf",
           level: LogLevel.error,
         ),
       );
