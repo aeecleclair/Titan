@@ -18,7 +18,6 @@ abstract class LogoRepository extends Repository {
           await http.get(Uri.parse("$host$ext$id$suffix"), headers: headers);
       if (response.statusCode == 200) {
         try {
-          await cacheManager.writeImage(ext + id + suffix, response.bodyBytes);
           return response.bodyBytes;
         } catch (e) {
           Repository.logger.error(
@@ -46,15 +45,10 @@ abstract class LogoRepository extends Repository {
     } on AppException {
       rethrow;
     } catch (e) {
-      try {
-        return await cacheManager.readImage(ext + id + suffix);
-      } catch (e) {
-        Repository.logger.error(
-          "GET $ext$id$suffix\nError while decoding response from cache",
-        );
-        cacheManager.deleteCache(ext + id + suffix);
-        rethrow;
-      }
+      Repository.logger.error(
+        "GET $ext$id$suffix\nCould not load the logo",
+      );
+      rethrow;
     }
   }
 
