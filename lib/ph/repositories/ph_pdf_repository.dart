@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/pdf_repository.dart';
 
 class PhPdfRepository extends PdfRepository {
@@ -17,3 +19,8 @@ class PhPdfRepository extends PdfRepository {
     return uint8List;
   }
 }
+
+final phPdfRepositoryProvider = Provider<PhPdfRepository>((ref) {
+  final token = ref.watch(tokenProvider);
+  return PhPdfRepository()..setToken(token);
+});

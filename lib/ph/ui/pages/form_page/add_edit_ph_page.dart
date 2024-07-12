@@ -33,7 +33,6 @@ class PhAddEditPhPage extends HookConsumerWidget {
     final name = useTextEditingController(text: ph.name);
 
     final phListNotifier = ref.watch(phListProvider.notifier);
-    final phPdfNotifier = ref.watch(phPdfProvider.notifier);
     final phSendPdf = ref.watch(phSendPdfProvider);
 
     void displayPhToastWithContext(TypeMsg type, String msg) {
@@ -124,11 +123,13 @@ class PhAddEditPhPage extends HookConsumerWidget {
                                 );
                                 phList.maybeWhen(
                                   data: (list) {
-                                    final newPh = list.last;
-                                    phPdfNotifier.updatePhPdf(
-                                      newPh.id,
-                                      phSendPdf,
-                                    );
+                                    ref
+                                        .read(
+                                          phPdfProvider(list.last.id).notifier,
+                                        )
+                                        .updatePhPdf(
+                                          Uint8List.fromList(phSendPdf),
+                                        );
                                   },
                                   orElse: () {},
                                 );
