@@ -13,7 +13,7 @@ import 'package:myecl/cinema/providers/the_movie_db_genre_provider.dart';
 import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/cinema/ui/cinema.dart';
-import 'package:myecl/cinema/ui/pages/session_pages/imdb_button.dart';
+import 'package:myecl/cinema/ui/pages/session_pages/tmdb_button.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
@@ -31,7 +31,7 @@ class AddEditSessionPage extends HookConsumerWidget {
     final session = ref.watch(sessionProvider);
     final movieNotifier = ref.watch(theMovieDBMovieProvider.notifier);
     final isEdit = session.id != Session.empty().id;
-    final imdbUrl = useTextEditingController();
+    final tmdbUrl = useTextEditingController();
     final key = GlobalKey<FormState>();
     final sessionListNotifier = ref.watch(sessionListProvider.notifier);
     final sessionList = ref.watch(sessionListProvider);
@@ -80,60 +80,63 @@ class AddEditSessionPage extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 30),
                 TextField(
-                  controller: imdbUrl,
+                  controller: tmdbUrl,
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
-                    labelText: CinemaTextConstants.importFromIMDB,
+                    labelText: CinemaTextConstants.importFromTMDB,
                     labelStyle:
                         const TextStyle(color: Colors.black, fontSize: 20),
                     suffixIcon: Container(
                       padding: const EdgeInsets.all(10),
                       child: WaitingButton(
                         onTap: () async {
-                          if (imdbUrl.text.isEmpty) {
+                          if (tmdbUrl.text.isEmpty) {
                             displayToastWithContext(
                               TypeMsg.error,
                               CinemaTextConstants.emptyUrl,
                             );
                             return;
                           }
-                          if (!imdbUrl.text.contains('imdb.com/title/')) {
+                          try {
+                            final url = Uri.parse(tmdbUrl.text);
+                            final movieId = switch (url.host) {
+                              "www.themoviedb.org" => url.pathSegments[1],
+                              "www.imdb.com" => url.pathSegments[1],
+                              _ => throw const FormatException(),
+                            };
+                            tokenExpireWrapper(ref, () async {
+                              movieNotifier.loadMovie(movieId).then((value) {
+                                value.when(
+                                  data: (data) async {
+                                    name.text = data.title;
+                                    overview.text = data.overview;
+                                    posterUrl.text = data.posterUrl;
+                                    genre.text = data.genres.join(', ');
+                                    tagline.text = data.tagline;
+                                    duration.text =
+                                        parseDurationBack(data.runtime);
+                                    logo.value =
+                                        await getFromUrl(data.posterUrl);
+                                  },
+                                  loading: () {},
+                                  error: (e, s) {
+                                    displayToastWithContext(
+                                      TypeMsg.error,
+                                      e.toString(),
+                                    );
+                                  },
+                                );
+                              });
+                            });
+                          } on FormatException catch (_) {
                             displayToastWithContext(
                               TypeMsg.error,
                               CinemaTextConstants.invalidUrl,
                             );
                             return;
                           }
-                          final movieId = imdbUrl.text
-                              .split('imdb.com/title/')
-                              .last
-                              .split('/')
-                              .first;
-                          tokenExpireWrapper(ref, () async {
-                            movieNotifier.loadMovie(movieId).then((value) {
-                              value.when(
-                                data: (data) async {
-                                  name.text = data.title;
-                                  overview.text = data.overview;
-                                  posterUrl.text = data.posterUrl;
-                                  genre.text = data.genres.join(', ');
-                                  tagline.text = data.tagline;
-                                  duration.text =
-                                      parseDurationBack(data.runtime);
-                                  logo.value = await getFromUrl(data.posterUrl);
-                                },
-                                loading: () {},
-                                error: (e, s) {
-                                  displayToastWithContext(
-                                    TypeMsg.error,
-                                    e.toString(),
-                                  );
-                                },
-                              );
-                            });
-                          });
                         },
-                        builder: (child) => ImdbButton(child: child),
+                        builder: (child) => TmdbButton(child: child),
                         child: const HeroIcon(
                           HeroIcons.arrowRight,
                           size: 22,
