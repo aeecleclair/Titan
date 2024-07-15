@@ -49,7 +49,7 @@ class PhMainPage extends HookConsumerWidget {
           AsyncChild(
             value: phList,
             builder: (context, phs) {
-              phs.sort((b, a) => a.date.compareTo(b.date));
+              phs.sort((a, b) => a.date.compareTo(b.date));
               if (phs.isEmpty) {
                 return const Text(PhTextConstants.noJournalInDatabase);
               } else {
