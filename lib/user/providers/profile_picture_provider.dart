@@ -59,13 +59,6 @@ class ProfilePictureNotifier extends SingleNotifier<Uint8List> {
       final File newImage = await file.writeAsBytes(value);
       CroppedFile? croppedFile = await ImageCropper().cropImage(
         sourcePath: newImage.path,
-        aspectRatioPresets: [
-          CropAspectRatioPreset.square,
-          CropAspectRatioPreset.ratio3x2,
-          CropAspectRatioPreset.original,
-          CropAspectRatioPreset.ratio4x3,
-          CropAspectRatioPreset.ratio16x9,
-        ],
         uiSettings: [
           AndroidUiSettings(
             toolbarTitle: 'Recadrer',
@@ -73,9 +66,23 @@ class ProfilePictureNotifier extends SingleNotifier<Uint8List> {
             toolbarWidgetColor: Colors.grey[100],
             initAspectRatio: CropAspectRatioPreset.original,
             lockAspectRatio: false,
+            aspectRatioPresets: [
+              CropAspectRatioPreset.square,
+              CropAspectRatioPreset.ratio3x2,
+              CropAspectRatioPreset.original,
+              CropAspectRatioPreset.ratio4x3,
+              CropAspectRatioPreset.ratio16x9,
+            ],
           ),
           IOSUiSettings(
             title: 'Recadrer',
+            aspectRatioPresets: [
+              CropAspectRatioPreset.square,
+              CropAspectRatioPreset.ratio3x2,
+              CropAspectRatioPreset.original,
+              CropAspectRatioPreset.ratio4x3,
+              CropAspectRatioPreset.ratio16x9,
+            ],
           ),
         ],
       );
