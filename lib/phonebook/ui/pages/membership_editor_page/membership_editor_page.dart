@@ -118,8 +118,8 @@ class MembershipEditorPage extends HookConsumerWidget {
                             ),
                             fillColor: rolesTagList.keys.first == tagKey &&
                                     !isPhonebookAdmin
-                                ? MaterialStateProperty.all(Colors.black)
-                                : MaterialStateProperty.all(Colors.grey),
+                                ? WidgetStateProperty.all(Colors.black)
+                                : WidgetStateProperty.all(Colors.grey),
                             onChanged: rolesTagList.keys.first == tagKey &&
                                     !isPhonebookAdmin
                                 ? null

@@ -5,6 +5,8 @@ class Association {
     required this.description,
     required this.kind,
     required this.mandateYear,
+    required this.deactivated,
+    required this.associatedGroups,
   });
 
   late final String id;
@@ -12,6 +14,8 @@ class Association {
   late final String description;
   late final String kind;
   late final int mandateYear;
+  late final bool deactivated;
+  late final List<String> associatedGroups;
 
   Association.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -19,6 +23,8 @@ class Association {
     description = json['description'];
     kind = json['kind'];
     mandateYear = json['mandate_year'];
+    deactivated = json['deactivated'];
+    associatedGroups = List<String>.from(json['associated_groups']);
   }
 
   Map<String, dynamic> toJson() {
@@ -28,6 +34,8 @@ class Association {
       'description': description,
       'kind': kind,
       'mandate_year': mandateYear,
+      'deactivated': deactivated,
+      'associated_groups': associatedGroups,
     };
     return data;
   }
@@ -38,6 +46,8 @@ class Association {
     String? description,
     String? kind,
     int? mandateYear,
+    bool? deactivated,
+    List<String>? associatedGroups,
   }) {
     return Association(
       id: id ?? this.id,
@@ -45,6 +55,8 @@ class Association {
       description: description ?? this.description,
       kind: kind ?? this.kind,
       mandateYear: mandateYear ?? this.mandateYear,
+      deactivated: deactivated ?? this.deactivated,
+      associatedGroups: associatedGroups ?? this.associatedGroups,
     );
   }
 
@@ -54,6 +66,7 @@ class Association {
     description = "";
     kind = "";
     mandateYear = 0;
+    deactivated = false;
   }
 
   void newMandate() {
@@ -62,6 +75,6 @@ class Association {
 
   @override
   String toString() {
-    return "Association(Nom : $name, id : $id, description : $description, kind : $kind, mandate_year : $mandateYear)";
+    return "Association(Nom : $name, id : $id, description : $description, kind : $kind, mandate_year : $mandateYear, deactivated : $deactivated, associated_groups : $associatedGroups)";
   }
 }

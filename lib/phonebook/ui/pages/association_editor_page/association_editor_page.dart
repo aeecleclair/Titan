@@ -11,6 +11,7 @@ import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
 import 'package:myecl/phonebook/providers/member_role_tags_provider.dart';
 import 'package:myecl/phonebook/providers/membership_provider.dart';
+import 'package:myecl/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
@@ -46,6 +47,7 @@ class AssociationEditorPage extends HookConsumerWidget {
     final membershipNotifier = ref.watch(membershipProvider.notifier);
     final completeMemberNotifier = ref.watch(completeMemberProvider.notifier);
     final memberRoleTagsNotifier = ref.watch(memberRoleTagsProvider.notifier);
+    final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -140,10 +142,11 @@ class AssociationEditorPage extends HookConsumerWidget {
             ),
             AsyncChild(
               value: associationMemberList,
-              builder: (context, associationMembers) =>
-                  associationMembers.isEmpty
-                      ? const Text(PhonebookTextConstants.noMember)
-                      : SizedBox(
+              builder: (context, associationMembers) => associationMembers
+                      .isEmpty
+                  ? const Text(PhonebookTextConstants.noMember)
+                  : isPhonebookAdmin
+                      ? SizedBox(
                           height: 400,
                           child: ReorderableListView(
                             proxyDecorator: (child, index, animation) {
@@ -192,12 +195,29 @@ class AssociationEditorPage extends HookConsumerWidget {
                             children: associationMemberSortedList
                                 .map(
                                   (member) => MemberEditableCard(
+                                    deactivated: false,
                                     key: ValueKey(member.member.id),
                                     member: member,
                                     association: association,
                                   ),
                                 )
                                 .toList(),
+                          ),
+                        )
+                      : SizedBox(
+                          height: 400,
+                          child: ListView.builder(
+                            itemCount: associationMembers.length,
+                            itemBuilder: (context, index) {
+                              return MemberEditableCard(
+                                deactivated: true,
+                                key: ValueKey(
+                                  associationMembers[index].member.id,
+                                ),
+                                member: associationMembers[index],
+                                association: association,
+                              );
+                            },
                           ),
                         ),
             ),

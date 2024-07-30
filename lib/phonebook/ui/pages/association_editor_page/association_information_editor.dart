@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/class/simple_group.dart';
+import 'package:myecl/admin/providers/group_list_provider.dart';
+import 'package:myecl/admin/providers/is_admin_provider.dart';
 import 'package:myecl/phonebook/providers/association_kind_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
+import 'package:myecl/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/ui/components/kinds_bar.dart';
 import 'package:myecl/tools/constants.dart';
@@ -30,13 +34,205 @@ class AssociationInformationEditor extends HookConsumerWidget {
     final name = useTextEditingController(text: association.name);
     final description = useTextEditingController(text: association.description);
     final associationListNotifier = ref.watch(associationListProvider.notifier);
+    final isAdmin = ref.watch(isAdminProvider);
+    final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
+
+    final groups = ref.watch(allGroupListProvider);
+    List<SimpleGroup> selectedGroups = groups.maybeWhen(
+      data: (value) {
+        return value.where((element) {
+          return association.associatedGroups.contains(element.id);
+        }).toList();
+      },
+      orElse: () {
+        return [];
+      },
+    );
     final key = GlobalKey<FormState>();
 
-    return Form(
-      key: key,
-      child: Column(
-        children: [
-          KindsBar(key: scrollKey),
+    return Column(
+      children: [
+        isPhonebookAdmin
+            ? Form(
+                key: key,
+                child: Column(
+                  children: [
+                    KindsBar(key: scrollKey),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Column(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  child: TextFormField(
+                                    controller: name,
+                                    cursorColor: ColorConstants.gradient1,
+                                    decoration: InputDecoration(
+                                      labelText:
+                                          PhonebookTextConstants.namePure,
+                                      labelStyle: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      suffixIcon: Container(
+                                        padding: const EdgeInsets.all(10),
+                                        child: const HeroIcon(
+                                          HeroIcons.pencil,
+                                        ),
+                                      ),
+                                      enabledBorder: const UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                      focusedBorder: const UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: ColorConstants.gradient1,
+                                        ),
+                                      ),
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return PhonebookTextConstants
+                                            .emptyFieldError;
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  child: TextFormField(
+                                    controller: description,
+                                    cursorColor: ColorConstants.gradient1,
+                                    decoration: InputDecoration(
+                                      labelText:
+                                          PhonebookTextConstants.description,
+                                      labelStyle: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      suffixIcon: Container(
+                                        padding: const EdgeInsets.all(10),
+                                        child: const HeroIcon(
+                                          HeroIcons.pencil,
+                                        ),
+                                      ),
+                                      enabledBorder: const UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                      focusedBorder: const UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: ColorConstants.gradient1,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          WaitingButton(
+                            builder: (child) => AddEditButtonLayout(
+                              colors: const [
+                                ColorConstants.gradient1,
+                                ColorConstants.gradient2,
+                              ],
+                              child: child,
+                            ),
+                            onTap: () async {
+                              if (!key.currentState!.validate()) {
+                                return;
+                              }
+                              if (kind == '') {
+                                displayToastWithContext(
+                                  TypeMsg.error,
+                                  PhonebookTextConstants.emptyKindError,
+                                );
+                                return;
+                              }
+                              await tokenExpireWrapper(ref, () async {
+                                final value = await associationListNotifier
+                                    .updateAssociation(
+                                  association.copyWith(
+                                    name: name.text,
+                                    description: description.text,
+                                    kind: kind,
+                                  ),
+                                );
+                                if (value) {
+                                  displayToastWithContext(
+                                    TypeMsg.msg,
+                                    PhonebookTextConstants.updatedAssociation,
+                                  );
+                                } else {
+                                  displayToastWithContext(
+                                    TypeMsg.msg,
+                                    PhonebookTextConstants.updatingError,
+                                  );
+                                }
+                              });
+                            },
+                            child: const Text(
+                              PhonebookTextConstants.edit,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            : Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Column(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      child: Text(
+                        association.name,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      child: SizedBox(
+                        child: Text(
+                          association.description,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+        if (isAdmin)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Column(
@@ -48,75 +244,53 @@ class AssociationInformationEditor extends HookConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        child: TextFormField(
-                          controller: name,
-                          cursorColor: ColorConstants.gradient1,
-                          decoration: InputDecoration(
-                            labelText: PhonebookTextConstants.namePure,
-                            labelStyle: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            suffixIcon: Container(
-                              padding: const EdgeInsets.all(10),
-                              child: const HeroIcon(
-                                HeroIcons.pencil,
-                              ),
-                            ),
-                            enabledBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                              ),
-                            ),
-                            focusedBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ColorConstants.gradient1,
-                              ),
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return PhonebookTextConstants.emptyFieldError;
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        child: TextFormField(
-                          controller: description,
-                          cursorColor: ColorConstants.gradient1,
-                          decoration: InputDecoration(
-                            labelText: PhonebookTextConstants.description,
-                            labelStyle: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            suffixIcon: Container(
-                              padding: const EdgeInsets.all(10),
-                              child: const HeroIcon(
-                                HeroIcons.pencil,
-                              ),
-                            ),
-                            enabledBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                              ),
-                            ),
-                            focusedBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ColorConstants.gradient1,
-                              ),
-                            ),
+                        child: ExpansionTile(
+                          title: const Text(PhonebookTextConstants.groups),
+                          children: groups.maybeWhen(
+                            data: (data) {
+                              return data.map((group) {
+                                return Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        child: Text(
+                                          group.name,
+                                          style: const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                      StatefulBuilder(
+                                        builder: (context, setState) {
+                                          return Checkbox(
+                                            value:
+                                                selectedGroups.contains(group),
+                                            onChanged: (value) {
+                                              if (value == true) {
+                                                selectedGroups.add(group);
+                                              } else {
+                                                selectedGroups.remove(group);
+                                              }
+                                              setState(() {});
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }).toList();
+                            },
+                            orElse: () {
+                              return [];
+                            },
                           ),
                         ),
                       ),
@@ -132,29 +306,18 @@ class AssociationInformationEditor extends HookConsumerWidget {
                     child: child,
                   ),
                   onTap: () async {
-                    if (!key.currentState!.validate()) {
-                      return;
-                    }
-                    if (kind == '') {
-                      displayToastWithContext(
-                        TypeMsg.error,
-                        PhonebookTextConstants.emptyKindError,
-                      );
-                      return;
-                    }
                     await tokenExpireWrapper(ref, () async {
                       final value =
-                          await associationListNotifier.updateAssociation(
+                          await associationListNotifier.updateAssociationGroups(
                         association.copyWith(
-                          name: name.text,
-                          description: description.text,
-                          kind: kind,
+                          associatedGroups:
+                              selectedGroups.map((e) => e.id).toList(),
                         ),
                       );
                       if (value) {
                         displayToastWithContext(
                           TypeMsg.msg,
-                          PhonebookTextConstants.updatedAssociation,
+                          PhonebookTextConstants.updatedGroups,
                         );
                       } else {
                         displayToastWithContext(
@@ -165,7 +328,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                     });
                   },
                   child: const Text(
-                    PhonebookTextConstants.edit,
+                    PhonebookTextConstants.updateGroups,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -176,8 +339,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
               ],
             ),
           ),
-        ],
-      ),
+      ],
     );
   }
 }

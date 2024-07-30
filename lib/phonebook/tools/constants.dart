@@ -64,6 +64,8 @@ class PhonebookTextConstants {
 
   static const String firstname = "Prénom :";
 
+  static const String groups = "Groupes associés :";
+
   static const String mandateChangingError =
       "Erreur lors du changement de mandat";
   static const String member = "Membre";
@@ -103,11 +105,13 @@ class PhonebookTextConstants {
   static const String tooHeavyAssociationPicture =
       "L'image est trop lourde (max 4Mo)";
 
+  static const String updateGroups = "Mettre à jour les groupes";
   static const String updatedAssociation = "Association modifiée";
   static const String updatedAssociationPicture =
       "La photo d'association a été changée";
-  static const String updatingError = "Erreur lors de la modification";
+  static const String updatedGroups = "Groupes mis à jour";
   static const String updatedMember = "Membre modifié";
+  static const String updatingError = "Erreur lors de la modification";
 
   static const String validation = "Valider";
 }

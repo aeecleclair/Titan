@@ -25,10 +25,12 @@ class MemberEditableCard extends HookConsumerWidget {
     super.key,
     required this.member,
     required this.association,
+    required this.deactivated,
   });
 
   final CompleteMember member;
   final Association association;
+  final bool deactivated;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -124,6 +126,7 @@ class MemberEditableCard extends HookConsumerWidget {
             ),
           ),
           EditionButton(
+            deactivated: deactivated,
             onEdition: () async {
               roleTagsNotifier.resetChecked();
               roleTagsNotifier.loadRoleTagsFromMember(member, association);
@@ -149,6 +152,7 @@ class MemberEditableCard extends HookConsumerWidget {
           ),
           const SizedBox(width: 10),
           DeleteButton(
+            deactivated: deactivated,
             onDelete: () async {
               final result = await associationMemberListNotifier.deleteMember(
                 member,

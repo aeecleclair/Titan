@@ -40,6 +40,26 @@ class AssociationListNotifier extends ListNotifier<Association> {
       association,
     );
   }
+
+  Future<bool> deactivateAssociation(Association association) async {
+    return await update(
+      associationRepository.deactivateAssociation,
+      (associations, association) => associations
+        ..[associations.indexWhere((g) => g.id == association.id)] =
+            association.copyWith(deactivated: true),
+      association,
+    );
+  }
+
+  Future<bool> updateAssociationGroups(Association association) async {
+    return await update(
+      associationRepository.updateAssociationGroups,
+      (associations, association) => associations
+        ..[associations.indexWhere((g) => g.id == association.id)] =
+            association,
+      association,
+    );
+  }
 }
 
 final associationListProvider = StateNotifierProvider<AssociationListNotifier,

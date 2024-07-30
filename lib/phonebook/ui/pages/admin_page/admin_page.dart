@@ -5,6 +5,7 @@ import 'package:myecl/phonebook/providers/association_filtered_list_provider.dar
 import 'package:myecl/phonebook/providers/association_kind_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
+import 'package:myecl/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
@@ -12,6 +13,7 @@ import 'package:myecl/phonebook/ui/components/kinds_bar.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/association_research_bar.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/editable_association_card.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
@@ -30,6 +32,7 @@ class AdminPage extends HookConsumerWidget {
     final associationList = ref.watch(associationListProvider);
     final associationFilteredList = ref.watch(associationFilteredListProvider);
     final roleNotifier = ref.watch(rolesTagsProvider.notifier);
+    final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -54,13 +57,15 @@ class AdminPage extends HookConsumerWidget {
                   children: [
                     KindsBar(),
                     GestureDetector(
-                      onTap: () {
-                        QR.to(
-                          PhonebookRouter.root +
-                              PhonebookRouter.admin +
-                              PhonebookRouter.createAssociaiton,
-                        );
-                      },
+                      onTap: isPhonebookAdmin
+                          ? () {
+                              QR.to(
+                                PhonebookRouter.root +
+                                    PhonebookRouter.admin +
+                                    PhonebookRouter.createAssociaiton,
+                              );
+                            }
+                          : null,
                       child: CardLayout(
                         margin: const EdgeInsets.only(
                           bottom: 10,
@@ -70,7 +75,9 @@ class AdminPage extends HookConsumerWidget {
                         ),
                         width: double.infinity,
                         height: 100,
-                        color: Colors.white,
+                        color: isPhonebookAdmin
+                            ? Colors.white
+                            : ColorConstants.deactivated2,
                         child: Center(
                           child: HeroIcon(
                             HeroIcons.plus,
@@ -91,6 +98,7 @@ class AdminPage extends HookConsumerWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: EditableAssociationCard(
                             association: association,
+                            isPhonebookAdmin: isPhonebookAdmin,
                             onEdit: () {
                               kindNotifier.setKind(association.kind);
                               associationNotifier.setAssociation(association);
