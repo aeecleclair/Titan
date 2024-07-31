@@ -98,36 +98,41 @@ class AssociationEditorPage extends HookConsumerWidget {
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: ColorConstants.gradient1,
+                        color: isPhonebookAdmin
+                            ? ColorConstants.gradient1
+                            : ColorConstants.deactivated1,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: child,
                     ),
-                    onTap: () async {
-                      rolesTagsNotifier.resetChecked();
-                      memberRoleTagsNotifier.reset();
-                      completeMemberNotifier
-                          .setCompleteMember(CompleteMember.empty());
-                      membershipNotifier.setMembership(
-                        Membership.empty()
-                            .copyWith(associationId: association.id),
-                      );
-                      if (QR.currentPath.contains(PhonebookRouter.admin)) {
-                        QR.to(
-                          PhonebookRouter.root +
-                              PhonebookRouter.admin +
-                              PhonebookRouter.editAssociation +
-                              PhonebookRouter.addEditMember,
-                        );
-                      } else {
-                        QR.to(
-                          PhonebookRouter.root +
-                              PhonebookRouter.associationDetail +
-                              PhonebookRouter.editAssociation +
-                              PhonebookRouter.addEditMember,
-                        );
-                      }
-                    },
+                    onTap: isPhonebookAdmin
+                        ? () async {
+                            rolesTagsNotifier.resetChecked();
+                            memberRoleTagsNotifier.reset();
+                            completeMemberNotifier
+                                .setCompleteMember(CompleteMember.empty());
+                            membershipNotifier.setMembership(
+                              Membership.empty()
+                                  .copyWith(associationId: association.id),
+                            );
+                            if (QR.currentPath
+                                .contains(PhonebookRouter.admin)) {
+                              QR.to(
+                                PhonebookRouter.root +
+                                    PhonebookRouter.admin +
+                                    PhonebookRouter.editAssociation +
+                                    PhonebookRouter.addEditMember,
+                              );
+                            } else {
+                              QR.to(
+                                PhonebookRouter.root +
+                                    PhonebookRouter.associationDetail +
+                                    PhonebookRouter.editAssociation +
+                                    PhonebookRouter.addEditMember,
+                              );
+                            }
+                          }
+                        : () async {},
                     child: const HeroIcon(
                       HeroIcons.plus,
                       size: 30,
@@ -228,61 +233,75 @@ class AssociationEditorPage extends HookConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: WaitingButton(
                 builder: (child) => AddEditButtonLayout(
-                  colors: const [
-                    ColorConstants.gradient1,
-                    ColorConstants.gradient2,
-                  ],
+                  colors: isPhonebookAdmin
+                      ? [
+                          ColorConstants.gradient1,
+                          ColorConstants.gradient2,
+                        ]
+                      : [
+                          ColorConstants.deactivated1,
+                          ColorConstants.deactivated2
+                        ],
                   child: child,
                 ),
-                onTap: () async {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: const Text(PhonebookTextConstants.newMandate),
-                      content: const Text(
-                        PhonebookTextConstants.changeMandateConfirm,
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Text(PhonebookTextConstants.cancel),
-                        ),
-                        TextButton(
-                          onPressed: () async {
-                            Navigator.pop(context);
-                            await tokenExpireWrapper(ref, () async {
-                              final value = await associationListNotifier
-                                  .updateAssociation(
-                                association.copyWith(
-                                  mandateYear: association.mandateYear + 1,
-                                ),
-                              );
-                              if (value) {
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  PhonebookTextConstants.newMandateConfirmed,
-                                );
-                                associationNotifier.setAssociation(
-                                  association.copyWith(
-                                    mandateYear: association.mandateYear + 1,
-                                  ),
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  PhonebookTextConstants.mandateChangingError,
-                                );
-                              }
-                            });
-                          },
-                          child: const Text(PhonebookTextConstants.validation),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                onTap: isPhonebookAdmin
+                    ? () async {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title:
+                                const Text(PhonebookTextConstants.newMandate),
+                            content: const Text(
+                              PhonebookTextConstants.changeMandateConfirm,
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child:
+                                    const Text(PhonebookTextConstants.cancel),
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  Navigator.pop(context);
+                                  await tokenExpireWrapper(ref, () async {
+                                    final value = await associationListNotifier
+                                        .updateAssociation(
+                                      association.copyWith(
+                                        mandateYear:
+                                            association.mandateYear + 1,
+                                      ),
+                                    );
+                                    if (value) {
+                                      displayToastWithContext(
+                                        TypeMsg.msg,
+                                        PhonebookTextConstants
+                                            .newMandateConfirmed,
+                                      );
+                                      associationNotifier.setAssociation(
+                                        association.copyWith(
+                                          mandateYear:
+                                              association.mandateYear + 1,
+                                        ),
+                                      );
+                                    } else {
+                                      displayToastWithContext(
+                                        TypeMsg.error,
+                                        PhonebookTextConstants
+                                            .mandateChangingError,
+                                      );
+                                    }
+                                  });
+                                },
+                                child: const Text(
+                                    PhonebookTextConstants.validation),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    : () async {},
                 child: Text(
                   "${PhonebookTextConstants.changeMandate} ${association.mandateYear + 1}",
                   style: const TextStyle(
