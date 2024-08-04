@@ -109,33 +109,68 @@ class AdminPage extends HookConsumerWidget {
                               );
                             },
                             onDelete: () async {
-                              await showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return CustomDialogBox(
-                                    title: PhonebookTextConstants.deleting,
-                                    descriptions: PhonebookTextConstants
-                                        .deleteAssociation,
-                                    onYes: () async {
-                                      final result =
-                                          await associationListNotifier
-                                              .deleteAssociation(association);
-                                      if (result) {
-                                        displayToastWithContext(
-                                          TypeMsg.msg,
-                                          PhonebookTextConstants
-                                              .deletedAssociation,
+                              association.deactivated
+                                  ? await showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return CustomDialogBox(
+                                          title:
+                                              PhonebookTextConstants.deleting,
+                                          descriptions: PhonebookTextConstants
+                                              .deleteAssociation,
+                                          onYes: () async {
+                                            final result =
+                                                await associationListNotifier
+                                                    .deleteAssociation(
+                                                        association);
+                                            if (result) {
+                                              displayToastWithContext(
+                                                TypeMsg.msg,
+                                                PhonebookTextConstants
+                                                    .deletedAssociation,
+                                              );
+                                            } else {
+                                              displayToastWithContext(
+                                                TypeMsg.error,
+                                                PhonebookTextConstants
+                                                    .deletingError,
+                                              );
+                                            }
+                                          },
                                         );
-                                      } else {
-                                        displayToastWithContext(
-                                          TypeMsg.error,
-                                          PhonebookTextConstants.deletingError,
+                                      },
+                                    )
+                                  : await showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return CustomDialogBox(
+                                          title: PhonebookTextConstants
+                                              .deactivating,
+                                          descriptions: PhonebookTextConstants
+                                              .deactivateAssociation,
+                                          onYes: () async {
+                                            final result =
+                                                await associationListNotifier
+                                                    .deactivateAssociation(
+                                              association,
+                                            );
+                                            if (result) {
+                                              displayToastWithContext(
+                                                TypeMsg.msg,
+                                                PhonebookTextConstants
+                                                    .deactivatedAssociation,
+                                              );
+                                            } else {
+                                              displayToastWithContext(
+                                                TypeMsg.error,
+                                                PhonebookTextConstants
+                                                    .deactivatingError,
+                                              );
+                                            }
+                                          },
                                         );
-                                      }
-                                    },
-                                  );
-                                },
-                              );
+                                      },
+                                    );
                             },
                           ),
                         ),

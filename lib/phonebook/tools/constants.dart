@@ -26,6 +26,11 @@ class PhonebookTextConstants {
       "Êtes-vous sûr de vouloir changer tout le mandat ?\nCette action est irréversible !";
   static const String copied = "Copié dans le presse-papier";
 
+  static const String deactivateAssociation =
+      "Êtes-vous sûr de vouloir désactiver cette association ?\nCette action est irréversible !";
+  static const String deactivatedAssociation = "Association désactivée";
+  static const String deactivating = "Désactiver l'association ?";
+  static const String deactivatingError = "Erreur lors de la désactivation";
   static const String detail = "Détail :";
   static const String deleteAssociation = "Supprimer l'association ?";
   static const String deletedAssociation = "Association supprimée";

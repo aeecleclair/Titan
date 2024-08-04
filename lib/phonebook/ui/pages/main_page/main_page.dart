@@ -73,16 +73,19 @@ class PhonebookMainPage extends HookConsumerWidget {
                       )
                     else
                       ...associationFilteredList.map(
-                        (association) => AssociationCard(
-                          association: association,
-                          onClicked: () {
-                            associationNotifier.setAssociation(association);
-                            QR.to(
-                              PhonebookRouter.root +
-                                  PhonebookRouter.associationDetail,
-                            );
-                          },
-                        ),
+                        (association) => !association.deactivated
+                            ? AssociationCard(
+                                association: association,
+                                onClicked: () {
+                                  associationNotifier
+                                      .setAssociation(association);
+                                  QR.to(
+                                    PhonebookRouter.root +
+                                        PhonebookRouter.associationDetail,
+                                  );
+                                },
+                              )
+                            : const SizedBox.shrink(),
                       ),
                   ],
                 );
