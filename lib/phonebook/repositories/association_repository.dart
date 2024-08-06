@@ -28,4 +28,18 @@ class AssociationRepository extends Repository {
   Future<AssociationKinds> getAssociationKinds() async {
     return AssociationKinds.fromJson(await getOne("kinds"));
   }
+
+  Future<bool> deactivateAssociation(Association association) async {
+    return await update(null, association.id, suffix: "/deactivate");
+  }
+
+  Future<bool> updateAssociationGroups(
+    Association association,
+  ) async {
+    return await update(
+      {"associated_groups": association.associatedGroups},
+      association.id,
+      suffix: "/groups",
+    );
+  }
 }

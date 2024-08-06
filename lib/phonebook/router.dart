@@ -41,7 +41,7 @@ class PhonebookRouter {
             path: admin,
             builder: () => const AdminPage(),
             middleware: [
-              AdminMiddleware(ref, isPhonebookAdminProvider),
+              AdminMiddleware(ref, hasPhonebookAdminAccessProvider),
             ],
             children: [
               QRoute(

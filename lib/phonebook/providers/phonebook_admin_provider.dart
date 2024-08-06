@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/admin/providers/is_admin_provider.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
@@ -15,6 +16,12 @@ final isPhonebookAdminProvider = StateProvider<bool>((ref) {
     return true;
   }
   return false;
+});
+
+final hasPhonebookAdminAccessProvider = StateProvider<bool>((ref) {
+  final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
+  final isAdmin = ref.watch(isAdminProvider);
+  return isPhonebookAdmin || isAdmin;
 });
 
 final isAssociationPresidentProvider = StateProvider<bool>((ref) {

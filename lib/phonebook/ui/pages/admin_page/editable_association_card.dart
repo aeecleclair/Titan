@@ -6,11 +6,13 @@ import 'package:myecl/phonebook/ui/pages/admin_page/edition_button.dart';
 
 class EditableAssociationCard extends HookConsumerWidget {
   final Association association;
+  final bool isPhonebookAdmin;
   final void Function() onEdit;
   final Future Function() onDelete;
   const EditableAssociationCard({
     super.key,
     required this.association,
+    required this.isPhonebookAdmin,
     required this.onEdit,
     required this.onDelete,
   });
@@ -57,9 +59,9 @@ class EditableAssociationCard extends HookConsumerWidget {
           ),
           Row(
             children: [
-              EditionButton(onEdition: onEdit),
+              EditionButton(onEdition: onEdit, deactivated: false),
               const SizedBox(width: 5),
-              DeleteButton(onDelete: onDelete),
+              DeleteButton(onDelete: onDelete, deactivated: !isPhonebookAdmin),
             ],
           ),
         ],

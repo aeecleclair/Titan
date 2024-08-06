@@ -5,6 +5,8 @@ class ColorConstants {
   static const Color gradient2 = Color(0xffeb3e1b);
   static const Color error = Color(0xFFC91717);
   static const Color background2 = Color(0xFF222643);
+  static const Color deactivated1 = Color(0xFF9E9E9E);
+  static const Color deactivated2 = Color(0xFFC0C0C0);
 }
 
 class TextConstants {

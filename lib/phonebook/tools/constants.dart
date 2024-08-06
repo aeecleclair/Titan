@@ -64,9 +64,12 @@ class PhonebookTextConstants {
 
   static const String firstname = "Prénom :";
 
+  static const String groups = "Groupes associés :";
+
   static const String mandateChangingError =
       "Erreur lors du changement de mandat";
   static const String member = "Membre";
+  static const String memberReordered = "Membre réordonné";
   static const String members = "Membres";
   static const String membershipAssociationError =
       "Veuillez choisir une association";
@@ -80,6 +83,9 @@ class PhonebookTextConstants {
   static const String newMandateConfirmed = "Mandat changé";
   static const String nickname = "Surnom :";
   static const String nicknameCopied = "Surnom copié dans le presse-papier";
+  static const String noAssociationFound = "Aucune association trouvée";
+  static const String noMember = "Aucun membre";
+  static const String noMemberRole = "Aucun role trouvé";
 
   static const String phone = "Téléphone :";
   static const String phonebook = "Annuaire";
@@ -89,28 +95,25 @@ class PhonebookTextConstants {
   static const String phonebookSearchName = "Nom/Prénom/Surnom";
   static const String phonebookSearchRole = "Poste";
   static const String presidentRoleTag = "Prez'";
+  static const String promoNotGiven = "Promo non renseignée";
   static const String promotion = "Promotion :";
 
+  static const String reorderingError = "Erreur lors du réordonnement";
   static const String research = "Rechercher";
   static const String rolePure = "Rôle";
 
   static const String tooHeavyAssociationPicture =
       "L'image est trop lourde (max 4Mo)";
 
+  static const String updateGroups = "Mettre à jour les groupes";
   static const String updatedAssociation = "Association modifiée";
   static const String updatedAssociationPicture =
       "La photo d'association a été changée";
-  static const String updatingError = "Erreur lors de la modification";
+  static const String updatedGroups = "Groupes mis à jour";
   static const String updatedMember = "Membre modifié";
+  static const String updatingError = "Erreur lors de la modification";
 
   static const String validation = "Valider";
-
-  static const String promoNotGiven = "Promo non renseignée";
-
-  static const String noAssociationFound = "Aucune association trouvée";
-
-  static const String noMember = "Aucun membre";
-  static const String noMemberRole = "Aucun role trouvé";
 }
 
 class PhonebookColorConstants {
