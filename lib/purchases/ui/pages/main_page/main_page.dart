@@ -1,0 +1,93 @@
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/purchases/providers/purchases_admin_provider.dart';
+import 'package:myecl/purchases/providers/ticket_list_provider.dart';
+import 'package:myecl/purchases/providers/ticket_provider.dart';
+import 'package:myecl/purchases/router.dart';
+import 'package:myecl/purchases/tools/constants.dart';
+import 'package:myecl/purchases/ui/pages/main_page/history_button.dart';
+import 'package:myecl/purchases/ui/pages/main_page/ticket_card.dart';
+import 'package:myecl/purchases/ui/purchases.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:myecl/tools/ui/widgets/admin_button.dart';
+import 'package:qlevar_router/qlevar_router.dart';
+
+class PurchasesMainPage extends HookConsumerWidget {
+  const PurchasesMainPage({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isAdmin = ref.watch(isPurchasesAdminProvider);
+    final ticketList = ref.watch(ticketListProvider);
+    final ticketListNotifier = ref.watch(ticketListProvider.notifier);
+    final ticketNotifier = ref.watch(ticketProvider.notifier);
+
+    return PurchasesTemplate(
+      child: Refresher(
+        onRefresh: () async {
+          await ticketListNotifier.loadTickets();
+        },
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: HistoryButton(
+                      onTap: () {
+                        QR.to(PurchasesRouter.root + PurchasesRouter.history);
+                      },
+                    ),
+                  ),
+                  if (isAdmin)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: AdminButton(
+                        onTap: () {
+                          QR.to(PurchasesRouter.root + PurchasesRouter.scan);
+                        },
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+            AsyncChild(
+              value: ticketList,
+              builder: (context, tickets) {
+                return Column(
+                  children: [
+                    if (tickets.isEmpty)
+                      const Center(
+                        child: Text(PurchasesTextConstants.noTickets),
+                      )
+                    else
+                      ...ticketList.maybeWhen(
+                        data: (tickets) => tickets.map(
+                          (ticket) => TicketCard(
+                            ticket: ticket,
+                            onClicked: () {
+                              ticketNotifier.setTicket(ticket);
+                              ticketNotifier.loadTicketSecret();
+                              QR.to(
+                                PurchasesRouter.root + PurchasesRouter.ticket,
+                              );
+                            },
+                          ),
+                        ),
+                        orElse: () =>
+                            [const Text(PurchasesTextConstants.ticketsError)],
+                      ),
+                  ],
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
