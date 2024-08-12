@@ -20,14 +20,15 @@ class PurchaseListNotifier extends ListNotifier<Purchase> {
   List<int> getPurchasesYears() {
     List<int> years = [];
     state.maybeWhen(
-        orElse: () => [],
-        data: (value) {
-          for (Purchase purchase in value) {
-            if (!years.contains(purchase.purchasedOn.year)) {
-              years.add(purchase.purchasedOn.year);
-            }
+      orElse: () => [],
+      data: (value) {
+        for (Purchase purchase in value) {
+          if (!years.contains(purchase.purchasedOn.year)) {
+            years.add(purchase.purchasedOn.year);
           }
-        });
+        }
+      },
+    );
     return years;
   }
 }

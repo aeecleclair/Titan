@@ -19,11 +19,4 @@ class TicketRepository extends Repository {
       qrCodeSecret: secret,
     );
   }
-
-  Future<bool> consumeTicket(Ticket ticket) async {
-    return await update(
-      ticket.toJson(),
-      ticket.id,
-    );
-  }
 }

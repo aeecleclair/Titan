@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/purchases/class/ticket.dart';
-import 'package:myecl/purchases/class/ticket_information.dart';
 import 'package:myecl/purchases/repositories/ticket_repository.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
 
