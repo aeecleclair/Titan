@@ -37,6 +37,7 @@ class PurchasesMainPage extends HookConsumerWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 20),
                     child: HistoryButton(
+                      text: PurchasesTextConstants.history,
                       onTap: () {
                         QR.to(PurchasesRouter.root + PurchasesRouter.history);
                       },

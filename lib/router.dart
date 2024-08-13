@@ -18,6 +18,7 @@ import 'package:myecl/others/ui/no_module.dart' deferred as no_module_page;
 import 'package:myecl/others/ui/update_page.dart' deferred as update_page;
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/ph/router.dart';
+import 'package:myecl/purchases/router.dart';
 import 'package:myecl/recommendation/router.dart';
 import 'package:myecl/settings/router.dart';
 import 'package:myecl/raffle/router.dart';
@@ -94,6 +95,7 @@ class AppRouter {
       VoteRouter(ref).route(),
       PhonebookRouter(ref).route(),
       PhRouter(ref).route(),
+      PurchasesRouter(ref).route(),
     ];
   }
 }

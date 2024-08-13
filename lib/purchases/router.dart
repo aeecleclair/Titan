@@ -23,7 +23,7 @@ class PurchasesRouter {
   static const String purchase = '/purchase';
   static final Module module = Module(
     name: "Achats",
-    icon: const Left(HeroIcons.phone),
+    icon: const Left(HeroIcons.shoppingBag),
     root: PurchasesRouter.root,
     selected: false,
   );

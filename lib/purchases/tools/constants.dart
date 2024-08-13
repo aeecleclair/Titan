@@ -30,6 +30,8 @@ class PurchasesTextConstants {
 
   static const String leftScan = "Scans restants";
   static const String tag = "Tag";
+
+  static const String history = "Historique";
 }
 
 class PurchasesColorConstants {
