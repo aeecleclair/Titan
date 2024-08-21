@@ -6,11 +6,13 @@ import 'package:myecl/tools/ui/builders/waiting_button.dart';
 class DeleteButton extends StatelessWidget {
   final Future Function() onDelete;
   final bool deactivated;
+  final bool deletion;
 
   const DeleteButton({
     super.key,
     required this.onDelete,
     required this.deactivated,
+    required this.deletion,
   });
 
   @override
@@ -46,8 +48,8 @@ class DeleteButton extends StatelessWidget {
         child: child,
       ),
       onTap: !deactivated ? onDelete : () async {},
-      child: const HeroIcon(
-        HeroIcons.xMark,
+      child: HeroIcon(
+        deletion ? HeroIcons.trash : HeroIcons.noSymbol,
         size: 30,
         color: Colors.white,
       ),

@@ -98,14 +98,14 @@ class AssociationEditorPage extends HookConsumerWidget {
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: isPhonebookAdmin
+                        color: isPhonebookAdmin && !association.deactivated
                             ? ColorConstants.gradient1
                             : ColorConstants.deactivated1,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: child,
                     ),
-                    onTap: isPhonebookAdmin
+                    onTap: isPhonebookAdmin && !association.deactivated
                         ? () async {
                             rolesTagsNotifier.resetChecked();
                             memberRoleTagsNotifier.reset();
@@ -150,7 +150,7 @@ class AssociationEditorPage extends HookConsumerWidget {
               builder: (context, associationMembers) => associationMembers
                       .isEmpty
                   ? const Text(PhonebookTextConstants.noMember)
-                  : isPhonebookAdmin
+                  : isPhonebookAdmin && !association.deactivated
                       ? SizedBox(
                           height: 400,
                           child: ReorderableListView(
@@ -233,7 +233,7 @@ class AssociationEditorPage extends HookConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: WaitingButton(
                 builder: (child) => AddEditButtonLayout(
-                  colors: isPhonebookAdmin
+                  colors: isPhonebookAdmin && !association.deactivated
                       ? [
                           ColorConstants.gradient1,
                           ColorConstants.gradient2,
@@ -244,7 +244,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                         ],
                   child: child,
                 ),
-                onTap: isPhonebookAdmin
+                onTap: isPhonebookAdmin && !association.deactivated
                     ? () async {
                         showDialog(
                           context: context,

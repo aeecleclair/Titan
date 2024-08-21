@@ -23,7 +23,7 @@ class EditableAssociationCard extends HookConsumerWidget {
       margin: const EdgeInsets.symmetric(vertical: 5),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: association.deactivated ? Colors.grey[500] : Colors.white,
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
@@ -61,7 +61,10 @@ class EditableAssociationCard extends HookConsumerWidget {
             children: [
               EditionButton(onEdition: onEdit, deactivated: false),
               const SizedBox(width: 5),
-              DeleteButton(onDelete: onDelete, deactivated: !isPhonebookAdmin),
+              DeleteButton(
+                  onDelete: onDelete,
+                  deactivated: !isPhonebookAdmin,
+                  deletion: association.deactivated),
             ],
           ),
         ],

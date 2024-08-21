@@ -52,7 +52,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
 
     return Column(
       children: [
-        isPhonebookAdmin
+        isPhonebookAdmin && !association.deactivated
             ? Form(
                 key: key,
                 child: Column(
@@ -207,6 +207,18 @@ class AssociationInformationEditor extends HookConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Column(
                   children: [
+                    if (association.deactivated)
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        child: const Text(
+                          PhonebookTextConstants.deactivatedAssociationWarning,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red,
+                          ),
+                        ),
+                      ),
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 10),
                       child: Text(
@@ -232,7 +244,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                   ],
                 ),
               ),
-        if (isAdmin)
+        if (isAdmin && !association.deactivated)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Column(

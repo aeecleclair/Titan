@@ -29,10 +29,13 @@ class PhonebookTextConstants {
   static const String deactivateAssociation =
       "Êtes-vous sûr de vouloir désactiver cette association ?\nCette action est irréversible !";
   static const String deactivatedAssociation = "Association désactivée";
+  static const String deactivatedAssociationWarning =
+      "Attention, cette association est désactivée, vous ne pouvez pas la modifier";
   static const String deactivating = "Désactiver l'association ?";
   static const String deactivatingError = "Erreur lors de la désactivation";
   static const String detail = "Détail :";
-  static const String deleteAssociation = "Supprimer l'association ?";
+  static const String deleteAssociation =
+      "Supprimer l'association ?\nCela va effacer tout l'historique de l'association";
   static const String deletedAssociation = "Association supprimée";
   static const String deletedMember = "Membre supprimé";
   static const String deleting = "Suppression";

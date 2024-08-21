@@ -153,6 +153,7 @@ class MemberEditableCard extends HookConsumerWidget {
           const SizedBox(width: 10),
           DeleteButton(
             deactivated: deactivated,
+            deletion: true,
             onDelete: () async {
               final result = await associationMemberListNotifier.deleteMember(
                 member,
