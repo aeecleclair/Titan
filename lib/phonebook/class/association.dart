@@ -67,6 +67,7 @@ class Association {
     kind = "";
     mandateYear = 0;
     deactivated = false;
+    associatedGroups = [];
   }
 
   void newMandate() {
