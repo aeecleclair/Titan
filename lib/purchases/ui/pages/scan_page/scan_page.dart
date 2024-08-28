@@ -101,7 +101,6 @@ class ScanPage extends HookConsumerWidget {
               onChanged: (value) async {
                 tagNotifier.setTag(value);
               },
-              controller: TextEditingController(text: tag),
               cursorColor: PurchasesColorConstants.textDark,
               decoration: const InputDecoration(
                 isDense: true,
@@ -118,36 +117,40 @@ class ScanPage extends HookConsumerWidget {
             ),
             product.id == ""
                 ? const Text(PurchasesTextConstants.pleaseSelectProduct)
-                : SizedBox(
-                    child: QRCodeScannerScreen(
-                      product: product,
-                      onScan: (secret) async {
-                        await scannerNotifier.scanTicket(product.id, secret);
-                        scanner.when(
-                          data: (data) {
-                            scannerNotifier.setScanner(
-                              data.copyWith(
-                                secret: secret,
-                              ),
-                            );
-                            QR.to(
-                              PurchasesRouter.root +
-                                  PurchasesRouter.scan +
-                                  PurchasesRouter.confirmation,
-                            );
-                          },
-                          error: (error, stack) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(error.toString()),
-                              ),
-                            );
-                          },
-                          loading: () {},
-                        );
-                      },
-                    ),
-                  )
+                : Padding(
+                    padding: const EdgeInsets.all(30),
+                    child: SizedBox(
+                      height: 300,
+                      width: 300,
+                      child: QRCodeScannerScreen(
+                        product: product,
+                        onScan: (secret) async {
+                          await scannerNotifier.scanTicket(product.id, secret);
+                          scanner.when(
+                            data: (data) {
+                              scannerNotifier.setScanner(
+                                data.copyWith(
+                                  secret: secret,
+                                ),
+                              );
+                              QR.to(
+                                PurchasesRouter.root +
+                                    PurchasesRouter.scan +
+                                    PurchasesRouter.confirmation,
+                              );
+                            },
+                            error: (error, stack) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(error.toString()),
+                                ),
+                              );
+                            },
+                            loading: () {},
+                          );
+                        },
+                      ),
+                    )),
           ],
         ),
       ),
