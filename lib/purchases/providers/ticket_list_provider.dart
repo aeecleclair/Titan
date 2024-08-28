@@ -3,12 +3,13 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/purchases/class/ticket.dart';
 import 'package:myecl/purchases/class/ticket_information.dart';
 import 'package:myecl/purchases/repositories/scanner_repository.dart';
-import 'package:myecl/purchases/repositories/ticket_repository.dart';
+import 'package:myecl/purchases/repositories/user_information_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class TicketListNotifier extends ListNotifier<Ticket> {
-  final TicketRepository ticketRepository = TicketRepository();
+  final UserInformationRepository ticketRepository =
+      UserInformationRepository();
   final ScannerRepository scannerRepository = ScannerRepository();
   AsyncValue<List<Ticket>> ticketList = const AsyncValue.loading();
   TicketListNotifier({required String token})

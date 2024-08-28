@@ -1,11 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/purchases/class/ticket.dart';
-import 'package:myecl/purchases/repositories/ticket_repository.dart';
+import 'package:myecl/purchases/repositories/user_information_repository.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
 
 class TicketNotifier extends SingleNotifier<Ticket> {
-  final TicketRepository ticketRepository = TicketRepository();
+  final UserInformationRepository ticketRepository =
+      UserInformationRepository();
   TicketNotifier({required String token}) : super(const AsyncValue.loading()) {
     ticketRepository.setToken(token);
   }

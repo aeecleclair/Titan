@@ -8,7 +8,7 @@ class ProductRepository extends Repository {
 
   Future<List<Product>> getProductList(String sellerId) async {
     return List<Product>.from(
-      (await getList(suffix: "/$sellerId/products"))
+      (await getList(suffix: "$sellerId/products/"))
           .map((x) => Product.fromJson(x)),
     );
   }

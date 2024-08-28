@@ -1,12 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/purchases/class/seller.dart';
-import 'package:myecl/purchases/repositories/seller_repository.dart';
+import 'package:myecl/purchases/repositories/user_information_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class SellerListNotifier extends ListNotifier<Seller> {
-  final SellerRepository sellerRepository = SellerRepository();
+  final UserInformationRepository sellerRepository =
+      UserInformationRepository();
   AsyncValue<List<Seller>> sellerList = const AsyncValue.loading();
   SellerListNotifier({required String token})
       : super(const AsyncValue.loading()) {
