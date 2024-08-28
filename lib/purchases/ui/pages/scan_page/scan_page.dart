@@ -51,23 +51,26 @@ class ScanPage extends HookConsumerWidget {
               builder: (context, sellers) {
                 return Column(
                   children: [
-                    Row(
-                      children: [
-                        ...sellers.isEmpty
-                            ? [const SizedBox()]
-                            : sellers.map(
-                                (eachSeller) => RadioChip(
-                                  label: eachSeller.name,
-                                  selected: eachSeller == seller,
-                                  onTap: () async {
-                                    sellerNotifier.setSeller(eachSeller);
-                                    await productsNotifier
-                                        .loadProducts(eachSeller.id);
-                                  },
-                                ),
-                              ),
-                      ],
-                    ),
+                    SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        physics: const BouncingScrollPhysics(),
+                        child: Row(
+                          children: [
+                            ...sellers.isEmpty
+                                ? [const SizedBox()]
+                                : sellers.map(
+                                    (eachSeller) => RadioChip(
+                                      label: eachSeller.name,
+                                      selected: eachSeller == seller,
+                                      onTap: () async {
+                                        sellerNotifier.setSeller(eachSeller);
+                                        await productsNotifier
+                                            .loadProducts(eachSeller.id);
+                                      },
+                                    ),
+                                  ),
+                          ],
+                        )),
                     const SizedBox(height: 10),
                     AsyncChild(
                       value: products,
@@ -102,11 +105,6 @@ class ScanPage extends HookConsumerWidget {
               cursorColor: PurchasesColorConstants.textDark,
               decoration: const InputDecoration(
                 isDense: true,
-                suffixIcon: Icon(
-                  Icons.search,
-                  color: PurchasesColorConstants.textDark,
-                  size: 30,
-                ),
                 label: Text(
                   PurchasesTextConstants.tag,
                   style: TextStyle(
@@ -120,34 +118,36 @@ class ScanPage extends HookConsumerWidget {
             ),
             product.id == ""
                 ? const Text(PurchasesTextConstants.pleaseSelectProduct)
-                : QrCodeScanner(
-                    product: product,
-                    onScan: (secret) async {
-                      await scannerNotifier.scanTicket(product.id, secret);
-                      scanner.when(
-                        data: (data) {
-                          scannerNotifier.setScanner(
-                            data.copyWith(
-                              secret: secret,
-                            ),
-                          );
-                          QR.to(
-                            PurchasesRouter.root +
-                                PurchasesRouter.scan +
-                                PurchasesRouter.confirmation,
-                          );
-                        },
-                        error: (error, stack) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(error.toString()),
-                            ),
-                          );
-                        },
-                        loading: () {},
-                      );
-                    },
-                  ),
+                : SizedBox(
+                    child: QRCodeScannerScreen(
+                      product: product,
+                      onScan: (secret) async {
+                        await scannerNotifier.scanTicket(product.id, secret);
+                        scanner.when(
+                          data: (data) {
+                            scannerNotifier.setScanner(
+                              data.copyWith(
+                                secret: secret,
+                              ),
+                            );
+                            QR.to(
+                              PurchasesRouter.root +
+                                  PurchasesRouter.scan +
+                                  PurchasesRouter.confirmation,
+                            );
+                          },
+                          error: (error, stack) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(error.toString()),
+                              ),
+                            );
+                          },
+                          loading: () {},
+                        );
+                      },
+                    ),
+                  )
           ],
         ),
       ),
