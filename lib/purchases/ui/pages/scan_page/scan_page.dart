@@ -35,6 +35,8 @@ class ScanPage extends HookConsumerWidget {
     final tagNotifier = ref.watch(tagProvider.notifier);
     final tag = ref.watch(tagProvider);
 
+    ExpansionTileController controller = ExpansionTileController();
+
     return PurchasesTemplate(
       child: Refresher(
         onRefresh: () async {
@@ -52,47 +54,63 @@ class ScanPage extends HookConsumerWidget {
                 return Column(
                   children: [
                     SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        physics: const BouncingScrollPhysics(),
-                        child: Row(
-                          children: [
-                            ...sellers.isEmpty
-                                ? [const SizedBox()]
-                                : sellers.map(
-                                    (eachSeller) => RadioChip(
-                                      label: eachSeller.name,
-                                      selected: eachSeller == seller,
-                                      onTap: () async {
-                                        sellerNotifier.setSeller(eachSeller);
-                                        await productsNotifier
-                                            .loadProducts(eachSeller.id);
-                                      },
-                                    ),
+                      scrollDirection: Axis.horizontal,
+                      physics: const BouncingScrollPhysics(),
+                      child: Row(
+                        children: [
+                          ...sellers.isEmpty
+                              ? [const SizedBox()]
+                              : sellers.map(
+                                  (eachSeller) => RadioChip(
+                                    label: eachSeller.name,
+                                    selected: eachSeller == seller,
+                                    onTap: () async {
+                                      sellerNotifier.setSeller(eachSeller);
+                                      await productsNotifier
+                                          .loadProducts(eachSeller.id);
+                                      controller.expand();
+                                    },
                                   ),
-                          ],
-                        )),
-                    const SizedBox(height: 10),
-                    AsyncChild(
-                      value: products,
-                      builder: (context, products) {
-                        return ExpansionTile(
-                          title: const Text(PurchasesTextConstants.products),
-                          children: products.map((eachProduct) {
-                            return GestureDetector(
-                              onTap: () {
-                                productNotifier.setProduct(eachProduct);
-                              },
-                              child: Card(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(eachProduct.nameFR),
                                 ),
-                              ),
-                            );
-                          }).toList(),
-                        );
-                      },
+                        ],
+                      ),
                     ),
+                    const SizedBox(height: 10),
+                    seller.id == ""
+                        ? const Text(PurchasesTextConstants.pleaseSelectSeller)
+                        : AsyncChild(
+                            value: products,
+                            builder: (context, products) {
+                              return ExpansionTile(
+                                title: Text(
+                                  "${PurchasesTextConstants.products}: ${product.id == "" ? PurchasesTextConstants.pleaseSelectProduct : product.nameFR}",
+                                ),
+                                controller: controller,
+                                children: products.map((eachProduct) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      productNotifier.setProduct(eachProduct);
+                                      controller.collapse();
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(8.0),
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.5),
+                                            spreadRadius: 1,
+                                            blurRadius: 1,
+                                            offset: const Offset(0, 1),
+                                          ),
+                                        ],
+                                      ),
+                                      child: Text(eachProduct.nameFR),
+                                    ),
+                                  );
+                                }).toList(),
+                              );
+                            },
+                          ),
                   ],
                 );
               },
@@ -115,6 +133,12 @@ class ScanPage extends HookConsumerWidget {
                 ),
               ),
             ),
+            tag == ""
+                ? const Text(
+                    PurchasesTextConstants.noTagGiven,
+                    style: TextStyle(color: Colors.red),
+                  )
+                : const SizedBox(),
             product.id == ""
                 ? const Text(PurchasesTextConstants.pleaseSelectProduct)
                 : Padding(
@@ -150,7 +174,8 @@ class ScanPage extends HookConsumerWidget {
                           );
                         },
                       ),
-                    )),
+                    ),
+                  ),
           ],
         ),
       ),

@@ -24,15 +24,15 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-        child: MobileScanner(
-      controller: controller,
-      onDetect: (BarcodeCapture capture) async {
-        setState(() {
-          qrCode = capture.raw.toString();
-        });
-        print(qrCode);
-        //widget.onScan(qrCode!);
-      },
-    ));
+      child: MobileScanner(
+        controller: controller,
+        onDetect: (BarcodeCapture capture) async {
+          setState(() {
+            qrCode = capture.barcodes.first.rawValue;
+          });
+          widget.onScan(qrCode!);
+        },
+      ),
+    );
   }
 }

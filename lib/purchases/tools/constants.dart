@@ -32,6 +32,10 @@ class PurchasesTextConstants {
   static const String tag = "Tag";
 
   static const String history = "Historique";
+
+  static const String pleaseSelectSeller = "Veuillez sélectionner un vendeur";
+
+  static const String noTagGiven = "Attention, aucun tag n'a été entré";
 }
 
 class PurchasesColorConstants {

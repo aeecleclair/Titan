@@ -52,6 +52,7 @@ class ConfirmationPage extends HookConsumerWidget {
                 GestureDetector(
                   onTap: () async {
                     await ticketsNotifier.consumeTicket(ticket, tag);
+                    scannerNotifier.reset();
                     QR.back();
                   },
                   child: Container(
