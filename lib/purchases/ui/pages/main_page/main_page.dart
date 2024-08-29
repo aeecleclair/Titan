@@ -11,6 +11,7 @@ import 'package:myecl/purchases/ui/purchases.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/ui/widgets/admin_button.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class PurchasesMainPage extends HookConsumerWidget {
@@ -33,29 +34,28 @@ class PurchasesMainPage extends HookConsumerWidget {
             Padding(
               padding: const EdgeInsets.all(30.0),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: HistoryButton(
-                      text: PurchasesTextConstants.history,
-                      onTap: () {
-                        QR.to(PurchasesRouter.root + PurchasesRouter.history);
-                      },
-                    ),
+                  HistoryButton(
+                    text: PurchasesTextConstants.history,
+                    onTap: () {
+                      QR.to(PurchasesRouter.root + PurchasesRouter.history);
+                    },
                   ),
                   if (isAdmin)
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: AdminButton(
-                        onTap: () {
-                          QR.to(PurchasesRouter.root + PurchasesRouter.scan);
-                        },
-                      ),
+                    AdminButton(
+                      onTap: () {
+                        QR.to(PurchasesRouter.root + PurchasesRouter.scan);
+                      },
                     ),
                 ],
               ),
             ),
-            const SizedBox(height: 10),
+            const AlignLeftText(
+              padding: EdgeInsets.only(left: 30),
+              PurchasesTextConstants.tickets,
+              fontSize: 20,
+            ),
             AsyncChild(
               value: ticketList,
               builder: (context, tickets) {

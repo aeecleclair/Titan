@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/purchases/class/ticket.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 
 class TicketCard extends HookConsumerWidget {
@@ -16,25 +17,27 @@ class TicketCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: GestureDetector(
         onTap: onClicked,
         child: CardLayout(
-          margin: EdgeInsets.zero,
-          child: Expanded(
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  ticket.productVariant.nameFR,
+                  "${ticket.productVariant.nameFR} / ${ticket.productVariant.nameEN}",
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  ticket.productVariant.nameEN,
+                  "${ticket.scanLeft} scan${ticket.scanLeft > 1 ? 's' : ""} restant${ticket.scanLeft > 1 ? 's' : ""} - Valide jusqu'au ${processDate(ticket.expirationDate)}",
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: 12,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

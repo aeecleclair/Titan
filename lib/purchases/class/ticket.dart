@@ -10,7 +10,7 @@ class Ticket {
     required this.scanLeft,
     required this.tags,
     required this.expirationDate,
-    required this.qrCodeSecret,
+    this.qrCodeSecret = "",
   });
 
   late final String id;

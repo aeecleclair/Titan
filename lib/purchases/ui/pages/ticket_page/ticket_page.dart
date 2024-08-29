@@ -5,6 +5,7 @@ import 'package:myecl/purchases/tools/constants.dart';
 import 'package:myecl/purchases/ui/purchases.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:myecl/tools/ui/widgets/loader.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class TicketPage extends HookConsumerWidget {
@@ -36,19 +37,25 @@ class TicketPage extends HookConsumerWidget {
                   style: TextStyle(fontSize: 20, color: Colors.grey[700]),
                 ),
                 const SizedBox(height: 10),
-                QrImageView(
-                  data: data.qrCodeSecret,
-                  version: QrVersions.auto,
-                  size: MediaQuery.of(context).size.width * 0.7,
-                  eyeStyle: const QrEyeStyle(
-                    color: Colors.black,
-                    eyeShape: QrEyeShape.square,
-                  ),
-                  dataModuleStyle: const QrDataModuleStyle(
-                    dataModuleShape: QrDataModuleShape.square,
-                    color: Colors.black,
-                  ),
-                ),
+                data.qrCodeSecret != ""
+                    ? QrImageView(
+                        data: data.qrCodeSecret,
+                        version: QrVersions.auto,
+                        size: MediaQuery.of(context).size.width * 0.7,
+                        eyeStyle: const QrEyeStyle(
+                          color: Colors.black,
+                          eyeShape: QrEyeShape.square,
+                        ),
+                        dataModuleStyle: const QrDataModuleStyle(
+                          dataModuleShape: QrDataModuleShape.square,
+                          color: Colors.black,
+                        ),
+                      )
+                    : SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        height: MediaQuery.of(context).size.width * 0.7,
+                        child: const Loader(),
+                      ),
                 const SizedBox(height: 10),
                 Text(
                   "${PurchasesTextConstants.leftScan}: ${data.scanLeft.toString()}",
