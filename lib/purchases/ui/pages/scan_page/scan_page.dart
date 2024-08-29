@@ -9,7 +9,9 @@ import 'package:myecl/purchases/providers/seller_provider.dart';
 import 'package:myecl/purchases/providers/tag_provider.dart';
 import 'package:myecl/purchases/router.dart';
 import 'package:myecl/purchases/tools/constants.dart';
+import 'package:myecl/purchases/ui/pages/scan_page/product_card.dart';
 import 'package:myecl/purchases/ui/pages/scan_page/qr_code_scanner.dart';
+import 'package:myecl/purchases/ui/pages/scan_page/scan_dialog.dart';
 import 'package:myecl/purchases/ui/purchases.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
@@ -35,8 +37,6 @@ class ScanPage extends HookConsumerWidget {
     final scanner = ref.watch(scannerProvider);
     final tagNotifier = ref.watch(tagProvider.notifier);
     final tag = ref.watch(tagProvider);
-
-    ExpansionTileController controller = ExpansionTileController();
 
     return PurchasesTemplate(
       child: Refresher(
@@ -64,7 +64,6 @@ class ScanPage extends HookConsumerWidget {
                           onTap: () async {
                             sellerNotifier.setSeller(eachSeller);
                             await productsNotifier.loadProducts(eachSeller.id);
-                            controller.expand();
                           },
                           child: Text(
                             eachSeller.name,
@@ -82,31 +81,26 @@ class ScanPage extends HookConsumerWidget {
                         : AsyncChild(
                             value: products,
                             builder: (context, products) {
-                              return ExpansionTile(
-                                title: Text(
-                                  "${PurchasesTextConstants.products}: ${product.id == "" ? PurchasesTextConstants.pleaseSelectProduct : product.nameFR}",
-                                ),
-                                controller: controller,
-                                children: products.map((eachProduct) {
-                                  return GestureDetector(
-                                    onTap: () {
+                              final scannableProducts = products
+                                  .where((product) => product.generateTicket);
+                              if (scannableProducts.isEmpty) {
+                                return const Text(
+                                  PurchasesTextConstants.noScannableProducts,
+                                );
+                              }
+                              return Column(
+                                children: scannableProducts.map((eachProduct) {
+                                  return ProductCard(
+                                    product: eachProduct,
+                                    onClicked: () {
                                       productNotifier.setProduct(eachProduct);
-                                      controller.collapse();
+                                      showDialog<bool>(
+                                        context: context,
+                                        builder: (context) => ScanDialog(
+                                          product: product,
+                                        ),
+                                      );
                                     },
-                                    child: Container(
-                                      padding: const EdgeInsets.all(8.0),
-                                      decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.5),
-                                            spreadRadius: 1,
-                                            blurRadius: 1,
-                                            offset: const Offset(0, 1),
-                                          ),
-                                        ],
-                                      ),
-                                      child: Text(eachProduct.nameFR),
-                                    ),
                                   );
                                 }).toList(),
                               );
@@ -116,67 +110,67 @@ class ScanPage extends HookConsumerWidget {
                 );
               },
             ),
-            TextField(
-              onChanged: (value) async {
-                tagNotifier.setTag(value);
-              },
-              cursorColor: PurchasesColorConstants.textDark,
-              decoration: const InputDecoration(
-                isDense: true,
-                label: Text(
-                  PurchasesTextConstants.tag,
-                  style: TextStyle(
-                    color: PurchasesColorConstants.textDark,
-                  ),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: ColorConstants.gradient1),
-                ),
-              ),
-            ),
-            tag == ""
-                ? const Text(
-                    PurchasesTextConstants.noTagGiven,
-                    style: TextStyle(color: Colors.red),
-                  )
-                : const SizedBox(),
-            product.id == ""
-                ? const Text(PurchasesTextConstants.pleaseSelectProduct)
-                : Padding(
-                    padding: const EdgeInsets.all(30),
-                    child: SizedBox(
-                      height: 300,
-                      width: 300,
-                      child: QRCodeScannerScreen(
-                        product: product,
-                        onScan: (secret) async {
-                          await scannerNotifier.scanTicket(product.id, secret);
-                          scanner.when(
-                            data: (data) {
-                              scannerNotifier.setScanner(
-                                data.copyWith(
-                                  secret: secret,
-                                ),
-                              );
-                              QR.to(
-                                PurchasesRouter.root +
-                                    PurchasesRouter.scan +
-                                    PurchasesRouter.confirmation,
-                              );
-                            },
-                            error: (error, stack) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(error.toString()),
-                                ),
-                              );
-                            },
-                            loading: () {},
-                          );
-                        },
-                      ),
-                    ),
-                  ),
+            // TextField(
+            //   onChanged: (value) async {
+            //     tagNotifier.setTag(value);
+            //   },
+            //   cursorColor: PurchasesColorConstants.textDark,
+            //   decoration: const InputDecoration(
+            //     isDense: true,
+            //     label: Text(
+            //       PurchasesTextConstants.tag,
+            //       style: TextStyle(
+            //         color: PurchasesColorConstants.textDark,
+            //       ),
+            //     ),
+            //     focusedBorder: UnderlineInputBorder(
+            //       borderSide: BorderSide(color: ColorConstants.gradient1),
+            //     ),
+            //   ),
+            // ),
+            // tag == ""
+            //     ? const Text(
+            //         PurchasesTextConstants.noTagGiven,
+            //         style: TextStyle(color: Colors.red),
+            //       )
+            //     : const SizedBox(),
+            // product.id == ""
+            //     ? const Text(PurchasesTextConstants.pleaseSelectProduct)
+            //     : Padding(
+            //         padding: const EdgeInsets.all(30),
+            //         child: SizedBox(
+            //           height: 300,
+            //           width: 300,
+            //           child: QRCodeScannerScreen(
+            //             product: product,
+            //             onScan: (secret) async {
+            //               await scannerNotifier.scanTicket(product.id, secret);
+            //               scanner.when(
+            //                 data: (data) {
+            //                   scannerNotifier.setScanner(
+            //                     data.copyWith(
+            //                       secret: secret,
+            //                     ),
+            //                   );
+            //                   QR.to(
+            //                     PurchasesRouter.root +
+            //                         PurchasesRouter.scan +
+            //                         PurchasesRouter.confirmation,
+            //                   );
+            //                 },
+            //                 error: (error, stack) {
+            //                   ScaffoldMessenger.of(context).showSnackBar(
+            //                     SnackBar(
+            //                       content: Text(error.toString()),
+            //                     ),
+            //                   );
+            //                 },
+            //                 loading: () {},
+            //               );
+            //             },
+            //           ),
+            //         ),
+            //       ),
           ],
         ),
       ),

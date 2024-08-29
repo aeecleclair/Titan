@@ -38,6 +38,10 @@ class PurchasesTextConstants {
   static const String noTagGiven = "Attention, aucun tag n'a été entré";
 
   static const String tickets = "Tickets";
+
+  static const String noScannableProducts = "Aucun produit scannable";
+
+  static const String loading = "En attente de scan";
 }
 
 class PurchasesColorConstants {
