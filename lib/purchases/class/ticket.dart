@@ -1,20 +1,21 @@
 import 'package:myecl/purchases/class/product_variant.dart';
+import 'package:myecl/purchases/class/user_ticket.dart';
 import 'package:myecl/tools/functions.dart';
 
 class Ticket {
   Ticket({
     required this.id,
     required this.productVariant,
-    required this.userId,
+    required this.user,
     required this.scanLeft,
     required this.tags,
     required this.expirationDate,
-    this.qrCodeSecret = "",
+    required this.qrCodeSecret,
   });
 
   late final String id;
   late final ProductVariant productVariant;
-  late final String userId;
+  late final UserTicket user;
   late final int scanLeft;
   late final List<String> tags;
   late final DateTime expirationDate;
@@ -23,17 +24,18 @@ class Ticket {
   Ticket.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     productVariant = ProductVariant.fromJson(json['product_variant']);
-    userId = json['user_id'];
+    user = UserTicket.fromJson(json['user']);
     scanLeft = json['scan_left'];
     tags = json['tags'].toString().split(";");
     expirationDate = processDateFromAPI(json['expiration']);
+    qrCodeSecret = "";
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{
       'id': id,
       'product_variant': productVariant.toJson(),
-      'user_id': userId,
+      'user': user.toJson(),
       'scan_left': scanLeft,
       'tags': tags.join(";"),
       'expiration': processDateToAPI(expirationDate),
@@ -45,7 +47,7 @@ class Ticket {
   Ticket copyWith({
     String? id,
     ProductVariant? productVariant,
-    String? userId,
+    UserTicket? user,
     int? scanLeft,
     List<String>? tags,
     DateTime? expirationDate,
@@ -54,7 +56,7 @@ class Ticket {
     return Ticket(
       id: id ?? this.id,
       productVariant: productVariant ?? this.productVariant,
-      userId: userId ?? this.userId,
+      user: user ?? this.user,
       scanLeft: scanLeft ?? this.scanLeft,
       tags: tags ?? this.tags,
       expirationDate: expirationDate ?? this.expirationDate,
@@ -65,7 +67,7 @@ class Ticket {
   Ticket.empty() {
     id = "";
     productVariant = ProductVariant.empty();
-    userId = "";
+    user = UserTicket.empty();
     scanLeft = 0;
     tags = [];
     expirationDate = DateTime.now();
@@ -74,6 +76,6 @@ class Ticket {
 
   @override
   String toString() {
-    return 'Ticket(id: $id, productVariant: $productVariant, userId: $userId, scan: $scanLeft, tags: $tags, expirationDate: $expirationDate, qrCodeSecret: $qrCodeSecret)';
+    return 'Ticket(id: $id, productVariant: $productVariant, user: $user, scan: $scanLeft, tags: $tags, expirationDate: $expirationDate, qrCodeSecret: $qrCodeSecret)';
   }
 }
