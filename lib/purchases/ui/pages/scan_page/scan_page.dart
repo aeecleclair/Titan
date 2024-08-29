@@ -10,10 +10,11 @@ import 'package:myecl/purchases/providers/tag_provider.dart';
 import 'package:myecl/purchases/router.dart';
 import 'package:myecl/purchases/tools/constants.dart';
 import 'package:myecl/purchases/ui/pages/scan_page/qr_code_scanner.dart';
-import 'package:myecl/purchases/ui/pages/scan_page/radio_chip.dart';
 import 'package:myecl/purchases/ui/purchases.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -47,33 +48,33 @@ class ScanPage extends HookConsumerWidget {
         },
         child: Column(
           children: [
-            const SizedBox(height: 10),
+            const SizedBox(height: 20),
             AsyncChild(
               value: sellers,
               builder: (context, sellers) {
                 return Column(
                   children: [
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      physics: const BouncingScrollPhysics(),
-                      child: Row(
-                        children: [
-                          ...sellers.isEmpty
-                              ? [const SizedBox()]
-                              : sellers.map(
-                                  (eachSeller) => RadioChip(
-                                    label: eachSeller.name,
-                                    selected: eachSeller == seller,
-                                    onTap: () async {
-                                      sellerNotifier.setSeller(eachSeller);
-                                      await productsNotifier
-                                          .loadProducts(eachSeller.id);
-                                      controller.expand();
-                                    },
-                                  ),
-                                ),
-                        ],
-                      ),
+                    HorizontalListView.builder(
+                      height: 40,
+                      items: sellers,
+                      itemBuilder: (context, eachSeller, i) {
+                        final selected = eachSeller == seller;
+                        return ItemChip(
+                          selected: selected,
+                          onTap: () async {
+                            sellerNotifier.setSeller(eachSeller);
+                            await productsNotifier.loadProducts(eachSeller.id);
+                            controller.expand();
+                          },
+                          child: Text(
+                            eachSeller.name,
+                            style: TextStyle(
+                              color: selected ? Colors.white : Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     const SizedBox(height: 10),
                     seller.id == ""
