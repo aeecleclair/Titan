@@ -17,8 +17,8 @@ class TicketListNotifier extends ListNotifier<Ticket> {
     ticketRepository.setToken(token);
   }
 
-  Future<AsyncValue<List<Ticket>>> loadTickets(String userId) async {
-    return await loadList(() => ticketRepository.getTicketList(userId));
+  Future<AsyncValue<List<Ticket>>> loadTickets() async {
+    return await loadList(ticketRepository.getTicketList);
   }
 
   Future<bool> consumeTicket(TicketInformation ticket, String tag) async {
@@ -39,14 +39,9 @@ class TicketListNotifier extends ListNotifier<Ticket> {
 final ticketListProvider =
     StateNotifierProvider<TicketListNotifier, AsyncValue<List<Ticket>>>((ref) {
   final token = ref.watch(tokenProvider);
-  final userId = ref.watch(idProvider);
   TicketListNotifier notifier = TicketListNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {
-    userId.maybeWhen(
-        orElse: () {},
-        data: (userId) async {
-          await notifier.loadTickets(userId);
-        },);
+    await notifier.loadTickets();
   });
   return notifier;
 });

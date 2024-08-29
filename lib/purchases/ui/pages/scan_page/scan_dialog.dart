@@ -3,12 +3,10 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/purchases/class/product.dart';
 import 'package:myecl/purchases/providers/scanner_provider.dart';
-import 'package:myecl/purchases/router.dart';
 import 'package:myecl/purchases/tools/constants.dart';
 import 'package:myecl/purchases/ui/pages/scan_page/qr_code_scanner.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
-import 'package:qlevar_router/qlevar_router.dart';
 
 class ScanDialog extends HookConsumerWidget {
   final Product product;

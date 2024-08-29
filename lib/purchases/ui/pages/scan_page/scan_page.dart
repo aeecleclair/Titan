@@ -3,22 +3,16 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/purchases/class/seller.dart';
 import 'package:myecl/purchases/providers/product_list_provider.dart';
 import 'package:myecl/purchases/providers/product_provider.dart';
-import 'package:myecl/purchases/providers/scanner_provider.dart';
 import 'package:myecl/purchases/providers/seller_list_provider.dart';
 import 'package:myecl/purchases/providers/seller_provider.dart';
-import 'package:myecl/purchases/providers/tag_provider.dart';
-import 'package:myecl/purchases/router.dart';
 import 'package:myecl/purchases/tools/constants.dart';
 import 'package:myecl/purchases/ui/pages/scan_page/product_card.dart';
-import 'package:myecl/purchases/ui/pages/scan_page/qr_code_scanner.dart';
 import 'package:myecl/purchases/ui/pages/scan_page/scan_dialog.dart';
 import 'package:myecl/purchases/ui/purchases.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:qlevar_router/qlevar_router.dart';
 
 class ScanPage extends HookConsumerWidget {
   const ScanPage({super.key});
@@ -33,10 +27,6 @@ class ScanPage extends HookConsumerWidget {
     final productsNotifier = ref.watch(productListProvider.notifier);
     final product = ref.watch(productProvider);
     final productNotifier = ref.watch(productProvider.notifier);
-    final scannerNotifier = ref.watch(scannerProvider.notifier);
-    final scanner = ref.watch(scannerProvider);
-    final tagNotifier = ref.watch(tagProvider.notifier);
-    final tag = ref.watch(tagProvider);
 
     return PurchasesTemplate(
       child: Refresher(
