@@ -71,9 +71,9 @@ final asyncUserProvider =
 
 final userProvider = Provider((ref) {
   return ref.watch(asyncUserProvider).maybeWhen(
-    data: (user) => user,
-    orElse: () {
-      return User.empty();
-    },
-  );
+        data: (user) => user,
+        orElse: () {
+          return User.empty();
+        },
+      );
 });

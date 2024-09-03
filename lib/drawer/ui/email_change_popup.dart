@@ -51,12 +51,15 @@ class EmailChangeDialog extends HookConsumerWidget {
         useState(AsyncError("", StackTrace.current));
     final displayForm = useState(true);
 
-    useEffect(() {
-      if (shouldBeUser) {
-        emailController.text = newEmail;
-      }
-      return () {};
-    }, [newEmail],);
+    useEffect(
+      () {
+        if (shouldBeUser) {
+          emailController.text = newEmail;
+        }
+        return () {};
+      },
+      [newEmail],
+    );
 
     return GestureDetector(
       onTap: alreadyDisplayedNotifier.setAlreadyDisplayed,
