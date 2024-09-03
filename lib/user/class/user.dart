@@ -23,9 +23,9 @@ class User {
   late final String? nickname;
   late final String id;
   late final String email;
-  late final DateTime birthday;
+  late final DateTime? birthday;
   late final int? promo;
-  late final String floor;
+  late final String? floor;
   late final String? phone;
   late final DateTime createdOn;
   late final List<SimpleGroup> groups;
@@ -38,9 +38,12 @@ class User {
         : null;
     id = json['id'];
     email = json['email'];
-    birthday = processDateFromAPIWithoutHour(json['birthday']);
+    birthday = json['birthday'] != null
+        ? processDateFromAPIWithoutHour(json['birthday'])
+        : null;
     promo = json['promo'];
-    floor = json['floor'];
+    floor = json['floor'] ??
+        capitalize(Floors.values.first.toString().split('.').last);
     phone =
         (json['phone'] != "" && json["phone"] != null) ? json['phone'] : null;
     createdOn = processDateFromAPI(json['created_on']);
@@ -55,7 +58,8 @@ class User {
     data['nickname'] = nickname;
     data['id'] = id;
     data['email'] = email;
-    data['birthday'] = processDateToAPIWithoutHour(birthday);
+    data['birthday'] =
+        birthday != null ? processDateToAPIWithoutHour(birthday!) : null;
     data['promo'] = promo;
     data['floor'] = floor;
     data['phone'] = phone;
