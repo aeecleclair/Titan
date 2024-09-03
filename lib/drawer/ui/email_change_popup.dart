@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/already_displayed_popup.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/providers/should_notify_provider.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
@@ -19,6 +20,8 @@ class Consts {
   static const Color redGradient2 = Color(0xFF590512);
   static const String description =
       "L'administration a décidé de changer les adresses mails des étudiants.\nPour être sur de recevoir les mails en cas de perte du mot de passe, merci de renseigner la nouvelle (normalement elle est déjà préremplie 😉).";
+  static const String descriptionMigration =
+      "Vous avez créé un compte avec une adresse qui n'est pas une adresse centralienne.\nPour pouvoir accéder à cette application, vous devez changer cette adresse (normalement elle est déjà préremplie, on vous laisse vérifier et valider 😉).";
 }
 
 class EmailChangeDialog extends HookConsumerWidget {
@@ -27,10 +30,13 @@ class EmailChangeDialog extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider);
+    final shouldBeUser = ref.watch(shouldNotifyProvider);
     final userNotifier = ref.watch(asyncUserProvider.notifier);
     final alreadyDisplayedNotifier =
         ref.watch(alreadyDisplayedProvider.notifier);
-    final newEmail = '${user.email.split('@')[0]}@etu.ec-lyon.fr';
+    final newEmail = shouldBeUser
+        ? '${user.firstname.toLowerCase()}.${user.name.toLowerCase()}@etu.ec-lyon.fr'
+        : '${user.email.split('@')[0]}@etu.ec-lyon.fr';
     final emailController = useTextEditingController(text: newEmail);
     final formKey = GlobalKey<FormState>();
     final checkAnimationController = useAnimationController(
@@ -44,6 +50,14 @@ class EmailChangeDialog extends HookConsumerWidget {
     final ValueNotifier<AsyncValue> currentState =
         useState(AsyncError("", StackTrace.current));
     final displayForm = useState(true);
+
+    useEffect(() {
+      if (shouldBeUser) {
+        emailController.text = newEmail;
+      }
+      return () {};
+    }, [newEmail],);
+
     return GestureDetector(
       onTap: alreadyDisplayedNotifier.setAlreadyDisplayed,
       child: Container(
@@ -97,8 +111,10 @@ class EmailChangeDialog extends HookConsumerWidget {
                               autovalidateMode: AutovalidateMode.always,
                               child: Column(
                                 children: [
-                                  const Text(
-                                    Consts.description,
+                                  Text(
+                                    shouldBeUser
+                                        ? Consts.descriptionMigration
+                                        : Consts.description,
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 16.0,
