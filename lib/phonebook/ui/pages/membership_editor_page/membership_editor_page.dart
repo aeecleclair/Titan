@@ -8,6 +8,7 @@ import 'package:myecl/phonebook/providers/association_member_list_provider.dart'
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/member_role_tags_provider.dart';
 import 'package:myecl/phonebook/providers/membership_provider.dart';
+import 'package:myecl/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
@@ -45,6 +46,8 @@ class MembershipEditorPage extends HookConsumerWidget {
     final memberRoleTags = ref.watch(memberRoleTagsProvider);
     final apparentNameController =
         useTextEditingController(text: membership.apparentName);
+    final associationMembers = ref.watch(associationMemberListProvider);
+    final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -113,22 +116,29 @@ class MembershipEditorPage extends HookConsumerWidget {
                               data: (rolesTag) => rolesTag[0],
                               orElse: () => false,
                             ),
-                            fillColor: WidgetStateProperty.all(Colors.black),
-                            onChanged: (value) {
-                              rolesTagList[tagKey] = AsyncData([value!]);
-                              memberRoleTagsNotifier
-                                  .setRoleTagsWithFilter(rolesTagList);
-                              rolesTagsNotifier.setTData(
-                                tagKey,
-                                AsyncData([value]),
-                              );
-                              if (value && apparentNameController.text == "") {
-                                apparentNameController.text = tagKey;
-                              } else if (!value &&
-                                  apparentNameController.text == tagKey) {
-                                apparentNameController.text = "";
-                              }
-                            },
+                            fillColor: rolesTagList.keys.first == tagKey &&
+                                    !isPhonebookAdmin
+                                ? WidgetStateProperty.all(Colors.black)
+                                : WidgetStateProperty.all(Colors.grey),
+                            onChanged: rolesTagList.keys.first == tagKey &&
+                                    !isPhonebookAdmin
+                                ? null
+                                : (value) {
+                                    rolesTagList[tagKey] = AsyncData([value!]);
+                                    memberRoleTagsNotifier
+                                        .setRoleTagsWithFilter(rolesTagList);
+                                    rolesTagsNotifier.setTData(
+                                      tagKey,
+                                      AsyncData([value]),
+                                    );
+                                    if (value &&
+                                        apparentNameController.text == "") {
+                                      apparentNameController.text = tagKey;
+                                    } else if (!value &&
+                                        apparentNameController.text == tagKey) {
+                                      apparentNameController.text = "";
+                                    }
+                                  },
                           ),
                         ],
                       ),
@@ -187,6 +197,7 @@ class MembershipEditorPage extends HookConsumerWidget {
                           rolesTags: memberRoleTags,
                           apparentName: apparentNameController.text,
                           mandateYear: membership.mandateYear,
+                          order: membership.order,
                         );
                         member.memberships[member.memberships.indexWhere(
                           (membership) => membership.id == membershipEdit.id,
@@ -241,6 +252,10 @@ class MembershipEditorPage extends HookConsumerWidget {
                           rolesTags: memberRoleTags,
                           apparentName: apparentNameController.text,
                           mandateYear: association.mandateYear,
+                          order: associationMembers.maybeWhen(
+                            data: (members) => members.length,
+                            orElse: () => 0,
+                          ),
                         );
                         final value = await associationMemberListNotifier
                             .addMember(member, membershipAdd);

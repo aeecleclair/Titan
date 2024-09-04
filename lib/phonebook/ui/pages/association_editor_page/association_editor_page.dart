@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/membership.dart';
-import 'package:myecl/phonebook/providers/association_kind_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_member_sorted_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_picture_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
+import 'package:myecl/phonebook/providers/member_role_tags_provider.dart';
 import 'package:myecl/phonebook/providers/membership_provider.dart';
+import 'package:myecl/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/phonebook/ui/components/kinds_bar.dart';
+import 'package:myecl/phonebook/ui/pages/association_editor_page/association_information_editor.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/phonebook/ui/pages/association_editor_page/member_editable_card.dart';
 import 'package:myecl/tools/constants.dart';
@@ -33,7 +33,6 @@ class AssociationEditorPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final key = GlobalKey<FormState>();
     final association = ref.watch(associationProvider);
     final associationNotifier = ref.watch(associationProvider.notifier);
     final associationMemberListNotifier =
@@ -44,12 +43,12 @@ class AssociationEditorPage extends HookConsumerWidget {
     final associationPictureNotifier =
         ref.watch(associationPictureProvider.notifier);
     final associationListNotifier = ref.watch(associationListProvider.notifier);
-    final kind = ref.watch(associationKindProvider);
-    final name = useTextEditingController(text: association.name);
-    final description = useTextEditingController(text: association.description);
     final rolesTagsNotifier = ref.watch(rolesTagsProvider.notifier);
     final membershipNotifier = ref.watch(membershipProvider.notifier);
     final completeMemberNotifier = ref.watch(completeMemberProvider.notifier);
+    final memberRoleTagsNotifier = ref.watch(memberRoleTagsProvider.notifier);
+    final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
+
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -84,155 +83,7 @@ class AssociationEditorPage extends HookConsumerWidget {
             const SizedBox(
               height: 20,
             ),
-            Form(
-              key: key,
-              child: Column(
-                children: [
-                  KindsBar(key: scrollKey),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.symmetric(vertical: 10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                child: TextFormField(
-                                  controller: name,
-                                  cursorColor: ColorConstants.gradient1,
-                                  decoration: InputDecoration(
-                                    labelText: PhonebookTextConstants.namePure,
-                                    labelStyle: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    suffixIcon: Container(
-                                      padding: const EdgeInsets.all(10),
-                                      child: const HeroIcon(
-                                        HeroIcons.pencil,
-                                      ),
-                                    ),
-                                    enabledBorder: const UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                      ),
-                                    ),
-                                    focusedBorder: const UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: ColorConstants.gradient1,
-                                      ),
-                                    ),
-                                  ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return PhonebookTextConstants
-                                          .emptyFieldError;
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(vertical: 10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                child: TextFormField(
-                                  controller: description,
-                                  cursorColor: ColorConstants.gradient1,
-                                  decoration: InputDecoration(
-                                    labelText:
-                                        PhonebookTextConstants.description,
-                                    labelStyle: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    suffixIcon: Container(
-                                      padding: const EdgeInsets.all(10),
-                                      child: const HeroIcon(
-                                        HeroIcons.pencil,
-                                      ),
-                                    ),
-                                    enabledBorder: const UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                      ),
-                                    ),
-                                    focusedBorder: const UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: ColorConstants.gradient1,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        WaitingButton(
-                          builder: (child) => AddEditButtonLayout(
-                            colors: const [
-                              ColorConstants.gradient1,
-                              ColorConstants.gradient2,
-                            ],
-                            child: child,
-                          ),
-                          onTap: () async {
-                            if (!key.currentState!.validate()) {
-                              return;
-                            }
-                            if (kind == '') {
-                              displayToastWithContext(
-                                TypeMsg.error,
-                                PhonebookTextConstants.emptyKindError,
-                              );
-                              return;
-                            }
-                            await tokenExpireWrapper(ref, () async {
-                              final value = await associationListNotifier
-                                  .updateAssociation(
-                                association.copyWith(
-                                  name: name.text,
-                                  description: description.text,
-                                  kind: kind,
-                                ),
-                              );
-                              if (value) {
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  PhonebookTextConstants.updatedAssociation,
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  PhonebookTextConstants.updatingError,
-                                );
-                              }
-                            });
-                          },
-                          child: const Text(
-                            PhonebookTextConstants.edit,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: Color.fromARGB(255, 255, 255, 255),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            AssociationInformationEditor(),
             const SizedBox(
               height: 30,
             ),
@@ -247,35 +98,41 @@ class AssociationEditorPage extends HookConsumerWidget {
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: ColorConstants.gradient1,
+                        color: isPhonebookAdmin && !association.deactivated
+                            ? ColorConstants.gradient1
+                            : ColorConstants.deactivated1,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: child,
                     ),
-                    onTap: () async {
-                      rolesTagsNotifier.resetChecked();
-                      completeMemberNotifier
-                          .setCompleteMember(CompleteMember.empty());
-                      membershipNotifier.setMembership(
-                        Membership.empty()
-                            .copyWith(associationId: association.id),
-                      );
-                      if (QR.currentPath.contains(PhonebookRouter.admin)) {
-                        QR.to(
-                          PhonebookRouter.root +
-                              PhonebookRouter.admin +
-                              PhonebookRouter.editAssociation +
-                              PhonebookRouter.addEditMember,
-                        );
-                      } else {
-                        QR.to(
-                          PhonebookRouter.root +
-                              PhonebookRouter.associationDetail +
-                              PhonebookRouter.editAssociation +
-                              PhonebookRouter.addEditMember,
-                        );
-                      }
-                    },
+                    onTap: isPhonebookAdmin && !association.deactivated
+                        ? () async {
+                            rolesTagsNotifier.resetChecked();
+                            memberRoleTagsNotifier.reset();
+                            completeMemberNotifier
+                                .setCompleteMember(CompleteMember.empty());
+                            membershipNotifier.setMembership(
+                              Membership.empty()
+                                  .copyWith(associationId: association.id),
+                            );
+                            if (QR.currentPath
+                                .contains(PhonebookRouter.admin)) {
+                              QR.to(
+                                PhonebookRouter.root +
+                                    PhonebookRouter.admin +
+                                    PhonebookRouter.editAssociation +
+                                    PhonebookRouter.addEditMember,
+                              );
+                            } else {
+                              QR.to(
+                                PhonebookRouter.root +
+                                    PhonebookRouter.associationDetail +
+                                    PhonebookRouter.editAssociation +
+                                    PhonebookRouter.addEditMember,
+                              );
+                            }
+                          }
+                        : () async {},
                     child: const HeroIcon(
                       HeroIcons.plus,
                       size: 30,
@@ -290,18 +147,83 @@ class AssociationEditorPage extends HookConsumerWidget {
             ),
             AsyncChild(
               value: associationMemberList,
-              builder: (context, associationMembers) =>
-                  associationMembers.isEmpty
-                      ? const Text(PhonebookTextConstants.noMember)
-                      : Column(
-                          children: associationMemberSortedList
-                              .map(
-                                (member) => MemberEditableCard(
-                                  member: member,
-                                  association: association,
+              builder: (context, associationMembers) => associationMembers
+                      .isEmpty
+                  ? const Text(PhonebookTextConstants.noMember)
+                  : isPhonebookAdmin && !association.deactivated
+                      ? SizedBox(
+                          height: 400,
+                          child: ReorderableListView(
+                            proxyDecorator: (child, index, animation) {
+                              return Material(
+                                child: FadeTransition(
+                                  opacity: animation,
+                                  child: child,
                                 ),
-                              )
-                              .toList(),
+                              );
+                            },
+                            onReorder: (int oldIndex, int newIndex) async {
+                              await tokenExpireWrapper(
+                                ref,
+                                () async {
+                                  final result =
+                                      await associationMemberListNotifier
+                                          .reorderMember(
+                                    associationMemberSortedList[oldIndex],
+                                    associationMemberSortedList[oldIndex]
+                                        .memberships
+                                        .firstWhere(
+                                          (element) =>
+                                              element.associationId ==
+                                                  association.id &&
+                                              element.mandateYear ==
+                                                  association.mandateYear,
+                                        )
+                                        .copyWith(order: newIndex),
+                                    oldIndex,
+                                    newIndex,
+                                  );
+                                  if (result) {
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
+                                      PhonebookTextConstants.memberReordered,
+                                    );
+                                  } else {
+                                    displayToastWithContext(
+                                      TypeMsg.error,
+                                      PhonebookTextConstants.reorderingError,
+                                    );
+                                  }
+                                },
+                              );
+                            },
+                            children: associationMemberSortedList
+                                .map(
+                                  (member) => MemberEditableCard(
+                                    deactivated: false,
+                                    key: ValueKey(member.member.id),
+                                    member: member,
+                                    association: association,
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        )
+                      : SizedBox(
+                          height: 400,
+                          child: ListView.builder(
+                            itemCount: associationMembers.length,
+                            itemBuilder: (context, index) {
+                              return MemberEditableCard(
+                                deactivated: true,
+                                key: ValueKey(
+                                  associationMembers[index].member.id,
+                                ),
+                                member: associationMembers[index],
+                                association: association,
+                              );
+                            },
+                          ),
                         ),
             ),
             const SizedBox(
@@ -311,61 +233,75 @@ class AssociationEditorPage extends HookConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: WaitingButton(
                 builder: (child) => AddEditButtonLayout(
-                  colors: const [
-                    ColorConstants.gradient1,
-                    ColorConstants.gradient2,
-                  ],
+                  colors: isPhonebookAdmin && !association.deactivated
+                      ? [
+                          ColorConstants.gradient1,
+                          ColorConstants.gradient2,
+                        ]
+                      : [
+                          ColorConstants.deactivated1,
+                          ColorConstants.deactivated2
+                        ],
                   child: child,
                 ),
-                onTap: () async {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: const Text(PhonebookTextConstants.newMandate),
-                      content: const Text(
-                        PhonebookTextConstants.changeMandateConfirm,
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Text(PhonebookTextConstants.cancel),
-                        ),
-                        TextButton(
-                          onPressed: () async {
-                            Navigator.pop(context);
-                            await tokenExpireWrapper(ref, () async {
-                              final value = await associationListNotifier
-                                  .updateAssociation(
-                                association.copyWith(
-                                  mandateYear: association.mandateYear + 1,
-                                ),
-                              );
-                              if (value) {
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  PhonebookTextConstants.newMandateConfirmed,
-                                );
-                                associationNotifier.setAssociation(
-                                  association.copyWith(
-                                    mandateYear: association.mandateYear + 1,
-                                  ),
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  PhonebookTextConstants.mandateChangingError,
-                                );
-                              }
-                            });
-                          },
-                          child: const Text(PhonebookTextConstants.validation),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                onTap: isPhonebookAdmin && !association.deactivated
+                    ? () async {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title:
+                                const Text(PhonebookTextConstants.newMandate),
+                            content: const Text(
+                              PhonebookTextConstants.changeMandateConfirm,
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child:
+                                    const Text(PhonebookTextConstants.cancel),
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  Navigator.pop(context);
+                                  await tokenExpireWrapper(ref, () async {
+                                    final value = await associationListNotifier
+                                        .updateAssociation(
+                                      association.copyWith(
+                                        mandateYear:
+                                            association.mandateYear + 1,
+                                      ),
+                                    );
+                                    if (value) {
+                                      displayToastWithContext(
+                                        TypeMsg.msg,
+                                        PhonebookTextConstants
+                                            .newMandateConfirmed,
+                                      );
+                                      associationNotifier.setAssociation(
+                                        association.copyWith(
+                                          mandateYear:
+                                              association.mandateYear + 1,
+                                        ),
+                                      );
+                                    } else {
+                                      displayToastWithContext(
+                                        TypeMsg.error,
+                                        PhonebookTextConstants
+                                            .mandateChangingError,
+                                      );
+                                    }
+                                  });
+                                },
+                                child: const Text(
+                                    PhonebookTextConstants.validation),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    : () async {},
                 child: Text(
                   "${PhonebookTextConstants.changeMandate} ${association.mandateYear + 1}",
                   style: const TextStyle(

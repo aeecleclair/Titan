@@ -45,7 +45,61 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
     return await update(
       (member) => associationMemberRepository.updateMember(membership),
       (members, member) => members
-        ..[members.indexWhere((e) => e.member.id == member.member.id)] = member,
+        ..[members.indexWhere((i) => i.member.id == member.member.id)] = member,
+      member,
+    );
+  }
+
+  Future<bool> reorderMember(
+    CompleteMember member,
+    Membership membership,
+    int oldIndex,
+    int newIndex,
+  ) async {
+    return await update(
+      (member) => associationMemberRepository.updateMember(membership),
+      (members, member) {
+        members.sort(
+          (a, b) => a.memberships
+              .firstWhere(
+                (e) =>
+                    e.associationId == membership.associationId &&
+                    e.mandateYear == membership.mandateYear,
+              )
+              .order
+              .compareTo(
+                b.memberships
+                    .firstWhere(
+                      (e) =>
+                          e.associationId == membership.associationId &&
+                          e.mandateYear == membership.mandateYear,
+                    )
+                    .order,
+              ),
+        );
+        members.remove(member);
+        if (oldIndex < newIndex) newIndex--;
+        members.insert(newIndex, member);
+
+        for (int i = 0; i < members.length; i++) {
+          List<Membership> memberships = members[i].memberships;
+          Membership oldMembership = memberships.firstWhere(
+            (e) =>
+                e.associationId == membership.associationId &&
+                e.mandateYear == membership.mandateYear,
+          );
+          memberships.remove(
+            memberships.firstWhere(
+              (e) =>
+                  e.associationId == membership.associationId &&
+                  e.mandateYear == membership.mandateYear,
+            ),
+          );
+          memberships.add(oldMembership.copyWith(order: i));
+          members[i].copyWith(membership: memberships);
+        }
+        return members;
+      },
       member,
     );
   }

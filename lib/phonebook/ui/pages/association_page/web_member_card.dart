@@ -7,6 +7,7 @@ import 'package:myecl/phonebook/class/membership.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
+import 'package:myecl/phonebook/tools/function.dart';
 import 'package:myecl/phonebook/ui/pages/association_page/card_field.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -38,6 +39,16 @@ class WebMemberCard extends HookConsumerWidget {
           QR.to(PhonebookRouter.root + PhonebookRouter.memberDetail);
         },
         child: CardLayout(
+          color: getColorFromTagList(
+            ref,
+            member.memberships
+                .firstWhere(
+                  (element) =>
+                      element.associationId == association.id &&
+                      element.mandateYear == association.mandateYear,
+                )
+                .rolesTags,
+          ),
           margin: EdgeInsets.zero,
           child: LayoutBuilder(
             builder: (context, constraints) {

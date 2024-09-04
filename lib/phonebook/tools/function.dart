@@ -1,34 +1,28 @@
-import 'dart:math';
-
+import 'package:diacritic/diacritic.dart';
+import 'package:flutter/material.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/association_kinds.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/membership.dart';
+import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 
 int getPosition(
   CompleteMember member,
   String associationId,
-  List<String> rolesTags,
 ) {
   Membership membership = member.memberships
       .firstWhere((element) => element.associationId == associationId);
-  if (membership.rolesTags.isEmpty || membership.rolesTags.first == "") {
-    return rolesTags.length;
-  }
-  return membership.rolesTags
-      .map((roleTag) => rolesTags.indexOf(roleTag))
-      .reduce((value, element) => min(value, element));
+  return membership.order;
 }
 
 List<CompleteMember> sortedMembers(
   List<CompleteMember> members,
   String associationId,
-  List<String> rolesTags,
 ) {
   return members
     ..sort(
-      (a, b) => getPosition(a, associationId, rolesTags)
-          .compareTo(getPosition(b, associationId, rolesTags)),
+      (a, b) => getPosition(a, associationId)
+          .compareTo(getPosition(b, associationId)),
     );
 }
 
@@ -43,8 +37,31 @@ List<Association> sortedAssociationByKind(
     sortedByKind[kinds.kinds.indexOf(association.kind)].add(association);
   }
   for (List<Association> list in sortedByKind) {
-    list.sort((a, b) => a.name.compareTo(b.name));
+    list.sort(
+      (a, b) => removeDiacritics(a.name)
+          .toLowerCase()
+          .compareTo(removeDiacritics(b.name).toLowerCase()),
+    );
     sorted.addAll(list);
   }
   return sorted;
+}
+
+Color getColorFromTagList(ref, List<String> tags) {
+  final rolesTags = ref.watch(rolesTagsProvider).keys.toList();
+  int index = 3;
+  for (String tag in tags) {
+    if (rolesTags.indexOf(tag) < index) {
+      index = rolesTags.indexOf(tag);
+    }
+  }
+  switch (index) {
+    case 0:
+      return const Color.fromARGB(255, 251, 109, 16);
+    case 1:
+      return const Color.fromARGB(255, 252, 145, 74);
+    case 2:
+      return const Color.fromARGB(255, 253, 193, 153);
+  }
+  return Colors.white;
 }

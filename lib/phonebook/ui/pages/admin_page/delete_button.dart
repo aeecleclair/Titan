@@ -5,8 +5,15 @@ import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class DeleteButton extends StatelessWidget {
   final Future Function() onDelete;
+  final bool deactivated;
+  final bool deletion;
 
-  const DeleteButton({super.key, required this.onDelete});
+  const DeleteButton({
+    super.key,
+    required this.onDelete,
+    required this.deactivated,
+    required this.deletion,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,17 +21,24 @@ class DeleteButton extends StatelessWidget {
       builder: (child) => Container(
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [
-              ColorConstants.gradient1,
-              ColorConstants.gradient2,
-            ],
+          gradient: LinearGradient(
+            colors: !deactivated
+                ? [
+                    ColorConstants.gradient1,
+                    ColorConstants.gradient2,
+                  ]
+                : [
+                    ColorConstants.deactivated1,
+                    ColorConstants.deactivated2,
+                  ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
           boxShadow: [
             BoxShadow(
-              color: ColorConstants.gradient2.withOpacity(0.2),
+              color: !deactivated
+                  ? ColorConstants.gradient2.withOpacity(0.2)
+                  : ColorConstants.deactivated2.withOpacity(0.2),
               blurRadius: 10,
               offset: const Offset(2, 3),
             ),
@@ -33,9 +47,9 @@ class DeleteButton extends StatelessWidget {
         ),
         child: child,
       ),
-      onTap: onDelete,
-      child: const HeroIcon(
-        HeroIcons.xMark,
+      onTap: !deactivated ? onDelete : () async {},
+      child: HeroIcon(
+        deletion ? HeroIcons.trash : HeroIcons.noSymbol,
         size: 30,
         color: Colors.white,
       ),
