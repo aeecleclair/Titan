@@ -25,7 +25,6 @@ class ScanPage extends HookConsumerWidget {
     final seller = ref.watch(sellerProvider);
     final products = ref.watch(productListProvider);
     final productsNotifier = ref.watch(productListProvider.notifier);
-    final product = ref.watch(productProvider);
     final productNotifier = ref.watch(productProvider.notifier);
 
     return PurchasesTemplate(
@@ -87,7 +86,7 @@ class ScanPage extends HookConsumerWidget {
                                       showDialog<bool>(
                                         context: context,
                                         builder: (context) => ScanDialog(
-                                          product: product,
+                                          product: eachProduct,
                                         ),
                                       );
                                     },
