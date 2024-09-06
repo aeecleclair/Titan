@@ -133,7 +133,11 @@ class ScanDialog extends HookConsumerWidget {
                         scanner: scanner,
                         onScan: (secret) async {
                           await scannerNotifier.scanTicket(
-                              sellerId, productId, secret, ticket.id,);
+                            sellerId,
+                            productId,
+                            secret,
+                            ticket.id,
+                          );
                           scanner.when(
                             data: (data) {
                               scannerNotifier.setScanner(
