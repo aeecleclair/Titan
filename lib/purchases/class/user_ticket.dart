@@ -21,6 +21,7 @@ class UserTicket extends SimpleUser {
     createdOn = processDateFromAPI(json['created_on']);
   }
 
+  @override
   Map<String, dynamic> toJson() {
     final users = super.toJson();
     users['promo'] = promo;

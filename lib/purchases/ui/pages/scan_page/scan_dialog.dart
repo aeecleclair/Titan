@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/purchases/class/product.dart';
+import 'package:myecl/purchases/class/generated_ticket.dart';
 import 'package:myecl/purchases/providers/scanner_provider.dart';
 import 'package:myecl/purchases/providers/tag_provider.dart';
 import 'package:myecl/purchases/providers/ticket_list_provider.dart';
@@ -15,8 +15,8 @@ import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 
 class ScanDialog extends HookConsumerWidget {
-  final Product product;
-  const ScanDialog({super.key, required this.product});
+  final GeneratedTicket ticket;
+  const ScanDialog({super.key, required this.ticket});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -85,7 +85,7 @@ class ScanDialog extends HookConsumerWidget {
                 children: [
                   const SizedBox(height: 10),
                   Text(
-                    product.nameFR,
+                    ticket.name,
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -124,10 +124,10 @@ class ScanDialog extends HookConsumerWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: QRCodeScannerScreen(
-                        product: product,
+                        generatedTicket: ticket,
                         scanner: scanner,
                         onScan: (secret) async {
-                          await scannerNotifier.scanTicket(product.id, secret);
+                          await scannerNotifier.scanTicket(ticket.id, secret);
                           scanner.when(
                             data: (data) {
                               scannerNotifier.setScanner(
@@ -166,7 +166,7 @@ class ScanDialog extends HookConsumerWidget {
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            "${data.ticket.scanLeft.toString()} / ${product.ticketMaxUse} ${PurchasesTextConstants.leftScan}",
+                            "${data.ticket.scanLeft.toString()} / ${ticket.maxUse} ${PurchasesTextConstants.leftScan}",
                             style: const TextStyle(
                                 fontSize: 16, color: Colors.black),
                           ),

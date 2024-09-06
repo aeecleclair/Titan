@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/purchases/class/seller.dart';
 import 'package:myecl/purchases/providers/product_list_provider.dart';
-import 'package:myecl/purchases/providers/product_provider.dart';
+import 'package:myecl/purchases/providers/generated_ticket_provider.dart';
 import 'package:myecl/purchases/providers/seller_list_provider.dart';
 import 'package:myecl/purchases/providers/seller_provider.dart';
 import 'package:myecl/purchases/tools/constants.dart';
-import 'package:myecl/purchases/ui/pages/scan_page/product_card.dart';
+import 'package:myecl/purchases/ui/pages/scan_page/ticket_card.dart';
 import 'package:myecl/purchases/ui/pages/scan_page/scan_dialog.dart';
 import 'package:myecl/purchases/ui/purchases.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
@@ -25,7 +25,7 @@ class ScanPage extends HookConsumerWidget {
     final seller = ref.watch(sellerProvider);
     final products = ref.watch(productListProvider);
     final productsNotifier = ref.watch(productListProvider.notifier);
-    final productNotifier = ref.watch(productProvider.notifier);
+    final generatedTicketNotifier = ref.watch(generatedTicketProvider.notifier);
 
     return PurchasesTemplate(
       child: Refresher(
@@ -70,28 +70,30 @@ class ScanPage extends HookConsumerWidget {
                         : AsyncChild(
                             value: products,
                             builder: (context, products) {
-                              final scannableProducts = products
-                                  .where((product) => product.generateTicket);
+                              final scannableProducts = products.where(
+                                  (product) => product.tickets.isNotEmpty);
                               if (scannableProducts.isEmpty) {
                                 return const Text(
                                   PurchasesTextConstants.noScannableProducts,
                                 );
                               }
                               return Column(
-                                children: scannableProducts.map((eachProduct) {
-                                  return ProductCard(
-                                    product: eachProduct,
-                                    onClicked: () {
-                                      productNotifier.setProduct(eachProduct);
-                                      showDialog<bool>(
-                                        context: context,
-                                        builder: (context) => ScanDialog(
-                                          product: eachProduct,
-                                        ),
-                                      );
-                                    },
-                                  );
-                                }).toList(),
+                                children: scannableProducts.map((product) {
+                                  return product.tickets.map((ticket) {
+                                    return TicketCard(
+                                      ticket: ticket,
+                                      onClicked: () {
+                                        generatedTicketNotifier.setGeneratedTicket(ticket);
+                                        showDialog<bool>(
+                                          context: context,
+                                          builder: (context) => ScanDialog(
+                                            ticket: ticket,
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  });
+                                }).fold([], (a, b) => a..addAll(b)),
                               );
                             },
                           ),

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/purchases/class/product.dart';
+import 'package:myecl/purchases/class/generated_ticket.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 
-class ProductCard extends HookConsumerWidget {
-  const ProductCard({
+class TicketCard extends HookConsumerWidget {
+  const TicketCard({
     super.key,
-    required this.product,
+    required this.ticket,
     required this.onClicked,
   });
 
-  final Product product;
+  final GeneratedTicket ticket;
   final VoidCallback onClicked;
 
   @override
@@ -28,14 +28,14 @@ class ProductCard extends HookConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${product.nameFR} / ${product.nameEN}",
+                  ticket.name,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  "${product.ticketMaxUse} scan${(product.ticketMaxUse ?? 0) > 1 ? 's' : ""} maximun - Valide jusqu'au ${product.ticketExpiration != null ? processDate(product.ticketExpiration!) : ""}",
+                  "${ticket.maxUse} scan${ticket.maxUse > 1 ? 's' : ""} maximun - Valide jusqu'au ${processDate(ticket.expiration)}",
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,

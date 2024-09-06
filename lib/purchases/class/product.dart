@@ -1,25 +1,21 @@
-import 'package:myecl/tools/functions.dart';
+import 'package:myecl/purchases/class/generated_ticket.dart';
 
 class Product {
   Product({
     required this.id,
     required this.nameFR,
     required this.nameEN,
-    this.descriptionFR = "",
-    this.descriptionEN = "",
-    required this.generateTicket,
-    required this.ticketMaxUse,
-    required this.ticketExpiration,
+    required this.descriptionFR,
+    required this.descriptionEN,
+    required this.tickets,
   });
 
   late final String id;
   late final String nameFR;
-  late final String nameEN;
-  late final String descriptionFR;
-  late final String descriptionEN;
-  late final bool generateTicket;
-  late final int? ticketMaxUse;
-  late final DateTime? ticketExpiration;
+  late final String? nameEN;
+  late final String? descriptionFR;
+  late final String? descriptionEN;
+  late final List<GeneratedTicket> tickets;
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -27,11 +23,9 @@ class Product {
     nameEN = json['name_en'];
     descriptionFR = json['description_fr'] ?? "";
     descriptionEN = json['description_en'] ?? "";
-    generateTicket = json['generate_ticket'];
-    ticketMaxUse = json['ticket_max_use'];
-    ticketExpiration = json['ticket_expiration'] != null
-        ? processDateFromAPI(json['ticket_expiration'])
-        : null;
+    tickets = List<GeneratedTicket>.from(
+      (json['tickets'] as List).map((x) => GeneratedTicket.fromJson(x)),
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -41,10 +35,7 @@ class Product {
       'name_en': nameEN,
       'description_fr': descriptionFR,
       'description_en': descriptionEN,
-      'generate_ticket': generateTicket,
-      'ticket_max_use': ticketMaxUse,
-      'ticket_expiration':
-          ticketExpiration != null ? processDateToAPI(ticketExpiration!) : null,
+      'tickets': tickets.map((x) => x.toJson()).toList(),
     };
     return data;
   }
@@ -55,9 +46,7 @@ class Product {
     String? nameEN,
     String? descriptionFR,
     String? descriptionEN,
-    bool? generateTicket,
-    int? ticketMaxUse,
-    DateTime? ticketExpiration,
+    List<GeneratedTicket>? tickets,
   }) {
     return Product(
       id: id ?? this.id,
@@ -65,9 +54,7 @@ class Product {
       nameEN: nameEN ?? this.nameEN,
       descriptionFR: descriptionFR ?? this.descriptionFR,
       descriptionEN: descriptionEN ?? this.descriptionEN,
-      generateTicket: generateTicket ?? this.generateTicket,
-      ticketMaxUse: ticketMaxUse ?? this.ticketMaxUse,
-      ticketExpiration: ticketExpiration ?? this.ticketExpiration,
+      tickets: tickets ?? this.tickets,
     );
   }
 
@@ -77,13 +64,11 @@ class Product {
     nameEN = "";
     descriptionFR = "";
     descriptionEN = "";
-    generateTicket = false;
-    ticketMaxUse = 0;
-    ticketExpiration = DateTime.now();
+    tickets = [];
   }
 
   @override
   String toString() {
-    return 'Product(id: $id, nameFR: $nameFR, nameEN: $nameEN, descriptionFR: $descriptionFR, descriptionEN: $descriptionEN)';
+    return 'Product(id: $id, nameFR: $nameFR, nameEN: $nameEN, descriptionFR: $descriptionFR, descriptionEN: $descriptionEN, tickets: $tickets)';
   }
 }
