@@ -28,12 +28,12 @@ class TicketPage extends HookConsumerWidget {
               children: [
                 const SizedBox(height: 20),
                 Text(
-                  data.productVariant.nameFR,
+                  data.name,
                   style: const TextStyle(fontSize: 40, color: Colors.black),
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  data.productVariant.nameEN,
+                  data.productVariant.nameFR,
                   style: TextStyle(fontSize: 20, color: Colors.grey[700]),
                 ),
                 const SizedBox(height: 10),
@@ -41,7 +41,7 @@ class TicketPage extends HookConsumerWidget {
                     ? QrImageView(
                         data: data.qrCodeSecret,
                         version: QrVersions.auto,
-                        size: MediaQuery.of(context).size.width * 0.7,
+                        size: MediaQuery.of(context).size.width * 0.8,
                         eyeStyle: const QrEyeStyle(
                           color: Colors.black,
                           eyeShape: QrEyeShape.square,
@@ -52,8 +52,8 @@ class TicketPage extends HookConsumerWidget {
                         ),
                       )
                     : SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.7,
-                        height: MediaQuery.of(context).size.width * 0.7,
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: MediaQuery.of(context).size.width * 0.8,
                         child: const Loader(),
                       ),
                 const SizedBox(height: 10),
