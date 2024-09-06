@@ -7,7 +7,7 @@ class Product {
     required this.nameEN,
     required this.descriptionFR,
     required this.descriptionEN,
-    required this.tickets,
+    required this.ticketGenerators,
   });
 
   late final String id;
@@ -15,7 +15,7 @@ class Product {
   late final String? nameEN;
   late final String? descriptionFR;
   late final String? descriptionEN;
-  late final List<GeneratedTicket> tickets;
+  late final List<TicketGenerator> ticketGenerators;
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -23,8 +23,8 @@ class Product {
     nameEN = json['name_en'];
     descriptionFR = json['description_fr'] ?? "";
     descriptionEN = json['description_en'] ?? "";
-    tickets = List<GeneratedTicket>.from(
-      (json['tickets'] as List).map((x) => GeneratedTicket.fromJson(x)),
+    ticketGenerators = List<TicketGenerator>.from(
+      (json['tickets'] as List).map((x) => TicketGenerator.fromJson(x)),
     );
   }
 
@@ -35,7 +35,7 @@ class Product {
       'name_en': nameEN,
       'description_fr': descriptionFR,
       'description_en': descriptionEN,
-      'tickets': tickets.map((x) => x.toJson()).toList(),
+      'tickets': ticketGenerators.map((x) => x.toJson()).toList(),
     };
     return data;
   }
@@ -46,7 +46,7 @@ class Product {
     String? nameEN,
     String? descriptionFR,
     String? descriptionEN,
-    List<GeneratedTicket>? tickets,
+    List<TicketGenerator>? ticketGenerators,
   }) {
     return Product(
       id: id ?? this.id,
@@ -54,7 +54,7 @@ class Product {
       nameEN: nameEN ?? this.nameEN,
       descriptionFR: descriptionFR ?? this.descriptionFR,
       descriptionEN: descriptionEN ?? this.descriptionEN,
-      tickets: tickets ?? this.tickets,
+      ticketGenerators: ticketGenerators ?? this.ticketGenerators,
     );
   }
 
@@ -64,11 +64,11 @@ class Product {
     nameEN = "";
     descriptionFR = "";
     descriptionEN = "";
-    tickets = [];
+    ticketGenerators = [];
   }
 
   @override
   String toString() {
-    return 'Product(id: $id, nameFR: $nameFR, nameEN: $nameEN, descriptionFR: $descriptionFR, descriptionEN: $descriptionEN, tickets: $tickets)';
+    return 'Product(id: $id, nameFR: $nameFR, nameEN: $nameEN, descriptionFR: $descriptionFR, descriptionEN: $descriptionEN, ticketGenerators: $ticketGenerators)';
   }
 }

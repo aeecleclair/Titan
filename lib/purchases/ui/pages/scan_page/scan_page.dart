@@ -25,7 +25,7 @@ class ScanPage extends HookConsumerWidget {
     final seller = ref.watch(sellerProvider);
     final products = ref.watch(productListProvider);
     final productsNotifier = ref.watch(productListProvider.notifier);
-    final generatedTicketNotifier = ref.watch(generatedTicketProvider.notifier);
+    final ticketGeneratorNotifier = ref.watch(ticketGeneratorProvider.notifier);
 
     return PurchasesTemplate(
       child: Refresher(
@@ -71,7 +71,7 @@ class ScanPage extends HookConsumerWidget {
                             value: products,
                             builder: (context, products) {
                               final scannableProducts = products.where(
-                                  (product) => product.tickets.isNotEmpty);
+                                  (product) => product.ticketGenerators.isNotEmpty);
                               if (scannableProducts.isEmpty) {
                                 return const Text(
                                   PurchasesTextConstants.noScannableProducts,
@@ -79,12 +79,12 @@ class ScanPage extends HookConsumerWidget {
                               }
                               return Column(
                                 children: scannableProducts.map((product) {
-                                  return product.tickets.map((ticket) {
+                                  return product.ticketGenerators.map((ticket) {
                                     return TicketCard(
                                       ticket: ticket,
                                       onClicked: () {
-                                        generatedTicketNotifier
-                                            .setGeneratedTicket(ticket);
+                                        ticketGeneratorNotifier
+                                            .setTicketGenerator(ticket);
                                         showDialog<bool>(
                                           context: context,
                                           builder: (context) => ScanDialog(

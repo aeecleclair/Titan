@@ -17,7 +17,7 @@ import 'package:myecl/tools/ui/layouts/card_layout.dart';
 class ScanDialog extends HookConsumerWidget {
   final String sellerId;
   final String productId;
-  final GeneratedTicket ticket;
+  final TicketGenerator ticket;
   const ScanDialog(
       {super.key,
       required this.ticket,
@@ -130,11 +130,10 @@ class ScanDialog extends HookConsumerWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: QRCodeScannerScreen(
-                        generatedTicket: ticket,
                         scanner: scanner,
                         onScan: (secret) async {
                           await scannerNotifier.scanTicket(
-                              sellerId, productId, secret, ticket.id);
+                              sellerId, productId, secret, ticket.id,);
                           scanner.when(
                             data: (data) {
                               scannerNotifier.setScanner(

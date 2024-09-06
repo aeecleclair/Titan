@@ -11,7 +11,7 @@ class TicketCard extends HookConsumerWidget {
     required this.onClicked,
   });
 
-  final GeneratedTicket ticket;
+  final TicketGenerator ticket;
   final VoidCallback onClicked;
 
   @override

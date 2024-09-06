@@ -1,7 +1,7 @@
 import 'package:myecl/tools/functions.dart';
 
-class GeneratedTicket {
-  GeneratedTicket({
+class TicketGenerator {
+  TicketGenerator({
     required this.id,
     required this.name,
     required this.maxUse,
@@ -13,7 +13,7 @@ class GeneratedTicket {
   late final int maxUse;
   late final DateTime expiration;
 
-  GeneratedTicket.fromJson(Map<String, dynamic> json) {
+  TicketGenerator.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     maxUse = json['max_use'];
@@ -30,13 +30,13 @@ class GeneratedTicket {
     return data;
   }
 
-  GeneratedTicket copyWith({
+  TicketGenerator copyWith({
     String? id,
     String? name,
     int? maxUse,
     DateTime? expiration,
   }) {
-    return GeneratedTicket(
+    return TicketGenerator(
       id: id ?? this.id,
       name: name ?? this.name,
       maxUse: maxUse ?? this.maxUse,
@@ -44,7 +44,7 @@ class GeneratedTicket {
     );
   }
 
-  GeneratedTicket.empty() {
+  TicketGenerator.empty() {
     id = "";
     name = "";
     maxUse = 0;
@@ -53,6 +53,6 @@ class GeneratedTicket {
 
   @override
   String toString() {
-    return 'GeneratedTicket(id: $id, name: $name, maxUse: $maxUse, expiration: $expiration)';
+    return 'TicketGenerator(id: $id, name: $name, maxUse: $maxUse, expiration: $expiration)';
   }
 }

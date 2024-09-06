@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:myecl/purchases/class/generated_ticket.dart';
 import 'package:myecl/purchases/class/ticket_information.dart';
 
 class QRCodeScannerScreen extends StatefulWidget {
   const QRCodeScannerScreen({
     super.key,
-    required this.generatedTicket,
     required this.onScan,
     required this.scanner,
   });
 
-  final GeneratedTicket generatedTicket;
   final Function onScan;
   final AsyncValue<TicketInformation> scanner;
 
