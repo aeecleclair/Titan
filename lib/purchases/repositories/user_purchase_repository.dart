@@ -7,7 +7,6 @@ class UserPurchaseRepository extends Repository {
   final ext = "cdr/me/";
 
   Future<List<Purchase>> getPurchaseList() async {
-    print((await getList(suffix: "purchases/")));
     return List<Purchase>.from(
       (await getList(suffix: "purchases/")).map((x) => Purchase.fromJson(x)),
     );

@@ -15,8 +15,10 @@ import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 
 class ScanDialog extends HookConsumerWidget {
+  final String sellerId;
+  final String productId;
   final GeneratedTicket ticket;
-  const ScanDialog({super.key, required this.ticket});
+  const ScanDialog({super.key, required this.ticket, required this.sellerId, required this.productId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -127,7 +129,7 @@ class ScanDialog extends HookConsumerWidget {
                         generatedTicket: ticket,
                         scanner: scanner,
                         onScan: (secret) async {
-                          await scannerNotifier.scanTicket(ticket.id, secret);
+                          await scannerNotifier.scanTicket(sellerId, productId, secret, ticket.id);
                           scanner.when(
                             data: (data) {
                               scannerNotifier.setScanner(
@@ -196,7 +198,7 @@ class ScanDialog extends HookConsumerWidget {
                                 GestureDetector(
                                   onTap: () async {
                                     final value = await ticketListNotifier
-                                        .consumeTicket(data, tag);
+                                        .consumeTicket(sellerId, data, ticket.id, tag);
                                     if (value) {
                                       displayToastWithContext(
                                         TypeMsg.msg,

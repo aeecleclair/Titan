@@ -21,9 +21,19 @@ class TicketListNotifier extends ListNotifier<Ticket> {
     return await loadList(ticketRepository.getTicketList);
   }
 
-  Future<bool> consumeTicket(TicketInformation ticket, String tag) async {
+  Future<bool> consumeTicket(
+    String sellerId,
+    TicketInformation ticket,
+    String generatorId,
+    String tag,
+  ) async {
     return await update(
-      (Ticket fakeTicket) => scannerRepository.consumeTicket(ticket, tag),
+      (Ticket fakeTicket) => scannerRepository.consumeTicket(
+        sellerId,
+        ticket,
+        generatorId,
+        tag,
+      ),
       (tickets, ticket) {
         List<String> tags = ticket.tags;
         tags.add(tag);

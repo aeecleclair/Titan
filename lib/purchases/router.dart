@@ -3,7 +3,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/purchases/providers/purchases_admin_provider.dart';
-import 'package:myecl/purchases/ui/pages/confirmation_page/confirmation_page.dart';
 import 'package:myecl/purchases/ui/pages/history_page/history_page.dart';
 import 'package:myecl/purchases/ui/pages/main_page/main_page.dart';
 import 'package:myecl/purchases/ui/pages/purchase_page/purchase_page.dart';
@@ -40,12 +39,6 @@ class PurchasesRouter {
             builder: () => const ScanPage(),
             middleware: [
               AdminMiddleware(ref, isPurchasesAdminProvider),
-            ],
-            children: [
-              QRoute(
-                path: confirmation,
-                builder: () => const ConfirmationPage(),
-              ),
             ],
           ),
           QRoute(

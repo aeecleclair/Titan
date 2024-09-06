@@ -83,10 +83,13 @@ class ScanPage extends HookConsumerWidget {
                                     return TicketCard(
                                       ticket: ticket,
                                       onClicked: () {
-                                        generatedTicketNotifier.setGeneratedTicket(ticket);
+                                        generatedTicketNotifier
+                                            .setGeneratedTicket(ticket);
                                         showDialog<bool>(
                                           context: context,
                                           builder: (context) => ScanDialog(
+                                            sellerId: seller.id,
+                                            productId: product.id,
                                             ticket: ticket,
                                           ),
                                         );

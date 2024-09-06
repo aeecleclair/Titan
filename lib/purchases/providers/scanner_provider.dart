@@ -10,11 +10,18 @@ class ScannerNotifier extends SingleNotifier<TicketInformation> {
     scannerRepository.setToken(token);
   }
   Future<AsyncValue<TicketInformation>> scanTicket(
+    String sellerId,
     String productId,
     String ticketSecret,
+    String generatorId,
   ) async {
     return await load(
-      () => scannerRepository.scanTicket(productId, ticketSecret),
+      () => scannerRepository.scanTicket(
+        sellerId,
+        productId,
+        ticketSecret,
+        generatorId,
+      ),
     );
   }
 
