@@ -6,7 +6,8 @@ import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class PurchaseListNotifier extends ListNotifier<Purchase> {
-      final UserPurchaseRepository userPurchaseRepository = UserPurchaseRepository();
+  final UserPurchaseRepository userPurchaseRepository =
+      UserPurchaseRepository();
   AsyncValue<List<Purchase>> purchaseList = const AsyncValue.loading();
   PurchaseListNotifier({required String token})
       : super(const AsyncValue.loading()) {

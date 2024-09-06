@@ -37,7 +37,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
-                color:  widget.scanner.when(
+                color: widget.scanner.when(
                   data: (data) => Colors.green,
                   loading: () => Colors.white,
                   error: (error, stackTrace) => Colors.red,
@@ -57,5 +57,3 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
     );
   }
 }
-
-
