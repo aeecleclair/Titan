@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/purchases/providers/purchase_list_provider.dart';
 import 'package:myecl/purchases/providers/purchase_provider.dart';
@@ -7,6 +8,8 @@ import 'package:myecl/purchases/tools/constants.dart';
 import 'package:myecl/purchases/ui/pages/history_page/purchase_card.dart';
 import 'package:myecl/purchases/ui/purchases.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -19,6 +22,8 @@ class HistoryPage extends HookConsumerWidget {
     final purchasesListNotifier = ref.watch(purchaseListProvider.notifier);
     final purchaseNotifier = ref.watch(purchaseProvider.notifier);
 
+    final selectedYear = useState(DateTime.now().year);
+
     return PurchasesTemplate(
       child: Refresher(
         onRefresh: () async {
@@ -29,29 +34,25 @@ class HistoryPage extends HookConsumerWidget {
           builder: (context, purchases) {
             List<Widget> children = [];
             List<int> years = purchasesListNotifier.getPurchasesYears();
-            for (int year in years) {
-              children.add(
-                ExpansionTile(
-                  title: Text(year.toString()),
-                  children: purchases.map((purchase) {
-                    if (purchase.purchasedOn.year == year) {
-                      return PurchaseCard(
-                        purchase: purchase,
-                        onClicked: () {
-                          purchaseNotifier.setPurchase(purchase);
-                          QR.to(
-                            PurchasesRouter.root +
-                                PurchasesRouter.history +
-                                PurchasesRouter.purchase,
-                          );
-                        },
+            children.addAll(
+              purchases.map((purchase) {
+                if (purchase.purchasedOn.year == selectedYear.value) {
+                  return PurchaseCard(
+                    purchase: purchase,
+                    onClicked: () {
+                      purchaseNotifier.setPurchase(purchase);
+                      QR.to(
+                        PurchasesRouter.root +
+                            PurchasesRouter.history +
+                            PurchasesRouter.purchase,
                       );
-                    }
-                    return const SizedBox();
-                  }).toList(),
-                ),
-              );
-            }
+                    },
+                  );
+                }
+                return const SizedBox();
+              }),
+            );
+
             if (children.isEmpty) {
               children.add(
                 const Center(
@@ -60,7 +61,31 @@ class HistoryPage extends HookConsumerWidget {
               );
             }
             return Column(
-              children: children,
+              children: [
+                const SizedBox(height: 30),
+                HorizontalListView.builder(
+                  items: years,
+                  itemBuilder: (context, currentYear, index) {
+                    final selected = selectedYear.value == currentYear;
+                    return ItemChip(
+                      onTap: () {
+                        selectedYear.value = currentYear;
+                      },
+                      selected: selected,
+                      child: Text(
+                        currentYear.toString(),
+                        style: TextStyle(
+                          color: selected ? Colors.white : Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    );
+                  },
+                  height: 40,
+                ),
+                const SizedBox(height: 20),
+                ...children,
+              ],
             );
           },
           errorBuilder: (error, stack) => const Center(

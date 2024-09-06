@@ -27,7 +27,7 @@ class PurchaseCard extends HookConsumerWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
-                  purchase.name,
+                  purchase.product.nameFR,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -35,7 +35,13 @@ class PurchaseCard extends HookConsumerWidget {
                 ),
               ),
               purchase.validated
-                  ? const SizedBox()
+                  ? Text(
+                      "${purchase.quantity} x ${purchase.price / 100} €",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
                   : const Text(
                       PurchasesTextConstants.notPaid,
                       style: TextStyle(

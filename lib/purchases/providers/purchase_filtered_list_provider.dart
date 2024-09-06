@@ -11,7 +11,7 @@ final purchaseFilteredListProvider = Provider<List<Purchase>>((ref) {
     data: (purchases) {
       return purchases
           .where(
-            (purchase) => removeDiacritics(purchase.name.toLowerCase())
+            (purchase) => removeDiacritics(purchase.product.nameFR.toLowerCase())
                 .contains(removeDiacritics(searchFilter.toLowerCase())),
           )
           .toList();

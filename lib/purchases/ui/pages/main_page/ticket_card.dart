@@ -28,7 +28,7 @@ class TicketCard extends HookConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${ticket.productVariant.nameFR} / ${ticket.productVariant.nameEN}",
+                  ticket.name,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

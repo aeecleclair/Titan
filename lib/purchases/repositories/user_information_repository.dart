@@ -1,4 +1,3 @@
-import 'package:myecl/purchases/class/purchase.dart';
 import 'package:myecl/purchases/class/seller.dart';
 import 'package:myecl/purchases/class/ticket.dart';
 import 'package:myecl/tools/repository/repository.dart';
@@ -7,12 +6,6 @@ class UserInformationRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "cdr/users/me/";
-
-  Future<List<Purchase>> getPurchaseList() async {
-    return List<Purchase>.from(
-      (await getList(suffix: "purchases/")).map((x) => Purchase.fromJson(x)),
-    );
-  }
 
   Future<List<Seller>> getSellerList() async {
     return List<Seller>.from(
