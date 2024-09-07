@@ -14,9 +14,14 @@ class UserInformationRepository extends Repository {
   }
 
   Future<List<Ticket>> getTicketList() async {
-    return List<Ticket>.from(
-      (await getList(suffix: "tickets/")).map((x) => Ticket.fromJson(x)),
-    );
+    final json = await getList(suffix: "tickets/");
+    print(json);
+    final tickets = List<Ticket>.from(json.map((x) => Ticket.fromJson(x)));
+    // final tickets = List<Ticket>.from(
+    //   (await getList(suffix: "tickets/")).map((x) => Ticket.fromJson(x)),
+    // );
+    print(tickets);
+    return tickets;
   }
 
   Future<Ticket> getTicketQrCodeSecret(Ticket ticket) async {

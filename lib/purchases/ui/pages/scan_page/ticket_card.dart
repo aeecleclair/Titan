@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/purchases/class/generated_ticket.dart';
+import 'package:myecl/purchases/class/ticket_generator.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 
