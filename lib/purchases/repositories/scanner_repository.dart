@@ -13,14 +13,20 @@ class ScannerRepository extends Repository {
     String generatorId,
   ) async {
     return TicketInformation.fromJson(
-      await getOne(productId,
-          suffix:
-              "$sellerId/products/$productId/tickets/$generatorId/$ticketSecret/"),
+      await getOne(
+        productId,
+        suffix:
+            "$sellerId/products/$productId/tickets/$generatorId/$ticketSecret/",
+      ),
     );
   }
 
-  Future<bool> consumeTicket(String sellerId, TicketInformation ticket,
-      String generatorId, String tag) async {
+  Future<bool> consumeTicket(
+    String sellerId,
+    TicketInformation ticket,
+    String generatorId,
+    String tag,
+  ) async {
     return await update(
       ticket.ticket.toJson(),
       ticket.ticket.id,

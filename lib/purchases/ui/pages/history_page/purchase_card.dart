@@ -37,7 +37,7 @@ class PurchaseCard extends HookConsumerWidget {
               purchase.validated
                   ? Text(
                       "${purchase.quantity} x ${purchase.price / 100} €",
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/purchases/class/generated_ticket.dart';
+import 'package:myecl/purchases/class/ticket_generator.dart';
 import 'package:myecl/purchases/providers/scanner_provider.dart';
 import 'package:myecl/purchases/providers/tag_provider.dart';
 import 'package:myecl/purchases/providers/ticket_list_provider.dart';
@@ -18,11 +18,12 @@ class ScanDialog extends HookConsumerWidget {
   final String sellerId;
   final String productId;
   final TicketGenerator ticket;
-  const ScanDialog(
-      {super.key,
-      required this.ticket,
-      required this.sellerId,
-      required this.productId});
+  const ScanDialog({
+    super.key,
+    required this.ticket,
+    required this.sellerId,
+    required this.productId,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,53 +41,55 @@ class ScanDialog extends HookConsumerWidget {
     return CardLayout(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
       child: shouldSetTag.value
-          ? Column(children: [
-              const SizedBox(height: 20),
-              Text(
-                "Ajouter un tag pour les scans",
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+          ? Column(
+              children: [
+                const SizedBox(height: 20),
+                const Text(
+                  "Ajouter un tag pour les scans",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                onChanged: (value) async {
-                  tagNotifier.setTag(value);
-                },
-                cursorColor: PurchasesColorConstants.textDark,
-                decoration: const InputDecoration(
-                  isDense: true,
-                  label: Text(
-                    PurchasesTextConstants.tag,
-                    style: TextStyle(
-                      color: PurchasesColorConstants.textDark,
+                const SizedBox(height: 20),
+                TextField(
+                  onChanged: (value) async {
+                    tagNotifier.setTag(value);
+                  },
+                  cursorColor: PurchasesColorConstants.textDark,
+                  decoration: const InputDecoration(
+                    isDense: true,
+                    label: Text(
+                      PurchasesTextConstants.tag,
+                      style: TextStyle(
+                        color: PurchasesColorConstants.textDark,
+                      ),
                     ),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: ColorConstants.gradient1),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              GestureDetector(
-                onTap: () {
-                  shouldSetTag.value = false;
-                },
-                child: const AddEditButtonLayout(
-                  child: Text(
-                    "Scanner",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: ColorConstants.gradient1),
                     ),
                   ),
                 ),
-              ),
-            ])
+                const SizedBox(height: 20),
+                GestureDetector(
+                  onTap: () {
+                    shouldSetTag.value = false;
+                  },
+                  child: const AddEditButtonLayout(
+                    child: Text(
+                      "Scanner",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )
           : SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
                   const SizedBox(height: 10),
@@ -172,13 +175,17 @@ class ScanDialog extends HookConsumerWidget {
                           Text(
                             user.getName(),
                             style: const TextStyle(
-                                fontSize: 20, color: Colors.black),
+                              fontSize: 20,
+                              color: Colors.black,
+                            ),
                           ),
                           const SizedBox(height: 10),
                           Text(
                             "${data.ticket.scanLeft.toString()} / ${ticket.maxUse} ${PurchasesTextConstants.leftScan}",
                             style: const TextStyle(
-                                fontSize: 16, color: Colors.black),
+                              fontSize: 16,
+                              color: Colors.black,
+                            ),
                           ),
                           const SizedBox(height: 30),
                           Padding(
@@ -207,7 +214,11 @@ class ScanDialog extends HookConsumerWidget {
                                   onTap: () async {
                                     final value =
                                         await ticketListNotifier.consumeTicket(
-                                            sellerId, data, ticket.id, tag);
+                                      sellerId,
+                                      data,
+                                      ticket.id,
+                                      tag,
+                                    );
                                     if (value) {
                                       displayToastWithContext(
                                         TypeMsg.msg,
@@ -256,7 +267,9 @@ class ScanDialog extends HookConsumerWidget {
                         Text(
                           error.toString(),
                           style: const TextStyle(
-                              fontSize: 16, color: Colors.black),
+                            fontSize: 16,
+                            color: Colors.black,
+                          ),
                         ),
                         const SizedBox(height: 10),
                       ],

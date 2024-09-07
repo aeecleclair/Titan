@@ -71,8 +71,9 @@ class ScanPage extends HookConsumerWidget {
                             value: products,
                             builder: (context, products) {
                               final scannableProducts = products.where(
-                                  (product) =>
-                                      product.ticketGenerators.isNotEmpty);
+                                (product) =>
+                                    product.ticketGenerators.isNotEmpty,
+                              );
                               if (scannableProducts.isEmpty) {
                                 return const Text(
                                   PurchasesTextConstants.noScannableProducts,
