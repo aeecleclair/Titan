@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/purchases/class/ticket.dart';
-import 'package:myecl/purchases/class/ticket_information.dart';
 import 'package:myecl/purchases/repositories/scanner_repository.dart';
 import 'package:myecl/purchases/repositories/user_information_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
@@ -11,10 +10,10 @@ class TicketListNotifier extends ListNotifier<Ticket> {
   final UserInformationRepository ticketRepository =
       UserInformationRepository();
   final ScannerRepository scannerRepository = ScannerRepository();
-  AsyncValue<List<Ticket>> ticketList = const AsyncValue.loading();
   TicketListNotifier({required String token})
       : super(const AsyncValue.loading()) {
     ticketRepository.setToken(token);
+    scannerRepository.setToken(token);
   }
 
   Future<AsyncValue<List<Ticket>>> loadTickets() async {
@@ -23,7 +22,7 @@ class TicketListNotifier extends ListNotifier<Ticket> {
 
   Future<bool> consumeTicket(
     String sellerId,
-    TicketInformation ticket,
+    Ticket ticket,
     String generatorId,
     String tag,
   ) async {
@@ -41,7 +40,7 @@ class TicketListNotifier extends ListNotifier<Ticket> {
           ..[tickets.indexWhere((g) => g.id == ticket.id)] =
               ticket.copyWith(tags: tags, scanLeft: ticket.scanLeft - 1);
       },
-      ticket.ticket,
+      ticket,
     );
   }
 }

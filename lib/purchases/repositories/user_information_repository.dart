@@ -14,23 +14,17 @@ class UserInformationRepository extends Repository {
   }
 
   Future<List<Ticket>> getTicketList() async {
-    final json = await getList(suffix: "tickets/");
-    print(json);
-    final tickets = List<Ticket>.from(json.map((x) => Ticket.fromJson(x)));
-    // final tickets = List<Ticket>.from(
-    //   (await getList(suffix: "tickets/")).map((x) => Ticket.fromJson(x)),
-    // );
-    print(tickets);
-    return tickets;
+    return List<Ticket>.from(
+      (await getList(suffix: "tickets/")).map((x) => Ticket.fromJson(x)),
+    );
   }
 
   Future<Ticket> getTicketQrCodeSecret(Ticket ticket) async {
-    String secret = (await getOne(
-      "tickets/${ticket.id}",
-      suffix: "/secret/",
-    ))['qr_code_secret'];
     return ticket.copyWith(
-      qrCodeSecret: secret,
+      qrCodeSecret: (await getOne(
+        "tickets/${ticket.id}",
+        suffix: "/secret/",
+      ))['qr_code_secret'],
     );
   }
 }

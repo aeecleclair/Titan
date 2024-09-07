@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/tools/constants.dart';
 
-class HistoryButton extends StatelessWidget {
+class CustomButton extends StatelessWidget {
   final VoidCallback onTap;
   final Color textColor;
   final Color? color;
   final List<Color>? colors;
   final String text;
-  const HistoryButton({
+  final HeroIcons icon;
+  const CustomButton({
     super.key,
     required this.onTap,
     this.textColor = Colors.white,
     this.color = Colors.black,
     this.text = TextConstants.admin,
     this.colors,
+    required this.icon,
   });
 
   @override
@@ -44,7 +46,7 @@ class HistoryButton extends StatelessWidget {
         ),
         child: Row(
           children: [
-            HeroIcon(HeroIcons.clock, color: textColor),
+            HeroIcon(icon, color: textColor),
             const SizedBox(width: 10),
             Text(
               text,

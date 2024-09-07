@@ -19,8 +19,9 @@ class TicketCard extends HookConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: GestureDetector(
-        onTap: onClicked,
+        onTap: ticket.scanLeft > 0 ? onClicked : null,
         child: CardLayout(
+          color: ticket.scanLeft > 0 ? Colors.white : Colors.grey[400]!,
           width: double.infinity,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),

@@ -1,4 +1,4 @@
-import 'package:myecl/purchases/class/ticket_information.dart';
+import 'package:myecl/purchases/class/ticket.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class ScannerRepository extends Repository {
@@ -6,15 +6,15 @@ class ScannerRepository extends Repository {
   // ignore: overridden_fields
   final ext = "cdr/sellers/";
 
-  Future<TicketInformation> scanTicket(
+  Future<Ticket> scanTicket(
     String sellerId,
     String productId,
     String ticketSecret,
     String generatorId,
   ) async {
-    return TicketInformation.fromJson(
+    return Ticket.fromJson(
       await getOne(
-        productId,
+        "",
         suffix:
             "$sellerId/products/$productId/tickets/$generatorId/$ticketSecret/",
       ),
@@ -23,15 +23,15 @@ class ScannerRepository extends Repository {
 
   Future<bool> consumeTicket(
     String sellerId,
-    TicketInformation ticket,
+    Ticket ticket,
     String generatorId,
     String tag,
   ) async {
     return await update(
-      ticket.ticket.toJson(),
-      ticket.ticket.id,
+      {"tag": tag},
+      "",
       suffix:
-          "$sellerId/products/${ticket.ticket.productVariant.id}/tickets/$generatorId/${ticket.secret}/",
+          "$sellerId/products/${ticket.productVariant.productId}/tickets/$generatorId/${ticket.qrCodeSecret}/",
     );
   }
 }

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/purchases/providers/purchases_admin_provider.dart';
 import 'package:myecl/purchases/providers/ticket_list_provider.dart';
 import 'package:myecl/purchases/providers/ticket_provider.dart';
 import 'package:myecl/purchases/router.dart';
 import 'package:myecl/purchases/tools/constants.dart';
-import 'package:myecl/purchases/ui/pages/main_page/history_button.dart';
+import 'package:myecl/purchases/ui/pages/main_page/custom_button.dart';
 import 'package:myecl/purchases/ui/pages/main_page/ticket_card.dart';
 import 'package:myecl/purchases/ui/purchases.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/ui/widgets/admin_button.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -36,14 +36,17 @@ class PurchasesMainPage extends HookConsumerWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  HistoryButton(
+                  CustomButton(
+                    icon: HeroIcons.clock,
                     text: PurchasesTextConstants.history,
                     onTap: () {
                       QR.to(PurchasesRouter.root + PurchasesRouter.history);
                     },
                   ),
                   if (isAdmin)
-                    AdminButton(
+                    CustomButton(
+                      icon: HeroIcons.viewfinderCircle,
+                      text: PurchasesTextConstants.scan,
                       onTap: () {
                         QR.to(PurchasesRouter.root + PurchasesRouter.scan);
                       },

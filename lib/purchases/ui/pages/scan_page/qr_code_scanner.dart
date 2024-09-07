@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:myecl/purchases/class/ticket_information.dart';
+import 'package:myecl/purchases/class/ticket.dart';
 
 class QRCodeScannerScreen extends StatefulWidget {
   const QRCodeScannerScreen({
@@ -11,7 +11,7 @@ class QRCodeScannerScreen extends StatefulWidget {
   });
 
   final Function onScan;
-  final AsyncValue<TicketInformation> scanner;
+  final AsyncValue<Ticket> scanner;
 
   @override
   _QRCodeScannerScreenState createState() => _QRCodeScannerScreenState();

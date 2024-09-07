@@ -42,6 +42,8 @@ class PurchasesTextConstants {
   static const String noScannableProducts = "Aucun produit scannable";
 
   static const String loading = "En attente de scan";
+
+  static const String scan = "Scanner";
 }
 
 class PurchasesColorConstants {

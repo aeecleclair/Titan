@@ -29,10 +29,12 @@ class ScanDialog extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final scannerNotifier = ref.watch(scannerProvider.notifier);
     final scanner = ref.watch(scannerProvider);
+
     final tag = ref.watch(tagProvider);
     final tagNotifier = ref.read(tagProvider.notifier);
     final ticketListNotifier = ref.read(ticketListProvider.notifier);
     final shouldSetTag = useState(true);
+    final shouldScan = useState(true);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -52,7 +54,8 @@ class ScanDialog extends HookConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                TextField(
+                Material(
+                    child: TextField(
                   onChanged: (value) async {
                     tagNotifier.setTag(value);
                   },
@@ -69,11 +72,12 @@ class ScanDialog extends HookConsumerWidget {
                       borderSide: BorderSide(color: ColorConstants.gradient1),
                     ),
                   ),
-                ),
+                )),
                 const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
                     shouldSetTag.value = false;
+                    scannerNotifier.reset();
                   },
                   child: const AddEditButtonLayout(
                     child: Text(
@@ -145,9 +149,10 @@ class ScanDialog extends HookConsumerWidget {
                             data: (data) {
                               scannerNotifier.setScanner(
                                 data.copyWith(
-                                  secret: secret,
+                                  qrCodeSecret: secret,
                                 ),
                               );
+                              shouldScan.value = false;
                             },
                             error: (error, stack) {
                               displayToastWithContext(
@@ -181,7 +186,7 @@ class ScanDialog extends HookConsumerWidget {
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            "${data.ticket.scanLeft.toString()} / ${ticket.maxUse} ${PurchasesTextConstants.leftScan}",
+                            "${data.scanLeft.toString()} / ${ticket.maxUse} ${PurchasesTextConstants.leftScan}",
                             style: const TextStyle(
                               fontSize: 16,
                               color: Colors.black,
@@ -193,9 +198,12 @@ class ScanDialog extends HookConsumerWidget {
                             child: Row(
                               children: [
                                 GestureDetector(
-                                  onTap: scannerNotifier.reset,
-                                  child: const Flexible(
-                                    flex: 2,
+                                  onTap: () {
+                                    scannerNotifier.reset();
+                                    shouldScan.value = true;
+                                  },
+                                  child: const SizedBox(
+                                    width: 100,
                                     child: AddEditButtonLayout(
                                       color: Colors.red,
                                       child: Text(
@@ -219,6 +227,7 @@ class ScanDialog extends HookConsumerWidget {
                                       ticket.id,
                                       tag,
                                     );
+                                    shouldScan.value = true;
                                     if (value) {
                                       displayToastWithContext(
                                         TypeMsg.msg,
@@ -232,8 +241,8 @@ class ScanDialog extends HookConsumerWidget {
                                       );
                                     }
                                   },
-                                  child: const Flexible(
-                                    flex: 2,
+                                  child: const SizedBox(
+                                    width: 100,
                                     child: AddEditButtonLayout(
                                       color: Colors.green,
                                       child: Text(

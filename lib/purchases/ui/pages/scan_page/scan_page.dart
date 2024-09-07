@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/purchases/class/seller.dart';
 import 'package:myecl/purchases/providers/product_list_provider.dart';
 import 'package:myecl/purchases/providers/generated_ticket_provider.dart';
+import 'package:myecl/purchases/providers/scanner_provider.dart';
 import 'package:myecl/purchases/providers/seller_list_provider.dart';
 import 'package:myecl/purchases/providers/seller_provider.dart';
 import 'package:myecl/purchases/tools/constants.dart';
@@ -26,6 +27,7 @@ class ScanPage extends HookConsumerWidget {
     final products = ref.watch(productListProvider);
     final productsNotifier = ref.watch(productListProvider.notifier);
     final ticketGeneratorNotifier = ref.watch(ticketGeneratorProvider.notifier);
+    final scannerNotifier = ref.watch(scannerProvider.notifier);
 
     return PurchasesTemplate(
       child: Refresher(
@@ -34,6 +36,7 @@ class ScanPage extends HookConsumerWidget {
           if (seller != Seller.empty()) {
             await productsNotifier.loadProducts(seller.id);
           }
+          scannerNotifier.reset();
         },
         child: Column(
           children: [

@@ -3,7 +3,7 @@ class ProductVariant {
     required this.id,
     required this.productId,
     required this.nameFR,
-    required this.nameEN,
+    this.nameEN = "",
     this.descriptionFR = "",
     this.descriptionEN = "",
     required this.price,
@@ -21,7 +21,7 @@ class ProductVariant {
     id = json['id'];
     productId = json['product_id'];
     nameFR = json['name_fr'];
-    nameEN = json['name_en'];
+    nameEN = json['name_en'] ?? "";
     descriptionFR = json['description_fr'] ?? "";
     descriptionEN = json['description_en'] ?? "";
     price = json['price'];
