@@ -44,6 +44,7 @@ dependencies:
   intl: ^0.19.0
   jwt_decoder: ^2.0.1
   load_switch: ^2.0.5
+  mobile_scanner: ^5.1.1
   mocktail: ^1.0.3
   numberpicker: ^2.1.1
   package_info_plus: ^8.0.0
@@ -51,6 +52,7 @@ dependencies:
   path_provider: ^2.0.11
   rxdart: ^0.27.7
   qlevar_router: ^1.9.0
+  qr_flutter: ^4.1.0
   shared_preferences: ^2.1.1
   smooth_page_indicator: ^1.0.0+2
   syncfusion_flutter_calendar: ^26.1.39

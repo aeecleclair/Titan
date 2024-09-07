@@ -119,6 +119,13 @@ class User {
     );
   }
 
+  String getName() {
+    if (nickname == null) {
+      return '$firstname $name';
+    }
+    return '$nickname ($firstname $name)';
+  }
+
   @override
   String toString() {
     return "User {name: $name, firstname: $firstname, nickname: $nickname, id: $id, email: $email, birthday: $birthday, promo: $promo, floor: $floor, phone: $phone, createdOn: $createdOn, groups: $groups}";
