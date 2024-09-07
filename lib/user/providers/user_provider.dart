@@ -56,12 +56,13 @@ final asyncUserProvider =
     StateNotifierProvider<UserNotifier, AsyncValue<User>>((ref) {
   final UserRepository userRepository = ref.watch(userRepositoryProvider);
   UserNotifier userNotifier = UserNotifier(userRepository: userRepository);
+  final token = ref.watch(tokenProvider);
   tokenExpireWrapperAuth(ref, () async {
     final isLoggedIn = ref.watch(isLoggedInProvider);
     final id = ref
         .watch(idProvider)
         .maybeWhen(data: (value) => value, orElse: () => "");
-    if (isLoggedIn && id != "") {
+    if (isLoggedIn && id != "" && token != "") {
       return userNotifier..loadMe();
     }
   });
@@ -70,11 +71,9 @@ final asyncUserProvider =
 
 final userProvider = Provider((ref) {
   return ref.watch(asyncUserProvider).maybeWhen(
-    data: (user) {
-      return user;
-    },
-    orElse: () {
-      return User.empty();
-    },
-  );
+        data: (user) => user,
+        orElse: () {
+          return User.empty();
+        },
+      );
 });

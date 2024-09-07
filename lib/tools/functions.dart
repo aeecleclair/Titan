@@ -424,6 +424,11 @@ bool isStudent(String email) {
   return regex.hasMatch(email);
 }
 
+bool isNotStaff(String email) {
+  final regex = RegExp(previousStaffEmailRegex);
+  return !regex.hasMatch(email);
+}
+
 String getAppFlavor() {
   if (appFlavor != null) {
     return appFlavor!;

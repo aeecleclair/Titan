@@ -33,8 +33,8 @@ class EditUserPage extends HookConsumerWidget {
     final user = ref.watch(userProvider);
     final profilePicture = ref.watch(profilePictureProvider);
     final profilePictureNotifier = ref.watch(profilePictureProvider.notifier);
-    final dateController =
-        useTextEditingController(text: processDate(user.birthday));
+    final dateController = useTextEditingController(
+        text: user.birthday != null ? processDate(user.birthday!) : "");
     final nickNameController =
         useTextEditingController(text: user.nickname ?? '');
     final phoneController = useTextEditingController(text: user.phone ?? '');
@@ -351,9 +351,11 @@ class EditUserPage extends HookConsumerWidget {
                     await tokenExpireWrapper(ref, () async {
                       final value = await asyncUserNotifier.updateMe(
                         user.copyWith(
-                          birthday: DateTime.parse(
-                            processDateBack(dateController.value.text),
-                          ),
+                          birthday: dateController.value.text.isNotEmpty
+                              ? DateTime.parse(
+                                  processDateBack(dateController.value.text),
+                                )
+                              : null,
                           nickname: nickNameController.value.text.isEmpty
                               ? null
                               : nickNameController.value.text,

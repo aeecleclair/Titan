@@ -21,11 +21,25 @@ class UserRepository extends Repository {
   }
 
   Future<bool> updateUser(User user) async {
-    return await update(user, user.id);
+    final body = user.toJson();
+    final nullTrimmedBody = <String, dynamic>{};
+    body.forEach((key, value) {
+      if (value != null) {
+        nullTrimmedBody[key] = value;
+      }
+    });
+    return await update(nullTrimmedBody, user.id);
   }
 
   Future<bool> updateMe(User user) async {
-    return await update(user, "me");
+    final body = user.toJson();
+    final nullTrimmedBody = <String, dynamic>{};
+    body.forEach((key, value) {
+      if (value != null) {
+        nullTrimmedBody[key] = value;
+      }
+    });
+    return await update(nullTrimmedBody, "me");
   }
 
   Future<User> createUser(User user) async {
