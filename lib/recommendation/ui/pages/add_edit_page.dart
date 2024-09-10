@@ -47,13 +47,7 @@ class AddEditRecommendationPage extends HookConsumerWidget {
     final recommendationLogoMap = ref.watch(recommendationLogoMapProvider);
 
     if (recommendationLogoMap[recommendation] != null) {
-      recommendationLogoMap[recommendation]!.whenData(
-        (data) {
-          if (data.isNotEmpty) {
-            logo.value = data.first;
-          }
-        },
-      );
+      logo.value = recommendationLogoMap[recommendation];
     }
 
     void displayAdvertToastWithContext(TypeMsg type, String msg) {
