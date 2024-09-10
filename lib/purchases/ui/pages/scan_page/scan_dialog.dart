@@ -186,6 +186,14 @@ class ScanDialog extends HookConsumerWidget {
                           ),
                           const SizedBox(height: 10),
                           Text(
+                            "Variant : ${data.productVariant.nameFR}",
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
                             "${data.scanLeft.toString()} / ${ticket.maxUse} ${PurchasesTextConstants.leftScan}",
                             style: const TextStyle(
                               fontSize: 16,
