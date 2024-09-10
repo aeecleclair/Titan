@@ -10,14 +10,8 @@ final isPurchasesAdminProvider = StateProvider<bool>((ref) {
       .contains("c1275229-46b2-4e53-a7c4-305513bb1a2a")) {
     return true;
   }
-  sellers.when(
-    data: (data) {
-      if (data.isNotEmpty) {
-        return true;
-      }
-    },
-    loading: () {},
-    error: (error, stackTrace) {},
+  return sellers.maybeWhen(
+    data: (data) => data.isNotEmpty,
+    orElse: () => false,
   );
-  return false;
 });
