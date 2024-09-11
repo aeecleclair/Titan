@@ -86,6 +86,7 @@ class ScanPage extends HookConsumerWidget {
                                 children: scannableProducts.map((product) {
                                   return product.ticketGenerators.map((ticket) {
                                     return TicketCard(
+                                      product: product,
                                       ticket: ticket,
                                       onClicked: () {
                                         ticketGeneratorNotifier

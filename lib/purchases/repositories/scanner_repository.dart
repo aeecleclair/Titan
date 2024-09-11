@@ -1,5 +1,6 @@
 import 'package:myecl/purchases/class/ticket.dart';
 import 'package:myecl/tools/repository/repository.dart';
+import 'package:myecl/user/class/list_users.dart';
 
 class ScannerRepository extends Repository {
   @override
@@ -32,6 +33,33 @@ class ScannerRepository extends Repository {
       "",
       suffix:
           "$sellerId/products/${ticket.productVariant.productId}/tickets/$generatorId/${ticket.qrCodeSecret}/",
+    );
+  }
+
+  Future<List<String>> getTags(
+    String sellerId,
+    String productId,
+    String generatorId,
+  ) async {
+    return List<String>.from(
+      await getList(
+        suffix: "$sellerId/products/$productId/tags/$generatorId/",
+      ),
+    ).where((tag) => tag.isNotEmpty).toList();
+  }
+
+  Future<List<SimpleUser>> getUsersList(
+    String sellerId,
+    String productId,
+    String generatorId,
+    String tag,
+  ) async {
+    return List<SimpleUser>.from(
+      (await getList(
+        suffix:
+            "$sellerId/products/$productId/tickets/$generatorId/lists/$tag/",
+      ))
+          .map((x) => SimpleUser.fromJson(x)),
     );
   }
 }
