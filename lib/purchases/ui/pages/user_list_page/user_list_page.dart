@@ -57,39 +57,39 @@ class UserListPage extends HookConsumerWidget {
                     child: Text("Aucun tag disponible"),
                   );
                 }
-              
-              return HorizontalListView.builder(
-                height: 40,
-                items: tags,
-                itemBuilder: (context, tag, i) {
-                  final selected = tag == selectedTag.value;
-                  return ItemChip(
-                    selected: selected,
-                    onTap: () async {
-                      selectedTag.value = tag;
-                      productId.maybeWhen(
-                        orElse: () {},
-                        data: (id) {
-                          ticketId.maybeWhen(
-                            orElse: () {},
-                            data: (ticketId) {
-                              scannedUsersListNotifier.loadUsers(
-                                  seller.id, id, ticketId, tag);
-                            },
-                          );
-                        },
-                      );
-                    },
-                    child: Text(
-                      tag,
-                      style: TextStyle(
-                        color: selected ? Colors.white : Colors.black,
-                        fontWeight: FontWeight.bold,
+
+                return HorizontalListView.builder(
+                  height: 40,
+                  items: tags,
+                  itemBuilder: (context, tag, i) {
+                    final selected = tag == selectedTag.value;
+                    return ItemChip(
+                      selected: selected,
+                      onTap: () async {
+                        selectedTag.value = tag;
+                        productId.maybeWhen(
+                          orElse: () {},
+                          data: (id) {
+                            ticketId.maybeWhen(
+                              orElse: () {},
+                              data: (ticketId) {
+                                scannedUsersListNotifier.loadUsers(
+                                    seller.id, id, ticketId, tag);
+                              },
+                            );
+                          },
+                        );
+                      },
+                      child: Text(
+                        tag,
+                        style: TextStyle(
+                          color: selected ? Colors.white : Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  );
-                },
-              );
+                    );
+                  },
+                );
               },
             ),
             const SizedBox(height: 10),
@@ -100,10 +100,13 @@ class UserListPage extends HookConsumerWidget {
                   if (users.isEmpty) {
                     return const Text("Aucun utilisateur scanné");
                   }
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children:
-                        users.map((user) => Text(user.getName())).toList(),
+                  return SizedBox(
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children:
+                          users.map((user) => Text(user.getName())).toList(),
+                    ),
                   );
                 },
               ),

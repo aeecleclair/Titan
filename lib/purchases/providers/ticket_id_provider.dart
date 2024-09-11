@@ -6,7 +6,8 @@ import 'package:myecl/tools/providers/single_notifier.dart';
 class TicketIdNotifier extends SingleNotifier<String> {
   final UserInformationRepository ticketIdRepository =
       UserInformationRepository();
-  TicketIdNotifier({required String token}) : super(const AsyncValue.loading()) {
+  TicketIdNotifier({required String token})
+      : super(const AsyncValue.loading()) {
     ticketIdRepository.setToken(token);
   }
 

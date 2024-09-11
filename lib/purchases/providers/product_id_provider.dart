@@ -6,7 +6,8 @@ import 'package:myecl/tools/providers/single_notifier.dart';
 class ProductIdNotifier extends SingleNotifier<String> {
   final UserInformationRepository productIdRepository =
       UserInformationRepository();
-  ProductIdNotifier({required String token}) : super(const AsyncValue.loading()) {
+  ProductIdNotifier({required String token})
+      : super(const AsyncValue.loading()) {
     productIdRepository.setToken(token);
   }
 
