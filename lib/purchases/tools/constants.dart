@@ -18,7 +18,7 @@ class PurchasesTextConstants {
 
   static const String alreadyUsed = "Déjà utilisé";
 
-  static const String notPaid = "Non payé";
+  static const String notPaid = "Non validé";
 
   static const String pleaseSelectProduct = "Veuillez sélectionner un produit";
 
