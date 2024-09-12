@@ -104,8 +104,19 @@ class UserListPage extends HookConsumerWidget {
                     width: double.infinity,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children:
-                          users.map((user) => Text(user.getName())).toList(),
+                      children: users
+                          .map(
+                            (user) => Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 5,
+                                horizontal: 30,
+                              ),
+                              child: Text(
+                                user.getName(),
+                              ),
+                            ),
+                          )
+                          .toList(),
                     ),
                   );
                 },
