@@ -34,7 +34,6 @@ class ScanDialog extends HookConsumerWidget {
     final tagNotifier = ref.read(tagProvider.notifier);
     final ticketListNotifier = ref.read(ticketListProvider.notifier);
     final shouldSetTag = useState(true);
-    final shouldScan = useState(true);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -152,7 +151,6 @@ class ScanDialog extends HookConsumerWidget {
                                   qrCodeSecret: secret,
                                 ),
                               );
-                              shouldScan.value = false;
                             },
                             error: (error, stack) {
                               displayToastWithContext(
@@ -208,7 +206,6 @@ class ScanDialog extends HookConsumerWidget {
                                 GestureDetector(
                                   onTap: () {
                                     scannerNotifier.reset();
-                                    shouldScan.value = true;
                                   },
                                   child: const SizedBox(
                                     width: 100,
@@ -235,7 +232,6 @@ class ScanDialog extends HookConsumerWidget {
                                       ticket.id,
                                       tag,
                                     );
-                                    shouldScan.value = true;
                                     if (value) {
                                       displayToastWithContext(
                                         TypeMsg.msg,

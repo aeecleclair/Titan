@@ -8,6 +8,7 @@ import 'package:myecl/purchases/ui/pages/main_page/main_page.dart';
 import 'package:myecl/purchases/ui/pages/purchase_page/purchase_page.dart';
 import 'package:myecl/purchases/ui/pages/scan_page/scan_page.dart';
 import 'package:myecl/purchases/ui/pages/ticket_page/ticket_page.dart';
+import 'package:myecl/purchases/ui/pages/user_list_page/user_list_page.dart';
 import 'package:myecl/tools/middlewares/admin_middleware.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -16,7 +17,7 @@ class PurchasesRouter {
   final ProviderRef ref;
   static const String root = '/purchases';
   static const String scan = '/scan';
-  static const String confirmation = '/confirmation';
+  static const String user_list = '/user_list';
   static const String history = '/history';
   static const String ticket = '/ticket';
   static const String purchase = '/purchase';
@@ -54,6 +55,10 @@ class PurchasesRouter {
           QRoute(
             path: ticket,
             builder: () => const TicketPage(),
+          ),
+          QRoute(
+            path: user_list,
+            builder: () => const UserListPage(),
           ),
         ],
       );
