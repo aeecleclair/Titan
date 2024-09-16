@@ -55,10 +55,11 @@ class ScanPage extends HookConsumerWidget {
                         return ItemChip(
                           selected: selected,
                           onTap: () async {
-                    await tokenExpireWrapper(ref, () async {
-                            sellerNotifier.setSeller(eachSeller);
-                            await productsNotifier.loadProducts(eachSeller.id);
-                          });
+                            await tokenExpireWrapper(ref, () async {
+                              sellerNotifier.setSeller(eachSeller);
+                              await productsNotifier
+                                  .loadProducts(eachSeller.id);
+                            });
                           },
                           child: Text(
                             eachSeller.name,
