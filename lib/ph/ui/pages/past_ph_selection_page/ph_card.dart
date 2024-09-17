@@ -9,7 +9,6 @@ import 'package:myecl/ph/providers/ph_provider.dart';
 import 'package:myecl/ph/providers/ph_pdf_provider.dart';
 import 'package:myecl/ph/router.dart';
 import 'package:myecl/ph/tools/constants.dart';
-import 'package:myecl/ph/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
@@ -43,76 +42,69 @@ class PhCard extends HookConsumerWidget {
         );
       },
       child: CardLayout(
+        padding: const EdgeInsets.all(6),
+        margin: const EdgeInsets.all(6),
+        borderColor: Colors.blue,
         child: Column(
           children: [
-            SizedBox(
-              height: kIsWeb ? MediaQuery.of(context).size.width / 7 : 115,
+            Expanded(
               child: AsyncChild(
                 value: phCover,
                 builder: (context, value) => Image.memory(value),
               ),
             ),
-            Row(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      shortenText(ph.name, 13),
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Text(phFormatDate(ph.date)),
-                  ],
-                ),
-                const Spacer(),
-                GestureDetector(
-                  onTap: () async {
-                    late final Uint8List pdfBytes;
+            GestureDetector(
+              onTap: () async {
+                late final Uint8List pdfBytes;
 
-                    try {
-                      pdfBytes = await phPdf;
-                    } catch (e) {
-                      displayPhToastWithContext(
-                        TypeMsg.error,
-                        e.toString(),
+                try {
+                  pdfBytes = await phPdf;
+                } catch (e) {
+                  displayPhToastWithContext(
+                    TypeMsg.error,
+                    e.toString(),
+                  );
+                  return;
+                }
+
+                final path = kIsWeb
+                    ? await FileSaver.instance.saveFile(
+                        name: ph.name,
+                        bytes: pdfBytes,
+                        ext: "pdf",
+                        mimeType: MimeType.pdf,
+                      )
+                    : await FileSaver.instance.saveAs(
+                        name: ph.name,
+                        bytes: pdfBytes,
+                        ext: "pdf",
+                        mimeType: MimeType.pdf,
                       );
-                      return;
-                    }
 
-                    final path = kIsWeb
-                        ? await FileSaver.instance.saveFile(
-                            name: ph.name,
-                            bytes: pdfBytes,
-                            ext: "pdf",
-                            mimeType: MimeType.pdf,
-                          )
-                        : await FileSaver.instance.saveAs(
-                            name: ph.name,
-                            bytes: pdfBytes,
-                            ext: "pdf",
-                            mimeType: MimeType.pdf,
-                          );
-
-                    if (path != null) {
-                      displayPhToastWithContext(
-                        TypeMsg.msg,
-                        PhTextConstants.succesDowloading,
-                      );
-                    }
-                  },
-                  child: CardButton(
-                    colors: [
-                      Colors.grey.shade100,
-                      Colors.grey.shade400,
-                    ],
-                    shadowColor: Colors.grey.shade300.withOpacity(0.2),
-                    child: const HeroIcon(
-                      HeroIcons.arrowDownTray,
-                      color: Colors.black,
+                if (path != null) {
+                  displayPhToastWithContext(
+                    TypeMsg.msg,
+                    PhTextConstants.succesDowloading,
+                  );
+                }
+              },
+              child: Row(
+                children: [
+                  Expanded(
+                    child: CardButton(
+                      colors: [
+                        Colors.grey.shade100,
+                        Colors.grey.shade400,
+                      ],
+                      shadowColor: Colors.grey.shade300.withOpacity(0.2),
+                      child: const HeroIcon(
+                        HeroIcons.arrowDownTray,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
