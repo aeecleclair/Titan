@@ -44,7 +44,7 @@ class AdminPhCard extends StatelessWidget {
                       style: TextStyle(fontWeight: FontWeight.bold),
                       textAlign: TextAlign.left,
                     ),
-                    Text(phFormatDate(ph.date)),
+                    Text(shortenText(phFormatDate(ph.date), 28)),
                   ],
                 ),
               ],

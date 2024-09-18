@@ -1,7 +1,7 @@
 class PhTextConstants {
   static const String addNewJournal = "Ajouter un nouveau journal";
   static const String nameField = "Nom : ";
-  static const String dateField = "Date de publication : ";
+  static const String dateField = "Date : ";
   static const String delete = "Voulez-vous vraiment supprimer ce journal ?";
   static const String irreversibleAction = "Cette action est irréversible";
   static const String toHeavyFile = "Fichier trop volumineux";
