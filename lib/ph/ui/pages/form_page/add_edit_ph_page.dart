@@ -35,6 +35,7 @@ class PhAddEditPhPage extends HookConsumerWidget {
 
     final phListNotifier = ref.watch(phListProvider.notifier);
     final phSendPdf = ref.watch(phSendPdfProvider);
+    final editPdfNotifier = ref.watch(editPdfProvider.notifier);
     final editPdf = ref.watch(editPdfProvider);
 
     void displayPhToastWithContext(TypeMsg type, String msg) {
@@ -117,12 +118,6 @@ class PhAddEditPhPage extends HookConsumerWidget {
                                   .invokeMethod('TextInput.hide');
                               QR.back();
                               {
-                                displayPhToastWithContext(
-                                  TypeMsg.msg,
-                                  isEdit
-                                      ? PhTextConstants.edited
-                                      : PhTextConstants.added,
-                                );
                                 if (editPdf) {
                                   phList.maybeWhen(
                                     data: (list) {
@@ -138,6 +133,13 @@ class PhAddEditPhPage extends HookConsumerWidget {
                                     orElse: () {},
                                   );
                                 }
+                                displayPhToastWithContext(
+                                  TypeMsg.msg,
+                                  isEdit
+                                      ? PhTextConstants.edited
+                                      : PhTextConstants.added,
+                                );
+                                editPdfNotifier.editPdf(false);
                               }
                             } else {
                               displayPhToastWithContext(
