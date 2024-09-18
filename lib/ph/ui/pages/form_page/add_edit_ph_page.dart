@@ -8,6 +8,7 @@ import 'package:myecl/ph/providers/ph_list_provider.dart';
 import 'package:myecl/ph/providers/ph_pdf_provider.dart';
 import 'package:myecl/ph/providers/ph_send_pdf_provider.dart';
 import 'package:myecl/ph/providers/ph_provider.dart';
+import 'package:myecl/ph/providers/edit_pdf_provider.dart';
 import 'package:myecl/ph/tools/constants.dart';
 import 'package:myecl/ph/tools/functions.dart';
 import 'package:myecl/ph/ui/pages/file_picker/pdf_picker.dart';
@@ -34,6 +35,7 @@ class PhAddEditPhPage extends HookConsumerWidget {
 
     final phListNotifier = ref.watch(phListProvider.notifier);
     final phSendPdf = ref.watch(phSendPdfProvider);
+    final editPdf = ref.watch(editPdfProvider);
 
     void displayPhToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -121,18 +123,21 @@ class PhAddEditPhPage extends HookConsumerWidget {
                                       ? PhTextConstants.edited
                                       : PhTextConstants.added,
                                 );
-                                phList.maybeWhen(
-                                  data: (list) {
-                                    ref
-                                        .read(
-                                          phPdfProvider(list.last.id).notifier,
-                                        )
-                                        .updatePhPdf(
-                                          Uint8List.fromList(phSendPdf),
-                                        );
-                                  },
-                                  orElse: () {},
-                                );
+                                if (editPdf) {
+                                  phList.maybeWhen(
+                                    data: (list) {
+                                      ref
+                                          .read(
+                                            phPdfProvider(list.last.id)
+                                                .notifier,
+                                          )
+                                          .updatePhPdf(
+                                            Uint8List.fromList(phSendPdf),
+                                          );
+                                    },
+                                    orElse: () {},
+                                  );
+                                }
                               }
                             } else {
                               displayPhToastWithContext(
