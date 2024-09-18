@@ -42,69 +42,65 @@ class PhCard extends HookConsumerWidget {
         );
       },
       child: CardLayout(
-        padding: const EdgeInsets.all(6),
+        padding: const EdgeInsets.all(0),
         margin: const EdgeInsets.all(6),
-        borderColor: Colors.blue,
-        child: Column(
+        color: Colors.transparent,
+        child: Stack(
           children: [
-            Expanded(
+            ClipRRect(
+              borderRadius: BorderRadius.circular(24),
               child: AsyncChild(
                 value: phCover,
                 builder: (context, value) => Image.memory(value),
               ),
             ),
-            const SizedBox(height: 2),
-            GestureDetector(
-              onTap: () async {
-                late final Uint8List pdfBytes;
+            Positioned(
+              bottom: 5,
+              right: 5,
+              child: GestureDetector(
+                onTap: () async {
+                  late final Uint8List pdfBytes;
 
-                try {
-                  pdfBytes = await phPdf;
-                } catch (e) {
-                  displayPhToastWithContext(
-                    TypeMsg.error,
-                    e.toString(),
-                  );
-                  return;
-                }
+                  try {
+                    pdfBytes = await phPdf;
+                  } catch (e) {
+                    displayPhToastWithContext(
+                      TypeMsg.error,
+                      e.toString(),
+                    );
+                    return;
+                  }
 
-                final path = kIsWeb
-                    ? await FileSaver.instance.saveFile(
-                        name: ph.name,
-                        bytes: pdfBytes,
-                        ext: "pdf",
-                        mimeType: MimeType.pdf,
-                      )
-                    : await FileSaver.instance.saveAs(
-                        name: ph.name,
-                        bytes: pdfBytes,
-                        ext: "pdf",
-                        mimeType: MimeType.pdf,
-                      );
+                  final path = kIsWeb
+                      ? await FileSaver.instance.saveFile(
+                          name: ph.name,
+                          bytes: pdfBytes,
+                          ext: "pdf",
+                          mimeType: MimeType.pdf,
+                        )
+                      : await FileSaver.instance.saveAs(
+                          name: ph.name,
+                          bytes: pdfBytes,
+                          ext: "pdf",
+                          mimeType: MimeType.pdf,
+                        );
 
-                if (path != null) {
-                  displayPhToastWithContext(
-                    TypeMsg.msg,
-                    PhTextConstants.succesDowloading,
-                  );
-                }
-              },
-              child: Row(
-                children: [
-                  Expanded(
-                    child: CardButton(
-                      colors: [
-                        Colors.grey.shade100,
-                        Colors.grey.shade400,
-                      ],
-                      shadowColor: Colors.grey.shade300.withOpacity(0.2),
-                      child: const HeroIcon(
-                        HeroIcons.arrowDownTray,
-                        color: Colors.black,
-                      ),
-                    ),
+                  if (path != null) {
+                    displayPhToastWithContext(
+                      TypeMsg.msg,
+                      PhTextConstants.succesDowloading,
+                    );
+                  }
+                },
+                child: CardButton(
+                  borderRadius: const BorderRadius.all(Radius.circular(10000)),
+                  size: 60,
+                  color: Colors.grey.shade300.withOpacity(0.9),
+                  child: const HeroIcon(
+                    HeroIcons.arrowDownTray,
+                    color: Colors.black,
                   ),
-                ],
+                ),
               ),
             ),
           ],

@@ -9,6 +9,7 @@ class CardLayout extends StatelessWidget {
   final Color? borderColor;
   final String? id;
   final EdgeInsetsGeometry padding, margin;
+  final BorderRadiusGeometry? borderRadius;
   const CardLayout({
     super.key,
     required this.child,
@@ -21,6 +22,7 @@ class CardLayout extends StatelessWidget {
     this.borderColor,
     this.padding = const EdgeInsets.all(12.0),
     this.margin = const EdgeInsets.symmetric(horizontal: 15.0),
+    this.borderRadius = const BorderRadius.all(Radius.circular(30)),
   });
 
   @override

@@ -6,6 +6,8 @@ class CardButton extends StatelessWidget {
   final List<Color>? colors;
   final Color shadowColor;
   final Color? borderColor;
+  final double? size;
+  final BorderRadiusGeometry? borderRadius;
   const CardButton({
     super.key,
     required this.child,
@@ -13,6 +15,8 @@ class CardButton extends StatelessWidget {
     this.colors,
     this.shadowColor = const Color(0x339E9E9E),
     this.borderColor,
+    this.size = 40,
+    this.borderRadius = const BorderRadius.all(Radius.circular(15)),
   });
 
   @override
@@ -20,11 +24,11 @@ class CardButton extends StatelessWidget {
     final useColors = colors != null && colors!.length > 1;
     final useShadow = !useColors || (useColors && colors!.last == Colors.white);
     return Container(
-      width: 40,
-      height: 40,
+      width: size,
+      height: size,
       padding: const EdgeInsets.all(7),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: borderRadius,
         color: color,
         gradient: useColors
             ? RadialGradient(

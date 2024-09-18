@@ -35,7 +35,7 @@ class PhList extends HookConsumerWidget {
             const SizedBox(height: 10),
             Expanded(
               child: GridView.count(
-                childAspectRatio: 0.7,
+                childAspectRatio: 0.72,
                 crossAxisCount: kIsWeb ? 5 : 2,
                 children: list.map((ph) {
                   return PhCard(ph: ph);
