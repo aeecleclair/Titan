@@ -53,6 +53,7 @@ class PhCard extends HookConsumerWidget {
                 builder: (context, value) => Image.memory(value),
               ),
             ),
+            const SizedBox(height: 2),
             GestureDetector(
               onTap: () async {
                 late final Uint8List pdfBytes;
