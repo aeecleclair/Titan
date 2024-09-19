@@ -4,11 +4,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/membership.dart';
+import 'package:myecl/phonebook/providers/member_pictures_provider.dart';
+import 'package:myecl/phonebook/providers/profile_picture_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/tools/function.dart';
 import 'package:myecl/phonebook/ui/pages/association_page/card_field.dart';
+import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -25,6 +28,12 @@ class WebMemberCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final memberNotifier = ref.watch(completeMemberProvider.notifier);
+
+    final memberPictures =
+        ref.watch(memberPicturesProvider.select((value) => value[member]));
+    final memberPicturesNotifier = ref.watch(memberPicturesProvider.notifier);
+    final profilePictureNotifier = ref.watch(profilePictureProvider.notifier);
+
     Membership? assoMembership = member.memberships.firstWhereOrNull(
       (memberships) =>
           memberships.associationId == association.id &&
@@ -61,6 +70,37 @@ class WebMemberCard extends HookConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  spreadRadius: 5,
+                                  blurRadius: 10,
+                                  offset: const Offset(2, 3),
+                                ),
+                              ],
+                            ),
+                            child: AutoLoaderChild(
+                              group: memberPictures,
+                              notifier: memberPicturesNotifier,
+                              mapKey: member,
+                              loader: (ref) => profilePictureNotifier
+                                  .getProfilePicture(member.member.id),
+                              loadingBuilder: (context) => const CircleAvatar(
+                                radius: 40,
+                                child: CircularProgressIndicator(),
+                              ),
+                              dataBuilder: (context, data) => CircleAvatar(
+                                radius: 40,
+                                backgroundImage: data.first.image,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
                           if (member.member.nickname != null) ...[
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
