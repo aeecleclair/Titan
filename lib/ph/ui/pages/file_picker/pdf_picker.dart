@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/ph/providers/edit_pdf_provider.dart';
 import 'package:myecl/ph/providers/file_picker_result_provider.dart';
 import 'package:myecl/ph/providers/ph_send_pdf_provider.dart';
 import 'package:myecl/ph/tools/constants.dart';
@@ -20,6 +21,7 @@ class PdfPicker extends HookConsumerWidget {
     final phSendPdfNotifier = ref.watch(phSendPdfProvider.notifier);
     final resultNotifier = ref.watch(filePickerResultProvider.notifier);
     final result = ref.watch(filePickerResultProvider);
+    final editPdfNotifier = ref.watch(editPdfProvider.notifier);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -49,6 +51,9 @@ class PdfPicker extends HookConsumerWidget {
                 PhTextConstants.toHeavyFile,
               );
             }
+          }
+          if (isEdit) {
+            editPdfNotifier.editPdf(true);
           }
         },
         child: MyButton(
