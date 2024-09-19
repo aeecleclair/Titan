@@ -65,42 +65,42 @@ class WebMemberCard extends HookConsumerWidget {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            spreadRadius: 5,
+                            blurRadius: 10,
+                            offset: const Offset(2, 3),
+                          ),
+                        ],
+                      ),
+                      child: AutoLoaderChild(
+                        group: memberPictures,
+                        notifier: memberPicturesNotifier,
+                        mapKey: member,
+                        loader: (ref) => profilePictureNotifier
+                            .getProfilePicture(member.member.id),
+                        loadingBuilder: (context) => const CircleAvatar(
+                          radius: 40,
+                          child: CircularProgressIndicator(),
+                        ),
+                        dataBuilder: (context, data) => CircleAvatar(
+                          radius: 40,
+                          backgroundImage: data.first.image,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
-                                  spreadRadius: 5,
-                                  blurRadius: 10,
-                                  offset: const Offset(2, 3),
-                                ),
-                              ],
-                            ),
-                            child: AutoLoaderChild(
-                              group: memberPictures,
-                              notifier: memberPicturesNotifier,
-                              mapKey: member,
-                              loader: (ref) => profilePictureNotifier
-                                  .getProfilePicture(member.member.id),
-                              loadingBuilder: (context) => const CircleAvatar(
-                                radius: 40,
-                                child: CircularProgressIndicator(),
-                              ),
-                              dataBuilder: (context, data) => CircleAvatar(
-                                radius: 40,
-                                backgroundImage: data.first.image,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
                           if (member.member.nickname != null) ...[
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
