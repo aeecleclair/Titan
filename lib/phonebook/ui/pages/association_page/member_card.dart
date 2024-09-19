@@ -61,65 +61,70 @@ class MemberCard extends HookConsumerWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      spreadRadius: 5,
-                      blurRadius: 10,
-                      offset: const Offset(2, 3),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          spreadRadius: 5,
+                          blurRadius: 10,
+                          offset: const Offset(2, 3),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                child: AutoLoaderChild(
-                  group: memberPictures,
-                  notifier: memberPicturesNotifier,
-                  mapKey: member,
-                  loader: (ref) => profilePictureNotifier
-                      .getProfilePicture(member.member.id),
-                  loadingBuilder: (context) => const CircleAvatar(
-                    radius: 20,
-                    child: CircularProgressIndicator(),
+                    child: AutoLoaderChild(
+                      group: memberPictures,
+                      notifier: memberPicturesNotifier,
+                      mapKey: member,
+                      loader: (ref) => profilePictureNotifier
+                          .getProfilePicture(member.member.id),
+                      loadingBuilder: (context) => const CircleAvatar(
+                        radius: 20,
+                        child: CircularProgressIndicator(),
+                      ),
+                      dataBuilder: (context, data) => CircleAvatar(
+                        radius: 20,
+                        backgroundImage: data.first.image,
+                      ),
+                    ),
                   ),
-                  dataBuilder: (context, data) => CircleAvatar(
-                    radius: 20,
-                    backgroundImage: data.first.image,
-                  ),
-                ),
+                  const SizedBox(width: 10),
+                  if ((member.member.nickname != null) &&
+                      (member.member.nickname != "")) ...[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          member.member.nickname!,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Text(
+                          "(${member.member.name} ${member.member.firstname})",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Color.fromARGB(255, 115, 115, 115),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ] else
+                    Text(
+                      "${member.member.name} ${member.member.firstname}",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                ],
               ),
-              const SizedBox(width: 10),
-              if ((member.member.nickname != null) &&
-                  (member.member.nickname != "")) ...[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      member.member.nickname!,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    Text(
-                      "(${member.member.name} ${member.member.firstname})",
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Color.fromARGB(255, 115, 115, 115),
-                      ),
-                    ),
-                  ],
-                ),
-              ] else
-                Text(
-                  "${member.member.name} ${member.member.firstname}",
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
               Flexible(
                 child: Text(
                   textAlign: TextAlign.right,
