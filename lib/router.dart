@@ -3,6 +3,7 @@ import 'package:myecl/admin/router.dart';
 import 'package:myecl/advert/router.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/booking/router.dart';
+import 'package:myecl/sg/router.dart';
 import 'package:myecl/centralisation/router.dart';
 import 'package:myecl/cinema/router.dart';
 import 'package:myecl/event/router.dart';
@@ -96,6 +97,7 @@ class AppRouter {
       PhonebookRouter(ref).route(),
       PhRouter(ref).route(),
       PurchasesRouter(ref).route(),
+      ShotgunRouter(ref).route(),
     ];
   }
 }

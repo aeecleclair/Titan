@@ -4,6 +4,7 @@ import 'package:myecl/advert/router.dart';
 import 'package:myecl/admin/providers/all_my_module_roots_list_provider.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/booking/router.dart';
+import 'package:myecl/sg/router.dart';
 import 'package:myecl/centralisation/router.dart';
 import 'package:myecl/cinema/router.dart';
 import 'package:myecl/drawer/class/module.dart';
@@ -48,6 +49,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     EventRouter.module,
     VoteRouter.module,
     RaffleRouter.module,
+    ShotgunRouter.module,
   ];
   ModulesNotifier() : super([]);
 
