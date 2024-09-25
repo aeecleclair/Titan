@@ -9,6 +9,7 @@ import 'package:myecl/purchases/tools/constants.dart';
 import 'package:myecl/purchases/ui/pages/main_page/custom_button.dart';
 import 'package:myecl/purchases/ui/pages/main_page/ticket_card.dart';
 import 'package:myecl/purchases/ui/purchases.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
@@ -73,12 +74,14 @@ class PurchasesMainPage extends HookConsumerWidget {
                         data: (tickets) => tickets.map(
                           (ticket) => TicketCard(
                             ticket: ticket,
-                            onClicked: () {
-                              ticketNotifier.setTicket(ticket);
-                              ticketNotifier.loadTicketSecret();
-                              QR.to(
-                                PurchasesRouter.root + PurchasesRouter.ticket,
-                              );
+                            onClicked: () async {
+                              await tokenExpireWrapper(ref, () async {
+                                ticketNotifier.setTicket(ticket);
+                                ticketNotifier.loadTicketSecret();
+                                QR.to(
+                                  PurchasesRouter.root + PurchasesRouter.ticket,
+                                );
+                              });
                             },
                           ),
                         ),

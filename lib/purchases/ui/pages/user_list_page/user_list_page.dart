@@ -8,6 +8,7 @@ import 'package:myecl/purchases/providers/seller_provider.dart';
 import 'package:myecl/purchases/providers/tag_list_provider.dart';
 import 'package:myecl/purchases/providers/ticket_id_provider.dart';
 import 'package:myecl/purchases/ui/purchases.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
@@ -66,19 +67,21 @@ class UserListPage extends HookConsumerWidget {
                     return ItemChip(
                       selected: selected,
                       onTap: () async {
-                        selectedTag.value = tag;
-                        productId.maybeWhen(
-                          orElse: () {},
-                          data: (id) {
-                            ticketId.maybeWhen(
-                              orElse: () {},
-                              data: (ticketId) {
-                                scannedUsersListNotifier.loadUsers(
-                                    seller.id, id, ticketId, tag);
-                              },
-                            );
-                          },
-                        );
+                        await tokenExpireWrapper(ref, () async {
+                          selectedTag.value = tag;
+                          productId.maybeWhen(
+                            orElse: () {},
+                            data: (id) {
+                              ticketId.maybeWhen(
+                                orElse: () {},
+                                data: (ticketId) {
+                                  scannedUsersListNotifier.loadUsers(
+                                      seller.id, id, ticketId, tag);
+                                },
+                              );
+                            },
+                          );
+                        });
                       },
                       child: Text(
                         tag,
