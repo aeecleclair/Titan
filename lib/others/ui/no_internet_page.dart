@@ -3,10 +3,12 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/is_connected_provider.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/home/router.dart';
 import 'package:myecl/others/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/version/providers/version_verifier_provider.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class NoInternetPage extends HookConsumerWidget {
   const NoInternetPage({super.key});
@@ -65,6 +67,7 @@ class NoInternetPage extends HookConsumerWidget {
                   onTap: () async {
                     isConnectedNotifier.isInternet();
                     if (isConnected) {
+                      QR.to(HomeRouter.root);
                       await versionVerifierNotifier.loadVersion();
                       await authTokenNotifier.getTokenFromStorage();
                       isLoggedInNotifier.refresh(authToken);
