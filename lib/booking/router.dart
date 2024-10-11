@@ -1,5 +1,4 @@
 import 'package:either_dart/either.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/booking/providers/is_admin_provider.dart';
 import 'package:myecl/booking/providers/is_manager_provider.dart';
@@ -18,13 +17,13 @@ import 'package:myecl/booking/ui/pages/manager_page/manager_page.dart'
 import 'package:myecl/booking/ui/pages/admin_pages/add_edit_room_page.dart'
     deferred as add_edit_room_page;
 import 'package:myecl/drawer/class/module.dart';
+import 'package:myecl/tools/class/module_router.dart';
 import 'package:myecl/tools/middlewares/admin_middleware.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class BookingRouter {
-  final ProviderRef ref;
+class BookingRouter extends ModuleRouter {
   static const String root = '/booking';
   static const String admin = '/admin';
   static const String manager = '/manager';
@@ -37,8 +36,9 @@ class BookingRouter {
     root: BookingRouter.root,
     selected: false,
   );
-  BookingRouter(this.ref);
+  BookingRouter(super.ref);
 
+  @override
   QRoute route() => QRoute(
         name: "booking",
         path: BookingRouter.root,

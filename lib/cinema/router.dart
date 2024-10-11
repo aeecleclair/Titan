@@ -1,5 +1,4 @@
 import 'package:either_dart/either.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/cinema/providers/is_cinema_admin.dart';
 import 'package:myecl/cinema/ui/pages/admin_page/admin_page.dart'
@@ -11,14 +10,14 @@ import 'package:myecl/cinema/ui/pages/main_page/main_page.dart'
 import 'package:myecl/cinema/ui/pages/session_pages/add_edit_session.dart'
     deferred as add_edit_session_page;
 import 'package:myecl/drawer/class/module.dart';
+import 'package:myecl/tools/class/module_router.dart';
 import 'package:myecl/tools/middlewares/admin_middleware.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:myecl/tools/middlewares/notification_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class CinemaRouter {
-  final ProviderRef ref;
+class CinemaRouter extends ModuleRouter {
   static const String root = '/cinema';
   static const String admin = '/admin';
   static const String addEdit = '/add_edit';
@@ -29,8 +28,9 @@ class CinemaRouter {
     root: CinemaRouter.root,
     selected: false,
   );
-  CinemaRouter(this.ref);
+  CinemaRouter(super.ref);
 
+  @override
   QRoute route() => QRoute(
         name: "cinema",
         path: CinemaRouter.root,

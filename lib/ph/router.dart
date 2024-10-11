@@ -1,12 +1,12 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:either_dart/either.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/ph/ui/pages/form_page/add_edit_ph_page.dart'
     deferred as add_edit_ph_page;
 import 'package:myecl/ph/ui/pages/past_ph_selection_page/past_ph_selection_page.dart';
+import 'package:myecl/tools/class/module_router.dart';
 import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:myecl/ph/ui/pages/main_page/main_page.dart'
@@ -16,8 +16,7 @@ import 'package:myecl/ph/ui/pages/admin_page/admin_page.dart'
 import 'package:myecl/ph/ui/pages/view_ph/view_ph.dart'
     deferred as view_ph_page;
 
-class PhRouter {
-  final ProviderRef ref;
+class PhRouter extends ModuleRouter {
   static const String root = '/ph';
   static const String past_ph_selection = '/past_ph_selection';
   static const String view_ph = '/view_ph';
@@ -29,7 +28,9 @@ class PhRouter {
     root: PhRouter.root,
     selected: false,
   );
-  PhRouter(this.ref);
+  PhRouter(super.ref);
+
+  @override
   QRoute route() => QRoute(
         name: "ph",
         path: PhRouter.root,

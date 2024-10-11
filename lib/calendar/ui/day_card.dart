@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:myecl/home/providers/selected_day.dart';
-import 'package:myecl/home/tools/constants.dart';
+import 'package:myecl/calendar/providers/selected_day.dart';
+import 'package:myecl/calendar/tools/constants.dart';
 
 class DayCard extends HookConsumerWidget {
   final bool isToday;
@@ -44,8 +44,8 @@ class DayCard extends HookConsumerWidget {
             end: Alignment.bottomRight,
             colors: isToday
                 ? [
-                    HomeColorConstants.gradient1,
-                    HomeColorConstants.gradient2,
+                    CalendarColorConstants.gradient1,
+                    CalendarColorConstants.gradient2,
                   ]
                 : [
                     Colors.white,
@@ -55,7 +55,7 @@ class DayCard extends HookConsumerWidget {
           boxShadow: [
             BoxShadow(
               color: isToday
-                  ? HomeColorConstants.gradient2.withOpacity(0.2)
+                  ? CalendarColorConstants.gradient2.withOpacity(0.2)
                   : Colors.grey.withOpacity(0.2),
               spreadRadius: 5,
               blurRadius: 10,
@@ -83,7 +83,7 @@ class DayCard extends HookConsumerWidget {
             SizedBox(
               height: 15,
               child: Text(
-                HomeTextConstants
+                CalendarTextConstants
                     .translateDayShort[DateFormat('E').format(day)]!,
                 textAlign: TextAlign.center,
                 style: TextStyle(

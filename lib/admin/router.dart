@@ -23,7 +23,6 @@ class AdminRouter {
   static const String editAssociation = '/edit_association';
   static const String editModuleVisibility = '/edit_module_visibility';
   AdminRouter(this.ref);
-
   QRoute route() => QRoute(
         name: "admin",
         path: AdminRouter.root,

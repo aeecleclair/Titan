@@ -43,8 +43,10 @@ class TicketPage extends HookConsumerWidget {
                     ? QrImageView(
                         data: data.qrCodeSecret,
                         version: QrVersions.auto,
-                        size: min(MediaQuery.of(context).size.width * 0.8,
-                            MediaQuery.of(context).size.height * 0.8),
+                        size: min(
+                          MediaQuery.of(context).size.width * 0.8,
+                          MediaQuery.of(context).size.height * 0.8,
+                        ),
                         eyeStyle: const QrEyeStyle(
                           color: Colors.black,
                           eyeShape: QrEyeShape.square,

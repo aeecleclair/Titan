@@ -8,7 +8,7 @@ import 'package:myecl/auth/providers/is_connected_provider.dart';
 import 'package:myecl/drawer/providers/animation_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/tools/constants.dart';
-import 'package:myecl/home/providers/scrolled_provider.dart';
+import 'package:myecl/calendar/providers/scrolled_provider.dart';
 import 'package:myecl/settings/router.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
