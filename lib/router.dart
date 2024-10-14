@@ -20,11 +20,13 @@ import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/ph/router.dart';
 import 'package:myecl/purchases/router.dart';
 import 'package:myecl/recommendation/router.dart';
+import 'package:myecl/rplace/router.dart';
 import 'package:myecl/settings/router.dart';
 import 'package:myecl/raffle/router.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:myecl/vote/router.dart';
+
 import 'package:qlevar_router/qlevar_router.dart';
 
 final appRouterProvider = Provider<AppRouter>((ref) => AppRouter(ref));
@@ -96,6 +98,7 @@ class AppRouter {
       PhonebookRouter(ref).route(),
       PhRouter(ref).route(),
       PurchasesRouter(ref).route(),
+      rPlaceRouter(ref).route(),
     ];
   }
 }
