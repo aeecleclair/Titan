@@ -63,7 +63,7 @@ class BookingTextConstants {
   static const String invalidIntervalError = "Intervalle invalide";
   static const String invalidDates = "Dates invalides";
   static const String invalidRoom = "Salle invalide";
-  static const String keys = "Clés";
+  static const String keysRequested = "Clés demandées";
   static const String manager = "Gestionnaire";
   static const String managerName = "Nom du gestionnaire";
   static const String multipleDay = "Plusieurs jours";
