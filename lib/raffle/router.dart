@@ -1,5 +1,4 @@
 import 'package:either_dart/either.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/raffle/providers/is_raffle_admin.dart';
@@ -15,13 +14,13 @@ import 'package:myecl/raffle/ui/pages/prize_page/add_edit_prize_page.dart'
     deferred as add_edit_prize_page;
 import 'package:myecl/raffle/ui/pages/raffle_page/raffle_page.dart'
     deferred as raffle_page;
+import 'package:myecl/tools/class/module_router.dart';
 import 'package:myecl/tools/middlewares/admin_middleware.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class RaffleRouter {
-  final ProviderRef ref;
+class RaffleRouter extends ModuleRouter {
   static const String root = '/tombola';
   static const String admin = '/admin';
   static const String detail = '/detail';
@@ -34,7 +33,9 @@ class RaffleRouter {
     root: RaffleRouter.root,
     selected: false,
   );
-  RaffleRouter(this.ref);
+  RaffleRouter(super.ref);
+
+  @override
   QRoute route() => QRoute(
         name: "raffle",
         path: RaffleRouter.root,

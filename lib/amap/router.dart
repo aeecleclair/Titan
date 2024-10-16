@@ -1,5 +1,4 @@
 import 'package:either_dart/either.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/amap/providers/is_amap_admin_provider.dart';
 import 'package:myecl/amap/ui/pages/admin_page/admin_page.dart'
@@ -19,13 +18,13 @@ import 'package:myecl/amap/ui/pages/presentation_page/text.dart'
 import 'package:myecl/amap/ui/pages/product_pages/add_edit_product.dart'
     deferred as add_edit_product;
 import 'package:myecl/drawer/class/module.dart';
+import 'package:myecl/tools/class/module_router.dart';
 import 'package:myecl/tools/middlewares/admin_middleware.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class AmapRouter {
-  final ProviderRef ref;
+class AmapRouter extends ModuleRouter {
   static const String root = '/amap';
   static const String admin = '/admin';
   static const String addEditDelivery = '/add_edit_delivery';
@@ -40,8 +39,9 @@ class AmapRouter {
     root: AmapRouter.root,
     selected: false,
   );
-  AmapRouter(this.ref);
+  AmapRouter(super.ref);
 
+  @override
   QRoute route() => QRoute(
         name: "amap",
         path: AmapRouter.root,
