@@ -1,5 +1,4 @@
 import 'package:either_dart/either.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/recommendation/providers/is_recommendation_admin_provider.dart';
@@ -9,14 +8,13 @@ import 'package:myecl/recommendation/ui/pages/information_page.dart'
     deferred as information_page;
 import 'package:myecl/recommendation/ui/pages/add_edit_page.dart'
     deferred as add_edit_page;
+import 'package:myecl/tools/class/module_router.dart';
 import 'package:myecl/tools/middlewares/admin_middleware.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class RecommendationRouter {
-  final ProviderRef ref;
-
+class RecommendationRouter extends ModuleRouter {
   static const String root = '/recommendation';
   static const String information = '/information';
   static const String addEdit = '/add_edit';
@@ -27,8 +25,9 @@ class RecommendationRouter {
     selected: false,
   );
 
-  RecommendationRouter(this.ref);
+  RecommendationRouter(super.ref);
 
+  @override
   QRoute route() => QRoute(
         name: "recommendation",
         path: RecommendationRouter.root,

@@ -240,7 +240,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                         ]
                       : [
                           ColorConstants.deactivated1,
-                          ColorConstants.deactivated2
+                          ColorConstants.deactivated2,
                         ],
                   child: child,
                 ),
@@ -295,7 +295,8 @@ class AssociationEditorPage extends HookConsumerWidget {
                                   });
                                 },
                                 child: const Text(
-                                    PhonebookTextConstants.validation),
+                                  PhonebookTextConstants.validation,
+                                ),
                               ),
                             ],
                           ),

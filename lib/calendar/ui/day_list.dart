@@ -4,9 +4,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/event/providers/day_sorted_event_list_provider.dart';
 import 'package:myecl/event/providers/sorted_event_list_provider.dart';
 import 'package:myecl/event/tools/functions.dart';
-import 'package:myecl/home/providers/days_provider.dart';
-import 'package:myecl/home/providers/number_day_provider.dart';
-import 'package:myecl/home/ui/day_card.dart';
+import 'package:myecl/calendar/providers/days_provider.dart';
+import 'package:myecl/calendar/providers/number_day_provider.dart';
+import 'package:myecl/calendar/ui/day_card.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 

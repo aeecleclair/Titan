@@ -4,8 +4,8 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_provider.dart';
-import 'package:myecl/home/router.dart';
-import 'package:myecl/home/tools/constants.dart';
+import 'package:myecl/calendar/router.dart';
+import 'package:myecl/calendar/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
@@ -60,8 +60,8 @@ class DaysEvent extends HookConsumerWidget {
                     ]
                   : start.compareTo(now) <= 0
                       ? [
-                          HomeColorConstants.gradient1,
-                          HomeColorConstants.gradient2,
+                          CalendarColorConstants.gradient1,
+                          CalendarColorConstants.gradient2,
                         ]
                       : [
                           Colors.white,
@@ -91,7 +91,7 @@ class DaysEvent extends HookConsumerWidget {
                       GestureDetector(
                         onTap: () {
                           eventNotifier.setEvent(event);
-                          QR.to(HomeRouter.root + HomeRouter.detail);
+                          QR.to(CalendarRouter.root + CalendarRouter.detail);
                         },
                         child: HeroIcon(
                           HeroIcons.informationCircle,

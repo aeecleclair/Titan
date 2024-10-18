@@ -1,22 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/advert/router.dart';
 import 'package:myecl/admin/providers/all_my_module_roots_list_provider.dart';
-import 'package:myecl/amap/router.dart';
-import 'package:myecl/booking/router.dart';
-import 'package:myecl/centralisation/router.dart';
-import 'package:myecl/cinema/router.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:collection/collection.dart';
-import 'package:myecl/event/router.dart';
-import 'package:myecl/home/router.dart';
-import 'package:myecl/loan/router.dart';
-import 'package:myecl/phonebook/router.dart';
-import 'package:myecl/ph/router.dart';
-import 'package:myecl/purchases/router.dart';
-import 'package:myecl/raffle/router.dart';
-import 'package:myecl/recommendation/router.dart';
-import 'package:myecl/vote/router.dart';
+import 'package:myecl/module_router_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final modulesProvider =
@@ -33,22 +20,9 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
   String dbModule = "modules";
   String dbAllModules = "allModules";
   final eq = const DeepCollectionEquality.unordered();
-  List<Module> allModules = [
-    HomeRouter.module,
-    CentralisationRouter.module,
-    PhRouter.module,
-    CinemaRouter.module,
-    AmapRouter.module,
-    BookingRouter.module,
-    LoanRouter.module,
-    PhonebookRouter.module,
-    PurchasesRouter.module,
-    RecommendationRouter.module,
-    AdvertRouter.module,
-    EventRouter.module,
-    VoteRouter.module,
-    RaffleRouter.module,
-  ];
+  List<Module> allModules =
+      ModulesRouterList.routers.map((e) => e.getModule()).toList();
+
   ModulesNotifier() : super([]);
 
   void saveModules() {
