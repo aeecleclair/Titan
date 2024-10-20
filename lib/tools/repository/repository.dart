@@ -99,7 +99,6 @@ abstract class Repository {
   Future<dynamic> getOne(
     String id, {
     String suffix = "",
-    bool decode = false,
   }) async {
     try {
       final response =
