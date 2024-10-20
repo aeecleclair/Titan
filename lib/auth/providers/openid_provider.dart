@@ -121,7 +121,7 @@ class OpenIdTokenProvider
   final String redirectUrl = "${getTitanPackageName()}://authorized";
   final String redirectUrlHost = "myecl.fr";
   final String discoveryUrl =
-      "${Repository.displayHost}.well-known/openid-configuration";
+      "${Repository.host}.well-known/openid-configuration";
   final List<String> scopes = ["API"];
   OpenIdTokenProvider() : super(const AsyncValue.loading());
 
@@ -147,7 +147,7 @@ class OpenIdTokenProvider
     final codeVerifier = generateRandomString(128);
 
     final authUrl =
-        "${Repository.displayHost}auth/authorize?client_id=$clientId&response_type=code&scope=${scopes.join(" ")}&redirect_uri=$redirectUri&code_challenge=${hash(codeVerifier)}&code_challenge_method=S256";
+        "${Repository.host}auth/authorize?client_id=$clientId&response_type=code&scope=${scopes.join(" ")}&redirect_uri=$redirectUri&code_challenge=${hash(codeVerifier)}&code_challenge_method=S256";
 
     state = const AsyncValue.loading();
     try {

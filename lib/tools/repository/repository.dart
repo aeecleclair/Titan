@@ -8,9 +8,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/logs/logger.dart';
 
 abstract class Repository {
-  final String host = getTitanHost();
-
-  static final String displayHost = getTitanHost();
+  static final String host = getTitanHost();
   static const String expiredTokenDetail = "Could not validate credentials";
   final String ext = "";
   final Map<String, String> headers = {
@@ -36,9 +34,7 @@ abstract class Repository {
       if (response.statusCode == 200) {
         try {
           String toDecode = response.body;
-          if (host == displayHost) {
-            toDecode = utf8.decode(response.body.runes.toList());
-          }
+          toDecode = utf8.decode(response.body.runes.toList());
           if (!kIsWeb) {
             cacheManager.writeCache(ext + suffix, toDecode);
           }
@@ -55,9 +51,7 @@ abstract class Repository {
         );
         try {
           String toDecode = response.body;
-          if (host == displayHost) {
-            toDecode = utf8.decode(response.body.runes.toList());
-          }
+          toDecode = utf8.decode(response.body.runes.toList());
           final decoded = jsonDecode(toDecode);
           if (decoded["detail"] == expiredTokenDetail) {
             throw AppException(ErrorType.tokenExpire, decoded["detail"]);
@@ -113,9 +107,7 @@ abstract class Repository {
       if (response.statusCode == 200) {
         try {
           String toDecode = response.body;
-          if (host == displayHost || decode) {
-            toDecode = utf8.decode(response.body.runes.toList());
-          }
+          toDecode = utf8.decode(response.body.runes.toList());
           if (!kIsWeb) {
             cacheManager.writeCache(ext + id + suffix, toDecode);
           }
@@ -132,9 +124,7 @@ abstract class Repository {
         );
         try {
           String toDecode = response.body;
-          if (host == displayHost) {
-            toDecode = utf8.decode(response.body.runes.toList());
-          }
+          toDecode = utf8.decode(response.body.runes.toList());
           final decoded = jsonDecode(toDecode);
           if (decoded["detail"] == expiredTokenDetail) {
             throw AppException(ErrorType.tokenExpire, decoded["detail"]);
@@ -187,9 +177,7 @@ abstract class Repository {
     if (response.statusCode == 201) {
       try {
         String toDecode = response.body;
-        if (host == displayHost) {
-          toDecode = utf8.decode(response.body.runes.toList());
-        }
+        toDecode = utf8.decode(response.body.runes.toList());
         return jsonDecode(toDecode);
       } catch (e) {
         logger.error(
@@ -204,9 +192,7 @@ abstract class Repository {
         "POST ${ext + suffix}\n${response.statusCode} ${response.body}",
       );
       String toDecode = response.body;
-      if (host == displayHost) {
-        toDecode = utf8.decode(response.body.runes.toList());
-      }
+      toDecode = utf8.decode(response.body.runes.toList());
       final decoded = jsonDecode(toDecode);
       if (decoded["detail"] == expiredTokenDetail) {
         throw AppException(ErrorType.tokenExpire, decoded["detail"]);
@@ -236,9 +222,7 @@ abstract class Repository {
         "PATCH ${ext + tId + suffix}\n${response.statusCode} ${response.body}",
       );
       String toDecode = response.body;
-      if (host == displayHost) {
-        toDecode = utf8.decode(response.body.runes.toList());
-      }
+      toDecode = utf8.decode(response.body.runes.toList());
       final decoded = jsonDecode(toDecode);
       if (decoded["detail"] == expiredTokenDetail) {
         throw AppException(ErrorType.tokenExpire, decoded["detail"]);
@@ -266,9 +250,7 @@ abstract class Repository {
         "DELETE ${ext + tId + suffix}\n${response.statusCode} ${response.body}",
       );
       String toDecode = response.body;
-      if (host == displayHost) {
-        toDecode = utf8.decode(response.body.runes.toList());
-      }
+      toDecode = utf8.decode(response.body.runes.toList());
       final decoded = jsonDecode(toDecode);
       if (decoded["detail"] == expiredTokenDetail) {
         throw AppException(ErrorType.tokenExpire, decoded["detail"]);
