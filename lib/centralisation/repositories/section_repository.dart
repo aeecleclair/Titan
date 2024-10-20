@@ -7,7 +7,7 @@ class SectionRepository extends Repository {
   final host = "https://centralisation.eclair.ec-lyon.fr/links.json";
 
   Future<List<Section>> getSectionList() async {
-    final data = await getOne("", decode: true) as Map<String, dynamic>;
+    final data = await getOne("") as Map<String, dynamic>;
     return data
         .map((key, value) => MapEntry(key, Section.fromJson(key, value)))
         .values
