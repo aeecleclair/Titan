@@ -7,7 +7,19 @@ import 'package:qlevar_router/qlevar_router.dart';
 
 class SDeCTemplate extends StatelessWidget {
   final Widget child;
-  const SDeCTemplate({super.key, required this.child});
+  final String root;
+  final String road;
+  final VoidCallback? onMenu;
+  final VoidCallback? onBack;
+  final Widget? rightIcon;
+  const SDeCTemplate(
+      {super.key,
+      required this.child,
+      required this.root,
+      required this.road,
+      this.onMenu,
+      this.onBack,
+      this.rightIcon});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +31,9 @@ class SDeCTemplate extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               TopBar(
-                title: SDeCTextConstants.sdecnom,
+                title: QR.currentPath == SdecRouter.root
+                    ? SDeCTextConstants.sdecnom
+                    : SDeCTextConstants.sdecnomc + " - " + road,
                 root: SdecRouter.root,
                 rightIcon: QR.currentPath == SdecRouter.root
                     ? IconButton(

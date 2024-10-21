@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/sdec/router.dart';
 import 'package:myecl/sdec/tools/constants.dart';
 import 'package:myecl/sdec/ui/sdec.dart';
 
@@ -16,6 +17,8 @@ class DescriptionPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final useColors = colors != null;
     return SDeCTemplate(
+        root: SdecRouter.root,
+        road: SDeCTextConstants.descriptionsdec,
         child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Container(

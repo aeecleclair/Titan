@@ -1,5 +1,6 @@
 class SDeCTextConstants {
   static const String sdecnom = "Service Des Cours";
+  static const String sdecnomc = "SDeC";
   static const String close = 'Fermer';
   static const String error = "Erreur";
   static const String imagePath =

@@ -15,28 +15,30 @@ class SdecMainPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return const SDeCTemplate(
+        root: SdecRouter.root,
+        road: "",
         child: Column(children: [
-      SizedBox(height: 40),
-      SdecContainer(
-        text: SDeCTextConstants.descriptionsdec,
-        route: SdecRouter.description,
-      ),
-      SizedBox(height: 40),
-      SdecContainer(
-        text: SDeCTextConstants.produits,
-        route: SdecRouter.presentation,
-      ),
-      SizedBox(height: 40),
-      SdecContainer(
-        text: SDeCTextConstants.simulation,
-        route: SdecRouter.presentation,
-      ),
-      SizedBox(height: 40),
-      SdecContainer(
-        text: SDeCTextConstants.services,
-        route: SdecRouter.presentation,
-      ),
-    ]));
+          SizedBox(height: 40),
+          SdecContainer(
+            text: SDeCTextConstants.descriptionsdec,
+            route: SdecRouter.description,
+          ),
+          SizedBox(height: 40),
+          SdecContainer(
+            text: SDeCTextConstants.produits,
+            route: SdecRouter.description,
+          ),
+          SizedBox(height: 40),
+          SdecContainer(
+            text: SDeCTextConstants.simulation,
+            route: SdecRouter.description,
+          ),
+          SizedBox(height: 40),
+          SdecContainer(
+            text: SDeCTextConstants.services,
+            route: SdecRouter.presentation,
+          ),
+        ]));
   }
 }
 
