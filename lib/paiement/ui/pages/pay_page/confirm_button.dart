@@ -8,7 +8,7 @@ import 'package:local_auth_android/local_auth_android.dart';
 import 'package:local_auth_darwin/local_auth_darwin.dart';
 
 class ConfirmButton extends ConsumerWidget {
-  const ConfirmButton({Key? key}) : super(key: key);
+  const ConfirmButton({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,9 +23,9 @@ class ConfirmButton extends ConsumerWidget {
                 cancelButton: 'Non merci',
               ),
               const IOSAuthMessages(
-               cancelButton: 'Non merci',
+                cancelButton: 'Non merci',
               ),
-            ]);
+            ],);
         if (didAuthenticate) {
           QR.to(PaymentRouter.root + PaymentRouter.pay + PaymentRouter.qr);
         }

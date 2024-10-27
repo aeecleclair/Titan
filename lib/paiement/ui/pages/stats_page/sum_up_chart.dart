@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/paiement/ui/pages/stats_page/sum_up_card.dart';
 
 class SumUpChart extends HookConsumerWidget {
-  const SumUpChart({Key? key}) : super(key: key);
+  const SumUpChart({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -18,7 +18,7 @@ class SumUpChart extends HookConsumerWidget {
             radius: 60 + (selected.value == 0 ? 15 : 0),
             title: "",
             color: const Color.fromARGB(255, 255, 119, 7),
-          badgePositionPercentageOffset: 0.6,
+            badgePositionPercentageOffset: 0.6,
             badgeWidget: SumUpCard(
               amount: '68,46€',
               color: const Color.fromARGB(255, 255, 119, 7),
@@ -26,7 +26,7 @@ class SumUpChart extends HookConsumerWidget {
               shadowColor:
                   const Color.fromARGB(255, 97, 44, 0).withOpacity(0.2),
               title: 'Bar',
-            )),
+            ),),
         PieChartSectionData(
           value: 25,
           color: const Color(0xff017f80),
@@ -69,11 +69,11 @@ class SumUpChart extends HookConsumerWidget {
                   selected.value =
                       pieTouchResponse?.touchedSection?.touchedSectionIndex ??
                           0;
-                }),
+                },),
                 sectionsSpace: 8,
                 centerSpaceRadius: 80,
                 sections: showingSections(),
-                startDegreeOffset: 0),
+                startDegreeOffset: 0,),
             swapAnimationCurve: Curves.easeOutCubic,
           ),
           const SizedBox(
@@ -94,14 +94,14 @@ class SumUpChart extends HookConsumerWidget {
                       style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 4, 84, 84)),
+                          color: Color.fromARGB(255, 4, 84, 84),),
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                  ]),
+                  ],),
             ),
-          )
+          ),
         ],
       ),
     );
