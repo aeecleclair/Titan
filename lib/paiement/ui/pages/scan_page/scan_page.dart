@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:myecl/paiement/ui/paiement.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class ScanPage extends StatefulWidget {
@@ -31,7 +32,7 @@ class _ScanPageState extends State<ScanPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return PaymentTemplate(
       child: Stack(
         children: <Widget>[
           _buildQrView(context),
