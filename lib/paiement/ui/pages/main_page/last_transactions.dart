@@ -3,7 +3,7 @@ import 'package:myecl/paiement/ui/pages/main_page/day_divider.dart';
 import 'package:myecl/paiement/ui/pages/main_page/transaction_card.dart';
 
 class LastTransactions extends StatelessWidget {
-  const LastTransactions({Key? key}) : super(key: key);
+  const LastTransactions({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class LastTransactions extends StatelessWidget {
               style: TextStyle(
                   color: Color(0xff204550),
                   fontSize: 20,
-                  fontWeight: FontWeight.bold)),
+                  fontWeight: FontWeight.bold,),),
         ),
         const SizedBox(
           height: 15,

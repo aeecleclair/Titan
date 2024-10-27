@@ -19,7 +19,7 @@ class ScannedUsersListNotifier extends ListNotifier<SimpleUser> {
     String tag,
   ) async {
     return await loadList(() =>
-        scannerRepository.getUsersList(sellerId, productId, generatorId, tag));
+        scannerRepository.getUsersList(sellerId, productId, generatorId, tag),);
   }
 }
 

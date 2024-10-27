@@ -16,7 +16,7 @@ class TagListNotifier extends ListNotifier<String> {
     String generatorId,
   ) async {
     return await loadList(
-        () => scannerRepository.getTags(sellerId, productId, generatorId));
+        () => scannerRepository.getTags(sellerId, productId, generatorId),);
   }
 }
 

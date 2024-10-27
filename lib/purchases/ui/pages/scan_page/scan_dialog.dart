@@ -72,7 +72,7 @@ class ScanDialog extends HookConsumerWidget {
                       borderSide: BorderSide(color: ColorConstants.gradient1),
                     ),
                   ),
-                )),
+                ),),
                 const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {

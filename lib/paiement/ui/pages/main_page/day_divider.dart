@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DayDivider extends StatelessWidget {
-  const DayDivider({Key? key}) : super(key: key);
+  const DayDivider({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class DayDivider extends StatelessWidget {
                   style: TextStyle(
                       color: Color(0xff204550),
                       fontSize: 14,
-                      fontWeight: FontWeight.bold)),
+                      fontWeight: FontWeight.bold,),),
             ),
           ),
           Expanded(

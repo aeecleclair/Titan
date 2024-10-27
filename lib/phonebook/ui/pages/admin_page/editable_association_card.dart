@@ -64,7 +64,7 @@ class EditableAssociationCard extends HookConsumerWidget {
               DeleteButton(
                   onDelete: onDelete,
                   deactivated: !isPhonebookAdmin,
-                  deletion: association.deactivated),
+                  deletion: association.deactivated,),
             ],
           ),
         ],
