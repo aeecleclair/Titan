@@ -4,6 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:myecl/paiement/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:local_auth_android/local_auth_android.dart';
+import 'package:local_auth_darwin/local_auth_darwin.dart';
 
 class ConfirmButton extends ConsumerWidget {
   const ConfirmButton({Key? key}) : super(key: key);
@@ -16,13 +18,13 @@ class ConfirmButton extends ConsumerWidget {
         final bool didAuthenticate = await auth.authenticate(
             localizedReason: 'Veuillez vous authentifier pour payer',
             authMessages: [
-              // const AndroidAuthMessages(
-              //   signInTitle: 'L\'authentification est requise pour payer',
-              //   cancelButton: 'No thanks',
-              // ),
-              // const IOSAuthMessages(
-              //  cancelButton: 'No thanks',
-              // ),
+              const AndroidAuthMessages(
+                signInTitle: 'L\'authentification est requise pour payer',
+                cancelButton: 'Non merci',
+              ),
+              const IOSAuthMessages(
+               cancelButton: 'Non merci',
+              ),
             ]);
         if (didAuthenticate) {
           QR.to(PaymentRouter.root + PaymentRouter.qr);
