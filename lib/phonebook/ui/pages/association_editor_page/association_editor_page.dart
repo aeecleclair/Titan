@@ -295,7 +295,8 @@ class AssociationEditorPage extends HookConsumerWidget {
                                   });
                                 },
                                 child: const Text(
-                                    PhonebookTextConstants.validation,),
+                                  PhonebookTextConstants.validation,
+                                ),
                               ),
                             ],
                           ),

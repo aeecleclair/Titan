@@ -23,18 +23,24 @@ class MonthBar extends HookConsumerWidget {
               onTap: () {
                 currentMonth.value = (currentMonth.value - 1) % 12;
               },
-              child: Text(getMonth((currentMonth.value - 1) % 12),
-                  style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 149, 149, 149),),),
+              child: Text(
+                getMonth((currentMonth.value - 1) % 12),
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 149, 149, 149),
+                ),
+              ),
             ),
           ],
         ),
         Text(
           getMonth(currentMonth.value % 12),
           style: const TextStyle(
-              fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold,),
+            fontSize: 20,
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         Row(
           children: [
@@ -42,11 +48,14 @@ class MonthBar extends HookConsumerWidget {
               onTap: () {
                 currentMonth.value = (currentMonth.value + 1) % 12;
               },
-              child: Text(getMonth((currentMonth.value + 1) % 12),
-                  style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 149, 149, 149),),),
+              child: Text(
+                getMonth((currentMonth.value + 1) % 12),
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 149, 149, 149),
+                ),
+              ),
             ),
             const SizedBox(
               width: 30,

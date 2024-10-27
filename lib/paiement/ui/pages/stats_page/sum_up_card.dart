@@ -5,13 +5,14 @@ class SumUpCard extends StatelessWidget {
   final String title;
   final String amount;
   final Color color, darkColor, shadowColor;
-  const SumUpCard(
-      {super.key,
-      required this.title,
-      required this.amount,
-      required this.color,
-      required this.darkColor,
-      required this.shadowColor,});
+  const SumUpCard({
+    super.key,
+    required this.title,
+    required this.amount,
+    required this.color,
+    required this.darkColor,
+    required this.shadowColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +46,10 @@ class SumUpCard extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                  color: Colors.white.withOpacity(0.8),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13,),
+                color: Colors.white.withOpacity(0.8),
+                fontWeight: FontWeight.bold,
+                fontSize: 13,
+              ),
             ),
             const SizedBox(
               height: 3,
@@ -55,9 +57,10 @@ class SumUpCard extends StatelessWidget {
             Text(
               amount,
               style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,),
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),
             ),
           ],
         ),
