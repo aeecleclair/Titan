@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/admin/router.dart';
 import 'package:myecl/flappybird/router.dart';
+import 'package:myecl/home/router.dart';
 import 'package:myecl/login/router.dart';
 import 'package:myecl/module_router_list.dart';
 import 'package:myecl/others/ui/loading_page.dart' deferred as loading_page;
@@ -63,14 +64,14 @@ class AppRouter {
           DeferredLoadingMiddleware(no_module_page.loadLibrary),
         ],
       ),
+      HomeRouter(ref).route(),
       AdminRouter(ref).route(),
       FlappyBirdRouter(ref).route(),
       LoginRouter(ref).accountRoute(),
       LoginRouter(ref).route(),
       LoginRouter(ref).passwordRoute(),
       SettingsRouter(ref).route(),
-      AdminRouter(ref).route(),
-      ...ModulesRouterList.routers.map((router) => router.route())
+      ...ModuleRouterList(ref).getRoutes(),
     ];
   }
 }

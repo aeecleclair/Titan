@@ -4,16 +4,16 @@ import 'package:myecl/calendar/providers/scrolled_provider.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/drawer/providers/animation_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
-import 'package:myecl/drawer/tools/constants.dart';
 import 'package:myecl/calendar/router.dart';
+import 'package:myecl/home/tools/constant.dart';
 import 'package:myecl/tools/providers/path_forwarding_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class ModuleUI extends HookConsumerWidget {
-  const ModuleUI({super.key, required this.module});
+  const ModuleUI({super.key, required this.module, required this.size});
 
-  static Duration duration = const Duration(milliseconds: 200);
   final Module module;
+  final double size;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,18 +26,19 @@ class ModuleUI extends HookConsumerWidget {
       key: ValueKey(module.root),
       child: Container(
         margin: const EdgeInsets.only(top: 8, bottom: 8),
+        decoration: BoxDecoration(
+          color: HomeColorConstants.box,
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(40),
+        ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
               width: 25,
             ),
             Center(
-              child: module.getIcon(
-                module.root == pathForwarding.path
-                    ? DrawerColorConstants.selectedText
-                    : DrawerColorConstants.lightText,
-              ),
+              child: module.getIcon(HomeColorConstants.text, size: size),
             ),
             Container(
               width: 20,
@@ -48,9 +49,7 @@ class ModuleUI extends HookConsumerWidget {
                 child: Text(
                   module.name,
                   style: TextStyle(
-                    color: module.root == pathForwarding.path
-                        ? DrawerColorConstants.selectedText
-                        : DrawerColorConstants.lightText,
+                    color: HomeColorConstants.text,
                     fontSize: 18,
                   ),
                 ),

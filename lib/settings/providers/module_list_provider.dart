@@ -10,7 +10,6 @@ final modulesProvider =
     StateNotifierProvider<ModulesNotifier, List<Module>>((ref) {
   final myModulesRoot =
       ref.watch(allMyModuleRootList).map((root) => '/$root').toList();
-
   ModulesNotifier modulesNotifier = ModulesNotifier();
   modulesNotifier.loadModules(myModulesRoot);
   return modulesNotifier;
@@ -20,10 +19,11 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
   String dbModule = "modules";
   String dbAllModules = "allModules";
   final eq = const DeepCollectionEquality.unordered();
-  List<Module> allModules =
-      ModulesRouterList.routers.map((e) => e.getModule()).toList();
+  late List<Module> allModules;
 
-  ModulesNotifier() : super([]);
+  ModulesNotifier() : super([]) {
+    allModules = ModuleList().moduleList;
+  }
 
   void saveModules() {
     SharedPreferences.getInstance().then((prefs) {
