@@ -3,6 +3,9 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 final shouldNotifyProvider = Provider((ref) {
-  final user = ref.watch(userProvider);
-  return !isStudent(user.email) && isNotStaff(user.email);
+  final asyncUser = ref.watch(asyncUserProvider);
+  return asyncUser.maybeWhen(
+    data: (user) => !isStudent(user.email) && isNotStaff(user.email),
+    orElse: () => false,
+  );
 });

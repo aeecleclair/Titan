@@ -123,7 +123,7 @@ class GamePage extends HookConsumerWidget {
             child: LayoutBuilder(
               builder: (context, constraints) {
                 return GestureDetector(
-                  onTap: () {
+                  onTapDown: (details) {
                     if (!gameStarted) {
                       gameStartNotifier.setState(true);
                       pipePassed.value = false;

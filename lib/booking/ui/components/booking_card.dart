@@ -169,7 +169,7 @@ class BookingCard extends StatelessWidget {
                 ),
               ),
               Text(
-                '${BookingTextConstants.keys}: ${booking.key ? BookingTextConstants.yes : BookingTextConstants.no}',
+                '${BookingTextConstants.keysRequested}: ${booking.key ? BookingTextConstants.yes : BookingTextConstants.no}',
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
