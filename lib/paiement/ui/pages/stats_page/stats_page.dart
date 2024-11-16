@@ -12,7 +12,7 @@ class StatsPage extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: 10,
+            height: 20,
           ),
           MonthBar(),
           SizedBox(
