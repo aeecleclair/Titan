@@ -24,7 +24,7 @@ class PaymentRouter {
   static const String pay = '/pay';
   static const String scan = '/scan';
   static final Module module = Module(
-    name: "Paiement",
+    name: "MyECLPay",
     icon: const Left(HeroIcons.creditCard),
     root: PaymentRouter.root,
     selected: false,
