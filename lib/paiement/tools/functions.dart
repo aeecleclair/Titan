@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:myecl/paiement/class/qr_code_data.dart';
+import 'package:myecl/paiement/class/qr_code_signature_data.dart';
 import 'package:myecl/paiement/class/wallet_device.dart';
 import 'package:myecl/paiement/tools/key_service.dart';
 import 'package:myecl/tools/functions.dart';
@@ -101,23 +102,28 @@ Widget getStatusTag(WalletDeviceStatus status) {
 }
 
 Future<String> getQRCodeContent(
-    String id, String payAmount, KeyService keyService,) async {
+  String id,
+  String payAmount,
+  KeyService keyService,
+  bool store,
+) async {
   final keyId = await keyService.getKeyId();
-  final now = DateTime.now();
-  final data = {
-    "id": id,
-    "tot": (double.parse(payAmount) * 100) ~/ 1,
-    "iat": processDateToAPI(now),
-    "key": keyId!,
-    "store": true,
-  }.toString();
   final keyPair = await keyService.getKeyPair();
-  return QrCodeData(
+  final now = DateTime.now();
+  final total = (double.parse(payAmount.replaceAll(',', '.')) * 100) ~/ 1;
+  final data = QrCodeSignatureData(
     id: id,
-    tot: (double.parse(payAmount) * 100) ~/ 1,
+    tot: total,
     iat: now,
-    key: keyId,
-    store: true,
+    key: keyId!,
+    store: store,
+  ).toJson().toString();
+  return QrCodeData(
+    qrCodeId: id,
+    total: total,
+    creation: now,
+    walletDeviceId: keyId,
+    store: store,
     signature: base64Encode(
       (await keyService.signMessage(keyPair!, data.codeUnits)).bytes,
     ),
