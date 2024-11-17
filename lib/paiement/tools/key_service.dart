@@ -21,9 +21,13 @@ class KeyService {
     final privateKey = await keyPair.extractPrivateKeyBytes();
     final publicKey = await keyPair.extractPublicKey();
     await _secureStorage.write(
-        key: 'privateKey', value: String.fromCharCodes(privateKey),);
+      key: 'privateKey',
+      value: String.fromCharCodes(privateKey),
+    );
     await _secureStorage.write(
-        key: 'publicKey', value: String.fromCharCodes(publicKey.bytes),);
+      key: 'publicKey',
+      value: String.fromCharCodes(publicKey.bytes),
+    );
   }
 
   Future saveKeyId(String keyId) async {

@@ -14,10 +14,11 @@ class DeviceListNotifier extends ListNotifier<WalletDevice> {
 
   Future<bool> revokeDevice(WalletDevice device) async {
     return await update(
-        (device) => devicesRepository.revokeDevice(device.id),
-        (devices, device) =>
-            devices..[devices.indexWhere((d) => d.id == device.id)] = device,
-        device,);
+      (device) => devicesRepository.revokeDevice(device.id),
+      (devices, device) =>
+          devices..[devices.indexWhere((d) => d.id == device.id)] = device,
+      device,
+    );
   }
 }
 

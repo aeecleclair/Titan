@@ -111,11 +111,12 @@ class AccountCard extends HookConsumerWidget {
                   title: "Payer",
                   onPressed: () {
                     showModalBottomSheet(
-                        context: context,
-                        backgroundColor: Colors.transparent,
-                        scrollControlDisabledMaxHeightRatio:
-                            (1 - 80 / MediaQuery.of(context).size.height),
-                        builder: (context) => const PayPage());
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      scrollControlDisabledMaxHeightRatio:
+                          (1 - 80 / MediaQuery.of(context).size.height),
+                      builder: (context) => const PayPage(),
+                    );
                   },
                 ),
                 // if (!kIsWeb)
