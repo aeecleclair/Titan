@@ -48,7 +48,7 @@ class DevicesPage extends HookConsumerWidget {
                       devices
                               .where((e) => e.id == snapshot.data)
                               .first
-                              .status !=
+                              .status ==
                           WalletDeviceStatus.disabled) &&
                   displayAddDevice.value;
               return Column(
@@ -70,7 +70,7 @@ class DevicesPage extends HookConsumerWidget {
                               final base64PublicKey = base64Encode(publicKey);
                               final body = CreateDevice(
                                   name: name,
-                                  ed25519PublicKey: base64PublicKey);
+                                  ed25519PublicKey: base64PublicKey,);
                               final value =
                                   await deviceNotifier.registerDevice(body);
                               if (value != null) {
@@ -124,7 +124,7 @@ class DevicesPage extends HookConsumerWidget {
                                     );
                                   },
                                 );
-                              });
+                              },);
                         }),
                       ],
                     ),
@@ -134,7 +134,7 @@ class DevicesPage extends HookConsumerWidget {
                     count: devices.length + (shouldDisplayAddDevice ? 1 : 0),
                     effect: WormEffect(
                       dotColor: Colors.grey.shade300,
-                      activeDotColor: Color.fromARGB(255, 4, 84, 84),
+                      activeDotColor: const Color.fromARGB(255, 4, 84, 84),
                       dotWidth: 7,
                       dotHeight: 7,
                     ),
@@ -146,7 +146,7 @@ class DevicesPage extends HookConsumerWidget {
                       );
                     },
                   ),
-                  SizedBox(height: 50),
+                  const SizedBox(height: 50),
                 ],
               );
             },
