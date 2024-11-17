@@ -98,14 +98,21 @@ class AccountCard extends HookConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                AccountButton(
+                  icon: HeroIcons.devicePhoneMobile,
+                  title: "Appareils",
+                  onPressed: () {
+                    QR.to(PaymentRouter.root + PaymentRouter.devices);
+                  },
+                ),
                 // if (!kIsWeb)
-                  AccountButton(
-                    icon: HeroIcons.qrCode,
-                    title: "Payer",
-                    onPressed: () {
-                      QR.to(PaymentRouter.root + PaymentRouter.pay);
-                    },
-                  ),
+                AccountButton(
+                  icon: HeroIcons.qrCode,
+                  title: "Payer",
+                  onPressed: () {
+                    QR.to(PaymentRouter.root + PaymentRouter.pay);
+                  },
+                ),
                 // if (!kIsWeb)
                   AccountButton(
                     icon: HeroIcons.viewfinderCircle,
