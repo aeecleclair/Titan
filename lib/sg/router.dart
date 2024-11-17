@@ -23,7 +23,7 @@ class ShotgunRouter {
   QRoute route() => QRoute(
         name: "shotgun",
         path: ShotgunRouter.root,
-        builder: () => main_page.ShotgunMainPage(),
+        builder: () => main_page.SgMainPage(),
         middleware: [
           AuthenticatedMiddleware(ref),
           DeferredLoadingMiddleware(main_page.loadLibrary),

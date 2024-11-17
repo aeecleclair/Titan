@@ -7,6 +7,6 @@ class AdminPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const SgTemplate(child: Scaffold());
+    return SgTemplate(child: Scaffold());
   }
 }
