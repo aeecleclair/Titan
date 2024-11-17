@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class AccountButton extends StatelessWidget {
   final HeroIcons icon;
   final String title;
-  final VoidCallback onPressed;
+  final Future<dynamic> Function() onPressed;
   const AccountButton({
     super.key,
     required this.icon,
@@ -14,14 +15,14 @@ class AccountButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 10,
-          ),
-          Container(
+    return Column(
+      children: [
+        const SizedBox(
+          height: 10,
+        ),
+        WaitingButton(
+          onTap: onPressed,
+          builder: (child) => Container(
             height: 40,
             width: 40,
             decoration: BoxDecoration(
@@ -40,25 +41,26 @@ class AccountButton extends StatelessWidget {
                 ),
               ],
             ),
-            child: HeroIcon(
-              icon,
-              color: Colors.white,
-              size: 30,
-            ),
+            child: child,
           ),
-          const SizedBox(
-            height: 5,
+          child: HeroIcon(
+            icon,
+            color: Colors.white,
+            size: 30,
           ),
-          Text(
-            title,
-            style: const TextStyle(
-              color: Color(0xff017f80),
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-            ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Text(
+          title,
+          style: const TextStyle(
+            color: Color(0xff017f80),
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
