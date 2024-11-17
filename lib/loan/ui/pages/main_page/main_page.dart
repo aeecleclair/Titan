@@ -67,7 +67,7 @@ class LoanMainPage extends HookConsumerWidget {
                             '${onGoingLoan.length} ${LoanTextConstants.loan.toLowerCase()}${onGoingLoan.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 30.0),
-                            color: Colors.grey,
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                           const SizedBox(height: 30),
                           HorizontalListView.builder(
@@ -96,7 +96,9 @@ class LoanMainPage extends HookConsumerWidget {
                                       style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.grey.shade300,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .tertiary,
                                       ),
                                     ),
                                   ),
@@ -113,7 +115,7 @@ class LoanMainPage extends HookConsumerWidget {
                       AlignLeftText(
                         '${returnedLoan.length} ${LoanTextConstants.loan.toLowerCase()}${returnedLoan.length > 1 ? 's' : ''} ${LoanTextConstants.returned.toLowerCase()}${returnedLoan.length > 1 ? 's' : ''}',
                         padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        color: Colors.grey,
+                        color: Theme.of(context).colorScheme.tertiary,
                       ),
                       const SizedBox(height: 30),
                       HorizontalListView.builder(

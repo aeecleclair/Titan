@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 
@@ -21,12 +20,12 @@ class TextEditing extends StatelessWidget {
             label,
             fontSize: 14,
             fontWeight: FontWeight.w400,
-            color: Colors.grey.shade500,
+            color: Theme.of(context).colorScheme.secondaryFixed,
           ),
           TextEntry(
             label: label,
             controller: controller,
-            color: ColorConstants.gradient1,
+            color: Theme.of(context).colorScheme.primaryContainer,
           ),
         ],
       ),

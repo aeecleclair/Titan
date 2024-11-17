@@ -95,10 +95,10 @@ class PhCard extends HookConsumerWidget {
                 child: CardButton(
                   borderRadius: const BorderRadius.all(Radius.circular(10000)),
                   size: 60,
-                  color: Colors.grey.shade300.withOpacity(0.9),
-                  child: const HeroIcon(
+                  color: Theme.of(context).shadowColor,
+                  child: HeroIcon(
                     HeroIcons.arrowDownTray,
-                    color: Colors.black,
+                    color: Theme.of(context).colorScheme.onPrimary,
                   ),
                 ),
               ),

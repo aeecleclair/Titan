@@ -40,15 +40,15 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
               SizedBox(
                 child: Column(
                   children: [
-                    const Align(
+                    Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         AdvertTextConstants.modifyAnnouncingGroup,
                         style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          color: ColorConstants.gradient1,
-                        ),
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            color:
+                                Theme.of(context).colorScheme.primaryContainer),
                       ),
                     ),
                     const SizedBox(

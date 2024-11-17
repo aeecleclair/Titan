@@ -50,22 +50,34 @@ class AssociationPage extends HookConsumerWidget {
                 const SizedBox(height: 20),
                 Text(
                   association.name,
-                  style: const TextStyle(fontSize: 40, color: Colors.black),
+                  style: TextStyle(
+                    fontSize: 40,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
                 ),
                 const SizedBox(height: 10),
                 Text(
                   association.kind,
-                  style: const TextStyle(fontSize: 20, color: Colors.black),
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
                 ),
                 const SizedBox(height: 10),
                 Text(
                   association.description,
-                  style: const TextStyle(fontSize: 15, color: Colors.black),
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
                 ),
                 const SizedBox(height: 10),
                 Text(
                   "${PhonebookTextConstants.activeMandate} ${association.mandateYear}",
-                  style: const TextStyle(fontSize: 15, color: Colors.black),
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
                 ),
                 const SizedBox(
                   height: 20,

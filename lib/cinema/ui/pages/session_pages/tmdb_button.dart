@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/cinema/tools/constants.dart';
 
 class TmdbButton extends StatelessWidget {
   final Widget child;
@@ -11,7 +10,7 @@ class TmdbButton extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: CinemaColorConstants.tmdbColor,
+        color: Theme.of(context).colorScheme.primaryContainer,
       ),
       child: child,
     );

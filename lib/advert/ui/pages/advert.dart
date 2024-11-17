@@ -13,22 +13,19 @@ class AdvertTemplate extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedAnnouncersNotifier = ref.read(announcerProvider.notifier);
     return Scaffold(
-      body: Container(
-        color: Colors.white,
-        child: SafeArea(
-          child: Column(
-            children: [
-              TopBar(
-                title: AdvertTextConstants.advert,
-                root: AdvertRouter.root,
-                onBack: () {
-                  selectedAnnouncersNotifier.clearAnnouncer();
-                },
-              ),
-              const SizedBox(height: 30),
-              Expanded(child: child),
-            ],
-          ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            TopBar(
+              title: AdvertTextConstants.advert,
+              root: AdvertRouter.root,
+              onBack: () {
+                selectedAnnouncersNotifier.clearAnnouncer();
+              },
+            ),
+            const SizedBox(height: 30),
+            Expanded(child: child),
+          ],
         ),
       ),
     );

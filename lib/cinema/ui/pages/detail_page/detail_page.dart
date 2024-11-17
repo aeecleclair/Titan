@@ -50,13 +50,13 @@ class DetailPage extends HookConsumerWidget {
       children: [
         Container(
           width: double.infinity,
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Colors.black26,
+                color: Theme.of(context).colorScheme.secondary,
                 blurRadius: 10,
                 spreadRadius: 7,
-                offset: Offset(0, 5),
+                offset: const Offset(0, 5),
               ),
             ],
           ),

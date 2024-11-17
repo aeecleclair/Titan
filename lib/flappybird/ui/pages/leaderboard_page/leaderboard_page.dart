@@ -5,6 +5,7 @@ import 'package:myecl/flappybird/providers/score_list_provider.dart';
 import 'package:myecl/flappybird/providers/user_score_provider.dart';
 import 'package:myecl/flappybird/ui/flappybird_template.dart';
 import 'package:myecl/flappybird/ui/pages/leaderboard_page/leaderboard_item.dart';
+import 'package:myecl/drawer/providers/theme_provider.dart';
 
 class LeaderBoardPage extends HookConsumerWidget {
   const LeaderBoardPage({super.key});
@@ -13,6 +14,7 @@ class LeaderBoardPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final leaderBoard = ref.watch(scoreListProvider);
     final bestUserScore = ref.watch(userScoreProvider);
+    final isDarkTheme = ref.watch(themeProvider);
     return FlappyBirdTemplate(
       child: Column(
         children: [
@@ -21,7 +23,7 @@ class LeaderBoardPage extends HookConsumerWidget {
             child: Container(
               width: double.infinity,
               height: double.infinity,
-              color: Colors.blue,
+              color: isDarkTheme ? Colors.blue[900] : Colors.blue,
               padding: const EdgeInsets.only(top: 90, left: 30, right: 30),
               child: leaderBoard.when(
                 data: (scoreList) => ListView.builder(

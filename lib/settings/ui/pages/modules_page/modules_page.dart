@@ -35,25 +35,25 @@ class ModulesPage extends HookConsumerWidget {
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
+                    color: Theme.of(context).shadowColor,
                     spreadRadius: 5,
                     blurRadius: 10,
                     offset: const Offset(0, 2), // changes position of shadow
                   ),
                 ],
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.primary,
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 5),
                 child: Row(
                   children: [
-                    module.getIcon(Colors.grey.shade700),
+                    module.getIcon(Theme.of(context).colorScheme.tertiary),
                     const SizedBox(width: 20),
                     Text(
                       module.name,
-                      style: const TextStyle(
-                        color: Colors.black,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
                       ),
@@ -62,7 +62,7 @@ class ModulesPage extends HookConsumerWidget {
                     const Spacer(),
                     Checkbox(
                       value: modules.contains(module),
-                      activeColor: Colors.grey.shade700,
+                      activeColor: Theme.of(context).colorScheme.tertiary,
                       onChanged: (bool? value) {
                         modulesNotifier.toggleModule(module);
                       },

@@ -7,6 +7,7 @@ import 'package:myecl/flappybird/providers/user_score_provider.dart';
 import 'package:myecl/flappybird/router.dart';
 import 'package:myecl/tools/ui/widgets/top_bar.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:myecl/drawer/providers/theme_provider.dart';
 
 class FlappyBirdTemplate extends HookConsumerWidget {
   final Widget child;
@@ -16,8 +17,9 @@ class FlappyBirdTemplate extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final leaderBoardNotifier = ref.watch(scoreListProvider.notifier);
     final bestUserScoreNotifier = ref.watch(userScoreProvider.notifier);
+    final isDarkTheme = ref.watch(themeProvider);
     return Container(
-      color: Colors.blue,
+      color: isDarkTheme ? Colors.blue[900] : Colors.blue,
       child: SafeArea(
         child: Column(
           children: [

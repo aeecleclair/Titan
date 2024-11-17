@@ -23,8 +23,8 @@ class MyButton extends StatelessWidget {
         gradient: LinearGradient(
           colors: enabled
               ? [
-                  const Color.fromARGB(255, 115, 3, 3),
-                  const Color.fromARGB(255, 231, 84, 31),
+                  Theme.of(context).colorScheme.primaryFixed,
+                  Theme.of(context).colorScheme.primaryContainer,
                 ]
               : [
                   Colors.grey.shade200,
@@ -41,7 +41,7 @@ class MyButton extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.w700,
             color: enabled
-                ? const Color.fromARGB(255, 255, 252, 251)
+                ? Theme.of(context).colorScheme.onPrimaryContainer
                 : Colors.black,
           ),
           maxLines: 1,

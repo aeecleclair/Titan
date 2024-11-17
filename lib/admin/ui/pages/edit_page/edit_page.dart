@@ -11,7 +11,6 @@ import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/ui/admin.dart';
 import 'package:myecl/admin/ui/components/admin_button.dart';
 import 'package:myecl/admin/ui/pages/edit_page/search_user.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
@@ -60,10 +59,10 @@ class EditAssociationPage extends HookConsumerWidget {
               description.text = group.description;
               return Column(
                 children: [
-                  const AlignLeftText(
+                  AlignLeftText(
                     AdminTextConstants.edit,
                     fontSize: 20,
-                    color: ColorConstants.gradient1,
+                    color: Theme.of(context).colorScheme.primaryContainer,
                   ),
                   const SizedBox(height: 20),
                   Form(
@@ -75,7 +74,8 @@ class EditAssociationPage extends HookConsumerWidget {
                           alignment: Alignment.centerLeft,
                           child: TextEntry(
                             controller: name,
-                            color: ColorConstants.gradient1,
+                            color:
+                                Theme.of(context).colorScheme.primaryContainer,
                             label: AdminTextConstants.name,
                             suffixIcon: const HeroIcon(HeroIcons.pencil),
                             enabledColor: Colors.transparent,
@@ -86,7 +86,8 @@ class EditAssociationPage extends HookConsumerWidget {
                           alignment: Alignment.centerLeft,
                           child: TextEntry(
                             controller: description,
-                            color: ColorConstants.gradient1,
+                            color:
+                                Theme.of(context).colorScheme.primaryContainer,
                             label: AdminTextConstants.description,
                             suffixIcon: const HeroIcon(HeroIcons.pencil),
                             enabledColor: Colors.transparent,

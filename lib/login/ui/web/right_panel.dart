@@ -90,30 +90,35 @@ class RightPanel extends HookConsumerWidget {
                       if (screenShot.title.isNotEmpty)
                         Text(
                           screenShot.title,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer,
                           ),
                         ),
                       if (screenShot.title.isNotEmpty)
-                        const Text(
+                        Text(
                           " - ",
                           style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer,
                           ),
                         ),
                       Expanded(
                         child: AutoSizeText(
                           screenShot.description,
                           maxLines: 1,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer),
                         ),
                       ),
                     ],
@@ -159,11 +164,16 @@ class RightPanel extends HookConsumerWidget {
                                 child: Container(
                                   width: constraints.maxWidth,
                                   decoration: BoxDecoration(
-                                    color:
-                                        Colors.grey.shade200.withOpacity(0.2),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondaryFixed
+                                        .withOpacity(0.2),
                                     borderRadius: BorderRadius.circular(20),
                                     border: Border.all(
-                                      color: Colors.white.withOpacity(0.2),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary
+                                          .withOpacity(0.2),
                                       width: 2,
                                     ),
                                   ),
@@ -200,9 +210,10 @@ class RightPanel extends HookConsumerWidget {
                     axisDirection: Axis.vertical,
                     controller: pageController,
                     count: screenShots.length,
-                    effect: const WormEffect(
-                      dotColor: Colors.white,
-                      activeDotColor: Color.fromARGB(255, 48, 48, 48),
+                    effect: WormEffect(
+                      dotColor:
+                          Theme.of(context).colorScheme.onPrimaryContainer,
+                      activeDotColor: const Color.fromARGB(255, 48, 48, 48),
                       dotWidth: 20,
                       dotHeight: 20,
                     ),

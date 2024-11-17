@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/tools/constants.dart';
 
 class AdminButton extends StatelessWidget {
   final Widget child;
@@ -13,12 +12,15 @@ class AdminButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 15),
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [ColorConstants.gradient1, ColorConstants.gradient2],
+        gradient: LinearGradient(
+          colors: [
+            Theme.of(context).colorScheme.primaryContainer,
+            Theme.of(context).colorScheme.primaryFixed
+          ],
         ),
         boxShadow: [
           BoxShadow(
-            color: ColorConstants.gradient2.withOpacity(0.5),
+            color: Theme.of(context).colorScheme.primaryFixed.withOpacity(0.5),
             blurRadius: 5,
             offset: const Offset(2, 2),
             spreadRadius: 2,

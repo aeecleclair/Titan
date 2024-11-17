@@ -15,6 +15,7 @@ import 'package:myecl/flappybird/ui/flappybird_template.dart';
 import 'package:myecl/flappybird/ui/pages/game_page/pipe_handler.dart';
 import 'package:myecl/flappybird/ui/pages/game_page/score.dart';
 import 'package:myecl/flappybird/ui/pages/game_page/start_screen.dart';
+import 'package:myecl/drawer/providers/theme_provider.dart';
 
 import 'bird.dart';
 
@@ -34,6 +35,8 @@ class GamePage extends HookConsumerWidget {
     final bestScore = ref.watch(bestScoreProvider);
     final bestScoreNotifier = ref.read(bestScoreProvider.notifier);
     final width = MediaQuery.of(context).size.width;
+
+    final isDarkTheme = ref.watch(themeProvider);
 
     void showGameOverDialog() {
       showDialog(
@@ -135,7 +138,7 @@ class GamePage extends HookConsumerWidget {
                     }
                   },
                   child: Container(
-                    color: Colors.blue,
+                    color: isDarkTheme ? Colors.blue[900] : Colors.blue,
                     child: Stack(
                       children: [
                         const BirdDisplay(),
