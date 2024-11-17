@@ -3,6 +3,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/paiement/router.dart';
 import 'package:myecl/paiement/ui/pages/main_page/account_button.dart';
+import 'package:myecl/paiement/ui/pages/pay_page/pay_page.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AccountCard extends HookConsumerWidget {
@@ -109,17 +110,22 @@ class AccountCard extends HookConsumerWidget {
                   icon: HeroIcons.qrCode,
                   title: "Payer",
                   onPressed: () {
-                    QR.to(PaymentRouter.root + PaymentRouter.pay);
+                    showModalBottomSheet(
+                        context: context,
+                        backgroundColor: Colors.transparent,
+                        scrollControlDisabledMaxHeightRatio:
+                            (1 - 80 / MediaQuery.of(context).size.height),
+                        builder: (context) => const PayPage());
                   },
                 ),
                 // if (!kIsWeb)
-                  AccountButton(
-                    icon: HeroIcons.viewfinderCircle,
-                    title: "Scanner",
-                    onPressed: () {
-                      QR.to(PaymentRouter.root + PaymentRouter.scan);
-                    },
-                  ),
+                AccountButton(
+                  icon: HeroIcons.viewfinderCircle,
+                  title: "Scanner",
+                  onPressed: () {
+                    QR.to(PaymentRouter.root + PaymentRouter.scan);
+                  },
+                ),
                 AccountButton(
                   icon: HeroIcons.creditCard,
                   title: "Alimenter",
