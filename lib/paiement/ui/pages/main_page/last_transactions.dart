@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/paiement/providers/history_provider.dart';
 import 'package:myecl/paiement/ui/pages/main_page/day_divider.dart';
 import 'package:myecl/paiement/ui/pages/main_page/transaction_card.dart';
 
-class LastTransactions extends StatelessWidget {
+class LastTransactions extends ConsumerWidget {
   const LastTransactions({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final history = ref.watch(historyProvider);
+    // TODO: implement build
     return Column(
       children: [
         Container(

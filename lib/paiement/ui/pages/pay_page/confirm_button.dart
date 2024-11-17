@@ -2,17 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:myecl/paiement/router.dart';
-import 'package:qlevar_router/qlevar_router.dart';
 import 'package:local_auth_android/local_auth_android.dart';
 import 'package:local_auth_darwin/local_auth_darwin.dart';
+import 'package:myecl/paiement/providers/key_service_provider.dart';
+import 'package:myecl/paiement/router.dart';
+import 'package:myecl/tools/functions.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class ConfirmButton extends ConsumerWidget {
   const ConfirmButton({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final keyService = ref.watch(keyServiceProvider);
     final LocalAuthentication auth = LocalAuthentication();
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
+
     return GestureDetector(
       onTap: () async {
         final bool didAuthenticate = await auth.authenticate(
@@ -27,9 +35,21 @@ class ConfirmButton extends ConsumerWidget {
             ),
           ],
         );
-        if (didAuthenticate) {
-          QR.to(PaymentRouter.root + PaymentRouter.pay + PaymentRouter.qr);
+        if (!didAuthenticate) {
+          displayToastWithContext(
+            TypeMsg.error,
+            'L\'authentification a échoué',
+          );
+          return;
         }
+        if ((await keyService.getKeyId()) == null) {
+          displayToastWithContext(
+            TypeMsg.error,
+            'Veuillez ajouter cet appareil pour payer',
+          );
+          return;
+        }
+        QR.to(PaymentRouter.root + PaymentRouter.pay + PaymentRouter.qr);
       },
       child: Container(
         height: 75,
