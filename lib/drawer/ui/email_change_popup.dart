@@ -119,7 +119,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                                         ? Consts.descriptionMigration
                                         : Consts.description,
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 16.0,
                                     ),
                                   ),

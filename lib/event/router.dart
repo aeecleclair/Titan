@@ -1,5 +1,4 @@
 import 'package:either_dart/either.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/event/providers/is_admin_provider.dart';
@@ -11,13 +10,13 @@ import 'package:myecl/event/ui/pages/event_pages/add_edit_event_page.dart'
     deferred as add_edit_event_page;
 import 'package:myecl/event/ui/pages/main_page/main_page.dart'
     deferred as main_page;
+import 'package:myecl/tools/class/module_router.dart';
 import 'package:myecl/tools/middlewares/admin_middleware.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class EventRouter {
-  final ProviderRef ref;
+class EventRouter extends ModuleRouter {
   static const String root = '/event';
   static const String admin = '/admin';
   static const String addEdit = '/add_edit';
@@ -28,8 +27,9 @@ class EventRouter {
     root: EventRouter.root,
     selected: false,
   );
-  EventRouter(this.ref);
+  EventRouter(super.ref);
 
+  @override
   QRoute route() => QRoute(
         name: "event",
         path: EventRouter.root,

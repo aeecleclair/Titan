@@ -55,24 +55,25 @@ class ScanDialog extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 20),
                 Material(
-                    child: TextField(
-                  onChanged: (value) async {
-                    tagNotifier.setTag(value);
-                  },
-                  cursorColor: PurchasesColorConstants.textDark,
-                  decoration: const InputDecoration(
-                    isDense: true,
-                    label: Text(
-                      PurchasesTextConstants.tag,
-                      style: TextStyle(
-                        color: PurchasesColorConstants.textDark,
+                  child: TextField(
+                    onChanged: (value) async {
+                      tagNotifier.setTag(value);
+                    },
+                    cursorColor: PurchasesColorConstants.textDark,
+                    decoration: const InputDecoration(
+                      isDense: true,
+                      label: Text(
+                        PurchasesTextConstants.tag,
+                        style: TextStyle(
+                          color: PurchasesColorConstants.textDark,
+                        ),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: ColorConstants.gradient1),
                       ),
                     ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: ColorConstants.gradient1),
-                    ),
                   ),
-                )),
+                ),
                 const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {

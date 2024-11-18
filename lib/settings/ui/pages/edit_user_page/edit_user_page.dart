@@ -34,7 +34,8 @@ class EditUserPage extends HookConsumerWidget {
     final profilePicture = ref.watch(profilePictureProvider);
     final profilePictureNotifier = ref.watch(profilePictureProvider.notifier);
     final dateController = useTextEditingController(
-        text: user.birthday != null ? processDate(user.birthday!) : "");
+      text: user.birthday != null ? processDate(user.birthday!) : "",
+    );
     final nickNameController =
         useTextEditingController(text: user.nickname ?? '');
     final phoneController = useTextEditingController(text: user.phone ?? '');
