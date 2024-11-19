@@ -1,22 +1,37 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
+import 'package:intl/intl.dart';
+import 'package:myecl/paiement/class/history.dart';
 
 class TransactionCard extends StatelessWidget {
-  const TransactionCard({super.key});
+  final History transaction;
+  const TransactionCard({super.key, required this.transaction});
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat("#,##0.00", "fr_FR");
+    final icon = transaction.type == HistoryType.given
+        ? HeroIcons.arrowUpRight
+        : transaction.type == HistoryType.received
+            ? HeroIcons.arrowDownRight
+            : HeroIcons.creditCard;
     return Container(
-      height: 80,
+      height: 60,
       padding: const EdgeInsets.symmetric(horizontal: 20),
       width: MediaQuery.of(context).size.width,
-      child: const Row(
+      child: Row(
         children: [
           CircleAvatar(
             radius: 27,
-            backgroundColor: Color(0xff017f80),
+            backgroundColor: const Color(0xff017f80),
+            child: HeroIcon(
+              icon,
+              color: Colors.white,
+              size: 25,
+            ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 15,
           ),
           Expanded(
@@ -25,35 +40,57 @@ class TransactionCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AutoSizeText(
-                  "Maxime Roucher (Khurzs)",
+                  transaction.otherWalletName,
                   maxLines: 2,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Color(0xff204550),
                     fontSize: 14,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
-                Text(
-                  "Bar - Rewass",
-                  style: TextStyle(
-                    color: Color(0xff204550),
-                    fontSize: 12,
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: transaction.status == TransactionStatus.confirmed
+                        ? const Color.fromARGB(255, 21, 215, 105)
+                            .withOpacity(0.2)
+                        : const Color.fromARGB(255, 204, 70, 25)
+                            .withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Text(
+                    transaction.status == TransactionStatus.confirmed
+                        ? "Confirmé"
+                        : "Annulé",
+                    style: TextStyle(
+                      color: transaction.status == TransactionStatus.confirmed
+                          ? const Color.fromARGB(255, 21, 215, 105)
+                          : const Color.fromARGB(255, 204, 70, 25),
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
           Text(
-            "- 2,50€",
+            "${transaction.type == HistoryType.given ? " - " : " + "} ${formatter.format(transaction.total / 100)} €",
             style: TextStyle(
-              color: Color(0xff204550),
+              color: const Color(0xff204550),
               fontSize: 18,
               fontWeight: FontWeight.bold,
+              decoration: transaction.status == TransactionStatus.confirmed
+                  ? TextDecoration.none
+                  : TextDecoration.lineThrough,
+              decorationColor: const Color(0xff204550).withOpacity(0.8),
+              decorationThickness: 2.85,
             ),
           ),
         ],

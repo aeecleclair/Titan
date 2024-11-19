@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:myecl/paiement/class/qr_code_data.dart';
 import 'package:myecl/paiement/class/qr_code_signature_data.dart';
 import 'package:myecl/paiement/class/wallet_device.dart';
@@ -127,4 +128,39 @@ Future<String> getQRCodeContent(
       (await keyService.signMessage(keyPair!, data.codeUnits)).bytes,
     ),
   ).toJson().toString();
+}
+
+
+String dateFromNow(DateTime date) {
+  final now = DateTime.now();
+  final difference = now.difference(date);
+
+  if (difference.inDays == 0) {
+    return "Aujourd'hui";
+  }
+
+  if (difference.inDays == 1) {
+    return "Hier";
+  }
+
+  if (difference.inDays < 7) {
+    switch (date.weekday) {
+      case DateTime.monday:
+        return "Lundi dernier";
+      case DateTime.tuesday:
+        return "Mardi dernier";
+      case DateTime.wednesday:
+        return "Mercredi dernier";
+      case DateTime.thursday:
+        return "Jeudi dernier";
+      case DateTime.friday:
+        return "Vendredi dernier";
+      case DateTime.saturday:
+        return "Samedi dernier";
+      case DateTime.sunday:
+        return "Dimanche dernier";
+    }
+  }
+
+  return "Le ${DateFormat("dd/MM/yyyy").format(date)}";
 }
