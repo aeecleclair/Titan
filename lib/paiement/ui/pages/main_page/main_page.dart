@@ -15,7 +15,6 @@ import 'package:myecl/paiement/ui/pages/main_page/store_card/store_card.dart';
 import 'package:myecl/paiement/ui/pages/main_page/store_card/stores.dart';
 import 'package:myecl/paiement/ui/paiement.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/user/providers/user_provider.dart';
 
 class PaymentMainPage extends HookConsumerWidget {
   const PaymentMainPage({super.key});
