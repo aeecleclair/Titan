@@ -13,8 +13,8 @@ import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class AddAssociationPage extends HookConsumerWidget {
-  const AddAssociationPage({super.key});
+class AddGroupPage extends HookConsumerWidget {
+  const AddGroupPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
