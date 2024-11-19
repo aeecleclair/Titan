@@ -80,7 +80,7 @@ class GroupsPage extends HookConsumerWidget {
                         onTap: () {
                           QR.to(
                             AdminRouter.root +
-                                AdminRouter.addLoaner +
+                                AdminRouter.groups +
                                 AdminRouter.addLoaner,
                           );
                         },
