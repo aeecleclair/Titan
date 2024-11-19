@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/admin/ui/pages/main_page/association_button.dart';
+import 'package:myecl/admin/ui/pages/group_page/group_button.dart';
 import 'package:myecl/admin/ui/pages/main_page/card_ui.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
-class AssociationUi extends HookConsumerWidget {
+class GroupUi extends HookConsumerWidget {
   final SimpleGroup group;
   final void Function() onEdit;
   final Future Function() onDelete;
   final bool isLoaner;
-  const AssociationUi({
+  const GroupUi({
     super.key,
     required this.group,
     required this.onEdit,
@@ -50,7 +50,7 @@ class AssociationUi extends HookConsumerWidget {
           children: [
             GestureDetector(
               onTap: onEdit,
-              child: AssociationButton(
+              child: GroupButton(
                 gradient1: Colors.grey.shade800,
                 gradient2: Colors.grey.shade900,
                 child: const HeroIcon(
@@ -62,7 +62,7 @@ class AssociationUi extends HookConsumerWidget {
             const SizedBox(width: 10),
             WaitingButton(
               onTap: onDelete,
-              builder: (child) => AssociationButton(
+              builder: (child) => GroupButton(
                 gradient1: ColorConstants.gradient1,
                 gradient2: ColorConstants.gradient2,
                 child: child,

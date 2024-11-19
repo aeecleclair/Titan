@@ -10,7 +10,7 @@ import 'package:myecl/admin/providers/simple_groups_groups_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/ui/admin.dart';
 import 'package:myecl/admin/ui/components/admin_button.dart';
-import 'package:myecl/admin/ui/pages/edit_page/search_user.dart';
+import 'package:myecl/admin/ui/pages/edit_group_page/search_user.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -20,8 +20,8 @@ import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class EditAssociationPage extends HookConsumerWidget {
-  const EditAssociationPage({super.key});
+class EditGroupPage extends HookConsumerWidget {
+  const EditGroupPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
