@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/paiement/providers/history_provider.dart';
-import 'package:myecl/paiement/ui/pages/main_page/account_card/day_divider.dart';
+import 'package:myecl/paiement/ui/pages/main_page/seller_card/seller_divider.dart';
 import 'package:myecl/paiement/ui/pages/main_page/transaction_card.dart';
 
-class LastTransactions extends ConsumerWidget {
-  const LastTransactions({super.key});
+class Sellers extends ConsumerWidget {
+  const Sellers({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final history = ref.watch(historyProvider);
     // TODO: implement build
     return Column(
       children: [
@@ -17,9 +15,9 @@ class LastTransactions extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 30),
           alignment: Alignment.centerLeft,
           child: const Text(
-            "Dernières transactions",
+            "Gestion des sellers",
             style: TextStyle(
-              color: Color(0xff204550),
+              color: Color.fromARGB(255, 199, 90, 1),
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
@@ -28,12 +26,10 @@ class LastTransactions extends ConsumerWidget {
         const SizedBox(
           height: 15,
         ),
-        const DayDivider(),
+        const SellerDivider(),
         const TransactionCard(),
         const TransactionCard(),
-        const DayDivider(),
-        const TransactionCard(),
-        const DayDivider(),
+        const SellerDivider(),
         const TransactionCard(),
         const SizedBox(
           height: 15,
