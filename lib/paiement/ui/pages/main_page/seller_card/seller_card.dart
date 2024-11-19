@@ -3,33 +3,33 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_card_button.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_card_template.dart';
 
-class StoreCard extends StatelessWidget {
-  const StoreCard({super.key});
+class SellerCard extends StatelessWidget {
+  const SellerCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-   final buttonGradient = [
-      Color.fromARGB(255, 255, 119, 7),
-      Color.fromARGB(255, 230, 103, 0),
+    final buttonGradient = [
+      const Color.fromARGB(255, 0, 68, 68),
+      const Color.fromARGB(255, 6, 75, 75),
     ];
     return MainCardTemplate(
       colors: const [
-        Color.fromARGB(255, 230, 103, 0),
-        Color.fromARGB(255, 255, 119, 7),
-        Color.fromARGB(255, 199, 90, 1),
+        Color.fromARGB(255, 6, 75, 75),
+        Color.fromARGB(255, 0, 68, 68),
+        Color.fromARGB(255, 0, 29, 29)
       ],
-      title: 'Administrateur',
+      title: 'Solde associatif',
       topRightWidget: GestureDetector(
         onTap: () {
           // QR.to(PaymentRouter.root + PaymentRouter.stats);
         },
         child: const HeroIcon(
-          HeroIcons.userGroup,
+          HeroIcons.chartPie,
           color: Colors.white,
           size: 30,
         ),
       ),
-      value: "10 Stores",
+      value: "WEI",
       actionButtons: [
         MainCardButton(
           colors: buttonGradient,

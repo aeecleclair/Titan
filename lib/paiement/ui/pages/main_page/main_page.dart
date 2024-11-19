@@ -9,6 +9,8 @@ import 'package:myecl/paiement/providers/should_display_cgu_dialog.dart';
 import 'package:myecl/paiement/ui/pages/main_page/account_card/account_card.dart';
 import 'package:myecl/paiement/ui/pages/main_page/cgu_dialog.dart';
 import 'package:myecl/paiement/ui/pages/main_page/account_card/last_transactions.dart';
+import 'package:myecl/paiement/ui/pages/main_page/seller_card/last_seller_transactions.dart';
+import 'package:myecl/paiement/ui/pages/main_page/seller_card/seller_card.dart';
 import 'package:myecl/paiement/ui/pages/main_page/store_card/store_card.dart';
 import 'package:myecl/paiement/ui/pages/main_page/store_card/stores.dart';
 import 'package:myecl/paiement/ui/paiement.dart';
@@ -60,6 +62,10 @@ class PaymentMainPage extends HookConsumerWidget {
           StoreCard(),
           Stores(),
         ],
+      [
+        SellerCard(),
+        LastSellerTransactions(),
+      ],
     ];
 
     return PaymentTemplate(
