@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
-class AccountButton extends StatelessWidget {
+class StoreButton extends StatelessWidget {
   final HeroIcons icon;
   final String title;
   final Future<dynamic> Function() onPressed;
-  const AccountButton({
+  const StoreButton({
     super.key,
     required this.icon,
     required this.onPressed,
@@ -25,16 +25,20 @@ class AccountButton extends StatelessWidget {
           builder: (child) => Container(
             height: 40,
             width: 40,
+            padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
               gradient: const RadialGradient(
-                colors: [Color(0xff017f80), Color.fromARGB(255, 4, 84, 84)],
+                colors: [
+            Color.fromARGB(255, 255, 119, 7),
+            Color.fromARGB(255, 230, 103, 0),
+            ],
                 center: Alignment.topLeft,
                 radius: 1.5,
               ),
               borderRadius: BorderRadius.circular(15),
               boxShadow: [
                 BoxShadow(
-                  color: const Color.fromARGB(255, 4, 84, 84).withOpacity(0.2),
+                  color: const Color.fromARGB(255, 230, 103, 0).withOpacity(0.2),
                   spreadRadius: 1,
                   blurRadius: 3,
                   offset: const Offset(0, 1), // changes position of shadow
@@ -55,7 +59,7 @@ class AccountButton extends StatelessWidget {
         Text(
           title,
           style: const TextStyle(
-            color: Color(0xff017f80),
+            color: Color.fromARGB(255, 230, 103, 0),
             fontSize: 12,
             fontWeight: FontWeight.bold,
           ),
