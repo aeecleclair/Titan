@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/paiement/ui/pages/main_page/store_card/seller_card.dart';
+import 'package:myecl/paiement/ui/pages/main_page/store_card/store_seller_card.dart';
 import 'package:myecl/paiement/ui/pages/main_page/store_card/store_divider.dart';
 
 class Stores extends ConsumerWidget {
@@ -27,10 +27,10 @@ class Stores extends ConsumerWidget {
           height: 15,
         ),
         const StoreDivider(),
-        const SellerCard(),
-        const SellerCard(),
+        const StoreSellerCard(),
+        const StoreSellerCard(),
         const StoreDivider(),
-        const SellerCard(),
+        const StoreSellerCard(),
         const SizedBox(
           height: 15,
         ),

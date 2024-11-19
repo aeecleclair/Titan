@@ -4,8 +4,8 @@ import 'package:myecl/paiement/providers/history_provider.dart';
 import 'package:myecl/paiement/ui/pages/main_page/account_card/day_divider.dart';
 import 'package:myecl/paiement/ui/pages/main_page/transaction_card.dart';
 
-class LastTransactions extends ConsumerWidget {
-  const LastTransactions({super.key});
+class LastSellerTransactions extends ConsumerWidget {
+  const LastSellerTransactions({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
