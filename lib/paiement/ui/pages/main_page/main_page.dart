@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -9,10 +8,9 @@ import 'package:myecl/paiement/providers/should_display_cgu_dialog.dart';
 import 'package:myecl/paiement/ui/pages/main_page/account_card/account_card.dart';
 import 'package:myecl/paiement/ui/pages/main_page/cgu_dialog.dart';
 import 'package:myecl/paiement/ui/pages/main_page/account_card/last_transactions.dart';
-import 'package:myecl/paiement/ui/pages/main_page/seller_card/last_seller_transactions.dart';
+import 'package:myecl/paiement/ui/pages/main_page/flip_card.dart';
 import 'package:myecl/paiement/ui/pages/main_page/seller_card/seller_card.dart';
-import 'package:myecl/paiement/ui/pages/main_page/store_card/store_card.dart';
-import 'package:myecl/paiement/ui/pages/main_page/store_card/stores.dart';
+import 'package:myecl/paiement/ui/pages/main_page/seller_card/seller_list.dart';
 import 'package:myecl/paiement/ui/paiement.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 
@@ -28,13 +26,21 @@ class PaymentMainPage extends HookConsumerWidget {
     final cguNotifier = ref.read(cguProvider.notifier);
     final registerNotifier = ref.read(registerProvider.notifier);
     final isAdmin = ref.watch(isPaymentAdmin);
-    final firstPageController = PageController(viewportFraction: 0.8);
+    final flipped = useState(true);
 
-    final scrollValue = useState(0.0);
+    final controller = useAnimationController(
+      duration: const Duration(milliseconds: 500),
+      initialValue: 0,
+    );
 
-    firstPageController.addListener(() {
-      scrollValue.value = firstPageController.page ?? 0.0;
-    });
+    toggle() {
+      flipped.value = !flipped.value;
+      if (flipped.value) {
+        controller.reverse();
+      } else {
+        controller.forward();
+      }
+    }
 
     cgu.maybeWhen(
       orElse: () {},
@@ -51,22 +57,6 @@ class PaymentMainPage extends HookConsumerWidget {
       },
     );
 
-    final userCards = [
-      [
-        AccountCard(),
-        LastTransactions(),
-      ],
-      if (isAdmin)
-        [
-          StoreCard(),
-          Stores(),
-        ],
-      [
-        SellerCard(),
-        LastSellerTransactions(),
-      ],
-    ];
-
     return PaymentTemplate(
       child: Refresher(
         onRefresh: () async {},
@@ -80,33 +70,43 @@ class PaymentMainPage extends HookConsumerWidget {
                 SizedBox(
                   height: 250,
                   width: MediaQuery.of(context).size.width,
-                  child: PageView.builder(
-                    controller: firstPageController,
-                    itemCount: userCards.length,
-                    itemBuilder: (context, index) {
-                      return userCards[index][0];
-                    },
+                  child: FlipCard(
+                    back: SellerCard(
+                      toggle: isAdmin ? toggle : null,
+                    ),
+                    front: AccountCard(
+                      toggle: isAdmin ? toggle : null,
+                    ),
+                    controller: controller,
                   ),
                 ),
                 const SizedBox(
                   height: 25,
                 ),
-                Stack(
-                  children: userCards.map((e) {
-                    return Visibility(
-                      visible:
-                          (scrollValue.value - userCards.indexOf(e)).abs() < 1,
-                      child: AnimatedOpacity(
-                        duration: const Duration(milliseconds: 300),
-                        opacity: clampDouble(
-                          1 - (scrollValue.value - userCards.indexOf(e)).abs(),
-                          0,
-                          1,
+                AnimatedBuilder(
+                  animation: controller,
+                  builder: (context, child) {
+                    return Stack(
+                      children: [
+                        Visibility(
+                          visible: controller.value.abs() < 1,
+                          child: AnimatedOpacity(
+                            duration: const Duration(milliseconds: 300),
+                            opacity: 1 - controller.value.abs(),
+                            child: LastTransactions(),
+                          ),
                         ),
-                        child: e[1],
-                      ),
+                        Visibility(
+                          visible: controller.value.abs() > 0,
+                          child: AnimatedOpacity(
+                            duration: const Duration(milliseconds: 300),
+                            opacity: controller.value.abs(),
+                            child: SellerList(),
+                          ),
+                        ),
+                      ],
                     );
-                  }).toList(),
+                  },
                 )
               ],
             ),

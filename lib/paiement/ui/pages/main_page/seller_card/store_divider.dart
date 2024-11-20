@@ -1,36 +1,37 @@
 import 'package:flutter/material.dart';
 
 class StoreDivider extends StatelessWidget {
-  const StoreDivider({super.key});
+  final String name;
+  const StoreDivider({super.key, required this.name});
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.only(top: 10, left: 30, right: 30, bottom: 5),
+    return Padding(
+      padding: const EdgeInsets.only(top: 10, left: 30, right: 30, bottom: 5),
       child: Row(
         children: [
-          Expanded(
+          const Expanded(
             child: Divider(
-              color: Color.fromARGB(255, 199, 90, 1),
+              color: Color.fromARGB(255, 0, 29, 29),
               thickness: 1,
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Center(
               child: Text(
-                "AEECL",
-                style: TextStyle(
-                  color: Color.fromARGB(255, 199, 90, 1),
+                name,
+                style: const TextStyle(
+                  color: Color.fromARGB(255, 0, 29, 29),
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
           ),
-          Expanded(
+          const Expanded(
             child: Divider(
-              color: Color.fromARGB(255, 199, 90, 1),
+              color: Color.fromARGB(255, 0, 29, 29),
               thickness: 1,
             ),
           ),
