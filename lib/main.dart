@@ -19,6 +19,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/plausible/plausible_observer.dart';
 import 'package:myecl/tools/ui/layouts/app_template.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 void main() async {
   await dotenv.load();
@@ -34,6 +35,8 @@ void main() async {
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   }
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  timeago.setLocaleMessages('fr', timeago.FrMessages());
+  timeago.setLocaleMessages('fr_short', timeago.FrShortMessages());
   runApp(const ProviderScope(child: MyApp()));
 }
 
