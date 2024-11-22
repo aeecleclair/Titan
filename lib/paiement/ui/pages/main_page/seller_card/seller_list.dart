@@ -11,7 +11,7 @@ class SellerList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final stores = ref.watch(myMyStoresProvider);
+    final stores = ref.watch(myStoresProvider);
     return Column(
       children: [
         Container(
