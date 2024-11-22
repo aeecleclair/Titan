@@ -1,108 +1,172 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:myecl/paiement/ui/paiement.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:heroicons/heroicons.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:myecl/paiement/providers/barcode_provider.dart';
+import 'package:myecl/paiement/ui/pages/scan_page/scanner.dart';
+import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 
-class ScanPage extends StatefulWidget {
+class ScanPage extends HookConsumerWidget {
   const ScanPage({super.key});
 
   @override
-  State<StatefulWidget> createState() => _ScanPageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final barcode = ref.watch(barcodeProvider);
+    final barcodeNotifier = ref.watch(barcodeProvider.notifier);
+    final formatter = NumberFormat("#,##0.00", "fr_FR");
 
-class _ScanPageState extends State<ScanPage> {
-  Barcode? result;
-  QRViewController? controller;
-  bool cameraPaused = false;
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-
-  // In order to get hot reload to work we need to pause the camera if the platform
-  // is android, or resume the camera if the platform is iOS.
-  @override
-  void reassemble() {
-    super.reassemble();
-    if (controller != null) {
-      if (Platform.isAndroid) {
-        controller!.pauseCamera();
-      }
-      controller!.resumeCamera();
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return PaymentTemplate(
-      child: Stack(
-        children: <Widget>[
-          _buildQrView(context),
-          Column(
-            children: <Widget>[
-              const Spacer(),
-              Container(
-                height: MediaQuery.of(context).size.height - 670,
-                color: Colors.black.withOpacity(0.48),
+    final opacity = useAnimationController(
+      duration: const Duration(seconds: 1),
+    )..repeat(reverse: true);
+    return Stack(
+      children: [
+        const Scanner(),
+        Positioned(
+          top: 20,
+          right: 20,
+          child: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: const HeroIcon(
+              HeroIcons.xMark,
+              size: 20,
+              color: Colors.white,
+            ),
+          ),
+        ),
+        Column(
+          children: [
+            Expanded(
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  barcode != null
+                      ? Row(
+                          children: [
+                            const Spacer(),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 20, horizontal: 50),
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade200.withOpacity(0.8),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Column(
+                                children: [
+                                  const Text(
+                                    "Montant",
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${formatter.format(barcode.total / 100)} €',
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const Spacer(),
+                          ],
+                        )
+                      : SizedBox(
+                          height: 100,
+                          child: Center(
+                            child: AnimatedBuilder(
+                              animation: opacity,
+                              builder: (context, child) {
+                                return Opacity(
+                                  opacity: opacity.value,
+                                  child: const Text(
+                                    'Scanner un code',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                ],
               ),
-            ],
-          ),
-        ],
-      ),
+            ),
+            // Qr code scanning zone
+            SizedBox(
+              height: MediaQuery.of(context).size.width * 0.8,
+            ),
+            Expanded(
+              child: Column(
+                children: [
+                  const Spacer(),
+                  if (barcode != null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: GestureDetector(
+                              child: Container(
+                                width: double.infinity,
+                                height: 50,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white.withOpacity(0.8),
+                                ),
+                                child: const Text(
+                                  'Suivant',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                              onTap: () {
+                                barcodeNotifier.clearBarcode();
+                              },
+                            ),
+                          ),
+                          const SizedBox(width: 20),
+                          Expanded(
+                            child: GestureDetector(
+                              child: AddEditButtonLayout(
+                                colors: [
+                                  const Color.fromARGB(255, 138, 38, 5)
+                                      .withOpacity(0.8),
+                                  const Color.fromARGB(255, 116, 29, 0)
+                                      .withOpacity(0.8),
+                                ],
+                                child: const Text(
+                                  'Annuler',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                              onTap: () {},
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  const Spacer(),
+                ],
+              ),
+            ),
+          ],
+        )
+      ],
     );
-  }
-
-  Widget _buildQrView(BuildContext context) {
-    var scanArea = (MediaQuery.of(context).size.width < 350 ||
-            MediaQuery.of(context).size.height < 350)
-        ? 250.0
-        : 320.0;
-    return Container(
-      margin: const EdgeInsets.only(top: 10),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
-        ),
-        child: QRView(
-          key: qrKey,
-          onQRViewCreated: _onQRViewCreated,
-          overlayMargin: EdgeInsets.only(
-            bottom: MediaQuery.of(context).size.height - scanArea - 350,
-          ),
-          overlay: QrScannerOverlayShape(
-            borderColor: const Color(0xff017f80),
-            borderRadius: 20,
-            borderLength: 30,
-            borderWidth: 10,
-            cutOutSize: scanArea,
-          ),
-          onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
-        ),
-      ),
-    );
-  }
-
-  void _onQRViewCreated(QRViewController controller) {
-    setState(() {
-      this.controller = controller;
-    });
-    controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        result = scanData;
-      });
-    });
-  }
-
-  void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
-    if (!p) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('no Permission')),
-      );
-    }
-  }
-
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
   }
 }
