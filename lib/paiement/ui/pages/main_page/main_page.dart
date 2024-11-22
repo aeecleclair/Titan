@@ -9,8 +9,8 @@ import 'package:myecl/paiement/ui/pages/main_page/account_card/account_card.dart
 import 'package:myecl/paiement/ui/pages/main_page/cgu_dialog.dart';
 import 'package:myecl/paiement/ui/pages/main_page/account_card/last_transactions.dart';
 import 'package:myecl/paiement/ui/pages/main_page/flip_card.dart';
-import 'package:myecl/paiement/ui/pages/main_page/seller_card/seller_card.dart';
-import 'package:myecl/paiement/ui/pages/main_page/seller_card/seller_list.dart';
+import 'package:myecl/paiement/ui/pages/main_page/seller_card/store_card.dart';
+import 'package:myecl/paiement/ui/pages/main_page/seller_card/store_list.dart';
 import 'package:myecl/paiement/ui/paiement.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
@@ -80,9 +80,8 @@ class PaymentMainPage extends HookConsumerWidget {
                       height: 250,
                       width: MediaQuery.of(context).size.width,
                       child: FlipCard(
-                        back: SellerCard(
+                        back: StoreCard(
                           toggle: toggle,
-                          seller: mySellers.first,
                         ),
                         front: AccountCard(
                           toggle: toggle,
@@ -113,7 +112,7 @@ class PaymentMainPage extends HookConsumerWidget {
                           child: AnimatedOpacity(
                             duration: const Duration(milliseconds: 300),
                             opacity: controller.value.abs(),
-                            child: const SellerList(),
+                            child: const StoreList(),
                           ),
                         ),
                       ],
