@@ -26,7 +26,7 @@ class AccountCard extends HookConsumerWidget {
     final deviceNotifier = ref.watch(deviceProvider.notifier);
     final buttonGradient = [
       const Color(0xff017f80),
-      const Color.fromARGB(255, 4, 84, 84)
+      const Color.fromARGB(255, 4, 84, 84),
     ];
 
     void displayToastWithContext(TypeMsg type, String message) {
