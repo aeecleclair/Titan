@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/paiement/class/store.dart';
+import 'package:myecl/paiement/providers/is_payment_admin.dart';
 import 'package:myecl/paiement/providers/my_stores_provider.dart';
+import 'package:myecl/paiement/ui/pages/main_page/seller_card/store_admin_card.dart';
 import 'package:myecl/paiement/ui/pages/main_page/seller_card/store_divider.dart';
 import 'package:myecl/paiement/ui/pages/main_page/seller_card/store_seller_card.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
@@ -12,6 +14,7 @@ class SellerList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final stores = ref.watch(myStoresProvider);
+    final isAdmin = ref.watch(isPaymentAdmin);
     return Column(
       children: [
         Container(
@@ -41,13 +44,20 @@ class SellerList extends ConsumerWidget {
               sortedByMembership[membership.name]!.add(store);
             }
             return Column(
-              children: sortedByMembership
-                  .map((membership, stores) {
-                    final List<Store> alphabeticallyOrderedStores = stores
-                      ..sort((a, b) => a.name.compareTo(b.name));
-                    return MapEntry(
-                      membership,
-                      Column(children: [
+              children: [
+                if (isAdmin) ...[
+                  const StoreDivider(
+                    name: "Admin",
+                  ),
+                  const StoreAdminCard()
+                ],
+                ...sortedByMembership.map((membership, stores) {
+                  final List<Store> alphabeticallyOrderedStores = stores
+                    ..sort((a, b) => a.name.compareTo(b.name));
+                  return MapEntry(
+                    membership,
+                    Column(
+                      children: [
                         StoreDivider(
                           name: membership,
                         ),
@@ -55,11 +65,11 @@ class SellerList extends ConsumerWidget {
                           StoreSellerCard(
                             store: store,
                           ),
-                      ]),
-                    );
-                  })
-                  .values
-                  .toList(),
+                      ],
+                    ),
+                  );
+                }).values,
+              ],
             );
           },
         ),
