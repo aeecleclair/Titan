@@ -36,7 +36,7 @@ class ConfirmButton extends ConsumerWidget {
         context: context,
         enableDrag: false,
         scrollControlDisabledMaxHeightRatio:
-            (1 - 100 / MediaQuery.of(context).size.height),
+            (1 - 50 / MediaQuery.of(context).size.height),
         backgroundColor: Colors.transparent,
         builder: (context) {
           return Container(
