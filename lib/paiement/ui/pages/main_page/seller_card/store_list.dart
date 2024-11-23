@@ -45,12 +45,12 @@ class StoreList extends ConsumerWidget {
             }
             return Column(
               children: [
-                if (isAdmin) ...[
-                  const StoreDivider(
-                    name: "Admin",
-                  ),
-                  const StoreAdminCard()
-                ],
+                // if (isAdmin) ...[
+                //   const StoreDivider(
+                //     name: "Admin",
+                //   ),
+                //   const StoreAdminCard()
+                // ],
                 ...sortedByMembership.map((membership, stores) {
                   final List<Store> alphabeticallyOrderedStores = stores
                     ..sort((a, b) => a.name.compareTo(b.name));
