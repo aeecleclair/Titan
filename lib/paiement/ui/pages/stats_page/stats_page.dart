@@ -23,7 +23,7 @@ class StatsPage extends StatelessWidget {
           SizedBox(
             height: 50,
           ),
-          TransactionsDetail()
+          TransactionsDetail(),
         ],
       ),
     );
