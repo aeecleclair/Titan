@@ -20,7 +20,7 @@ class StoreCard extends ConsumerWidget {
     return MainCardTemplate(
       toggle: toggle,
       colors: const [
-        Color.fromARGB(255, 6, 75, 75),
+        Color.fromARGB(255, 3, 58, 58),
         Color.fromARGB(255, 0, 68, 68),
         Color.fromARGB(255, 0, 29, 29)
       ],
