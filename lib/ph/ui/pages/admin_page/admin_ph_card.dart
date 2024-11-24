@@ -58,8 +58,10 @@ class AdminPhCard extends StatelessWidget {
                   Theme.of(context).colorScheme.secondaryFixed,
                 ],
                 shadowColor: Theme.of(context).shadowColor.withOpacity(0.2),
-                child: HeroIcon(HeroIcons.pencil,
-                    color: Theme.of(context).colorScheme.onPrimary),
+                child: HeroIcon(
+                  HeroIcons.pencil,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
               ),
             ),
             const SizedBox(width: 10),
@@ -72,8 +74,10 @@ class AdminPhCard extends StatelessWidget {
                 ],
                 shadowColor:
                     Theme.of(context).colorScheme.primaryFixed.withOpacity(0.2),
-                child: HeroIcon(HeroIcons.trash,
-                    color: Theme.of(context).colorScheme.onPrimaryContainer),
+                child: HeroIcon(
+                  HeroIcons.trash,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                ),
               ),
             ),
           ],

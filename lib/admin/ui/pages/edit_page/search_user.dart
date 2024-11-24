@@ -9,7 +9,6 @@ import 'package:myecl/admin/providers/simple_groups_groups_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/ui/pages/edit_page/results.dart';
 import 'package:myecl/admin/ui/components/user_ui.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
@@ -47,7 +46,7 @@ class SearchUser extends HookConsumerWidget {
           children: [
             StyledSearchBar(
               label: AdminTextConstants.members,
-              color: ColorConstants.gradient1,
+              color: Theme.of(context).colorScheme.primaryContainer,
               padding: const EdgeInsets.all(0),
               onChanged: (value) async {
                 if (value.isNotEmpty) {
@@ -74,17 +73,20 @@ class SearchUser extends HookConsumerWidget {
                 child: Container(
                   padding: const EdgeInsets.all(7),
                   decoration: BoxDecoration(
-                    gradient: const LinearGradient(
+                    gradient: LinearGradient(
                       colors: [
-                        ColorConstants.gradient1,
-                        ColorConstants.gradient2,
+                        Theme.of(context).colorScheme.primaryContainer,
+                        Theme.of(context).colorScheme.primaryFixed
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: ColorConstants.gradient2.withOpacity(0.4),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primaryFixed
+                            .withOpacity(0.4),
                         offset: const Offset(2, 3),
                         blurRadius: 5,
                       ),
@@ -94,7 +96,7 @@ class SearchUser extends HookConsumerWidget {
                   child: HeroIcon(
                     !add.value ? HeroIcons.plus : HeroIcons.xMark,
                     size: 20,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
                   ),
                 ),
               ),

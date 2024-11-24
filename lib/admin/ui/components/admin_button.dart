@@ -15,7 +15,7 @@ class AdminButton extends StatelessWidget {
         gradient: LinearGradient(
           colors: [
             Theme.of(context).colorScheme.primaryContainer,
-            Theme.of(context).colorScheme.primaryFixed
+            Theme.of(context).colorScheme.primaryFixed,
           ],
         ),
         boxShadow: [

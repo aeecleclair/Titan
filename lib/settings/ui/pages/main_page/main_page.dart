@@ -160,8 +160,9 @@ class SettingsMainPage extends HookConsumerWidget {
                     child: Text(
                       SettingsTextConstants.editAccount,
                       style: TextStyle(
-                          fontSize: 16,
-                          color: Theme.of(context).colorScheme.onPrimary),
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 30),
@@ -203,8 +204,9 @@ class SettingsMainPage extends HookConsumerWidget {
                     child: Text(
                       SettingsTextConstants.editPassword,
                       style: TextStyle(
-                          fontSize: 16,
-                          color: Theme.of(context).colorScheme.onPrimary),
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 50),
@@ -298,8 +300,9 @@ class SettingsMainPage extends HookConsumerWidget {
                     child: Text(
                       SettingsTextConstants.detelePersonalData,
                       style: TextStyle(
-                          fontSize: 16,
-                          color: Theme.of(context).colorScheme.onPrimary),
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 60),

@@ -159,11 +159,13 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                           ),
                                         ],
                                       )
-                                    : HeroIcon(HeroIcons.photo,
+                                    : HeroIcon(
+                                        HeroIcons.photo,
                                         size: 160,
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .tertiary),
+                                            .tertiary,
+                                      ),
                               ),
                             ),
                           ],

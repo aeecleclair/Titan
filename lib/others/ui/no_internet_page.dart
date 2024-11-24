@@ -60,7 +60,7 @@ class NoInternetPage extends HookConsumerWidget {
                     gradient: LinearGradient(
                       colors: [
                         Theme.of(context).colorScheme.primaryContainer,
-                        Theme.of(context).colorScheme.primaryFixed
+                        Theme.of(context).colorScheme.primaryFixed,
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,

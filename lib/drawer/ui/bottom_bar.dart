@@ -29,7 +29,9 @@ class BottomBar extends HookConsumerWidget {
               ),
               const SizedBox(width: 15),
               Text(
-                DrawerTextConstants.darkMode,
+                isDarkTheme
+                    ? DrawerTextConstants.darkMode
+                    : DrawerTextConstants.lightMode,
                 style: TextStyle(
                   color: DrawerColorConstants.lightText,
                   fontSize: 18,

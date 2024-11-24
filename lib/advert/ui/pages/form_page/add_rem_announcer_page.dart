@@ -8,7 +8,6 @@ import 'package:myecl/advert/providers/announcer_list_provider.dart';
 import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/advert/ui/pages/advert.dart';
 import 'package:myecl/advert/ui/pages/form_page/announcer_card.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
@@ -45,10 +44,10 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                       child: Text(
                         AdvertTextConstants.modifyAnnouncingGroup,
                         style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            color:
-                                Theme.of(context).colorScheme.primaryContainer),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                        ),
                       ),
                     ),
                     const SizedBox(

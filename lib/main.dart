@@ -87,23 +87,32 @@ class MyApp extends HookConsumerWidget {
         theme: ThemeData(
           brightness: Brightness.light,
           primarySwatch: Colors.orange,
-          shadowColor: Colors.grey.withOpacity(0.3),
+          shadowColor:
+              Colors.grey.withOpacity(0.3), // to be used by default for shadows
           colorScheme: const ColorScheme(
             brightness: Brightness.light,
-            primary: Colors.white,
-            onPrimary: Colors.black,
-            secondary: Colors.black,
-            onSecondary: Colors.white,
-            tertiary: Colors.grey,
-            error: Colors.red,
-            onError: Colors.white,
-            surface: Colors.white,
-            onSurface: Colors.black,
-            primaryContainer: Color(0xFFfb6d10),
-            primaryFixed: Color(0xffeb3e1b),
-            onPrimaryContainer: Colors.white,
-            secondaryFixed: Color(0xFFDDDDDD),
-            secondaryContainer: Color(0xFF222222),
+            primary: Colors.white, // main color, mostly for background
+            onPrimary: Colors.black, // for small things on primary
+            secondary: Colors
+                .black, // opposite of the primary, covering larger surface
+            onSecondary: Colors.white, // for small things on secondary
+            tertiary: Colors.grey, // between primary and secondary. Constant
+            error: Colors.red, // self-explanatory. Constant
+            onError:
+                Colors.white, // white stands out well on red. Thus constant
+            surface: Colors.white, // identical to primary
+            onSurface: Colors.black, // identical to onPrimary
+            primaryContainer: Color(
+              0xFFfb6d10,
+            ), // an actual color. For boxes, buttons, etc., to emphasize them. Formerly known as gradient1
+            primaryFixed: Color(
+              0xffeb3e1b,
+            ), // formerly known as gradient2, used mainly for gradients. Slightly farther from primary
+            onPrimaryContainer: Colors
+                .white, // a color that stands out well on primaryContainer
+            secondaryFixed:
+                Color(0xFFDDDDDD), // for discrete shadows on primary
+            secondaryContainer: Color(0xFF222222), // opposite of secondaryFixed
           ),
           textTheme: GoogleFonts.latoTextTheme(
             Theme.of(context)

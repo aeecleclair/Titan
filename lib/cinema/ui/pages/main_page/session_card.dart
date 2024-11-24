@@ -216,11 +216,13 @@ class SessionCard extends HookConsumerWidget {
                                     ),
                                   ),
                                   child: Center(
-                                    child: HeroIcon(HeroIcons.bell,
-                                        size: 30,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primaryFixed),
+                                    child: HeroIcon(
+                                      HeroIcons.bell,
+                                      size: 30,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primaryFixed,
+                                    ),
                                   ),
                                 ),
                               ),

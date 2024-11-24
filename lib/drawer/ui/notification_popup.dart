@@ -8,7 +8,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/drawer/providers/display_notification_popup.dart';
 import 'package:myecl/service/class/topic.dart';
 import 'package:myecl/service/providers/topic_provider.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/service/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
@@ -46,7 +45,7 @@ class NotificationPopup extends HookConsumerWidget {
       orElse: () => [],
     );
     return ColoredBox(
-      color: Colors.black54,
+      color: Theme.of(context).shadowColor,
       child: Dialog(
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(Consts.padding)),
@@ -68,26 +67,26 @@ class NotificationPopup extends HookConsumerWidget {
                   ),
                   margin: const EdgeInsets.only(top: Consts.avatarRadius),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.primary,
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(Consts.padding),
-                    boxShadow: const [
+                    boxShadow: [
                       BoxShadow(
-                        color: Colors.black26,
+                        color: Theme.of(context).shadowColor,
                         blurRadius: 10.0,
-                        offset: Offset(0.0, 10.0),
+                        offset: const Offset(0.0, 10.0),
                       ),
                     ],
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text(
+                      Text(
                         Consts.title,
                         style: TextStyle(
                           fontSize: 24.0,
                           fontWeight: FontWeight.w700,
-                          color: ColorConstants.background2,
+                          color: Theme.of(context).colorScheme.onPrimary,
                         ),
                       ),
                       const SizedBox(height: 15.0),
@@ -113,13 +112,19 @@ class NotificationPopup extends HookConsumerWidget {
                                   padding: const EdgeInsets.all(10.0),
                                   decoration: BoxDecoration(
                                     color: selectedTopic.contains(e)
-                                        ? ColorConstants.gradient1
+                                        ? Theme.of(context)
+                                            .colorScheme
+                                            .primaryContainer
                                         : Colors.transparent,
                                     borderRadius: BorderRadius.circular(10.0),
                                     border: Border.all(
                                       color: selectedTopic.contains(e)
-                                          ? ColorConstants.gradient1
-                                          : Colors.black,
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .primaryContainer
+                                          : Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary,
                                       width: 2.0,
                                     ),
                                   ),
@@ -131,8 +136,12 @@ class NotificationPopup extends HookConsumerWidget {
                                       fontSize: 20,
                                       fontWeight: FontWeight.w700,
                                       color: selectedTopic.contains(e)
-                                          ? Colors.white
-                                          : Colors.black,
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .onPrimaryContainer
+                                          : Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary,
                                     ),
                                   ),
                                 ),
@@ -151,23 +160,28 @@ class NotificationPopup extends HookConsumerWidget {
                           height: 60,
                           padding: const EdgeInsets.all(10.0),
                           decoration: BoxDecoration(
-                            color: ColorConstants.gradient1,
+                            color:
+                                Theme.of(context).colorScheme.primaryContainer,
                             borderRadius: BorderRadius.circular(10.0),
                             border: Border.all(
-                              color: ColorConstants.gradient1,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer,
                               width: 2.0,
                             ),
                           ),
                           alignment: Alignment.center,
                           child: child,
                         ),
-                        child: const AutoSizeText(
+                        child: AutoSizeText(
                           Consts.button,
                           maxLines: 1,
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
-                            color: Colors.white,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer,
                           ),
                         ),
                       ),
@@ -182,17 +196,20 @@ class NotificationPopup extends HookConsumerWidget {
                     height: Consts.avatarRadius * 2,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      gradient: const LinearGradient(
+                      gradient: LinearGradient(
                         colors: [
-                          ColorConstants.gradient1,
-                          ColorConstants.gradient2,
+                          Theme.of(context).colorScheme.primaryContainer,
+                          Theme.of(context).colorScheme.primaryFixed,
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: ColorConstants.gradient2.withOpacity(0.3),
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primaryFixed
+                              .withOpacity(0.3),
                           blurRadius: 10.0,
                           offset: const Offset(0.0, 10.0),
                         ),
@@ -203,11 +220,15 @@ class NotificationPopup extends HookConsumerWidget {
                       builder: (context, animation) {
                         return Center(
                           child: Badge(
-                            backgroundColor: Colors.white,
+                            backgroundColor: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer,
                             label: Text(
                               selectedTopic.length.toString(),
-                              style: const TextStyle(
-                                color: ColorConstants.gradient1,
+                              style: TextStyle(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -215,10 +236,12 @@ class NotificationPopup extends HookConsumerWidget {
                               origin: const Offset(0, -20),
                               // Bounce
                               angle: sin(curvedAnimation.value * pi * 2) * 0.2,
-                              child: const HeroIcon(
+                              child: HeroIcon(
                                 HeroIcons.bell,
                                 size: 60,
-                                color: Colors.white,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onPrimaryContainer,
                               ),
                             ),
                           ),

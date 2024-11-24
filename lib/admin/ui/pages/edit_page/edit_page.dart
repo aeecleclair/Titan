@@ -122,12 +122,14 @@ class EditAssociationPage extends HookConsumerWidget {
                             });
                           },
                           builder: (child) => AdminButton(child: child),
-                          child: const Text(
+                          child: Text(
                             AdminTextConstants.edit,
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
-                              color: Colors.white,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer,
                             ),
                           ),
                         ),
@@ -139,7 +141,7 @@ class EditAssociationPage extends HookConsumerWidget {
                 ],
               );
             },
-            loaderColor: Colors.white,
+            loaderColor: Theme.of(context).colorScheme.primary,
           ),
         ),
       ),

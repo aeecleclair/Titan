@@ -75,9 +75,12 @@ class ModuleCard extends HookConsumerWidget {
               ),
             ),
             IconButton(
-              icon: favorites.contains(module.name)
-                  ? const Icon(Icons.star, color: Colors.grey)
-                  : const Icon(Icons.star_border, color: Colors.grey),
+              icon: Icon(
+                favorites.contains(module.name)
+                    ? Icons.star
+                    : Icons.star_border,
+                color: Theme.of(context).colorScheme.tertiary,
+              ),
               onPressed: () {
                 favoritesProviderNotifier.toggleFavorite(module.name);
               },
