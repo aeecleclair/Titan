@@ -48,7 +48,9 @@ class ScanPage extends HookConsumerWidget {
                             const Spacer(),
                             Container(
                               padding: const EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 50),
+                                vertical: 20,
+                                horizontal: 50,
+                              ),
                               decoration: BoxDecoration(
                                 color: Colors.grey.shade200.withOpacity(0.8),
                                 borderRadius: BorderRadius.circular(20),
@@ -165,7 +167,7 @@ class ScanPage extends HookConsumerWidget {
               ),
             ),
           ],
-        )
+        ),
       ],
     );
   }

@@ -19,9 +19,11 @@ class StoreStatsPage extends ConsumerWidget {
       value: selectedHistory,
       builder: (context, history) {
         final sortedByDate = history
-            .where((element) =>
-                element.creation.month == selectedMonth.month &&
-                element.creation.year == selectedMonth.year)
+            .where(
+              (element) =>
+                  element.creation.month == selectedMonth.month &&
+                  element.creation.year == selectedMonth.year,
+            )
             .toList()
           ..sort((a, b) => a.creation.compareTo(b.creation));
         return PaymentTemplate(
