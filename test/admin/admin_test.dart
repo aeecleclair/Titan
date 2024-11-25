@@ -116,6 +116,7 @@ void main() {
             "name": "name",
             "firstname": "firstname",
             "nickname": "nickname",
+            "account_type": "external",
           }
         ],
       });
@@ -133,6 +134,7 @@ void main() {
         members: [
           SimpleUser(
             id: "1",
+            accountType: "external",
             name: "name",
             firstname: "firstname",
             nickname: null,
@@ -146,6 +148,7 @@ void main() {
         "members": [
           {
             "id": "1",
+            "account_type": "external",
             "name": "name",
             "firstname": "firstname",
             "nickname": null,

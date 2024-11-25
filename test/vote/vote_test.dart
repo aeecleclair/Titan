@@ -23,6 +23,7 @@ void main() {
     test('Should return a Member', () {
       final member = Member(
         id: 'id',
+        accountType: 'external',
         name: 'name',
         firstname: 'firstname',
         nickname: 'nickname',
@@ -63,6 +64,7 @@ void main() {
     test('Should print a Member', () {
       final member = Member(
         id: 'id',
+        accountType: 'external',
         name: 'name',
         firstname: 'firstname',
         nickname: 'nickname',
@@ -78,6 +80,7 @@ void main() {
       final member = Member.fromSimpleUser(
         SimpleUser(
           id: 'id',
+          accountType: 'external',
           name: 'name',
           firstname: 'firstname',
           nickname: 'nickname',
@@ -99,6 +102,7 @@ void main() {
           "name": "name",
           "firstname": "firstname",
           "nickname": "nickname",
+          "account_type": "external",
         },
         "role": "role",
       });
@@ -108,11 +112,13 @@ void main() {
       expect(member.firstname, 'Firstname');
       expect(member.nickname, 'Nickname');
       expect(member.role, 'Role');
+      expect(member.accountType, 'external');
     });
 
     test('Should return a correct json', () {
       final member = Member(
         id: 'id',
+        accountType: 'external',
         name: 'name',
         firstname: 'firstname',
         nickname: 'nickname',

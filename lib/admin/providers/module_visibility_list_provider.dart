@@ -46,6 +46,38 @@ class ModuleVisibilityListNotifier extends ListNotifier<ModuleVisibility> {
     );
   }
 
+  Future<bool> addAccountTypeToModule(
+    ModuleVisibility moduleVisibility,
+    String allowedAccountType,
+  ) async {
+    return await update(
+      (moduleVisibility) async => repository.addAccountTypeToModule(
+        moduleVisibility.root,
+        allowedAccountType,
+      ),
+      (list, moduleVisibility) => list
+        ..[list.indexWhere((m) => m.root == moduleVisibility.root)] =
+            moduleVisibility,
+      moduleVisibility,
+    );
+  }
+
+  Future<bool> deleteAccountTypeAccessForModule(
+    ModuleVisibility moduleVisibility,
+    String allowedAccountType,
+  ) async {
+    return await update(
+      (moduleVisibility) async => repository.deleteAccountTypeAccessForModule(
+        moduleVisibility.root,
+        allowedAccountType,
+      ),
+      (list, moduleVisibility) => list
+        ..[list.indexWhere((m) => m.root == moduleVisibility.root)] =
+            moduleVisibility,
+      moduleVisibility,
+    );
+  }
+
   void setState(List<ModuleVisibility> modules) {
     state = AsyncValue.data(modules);
   }

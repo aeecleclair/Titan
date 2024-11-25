@@ -123,6 +123,7 @@ void main() {
         ],
         borrower: SimpleUser(
           id: '1',
+          accountType: 'external',
           name: 'name',
           firstname: '',
           nickname: '',
@@ -158,6 +159,7 @@ void main() {
       newLoan = loan.copyWith(
         borrower: SimpleUser(
           id: '2',
+          accountType: 'external',
           name: 'name2',
           firstname: '',
           nickname: '',
@@ -211,6 +213,7 @@ void main() {
         ],
         borrower: SimpleUser(
           id: '1',
+          accountType: 'external',
           name: 'name',
           firstname: '',
           nickname: '',
@@ -225,7 +228,7 @@ void main() {
       );
       expect(
         loan.toString(),
-        'Loan(id: 1, loaner: Loaner(name: , groupManagerId: , id: ), borrower: SimpleUser {name: name, firstname: , nickname: , id: 1}, notes: , start: 2020-01-01 00:00:00.000, end: 2020-01-01 00:00:00.000, caution: , itemsQuantity: [ItemQuantity(itemSimple: ItemSimple(id: 1, name: name, quantity: 2)], returned: true, returnedDate: 2020-01-01 00:00:00.000)',
+        'Loan(id: 1, loaner: Loaner(name: , groupManagerId: , id: ), borrower: SimpleUser {name: name, firstname: , nickname: , id: 1, accountType: external}, notes: , start: 2020-01-01 00:00:00.000, end: 2020-01-01 00:00:00.000, caution: , itemsQuantity: [ItemQuantity(itemSimple: ItemSimple(id: 1, name: name, quantity: 2)], returned: true, returnedDate: 2020-01-01 00:00:00.000)',
       );
     });
 
@@ -250,6 +253,7 @@ void main() {
           'name': 'name',
           'firstname': '',
           'nickname': '',
+          'account_type': 'external',
         },
         'returned': true,
         'caution': '',
@@ -282,6 +286,7 @@ void main() {
         ],
         borrower: SimpleUser(
           id: '1',
+          accountType: 'external',
           name: 'name',
           firstname: '',
           nickname: '',

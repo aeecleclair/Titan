@@ -23,6 +23,7 @@ final modulesProvider =
     StateNotifierProvider<ModulesNotifier, List<Module>>((ref) {
   final myModulesRoot =
       ref.watch(allMyModuleRootList).map((root) => '/$root').toList();
+  print(myModulesRoot);
 
   ModulesNotifier modulesNotifier = ModulesNotifier();
   modulesNotifier.loadModules(myModulesRoot);
@@ -110,9 +111,9 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
         }
       }
     }
-    // for (Module module in toDelete) {
-    //   allModules.remove(module);
-    // }
+    for (Module module in toDelete) {
+      allModules.remove(module);
+    }
     state = allModules;
   }
 
