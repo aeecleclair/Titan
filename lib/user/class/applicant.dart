@@ -9,6 +9,7 @@ class Applicant extends SimpleUser {
     required super.firstname,
     required super.nickname,
     required super.id,
+    required super.accountType,
     required this.email,
     required this.promo,
     required this.phone,
@@ -37,6 +38,7 @@ class Applicant extends SimpleUser {
     String? nickname,
     String? id,
     String? email,
+    String? accountType,
     int? promo,
     String? phone,
   }) {
@@ -46,6 +48,7 @@ class Applicant extends SimpleUser {
       nickname: nickname ?? this.nickname,
       id: id ?? this.id,
       email: email ?? this.email,
+      accountType: accountType ?? this.accountType,
       promo: promo ?? this.promo,
       phone: phone ?? this.phone,
     );
@@ -60,6 +63,6 @@ class Applicant extends SimpleUser {
 
   @override
   String toString() {
-    return 'Applicant{name: $name, firstname: $firstname, nickname: $nickname, id: $id, email: $email, promo: $promo, phone: $phone}';
+    return 'Applicant{name: $name, firstname: $firstname, nickname: $nickname, id: $id, email: $email, promo: $promo, phone: $phone, accountType: $accountType}';
   }
 }

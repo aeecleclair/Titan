@@ -111,6 +111,7 @@ void main() {
         firstname: 'firstname',
         nickname: null,
         id: 'id',
+        accountType: 'external',
         birthday: DateTime(1999, 1, 1),
         createdOn: DateTime(2021, 1, 1),
         email: 'email',

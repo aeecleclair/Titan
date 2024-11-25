@@ -123,6 +123,7 @@ void main() {
         ],
         borrower: SimpleUser(
           id: '1',
+          accountType: 'external',
           name: 'name',
           firstname: '',
           nickname: '',
@@ -158,6 +159,7 @@ void main() {
       newLoan = loan.copyWith(
         borrower: SimpleUser(
           id: '2',
+          accountType: 'external',
           name: 'name2',
           firstname: '',
           nickname: '',
@@ -211,6 +213,7 @@ void main() {
         ],
         borrower: SimpleUser(
           id: '1',
+          accountType: 'external',
           name: 'name',
           firstname: '',
           nickname: '',
@@ -282,6 +285,7 @@ void main() {
         ],
         borrower: SimpleUser(
           id: '1',
+          accountType: 'external',
           name: 'name',
           firstname: '',
           nickname: '',

@@ -51,6 +51,7 @@ void main() {
         firstname: "firstname",
         nickname: null,
         email: "email",
+        accountType: "external",
         groups: [group],
         birthday: DateTime.now(),
         createdOn: DateTime.now(),

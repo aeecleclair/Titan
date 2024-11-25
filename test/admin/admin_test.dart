@@ -133,6 +133,7 @@ void main() {
         members: [
           SimpleUser(
             id: "1",
+            accountType: "external",
             name: "name",
             firstname: "firstname",
             nickname: null,

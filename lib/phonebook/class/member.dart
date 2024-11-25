@@ -6,6 +6,7 @@ class Member extends SimpleUser {
     required super.firstname,
     required super.nickname,
     required super.id,
+    required super.accountType,
     required this.email,
     required this.phone,
     required this.promotion,
@@ -35,6 +36,7 @@ class Member extends SimpleUser {
     String? firstname,
     String? nickname,
     String? id,
+    String? accountType,
     String? email,
     String? phone,
     int? promotion,
@@ -44,6 +46,7 @@ class Member extends SimpleUser {
       firstname: firstname ?? this.firstname,
       nickname: nickname,
       id: id ?? this.id,
+      accountType: accountType ?? this.accountType,
       email: email ?? this.email,
       phone: phone ?? this.phone,
       promotion: promotion ?? this.promotion,
@@ -62,6 +65,7 @@ class Member extends SimpleUser {
           firstname: user.firstname,
           nickname: user.nickname,
           id: user.id,
+          accountType: user.accountType,
         ) {
     email = "";
     phone = "";

@@ -16,6 +16,7 @@ class CompleteMember {
       firstname: json['firstname'],
       nickname: json['nickname'] ?? "",
       id: json['id'],
+      accountType: json['account_type'],
       email: json['email'],
       phone: json['phone'],
       promotion: json['promo'] ?? 0,
