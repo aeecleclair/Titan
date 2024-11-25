@@ -102,6 +102,7 @@ void main() {
           "name": "name",
           "firstname": "firstname",
           "nickname": "nickname",
+          "account_type": "external",
         },
         "role": "role",
       });
@@ -111,6 +112,7 @@ void main() {
       expect(member.firstname, 'Firstname');
       expect(member.nickname, 'Nickname');
       expect(member.role, 'Role');
+      expect(member.accountType, 'external');
     });
 
     test('Should return a correct json', () {

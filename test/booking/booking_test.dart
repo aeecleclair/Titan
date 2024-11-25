@@ -145,7 +145,7 @@ void main() {
       );
       expect(
         booking.toString(),
-        "Booking{id: 1, reason: reason, start: 2021-01-01 00:00:00.000Z, end: 2021-01-01 00:00:00.000Z, creation: 2021-01-01 00:00:00.000Z, note: note, room: Room{name: , manager_id: , id: 1}, key: true, decision: Decision.approved, recurrenceRule: , entity: entity, applicant: Applicant{name: Nom, firstname: Prénom, nickname: null, id: 1, email: empty@ecl.ec-lyon.fr, promo: null, phone: null}, applicantId: 1}",
+        "Booking{id: 1, reason: reason, start: 2021-01-01 00:00:00.000Z, end: 2021-01-01 00:00:00.000Z, creation: 2021-01-01 00:00:00.000Z, note: note, room: Room{name: , manager_id: , id: 1}, key: true, decision: Decision.approved, recurrenceRule: , entity: entity, applicant: Applicant{name: Nom, firstname: Prénom, nickname: null, id: 1, email: empty@ecl.ec-lyon.fr, promo: null, phone: null, accountType: external}, applicantId: 1}",
       );
     });
 
@@ -176,6 +176,7 @@ void main() {
           "email": "email",
           "phone": "phone",
           "promo": null,
+          "account_type": "external",
         },
       });
       expect(booking, isA<Booking>());
@@ -254,6 +255,7 @@ void main() {
           "email": "email",
           "phone": "phone",
           "promo": null,
+          "account_type": "external",
         },
       });
       expect(booking.toJson(), {

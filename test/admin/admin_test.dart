@@ -116,6 +116,7 @@ void main() {
             "name": "name",
             "firstname": "firstname",
             "nickname": "nickname",
+            "account_type": "external",
           }
         ],
       });
@@ -147,6 +148,7 @@ void main() {
         "members": [
           {
             "id": "1",
+            "account_type": "external",
             "name": "name",
             "firstname": "firstname",
             "nickname": null,
