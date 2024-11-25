@@ -138,6 +138,7 @@ void main() {
         "birthday": "1999-01-01",
         "created_on": createdOn.toIso8601String(),
         "email": "email",
+        "account_type": "external",
         "floor": "floor",
         "groups": [],
         "phone": "phone",
