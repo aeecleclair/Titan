@@ -1,43 +1,41 @@
 class AdminTextConstants {
+  static const String accountTypes = "Types de compte";
   static const String add = "Ajouter";
-  static const String addAssociation = "Ajouter un groupe";
-  static const String addedAssociation = "Groupe ajouté";
+  static const String addGroup = "Ajouter un groupe";
+  static const String addedGroup = "Groupe créé";
   static const String addedLoaner = "Préteur ajouté";
   static const String addedMember = "Membre ajouté";
   static const String addingError = "Erreur lors de l'ajout";
   static const String addingMember = "Ajout d'un membre";
-  static const String addLoaningAssociation = "Ajouter un groupe de prêt";
+  static const String addLoaningGroup = "Ajouter un groupe de prêt";
+  static const String addSchool = "Ajouter une école";
+  static const String addedSchool = "École créée";
   static const String administration = "Administration";
-  static const String association = "Groupe";
+  static const String group = "Groupe";
+  static const String groups = "Groupes";
   static const String delete = "Supprimer";
-  static const String deleteAssociation = "Supprimer le groupe ?";
-  static const String deletedAssociation = "Groupe supprimé";
+  static const String deleteGroup = "Supprimer le groupe ?";
+  static const String deletedGroup = "Groupe supprimé";
+  static const String deleteSchool = "Supprimer l'école ?";
+  static String deletedSchool = "École supprimée";
   static const String deleting = "Suppression";
   static const String deletingError = "Erreur lors de la suppression";
   static const String description = "Description";
   static const String edit = "Modifier";
+  static const String emailRegex = "Email Regex";
   static const String emptyFieldError = "Le nom ne peut pas être vide";
   static const String error = "Erreur";
-  static const String loaningAssociation = "Association de prêt";
+  static const String loaningGroup = "Groupe de prêt";
   static const String looking = "Recherche";
   static const String members = "Membres";
   static const String modifyModuleVisibility =
       "Modifier la visibilité des modules";
   static const String name = "Nom";
   static const String noMoreLoaner = "Aucun prêteur n'est disponible";
-  static const String removeAssociationMember =
-      "Supprimer le membre de l'association ?";
-  static const String updatedAssociation = "Groupe modifié";
-  static const String updatingError = "Erreur lors de la modification";
-
-  static const String emailRegex = "Email Regex";
-
   static const String noSchool = "Sans école";
-
+  static const String removeGroupMember = "Supprimer le membre du groupe ?";
   static const String schools = "Écoles";
-
+  static const String updatedGroup = "Groupe modifié";
+  static const String updatingError = "Erreur lors de la modification";
   static const String visibilities = "Visibilités";
-  static const String accountTypes = "Types de compte";
-
-  static const String groups = "Groupes";
 }

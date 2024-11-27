@@ -200,7 +200,7 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                         ),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),

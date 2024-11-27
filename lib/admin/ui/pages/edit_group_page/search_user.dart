@@ -109,8 +109,7 @@ class SearchUser extends HookConsumerWidget {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) => CustomDialogBox(
-                            descriptions:
-                                AdminTextConstants.removeAssociationMember,
+                            descriptions: AdminTextConstants.removeGroupMember,
                             title: AdminTextConstants.deleting,
                             onYes: () async {
                               await tokenExpireWrapper(ref, () async {
@@ -133,7 +132,7 @@ class SearchUser extends HookConsumerWidget {
                                   );
                                   displayToastWithContext(
                                     TypeMsg.msg,
-                                    AdminTextConstants.updatedAssociation,
+                                    AdminTextConstants.updatedGroup,
                                   );
                                 } else {
                                   displayToastWithContext(
