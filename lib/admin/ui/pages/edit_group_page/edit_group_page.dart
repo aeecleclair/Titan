@@ -110,7 +110,7 @@ class EditGroupPage extends HookConsumerWidget {
                                 QR.back();
                                 displayToastWithContext(
                                   TypeMsg.msg,
-                                  AdminTextConstants.updatedAssociation,
+                                  AdminTextConstants.updatedGroup,
                                 );
                               } else {
                                 displayToastWithContext(

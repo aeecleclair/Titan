@@ -39,7 +39,7 @@ class AddLoanerPage extends HookConsumerWidget {
                 child: Column(
                   children: [
                     const AlignLeftText(
-                      AdminTextConstants.addLoaningAssociation,
+                      AdminTextConstants.addLoaningGroup,
                     ),
                     const SizedBox(height: 30),
                     AsyncChild(

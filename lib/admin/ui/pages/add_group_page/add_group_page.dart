@@ -37,7 +37,7 @@ class AddGroupPage extends HookConsumerWidget {
             key: key,
             child: Column(
               children: [
-                const AlignLeftText(AdminTextConstants.addAssociation),
+                const AlignLeftText(AdminTextConstants.addGroup),
                 const SizedBox(height: 30),
                 TextEditing(controller: name, label: AdminTextConstants.name),
                 TextEditing(
@@ -58,7 +58,7 @@ class AddGroupPage extends HookConsumerWidget {
                         QR.back();
                         displayToastWithContext(
                           TypeMsg.msg,
-                          AdminTextConstants.addedAssociation,
+                          AdminTextConstants.addedGroup,
                         );
                       } else {
                         displayToastWithContext(
