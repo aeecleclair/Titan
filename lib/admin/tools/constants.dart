@@ -28,8 +28,7 @@ class AdminTextConstants {
   static const String loaningGroup = "Groupe de prêt";
   static const String looking = "Recherche";
   static const String members = "Membres";
-  static const String modifyModuleVisibility =
-      "Modifier la visibilité des modules";
+  static const String modifyModuleVisibility = "Visibilité des modules";
   static const String name = "Nom";
   static const String noMoreLoaner = "Aucun prêteur n'est disponible";
   static const String noSchool = "Sans école";
