@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/class/school.dart';
+import 'package:myecl/admin/ui/components/item_card_ui.dart';
 import 'package:myecl/admin/ui/pages/school_page/school_button.dart';
-import 'package:myecl/admin/ui/pages/main_page/card_ui.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
@@ -20,7 +20,7 @@ class SchoolUi extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return CardUi(
+    return ItemCardUi(
       children: [
         const SizedBox(width: 10),
         Expanded(

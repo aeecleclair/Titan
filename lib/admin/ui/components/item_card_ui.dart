@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class CardUi extends StatelessWidget {
+class ItemCardUi extends StatelessWidget {
   final List<Widget> children;
-  const CardUi({super.key, required this.children});
+  const ItemCardUi({super.key, required this.children});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class CardUi extends StatelessWidget {
         ],
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: children,
       ),
     );
