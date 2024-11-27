@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class AssociationButton extends StatelessWidget {
+class GroupButton extends StatelessWidget {
   final Widget child;
   final Color gradient1;
   final Color gradient2;
-  const AssociationButton({
+  const GroupButton({
     super.key,
     required this.child,
     required this.gradient1,

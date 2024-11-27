@@ -21,10 +21,25 @@ class ModuleVisibilityRepository extends Repository {
     return true;
   }
 
+  Future<bool> addAccountTypeToModule(
+    String root,
+    String allowedAccounTypes,
+  ) async {
+    await create({'root': root, 'allowed_account_type': allowedAccounTypes});
+    return true;
+  }
+
   Future<bool> deleteGroupAccessForModule(
     String root,
     String allowedGroupId,
   ) async {
-    return await delete("$root/$allowedGroupId");
+    return await delete("$root/groups/$allowedGroupId");
+  }
+
+  Future<bool> deleteAccountTypeAccessForModule(
+    String root,
+    String allowedAccounTypes,
+  ) async {
+    return await delete("$root/account-types/$allowedAccounTypes");
   }
 }

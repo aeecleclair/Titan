@@ -9,6 +9,7 @@ class Member extends SimpleUser {
     required super.firstname,
     required super.nickname,
     required super.id,
+    required super.accountType,
     required this.role,
   });
 
@@ -18,6 +19,7 @@ class Member extends SimpleUser {
     String? firstname,
     String? nickname,
     String? id,
+    String? accountType,
     String? role,
   }) {
     return Member(
@@ -25,6 +27,7 @@ class Member extends SimpleUser {
       firstname: firstname ?? this.firstname,
       nickname: nickname ?? this.nickname,
       id: id ?? this.id,
+      accountType: accountType ?? this.accountType,
       role: role ?? this.role,
     );
   }
@@ -46,6 +49,7 @@ class Member extends SimpleUser {
           ? capitaliseAll(user['nickname'])
           : null,
       id: user['id'],
+      accountType: user['account_type'],
       role: capitaliseAll(map['role']),
     );
   }
@@ -56,6 +60,7 @@ class Member extends SimpleUser {
       firstname: user.firstname,
       nickname: user.nickname,
       id: user.id,
+      accountType: user.accountType,
       role: role,
     );
   }
@@ -66,6 +71,7 @@ class Member extends SimpleUser {
       firstname: '',
       nickname: '',
       id: '',
+      accountType: 'external',
       role: '',
     );
   }

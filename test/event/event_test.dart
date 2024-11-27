@@ -95,7 +95,7 @@ void main() {
       );
       expect(
         event.toString(),
-        'Event{id: 1, name: Event 1, organizer: 1, start: 2021-01-01 00:00:00.000Z, end: 2021-01-01 00:00:00.000Z, allDay: false, location: Location 1, type: CalendarEventType.eventAE, description: Description 1, recurrenceRule: , applicantId: 1, applicant: Applicant{name: Nom, firstname: Prénom, nickname: null, id: 1, email: empty@ecl.ec-lyon.fr, promo: null, phone: null}, decision: Decision.approved',
+        'Event{id: 1, name: Event 1, organizer: 1, start: 2021-01-01 00:00:00.000Z, end: 2021-01-01 00:00:00.000Z, allDay: false, location: Location 1, type: CalendarEventType.eventAE, description: Description 1, recurrenceRule: , applicantId: 1, applicant: Applicant{name: Nom, firstname: Prénom, nickname: null, id: 1, email: empty@ecl.ec-lyon.fr, promo: null, phone: null, accountType: external}, decision: Decision.approved',
       );
     });
 
@@ -118,6 +118,7 @@ void main() {
           "name": "Last name 1",
           "nickname": null,
           "email": "email",
+          "account_type": "external",
           "phone": null,
           "promo": null,
         },
@@ -145,6 +146,7 @@ void main() {
           "name": "Last name 1",
           "nickname": null,
           "email": "email",
+          "account_type": "external",
           "phone": null,
           "promo": null,
         },

@@ -11,6 +11,7 @@ class User {
     required this.nickname,
     required this.id,
     required this.email,
+    required this.accountType,
     required this.birthday,
     required this.promo,
     required this.floor,
@@ -23,6 +24,7 @@ class User {
   late final String? nickname;
   late final String id;
   late final String email;
+  late final String accountType;
   late final DateTime? birthday;
   late final int? promo;
   late final String? floor;
@@ -38,6 +40,7 @@ class User {
         : null;
     id = json['id'];
     email = json['email'];
+    accountType = json['account_type'];
     birthday = json['birthday'] != null
         ? processDateFromAPIWithoutHour(json['birthday'])
         : null;
@@ -58,6 +61,7 @@ class User {
     data['nickname'] = nickname;
     data['id'] = id;
     data['email'] = email;
+    data['account_type'] = accountType;
     data['birthday'] =
         birthday != null ? processDateToAPIWithoutHour(birthday!) : null;
     data['promo'] = promo;
@@ -74,6 +78,7 @@ class User {
     nickname = null;
     id = '';
     email = 'empty@ecl.ec-lyon.fr';
+    accountType = 'external';
     birthday = normalizedDate(DateTime.now());
     promo = null;
     floor = capitalize(Floors.values.first.toString().split('.').last);
@@ -88,6 +93,7 @@ class User {
     String? nickname,
     String? id,
     String? email,
+    String? accountType,
     DateTime? birthday,
     int? promo,
     String? floor,
@@ -101,6 +107,7 @@ class User {
       nickname: nickname,
       id: id ?? this.id,
       email: email ?? this.email,
+      accountType: accountType ?? this.accountType,
       birthday: birthday ?? this.birthday,
       promo: promo,
       floor: floor ?? this.floor,
@@ -116,6 +123,7 @@ class User {
       firstname: firstname,
       nickname: nickname,
       id: id,
+      accountType: accountType,
     );
   }
 
@@ -128,7 +136,7 @@ class User {
 
   @override
   String toString() {
-    return "User {name: $name, firstname: $firstname, nickname: $nickname, id: $id, email: $email, birthday: $birthday, promo: $promo, floor: $floor, phone: $phone, createdOn: $createdOn, groups: $groups}";
+    return "User {name: $name, firstname: $firstname, nickname: $nickname, id: $id, email: $email, accountType: $accountType, birthday: $birthday, promo: $promo, floor: $floor, phone: $phone, createdOn: $createdOn, groups: $groups}";
   }
 
   Applicant toApplicant() {
@@ -137,6 +145,7 @@ class User {
       firstname: firstname,
       nickname: nickname,
       id: id,
+      accountType: accountType,
       email: email,
       promo: promo,
       phone: '',
