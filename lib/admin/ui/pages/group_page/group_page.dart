@@ -5,8 +5,8 @@ import 'package:myecl/admin/providers/group_id_provider.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/router.dart';
 import 'package:myecl/admin/ui/admin.dart';
+import 'package:myecl/admin/ui/components/item_card_ui.dart';
 import 'package:myecl/admin/ui/pages/group_page/group_ui.dart';
-import 'package:myecl/admin/ui/pages/main_page/card_ui.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
@@ -64,7 +64,7 @@ class GroupsPage extends HookConsumerWidget {
                                 AdminRouter.addGroup,
                           );
                         },
-                        child: CardUi(
+                        child: ItemCardUi(
                           children: [
                             const Spacer(),
                             HeroIcon(
@@ -84,7 +84,7 @@ class GroupsPage extends HookConsumerWidget {
                                 AdminRouter.addLoaner,
                           );
                         },
-                        child: CardUi(
+                        child: ItemCardUi(
                           children: [
                             const Spacer(),
                             Stack(

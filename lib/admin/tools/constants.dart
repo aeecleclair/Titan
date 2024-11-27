@@ -33,6 +33,10 @@ class AdminTextConstants {
   static const String emailRegex = "Email Regex";
 
   static const String noSchool = "Sans école";
+
+  static const String schools = "Écoles";
+
+  static const String visibilities = "Visibilités";
   static const String accountTypes = "Types de compte";
 
   static const String groups = "Groupes";
