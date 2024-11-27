@@ -110,7 +110,10 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
         }
       }
     }
-    state = modules;
+    for (Module module in toDelete) {
+      allModules.remove(module);
+    }
+    state = allModules;
   }
 
   void sortModules() {
