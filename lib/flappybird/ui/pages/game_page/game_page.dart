@@ -16,6 +16,7 @@ import 'package:myecl/flappybird/ui/pages/game_page/pipe_handler.dart';
 import 'package:myecl/flappybird/ui/pages/game_page/score.dart';
 import 'package:myecl/flappybird/ui/pages/game_page/start_screen.dart';
 import 'package:myecl/drawer/providers/theme_provider.dart';
+import 'package:myecl/flappybird/tools/constants.dart';
 
 import 'bird.dart';
 
@@ -55,7 +56,8 @@ class GamePage extends HookConsumerWidget {
                 child: Text(
                   'Game over!'.toUpperCase(),
                   style: GoogleFonts.silkscreen(
-                    textStyle: const TextStyle(color: Colors.white),
+                    textStyle:
+                        TextStyle(color: FlappyBirdColors(isDarkTheme).text),
                   ),
                 ),
               ),
@@ -63,15 +65,15 @@ class GamePage extends HookConsumerWidget {
                 Container(
                   margin: const EdgeInsets.only(bottom: 10),
                   child: MaterialButton(
-                    color: Colors.grey[100],
+                    color: FlappyBirdColors(isDarkTheme).text,
                     onPressed: () {
                       birdNotifier.resetBird();
                       pipeListNotifier.clearPipe();
                       Navigator.pop(context);
                     },
-                    child: const Icon(
+                    child: Icon(
                       Icons.refresh,
-                      color: Colors.brown,
+                      color: FlappyBirdColors(isDarkTheme).land,
                     ),
                   ),
                 ),
@@ -138,7 +140,7 @@ class GamePage extends HookConsumerWidget {
                     }
                   },
                   child: Container(
-                    color: isDarkTheme ? Colors.blue[900] : Colors.blue,
+                    color: FlappyBirdColors(isDarkTheme).sky,
                     child: Stack(
                       children: [
                         const BirdDisplay(),

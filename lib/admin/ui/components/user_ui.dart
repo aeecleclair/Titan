@@ -31,7 +31,7 @@ class UserUi extends HookConsumerWidget {
                 gradient: LinearGradient(
                   colors: [
                     Theme.of(context).colorScheme.secondaryContainer,
-                    Theme.of(context).colorScheme.secondary
+                    Theme.of(context).colorScheme.secondary,
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
