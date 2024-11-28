@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myecl/flappybird/class/score.dart';
-import 'package:myecl/drawer/providers/theme_provider.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
 import 'package:myecl/flappybird/tools/constants.dart';
 
 class LeaderBoardItem extends ConsumerWidget {

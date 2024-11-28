@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/flappybird/providers/bird_provider.dart';
 import 'package:myecl/flappybird/providers/current_best_score.dart';
-import 'package:myecl/drawer/providers/theme_provider.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
 import 'package:myecl/flappybird/tools/constants.dart';
 
 class GameScore extends HookConsumerWidget {

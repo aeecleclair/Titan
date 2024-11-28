@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/providers/display_quit_popup.dart';
-import 'package:myecl/drawer/providers/theme_provider.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
 import 'package:myecl/drawer/tools/constants.dart';
 
 class BottomBar extends HookConsumerWidget {

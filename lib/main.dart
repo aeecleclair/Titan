@@ -19,7 +19,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/plausible/plausible_observer.dart';
 import 'package:myecl/tools/ui/layouts/app_template.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-import 'package:myecl/drawer/providers/theme_provider.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
 
 void main() async {
   await dotenv.load();

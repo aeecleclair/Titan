@@ -7,7 +7,7 @@ import 'package:myecl/flappybird/providers/user_score_provider.dart';
 import 'package:myecl/flappybird/router.dart';
 import 'package:myecl/tools/ui/widgets/top_bar.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-import 'package:myecl/drawer/providers/theme_provider.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
 import 'package:myecl/flappybird/tools/constants.dart';
 
 class FlappyBirdTemplate extends HookConsumerWidget {

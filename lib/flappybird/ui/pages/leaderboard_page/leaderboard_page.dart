@@ -5,7 +5,7 @@ import 'package:myecl/flappybird/providers/score_list_provider.dart';
 import 'package:myecl/flappybird/providers/user_score_provider.dart';
 import 'package:myecl/flappybird/ui/flappybird_template.dart';
 import 'package:myecl/flappybird/ui/pages/leaderboard_page/leaderboard_item.dart';
-import 'package:myecl/drawer/providers/theme_provider.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
 import 'package:myecl/flappybird/tools/constants.dart';
 
 class LeaderBoardPage extends HookConsumerWidget {

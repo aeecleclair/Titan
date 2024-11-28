@@ -15,7 +15,7 @@ import 'package:myecl/flappybird/ui/flappybird_template.dart';
 import 'package:myecl/flappybird/ui/pages/game_page/pipe_handler.dart';
 import 'package:myecl/flappybird/ui/pages/game_page/score.dart';
 import 'package:myecl/flappybird/ui/pages/game_page/start_screen.dart';
-import 'package:myecl/drawer/providers/theme_provider.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
 import 'package:myecl/flappybird/tools/constants.dart';
 
 import 'bird.dart';
