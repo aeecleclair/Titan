@@ -1,3 +1,6 @@
+//Mettre tous les secondaryFixed en tertiary
+//Theme.of(context).colorScheme.
+
 import 'package:flutter/material.dart';
 
 class AddEditButtonLayout extends StatelessWidget {

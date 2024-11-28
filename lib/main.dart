@@ -19,6 +19,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/plausible/plausible_observer.dart';
 import 'package:myecl/tools/ui/layouts/app_template.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
 
 void main() async {
   await dotenv.load();
@@ -49,6 +50,7 @@ class MyApp extends HookConsumerWidget {
     final navigatorKey = GlobalKey<NavigatorState>();
     final plausible = getPlausible();
     Future(() => animationNotifier.setController(animationController));
+    final isDarkTheme = ref.watch(themeProvider);
 
     final popScope = PopScope(
       canPop: false,
@@ -83,10 +85,69 @@ class MyApp extends HookConsumerWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         theme: ThemeData(
-          primarySwatch: Colors.orange,
-          textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
           brightness: Brightness.light,
+          primarySwatch: Colors.orange,
+          shadowColor:
+              Colors.grey.withOpacity(0.3), // to be used by default for shadows
+          colorScheme: const ColorScheme(
+            brightness: Brightness.light,
+            primary: Colors.white, // main color, mostly for background
+            onPrimary: Colors.black, // for small things on primary
+            secondary: Colors
+                .black, // opposite of the primary, covering larger surface
+            onSecondary: Colors.white, // for small things on secondary
+            tertiary: Colors.grey, // between primary and secondary. Constant
+            error: Colors.red, // self-explanatory. Constant
+            onError:
+                Colors.white, // white stands out well on red. Thus constant
+            surface: Colors.white, // identical to primary
+            onSurface: Colors.black, // identical to onPrimary
+            primaryContainer: Color(
+              0xFFfb6d10,
+            ), // an actual color. For boxes, buttons, etc., to emphasize them. Formerly known as gradient1
+            primaryFixed: Color(
+              0xffeb3e1b,
+            ), // formerly known as gradient2, used mainly for gradients. Slightly farther from primary
+            onPrimaryContainer: Colors
+                .white, // a color that stands out well on primaryContainer
+            secondaryFixed:
+                Color(0xFFDDDDDD), // for discrete shadows on primary
+            secondaryContainer: Color(0xFF222222), // opposite of secondaryFixed
+          ),
+          textTheme: GoogleFonts.latoTextTheme(
+            Theme.of(context)
+                .textTheme
+                .apply(bodyColor: Colors.black, displayColor: Colors.black),
+          ),
         ),
+        darkTheme: ThemeData(
+          brightness: Brightness.dark,
+          primarySwatch: Colors.orange,
+          shadowColor: Colors.grey.withOpacity(0.7),
+          colorScheme: const ColorScheme(
+            brightness: Brightness.dark,
+            primary: Colors.black,
+            onPrimary: Colors.white,
+            secondary: Colors.white,
+            onSecondary: Colors.black,
+            error: Colors.red,
+            onError: Colors.white,
+            tertiary: Colors.grey,
+            surface: Colors.black,
+            onSurface: Colors.white,
+            primaryContainer: Color(0xFFfb6d10),
+            primaryFixed: Color(0xffeb3e1b),
+            onPrimaryContainer: Colors.white,
+            secondaryFixed: Color(0xFF222222),
+            secondaryContainer: Color(0xFFDDDDDD),
+          ),
+          textTheme: GoogleFonts.latoTextTheme(
+            Theme.of(context)
+                .textTheme
+                .apply(bodyColor: Colors.white, displayColor: Colors.white),
+          ),
+        ),
+        themeMode: isDarkTheme ? ThemeMode.dark : ThemeMode.light,
         routeInformationParser: const QRouteInformationParser(),
         builder: (context, child) {
           if (child == null) {

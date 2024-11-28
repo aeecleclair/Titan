@@ -15,9 +15,7 @@ class AdminTemplate extends HookConsumerWidget {
     final meNotifier = ref.watch(asyncUserProvider.notifier);
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-        ),
+        decoration: const BoxDecoration(),
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,

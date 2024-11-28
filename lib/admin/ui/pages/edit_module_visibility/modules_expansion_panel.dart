@@ -33,8 +33,8 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Text(
                   moduleVisibility.root,
-                  style: const TextStyle(
-                    color: Color.fromARGB(255, 0, 0, 0),
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onPrimary,
                     fontSize: 22,
                     fontWeight: FontWeight.w800,
                   ),
@@ -53,8 +53,8 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                           children: [
                             Text(
                               group.name,
-                              style: const TextStyle(
-                                color: Color.fromARGB(255, 0, 0, 0),
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.onPrimary,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
                               ),

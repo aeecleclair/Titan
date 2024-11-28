@@ -72,7 +72,7 @@ class TicketCard extends HookConsumerWidget {
                   });
                 },
                 child: const HeroIcon(HeroIcons.listBullet),
-              )
+              ),
             ],
           ),
         ),

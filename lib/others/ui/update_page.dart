@@ -18,9 +18,10 @@ class UpdatePage extends HookConsumerWidget {
             const Spacer(
               flex: 2,
             ),
-            const HeroIcon(
+            HeroIcon(
               HeroIcons.bellAlert,
               size: 100,
+              color: Theme.of(context).colorScheme.onPrimary,
             ),
             const SizedBox(
               height: 50,
@@ -37,10 +38,10 @@ class UpdatePage extends HookConsumerWidget {
             ),
             Text(
               "${OthersTextConstants.version} $titanVersion",
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w500,
-                color: Colors.black,
+                color: Theme.of(context).colorScheme.onPrimary,
               ),
             ),
             const SizedBox(

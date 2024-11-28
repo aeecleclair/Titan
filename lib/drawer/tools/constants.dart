@@ -14,6 +14,8 @@ class DrawerTextConstants {
   static const String androidAppLink =
       "https://play.google.com/store/apps/details?id=fr.myecl.titan";
   static const String copied = "Copié !";
+  static const String lightMode = "Mode clair";
+  static const String darkMode = "Mode sombre";
   static const String downloadAppOnMobileDevice =
       "Ce site est la version Web de l'application MyECL. Nous vous invitons à télécharger l'application. N'utilisez ce site qu'en cas de problème avec l'application.\n";
   static const String iosAppLink =

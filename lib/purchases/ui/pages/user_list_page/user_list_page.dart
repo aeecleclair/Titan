@@ -76,7 +76,11 @@ class UserListPage extends HookConsumerWidget {
                                 orElse: () {},
                                 data: (ticketId) {
                                   scannedUsersListNotifier.loadUsers(
-                                      seller.id, id, ticketId, tag);
+                                    seller.id,
+                                    id,
+                                    ticketId,
+                                    tag,
+                                  );
                                 },
                               );
                             },

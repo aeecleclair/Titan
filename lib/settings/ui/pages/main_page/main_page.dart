@@ -157,9 +157,12 @@ class SettingsMainPage extends HookConsumerWidget {
                     onTap: () {
                       QR.to(SettingsRouter.root + SettingsRouter.editAccount);
                     },
-                    child: const Text(
+                    child: Text(
                       SettingsTextConstants.editAccount,
-                      style: TextStyle(fontSize: 16, color: Colors.black),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 30),
@@ -177,9 +180,12 @@ class SettingsMainPage extends HookConsumerWidget {
                         );
                       });
                     },
-                    child: const Text(
+                    child: Text(
                       SettingsTextConstants.eventsIcal,
-                      style: TextStyle(fontSize: 16, color: Colors.black),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 50),
@@ -195,9 +201,12 @@ class SettingsMainPage extends HookConsumerWidget {
                         SettingsRouter.root + SettingsRouter.changePassword,
                       );
                     },
-                    child: const Text(
+                    child: Text(
                       SettingsTextConstants.editPassword,
-                      style: TextStyle(fontSize: 16, color: Colors.black),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 50),
@@ -212,9 +221,12 @@ class SettingsMainPage extends HookConsumerWidget {
                       onTap: () {
                         QR.to(SettingsRouter.root + SettingsRouter.logs);
                       },
-                      child: const Text(
+                      child: Text(
                         SettingsTextConstants.logs,
-                        style: TextStyle(fontSize: 16, color: Colors.black),
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 50),
@@ -229,9 +241,12 @@ class SettingsMainPage extends HookConsumerWidget {
                     onTap: () {
                       QR.to(SettingsRouter.root + SettingsRouter.modules);
                     },
-                    child: const Text(
+                    child: Text(
                       SettingsTextConstants.modules,
-                      style: TextStyle(fontSize: 16, color: Colors.black),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 30),
@@ -240,9 +255,12 @@ class SettingsMainPage extends HookConsumerWidget {
                     onTap: () {
                       QR.to(SettingsRouter.root + SettingsRouter.notifications);
                     },
-                    child: const Text(
+                    child: Text(
                       SettingsTextConstants.notifications,
-                      style: TextStyle(fontSize: 16, color: Colors.black),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 50),
@@ -279,18 +297,21 @@ class SettingsMainPage extends HookConsumerWidget {
                         },
                       );
                     },
-                    child: const Text(
+                    child: Text(
                       SettingsTextConstants.detelePersonalData,
-                      style: TextStyle(fontSize: 16, color: Colors.black),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 60),
                   Text(
                     "${SettingsTextConstants.version} $titanVersion",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
-                      color: Colors.black,
+                      color: Theme.of(context).colorScheme.onPrimary,
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -298,10 +319,10 @@ class SettingsMainPage extends HookConsumerWidget {
                     Repository.displayHost,
                     maxLines: 1,
                     minFontSize: 10,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
-                      color: Colors.black,
+                      color: Theme.of(context).colorScheme.onPrimary,
                     ),
                   ),
                   const SizedBox(height: 20),
