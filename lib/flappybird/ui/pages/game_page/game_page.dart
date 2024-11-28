@@ -51,7 +51,7 @@ class GamePage extends HookConsumerWidget {
               Navigator.of(context).pop();
             },
             child: AlertDialog(
-              backgroundColor: Colors.brown,
+              backgroundColor: FlappyBirdColors(isDarkTheme).land,
               title: Center(
                 child: Text(
                   'Game over!'.toUpperCase(),
