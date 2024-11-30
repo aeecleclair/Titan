@@ -53,7 +53,6 @@ class AccountCard extends HookConsumerWidget {
       ],
       title: 'Solde personnel',
       toggle: toggle,
-      value: "348,23 €",
       actionButtons: [
         MainCardButton(
           colors: buttonGradient,
@@ -138,6 +137,13 @@ class AccountCard extends HookConsumerWidget {
           onPressed: () async {},
         ),
       ],
+      child: const Text(
+        "348,23 €",
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 50,
+        ),
+      ),
     );
   }
 }
