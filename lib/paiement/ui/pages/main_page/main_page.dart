@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/paiement/providers/cgu_provider.dart';
+import 'package:myecl/paiement/providers/is_payment_admin.dart';
+import 'package:myecl/paiement/providers/my_history_provider.dart';
 import 'package:myecl/paiement/providers/my_stores_provider.dart';
 import 'package:myecl/paiement/providers/register_provider.dart';
 import 'package:myecl/paiement/providers/should_display_cgu_dialog.dart';
@@ -27,6 +29,9 @@ class PaymentMainPage extends HookConsumerWidget {
     final cguNotifier = ref.read(cguProvider.notifier);
     final registerNotifier = ref.read(registerProvider.notifier);
     final mySellers = ref.watch(myStoresProvider);
+    final mySellersNotifier = ref.read(myStoresProvider.notifier);
+    final myHistoryNotifier = ref.read(myHistoryProvider.notifier);
+    final isAdmin = ref.watch(isPaymentAdminProvider);
     final flipped = useState(true);
 
     final controller = useAnimationController(
@@ -60,7 +65,10 @@ class PaymentMainPage extends HookConsumerWidget {
 
     return PaymentTemplate(
       child: Refresher(
-        onRefresh: () async {},
+        onRefresh: () async {
+          await mySellersNotifier.getMyStores();
+          await myHistoryNotifier.getHistory();
+        },
         child: Stack(
           children: [
             Column(
@@ -71,7 +79,7 @@ class PaymentMainPage extends HookConsumerWidget {
                 AsyncChild(
                   value: mySellers,
                   builder: (context, mySellers) {
-                    if (mySellers.isEmpty) {
+                    if (mySellers.isEmpty && !isAdmin) {
                       return SizedBox(
                         height: 250,
                         width: MediaQuery.of(context).size.width,
@@ -143,6 +151,8 @@ class PaymentMainPage extends HookConsumerWidget {
                       );
                       if (value) {
                         shouldDisplayCguDialogNotifier.update(false);
+                        mySellersNotifier.getMyStores();
+                        myHistoryNotifier.getHistory();
                       }
                     },
                   );
