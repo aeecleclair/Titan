@@ -29,9 +29,7 @@ class Store {
       'id': id,
       'name': name,
       'wallet_id': walletId,
-      'membership': membership == AvailableAssociationMembership.AEECL
-          ? 'aeecl'
-          : 'useecl',
+      'membership': membership.name,
     };
   }
 
