@@ -45,46 +45,50 @@ class StoreCard extends HookConsumerWidget {
       ],
       title: 'Solde associatif',
       actionButtons: [
-        MainCardButton(
-          colors: buttonGradient,
-          icon: HeroIcons.viewfinderCircle,
-          title: "Scanner",
-          onPressed: () async {
-            showModalBottomSheet(
-              context: context,
-              backgroundColor: Colors.transparent,
-              scrollControlDisabledMaxHeightRatio:
-                  (1 - 80 / MediaQuery.of(context).size.height),
-              builder: (context) => const ScanPage(),
-            );
-          },
-        ),
-        MainCardButton(
-          colors: buttonGradient,
-          icon: HeroIcons.userGroup,
-          onPressed: () async {
-            storeAdminListNotifier.getStoreAdminList(store.id);
-            QR.to(PaymentRouter.root + PaymentRouter.storeAdmin);
-          },
-          title: 'Gestion',
-        ),
-        MainCardButton(
-          colors: buttonGradient,
-          icon: HeroIcons.pencilSquare,
-          onPressed: () async {
-            isEditing.value = !isEditing.value;
-          },
-          title: 'Editer',
-        ),
-        MainCardButton(
-          colors: buttonGradient,
-          icon: HeroIcons.wallet,
-          onPressed: () async {
-            selectedMonthNotifier.clearSelectedMonth();
-            QR.to(PaymentRouter.root + PaymentRouter.storeStats);
-          },
-          title: 'Historique',
-        ),
+        if (store.canBank || store.storeAdmin)
+          MainCardButton(
+            colors: buttonGradient,
+            icon: HeroIcons.viewfinderCircle,
+            title: "Scanner",
+            onPressed: () async {
+              showModalBottomSheet(
+                context: context,
+                backgroundColor: Colors.transparent,
+                scrollControlDisabledMaxHeightRatio:
+                    (1 - 80 / MediaQuery.of(context).size.height),
+                builder: (context) => const ScanPage(),
+              );
+            },
+          ),
+        if (store.canManageSellers || store.storeAdmin)
+          MainCardButton(
+            colors: buttonGradient,
+            icon: HeroIcons.userGroup,
+            onPressed: () async {
+              storeAdminListNotifier.getStoreAdminList(store.id);
+              QR.to(PaymentRouter.root + PaymentRouter.storeAdmin);
+            },
+            title: 'Gestion',
+          ),
+        if (store.canManageSellers || store.storeAdmin)
+          MainCardButton(
+            colors: buttonGradient,
+            icon: HeroIcons.pencilSquare,
+            onPressed: () async {
+              isEditing.value = !isEditing.value;
+            },
+            title: 'Editer',
+          ),
+        if (store.canSeeHistory || store.storeAdmin)
+          MainCardButton(
+            colors: buttonGradient,
+            icon: HeroIcons.wallet,
+            onPressed: () async {
+              selectedMonthNotifier.clearSelectedMonth();
+              QR.to(PaymentRouter.root + PaymentRouter.storeStats);
+            },
+            title: 'Historique',
+          ),
       ],
       child: isEditing.value
           ? Row(
