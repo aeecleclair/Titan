@@ -12,7 +12,7 @@ import 'package:myecl/settings/ui/pages/main_page/settings_item.dart';
 import 'package:myecl/settings/ui/settings.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/widgets/dialog.dart';
+import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
