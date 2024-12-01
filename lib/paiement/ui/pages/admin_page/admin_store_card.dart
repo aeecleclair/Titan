@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/paiement/class/store.dart';
+import 'package:myecl/paiement/providers/store_admin_list_provider.dart';
 import 'package:myecl/paiement/providers/store_provider.dart';
 import 'package:myecl/paiement/providers/stores_list_provider.dart';
 import 'package:myecl/paiement/router.dart';
+import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
+import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdminStoreCard extends ConsumerWidget {
@@ -17,6 +21,12 @@ class AdminStoreCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final storeListNotifier = ref.watch(storeListProvider.notifier);
     final storeNotifier = ref.watch(storeProvider.notifier);
+    final storeAdminListNotifier = ref.watch(storeAdminListProvider.notifier);
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -47,7 +57,15 @@ class AdminStoreCard extends ConsumerWidget {
               ),
               const Spacer(),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  storeNotifier.updateStore(store);
+                  storeAdminListNotifier.getStoreAdminList(store.id);
+                  QR.to(
+                    PaymentRouter.root +
+                        PaymentRouter.admin +
+                        PaymentRouter.storeAdmin,
+                  );
+                },
                 child: const CardButton(
                   colors: [
                     Color.fromARGB(255, 6, 75, 75),
@@ -83,7 +101,31 @@ class AdminStoreCard extends ConsumerWidget {
               const SizedBox(width: 10),
               WaitingButton(
                 onTap: () async {
-                  await storeListNotifier.deleteStore(store);
+                  await showDialog(
+                    context: context,
+                    builder: (context) => CustomDialogBox(
+                      title: "Supprimer l'association",
+                      descriptions:
+                          "Voulez-vous vraiment supprimer cette association ?",
+                      onYes: () {
+                        tokenExpireWrapper(ref, () async {
+                          final value =
+                              await storeListNotifier.deleteStore(store);
+                          if (value) {
+                            displayToastWithContext(
+                              TypeMsg.msg,
+                              "Association supprimée",
+                            );
+                          } else {
+                            displayToastWithContext(
+                              TypeMsg.error,
+                              "Impossible de supprimer l'association",
+                            );
+                          }
+                        });
+                      },
+                    ),
+                  );
                 },
                 builder: (child) => CardButton(
                   colors: const [
