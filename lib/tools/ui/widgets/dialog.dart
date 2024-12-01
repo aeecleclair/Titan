@@ -42,7 +42,7 @@ class CustomDialogBox extends StatelessWidget {
               borderRadius: BorderRadius.circular(CustomDialogBox._padding),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.shade700,
+                  color: Colors.grey.shade400,
                   offset: const Offset(0, 5),
                   blurRadius: 5,
                 ),
