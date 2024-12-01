@@ -5,7 +5,7 @@ import 'package:myecl/settings/providers/logs_provider.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/log_page/log_card.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/widgets/dialog.dart';
+import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 
 class LogTab extends HookConsumerWidget {
   const LogTab({super.key});
