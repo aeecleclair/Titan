@@ -11,6 +11,29 @@ class StoreAdminListNotifier extends ListNotifier<Seller> {
   Future<AsyncValue<List<Seller>>> getStoreAdminList(String storeId) async {
     return await loadList(() => storeAdminsRepository.getStoreAdmins(storeId));
   }
+
+  Future<bool> createStoreAdmin(Seller seller) async {
+    return await add(
+      (seller) => storeAdminsRepository.createSellerAdmin(
+        seller.storeId,
+        seller.userId,
+      ),
+      seller,
+    );
+  }
+
+  Future<bool> deleteStoreAdmin(Seller seller) async {
+    return await delete(
+      (_) => storeAdminsRepository.deleteStoreAdmin(
+        seller.storeId,
+        seller.userId,
+      ),
+      (sellers, seller) =>
+          sellers.where((s) => s.userId != seller.userId).toList(),
+      seller.userId,
+      seller,
+    );
+  }
 }
 
 final storeAdminListProvider =
