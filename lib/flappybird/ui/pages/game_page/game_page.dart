@@ -105,6 +105,7 @@ class GamePage extends HookConsumerWidget {
             Score(
               user: newBird.user,
               value: newBird.score,
+              key: Score.genKey(newBird.score),
               date: DateTime.now(),
               position: 0,
             ),
