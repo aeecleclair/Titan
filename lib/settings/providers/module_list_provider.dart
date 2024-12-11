@@ -11,6 +11,7 @@ import 'package:collection/collection.dart';
 import 'package:myecl/event/router.dart';
 import 'package:myecl/home/router.dart';
 import 'package:myecl/loan/router.dart';
+import 'package:myecl/CMM/router.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/ph/router.dart';
 import 'package:myecl/purchases/router.dart';
@@ -48,6 +49,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     EventRouter.module,
     VoteRouter.module,
     RaffleRouter.module,
+    CMMRouter.module,
   ];
   ModulesNotifier() : super([]);
 
