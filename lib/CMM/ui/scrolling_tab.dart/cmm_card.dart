@@ -24,7 +24,7 @@ class CMMCard extends ConsumerWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
-            border: Border.all(color: Colors.orange, width: 4),
+            border: Border.all(color: Colors.grey, width: 2),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -58,64 +58,75 @@ class CMMCard extends ConsumerWidget {
                             print("pressed");
                           },
                           icon: const Icon(
-                            Icons.arrow_upward,
-                            size: 20, // Ajustez la taille de l'icône
+                            Icons.keyboard_double_arrow_up,
+                            size: 35,
+                            color: Colors.green, // Ajustez la taille de l'icône
                           ),
                           padding: EdgeInsets.zero,
-                          constraints: BoxConstraints(
+                          constraints: const BoxConstraints(
                             minWidth: 40, // Largeur du bouton
                             minHeight: 40, // Hauteur du bouton
                           ),
                         ),
-                        Text("500"),
+                        const Text(
+                          "+500",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                         IconButton(
                           onPressed: () {
                             print("pressed");
                           },
                           icon: const Icon(
-                            Icons.arrow_downward,
-                            size: 20, // Ajustez la taille de l'icône
+                            Icons.keyboard_double_arrow_down,
+                            size: 35, // Ajustez la taille de l'icône
                           ),
                           padding: EdgeInsets.zero,
-                          constraints: BoxConstraints(
+                          constraints: const BoxConstraints(
                             minWidth: 40, // Largeur du bouton
                             minHeight: 40, // Hauteur du bouton
                           ),
                         ),
                         if (isAdmin)
-                          ElevatedButton(
+                          IconButton(
                             onPressed: () {
                               print("pressed");
                             },
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor: Colors.black,
-                              shape: const CircleBorder(),
-                            ),
-                            child: Icon(
+                            icon: const Icon(
                               Icons.delete,
-                              size: 10,
+                              size: 30, // Ajustez la taille de l'icône
+                            ),
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(
+                              minWidth: 40, // Largeur du bouton
+                              minHeight: 40, // Hauteur du bouton
                             ),
                           ),
                         if (isAdmin)
-                          ElevatedButton(
+                          IconButton(
                             onPressed: () {
                               print("pressed");
                             },
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor: Colors.black,
-                              shape: const CircleBorder(),
-                            ),
-                            child: Icon(
+                            icon: const Icon(
                               Icons.block,
-                              size: 10,
+                              size: 30, // Ajustez la taille de l'icône
+                            ),
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(
+                              minWidth: 40, // Largeur du bouton
+                              minHeight: 40, // Hauteur du bouton
                             ),
                           ),
                       ],
                     ),
-                    Spacer(),
-                    Text("Foucauld Bellanger (Ñool)"),
+                    const Spacer(),
+                    const Text(
+                      "Ñool",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
                     AsyncChild(
                       value: profilePicture,
                       builder: (context, file) => Row(
@@ -135,7 +146,7 @@ class CMMCard extends ConsumerWidget {
                                   ],
                                 ),
                                 child: CircleAvatar(
-                                  radius: 15,
+                                  radius: 20,
                                   backgroundImage: file.isEmpty
                                       ? AssetImage(getTitanLogo())
                                       : Image.memory(file).image,
@@ -149,6 +160,9 @@ class CMMCard extends ConsumerWidget {
                   ],
                 ),
               ),
+              const SizedBox(
+                height: 10,
+              )
             ],
           ),
         ),
