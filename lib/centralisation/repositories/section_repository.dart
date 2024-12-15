@@ -4,7 +4,7 @@ import 'package:myecl/tools/repository/repository.dart';
 class SectionRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final host = "https://centralisation.eclair.ec-lyon.fr/links.json";
+  final host = "https://centralisation.myecl.fr/links.json";
 
   Future<List<Section>> getSectionList() async {
     final data = await getOne("", decode: true) as Map<String, dynamic>;
