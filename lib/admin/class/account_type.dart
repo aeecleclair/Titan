@@ -17,4 +17,16 @@ class AccountType {
   String toString() {
     return 'AccountType(type: $type)';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is AccountType && other.type == type;
+  }
+
+  @override
+  int get hashCode {
+    return type.hashCode;
+  }
 }

@@ -48,7 +48,10 @@ class EditModulesVisibilityPage extends HookConsumerWidget {
                               groups.isEmpty ||
                               accountTypes.isEmpty
                           ? const Loader()
-                          : ModulesExpansionPanel(modules: modules),
+                          : ModulesExpansionPanel(
+                              modules: modules,
+                              accountTypes: accountTypes,
+                            ),
                     ),
                   ],
                 ),

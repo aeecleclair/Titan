@@ -1,3 +1,5 @@
+import 'package:myecl/admin/class/account_type.dart';
+
 class ModuleVisibility {
   ModuleVisibility({
     required this.root,
@@ -6,12 +8,14 @@ class ModuleVisibility {
   });
   late final String root;
   late final List<String> allowedGroupIds;
-  late final List<String> allowedAccountTypes;
+  late final List<AccountType> allowedAccountTypes;
 
   ModuleVisibility.fromJson(Map<String, dynamic> json) {
     root = json['root'];
     allowedGroupIds = List<String>.from(json['allowed_group_ids']);
-    allowedAccountTypes = List<String>.from(json['allowed_account_types']);
+    allowedAccountTypes = List.from(json['allowed_account_types'])
+        .map((x) => AccountType(type: x))
+        .toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -25,7 +29,7 @@ class ModuleVisibility {
   ModuleVisibility copyWith({
     String? root,
     List<String>? allowedGroupIds,
-    List<String>? allowedAccountTypes,
+    List<AccountType>? allowedAccountTypes,
   }) =>
       ModuleVisibility(
         root: root ?? this.root,

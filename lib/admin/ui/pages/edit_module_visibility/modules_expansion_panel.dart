@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/class/account_type.dart';
 import 'package:myecl/admin/class/module_visibility.dart';
 import 'package:myecl/admin/providers/all_account_types_list_provider.dart';
 import 'package:myecl/admin/providers/all_groups_list_provider.dart';
@@ -10,17 +11,18 @@ import 'package:myecl/admin/tools/constants.dart';
 
 class ModulesExpansionPanel extends HookConsumerWidget {
   final List<ModuleVisibility> modules;
+  final List<AccountType> accountTypes;
 
   const ModulesExpansionPanel({
     super.key,
     required this.modules,
+    required this.accountTypes,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final modulesNotifier = ref.watch(moduleVisibilityListProvider.notifier);
     final groups = ref.watch(allGroupList);
-    final accountTypes = ref.watch(allAccountTypes);
     final isExpandedList = ref.watch(isExpandedListProvider);
     final isExpandedListNotifier = ref.watch(isExpandedListProvider.notifier);
     return ExpansionPanelList(
@@ -75,7 +77,7 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                               ),
                               const Spacer(),
                               moduleVisibility.allowedAccountTypes
-                                      .contains(accountType.type)
+                                      .contains(accountType)
                                   ? GestureDetector(
                                       onTap: () async {
                                         final newModuleVisibility =
@@ -83,8 +85,7 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                                           allowedAccountTypes: moduleVisibility
                                               .allowedAccountTypes
                                               .where(
-                                                (type) =>
-                                                    type != accountType.type,
+                                                (type) => type != accountType,
                                               )
                                               .toList(),
                                         );
@@ -105,7 +106,7 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                                             moduleVisibility.copyWith(
                                           allowedAccountTypes: moduleVisibility
                                                   .allowedAccountTypes +
-                                              [accountType.type],
+                                              [accountType],
                                         );
                                         await modulesNotifier
                                             .addAccountTypeToModule(
@@ -200,7 +201,7 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                         ),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
