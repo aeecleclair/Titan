@@ -122,7 +122,8 @@ class AdminPage extends HookConsumerWidget {
                                             final result =
                                                 await associationListNotifier
                                                     .deleteAssociation(
-                                                        association);
+                                              association,
+                                            );
                                             if (result) {
                                               displayToastWithContext(
                                                 TypeMsg.msg,

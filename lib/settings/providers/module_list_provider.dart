@@ -23,7 +23,6 @@ final modulesProvider =
     StateNotifierProvider<ModulesNotifier, List<Module>>((ref) {
   final myModulesRoot =
       ref.watch(allMyModuleRootList).map((root) => '/$root').toList();
-  print(myModulesRoot);
 
   ModulesNotifier modulesNotifier = ModulesNotifier();
   modulesNotifier.loadModules(myModulesRoot);
