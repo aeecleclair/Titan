@@ -51,7 +51,7 @@ class SimpleUser {
 
   @override
   String toString() {
-    return "SimpleUser {name: $name, firstname: $firstname, nickname: $nickname, id: $id, accountType: $accountType}";
+    return "SimpleUser {name: $name, firstname: $firstname, nickname: $nickname, id: $id, accountType: ${accountType.type}}";
   }
 
   SimpleUser copyWith({

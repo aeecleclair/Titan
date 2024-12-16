@@ -1,3 +1,4 @@
+import 'package:myecl/admin/class/account_type.dart';
 import 'package:myecl/user/class/list_users.dart';
 
 class Member extends SimpleUser {
@@ -36,7 +37,7 @@ class Member extends SimpleUser {
     String? firstname,
     String? nickname,
     String? id,
-    String? accountType,
+    AccountType? accountType,
     String? email,
     String? phone,
     int? promotion,

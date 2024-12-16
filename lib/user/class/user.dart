@@ -137,7 +137,7 @@ class User {
 
   @override
   String toString() {
-    return "User {name: $name, firstname: $firstname, nickname: $nickname, id: $id, email: $email, accountType: $accountType, birthday: $birthday, promo: $promo, floor: $floor, phone: $phone, createdOn: $createdOn, groups: $groups}";
+    return "User {name: $name, firstname: $firstname, nickname: $nickname, id: $id, email: $email, accountType: ${accountType.type}, birthday: $birthday, promo: $promo, floor: $floor, phone: $phone, createdOn: $createdOn, groups: $groups}";
   }
 
   Applicant toApplicant() {

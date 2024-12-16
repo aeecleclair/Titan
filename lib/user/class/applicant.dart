@@ -64,6 +64,6 @@ class Applicant extends SimpleUser {
 
   @override
   String toString() {
-    return 'Applicant{name: $name, firstname: $firstname, nickname: $nickname, id: $id, email: $email, promo: $promo, phone: $phone, accountType: $accountType}';
+    return 'Applicant{name: $name, firstname: $firstname, nickname: $nickname, id: $id, email: $email, promo: $promo, phone: $phone, accountType: ${accountType.type}}';
   }
 }
