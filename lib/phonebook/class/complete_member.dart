@@ -1,3 +1,4 @@
+import 'package:myecl/admin/class/account_type.dart';
 import 'package:myecl/phonebook/class/membership.dart';
 import 'member.dart';
 
@@ -16,7 +17,7 @@ class CompleteMember {
       firstname: json['firstname'],
       nickname: json['nickname'] ?? "",
       id: json['id'],
-      accountType: json['account_type'],
+      accountType: AccountType(type: json['account_type']),
       email: json['email'],
       phone: json['phone'],
       promotion: json['promo'] ?? 0,

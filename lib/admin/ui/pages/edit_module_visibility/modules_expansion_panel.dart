@@ -3,7 +3,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/class/account_type.dart';
 import 'package:myecl/admin/class/module_visibility.dart';
-import 'package:myecl/admin/providers/all_account_types_list_provider.dart';
 import 'package:myecl/admin/providers/all_groups_list_provider.dart';
 import 'package:myecl/admin/providers/is_expanded_list_provider.dart';
 import 'package:myecl/admin/providers/module_visibility_list_provider.dart';
