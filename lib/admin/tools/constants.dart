@@ -29,4 +29,8 @@ class AdminTextConstants {
       "Supprimer le membre de l'association ?";
   static const String updatedAssociation = "Association modifiée";
   static const String updatingError = "Erreur lors de la modification";
+
+  static const String accountTypes = "Types de compte";
+
+  static const String groups = "Groupes";
 }

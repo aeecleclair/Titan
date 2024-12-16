@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/providers/all_account_types_list_provider.dart';
 import 'package:myecl/admin/providers/all_groups_list_provider.dart';
 import 'package:myecl/admin/providers/module_visibility_list_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
@@ -16,6 +17,7 @@ class EditModulesVisibilityPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final modulesProvider = ref.watch(moduleVisibilityListProvider);
     final groups = ref.watch(allGroupList);
+    final accountTypes = ref.watch(allAccountTypes);
     return AdminTemplate(
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -42,10 +44,14 @@ class EditModulesVisibilityPage extends HookConsumerWidget {
                     ),
                     AsyncChild(
                       value: modulesProvider,
-                      builder: (context, modules) =>
-                          modules.isEmpty || groups.isEmpty
-                              ? const Loader()
-                              : ModulesExpansionPanel(modules: modules),
+                      builder: (context, modules) => modules.isEmpty ||
+                              groups.isEmpty ||
+                              accountTypes.isEmpty
+                          ? const Loader()
+                          : ModulesExpansionPanel(
+                              modules: modules,
+                              accountTypes: accountTypes,
+                            ),
                     ),
                   ],
                 ),

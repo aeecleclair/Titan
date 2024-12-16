@@ -57,7 +57,7 @@ void main() {
       final cash = Cash.empty();
       expect(
         cash.toString(),
-        'Cash{balance: 0.0, user: SimpleUser {name: Nom, firstname: Prénom, nickname: null, id: }}',
+        'Cash{balance: 0.0, user: SimpleUser {name: Nom, firstname: Prénom, nickname: null, id: , accountType: external}}',
       );
     });
 
@@ -72,6 +72,7 @@ void main() {
           "birthday": "1999-01-01",
           "created_on": "2021-01-01",
           "email": "email",
+          "account_type": "account_type",
           "floor": "floor",
           "groups": [],
           "phone": "phone",
@@ -92,6 +93,7 @@ void main() {
           "firstname": "Firstname",
           "nickname": null,
           "id": "id",
+          "account_type": "external",
         },
       });
       expect(cash.toJson(), {
@@ -249,7 +251,7 @@ void main() {
       );
       expect(
         order.toString(),
-        'Order{id: id, orderingDate: 2021-01-01 00:00:00.000, deliveryDate: 2021-01-01 00:00:00.000, productsDetail: [id], productsQuantity: [0], deliveryId: delivery_id, products: [Product{id: id, name: name, price: 0.0, quantity: 0, category: }], amount: 0.0, lastAmount: 0.0, collectionSlot: CollectionSlot.midDay, user: SimpleUser {name: Name, firstname: Prénom, nickname: null, id: }, expanded: false}',
+        'Order{id: id, orderingDate: 2021-01-01 00:00:00.000, deliveryDate: 2021-01-01 00:00:00.000, productsDetail: [id], productsQuantity: [0], deliveryId: delivery_id, products: [Product{id: id, name: name, price: 0.0, quantity: 0, category: }], amount: 0.0, lastAmount: 0.0, collectionSlot: CollectionSlot.midDay, user: SimpleUser {name: Name, firstname: Prénom, nickname: null, id: , accountType: external}, expanded: false}',
       );
     });
 
@@ -273,6 +275,7 @@ void main() {
           "firstname": "Firstname",
           "nickname": null,
           "id": "id",
+          "account_type": "external",
         },
         "ordering_date": "2021-01-01",
         "delivery_date": "2021-01-01",
@@ -301,6 +304,7 @@ void main() {
           "firstname": "Firstname",
           "nickname": null,
           "id": "id",
+          "account_type": "external",
         },
         "ordering_date": orderingDate.toIso8601String(),
         "delivery_date": "2021-01-01",
