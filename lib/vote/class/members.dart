@@ -50,7 +50,7 @@ class Member extends SimpleUser {
           ? capitaliseAll(user['nickname'])
           : null,
       id: user['id'],
-      accountType: user['account_type'],
+      accountType: AccountType(type: user['account_type']),
       role: capitaliseAll(map['role']),
     );
   }
