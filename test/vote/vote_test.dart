@@ -113,7 +113,7 @@ void main() {
       expect(member.firstname, 'Firstname');
       expect(member.nickname, 'Nickname');
       expect(member.role, 'Role');
-      expect(member.accountType, 'external');
+      expect(member.accountType, AccountType(type: 'external'));
     });
 
     test('Should return a correct json', () {
