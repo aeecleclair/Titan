@@ -10,7 +10,7 @@ class AccountType {
   }
 
   AccountType.empty() {
-    type = "";
+    type = "external";
   }
 
   @override
