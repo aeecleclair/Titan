@@ -1,3 +1,4 @@
+import 'package:myecl/admin/class/account_type.dart';
 import 'package:myecl/tools/functions.dart';
 
 class SimpleUser {
@@ -12,7 +13,7 @@ class SimpleUser {
   late final String firstname;
   late final String? nickname;
   late final String id;
-  late final String accountType;
+  late final AccountType accountType;
 
   SimpleUser.fromJson(Map<String, dynamic> json) {
     name = capitaliseAll(json['name']);
@@ -21,7 +22,7 @@ class SimpleUser {
         ? capitaliseAll(json['nickname'])
         : null;
     id = json['id'];
-    accountType = json['account_type'];
+    accountType = AccountType(type: json['account_type']);
   }
 
   Map<String, dynamic> toJson() {
@@ -30,7 +31,7 @@ class SimpleUser {
     users['firstname'] = firstname;
     users['nickname'] = nickname;
     users['id'] = id;
-    users['account_type'] = accountType;
+    users['account_type'] = accountType.type;
     return users;
   }
 
@@ -39,7 +40,7 @@ class SimpleUser {
         firstname = 'Prénom',
         nickname = null,
         id = '',
-        accountType = 'external';
+        accountType = AccountType.empty();
 
   String getName() {
     if (nickname == null) {
@@ -58,7 +59,7 @@ class SimpleUser {
     String? firstname,
     String? nickname,
     String? id,
-    String? accountType,
+    AccountType? accountType,
   }) {
     return SimpleUser(
       name: name ?? this.name,

@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:myecl/admin/class/account_type.dart';
 import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/repositories/group_repository.dart';
@@ -51,7 +52,7 @@ void main() {
         firstname: "firstname",
         nickname: null,
         email: "email",
-        accountType: "external",
+        accountType: AccountType(type: "external"),
         groups: [group],
         birthday: DateTime.now(),
         createdOn: DateTime.now(),

@@ -1,3 +1,4 @@
+import 'package:myecl/admin/class/account_type.dart';
 import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/class/applicant.dart';
@@ -24,7 +25,7 @@ class User {
   late final String? nickname;
   late final String id;
   late final String email;
-  late final String accountType;
+  late final AccountType accountType;
   late final DateTime? birthday;
   late final int? promo;
   late final String? floor;
@@ -40,7 +41,7 @@ class User {
         : null;
     id = json['id'];
     email = json['email'];
-    accountType = json['account_type'];
+    accountType = AccountType(type: json['account_type']);
     birthday = json['birthday'] != null
         ? processDateFromAPIWithoutHour(json['birthday'])
         : null;
@@ -61,7 +62,7 @@ class User {
     data['nickname'] = nickname;
     data['id'] = id;
     data['email'] = email;
-    data['account_type'] = accountType;
+    data['account_type'] = accountType.type;
     data['birthday'] =
         birthday != null ? processDateToAPIWithoutHour(birthday!) : null;
     data['promo'] = promo;
@@ -78,7 +79,7 @@ class User {
     nickname = null;
     id = '';
     email = 'empty@ecl.ec-lyon.fr';
-    accountType = 'external';
+    accountType = AccountType.empty();
     birthday = normalizedDate(DateTime.now());
     promo = null;
     floor = capitalize(Floors.values.first.toString().split('.').last);
@@ -93,7 +94,7 @@ class User {
     String? nickname,
     String? id,
     String? email,
-    String? accountType,
+    AccountType? accountType,
     DateTime? birthday,
     int? promo,
     String? floor,

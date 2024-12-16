@@ -1,3 +1,4 @@
+import 'package:myecl/admin/class/account_type.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/class/list_users.dart';
 
@@ -19,7 +20,7 @@ class Member extends SimpleUser {
     String? firstname,
     String? nickname,
     String? id,
-    String? accountType,
+    AccountType? accountType,
     String? role,
   }) {
     return Member(
@@ -71,7 +72,7 @@ class Member extends SimpleUser {
       firstname: '',
       nickname: '',
       id: '',
-      accountType: 'external',
+      accountType: AccountType.empty(),
       role: '',
     );
   }

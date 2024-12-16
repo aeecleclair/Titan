@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:myecl/admin/class/account_type.dart';
 import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/vote/class/members.dart';
 import 'package:myecl/vote/class/contender.dart';
@@ -23,7 +24,7 @@ void main() {
     test('Should return a Member', () {
       final member = Member(
         id: 'id',
-        accountType: 'external',
+        accountType: AccountType(type: 'external'),
         name: 'name',
         firstname: 'firstname',
         nickname: 'nickname',
@@ -64,7 +65,7 @@ void main() {
     test('Should print a Member', () {
       final member = Member(
         id: 'id',
-        accountType: 'external',
+        accountType: AccountType(type: 'external'),
         name: 'name',
         firstname: 'firstname',
         nickname: 'nickname',
@@ -80,7 +81,7 @@ void main() {
       final member = Member.fromSimpleUser(
         SimpleUser(
           id: 'id',
-          accountType: 'external',
+          accountType: AccountType(type: 'external'),
           name: 'name',
           firstname: 'firstname',
           nickname: 'nickname',
@@ -118,7 +119,7 @@ void main() {
     test('Should return a correct json', () {
       final member = Member(
         id: 'id',
-        accountType: 'external',
+        accountType: AccountType(type: 'external'),
         name: 'name',
         firstname: 'firstname',
         nickname: 'nickname',

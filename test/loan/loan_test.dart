@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:myecl/admin/class/account_type.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/loan/class/item_quantity.dart';
 import 'package:myecl/loan/class/item_simple.dart';
@@ -123,7 +124,7 @@ void main() {
         ],
         borrower: SimpleUser(
           id: '1',
-          accountType: 'external',
+          accountType: AccountType(type: 'external'),
           name: 'name',
           firstname: '',
           nickname: '',
@@ -159,7 +160,7 @@ void main() {
       newLoan = loan.copyWith(
         borrower: SimpleUser(
           id: '2',
-          accountType: 'external',
+          accountType: AccountType(type: 'external'),
           name: 'name2',
           firstname: '',
           nickname: '',
@@ -213,7 +214,7 @@ void main() {
         ],
         borrower: SimpleUser(
           id: '1',
-          accountType: 'external',
+          accountType: AccountType(type: 'external'),
           name: 'name',
           firstname: '',
           nickname: '',
@@ -286,7 +287,7 @@ void main() {
         ],
         borrower: SimpleUser(
           id: '1',
-          accountType: 'external',
+          accountType: AccountType(type: 'external'),
           name: 'name',
           firstname: '',
           nickname: '',

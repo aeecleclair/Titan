@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:myecl/admin/class/account_type.dart';
 import 'package:myecl/user/class/applicant.dart';
 import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/class/user.dart';
@@ -113,7 +114,7 @@ void main() {
         firstname: 'firstname',
         nickname: null,
         id: 'id',
-        accountType: 'external',
+        accountType: AccountType(type: 'external'),
         birthday: DateTime(1999, 1, 1),
         createdOn: DateTime(2021, 1, 1),
         email: 'email',
