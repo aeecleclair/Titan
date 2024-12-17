@@ -5,7 +5,7 @@ import 'dart:convert';
 
 class SectionRepository {
   static const String host =
-      "https://centralisation.eclair.ec-lyon.fr/links.json";
+      "https://centralisation.myecl.fr/links.json";
   final Map<String, String> headers = {
     "Content-Type": "application/json; charset=UTF-8",
     "Accept": "application/json",
