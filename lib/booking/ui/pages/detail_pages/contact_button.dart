@@ -13,13 +13,13 @@ class ContactButton extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
         border: Border.all(
-          color: Colors.black,
+          color: Theme.of(context).colorScheme.onPrimary,
           width: 2,
         ),
-        color: Colors.grey.shade50,
+        color: Theme.of(context).colorScheme.secondaryFixed,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
+            color: Theme.of(context).shadowColor,
             blurRadius: 10,
             offset: const Offset(0, 10),
           ),
