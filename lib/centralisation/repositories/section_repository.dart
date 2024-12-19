@@ -4,8 +4,7 @@ import 'package:myecl/tools/logs/logger.dart';
 import 'dart:convert';
 
 class SectionRepository {
-  static const String host =
-      "https://centralisation.myecl.fr/links.json";
+  static const String host = "https://centralisation.myecl.fr/links.json";
   final Map<String, String> headers = {
     "Content-Type": "application/json; charset=UTF-8",
     "Accept": "application/json",
