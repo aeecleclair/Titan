@@ -7,6 +7,7 @@ class UserTicket extends SimpleUser {
     required super.firstname,
     required super.nickname,
     required super.id,
+    required super.accountType,
     required this.promo,
     required this.floor,
     required this.createdOn,
