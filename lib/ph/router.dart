@@ -4,9 +4,11 @@ import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
+import 'package:myecl/ph/providers/is_ph_admin_provider.dart';
 import 'package:myecl/ph/ui/pages/form_page/add_edit_ph_page.dart'
     deferred as add_edit_ph_page;
 import 'package:myecl/ph/ui/pages/past_ph_selection_page/past_ph_selection_page.dart';
+import 'package:myecl/tools/middlewares/admin_middleware.dart';
 import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:myecl/ph/ui/pages/main_page/main_page.dart'
@@ -55,6 +57,7 @@ class PhRouter {
             path: admin,
             builder: () => admin_page.AdminPage(),
             middleware: [
+              AdminMiddleware(ref, isPhAdminProvider),
               DeferredLoadingMiddleware(admin_page.loadLibrary),
             ],
             children: [
