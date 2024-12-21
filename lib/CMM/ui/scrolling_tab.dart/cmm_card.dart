@@ -21,150 +21,144 @@ class CMMCard extends ConsumerWidget {
         padding: const EdgeInsets.all(
           10.0,
         ),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            border: Border.all(color: Colors.grey, width: 2),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height - 250,
-                      maxWidth: double.infinity, // Max width
-                    ),
-                    child: Image.asset(
-                      string,
-                      fit: BoxFit.cover,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: AsyncChild(
+                    value: profilePicture,
+                    builder: (context, file) => Row(
+                      children: [
+                        Stack(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.1),
+                                    spreadRadius: 5,
+                                    blurRadius: 10,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: CircleAvatar(
+                                radius: 18,
+                                backgroundImage: file.isEmpty
+                                    ? AssetImage(getTitanLogo())
+                                    : Image.memory(file).image,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            print("pressed");
-                          },
-                          icon: const Icon(
-                            Icons.keyboard_double_arrow_up,
-                            size: 35,
-                            color: Colors.green, // Ajustez la taille de l'icône
-                          ),
-                          padding: EdgeInsets.zero,
-                          constraints: const BoxConstraints(
-                            minWidth: 40, // Largeur du bouton
-                            minHeight: 40, // Hauteur du bouton
-                          ),
-                        ),
-                        const Text(
-                          "+500",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            print("pressed");
-                          },
-                          icon: const Icon(
-                            Icons.keyboard_double_arrow_down,
-                            size: 35, // Ajustez la taille de l'icône
-                          ),
-                          padding: EdgeInsets.zero,
-                          constraints: const BoxConstraints(
-                            minWidth: 40, // Largeur du bouton
-                            minHeight: 40, // Hauteur du bouton
-                          ),
-                        ),
-                        if (isAdmin)
-                          IconButton(
-                            onPressed: () {
-                              print("pressed");
-                            },
-                            icon: const Icon(
-                              Icons.delete,
-                              size: 30, // Ajustez la taille de l'icône
-                            ),
-                            padding: EdgeInsets.zero,
-                            constraints: const BoxConstraints(
-                              minWidth: 40, // Largeur du bouton
-                              minHeight: 40, // Hauteur du bouton
-                            ),
-                          ),
-                        if (isAdmin)
-                          IconButton(
-                            onPressed: () {
-                              print("pressed");
-                            },
-                            icon: const Icon(
-                              Icons.block,
-                              size: 30, // Ajustez la taille de l'icône
-                            ),
-                            padding: EdgeInsets.zero,
-                            constraints: const BoxConstraints(
-                              minWidth: 40, // Largeur du bouton
-                              minHeight: 40, // Hauteur du bouton
-                            ),
-                          ),
-                      ],
-                    ),
-                    const Spacer(),
-                    const Text(
-                      "Ñool",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    AsyncChild(
-                      value: profilePicture,
-                      builder: (context, file) => Row(
-                        children: [
-                          Stack(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.1),
-                                      spreadRadius: 5,
-                                      blurRadius: 10,
-                                      offset: const Offset(0, 3),
-                                    ),
-                                  ],
-                                ),
-                                child: CircleAvatar(
-                                  radius: 20,
-                                  backgroundImage: file.isEmpty
-                                      ? AssetImage(getTitanLogo())
-                                      : Image.memory(file).image,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                const Text(
+                  "Ñool",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height - 250,
+                    maxWidth: double.infinity, // Max width
+                  ),
+                  child: Image.asset(
+                    string,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              )
-            ],
-          ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        print("pressed");
+                      },
+                      icon: const Icon(
+                        Icons.keyboard_double_arrow_up,
+                        size: 35,
+                        color: Colors.green, // Ajustez la taille de l'icône
+                      ),
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(
+                        minWidth: 40, // Largeur du bouton
+                        minHeight: 40, // Hauteur du bouton
+                      ),
+                    ),
+                    const Text(
+                      "+500",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        print("pressed");
+                      },
+                      icon: const Icon(
+                        Icons.keyboard_double_arrow_down,
+                        size: 35, // Ajustez la taille de l'icône
+                      ),
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(
+                        minWidth: 40, // Largeur du bouton
+                        minHeight: 40, // Hauteur du bouton
+                      ),
+                    ),
+                    if (isAdmin)
+                      IconButton(
+                        onPressed: () {
+                          print("pressed");
+                        },
+                        icon: const Icon(
+                          Icons.delete,
+                          size: 30, // Ajustez la taille de l'icône
+                        ),
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(
+                          minWidth: 40, // Largeur du bouton
+                          minHeight: 40, // Hauteur du bouton
+                        ),
+                      ),
+                    if (isAdmin)
+                      IconButton(
+                        onPressed: () {
+                          print("pressed");
+                        },
+                        icon: const Icon(
+                          Icons.block,
+                          size: 30, // Ajustez la taille de l'icône
+                        ),
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(
+                          minWidth: 40, // Largeur du bouton
+                          minHeight: 40, // Hauteur du bouton
+                        ),
+                      ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+          ],
         ),
       ),
     );
