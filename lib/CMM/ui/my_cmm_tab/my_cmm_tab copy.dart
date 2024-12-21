@@ -8,8 +8,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/widgets/image_picker_on_tap.dart';
 
-class AddCMMTab extends HookWidget {
-  const AddCMMTab({super.key});
+class MyCMMTab extends HookWidget {
+  const MyCMMTab({super.key});
 
   @override
   Widget build(BuildContext context) {

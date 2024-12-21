@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/CMM/providers/profile_picture_repository.dart';
-import 'package:myecl/CMM/ui/add_cmm_tab/add_cmm_tab.dart';
+import 'package:myecl/CMM/ui/my_cmm_tab/my_cmm_tab.dart';
 import 'package:myecl/CMM/ui/cmm.dart';
 import 'package:myecl/CMM/ui/leaderboard_tab/leaderboard_tab.dart';
 import 'package:myecl/CMM/ui/scrolling_tab.dart/scrolling_tab.dart';
@@ -24,7 +24,7 @@ class CMMMainPage extends ConsumerWidget {
             children: [
               ScrollingTab(),
               LeaderboardTab(),
-              AddCMMTab(),
+              MyCMMTab(),
             ],
           ),
           bottomNavigationBar: Material(

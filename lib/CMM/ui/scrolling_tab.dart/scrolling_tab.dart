@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/CMM/ui/cmm.dart';
 import 'package:myecl/CMM/ui/scrolling_tab.dart/cmm_card.dart';
 
 class ScrollingTab extends ConsumerWidget {
@@ -14,7 +13,7 @@ class ScrollingTab extends ConsumerWidget {
         child: Column(
           children: [
             CMMCard(string: "assets/images/cmm.jpg"),
-            CMMCard(string: "assets/images/cmm2.jpg")
+            CMMCard(string: "assets/images/cmm2.jpg"),
           ],
         ),
       ),
