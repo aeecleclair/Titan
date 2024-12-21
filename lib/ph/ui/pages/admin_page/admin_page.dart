@@ -26,7 +26,7 @@ class AdminPage extends HookConsumerWidget {
       child: Column(
         children: [
           const YearBar(),
-          Expanded(child: SingleChildScrollView(child: AdminPhList())),
+          const Expanded(child: SingleChildScrollView(child: AdminPhList())),
           const SizedBox(height: 20),
           GestureDetector(
             onTap: () {
