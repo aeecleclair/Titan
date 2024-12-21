@@ -36,7 +36,7 @@ class AdminButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-              color: (useColors ? colors!.last : color)!.withOpacity(0.2),
+              color: (useColors ? colors!.last : color)!.withValues(alpha: 0.2),
               blurRadius: 10,
               offset: const Offset(0, 5),
             ),

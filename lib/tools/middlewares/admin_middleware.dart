@@ -4,7 +4,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 
 class AdminMiddleware extends QMiddleware {
   final StateProvider<bool> isAdminProvider;
-  final ProviderRef ref;
+  final Ref ref;
 
   AdminMiddleware(this.ref, this.isAdminProvider);
 

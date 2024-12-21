@@ -14,10 +14,10 @@ class TagChip extends StatelessWidget {
     Color borderColor =
         bgColor.computeLuminance() > 0.1 ? bgColor : Colors.white;
     Color darkerBgColor = Color.fromARGB(
-      bgColor.alpha,
-      max(bgColor.red - 30, 0),
-      max(bgColor.green - 30, 0),
-      max(bgColor.blue - 30, 0),
+      (bgColor.a * 255).round(),
+      max((bgColor.r * 255).round() - 30, 0),
+      max((bgColor.g * 255).round() - 30, 0),
+      max((bgColor.b * 255).round() - 30, 0),
     );
 
     return Container(

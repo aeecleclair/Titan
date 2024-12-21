@@ -83,7 +83,7 @@ class CreateAccountField extends HookConsumerWidget {
               decoration: InputDecoration(
                 hintText: hint,
                 hintStyle: TextStyle(
-                  color: Colors.white.withOpacity(0.5),
+                  color: Colors.white.withValues(alpha: 0.5),
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                 ),

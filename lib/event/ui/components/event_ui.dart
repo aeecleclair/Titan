@@ -81,10 +81,10 @@ class EventUi extends ConsumerWidget {
           boxShadow: [
             BoxShadow(
               color: event.end.compareTo(now) < 0
-                  ? Colors.black.withOpacity(0.2)
+                  ? Colors.black.withValues(alpha: 0.2)
                   : event.start.compareTo(now) <= 0
-                      ? ColorConstants.gradient2.withOpacity(0.2)
-                      : Colors.grey.withOpacity(0.2),
+                      ? ColorConstants.gradient2.withValues(alpha: 0.2)
+                      : Colors.grey.withValues(alpha: 0.2),
               spreadRadius: 5,
               blurRadius: 10,
               offset: const Offset(3, 3),
@@ -138,7 +138,7 @@ class EventUi extends ConsumerWidget {
                         event.allDay,
                       ),
                       style: TextStyle(
-                        color: textColor.withOpacity(0.7),
+                        color: textColor.withValues(alpha: 0.7),
                         fontSize: 13,
                       ),
                     ),
@@ -169,7 +169,7 @@ class EventUi extends ConsumerWidget {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  color: textColor.withOpacity(0.7),
+                  color: textColor.withValues(alpha: 0.7),
                   fontSize: 13,
                 ),
               ),

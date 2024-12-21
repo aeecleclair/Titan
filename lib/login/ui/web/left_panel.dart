@@ -113,7 +113,7 @@ class LeftPanel extends HookConsumerWidget {
                     boxShadow: [
                       BoxShadow(
                         color: const Color.fromARGB(255, 255, 114, 0)
-                            .withOpacity(0.2),
+                            .withValues(alpha: 0.2),
                         spreadRadius: 3,
                         blurRadius: 7,
                         offset: const Offset(0, 3),

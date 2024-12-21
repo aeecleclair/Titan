@@ -45,7 +45,5 @@ String topicToFrenchString(Topic topic) {
       return "Vote";
     case Topic.ph:
       return "PH";
-    default:
-      return "Cinéma";
   }
 }

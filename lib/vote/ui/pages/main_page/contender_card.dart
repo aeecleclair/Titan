@@ -97,7 +97,8 @@ class ContenderCard extends HookConsumerWidget {
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.grey.shade500.withOpacity(0.5),
+                              color:
+                                  Colors.grey.shade500.withValues(alpha: 0.5),
                               spreadRadius: 5,
                               blurRadius: 10,
                               offset: const Offset(3, 3),
@@ -150,7 +151,7 @@ class ContenderCard extends HookConsumerWidget {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.shade500.withOpacity(0.1),
+                  color: Colors.grey.shade500.withValues(alpha: 0.1),
                   spreadRadius: 5,
                   blurRadius: 10,
                   offset: const Offset(3, 3),

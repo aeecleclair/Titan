@@ -18,7 +18,7 @@ import 'package:myecl/tools/middlewares/notification_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class CinemaRouter {
-  final ProviderRef ref;
+  final Ref ref;
   static const String root = '/cinema';
   static const String admin = '/admin';
   static const String addEdit = '/add_edit';

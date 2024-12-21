@@ -21,7 +21,7 @@ import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RaffleRouter {
-  final ProviderRef ref;
+  final Ref ref;
   static const String root = '/tombola';
   static const String admin = '/admin';
   static const String detail = '/detail';

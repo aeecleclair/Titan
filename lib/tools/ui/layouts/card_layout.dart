@@ -53,7 +53,7 @@ class CardLayout extends StatelessWidget {
             BoxShadow(
               color: (useShadow || !useColors)
                   ? shadowColor
-                  : colors!.last.withOpacity(0.3),
+                  : colors!.last.withValues(alpha: 0.3),
               spreadRadius: 5,
               blurRadius: 10,
               offset: const Offset(3, 3),

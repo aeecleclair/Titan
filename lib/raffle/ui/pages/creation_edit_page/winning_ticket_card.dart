@@ -26,7 +26,7 @@ class WinningTicketUI extends HookConsumerWidget {
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: RaffleColorConstants.ticketBack.withOpacity(0.3),
+                color: RaffleColorConstants.ticketBack.withValues(alpha: 0.3),
                 blurRadius: 6,
                 offset: const Offset(1, 2),
               ),
@@ -53,7 +53,7 @@ class WinningTicketUI extends HookConsumerWidget {
                     ticket.user.nickname ?? ticket.user.firstname,
                     maxLines: 2,
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.8),
+                      color: Colors.white.withValues(alpha: 0.8),
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
@@ -69,7 +69,7 @@ class WinningTicketUI extends HookConsumerWidget {
                     textAlign: TextAlign.center,
                     minFontSize: 10,
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.8),
+                      color: Colors.white.withValues(alpha: 0.8),
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),

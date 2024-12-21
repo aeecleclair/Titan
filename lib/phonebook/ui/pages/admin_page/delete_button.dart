@@ -37,8 +37,8 @@ class DeleteButton extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: !deactivated
-                  ? ColorConstants.gradient2.withOpacity(0.2)
-                  : ColorConstants.deactivated2.withOpacity(0.2),
+                  ? ColorConstants.gradient2.withValues(alpha: 0.2)
+                  : ColorConstants.deactivated2.withValues(alpha: 0.2),
               blurRadius: 10,
               offset: const Offset(2, 3),
             ),
