@@ -102,7 +102,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                     BoxShadow(
                                       color: formFieldState.hasError
                                           ? Colors.red
-                                          : Colors.black.withOpacity(0.1),
+                                          : Colors.black.withValues(alpha: 0.1),
                                       spreadRadius: 5,
                                       blurRadius: 10,
                                       offset: const Offset(2, 3),
@@ -140,13 +140,13 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                                     Radius.circular(5),
                                                   ),
                                                   color: Colors.white
-                                                      .withOpacity(0.4),
+                                                      .withValues(alpha: 0.4),
                                                 ),
                                                 child: HeroIcon(
                                                   HeroIcons.photo,
                                                   size: 40,
                                                   color: Colors.black
-                                                      .withOpacity(0.5),
+                                                      .withValues(alpha: 0.5),
                                                 ),
                                               ),
                                             ),

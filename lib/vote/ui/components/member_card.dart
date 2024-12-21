@@ -75,7 +75,7 @@ class MemberCard extends StatelessWidget {
                   onTap: onEdit,
                   child: CardButton(
                     color: Colors.grey.shade200,
-                    shadowColor: Colors.grey.withOpacity(0.2),
+                    shadowColor: Colors.grey.withValues(alpha: 0.2),
                     child:
                         const HeroIcon(HeroIcons.pencil, color: Colors.black),
                   ),

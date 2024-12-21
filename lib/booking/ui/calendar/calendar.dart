@@ -95,7 +95,7 @@ class Calendar extends HookConsumerWidget {
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.shade700.withOpacity(0.3),
+                          color: Colors.grey.shade700.withValues(alpha: 0.3),
                           blurRadius: 5,
                           spreadRadius: 1,
                         ),
@@ -124,7 +124,7 @@ class Calendar extends HookConsumerWidget {
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.shade700.withOpacity(0.3),
+                          color: Colors.grey.shade700.withValues(alpha: 0.3),
                           blurRadius: 5,
                           spreadRadius: 1,
                         ),

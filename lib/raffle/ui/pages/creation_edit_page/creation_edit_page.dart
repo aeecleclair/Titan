@@ -106,7 +106,7 @@ class CreationPage extends HookConsumerWidget {
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
+                          color: Colors.black.withValues(alpha: 0.1),
                           spreadRadius: 5,
                           blurRadius: 10,
                           offset: const Offset(2, 3),
@@ -163,7 +163,7 @@ class CreationPage extends HookConsumerWidget {
                             boxShadow: [
                               BoxShadow(
                                 color: RaffleColorConstants.gradient2
-                                    .withOpacity(0.3),
+                                    .withValues(alpha: 0.3),
                                 spreadRadius: 2,
                                 blurRadius: 4,
                                 offset: const Offset(2, 3),

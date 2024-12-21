@@ -26,7 +26,7 @@ class LikedCard extends StatelessWidget {
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
+                    color: Colors.grey.withValues(alpha: 0.3),
                     blurRadius: 8,
                     spreadRadius: 2,
                     offset: const Offset(2, 3),

@@ -90,7 +90,7 @@ class DetailPage extends HookConsumerWidget {
                     end: Alignment.bottomCenter,
                     colors: [
                       Colors.transparent,
-                      Colors.grey.shade50.withOpacity(0.85),
+                      Colors.grey.shade50..withValues(alpha: 0.85),
                       Colors.grey.shade50,
                     ],
                     stops: const [0.0, 0.65, 1.0],
@@ -187,11 +187,11 @@ class DetailPage extends HookConsumerWidget {
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.9),
+                      color: Colors.white.withValues(alpha: 0.9),
                       borderRadius: BorderRadius.circular(18),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.white.withOpacity(0.3),
+                          color: Colors.white.withValues(alpha: 0.3),
                           blurRadius: 7,
                           spreadRadius: 2,
                           offset: const Offset(2, 3),
@@ -209,11 +209,11 @@ class DetailPage extends HookConsumerWidget {
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.9),
+                    color: Colors.white.withValues(alpha: 0.9),
                     borderRadius: BorderRadius.circular(18),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.white.withOpacity(0.3),
+                        color: Colors.white.withValues(alpha: 0.3),
                         blurRadius: 7,
                         spreadRadius: 2,
                         offset: const Offset(2, 3),
@@ -256,7 +256,7 @@ class DetailPage extends HookConsumerWidget {
                   end: Alignment.bottomCenter,
                   colors: [
                     const Color.fromARGB(0, 255, 255, 255),
-                    Colors.grey.shade50.withOpacity(0.85),
+                    Colors.grey.shade50..withValues(alpha: 0.85),
                     Colors.grey.shade50,
                   ],
                   stops: const [0.0, 0.25, 1.0],
@@ -279,7 +279,7 @@ class DetailPage extends HookConsumerWidget {
                       borderRadius: BorderRadius.circular(18),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
+                          color: Colors.black.withValues(alpha: 0.2),
                           blurRadius: 7,
                           spreadRadius: 2,
                           offset: const Offset(2, 3),

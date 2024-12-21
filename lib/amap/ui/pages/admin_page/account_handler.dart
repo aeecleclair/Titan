@@ -72,7 +72,7 @@ class AccountHandler extends HookConsumerWidget {
                   AMAPColorConstants.green1,
                   AMAPColorConstants.textLight,
                 ],
-                shadowColor: AMAPColorConstants.textDark.withOpacity(0.2),
+                shadowColor: AMAPColorConstants.textDark.withValues(alpha: 0.2),
                 padding: const EdgeInsets.symmetric(horizontal: 17.0),
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12.0),
