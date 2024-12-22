@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:myecl/CMM/router.dart';
 import 'package:myecl/CMM/ui/components/button.dart';
 import 'package:myecl/CMM/ui/my_cmm_tab/my_cmm_list.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class MyCMMTab extends HookWidget {
   const MyCMMTab({super.key});
@@ -10,22 +12,22 @@ class MyCMMTab extends HookWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Expanded(
+        const Expanded(
           child: SingleChildScrollView(
             child: MyCMMList(),
           ),
         ),
         GestureDetector(
           onTap: () {
-            print("salut");
+            QR.to(CMMRouter.root + CMMRouter.add);
           },
           child: const MyButton(
             text: "Ajouter un CMM",
           ),
         ),
-        SizedBox(
-          width: 20,
-        )
+        const SizedBox(
+          height: 20,
+        ),
       ],
     );
   }

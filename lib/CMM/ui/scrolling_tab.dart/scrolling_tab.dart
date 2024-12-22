@@ -9,10 +9,11 @@ class ScrollingTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return const SingleChildScrollView(
       child: Padding(
-          padding: EdgeInsets.all(8.0),
-          child: SingleChildScrollView(
-            child: CMMList(),
-          )),
+        padding: EdgeInsets.all(8.0),
+        child: SingleChildScrollView(
+          child: CMMList(),
+        ),
+      ),
     );
   }
 }
