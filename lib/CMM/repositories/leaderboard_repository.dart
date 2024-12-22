@@ -1,4 +1,5 @@
 import 'package:myecl/CMM/class/cmm_score.dart';
+import 'package:myecl/admin/class/account_type.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/user/class/list_users.dart';
 
@@ -8,8 +9,12 @@ class CMMScoreRepository extends Repository {
   final ext = "cmm/";
 
   Future<List<CMMScore>> getLeaderboard() async {
-    final user =
-        SimpleUser(name: "Ñool", firstname: "Ñool", nickname: "Ñool", id: "A");
+    final user = SimpleUser(
+        name: "Ñool",
+        firstname: "Ñool",
+        nickname: "Ñool",
+        id: "A",
+        accountType: AccountType(type: "Student"));
     return <CMMScore>[
       CMMScore(value: 5, user: user, position: 1),
       CMMScore(value: 2, user: user, position: 2),
