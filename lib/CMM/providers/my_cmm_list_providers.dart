@@ -16,7 +16,7 @@ class MyCMMListNotifier extends SingleNotifier<List<CMM>> {
   }
 }
 
-final userCMMScoreProvider =
+final myCMMListProvider =
     StateNotifierProvider<MyCMMListNotifier, AsyncValue<List<CMM>>>((ref) {
   final token = ref.watch(tokenProvider);
   final notifier = MyCMMListNotifier(token: token);

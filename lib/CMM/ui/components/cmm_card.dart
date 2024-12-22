@@ -4,12 +4,15 @@ import 'package:myecl/CMM/providers/is_cmm_admin_provider.dart';
 import 'package:myecl/CMM/providers/profile_picture_repository.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/user/class/list_users.dart';
 
 class CMMCard extends ConsumerWidget {
   final String string;
+  final SimpleUser user;
   const CMMCard({
     super.key,
     required this.string,
+    required this.user,
   });
 
   @override
@@ -61,9 +64,11 @@ class CMMCard extends ConsumerWidget {
                     ),
                   ),
                 ),
-                const Text(
-                  "Ñool",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                Text(
+                  user.nickname != ""
+                      ? user.nickname!
+                      : "${user.firstname} ${user.name}",
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
             ),
