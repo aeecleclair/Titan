@@ -5,9 +5,9 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class CMMScoreListNotifier extends SingleNotifier<CMMScore> {
+class CMMScoreNotifier extends SingleNotifier<CMMScore> {
   final CMMScoreRepository _scoreRepository = CMMScoreRepository();
-  CMMScoreListNotifier({required String token}) : super(const AsyncLoading()) {
+  CMMScoreNotifier({required String token}) : super(const AsyncLoading()) {
     _scoreRepository.setToken(token);
   }
 
@@ -17,9 +17,9 @@ class CMMScoreListNotifier extends SingleNotifier<CMMScore> {
 }
 
 final userCMMScoreProvider =
-    StateNotifierProvider<CMMScoreListNotifier, AsyncValue<CMMScore>>((ref) {
+    StateNotifierProvider<CMMScoreNotifier, AsyncValue<CMMScore>>((ref) {
   final token = ref.watch(tokenProvider);
-  final notifier = CMMScoreListNotifier(token: token);
+  final notifier = CMMScoreNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {
     await notifier.getLeaderBoardPosition();
   });
