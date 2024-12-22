@@ -3,7 +3,7 @@ import 'package:myecl/CMM/class/cmm.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
-class CMMRepository extends Repository {
+class MyCMMRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "cmm/me";
@@ -22,7 +22,7 @@ class CMMRepository extends Repository {
   }
 }
 
-final cmmRepositoryProvider = Provider<CMMRepository>((ref) {
+final cmmRepositoryProvider = Provider<MyCMMRepository>((ref) {
   final token = ref.watch(tokenProvider);
-  return CMMRepository()..setToken(token);
+  return MyCMMRepository()..setToken(token);
 });
