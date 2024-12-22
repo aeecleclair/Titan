@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/CMM/ui/scrolling_tab.dart/cmm_card.dart';
+import 'package:myecl/CMM/ui/components/cmm_card.dart';
 
 class ScrollingTab extends ConsumerWidget {
   const ScrollingTab({super.key});
