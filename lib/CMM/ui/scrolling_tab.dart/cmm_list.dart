@@ -29,6 +29,8 @@ class CMMList extends HookConsumerWidget {
                 return CMMCard(
                   string: cmm.path,
                   user: cmm.user,
+                  vote: cmm.vote,
+                  score: cmm.score,
                 );
               }).toList(),
             );
