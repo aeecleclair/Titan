@@ -68,7 +68,7 @@ class TicketCard extends HookConsumerWidget {
                     ticketIdNotifier.setTicketId(ticket.id);
                     productIdNotifier.setProductId(product.id);
                     tagListNotifier.loadTags(seller.id, product.id, ticket.id);
-                    QR.to(PurchasesRouter.root + PurchasesRouter.user_list);
+                    QR.to(PurchasesRouter.root + PurchasesRouter.userList);
                   });
                 },
                 child: const HeroIcon(HeroIcons.listBullet),
