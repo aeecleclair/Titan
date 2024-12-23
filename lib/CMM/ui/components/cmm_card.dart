@@ -78,16 +78,19 @@ class CMMCard extends ConsumerWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxHeight: MediaQuery.of(context).size.height - 250,
-                    maxWidth: double.infinity, // Max width
-                  ),
-                  child: Image.asset(
-                    string,
-                    fit: BoxFit.cover,
+              child: GestureDetector(
+                onDoubleTap: () => print("liked"),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxHeight: MediaQuery.of(context).size.height - 250,
+                      maxWidth: double.infinity, // Max width
+                    ),
+                    child: Image.asset(
+                      string,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
