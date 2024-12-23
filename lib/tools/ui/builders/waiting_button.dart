@@ -5,7 +5,7 @@ import 'package:myecl/tools/ui/widgets/loader.dart';
 class WaitingButton extends HookWidget {
   final Widget child;
   final Widget Function(Widget) builder;
-  final Color waitingColor;
+  final Color? waitingColor;
   final Future Function()? onTap;
 
   const WaitingButton({
@@ -13,7 +13,7 @@ class WaitingButton extends HookWidget {
     required this.child,
     required this.onTap,
     required this.builder,
-    this.waitingColor = Colors.white,
+    this.waitingColor,
   });
 
   @override
@@ -47,7 +47,12 @@ class WaitingButton extends HookWidget {
           scale: 1 - animationController.value,
           child: builder(child!),
         ),
-        child: clicked.value ? Loader(color: waitingColor) : child,
+        child: clicked.value
+            ? Loader(
+                color:
+                    waitingColor ?? Theme.of(context).colorScheme.onSecondary,
+              )
+            : child,
       ),
     );
   }

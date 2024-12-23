@@ -38,9 +38,7 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                 child: Text(
                   moduleVisibility.root,
                   style: TextStyle(
-                    color: Theme.of(context)
-                                .colorScheme
-                                .onPrimary,
+                    color: Theme.of(context).colorScheme.onPrimary,
                     fontSize: 22,
                     fontWeight: FontWeight.w800,
                   ),
@@ -55,9 +53,7 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                       Text(
                         AdminTextConstants.accountTypes,
                         style: TextStyle(
-                          color: Theme.of(context)
-                                      .colorScheme
-                                      .onPrimary,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           fontSize: 20,
                           fontWeight: FontWeight.w800,
                         ),
@@ -73,9 +69,8 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                               Text(
                                 accountType.type,
                                 style: TextStyle(
-                                  color: Theme.of(context)
-                                              .colorScheme
-                                              .onPrimary,
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -104,8 +99,8 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                                         HeroIcons.eye,
                                         size: 40,
                                         color: Theme.of(context)
-                                                    .colorScheme
-                                                    .onPrimary,
+                                            .colorScheme
+                                            .onPrimary,
                                       ),
                                     )
                                   : GestureDetector(
@@ -126,8 +121,8 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                                         HeroIcons.eyeSlash,
                                         size: 40,
                                         color: Theme.of(context)
-                                                    .colorScheme
-                                                    .onPrimary,
+                                            .colorScheme
+                                            .onPrimary,
                                       ),
                                     ),
                             ],
@@ -142,9 +137,7 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                       Text(
                         AdminTextConstants.groups,
                         style: TextStyle(
-                          color: Theme.of(context)
-                                      .colorScheme
-                                      .onPrimary,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           fontSize: 20,
                           fontWeight: FontWeight.w900,
                         ),
@@ -160,9 +153,8 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                               Text(
                                 group.name,
                                 style: TextStyle(
-                                  color: Theme.of(context)
-                                              .colorScheme
-                                              .onPrimary,
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -192,8 +184,8 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                                         HeroIcons.eye,
                                         size: 40,
                                         color: Theme.of(context)
-                                                    .colorScheme
-                                                    .onPrimary,
+                                            .colorScheme
+                                            .onPrimary,
                                       ),
                                     )
                                   : GestureDetector(
@@ -213,8 +205,8 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                                         HeroIcons.eyeSlash,
                                         size: 40,
                                         color: Theme.of(context)
-                                                    .colorScheme
-                                                    .onPrimary,
+                                            .colorScheme
+                                            .onPrimary,
                                       ),
                                     ),
                             ],

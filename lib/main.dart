@@ -87,8 +87,8 @@ class MyApp extends HookConsumerWidget {
         theme: ThemeData(
           brightness: Brightness.light,
           primarySwatch: Colors.orange,
-          shadowColor:
-              Colors.grey.withOpacity(0.3), // to be used by default for shadows
+          shadowColor: Colors.grey
+              .withValues(alpha: 0.3), // to be used by default for shadows
           colorScheme: const ColorScheme(
             brightness: Brightness.light,
             primary: Colors.white, // main color, mostly for background
@@ -123,7 +123,7 @@ class MyApp extends HookConsumerWidget {
         darkTheme: ThemeData(
           brightness: Brightness.dark,
           primarySwatch: Colors.orange,
-          shadowColor: Colors.grey.withOpacity(0.7),
+          shadowColor: Colors.grey.withValues(alpha: 0.7),
           colorScheme: const ColorScheme(
             brightness: Brightness.dark,
             primary: Colors.black,
