@@ -14,25 +14,29 @@ class MyCMMRepository extends Repository {
     //return (await getList(suffix: '')).map((e) => CMM.fromJson(e)).toList();
     return [
       CMM(
-          id: '1',
-          date: DateTime.now(),
-          user: SimpleUser(
-              name: "Ñool",
-              firstname: "Ñool",
-              nickname: "Ñool",
-              id: "A",
-              accountType: AccountType(type: "Student")),
-          path: "assets/images/cmm.jpg"),
+        id: '1',
+        date: DateTime.now(),
+        user: SimpleUser(
+          name: "Ñool",
+          firstname: "Ñool",
+          nickname: "Ñool",
+          id: "A",
+          accountType: AccountType(type: "Student"),
+        ),
+        path: "assets/images/cmm.jpg",
+      ),
       CMM(
-          id: '2',
-          date: DateTime.now(),
-          user: SimpleUser(
-              name: "Ñool",
-              firstname: "Ñool",
-              nickname: "Ñool",
-              id: "A",
-              accountType: AccountType(type: "Student")),
-          path: "assets/images/cmm2.jpg")
+        id: '2',
+        date: DateTime.now(),
+        user: SimpleUser(
+          name: "Ñool",
+          firstname: "Ñool",
+          nickname: "Ñool",
+          id: "A",
+          accountType: AccountType(type: "Student"),
+        ),
+        path: "assets/images/cmm2.jpg",
+      ),
     ];
   }
 

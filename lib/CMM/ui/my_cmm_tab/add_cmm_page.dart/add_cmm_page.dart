@@ -27,7 +27,7 @@ class AddCMMPage extends HookWidget {
     return CMMTemplate(
       child: Column(
         children: [
-          Spacer(),
+          const Spacer(),
           FormField<File>(
             validator: (e) {
               if (poster.value == null) {
@@ -101,7 +101,7 @@ class AddCMMPage extends HookWidget {
               ),
             ),
           ),
-          Spacer(),
+          const Spacer(),
           GestureDetector(
             onTap: () {
               print("added");
@@ -111,9 +111,9 @@ class AddCMMPage extends HookWidget {
               text: "Ajouter ce CMM",
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
-          )
+          ),
         ],
       ),
     );

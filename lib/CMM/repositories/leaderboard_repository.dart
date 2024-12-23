@@ -10,11 +10,12 @@ class CMMScoreRepository extends Repository {
 
   Future<List<CMMScore>> getLeaderboard() async {
     final user = SimpleUser(
-        name: "Ñool",
-        firstname: "Ñool",
-        nickname: "Ñool",
-        id: "A",
-        accountType: AccountType(type: "Student"));
+      name: "Ñool",
+      firstname: "Ñool",
+      nickname: "Ñool",
+      id: "A",
+      accountType: AccountType(type: "Student"),
+    );
     return <CMMScore>[
       CMMScore(value: 5, user: user, position: 1),
       CMMScore(value: 2, user: user, position: 2),

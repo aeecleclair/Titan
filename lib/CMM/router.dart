@@ -19,16 +19,17 @@ class CMMRouter {
   );
   CMMRouter(this.ref);
   QRoute route() => QRoute(
-          name: "CMM",
-          path: CMMRouter.root,
-          builder: () => main_page.CMMMainPage(),
-          middleware: [
-            DeferredLoadingMiddleware(main_page.loadLibrary),
-          ],
-          children: [
-            QRoute(
-              path: add,
-              builder: () => const AddCMMPage(),
-            )
-          ]);
+        name: "CMM",
+        path: CMMRouter.root,
+        builder: () => main_page.CMMMainPage(),
+        middleware: [
+          DeferredLoadingMiddleware(main_page.loadLibrary),
+        ],
+        children: [
+          QRoute(
+            path: add,
+            builder: () => const AddCMMPage(),
+          ),
+        ],
+      );
 }

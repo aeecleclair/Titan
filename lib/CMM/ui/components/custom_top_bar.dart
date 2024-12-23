@@ -87,13 +87,15 @@ class CustomTopBar extends HookConsumerWidget {
               width: 120,
               child: Container(
                 decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black, width: 2),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20), // Rounded top-left corner
-                        bottomLeft: Radius.circular(20))),
+                  border: Border.all(color: Colors.black, width: 2),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(20), // Rounded top-left corner
+                    bottomLeft: Radius.circular(20),
+                  ),
+                ),
                 child: rightIcon,
               ),
-            )
+            ),
           ],
         ),
       ],
