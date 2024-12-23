@@ -1,3 +1,4 @@
+import 'package:myecl/admin/class/account_type.dart';
 import 'package:myecl/tools/functions.dart';
 
 class SimpleUser {
@@ -6,11 +7,13 @@ class SimpleUser {
     required this.firstname,
     required this.nickname,
     required this.id,
+    required this.accountType,
   });
   late final String name;
   late final String firstname;
   late final String? nickname;
   late final String id;
+  late final AccountType accountType;
 
   SimpleUser.fromJson(Map<String, dynamic> json) {
     name = capitaliseAll(json['name']);
@@ -19,6 +22,7 @@ class SimpleUser {
         ? capitaliseAll(json['nickname'])
         : null;
     id = json['id'];
+    accountType = AccountType(type: json['account_type']);
   }
 
   Map<String, dynamic> toJson() {
@@ -27,6 +31,7 @@ class SimpleUser {
     users['firstname'] = firstname;
     users['nickname'] = nickname;
     users['id'] = id;
+    users['account_type'] = accountType.type;
     return users;
   }
 
@@ -34,7 +39,8 @@ class SimpleUser {
       : name = 'Nom',
         firstname = 'Prénom',
         nickname = null,
-        id = '';
+        id = '',
+        accountType = AccountType.empty();
 
   String getName() {
     if (nickname == null) {
@@ -45,7 +51,7 @@ class SimpleUser {
 
   @override
   String toString() {
-    return "SimpleUser {name: $name, firstname: $firstname, nickname: $nickname, id: $id}";
+    return "SimpleUser {name: $name, firstname: $firstname, nickname: $nickname, id: $id, accountType: ${accountType.type}}";
   }
 
   SimpleUser copyWith({
@@ -53,12 +59,14 @@ class SimpleUser {
     String? firstname,
     String? nickname,
     String? id,
+    AccountType? accountType,
   }) {
     return SimpleUser(
       name: name ?? this.name,
       firstname: firstname ?? this.firstname,
       nickname: nickname ?? this.nickname,
       id: id ?? this.id,
+      accountType: accountType ?? this.accountType,
     );
   }
 }

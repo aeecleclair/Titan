@@ -15,8 +15,8 @@ abstract class PdfRepository extends Repository {
 
   Future<Uint8List> getPdf(String id, {String suffix = ""}) async {
     try {
-      final response =
-          await http.get(Uri.parse("$host$ext$id$suffix"), headers: headers);
+      final response = await http
+          .get(Uri.parse("${Repository.host}$ext$id$suffix"), headers: headers);
       if (response.statusCode == 200) {
         try {
           return response.bodyBytes;
@@ -72,17 +72,17 @@ abstract class PdfRepository extends Repository {
     String id, {
     String suffix = "",
   }) async {
-    final request =
-        http.MultipartRequest('POST', Uri.parse("$host$ext$id$suffix"))
-          ..headers.addAll(headers)
-          ..files.add(
-            http.MultipartFile.fromBytes(
-              'pdf',
-              bytes,
-              filename: 'pdf',
-              contentType: MediaType('application', 'pdf'),
-            ),
-          );
+    final request = http.MultipartRequest(
+        'POST', Uri.parse("${Repository.host}$ext$id$suffix"))
+      ..headers.addAll(headers)
+      ..files.add(
+        http.MultipartFile.fromBytes(
+          'pdf',
+          bytes,
+          filename: 'pdf',
+          contentType: MediaType('application', 'pdf'),
+        ),
+      );
     final response = await request.send();
     response.stream.transform(utf8.decoder).listen((value) async {
       if (response.statusCode == 201) {
