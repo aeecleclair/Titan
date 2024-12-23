@@ -53,10 +53,6 @@ class MyCMMRepository extends LogoRepository {
     return Image.memory(uint8List);
   }
 
-  reactToCMM(String id, bool positive) async {
-    await create(cmm.toJson(), suffix: 'memes/$id/vote');
-  }
-
   Future<bool> deleteCMM(String id) async {
     return await delete(id);
   }
