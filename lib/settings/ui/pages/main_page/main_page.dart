@@ -171,7 +171,7 @@ class SettingsMainPage extends HookConsumerWidget {
                     onTap: () {
                       Clipboard.setData(
                         ClipboardData(
-                          text: "${Repository.displayHost}calendar/ical",
+                          text: "${Repository.host}calendar/ical",
                         ),
                       ).then((value) {
                         displayToastWithContext(
@@ -316,7 +316,7 @@ class SettingsMainPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 10),
                   AutoSizeText(
-                    Repository.displayHost,
+                    Repository.host,
                     maxLines: 1,
                     minFontSize: 10,
                     style: TextStyle(
