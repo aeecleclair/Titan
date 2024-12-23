@@ -24,18 +24,22 @@ class CMMRepository extends Repository {
           accountType: AccountType(type: "Student"),
         ),
         path: "assets/images/cmm.jpg",
+        vote: 1,
+        score: 300,
       ),
       CMM(
         id: '2',
         date: DateTime.now(),
         user: SimpleUser(
-          name: "Nom",
-          firstname: "Prénom",
-          nickname: "",
+          name: "Ñool",
+          firstname: "Ñool",
+          nickname: "Ñool",
           id: "A",
           accountType: AccountType(type: "Student"),
         ),
         path: "assets/images/cmm2.jpg",
+        vote: -1,
+        score: 439,
       ),
     ];
   }
