@@ -73,7 +73,9 @@ abstract class PdfRepository extends Repository {
     String suffix = "",
   }) async {
     final request = http.MultipartRequest(
-        'POST', Uri.parse("${Repository.host}$ext$id$suffix"))
+      'POST',
+      Uri.parse("${Repository.host}$ext$id$suffix"),
+    )
       ..headers.addAll(headers)
       ..files.add(
         http.MultipartFile.fromBytes(
