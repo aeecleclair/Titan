@@ -27,12 +27,6 @@ class CMMScoreRepository extends Repository {
     // );
   }
 
-  Future<CMMScore> createCMMScore(CMMScore cmmScore) async {
-    return CMMScore.fromJson(
-      await create(cmmScore.toJson(), suffix: "CMMScores"),
-    );
-  }
-
   Future<CMMScore> getLeaderBoardPosition() async {
     final response = await getOne("CMMScores/me");
     if (response == null) {
