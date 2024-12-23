@@ -9,10 +9,14 @@ import 'package:myecl/user/class/list_users.dart';
 class CMMCard extends ConsumerWidget {
   final String string;
   final SimpleUser user;
+  final int vote;
+  final int score;
   const CMMCard({
     super.key,
     required this.string,
     required this.user,
+    required this.vote,
+    required this.score,
   });
 
   @override
@@ -97,10 +101,12 @@ class CMMCard extends ConsumerWidget {
                       onPressed: () {
                         print("pressed");
                       },
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.keyboard_double_arrow_up,
                         size: 35,
-                        color: Colors.green, // Ajustez la taille de l'icône
+                        color: vote > 0
+                            ? Colors.green
+                            : Colors.grey, // Ajustez la taille de l'icône
                       ),
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(
@@ -108,17 +114,19 @@ class CMMCard extends ConsumerWidget {
                         minHeight: 40, // Hauteur du bouton
                       ),
                     ),
-                    const Text(
-                      "+500",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    Text(
+                      score.toString(),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     IconButton(
                       onPressed: () {
                         print("pressed");
                       },
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.keyboard_double_arrow_down,
-                        size: 35, // Ajustez la taille de l'icône
+                        size: 35,
+                        color: vote < 0 ? Colors.red : Colors.grey,
+                        // Ajustez la taille de l'icône
                       ),
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(

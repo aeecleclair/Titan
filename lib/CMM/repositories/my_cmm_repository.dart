@@ -24,6 +24,8 @@ class MyCMMRepository extends Repository {
           accountType: AccountType(type: "Student"),
         ),
         path: "assets/images/cmm.jpg",
+        vote: 1,
+        score: 300,
       ),
       CMM(
         id: '2',
@@ -36,6 +38,8 @@ class MyCMMRepository extends Repository {
           accountType: AccountType(type: "Student"),
         ),
         path: "assets/images/cmm2.jpg",
+        vote: -1,
+        score: 439,
       ),
     ];
   }

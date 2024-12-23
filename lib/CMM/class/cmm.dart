@@ -7,11 +7,15 @@ class CMM {
     required this.date,
     required this.user,
     required this.path,
+    required this.score,
+    required this.vote,
   });
   late final String id;
   late final DateTime date;
   late final SimpleUser user;
   late final String path;
+  late final int score;
+  late final int vote;
 
   CMM.fromJson(Map<String, dynamic> json) {
     id = json['id'];
