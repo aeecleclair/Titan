@@ -6,13 +6,13 @@ import 'package:myecl/tools/providers/single_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class CMMListNotifier extends SingleNotifier<List<CMM>> {
-  final CMMRepository _CMMRepository = CMMRepository();
+  final CMMRepository _cmmRepository = CMMRepository();
   CMMListNotifier({required String token}) : super(const AsyncLoading()) {
-    _CMMRepository.setToken(token);
+    _cmmRepository.setToken(token);
   }
 
   Future<AsyncValue<List<CMM>>> getCMM() async {
-    return await load(_CMMRepository.getCMM);
+    return await load(_cmmRepository.getCMM);
   }
 }
 
