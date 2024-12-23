@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/CMM/class/cmm.dart';
+import 'package:myecl/CMM/tools/functions.dart';
 import 'package:myecl/admin/class/account_type.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
@@ -46,6 +47,14 @@ class CMMRepository extends Repository {
 
   Future<bool> deleteCMM(String id) async {
     return await delete(id);
+  }
+
+  Future<bool> addVoteToCMM(String id, bool positive) async {
+    return await create(toJson(positive), suffix: 'memes/$id/vote');
+  }
+
+  Future<bool> deleteVoteToCMM(String id) async {
+    return await delete(id, suffix: 'memes/$id/vote');
   }
 }
 
