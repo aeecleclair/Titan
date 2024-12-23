@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/CMM/providers/cmm_list_provider.dart';
 import 'package:myecl/CMM/ui/components/cmm_card.dart';
+import 'package:myecl/CMM/ui/components/sorting_bar.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 
 class CMMList extends HookConsumerWidget {
@@ -14,19 +15,24 @@ class CMMList extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final cmmList = ref.watch(cmmListProvider);
 
-    return AsyncChild(
-      value: cmmList,
-      builder: (context, cmmList) {
-        cmmList.sort((a, b) => b.date.compareTo(a.date));
-        return Column(
-          children: cmmList.map((cmm) {
-            return CMMCard(
-              string: cmm.path,
-              user: cmm.user,
+    return Column(
+      children: [
+        const SortingBar(),
+        AsyncChild(
+          value: cmmList,
+          builder: (context, cmmList) {
+            cmmList.sort((a, b) => b.date.compareTo(a.date));
+            return Column(
+              children: cmmList.map((cmm) {
+                return CMMCard(
+                  string: cmm.path,
+                  user: cmm.user,
+                );
+              }).toList(),
             );
-          }).toList(),
-        );
-      },
+          },
+        ),
+      ],
     );
   }
 }
