@@ -9,6 +9,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:uuid/uuid.dart';
 
 class LocalNotificationService {
   LocalNotificationService() {
@@ -65,42 +66,14 @@ class LocalNotificationService {
 
   Future showNotification(message_class.Message message) async {
     final notificationDetails = getNotificationDetails();
-    if (message.deliveryDateTime == null) {
-      _localNotificationService.show(
-        generateIntFromString(message.context),
-        message.title,
-        message.content,
-        notificationDetails,
-        payload: json.encode(message.toJson()),
-      );
-      return;
-    }
-    final dateToDisplay = tz.TZDateTime.from(
-      message.deliveryDateTime!,
-      tz.local,
+    _localNotificationService.show(
+      generateIntFromString(const Uuid().toString()),
+      message.title,
+      message.content,
+      notificationDetails,
+      payload: json.encode(message.toJson()),
     );
-    final now = tz.TZDateTime.now(tz.local);
-    if (dateToDisplay.isAfter(now)) {
-      _localNotificationService.zonedSchedule(
-        generateIntFromString(message.context),
-        message.title,
-        message.content,
-        dateToDisplay,
-        notificationDetails,
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
-        payload: json.encode(message.toJson()),
-      );
-    } else {
-      _localNotificationService.show(
-        generateIntFromString(message.context),
-        message.title,
-        message.content,
-        notificationDetails,
-        payload: json.encode(message.toJson()),
-      );
-    }
+    return;
   }
 
   Future<void> showPeriodicNotification(
@@ -283,7 +256,7 @@ void onDidReceiveBackgroundNotificationResponse(
   final message = message_class.Message.fromJson(
     jsonDecode(utf8.decode(response.payload!.runes.toList())),
   );
-  if (message.actionModule != null && message.actionTable != null) {
+  if (message.actionModule != null) {
     final provider = providers[message.actionModule];
     if (provider == null) {
       return;

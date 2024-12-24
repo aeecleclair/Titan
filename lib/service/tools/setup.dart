@@ -1,16 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:myecl/service/class/message.dart' as message_class;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/service/local_notification_service.dart';
 import 'package:myecl/service/providers/firebase_token_expiration_provider.dart';
 import 'package:myecl/service/providers/firebase_token_provider.dart';
 import 'package:myecl/service/providers/messages_provider.dart';
 import 'package:myecl/service/providers/topic_provider.dart';
-import 'package:myecl/service/repositories/notification_repository.dart';
 import 'package:myecl/tools/logs/log.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 void setUpNotification(WidgetRef ref) {
@@ -50,40 +49,19 @@ void setUpNotification(WidgetRef ref) {
     }
   });
 
-  void handleMessages() async {
-    tokenExpireWrapper(ref, () async {
-      final messages = await messageNotifier.getMessages();
-      messages.maybeWhen(
-        data: (messageList) async {
-          for (final message in messageList) {
-            Repository.logger.logNotification(message);
-            final actionModule = message.actionModule;
-            final actionTable = message.actionTable;
-            if (!message.isVisible &&
-                actionModule != null &&
-                actionTable != null) {
-              localNotificationService.handleAction(actionModule, actionTable);
-            } else {
-              localNotificationService.showNotification(message);
-            }
-          }
-        },
-        orElse: () {},
-      );
-    });
-  }
-
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    message_class.Message messages =
+        message_class.Message.fromJson(message.data);
     Repository.logger
         .writeLog(Log(message: "GOT trigger onMessage", level: LogLevel.error));
-    handleMessages();
-  });
 
-  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-    Repository.logger.writeLog(
-      Log(message: "GOT trigger onMessageOpenedApp", level: LogLevel.error),
+    message_class.Message me = message_class.Message(
+      title: message.notification?.title ?? "No title",
+      content: message.notification?.body ?? "No body",
+      actionModule: messages.actionModule,
+      actionTable: messages.actionTable,
     );
-    handleMessages();
+    localNotificationService.showNotification(me);
   });
 }
 
@@ -96,14 +74,4 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   final LocalNotificationService localNotificationService =
       LocalNotificationService();
   localNotificationService.init();
-  final firebaseToken = await FirebaseMessaging.instance
-      .getToken(vapidKey: "")
-      .then((value) => value.toString());
-  NotificationRepository notificationRepository = NotificationRepository();
-  final messages = await notificationRepository.getMessages(firebaseToken);
-  for (final message in messages) {
-    if (message.isVisible) {
-      localNotificationService.showNotification(message);
-    }
-  }
 }
