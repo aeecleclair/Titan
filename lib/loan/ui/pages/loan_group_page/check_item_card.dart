@@ -21,7 +21,7 @@ class CheckItemCard extends StatelessWidget {
       height: 130,
       borderColor: isSelected ? Colors.black : Colors.transparent,
       shadowColor: (isSelected ? Colors.grey.shade400 : Colors.grey.shade200)
-          .withOpacity(0.5),
+          .withValues(alpha: 0.5),
       padding: const EdgeInsets.symmetric(horizontal: 17.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,

@@ -103,7 +103,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                           color: Colors.white,
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.white.withOpacity(0.5),
+                              color: Colors.white.withValues(alpha: 0.5),
                               blurRadius: 15,
                               offset: const Offset(2, 3),
                             ),
@@ -181,7 +181,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                 Text(
                   "${packTicket.packSize} tickets",
                   style: TextStyle(
-                    color: Colors.white.withOpacity(0.8),
+                    color: Colors.white.withValues(alpha: 0.8),
                     fontSize: 38,
                     fontWeight: FontWeight.bold,
                   ),
@@ -227,7 +227,8 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.grey.shade300.withOpacity(0.5),
+                                color:
+                                    Colors.grey.shade300.withValues(alpha: 0.5),
                                 blurRadius: 10,
                                 offset: const Offset(2, 3),
                               ),
@@ -296,7 +297,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                             boxShadow: [
                               BoxShadow(
                                 color: RaffleColorConstants.redGradient2
-                                    .withOpacity(0.5),
+                                    .withValues(alpha: 0.5),
                                 blurRadius: 10,
                                 offset: const Offset(2, 3),
                               ),

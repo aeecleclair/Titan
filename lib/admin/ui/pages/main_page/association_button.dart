@@ -26,7 +26,7 @@ class AssociationButton extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: gradient2.withOpacity(0.3),
+            color: gradient2.withValues(alpha: 0.3),
             spreadRadius: 2,
             blurRadius: 4,
             offset: const Offset(2, 3),

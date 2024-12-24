@@ -14,7 +14,7 @@ class CustomButton extends HookConsumerWidget {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: RaffleColorConstants.gradient2.withOpacity(0.3),
+            color: RaffleColorConstants.gradient2.withValues(alpha: 0.3),
             blurRadius: 5,
             spreadRadius: 2,
             offset: const Offset(2, 3),

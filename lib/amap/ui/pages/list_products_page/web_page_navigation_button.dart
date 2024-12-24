@@ -21,7 +21,7 @@ class WebPageNavigationButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: AMAPColorConstants.enabled.withOpacity(0.3),
+            color: AMAPColorConstants.enabled.withValues(alpha: 0.3),
             blurRadius: 5,
             spreadRadius: 1,
           ),
