@@ -48,10 +48,10 @@ class Calendar extends HookConsumerWidget {
                         AutoSizeText(
                           appointmentDetails.subject,
                           maxLines: 2,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.onPrimary,
                           ),
                         ),
                         const SizedBox(height: 10),

@@ -35,11 +35,11 @@ class AdminSessionCard extends HookConsumerWidget {
         height: 300,
         margin: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.primary,
           borderRadius: BorderRadius.circular(18),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
+              color: Theme.of(context).shadowColor,
               spreadRadius: 1,
               blurRadius: 10,
               offset: const Offset(0, 5), // changes position of shadow
@@ -91,21 +91,23 @@ class AdminSessionCard extends HookConsumerWidget {
                         GestureDetector(
                           onTap: onEdit,
                           child: CardButton(
-                            color: Colors.grey.shade200,
-                            shadowColor: Colors.grey.withOpacity(0.2),
-                            child: const HeroIcon(
+                            color: Theme.of(context).shadowColor,
+                            shadowColor: Theme.of(context).shadowColor,
+                            child: HeroIcon(
                               HeroIcons.pencil,
-                              color: Colors.black,
+                              color: Theme.of(context).colorScheme.onPrimary,
                             ),
                           ),
                         ),
                         WaitingButton(
                           onTap: onDelete,
-                          builder: (child) =>
-                              CardButton(color: Colors.black, child: child),
-                          child: const HeroIcon(
+                          builder: (child) => CardButton(
+                            color: Theme.of(context).colorScheme.secondary,
+                            child: child,
+                          ),
+                          child: HeroIcon(
                             HeroIcons.trash,
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.onSecondary,
                           ),
                         ),
                       ],

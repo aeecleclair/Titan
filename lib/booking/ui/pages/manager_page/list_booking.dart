@@ -68,10 +68,10 @@ class ListBooking extends HookConsumerWidget {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "$title${bookings.length > 1 ? "s" : ""} (${bookings.length})",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 149, 149, 149),
+                        color: Theme.of(context).colorScheme.tertiary,
                       ),
                     ),
                   ),
@@ -80,7 +80,7 @@ class ListBooking extends HookConsumerWidget {
                       toggle.value
                           ? HeroIcons.chevronUp
                           : HeroIcons.chevronDown,
-                      color: const Color.fromARGB(255, 149, 149, 149),
+                      color: Theme.of(context).colorScheme.tertiary,
                       size: 30,
                     ),
                 ],

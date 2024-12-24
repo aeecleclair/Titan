@@ -9,21 +9,16 @@ class SettingsTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-      ),
-      child: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const TopBar(
-              title: SettingsTextConstants.settings,
-              root: SettingsRouter.root,
-            ),
-            Expanded(child: child),
-          ],
-        ),
+    return SafeArea(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const TopBar(
+            title: SettingsTextConstants.settings,
+            root: SettingsRouter.root,
+          ),
+          Expanded(child: child),
+        ],
       ),
     );
   }

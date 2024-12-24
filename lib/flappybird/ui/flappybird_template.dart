@@ -7,6 +7,8 @@ import 'package:myecl/flappybird/providers/user_score_provider.dart';
 import 'package:myecl/flappybird/router.dart';
 import 'package:myecl/tools/ui/widgets/top_bar.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
+import 'package:myecl/flappybird/tools/constants.dart';
 
 class FlappyBirdTemplate extends HookConsumerWidget {
   final Widget child;
@@ -16,8 +18,9 @@ class FlappyBirdTemplate extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final leaderBoardNotifier = ref.watch(scoreListProvider.notifier);
     final bestUserScoreNotifier = ref.watch(userScoreProvider.notifier);
+    final isDarkTheme = ref.watch(themeProvider);
     return Container(
-      color: Colors.blue,
+      color: FlappyBirdColors(isDarkTheme).sky,
       child: SafeArea(
         child: Column(
           children: [
@@ -25,10 +28,10 @@ class FlappyBirdTemplate extends HookConsumerWidget {
               title: "Flappy Bird",
               root: FlappyBirdRouter.root,
               textStyle: GoogleFonts.silkscreen(
-                textStyle: const TextStyle(
+                textStyle: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: FlappyBirdColors(isDarkTheme).text,
                 ),
               ),
               rightIcon: QR.currentPath == FlappyBirdRouter.root
@@ -40,9 +43,9 @@ class FlappyBirdTemplate extends HookConsumerWidget {
                           FlappyBirdRouter.root + FlappyBirdRouter.leaderBoard,
                         );
                       },
-                      icon: const HeroIcon(
+                      icon: HeroIcon(
                         HeroIcons.trophy,
-                        color: Colors.white,
+                        color: FlappyBirdColors(isDarkTheme).text,
                         size: 40,
                       ),
                     )

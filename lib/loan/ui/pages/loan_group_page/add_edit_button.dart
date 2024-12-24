@@ -144,8 +144,8 @@ class AddEditButton extends HookConsumerWidget {
       },
       child: Text(
         isEdit ? LoanTextConstants.edit : LoanTextConstants.add,
-        style: const TextStyle(
-          color: Colors.white,
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.onSecondary,
           fontSize: 25,
           fontWeight: FontWeight.bold,
         ),

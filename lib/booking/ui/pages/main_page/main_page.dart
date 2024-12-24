@@ -94,8 +94,8 @@ class BookingMainPage extends HookConsumerWidget {
                 const SizedBox(height: 10),
                 const Expanded(child: Calendar(isManagerPage: false)),
                 const SizedBox(height: 30),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.0),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -103,7 +103,7 @@ class BookingMainPage extends HookConsumerWidget {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 149, 149, 149),
+                        color: Theme.of(context).colorScheme.secondaryFixed,
                       ),
                     ),
                   ),
@@ -123,14 +123,14 @@ class BookingMainPage extends HookConsumerWidget {
                           selectedDaysNotifier.clear();
                           QR.to(BookingRouter.root + BookingRouter.addEdit);
                         },
-                        child: const CardLayout(
+                        child: CardLayout(
                           width: 120,
                           height: 200,
                           child: Center(
                             child: HeroIcon(
                               HeroIcons.plus,
                               size: 40.0,
-                              color: Colors.black,
+                              color: Theme.of(context).colorScheme.onPrimary,
                             ),
                           ),
                         ),

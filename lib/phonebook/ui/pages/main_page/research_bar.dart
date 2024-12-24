@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/providers/research_filter_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/tools/constants.dart';
 
 class ResearchBar extends HookConsumerWidget {
   const ResearchBar({super.key});
@@ -22,21 +21,23 @@ class ResearchBar extends HookConsumerWidget {
         focusNode: focusNode,
         controller: editingController,
         cursorColor: PhonebookColorConstants.textDark,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           isDense: true,
-          suffixIcon: Icon(
+          suffixIcon: const Icon(
             Icons.search,
             color: PhonebookColorConstants.textDark,
             size: 30,
           ),
-          label: Text(
+          label: const Text(
             PhonebookTextConstants.research,
             style: TextStyle(
               color: PhonebookColorConstants.textDark,
             ),
           ),
           focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: ColorConstants.gradient1),
+            borderSide: BorderSide(
+              color: Theme.of(context).colorScheme.primaryContainer,
+            ),
           ),
         ),
       ),

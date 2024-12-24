@@ -37,25 +37,29 @@ class LeftPanel extends HookConsumerWidget {
                     children: [
                       Image.asset(getTitanLogo(), width: 70, height: 70),
                       const SizedBox(width: 20),
-                      const Text(
+                      Text(
                         'MyECL',
                         style: TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onPrimary,
                         ),
                       ),
                       const SizedBox(width: 15),
-                      const Text(
+                      Text(
                         "-",
-                        style: TextStyle(fontSize: 25, color: Colors.black),
+                        style: TextStyle(
+                          fontSize: 25,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
                       ),
                       const SizedBox(width: 15),
-                      const Text(
+                      Text(
                         "L'application de l'associatif centralien",
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: Theme.of(context).colorScheme.onPrimary,
                         ),
                       ),
                     ],
@@ -125,26 +129,30 @@ class LeftPanel extends HookConsumerWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       LoginTextConstants.signIn,
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
                       ),
                     ),
                     Container(
                       margin: const EdgeInsets.only(left: 20),
                       child: isLoading
-                          ? const Padding(
-                              padding: EdgeInsets.all(12.0),
+                          ? Padding(
+                              padding: const EdgeInsets.all(12.0),
                               child: CircularProgressIndicator(
-                                color: Colors.white,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onPrimaryContainer,
                               ),
                             )
-                          : const HeroIcon(
+                          : HeroIcon(
                               HeroIcons.arrowRight,
-                              color: Colors.white,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer,
                               size: 35.0,
                             ),
                     ),
@@ -162,13 +170,14 @@ class LeftPanel extends HookConsumerWidget {
                         QR.to(LoginRouter.createAccount);
                         controller?.forward();
                       },
-                      child: const Text(
+                      child: Text(
                         LoginTextConstants.createAccount,
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                           decoration: TextDecoration.underline,
-                          color: Color.fromARGB(255, 48, 48, 48),
+                          color:
+                              Theme.of(context).colorScheme.secondaryContainer,
                         ),
                       ),
                     ),
@@ -178,13 +187,14 @@ class LeftPanel extends HookConsumerWidget {
                         QR.to(LoginRouter.forgotPassword);
                         controller?.forward();
                       },
-                      child: const Text(
+                      child: Text(
                         LoginTextConstants.forgotPassword,
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                           decoration: TextDecoration.underline,
-                          color: Color.fromARGB(255, 48, 48, 48),
+                          color:
+                              Theme.of(context).colorScheme.secondaryContainer,
                         ),
                       ),
                     ),

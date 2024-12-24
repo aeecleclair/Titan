@@ -9,7 +9,6 @@ import 'package:myecl/admin/ui/pages/main_page/association_ui.dart';
 import 'package:myecl/admin/ui/pages/main_page/card_ui.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
@@ -67,7 +66,7 @@ class AdminMainPage extends HookConsumerWidget {
                             const Spacer(),
                             HeroIcon(
                               HeroIcons.eye,
-                              color: Colors.grey.shade700,
+                              color: Theme.of(context).colorScheme.tertiary,
                               size: 40,
                             ),
                             const Spacer(),
@@ -83,7 +82,7 @@ class AdminMainPage extends HookConsumerWidget {
                             const Spacer(),
                             HeroIcon(
                               HeroIcons.plus,
-                              color: Colors.grey.shade700,
+                              color: Theme.of(context).colorScheme.tertiary,
                               size: 40,
                             ),
                             const Spacer(),
@@ -102,7 +101,7 @@ class AdminMainPage extends HookConsumerWidget {
                               children: [
                                 HeroIcon(
                                   HeroIcons.buildingLibrary,
-                                  color: Colors.grey.shade700,
+                                  color: Theme.of(context).colorScheme.tertiary,
                                   size: 40,
                                 ),
                                 Positioned(
@@ -111,7 +110,8 @@ class AdminMainPage extends HookConsumerWidget {
                                   child: HeroIcon(
                                     HeroIcons.plus,
                                     size: 15,
-                                    color: Colors.grey.shade700,
+                                    color:
+                                        Theme.of(context).colorScheme.tertiary,
                                   ),
                                 ),
                               ],
@@ -167,7 +167,7 @@ class AdminMainPage extends HookConsumerWidget {
                 ],
               );
             },
-            loaderColor: ColorConstants.gradient1,
+            loaderColor: Theme.of(context).colorScheme.primaryContainer,
           ),
         ),
       ),

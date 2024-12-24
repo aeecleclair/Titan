@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/flappybird/providers/pipe_image_provider.dart';
@@ -29,8 +27,8 @@ class PipeDisplay extends HookConsumerWidget {
               isBottomPipe ? Alignment.topCenter : Alignment.bottomCenter,
           fit: BoxFit.fitWidth,
           clipBehavior: Clip.hardEdge,
-          child: Transform.rotate(
-            angle: isBottomPipe ? 0 : pi,
+          child: Transform.flip(
+            flipY: !isBottomPipe,
             child: pipeImage.isNotEmpty ? Image.memory(pipeImage) : Container(),
           ),
         ),

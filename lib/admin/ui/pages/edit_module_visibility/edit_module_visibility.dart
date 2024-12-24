@@ -6,7 +6,6 @@ import 'package:myecl/admin/providers/module_visibility_list_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/ui/admin.dart';
 import 'package:myecl/admin/ui/pages/edit_module_visibility/modules_expansion_panel.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/loader.dart';
 
@@ -28,14 +27,14 @@ class EditModulesVisibilityPage extends HookConsumerWidget {
               SizedBox(
                 child: Column(
                   children: [
-                    const Align(
+                    Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         AdminTextConstants.modifyModuleVisibility,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
-                          color: ColorConstants.gradient1,
+                          color: Theme.of(context).colorScheme.primaryContainer,
                         ),
                       ),
                     ),

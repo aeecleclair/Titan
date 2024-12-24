@@ -76,16 +76,18 @@ class AddEditSessionPage extends HookConsumerWidget {
                   isEdit
                       ? CinemaTextConstants.editSession
                       : CinemaTextConstants.addSession,
-                  color: Colors.grey,
+                  color: Theme.of(context).colorScheme.secondaryFixed,
                 ),
                 const SizedBox(height: 30),
                 TextField(
                   controller: tmdbUrl,
-                  cursorColor: Colors.black,
+                  cursorColor: Theme.of(context).colorScheme.onPrimary,
                   decoration: InputDecoration(
                     labelText: CinemaTextConstants.importFromTMDB,
-                    labelStyle:
-                        const TextStyle(color: Colors.black, fontSize: 20),
+                    labelStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      fontSize: 20,
+                    ),
                     suffixIcon: Container(
                       padding: const EdgeInsets.all(10),
                       child: WaitingButton(
@@ -137,21 +139,31 @@ class AddEditSessionPage extends HookConsumerWidget {
                           }
                         },
                         builder: (child) => TmdbButton(child: child),
-                        child: const HeroIcon(
+                        child: HeroIcon(
                           HeroIcons.arrowRight,
                           size: 22,
-                          color: Colors.black,
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
                         ),
                       ),
                     ),
-                    border: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 2.0),
+                    border: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        width: 2.0,
+                      ),
                     ),
-                    enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 2.0),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        width: 2.0,
+                      ),
                     ),
-                    focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 2.0),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        width: 2.0,
+                      ),
                     ),
                   ),
                 ),
@@ -164,13 +176,14 @@ class AddEditSessionPage extends HookConsumerWidget {
                               horizontal: 30,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.grey[200],
+                              color: Theme.of(context).shadowColor,
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: HeroIcon(
                               HeroIcons.camera,
                               size: 100,
-                              color: Colors.grey.shade500,
+                              color:
+                                  Theme.of(context).colorScheme.secondaryFixed,
                             ),
                           )
                         : Image(image: logoFile.value!.image, fit: BoxFit.cover)
@@ -323,8 +336,8 @@ class AddEditSessionPage extends HookConsumerWidget {
                   },
                   child: Text(
                     isEdit ? CinemaTextConstants.edit : CinemaTextConstants.add,
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSecondary,
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
                     ),

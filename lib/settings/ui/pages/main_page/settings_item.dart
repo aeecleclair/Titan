@@ -26,18 +26,19 @@ class SettingsItem extends StatelessWidget {
             child: HeroIcon(
               icon,
               size: 30,
-              color: Colors.black,
+              color: Theme.of(context).colorScheme.onPrimary,
             ),
           ),
           Expanded(child: child),
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(color: Colors.black),
+              color: Theme.of(context).colorScheme.primary,
+              border:
+                  Border.all(color: Theme.of(context).colorScheme.onPrimary),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.shade400.withOpacity(0.3),
+                  color: Theme.of(context).shadowColor,
                   spreadRadius: 2,
                   blurRadius: 5,
                   offset: const Offset(2, 3),
@@ -45,10 +46,10 @@ class SettingsItem extends StatelessWidget {
               ],
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const HeroIcon(
+            child: HeroIcon(
               HeroIcons.chevronRight,
               size: 25,
-              color: Colors.black,
+              color: Theme.of(context).colorScheme.onPrimary,
             ),
           ),
         ],

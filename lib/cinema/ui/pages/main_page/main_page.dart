@@ -61,12 +61,12 @@ class CinemaMainPage extends HookConsumerWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
+                      Text(
                         CinemaTextConstants.incomingSession,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.grey,
+                          color: Theme.of(context).colorScheme.secondaryFixed,
                         ),
                       ),
                       if (isAdmin)
@@ -86,7 +86,7 @@ class CinemaMainPage extends HookConsumerWidget {
                 builder: (context, data) {
                   data.sort((a, b) => a.start.compareTo(b.start));
                   if (data.isEmpty) {
-                    return const SizedBox(
+                    return SizedBox(
                       height: 200,
                       child: Center(
                         child: Text(
@@ -94,7 +94,7 @@ class CinemaMainPage extends HookConsumerWidget {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.onPrimary,
                           ),
                         ),
                       ),
