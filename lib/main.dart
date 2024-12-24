@@ -84,7 +84,7 @@ class MyApp extends HookConsumerWidget {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        // DRAFT: Semantics of the colors
+        // Semantics of the colors
         //
         // `primary` is the ultimate background, hence the most prominent onscreen,
         // the theme is named after the "brightness" of `primary`.
