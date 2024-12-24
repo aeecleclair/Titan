@@ -4,22 +4,22 @@ import 'package:myecl/tools/constants.dart';
 
 class AdminButton extends StatelessWidget {
   final VoidCallback onTap;
-  final Color textColor;
+  final Color? textColor;
   final Color? color;
   final List<Color>? colors;
   final String text;
   const AdminButton({
     super.key,
     required this.onTap,
-    this.textColor = Colors.white,
-    this.color = Colors.black,
+    this.textColor,
+    this.color,
     this.text = TextConstants.admin,
     this.colors,
   });
 
   @override
   Widget build(BuildContext context) {
-    final useColors = colors != null;
+    final useColors = colors != null && colors!.length > 1;
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -32,11 +32,13 @@ class AdminButton extends StatelessWidget {
                   radius: 2,
                 )
               : null,
-          color: color,
+          color: useColors
+              ? null
+              : color ?? Theme.of(context).colorScheme.secondary,
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-              color: (useColors ? colors!.last : color)!.withOpacity(0.2),
+              color: Theme.of(context).shadowColor,
               blurRadius: 10,
               offset: const Offset(0, 5),
             ),
@@ -44,14 +46,17 @@ class AdminButton extends StatelessWidget {
         ),
         child: Row(
           children: [
-            HeroIcon(HeroIcons.userGroup, color: textColor),
+            HeroIcon(
+              HeroIcons.userGroup,
+              color: textColor ?? Theme.of(context).colorScheme.onSecondary,
+            ),
             const SizedBox(width: 10),
             Text(
               text,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: textColor,
+                color: textColor ?? Theme.of(context).colorScheme.onSecondary,
               ),
             ),
           ],

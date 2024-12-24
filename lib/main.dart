@@ -84,40 +84,73 @@ class MyApp extends HookConsumerWidget {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
+        // DRAFT: Semantics of the colors
+        //
+        // `primary` is the ultimate background, hence the most prominent onscreen,
+        // the theme is named after the "brightness" of `primary`.
+        // There are 3 main colors, they strongly contrast with each other:
+        // `secondary` is the opposite of `primary`;
+        // `primaryContainer` is a true color (not some grayscale), a vivid one, to emphasize.
+        // `secondary` and `primaryContainer` are for surfaces displayed on top of `primary`.
+        // `surface` is identical to `primary`, in case a surface of this color is needed.
+        //
+        // `tertiary` is a blend of `primary` and `secondary`,
+        // and in practice is it the same for both themes (and is seldom used, so far).
+        // `error` is red in any case.
+        // `primaryContainer` is defined to be close to `primarySwatch`,
+        // which is outside of `colorScheme` and never written in code,
+        // it is just to have a default non-grayscale color.
+        // However `shadowColor` is written in code altough defined outside of `colorScheme`,
+        // it is a translucent color, closer to `primary`, meant to be the default for shadows.
+        //
+        // Without the `on-` prefix, it is for surfaces (buttons, cards).
+        // With `on-`, it is for things with no "thickness" (texts, icons, borders),
+        // such that nothing could be displayed on top of them.
+        // `onSomeColor` should be very legible on `someColor`,
+        // so `onPrimaryContainer` and `onError` should be chosen carefully
+        // since they do not have a natural opposite.
+        // Meanwhile, the primary-secondary duality is still there with `on-`, thus:
+        // `onSurface` = `onPrimary` := `secondary`, `onSecondary` := `primary`, etc.
+        //
+        // Likewise, the `-Fixed` suffix is for a less strong variant,
+        // needed in some contexts (a discrete shadow, a minimal yet visible contrast),
+        // hence `primaryFixed` and `secondaryFixed` are opposite.
+        // `secondaryContainer` is to be understood as "primaryContainerFixed"
+        // as it is actually a variant of `primaryContainer`,
+        // slightly farther from `primary` and used mostly for gradients:
+        // `primaryContainer` and `primaryFixed` are formerly known
+        // as "gradient1" and "gradient2" here on Titan.
+        //
+        // LIST OF INCONSISTENCIES to fix (in that order):
+        // Replace most `secondaryFixed` with `tertiary` (don't remember why, though)
+        // Swap `primaryFixed` and `secondaryContainer`
+        // Swap the `-Fixed`
         theme: ThemeData(
           brightness: Brightness.light,
           primarySwatch: Colors.orange,
-          shadowColor: Colors.grey
-              .withValues(alpha: 0.3), // to be used by default for shadows
+          shadowColor: Colors.grey.withValues(alpha: 0.3),
           colorScheme: const ColorScheme(
             brightness: Brightness.light,
-            primary: Colors.white, // main color, mostly for background
-            onPrimary: Colors.black, // for small things on primary
-            secondary: Colors
-                .black, // opposite of the primary, covering larger surface
-            onSecondary: Colors.white, // for small things on secondary
-            tertiary: Colors.grey, // between primary and secondary. Constant
-            error: Colors.red, // self-explanatory. Constant
-            onError:
-                Colors.white, // white stands out well on red. Thus constant
-            surface: Colors.white, // identical to primary
-            onSurface: Colors.black, // identical to onPrimary
-            primaryContainer: Color(
-              0xFFfb6d10,
-            ), // an actual color. For boxes, buttons, etc., to emphasize them. Formerly known as gradient1
-            primaryFixed: Color(
-              0xffeb3e1b,
-            ), // formerly known as gradient2, used mainly for gradients. Slightly farther from primary
-            onPrimaryContainer: Colors
-                .white, // a color that stands out well on primaryContainer
-            secondaryFixed:
-                Color(0xFFDDDDDD), // for discrete shadows on primary
-            secondaryContainer: Color(0xFF222222), // opposite of secondaryFixed
+            primary: Colors.white,
+            onPrimary: Colors.black,
+            secondary: Colors.black,
+            onSecondary: Colors.white,
+            surface: Colors.white,
+            onSurface: Colors.black,
+            primaryContainer: Color(0xFFfb6d10),
+            primaryFixed: Color(0xffeb3e1b),
+            onPrimaryContainer: Colors.white,
+            secondaryFixed: Color(0xFFDDDDDD),
+            secondaryContainer: Color(0xFF222222),
+            tertiary: Colors.grey,
+            error: Colors.red,
+            onError: Colors.white,
           ),
           textTheme: GoogleFonts.latoTextTheme(
-            Theme.of(context)
-                .textTheme
-                .apply(bodyColor: Colors.black, displayColor: Colors.black),
+            Theme.of(context).textTheme.apply(
+                  bodyColor: Colors.black,
+                  displayColor: Colors.black,
+                ),
           ),
         ),
         darkTheme: ThemeData(
@@ -130,9 +163,6 @@ class MyApp extends HookConsumerWidget {
             onPrimary: Colors.white,
             secondary: Colors.white,
             onSecondary: Colors.black,
-            error: Colors.red,
-            onError: Colors.white,
-            tertiary: Colors.grey,
             surface: Colors.black,
             onSurface: Colors.white,
             primaryContainer: Color(0xFFfb6d10),
@@ -140,6 +170,9 @@ class MyApp extends HookConsumerWidget {
             onPrimaryContainer: Colors.white,
             secondaryFixed: Color(0xFF222222),
             secondaryContainer: Color(0xFFDDDDDD),
+            error: Colors.red,
+            onError: Colors.white,
+            tertiary: Colors.grey,
           ),
           textTheme: GoogleFonts.latoTextTheme(
             Theme.of(context)
