@@ -16,7 +16,7 @@ class RecommendationCardLayout extends StatelessWidget {
     return CardLayout(
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
       color: backgroundColor,
-      shadowColor: Colors.grey.withOpacity(0.2),
+      shadowColor: Colors.grey.withValues(alpha: 0.2),
       child: child,
     );
   }

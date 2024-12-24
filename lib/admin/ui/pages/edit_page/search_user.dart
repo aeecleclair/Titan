@@ -84,7 +84,7 @@ class SearchUser extends HookConsumerWidget {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: ColorConstants.gradient2.withOpacity(0.4),
+                        color: ColorConstants.gradient2.withValues(alpha: 0.4),
                         offset: const Offset(2, 3),
                         blurRadius: 5,
                       ),

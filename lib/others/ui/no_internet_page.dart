@@ -68,7 +68,7 @@ class NoInternetPage extends HookConsumerWidget {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: ColorConstants.gradient1.withOpacity(0.2),
+                        color: ColorConstants.gradient1.withValues(alpha: 0.2),
                         blurRadius: 10,
                         offset: const Offset(0, 5),
                       ),

@@ -54,7 +54,7 @@ class ProductUiInList extends ConsumerWidget {
                     HeroIcons.minus,
                     size: 22,
                     color: quantity > 0
-                        ? AMAPColorConstants.green2.withOpacity(0.8)
+                        ? AMAPColorConstants.green2.withValues(alpha: 0.8)
                         : AMAPColorConstants.background3,
                   ),
                 ),
@@ -107,7 +107,7 @@ class ProductUiInList extends ConsumerWidget {
                   child: HeroIcon(
                     HeroIcons.plus,
                     size: 22,
-                    color: AMAPColorConstants.green2.withOpacity(0.8),
+                    color: AMAPColorConstants.green2.withValues(alpha: 0.8),
                   ),
                 ),
                 onTap: () {

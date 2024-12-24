@@ -227,7 +227,7 @@ class CreateAccountPage extends HookConsumerWidget {
                 floor.text = value.toString();
               },
               dropdownColor: ColorConstants.background2,
-              iconEnabledColor: Colors.grey.shade100.withOpacity(.8),
+              iconEnabledColor: Colors.grey.shade100.withValues(alpha: .8),
               style: const TextStyle(fontSize: 20, color: Colors.white),
               decoration: const InputDecoration(
                 contentPadding: EdgeInsets.symmetric(vertical: 10),

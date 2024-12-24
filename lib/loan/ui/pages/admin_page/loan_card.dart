@@ -51,7 +51,7 @@ class LoanCard extends StatelessWidget {
               ]
             : [Colors.white, Colors.white],
         shadowColor: shouldReturn
-            ? LoanColorConstants.redGradient2.withOpacity(0.25)
+            ? LoanColorConstants.redGradient2.withValues(alpha: 0.25)
             : LoanColorConstants.shadowColor,
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
@@ -108,7 +108,7 @@ class LoanCard extends StatelessWidget {
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
                 color: shouldReturn
-                    ? Colors.white.withOpacity(0.8)
+                    ? Colors.white.withValues(alpha: 0.8)
                     : Colors.grey.shade400,
               ),
             ),
@@ -149,7 +149,7 @@ class LoanCard extends StatelessWidget {
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
                     color: shouldReturn
-                        ? Colors.white.withOpacity(0.8)
+                        ? Colors.white.withValues(alpha: 0.8)
                         : Colors.grey.shade400,
                   ),
                 ),
@@ -164,7 +164,7 @@ class LoanCard extends StatelessWidget {
                     onTap: onEdit,
                     child: CardButton(
                       color: shouldReturn
-                          ? Colors.white.withOpacity(0.7)
+                          ? Colors.white.withValues(alpha: 0.7)
                           : Colors.grey.shade200,
                       child: HeroIcon(
                         HeroIcons.pencil,
@@ -180,7 +180,7 @@ class LoanCard extends StatelessWidget {
                         : Colors.black,
                     builder: (child) => CardButton(
                       color: shouldReturn
-                          ? Colors.white.withOpacity(0.7)
+                          ? Colors.white.withValues(alpha: 0.7)
                           : Colors.grey.shade200,
                       child: child,
                     ),

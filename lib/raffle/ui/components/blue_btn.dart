@@ -23,7 +23,7 @@ class BlueBtn extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: RaffleColorConstants.gradient2.withOpacity(0.4),
+            color: RaffleColorConstants.gradient2.withValues(alpha: 0.4),
             offset: const Offset(2, 3),
             blurRadius: 5,
           ),

@@ -192,7 +192,8 @@ class NotificationPopup extends HookConsumerWidget {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: ColorConstants.gradient2.withOpacity(0.3),
+                          color:
+                              ColorConstants.gradient2.withValues(alpha: 0.3),
                           blurRadius: 10.0,
                           offset: const Offset(0.0, 10.0),
                         ),

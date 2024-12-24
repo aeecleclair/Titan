@@ -44,7 +44,7 @@ class CardButton extends StatelessWidget {
           BoxShadow(
             color: (useShadow || !useColors)
                 ? shadowColor
-                : colors!.last.withOpacity(0.5),
+                : colors!.last.withValues(alpha: 0.5),
             blurRadius: 10,
             offset: const Offset(2, 3),
           ),
