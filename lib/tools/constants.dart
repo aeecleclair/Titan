@@ -18,6 +18,8 @@ class TextConstants {
   static const String imageSizeTooBig =
       "La taille de l'image ne doit pas dépasser 4 Mio";
   static const String imageError = "Erreur lors de l'ajout de l'image";
+  static const String yes = "Oui";
+  static const String no = "Non";
 }
 
 const String previousEmailRegex =

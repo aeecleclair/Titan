@@ -27,8 +27,8 @@ class MyButton extends StatelessWidget {
                   Theme.of(context).colorScheme.primaryContainer,
                 ]
               : [
-                  Colors.grey.shade200,
-                  Colors.grey.shade200,
+                  Theme.of(context).colorScheme.tertiary,
+                  Theme.of(context).colorScheme.tertiary,
                 ],
           begin: Alignment.bottomRight,
           end: Alignment.topLeft,
@@ -42,7 +42,7 @@ class MyButton extends StatelessWidget {
             fontWeight: FontWeight.w700,
             color: enabled
                 ? Theme.of(context).colorScheme.onPrimaryContainer
-                : Colors.black,
+                : Theme.of(context).colorScheme.onSurface,
           ),
           maxLines: 1,
         ),

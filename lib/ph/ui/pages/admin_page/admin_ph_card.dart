@@ -57,10 +57,9 @@ class AdminPhCard extends StatelessWidget {
                   Theme.of(context).colorScheme.primary,
                   Theme.of(context).colorScheme.secondaryFixed,
                 ],
-                shadowColor: Theme.of(context).shadowColor.withOpacity(0.2),
                 child: HeroIcon(
                   HeroIcons.pencil,
-                  color: Theme.of(context).colorScheme.onPrimary,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
             ),

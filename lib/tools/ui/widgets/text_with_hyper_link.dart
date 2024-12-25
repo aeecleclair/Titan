@@ -64,7 +64,7 @@ class TextWithHyperLink extends StatelessWidget {
     final theme = Theme.of(context);
     final hyperLinkStyle = linkStyle ??
         theme.textTheme.bodyMedium?.copyWith(
-          color: ColorConstants.gradient1,
+          color: Theme.of(context).colorScheme.primaryContainer,
           decoration: TextDecoration.underline,
         );
 
