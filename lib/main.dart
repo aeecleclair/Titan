@@ -155,7 +155,7 @@ class MyApp extends HookConsumerWidget {
         ),
         darkTheme: ThemeData(
           brightness: Brightness.dark,
-          primarySwatch: Colors.orange,
+          primarySwatch: Colors.purple,
           shadowColor: Colors.grey.withValues(alpha: 0.7),
           colorScheme: const ColorScheme(
             brightness: Brightness.dark,
@@ -165,9 +165,9 @@ class MyApp extends HookConsumerWidget {
             onSecondary: Colors.black,
             surface: Colors.black,
             onSurface: Colors.white,
-            primaryContainer: Color(0xfffb6d10),
-            primaryFixed: Color(0xffeb9c05),
-            onPrimaryContainer: Colors.white,
+            primaryContainer: Color(0xff6d10fb),
+            primaryFixed: Color(0xff9c05eb),
+            onPrimaryContainer: Colors.black,
             secondaryFixed: Color(0xFF222222),
             secondaryContainer: Color(0xFFDDDDDD),
             error: Colors.red,

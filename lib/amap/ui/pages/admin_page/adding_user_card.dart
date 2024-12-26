@@ -5,6 +5,8 @@ import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/providers/cash_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
+import 'package:myecl/amap/tools/constants.dart';
 
 class AddingUserCard extends HookConsumerWidget {
   final SimpleUser user;

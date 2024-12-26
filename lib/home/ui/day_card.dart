@@ -126,7 +126,9 @@ class DayCard extends HookConsumerWidget {
                       child: Text(
                         "$numberOfEvent",
                         style: TextStyle(
-                          color: isToday ? Colors.yellow : Colors.brown,
+                          color: isToday
+                              ? Theme.of(context).colorScheme.onPrimaryContainer
+                              : Theme.of(context).colorScheme.onPrimary,
                           fontWeight: FontWeight.bold,
                           fontSize: 12,
                         ),
