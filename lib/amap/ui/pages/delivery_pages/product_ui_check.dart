@@ -46,8 +46,8 @@ class ProductUi extends ConsumerWidget {
               const SizedBox(width: 15),
               Checkbox(
                 value: isModification,
-                checkColor: AMAPColorConstants.background,
-                activeColor: AMAPColorConstants.green2,
+                checkColor: AMAPColors(isDarkTheme).background,
+                activeColor: AMAPColors(isDarkTheme).secondaryFixedGreen,
                 onChanged: (value) {
                   onclick();
                 },

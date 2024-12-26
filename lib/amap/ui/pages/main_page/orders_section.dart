@@ -41,10 +41,10 @@ class OrderSection extends HookConsumerWidget {
 
     return Column(
       children: [
-        const AlignLeftText(
+        AlignLeftText(
           AMAPTextConstants.orders,
           padding: EdgeInsets.symmetric(horizontal: 30),
-          color: AMAPColorConstants.textDark,
+          color: AMAPColors(isDarkTheme).textOnPrimary,
         ),
         const SizedBox(height: 10),
         HorizontalListView(
@@ -58,12 +58,12 @@ class OrderSection extends HookConsumerWidget {
                 orderNotifier.setOrder(e);
                 addOrder();
               },
-              child: const CardLayout(
+              child: CardLayout(
                 width: 100,
                 height: 150,
                 colors: [
-                  AMAPColorConstants.lightGradient1,
-                  AMAPColorConstants.greenGradient1,
+                  AMAPColors(isDarkTheme).lightGradientPrimary,
+                  AMAPColors(isDarkTheme).greenGradientPrimary,
                 ],
                 child: Center(
                   child: HeroIcon(
@@ -95,7 +95,7 @@ class OrderSection extends HookConsumerWidget {
                   }).toList(),
                 );
               },
-              loaderColor: AMAPColorConstants.greenGradient2,
+              loaderColor: AMAPColors(isDarkTheme).greenGradientSecondary,
             ),
             const SizedBox(width: 25),
           ],

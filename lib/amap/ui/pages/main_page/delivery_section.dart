@@ -35,7 +35,9 @@ class DeliverySection extends HookConsumerWidget {
         AlignLeftText(
           AMAPTextConstants.deliveries,
           padding: const EdgeInsets.symmetric(horizontal: 30),
-          color: showSelected ? Colors.white : AMAPColorConstants.textDark,
+          color: showSelected
+              ? Colors.white
+              : AMAPColors(isDarkTheme).textOnPrimary,
         ),
         AsyncChild(
           value: deliveries,
@@ -69,7 +71,7 @@ class DeliverySection extends HookConsumerWidget {
               ),
             );
           },
-          loaderColor: AMAPColorConstants.greenGradient2,
+          loaderColor: AMAPColors(isDarkTheme).greenGradientSecondary,
         ),
       ],
     );

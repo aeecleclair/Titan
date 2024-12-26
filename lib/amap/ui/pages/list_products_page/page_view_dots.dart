@@ -20,7 +20,7 @@ class Dots extends HookConsumerWidget {
             controller: pageController,
             count: len,
             effect: WormEffect(
-              dotColor: AMAPColorConstants.background3,
+              dotColor: AMAPColors(isDarkTheme).background3,
               activeDotColor: AMAPColorConstants.enabled,
               dotWidth: 7,
               dotHeight: 7,

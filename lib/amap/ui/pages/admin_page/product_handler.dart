@@ -39,10 +39,10 @@ class ProductHandler extends HookConsumerWidget {
 
     return Column(
       children: [
-        const AlignLeftText(
+        AlignLeftText(
           padding: EdgeInsets.symmetric(horizontal: 30),
           AMAPTextConstants.products,
-          color: AMAPColorConstants.textDark,
+          color: AMAPColors(isDarkTheme).textOnPrimary,
         ),
         const SizedBox(height: 10),
         HorizontalListView(
@@ -61,11 +61,12 @@ class ProductHandler extends HookConsumerWidget {
               child: CardLayout(
                 height: 155,
                 width: 100,
-                colors: const [
-                  AMAPColorConstants.lightGradient1,
-                  AMAPColorConstants.lightGradient2,
+                colors: [
+                  AMAPColors(isDarkTheme).lightGradientPrimary,
+                  AMAPColors(isDarkTheme).lightGradientSecondary,
                 ],
-                shadowColor: AMAPColorConstants.textDark.withOpacity(0.3),
+                shadowColor:
+                    AMAPColors(isDarkTheme).textOnPrimary.withOpacity(0.3),
                 child: const Center(
                   child: HeroIcon(
                     HeroIcons.plus,

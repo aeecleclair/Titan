@@ -35,16 +35,16 @@ class DeliveryUi extends HookConsumerWidget {
           gradient: LinearGradient(
             colors: [
               (selected && showSelected)
-                  ? AMAPColorConstants.greenGradient2
+                  ? AMAPColors(isDarkTheme).greenGradientSecondary
                   : Colors.white,
               (selected && showSelected)
-                  ? AMAPColorConstants.textDark
+                  ? AMAPColors(isDarkTheme).textOnPrimary
                   : Colors.white,
             ],
           ),
           boxShadow: [
             BoxShadow(
-              color: AMAPColorConstants.textDark.withOpacity(0.2),
+              color: AMAPColors(isDarkTheme).textOnPrimary.withOpacity(0.2),
               spreadRadius: 5,
               blurRadius: 10,
               offset: const Offset(3, 3),
@@ -64,7 +64,7 @@ class DeliveryUi extends HookConsumerWidget {
                   fontWeight: FontWeight.bold,
                   color: (selected && showSelected)
                       ? Colors.white
-                      : AMAPColorConstants.textDark,
+                      : AMAPColors(isDarkTheme).textOnPrimary,
                 ),
               ),
               const Spacer(),
@@ -75,7 +75,7 @@ class DeliveryUi extends HookConsumerWidget {
                   fontWeight: FontWeight.w700,
                   color: (selected && showSelected)
                       ? Colors.white
-                      : AMAPColorConstants.textLight,
+                      : AMAPColors(isDarkTheme).textOnSecondary,
                 ),
               ),
               const SizedBox(width: 10),

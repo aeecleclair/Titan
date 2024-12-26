@@ -31,7 +31,7 @@ class AccountHandler extends HookConsumerWidget {
       children: [
         StyledSearchBar(
           label: AMAPTextConstants.accounts,
-          color: AMAPColorConstants.textDark,
+          color: AMAPColors(isDarkTheme).textOnPrimary,
           onChanged: (value) async {
             if (!searchingAmapUser) {
               if (value.isNotEmpty) {
@@ -71,17 +71,18 @@ class AccountHandler extends HookConsumerWidget {
               child: CardLayout(
                 height: 100,
                 width: 100,
-                colors: const [
-                  AMAPColorConstants.green1,
-                  AMAPColorConstants.textLight,
+                colors: [
+                  AMAPColors(isDarkTheme).primaryFixedGreen,
+                  AMAPColors(isDarkTheme).textOnSecondary,
                 ],
-                shadowColor: AMAPColorConstants.textDark.withOpacity(0.2),
+                shadowColor:
+                    AMAPColors(isDarkTheme).textOnPrimary.withOpacity(0.2),
                 padding: const EdgeInsets.symmetric(horizontal: 17.0),
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12.0),
                   child: HeroIcon(
                     searchingAmapUser ? HeroIcons.plus : HeroIcons.xMark,
-                    color: AMAPColorConstants.green3,
+                    color: AMAPColors(isDarkTheme).primaryGreen,
                     size: 50,
                   ),
                 ),

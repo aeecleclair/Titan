@@ -46,10 +46,10 @@ class AddingUserCard extends HookConsumerWidget {
                   user.nickname ?? user.firstname,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: AMAPColorConstants.textLight,
+                    color: AMAPColors(isDarkTheme).textOnSecondary,
                   ),
                 ),
                 const SizedBox(height: 2),
@@ -59,10 +59,10 @@ class AddingUserCard extends HookConsumerWidget {
                       : user.name,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
-                    color: AMAPColorConstants.textDark,
+                    color: AMAPColors(isDarkTheme).textOnPrimary,
                   ),
                 ),
                 const SizedBox(height: 3),

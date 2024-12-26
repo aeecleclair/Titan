@@ -21,7 +21,7 @@ class AddingUserContainer extends HookConsumerWidget {
         children:
             users.map((e) => AddingUserCard(user: e, onAdd: onAdd)).toList(),
       ),
-      loaderColor: AMAPColorConstants.greenGradient2,
+      loaderColor: AMAPColors(isDarkTheme).greenGradientSecondary,
     );
   }
 }

@@ -30,9 +30,9 @@ class ProductCard extends ConsumerWidget {
       id: product.id,
       width: 130,
       height: showButton ? 155 : 130,
-      colors: const [
-        AMAPColorConstants.lightGradient1,
-        AMAPColorConstants.lightGradient2,
+      colors: [
+        AMAPColors(isDarkTheme).lightGradientPrimary,
+        AMAPColors(isDarkTheme).lightGradientSecondary,
       ],
       padding: const EdgeInsets.only(left: 17.0, top: 5, right: 17),
       child: Column(
@@ -44,10 +44,10 @@ class ProductCard extends ConsumerWidget {
             product.category,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: AMAPColorConstants.darkGreen,
+              color: AMAPColors(isDarkTheme).secondaryGreen,
             ),
           ),
           const SizedBox(height: 4),
@@ -67,10 +67,10 @@ class ProductCard extends ConsumerWidget {
             maxLines: 1,
             minFontSize: 10,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: AMAPColorConstants.darkGreen,
+              color: AMAPColors(isDarkTheme).secondaryGreen,
             ),
           ),
           const Spacer(),
@@ -80,10 +80,10 @@ class ProductCard extends ConsumerWidget {
                   children: [
                     GestureDetector(
                       onTap: onEdit,
-                      child: const CardButton(
+                      child: CardButton(
                         colors: [
-                          AMAPColorConstants.greenGradient2,
-                          AMAPColorConstants.textDark,
+                          AMAPColors(isDarkTheme).greenGradientSecondary,
+                          AMAPColors(isDarkTheme).textOnPrimary,
                         ],
                         child: HeroIcon(HeroIcons.pencil, color: Colors.white),
                       ),
@@ -91,9 +91,9 @@ class ProductCard extends ConsumerWidget {
                     WaitingButton(
                       onTap: onDelete,
                       builder: (child) => CardButton(
-                        colors: const [
-                          AMAPColorConstants.redGradient1,
-                          AMAPColorConstants.redGradient2,
+                        colors: [
+                          AMAPColors(isDarkTheme).redGradientPrimary,
+                          AMAPColors(isDarkTheme).redGradientSecondary,
                         ],
                         child: child,
                       ),
@@ -106,10 +106,10 @@ class ProductCard extends ConsumerWidget {
                   margin: const EdgeInsets.only(bottom: 5),
                   child: Text(
                     "${AMAPTextConstants.quantity} : ${product.quantity}",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
-                      color: AMAPColorConstants.darkGreen,
+                      color: AMAPColors(isDarkTheme).secondaryGreen,
                     ),
                   ),
                 ),

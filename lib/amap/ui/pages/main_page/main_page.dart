@@ -87,13 +87,13 @@ class AmapMainPage extends HookConsumerWidget {
                       value: balance,
                       builder: (context, s) => Text(
                         "${AMAPTextConstants.amount} : ${s.balance.toStringAsFixed(2)}€",
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: AMAPColorConstants.greenGradient1,
+                          color: AMAPColors(isDarkTheme).greenGradientPrimary,
                         ),
                       ),
-                      loaderColor: AMAPColorConstants.greenGradient1,
+                      loaderColor: AMAPColors(isDarkTheme).greenGradientPrimary,
                     ),
                   ),
                   if (isAdmin)
@@ -101,9 +101,9 @@ class AmapMainPage extends HookConsumerWidget {
                       onTap: () {
                         QR.to(AmapRouter.root + AmapRouter.admin);
                       },
-                      colors: const [
-                        AMAPColorConstants.greenGradient1,
-                        AMAPColorConstants.greenGradient2,
+                      colors: [
+                        AMAPColors(isDarkTheme).greenGradientPrimary,
+                        AMAPColors(isDarkTheme).greenGradientSecondary,
                       ],
                     ),
                 ],
@@ -155,10 +155,10 @@ class AmapMainPage extends HookConsumerWidget {
                     width: double.infinity,
                     height: MediaQuery.of(context).size.height - 150,
                     decoration: BoxDecoration(
-                      gradient: const RadialGradient(
+                      gradient: RadialGradient(
                         colors: [
-                          AMAPColorConstants.textLight,
-                          AMAPColorConstants.greenGradient1,
+                          AMAPColors(isDarkTheme).textOnSecondary,
+                          AMAPColors(isDarkTheme).greenGradientPrimary,
                         ],
                         center: Alignment.topRight,
                         radius: 1.5,
@@ -169,7 +169,9 @@ class AmapMainPage extends HookConsumerWidget {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: AMAPColorConstants.textDark.withOpacity(0.3),
+                          color: AMAPColors(isDarkTheme)
+                              .textOnPrimary
+                              .withOpacity(0.3),
                           spreadRadius: 5,
                           blurRadius: 10,
                           offset: const Offset(3, 3),
@@ -252,17 +254,19 @@ class AmapMainPage extends HookConsumerWidget {
                             height: 70,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(25),
-                              gradient: const LinearGradient(
+                              gradient: LinearGradient(
                                 colors: [
-                                  AMAPColorConstants.greenGradient2,
-                                  AMAPColorConstants.textDark,
+                                  AMAPColors(isDarkTheme)
+                                      .greenGradientSecondary,
+                                  AMAPColors(isDarkTheme).textOnPrimary,
                                 ],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                               ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: AMAPColorConstants.textDark
+                                  color: AMAPColors(isDarkTheme)
+                                      .textOnPrimary
                                       .withOpacity(0.3),
                                   spreadRadius: 2,
                                   blurRadius: 10,

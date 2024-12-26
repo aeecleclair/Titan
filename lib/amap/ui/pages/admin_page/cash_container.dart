@@ -18,7 +18,7 @@ class CashContainer extends HookConsumerWidget {
       value: cash,
       builder: (context, cash) =>
           Row(children: cash.map((e) => UserCashUi(cash: e)).toList()),
-      loaderColor: AMAPColorConstants.greenGradient2,
+      loaderColor: AMAPColors(isDarkTheme).greenGradientSecondary,
     );
   }
 }

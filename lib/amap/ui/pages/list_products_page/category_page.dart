@@ -73,7 +73,7 @@ class CategoryPage extends HookConsumerWidget {
                       capitalize(category),
                       padding:
                           const EdgeInsets.only(left: 20, top: 20, right: 20),
-                      color: AMAPColorConstants.textDark,
+                      color: AMAPColors(isDarkTheme).textOnPrimary,
                       fontSize: 25,
                     ),
                   ),
@@ -99,7 +99,8 @@ class CategoryPage extends HookConsumerWidget {
                             ),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: AMAPColorConstants.background2
+                                color: AMAPColors(isDarkTheme)
+                                    .background2
                                     .withOpacity(0.5),
                               ),
                               child: Column(
@@ -130,17 +131,19 @@ class CategoryPage extends HookConsumerWidget {
                                 width: 150,
                                 height: 50,
                                 decoration: BoxDecoration(
-                                  gradient: const LinearGradient(
+                                  gradient: LinearGradient(
                                     colors: [
-                                      AMAPColorConstants.green1,
-                                      AMAPColorConstants.green2,
+                                      AMAPColors(isDarkTheme).primaryFixedGreen,
+                                      AMAPColors(isDarkTheme)
+                                          .secondaryFixedGreen,
                                     ],
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,
                                   ),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: AMAPColorConstants.green2
+                                      color: AMAPColors(isDarkTheme)
+                                          .secondaryFixedGreen
                                           .withOpacity(0.4),
                                       offset: const Offset(2, 3),
                                       blurRadius: 5,
@@ -158,13 +161,14 @@ class CategoryPage extends HookConsumerWidget {
                                     HeroIcon(
                                       HeroIcons.chevronDoubleDown,
                                       size: 15,
-                                      color: AMAPColorConstants.background,
+                                      color: AMAPColors(isDarkTheme).background,
                                     ),
                                     Text(
                                       AMAPTextConstants.seeMore,
                                       style: TextStyle(
                                         fontSize: 18,
-                                        color: AMAPColorConstants.background,
+                                        color:
+                                            AMAPColors(isDarkTheme).background,
                                       ),
                                     ),
                                   ],
@@ -183,8 +187,9 @@ class CategoryPage extends HookConsumerWidget {
                       filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                       child: Container(
                         decoration: BoxDecoration(
-                          color:
-                              AMAPColorConstants.background2.withOpacity(0.5),
+                          color: AMAPColors(isDarkTheme)
+                              .background2
+                              .withOpacity(0.5),
                         ),
                         child: Column(children: listWidgetProduct),
                       ),

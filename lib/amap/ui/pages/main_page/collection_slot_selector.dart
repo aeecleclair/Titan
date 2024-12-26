@@ -47,7 +47,7 @@ class CollectionSlotSelector extends HookConsumerWidget {
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
                 color: isSelected
-                    ? AMAPColorConstants.greenGradient2
+                    ? AMAPColors(isDarkTheme).greenGradientSecondary
                     : Colors.white,
               ),
             ),

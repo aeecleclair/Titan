@@ -304,9 +304,9 @@ class AdminPage extends HookConsumerWidget {
                           builder: (child) => CardLayout(
                             padding: const EdgeInsets.only(top: 10, bottom: 12),
                             width: double.infinity,
-                            colors: const [
-                              ColorConstants.gradient1,
-                              ColorConstants.gradient2,
+                            colors: [
+                              Theme.of(context).colorScheme.primaryContainer,
+                              Theme.of(context).colorScheme.primaryFixed,
                             ],
                             child: child,
                           ),
@@ -405,10 +405,7 @@ class AdminPage extends HookConsumerWidget {
                                             bottom: 12,
                                           ),
                                           margin: const EdgeInsets.all(0),
-                                          colors: const [
-                                            AMAPColorConstants.redGradient1,
-                                            AMAPColorConstants.redGradient2,
-                                          ],
+                                          color: Colors.red,
                                           borderColor: Colors.white,
                                           child: child,
                                         ),
@@ -481,10 +478,7 @@ class AdminPage extends HookConsumerWidget {
                                             bottom: 12,
                                           ),
                                           margin: const EdgeInsets.all(0),
-                                          colors: const [
-                                            AMAPColorConstants.redGradient1,
-                                            AMAPColorConstants.redGradient2,
-                                          ],
+                                          color: Colors.red,
                                           borderColor: Colors.white,
                                           child: child,
                                         ),

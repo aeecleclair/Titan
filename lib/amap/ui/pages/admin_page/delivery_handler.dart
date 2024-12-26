@@ -27,10 +27,10 @@ class DeliveryHandler extends HookConsumerWidget {
     final isDarkTheme = ref.watch(themeProvider);
     return Column(
       children: [
-        const AlignLeftText(
+        AlignLeftText(
           AMAPTextConstants.deliveries,
           padding: EdgeInsets.symmetric(horizontal: 30),
-          color: AMAPColorConstants.textDark,
+          color: AMAPColors(isDarkTheme).textOnPrimary,
         ),
         const SizedBox(height: 10),
         HorizontalListView(
@@ -50,11 +50,12 @@ class DeliveryHandler extends HookConsumerWidget {
               child: CardLayout(
                 height: 160,
                 width: 100,
-                shadowColor: AMAPColorConstants.textDark.withOpacity(0.2),
-                child: const Center(
+                shadowColor:
+                    AMAPColors(isDarkTheme).textOnPrimary.withOpacity(0.2),
+                child: Center(
                   child: HeroIcon(
                     HeroIcons.plus,
-                    color: AMAPColorConstants.textDark,
+                    color: AMAPColors(isDarkTheme).textOnPrimary,
                     size: 50,
                   ),
                 ),
@@ -68,7 +69,7 @@ class DeliveryHandler extends HookConsumerWidget {
                   children: data.map((e) => DeliveryUi(delivery: e)).toList(),
                 );
               },
-              loaderColor: AMAPColorConstants.greenGradient2,
+              loaderColor: AMAPColors(isDarkTheme).greenGradientSecondary,
             ),
             const SizedBox(width: 5),
           ],

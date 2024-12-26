@@ -43,9 +43,9 @@ class DetailOrderUI extends HookConsumerWidget {
     return CardLayout(
       width: 250,
       height: 145 + (20.0 * order.products.length),
-      colors: const [
-        AMAPColorConstants.lightGradient1,
-        AMAPColorConstants.greenGradient1,
+      colors: [
+        AMAPColors(isDarkTheme).lightGradientPrimary,
+        AMAPColors(isDarkTheme).greenGradientPrimary,
       ],
       padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 17.0),
       child: Column(
@@ -57,10 +57,10 @@ class DetailOrderUI extends HookConsumerWidget {
             child: AutoSizeText(
               order.user.getName(),
               maxLines: 1,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: AMAPColorConstants.textDark,
+                color: AMAPColors(isDarkTheme).textOnPrimary,
               ),
             ),
           ),
@@ -130,10 +130,10 @@ class DetailOrderUI extends HookConsumerWidget {
             children: [
               Text(
                 "${AMAPTextConstants.amount} : ${userCash.balance.toStringAsFixed(2)}€",
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
-                  color: AMAPColorConstants.textDark,
+                  color: AMAPColors(isDarkTheme).textOnPrimary,
                 ),
               ),
               const Spacer(),
@@ -184,9 +184,9 @@ class DetailOrderUI extends HookConsumerWidget {
                   );
                 },
                 builder: (child) => CardButton(
-                  colors: const [
-                    AMAPColorConstants.redGradient1,
-                    AMAPColorConstants.redGradient2,
+                  colors: [
+                    AMAPColors(isDarkTheme).redGradientPrimary,
+                    AMAPColors(isDarkTheme).redGradientSecondary,
                   ],
                   child: child,
                 ),

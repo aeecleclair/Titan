@@ -39,10 +39,10 @@ class PresentationPage extends HookConsumerWidget {
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
                         foreground: Paint()
-                          ..shader = const RadialGradient(
+                          ..shader = RadialGradient(
                             colors: [
-                              AMAPColorConstants.greenGradient1,
-                              AMAPColorConstants.textDark,
+                              AMAPColors(isDarkTheme).greenGradientPrimary,
+                              AMAPColors(isDarkTheme).textOnPrimary,
                             ],
                             center: Alignment.topLeft,
                             radius: 10,
@@ -91,10 +91,10 @@ class PresentationPage extends HookConsumerWidget {
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
                         foreground: Paint()
-                          ..shader = const RadialGradient(
+                          ..shader = RadialGradient(
                             colors: [
-                              AMAPColorConstants.greenGradient1,
-                              AMAPColorConstants.textDark,
+                              AMAPColors(isDarkTheme).greenGradientPrimary,
+                              AMAPColors(isDarkTheme).textOnPrimary,
                             ],
                             center: Alignment.topLeft,
                             radius: 10,
@@ -111,10 +111,10 @@ class PresentationPage extends HookConsumerWidget {
                 value: information,
                 builder: (context, info) => Text(
                   "${AMAPTextConstants.contact} : ${info.manager}	",
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
-                    color: AMAPColorConstants.textDark,
+                    color: AMAPColors(isDarkTheme).textOnPrimary,
                   ),
                 ),
               ),

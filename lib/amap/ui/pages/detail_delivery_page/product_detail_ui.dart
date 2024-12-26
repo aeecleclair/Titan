@@ -22,11 +22,11 @@ class ProductDetailCard extends ConsumerWidget {
     return CardLayout(
       width: 130,
       height: 100,
-      colors: const [
-        AMAPColorConstants.lightGradient1,
-        AMAPColorConstants.lightGradient2,
+      colors: [
+        AMAPColors(isDarkTheme).lightGradientPrimary,
+        AMAPColors(isDarkTheme).lightGradientSecondary,
       ],
-      shadowColor: AMAPColorConstants.textDark.withOpacity(0.3),
+      shadowColor: AMAPColors(isDarkTheme).textOnPrimary.withOpacity(0.3),
       padding: const EdgeInsets.only(left: 17.0, top: 5, right: 17),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -37,10 +37,10 @@ class ProductDetailCard extends ConsumerWidget {
             product.name,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: AMAPColorConstants.darkGreen,
+              color: AMAPColors(isDarkTheme).secondaryGreen,
             ),
           ),
           const SizedBox(height: 4),
@@ -60,10 +60,10 @@ class ProductDetailCard extends ConsumerWidget {
             maxLines: 1,
             minFontSize: 10,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: AMAPColorConstants.darkGreen,
+              color: AMAPColors(isDarkTheme).secondaryGreen,
             ),
           ),
           const SizedBox(height: 10),
