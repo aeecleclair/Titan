@@ -4,6 +4,8 @@ import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
+import 'package:myecl/amap/tools/constants.dart';
 
 class DeliveryUi extends HookConsumerWidget {
   final Delivery delivery;
@@ -20,6 +22,7 @@ class DeliveryUi extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedDelivery = ref.watch(deliveryProvider);
     final selected = selectedDelivery.id == delivery.id;
+    final isDarkTheme = ref.watch(themeProvider);
     return GestureDetector(
       onTap: onTap,
       child: Container(

@@ -13,6 +13,7 @@ class CashContainer extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cash = ref.watch(cashListProvider);
+    final isDarkTheme = ref.watch(themeProvider);
     return AsyncChild(
       value: cash,
       builder: (context, cash) =>

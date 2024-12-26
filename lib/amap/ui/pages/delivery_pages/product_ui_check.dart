@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
+import 'package:myecl/amap/tools/constants.dart';
 
 class ProductUi extends ConsumerWidget {
   final Product product;
@@ -16,6 +18,7 @@ class ProductUi extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkTheme = ref.watch(themeProvider);
     return Container(
       height: 55,
       alignment: Alignment.centerLeft,

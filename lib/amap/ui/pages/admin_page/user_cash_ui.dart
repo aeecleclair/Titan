@@ -13,6 +13,8 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
+import 'package:myecl/amap/tools/constants.dart';
 
 class UserCashUi extends HookConsumerWidget {
   final Cash cash;
@@ -23,6 +25,7 @@ class UserCashUi extends HookConsumerWidget {
     final flipped = useState(true);
     final amount = useTextEditingController();
     final key = GlobalKey<FormState>();
+    final isDarkTheme = ref.watch(themeProvider);
     bool isFront = true;
     double anglePlus = 0;
     final controller = useAnimationController(

@@ -24,6 +24,7 @@ class DeliveryHandler extends HookConsumerWidget {
     final deliveries = ref.watch(deliveryListProvider);
     final deliveryIdNotifier = ref.watch(deliveryIdProvider.notifier);
     final selectedNotifier = ref.watch(selectedListProvider.notifier);
+    final isDarkTheme = ref.watch(themeProvider);
     return Column(
       children: [
         const AlignLeftText(

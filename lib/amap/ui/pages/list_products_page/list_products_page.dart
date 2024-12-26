@@ -6,6 +6,8 @@ import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/amap/ui/pages/list_products_page/product_choice_button.dart';
 import 'package:myecl/amap/ui/pages/list_products_page/list_products.dart';
 import 'package:myecl/amap/ui/pages/list_products_page/page_view_dots.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
+import 'package:myecl/amap/tools/constants.dart';
 
 class ListProductPage extends HookConsumerWidget {
   const ListProductPage({super.key});
@@ -15,6 +17,7 @@ class ListProductPage extends HookConsumerWidget {
     final animation =
         useAnimationController(duration: const Duration(milliseconds: 200))
           ..repeat();
+    final isDarkTheme = ref.watch(themeProvider);
     return AmapTemplate(
       child: SizedBox(
         height: MediaQuery.of(context).size.height,

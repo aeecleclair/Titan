@@ -25,6 +25,7 @@ class AccountHandler extends HookConsumerWidget {
     final searchingAmapUser = ref.watch(searchingAmapUserProvider);
     final searchingAmapUserNotifier =
         ref.read(searchingAmapUserProvider.notifier);
+    final isDarkTheme = ref.watch(themeProvider);
 
     return Column(
       children: [

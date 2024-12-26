@@ -39,6 +39,7 @@ class DeliveryUi extends HookConsumerWidget {
         ref.watch(adminDeliveryOrderListProvider.notifier);
     final ordersByDeliveryListNotifier =
         ref.watch(orderByDeliveryListProvider.notifier);
+    final isDarkTheme = ref.watch(themeProvider);
 
     void displayVoteWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);

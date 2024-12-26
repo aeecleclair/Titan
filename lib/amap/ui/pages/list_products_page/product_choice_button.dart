@@ -13,6 +13,8 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
+import 'package:myecl/amap/tools/constants.dart';
 
 class ProductChoiceButton extends HookConsumerWidget {
   const ProductChoiceButton({super.key});
@@ -26,6 +28,7 @@ class ProductChoiceButton extends HookConsumerWidget {
     final userAmountNotifier = ref.watch(userAmountProvider.notifier);
     final me = ref.watch(userProvider);
     final isEdit = order.id != Order.empty().id;
+    final isDarkTheme = ref.watch(themeProvider);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }

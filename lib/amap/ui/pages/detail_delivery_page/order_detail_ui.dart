@@ -14,6 +14,8 @@ import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
+import 'package:myecl/amap/tools/constants.dart';
 
 class DetailOrderUI extends HookConsumerWidget {
   final Order order;
@@ -33,6 +35,7 @@ class DetailOrderUI extends HookConsumerWidget {
     final deliveryOrdersNotifier =
         ref.watch(adminDeliveryOrderListProvider.notifier);
     final cashListNotifier = ref.watch(cashListProvider.notifier);
+    final isDarkTheme = ref.watch(themeProvider);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }

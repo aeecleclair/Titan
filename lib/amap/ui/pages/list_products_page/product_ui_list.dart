@@ -5,6 +5,8 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
+import 'package:myecl/amap/tools/constants.dart';
 
 class ProductUiInList extends ConsumerWidget {
   final Product p;
@@ -20,6 +22,7 @@ class ProductUiInList extends ConsumerWidget {
           orElse: () => Product.empty(),
         )
         .quantity;
+    final isDarkTheme = ref.watch(themeProvider);
     return Container(
       height: 50,
       alignment: Alignment.centerLeft,

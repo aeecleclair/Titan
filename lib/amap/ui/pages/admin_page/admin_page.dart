@@ -19,6 +19,7 @@ class AdminPage extends HookConsumerWidget {
     final cashNotifier = ref.read(cashListProvider.notifier);
     final deliveryListNotifier = ref.read(deliveryListProvider.notifier);
     final productListNotifier = ref.read(productListProvider.notifier);
+    final isDarkTheme = ref.watch(themeProvider);
     return AmapTemplate(
       child: Refresher(
         onRefresh: () async {

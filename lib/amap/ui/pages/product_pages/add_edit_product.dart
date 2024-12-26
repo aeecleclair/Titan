@@ -16,6 +16,8 @@ import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
+import 'package:myecl/amap/tools/constants.dart';
 
 class AddEditProduct extends HookConsumerWidget {
   const AddEditProduct({super.key});
@@ -38,6 +40,7 @@ class AddEditProduct extends HookConsumerWidget {
     final categoryNotifier =
         ref.watch(selectedCategoryProvider(beginState).notifier);
     final newCategory = useTextEditingController(text: "");
+    final isDarkTheme = ref.watch(themeProvider);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);

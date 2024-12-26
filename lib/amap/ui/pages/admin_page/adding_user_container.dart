@@ -14,6 +14,7 @@ class AddingUserContainer extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final users = ref.watch(userList);
+    final isDarkTheme = ref.watch(themeProvider);
     return AsyncChild(
       value: users,
       builder: (context, users) => Row(

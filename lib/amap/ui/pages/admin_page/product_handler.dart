@@ -31,6 +31,7 @@ class ProductHandler extends HookConsumerWidget {
         .expand((element) => element)
         .toList();
     final productsNotifier = ref.read(productListProvider.notifier);
+    final isDarkTheme = ref.watch(themeProvider);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);

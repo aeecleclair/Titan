@@ -16,6 +16,7 @@ class AddingUserCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cashNotifier = ref.watch(cashListProvider.notifier);
+    final isDarkTheme = ref.watch(themeProvider);
     return GestureDetector(
       onTap: () {
         cashNotifier.addCash(

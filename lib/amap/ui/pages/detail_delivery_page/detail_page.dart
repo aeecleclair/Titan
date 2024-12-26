@@ -17,6 +17,8 @@ import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/loader.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
+import 'package:myecl/amap/tools/constants.dart';
 
 class DetailDeliveryPage extends HookConsumerWidget {
   const DetailDeliveryPage({super.key});
@@ -32,6 +34,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
     final sortedByCategoryDeliveryProducts =
         ref.watch(sortedByCategoryDeliveryProductsProvider);
     final cash = ref.watch(cashListProvider);
+    final isDarkTheme = ref.watch(themeProvider);
     return AmapTemplate(
       child: Refresher(
         onRefresh: () async {

@@ -5,6 +5,8 @@ import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
+import 'package:myecl/amap/tools/constants.dart';
 
 class CollectionSlotSelector extends HookConsumerWidget {
   final CollectionSlot collectionSlot;
@@ -16,6 +18,7 @@ class CollectionSlotSelector extends HookConsumerWidget {
     final orderNotifier = ref.read(orderProvider.notifier);
     final isSelected = collectionSlot == order.collectionSlot;
     final isFirst = CollectionSlot.values.first == collectionSlot;
+    final isDarkTheme = ref.watch(themeProvider);
     return Expanded(
       child: GestureDetector(
         onTap: () {

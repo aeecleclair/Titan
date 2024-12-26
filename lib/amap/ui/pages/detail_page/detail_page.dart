@@ -6,6 +6,8 @@ import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/amap/ui/components/order_ui.dart';
 import 'package:myecl/amap/ui/components/product_ui.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
+import 'package:myecl/amap/tools/constants.dart';
 
 class DetailPage extends HookConsumerWidget {
   const DetailPage({super.key});
@@ -13,6 +15,7 @@ class DetailPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final order = ref.watch(orderProvider);
+    final isDarkTheme = ref.watch(themeProvider);
     return AmapTemplate(
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

@@ -10,6 +10,8 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/list_products_page/product_ui_list.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
+import 'package:myecl/amap/tools/constants.dart';
 
 class CategoryPage extends HookConsumerWidget {
   final String category;
@@ -29,6 +31,7 @@ class CategoryPage extends HookConsumerWidget {
     final scrollController = ref.watch(scrollControllerProvider(hideAnimation));
 
     final scroll = ref.watch(scrollProvider);
+    final isDarkTheme = ref.watch(themeProvider);
 
     double minScale = 0.8;
     double scale = 1;

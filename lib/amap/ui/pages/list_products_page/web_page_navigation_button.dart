@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
+import 'package:myecl/amap/tools/constants.dart';
 
-class WebPageNavigationButton extends StatelessWidget {
+class WebPageNavigationButton extends ConsumerWidget {
   final VoidCallback onPressed;
   final HeroIcons icon;
   const WebPageNavigationButton({
@@ -12,7 +15,8 @@ class WebPageNavigationButton extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkTheme = ref.watch(themeProvider);
     return Container(
       height: 50,
       width: 50,

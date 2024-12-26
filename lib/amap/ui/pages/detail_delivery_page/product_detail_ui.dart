@@ -1,10 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
+import 'package:myecl/amap/tools/constants.dart';
 
-class ProductDetailCard extends StatelessWidget {
+class ProductDetailCard extends ConsumerWidget {
   final Product product;
   final int quantity;
   const ProductDetailCard({
@@ -14,7 +17,8 @@ class ProductDetailCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkTheme = ref.watch(themeProvider);
     return CardLayout(
       width: 130,
       height: 100,
