@@ -12,7 +12,6 @@ import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/widgets/styled_search_bar.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/tools/providers/theme_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
 
 class AccountHandler extends HookConsumerWidget {
   const AccountHandler({super.key});

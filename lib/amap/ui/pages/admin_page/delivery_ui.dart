@@ -20,7 +20,6 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:myecl/tools/providers/theme_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
 
 class DeliveryUi extends HookConsumerWidget {
   final Delivery delivery;
@@ -164,7 +163,7 @@ class DeliveryUi extends HookConsumerWidget {
                       ],
                       child: HeroIcon(
                         HeroIcons.pencil,
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.onSecondary,
                         size: 22,
                       ),
                     ),
@@ -207,9 +206,9 @@ class DeliveryUi extends HookConsumerWidget {
                       ],
                       child: child,
                     ),
-                    child: const HeroIcon(
+                    child: HeroIcon(
                       HeroIcons.trash,
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.onSecondary,
                       size: 22,
                     ),
                   ),
@@ -350,8 +349,8 @@ class DeliveryUi extends HookConsumerWidget {
                                   : delivery.status == DeliveryStatus.locked
                                       ? AMAPTextConstants.endingDelivery
                                       : AMAPTextConstants.archiveDelivery,
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onSecondary,
                             fontSize: 20,
                           ),
                         ),
@@ -365,7 +364,7 @@ class DeliveryUi extends HookConsumerWidget {
                                 : delivery.status == DeliveryStatus.locked
                                     ? HeroIcons.truck
                                     : HeroIcons.archiveBoxArrowDown,
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.onSecondary,
                         size: 22,
                       ),
                     ],

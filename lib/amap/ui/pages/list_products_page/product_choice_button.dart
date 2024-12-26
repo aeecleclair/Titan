@@ -14,7 +14,6 @@ import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:myecl/tools/providers/theme_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
 
 class ProductChoiceButton extends HookConsumerWidget {
   const ProductChoiceButton({super.key});

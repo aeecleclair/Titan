@@ -8,7 +8,6 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:myecl/tools/providers/theme_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
 
 class PresentationPage extends HookConsumerWidget {
   const PresentationPage({super.key});

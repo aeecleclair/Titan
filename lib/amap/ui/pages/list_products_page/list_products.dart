@@ -10,8 +10,6 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/list_products_page/category_page.dart';
 import 'package:myecl/amap/ui/pages/list_products_page/web_page_navigation_button.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
-import 'package:myecl/tools/providers/theme_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
 
 class ListProducts extends HookConsumerWidget {
   const ListProducts({super.key});
@@ -28,7 +26,6 @@ class ListProducts extends HookConsumerWidget {
     final scrollNotifier = ref.watch(scrollProvider.notifier);
     final pageController = ref.watch(amapPageControllerProvider);
     final isWebFormat = ref.watch(isWebFormatProvider);
-    final isDarkTheme = ref.watch(themeProvider);
     pageController.addListener(() {
       scrollNotifier.setScroll(pageController.page!);
     });

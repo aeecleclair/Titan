@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/tools/providers/theme_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
 
 class WebPageNavigationButton extends ConsumerWidget {
   final VoidCallback onPressed;
@@ -16,7 +14,6 @@ class WebPageNavigationButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDarkTheme = ref.watch(themeProvider);
     return Container(
       height: 50,
       width: 50,
@@ -36,7 +33,7 @@ class WebPageNavigationButton extends ConsumerWidget {
         icon: HeroIcon(
           icon,
           size: 25,
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.onSecondary,
         ),
       ),
     );

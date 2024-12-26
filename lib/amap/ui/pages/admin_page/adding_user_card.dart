@@ -6,7 +6,6 @@ import 'package:myecl/amap/providers/cash_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/tools/providers/theme_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
 
 class AddingUserCard extends HookConsumerWidget {
   final SimpleUser user;
@@ -33,7 +32,7 @@ class AddingUserCard extends HookConsumerWidget {
           width: 140,
           height: 75,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(25),
           ),
           child: Padding(

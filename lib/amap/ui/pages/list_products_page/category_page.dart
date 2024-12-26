@@ -11,7 +11,6 @@ import 'package:myecl/amap/ui/pages/list_products_page/product_ui_list.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/providers/theme_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
 
 class CategoryPage extends HookConsumerWidget {
   final String category;

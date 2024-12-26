@@ -15,7 +15,6 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/providers/theme_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
 
 class DetailOrderUI extends HookConsumerWidget {
   final Order order;
@@ -74,10 +73,10 @@ class DetailOrderUI extends HookConsumerWidget {
                     maxLines: 1,
                     minFontSize: 10,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w700,
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.onSecondary,
                     ),
                   ),
                 ),
@@ -86,10 +85,10 @@ class DetailOrderUI extends HookConsumerWidget {
                   child: Text(
                     "${product.quantity} (${(product.quantity * product.price).toStringAsFixed(2)}€)",
                     textAlign: TextAlign.right,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w700,
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.onSecondary,
                     ),
                   ),
                 ),
@@ -98,9 +97,9 @@ class DetailOrderUI extends HookConsumerWidget {
           ),
           Container(
             height: 3,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.onSecondary,
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
             margin: const EdgeInsets.symmetric(vertical: 7),
           ),
@@ -108,19 +107,19 @@ class DetailOrderUI extends HookConsumerWidget {
             children: [
               Text(
                 "${order.products.fold<int>(0, (value, product) => value + product.quantity)} ${AMAPTextConstants.product}${order.products.fold<int>(0, (value, product) => value + product.quantity) != 1 ? "s" : ""}",
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onSecondary,
                 ),
               ),
               const Spacer(),
               Text(
                 "${order.amount.toStringAsFixed(2)}€",
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onSecondary,
                 ),
               ),
             ],
@@ -190,9 +189,9 @@ class DetailOrderUI extends HookConsumerWidget {
                   ],
                   child: child,
                 ),
-                child: const HeroIcon(
+                child: HeroIcon(
                   HeroIcons.trash,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onSecondary,
                   size: 20,
                 ),
               ),

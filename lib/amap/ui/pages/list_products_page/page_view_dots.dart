@@ -5,7 +5,6 @@ import 'package:myecl/amap/providers/sorted_delivery_product.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:myecl/tools/providers/theme_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
 
 class Dots extends HookConsumerWidget {
   const Dots({super.key});

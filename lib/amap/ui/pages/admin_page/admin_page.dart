@@ -8,8 +8,6 @@ import 'package:myecl/amap/ui/pages/admin_page/account_handler.dart';
 import 'package:myecl/amap/ui/pages/admin_page/delivery_handler.dart';
 import 'package:myecl/amap/ui/pages/admin_page/product_handler.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/providers/theme_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
 
 class AdminPage extends HookConsumerWidget {
   const AdminPage({super.key});
@@ -19,7 +17,6 @@ class AdminPage extends HookConsumerWidget {
     final cashNotifier = ref.read(cashListProvider.notifier);
     final deliveryListNotifier = ref.read(deliveryListProvider.notifier);
     final productListNotifier = ref.read(productListProvider.notifier);
-    final isDarkTheme = ref.watch(themeProvider);
     return AmapTemplate(
       child: Refresher(
         onRefresh: () async {

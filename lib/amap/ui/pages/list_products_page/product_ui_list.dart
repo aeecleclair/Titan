@@ -6,7 +6,6 @@ import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/tools/providers/theme_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
 
 class ProductUiInList extends ConsumerWidget {
   final Product p;

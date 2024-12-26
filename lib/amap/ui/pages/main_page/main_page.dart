@@ -27,7 +27,6 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:myecl/tools/providers/theme_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
 
 class AmapMainPage extends HookConsumerWidget {
   const AmapMainPage({super.key});

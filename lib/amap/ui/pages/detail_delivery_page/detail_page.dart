@@ -18,7 +18,6 @@ import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/loader.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/providers/theme_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
 
 class DetailDeliveryPage extends HookConsumerWidget {
   const DetailDeliveryPage({super.key});
@@ -114,7 +113,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
             const SizedBox(height: 20),
             AlignLeftText(
               "${AMAPTextConstants.orders} :",
-              padding: EdgeInsets.only(left: 30),
+              padding: const EdgeInsets.only(left: 30),
               color: AMAPColors(isDarkTheme).textOnPrimary,
             ),
             const SizedBox(height: 30),
@@ -122,7 +121,8 @@ class DetailDeliveryPage extends HookConsumerWidget {
               margin: const EdgeInsets.symmetric(horizontal: 10),
               child: orders == null
                   ? Loader(
-                      color: AMAPColors(isDarkTheme).greenGradientSecondary)
+                      color: AMAPColors(isDarkTheme).greenGradientSecondary,
+                    )
                   : AsyncChild(
                       value: orders,
                       loaderColor:

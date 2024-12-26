@@ -16,7 +16,6 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:myecl/tools/providers/theme_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
 
 class ProductHandler extends HookConsumerWidget {
   const ProductHandler({super.key});
@@ -40,7 +39,7 @@ class ProductHandler extends HookConsumerWidget {
     return Column(
       children: [
         AlignLeftText(
-          padding: EdgeInsets.symmetric(horizontal: 30),
+          padding: const EdgeInsets.symmetric(horizontal: 30),
           AMAPTextConstants.products,
           color: AMAPColors(isDarkTheme).textOnPrimary,
         ),
@@ -67,10 +66,10 @@ class ProductHandler extends HookConsumerWidget {
                 ],
                 shadowColor:
                     AMAPColors(isDarkTheme).textOnPrimary.withOpacity(0.3),
-                child: const Center(
+                child: Center(
                   child: HeroIcon(
                     HeroIcons.plus,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onSecondary,
                     size: 50,
                   ),
                 ),
