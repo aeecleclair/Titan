@@ -55,10 +55,10 @@ class ProductCard extends ConsumerWidget {
             product.name,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.onSecondary,
             ),
           ),
           const SizedBox(height: 4),
@@ -85,7 +85,10 @@ class ProductCard extends ConsumerWidget {
                           AMAPColors(isDarkTheme).greenGradientSecondary,
                           AMAPColors(isDarkTheme).textOnPrimary,
                         ],
-                        child: HeroIcon(HeroIcons.pencil, color: Colors.white),
+                        child: HeroIcon(
+                          HeroIcons.pencil,
+                          color: Theme.of(context).colorScheme.onSecondary,
+                        ),
                       ),
                     ),
                     WaitingButton(
@@ -97,8 +100,10 @@ class ProductCard extends ConsumerWidget {
                         ],
                         child: child,
                       ),
-                      child:
-                          const HeroIcon(HeroIcons.trash, color: Colors.white),
+                      child: HeroIcon(
+                        HeroIcons.trash,
+                        color: Theme.of(context).colorScheme.onSecondary,
+                      ),
                     ),
                   ],
                 )

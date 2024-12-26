@@ -75,14 +75,17 @@ class PresentationPage extends HookConsumerWidget {
                             }
                           },
                       ),
-                      error: (Object error, StackTrace stackTrace) =>
-                          const TextSpan(
+                      error: (Object error, StackTrace stackTrace) => TextSpan(
                         text: AMAPTextConstants.loadingError,
-                        style: TextStyle(color: Colors.red),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
                       ),
-                      loading: () => const TextSpan(
+                      loading: () => TextSpan(
                         text: AMAPTextConstants.loading,
-                        style: TextStyle(color: Colors.red),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
                       ),
                     ),
                     TextSpan(

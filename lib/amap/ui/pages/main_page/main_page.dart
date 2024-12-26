@@ -186,14 +186,16 @@ class AmapMainPage extends HookConsumerWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const AlignLeftText(
+                              AlignLeftText(
                                 AMAPTextConstants.addOrder,
-                                color: Colors.white,
+                                color:
+                                    Theme.of(context).colorScheme.onSecondary,
                               ),
                               IconButton(
-                                icon: const HeroIcon(
+                                icon: HeroIcon(
                                   HeroIcons.xMark,
-                                  color: Colors.white,
+                                  color:
+                                      Theme.of(context).colorScheme.onSecondary,
                                   size: 30,
                                 ),
                                 onPressed: () {
@@ -212,7 +214,10 @@ class AmapMainPage extends HookConsumerWidget {
                             width: double.infinity,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(25),
-                              border: Border.all(color: Colors.white, width: 2),
+                              border: Border.all(
+                                  color:
+                                      Theme.of(context).colorScheme.onSecondary,
+                                  width: 2),
                             ),
                             child: Row(
                               children: CollectionSlot.values
@@ -279,13 +284,14 @@ class AmapMainPage extends HookConsumerWidget {
                           child: Container(
                             padding: const EdgeInsets.only(bottom: 5),
                             width: double.infinity,
-                            child: const Center(
+                            child: Center(
                               child: Text(
                                 AMAPTextConstants.nextStep,
                                 style: TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.w900,
-                                  color: Colors.white,
+                                  color:
+                                      Theme.of(context).colorScheme.onSecondary,
                                 ),
                               ),
                             ),

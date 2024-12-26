@@ -7,7 +7,6 @@ import 'package:myecl/amap/ui/components/order_ui.dart';
 import 'package:myecl/amap/ui/components/product_ui.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/providers/theme_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
 
 class DetailPage extends HookConsumerWidget {
   const DetailPage({super.key});
@@ -30,10 +29,10 @@ class DetailPage extends HookConsumerWidget {
                     width: double.infinity,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: Colors.grey.shade50,
+                      color: Theme.of(context).colorScheme.secondaryFixed,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
+                          color: Theme.of(context).shadowColor,
                           blurRadius: 10,
                           offset: const Offset(0, 10),
                         ),

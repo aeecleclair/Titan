@@ -5,7 +5,6 @@ import 'package:myecl/amap/providers/delivery_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/providers/theme_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
 
 class DeliveryUi extends HookConsumerWidget {
   final Delivery delivery;
@@ -36,10 +35,10 @@ class DeliveryUi extends HookConsumerWidget {
             colors: [
               (selected && showSelected)
                   ? AMAPColors(isDarkTheme).greenGradientSecondary
-                  : Colors.white,
+                  : Theme.of(context).colorScheme.surface,
               (selected && showSelected)
                   ? AMAPColors(isDarkTheme).textOnPrimary
-                  : Colors.white,
+                  : Theme.of(context).colorScheme.surface,
             ],
           ),
           boxShadow: [
@@ -63,7 +62,7 @@ class DeliveryUi extends HookConsumerWidget {
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: (selected && showSelected)
-                      ? Colors.white
+                      ? Theme.of(context).colorScheme.onSecondary
                       : AMAPColors(isDarkTheme).textOnPrimary,
                 ),
               ),
@@ -74,7 +73,7 @@ class DeliveryUi extends HookConsumerWidget {
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
                   color: (selected && showSelected)
-                      ? Colors.white
+                      ? Theme.of(context).colorScheme.onSecondary
                       : AMAPColors(isDarkTheme).textOnSecondary,
                 ),
               ),

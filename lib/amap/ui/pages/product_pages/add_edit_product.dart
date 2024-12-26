@@ -94,12 +94,12 @@ class AddEditProduct extends HookConsumerWidget {
                       child: DropdownButtonFormField<String>(
                         value: categoryController,
                         decoration: InputDecoration(
-                          enabledBorder: UnderlineInputBorder(
+                          enabledBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: AMAPColorConstants.enabled,
                             ),
                           ),
-                          errorBorder: UnderlineInputBorder(
+                          errorBorder: const UnderlineInputBorder(
                             borderSide:
                                 BorderSide(color: AMAPColorConstants.red),
                           ),

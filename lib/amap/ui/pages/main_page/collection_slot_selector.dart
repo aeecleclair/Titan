@@ -6,7 +6,6 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/providers/theme_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
 
 class CollectionSlotSelector extends HookConsumerWidget {
   final CollectionSlot collectionSlot;
@@ -37,8 +36,9 @@ class CollectionSlotSelector extends HookConsumerWidget {
               topRight: Radius.circular(!isFirst ? 22 : 0),
               bottomRight: Radius.circular(!isFirst ? 22 : 0),
             ),
-            color:
-                isSelected ? Colors.white.withOpacity(0.7) : Colors.transparent,
+            color: isSelected
+                ? Theme.of(context).colorScheme.surface.withOpacity(0.7)
+                : Colors.transparent,
           ),
           child: Center(
             child: Text(
@@ -48,7 +48,7 @@ class CollectionSlotSelector extends HookConsumerWidget {
                 fontWeight: FontWeight.bold,
                 color: isSelected
                     ? AMAPColors(isDarkTheme).greenGradientSecondary
-                    : Colors.white,
+                    : Theme.of(context).colorScheme.onSecondary,
               ),
             ),
           ),
