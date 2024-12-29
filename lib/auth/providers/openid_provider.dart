@@ -188,24 +188,23 @@ class OpenIdTokenProvider
             popupWin = null;
           }
           try {
-            if (token != null && token.isNotEmpty) {
-              final resp = await openIdRepository.getToken(
-                token,
-                clientId,
-                redirectUri.toString(),
-                codeVerifier,
-                "authorization_code",
-              );
-              final accessToken = resp[tokenKey]!;
-              final refreshToken = resp[refreshTokenKey]!;
-              await _secureStorage.write(key: tokenName, value: refreshToken);
-              state = AsyncValue.data({
-                tokenKey: accessToken,
-                refreshTokenKey: refreshToken,
-              });
-            } else {
+            if (token == null || token.isEmpty) {
               throw Exception('Wrong credentials');
             }
+            final resp = await openIdRepository.getToken(
+              token,
+              clientId,
+              redirectUri.toString(),
+              codeVerifier,
+              "authorization_code",
+            );
+            final accessToken = resp[tokenKey]!;
+            final refreshToken = resp[refreshTokenKey]!;
+            await _secureStorage.write(key: tokenName, value: refreshToken);
+            state = AsyncValue.data({
+              tokenKey: accessToken,
+              refreshTokenKey: refreshToken,
+            });
           } on TimeoutException catch (_) {
             throw Exception('No response from server');
           } catch (e) {
@@ -229,15 +228,16 @@ class OpenIdTokenProvider
             allowInsecureConnections: kDebugMode,
           ),
         );
-        if (resp != null) {
-          await _secureStorage.write(key: tokenName, value: resp.refreshToken);
-          state = AsyncValue.data({
-            tokenKey: resp.accessToken!,
-            refreshTokenKey: resp.refreshToken!,
-          });
-        } else {
-          state = const AsyncValue.error("Error", StackTrace.empty);
+        if (resp == null) {
+          state = const AsyncValue.error(
+              "No response from server", StackTrace.empty);
+          return;
         }
+        await _secureStorage.write(key: tokenName, value: resp.refreshToken);
+        state = AsyncValue.data({
+          tokenKey: resp.accessToken!,
+          refreshTokenKey: resp.refreshToken!,
+        });
       }
     } catch (e) {
       state = AsyncValue.error("Error $e", StackTrace.empty);
@@ -247,49 +247,50 @@ class OpenIdTokenProvider
   Future getTokenFromStorage() async {
     state = const AsyncValue.loading();
     _secureStorage.read(key: tokenName).then((token) async {
-      if (token != null) {
-        try {
-          if (kIsWeb) {
-            final resp = await openIdRepository.getToken(
-              token,
-              clientId,
-              "",
-              "",
-              refreshTokenKey,
-            );
-            final accessToken = resp[tokenKey]!;
-            final refreshToken = resp[refreshTokenKey]!;
-            await _secureStorage.write(key: tokenName, value: refreshToken);
-            state = AsyncValue.data({
-              tokenKey: accessToken,
-              refreshTokenKey: refreshToken,
-            });
-          } else {
-            final resp = await appAuth.token(
-              TokenRequest(
-                clientId,
-                redirectUrl,
-                discoveryUrl: discoveryUrl,
-                scopes: scopes,
-                refreshToken: token,
-                allowInsecureConnections: kDebugMode,
-              ),
-            );
-            if (resp != null) {
-              state = AsyncValue.data({
-                tokenKey: resp.accessToken!,
-                refreshTokenKey: resp.refreshToken!,
-              });
-              storeToken();
-            } else {
-              state = const AsyncValue.error("Error", StackTrace.empty);
-            }
-          }
-        } catch (e) {
-          state = AsyncValue.error(e, StackTrace.empty);
-        }
-      } else {
+      if (token == null) {
         state = const AsyncValue.error("No token found", StackTrace.empty);
+        return;
+      }
+      try {
+        if (kIsWeb) {
+          final resp = await openIdRepository.getToken(
+            token,
+            clientId,
+            "",
+            "",
+            refreshTokenKey,
+          );
+          final accessToken = resp[tokenKey]!;
+          final refreshToken = resp[refreshTokenKey]!;
+          await _secureStorage.write(key: tokenName, value: refreshToken);
+          state = AsyncValue.data({
+            tokenKey: accessToken,
+            refreshTokenKey: refreshToken,
+          });
+        } else {
+          final resp = await appAuth.token(
+            TokenRequest(
+              clientId,
+              redirectUrl,
+              discoveryUrl: discoveryUrl,
+              scopes: scopes,
+              refreshToken: token,
+              allowInsecureConnections: kDebugMode,
+            ),
+          );
+          if (resp == null) {
+            state = const AsyncValue.error(
+                "No response from server", StackTrace.empty);
+            return;
+          }
+          state = AsyncValue.data({
+            tokenKey: resp.accessToken!,
+            refreshTokenKey: resp.refreshToken!,
+          });
+          storeToken();
+        }
+      } catch (e) {
+        state = AsyncValue.error(e, StackTrace.empty);
       }
     });
   }
@@ -307,53 +308,52 @@ class OpenIdTokenProvider
       ),
     )
         .then((resp) {
-      if (resp != null) {
-        state = AsyncValue.data({
-          tokenKey: resp.accessToken!,
-          refreshTokenKey: resp.refreshToken!,
-        });
-      } else {
-        state = const AsyncValue.error("Error", StackTrace.empty);
+      if (resp == null) {
+        state =
+            const AsyncValue.error("No response from server", StackTrace.empty);
+        return;
       }
+      state = AsyncValue.data({
+        tokenKey: resp.accessToken!,
+        refreshTokenKey: resp.refreshToken!,
+      });
     });
   }
 
   Future<bool> refreshToken() async {
     return state.when(
-      data: (token) async {
-        if (token[refreshTokenKey] != null && token[refreshTokenKey] != "") {
-          TokenResponse? resp = await appAuth.token(
-            TokenRequest(
-              clientId,
-              redirectUrl,
-              discoveryUrl: discoveryUrl,
-              scopes: scopes,
-              refreshToken: token[refreshTokenKey] as String,
-              allowInsecureConnections: kDebugMode,
-            ),
-          );
-          if (resp == null) {
-            state = const AsyncValue.error("Error", StackTrace.empty);
-            return false;
+        data: (token) async {
+          if (token[refreshTokenKey] != null && token[refreshTokenKey] != "") {
+            TokenResponse? resp = await appAuth.token(
+              TokenRequest(
+                clientId,
+                redirectUrl,
+                discoveryUrl: discoveryUrl,
+                scopes: scopes,
+                refreshToken: token[refreshTokenKey] as String,
+                allowInsecureConnections: kDebugMode,
+              ),
+            );
+            if (resp == null) {
+              state = const AsyncValue.error(
+                  "No response from server", StackTrace.empty);
+              return false;
+            }
+            state = AsyncValue.data({
+              tokenKey: resp.accessToken!,
+              refreshTokenKey: resp.refreshToken!,
+            });
+            storeToken();
+            return true;
           }
-          state = AsyncValue.data({
-            tokenKey: resp.accessToken!,
-            refreshTokenKey: resp.refreshToken!,
-          });
-          storeToken();
-          return true;
-        }
-        state = const AsyncValue.error(e, StackTrace.empty);
-        return false;
-      },
-      error: (error, stackTrace) {
-        state = AsyncValue.error(error, stackTrace);
-        return false;
-      },
-      loading: () {
-        return false;
-      },
-    );
+          state = const AsyncValue.error(e, StackTrace.empty);
+          return false;
+        },
+        error: (error, stackTrace) {
+          state = AsyncValue.error(error, stackTrace);
+          return false;
+        },
+        loading: () => false);
   }
 
   void storeToken() {

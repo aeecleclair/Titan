@@ -11,6 +11,7 @@ import 'package:myecl/login/ui/components/sign_in_up_bar.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/providers/path_forwarding_provider.dart';
+import 'package:myecl/tools/repository/repository.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AppSignIn extends HookConsumerWidget {
@@ -74,10 +75,11 @@ class AppSignIn extends HookConsumerWidget {
                                     QR.to(pathForwarding.path);
                                   },
                                   error: (e, s) {
+                                    Repository.logger.error(e.toString());
                                     displayToast(
                                       context,
                                       TypeMsg.error,
-                                      LoginTextConstants.loginFailed,
+                                      "${LoginTextConstants.loginFailed} : $e",
                                     );
                                   },
                                   loading: () {},
