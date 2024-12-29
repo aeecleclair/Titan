@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/paiement/class/seller.dart';
+import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 
 class SellerRightCard extends StatelessWidget {
@@ -87,9 +88,8 @@ class SellerRightCard extends StatelessWidget {
           showModalBottomSheet(
             context: context,
             backgroundColor: Colors.transparent,
-            scrollControlDisabledMaxHeightRatio:
-                (80 + 45 * (icons.length - (storeSeller.storeAdmin ? 0 : 1))) /
-                    MediaQuery.of(context).size.height,
+            scrollControlDisabledMaxHeightRatio: (80 + 45 * icons.length + 55) /
+                MediaQuery.of(context).size.height,
             builder: (context) {
               return ClipRRect(
                 borderRadius: const BorderRadius.only(
@@ -104,16 +104,19 @@ class SellerRightCard extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      Text(
-                        "Droits de ${storeSeller.user.getName()}",
-                        style: const TextStyle(
-                          color: Color.fromARGB(255, 0, 29, 29),
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                      Expanded(
+                        child: Text(
+                          "Droits de ${storeSeller.user.nickname ?? ("${storeSeller.user.firstname} ${storeSeller.user.name}")}",
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            color: Color.fromARGB(255, 0, 29, 29),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       for (var i = 0; i < icons.length; i++)
                         if (i < 4 || storeSeller.storeAdmin)
@@ -149,6 +152,44 @@ class SellerRightCard extends StatelessWidget {
                               ],
                             ),
                           ),
+                      if (storeSeller.storeAdmin)
+                        GestureDetector(
+                          onTap: () {
+                            // Navigator.of(context).pop();
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10),
+                            child: AddEditButtonLayout(
+                              colors: [
+                                Color(0xFF9E131F),
+                                Color(0xFF590512),
+                              ],
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  HeroIcon(
+                                    HeroIcons.trash,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
+                                  SizedBox(
+                                    width: 15,
+                                  ),
+                                  Text(
+                                    "Supprimer le vendeur",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                     ],
                   ),
                 ),
@@ -161,7 +202,8 @@ class SellerRightCard extends StatelessWidget {
           children: [
             Center(
               child: Text(
-                storeSeller.user.getName(),
+                storeSeller.user.nickname ??
+                    ("${storeSeller.user.firstname} ${storeSeller.user.name}"),
                 style: const TextStyle(
                   color: Color.fromARGB(255, 0, 29, 29),
                   fontSize: 14,
