@@ -125,5 +125,6 @@ class PhonebookTextConstants {
 }
 
 class PhonebookColorConstants {
+  // Delete that class : -> secondaryContainer
   static const Color textDark = Color(0xFF1D1D1D);
 }

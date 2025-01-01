@@ -20,18 +20,18 @@ class ResearchBar extends HookConsumerWidget {
         },
         focusNode: focusNode,
         controller: editingController,
-        cursorColor: PhonebookColorConstants.textDark,
+        cursorColor: Theme.of(context).colorScheme.secondaryContainer,
         decoration: InputDecoration(
           isDense: true,
-          suffixIcon: const Icon(
+          suffixIcon: Icon(
             Icons.search,
-            color: PhonebookColorConstants.textDark,
+            color: Theme.of(context).colorScheme.secondaryContainer,
             size: 30,
           ),
-          label: const Text(
+          label: Text(
             PhonebookTextConstants.research,
             style: TextStyle(
-              color: PhonebookColorConstants.textDark,
+              color: Theme.of(context).colorScheme.secondaryContainer,
             ),
           ),
           focusedBorder: UnderlineInputBorder(

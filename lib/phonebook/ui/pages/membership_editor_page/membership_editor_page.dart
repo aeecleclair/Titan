@@ -118,8 +118,12 @@ class MembershipEditorPage extends HookConsumerWidget {
                             ),
                             fillColor: rolesTagList.keys.first == tagKey &&
                                     !isPhonebookAdmin
-                                ? WidgetStateProperty.all(Colors.black)
-                                : WidgetStateProperty.all(Colors.grey),
+                                ? WidgetStateProperty.all(
+                                    Theme.of(context).colorScheme.secondary,
+                                  )
+                                : WidgetStateProperty.all(
+                                    Theme.of(context).colorScheme.tertiary,
+                                  ),
                             onChanged: rolesTagList.keys.first == tagKey &&
                                     !isPhonebookAdmin
                                 ? null
@@ -154,9 +158,9 @@ class MembershipEditorPage extends HookConsumerWidget {
               const SizedBox(height: 50),
               WaitingButton(
                 builder: (child) => AddEditButtonLayout(
-                  colors: const [
-                    ColorConstants.gradient1,
-                    ColorConstants.gradient2,
+                  colors: [
+                    Theme.of(context).colorScheme.primaryContainer,
+                    Theme.of(context).colorScheme.primaryFixed,
                   ],
                   child: child,
                 ),
@@ -164,10 +168,10 @@ class MembershipEditorPage extends HookConsumerWidget {
                   !isEdit
                       ? PhonebookTextConstants.add
                       : PhonebookTextConstants.edit,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: Color.fromARGB(255, 255, 255, 255),
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
                   ),
                 ),
                 onTap: () async {

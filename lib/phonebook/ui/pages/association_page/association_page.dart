@@ -123,18 +123,17 @@ class AssociationPage extends HookConsumerWidget {
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      gradient: const RadialGradient(
+                      gradient: RadialGradient(
                         colors: [
-                          Color.fromARGB(255, 98, 98, 98),
-                          Color.fromARGB(255, 27, 27, 27),
+                          Theme.of(context).colorScheme.tertiary,
+                          Theme.of(context).colorScheme.secondary,
                         ],
                         center: Alignment.topLeft,
                         radius: 1.3,
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color.fromARGB(255, 27, 27, 27)
-                              .withOpacity(0.3),
+                          color: Theme.of(context).shadowColor,
                           spreadRadius: 5,
                           blurRadius: 10,
                           offset:
@@ -142,8 +141,10 @@ class AssociationPage extends HookConsumerWidget {
                         ),
                       ],
                     ),
-                    child:
-                        const HeroIcon(HeroIcons.pencil, color: Colors.white),
+                    child: HeroIcon(
+                      HeroIcons.pencil,
+                      color: Theme.of(context).colorScheme.onSecondary,
+                    ),
                   ),
                 ),
               ),

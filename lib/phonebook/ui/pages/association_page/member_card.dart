@@ -69,7 +69,7 @@ class MemberCard extends HookConsumerWidget {
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
+                          color: Theme.of(context).shadowColor,
                           spreadRadius: 5,
                           blurRadius: 10,
                           offset: const Offset(2, 3),
@@ -107,10 +107,10 @@ class MemberCard extends HookConsumerWidget {
                         ),
                         Text(
                           "(${member.member.name} ${member.member.firstname})",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
-                            color: Color.fromARGB(255, 115, 115, 115),
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                         ),
                       ],
