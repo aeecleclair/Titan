@@ -55,7 +55,7 @@ dependencies:
   qr_flutter: ^4.1.0
   shared_preferences: ^2.1.1
   smooth_page_indicator: ^1.0.0+2
-  syncfusion_flutter_calendar: ^26.1.39
+  syncfusion_flutter_calendar: ^28.1.37
   timezone: ^0.9.0
   tuple: ^2.0.0
   universal_html: ^2.0.8
