@@ -58,7 +58,10 @@ class SettingsMainPage extends HookConsumerWidget {
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.3),
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimary
+                                  .withOpacity(0.3),
                               spreadRadius: 6,
                               blurRadius: 10,
                               offset: const Offset(0, 2),
@@ -81,10 +84,12 @@ class SettingsMainPage extends HookConsumerWidget {
                             Container(
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
-                                color: Colors.white,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.white.withOpacity(0.5),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .primary
+                                        .withOpacity(0.5),
                                     spreadRadius: 5,
                                     blurRadius: 10,
                                     offset: const Offset(-2, -3),
@@ -134,8 +139,8 @@ class SettingsMainPage extends HookConsumerWidget {
                 selected: true,
                 child: Text(
                   capitalize(item.name),
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSecondary,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

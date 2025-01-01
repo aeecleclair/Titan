@@ -27,10 +27,10 @@ class NotificationPage extends HookConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
           child: Column(
             children: [
-              const AlignLeftText(
+              AlignLeftText(
                 SettingsTextConstants.updateNotification,
-                padding: EdgeInsets.symmetric(vertical: 30),
-                color: Colors.grey,
+                padding: const EdgeInsets.symmetric(vertical: 30),
+                color: Theme.of(context).colorScheme.tertiary,
               ),
               AsyncChild(
                 value: topics,
@@ -44,10 +44,12 @@ class NotificationPage extends HookConsumerWidget {
                             children: [
                               Text(
                                 topicToFrenchString(e),
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w700,
-                                  color: ColorConstants.background2,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .secondaryContainer,
                                 ),
                               ),
                               LoadSwitch(
@@ -62,17 +64,26 @@ class NotificationPage extends HookConsumerWidget {
                                     const Duration(milliseconds: 500),
                                 switchDecoration: (value, _) => BoxDecoration(
                                   color: value
-                                      ? ColorConstants.gradient1
+                                      ? Theme.of(context)
+                                          .colorScheme
+                                          .primaryContainer
                                           .withOpacity(0.3)
-                                      : Colors.grey.shade200,
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .secondaryFixed,
                                   borderRadius: BorderRadius.circular(30),
                                   shape: BoxShape.rectangle,
                                   boxShadow: [
                                     BoxShadow(
                                       color: value
-                                          ? ColorConstants.gradient1
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .primaryContainer
                                               .withOpacity(0.2)
-                                          : Colors.grey.withOpacity(0.2),
+                                          : Theme.of(context)
+                                              .colorScheme
+                                              .tertiary
+                                              .withOpacity(0.2),
                                       spreadRadius: 1,
                                       blurRadius: 3,
                                       offset: const Offset(0, 1),
@@ -80,19 +91,25 @@ class NotificationPage extends HookConsumerWidget {
                                   ],
                                 ),
                                 spinColor: (value) => value
-                                    ? ColorConstants.gradient1
-                                    : Colors.grey,
+                                    ? Theme.of(context)
+                                        .colorScheme
+                                        .primaryContainer
+                                    : Theme.of(context).colorScheme.tertiary,
                                 spinStrokeWidth: 2,
                                 thumbDecoration: (value, _) => BoxDecoration(
-                                  color: Colors.white,
+                                  color: Theme.of(context).colorScheme.surface,
                                   borderRadius: BorderRadius.circular(30),
                                   shape: BoxShape.rectangle,
                                   boxShadow: [
                                     BoxShadow(
                                       color: value
-                                          ? ColorConstants.gradient1
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .primaryContainer
                                               .withOpacity(0.2)
-                                          : Colors.grey.shade200
+                                          : Theme.of(context)
+                                              .colorScheme
+                                              .secondaryFixed
                                               .withOpacity(0.2),
                                       spreadRadius: 5,
                                       blurRadius: 7,
@@ -112,7 +129,7 @@ class NotificationPage extends HookConsumerWidget {
                       )
                       .toList(),
                 ),
-                loaderColor: ColorConstants.gradient1,
+                loaderColor: Theme.of(context).colorScheme.primaryContainer,
               ),
             ],
           ),
