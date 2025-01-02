@@ -21,7 +21,5 @@ String raffleStatusTypeToString(RaffleStatusType raffleStatusType) {
       return 'open';
     case RaffleStatusType.lock:
       return 'lock';
-    default:
-      return 'creation';
   }
 }

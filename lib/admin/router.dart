@@ -24,7 +24,7 @@ import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdminRouter {
-  final ProviderRef ref;
+  final Ref ref;
   static const String root = '/admin';
   static const String groups = '/groups';
   static const String addGroup = '/add_group';

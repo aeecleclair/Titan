@@ -11,7 +11,7 @@ import 'package:myecl/version/providers/version_verifier_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AuthenticatedMiddleware extends QMiddleware {
-  final ProviderRef ref;
+  final Ref ref;
 
   AuthenticatedMiddleware(this.ref);
 

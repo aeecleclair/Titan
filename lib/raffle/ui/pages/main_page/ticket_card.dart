@@ -51,7 +51,7 @@ class TicketWidget extends HookConsumerWidget {
                         color: Colors.white,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.white.withOpacity(0.3),
+                            color: Colors.white.withValues(alpha: 0.3),
                             blurRadius: 8,
                             offset: const Offset(2, 3),
                           ),
@@ -126,8 +126,8 @@ class TicketWidget extends HookConsumerWidget {
                   maxLines: 2,
                   style: TextStyle(
                     color: isWinningTicket
-                        ? Colors.black.withOpacity(0.8)
-                        : Colors.white.withOpacity(0.8),
+                        ? Colors.black.withValues(alpha: 0.8)
+                        : Colors.white.withValues(alpha: 0.8),
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),

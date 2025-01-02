@@ -63,7 +63,7 @@ class NotificationPage extends HookConsumerWidget {
                                 switchDecoration: (value, _) => BoxDecoration(
                                   color: value
                                       ? ColorConstants.gradient1
-                                          .withOpacity(0.3)
+                                          .withValues(alpha: 0.3)
                                       : Colors.grey.shade200,
                                   borderRadius: BorderRadius.circular(30),
                                   shape: BoxShape.rectangle,
@@ -71,8 +71,8 @@ class NotificationPage extends HookConsumerWidget {
                                     BoxShadow(
                                       color: value
                                           ? ColorConstants.gradient1
-                                              .withOpacity(0.2)
-                                          : Colors.grey.withOpacity(0.2),
+                                              .withValues(alpha: 0.2)
+                                          : Colors.grey.withValues(alpha: 0.2),
                                       spreadRadius: 1,
                                       blurRadius: 3,
                                       offset: const Offset(0, 1),
@@ -91,9 +91,9 @@ class NotificationPage extends HookConsumerWidget {
                                     BoxShadow(
                                       color: value
                                           ? ColorConstants.gradient1
-                                              .withOpacity(0.2)
+                                              .withValues(alpha: 0.2)
                                           : Colors.grey.shade200
-                                              .withOpacity(0.2),
+                                              .withValues(alpha: 0.2),
                                       spreadRadius: 5,
                                       blurRadius: 7,
                                       offset: const Offset(

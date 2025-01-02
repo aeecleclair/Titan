@@ -41,7 +41,7 @@ class DeliveryUi extends HookConsumerWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: AMAPColorConstants.textDark.withOpacity(0.2),
+              color: AMAPColorConstants.textDark.withValues(alpha: 0.2),
               spreadRadius: 5,
               blurRadius: 10,
               offset: const Offset(3, 3),

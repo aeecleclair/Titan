@@ -57,7 +57,7 @@ class Sphere {
   void move() {
     x += speed * cos(angle);
     y += speed * sin(angle);
-    paint.color = paint.color.withOpacity(opacityCurve.transform(t));
+    paint.color = paint.color.withValues(alpha: opacityCurve.transform(t));
     t += 0.01;
   }
 }

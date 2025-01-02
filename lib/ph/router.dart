@@ -19,7 +19,7 @@ import 'package:myecl/ph/ui/pages/view_ph/view_ph.dart'
     deferred as view_ph_page;
 
 class PhRouter {
-  final ProviderRef ref;
+  final Ref ref;
   static const String root = '/ph';
   static const String past_ph_selection = '/past_ph_selection';
   static const String view_ph = '/view_ph';

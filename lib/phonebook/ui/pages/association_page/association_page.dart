@@ -122,7 +122,7 @@ class AssociationPage extends HookConsumerWidget {
                       boxShadow: [
                         BoxShadow(
                           color: const Color.fromARGB(255, 27, 27, 27)
-                              .withOpacity(0.3),
+                              .withValues(alpha: 0.3),
                           spreadRadius: 5,
                           blurRadius: 10,
                           offset:

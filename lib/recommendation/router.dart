@@ -15,7 +15,7 @@ import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RecommendationRouter {
-  final ProviderRef ref;
+  final Ref ref;
 
   static const String root = '/recommendation';
   static const String information = '/information';
