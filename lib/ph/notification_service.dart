@@ -5,8 +5,7 @@ import 'package:tuple/tuple.dart';
 
 final Map<String, Tuple2<String, List<StateNotifierProvider>>> phProviders = {
   "ph": Tuple2(
-    // L'actionTable de la notification est "session"
-    PhRouter.root, // La page principale du module ciné
+    PhRouter.root, // La page principale du module ph
     [phListProvider], // Le provider de la liste des sessions
   ),
 };
