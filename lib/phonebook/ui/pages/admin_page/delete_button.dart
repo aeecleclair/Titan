@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class DeleteButton extends StatelessWidget {
@@ -24,12 +23,12 @@ class DeleteButton extends StatelessWidget {
           gradient: LinearGradient(
             colors: !deactivated
                 ? [
-                    ColorConstants.gradient1,
-                    ColorConstants.gradient2,
+                    Theme.of(context).colorScheme.primaryContainer,
+                    Theme.of(context).colorScheme.primaryFixed,
                   ]
                 : [
-                    ColorConstants.deactivated1,
-                    ColorConstants.deactivated2,
+                    Theme.of(context).colorScheme.secondaryFixed,
+                    Theme.of(context).colorScheme.tertiary,
                   ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -37,8 +36,8 @@ class DeleteButton extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: !deactivated
-                  ? ColorConstants.gradient2.withOpacity(0.2)
-                  : ColorConstants.deactivated2.withOpacity(0.2),
+                  ? Theme.of(context).colorScheme.primaryFixed.withOpacity(0.2)
+                  : Theme.of(context).colorScheme.tertiary.withOpacity(0.2),
               blurRadius: 10,
               offset: const Offset(2, 3),
             ),
@@ -51,7 +50,7 @@ class DeleteButton extends StatelessWidget {
       child: HeroIcon(
         deletion ? HeroIcons.trash : HeroIcons.noSymbol,
         size: 30,
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.onPrimaryContainer,
       ),
     );
   }

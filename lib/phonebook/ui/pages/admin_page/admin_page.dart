@@ -76,13 +76,13 @@ class AdminPage extends HookConsumerWidget {
                         width: double.infinity,
                         height: 100,
                         color: isPhonebookAdmin
-                            ? Colors.white
-                            : ColorConstants.deactivated2,
+                            ? Theme.of(context).colorScheme.surface
+                            : Theme.of(context).colorScheme.tertiary,
                         child: Center(
                           child: HeroIcon(
                             HeroIcons.plus,
                             size: 40,
-                            color: Colors.grey.shade500,
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                         ),
                       ),

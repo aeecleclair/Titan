@@ -47,8 +47,8 @@ class AssociationCreationPage extends HookConsumerWidget {
               const SizedBox(
                 height: 30,
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -56,7 +56,7 @@ class AssociationCreationPage extends HookConsumerWidget {
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
-                      color: ColorConstants.gradient1,
+                      color: Theme.of(context).colorScheme.primaryContainer,
                     ),
                   ),
                 ),
@@ -88,9 +88,9 @@ class AssociationCreationPage extends HookConsumerWidget {
                     const SizedBox(height: 50),
                     WaitingButton(
                       builder: (child) => AddEditButtonLayout(
-                        colors: const [
-                          ColorConstants.gradient1,
-                          ColorConstants.gradient2,
+                        colors: [
+                          Theme.of(context).colorScheme.primaryContainer,
+                          Theme.of(context).colorScheme.primaryFixed,
                         ],
                         child: child,
                       ),
@@ -147,12 +147,13 @@ class AssociationCreationPage extends HookConsumerWidget {
                           }
                         });
                       },
-                      child: const Text(
+                      child: Text(
                         AdminTextConstants.add,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
-                          color: Color.fromARGB(255, 255, 255, 255),
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
                         ),
                       ),
                     ),

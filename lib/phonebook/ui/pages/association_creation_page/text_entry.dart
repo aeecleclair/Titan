@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
 
+// This component seems to be used nowhere...
+// That's the 3rd on Phonebook alone!
+
 class AddAssociationTextEntry extends StatelessWidget {
   final TextEditingController controller;
   final String title;
@@ -25,20 +28,22 @@ class AddAssociationTextEntry extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               title,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
-                color: Color.fromARGB(255, 158, 158, 158),
+                color: Theme.of(context).colorScheme.tertiary,
               ),
             ),
           ),
           SizedBox(
             child: TextFormField(
               controller: controller,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 isDense: true,
                 focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: ColorConstants.gradient1),
+                  borderSide: BorderSide(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                  ),
                 ),
               ),
               validator: canBeEmpty

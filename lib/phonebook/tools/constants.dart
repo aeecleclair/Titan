@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class PhonebookTextConstants {
   static const String activeMandate = "Mandat actif :";
   static const String add = "Ajouter";
@@ -122,9 +120,4 @@ class PhonebookTextConstants {
   static const String updatingError = "Erreur lors de la modification";
 
   static const String validation = "Valider";
-}
-
-class PhonebookColorConstants {
-  // Delete that class : -> secondaryContainer
-  static const Color textDark = Color(0xFF1D1D1D);
 }
