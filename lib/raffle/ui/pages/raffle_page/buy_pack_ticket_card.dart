@@ -45,7 +45,7 @@ class BuyPackTicket extends HookConsumerWidget {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: const Color.fromARGB(231, 4, 0, 11).withOpacity(0.4),
+              color: const Color.fromARGB(231, 4, 0, 11).withValues(alpha: 0.4),
               blurRadius: 8,
               offset: const Offset(2, 3),
             ),
@@ -75,7 +75,7 @@ class BuyPackTicket extends HookConsumerWidget {
                       color: Colors.white,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.white.withOpacity(0.3),
+                          color: Colors.white.withValues(alpha: 0.3),
                           blurRadius: 8,
                           offset: const Offset(1, 2),
                         ),
@@ -140,7 +140,7 @@ class BuyPackTicket extends HookConsumerWidget {
             Text(
               "${packTicket.packSize} tickets",
               style: TextStyle(
-                color: Colors.white.withOpacity(0.8),
+                color: Colors.white.withValues(alpha: 0.8),
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),

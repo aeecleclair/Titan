@@ -91,7 +91,7 @@ class AdvertAdminPage extends HookConsumerWidget {
                       Colors.white,
                       Colors.grey.shade100,
                     ],
-                    shadowColor: Colors.grey.withOpacity(0.2),
+                    shadowColor: Colors.grey.withValues(alpha: 0.2),
                     child: Center(
                       child: HeroIcon(
                         HeroIcons.plus,

@@ -47,7 +47,7 @@ class DeliveryHandler extends HookConsumerWidget {
               child: CardLayout(
                 height: 160,
                 width: 100,
-                shadowColor: AMAPColorConstants.textDark.withOpacity(0.2),
+                shadowColor: AMAPColorConstants.textDark.withValues(alpha: 0.2),
                 child: const Center(
                   child: HeroIcon(
                     HeroIcons.plus,

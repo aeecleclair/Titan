@@ -75,11 +75,11 @@ class BookingCard extends StatelessWidget {
 
     if (booking.decision == Decision.pending) {
       smallTextColor = Colors.grey.shade400;
-      cardBoxShadow = Colors.grey.shade200.withOpacity(0.5);
+      cardBoxShadow = Colors.grey.shade200.withValues(alpha: 0.5);
       lightIconBackgroundColor = Colors.white;
       bigTextColor = Colors.black;
     } else {
-      smallTextColor = Colors.white.withOpacity(0.8);
+      smallTextColor = Colors.white.withValues(alpha: 0.8);
       cardBoxShadow = darkIconBackgroundColor;
       lightIconBackgroundColor = Colors.grey.shade200;
       bigTextColor = Colors.white;
@@ -188,7 +188,7 @@ class BookingCard extends StatelessWidget {
                     onTap: onEdit,
                     child: CardButton(
                       color: lightIconBackgroundColor,
-                      shadowColor: Colors.grey.withOpacity(0.2),
+                      shadowColor: Colors.grey.withValues(alpha: 0.2),
                       child: HeroIcon(
                         HeroIcons.pencil,
                         color: lightIconColor,
@@ -200,7 +200,7 @@ class BookingCard extends StatelessWidget {
                   onTap: onCopy,
                   child: CardButton(
                     color: lightIconBackgroundColor,
-                    shadowColor: Colors.grey.withOpacity(0.2),
+                    shadowColor: Colors.grey.withValues(alpha: 0.2),
                     child: HeroIcon(
                       HeroIcons.documentDuplicate,
                       color: lightIconColor,
@@ -218,7 +218,7 @@ class BookingCard extends StatelessWidget {
                               ? darkIconBackgroundColor
                               : Colors.transparent
                           : Colors.transparent,
-                      shadowColor: Colors.grey.withOpacity(0.2),
+                      shadowColor: Colors.grey.withValues(alpha: 0.2),
                       child: HeroIcon(
                         HeroIcons.check,
                         color: darkIconBackgroundColor,
@@ -236,7 +236,8 @@ class BookingCard extends StatelessWidget {
                               ? Colors.white
                               : Colors.transparent
                           : Colors.transparent,
-                      shadowColor: darkIconBackgroundColor.withOpacity(0.2),
+                      shadowColor:
+                          darkIconBackgroundColor.withValues(alpha: 0.2),
                       child:
                           const HeroIcon(HeroIcons.xMark, color: Colors.white),
                     ),
@@ -247,7 +248,8 @@ class BookingCard extends StatelessWidget {
                     onTap: onDelete,
                     builder: (child) => CardButton(
                       color: darkIconBackgroundColor,
-                      shadowColor: darkIconBackgroundColor.withOpacity(0.2),
+                      shadowColor:
+                          darkIconBackgroundColor.withValues(alpha: 0.2),
                       child: child,
                     ),
                     child: const HeroIcon(HeroIcons.trash, color: Colors.white),

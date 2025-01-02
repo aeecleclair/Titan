@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:myecl/admin/class/account_type.dart';
 import 'package:myecl/user/class/applicant.dart';
 import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/class/user.dart';
@@ -32,6 +33,7 @@ void main() {
         "birthday": "1999-01-01",
         "created_on": createdOn.toIso8601String(),
         "email": "email",
+        "account_type": "external",
         "floor": "autre",
         "groups": [],
         "phone": null,
@@ -60,6 +62,7 @@ void main() {
         "birthday": "1999-01-01",
         "created_on": "2021-01-01",
         "email": "email",
+        "account_type": "external",
         "floor": "autre",
         "groups": [],
         "phone": "phone",
@@ -111,6 +114,7 @@ void main() {
         firstname: 'firstname',
         nickname: null,
         id: 'id',
+        accountType: AccountType(type: 'external'),
         birthday: DateTime(1999, 1, 1),
         createdOn: DateTime(2021, 1, 1),
         email: 'email',
@@ -121,7 +125,7 @@ void main() {
       );
       expect(
         user.toString(),
-        'User {name: name, firstname: firstname, nickname: null, id: id, email: email, birthday: 1999-01-01 00:00:00.000, promo: null, floor: floor, phone: phone, createdOn: 2021-01-01 00:00:00.000, groups: []}',
+        'User {name: name, firstname: firstname, nickname: null, id: id, email: email, accountType: external, birthday: 1999-01-01 00:00:00.000, promo: null, floor: floor, phone: phone, createdOn: 2021-01-01 00:00:00.000, groups: []}',
       );
     });
 
@@ -135,6 +139,7 @@ void main() {
         "birthday": "1999-01-01",
         "created_on": createdOn.toIso8601String(),
         "email": "email",
+        "account_type": "external",
         "floor": "floor",
         "groups": [],
         "phone": "phone",
@@ -148,6 +153,7 @@ void main() {
         "birthday": "1999-01-01",
         "created_on": createdOn.toIso8601String(),
         "email": "email",
+        "account_type": "external",
         "floor": "floor",
         "groups": [],
         "phone": "phone",
@@ -183,7 +189,7 @@ void main() {
       final applicant = Applicant.empty();
       expect(
         applicant.toString(),
-        'Applicant{name: Nom, firstname: Prénom, nickname: null, id: , email: empty@ecl.ec-lyon.fr, promo: null, phone: null}',
+        'Applicant{name: Nom, firstname: Prénom, nickname: null, id: , email: empty@ecl.ec-lyon.fr, promo: null, phone: null, accountType: external}',
       );
     });
 
@@ -194,6 +200,7 @@ void main() {
         "nickname": null,
         "id": "id",
         "email": "email",
+        "account_type": "external",
         "phone": "phone",
         "promo": null,
       });
@@ -207,6 +214,7 @@ void main() {
         "nickname": null,
         "id": "id",
         "email": "email",
+        "account_type": "external",
         "phone": "phone",
         "promo": null,
       });
@@ -216,6 +224,7 @@ void main() {
         "nickname": null,
         "id": "id",
         "email": "email",
+        "account_type": "external",
         "promo": null,
         "phone": "phone",
         "applicant_id": "id",
@@ -258,7 +267,7 @@ void main() {
       final simpleUser = SimpleUser.empty();
       expect(
         simpleUser.toString(),
-        'SimpleUser {name: Nom, firstname: Prénom, nickname: null, id: }',
+        'SimpleUser {name: Nom, firstname: Prénom, nickname: null, id: , accountType: external}',
       );
     });
 
@@ -267,6 +276,7 @@ void main() {
         "name": "name",
         "firstname": "firstname",
         "nickname": null,
+        "account_type": "external",
         "id": "id",
       });
       expect(simpleUser, isA<SimpleUser>());
@@ -277,12 +287,14 @@ void main() {
         "name": "name",
         "firstname": "firstname",
         "nickname": null,
+        "account_type": "external",
         "id": "id",
       });
       expect(simpleUser.toJson(), {
         "name": "Name",
         "firstname": "Firstname",
         "nickname": null,
+        "account_type": "external",
         "id": "id",
       });
     });

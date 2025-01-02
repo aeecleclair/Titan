@@ -121,7 +121,7 @@ class OpenIdTokenProvider
   final String redirectUrl = "${getTitanPackageName()}://authorized";
   final String redirectUrlHost = "myecl.fr";
   final String discoveryUrl =
-      "${Repository.displayHost}.well-known/openid-configuration";
+      "${Repository.host}.well-known/openid-configuration";
   final List<String> scopes = ["API"];
   OpenIdTokenProvider() : super(const AsyncValue.loading());
 
@@ -147,7 +147,7 @@ class OpenIdTokenProvider
     final codeVerifier = generateRandomString(128);
 
     final authUrl =
-        "${Repository.displayHost}auth/authorize?client_id=$clientId&response_type=code&scope=${scopes.join(" ")}&redirect_uri=$redirectUri&code_challenge=${hash(codeVerifier)}&code_challenge_method=S256";
+        "${Repository.host}auth/authorize?client_id=$clientId&response_type=code&scope=${scopes.join(" ")}&redirect_uri=$redirectUri&code_challenge=${hash(codeVerifier)}&code_challenge_method=S256";
 
     state = const AsyncValue.loading();
     try {
@@ -219,7 +219,7 @@ class OpenIdTokenProvider
           }
         });
       } else {
-        AuthorizationTokenResponse? resp =
+        AuthorizationTokenResponse resp =
             await appAuth.authorizeAndExchangeCode(
           AuthorizationTokenRequest(
             clientId,
@@ -229,15 +229,11 @@ class OpenIdTokenProvider
             allowInsecureConnections: kDebugMode,
           ),
         );
-        if (resp != null) {
-          await _secureStorage.write(key: tokenName, value: resp.refreshToken);
-          state = AsyncValue.data({
-            tokenKey: resp.accessToken!,
-            refreshTokenKey: resp.refreshToken!,
-          });
-        } else {
-          state = const AsyncValue.error("Error", StackTrace.empty);
-        }
+        await _secureStorage.write(key: tokenName, value: resp.refreshToken);
+        state = AsyncValue.data({
+          tokenKey: resp.accessToken!,
+          refreshTokenKey: resp.refreshToken!,
+        });
       }
     } catch (e) {
       state = AsyncValue.error("Error $e", StackTrace.empty);
@@ -275,15 +271,11 @@ class OpenIdTokenProvider
                 allowInsecureConnections: kDebugMode,
               ),
             );
-            if (resp != null) {
-              state = AsyncValue.data({
-                tokenKey: resp.accessToken!,
-                refreshTokenKey: resp.refreshToken!,
-              });
-              storeToken();
-            } else {
-              state = const AsyncValue.error("Error", StackTrace.empty);
-            }
+            state = AsyncValue.data({
+              tokenKey: resp.accessToken!,
+              refreshTokenKey: resp.refreshToken!,
+            });
+            storeToken();
           }
         } catch (e) {
           state = AsyncValue.error(e, StackTrace.empty);
@@ -307,14 +299,10 @@ class OpenIdTokenProvider
       ),
     )
         .then((resp) {
-      if (resp != null) {
-        state = AsyncValue.data({
-          tokenKey: resp.accessToken!,
-          refreshTokenKey: resp.refreshToken!,
-        });
-      } else {
-        state = const AsyncValue.error("Error", StackTrace.empty);
-      }
+      state = AsyncValue.data({
+        tokenKey: resp.accessToken!,
+        refreshTokenKey: resp.refreshToken!,
+      });
     });
   }
 
@@ -332,10 +320,6 @@ class OpenIdTokenProvider
               allowInsecureConnections: kDebugMode,
             ),
           );
-          if (resp == null) {
-            state = const AsyncValue.error("Error", StackTrace.empty);
-            return false;
-          }
           state = AsyncValue.data({
             tokenKey: resp.accessToken!,
             refreshTokenKey: resp.refreshToken!,

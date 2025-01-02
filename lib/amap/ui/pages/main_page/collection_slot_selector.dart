@@ -34,8 +34,9 @@ class CollectionSlotSelector extends HookConsumerWidget {
               topRight: Radius.circular(!isFirst ? 22 : 0),
               bottomRight: Radius.circular(!isFirst ? 22 : 0),
             ),
-            color:
-                isSelected ? Colors.white.withOpacity(0.7) : Colors.transparent,
+            color: isSelected
+                ? Colors.white.withValues(alpha: 0.7)
+                : Colors.transparent,
           ),
           child: Center(
             child: Text(

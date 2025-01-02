@@ -39,7 +39,7 @@ class AdminSessionCard extends HookConsumerWidget {
           borderRadius: BorderRadius.circular(18),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
+              color: Colors.grey.withValues(alpha: 0.2),
               spreadRadius: 1,
               blurRadius: 10,
               offset: const Offset(0, 5), // changes position of shadow
@@ -92,7 +92,7 @@ class AdminSessionCard extends HookConsumerWidget {
                           onTap: onEdit,
                           child: CardButton(
                             color: Colors.grey.shade200,
-                            shadowColor: Colors.grey.withOpacity(0.2),
+                            shadowColor: Colors.grey.withValues(alpha: 0.2),
                             child: const HeroIcon(
                               HeroIcons.pencil,
                               color: Colors.black,

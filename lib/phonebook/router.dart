@@ -15,7 +15,7 @@ import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class PhonebookRouter {
-  final ProviderRef ref;
+  final Ref ref;
   static const String root = '/phonebook';
   static const String admin = '/admin';
   static const String createAssociaiton = '/create_association';

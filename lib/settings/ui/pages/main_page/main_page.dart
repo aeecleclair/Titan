@@ -58,7 +58,7 @@ class SettingsMainPage extends HookConsumerWidget {
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.3),
+                              color: Colors.black.withValues(alpha: 0.3),
                               spreadRadius: 6,
                               blurRadius: 10,
                               offset: const Offset(0, 2),
@@ -84,7 +84,7 @@ class SettingsMainPage extends HookConsumerWidget {
                                 color: Colors.white,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.white.withOpacity(0.5),
+                                    color: Colors.white.withValues(alpha: 0.5),
                                     spreadRadius: 5,
                                     blurRadius: 10,
                                     offset: const Offset(-2, -3),
@@ -168,7 +168,7 @@ class SettingsMainPage extends HookConsumerWidget {
                     onTap: () {
                       Clipboard.setData(
                         ClipboardData(
-                          text: "${Repository.displayHost}calendar/ical",
+                          text: "${Repository.host}calendar/ical",
                         ),
                       ).then((value) {
                         displayToastWithContext(
@@ -295,7 +295,7 @@ class SettingsMainPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 10),
                   AutoSizeText(
-                    Repository.displayHost,
+                    Repository.host,
                     maxLines: 1,
                     minFontSize: 10,
                     style: const TextStyle(

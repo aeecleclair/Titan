@@ -39,9 +39,9 @@ class ListProductPage extends HookConsumerWidget {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Colors.white.withOpacity(1.0),
-                    Colors.white.withOpacity(0.8),
-                    Colors.white.withOpacity(0.0),
+                    Colors.white..withValues(alpha: 1.0),
+                    Colors.white.withValues(alpha: 0.8),
+                    Colors.white.withValues(alpha: 0.0),
                   ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,

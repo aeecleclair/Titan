@@ -20,7 +20,7 @@ import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdvertRouter {
-  final ProviderRef ref;
+  final Ref ref;
   static const String root = '/advert';
   static const String admin = '/admin';
   static const String addEditAdvert = '/add_edit_advert';

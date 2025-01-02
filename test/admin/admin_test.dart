@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:myecl/admin/class/account_type.dart';
 import 'package:myecl/admin/class/group.dart';
 import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/admin/repositories/group_repository.dart';
@@ -116,6 +117,7 @@ void main() {
             "name": "name",
             "firstname": "firstname",
             "nickname": "nickname",
+            "account_type": "external",
           }
         ],
       });
@@ -133,6 +135,7 @@ void main() {
         members: [
           SimpleUser(
             id: "1",
+            accountType: AccountType(type: "external"),
             name: "name",
             firstname: "firstname",
             nickname: null,
@@ -146,6 +149,7 @@ void main() {
         "members": [
           {
             "id": "1",
+            "account_type": "external",
             "name": "name",
             "firstname": "firstname",
             "nickname": null,
