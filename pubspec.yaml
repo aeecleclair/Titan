@@ -5,8 +5,8 @@ publish_to: "none"
 version: 0.10.5+136
 
 environment:
-  sdk: ^3.5.0
-  flutter: ^3.22.1
+  sdk: ^3.6.0
+  flutter: 3.27.1
 
 dependencies:
   auto_size_text: ^3.0.0
