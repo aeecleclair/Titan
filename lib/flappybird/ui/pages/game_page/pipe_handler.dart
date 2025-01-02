@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/flappybird/providers/pipe_list_provider.dart';
@@ -21,7 +23,7 @@ class PipeHandler extends HookConsumerWidget {
                   xPipeAlignment: e.position,
                 ),
                 PipeDisplay(
-                  pipeHeight: constraints - e.height - 200,
+                  pipeHeight: max(constraints - e.height - 200, 0),
                   xPipeAlignment: e.position,
                 ),
               ],

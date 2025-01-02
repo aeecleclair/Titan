@@ -159,11 +159,12 @@ class RightPanel extends HookConsumerWidget {
                                 child: Container(
                                   width: constraints.maxWidth,
                                   decoration: BoxDecoration(
-                                    color:
-                                        Colors.grey.shade200.withOpacity(0.2),
+                                    color: Colors.grey.shade200
+                                        .withValues(alpha: 0.2),
                                     borderRadius: BorderRadius.circular(20),
                                     border: Border.all(
-                                      color: Colors.white.withOpacity(0.2),
+                                      color:
+                                          Colors.white.withValues(alpha: 0.2),
                                       width: 2,
                                     ),
                                   ),

@@ -50,11 +50,19 @@ class Bird {
     );
   }
 
+  static int getColorValue(Color color) {
+    final int red = (color.r * 255).round();
+    final int green = (color.g * 255).round();
+    final int blue = (color.b * 255).round();
+    final int alpha = (color.a * 255).round();
+    return alpha << 24 | red << 16 | green << 8 | blue;
+  }
+
   static Bird empty() {
     final color = Color(0xff000000 + Random().nextInt(0xffffff));
     return Bird(
       user: SimpleUser.empty(),
-      color: MaterialColor(color.value, getSwatch(color)),
+      color: MaterialColor(getColorValue(color), getSwatch(color)),
       birdImage: Image.asset('images/bird.png'),
     );
   }

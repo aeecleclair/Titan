@@ -98,7 +98,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
+                            color: Colors.black.withValues(alpha: 0.1),
                             spreadRadius: 5,
                             blurRadius: 10,
                             offset: const Offset(2, 3),
@@ -283,7 +283,8 @@ class AddEditContenderPage extends HookConsumerWidget {
                                     borderRadius: BorderRadius.circular(10),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
+                                        color:
+                                            Colors.grey.withValues(alpha: 0.5),
                                         spreadRadius: 5,
                                         blurRadius: 10,
                                         offset: const Offset(
@@ -333,7 +334,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
+                          color: Colors.grey.withValues(alpha: 0.5),
                           spreadRadius: 5,
                           blurRadius: 10,
                           offset: const Offset(3, 3),

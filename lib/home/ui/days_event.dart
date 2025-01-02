@@ -104,7 +104,7 @@ class DaysEvent extends HookConsumerWidget {
                   Text(
                     formatDates(start, end, event.allDay),
                     style: TextStyle(
-                      color: textColor.withOpacity(0.7),
+                      color: textColor.withValues(alpha: 0.7),
                       fontSize: 13,
                     ),
                   ),
@@ -128,7 +128,7 @@ class DaysEvent extends HookConsumerWidget {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      color: textColor.withOpacity(0.7),
+                      color: textColor.withValues(alpha: 0.7),
                       fontSize: 13,
                     ),
                   ),

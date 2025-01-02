@@ -97,7 +97,7 @@ class CategoryPage extends HookConsumerWidget {
                             child: Container(
                               decoration: BoxDecoration(
                                 color: AMAPColorConstants.background2
-                                    .withOpacity(0.5),
+                                    .withValues(alpha: 0.5),
                               ),
                               child: Column(
                                 children: listWidgetProduct,
@@ -138,7 +138,7 @@ class CategoryPage extends HookConsumerWidget {
                                   boxShadow: [
                                     BoxShadow(
                                       color: AMAPColorConstants.green2
-                                          .withOpacity(0.4),
+                                          .withValues(alpha: 0.4),
                                       offset: const Offset(2, 3),
                                       blurRadius: 5,
                                     ),
@@ -180,8 +180,8 @@ class CategoryPage extends HookConsumerWidget {
                       filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                       child: Container(
                         decoration: BoxDecoration(
-                          color:
-                              AMAPColorConstants.background2.withOpacity(0.5),
+                          color: AMAPColorConstants.background2
+                              .withValues(alpha: 0.5),
                         ),
                         child: Column(children: listWidgetProduct),
                       ),

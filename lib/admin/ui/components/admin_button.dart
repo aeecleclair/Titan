@@ -18,7 +18,7 @@ class AdminButton extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: ColorConstants.gradient2.withOpacity(0.5),
+            color: ColorConstants.gradient2.withValues(alpha: 0.5),
             blurRadius: 5,
             offset: const Offset(2, 2),
             spreadRadius: 2,

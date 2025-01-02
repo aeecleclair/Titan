@@ -52,7 +52,7 @@ class MyApp extends HookConsumerWidget {
 
     final popScope = PopScope(
       canPop: false,
-      onPopInvoked: (didPop) async {
+      onPopInvokedWithResult: (didPop, result) async {
         final topBarCallBack = ref.watch(topBarCallBackProvider);
         if (QR.currentPath.split('/').length <= 2) {
           final animation = ref.watch(animationProvider);

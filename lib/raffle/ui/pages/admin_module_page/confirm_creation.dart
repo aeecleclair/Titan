@@ -93,7 +93,8 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.grey.shade300.withOpacity(0.5),
+                              color:
+                                  Colors.grey.shade300.withValues(alpha: 0.5),
                               blurRadius: 10,
                               offset: const Offset(2, 3),
                             ),
@@ -148,7 +149,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                           boxShadow: [
                             BoxShadow(
                               color: RaffleColorConstants.redGradient2
-                                  .withOpacity(0.5),
+                                  .withValues(alpha: 0.5),
                               blurRadius: 10,
                               offset: const Offset(2, 3),
                             ),

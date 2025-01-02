@@ -14,10 +14,10 @@ class QRCodeScannerScreen extends StatefulWidget {
   final AsyncValue<Ticket> scanner;
 
   @override
-  _QRCodeScannerScreenState createState() => _QRCodeScannerScreenState();
+  QRCodeScannerScreenState createState() => QRCodeScannerScreenState();
 }
 
-class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
+class QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
   String? qrCode;
 
   final MobileScannerController controller = MobileScannerController();

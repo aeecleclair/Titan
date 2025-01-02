@@ -79,8 +79,8 @@ class TicketHandler extends HookConsumerWidget {
                       color: RaffleColorConstants.ticketBack,
                       boxShadow: [
                         BoxShadow(
-                          color:
-                              RaffleColorConstants.ticketBack.withOpacity(0.3),
+                          color: RaffleColorConstants.ticketBack
+                              .withValues(alpha: 0.3),
                           blurRadius: 8,
                           offset: const Offset(2, 3),
                         ),

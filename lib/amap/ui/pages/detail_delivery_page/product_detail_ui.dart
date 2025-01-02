@@ -22,7 +22,7 @@ class ProductDetailCard extends StatelessWidget {
         AMAPColorConstants.lightGradient1,
         AMAPColorConstants.lightGradient2,
       ],
-      shadowColor: AMAPColorConstants.textDark.withOpacity(0.3),
+      shadowColor: AMAPColorConstants.textDark.withValues(alpha: 0.3),
       padding: const EdgeInsets.only(left: 17.0, top: 5, right: 17),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,

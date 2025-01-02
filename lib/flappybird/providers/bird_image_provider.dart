@@ -46,16 +46,16 @@ class BirdImageNotifier extends StateNotifier<Uint8List> {
       else if (pixels[i] >= 250 &&
           pixels[i + 1] >= 230 &&
           pixels[i + 2] >= 50) {
-        pixels[i] = color.shade300.red;
-        pixels[i + 1] = color.shade300.green;
-        pixels[i + 2] = color.shade300.blue;
+        pixels[i] = (color.shade300.r * 255).round();
+        pixels[i + 1] = (color.shade300.g * 255).round();
+        pixels[i + 2] = (color.shade300.b * 255).round();
       }
 
       // Detect the darkish blue shade & switch it with the desired color's RGB value.
       else if (pixels[i] >= 200 && pixels[i + 1] >= 100 && pixels[i + 2] >= 0) {
-        pixels[i] = color.shade900.red;
-        pixels[i + 1] = color.shade900.green;
-        pixels[i + 2] = color.shade900.blue;
+        pixels[i] = (color.shade300.r * 255).round();
+        pixels[i + 1] = (color.shade300.g * 255).round();
+        pixels[i + 2] = (color.shade300.b * 255).round();
       }
     }
     return external_image.encodePng(image);

@@ -37,7 +37,7 @@ class SettingsItem extends StatelessWidget {
               border: Border.all(color: Colors.black),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.shade400.withOpacity(0.3),
+                  color: Colors.grey.shade400.withValues(alpha: 0.3),
                   spreadRadius: 2,
                   blurRadius: 5,
                   offset: const Offset(2, 3),

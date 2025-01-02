@@ -46,7 +46,7 @@ class DeliveryUi extends HookConsumerWidget {
       id: delivery.id,
       height: 160,
       width: 280,
-      shadowColor: AMAPColorConstants.textDark.withOpacity(0.2),
+      shadowColor: AMAPColorConstants.textDark.withValues(alpha: 0.2),
       padding: const EdgeInsets.all(10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -322,9 +322,10 @@ class DeliveryUi extends HookConsumerWidget {
                       boxShadow: [
                         BoxShadow(
                           color: !(delivery.status == DeliveryStatus.creation)
-                              ? AMAPColorConstants.redGradient2.withOpacity(0.5)
+                              ? AMAPColorConstants.redGradient2
+                                  .withValues(alpha: 0.5)
                               : AMAPColorConstants.greenGradient2
-                                  .withOpacity(0.5),
+                                  .withValues(alpha: 0.5),
                           blurRadius: 10,
                           offset: const Offset(2, 3),
                         ),

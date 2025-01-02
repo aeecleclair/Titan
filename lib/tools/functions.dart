@@ -265,7 +265,7 @@ Color generateColor(String uuid) {
   for (int i = 0; i < uuid.length; i++) {
     hash = (10 * hash + uuid.codeUnitAt(i)) % 0xFFFFFF;
   }
-  Color color = Color(hash & 0xFFAAFF).withOpacity(1.0);
+  Color color = Color(hash & 0xFFAAFF)..withValues(alpha: 1.0);
   return color;
 }
 
@@ -391,7 +391,7 @@ getFullDate(
   final DateTime now = DateTime.now();
   _getDate(context, now, initialDate, firstDate, lastDate).then(
     (DateTime? date) {
-      if (date != null) {
+      if (date != null && context.mounted) {
         _getTime(context).then(
           (TimeOfDay? time) {
             if (time != null) {

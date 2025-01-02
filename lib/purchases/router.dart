@@ -14,10 +14,10 @@ import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class PurchasesRouter {
-  final ProviderRef ref;
+  final Ref ref;
   static const String root = '/purchases';
   static const String scan = '/scan';
-  static const String user_list = '/user_list';
+  static const String userList = '/user_list';
   static const String history = '/history';
   static const String ticket = '/ticket';
   static const String purchase = '/purchase';
@@ -57,7 +57,7 @@ class PurchasesRouter {
             builder: () => const TicketPage(),
           ),
           QRoute(
-            path: user_list,
+            path: userList,
             builder: () => const UserListPage(),
           ),
         ],

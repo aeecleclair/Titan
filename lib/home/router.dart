@@ -10,7 +10,7 @@ import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class HomeRouter {
-  final ProviderRef ref;
+  final Ref ref;
   static const String root = '/home';
   static const String detail = '/detail';
   static final Module module = Module(

@@ -174,7 +174,7 @@ class VoteBars extends HookConsumerWidget {
             ),
             barGroups: contenderBars,
           ),
-          swapAnimationDuration: animDuration,
+          duration: animDuration,
         ),
       ),
     );
