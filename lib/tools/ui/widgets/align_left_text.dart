@@ -4,14 +4,14 @@ class AlignLeftText extends StatelessWidget {
   final String title;
   final double fontSize;
   final FontWeight fontWeight;
-  final Color color;
+  final Color? color;
   final EdgeInsetsGeometry padding;
   const AlignLeftText(
     this.title, {
     super.key,
     this.fontSize = 18,
     this.fontWeight = FontWeight.bold,
-    this.color = Colors.black,
+    this.color,
     this.padding = const EdgeInsets.all(0),
   });
 
@@ -25,7 +25,7 @@ class AlignLeftText extends StatelessWidget {
         style: TextStyle(
           fontSize: fontSize,
           fontWeight: fontWeight,
-          color: color,
+          color: color ?? Theme.of(context).colorScheme.onPrimary,
         ),
       ),
     );

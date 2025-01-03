@@ -5,7 +5,6 @@ import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/change_pass/password_strength.dart';
 import 'package:myecl/settings/ui/pages/change_pass/test_entry_style.dart';
 import 'package:myecl/settings/ui/settings.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
@@ -51,7 +50,7 @@ class ChangePassPage extends HookConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: TextFormField(
-                    cursorColor: ColorConstants.gradient1,
+                    cursorColor: Theme.of(context).colorScheme.primaryContainer,
                     decoration: changePassInputDecoration(
                       hintText: SettingsTextConstants.oldPassword,
                       notifier: hideOldPass,
@@ -70,7 +69,7 @@ class ChangePassPage extends HookConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: TextFormField(
-                    cursorColor: ColorConstants.gradient1,
+                    cursorColor: Theme.of(context).colorScheme.primaryContainer,
                     decoration: changePassInputDecoration(
                       hintText: SettingsTextConstants.newPassword,
                       notifier: hideNewPass,
@@ -89,7 +88,7 @@ class ChangePassPage extends HookConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: TextFormField(
-                    cursorColor: ColorConstants.gradient1,
+                    cursorColor: Theme.of(context).colorScheme.primaryContainer,
                     decoration: changePassInputDecoration(
                       hintText: SettingsTextConstants.confirmPassword,
                       notifier: hideConfirmPass,
@@ -111,9 +110,9 @@ class ChangePassPage extends HookConsumerWidget {
                 const SizedBox(height: 60),
                 WaitingButton(
                   builder: (child) => AddEditButtonLayout(
-                    colors: const [
-                      ColorConstants.gradient1,
-                      ColorConstants.gradient2,
+                    colors: [
+                      Theme.of(context).colorScheme.primaryContainer,
+                      Theme.of(context).colorScheme.primaryFixed,
                     ],
                     child: child,
                   ),
@@ -149,13 +148,13 @@ class ChangePassPage extends HookConsumerWidget {
                       );
                     }
                   },
-                  child: const Center(
+                  child: Center(
                     child: Text(
                       SettingsTextConstants.save,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
                       ),
                     ),
                   ),

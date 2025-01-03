@@ -14,6 +14,7 @@ import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
 
 class DetailOrderUI extends HookConsumerWidget {
   final Order order;
@@ -33,6 +34,7 @@ class DetailOrderUI extends HookConsumerWidget {
     final deliveryOrdersNotifier =
         ref.watch(adminDeliveryOrderListProvider.notifier);
     final cashListNotifier = ref.watch(cashListProvider.notifier);
+    final isDarkTheme = ref.watch(themeProvider);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -40,9 +42,9 @@ class DetailOrderUI extends HookConsumerWidget {
     return CardLayout(
       width: 250,
       height: 145 + (20.0 * order.products.length),
-      colors: const [
-        AMAPColorConstants.lightGradient1,
-        AMAPColorConstants.greenGradient1,
+      colors: [
+        AMAPColors(isDarkTheme).lightGradientPrimary,
+        AMAPColors(isDarkTheme).greenGradientPrimary,
       ],
       padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 17.0),
       child: Column(
@@ -54,10 +56,10 @@ class DetailOrderUI extends HookConsumerWidget {
             child: AutoSizeText(
               order.user.getName(),
               maxLines: 1,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: AMAPColorConstants.textDark,
+                color: AMAPColors(isDarkTheme).textOnPrimary,
               ),
             ),
           ),
@@ -71,10 +73,10 @@ class DetailOrderUI extends HookConsumerWidget {
                     maxLines: 1,
                     minFontSize: 10,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w700,
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.onSecondary,
                     ),
                   ),
                 ),
@@ -83,10 +85,10 @@ class DetailOrderUI extends HookConsumerWidget {
                   child: Text(
                     "${product.quantity} (${(product.quantity * product.price).toStringAsFixed(2)}€)",
                     textAlign: TextAlign.right,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w700,
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.onSecondary,
                     ),
                   ),
                 ),
@@ -95,9 +97,9 @@ class DetailOrderUI extends HookConsumerWidget {
           ),
           Container(
             height: 3,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.onSecondary,
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
             margin: const EdgeInsets.symmetric(vertical: 7),
           ),
@@ -105,19 +107,19 @@ class DetailOrderUI extends HookConsumerWidget {
             children: [
               Text(
                 "${order.products.fold<int>(0, (value, product) => value + product.quantity)} ${AMAPTextConstants.product}${order.products.fold<int>(0, (value, product) => value + product.quantity) != 1 ? "s" : ""}",
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onSecondary,
                 ),
               ),
               const Spacer(),
               Text(
                 "${order.amount.toStringAsFixed(2)}€",
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onSecondary,
                 ),
               ),
             ],
@@ -127,10 +129,10 @@ class DetailOrderUI extends HookConsumerWidget {
             children: [
               Text(
                 "${AMAPTextConstants.amount} : ${userCash.balance.toStringAsFixed(2)}€",
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
-                  color: AMAPColorConstants.textDark,
+                  color: AMAPColors(isDarkTheme).textOnPrimary,
                 ),
               ),
               const Spacer(),
@@ -181,15 +183,15 @@ class DetailOrderUI extends HookConsumerWidget {
                   );
                 },
                 builder: (child) => CardButton(
-                  colors: const [
-                    AMAPColorConstants.redGradient1,
-                    AMAPColorConstants.redGradient2,
+                  colors: [
+                    AMAPColors(isDarkTheme).redGradientPrimary,
+                    AMAPColors(isDarkTheme).redGradientSecondary,
                   ],
                   child: child,
                 ),
-                child: const HeroIcon(
+                child: HeroIcon(
                   HeroIcons.trash,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onSecondary,
                   size: 20,
                 ),
               ),

@@ -13,6 +13,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
 
 class UserCashUi extends HookConsumerWidget {
   final Cash cash;
@@ -23,6 +24,7 @@ class UserCashUi extends HookConsumerWidget {
     final flipped = useState(true);
     final amount = useTextEditingController();
     final key = GlobalKey<FormState>();
+    final isDarkTheme = ref.watch(themeProvider);
     bool isFront = true;
     double anglePlus = 0;
     final controller = useAnimationController(
@@ -76,10 +78,10 @@ class UserCashUi extends HookConsumerWidget {
                           cash.user.nickname ?? cash.user.firstname,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: AMAPColorConstants.green3,
+                            color: AMAPColors(isDarkTheme).primaryGreen,
                           ),
                         ),
                         const SizedBox(height: 5),
@@ -89,10 +91,10 @@ class UserCashUi extends HookConsumerWidget {
                               : cash.user.name,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
-                            color: AMAPColorConstants.textDark,
+                            color: AMAPColors(isDarkTheme).textOnPrimary,
                           ),
                         ),
                         const SizedBox(height: 5),
@@ -104,15 +106,15 @@ class UserCashUi extends HookConsumerWidget {
                               maxLines: 1,
                               minFontSize: 10,
                               overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
-                                color: AMAPColorConstants.green3,
+                                color: AMAPColors(isDarkTheme).primaryGreen,
                               ),
                             ),
-                            const HeroIcon(
+                            HeroIcon(
                               HeroIcons.plus,
-                              color: AMAPColorConstants.green3,
+                              color: AMAPColors(isDarkTheme).primaryGreen,
                               size: 20,
                             ),
                           ],
@@ -137,8 +139,9 @@ class UserCashUi extends HookConsumerWidget {
                                 controller: amount,
                                 keyboardType: TextInputType.number,
                                 isDouble: true,
-                                color: AMAPColorConstants.textDark,
-                                enabledColor: AMAPColorConstants.green3,
+                                color: AMAPColors(isDarkTheme).textOnPrimary,
+                                enabledColor:
+                                    AMAPColors(isDarkTheme).primaryGreen,
                                 suffix: '€',
                                 isNegative: true,
                               ),
@@ -180,9 +183,9 @@ class UserCashUi extends HookConsumerWidget {
                                   });
                                 }
                               },
-                              child: const Icon(
+                              child: Icon(
                                 Icons.add,
-                                color: AMAPColorConstants.green3,
+                                color: AMAPColors(isDarkTheme).primaryGreen,
                                 size: 30,
                               ),
                             ),

@@ -1,14 +1,18 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myecl/flappybird/class/score.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
+import 'package:myecl/flappybird/tools/constants.dart';
 
-class LeaderBoardItem extends StatelessWidget {
+class LeaderBoardItem extends ConsumerWidget {
   final Score score;
   const LeaderBoardItem({super.key, required this.score});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkTheme = ref.watch(themeProvider);
     final style = GoogleFonts.silkscreen(
       textStyle: TextStyle(
         fontSize: 20,
@@ -19,7 +23,7 @@ class LeaderBoardItem extends StatelessWidget {
                 ? Colors.grey.shade400
                 : score.position == 3
                     ? Colors.brown.shade400
-                    : Colors.white,
+                    : FlappyBirdColors(isDarkTheme).text,
       ),
     );
     return Container(

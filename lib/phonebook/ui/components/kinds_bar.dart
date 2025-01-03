@@ -49,7 +49,9 @@ class KindsBar extends HookConsumerWidget {
               child: Text(
                 item,
                 style: TextStyle(
-                  color: selected ? Colors.white : Colors.black,
+                  color: selected
+                      ? Theme.of(context).colorScheme.onSecondary
+                      : Theme.of(context).colorScheme.onSurface,
                   fontWeight: FontWeight.bold,
                 ),
               ),

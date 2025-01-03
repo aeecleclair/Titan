@@ -37,8 +37,8 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Text(
                   moduleVisibility.root,
-                  style: const TextStyle(
-                    color: Color.fromARGB(255, 0, 0, 0),
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onPrimary,
                     fontSize: 22,
                     fontWeight: FontWeight.w800,
                   ),
@@ -50,10 +50,10 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                   Column(
                     children: [
                       const Divider(),
-                      const Text(
+                      Text(
                         AdminTextConstants.accountTypes,
                         style: TextStyle(
-                          color: Color.fromARGB(255, 0, 0, 0),
+                          color: Theme.of(context).colorScheme.onPrimary,
                           fontSize: 20,
                           fontWeight: FontWeight.w800,
                         ),
@@ -68,8 +68,9 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                             children: [
                               Text(
                                 accountType.type,
-                                style: const TextStyle(
-                                  color: Color.fromARGB(255, 0, 0, 0),
+                                style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -94,9 +95,12 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                                           accountType.type,
                                         );
                                       },
-                                      child: const HeroIcon(
+                                      child: HeroIcon(
                                         HeroIcons.eye,
                                         size: 40,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
                                       ),
                                     )
                                   : GestureDetector(
@@ -113,9 +117,12 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                                           accountType.type,
                                         );
                                       },
-                                      child: const HeroIcon(
+                                      child: HeroIcon(
                                         HeroIcons.eyeSlash,
                                         size: 40,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
                                       ),
                                     ),
                             ],
@@ -127,10 +134,10 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                   const Divider(),
                   Column(
                     children: [
-                      const Text(
+                      Text(
                         AdminTextConstants.groups,
                         style: TextStyle(
-                          color: Color.fromARGB(255, 0, 0, 0),
+                          color: Theme.of(context).colorScheme.onPrimary,
                           fontSize: 20,
                           fontWeight: FontWeight.w900,
                         ),
@@ -145,8 +152,9 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                             children: [
                               Text(
                                 group.name,
-                                style: const TextStyle(
-                                  color: Color.fromARGB(255, 0, 0, 0),
+                                style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -172,9 +180,12 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                                           group.id,
                                         );
                                       },
-                                      child: const HeroIcon(
+                                      child: HeroIcon(
                                         HeroIcons.eye,
                                         size: 40,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
                                       ),
                                     )
                                   : GestureDetector(
@@ -190,9 +201,12 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                                           group.id,
                                         );
                                       },
-                                      child: const HeroIcon(
+                                      child: HeroIcon(
                                         HeroIcons.eyeSlash,
                                         size: 40,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
                                       ),
                                     ),
                             ],

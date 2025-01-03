@@ -26,6 +26,7 @@ import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
 
 class AmapMainPage extends HookConsumerWidget {
   const AmapMainPage({super.key});
@@ -58,6 +59,8 @@ class AmapMainPage extends HookConsumerWidget {
         .map((delivery) => delivery.id)
         .toList(growable: false);
 
+    final isDarkTheme = ref.watch(themeProvider);
+
     void displayToastWithoutContext(TypeMsg type, String text) {
       displayToast(context, type, text);
     }
@@ -83,13 +86,13 @@ class AmapMainPage extends HookConsumerWidget {
                       value: balance,
                       builder: (context, s) => Text(
                         "${AMAPTextConstants.amount} : ${s.balance.toStringAsFixed(2)}€",
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: AMAPColorConstants.greenGradient1,
+                          color: AMAPColors(isDarkTheme).greenGradientPrimary,
                         ),
                       ),
-                      loaderColor: AMAPColorConstants.greenGradient1,
+                      loaderColor: AMAPColors(isDarkTheme).greenGradientPrimary,
                     ),
                   ),
                   if (isAdmin)
@@ -97,9 +100,9 @@ class AmapMainPage extends HookConsumerWidget {
                       onTap: () {
                         QR.to(AmapRouter.root + AmapRouter.admin);
                       },
-                      colors: const [
-                        AMAPColorConstants.greenGradient1,
-                        AMAPColorConstants.greenGradient2,
+                      colors: [
+                        AMAPColors(isDarkTheme).greenGradientPrimary,
+                        AMAPColors(isDarkTheme).greenGradientSecondary,
                       ],
                     ),
                 ],
@@ -151,10 +154,10 @@ class AmapMainPage extends HookConsumerWidget {
                     width: double.infinity,
                     height: MediaQuery.of(context).size.height - 150,
                     decoration: BoxDecoration(
-                      gradient: const RadialGradient(
+                      gradient: RadialGradient(
                         colors: [
-                          AMAPColorConstants.textLight,
-                          AMAPColorConstants.greenGradient1,
+                          AMAPColors(isDarkTheme).textOnSecondary,
+                          AMAPColors(isDarkTheme).greenGradientPrimary,
                         ],
                         center: Alignment.topRight,
                         radius: 1.5,
@@ -165,7 +168,8 @@ class AmapMainPage extends HookConsumerWidget {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: AMAPColorConstants.textDark
+                          color: AMAPColors(isDarkTheme)
+                              .textOnPrimary
                               .withValues(alpha: 0.3),
                           spreadRadius: 5,
                           blurRadius: 10,
@@ -181,14 +185,16 @@ class AmapMainPage extends HookConsumerWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const AlignLeftText(
+                              AlignLeftText(
                                 AMAPTextConstants.addOrder,
-                                color: Colors.white,
+                                color:
+                                    Theme.of(context).colorScheme.onSecondary,
                               ),
                               IconButton(
-                                icon: const HeroIcon(
+                                icon: HeroIcon(
                                   HeroIcons.xMark,
-                                  color: Colors.white,
+                                  color:
+                                      Theme.of(context).colorScheme.onSecondary,
                                   size: 30,
                                 ),
                                 onPressed: () {
@@ -207,7 +213,11 @@ class AmapMainPage extends HookConsumerWidget {
                             width: double.infinity,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(25),
-                              border: Border.all(color: Colors.white, width: 2),
+                              border: Border.all(
+                                color:
+                                    Theme.of(context).colorScheme.onSecondary,
+                                width: 2,
+                              ),
                             ),
                             child: Row(
                               children: CollectionSlot.values
@@ -249,17 +259,19 @@ class AmapMainPage extends HookConsumerWidget {
                             height: 70,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(25),
-                              gradient: const LinearGradient(
+                              gradient: LinearGradient(
                                 colors: [
-                                  AMAPColorConstants.greenGradient2,
-                                  AMAPColorConstants.textDark,
+                                  AMAPColors(isDarkTheme)
+                                      .greenGradientSecondary,
+                                  AMAPColors(isDarkTheme).textOnPrimary,
                                 ],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                               ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: AMAPColorConstants.textDark
+                                  color: AMAPColors(isDarkTheme)
+                                      .textOnPrimary
                                       .withValues(alpha: 0.3),
                                   spreadRadius: 2,
                                   blurRadius: 10,
@@ -272,13 +284,14 @@ class AmapMainPage extends HookConsumerWidget {
                           child: Container(
                             padding: const EdgeInsets.only(bottom: 5),
                             width: double.infinity,
-                            child: const Center(
+                            child: Center(
                               child: Text(
                                 AMAPTextConstants.nextStep,
                                 style: TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.w900,
-                                  color: Colors.white,
+                                  color:
+                                      Theme.of(context).colorScheme.onSecondary,
                                 ),
                               ),
                             ),

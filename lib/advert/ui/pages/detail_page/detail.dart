@@ -32,13 +32,13 @@ class AdvertDetailPage extends HookConsumerWidget {
       children: [
         Container(
           width: double.infinity,
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Colors.black26,
+                color: Theme.of(context).shadowColor,
                 blurRadius: 10,
                 spreadRadius: 7,
-                offset: Offset(0, 5),
+                offset: const Offset(0, 5),
               ),
             ],
           ),
@@ -69,7 +69,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                     end: Alignment.bottomCenter,
                     colors: [
                       const Color.fromARGB(0, 255, 255, 255),
-                      Colors.grey.shade50..withValues(alpha: 0.85),
+                      Colors.grey.shade50.withValues(alpha: 0.85),
                       Colors.grey.shade50,
                     ],
                     stops: const [0.0, 0.65, 1.0],
