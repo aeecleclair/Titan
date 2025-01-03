@@ -158,7 +158,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                             builder: (child) => AddEditButtonLayout(
                               colors: [
                                 Theme.of(context).colorScheme.primaryContainer,
-                                Theme.of(context).colorScheme.primaryFixed
+                                Theme.of(context).colorScheme.primaryFixed,
                               ],
                               child: child,
                             ),

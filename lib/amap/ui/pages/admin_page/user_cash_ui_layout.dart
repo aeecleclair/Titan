@@ -16,7 +16,7 @@ class UserCashUiLayout extends ConsumerWidget {
       height: 100,
       colors: [
         AMAPColors(isDarkTheme).primaryFixedGreen,
-        AMAPColors(isDarkTheme).textOnSecondary
+        AMAPColors(isDarkTheme).textOnSecondary,
       ],
       shadowColor: AMAPColors(isDarkTheme).textOnPrimary.withValues(alpha: 0.2),
       padding: const EdgeInsets.symmetric(horizontal: 17.0, vertical: 5),

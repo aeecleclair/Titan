@@ -13,7 +13,6 @@ import 'package:myecl/phonebook/ui/components/kinds_bar.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/association_research_bar.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/editable_association_card.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';

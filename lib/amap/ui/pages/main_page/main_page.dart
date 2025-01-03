@@ -214,9 +214,10 @@ class AmapMainPage extends HookConsumerWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(25),
                               border: Border.all(
-                                  color:
-                                      Theme.of(context).colorScheme.onSecondary,
-                                  width: 2),
+                                color:
+                                    Theme.of(context).colorScheme.onSecondary,
+                                width: 2,
+                              ),
                             ),
                             child: Row(
                               children: CollectionSlot.values

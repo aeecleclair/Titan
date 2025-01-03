@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/tools/constants.dart';
 
 // This component seems to be used nowhere...
 // That's the 3rd on Phonebook alone!
