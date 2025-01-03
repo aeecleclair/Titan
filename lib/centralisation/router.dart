@@ -10,7 +10,7 @@ import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class CentralisationRouter {
-  final ProviderRef ref;
+  final Ref ref;
   static const String root = '/centralisation';
   static final Module module = Module(
     name: CentralisationTextConstants.centralisation,

@@ -5,8 +5,8 @@ publish_to: "none"
 version: 0.10.5+136
 
 environment:
-  sdk: ^3.3.0
-  flutter: ^3.22.1
+  sdk: ^3.6.0
+  flutter: 3.27.1
 
 dependencies:
   auto_size_text: ^3.0.0
@@ -14,48 +14,48 @@ dependencies:
   collection: ^1.16.0
   crypto: ^3.0.2
   datetime_picker_formfield: ^2.0.1
-  device_info_plus: ^9.1.2
+  device_info_plus: ^10.1.2
   diacritic: ^0.1.5
   dotenv: ^4.0.1
-  firebase_core: ^2.25.5
+  firebase_core: ^3.9.0
   either_dart: ^1.0.0
-  firebase_messaging: ^14.9.4
-  fl_chart: ^0.68.0
+  firebase_messaging: ^15.1.6
+  fl_chart: ^0.70.0
   flash: ^3.1.1
   flutter:
     sdk: flutter
-  flutter_appauth: ^6.0.0
+  flutter_appauth: ^8.0.3
   flutter_dotenv: ^5.0.2
   flutter_hooks: ^0.20.0
-  flutter_local_notifications: ^17.1.2
+  flutter_local_notifications: 17.2.4
   flutter_localizations:
     sdk: flutter
   flutter_riverpod: ^2.1.1
   flutter_secure_storage: ^9.0.0
   flutter_svg: ^2.0.7
   google_fonts: ^6.2.1
-  heroicons: ^0.10.0
+  heroicons: ^0.11.0
   hooks_riverpod: ^2.1.1
   http: ^1.0.0
   http_parser: ^4.0.2
   image: ^4.0.15
-  image_cropper: ^7.1.0
+  image_cropper: ^8.1.0
   image_picker: ^1.0.0
   intl: ^0.19.0
   jwt_decoder: ^2.0.1
   load_switch: ^2.0.5
-  mobile_scanner: ^5.1.1
+  mobile_scanner: ^6.0.2
   mocktail: ^1.0.3
   numberpicker: ^2.1.1
   package_info_plus: ^8.0.0
   path: ^1.8.2
   path_provider: ^2.0.11
-  rxdart: ^0.27.7
+  rxdart: ^0.28.0
   qlevar_router: ^1.9.0
   qr_flutter: ^4.1.0
   shared_preferences: ^2.1.1
   smooth_page_indicator: ^1.0.0+2
-  syncfusion_flutter_calendar: ^26.1.39
+  syncfusion_flutter_calendar: ^28.1.35
   timezone: ^0.9.0
   tuple: ^2.0.0
   universal_html: ^2.0.8
@@ -65,10 +65,11 @@ dependencies:
   url_launcher: ^6.2.5
   pdfx: ^2.6.0
   file_saver: ^0.2.12
+  uuid: ^4.4.2
 
 dev_dependencies:
-  flutter_launcher_icons: ^0.13.1
-  flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.14.2
+  flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
 

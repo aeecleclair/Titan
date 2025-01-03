@@ -391,7 +391,7 @@ getFullDate(
   final DateTime now = DateTime.now();
   _getDate(context, now, initialDate, firstDate, lastDate).then(
     (DateTime? date) {
-      if (date != null) {
+      if (date != null && context.mounted) {
         _getTime(context).then(
           (TimeOfDay? time) {
             if (time != null) {

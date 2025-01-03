@@ -25,7 +25,7 @@ import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AmapRouter {
-  final ProviderRef ref;
+  final Ref ref;
   static const String root = '/amap';
   static const String admin = '/admin';
   static const String addEditDelivery = '/add_edit_delivery';

@@ -1,11 +1,11 @@
 import 'dart:ui';
 
 Color invert(Color color) {
-  return Color.fromARGB(
-    color.alpha,
-    255 - color.red,
-    255 - color.green,
-    255 - color.blue,
+  return Color.from(
+    alpha: color.a * 255,
+    red: 1.0 - color.r,
+    green: 1.0 - color.g,
+    blue: 1.0 - color.b,
   );
 }
 

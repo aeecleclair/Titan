@@ -19,7 +19,7 @@ import 'package:myecl/vote/ui/pages/section_pages/add_section.dart'
 import 'package:qlevar_router/qlevar_router.dart';
 
 class VoteRouter {
-  final ProviderRef ref;
+  final Ref ref;
   static const String root = '/vote';
   static const String admin = '/admin';
   static const String addEditContender = '/add_edit_contender';

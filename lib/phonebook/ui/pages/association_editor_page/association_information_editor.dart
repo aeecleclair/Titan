@@ -11,7 +11,6 @@ import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/ui/components/kinds_bar.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
