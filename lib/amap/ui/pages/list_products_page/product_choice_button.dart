@@ -56,7 +56,7 @@ class ProductChoiceButton extends HookConsumerWidget {
                     BoxShadow(
                       color: AMAPColors(isDarkTheme)
                           .greenGradientSecondary
-                          .withOpacity(0.4),
+                          .withValues(alpha: 0.4),
                       offset: const Offset(2, 3),
                       blurRadius: 5,
                     ),
@@ -141,7 +141,7 @@ class ProductChoiceButton extends HookConsumerWidget {
                   BoxShadow(
                     color: AMAPColors(isDarkTheme)
                         .redGradientSecondary
-                        .withOpacity(0.4),
+                        .withValues(alpha: 0.4),
                     offset: const Offset(2, 3),
                     blurRadius: 5,
                   ),

@@ -170,7 +170,7 @@ class AmapMainPage extends HookConsumerWidget {
                         BoxShadow(
                           color: AMAPColors(isDarkTheme)
                               .textOnPrimary
-                              .withOpacity(0.3),
+                              .withValues(alpha: 0.3),
                           spreadRadius: 5,
                           blurRadius: 10,
                           offset: const Offset(3, 3),
@@ -271,7 +271,7 @@ class AmapMainPage extends HookConsumerWidget {
                                 BoxShadow(
                                   color: AMAPColors(isDarkTheme)
                                       .textOnPrimary
-                                      .withOpacity(0.3),
+                                      .withValues(alpha: 0.3),
                                   spreadRadius: 2,
                                   blurRadius: 10,
                                   offset: const Offset(2, 5),

@@ -114,7 +114,8 @@ class TombolaHandler extends HookConsumerWidget {
                       borderRadius: BorderRadius.circular(30),
                       boxShadow: [
                         BoxShadow(
-                          color: RaffleColorConstants.textDark.withOpacity(0.2),
+                          color: RaffleColorConstants.textDark
+                              .withValues(alpha: 0.2),
                           spreadRadius: 5,
                           blurRadius: 10,
                           offset: const Offset(3, 3),

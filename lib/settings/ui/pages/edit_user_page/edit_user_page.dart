@@ -87,7 +87,7 @@ class EditUserPage extends HookConsumerWidget {
                                   color: Theme.of(context)
                                       .colorScheme
                                       .onPrimary
-                                      .withOpacity(0.1),
+                                      .withValues(alpha: 0.1),
                                   spreadRadius: 5,
                                   blurRadius: 10,
                                   offset: const Offset(2, 3),
@@ -280,7 +280,7 @@ class EditUserPage extends HookConsumerWidget {
                               color: Theme.of(context)
                                   .colorScheme
                                   .primaryFixed
-                                  .withOpacity(0.5),
+                                  .withValues(alpha: 0.5),
                               spreadRadius: 1,
                               blurRadius: 7,
                               offset: const Offset(0, 3),

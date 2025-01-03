@@ -36,8 +36,14 @@ class DeleteButton extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: !deactivated
-                  ? Theme.of(context).colorScheme.primaryFixed.withOpacity(0.2)
-                  : Theme.of(context).colorScheme.tertiary.withOpacity(0.2),
+                  ? Theme.of(context)
+                      .colorScheme
+                      .primaryFixed
+                      .withValues(alpha: 0.2)
+                  : Theme.of(context)
+                      .colorScheme
+                      .tertiary
+                      .withValues(alpha: 0.2),
               blurRadius: 10,
               offset: const Offset(2, 3),
             ),

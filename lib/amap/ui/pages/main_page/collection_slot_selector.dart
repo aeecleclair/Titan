@@ -37,7 +37,7 @@ class CollectionSlotSelector extends HookConsumerWidget {
               bottomRight: Radius.circular(!isFirst ? 22 : 0),
             ),
             color: isSelected
-                ? Theme.of(context).colorScheme.surface.withOpacity(0.7)
+                ? Theme.of(context).colorScheme.surface.withValues(alpha: 0.7)
                 : Colors.transparent,
           ),
           child: Center(

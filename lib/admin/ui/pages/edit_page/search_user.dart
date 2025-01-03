@@ -86,7 +86,7 @@ class SearchUser extends HookConsumerWidget {
                         color: Theme.of(context)
                             .colorScheme
                             .primaryFixed
-                            .withOpacity(0.4),
+                            .withValues(alpha: 0.4),
                         offset: const Offset(2, 3),
                         blurRadius: 5,
                       ),

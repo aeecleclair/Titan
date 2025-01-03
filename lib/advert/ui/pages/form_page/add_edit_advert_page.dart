@@ -144,7 +144,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                                   color: Theme.of(context)
                                                       .colorScheme
                                                       .primary
-                                                      .withOpacity(0.4),
+                                                      .withValues(alpha: 0.4),
                                                 ),
                                                 child: HeroIcon(
                                                   HeroIcons.photo,
@@ -152,7 +152,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                                   color: Theme.of(context)
                                                       .colorScheme
                                                       .onPrimary
-                                                      .withOpacity(0.5),
+                                                      .withValues(alpha: 0.5),
                                                 ),
                                               ),
                                             ),

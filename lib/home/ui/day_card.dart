@@ -55,11 +55,14 @@ class DayCard extends HookConsumerWidget {
           boxShadow: [
             BoxShadow(
               color: isToday
-                  ? Theme.of(context).colorScheme.primaryFixed.withOpacity(0.2)
+                  ? Theme.of(context)
+                      .colorScheme
+                      .primaryFixed
+                      .withValues(alpha: 0.2)
                   : Theme.of(context)
                       .colorScheme
                       .secondaryFixed
-                      .withOpacity(0.2),
+                      .withValues(alpha: 0.2),
               spreadRadius: 5,
               blurRadius: 10,
               offset: const Offset(3, 3),

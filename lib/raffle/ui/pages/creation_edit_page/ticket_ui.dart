@@ -30,7 +30,7 @@ class TicketUI extends HookConsumerWidget {
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: RaffleColorConstants.ticketBack.withOpacity(0.3),
+                color: RaffleColorConstants.ticketBack.withValues(alpha: 0.3),
                 blurRadius: 8,
                 offset: const Offset(2, 3),
               ),
@@ -57,7 +57,7 @@ class TicketUI extends HookConsumerWidget {
                   Text(
                     "${packTicket.packSize} tickets",
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.8),
+                      color: Colors.white.withValues(alpha: 0.8),
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
@@ -87,7 +87,8 @@ class TicketUI extends HookConsumerWidget {
                           borderRadius: BorderRadius.circular(15),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.grey.shade300.withOpacity(0.5),
+                              color:
+                                  Colors.grey.shade300.withValues(alpha: 0.5),
                               blurRadius: 10,
                               offset: const Offset(2, 3),
                             ),
@@ -117,7 +118,7 @@ class TicketUI extends HookConsumerWidget {
                           boxShadow: [
                             BoxShadow(
                               color: RaffleColorConstants.redGradient2
-                                  .withOpacity(0.5),
+                                  .withValues(alpha: 0.5),
                               blurRadius: 10,
                               offset: const Offset(2, 3),
                             ),

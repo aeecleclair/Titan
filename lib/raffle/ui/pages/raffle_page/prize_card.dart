@@ -29,7 +29,7 @@ class PrizeCard extends HookConsumerWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.5),
+              color: Colors.black.withValues(alpha: 0.5),
               spreadRadius: 0,
               blurRadius: 5,
               offset: const Offset(1, 2),
@@ -50,7 +50,7 @@ class PrizeCard extends HookConsumerWidget {
                     gradient: LinearGradient(
                       colors: [
                         Colors.transparent,
-                        Colors.black.withOpacity(0.7),
+                        Colors.black.withValues(alpha: 0.7),
                       ],
                       stops: const [
                         0,

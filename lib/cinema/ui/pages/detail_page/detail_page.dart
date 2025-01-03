@@ -93,7 +93,7 @@ class DetailPage extends HookConsumerWidget {
                       Theme.of(context)
                           .colorScheme
                           .secondaryFixed
-                          .withOpacity(0.85),
+                          .withValues(alpha: 0.85),
                       Theme.of(context).colorScheme.secondaryFixed,
                     ],
                     stops: const [0.0, 0.65, 1.0],
@@ -263,7 +263,7 @@ class DetailPage extends HookConsumerWidget {
                     Theme.of(context)
                         .colorScheme
                         .secondaryFixed
-                        .withOpacity(0.85),
+                        .withValues(alpha: 0.85),
                     Theme.of(context).colorScheme.secondaryFixed,
                   ],
                   stops: const [0.0, 0.25, 1.0],

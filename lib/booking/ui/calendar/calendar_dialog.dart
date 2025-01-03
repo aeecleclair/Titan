@@ -136,7 +136,7 @@ class CalendarDialog extends StatelessWidget {
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.shade500.withOpacity(0.3),
+                      color: Colors.grey.shade500.withValues(alpha: 0.3),
                       blurRadius: 5,
                       spreadRadius: 1,
                     ),

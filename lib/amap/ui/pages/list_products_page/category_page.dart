@@ -100,7 +100,7 @@ class CategoryPage extends HookConsumerWidget {
                               decoration: BoxDecoration(
                                 color: AMAPColors(isDarkTheme)
                                     .background2
-                                    .withOpacity(0.5),
+                                    .withValues(alpha: 0.5),
                               ),
                               child: Column(
                                 children: listWidgetProduct,
@@ -143,7 +143,7 @@ class CategoryPage extends HookConsumerWidget {
                                     BoxShadow(
                                       color: AMAPColors(isDarkTheme)
                                           .secondaryFixedGreen
-                                          .withOpacity(0.4),
+                                          .withValues(alpha: 0.4),
                                       offset: const Offset(2, 3),
                                       blurRadius: 5,
                                     ),
@@ -188,7 +188,7 @@ class CategoryPage extends HookConsumerWidget {
                         decoration: BoxDecoration(
                           color: AMAPColors(isDarkTheme)
                               .background2
-                              .withOpacity(0.5),
+                              .withValues(alpha: 0.5),
                         ),
                         child: Column(children: listWidgetProduct),
                       ),

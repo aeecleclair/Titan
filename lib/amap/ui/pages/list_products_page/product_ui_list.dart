@@ -58,7 +58,7 @@ class ProductUiInList extends ConsumerWidget {
                     color: quantity > 0
                         ? AMAPColors(isDarkTheme)
                             .secondaryFixedGreen
-                            .withOpacity(0.8)
+                            .withValues(alpha: 0.8)
                         : AMAPColors(isDarkTheme).background3,
                   ),
                 ),
@@ -113,7 +113,7 @@ class ProductUiInList extends ConsumerWidget {
                     size: 22,
                     color: AMAPColors(isDarkTheme)
                         .secondaryFixedGreen
-                        .withOpacity(0.8),
+                        .withValues(alpha: 0.8),
                   ),
                 ),
                 onTap: () {

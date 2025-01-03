@@ -209,7 +209,7 @@ class NotificationPopup extends HookConsumerWidget {
                           color: Theme.of(context)
                               .colorScheme
                               .primaryFixed
-                              .withOpacity(0.3),
+                              .withValues(alpha: 0.3),
                           blurRadius: 10.0,
                           offset: const Offset(0.0, 10.0),
                         ),

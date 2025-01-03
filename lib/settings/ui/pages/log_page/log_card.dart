@@ -39,7 +39,7 @@ class LogCard extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: color.withOpacity(0.2),
+            color: color.withValues(alpha: 0.2),
             spreadRadius: 5,
             blurRadius: 10,
             offset: const Offset(3, 3), // changes position of shadow

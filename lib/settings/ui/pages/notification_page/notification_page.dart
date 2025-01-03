@@ -67,7 +67,7 @@ class NotificationPage extends HookConsumerWidget {
                                       ? Theme.of(context)
                                           .colorScheme
                                           .primaryContainer
-                                          .withOpacity(0.3)
+                                          .withValues(alpha: 0.3)
                                       : Theme.of(context)
                                           .colorScheme
                                           .secondaryFixed,
@@ -79,11 +79,11 @@ class NotificationPage extends HookConsumerWidget {
                                           ? Theme.of(context)
                                               .colorScheme
                                               .primaryContainer
-                                              .withOpacity(0.2)
+                                              .withValues(alpha: 0.2)
                                           : Theme.of(context)
                                               .colorScheme
                                               .tertiary
-                                              .withOpacity(0.2),
+                                              .withValues(alpha: 0.2),
                                       spreadRadius: 1,
                                       blurRadius: 3,
                                       offset: const Offset(0, 1),
@@ -106,11 +106,11 @@ class NotificationPage extends HookConsumerWidget {
                                           ? Theme.of(context)
                                               .colorScheme
                                               .primaryContainer
-                                              .withOpacity(0.2)
+                                              .withValues(alpha: 0.2)
                                           : Theme.of(context)
                                               .colorScheme
                                               .secondaryFixed
-                                              .withOpacity(0.2),
+                                              .withValues(alpha: 0.2),
                                       spreadRadius: 5,
                                       blurRadius: 7,
                                       offset: const Offset(

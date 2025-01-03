@@ -28,7 +28,7 @@ class TicketCardBackground extends HookConsumerWidget {
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.shade300.withOpacity(0.3),
+                  color: Colors.grey.shade300.withValues(alpha: 0.3),
                   blurRadius: 8,
                   offset: const Offset(2, 3),
                 ),
@@ -61,7 +61,7 @@ class TicketCardBackground extends HookConsumerWidget {
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: RaffleColorConstants.gradient2.withOpacity(0.3),
+                  color: RaffleColorConstants.gradient2.withValues(alpha: 0.3),
                   blurRadius: 8,
                   offset: const Offset(2, 3),
                 ),

@@ -61,7 +61,7 @@ class SettingsMainPage extends HookConsumerWidget {
                               color: Theme.of(context)
                                   .colorScheme
                                   .onPrimary
-                                  .withOpacity(0.3),
+                                  .withValues(alpha: 0.3),
                               spreadRadius: 6,
                               blurRadius: 10,
                               offset: const Offset(0, 2),
@@ -89,7 +89,7 @@ class SettingsMainPage extends HookConsumerWidget {
                                     color: Theme.of(context)
                                         .colorScheme
                                         .primary
-                                        .withOpacity(0.5),
+                                        .withValues(alpha: 0.5),
                                     spreadRadius: 5,
                                     blurRadius: 10,
                                     offset: const Offset(-2, -3),
