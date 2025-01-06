@@ -310,12 +310,7 @@ class DetailPage extends HookConsumerWidget {
                               content: 'La séance '
                                   '${session.name}'
                                   ' commence dans 10 minutes',
-                              context: session.id,
-                              isVisible: true,
                               title: '🎬 Cinéma',
-                              deliveryDateTime: session.start.subtract(
-                                const Duration(minutes: 10),
-                              ),
                             ),
                           );
                           displayToast(
