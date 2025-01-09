@@ -60,7 +60,7 @@ class PhMainPage extends HookConsumerWidget {
                   value: lastPhPdf,
                   builder: (context, value) => Expanded(
                     child: PdfView(
-                      pageSnapping: kIsWeb ? false : true,
+                      pageSnapping: !kIsWeb,
                       controller: PdfController(
                         document: PdfDocument.openData(value),
                       ),
