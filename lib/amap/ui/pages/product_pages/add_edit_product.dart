@@ -16,6 +16,7 @@ import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
 
 class AddEditProduct extends HookConsumerWidget {
   const AddEditProduct({super.key});
@@ -38,6 +39,7 @@ class AddEditProduct extends HookConsumerWidget {
     final categoryNotifier =
         ref.watch(selectedCategoryProvider(beginState).notifier);
     final newCategory = useTextEditingController(text: "");
+    final isDarkTheme = ref.watch(themeProvider);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -57,7 +59,7 @@ class AddEditProduct extends HookConsumerWidget {
                   isEdit
                       ? AMAPTextConstants.editProduct
                       : AMAPTextConstants.addProduct,
-                  color: AMAPColorConstants.green2,
+                  color: AMAPColors(isDarkTheme).secondaryFixedGreen,
                 ),
                 const SizedBox(height: 40),
                 Column(
@@ -66,7 +68,7 @@ class AddEditProduct extends HookConsumerWidget {
                       child: TextEntry(
                         label: AMAPTextConstants.name,
                         controller: nameController,
-                        color: AMAPColorConstants.greenGradient2,
+                        color: AMAPColors(isDarkTheme).greenGradientSecondary,
                         enabledColor: AMAPColorConstants.enabled,
                       ),
                     ),
@@ -75,35 +77,36 @@ class AddEditProduct extends HookConsumerWidget {
                       child: TextEntry(
                         label: AMAPTextConstants.price,
                         isDouble: true,
-                        color: AMAPColorConstants.greenGradient2,
+                        color: AMAPColors(isDarkTheme).greenGradientSecondary,
                         enabledColor: AMAPColorConstants.enabled,
                         keyboardType: TextInputType.number,
                         controller: priceController,
                       ),
                     ),
                     const SizedBox(height: 30),
-                    const AlignLeftText(
+                    AlignLeftText(
                       AMAPTextConstants.category,
                       fontSize: 20,
-                      color: AMAPColorConstants.greenGradient2,
+                      color: AMAPColors(isDarkTheme).greenGradientSecondary,
                     ),
                     const SizedBox(height: 10),
                     Center(
                       child: DropdownButtonFormField<String>(
                         value: categoryController,
-                        decoration: const InputDecoration(
-                          enabledBorder: UnderlineInputBorder(
+                        decoration: InputDecoration(
+                          enabledBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: AMAPColorConstants.enabled,
                             ),
                           ),
-                          errorBorder: UnderlineInputBorder(
+                          errorBorder: const UnderlineInputBorder(
                             borderSide:
                                 BorderSide(color: AMAPColorConstants.red),
                           ),
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: AMAPColorConstants.greenGradient2,
+                              color: AMAPColors(isDarkTheme)
+                                  .greenGradientSecondary,
                             ),
                           ),
                         ),
@@ -141,7 +144,7 @@ class AddEditProduct extends HookConsumerWidget {
                               ),
                             );
                           },
-                          color: AMAPColorConstants.greenGradient2,
+                          color: AMAPColors(isDarkTheme).greenGradientSecondary,
                           enabledColor: AMAPColorConstants.enabled,
                           controller: newCategory,
                         ),
@@ -149,11 +152,11 @@ class AddEditProduct extends HookConsumerWidget {
                     ],
                     const SizedBox(height: 40),
                     WaitingButton(
-                      waitingColor: AMAPColorConstants.background,
+                      waitingColor: AMAPColors(isDarkTheme).background,
                       builder: (child) => AddEditButtonLayout(
-                        colors: const [
-                          AMAPColorConstants.greenGradient1,
-                          AMAPColorConstants.greenGradient2,
+                        colors: [
+                          AMAPColors(isDarkTheme).greenGradientPrimary,
+                          AMAPColors(isDarkTheme).greenGradientSecondary,
                         ],
                         child: child,
                       ),
@@ -222,7 +225,7 @@ class AddEditProduct extends HookConsumerWidget {
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
-                          color: AMAPColorConstants.background,
+                          color: AMAPColors(isDarkTheme).background,
                         ),
                       ),
                     ),

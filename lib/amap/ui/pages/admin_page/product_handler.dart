@@ -15,6 +15,7 @@ import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
 
 class ProductHandler extends HookConsumerWidget {
   const ProductHandler({super.key});
@@ -29,6 +30,7 @@ class ProductHandler extends HookConsumerWidget {
         .expand((element) => element)
         .toList();
     final productsNotifier = ref.read(productListProvider.notifier);
+    final isDarkTheme = ref.watch(themeProvider);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -36,10 +38,10 @@ class ProductHandler extends HookConsumerWidget {
 
     return Column(
       children: [
-        const AlignLeftText(
-          padding: EdgeInsets.symmetric(horizontal: 30),
+        AlignLeftText(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
           AMAPTextConstants.products,
-          color: AMAPColorConstants.textDark,
+          color: AMAPColors(isDarkTheme).textOnPrimary,
         ),
         const SizedBox(height: 10),
         HorizontalListView(
@@ -58,15 +60,17 @@ class ProductHandler extends HookConsumerWidget {
               child: CardLayout(
                 height: 155,
                 width: 100,
-                colors: const [
-                  AMAPColorConstants.lightGradient1,
-                  AMAPColorConstants.lightGradient2,
+                colors: [
+                  AMAPColors(isDarkTheme).lightGradientPrimary,
+                  AMAPColors(isDarkTheme).lightGradientSecondary,
                 ],
-                shadowColor: AMAPColorConstants.textDark.withValues(alpha: 0.3),
-                child: const Center(
+                shadowColor: AMAPColors(isDarkTheme)
+                    .textOnPrimary
+                    .withValues(alpha: 0.3),
+                child: Center(
                   child: HeroIcon(
                     HeroIcons.plus,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onSecondary,
                     size: 50,
                   ),
                 ),

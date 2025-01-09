@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 class CardLayout extends StatelessWidget {
   final Widget child;
   final double? width, height;
-  final Color color;
+  final Color? color;
   final List<Color>? colors;
-  final Color shadowColor;
+  final Color? shadowColor;
   final Color? borderColor;
   final String? id;
   final EdgeInsetsGeometry padding, margin;
@@ -17,8 +17,8 @@ class CardLayout extends StatelessWidget {
     this.width,
     this.height,
     this.colors,
-    this.color = Colors.white,
-    this.shadowColor = const Color(0x80EEEEEE),
+    this.color,
+    this.shadowColor,
     this.borderColor,
     this.padding = const EdgeInsets.all(12.0),
     this.margin = const EdgeInsets.symmetric(horizontal: 15.0),
@@ -28,7 +28,8 @@ class CardLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final useColors = colors != null && colors!.length > 1;
-    final useShadow = !useColors || (useColors && colors!.last == Colors.white);
+    final useShadow = !useColors ||
+        (useColors && colors!.last == Theme.of(context).colorScheme.primary);
     return Hero(
       tag: id ?? UniqueKey(),
       child: Container(
@@ -45,15 +46,17 @@ class CardLayout extends StatelessWidget {
                   radius: 1.3,
                 )
               : null,
-          color: useColors ? null : color,
+          color:
+              useColors ? null : color ?? Theme.of(context).colorScheme.primary,
           border: borderColor != null
               ? Border.all(color: borderColor!, width: 2)
               : null,
           boxShadow: [
             BoxShadow(
-              color: (useShadow || !useColors)
-                  ? shadowColor
-                  : colors!.last.withValues(alpha: 0.3),
+              color: (useShadow
+                      ? shadowColor
+                      : colors!.last.withValues(alpha: 0.3)) ??
+                  Theme.of(context).shadowColor,
               spreadRadius: 5,
               blurRadius: 10,
               offset: const Offset(3, 3),

@@ -14,6 +14,14 @@ class PasswordStrength extends HookConsumerWidget {
   final Color color3 = const Color(0xff3a5a81);
   final Color color4 = const Color(0xff1791b1);
 
+/* I'll keep that here in case
+  final Color color5 = const Color(0xffff0000);
+  final Color color6 = const Color(0xffbb4488);
+  final Color color7 = const Color(0xff8888ff);
+  final Color color8 = const Color(0xff44bb88);
+  final Color color9 = const Color(0xff00ff00);
+*/
+
   const PasswordStrength({
     super.key,
     required this.newPassword,

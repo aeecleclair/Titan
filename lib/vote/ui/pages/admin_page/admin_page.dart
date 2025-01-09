@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
@@ -304,9 +302,9 @@ class AdminPage extends HookConsumerWidget {
                           builder: (child) => CardLayout(
                             padding: const EdgeInsets.only(top: 10, bottom: 12),
                             width: double.infinity,
-                            colors: const [
-                              ColorConstants.gradient1,
-                              ColorConstants.gradient2,
+                            colors: [
+                              Theme.of(context).colorScheme.primaryContainer,
+                              Theme.of(context).colorScheme.primaryFixed,
                             ],
                             child: child,
                           ),
@@ -405,10 +403,7 @@ class AdminPage extends HookConsumerWidget {
                                             bottom: 12,
                                           ),
                                           margin: const EdgeInsets.all(0),
-                                          colors: const [
-                                            AMAPColorConstants.redGradient1,
-                                            AMAPColorConstants.redGradient2,
-                                          ],
+                                          color: Colors.red,
                                           borderColor: Colors.white,
                                           child: child,
                                         ),
@@ -481,10 +476,7 @@ class AdminPage extends HookConsumerWidget {
                                             bottom: 12,
                                           ),
                                           margin: const EdgeInsets.all(0),
-                                          colors: const [
-                                            AMAPColorConstants.redGradient1,
-                                            AMAPColorConstants.redGradient2,
-                                          ],
+                                          color: Colors.red,
                                           borderColor: Colors.white,
                                           child: child,
                                         ),

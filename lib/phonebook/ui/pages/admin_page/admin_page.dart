@@ -13,7 +13,6 @@ import 'package:myecl/phonebook/ui/components/kinds_bar.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/association_research_bar.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/editable_association_card.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
@@ -76,13 +75,13 @@ class AdminPage extends HookConsumerWidget {
                         width: double.infinity,
                         height: 100,
                         color: isPhonebookAdmin
-                            ? Colors.white
-                            : ColorConstants.deactivated2,
+                            ? Theme.of(context).colorScheme.surface
+                            : Theme.of(context).colorScheme.tertiary,
                         child: Center(
                           child: HeroIcon(
                             HeroIcons.plus,
                             size: 40,
-                            color: Colors.grey.shade500,
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                         ),
                       ),

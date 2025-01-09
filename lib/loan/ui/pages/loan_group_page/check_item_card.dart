@@ -19,8 +19,12 @@ class CheckItemCard extends StatelessWidget {
       id: item.id,
       width: 140,
       height: 130,
-      borderColor: isSelected ? Colors.black : Colors.transparent,
-      shadowColor: (isSelected ? Colors.grey.shade400 : Colors.grey.shade200)
+      borderColor: isSelected
+          ? Theme.of(context).colorScheme.onPrimary
+          : Colors.transparent,
+      shadowColor: (isSelected
+              ? Theme.of(context).shadowColor
+              : Theme.of(context).colorScheme.secondaryFixed)
           .withValues(alpha: 0.5),
       padding: const EdgeInsets.symmetric(horizontal: 17.0),
       child: Column(
@@ -31,10 +35,10 @@ class CheckItemCard extends StatelessWidget {
           AutoSizeText(
             item.name,
             maxLines: 1,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Colors.black,
+              color: Theme.of(context).colorScheme.onPrimary,
             ),
           ),
           const SizedBox(height: 5),
@@ -46,18 +50,18 @@ class CheckItemCard extends StatelessWidget {
               fontSize: 13,
               fontWeight: FontWeight.bold,
               color: item.loanedQuantity < item.totalQuantity
-                  ? Colors.grey.shade400
-                  : LoanColorConstants.redGradient2,
+                  ? Theme.of(context).colorScheme.tertiary
+                  : Theme.of(context).colorScheme.onError,
             ),
           ),
           const SizedBox(height: 5),
           AutoSizeText(
             '${item.caution.toStringAsFixed(2)} €',
             maxLines: 1,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Colors.black,
+              color: Theme.of(context).colorScheme.onPrimary,
             ),
           ),
           const SizedBox(height: 5),
@@ -67,7 +71,7 @@ class CheckItemCard extends StatelessWidget {
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.bold,
-              color: Colors.grey.shade400,
+              color: Theme.of(context).colorScheme.tertiary,
             ),
           ),
           const SizedBox(height: 10),

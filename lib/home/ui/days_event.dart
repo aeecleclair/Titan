@@ -5,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/home/router.dart';
-import 'package:myecl/home/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
@@ -29,7 +28,7 @@ class DaysEvent extends HookConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
       child: Column(
         children: [
-          AlignLeftText(day, color: Colors.grey),
+          AlignLeftText(day, color: Theme.of(context).colorScheme.tertiary),
           const SizedBox(height: 10),
           ...events.map((event) {
             final start = DateTime(
@@ -46,8 +45,9 @@ class DaysEvent extends HookConsumerWidget {
               event.end.hour,
               event.end.minute,
             );
-            final textColor =
-                start.compareTo(now) <= 0 ? Colors.white : Colors.black;
+            final textColor = start.compareTo(now) <= 0
+                ? Theme.of(context).colorScheme.onSecondary
+                : Theme.of(context).colorScheme.onPrimary;
             return CardLayout(
               id: event.id,
               margin: const EdgeInsets.all(10),
@@ -55,17 +55,17 @@ class DaysEvent extends HookConsumerWidget {
               width: double.infinity,
               colors: end.compareTo(now) < 0
                   ? [
-                      Colors.grey.shade700,
-                      Colors.grey.shade800,
+                      Theme.of(context).colorScheme.tertiary,
+                      Theme.of(context).colorScheme.secondaryContainer,
                     ]
                   : start.compareTo(now) <= 0
                       ? [
-                          HomeColorConstants.gradient1,
-                          HomeColorConstants.gradient2,
+                          Theme.of(context).colorScheme.primaryContainer,
+                          Theme.of(context).colorScheme.primaryFixed,
                         ]
                       : [
-                          Colors.white,
-                          Colors.white,
+                          Theme.of(context).colorScheme.primary,
+                          Theme.of(context).colorScheme.secondaryFixed,
                         ],
               padding:
                   const EdgeInsets.symmetric(horizontal: 15.0, vertical: 12),

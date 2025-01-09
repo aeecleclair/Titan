@@ -5,6 +5,8 @@ import 'package:myecl/flappybird/providers/score_list_provider.dart';
 import 'package:myecl/flappybird/providers/user_score_provider.dart';
 import 'package:myecl/flappybird/ui/flappybird_template.dart';
 import 'package:myecl/flappybird/ui/pages/leaderboard_page/leaderboard_item.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
+import 'package:myecl/flappybird/tools/constants.dart';
 
 class LeaderBoardPage extends HookConsumerWidget {
   const LeaderBoardPage({super.key});
@@ -13,6 +15,7 @@ class LeaderBoardPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final leaderBoard = ref.watch(scoreListProvider);
     final bestUserScore = ref.watch(userScoreProvider);
+    final isDarkTheme = ref.watch(themeProvider);
     return FlappyBirdTemplate(
       child: Column(
         children: [
@@ -21,7 +24,7 @@ class LeaderBoardPage extends HookConsumerWidget {
             child: Container(
               width: double.infinity,
               height: double.infinity,
-              color: Colors.blue,
+              color: FlappyBirdColors(isDarkTheme).sky,
               padding: const EdgeInsets.only(top: 90, left: 30, right: 30),
               child: leaderBoard.when(
                 data: (scoreList) => ListView.builder(
@@ -35,9 +38,10 @@ class LeaderBoardPage extends HookConsumerWidget {
                           "LeaderBoard",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.silkscreen(
-                            textStyle: const TextStyle(
+                            textStyle: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
+                              color: FlappyBirdColors(isDarkTheme).text,
                             ),
                           ),
                         ),
@@ -54,7 +58,7 @@ class LeaderBoardPage extends HookConsumerWidget {
           ),
           Expanded(
             child: Container(
-              color: Colors.brown,
+              color: FlappyBirdColors(isDarkTheme).land,
               child: Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.symmetric(horizontal: 30),

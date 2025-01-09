@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class AddEditButtonLayout extends StatelessWidget {
   final Widget child;
-  final Color color;
+  final Color? color;
   final List<Color>? colors;
   const AddEditButtonLayout({
     super.key,
     required this.child,
-    this.color = Colors.black,
+    this.color,
     this.colors,
   });
 
@@ -27,10 +27,11 @@ class AddEditButtonLayout extends StatelessWidget {
                 radius: 1.3,
               )
             : null,
-        color: useColors ? null : color,
+        color:
+            useColors ? null : color ?? Theme.of(context).colorScheme.secondary,
         boxShadow: [
           BoxShadow(
-            color: (useColors ? colors!.last : color).withValues(alpha: 0.3),
+            color: Theme.of(context).shadowColor,
             spreadRadius: 5,
             blurRadius: 10,
             offset: const Offset(3, 3), // changes position of shadow

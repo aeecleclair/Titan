@@ -7,6 +7,7 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/main_page/delivery_ui.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
 
 class DeliverySection extends HookConsumerWidget {
   final bool showSelected;
@@ -27,12 +28,15 @@ class DeliverySection extends HookConsumerWidget {
           .toList(),
       orElse: () => [],
     )..sort((a, b) => a.deliveryDate.compareTo(b.deliveryDate));
+    final isDarkTheme = ref.watch(themeProvider);
     return Column(
       children: [
         AlignLeftText(
           AMAPTextConstants.deliveries,
           padding: const EdgeInsets.symmetric(horizontal: 30),
-          color: showSelected ? Colors.white : AMAPColorConstants.textDark,
+          color: showSelected
+              ? Theme.of(context).colorScheme.onSecondary
+              : AMAPColors(isDarkTheme).textOnPrimary,
         ),
         AsyncChild(
           value: deliveries,
@@ -66,7 +70,7 @@ class DeliverySection extends HookConsumerWidget {
               ),
             );
           },
-          loaderColor: AMAPColorConstants.greenGradient2,
+          loaderColor: AMAPColors(isDarkTheme).greenGradientSecondary,
         ),
       ],
     );

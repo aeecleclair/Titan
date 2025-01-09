@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 
+// This component seems to be used nowhere...
+
 class TextInputDialog extends HookConsumerWidget {
   const TextInputDialog({
     super.key,
@@ -24,9 +26,12 @@ class TextInputDialog extends HookConsumerWidget {
     return AlertDialog(
       title: Center(
         child: Container(
-          decoration: const BoxDecoration(
-            border: Border(bottom: BorderSide(color: Colors.black)),
-            color: Colors.white,
+          decoration: BoxDecoration(
+            border: Border(
+              bottom:
+                  BorderSide(color: Theme.of(context).colorScheme.onSurface),
+            ),
+            color: Theme.of(context).colorScheme.surface,
           ),
           child: Text(title, style: const TextStyle(fontSize: 20)),
         ),
