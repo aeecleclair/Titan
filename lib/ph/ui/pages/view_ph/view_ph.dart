@@ -19,7 +19,7 @@ class ViewPhPage extends HookConsumerWidget {
       value: phPdf,
       builder: (builder, value) => PhTemplate(
         child: PdfView(
-          pageSnapping: false,
+          pageSnapping: kIsWeb ? false : true,
           scrollDirection: kIsWeb ? Axis.vertical : Axis.horizontal,
           controller: PdfController(
             document: PdfDocument.openData(value),
