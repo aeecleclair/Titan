@@ -14,10 +14,6 @@ class ScoreListNotifier extends ListNotifier<CMMScore> {
   Future<AsyncValue<List<CMMScore>>> getLeaderboard() async {
     return await loadList(_scoreRepository.getLeaderboard);
   }
-
-  Future<bool> createScore(CMMScore score) async {
-    return await add(_scoreRepository.createCMMScore, score);
-  }
 }
 
 final scoreListProvider =
