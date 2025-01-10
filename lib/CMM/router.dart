@@ -8,7 +8,7 @@ import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/CMM/ui/main_page/main_page.dart' deferred as main_page;
 
 class CMMRouter {
-  final ProviderRef ref;
+  final Ref ref;
   static const String root = '/CMM';
   static const String add = '/add';
   static final Module module = Module(
