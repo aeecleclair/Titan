@@ -10,9 +10,9 @@ class SellerHistoryNotifier extends ListNotifier<History> {
   SellerHistoryNotifier({required this.storesRepository})
       : super(const AsyncValue.loading());
 
-  Future<AsyncValue<List<History>>> getHistory(String storeId) async {
-    return await loadList(() => storesRepository.getStoreHistory(storeId));
-  }
+  // Future<AsyncValue<List<History>>> getHistory(String storeId) async {
+  //   return await loadList(() => storesRepository.getStoreHistory(storeId));
+  // }
 }
 
 final sellerHistoryProvider =
@@ -20,9 +20,9 @@ final sellerHistoryProvider =
         (ref) {
   final storesRepository = ref.watch(storesRepositoryProvider);
   final selectedStore = ref.watch(selectedStoreProvider);
-  if (selectedStore.id != Store.empty().id) {
-    return SellerHistoryNotifier(storesRepository: storesRepository)
-      ..getHistory(selectedStore.id);
-  }
+  // if (selectedStore.id != Store.empty().id) {
+  //   return SellerHistoryNotifier(storesRepository: storesRepository)
+  //     ..getHistory(selectedStore.id);
+  // }
   return SellerHistoryNotifier(storesRepository: storesRepository);
 });
