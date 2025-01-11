@@ -11,9 +11,83 @@ class CMMRepository extends Repository {
   // ignore: overridden_fields
   final ext = "cmm/";
 
-  Future<List<CMM>> getCMM() async {
+  Future<List<CMM>> getCMM(int page, int pagesize) async {
     //return (await getList(suffix: '')).map((e) => CMM.fromJson(e)).toList();
+    if (page == 0) {
+      return [
+        CMM(
+          id: '1',
+          date: DateTime.now(),
+          user: SimpleUser(
+            name: "Ñool",
+            firstname: "Ñool",
+            nickname: "Ñool",
+            id: "A",
+            accountType: AccountType(type: "Student"),
+          ),
+          path: "assets/images/cmm.jpg",
+          vote: 1,
+          score: 300,
+        ),
+        CMM(
+          id: '2',
+          date: DateTime.now(),
+          user: SimpleUser(
+            name: "Ñool",
+            firstname: "Ñool",
+            nickname: "Ñool",
+            id: "A",
+            accountType: AccountType(type: "Student"),
+          ),
+          path: "assets/images/cmm2.jpg",
+          vote: -1,
+          score: 439,
+        ),
+        CMM(
+          id: '2',
+          date: DateTime.now(),
+          user: SimpleUser(
+            name: "Ñool",
+            firstname: "Ñool",
+            nickname: "Ñool",
+            id: "A",
+            accountType: AccountType(type: "Student"),
+          ),
+          path: "assets/images/cmm2.jpg",
+          vote: -1,
+          score: 439,
+        ),
+        CMM(
+          id: '2',
+          date: DateTime.now(),
+          user: SimpleUser(
+            name: "Ñool",
+            firstname: "Ñool",
+            nickname: "Ñool",
+            id: "A",
+            accountType: AccountType(type: "Student"),
+          ),
+          path: "assets/images/cmm2.jpg",
+          vote: -1,
+          score: 439,
+        ),
+      ];
+    }
     return [
+      CMM(
+        id: '2',
+        date: DateTime.now(),
+        user: SimpleUser(
+          name: "Ñool",
+          firstname: "Ñool",
+          nickname: "Ñool",
+          id: "A",
+          accountType: AccountType(type: "Student"),
+        ),
+        path: "assets/images/cmm2.jpg",
+        vote: -1,
+        score: 439,
+      ),
       CMM(
         id: '1',
         date: DateTime.now(),
@@ -27,6 +101,20 @@ class CMMRepository extends Repository {
         path: "assets/images/cmm.jpg",
         vote: 1,
         score: 300,
+      ),
+      CMM(
+        id: '2',
+        date: DateTime.now(),
+        user: SimpleUser(
+          name: "Ñool",
+          firstname: "Ñool",
+          nickname: "Ñool",
+          id: "A",
+          accountType: AccountType(type: "Student"),
+        ),
+        path: "assets/images/cmm2.jpg",
+        vote: -1,
+        score: 439,
       ),
       CMM(
         id: '2',

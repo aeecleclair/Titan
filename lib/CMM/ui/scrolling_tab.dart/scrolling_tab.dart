@@ -7,13 +7,9 @@ class ScrollingTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          child: CMMList(),
-        ),
-      ),
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: CMMList(),
     );
   }
 }

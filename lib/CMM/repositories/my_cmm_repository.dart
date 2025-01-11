@@ -14,7 +14,7 @@ class MyCMMRepository extends LogoRepository {
   // ignore: overridden_fields
   final ext = "cmm/";
 
-  Future<List<CMM>> getMyCMM() async {
+  Future<List<CMM>> getMyCMM(int page, int pagesize) async {
     //return (await getList(suffix: '')).map((e) => CMM.fromJson(e)).toList();
     return [
       CMM(
