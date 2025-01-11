@@ -1,34 +1,66 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/CMM/providers/my_cmm_list_providers.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:myecl/CMM/class/cmm.dart';
+import 'package:myecl/CMM/repositories/my_cmm_repository.dart';
 import 'package:myecl/CMM/ui/components/cmm_card.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
 
-class MyCMMList extends HookConsumerWidget {
-  const MyCMMList({
-    super.key,
-  });
+class MyCMMList extends StatefulWidget {
+  const MyCMMList({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final myCMMList = ref.watch(myCMMListProvider);
+  MyCMMListState createState() => MyCMMListState();
+}
 
-    return AsyncChild(
-      value: myCMMList,
-      builder: (context, myCMMList) {
-        myCMMList.sort((a, b) => b.date.compareTo(a.date));
-        return Column(
-          children: myCMMList.map((cmm) {
-            return CMMCard(
-              string: cmm.path,
-              user: cmm.user,
-              vote: cmm.vote,
-              score: cmm.score,
-            );
-          }).toList(),
-        );
-      },
-    );
+class MyCMMListState extends State<MyCMMList> {
+  static const _pageSize = 10;
+
+  final PagingController<int, CMM> _pagingController =
+      PagingController(firstPageKey: 0);
+
+  @override
+  void initState() {
+    super.initState();
+    _pagingController.addPageRequestListener((pageKey) {
+      _fetchPage(pageKey);
+    });
+  }
+
+  final myCMMRepo = MyCMMRepository();
+  Future<void> _fetchPage(int pageKey) async {
+    try {
+      final newItems = await myCMMRepo.getMyCMM(pageKey, _pageSize);
+      final isLastPage = newItems.length < _pageSize;
+      if (isLastPage) {
+        _pagingController.appendLastPage(newItems);
+      } else {
+        final nextPageKey = (pageKey + newItems.length).toInt();
+        _pagingController.appendPage(newItems, nextPageKey);
+      }
+    } catch (error) {
+      _pagingController.error = error;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) =>
+      // Don't worry about displaying progress or error indicators on screen; the
+      // package takes care of that. If you want to customize them, use the
+      // [PagedChildBuilderDelegate] properties.
+      PagedListView<int, CMM>(
+        pagingController: _pagingController,
+        builderDelegate: PagedChildBuilderDelegate<CMM>(
+          itemBuilder: (context, cmm, index) => CMMCard(
+            string: cmm.path,
+            user: cmm.user,
+            vote: cmm.vote,
+            score: cmm.score,
+          ),
+        ),
+      );
+
+  @override
+  void dispose() {
+    _pagingController.dispose();
+    super.dispose();
   }
 }

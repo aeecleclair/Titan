@@ -13,9 +13,7 @@ class MyCMMTab extends HookWidget {
     return Column(
       children: [
         const Expanded(
-          child: SingleChildScrollView(
-            child: MyCMMList(),
-          ),
+          child: MyCMMList(),
         ),
         GestureDetector(
           onTap: () {
