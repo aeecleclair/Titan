@@ -1,136 +1,28 @@
+import 'dart:typed_data';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/CMM/class/cmm.dart';
 import 'package:myecl/CMM/tools/functions.dart';
-import 'package:myecl/admin/class/account_type.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/tools/repository/logo_repository.dart';
 
-class CMMRepository extends Repository {
+class CMMRepository extends LogoRepository {
   @override
   // ignore: overridden_fields
   final ext = "cmm/";
 
-  Future<List<CMM>> getCMM(int page, int pagesize) async {
-    //return (await getList(suffix: '')).map((e) => CMM.fromJson(e)).toList();
-    if (page == 0) {
-      return [
-        CMM(
-          id: '1',
-          date: DateTime.now(),
-          user: SimpleUser(
-            name: "Ñool",
-            firstname: "Ñool",
-            nickname: "Ñool",
-            id: "A",
-            accountType: AccountType(type: "Student"),
-          ),
-          path: "assets/images/cmm.jpg",
-          vote: 1,
-          score: 300,
-        ),
-        CMM(
-          id: '2',
-          date: DateTime.now(),
-          user: SimpleUser(
-            name: "Ñool",
-            firstname: "Ñool",
-            nickname: "Ñool",
-            id: "A",
-            accountType: AccountType(type: "Student"),
-          ),
-          path: "assets/images/cmm2.jpg",
-          vote: -1,
-          score: 439,
-        ),
-        CMM(
-          id: '2',
-          date: DateTime.now(),
-          user: SimpleUser(
-            name: "Ñool",
-            firstname: "Ñool",
-            nickname: "Ñool",
-            id: "A",
-            accountType: AccountType(type: "Student"),
-          ),
-          path: "assets/images/cmm2.jpg",
-          vote: -1,
-          score: 439,
-        ),
-        CMM(
-          id: '2',
-          date: DateTime.now(),
-          user: SimpleUser(
-            name: "Ñool",
-            firstname: "Ñool",
-            nickname: "Ñool",
-            id: "A",
-            accountType: AccountType(type: "Student"),
-          ),
-          path: "assets/images/cmm2.jpg",
-          vote: -1,
-          score: 439,
-        ),
-      ];
-    }
-    return [
-      CMM(
-        id: '2',
-        date: DateTime.now(),
-        user: SimpleUser(
-          name: "Ñool",
-          firstname: "Ñool",
-          nickname: "Ñool",
-          id: "A",
-          accountType: AccountType(type: "Student"),
-        ),
-        path: "assets/images/cmm2.jpg",
-        vote: -1,
-        score: 439,
-      ),
-      CMM(
-        id: '1',
-        date: DateTime.now(),
-        user: SimpleUser(
-          name: "Ñool",
-          firstname: "Ñool",
-          nickname: "Ñool",
-          id: "A",
-          accountType: AccountType(type: "Student"),
-        ),
-        path: "assets/images/cmm.jpg",
-        vote: 1,
-        score: 300,
-      ),
-      CMM(
-        id: '2',
-        date: DateTime.now(),
-        user: SimpleUser(
-          name: "Ñool",
-          firstname: "Ñool",
-          nickname: "Ñool",
-          id: "A",
-          accountType: AccountType(type: "Student"),
-        ),
-        path: "assets/images/cmm2.jpg",
-        vote: -1,
-        score: 439,
-      ),
-      CMM(
-        id: '2',
-        date: DateTime.now(),
-        user: SimpleUser(
-          name: "Ñool",
-          firstname: "Ñool",
-          nickname: "Ñool",
-          id: "A",
-          accountType: AccountType(type: "Student"),
-        ),
-        path: "assets/images/cmm2.jpg",
-        vote: -1,
-        score: 439,
-      ),
-    ];
+  Future<List<CMM>> getCMM(int page) async {
+    return (await getList(suffix: 'memes/?sort_by=best&n_page=1'))
+        .map((e) => CMM.fromJson(e))
+        .toList();
+  }
+
+  Future<Uint8List> getCMMImage(String id) async {
+    final uint8List = await getLogo("", suffix: "memes/$id/img");
+    // if (uint8List.isEmpty) {
+    //   return Image.asset(getTitanLogo());
+    // }
+    return uint8List;
   }
 
   Future<bool> deleteCMM(String id) async {

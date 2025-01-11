@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/CMM/providers/is_cmm_admin_provider.dart';
@@ -7,16 +9,16 @@ import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/user/class/list_users.dart';
 
 class CMMCard extends ConsumerWidget {
-  final String string;
+  final Uint8List string;
   final SimpleUser user;
-  final int vote;
-  final int score;
+  final bool? myVote;
+  final int voteScore;
   const CMMCard({
     super.key,
     required this.string,
     required this.user,
-    required this.vote,
-    required this.score,
+    required this.myVote,
+    required this.voteScore,
   });
 
   @override
@@ -69,7 +71,7 @@ class CMMCard extends ConsumerWidget {
                   ),
                 ),
                 Text(
-                  user.nickname != ""
+                  user.nickname != null
                       ? user.nickname!
                       : "${user.firstname} ${user.name}",
                   style: const TextStyle(fontWeight: FontWeight.bold),
@@ -87,7 +89,7 @@ class CMMCard extends ConsumerWidget {
                       maxHeight: MediaQuery.of(context).size.height - 250,
                       maxWidth: double.infinity, // Max width
                     ),
-                    child: Image.asset(
+                    child: Image.memory(
                       string,
                       fit: BoxFit.cover,
                     ),
@@ -107,7 +109,7 @@ class CMMCard extends ConsumerWidget {
                       icon: Icon(
                         Icons.keyboard_double_arrow_up,
                         size: 35,
-                        color: vote > 0
+                        color: myVote != null && myVote!
                             ? Colors.green
                             : Colors.grey, // Ajustez la taille de l'icône
                       ),
@@ -118,7 +120,7 @@ class CMMCard extends ConsumerWidget {
                       ),
                     ),
                     Text(
-                      score.toString(),
+                      voteScore.toString(),
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     IconButton(
@@ -128,7 +130,9 @@ class CMMCard extends ConsumerWidget {
                       icon: Icon(
                         Icons.keyboard_double_arrow_down,
                         size: 35,
-                        color: vote < 0 ? Colors.red : Colors.grey,
+                        color: myVote != null && !myVote!
+                            ? Colors.red
+                            : Colors.grey,
                         // Ajustez la taille de l'icône
                       ),
                       padding: EdgeInsets.zero,

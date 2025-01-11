@@ -49,11 +49,8 @@ class MyCMMListState extends State<MyCMMList> {
       PagedListView<int, CMM>(
         pagingController: _pagingController,
         builderDelegate: PagedChildBuilderDelegate<CMM>(
-          itemBuilder: (context, cmm, index) => CMMCard(
-            string: cmm.path,
-            user: cmm.user,
-            vote: cmm.vote,
-            score: cmm.score,
+          itemBuilder: (context, cmm, index) => ListTile(
+            title: Text(cmm.status),
           ),
         ),
       );
