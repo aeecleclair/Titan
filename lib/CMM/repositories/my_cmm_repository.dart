@@ -1,13 +1,9 @@
 import 'dart:async';
 import 'dart:typed_data';
-
-import 'package:flutter/material.dart';
 import 'package:myecl/tools/repository/logo_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/CMM/class/cmm.dart';
-import 'package:myecl/admin/class/account_type.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/user/class/list_users.dart';
 
 class MyCMMRepository extends LogoRepository {
   @override
@@ -15,42 +11,16 @@ class MyCMMRepository extends LogoRepository {
   final ext = "cmm/";
 
   Future<List<CMM>> getMyCMM(int page, int pagesize) async {
-    //return (await getList(suffix: '')).map((e) => CMM.fromJson(e)).toList();
-    return [
-      CMM(
-        id: '1',
-        date: DateTime.now(),
-        user: SimpleUser(
-          name: "Ñool",
-          firstname: "Ñool",
-          nickname: "Ñool",
-          id: "A",
-          accountType: AccountType(type: "Student"),
-        ),
-        path: "assets/images/cmm.jpg",
-        vote: 1,
-        score: 300,
-      ),
-      CMM(
-        id: '2',
-        date: DateTime.now(),
-        user: SimpleUser(
-          name: "Ñool",
-          firstname: "Ñool",
-          nickname: "Ñool",
-          id: "A",
-          accountType: AccountType(type: "Student"),
-        ),
-        path: "assets/images/cmm2.jpg",
-        vote: -1,
-        score: 439,
-      ),
-    ];
+    return (await getList(suffix: '')).map((e) => CMM.fromJson(e)).toList();
   }
 
-  Future<Image> addCMM(Uint8List bytes) async {
-    final uint8List = await addLogo(bytes, "", suffix: "memes");
-    return Image.memory(uint8List);
+  Future<bool> addCMM(Uint8List bytes) async {
+    try {
+      await addLogo(bytes, "", suffix: "memes");
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   Future<bool> deleteCMM(String id) async {

@@ -4,38 +4,40 @@ import 'package:myecl/user/class/list_users.dart';
 class CMM {
   CMM({
     required this.id,
-    required this.date,
     required this.user,
-    required this.path,
-    required this.score,
-    required this.vote,
+    required this.myVote,
+    required this.voteScore,
+    required this.status,
   });
   late final String id;
-  late final DateTime date;
   late final SimpleUser user;
-  late final String path;
-  late final int score;
-  late final int vote;
+  late final bool? myVote;
+  late final int voteScore;
+  late final String status;
 
   CMM.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    date = processDateFromAPIWithoutHour(json['release_date']);
+    user = SimpleUser.fromJson(json['user']);
+    myVote = json['my_vote'];
+    voteScore = json['vote_score'];
+    status = json['status'];
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['id'] = id;
-    data['release_date'] = processDateToAPIWithoutHour(date);
     return data;
   }
 
   CMM.empty() {
-    id = '';
-    date = DateTime.now();
+    id = "";
+    user = SimpleUser.empty();
+    myVote = null;
+    voteScore = 0;
+    status = "neutral";
   }
 
   @override
   String toString() {
-    return 'CMM{cmmId : $id, date: $date,}';
+    return 'CMM{vote_score: $voteScore, status: $status}';
   }
 }
