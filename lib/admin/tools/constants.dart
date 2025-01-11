@@ -17,7 +17,7 @@ class AdminTextConstants {
   static const String deleteGroup = "Supprimer le groupe ?";
   static const String deletedGroup = "Groupe supprimé";
   static const String deleteSchool = "Supprimer l'école ?";
-  static String deletedSchool = "École supprimée";
+  static const String deletedSchool = "École supprimée";
   static const String deleting = "Suppression";
   static const String deletingError = "Erreur lors de la suppression";
   static const String description = "Description";
@@ -29,6 +29,7 @@ class AdminTextConstants {
   static const String looking = "Recherche";
   static const String members = "Membres";
   static const String modifyModuleVisibility = "Visibilité des modules";
+  static const String myEclPay = "MyEclPay";
   static const String name = "Nom";
   static const String noMoreLoaner = "Aucun prêteur n'est disponible";
   static const String noSchool = "Sans école";
