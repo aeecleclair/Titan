@@ -4,7 +4,7 @@ import 'package:myecl/paiement/class/store.dart';
 import 'package:myecl/paiement/class/structure.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
-class StructureRepository extends Repository {
+class StructuresRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = 'myeclpay/structures';
@@ -25,8 +25,8 @@ class StructureRepository extends Repository {
     return await update(structure.toJson(), structure.id);
   }
 
-  Future<bool> deleteStructure(Structure structure) async {
-    return await delete("/${structure.id}");
+  Future<bool> deleteStructure(String structureId) async {
+    return await delete("/$structureId");
   }
 
   Future<bool> initializeManagerTransfer(
@@ -44,7 +44,7 @@ class StructureRepository extends Repository {
   }
 }
 
-final structureRepositoryProvider = Provider<StructureRepository>((ref) {
+final structuresRepositoryProvider = Provider<StructuresRepository>((ref) {
   final token = ref.watch(tokenProvider);
-  return StructureRepository()..setToken(token);
+  return StructuresRepository()..setToken(token);
 });
