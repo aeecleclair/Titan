@@ -1,16 +1,16 @@
-enum AvailableAssociationMembership { AEECL, USEECL }
+import 'package:myecl/paiement/class/structure.dart';
 
 class Store {
   final String id;
   final String name;
   final String walletId;
-  final AvailableAssociationMembership membership;
+  final Structure structure;
 
   Store({
     required this.id,
     required this.name,
     required this.walletId,
-    required this.membership,
+    required this.structure,
   });
 
   factory Store.fromJson(Map<String, dynamic> json) {
@@ -18,9 +18,7 @@ class Store {
       id: json['id'],
       name: json['name'],
       walletId: json['wallet_id'],
-      membership: json['membership'] == 'aeecl'
-          ? AvailableAssociationMembership.AEECL
-          : AvailableAssociationMembership.USEECL,
+      structure: json['structure'],
     );
   }
 
@@ -29,7 +27,7 @@ class Store {
       'id': id,
       'name': name,
       'wallet_id': walletId,
-      'membership': membership.name,
+      'structure': structure,
     };
   }
 
@@ -37,19 +35,19 @@ class Store {
     String? id,
     String? name,
     String? walletId,
-    AvailableAssociationMembership? membership,
+    Structure? structure,
   }) {
     return Store(
       id: id ?? this.id,
       name: name ?? this.name,
       walletId: walletId ?? this.walletId,
-      membership: membership ?? this.membership,
+      structure: structure ?? this.structure,
     );
   }
 
   @override
   String toString() {
-    return 'Store(id: $id, name: $name, walletId: $walletId, membership: $membership)';
+    return 'Store(id: $id, name: $name, walletId: $walletId, structure: $structure)';
   }
 
   Store.empty()
@@ -57,6 +55,6 @@ class Store {
           id: '',
           name: '',
           walletId: '',
-          membership: AvailableAssociationMembership.AEECL,
+          structure: Structure.empty(),
         );
 }
