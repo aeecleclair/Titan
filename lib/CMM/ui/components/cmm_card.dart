@@ -2,29 +2,73 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/CMM/class/cmm.dart';
+import 'package:myecl/CMM/providers/cmm_list_provider.dart';
 import 'package:myecl/CMM/providers/is_cmm_admin_provider.dart';
 import 'package:myecl/CMM/providers/profile_picture_repository.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/user/class/list_users.dart';
 
-class CMMCard extends ConsumerWidget {
-  final Uint8List string;
-  final SimpleUser user;
-  final bool? myVote;
-  final int voteScore;
+class CMMCard extends ConsumerStatefulWidget {
+  final CMM cmm;
+  final Uint8List image;
   const CMMCard({
     super.key,
-    required this.string,
-    required this.user,
-    required this.myVote,
-    required this.voteScore,
+    required this.cmm,
+    required this.image,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  CMMCardState createState() => CMMCardState();
+}
+
+class CMMCardState extends ConsumerState<CMMCard> {
+  late Color upButtonColor;
+  late Color downButtonColor;
+  late int voteScore;
+  late bool? myVote;
+  @override
+  void initState() {
+    super.initState();
+    upButtonColor = (widget.cmm.myVote != null && widget.cmm.myVote!)
+        ? Colors.green
+        : Colors.grey;
+    downButtonColor = (widget.cmm.myVote != null && !widget.cmm.myVote!)
+        ? Colors.red
+        : Colors.grey;
+    voteScore = widget.cmm.voteScore;
+    myVote = widget.cmm.myVote;
+  }
+
+  void _changeColor(bool up, Color color) {
+    if (up) {
+      setState(() {
+        upButtonColor = color;
+      });
+    } else {
+      setState(() {
+        downButtonColor = color;
+      });
+    }
+  }
+
+  void updateVote(int i) {
+    setState(() {
+      voteScore = voteScore + i;
+    });
+  }
+
+  void updateMyVote(bool b) {
+    setState(() {
+      myVote = b;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final isAdmin = ref.watch(isCMMAdminProvider);
     final profilePicture = ref.watch(profilePictureProvider);
+    final cmmListNotifier = ref.watch(cmmListProvider.notifier);
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(
@@ -71,9 +115,9 @@ class CMMCard extends ConsumerWidget {
                   ),
                 ),
                 Text(
-                  user.nickname != null
-                      ? user.nickname!
-                      : "${user.firstname} ${user.name}",
+                  widget.cmm.user.nickname != null
+                      ? widget.cmm.user.nickname!
+                      : "${widget.cmm.user.firstname} ${widget.cmm.user.name}",
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
@@ -90,7 +134,7 @@ class CMMCard extends ConsumerWidget {
                       maxWidth: double.infinity, // Max width
                     ),
                     child: Image.memory(
-                      string,
+                      widget.image,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -104,15 +148,23 @@ class CMMCard extends ConsumerWidget {
                   children: [
                     IconButton(
                       onPressed: () {
-                        print("pressed");
+                        if (myVote == null) {
+                          cmmListNotifier.addVoteToCMM(widget.cmm, true);
+                          _changeColor(true, Colors.green);
+                          updateVote(1);
+                          updateMyVote(true);
+                        } else if (!myVote!) {
+                          cmmListNotifier.updateVoteToCMM(widget.cmm, true);
+                          _changeColor(true, Colors.green);
+                          _changeColor(false, Colors.grey);
+                          updateVote(2);
+                          updateMyVote(true);
+                        }
                       },
-                      icon: Icon(
-                        Icons.keyboard_double_arrow_up,
-                        size: 35,
-                        color: myVote != null && myVote!
-                            ? Colors.green
-                            : Colors.grey, // Ajustez la taille de l'icône
-                      ),
+                      icon: Icon(Icons.keyboard_double_arrow_up,
+                          size: 35,
+                          color: upButtonColor // Ajustez la taille de l'icône
+                          ),
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(
                         minWidth: 40, // Largeur du bouton
@@ -125,16 +177,23 @@ class CMMCard extends ConsumerWidget {
                     ),
                     IconButton(
                       onPressed: () {
-                        print("pressed");
+                        if (myVote == null) {
+                          cmmListNotifier.addVoteToCMM(widget.cmm, false);
+                          _changeColor(false, Colors.red);
+                          updateVote(-1);
+                          updateMyVote(false);
+                        } else if (myVote!) {
+                          cmmListNotifier.updateVoteToCMM(widget.cmm, false);
+                          _changeColor(true, Colors.grey);
+                          _changeColor(false, Colors.red);
+                          updateVote(-2);
+                          updateMyVote(false);
+                        }
                       },
-                      icon: Icon(
-                        Icons.keyboard_double_arrow_down,
-                        size: 35,
-                        color: myVote != null && !myVote!
-                            ? Colors.red
-                            : Colors.grey,
-                        // Ajustez la taille de l'icône
-                      ),
+                      icon: Icon(Icons.keyboard_double_arrow_down,
+                          size: 35, color: downButtonColor
+                          // Ajustez la taille de l'icône
+                          ),
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(
                         minWidth: 40, // Largeur du bouton
