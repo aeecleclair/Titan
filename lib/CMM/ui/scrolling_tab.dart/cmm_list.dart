@@ -15,10 +15,10 @@ class CMMList extends ConsumerStatefulWidget {
 }
 
 class CMMListState extends ConsumerState<CMMList> {
-  static const _pageSize = 10;
+  static const _pageSize = 5;
 
   final PagingController<int, CMM> _pagingController =
-      PagingController(firstPageKey: 0);
+      PagingController(firstPageKey: 1);
 
   @override
   void initState() {
@@ -29,20 +29,17 @@ class CMMListState extends ConsumerState<CMMList> {
   }
 
   Future<void> _fetchPage(int pageKey) async {
-    print("fetching");
-    final cmmListNotifier = ref.read(cmmListProvider.notifier);
-    print(cmmListNotifier);
+    final cmmListNotifier = ref.watch(cmmListProvider.notifier);
+
     final asyncValue = await cmmListNotifier.getCMM(pageKey);
-    print(asyncValue);
 
     asyncValue.when(
       data: (newItems) {
-        print(newItems);
         final isLastPage = newItems.length < _pageSize;
         if (isLastPage) {
           _pagingController.appendLastPage(newItems);
         } else {
-          final nextPageKey = pageKey + newItems.length;
+          final nextPageKey = pageKey + 1;
           _pagingController.appendPage(newItems, nextPageKey);
         }
       },
@@ -69,10 +66,8 @@ class CMMListState extends ConsumerState<CMMList> {
                 return const Text("Erreur lors du chargement de l'image");
               } else if (snapshot.hasData) {
                 return CMMCard(
-                  string: snapshot.data!,
-                  user: cmm.user,
-                  myVote: cmm.myVote,
-                  voteScore: cmm.voteScore,
+                  cmm: cmm,
+                  image: snapshot.data!,
                 );
               } else {
                 return const Text("Aucune donnée disponible");

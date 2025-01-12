@@ -96,7 +96,5 @@ flutter:
     - assets/images/bird.png
     - assets/images/pipe.png
     - assets/images/logo_flappybird.svg
-    - assets/images/cmm.jpg
-    - assets/images/cmm2.jpg
 
   uses-material-design: true

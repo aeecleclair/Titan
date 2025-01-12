@@ -21,6 +21,18 @@ class CMMListNotifier extends ListNotifier<CMM> {
   Future<Uint8List> getCMMImage(String id) async {
     return await _cmmRepository.getCMMImage(id);
   }
+
+  Future<bool> addVoteToCMM(CMM cmm, bool positive) async {
+    return await _cmmRepository.addVoteToCMM(cmm, positive);
+  }
+
+  Future<bool> updateVoteToCMM(CMM cmm, bool positive) async {
+    return await update(
+      (cmm) => _cmmRepository.updateVoteToCMM(cmm, positive),
+      (cmms, cmm) => cmms..[cmms.indexWhere((b) => b.id == cmm.id)] = cmm,
+      cmm,
+    );
+  }
 }
 
 final cmmListProvider =

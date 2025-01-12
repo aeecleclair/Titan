@@ -9,16 +9,16 @@ import 'package:myecl/tools/repository/logo_repository.dart';
 class CMMRepository extends LogoRepository {
   @override
   // ignore: overridden_fields
-  final ext = "cmm/";
+  final ext = "cmm/memes/";
 
   Future<List<CMM>> getCMM(int page) async {
-    return (await getList(suffix: 'memes/?sort_by=best&n_page=1'))
+    return (await getList(suffix: '?sort_by=best&n_page=$page'))
         .map((e) => CMM.fromJson(e))
         .toList();
   }
 
   Future<Uint8List> getCMMImage(String id) async {
-    final uint8List = await getLogo("", suffix: "memes/$id/img");
+    final uint8List = await getLogo("", suffix: "$id/img");
     // if (uint8List.isEmpty) {
     //   return Image.asset(getTitanLogo());
     // }
@@ -29,8 +29,19 @@ class CMMRepository extends LogoRepository {
     return await delete(id);
   }
 
-  Future<bool> addVoteToCMM(String id, bool positive) async {
-    return await create(toJson(positive), suffix: 'memes/$id/vote');
+  Future<bool> addVoteToCMM(CMM cmm, bool positive) async {
+    return await create(
+      cmm.toJson(),
+      suffix: '${cmm.id}/vote/?positive=$positive',
+    );
+  }
+
+  Future<bool> updateVoteToCMM(CMM cmm, bool positive) async {
+    return await update(
+      cmm.toJson(),
+      cmm.id,
+      suffix: '/vote/?positive=$positive',
+    );
   }
 
   Future<bool> deleteVoteToCMM(String id) async {
