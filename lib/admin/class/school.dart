@@ -1,4 +1,4 @@
-import 'package:myecl/admin/tools/constants.dart';
+import 'package:myecl/admin/tools/function.dart';
 
 class School {
   School({
@@ -11,9 +11,7 @@ class School {
   late final String emailRegex;
 
   School.fromJson(Map<String, dynamic> json) {
-    name = json['name'] == "no_school"
-        ? AdminTextConstants.noSchool
-        : json['name'];
+    name = getSchoolNameFromId(json['id'], json['name']);
     id = json['id'];
     emailRegex = json['email_regex'];
   }

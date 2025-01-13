@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/class/school.dart';
+import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/ui/components/item_card_ui.dart';
 import 'package:myecl/admin/ui/pages/school_page/school_button.dart';
 import 'package:myecl/tools/constants.dart';
@@ -48,8 +49,8 @@ class SchoolUi extends HookConsumerWidget {
               ),
             ),
             const SizedBox(width: 10),
-            if (school.id != "dce19aa2-8863-4c93-861e-fb7be8f610ed" &&
-                school.id != "d9772da7-1142-4002-8b86-b694b431dfed")
+            if (school.id != SchoolIdConstant.noSchool.value &&
+                school.id != SchoolIdConstant.eclSchool.value)
               WaitingButton(
                 onTap: onDelete,
                 builder: (child) => SchoolButton(
