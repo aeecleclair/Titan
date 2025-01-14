@@ -36,4 +36,14 @@ class CacheManager {
     }
     return Uint8List.fromList(List<int>.from(json.decode(bytes)));
   }
+
+  Future<bool> containsKey(String key) async {
+    final storage = await SharedPreferences.getInstance();
+    return storage.containsKey(key);
+  }
+
+  clearCache() async {
+    final storage = await SharedPreferences.getInstance();
+    storage.clear();
+  }
 }
