@@ -36,6 +36,7 @@ class AdminTextConstants {
   static const String noSchool = "Sans école";
   static const String removeGroupMember = "Supprimer le membre du groupe ?";
   static const String schools = "Écoles";
+  static const String structures = "Structures";
   static const String updatedGroup = "Groupe modifié";
   static const String updatingError = "Erreur lors de la modification";
   static const String visibilities = "Visibilités";

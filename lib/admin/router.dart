@@ -16,6 +16,12 @@ import 'package:myecl/admin/ui/pages/add_school_page/add_school_page.dart'
     deferred as add_school_page;
 import 'package:myecl/admin/ui/pages/edit_school_page/edit_school_page.dart'
     deferred as edit_school_page;
+import 'package:myecl/admin/ui/pages/structure_page/structure_page.dart'
+    deferred as structure_page;
+// import 'package:myecl/admin/ui/pages/add_structure_page/add_structure_page.dart'
+//     deferred as add_structure_page;
+// import 'package:myecl/admin/ui/pages/edit_structure_page/edit_structure_page.dart'
+//     deferred as edit_structure_page;
 import 'package:myecl/admin/ui/pages/main_page/main_page.dart'
     deferred as main_page;
 import 'package:myecl/tools/middlewares/admin_middleware.dart';
@@ -33,6 +39,9 @@ class AdminRouter {
   static const String schools = '/schools';
   static const String addSchool = '/add_school';
   static const String editSchool = '/edit_school';
+  static const String structure = '/structure';
+  static const String addStructure = '/add_structure';
+  static const String editStructure = '/edit_structure';
   static const String editModuleVisibility = '/edit_module_visibility';
   AdminRouter(this.ref);
 
@@ -104,6 +113,27 @@ class AdminRouter {
                   DeferredLoadingMiddleware(edit_school_page.loadLibrary),
                 ],
               ),
+            ],
+          ),
+          QRoute(path:  structure, builder: () => structure_page.StructurePage(),
+            middleware: [
+              DeferredLoadingMiddleware(structure_page.loadLibrary),
+            ],
+            children: [
+              // QRoute(
+              //   path: addStructure,
+              //   builder: () => add_structure_page.AddStructurePage(),
+              //   middleware: [
+              //     DeferredLoadingMiddleware(add_structure_page.loadLibrary),
+              //   ],
+              // ),
+              // QRoute(
+              //   path: editStructure,
+              //   builder: () => edit_structure_page.EditStructurePage(),
+              //   middleware: [
+              //     DeferredLoadingMiddleware(edit_structure_page.loadLibrary),
+              //   ],
+              // ),
             ],
           ),
         ],
