@@ -13,8 +13,8 @@ import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class AddAssociationPage extends HookConsumerWidget {
-  const AddAssociationPage({super.key});
+class AddGroupPage extends HookConsumerWidget {
+  const AddGroupPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -37,7 +37,7 @@ class AddAssociationPage extends HookConsumerWidget {
             key: key,
             child: Column(
               children: [
-                const AlignLeftText(AdminTextConstants.addAssociation),
+                const AlignLeftText(AdminTextConstants.addGroup),
                 const SizedBox(height: 30),
                 TextEditing(controller: name, label: AdminTextConstants.name),
                 TextEditing(
@@ -58,7 +58,7 @@ class AddAssociationPage extends HookConsumerWidget {
                         QR.back();
                         displayToastWithContext(
                           TypeMsg.msg,
-                          AdminTextConstants.addedAssociation,
+                          AdminTextConstants.addedGroup,
                         );
                       } else {
                         displayToastWithContext(

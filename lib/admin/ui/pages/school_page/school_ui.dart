@@ -1,43 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/admin/ui/pages/main_page/association_button.dart';
-import 'package:myecl/admin/ui/pages/main_page/card_ui.dart';
+import 'package:myecl/admin/class/school.dart';
+import 'package:myecl/admin/tools/constants.dart';
+import 'package:myecl/admin/ui/components/item_card_ui.dart';
+import 'package:myecl/admin/ui/pages/school_page/school_button.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
-class AssociationUi extends HookConsumerWidget {
-  final SimpleGroup group;
+class SchoolUi extends HookConsumerWidget {
+  final School school;
   final void Function() onEdit;
   final Future Function() onDelete;
-  final bool isLoaner;
-  const AssociationUi({
+  const SchoolUi({
     super.key,
-    required this.group,
+    required this.school,
     required this.onEdit,
     required this.onDelete,
-    required this.isLoaner,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return CardUi(
+    return ItemCardUi(
       children: [
         const SizedBox(width: 10),
-        if (isLoaner)
-          Row(
-            children: [
-              HeroIcon(
-                HeroIcons.buildingLibrary,
-                color: Colors.grey.shade700,
-              ),
-              const SizedBox(width: 15),
-            ],
-          ),
         Expanded(
           child: Text(
-            group.name,
+            school.name,
             style: const TextStyle(
               color: Colors.black,
               fontSize: 20,
@@ -50,7 +39,7 @@ class AssociationUi extends HookConsumerWidget {
           children: [
             GestureDetector(
               onTap: onEdit,
-              child: AssociationButton(
+              child: SchoolButton(
                 gradient1: Colors.grey.shade800,
                 gradient2: Colors.grey.shade900,
                 child: const HeroIcon(
@@ -60,18 +49,20 @@ class AssociationUi extends HookConsumerWidget {
               ),
             ),
             const SizedBox(width: 10),
-            WaitingButton(
-              onTap: onDelete,
-              builder: (child) => AssociationButton(
-                gradient1: ColorConstants.gradient1,
-                gradient2: ColorConstants.gradient2,
-                child: child,
+            if (school.id != SchoolIdConstant.noSchool.value &&
+                school.id != SchoolIdConstant.eclSchool.value)
+              WaitingButton(
+                onTap: onDelete,
+                builder: (child) => SchoolButton(
+                  gradient1: ColorConstants.gradient1,
+                  gradient2: ColorConstants.gradient2,
+                  child: child,
+                ),
+                child: const HeroIcon(
+                  HeroIcons.xMark,
+                  color: Colors.white,
+                ),
               ),
-              child: const HeroIcon(
-                HeroIcons.xMark,
-                color: Colors.white,
-              ),
-            ),
           ],
         ),
       ],

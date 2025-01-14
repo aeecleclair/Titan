@@ -3,6 +3,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/class/account_type.dart';
 import 'package:myecl/admin/class/module_visibility.dart';
+import 'package:myecl/admin/providers/all_account_types_list_provider.dart';
 import 'package:myecl/admin/providers/all_groups_list_provider.dart';
 import 'package:myecl/admin/providers/is_expanded_list_provider.dart';
 import 'package:myecl/admin/providers/module_visibility_list_provider.dart';
@@ -22,6 +23,7 @@ class ModulesExpansionPanel extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final modulesNotifier = ref.watch(moduleVisibilityListProvider.notifier);
     final groups = ref.watch(allGroupList);
+    final accountTypes = ref.watch(allAccountTypes);
     final isExpandedList = ref.watch(isExpandedListProvider);
     final isExpandedListNotifier = ref.watch(isExpandedListProvider.notifier);
     return ExpansionPanelList(
