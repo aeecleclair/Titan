@@ -29,8 +29,7 @@ class StoresRepository extends Repository {
 
   Future<List<History>> getStoreHistory(String id) async {
     return List<History>.from(
-      (await getList(suffix: "/$id/history"))
-          .map((e) => History.fromJson(e)),
+      (await getList(suffix: "/$id/history")).map((e) => History.fromJson(e)),
     );
   }
 }

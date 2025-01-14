@@ -14,8 +14,6 @@ import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
-import 'package:myecl/user/providers/user_provider.dart';
-import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditStorePage extends HookConsumerWidget {
   const AddEditStorePage({super.key});
@@ -28,8 +26,7 @@ class AddEditStorePage extends HookConsumerWidget {
     final key = GlobalKey<FormState>();
     final isEdit = store.id != store_class.Store.empty().id;
     final name = useTextEditingController(text: store.name);
-    final type =
-        useState<Structure>(store.structure);
+    final type = useState<Structure>(store.structure);
 
     final myStructures = <Structure>[];
 

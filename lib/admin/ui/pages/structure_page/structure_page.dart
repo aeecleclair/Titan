@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/providers/structure_id_provider.dart';
+import 'package:myecl/admin/providers/structure_provider.dart';
 import 'package:myecl/admin/router.dart';
 import 'package:myecl/admin/ui/admin.dart';
 import 'package:myecl/admin/ui/components/item_card_ui.dart';
 import 'package:myecl/admin/ui/pages/structure_page/structure_ui.dart';
 import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/paiement/providers/structure_provider.dart';
+import 'package:myecl/paiement/class/structure.dart';
+import 'package:myecl/paiement/providers/structure_list_provider.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
@@ -24,13 +25,12 @@ class StructurePage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final structures = ref.watch(structureListProvider);
     final structuresNotifier = ref.watch(structureListProvider.notifier);
-    final structureIdNotifier = ref.watch(structureIdProvider.notifier);
+    final structureNotifier = ref.watch(structureProvider.notifier);
     ref.watch(userList);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
-
 
     return AdminTemplate(
       child: Refresher(
@@ -67,10 +67,11 @@ class StructurePage extends HookConsumerWidget {
                         children: [
                           GestureDetector(
                             onTap: () {
+                              structureNotifier.setStructure(Structure.empty());
                               QR.to(
                                 AdminRouter.root +
                                     AdminRouter.structures +
-                                    AdminRouter.addStructure,
+                                    AdminRouter.addEditStructure,
                               );
                             },
                             child: ItemCardUi(
@@ -89,11 +90,11 @@ class StructurePage extends HookConsumerWidget {
                             (structure) => StructureUi(
                               group: structure,
                               onEdit: () {
-                                structureIdNotifier.setId(structure.id);
+                                structureNotifier.setStructure(structure);
                                 QR.to(
                                   AdminRouter.root +
-                                      AdminRouter.structures+
-                                      AdminRouter.editStructure,
+                                      AdminRouter.structures +
+                                      AdminRouter.addEditStructure,
                                 );
                               },
                               onDelete: () async {
@@ -106,7 +107,8 @@ class StructurePage extends HookConsumerWidget {
                                           AdminTextConstants.deleteGroup,
                                       onYes: () async {
                                         tokenExpireWrapper(ref, () async {
-                                          final value = await structuresNotifier.deleteStructure(structure);
+                                          final value = await structuresNotifier
+                                              .deleteStructure(structure);
                                           if (value) {
                                             displayToastWithContext(
                                               TypeMsg.msg,

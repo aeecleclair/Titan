@@ -23,9 +23,10 @@ class QrScannerOverlayShape extends ShapeBorder {
       "Border can't be larger than ${min(this.cutOutWidth, this.cutOutHeight) / 2 + borderWidth * 2}",
     );
     assert(
-        (cutOutWidth == null && cutOutHeight == null) ||
-            (cutOutSize == null && cutOutWidth != null && cutOutHeight != null),
-        'Use only cutOutWidth and cutOutHeight or only cutOutSize');
+      (cutOutWidth == null && cutOutHeight == null) ||
+          (cutOutSize == null && cutOutWidth != null && cutOutHeight != null),
+      'Use only cutOutWidth and cutOutHeight or only cutOutSize',
+    );
   }
 
   final Color borderColor;
@@ -49,14 +50,14 @@ class QrScannerOverlayShape extends ShapeBorder {
 
   @override
   Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
-    Path _getLeftTopPath(Rect rect) {
+    Path getLeftTopPath(Rect rect) {
       return Path()
         ..moveTo(rect.left, rect.bottom)
         ..lineTo(rect.left, rect.top)
         ..lineTo(rect.right, rect.top);
     }
 
-    return _getLeftTopPath(rect)
+    return getLeftTopPath(rect)
       ..lineTo(
         rect.right,
         rect.bottom,
