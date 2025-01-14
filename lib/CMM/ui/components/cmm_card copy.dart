@@ -10,10 +10,12 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 
 class CMMCard extends ConsumerStatefulWidget {
-  final String path;
+  final CMM cmm;
+  final Uint8List image;
   const CMMCard({
     super.key,
-    required this.path,
+    required this.cmm,
+    required this.image,
   });
 
   @override
@@ -133,8 +135,8 @@ class CMMCardState extends ConsumerState<CMMCard> {
                       maxHeight: MediaQuery.of(context).size.height - 250,
                       maxWidth: double.infinity, // Max width
                     ),
-                    child: Image.asset(
-                      widget.path,
+                    child: Image.memory(
+                      widget.image,
                       fit: BoxFit.cover,
                     ),
                   ),

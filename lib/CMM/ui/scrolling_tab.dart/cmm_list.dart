@@ -6,6 +6,9 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:myecl/CMM/class/cmm.dart';
 import 'package:myecl/CMM/providers/cmm_list_provider.dart';
 import 'package:myecl/CMM/ui/components/cmm_card.dart';
+import 'package:myecl/admin/class/account_type.dart';
+import 'package:myecl/tools/cache/cache_manager.dart';
+import 'package:myecl/user/class/list_users.dart';
 
 class CMMList extends ConsumerStatefulWidget {
   const CMMList({super.key});
@@ -14,8 +17,26 @@ class CMMList extends ConsumerStatefulWidget {
   CMMListState createState() => CMMListState();
 }
 
+class CMM {
+  CMM({
+    required this.id,
+    required this.user,
+    required this.myVote,
+    required this.voteScore,
+    required this.status,
+    required this.path,
+  });
+  late final String id;
+  late final SimpleUser user;
+  late final bool? myVote;
+  late final int voteScore;
+  late final String status;
+  late String path;
+}
+
 class CMMListState extends ConsumerState<CMMList> {
-  static const _pageSize = 5;
+  final cache = CacheManager();
+  static const _pageSize = 2;
 
   final PagingController<int, CMM> _pagingController =
       PagingController(firstPageKey: 1);
@@ -28,51 +49,44 @@ class CMMListState extends ConsumerState<CMMList> {
     });
   }
 
+  List<CMM> getCMMImage(String id) {
+    return [
+      CMM(
+        id: '1',
+        user: SimpleUser(
+          name: "Ñool",
+          firstname: "Ñool",
+          nickname: "Ñool",
+          id: "A",
+          accountType: AccountType(type: "Student"),
+        ),
+        path: "assets/images/cmm.jpg",
+        myVote: true,
+        voteScore: 300,
+        status: "neutral",
+      ),
+    ];
+  }
+
   Future<void> _fetchPage(int pageKey) async {
-    final cmmListNotifier = ref.watch(cmmListProvider.notifier);
-
-    final asyncValue = await cmmListNotifier.getCMM(pageKey);
-
-    asyncValue.when(
-      data: (newItems) {
-        final isLastPage = newItems.length < _pageSize;
-        if (isLastPage) {
-          _pagingController.appendLastPage(newItems);
-        } else {
-          final nextPageKey = pageKey + 1;
-          _pagingController.appendPage(newItems, nextPageKey);
-        }
-      },
-      loading: () {},
-      error: (error, stack) {
-        _pagingController.error = error;
-      },
-    );
+    final newItems = getCMMImage(pageKey.toString());
+    final isLastPage = newItems.length < _pageSize;
+    if (isLastPage) {
+      _pagingController.appendLastPage(newItems);
+    } else {
+      final nextPageKey = pageKey;
+      _pagingController.appendPage(newItems, nextPageKey);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final cmmListNotifier = ref.watch(cmmListProvider.notifier);
     return PagedListView<int, CMM>(
       pagingController: _pagingController,
       builderDelegate: PagedChildBuilderDelegate<CMM>(
         itemBuilder: (context, cmm, index) {
-          return FutureBuilder<Uint8List>(
-            future: cmmListNotifier.getCMMImage(cmm.id),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
-              } else if (snapshot.hasError) {
-                return const Text("Erreur lors du chargement de l'image");
-              } else if (snapshot.hasData) {
-                return CMMCard(
-                  cmm: cmm,
-                  image: snapshot.data!,
-                );
-              } else {
-                return const Text("Aucune donnée disponible");
-              }
-            },
+          return CMMCard(
+            path: cmm.path,
           );
         },
       ),
