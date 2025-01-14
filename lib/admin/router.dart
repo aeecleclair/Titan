@@ -39,7 +39,7 @@ class AdminRouter {
   static const String schools = '/schools';
   static const String addSchool = '/add_school';
   static const String editSchool = '/edit_school';
-  static const String structure = '/structure';
+  static const String structures = '/structures';
   static const String addStructure = '/add_structure';
   static const String editStructure = '/edit_structure';
   static const String editModuleVisibility = '/edit_module_visibility';
@@ -115,11 +115,11 @@ class AdminRouter {
               ),
             ],
           ),
-          QRoute(path:  structure, builder: () => structure_page.StructurePage(),
+          QRoute(path:  structures, builder: () => structure_page.StructurePage(),
             middleware: [
               DeferredLoadingMiddleware(structure_page.loadLibrary),
             ],
-            children: [
+            // children: [
               // QRoute(
               //   path: addStructure,
               //   builder: () => add_structure_page.AddStructurePage(),
@@ -134,7 +134,7 @@ class AdminRouter {
               //     DeferredLoadingMiddleware(edit_structure_page.loadLibrary),
               //   ],
               // ),
-            ],
+            // ],
           ),
         ],
       );

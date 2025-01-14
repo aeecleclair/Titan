@@ -64,7 +64,7 @@ class AdminMainPage extends HookConsumerWidget {
             ),
             GestureDetector(
               onTap: () {
-                QR.to(AdminRouter.root + AdminRouter.schools);
+                QR.to(AdminRouter.root + AdminRouter.structures);
               },
               child: const MenuCardUi(
                 text: AdminTextConstants.myEclPay,
