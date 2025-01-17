@@ -18,7 +18,7 @@ class Store {
       id: json['id'],
       name: json['name'],
       walletId: json['wallet_id'],
-      structure: json['structure'],
+      structure: Structure.fromJson(json['structure']),
     );
   }
 
@@ -27,7 +27,7 @@ class Store {
       'id': id,
       'name': name,
       'wallet_id': walletId,
-      'structure': structure,
+      'structure': structure.toJson(),
     };
   }
 

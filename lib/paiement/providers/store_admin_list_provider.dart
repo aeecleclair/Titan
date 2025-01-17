@@ -36,11 +36,12 @@ class StoreAdminListNotifier extends ListNotifier<Seller> {
   }
 }
 
-final storeAdminListProvider =
-    StateNotifierProvider<StoreAdminListNotifier, AsyncValue<List<Seller>>>(
-        (ref) {
+final storeAdminListProvider = StateNotifierProvider.family<
+    StoreAdminListNotifier,
+    AsyncValue<List<Seller>>,
+    String>((ref, structureId) {
   final storeAdminListRepository = ref.watch(sellerAdminsRepositoryProvider);
   return StoreAdminListNotifier(
     storeAdminsRepository: storeAdminListRepository,
-  );
+  )..getStoreAdminList(structureId);
 });

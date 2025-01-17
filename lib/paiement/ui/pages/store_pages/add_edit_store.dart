@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/paiement/class/store.dart' as store_class;
 import 'package:myecl/paiement/class/structure.dart';
 import 'package:myecl/paiement/providers/my_stores_provider.dart';
+import 'package:myecl/paiement/providers/my_structures_provider.dart';
 import 'package:myecl/paiement/providers/store_provider.dart';
 import 'package:myecl/paiement/providers/stores_list_provider.dart';
 import 'package:myecl/paiement/ui/paiement.dart';
@@ -22,25 +23,12 @@ class AddEditStorePage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final store = ref.watch(storeProvider);
-    final myStores = ref.watch(myStoresProvider);
+    final myStructures = ref.watch(myStructuresProvider);
     final storeListNotifier = ref.watch(storeListProvider.notifier);
     final key = GlobalKey<FormState>();
     final isEdit = store.id != store_class.Store.empty().id;
     final name = useTextEditingController(text: store.name);
     final structure = useState<Structure>(store.structure);
-
-    final myStructures = <Structure>[];
-
-    myStores.whenData(
-      (value) {
-        for (var store in value) {
-          final myStructureIds = myStructures.map((e) => e.id).toList();
-          if (!myStructureIds.contains(store.structure.id)) {
-            myStructures.add(store.structure);
-          }
-        }
-      },
-    );
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -102,6 +90,13 @@ class AddEditStorePage extends HookConsumerWidget {
                           ),
                           onTap: () async {
                             if (key.currentState == null) {
+                              return;
+                            }
+                            if (structure.value == Structure.empty()) {
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                "Veuillez sélectionner une structure",
+                              );
                               return;
                             }
                             if (key.currentState!.validate()) {
