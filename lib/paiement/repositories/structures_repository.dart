@@ -22,7 +22,7 @@ class StructuresRepository extends Repository {
   }
 
   Future<bool> updateStructure(Structure structure) async {
-    return await update(structure.toJson(), structure.id);
+    return await update(structure.toJson(), "/${structure.id}");
   }
 
   Future<bool> deleteStructure(String structureId) async {
