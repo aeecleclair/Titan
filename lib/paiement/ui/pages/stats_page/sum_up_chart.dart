@@ -27,17 +27,17 @@ class SumUpChart extends HookConsumerWidget {
       HistoryType.given: [
         const Color.fromARGB(255, 1, 127, 128),
         const Color.fromARGB(255, 0, 102, 103),
-        const Color.fromARGB(255, 0, 44, 45).withOpacity(0.3),
+        const Color.fromARGB(255, 0, 44, 45).withValues(alpha: 0.3),
       ],
       HistoryType.received: [
         const Color.fromARGB(255, 4, 84, 84),
         const Color.fromARGB(255, 0, 68, 68),
-        const Color.fromARGB(255, 0, 29, 29).withOpacity(0.4),
+        const Color.fromARGB(255, 0, 29, 29).withValues(alpha: 0.4),
       ],
       HistoryType.transfer: [
         const Color.fromARGB(255, 255, 119, 7),
         const Color.fromARGB(255, 230, 103, 0),
-        const Color.fromARGB(255, 97, 44, 0).withOpacity(0.2),
+        const Color.fromARGB(255, 97, 44, 0).withValues(alpha: 0.2),
       ],
     };
     final Map<HistoryType, Map<String, List<History>>> transactionPerType = {
@@ -142,9 +142,8 @@ class SumUpChart extends HookConsumerWidget {
                           sections: chartPart,
                           startDegreeOffset: 0,
                         ),
-                        swapAnimationCurve: Curves.easeOutCubic,
-                        swapAnimationDuration:
-                            const Duration(milliseconds: 500),
+                        curve: Curves.easeOutCubic,
+                        duration: const Duration(milliseconds: 500),
                       ),
                     ),
                     SizedBox(

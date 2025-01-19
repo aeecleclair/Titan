@@ -18,14 +18,29 @@ class StoreSellerCard extends ConsumerWidget {
         selectedStoreNotifier.updateStore(store);
       },
       child: Container(
+        decoration: BoxDecoration(
+          color: store.id == selectedStore.id
+              ? const Color.fromARGB(255, 6, 75, 75)
+              : Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: store.id == selectedStore.id
+                ? const Color.fromARGB(255, 6, 75, 75)
+                : const Color.fromARGB(255, 0, 29, 29),
+            width: 1,
+          ),
+        ),
         height: 70,
+        margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
         padding: const EdgeInsets.symmetric(horizontal: 20),
         width: MediaQuery.of(context).size.width,
         child: Row(
           children: [
-            const CircleAvatar(
+            CircleAvatar(
               radius: 27,
-              backgroundColor: Color.fromARGB(255, 6, 75, 75),
+              backgroundColor: store.id == selectedStore.id
+                  ? Color.fromARGB(255, 0, 29, 29)
+                  : Color.fromARGB(255, 6, 75, 75),
             ),
             const SizedBox(
               width: 15,
@@ -34,8 +49,10 @@ class StoreSellerCard extends ConsumerWidget {
               child: AutoSizeText(
                 store.name,
                 maxLines: 2,
-                style: const TextStyle(
-                  color: Color.fromARGB(255, 0, 29, 29),
+                style: TextStyle(
+                  color: store.id == selectedStore.id
+                      ? Colors.white
+                      : Color.fromARGB(255, 0, 29, 29),
                   fontSize: 14,
                 ),
               ),

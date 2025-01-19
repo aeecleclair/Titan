@@ -29,7 +29,7 @@ Widget getStatusTag(WalletDeviceStatus status) {
     case WalletDeviceStatus.active:
       return Container(
         decoration: BoxDecoration(
-          color: Colors.green.withOpacity(0.2),
+          color: Colors.green.withValues(alpha: 0.2),
           borderRadius: BorderRadius.circular(5),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
@@ -45,7 +45,7 @@ Widget getStatusTag(WalletDeviceStatus status) {
     case WalletDeviceStatus.inactive:
       return Container(
         decoration: BoxDecoration(
-          color: Colors.orange.withOpacity(0.2),
+          color: Colors.orange.withValues(alpha: 0.2),
           borderRadius: BorderRadius.circular(5),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
@@ -61,7 +61,7 @@ Widget getStatusTag(WalletDeviceStatus status) {
     case WalletDeviceStatus.disabled:
       return Container(
         decoration: BoxDecoration(
-          color: Colors.red.withOpacity(0.2),
+          color: Colors.red.withValues(alpha: 0.2),
           borderRadius: BorderRadius.circular(5),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),

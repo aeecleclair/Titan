@@ -67,7 +67,7 @@ class SummaryCard extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 21, 215, 105)
-                            .withOpacity(0.2),
+                            .withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: const Text(
@@ -104,7 +104,7 @@ class SummaryCard extends StatelessWidget {
               color: const Color(0xff204550),
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              decorationColor: const Color(0xff204550).withOpacity(0.8),
+              decorationColor: const Color(0xff204550).withValues(alpha: 0.8),
               decorationThickness: 2.85,
             ),
           ),

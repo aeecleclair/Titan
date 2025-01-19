@@ -52,7 +52,8 @@ class ScanPage extends HookConsumerWidget {
                                 horizontal: 50,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.grey.shade200.withOpacity(0.8),
+                                color:
+                                    Colors.grey.shade200.withValues(alpha: 0.8),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Column(
@@ -121,7 +122,7 @@ class ScanPage extends HookConsumerWidget {
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
-                                  color: Colors.white.withOpacity(0.8),
+                                  color: Colors.white.withValues(alpha: 0.8),
                                 ),
                                 child: const Text(
                                   'Suivant',
@@ -143,9 +144,9 @@ class ScanPage extends HookConsumerWidget {
                               child: AddEditButtonLayout(
                                 colors: [
                                   const Color.fromARGB(255, 138, 38, 5)
-                                      .withOpacity(0.8),
+                                      .withValues(alpha: 0.8),
                                   const Color.fromARGB(255, 116, 29, 0)
-                                      .withOpacity(0.8),
+                                      .withValues(alpha: 0.8),
                                 ],
                                 child: const Text(
                                   'Annuler',
