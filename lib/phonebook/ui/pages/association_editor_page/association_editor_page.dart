@@ -3,6 +3,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/membership.dart';
+import 'package:myecl/phonebook/providers/association_kind_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_member_sorted_list_provider.dart';
@@ -49,6 +50,7 @@ class AssociationEditorPage extends HookConsumerWidget {
     final memberRoleTagsNotifier = ref.watch(memberRoleTagsProvider.notifier);
     final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
     final isAssociationPresident = ref.watch(isAssociationPresidentProvider);
+    final kindNotifier = ref.watch(associationKindProvider.notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -289,6 +291,14 @@ class AssociationEditorPage extends HookConsumerWidget {
                                               association.mandateYear + 1,
                                         ),
                                       );
+                                      if (QR.currentPath.contains(
+                                          PhonebookRouter.associationDetail)) {
+                                        kindNotifier.setKind("");
+                                        QR.to(
+                                          PhonebookRouter.root +
+                                              PhonebookRouter.associationDetail,
+                                        );
+                                      }
                                     } else {
                                       displayToastWithContext(
                                         TypeMsg.error,
