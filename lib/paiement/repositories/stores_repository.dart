@@ -9,18 +9,8 @@ class StoresRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'myeclpay/stores';
 
-  // Future<List<Store>> getStores() async {
-  //   return List<Store>.from(
-  //     (await getList()).map((e) => Store.fromJson(e)),
-  //   );
-  // }
-
-  // Future<Store> createStore(Store store) async {
-  //   return Store.fromJson(await create(store.toJson()));
-  // }
-
   Future<bool> updateStore(Store store) async {
-    return await update(store.toJson(), store.id);
+    return await update(store.toJson(), "/${store.id}");
   }
 
   Future<bool> deleteStore(String id) async {
