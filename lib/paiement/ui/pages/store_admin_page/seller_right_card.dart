@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/paiement/class/seller.dart';
 import 'package:myecl/paiement/providers/selected_store_provider.dart';
-import 'package:myecl/paiement/providers/store_admin_list_provider.dart';
 import 'package:myecl/paiement/providers/store_sellers_list_provider.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';

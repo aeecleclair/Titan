@@ -16,7 +16,7 @@ class StoreSellerListNotifier extends ListNotifier<Seller> {
     return await add(
       (seller) => sellerStoreRepository.createSeller(
         seller.storeId,
-        seller.userId,
+        seller,
       ),
       seller,
     );
@@ -53,9 +53,9 @@ class StoreSellerListNotifier extends ListNotifier<Seller> {
 final sellerStoreProvider = StateNotifierProvider.family<
     StoreSellerListNotifier,
     AsyncValue<List<Seller>>,
-    String>((ref, structureId) {
+    String>((ref, storeId) {
   final sellerStoreRepository = ref.watch(sellerStoreRepositoryProvider);
   return StoreSellerListNotifier(
     sellerStoreRepository: sellerStoreRepository,
-  )..getStoreSellerList(structureId);
+  )..getStoreSellerList(storeId);
 });
