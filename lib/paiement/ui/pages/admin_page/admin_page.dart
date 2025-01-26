@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/paiement/providers/selected_structure_provider.dart';
 import 'package:myecl/paiement/providers/stores_list_provider.dart';
 import 'package:myecl/paiement/ui/pages/admin_page/add_store_card.dart';
 import 'package:myecl/paiement/ui/pages/admin_page/admin_store_card.dart';
@@ -14,14 +15,15 @@ class AdminPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final storeList = ref.watch(storeListProvider);
+    final structure = ref.watch(selectedStructureProvider);
     return PaymentTemplate(
       child: Refresher(
         onRefresh: () async {},
         child: Column(
           children: [
             const SizedBox(height: 10),
-            const AlignLeftText(
-              "Gestion des associations",
+            AlignLeftText(
+              "Gestion des associations ${structure.name}",
               color: Colors.grey,
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -31,11 +33,15 @@ class AdminPage extends ConsumerWidget {
             const AddStoreCard(),
             AsyncChild(
               value: storeList,
-              builder: (context, stores) => Column(
-                children: stores
-                    .map((store) => AdminStoreCard(store: store))
-                    .toList(),
-              ),
+              builder: (context, stores) {
+                final storeFromStructures =
+                    stores.where((store) => store.structure.id == structure.id);
+                return Column(
+                  children: storeFromStructures
+                      .map((store) => AdminStoreCard(store: store))
+                      .toList(),
+                );
+              },
             ),
           ],
         ),
