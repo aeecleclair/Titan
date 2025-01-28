@@ -10,10 +10,12 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 
 class CMMCard extends ConsumerStatefulWidget {
-  final String path;
+  final CMM cmm;
+  final Uint8List image;
   const CMMCard({
     super.key,
-    required this.path,
+    required this.cmm,
+    required this.image,
   });
 
   @override
@@ -131,10 +133,10 @@ class CMMCardState extends ConsumerState<CMMCard> {
                   child: ConstrainedBox(
                     constraints: BoxConstraints(
                       maxHeight: MediaQuery.of(context).size.height - 250,
-                      maxWidth: double.infinity, // Max width
+                      maxWidth: double.infinity,
                     ),
-                    child: Image.asset(
-                      widget.path,
+                    child: Image.memory(
+                      widget.image,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -167,13 +169,11 @@ class CMMCardState extends ConsumerState<CMMCard> {
                         }
                       },
                       icon: Icon(Icons.keyboard_double_arrow_up,
-                          size: 35,
-                          color: upButtonColor // Ajustez la taille de l'icône
-                          ),
+                          size: 35, color: upButtonColor),
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(
-                        minWidth: 40, // Largeur du bouton
-                        minHeight: 40, // Hauteur du bouton
+                        minWidth: 40,
+                        minHeight: 40,
                       ),
                     ),
                     Text(
@@ -196,13 +196,11 @@ class CMMCardState extends ConsumerState<CMMCard> {
                         }
                       },
                       icon: Icon(Icons.keyboard_double_arrow_down,
-                          size: 35, color: downButtonColor
-                          // Ajustez la taille de l'icône
-                          ),
+                          size: 35, color: downButtonColor),
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(
-                        minWidth: 40, // Largeur du bouton
-                        minHeight: 40, // Hauteur du bouton
+                        minWidth: 40,
+                        minHeight: 40,
                       ),
                     ),
                     if (isAdmin)
@@ -212,12 +210,12 @@ class CMMCardState extends ConsumerState<CMMCard> {
                         },
                         icon: const Icon(
                           Icons.delete,
-                          size: 30, // Ajustez la taille de l'icône
+                          size: 30,
                         ),
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(
-                          minWidth: 40, // Largeur du bouton
-                          minHeight: 40, // Hauteur du bouton
+                          minWidth: 40,
+                          minHeight: 40,
                         ),
                       ),
                     if (isAdmin)
@@ -227,12 +225,12 @@ class CMMCardState extends ConsumerState<CMMCard> {
                         },
                         icon: const Icon(
                           Icons.block,
-                          size: 30, // Ajustez la taille de l'icône
+                          size: 30,
                         ),
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(
-                          minWidth: 40, // Largeur du bouton
-                          minHeight: 40, // Hauteur du bouton
+                          minWidth: 40,
+                          minHeight: 40,
                         ),
                       ),
                   ],
