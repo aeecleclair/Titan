@@ -74,7 +74,8 @@ class FundPage extends ConsumerWidget {
               },
               rightButtonFn: () {
                 fundAmountNotifier.setFundAmount(
-                    fundAmount.substring(0, fundAmount.length - 1));
+                  fundAmount.substring(0, fundAmount.length - 1),
+                );
               },
             ),
             const Expanded(child: Center(child: ConfirmFundButton())),
