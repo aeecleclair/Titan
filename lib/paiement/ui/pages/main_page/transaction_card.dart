@@ -68,7 +68,9 @@ class TransactionCard extends StatelessWidget {
                       child: Text(
                         transaction.status == TransactionStatus.confirmed
                             ? "Confirmé"
-                            : "Annulé",
+                            : transaction.status == TransactionStatus.refunded
+                                ? "Remboursé"
+                                : "Annulé",
                         style: TextStyle(
                           color:
                               transaction.status == TransactionStatus.confirmed
