@@ -19,7 +19,7 @@ dependencies:
   dotenv: ^4.0.1
   firebase_core: ^3.9.0
   either_dart: ^1.0.0
-  firebase_messaging: ^15.1.6
+  firebase_messaging: ^15.2.1
   fl_chart: ^0.70.0
   flash: ^3.1.1
   flutter:
