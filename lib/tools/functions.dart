@@ -464,12 +464,14 @@ Plausible? getPlausible() {
 }
 
 Future<String> getTitanHost() async {
+  // We get the host url from the .env file
   var host = dotenv.env["${getAppFlavor().toUpperCase()}_HOST"];
 
   if (host == null || host == "") {
     throw StateError("Could not find host corresponding to flavor");
   }
 
+  // Get backend version
   final response = await http.get(Uri.parse("$host/information"));
 
   if (response.statusCode == 200) {
@@ -477,20 +479,50 @@ Future<String> getTitanHost() async {
     toDecode = utf8.decode(response.body.runes.toList());
     var decoded = jsonDecode(toDecode);
     final version = decoded.version;
-    List<int> parts1 = version.split('.').map(int.parse).toList();
-    List<int> parts2 = String.fromEnvironment("MINIMAL_HYPERION_VERSION")
-        .split('.')
-        .map(int.parse)
-        .toList();
+    final minimalHyperionVersion = String.fromEnvironment("MINIMAL_HYPERION_VERSION");
 
-    for (int i = 0; i < 3; i++) {
-      if (parts1[i] < parts2[i]) {
-        host = String.fromEnvironment("ALPHA_HOST");
+    // We compare the version of the backend with the minimal requirements of this front version
+    if (!isBackVersionCompatible(version, minimalHyperionVersion)) {
+      // Back outdated
+      // Check for the back in alpha
+
+      if (getAppFlavor().toUpperCase() == "ALPHA") {
+        // Already with the alpha version
+        throw StateError("Hyperion (alpha) host does not match the minimal requirements. Got $version expected at least $minimalHyperionVersion.");
+      }
+
+      // Else we verify the alpha version
+      final alphaResponse = await http.get(Uri.parse("${String.fromEnvironment("ALPHA_HOST")}/information"));
+      if (alphaResponse.statusCode != 200) {
+        throw StateError("Hyperion (alpha) is not responding.");
+      }
+
+      String toDecode2 = alphaResponse.body;
+      toDecode2 = utf8.decode(alphaResponse.body.runes.toList());
+      var decoded2 = jsonDecode(toDecode2);
+      final alphaVersion = decoded2.version;
+
+      if (!isBackVersionCompatible(alphaVersion, minimalHyperionVersion)) {
+        throw StateError("Hyperion and Hyperion alpha hosts don't match the minimal requirements. Got $version (Hyperion) and $alphaVersion (Hyperion alpha) expected at least $minimalHyperionVersion.");
       }
     }
   }
 
   return host;
+}
+
+bool isBackVersionCompatible(String currentVersion, String targetedVersion) {
+
+  List<int> parts1 = currentVersion.split('.').map(int.parse).toList();  // e.g  1.1.0 -> [1, 1, 0]
+  List<int> parts2 = targetedVersion.split('.').map(int.parse).toList(); // e.g  1.2.1 -> [1, 2, 1]
+
+  for (int i = 0; i < 3; i++) {
+    if (parts1[i] < parts2[i]) {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 String getTitanPackageName() {
