@@ -475,7 +475,8 @@ Future<String> getTitanHost() async {
     toDecode = utf8.decode(response.body.runes.toList());
     var decoded = jsonDecode(toDecode);
     final version = decoded.version;
-    final minimalHyperionVersion = String.fromEnvironment("MINIMAL_HYPERION_VERSION");
+    final minimalHyperionVersion = "4.0.0";
+    final alphaHost = String.fromEnvironment("ALPHA_HOST");
 
     // We compare the version of the backend with the minimal requirements of this front version
     if (!isBackVersionCompatible(version, minimalHyperionVersion)) {
@@ -484,11 +485,12 @@ Future<String> getTitanHost() async {
 
       if (getAppFlavor().toUpperCase() == "ALPHA") {
         // Already with the alpha version
-        throw StateError("Hyperion (alpha) host does not match the minimal requirements. Got $version expected at least $minimalHyperionVersion.");
+        throw StateError(
+            "Hyperion (alpha) host does not match the minimal requirements. Got $version expected at least $minimalHyperionVersion.");
       }
 
       // Else we verify the alpha version
-      final alphaResponse = await http.get(Uri.parse("${String.fromEnvironment("ALPHA_HOST")}/information"));
+      final alphaResponse = await http.get(Uri.parse("$alphaHost/information"));
       if (alphaResponse.statusCode != 200) {
         throw StateError("Hyperion (alpha) is not responding.");
       }
@@ -499,8 +501,10 @@ Future<String> getTitanHost() async {
       final alphaVersion = decoded2.version;
 
       if (!isBackVersionCompatible(alphaVersion, minimalHyperionVersion)) {
-        throw StateError("Hyperion and Hyperion alpha hosts don't match the minimal requirements. Got $version (Hyperion) and $alphaVersion (Hyperion alpha) expected at least $minimalHyperionVersion.");
+        throw StateError(
+            "Hyperion and Hyperion alpha hosts don't match the minimal requirements. Got $version (Hyperion) and $alphaVersion (Hyperion alpha) expected at least $minimalHyperionVersion.");
       }
+      return alphaHost;
     }
   }
 
@@ -508,9 +512,14 @@ Future<String> getTitanHost() async {
 }
 
 bool isBackVersionCompatible(String currentVersion, String minimalVersion) {
-
-  List<int> current = currentVersion.split('.').map(int.parse).toList();  // e.g  1.1.0 -> [1, 1, 0]
-  List<int> minimal = minimalVersion.split('.').map(int.parse).toList(); // e.g  1.2.1 -> [1, 2, 1]
+  List<int> current = currentVersion
+      .split('.')
+      .map(int.parse)
+      .toList(); // e.g  1.1.0 -> [1, 1, 0]
+  List<int> minimal = minimalVersion
+      .split('.')
+      .map(int.parse)
+      .toList(); // e.g  1.2.1 -> [1, 2, 1]
 
   for (int i = 0; i < 3; i++) {
     if (current[i] > minimal[i]) {
