@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,7 @@ import 'package:myecl/tools/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:myecl/tools/plausible/plausible.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:http/http.dart' as http;
 
 enum TypeMsg { msg, error }
 
@@ -460,11 +463,31 @@ Plausible? getPlausible() {
   return null;
 }
 
-String getTitanHost() {
+Future<String> getTitanHost() async {
   var host = dotenv.env["${getAppFlavor().toUpperCase()}_HOST"];
 
   if (host == null || host == "") {
     throw StateError("Could not find host corresponding to flavor");
+  }
+
+  final response = await http.get(Uri.parse("$host/information"));
+
+  if (response.statusCode == 200) {
+    String toDecode = response.body;
+    toDecode = utf8.decode(response.body.runes.toList());
+    var decoded = jsonDecode(toDecode);
+    final version = decoded.version;
+    List<int> parts1 = version.split('.').map(int.parse).toList();
+    List<int> parts2 = String.fromEnvironment("MINIMAL_HYPERION_VERSION")
+        .split('.')
+        .map(int.parse)
+        .toList();
+
+    for (int i = 0; i < 3; i++) {
+      if (parts1[i] < parts2[i]) {
+        host = String.fromEnvironment("ALPHA_HOST");
+      }
+    }
   }
 
   return host;
