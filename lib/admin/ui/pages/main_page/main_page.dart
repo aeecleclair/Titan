@@ -62,6 +62,15 @@ class AdminMainPage extends HookConsumerWidget {
                 icon: HeroIcons.academicCap,
               ),
             ),
+            GestureDetector(
+              onTap: () {
+                QR.to(AdminRouter.root + AdminRouter.associationMemberships);
+              },
+              child: const MenuCardUi(
+                text: AdminTextConstants.memberships,
+                icon: HeroIcons.link,
+              ),
+            ),
           ],
         ),
       ),
