@@ -1,0 +1,122 @@
+import 'package:flutter/material.dart';
+import 'package:myecl/admin/tools/constants.dart';
+import 'package:myecl/tools/constants.dart';
+
+class MembershipCreationDialogBox extends StatelessWidget {
+  static const Color titleColor = ColorConstants.gradient1;
+  static const Color descriptionColor = Colors.black;
+  static const Color yesColor = ColorConstants.gradient2;
+  static const Color noColor = ColorConstants.background2;
+
+  final Function() onYes;
+  final Function()? onNo;
+  final TextEditingController controller;
+
+  static const double _padding = 20;
+  static const double _avatarRadius = 45;
+
+  static const Color background = Color(0xfffafafa);
+  const MembershipCreationDialogBox({
+    super.key,
+    required this.controller,
+    required this.onYes,
+    this.onNo,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius:
+            BorderRadius.circular(MembershipCreationDialogBox._padding),
+      ),
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      child: Stack(
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.all(MembershipCreationDialogBox._padding),
+            margin: const EdgeInsets.only(
+                top: MembershipCreationDialogBox._avatarRadius),
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              color: MembershipCreationDialogBox.background,
+              borderRadius:
+                  BorderRadius.circular(MembershipCreationDialogBox._padding),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.shade700,
+                  offset: const Offset(0, 5),
+                  blurRadius: 5,
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(
+                  AdminTextConstants.createAssociationMembership,
+                  style: const TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w800,
+                    color: titleColor,
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                TextField(
+                  controller: controller,
+                  decoration: const InputDecoration(
+                    hintText: AdminTextConstants.associationMembershipName,
+                  ),
+                ),
+                const SizedBox(
+                  height: 22,
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      TextButton(
+                        onPressed: () async {
+                          Navigator.of(context).pop();
+                          await onYes();
+                        },
+                        child: const Text(
+                          "Créer",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: noColor,
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          if (onNo == null) {
+                            Navigator.of(context).pop();
+                          }
+                          onNo?.call();
+                        },
+                        child: const Text(
+                          "Annuler",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: yesColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
