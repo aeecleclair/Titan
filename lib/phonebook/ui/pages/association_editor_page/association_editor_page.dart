@@ -292,7 +292,8 @@ class AssociationEditorPage extends HookConsumerWidget {
                                         ),
                                       );
                                       if (QR.currentPath.contains(
-                                          PhonebookRouter.associationDetail)) {
+                                        PhonebookRouter.associationDetail,
+                                      )) {
                                         kindNotifier.setKind("");
                                         QR.to(
                                           PhonebookRouter.root +

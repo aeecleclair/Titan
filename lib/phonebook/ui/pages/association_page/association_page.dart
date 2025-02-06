@@ -110,7 +110,9 @@ class AssociationPage extends HookConsumerWidget {
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 8),
+                        horizontal: 12,
+                        vertical: 8,
+                      ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         gradient: const RadialGradient(
@@ -128,7 +130,9 @@ class AssociationPage extends HookConsumerWidget {
                             spreadRadius: 5,
                             blurRadius: 10,
                             offset: const Offset(
-                                3, 3), // changes position of shadow
+                              3,
+                              3,
+                            ), // changes position of shadow
                           ),
                         ],
                       ),
