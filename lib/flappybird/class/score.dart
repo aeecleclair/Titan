@@ -1,5 +1,5 @@
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/user/class/simple_users.dart';
 
 class Score {
   late final SimpleUser user;
