@@ -11,9 +11,15 @@ class AdminTextConstants {
   static const String addSchool = "Ajouter une école";
   static const String addedSchool = "École créée";
   static const String administration = "Administration";
+  static const String associationsMemberships = "Adhésions d'associations";
   static const String group = "Groupe";
   static const String groups = "Groupes";
   static const String delete = "Supprimer";
+  static const String deleteAssociationMembership =
+      "Supprimer l'adhésion d'association ?";
+  static const String deletedAssociationMembership =
+      "Adhésion d'association supprimée";
+
   static const String deleteGroup = "Supprimer le groupe ?";
   static const String deletedGroup = "Groupe supprimé";
   static const String deleteSchool = "Supprimer l'école ?";
@@ -38,6 +44,25 @@ class AdminTextConstants {
   static const String updatedGroup = "Groupe modifié";
   static const String updatingError = "Erreur lors de la modification";
   static const String visibilities = "Visibilités";
+
+  static const String updatedAssociationMembership =
+      "Adhésion d'association modifiée";
+
+  static const String noMember = "Aucun membre";
+
+  static const String memberships = "Adhésions";
+
+  static const String associationMembershipName = "Nom de l'adhésion";
+
+  static const String createAssociationMembership =
+      "Créer une adhésion d'association";
+
+  static const String createdAssociationMembership =
+      "Adhésion d'association créée";
+
+  static const String creationError = "Erreur lors de la création";
+
+  static const String associationMembership = "Adhésion de l'association";
 }
 
 enum SchoolIdConstant {
