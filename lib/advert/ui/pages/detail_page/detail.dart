@@ -69,7 +69,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                     end: Alignment.bottomCenter,
                     colors: [
                       const Color.fromARGB(0, 255, 255, 255),
-                      Colors.grey.shade50..withValues(alpha: 0.85),
+                      Colors.grey.shade50.withValues(alpha: 0.85),
                       Colors.grey.shade50,
                     ],
                     stops: const [0.0, 0.65, 1.0],
