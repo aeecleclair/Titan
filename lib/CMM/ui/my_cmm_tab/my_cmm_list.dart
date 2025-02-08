@@ -1,63 +1,100 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/CMM/class/cmm.dart';
-import 'package:myecl/CMM/repositories/my_cmm_repository.dart';
+import 'package:myecl/CMM/providers/cmm_list_provider.dart';
+import 'package:myecl/CMM/providers/my_cmm_list_provider.dart';
 import 'package:myecl/CMM/ui/components/cmm_card.dart';
 
-class MyCMMList extends StatefulWidget {
+class CustomPageViewScrollPhysics extends ScrollPhysics {
+  const CustomPageViewScrollPhysics({super.parent});
+
+  @override
+  CustomPageViewScrollPhysics applyTo(ScrollPhysics? ancestor) {
+    return CustomPageViewScrollPhysics(parent: buildParent(ancestor)!);
+  }
+
+  @override
+  SpringDescription get spring => const SpringDescription(
+        mass: 50,
+        stiffness: 500,
+        damping: 1,
+      );
+}
+
+class MyCMMList extends ConsumerStatefulWidget {
   const MyCMMList({super.key});
 
   @override
-  MyCMMListState createState() => MyCMMListState();
+  CMMListState createState() => CMMListState();
 }
 
-class MyCMMListState extends State<MyCMMList> {
-  static const _pageSize = 10;
-
-  final PagingController<int, CMM> _pagingController =
-      PagingController(firstPageKey: 0);
+class CMMListState extends ConsumerState<MyCMMList> {
+  final PageController _pageController = PageController();
+  final List<CMM> _cmmList = [];
+  bool _isLoadingMore = false;
+  int _pageKey = 1;
 
   @override
   void initState() {
     super.initState();
-    _pagingController.addPageRequestListener((pageKey) {
-      _fetchPage(pageKey);
-    });
+    _fetchCMM(); // Load the first page
+    _pageController.addListener(_onPageChanged);
   }
 
-  final myCMMRepo = MyCMMRepository();
-  Future<void> _fetchPage(int pageKey) async {
-    try {
-      final newItems = await myCMMRepo.getMyCMM(pageKey, _pageSize);
-      final isLastPage = newItems.length < _pageSize;
-      if (isLastPage) {
-        _pagingController.appendLastPage(newItems);
-      } else {
-        final nextPageKey = (pageKey + newItems.length).toInt();
-        _pagingController.appendPage(newItems, nextPageKey);
-      }
-    } catch (error) {
-      _pagingController.error = error;
+  void _onPageChanged() {
+    if (_pageController.page == _cmmList.length - 2 && !_isLoadingMore) {
+      _fetchCMM();
     }
   }
 
+  Future<void> _fetchCMM() async {
+    setState(() => _isLoadingMore = true);
+    final myCMMListNotifier = ref.read(myCMMListProvider.notifier);
+
+    final newCmmList = await myCMMListNotifier.getMyCMM(_pageKey);
+
+    newCmmList.when(
+      data: (data) {
+        setState(() {
+          _cmmList.addAll(data);
+          _pageKey++;
+          _isLoadingMore = false;
+        });
+      },
+      loading: () {},
+      error: (err, stack) {
+        setState(() => _isLoadingMore = false);
+      },
+    );
+  }
+
   @override
-  Widget build(BuildContext context) =>
-      // Don't worry about displaying progress or error indicators on screen; the
-      // package takes care of that. If you want to customize them, use the
-      // [PagedChildBuilderDelegate] properties.
-      PagedListView<int, CMM>(
-        pagingController: _pagingController,
-        builderDelegate: PagedChildBuilderDelegate<CMM>(
-          itemBuilder: (context, cmm, index) => ListTile(
-            title: Text(cmm.status),
-          ),
-        ),
-      );
+  Widget build(BuildContext context) {
+    return PageView.builder(
+      controller: _pageController,
+      physics: CustomPageViewScrollPhysics(),
+      scrollDirection: Axis.vertical,
+      itemCount: _cmmList.length,
+      itemBuilder: (context, index) {
+        final cmm = _cmmList[index];
+        return FutureBuilder<Uint8List>(
+          future: ref.read(cmmListProvider.notifier).getCMMImage(cmm.id),
+          builder: (context, imageSnapshot) {
+            if (!imageSnapshot.hasData) {
+              return Center(child: CircularProgressIndicator());
+            }
+            return CMMCard(cmm: cmm, image: imageSnapshot.data!);
+          },
+        );
+      },
+    );
+  }
 
   @override
   void dispose() {
-    _pagingController.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 }

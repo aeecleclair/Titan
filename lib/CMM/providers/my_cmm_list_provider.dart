@@ -14,9 +14,9 @@ class MyCMMListNotifier extends ListNotifier<CMM> {
     _myCMMRepository.setToken(token);
   }
 
-  Future<AsyncValue<List<CMM>>> getMyCMM(int page, int pagesize) async {
+  Future<AsyncValue<List<CMM>>> getMyCMM(int page) async {
     return await loadList(
-      () async => _myCMMRepository.getMyCMM(page, pagesize),
+      () async => _myCMMRepository.getMyCMM(page),
     );
   }
 
@@ -31,7 +31,7 @@ final myCMMListProvider =
   final token = ref.watch(tokenProvider);
   final notifier = MyCMMListNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {
-    await notifier.getMyCMM(0, 0);
+    await notifier.getMyCMM(1);
   });
   return notifier;
 });
