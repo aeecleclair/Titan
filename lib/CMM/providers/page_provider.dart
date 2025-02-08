@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PageNotifier extends StateNotifier<int> {
-  PageNotifier() : super(0);
+  PageNotifier() : super(1);
 
   void setSortingType(int i) {
     state = i;
