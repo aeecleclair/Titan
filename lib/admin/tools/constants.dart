@@ -11,14 +11,15 @@ class AdminTextConstants {
   static const String addSchool = "Ajouter une école";
   static const String addedSchool = "École créée";
   static const String administration = "Administration";
-  static const String associationsMemberships = "Adhésions d'associations";
-  static const String group = "Groupe";
-  static const String groups = "Groupes";
+  static const String associationMembership = "Adhésion";
+  static const String associationMembershipName = "Nom de l'adhésion";
+  static const String associationsMemberships = "Adhésions";
+  static const String createAssociationMembership = "Créer une adhésion";
+  static const String createdAssociationMembership = "Adhésion créée";
+  static const String creationError = "Erreur lors de la création";
   static const String delete = "Supprimer";
-  static const String deleteAssociationMembership =
-      "Supprimer l'adhésion d'association ?";
-  static const String deletedAssociationMembership =
-      "Adhésion d'association supprimée";
+  static const String deleteAssociationMembership = "Supprimer l'adhésion ?";
+  static const String deletedAssociationMembership = "Adhésion supprimée";
 
   static const String deleteGroup = "Supprimer le groupe ?";
   static const String deletedGroup = "Groupe supprimé";
@@ -32,37 +33,40 @@ class AdminTextConstants {
   static const String emailRegex = "Email Regex";
   static const String emptyFieldError = "Le nom ne peut pas être vide";
   static const String error = "Erreur";
+  static const String group = "Groupe";
+  static const String groups = "Groupes";
   static const String loaningGroup = "Groupe de prêt";
   static const String looking = "Recherche";
   static const String members = "Membres";
+  static const String memberships = "Adhésions";
   static const String modifyModuleVisibility = "Visibilité des modules";
   static const String name = "Nom";
+  static const String noMember = "Aucun membre";
   static const String noMoreLoaner = "Aucun prêteur n'est disponible";
   static const String noSchool = "Sans école";
   static const String removeGroupMember = "Supprimer le membre du groupe ?";
+  static const String research = "Recherche";
   static const String schools = "Écoles";
+  static const String updatedAssociationMembership = "Adhésion modifiée";
   static const String updatedGroup = "Groupe modifié";
   static const String updatingError = "Erreur lors de la modification";
   static const String visibilities = "Visibilités";
 
-  static const String updatedAssociationMembership =
-      "Adhésion d'association modifiée";
+  static String editMembership = "Modifier l'adhésion";
 
-  static const String noMember = "Aucun membre";
+  static String addMember = "Ajouter un membre";
 
-  static const String memberships = "Adhésions";
+  static const String user = "Utilisateur";
 
-  static const String associationMembershipName = "Nom de l'adhésion";
+  static const String startDate = "Date de début";
 
-  static const String createAssociationMembership =
-      "Créer une adhésion d'association";
+  static const String endDate = "Date de fin";
 
-  static const String createdAssociationMembership =
-      "Adhésion d'association créée";
+  static const String emptyDate = "Date vide";
 
-  static const String creationError = "Erreur lors de la création";
+  static const String emptyUser = "Utilisateur vide";
 
-  static const String associationMembership = "Adhésion de l'association";
+  static const String updatedMembership = "Adhésion modifiée";
 }
 
 enum SchoolIdConstant {

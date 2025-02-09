@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
 
@@ -10,7 +11,9 @@ class MembershipCreationDialogBox extends StatelessWidget {
 
   final Function() onYes;
   final Function()? onNo;
-  final TextEditingController controller;
+  final TextEditingController nameController;
+  final TextEditingController groupIdController;
+  final List<SimpleGroup> groups;
 
   static const double _padding = 20;
   static const double _avatarRadius = 45;
@@ -18,13 +21,20 @@ class MembershipCreationDialogBox extends StatelessWidget {
   static const Color background = Color(0xfffafafa);
   const MembershipCreationDialogBox({
     super.key,
-    required this.controller,
+    required this.nameController,
+    required this.groupIdController,
     required this.onYes,
+    required this.groups,
     this.onNo,
   });
 
   @override
   Widget build(BuildContext context) {
+    groups.sort(
+      (SimpleGroup a, SimpleGroup b) =>
+          a.name.toLowerCase().compareTo(b.name.toLowerCase()),
+    );
+    groupIdController.text = groups.first.id;
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius:
@@ -37,7 +47,8 @@ class MembershipCreationDialogBox extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(MembershipCreationDialogBox._padding),
             margin: const EdgeInsets.only(
-                top: MembershipCreationDialogBox._avatarRadius),
+              top: MembershipCreationDialogBox._avatarRadius,
+            ),
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               color: MembershipCreationDialogBox.background,
@@ -66,13 +77,30 @@ class MembershipCreationDialogBox extends StatelessWidget {
                   height: 15,
                 ),
                 TextField(
-                  controller: controller,
+                  controller: nameController,
                   decoration: const InputDecoration(
                     hintText: AdminTextConstants.associationMembershipName,
                   ),
                 ),
                 const SizedBox(
                   height: 22,
+                ),
+                DropdownButtonFormField<String>(
+                  value: groupIdController.text,
+                  onChanged: (String? newValue) {
+                    groupIdController.text = newValue!;
+                  },
+                  items: groups
+                      .map(
+                        (SimpleGroup group) => DropdownMenuItem<String>(
+                          value: group.id,
+                          child: Text(group.name),
+                        ),
+                      )
+                      .toList(),
+                  decoration: const InputDecoration(
+                    hintText: AdminTextConstants.group,
+                  ),
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,

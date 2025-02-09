@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/class/user_association_membership.dart';
+import 'package:myecl/admin/providers/association_membership_filtered_members_provider.dart';
 import 'package:myecl/admin/providers/association_membership_members_list_provider.dart';
 import 'package:myecl/admin/providers/association_membership_provider.dart';
 import 'package:myecl/admin/providers/user_association_membership_provider.dart';
@@ -10,8 +11,8 @@ import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/ui/admin.dart';
 import 'package:myecl/admin/ui/pages/memberships/association_membership_detail_page/association_membership_information_editor.dart';
 import 'package:myecl/admin/ui/pages/memberships/association_membership_detail_page/association_membership_member_editable_card.dart';
+import 'package:myecl/admin/ui/pages/memberships/association_membership_detail_page/research_bar.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -25,11 +26,10 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
     final associationMembership = ref.watch(associationMembershipProvider);
     final associationMembershipMemberListNotifier =
         ref.watch(associationMembershipMembersProvider.notifier);
-    final associationMembershipMemberList =
-        ref.watch(associationMembershipMembersProvider);
     final userAssociationMembershipNotifier =
         ref.watch(userAssociationMembershipProvider.notifier);
-    final searchController = TextEditingController();
+    final associationMembershipFilteredList =
+        ref.watch(associationMembershipFilteredListProvider);
 
     return AdminTemplate(
       child: Refresher(
@@ -75,6 +75,7 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                       height: 40,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
+                        color: ColorConstants.gradient1,
                       ),
                       child: child,
                     ),
@@ -85,7 +86,6 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                           associationMembershipId: associationMembership.id,
                         ),
                       );
-
                       QR.to(
                         AdminRouter.root +
                             AdminRouter.associationMemberships +
@@ -105,27 +105,27 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
             const SizedBox(
               height: 10,
             ),
-            AsyncChild(
-              value: associationMembershipMemberList,
-              builder: (context, associationMembershipMembers) =>
-                  associationMembershipMembers.isEmpty
-                      ? const Text(AdminTextConstants.noMember)
-                      : SizedBox(
-                          height: 400,
-                          child: ListView.builder(
-                            itemCount: associationMembershipMembers.length,
-                            itemBuilder: (context, index) {
-                              return MemberEditableCard(
-                                key: ValueKey(
-                                  associationMembershipMembers[index].user.id,
-                                ),
-                                associationMembership:
-                                    associationMembershipMembers[index],
-                              );
-                            },
-                          ),
-                        ),
+            ResearchBar(),
+            const SizedBox(
+              height: 10,
             ),
+            associationMembershipFilteredList.isEmpty
+                ? const Text(AdminTextConstants.noMember)
+                : SizedBox(
+                    height: 400,
+                    child: ListView.builder(
+                      itemCount: associationMembershipFilteredList.length,
+                      itemBuilder: (context, index) {
+                        return MemberEditableCard(
+                          key: ValueKey(
+                            associationMembershipFilteredList[index].user.id,
+                          ),
+                          associationMembership:
+                              associationMembershipFilteredList[index],
+                        );
+                      },
+                    ),
+                  ),
             const SizedBox(
               height: 10,
             ),

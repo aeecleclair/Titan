@@ -1,0 +1,190 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/class/user_association_membership.dart';
+import 'package:myecl/admin/class/user_association_membership_base.dart';
+import 'package:myecl/admin/providers/association_membership_members_list_provider.dart';
+import 'package:myecl/admin/providers/user_association_membership_provider.dart';
+import 'package:myecl/admin/tools/constants.dart';
+import 'package:myecl/admin/ui/admin.dart';
+import 'package:myecl/admin/ui/pages/memberships/add_edit_user_membership_page/search_result.dart';
+import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/ui/widgets/date_entry.dart';
+import 'package:myecl/tools/ui/widgets/styled_search_bar.dart';
+import 'package:myecl/user/providers/user_list_provider.dart';
+import 'package:qlevar_router/qlevar_router.dart';
+
+class AddEditUserMembershipPage extends HookConsumerWidget {
+  const AddEditUserMembershipPage({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final associationMembershipMembersNotifier =
+        ref.watch(associationMembershipMembersProvider.notifier);
+    final queryController = useTextEditingController(text: '');
+    final usersNotifier = ref.watch(userList.notifier);
+    final membership = ref.watch(userAssociationMembershipProvider);
+    final isEdit = membership.id != UserAssociationMembership.empty().id;
+    final start = useTextEditingController(
+      text: isEdit ? processDate(membership.startDate) : "",
+    );
+    final end = useTextEditingController(
+      text: isEdit ? processDate(membership.endDate) : "",
+    );
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
+
+    return AdminTemplate(
+      child: Padding(
+        padding: const EdgeInsets.all(30.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              AlignLeftText(
+                isEdit
+                    ? AdminTextConstants.editMembership
+                    : AdminTextConstants.addMember,
+              ),
+              if (!isEdit) ...[
+                StyledSearchBar(
+                  padding: EdgeInsets.zero,
+                  label: AdminTextConstants.user,
+                  editingController: queryController,
+                  onChanged: (value) async {
+                    tokenExpireWrapper(
+                      ref,
+                      () async {
+                        if (value.isNotEmpty) {
+                          await usersNotifier.filterUsers(value);
+                        } else {
+                          usersNotifier.clear();
+                        }
+                      },
+                    );
+                  },
+                ),
+                SearchResult(queryController: queryController),
+              ] else
+                Text(
+                  membership.user.getName(),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              const SizedBox(
+                height: 10,
+              ),
+              DateEntry(
+                label: AdminTextConstants.startDate,
+                controller: start,
+                onTap: () => getOnlyDayDate(context, start),
+              ),
+              const SizedBox(height: 50),
+              DateEntry(
+                label: AdminTextConstants.endDate,
+                controller: end,
+                onTap: () => getOnlyDayDate(context, end),
+              ),
+              WaitingButton(
+                builder: (child) => AddEditButtonLayout(
+                  colors: const [
+                    ColorConstants.gradient1,
+                    ColorConstants.gradient2,
+                  ],
+                  child: child,
+                ),
+                child: Text(
+                  !isEdit ? AdminTextConstants.add : AdminTextConstants.edit,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                  ),
+                ),
+                onTap: () async {
+                  if (membership.user.id == "") {
+                    displayToastWithContext(
+                      TypeMsg.msg,
+                      AdminTextConstants.emptyUser,
+                    );
+                    return;
+                  }
+                  if (start.text.isEmpty || end.text.isEmpty) {
+                    displayToastWithContext(
+                      TypeMsg.msg,
+                      AdminTextConstants.emptyDate,
+                    );
+                    return;
+                  }
+
+                  tokenExpireWrapper(
+                    ref,
+                    () async {
+                      if (isEdit) {
+                        final value = await associationMembershipMembersNotifier
+                            .updateMember(
+                          membership.copyWith(
+                            startDate:
+                                DateTime.parse(processDateBack(start.text)),
+                            endDate: DateTime.parse(processDateBack(end.text)),
+                          ),
+                        );
+                        if (value) {
+                          displayToastWithContext(
+                            TypeMsg.msg,
+                            AdminTextConstants.updatedMembership,
+                          );
+                          QR.back();
+                        } else {
+                          displayToastWithContext(
+                            TypeMsg.error,
+                            AdminTextConstants.updatingError,
+                          );
+                        }
+                      } else {
+                        // Test if the membership already exists with (association_id,member_id,mandate_year)
+                        final membershipAdd = UserAssociationMembershipBase(
+                          id: "",
+                          associationMembershipId:
+                              membership.associationMembershipId,
+                          userId: membership.user.id,
+                          startDate:
+                              DateTime.parse(processDateBack(start.text)),
+                          endDate: DateTime.parse(processDateBack(end.text)),
+                        );
+                        final value = await associationMembershipMembersNotifier
+                            .addMember(membershipAdd, membership.user);
+                        if (value) {
+                          displayToastWithContext(
+                            TypeMsg.msg,
+                            AdminTextConstants.addedMember,
+                          );
+                          QR.back();
+                        } else {
+                          displayToastWithContext(
+                            TypeMsg.error,
+                            AdminTextConstants.addingError,
+                          );
+                        }
+                      }
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

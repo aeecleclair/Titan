@@ -83,6 +83,7 @@ class MemberEditableCard extends HookConsumerWidget {
               );
               QR.to(
                 AdminRouter.root +
+                    AdminRouter.associationMemberships +
                     AdminRouter.detailAssociationMembership +
                     AdminRouter.addEditMember,
               );
