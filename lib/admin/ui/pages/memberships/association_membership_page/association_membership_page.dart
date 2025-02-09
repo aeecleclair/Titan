@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/class/association_membership_simple.dart';
+import 'package:myecl/admin/providers/all_groups_list_provider.dart';
 import 'package:myecl/admin/providers/association_membership_list_provider.dart';
 import 'package:myecl/admin/providers/association_membership_members_list_provider.dart';
 import 'package:myecl/admin/providers/association_membership_provider.dart';
@@ -17,7 +18,6 @@ import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AssociationMembershipsPage extends HookConsumerWidget {
@@ -33,9 +33,10 @@ class AssociationMembershipsPage extends HookConsumerWidget {
         ref.watch(associationMembershipProvider.notifier);
     final associationMembershipMembersNotifier =
         ref.watch(associationMembershipMembersProvider.notifier);
-    ref.watch(userList);
+    final groups = ref.watch(allGroupList);
 
-    final controller = TextEditingController();
+    final nameController = TextEditingController();
+    final groupIdController = TextEditingController();
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -79,7 +80,9 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                                 context: context,
                                 builder: (context) {
                                   return MembershipCreationDialogBox(
-                                    controller: controller,
+                                    groups: groups,
+                                    nameController: nameController,
+                                    groupIdController: groupIdController,
                                     onYes: () async {
                                       tokenExpireWrapper(ref, () async {
                                         final value =
@@ -87,7 +90,8 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                                                 .createAssociationMembership(
                                           AssociationMembership.empty()
                                               .copyWith(
-                                            name: controller.text,
+                                            groupId: groupIdController.text,
+                                            name: nameController.text,
                                           ),
                                         );
                                         if (value) {

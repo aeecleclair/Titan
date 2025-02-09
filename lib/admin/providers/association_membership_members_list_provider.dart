@@ -39,6 +39,20 @@ class AssociationMembershipMembersNotifier
     );
   }
 
+  Future<bool> updateMember(
+    UserAssociationMembership associationMembership,
+  ) async {
+    return await update(
+      (associationMembership) async => associationMembershipRepository
+          .updateUserMembership(associationMembership),
+      (userAssociationMemberships, membership) => userAssociationMemberships
+        ..[userAssociationMemberships.indexWhere(
+          (g) => g.id == membership.id,
+        )] = membership,
+      associationMembership,
+    );
+  }
+
   Future<bool> deleteMember(
     UserAssociationMembership associationMembership,
   ) async {
