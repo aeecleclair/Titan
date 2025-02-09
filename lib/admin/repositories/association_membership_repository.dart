@@ -85,10 +85,12 @@ class AssociationMembershipRepository extends Repository {
         {
           "association_membership_id":
               userAssociationMembership.associationMembershipId,
-          "start_date": processDateToAPI(userAssociationMembership.startDate),
-          "end_date": processDateToAPI(userAssociationMembership.endDate),
+          "start_date":
+              processDateToAPIWithoutHour(userAssociationMembership.startDate),
+          "end_date":
+              processDateToAPIWithoutHour(userAssociationMembership.endDate),
         },
-        suffix: "membership/${userAssociationMembership.userId}",
+        suffix: "users/${userAssociationMembership.userId}",
       ),
     );
   }
@@ -98,11 +100,13 @@ class AssociationMembershipRepository extends Repository {
   ) async {
     return await update(
       {
-        "start_date": processDateToAPI(userAssociationMembership.startDate),
-        "end_date": processDateToAPI(userAssociationMembership.endDate),
+        "start_date":
+            processDateToAPIWithoutHour(userAssociationMembership.startDate),
+        "end_date":
+            processDateToAPIWithoutHour(userAssociationMembership.endDate),
       },
       "",
-      suffix: "membership/${userAssociationMembership.id}",
+      suffix: "users/${userAssociationMembership.id}",
     );
   }
 

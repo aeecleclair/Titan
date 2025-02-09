@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/providers/all_groups_list_provider.dart';
 import 'package:myecl/admin/providers/association_membership_list_provider.dart';
 import 'package:myecl/admin/providers/association_membership_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -28,9 +28,14 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
     final associationMembershipNotifier =
         ref.watch(associationMembershipProvider.notifier);
     final name = useTextEditingController(text: associationMembership.name);
+    final groups = ref.watch(allGroupList);
+    final groupIdController =
+        useTextEditingController(text: associationMembership.groupId);
     final associationMembershipListNotifier =
         ref.watch(allAssociationMembershipListProvider.notifier);
     final key = GlobalKey<FormState>();
+
+    groups.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
 
     return Column(
       children: [
@@ -53,7 +58,7 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                               controller: name,
                               cursorColor: ColorConstants.gradient1,
                               decoration: InputDecoration(
-                                labelText: PhonebookTextConstants.namePure,
+                                labelText: AdminTextConstants.name,
                                 labelStyle: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -77,7 +82,7 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return PhonebookTextConstants.emptyFieldError;
+                                  return AdminTextConstants.emptyFieldError;
                                 }
                                 return null;
                               },
@@ -85,6 +90,35 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                           ),
                         ],
                       ),
+                    ),
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        AdminTextConstants.group,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    DropdownButtonFormField<String>(
+                      value: groupIdController.text,
+                      onChanged: (String? newValue) {
+                        groupIdController.text = newValue!;
+                      },
+                      items: groups
+                          .map(
+                            (group) => DropdownMenuItem<String>(
+                              value: group.id,
+                              child: Text(group.name),
+                            ),
+                          )
+                          .toList(),
+                      decoration: const InputDecoration(
+                        hintText: AdminTextConstants.group,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
                     ),
                     WaitingButton(
                       builder: (child) => AddEditButtonLayout(
@@ -111,6 +145,7 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                                 .setAssociationMembership(
                               associationMembership.copyWith(
                                 name: name.text,
+                                groupId: groupIdController.text,
                               ),
                             );
                             displayToastWithContext(
@@ -120,13 +155,13 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                           } else {
                             displayToastWithContext(
                               TypeMsg.msg,
-                              PhonebookTextConstants.updatingError,
+                              AdminTextConstants.updatingError,
                             );
                           }
                         });
                       },
                       child: const Text(
-                        PhonebookTextConstants.edit,
+                        AdminTextConstants.edit,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,

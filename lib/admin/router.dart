@@ -10,6 +10,8 @@ import 'package:myecl/admin/ui/pages/groups/edit_group_page/edit_group_page.dart
     deferred as edit_group_page;
 import 'package:myecl/admin/ui/pages/groups/group_page/group_page.dart'
     deferred as group_page;
+import 'package:myecl/admin/ui/pages/memberships/add_edit_user_membership_page/add_edit_user_membership_page.dart'
+    deferred as add_edit_user_membership_page;
 import 'package:myecl/admin/ui/pages/memberships/association_membership_detail_page/association_membership_detail_page.dart'
     deferred as association_membership_detail_page;
 import 'package:myecl/admin/ui/pages/memberships/association_membership_page/association_membership_page.dart'
@@ -131,6 +133,18 @@ class AdminRouter {
                 middleware: [
                   DeferredLoadingMiddleware(
                     association_membership_detail_page.loadLibrary,
+                  ),
+                ],
+                children: [
+                  QRoute(
+                    path: addEditMember,
+                    builder: () => add_edit_user_membership_page
+                        .AddEditUserMembershipPage(),
+                    middleware: [
+                      DeferredLoadingMiddleware(
+                        add_edit_user_membership_page.loadLibrary,
+                      ),
+                    ],
                   ),
                 ],
               ),
