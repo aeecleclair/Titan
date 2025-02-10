@@ -8,7 +8,7 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 class MyCMMRepository extends LogoRepository {
   @override
   // ignore: overridden_fields
-  final ext = "cmm/";
+  final ext = "cmm/memes/";
 
   Future<List<CMM>> getMyCMM(int page) async {
     return (await getList(suffix: '')).map((e) => CMM.fromJson(e)).toList();
@@ -16,7 +16,7 @@ class MyCMMRepository extends LogoRepository {
 
   Future<bool> addCMM(Uint8List bytes) async {
     try {
-      await addLogo(bytes, "", suffix: "memes");
+      await addLogo(bytes, "", suffix: "");
       return true;
     } catch (e) {
       return false;

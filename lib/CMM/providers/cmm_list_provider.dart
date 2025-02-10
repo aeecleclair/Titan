@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/CMM/class/cmm.dart';
-import 'package:myecl/CMM/providers/page_provider.dart';
 import 'package:myecl/CMM/repositories/cmm_repository.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -33,15 +32,18 @@ class CMMListNotifier extends ListNotifier<CMM> {
       cmm,
     );
   }
+
+  Future<bool> deleteCMM(CMM cmm) async {
+    return await _cmmRepository.deleteCMM(cmm.id);
+  }
 }
 
 final cmmListProvider =
     StateNotifierProvider<CMMListNotifier, AsyncValue<List<CMM>>>((ref) {
   final token = ref.watch(tokenProvider);
   final notifier = CMMListNotifier(token: token);
-  final page = ref.watch(pageProvider);
   tokenExpireWrapperAuth(ref, () async {
-    await notifier.getCMM(page);
+    await notifier.getCMM(1);
   });
   return notifier;
 });

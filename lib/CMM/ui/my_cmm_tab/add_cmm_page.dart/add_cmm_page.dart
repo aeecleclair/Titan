@@ -7,10 +7,8 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:myecl/CMM/providers/my_cmm_list_provider.dart';
-import 'package:myecl/CMM/repositories/my_cmm_repository.dart';
 import 'package:myecl/CMM/ui/cmm.dart';
 import 'package:myecl/CMM/ui/components/button.dart';
-import 'package:myecl/CMM/ui/my_cmm_tab/my_cmm_list.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/widgets/image_picker_on_tap.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -55,7 +53,7 @@ class AddCMMPage extends HookConsumerWidget {
                           BoxShadow(
                             color: formFieldState.hasError
                                 ? Colors.red
-                                : Colors.black.withOpacity(0.1),
+                                : Colors.black.withValues(alpha: 0.1),
                             spreadRadius: 5,
                             blurRadius: 10,
                             offset: const Offset(2, 3),

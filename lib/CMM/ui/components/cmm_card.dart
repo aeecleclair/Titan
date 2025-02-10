@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/CMM/class/cmm.dart';
 import 'package:myecl/CMM/providers/cmm_list_provider.dart';
+import 'package:myecl/CMM/providers/cmm_ban_provider.dart';
 import 'package:myecl/CMM/providers/is_cmm_admin_provider.dart';
 import 'package:myecl/CMM/providers/profile_picture_repository.dart';
 import 'package:myecl/tools/functions.dart';
@@ -70,6 +71,7 @@ class CMMCardState extends ConsumerState<CMMCard> {
     final isAdmin = ref.watch(isCMMAdminProvider);
     final profilePicture = ref.watch(profilePictureProvider);
     final cmmListNotifier = ref.watch(cmmListProvider.notifier);
+    final banNotifier = ref.watch(bannedUsersProvider.notifier);
     return Center(
       key: _key,
       child: Padding(
@@ -96,7 +98,7 @@ class CMMCardState extends ConsumerState<CMMCard> {
                                 shape: BoxShape.circle,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
+                                    color: Colors.black.withValues(alpha: 0.1),
                                     spreadRadius: 5,
                                     blurRadius: 10,
                                     offset: const Offset(0, 3),
@@ -127,12 +129,25 @@ class CMMCardState extends ConsumerState<CMMCard> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
-                onDoubleTap: () => print("liked"),
+                onDoubleTap: () {
+                  if (myVote == null) {
+                    cmmListNotifier.addVoteToCMM(widget.cmm, true);
+                    _changeColor(true, Colors.green);
+                    updateVote(1);
+                    updateMyVote(true);
+                  } else if (!myVote!) {
+                    cmmListNotifier.updateVoteToCMM(widget.cmm, true);
+                    _changeColor(true, Colors.green);
+                    _changeColor(false, Colors.grey);
+                    updateVote(2);
+                    updateMyVote(true);
+                  }
+                },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: ConstrainedBox(
                     constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height - 250,
+                      maxHeight: MediaQuery.of(context).size.height - 320,
                       maxWidth: double.infinity,
                     ),
                     child: Image.memory(
@@ -151,11 +166,6 @@ class CMMCardState extends ConsumerState<CMMCard> {
                     IconButton(
                       onPressed: () {
                         if (myVote == null) {
-                          final RenderBox box = _key.currentContext!
-                              .findRenderObject() as RenderBox;
-                          final Size size = box.size;
-                          print(
-                              'Largeur : ${size.width}, Hauteur : ${size.height}');
                           cmmListNotifier.addVoteToCMM(widget.cmm, true);
                           _changeColor(true, Colors.green);
                           updateVote(1);
@@ -195,8 +205,11 @@ class CMMCardState extends ConsumerState<CMMCard> {
                           updateMyVote(false);
                         }
                       },
-                      icon: Icon(Icons.keyboard_double_arrow_down,
-                          size: 35, color: downButtonColor),
+                      icon: Icon(
+                        Icons.keyboard_double_arrow_down,
+                        size: 35,
+                        color: downButtonColor,
+                      ),
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(
                         minWidth: 40,
@@ -221,7 +234,7 @@ class CMMCardState extends ConsumerState<CMMCard> {
                     if (isAdmin)
                       IconButton(
                         onPressed: () {
-                          print("pressed");
+                          banNotifier.banUser(widget.cmm.user.id);
                         },
                         icon: const Icon(
                           Icons.block,
