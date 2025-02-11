@@ -1,0 +1,33 @@
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/CMM/ui/admin_tab/hidden_cmm_list.dart';
+import 'package:myecl/CMM/ui/admin_tab/user_tab.dart';
+
+class AdminTab extends ConsumerWidget {
+  const AdminTab({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 0, // Supprime l’espace du titre
+          bottom: TabBar(
+            tabs: [
+              Tab(icon: Icon(Icons.people, size: 30)),
+              Tab(icon: Icon(Icons.post_add, size: 30)),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          physics: NeverScrollableScrollPhysics(),
+          children: [
+            UserAdminTab(),
+            HiddenCMMList(),
+          ],
+        ),
+      ),
+    );
+  }
+}

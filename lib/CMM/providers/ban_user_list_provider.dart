@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/CMM/class/cmm.dart';
-import 'package:myecl/CMM/repositories/ban_repository.dart';
+import 'package:myecl/CMM/repositories/ban_user_repository.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';

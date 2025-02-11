@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/CMM/providers/is_cmm_admin_provider.dart';
 import 'package:myecl/CMM/providers/profile_picture_repository.dart';
-import 'package:myecl/CMM/ui/admin_tab/admin_tab.dart';
+import 'package:myecl/CMM/ui/admin_tab/admin_main_tab.dart';
 import 'package:myecl/CMM/ui/my_cmm_tab/my_cmm_tab.dart';
 import 'package:myecl/CMM/ui/cmm.dart';
 import 'package:myecl/CMM/ui/leaderboard_tab/leaderboard_tab.dart';

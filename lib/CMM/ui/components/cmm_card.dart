@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/CMM/class/cmm.dart';
 import 'package:myecl/CMM/providers/cmm_list_provider.dart';
-import 'package:myecl/CMM/providers/cmm_ban_provider.dart';
+import 'package:myecl/CMM/providers/ban_user_list_provider.dart';
+import 'package:myecl/CMM/providers/hidden_cmm_list_provider.dart';
 import 'package:myecl/CMM/providers/is_cmm_admin_provider.dart';
 import 'package:myecl/CMM/providers/profile_picture_repository.dart';
 import 'package:myecl/tools/functions.dart';
@@ -72,6 +73,7 @@ class CMMCardState extends ConsumerState<CMMCard> {
     final profilePicture = ref.watch(profilePictureProvider);
     final cmmListNotifier = ref.watch(cmmListProvider.notifier);
     final banNotifier = ref.watch(bannedUsersProvider.notifier);
+    final hiddenCMMListNotifier = ref.watch(hiddenCMMProvider.notifier);
     return Center(
       key: _key,
       child: Padding(
@@ -178,8 +180,11 @@ class CMMCardState extends ConsumerState<CMMCard> {
                           updateMyVote(true);
                         }
                       },
-                      icon: Icon(Icons.keyboard_double_arrow_up,
-                          size: 35, color: upButtonColor),
+                      icon: Icon(
+                        Icons.keyboard_double_arrow_up,
+                        size: 35,
+                        color: upButtonColor,
+                      ),
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(
                         minWidth: 40,
@@ -219,7 +224,7 @@ class CMMCardState extends ConsumerState<CMMCard> {
                     if (isAdmin)
                       IconButton(
                         onPressed: () {
-                          print("pressed");
+                          hiddenCMMListNotifier.hideCMM(widget.cmm.id);
                         },
                         icon: const Icon(
                           Icons.delete,

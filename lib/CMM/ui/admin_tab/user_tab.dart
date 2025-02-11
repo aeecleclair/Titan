@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/CMM/providers/cmm_ban_provider.dart';
+import 'package:myecl/CMM/providers/ban_user_list_provider.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 
-class AdminTab extends ConsumerWidget {
-  const AdminTab({super.key});
+class UserAdminTab extends ConsumerWidget {
+  const UserAdminTab({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
