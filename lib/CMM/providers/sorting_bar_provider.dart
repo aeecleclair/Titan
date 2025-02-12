@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/CMM/class/sorting_type.dart';
+import 'package:myecl/CMM/class/utils.dart';
 
 class SelectedSortingTypeNotifier extends StateNotifier<SortingType> {
   SelectedSortingTypeNotifier() : super(SortingType.newest);

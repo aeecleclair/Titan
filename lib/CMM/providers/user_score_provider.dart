@@ -1,27 +1,32 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/CMM/class/cmm_score.dart';
+import 'package:myecl/CMM/class/utils.dart';
+import 'package:myecl/CMM/providers/sorting_score_bar_provider.dart';
 import 'package:myecl/CMM/repositories/leaderboard_repository.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class CMMScoreNotifier extends SingleNotifier<CMMScore> {
-  final CMMScoreRepository _scoreRepository = CMMScoreRepository();
-  CMMScoreNotifier({required String token}) : super(const AsyncLoading()) {
-    _scoreRepository.setToken(token);
+class UserCMMScoreListNotifier extends ListNotifier<CMMScore> {
+  final _cmmScoreRepository = CMMScoreRepository();
+  UserCMMScoreListNotifier({required String token})
+      : super(const AsyncLoading()) {
+    _cmmScoreRepository.setToken(token);
   }
 
-  Future<AsyncValue<CMMScore>> getLeaderBoardPosition() async {
-    return await load(_scoreRepository.getLeaderBoardPosition);
+  Future<AsyncValue<List<CMMScore>>> getLeaderboard(Period p) async {
+    return await loadList(() => _cmmScoreRepository.getLeaderboard(p));
   }
 }
 
-final userCMMScoreProvider =
-    StateNotifierProvider<CMMScoreNotifier, AsyncValue<CMMScore>>((ref) {
+final userCMMScoreListProvider =
+    StateNotifierProvider<UserCMMScoreListNotifier, AsyncValue<List<CMMScore>>>(
+        (ref) {
   final token = ref.watch(tokenProvider);
-  final notifier = CMMScoreNotifier(token: token);
+  final notifier = UserCMMScoreListNotifier(token: token);
+  final period = ref.watch(selectedSortingScoreProvider);
   tokenExpireWrapperAuth(ref, () async {
-    await notifier.getLeaderBoardPosition();
+    await notifier.getLeaderboard(period);
   });
   return notifier;
 });

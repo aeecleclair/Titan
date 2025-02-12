@@ -44,7 +44,7 @@ class CMMLeaderBoardItem extends StatelessWidget {
             ),
           ),
           Text(
-            "${score.value}",
+            "${score.score}",
           ),
         ],
       ),
