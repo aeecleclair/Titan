@@ -18,8 +18,8 @@ import 'package:myecl/service/tools/setup.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/plausible/plausible_observer.dart';
 import 'package:myecl/tools/providers/path_forwarding_provider.dart';
+import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/ui/layouts/app_template.dart';
-import 'package:myecl/version.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:qlevar_router/qlevar_router.dart' as qqr;
 import 'package:timeago/timeago.dart' as timeago;
@@ -27,7 +27,7 @@ import 'package:app_links/app_links.dart';
 
 void main() async {
   await dotenv.load();
-  GlobalData().host = await getTitanHost();
+  Repository.host = await getTitanHost();
   QR.setUrlStrategy();
   // We set the default page type to QMaterialPage
   // See https://pub.dev/packages/qlevar_router#page-transition
