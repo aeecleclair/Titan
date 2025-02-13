@@ -5,10 +5,9 @@ import 'package:http/http.dart' as http;
 import 'package:myecl/tools/cache/cache_manager.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/logs/logger.dart';
-import 'package:myecl/version.dart';
 
 abstract class Repository {
-  static final String host = GlobalData().host;
+  static String host = "";
   static const String expiredTokenDetail = "Could not validate credentials";
   final String ext = "";
   final Map<String, String> headers = {
