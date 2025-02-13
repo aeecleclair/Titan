@@ -7,13 +7,15 @@ String sortingTypeToString(SortingType t) {
   return "Meilleur du mois";
 }
 
-enum Period { week, month, always }
+enum Period { week, month, year, always }
 
 String periodToString(Period p) {
   if (p == Period.week) {
     return "Semaine";
   } else if (p == Period.month) {
     return "Mois";
+  } else if (p == Period.year) {
+    return "Année";
   }
   return "All time";
 }
@@ -23,25 +25,27 @@ String periodToRequest(Period p) {
     return "week";
   } else if (p == Period.month) {
     return "month";
+  } else if (p == Period.year) {
+    return "year";
   }
   return "always";
 }
 
-enum EntityType { user, floor, promo }
+enum Entity { user, floor, promo }
 
-String entityToString(EntityType t) {
-  if (t == EntityType.promo) {
+String entityToString(Entity e) {
+  if (e == Entity.promo) {
     return "Promotion";
-  } else if (t == EntityType.floor) {
+  } else if (e == Entity.floor) {
     return "Étage";
   }
   return "Utilisateur";
 }
 
-String entityToRequest(EntityType t) {
-  if (t == EntityType.promo) {
-    return "promotion";
-  } else if (t == EntityType.floor) {
+String entityToRequest(Entity e) {
+  if (e == Entity.promo) {
+    return "promo";
+  } else if (e == Entity.floor) {
     return "floor";
   }
   return "user";

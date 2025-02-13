@@ -1,15 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/CMM/class/utils.dart';
 
-class SelectedSortingScoreNotifier extends StateNotifier<Period> {
-  SelectedSortingScoreNotifier() : super(Period.always);
+class SelectedSortingScoreTimeNotifier extends StateNotifier<Period> {
+  SelectedSortingScoreTimeNotifier() : super(Period.always);
 
   void setSortingPeriod(Period p) {
     state = p;
   }
 }
 
-final selectedSortingScoreProvider =
-    StateNotifierProvider<SelectedSortingScoreNotifier, Period>((ref) {
-  return SelectedSortingScoreNotifier();
+final selectedSortingScoreTimeProvider =
+    StateNotifierProvider<SelectedSortingScoreTimeNotifier, Period>((ref) {
+  return SelectedSortingScoreTimeNotifier();
 });

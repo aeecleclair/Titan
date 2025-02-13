@@ -7,10 +7,35 @@ class CMMScoreRepository extends Repository {
   // ignore: overridden_fields
   final ext = "cmm/leaderboard";
 
-  Future<List<CMMScore>> getLeaderboard(Period p) async {
-    return List<CMMScore>.from(
-      (await getList(suffix: "?period=${periodToRequest(p)}"))
-          .map((e) => CMMScore.fromJson(e))
+  Future<List<CMMScoreUser>> getUserLeaderboard(Period p) async {
+    return List<CMMScoreUser>.from(
+      (await getList(
+        suffix:
+            "?period=${periodToRequest(p)}&entity=${entityToRequest(Entity.user)}",
+      ))
+          .map((e) => CMMScoreUser.fromJson(e))
+          .toList(),
+    );
+  }
+
+  Future<List<CMMScorePromo>> getPromoLeaderboard(Period p) async {
+    return List<CMMScorePromo>.from(
+      (await getList(
+        suffix:
+            "?period=${periodToRequest(p)}&entity=${entityToRequest(Entity.promo)}",
+      ))
+          .map((e) => CMMScorePromo.fromJson(e))
+          .toList(),
+    );
+  }
+
+  Future<List<CMMScoreFloor>> getFloorLeaderboard(Period p) async {
+    return List<CMMScoreFloor>.from(
+      (await getList(
+        suffix:
+            "?period=${periodToRequest(p)}&entity=${entityToRequest(Entity.floor)}",
+      ))
+          .map((e) => CMMScoreFloor.fromJson(e))
           .toList(),
     );
   }

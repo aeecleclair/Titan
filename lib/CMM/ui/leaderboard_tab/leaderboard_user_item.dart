@@ -2,9 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:myecl/CMM/class/cmm_score.dart';
 
-class CMMLeaderBoardItem extends StatelessWidget {
-  final CMMScore score;
-  const CMMLeaderBoardItem({super.key, required this.score});
+class CMMLeaderBoardUserItem extends StatelessWidget {
+  final CMMScoreUser score;
+  const CMMLeaderBoardUserItem({super.key, required this.score});
 
   @override
   Widget build(BuildContext context) {

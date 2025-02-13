@@ -7,25 +7,25 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class UserCMMScoreListNotifier extends ListNotifier<CMMScoreUser> {
+class PromoCMMScoreListNotifier extends ListNotifier<CMMScorePromo> {
   final _cmmScoreRepository = CMMScoreRepository();
-  UserCMMScoreListNotifier({required String token})
+  PromoCMMScoreListNotifier({required String token})
       : super(const AsyncLoading()) {
     _cmmScoreRepository.setToken(token);
   }
 
-  Future<AsyncValue<List<CMMScoreUser>>> getUserLeaderboard(Period p) async {
-    return await loadList(() => _cmmScoreRepository.getUserLeaderboard(p));
+  Future<AsyncValue<List<CMMScorePromo>>> getPromoLeaderboard(Period p) async {
+    return await loadList(() => _cmmScoreRepository.getPromoLeaderboard(p));
   }
 }
 
-final userCMMScoreListProvider = StateNotifierProvider<UserCMMScoreListNotifier,
-    AsyncValue<List<CMMScoreUser>>>((ref) {
+final promoCMMScoreListProvider = StateNotifierProvider<
+    PromoCMMScoreListNotifier, AsyncValue<List<CMMScorePromo>>>((ref) {
   final token = ref.watch(tokenProvider);
-  final notifier = UserCMMScoreListNotifier(token: token);
+  final notifier = PromoCMMScoreListNotifier(token: token);
   final period = ref.watch(selectedSortingScoreTimeProvider);
   tokenExpireWrapperAuth(ref, () async {
-    await notifier.getUserLeaderboard(period);
+    await notifier.getPromoLeaderboard(period);
   });
   return notifier;
 });
