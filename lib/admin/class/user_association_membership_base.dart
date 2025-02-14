@@ -28,8 +28,10 @@ class UserAssociationMembershipBase {
     userAssociationMembership['association_membership_id'] =
         associationMembershipId;
     userAssociationMembership['user_id'] = userId;
-    userAssociationMembership['start_date'] = processDateToAPI(startDate);
-    userAssociationMembership['end_date'] = processDateToAPI(endDate);
+    userAssociationMembership['start_date'] =
+        processDateToAPIWithoutHour(startDate);
+    userAssociationMembership['end_date'] =
+        processDateToAPIWithoutHour(endDate);
     return userAssociationMembership;
   }
 
