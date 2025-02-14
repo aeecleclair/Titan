@@ -24,8 +24,7 @@ class LeaderboardTab extends ConsumerWidget {
     final promoLeaderboard = ref.watch(promoCMMScoreListProvider);
     final floorLeaderboard = ref.watch(floorCMMScoreListProvider);
 
-    //final bestUserScore = ref.watch(userCMMScoreProvider);
-
+    //final bestUserScore = ref.watch(userCMMScoreProvider); TODO
     return Column(
       children: [
         Padding(
@@ -58,7 +57,6 @@ class LeaderboardTab extends ConsumerWidget {
                 physics: const BouncingScrollPhysics(),
                 itemCount: scoreList.length,
                 itemBuilder: (context, index) {
-                  print("oui");
                   return selectedSortingScoreEntity == Entity.user
                       ? CMMLeaderBoardUserItem(
                           score: scoreList[index] as CMMScoreUser,

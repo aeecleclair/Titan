@@ -17,14 +17,9 @@ class CMMLeaderBoardUserItem extends StatelessWidget {
           Expanded(
             child: Row(
               children: [
-                score.position == 1
-                    ? const Icon(
-                        Icons.emoji_events,
-                        color: Colors.amber,
-                      )
-                    : Text(
-                        "${score.position}. ",
-                      ),
+                Text(
+                  "${score.position}. ",
+                ),
                 Expanded(
                   child: AutoSizeText(
                     score.user.nickname ??

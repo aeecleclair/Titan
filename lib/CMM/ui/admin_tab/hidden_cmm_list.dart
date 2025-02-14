@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/CMM/class/cmm.dart';
+import 'package:myecl/CMM/class/utils.dart';
 import 'package:myecl/CMM/providers/cmm_list_provider.dart';
 import 'package:myecl/CMM/providers/hidden_cmm_list_provider.dart';
 import 'package:myecl/CMM/ui/components/cmm_card.dart';
@@ -85,7 +86,11 @@ class CMMListState extends ConsumerState<HiddenCMMList> {
             if (!imageSnapshot.hasData) {
               return Center(child: CircularProgressIndicator());
             }
-            return CMMCard(cmm: cmm, image: imageSnapshot.data!);
+            return CMMCard(
+              cmm: cmm,
+              image: imageSnapshot.data!,
+              page: PageType.hidden,
+            );
           },
         );
       },

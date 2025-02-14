@@ -16,7 +16,7 @@ class AdminTab extends ConsumerWidget {
           bottom: TabBar(
             tabs: [
               Tab(icon: Icon(Icons.people, size: 30)),
-              Tab(icon: Icon(Icons.post_add, size: 30)),
+              Tab(icon: Icon(Icons.image_outlined, size: 30)),
             ],
           ),
         ),

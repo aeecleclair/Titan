@@ -50,3 +50,5 @@ String entityToRequest(Entity e) {
   }
   return "user";
 }
+
+enum PageType { scrolling, myPost, hidden }

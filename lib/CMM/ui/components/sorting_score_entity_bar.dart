@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/CMM/class/utils.dart';
 import 'package:myecl/CMM/providers/sorting_score_entity_bar_provider.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 
 class SortingScoreEntityBar extends HookConsumerWidget {
@@ -18,8 +17,7 @@ class SortingScoreEntityBar extends HookConsumerWidget {
     const entities = Entity.values;
 
     return Padding(
-      padding:
-          const EdgeInsets.symmetric(horizontal: 10), // Ajoute un peu de marge
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: entities.map((e) {

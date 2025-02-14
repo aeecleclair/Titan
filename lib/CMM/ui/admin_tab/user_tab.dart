@@ -16,9 +16,13 @@ class UserAdminTab extends ConsumerWidget {
         return Column(
           children: bannedUsers.map((user) {
             return ListTile(
-              title: Text(user.name),
+              title: Text(
+                user.nickname != null
+                    ? user.nickname! + ("${user.name} ${user.firstname}")
+                    : "${user.name} ${user.firstname}",
+              ),
               trailing: IconButton(
-                icon: Icon(Icons.delete, color: Colors.red),
+                icon: Icon(Icons.lock_open_outlined, color: Colors.green),
                 onPressed: () => banNotifier.unbanUser(user.id),
               ),
             );

@@ -28,8 +28,8 @@ class CMMMainPage extends ConsumerWidget {
                 ? [
                     ScrollingTab(),
                     LeaderboardTab(),
-                    MyCMMTab(),
                     AdminTab(),
+                    MyCMMTab(),
                   ]
                 : [
                     ScrollingTab(),
@@ -41,10 +41,13 @@ class CMMMainPage extends ConsumerWidget {
             child: TabBar(
               tabs: isAdmin
                   ? [
-                      const Tab(icon: Icon(Icons.newspaper, size: 30)),
+                      const Tab(icon: Icon(Icons.home_outlined, size: 30)),
                       const Tab(
-                        icon: HeroIcon(
-                          HeroIcons.trophy,
+                        icon: Icon(Icons.emoji_events_outlined, size: 30),
+                      ),
+                      const Tab(
+                        icon: Icon(
+                          Icons.admin_panel_settings_outlined,
                           size: 30,
                         ),
                       ),
@@ -80,12 +83,6 @@ class CMMMainPage extends ConsumerWidget {
                               ),
                             ],
                           ),
-                        ),
-                      ),
-                      const Tab(
-                        icon: Icon(
-                          Icons.admin_panel_settings_outlined,
-                          size: 30,
                         ),
                       ),
                     ]
