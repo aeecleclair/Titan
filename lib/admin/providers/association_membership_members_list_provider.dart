@@ -2,21 +2,40 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/class/user_association_membership.dart';
 import 'package:myecl/admin/class/user_association_membership_base.dart';
 import 'package:myecl/admin/repositories/association_membership_repository.dart';
+import 'package:myecl/admin/repositories/association_membership_user_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/user/class/simple_users.dart';
 
 class AssociationMembershipMembersNotifier
     extends ListNotifier<UserAssociationMembership> {
   final AssociationMembershipRepository associationMembershipRepository;
+  final AssociationMembershipUserRepository associationMembershipUserRepository;
   AssociationMembershipMembersNotifier({
     required this.associationMembershipRepository,
+    required this.associationMembershipUserRepository,
   }) : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<UserAssociationMembership>>>
-      loadAssociationMembershipMembers(String associationMembershipId) async {
+      loadAssociationMembershipMembers(
+    String associationMembershipId, {
+    DateTime? minimalStartDate,
+    DateTime? minimalEndDate,
+    DateTime? maximalStartDate,
+    DateTime? maximalEndDate,
+  }) async {
+    print(minimalStartDate);
+    print(minimalEndDate);
+    print(maximalStartDate);
+    print(maximalEndDate);
     return await loadList(
-      () async => associationMembershipRepository
-          .getAssociationMembershipMembers(associationMembershipId),
+      () async =>
+          associationMembershipRepository.getAssociationMembershipMembers(
+        associationMembershipId,
+        minimalStartDate,
+        minimalEndDate,
+        maximalStartDate,
+        maximalEndDate,
+      ),
     );
   }
 
@@ -25,7 +44,7 @@ class AssociationMembershipMembersNotifier
     SimpleUser user,
   ) async {
     return await add(
-      (associationMembership) async => associationMembershipRepository
+      (associationMembership) async => associationMembershipUserRepository
           .addUserMembership(userAssociationMembership),
       UserAssociationMembership(
         id: userAssociationMembership.id,
@@ -43,7 +62,7 @@ class AssociationMembershipMembersNotifier
     UserAssociationMembership associationMembership,
   ) async {
     return await update(
-      (associationMembership) async => associationMembershipRepository
+      (associationMembership) async => associationMembershipUserRepository
           .updateUserMembership(associationMembership),
       (userAssociationMemberships, membership) => userAssociationMemberships
         ..[userAssociationMemberships.indexWhere(
@@ -57,8 +76,8 @@ class AssociationMembershipMembersNotifier
     UserAssociationMembership associationMembership,
   ) async {
     return await delete(
-      (membershipId) async =>
-          associationMembershipRepository.deleteUserMembership(membershipId),
+      (membershipId) async => associationMembershipUserRepository
+          .deleteUserMembership(membershipId),
       (userAssociationMemberships, membership) =>
           userAssociationMemberships..remove(associationMembership),
       associationMembership.id,
@@ -70,9 +89,12 @@ class AssociationMembershipMembersNotifier
 final associationMembershipMembersProvider = StateNotifierProvider<
     AssociationMembershipMembersNotifier,
     AsyncValue<List<UserAssociationMembership>>>((ref) {
+  final associationMembershipUserRepository =
+      ref.watch(associationMembershipUserRepositoryProvider);
   final associationMembershipRepository =
       ref.watch(associationMembershipRepositoryProvider);
   return AssociationMembershipMembersNotifier(
     associationMembershipRepository: associationMembershipRepository,
+    associationMembershipUserRepository: associationMembershipUserRepository,
   );
 });
