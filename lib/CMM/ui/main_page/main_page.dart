@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/CMM/providers/is_cmm_admin_provider.dart';
-import 'package:myecl/CMM/providers/profile_picture_repository.dart';
+import 'package:myecl/CMM/providers/my_profile_picture_provider.dart';
 import 'package:myecl/CMM/ui/admin_tab/admin_main_tab.dart';
 import 'package:myecl/CMM/ui/my_cmm_tab/my_cmm_tab.dart';
 import 'package:myecl/CMM/ui/cmm.dart';
@@ -16,7 +16,7 @@ class CMMMainPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final profilePicture = ref.watch(profilePictureProvider);
+    final profilePicture = ref.watch(myProfilePictureProvider);
     final isAdmin = ref.watch(isCMMAdminProvider);
     return CMMTemplate(
       child: DefaultTabController(

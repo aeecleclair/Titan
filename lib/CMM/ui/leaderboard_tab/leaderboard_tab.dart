@@ -27,20 +27,8 @@ class LeaderboardTab extends ConsumerWidget {
     //final bestUserScore = ref.watch(userCMMScoreProvider); TODO
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            "LeaderBoard",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
         SortingScoreTimeBar(),
-        SizedBox(
-          height: 10,
-        ),
+        Text("Filtre"),
         SortingScoreEntityBar(),
         Expanded(
           child: Container(

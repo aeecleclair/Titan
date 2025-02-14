@@ -4,9 +4,9 @@ import 'package:myecl/tools/providers/single_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/repositories/profile_picture_repository.dart';
 
-class ProfilePictureNotifier extends SingleNotifier<Uint8List> {
+class MyProfilePictureNotifier extends SingleNotifier<Uint8List> {
   final ProfilePictureRepository profilePictureRepository;
-  ProfilePictureNotifier({required this.profilePictureRepository})
+  MyProfilePictureNotifier({required this.profilePictureRepository})
       : super(const AsyncLoading());
 
   Future<AsyncValue<Uint8List>> getProfilePicture(String userId) async {
@@ -16,10 +16,11 @@ class ProfilePictureNotifier extends SingleNotifier<Uint8List> {
   }
 }
 
-final profilePictureProvider =
-    StateNotifierProvider<ProfilePictureNotifier, AsyncValue<Uint8List>>((ref) {
+final myProfilePictureProvider =
+    StateNotifierProvider<MyProfilePictureNotifier, AsyncValue<Uint8List>>(
+        (ref) {
   final profilePictureRepository = ref.watch(profilePictureRepositoryProvider);
-  ProfilePictureNotifier notifier = ProfilePictureNotifier(
+  MyProfilePictureNotifier notifier = MyProfilePictureNotifier(
     profilePictureRepository: profilePictureRepository,
   );
   tokenExpireWrapperAuth(ref, () async {
