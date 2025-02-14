@@ -9,6 +9,7 @@ import 'package:myecl/phonebook/ui/pages/admin_page/delete_button.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/edition_button.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class MemberEditableCard extends HookConsumerWidget {
@@ -31,8 +32,8 @@ class MemberEditableCard extends HookConsumerWidget {
     }
 
     return Container(
-      padding: const EdgeInsets.all(5),
-      margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      margin: const EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
         border: Border.all(),
         borderRadius: const BorderRadius.all(Radius.circular(20)),
@@ -94,19 +95,24 @@ class MemberEditableCard extends HookConsumerWidget {
             deactivated: false,
             deletion: true,
             onDelete: () async {
-              final result = await associationMembershipMemberListNotifier
-                  .deleteMember(associationMembership);
-              if (result) {
-                displayToastWithContext(
-                  TypeMsg.msg,
-                  PhonebookTextConstants.deletedMember,
-                );
-              } else {
-                displayToastWithContext(
-                  TypeMsg.error,
-                  PhonebookTextConstants.deletingError,
-                );
-              }
+              await tokenExpireWrapper(
+                ref,
+                () async {
+                  final result = await associationMembershipMemberListNotifier
+                      .deleteMember(associationMembership);
+                  if (result) {
+                    displayToastWithContext(
+                      TypeMsg.msg,
+                      PhonebookTextConstants.deletedMember,
+                    );
+                  } else {
+                    displayToastWithContext(
+                      TypeMsg.error,
+                      PhonebookTextConstants.deletingError,
+                    );
+                  }
+                },
+              );
             },
           ),
         ],
