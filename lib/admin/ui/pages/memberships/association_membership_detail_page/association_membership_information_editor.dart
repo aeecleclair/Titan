@@ -43,133 +43,125 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
           key: key,
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 10),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            child: TextFormField(
-                              controller: name,
-                              cursorColor: ColorConstants.gradient1,
-                              decoration: InputDecoration(
-                                labelText: AdminTextConstants.name,
-                                labelStyle: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                suffixIcon: Container(
-                                  padding: const EdgeInsets.all(10),
-                                  child: const HeroIcon(
-                                    HeroIcons.pencil,
-                                  ),
-                                ),
-                                enabledBorder: const UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                                focusedBorder: const UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: ColorConstants.gradient1,
-                                  ),
-                                ),
-                              ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return AdminTextConstants.emptyFieldError;
-                                }
-                                return null;
-                              },
+                    SizedBox(
+                      child: TextFormField(
+                        controller: name,
+                        cursorColor: ColorConstants.gradient1,
+                        decoration: InputDecoration(
+                          labelText: AdminTextConstants.name,
+                          labelStyle: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          suffixIcon: Container(
+                            padding: const EdgeInsets.all(10),
+                            child: const HeroIcon(
+                              HeroIcons.pencil,
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                    const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        AdminTextConstants.group,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                          enabledBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                            ),
+                          ),
+                          focusedBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: ColorConstants.gradient1,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    DropdownButtonFormField<String>(
-                      value: groupIdController.text,
-                      onChanged: (String? newValue) {
-                        groupIdController.text = newValue!;
-                      },
-                      items: groups
-                          .map(
-                            (group) => DropdownMenuItem<String>(
-                              value: group.id,
-                              child: Text(group.name),
-                            ),
-                          )
-                          .toList(),
-                      decoration: const InputDecoration(
-                        hintText: AdminTextConstants.group,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    WaitingButton(
-                      builder: (child) => AddEditButtonLayout(
-                        colors: const [
-                          ColorConstants.gradient1,
-                          ColorConstants.gradient2,
-                        ],
-                        child: child,
-                      ),
-                      onTap: () async {
-                        if (!key.currentState!.validate()) {
-                          return;
-                        }
-
-                        await tokenExpireWrapper(ref, () async {
-                          final value = await associationMembershipListNotifier
-                              .updateAssociationMembership(
-                            associationMembership.copyWith(
-                              name: name.text,
-                            ),
-                          );
-                          if (value) {
-                            associationMembershipNotifier
-                                .setAssociationMembership(
-                              associationMembership.copyWith(
-                                name: name.text,
-                                groupId: groupIdController.text,
-                              ),
-                            );
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              AdminTextConstants.updatedAssociationMembership,
-                            );
-                          } else {
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              AdminTextConstants.updatingError,
-                            );
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return AdminTextConstants.emptyFieldError;
                           }
-                        });
-                      },
-                      child: const Text(
-                        AdminTextConstants.edit,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromARGB(255, 255, 255, 255),
-                        ),
+                          return null;
+                        },
                       ),
                     ),
                   ],
+                ),
+              ),
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  AdminTextConstants.group,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              DropdownButtonFormField<String>(
+                value: groupIdController.text,
+                onChanged: (String? newValue) {
+                  groupIdController.text = newValue!;
+                },
+                items: groups
+                    .map(
+                      (group) => DropdownMenuItem<String>(
+                        value: group.id,
+                        child: Text(group.name),
+                      ),
+                    )
+                    .toList(),
+                decoration: const InputDecoration(
+                  hintText: AdminTextConstants.group,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              WaitingButton(
+                builder: (child) => AddEditButtonLayout(
+                  colors: const [
+                    ColorConstants.gradient1,
+                    ColorConstants.gradient2,
+                  ],
+                  child: child,
+                ),
+                onTap: () async {
+                  if (!key.currentState!.validate()) {
+                    return;
+                  }
+
+                  await tokenExpireWrapper(ref, () async {
+                    final value = await associationMembershipListNotifier
+                        .updateAssociationMembership(
+                      associationMembership.copyWith(
+                        name: name.text,
+                      ),
+                    );
+                    if (value) {
+                      associationMembershipNotifier.setAssociationMembership(
+                        associationMembership.copyWith(
+                          name: name.text,
+                          groupId: groupIdController.text,
+                        ),
+                      );
+                      displayToastWithContext(
+                        TypeMsg.msg,
+                        AdminTextConstants.updatedAssociationMembership,
+                      );
+                    } else {
+                      displayToastWithContext(
+                        TypeMsg.msg,
+                        AdminTextConstants.updatingError,
+                      );
+                    }
+                  });
+                },
+                child: const Text(
+                  AdminTextConstants.edit,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                  ),
                 ),
               ),
             ],
