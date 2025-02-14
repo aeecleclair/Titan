@@ -1,20 +1,20 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/class/user_association_membership.dart';
-import 'package:myecl/admin/repositories/association_membership_repository.dart';
+import 'package:myecl/admin/repositories/association_membership_user_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class UserMembershiplistNotifier
     extends ListNotifier<UserAssociationMembership> {
-  final AssociationMembershipRepository associationMembershipRepository;
+  final AssociationMembershipUserRepository associationMembershipUserRepository;
   UserMembershiplistNotifier({
-    required this.associationMembershipRepository,
+    required this.associationMembershipUserRepository,
   }) : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<UserAssociationMembership>>>
       loadPersonalAssociationMembershipsList() async {
     return await loadList(
-      () async => associationMembershipRepository
+      () async => associationMembershipUserRepository
           .getPersonalAssociationMembershipList(),
     );
   }
@@ -24,7 +24,7 @@ class UserMembershiplistNotifier
     String userId,
   ) async {
     return await loadList(
-      () async => associationMembershipRepository
+      () async => associationMembershipUserRepository
           .getUserAssociationMembershipList(userId),
     );
   }
@@ -33,20 +33,20 @@ class UserMembershiplistNotifier
 final userMembershipListProvider = StateNotifierProvider<
     UserMembershiplistNotifier,
     AsyncValue<List<UserAssociationMembership>>>((ref) {
-  final associationMembershipRepository =
-      ref.watch(associationMembershipRepositoryProvider);
+  final associationMembershipUserRepository =
+      ref.watch(associationMembershipUserRepositoryProvider);
   return UserMembershiplistNotifier(
-    associationMembershipRepository: associationMembershipRepository,
+    associationMembershipUserRepository: associationMembershipUserRepository,
   );
 });
 
 final myMembershipListProvider = StateNotifierProvider<
     UserMembershiplistNotifier,
     AsyncValue<List<UserAssociationMembership>>>((ref) {
-  final associationMembershipRepository =
-      ref.watch(associationMembershipRepositoryProvider);
+  final associationMembershipUserRepository =
+      ref.watch(associationMembershipUserRepositoryProvider);
   UserMembershiplistNotifier provider = UserMembershiplistNotifier(
-    associationMembershipRepository: associationMembershipRepository,
+    associationMembershipUserRepository: associationMembershipUserRepository,
   );
   tokenExpireWrapperAuth(ref, () async {
     await provider.loadPersonalAssociationMembershipsList();

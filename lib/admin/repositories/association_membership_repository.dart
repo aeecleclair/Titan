@@ -1,11 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/admin/class/association_membership_simple.dart';
 import 'package:myecl/admin/class/user_association_membership.dart';
-import 'package:myecl/admin/class/user_association_membership_base.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:intl/intl.dart';
 
 class AssociationMembershipRepository extends Repository {
   @override
@@ -19,10 +17,34 @@ class AssociationMembershipRepository extends Repository {
   }
 
   Future<List<UserAssociationMembership>> getAssociationMembershipMembers(
-    String associationMembershipId,
-  ) async {
+    String associationMembershipId, [
+    DateTime? minimalStartDate,
+    DateTime? minimalEndDate,
+    DateTime? maximalStartDate,
+    DateTime? maximalEndDate,
+  ]) async {
+    String querries = "";
+    if (minimalStartDate != null) {
+      querries +=
+          "?minimalStartDate=${processDateToAPIWithoutHour(minimalStartDate)}";
+    }
+    if (minimalEndDate != null) {
+      querries += querries.isEmpty ? "?" : "&";
+      querries +=
+          "minimalEndDate=${processDateToAPIWithoutHour(minimalEndDate)}";
+    }
+    if (maximalStartDate != null) {
+      querries += querries.isEmpty ? "?" : "&";
+      querries +=
+          "maximalStartDate=${processDateToAPIWithoutHour(maximalStartDate)}";
+    }
+    if (maximalEndDate != null) {
+      querries += querries.isEmpty ? "?" : "&";
+      querries +=
+          "maximalEndDate=${processDateToAPIWithoutHour(maximalEndDate)}";
+    }
     return List<UserAssociationMembership>.from(
-      (await getList(suffix: "$associationMembershipId/members"))
+      (await getList(suffix: "$associationMembershipId/members$querries"))
           .map((x) => UserAssociationMembership.fromJson(x)),
     );
   }
@@ -47,75 +69,6 @@ class AssociationMembershipRepository extends Repository {
   ) async {
     return AssociationMembership.fromJson(
       await create(associationMembership.toJson()),
-    );
-  }
-
-  Future<List<UserAssociationMembership>> getPersonalAssociationMembershipList([
-    DateTime? minimalDate,
-  ]) async {
-    final DateFormat formatter = DateFormat('yyyyMMdd');
-    return List<UserAssociationMembership>.from(
-      (await getList(
-        suffix:
-            "users/me${minimalDate != null ? '?minimalDate=${formatter.format(minimalDate)}' : ''}",
-      ))
-          .map((x) => UserAssociationMembership.fromJson(x)),
-    );
-  }
-
-  Future<List<UserAssociationMembership>> getUserAssociationMembershipList(
-    String userId, [
-    DateTime? minimalDate,
-  ]) async {
-    final DateFormat formatter = DateFormat('yyyyMMdd');
-    return List<UserAssociationMembership>.from(
-      (await getList(
-        suffix:
-            "users/$userId${minimalDate != null ? '?minimalDate=${formatter.format(minimalDate)}' : ''}",
-      ))
-          .map((x) => UserAssociationMembership.fromJson(x)),
-    );
-  }
-
-  Future<UserAssociationMembership> addUserMembership(
-    UserAssociationMembershipBase userAssociationMembership,
-  ) async {
-    return UserAssociationMembership.fromJson(
-      await create(
-        {
-          "association_membership_id":
-              userAssociationMembership.associationMembershipId,
-          "start_date":
-              processDateToAPIWithoutHour(userAssociationMembership.startDate),
-          "end_date":
-              processDateToAPIWithoutHour(userAssociationMembership.endDate),
-        },
-        suffix: "users/${userAssociationMembership.userId}",
-      ),
-    );
-  }
-
-  Future<bool> updateUserMembership(
-    UserAssociationMembership userAssociationMembership,
-  ) async {
-    return await update(
-      {
-        "start_date":
-            processDateToAPIWithoutHour(userAssociationMembership.startDate),
-        "end_date":
-            processDateToAPIWithoutHour(userAssociationMembership.endDate),
-      },
-      "",
-      suffix: "users/${userAssociationMembership.id}",
-    );
-  }
-
-  Future<bool> deleteUserMembership(
-    String userAssociationMembershipId,
-  ) async {
-    return await delete(
-      "",
-      suffix: "users/$userAssociationMembershipId",
     );
   }
 }
