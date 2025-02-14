@@ -54,6 +54,7 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                     ? AdminTextConstants.editMembership
                     : AdminTextConstants.addMember,
               ),
+              const SizedBox(height: 20),
               if (!isEdit) ...[
                 StyledSearchBar(
                   padding: EdgeInsets.zero,
@@ -87,14 +88,25 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
               DateEntry(
                 label: AdminTextConstants.startDate,
                 controller: start,
-                onTap: () => getOnlyDayDate(context, start),
+                onTap: () => getOnlyDayDate(
+                  context,
+                  start,
+                  firstDate: DateTime(2019),
+                  lastDate: DateTime(2100),
+                ),
               ),
               const SizedBox(height: 50),
               DateEntry(
                 label: AdminTextConstants.endDate,
                 controller: end,
-                onTap: () => getOnlyDayDate(context, end),
+                onTap: () => getOnlyDayDate(
+                  context,
+                  end,
+                  firstDate: DateTime(2019),
+                  lastDate: DateTime(2100),
+                ),
               ),
+              const SizedBox(height: 50),
               WaitingButton(
                 builder: (child) => AddEditButtonLayout(
                   colors: const [
