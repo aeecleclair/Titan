@@ -23,10 +23,6 @@ class AssociationMembershipMembersNotifier
     DateTime? maximalStartDate,
     DateTime? maximalEndDate,
   }) async {
-    print(minimalStartDate);
-    print(minimalEndDate);
-    print(maximalStartDate);
-    print(maximalEndDate);
     return await loadList(
       () async =>
           associationMembershipRepository.getAssociationMembershipMembers(
