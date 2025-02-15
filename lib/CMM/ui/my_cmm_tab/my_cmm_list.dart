@@ -87,7 +87,10 @@ class CMMListState extends ConsumerState<MyCMMList> {
               return Center(child: CircularProgressIndicator());
             }
             return CMMCard(
-                cmm: cmm, image: imageSnapshot.data!, page: PageType.myPost);
+              cmm: cmm,
+              image: imageSnapshot.data!,
+              page: PageType.myPost,
+            );
           },
         );
       },

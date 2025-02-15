@@ -147,10 +147,36 @@ class CMMCardState extends ConsumerState<CMMCard> {
                       maxHeight: MediaQuery.of(context).size.height - 320,
                       maxWidth: double.infinity,
                     ),
-                    child: Image.memory(
-                      widget.image,
-                      fit: BoxFit.cover,
-                    ),
+                    child: widget.cmm.status == "neutral"
+                        ? Image.memory(
+                            widget.image,
+                            fit: BoxFit.cover,
+                          )
+                        : Stack(
+                            children: [
+                              // Image de fond
+                              Image.memory(
+                                widget.image,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                              ),
+                              // Filtre gris semi-transparent
+                              Container(
+                                width: double.infinity,
+                                height: double.infinity,
+                                color: Colors.black
+                                    .withValues(alpha: 0.3), // Opacité réglable
+                              ),
+                              // Icône "œil caché" au centre
+                              Center(
+                                child: Icon(
+                                  Icons.visibility_off,
+                                  color: Colors.white,
+                                  size: 50, // Taille réglable
+                                ),
+                              ),
+                            ],
+                          ),
                   ),
                 ),
               ),

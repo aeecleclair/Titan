@@ -18,6 +18,7 @@ class CMMMainPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final profilePicture = ref.watch(myProfilePictureProvider);
     final isAdmin = ref.watch(isCMMAdminProvider);
+    print(isAdmin);
     return CMMTemplate(
       child: DefaultTabController(
         length: isAdmin ? 4 : 3,

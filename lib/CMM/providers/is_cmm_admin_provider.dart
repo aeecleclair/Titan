@@ -4,7 +4,7 @@ import 'package:myecl/user/providers/user_provider.dart';
 final isCMMAdminProvider = StateProvider<bool>((ref) {
   final me = ref.watch(userProvider);
   for (final group in me.groups) {
-    if (group.name == "cmm") {
+    if (group.name == "CMM") {
       return true;
     }
   }
