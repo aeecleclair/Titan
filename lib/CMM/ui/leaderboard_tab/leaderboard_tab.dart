@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/CMM/class/cmm_score.dart';
 import 'package:myecl/CMM/class/utils.dart';
 import 'package:myecl/CMM/providers/floor_score_provider.dart';
+import 'package:myecl/CMM/providers/my_score_provider.dart';
 import 'package:myecl/CMM/providers/promo_score_provider.dart';
 import 'package:myecl/CMM/providers/sorting_score_entity_bar_provider.dart';
 import 'package:myecl/CMM/providers/user_score_provider.dart';
@@ -10,6 +11,7 @@ import 'package:myecl/CMM/ui/components/sorting_score_time_bar.dart';
 import 'package:myecl/CMM/ui/leaderboard_tab/leaderboard_floor_item.dart';
 import 'package:myecl/CMM/ui/leaderboard_tab/leaderboard_promo_item.dart';
 import 'package:myecl/CMM/ui/leaderboard_tab/leaderboard_user_item.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
 
 import '../components/sorting_score_entity_bar.dart';
 
@@ -24,12 +26,25 @@ class LeaderboardTab extends ConsumerWidget {
     final promoLeaderboard = ref.watch(promoCMMScoreListProvider);
     final floorLeaderboard = ref.watch(floorCMMScoreListProvider);
 
-    //final bestUserScore = ref.watch(userCMMScoreProvider); TODO
+    final myScore = ref.watch(myScoreProvider);
     return Column(
       children: [
-        SortingScoreTimeBar(),
-        Text("Filtre"),
-        SortingScoreEntityBar(),
+        // SortingScoreTimeBar(),
+        // Text("Filtre"),
+        // SortingScoreEntityBar(),
+        ExpansionTile(
+          title: const Text("Filtres"),
+          children: const [
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.0),
+              child: SortingScoreTimeBar(),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 8),
+              child: SortingScoreEntityBar(),
+            ),
+          ],
+        ),
         Expanded(
           child: Container(
             width: double.infinity,
@@ -63,11 +78,11 @@ class LeaderboardTab extends ConsumerWidget {
             ),
           ),
         ),
-        // AsyncChild(
-        //   value: bestUserScore,
-        //   builder: (context, score) => Text("Your score: ${score.value}"),
-        //   errorBuilder: (e, s) => Container(),
-        // ),
+        AsyncChild(
+          value: myScore,
+          builder: (context, score) => Text(score.toString()),
+          errorBuilder: (e, s) => Container(),
+        ),
       ],
     );
   }

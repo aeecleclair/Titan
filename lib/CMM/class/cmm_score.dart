@@ -1,82 +1,87 @@
 import 'package:myecl/user/class/list_users.dart';
 
-class CMMScoreUser {
-  late final SimpleUser user;
+class CMMScore {
   late final int score;
   late final int position;
 
-  CMMScoreUser({
-    required this.user,
+  CMMScore({
     required this.score,
     required this.position,
   });
 
-  CMMScoreUser.fromJson(Map<String, dynamic> json) {
-    user = SimpleUser.fromJson(json['user']);
+  CMMScore.fromJson(Map<String, dynamic> json) {
     score = json['score'];
     position = json['position'];
   }
 
-  CMMScoreUser.empty() {
-    user = SimpleUser.empty();
+  CMMScore.empty() {
     score = 0;
     position = 0;
   }
 
   @override
+  String toString() => "Votre position est $position avec un score de $score";
+}
+
+class CMMScoreUser extends CMMScore {
+  late final SimpleUser user;
+
+  CMMScoreUser({
+    required this.user,
+    required super.score,
+    required super.position,
+  });
+
+  CMMScoreUser.fromJson(super.json)
+      : user = SimpleUser.fromJson(json['user']),
+        super.fromJson();
+
+  CMMScoreUser.empty()
+      : user = SimpleUser.empty(),
+        super.empty();
+
+  @override
   String toString() => 'Score(user: $user, value: $score, position: $position)';
 }
 
-class CMMScorePromo {
+class CMMScorePromo extends CMMScore {
   late final int promo;
-  late final int score;
-  late final int position;
 
   CMMScorePromo({
     required this.promo,
-    required this.score,
-    required this.position,
+    required super.score,
+    required super.position,
   });
 
-  CMMScorePromo.fromJson(Map<String, dynamic> json) {
-    promo = json['promo'];
-    score = json['score'];
-    position = json['position'];
-  }
+  CMMScorePromo.fromJson(super.json)
+      : promo = json['promo'],
+        super.fromJson();
 
-  CMMScorePromo.empty() {
-    promo = 0;
-    score = 0;
-    position = 0;
-  }
+  CMMScorePromo.empty()
+      : promo = 0,
+        super.empty();
 
   @override
   String toString() =>
       'Score(promo: $promo, value: $score, position: $position)';
 }
 
-class CMMScoreFloor {
+class CMMScoreFloor extends CMMScore {
   late final String floor;
-  late final int score;
-  late final int position;
 
   CMMScoreFloor({
     required this.floor,
-    required this.score,
-    required this.position,
+    required super.score,
+    required super.position,
   });
 
-  CMMScoreFloor.fromJson(Map<String, dynamic> json) {
-    floor = json['floor'];
-    score = json['score'];
-    position = json['position'];
-  }
+  CMMScoreFloor.fromJson(super.json)
+      : floor = json['floor'] ?? "",
+        super.fromJson();
 
-  CMMScoreFloor.empty() {
-    floor = "";
-    score = 0;
-    position = 0;
-  }
+  CMMScoreFloor.empty()
+      : floor = "",
+        super.empty();
 
   @override
   String toString() =>

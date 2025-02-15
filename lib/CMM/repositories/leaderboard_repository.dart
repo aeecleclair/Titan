@@ -39,4 +39,12 @@ class CMMScoreRepository extends Repository {
           .toList(),
     );
   }
+
+  Future<CMMScore> getMyScore(Period p) async {
+    final response = await getOne("/me?period=${periodToRequest(p)}");
+    if (response == null) {
+      return CMMScore.empty();
+    }
+    return CMMScore.fromJson(response);
+  }
 }
