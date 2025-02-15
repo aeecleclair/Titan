@@ -79,7 +79,12 @@ class LeaderboardTab extends ConsumerWidget {
         ),
         AsyncChild(
           value: myScore,
-          builder: (context, score) => Text(score.toString()),
+          builder: (context, score) {
+            if (score.score == 0) {
+              return Container();
+            }
+            return Text(score.toString());
+          },
           errorBuilder: (e, s) => Container(),
         ),
       ],

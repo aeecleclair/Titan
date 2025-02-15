@@ -35,7 +35,7 @@ class MemeRepository extends LogoRepository {
     );
   }
 
-  Future<bool> updateVoteToMeme(Meme meme, bool positive) async {
+  Future<bool> updateVoteToMeme(Meme meme, bool? positive) async {
     return await update(
       meme.toJson(),
       meme.id,
@@ -44,7 +44,7 @@ class MemeRepository extends LogoRepository {
   }
 
   Future<bool> deleteVoteToMeme(String id) async {
-    return await delete(id, suffix: 'memes/$id/vote');
+    return await delete(id, suffix: '/vote');
   }
 }
 

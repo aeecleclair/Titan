@@ -25,6 +25,10 @@ class MemeListNotifier extends ListNotifier<Meme> {
     return await _memeRepository.addVoteToMeme(meme, positive);
   }
 
+  Future<bool> deleteVoteToMeme(Meme meme) async {
+    return await _memeRepository.deleteVoteToMeme(meme.id);
+  }
+
   Future<bool> updateVoteToMeme(Meme meme, bool positive) async {
     return await update(
       (meme) => _memeRepository.updateVoteToMeme(meme, positive),

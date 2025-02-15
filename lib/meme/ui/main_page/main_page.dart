@@ -87,7 +87,7 @@ class MemeMainPage extends ConsumerWidget {
                       ),
                     ]
                   : [
-                      const Tab(icon: Icon(Icons.newspaper, size: 30)),
+                      const Tab(icon: Icon(Icons.home_outlined, size: 30)),
                       const Tab(
                         icon: HeroIcon(
                           HeroIcons.trophy,

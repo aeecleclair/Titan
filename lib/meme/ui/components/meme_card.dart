@@ -18,8 +18,12 @@ class MemeCard extends ConsumerStatefulWidget {
   final Meme meme;
   final Uint8List image;
   final PageType page;
-  const MemeCard(
-      {super.key, required this.meme, required this.image, required this.page});
+  const MemeCard({
+    super.key,
+    required this.meme,
+    required this.image,
+    required this.page,
+  });
 
   @override
   MemeCardState createState() => MemeCardState();
@@ -56,13 +60,21 @@ class MemeCardState extends ConsumerState<MemeCard> {
     }
   }
 
-  void updateVote(int i) {
+  void updateVote(bool up, int? i) {
     setState(() {
-      voteScore = voteScore + i;
+      if (i != null) {
+        voteScore = voteScore + i;
+      } else {
+        if (up) {
+          voteScore = voteScore - 1;
+        } else {
+          voteScore = voteScore + 1;
+        }
+      }
     });
   }
 
-  void updateMyVote(bool b) {
+  void updateMyVote(bool? b) {
     setState(() {
       myVote = b;
     });
@@ -130,13 +142,13 @@ class MemeCardState extends ConsumerState<MemeCard> {
                   if (myVote == null) {
                     memeListNotifier.addVoteToMeme(widget.meme, true);
                     _changeColor(true, Colors.green);
-                    updateVote(1);
+                    updateVote(true, 1);
                     updateMyVote(true);
                   } else if (!myVote!) {
                     memeListNotifier.updateVoteToMeme(widget.meme, true);
                     _changeColor(true, Colors.green);
                     _changeColor(false, Colors.grey);
-                    updateVote(2);
+                    updateVote(true, 2);
                     updateMyVote(true);
                   }
                 },
@@ -190,14 +202,19 @@ class MemeCardState extends ConsumerState<MemeCard> {
                       if (myVote == null) {
                         memeListNotifier.addVoteToMeme(widget.meme, true);
                         _changeColor(true, Colors.green);
-                        updateVote(1);
+                        updateVote(true, 1);
                         updateMyVote(true);
                       } else if (!myVote!) {
                         memeListNotifier.updateVoteToMeme(widget.meme, true);
                         _changeColor(true, Colors.green);
                         _changeColor(false, Colors.grey);
-                        updateVote(2);
+                        updateVote(true, 2);
                         updateMyVote(true);
+                      } else if (myVote!) {
+                        memeListNotifier.deleteVoteToMeme(widget.meme);
+                        _changeColor(true, Colors.grey);
+                        updateVote(true, null);
+                        updateMyVote(null);
                       }
                     },
                     icon: Icon(
@@ -220,14 +237,19 @@ class MemeCardState extends ConsumerState<MemeCard> {
                       if (myVote == null) {
                         memeListNotifier.addVoteToMeme(widget.meme, false);
                         _changeColor(false, Colors.red);
-                        updateVote(-1);
+                        updateVote(false, -1);
                         updateMyVote(false);
                       } else if (myVote!) {
                         memeListNotifier.updateVoteToMeme(widget.meme, false);
                         _changeColor(true, Colors.grey);
                         _changeColor(false, Colors.red);
-                        updateVote(-2);
+                        updateVote(false, -2);
                         updateMyVote(false);
+                      } else if (!myVote!) {
+                        memeListNotifier.deleteVoteToMeme(widget.meme);
+                        _changeColor(false, Colors.grey);
+                        updateVote(false, null);
+                        updateMyVote(null);
                       }
                     },
                     icon: Icon(
