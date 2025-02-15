@@ -44,7 +44,7 @@ class AssociationMembershipUserRepository extends Repository {
   ) async {
     return await update(
       userAssociationMembership.toJson(),
-      "userAssociationMembership.id",
+      userAssociationMembership.id,
     );
   }
 
@@ -52,7 +52,7 @@ class AssociationMembershipUserRepository extends Repository {
     String userAssociationMembershipId,
   ) async {
     return await delete(
-      "userAssociationMembershipId",
+      userAssociationMembershipId,
     );
   }
 }
