@@ -1,0 +1,88 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/meme/class/meme_score.dart';
+import 'package:myecl/meme/class/utils.dart';
+import 'package:myecl/meme/providers/floor_score_provider.dart';
+import 'package:myecl/meme/providers/my_score_provider.dart';
+import 'package:myecl/meme/providers/promo_score_provider.dart';
+import 'package:myecl/meme/providers/sorting_score_entity_bar_provider.dart';
+import 'package:myecl/meme/providers/user_score_provider.dart';
+import 'package:myecl/meme/ui/components/sorting_score_entity_bar.dart';
+import 'package:myecl/meme/ui/components/sorting_score_time_bar.dart';
+import 'package:myecl/meme/ui/leaderboard_tab/leaderboard_floor_item.dart';
+import 'package:myecl/meme/ui/leaderboard_tab/leaderboard_promo_item.dart';
+import 'package:myecl/meme/ui/leaderboard_tab/leaderboard_user_item.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+
+class LeaderboardTab extends ConsumerWidget {
+  const LeaderboardTab({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedSortingScoreEntity =
+        ref.watch(selectedSortingScoreEntityProvider);
+    final userLeaderBoard = ref.watch(userMemeScoreListProvider);
+    final promoLeaderboard = ref.watch(promoMemeScoreListProvider);
+    final floorLeaderboard = ref.watch(floorMemeScoreListProvider);
+
+    final myScore = ref.watch(myScoreProvider);
+    return Column(
+      children: [
+        // SortingScoreTimeBar(),
+        // Text("Filtre"),
+        // SortingScoreEntityBar(),
+        ExpansionTile(
+          title: const Text("Filtres"),
+          children: const [
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.0),
+              child: SortingScoreTimeBar(),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 8),
+              child: SortingScoreEntityBar(),
+            ),
+          ],
+        ),
+        Expanded(
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            padding: const EdgeInsets.only(top: 15, left: 30, right: 30),
+            child: (selectedSortingScoreEntity == Entity.user
+                    ? userLeaderBoard
+                    : selectedSortingScoreEntity == Entity.promo
+                        ? promoLeaderboard
+                        : floorLeaderboard)
+                .when(
+              data: (scoreList) => ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                itemCount: scoreList.length,
+                itemBuilder: (context, index) {
+                  return selectedSortingScoreEntity == Entity.user
+                      ? MemeLeaderBoardUserItem(
+                          score: scoreList[index] as MemeScoreUser,
+                        )
+                      : selectedSortingScoreEntity == Entity.promo
+                          ? MemeLeaderBoardPromoItem(
+                              score: scoreList[index] as MemeScorePromo,
+                            )
+                          : MemeLeaderBoardFloorItem(
+                              score: scoreList[index] as MemeScoreFloor,
+                            );
+                },
+              ),
+              error: (e, s) => Text(e.toString()),
+              loading: () => const Text("Loading"),
+            ),
+          ),
+        ),
+        AsyncChild(
+          value: myScore,
+          builder: (context, score) => Text(score.toString()),
+          errorBuilder: (e, s) => Container(),
+        ),
+      ],
+    );
+  }
+}
