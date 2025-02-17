@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:myecl/tools/plausible/plausible.dart';
+import 'package:myecl/version/class/version.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:http/http.dart' as http;
 
@@ -472,15 +473,15 @@ Future<String> getTitanHost() async {
   }
 
   // Get backend version
-  final response = await http.get(Uri.parse("$host/information"));
+  final response = await http.get(Uri.parse("${host}information"));
 
   if (response.statusCode == 200) {
     String toDecode = response.body;
     toDecode = utf8.decode(response.body.runes.toList());
-    var decoded = jsonDecode(toDecode);
+    var decoded = Version.fromJson(jsonDecode(toDecode));
     final version = decoded.version;
     final minimalHyperionVersion = "4.0.0";
-    final alphaHost = String.fromEnvironment("ALPHA_HOST");
+    final alphaHost = dotenv.env["ALPHA_HOST"];
 
     // We compare the version of the backend with the minimal requirements of this front version
     if (!isBackVersionCompatible(version, minimalHyperionVersion)) {
@@ -493,15 +494,19 @@ Future<String> getTitanHost() async {
             "Hyperion (alpha) host does not match the minimal requirements. Got $version expected at least $minimalHyperionVersion.");
       }
 
+      if (alphaHost == null || alphaHost == "") {
+        throw StateError("Could not find alpha host corresponding to flavor");
+      }
+
       // Else we verify the alpha version
-      final alphaResponse = await http.get(Uri.parse("$alphaHost/information"));
+      final alphaResponse = await http.get(Uri.parse("${alphaHost}information"));
       if (alphaResponse.statusCode != 200) {
         throw StateError("Hyperion (alpha) is not responding.");
       }
 
       String toDecode2 = alphaResponse.body;
       toDecode2 = utf8.decode(alphaResponse.body.runes.toList());
-      var decoded2 = jsonDecode(toDecode2);
+      var decoded2 = Version.fromJson(jsonDecode(toDecode2));
       final alphaVersion = decoded2.version;
 
       if (!isBackVersionCompatible(alphaVersion, minimalHyperionVersion)) {
