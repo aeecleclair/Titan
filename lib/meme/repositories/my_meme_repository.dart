@@ -10,7 +10,7 @@ class MyMemeRepository extends LogoRepository {
   // ignore: overridden_fields
   final ext = "meme/memes/";
 
-  Future<List<Meme>> getMyMeme(int page) async {
+  Future<List<Meme>> getMyMeme() async {
     return (await getList(suffix: 'me')).map((e) => Meme.fromJson(e)).toList();
   }
 

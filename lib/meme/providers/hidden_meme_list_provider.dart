@@ -13,9 +13,10 @@ class HiddenMemeListNotifier extends ListNotifier<Meme> {
     _hiddenMemeRepository.setToken(token);
   }
 
-  Future<AsyncValue<List<Meme>>> getHiddenMeme(int page) async {
+  Future<AsyncValue<List<Meme>>> getHiddenMeme() async {
     return await loadList(
-        () async => _hiddenMemeRepository.getBannedMeme(page));
+      () async => _hiddenMemeRepository.getBannedMeme(),
+    );
   }
 
   Future<bool> hideMeme(String id) async {
@@ -27,13 +28,13 @@ class HiddenMemeListNotifier extends ListNotifier<Meme> {
   }
 }
 
-final hiddenMemeProvider =
+final hiddenMemeListProvider =
     StateNotifierProvider<HiddenMemeListNotifier, AsyncValue<List<Meme>>>(
         (ref) {
   final token = ref.watch(tokenProvider);
   final notifier = HiddenMemeListNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {
-    await notifier.getHiddenMeme(1);
+    await notifier.getHiddenMeme();
   });
   return notifier;
 });

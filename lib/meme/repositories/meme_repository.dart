@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/meme/class/meme.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/meme/class/utils.dart';
 import 'package:myecl/tools/repository/logo_repository.dart';
 
 class MemeRepository extends LogoRepository {
@@ -10,8 +11,10 @@ class MemeRepository extends LogoRepository {
   // ignore: overridden_fields
   final ext = "meme/memes/";
 
-  Future<List<Meme>> getMeme(int page) async {
-    return (await getList(suffix: '?sort_by=best&n_page=$page'))
+  Future<List<Meme>> getMeme(SortingType sortingType) async {
+    return (await getList(
+      suffix: '?sort_by=${sortingType.name.split(".").last}',
+    ))
         .map((e) => Meme.fromJson(e))
         .toList();
   }

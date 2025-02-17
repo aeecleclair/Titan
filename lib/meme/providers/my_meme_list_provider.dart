@@ -13,9 +13,9 @@ class MyMemeListNotifier extends ListNotifier<Meme> {
     _myMemeRepository.setToken(token);
   }
 
-  Future<AsyncValue<List<Meme>>> getMyMeme(int page) async {
+  Future<AsyncValue<List<Meme>>> getMyMeme() async {
     return await loadList(
-      () async => _myMemeRepository.getMyMeme(page),
+      () async => _myMemeRepository.getMyMeme(),
     );
   }
 
@@ -30,7 +30,7 @@ final myMemeListProvider =
   final token = ref.watch(tokenProvider);
   final notifier = MyMemeListNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {
-    await notifier.getMyMeme(1);
+    await notifier.getMyMeme();
   });
   return notifier;
 });

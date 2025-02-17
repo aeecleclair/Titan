@@ -9,8 +9,8 @@ class HiddenMemeRepository extends Repository {
   // ignore: overridden_fields
   final ext = "meme/memes/";
 
-  Future<List<Meme>> getBannedMeme(int page) async {
-    return (await getList(suffix: 'hidden?n_page=$page'))
+  Future<List<Meme>> getBannedMeme() async {
+    return (await getList(suffix: 'hidden'))
         .map((e) => Meme.fromJson(e))
         .toList();
   }

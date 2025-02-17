@@ -1,10 +1,18 @@
-enum SortingType { newest, bestOfTheMonth }
+enum SortingType { best, worst, trending, newest, oldest }
 
 String sortingTypeToString(SortingType t) {
-  if (t == SortingType.newest) {
-    return "Récent";
+  switch (t) {
+    case SortingType.best:
+      return "Meilleur";
+    case SortingType.worst:
+      return "Pire";
+    case SortingType.trending:
+      return "Tendance";
+    case SortingType.newest:
+      return "Plus récent";
+    case SortingType.oldest:
+      return "Plus ancien";
   }
-  return "Meilleur du mois";
 }
 
 enum Period { week, month, year, always }

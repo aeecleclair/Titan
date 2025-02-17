@@ -2,11 +2,11 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/meme/class/meme.dart';
 import 'package:myecl/meme/class/utils.dart';
 import 'package:myecl/meme/providers/meme_list_provider.dart';
 import 'package:myecl/meme/providers/my_meme_list_provider.dart';
 import 'package:myecl/meme/ui/components/meme_card.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
 
 class CustomPageViewScrollPhysics extends ScrollPhysics {
   const CustomPageViewScrollPhysics({super.parent});
@@ -24,82 +24,37 @@ class CustomPageViewScrollPhysics extends ScrollPhysics {
       );
 }
 
-class MyMemeList extends ConsumerStatefulWidget {
+class MyMemeList extends ConsumerWidget {
   const MyMemeList({super.key});
 
   @override
-  MemeListState createState() => MemeListState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final myMemeList = ref.watch(myMemeListProvider);
 
-class MemeListState extends ConsumerState<MyMemeList> {
-  final PageController _pageController = PageController();
-  final List<Meme> _memeList = [];
-  bool _isLoadingMore = false;
-  int _pageKey = 1;
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchMeme(); // Load the first page
-    _pageController.addListener(_onPageChanged);
-  }
-
-  void _onPageChanged() {
-    if (_pageController.page == _memeList.length - 2 && !_isLoadingMore) {
-      _fetchMeme();
-    }
-  }
-
-  Future<void> _fetchMeme() async {
-    setState(() => _isLoadingMore = true);
-    final myMemeListNotifier = ref.read(myMemeListProvider.notifier);
-
-    final newCmmList = await myMemeListNotifier.getMyMeme(_pageKey);
-
-    newCmmList.when(
-      data: (data) {
-        setState(() {
-          _memeList.addAll(data);
-          _pageKey++;
-          _isLoadingMore = false;
-        });
-      },
-      loading: () {},
-      error: (err, stack) {
-        setState(() => _isLoadingMore = false);
-      },
+    return AsyncChild(
+      value: myMemeList,
+      builder: (context, memeList) => PageView.builder(
+        scrollDirection: Axis.vertical,
+        physics: const CustomPageViewScrollPhysics(),
+        controller: PageController(),
+        itemCount: memeList.length,
+        itemBuilder: (context, index) {
+          final meme = memeList[index];
+          return FutureBuilder<Uint8List>(
+            future: ref.read(memeListProvider.notifier).getMemeImage(meme.id),
+            builder: (context, imageSnapshot) {
+              if (!imageSnapshot.hasData) {
+                return Center(child: CircularProgressIndicator());
+              }
+              return MemeCard(
+                meme: meme,
+                image: imageSnapshot.data!,
+                page: PageType.myPost,
+              );
+            },
+          );
+        },
+      ),
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return PageView.builder(
-      controller: _pageController,
-      physics: CustomPageViewScrollPhysics(),
-      scrollDirection: Axis.vertical,
-      itemCount: _memeList.length,
-      itemBuilder: (context, index) {
-        final meme = _memeList[index];
-        return FutureBuilder<Uint8List>(
-          future: ref.read(memeListProvider.notifier).getMemeImage(meme.id),
-          builder: (context, imageSnapshot) {
-            if (!imageSnapshot.hasData) {
-              return Center(child: CircularProgressIndicator());
-            }
-            return MemeCard(
-              meme: meme,
-              image: imageSnapshot.data!,
-              page: PageType.myPost,
-            );
-          },
-        );
-      },
-    );
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
   }
 }

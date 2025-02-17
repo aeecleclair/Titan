@@ -85,7 +85,7 @@ class MemeCardState extends ConsumerState<MemeCard> {
     final isAdmin = ref.watch(isMemeAdminProvider);
     final memeListNotifier = ref.watch(memeListProvider.notifier);
     final banNotifier = ref.watch(bannedUsersProvider.notifier);
-    final hiddenMemeListNotifier = ref.watch(hiddenMemeProvider.notifier);
+    final hiddenMemeListNotifier = ref.watch(hiddenMemeListProvider.notifier);
     final memePictures =
         ref.watch(memePicturesProvider.select((value) => value[widget.meme]));
     final memePicturesNotifier = ref.watch(memePicturesProvider.notifier);
