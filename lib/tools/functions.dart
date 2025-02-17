@@ -521,26 +521,25 @@ Future<String> getTitanHost() async {
 }
 
 bool isBackVersionCompatible(String currentVersion, String minimalVersion) {
-  List<int> current = currentVersion
-      .split('.')
-      .map(int.parse)
-      .toList(); // e.g  1.1.0 -> [1, 1, 0]
-  List<int> minimal = minimalVersion
-      .split('.')
-      .map(int.parse)
-      .toList(); // e.g  1.2.1 -> [1, 2, 1]
+  final List<int> currentVersionParts = currentVersion.split('.').map(int.parse).toList();
+  final int major = currentVersionParts[0];
+  final int minor = currentVersionParts[1];
+  final int patch = currentVersionParts[2];
+  final minimalVersionParts = minimalVersion.split('.').map(int.parse).toList();
+  final int minimalMajor = minimalVersionParts[0];
+  final int minimalMinor = minimalVersionParts[1];
+  final int minimalPatch = minimalVersionParts[2];
 
-  for (int i = 0; i < 3; i++) {
-    if (current[i] > minimal[i]) {
-      return true;
-    } else if (current[i] < minimal[i]) {
-      return false;
-    } else if (i == 2 && (current[i] == minimal[i])) {
-      return true;
-    }
+  if (major < minimalMajor) {
+    return false;
   }
-
-  return false;
+  if (major == minimalMajor && minor < minimalMinor) {
+    return false;
+  }
+  if (major == minimalMajor && minor == minimalMinor && patch < minimalPatch) {
+    return false;
+  }
+  return true;
 }
 
 String getTitanPackageName() {
