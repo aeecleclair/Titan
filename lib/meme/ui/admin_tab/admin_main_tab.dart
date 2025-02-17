@@ -24,7 +24,7 @@ class AdminTab extends ConsumerWidget {
           physics: NeverScrollableScrollPhysics(),
           children: [
             UserAdminTab(),
-            //HiddenMemeList(),
+            HiddenMemeList(),
           ],
         ),
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/meme/class/utils.dart';
 import 'package:myecl/meme/router.dart';
 import 'package:myecl/tools/ui/widgets/top_bar.dart';
 
@@ -14,7 +15,7 @@ class MemeTemplate extends HookConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const TopBar(
-            title: "Meme",
+            title: MemeTextConstant.cmm,
             root: MemeRouter.root,
           ),
           Expanded(child: child),

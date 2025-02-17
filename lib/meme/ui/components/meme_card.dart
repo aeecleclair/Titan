@@ -270,21 +270,20 @@ class MemeCardState extends ConsumerState<MemeCard> {
                           context: context,
                           builder: (BuildContext context) {
                             return CustomDialogBox(
-                              title: "Cacher un meme",
-                              descriptions:
-                                  "Voulez-vous vraiment cacher ce meme ?",
+                              title: MemeTextConstant.hideMeme,
+                              descriptions: MemeTextConstant.wantToHideMeme,
                               onYes: () async {
                                 final value = await hiddenMemeListNotifier
                                     .hideMeme(widget.meme.id);
                                 if (value) {
                                   displayToastWithContext(
                                     TypeMsg.msg,
-                                    "Meme caché",
+                                    MemeTextConstant.hiddenMeme,
                                   );
                                 } else {
                                   displayToastWithContext(
                                     TypeMsg.error,
-                                    "Erreur lors l'invisibilisation du meme",
+                                    MemeTextConstant.errorHiddingMeme,
                                   );
                                 }
                               },
@@ -309,21 +308,20 @@ class MemeCardState extends ConsumerState<MemeCard> {
                           context: context,
                           builder: (BuildContext context) {
                             return CustomDialogBox(
-                              title: "Bannir un utilisateur",
-                              descriptions:
-                                  "Voulez-vous vraiment bannir cet utilisateur ?",
+                              title: MemeTextConstant.banUser,
+                              descriptions: MemeTextConstant.wantToBanUser,
                               onYes: () async {
                                 final value = await banNotifier
                                     .banUser(widget.meme.user.id);
                                 if (value) {
                                   displayToastWithContext(
                                     TypeMsg.msg,
-                                    "Utilisateur banni",
+                                    MemeTextConstant.bannedUser,
                                   );
                                 } else {
                                   displayToastWithContext(
                                     TypeMsg.error,
-                                    "Erreur lors du bannissement de l'utilisateur",
+                                    MemeTextConstant.errorBanningUser,
                                   );
                                 }
                               },
@@ -354,21 +352,20 @@ class MemeCardState extends ConsumerState<MemeCard> {
                         context: context,
                         builder: (BuildContext context) {
                           return CustomDialogBox(
-                            title: "Supprimer un meme",
-                            descriptions:
-                                "Voulez-vous vraiment supprimer ce meme ?",
+                            title: MemeTextConstant.deleteMeme,
+                            descriptions: MemeTextConstant.wantToDeleteMeme,
                             onYes: () async {
                               final value = await memeListNotifier
                                   .deleteMeme(widget.meme);
                               if (value) {
                                 displayToastWithContext(
                                   TypeMsg.msg,
-                                  "Meme supprimé",
+                                  MemeTextConstant.deletedMeme,
                                 );
                               } else {
                                 displayToastWithContext(
                                   TypeMsg.error,
-                                  "Erreur lors de la suppression du meme",
+                                  MemeTextConstant.errorDeletingMeme,
                                 );
                               }
                             },
@@ -395,21 +392,20 @@ class MemeCardState extends ConsumerState<MemeCard> {
                         context: context,
                         builder: (BuildContext context) {
                           return CustomDialogBox(
-                            title: "Rendre visible un meme",
-                            descriptions:
-                                "Voulez-vous vraiment rendre à nouveau visible ce meme ?",
+                            title: MemeTextConstant.showMeme,
+                            descriptions: MemeTextConstant.wantToShowMeme,
                             onYes: () async {
                               final value = await hiddenMemeListNotifier
                                   .showMeme(widget.meme.id);
                               if (value) {
                                 displayToastWithContext(
                                   TypeMsg.msg,
-                                  "Meme rendu visible",
+                                  MemeTextConstant.showedMeme,
                                 );
                               } else {
                                 displayToastWithContext(
                                   TypeMsg.error,
-                                  "Erreur lors de la visibilisation du meme",
+                                  MemeTextConstant.errorShowingMeme,
                                 );
                               }
                             },

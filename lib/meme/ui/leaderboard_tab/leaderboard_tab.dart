@@ -32,7 +32,7 @@ class LeaderboardTab extends ConsumerWidget {
         // Text("Filtre"),
         // SortingScoreEntityBar(),
         ExpansionTile(
-          title: const Text("Filtres"),
+          title: const Text(MemeTextConstant.filters),
           children: const [
             Padding(
               padding: EdgeInsets.symmetric(vertical: 8.0),
@@ -73,7 +73,7 @@ class LeaderboardTab extends ConsumerWidget {
                 },
               ),
               error: (e, s) => Text(e.toString()),
-              loading: () => const Text("Loading"),
+              loading: () => const Text(MemeTextConstant.loading),
             ),
           ),
         ),

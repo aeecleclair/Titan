@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:myecl/meme/class/utils.dart';
 import 'package:myecl/meme/router.dart';
 import 'package:myecl/meme/ui/components/button.dart';
 import 'package:myecl/meme/ui/my_meme_tab/my_meme_list.dart';
@@ -21,7 +22,7 @@ class MyMemeTab extends HookWidget {
             QR.to(MemeRouter.root + MemeRouter.add);
           },
           child: const MyButton(
-            text: "Ajouter un Meme",
+            text: MemeTextConstant.addMeme,
           ),
         ),
         const SizedBox(

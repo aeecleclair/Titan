@@ -6,6 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:myecl/meme/class/utils.dart';
 import 'package:myecl/meme/providers/my_meme_list_provider.dart';
 import 'package:myecl/meme/ui/meme.dart';
 import 'package:myecl/meme/ui/components/button.dart';
@@ -34,7 +35,7 @@ class AddMemePage extends HookConsumerWidget {
           FormField<File>(
             validator: (e) {
               if (poster.value == null) {
-                return "Choix poster";
+                return MemeTextConstant.choicePoster;
               }
               return null;
             },
@@ -61,24 +62,7 @@ class AddMemePage extends HookConsumerWidget {
                         ],
                       ),
                       child: posterFile.value != null
-                          ?
-                          // ? Container(
-                          //     decoration: BoxDecoration(
-                          //       borderRadius: const BorderRadius.all(
-                          //         Radius.circular(5),
-                          //       ),
-                          //       image: DecorationImage(
-                          //         image: poster.value != null
-                          //             ? Image.memory(
-                          //                 poster.value!,
-                          //                 fit: BoxFit.cover,
-                          //               ).image
-                          //             : posterFile.value!.image,
-                          //         fit: BoxFit.cover,
-                          //       ),
-                          //     ),
-                          //   )
-                          Padding(
+                          ? Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
@@ -111,7 +95,7 @@ class AddMemePage extends HookConsumerWidget {
               QR.back();
             },
             child: const MyButton(
-              text: "Ajouter ce Meme",
+              text: MemeTextConstant.addThisMeme,
             ),
           ),
           const SizedBox(

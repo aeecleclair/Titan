@@ -11,7 +11,7 @@ class MemeScoreRepository extends Repository {
     return List<MemeScoreUser>.from(
       (await getList(
         suffix:
-            "?period=${periodToRequest(p)}&entity=${entityToRequest(Entity.user)}",
+            "?period=${p.name.split(".").last}&entity=${Entity.user.name.split(".").last}",
       ))
           .map((e) => MemeScoreUser.fromJson(e))
           .toList(),
@@ -22,7 +22,7 @@ class MemeScoreRepository extends Repository {
     return List<MemeScorePromo>.from(
       (await getList(
         suffix:
-            "?period=${periodToRequest(p)}&entity=${entityToRequest(Entity.promo)}",
+            "?period=${p.name.split(".").last}&entity=${Entity.user.name.split(".").last}",
       ))
           .map((e) => MemeScorePromo.fromJson(e))
           .toList(),
@@ -33,7 +33,7 @@ class MemeScoreRepository extends Repository {
     return List<MemeScoreFloor>.from(
       (await getList(
         suffix:
-            "?period=${periodToRequest(p)}&entity=${entityToRequest(Entity.floor)}",
+            "?period=${p.name.split(".").last}&entity=${Entity.user.name.split(".").last}",
       ))
           .map((e) => MemeScoreFloor.fromJson(e))
           .toList(),
@@ -41,7 +41,7 @@ class MemeScoreRepository extends Repository {
   }
 
   Future<MemeScore> getMyScore(Period p) async {
-    final response = await getOne("/me?period=${periodToRequest(p)}");
+    final response = await getOne("/me?period=${p.name.split(".").last}");
     if (response == null) {
       return MemeScore.empty();
     }
