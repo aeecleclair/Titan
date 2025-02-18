@@ -8,8 +8,8 @@ import 'package:myecl/paiement/ui/pages/main_page/seller_card/store_divider.dart
 import 'package:myecl/paiement/ui/pages/main_page/seller_card/store_seller_card.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 
-class SellerList extends ConsumerWidget {
-  const SellerList({super.key});
+class StoreList extends ConsumerWidget {
+  const StoreList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

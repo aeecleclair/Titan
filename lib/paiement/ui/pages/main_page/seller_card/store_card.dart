@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/paiement/class/store.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/paiement/providers/selected_store_provider.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_card_button.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_card_template.dart';
 import 'package:myecl/paiement/ui/pages/scan_page/scan_page.dart';
 
-class SellerCard extends StatelessWidget {
+class StoreCard extends ConsumerWidget {
   final Function? toggle;
-  final Store seller;
-  const SellerCard({super.key, required this.toggle, required this.seller});
+  const StoreCard({super.key, required this.toggle});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final store = ref.watch(selectedStoreProvider);
     final buttonGradient = [
       const Color.fromARGB(255, 6, 75, 75),
-      Color.fromARGB(255, 0, 29, 29)
+      const Color.fromARGB(255, 0, 29, 29)
     ];
     return MainCardTemplate(
       toggle: toggle,
@@ -24,7 +25,7 @@ class SellerCard extends StatelessWidget {
         Color.fromARGB(255, 0, 29, 29)
       ],
       title: 'Solde associatif',
-      value: seller.name,
+      value: store.name,
       actionButtons: [
         MainCardButton(
           colors: buttonGradient,
