@@ -32,7 +32,7 @@ class TransactionCard extends StatelessWidget {
               SizedBox(
                 height: 5,
               ),
-              Text("12/10/2021",
+              Text("Bar - Rewass",
                   style: TextStyle(
                     color: Color(0xff204550),
                     fontSize: 12,

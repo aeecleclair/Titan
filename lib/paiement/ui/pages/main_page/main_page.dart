@@ -25,7 +25,7 @@ class MainPage extends HookConsumerWidget {
                     }),
               ),
               const SizedBox(
-                height: 20,
+                height: 25,
               ),
               const LastTransactions()
             ],

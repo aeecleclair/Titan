@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/paiement/ui/pages/main_page/day_divider.dart';
 import 'package:myecl/paiement/ui/pages/main_page/transaction_card.dart';
 
 class LastTransactions extends StatelessWidget {
@@ -18,11 +19,18 @@ class LastTransactions extends StatelessWidget {
                   fontWeight: FontWeight.bold)),
         ),
         const SizedBox(
-          height: 10,
+          height: 15,
         ),
+        const DayDivider(),
         const TransactionCard(),
         const TransactionCard(),
+        const DayDivider(),
         const TransactionCard(),
+        const DayDivider(),
+        const TransactionCard(),
+        const SizedBox(
+          height: 15,
+        ),
       ],
     );
   }

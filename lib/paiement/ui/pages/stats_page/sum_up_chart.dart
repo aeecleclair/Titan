@@ -18,11 +18,13 @@ class SumUpChart extends HookConsumerWidget {
             radius: 60 + (selected.value == 0 ? 15 : 0),
             title: "",
             color: const Color.fromARGB(255, 255, 119, 7),
+          badgePositionPercentageOffset: 0.6,
             badgeWidget: SumUpCard(
               amount: '68,46€',
               color: const Color.fromARGB(255, 255, 119, 7),
               darkColor: const Color.fromARGB(255, 230, 103, 0),
-              shadowColor: const Color.fromARGB(255, 97, 44, 0).withOpacity(0.2),
+              shadowColor:
+                  const Color.fromARGB(255, 97, 44, 0).withOpacity(0.2),
               title: 'Bar',
             )),
         PieChartSectionData(
@@ -30,7 +32,8 @@ class SumUpChart extends HookConsumerWidget {
           color: const Color(0xff017f80),
           radius: 70 + (selected.value == 1 ? 15 : 0),
           title: "",
-          badgeWidget:  SumUpCard(
+          badgePositionPercentageOffset: 0.6,
+          badgeWidget: SumUpCard(
             amount: '174,12€',
             color: const Color.fromARGB(255, 1, 127, 128),
             darkColor: const Color.fromARGB(255, 0, 102, 103),
@@ -43,7 +46,8 @@ class SumUpChart extends HookConsumerWidget {
           color: const Color.fromARGB(255, 4, 84, 84),
           title: "",
           radius: 65 + (selected.value == 2 ? 15 : 0),
-          badgeWidget:  SumUpCard(
+          badgePositionPercentageOffset: 0.6,
+          badgeWidget: SumUpCard(
             amount: '85,58€',
             color: const Color.fromARGB(255, 4, 84, 84),
             darkColor: const Color.fromARGB(255, 0, 68, 68),
@@ -59,9 +63,7 @@ class SumUpChart extends HookConsumerWidget {
         children: [
           PieChart(
             PieChartData(
-                borderData: FlBorderData(
-                  show: true,
-                ),
+                borderData: FlBorderData(show: true),
                 pieTouchData: PieTouchData(
                     touchCallback: (flTouchEvent, pieTouchResponse) {
                   selected.value =
@@ -85,7 +87,7 @@ class SumUpChart extends HookConsumerWidget {
                       style: TextStyle(fontSize: 18, color: Colors.grey),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 7,
                     ),
                     Text(
                       "348,23€",
@@ -93,6 +95,9 @@ class SumUpChart extends HookConsumerWidget {
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
                           color: Color.fromARGB(255, 4, 84, 84)),
+                    ),
+                    SizedBox(
+                      height: 10,
                     ),
                   ]),
             ),
