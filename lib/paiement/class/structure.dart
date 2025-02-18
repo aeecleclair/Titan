@@ -18,14 +18,15 @@ class Structure {
 
   factory Structure.fromJson(Map<String, dynamic> json) {
     return Structure(
-        name: json['name'],
-        membership: json['membership'] != null
-            ? AvailableAssociationMembership.values.firstWhere(
-                (e) => e.toString().split('.').last == json['membership'],
-              )
-            : AvailableAssociationMembership.noMembership,
-        id: json['id'],
-        managerUser: SimpleUser.fromJson(json['manager_user']));
+      name: json['name'],
+      membership: json['membership'] != null
+          ? AvailableAssociationMembership.values.firstWhere(
+              (e) => e.toString().split('.').last == json['membership'],
+            )
+          : AvailableAssociationMembership.noMembership,
+      id: json['id'],
+      managerUser: SimpleUser.fromJson(json['manager_user']),
+    );
   }
 
   Map<String, dynamic> toJson() {

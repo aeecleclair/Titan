@@ -28,7 +28,10 @@ class ConfirmFundButton extends ConsumerWidget {
 
     void helloAssoCallback(String fundingUrl) async {
       html.WindowBase popupWin = html.window.open(
-          fundingUrl, "HelloAsso", "width=800, height=900, scrollbars=yes");
+        fundingUrl,
+        "HelloAsso",
+        "width=800, height=900, scrollbars=yes",
+      );
 
       final completer = Completer();
       void checkWindowClosed() {
@@ -72,9 +75,10 @@ class ConfirmFundButton extends ConsumerWidget {
         }
         final value = await fundingUrlNotifier.getFundingUrl(
           Transfer(
-              amount:
-                  (double.parse(fundAmount.replaceAll(',', '.')) * 100).toInt(),
-              type: TransferType.helloAsso),
+            amount:
+                (double.parse(fundAmount.replaceAll(',', '.')) * 100).toInt(),
+            type: TransferType.helloAsso,
+          ),
         );
         value.when(
           data: (fundingUrl) {
