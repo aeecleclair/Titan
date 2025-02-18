@@ -32,7 +32,7 @@ class InfoCard extends StatelessWidget {
             Text(
               title,
               style: const TextStyle(
-                fontSize: 15,
+                fontSize: 13,
               ),
             ),
             Text(
