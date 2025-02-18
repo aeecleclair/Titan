@@ -69,7 +69,7 @@ class StructurePage extends HookConsumerWidget {
                             onTap: () {
                               QR.to(
                                 AdminRouter.root +
-                                    AdminRouter.structure +
+                                    AdminRouter.structures +
                                     AdminRouter.addStructure,
                               );
                             },
@@ -92,7 +92,7 @@ class StructurePage extends HookConsumerWidget {
                                 structureIdNotifier.setId(structure.id);
                                 QR.to(
                                   AdminRouter.root +
-                                      AdminRouter.structure+
+                                      AdminRouter.structures+
                                       AdminRouter.editStructure,
                                 );
                               },
