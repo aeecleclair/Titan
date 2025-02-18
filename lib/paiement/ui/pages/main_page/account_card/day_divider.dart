@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/paiement/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 
 class DayDivider extends StatelessWidget {
-  final DateTime date;
+  final String date;
   const DayDivider({super.key, required this.date});
 
   @override
@@ -21,7 +22,7 @@ class DayDivider extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Center(
               child: Text(
-                dateFromNow(date),
+                capitalize(date),
                 style: const TextStyle(
                   color: Color(0xff204550),
                   fontSize: 14,
