@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/paiement/providers/selected_store_provider.dart';
+import 'package:myecl/paiement/providers/selected_structure_provider.dart';
 import 'package:myecl/paiement/providers/store_admin_list_provider.dart';
 import 'package:myecl/paiement/ui/pages/store_admin_page/search_result.dart';
 import 'package:myecl/paiement/ui/pages/store_admin_page/seller_right_card.dart';
@@ -19,7 +20,9 @@ class StoreAdminPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final store = ref.watch(selectedStoreProvider);
-    final storeSellers = ref.watch(storeAdminListProvider);
+    final selectedStructure = ref.read(selectedStructureProvider);
+    final storeSellers =
+        ref.watch(storeAdminListProvider(selectedStructure.id));
     final usersNotifier = ref.watch(userList.notifier);
     final queryController = useTextEditingController();
     final isSearching = useState(false);

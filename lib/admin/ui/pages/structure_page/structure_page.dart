@@ -72,7 +72,8 @@ class StructurePage extends HookConsumerWidget {
                           GestureDetector(
                             onTap: () {
                               structureNotifier.setStructure(Structure.empty());
-                              structureManagerNotifier.setUser(SimpleUser.empty()); 
+                              structureManagerNotifier
+                                  .setUser(SimpleUser.empty());
                               QR.to(
                                 AdminRouter.root +
                                     AdminRouter.structures +
@@ -96,7 +97,8 @@ class StructurePage extends HookConsumerWidget {
                               group: structure,
                               onEdit: () {
                                 structureNotifier.setStructure(structure);
-                                // structureManagerNotifier.setUser(structure.managerUserId); TODO: w8 for back end update
+                                structureManagerNotifier
+                                    .setUser(structure.managerUser);
                                 QR.to(
                                   AdminRouter.root +
                                       AdminRouter.structures +

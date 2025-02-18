@@ -3,6 +3,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/paiement/class/seller.dart';
 import 'package:myecl/paiement/providers/new_admin_provider.dart';
+import 'package:myecl/paiement/providers/selected_structure_provider.dart';
 import 'package:myecl/paiement/providers/store_admin_list_provider.dart';
 import 'package:myecl/paiement/providers/store_provider.dart';
 import 'package:myecl/tools/functions.dart';
@@ -22,7 +23,9 @@ class SearchResult extends HookConsumerWidget {
     final usersNotifier = ref.watch(userList.notifier);
     final newAdmin = ref.watch(newAdminProvider);
     final newAdminNotifier = ref.watch(newAdminProvider.notifier);
-    final storeAdminListNotifier = ref.watch(storeAdminListProvider.notifier);
+    final selectedStructure = ref.read(selectedStructureProvider);
+    final storeAdminListNotifier =
+        ref.watch(storeAdminListProvider(selectedStructure.id).notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);

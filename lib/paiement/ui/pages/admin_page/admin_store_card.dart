@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/paiement/class/store.dart';
+import 'package:myecl/paiement/providers/selected_structure_provider.dart';
 import 'package:myecl/paiement/providers/store_admin_list_provider.dart';
 import 'package:myecl/paiement/providers/store_provider.dart';
 import 'package:myecl/paiement/providers/stores_list_provider.dart';
@@ -19,9 +20,11 @@ class AdminStoreCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final storeListNotifier = ref.watch(storeListProvider.notifier);
     final storeNotifier = ref.watch(storeProvider.notifier);
-    final storeAdminListNotifier = ref.watch(storeAdminListProvider.notifier);
+    final selectedStructure = ref.read(selectedStructureProvider);
+    final storeListNotifier = ref.watch(storeListProvider.notifier);
+    final storeAdminListNotifier =
+        ref.watch(storeAdminListProvider(selectedStructure.id).notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);

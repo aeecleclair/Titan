@@ -3,20 +3,21 @@ import 'package:myecl/paiement/class/store.dart';
 import 'package:myecl/paiement/class/structure.dart';
 import 'package:myecl/paiement/repositories/stores_repository.dart';
 import 'package:myecl/paiement/repositories/structures_repository.dart';
+import 'package:myecl/paiement/repositories/users_me_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 
 class StoreListNotifier extends ListNotifier<Store> {
   final StoresRepository storesRepository;
   final StructuresRepository structureRepository;
+  final UsersMeRepository usersMeRepository;
   StoreListNotifier({
     required this.storesRepository,
     required this.structureRepository,
+    required this.usersMeRepository,
   }) : super(const AsyncValue.loading());
 
-  Future<AsyncValue<List<Store>>> getStores(Structure structure) async {
-    return await loadList(
-      () => structureRepository.getStructureStores(structure),
-    );
+  Future<AsyncValue<List<Store>>> getStores() async {
+    return await loadList(usersMeRepository.getMyStores);
   }
 
   Future<bool> createStore(Structure structure, Store store) async {
@@ -49,9 +50,10 @@ final storeListProvider =
     StateNotifierProvider<StoreListNotifier, AsyncValue<List<Store>>>((ref) {
   final storeListRepository = ref.watch(storesRepositoryProvider);
   final structureRepository = ref.watch(structuresRepositoryProvider);
-  final notifier = StoreListNotifier(
+  final usersMeRepository = ref.watch(usersMeRepositoryProvider);
+  return StoreListNotifier(
     storesRepository: storeListRepository,
     structureRepository: structureRepository,
-  );
-  return notifier;
+    usersMeRepository: usersMeRepository,
+  )..getStores();
 });
