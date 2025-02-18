@@ -25,6 +25,15 @@ class StoreListNotifier extends ListNotifier<Store> {
       store,
     );
   }
+
+  Future<bool> deleteStore(Store store) async {
+    return await delete(
+      storesRepository.deleteStore,
+      (stores, store) => stores..remove(store),
+      store.id,
+      store,
+    );
+  }
 }
 
 final storeListProvider =

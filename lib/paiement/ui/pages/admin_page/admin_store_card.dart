@@ -109,19 +109,19 @@ class AdminStoreCard extends ConsumerWidget {
                           "Voulez-vous vraiment supprimer cette association ?",
                       onYes: () {
                         tokenExpireWrapper(ref, () async {
-                          // final value =
-                          //     await storeListNotifier.deleteStore(store);
-                          // if (value) {
-                          //   displayToastWithContext(
-                          //     TypeMsg.msg,
-                          //     "Association supprimée",
-                          //   );
-                          // } else {
-                          //   displayToastWithContext(
-                          //     TypeMsg.error,
-                          //     "Impossible de supprimer l'association",
-                          //   );
-                          // }
+                          final value =
+                              await storeListNotifier.deleteStore(store);
+                          if (value) {
+                            displayToastWithContext(
+                              TypeMsg.msg,
+                              "Association supprimée",
+                            );
+                          } else {
+                            displayToastWithContext(
+                              TypeMsg.error,
+                              "Impossible de supprimer l'association",
+                            );
+                          }
                         });
                       },
                     ),
