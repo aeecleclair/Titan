@@ -5,6 +5,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/paiement/providers/barcode_provider.dart';
 import 'package:myecl/paiement/providers/ongoing_transaction.dart';
+import 'package:myecl/paiement/providers/scan_provider.dart';
+import 'package:myecl/paiement/providers/store_provider.dart';
 import 'package:myecl/paiement/providers/transaction_provider.dart';
 import 'package:myecl/paiement/ui/pages/scan_page/cancel_button.dart';
 import 'package:myecl/paiement/ui/pages/scan_page/scanner.dart';
@@ -25,6 +27,8 @@ class ScanPage extends HookConsumerWidget {
     final ongoingTransaction = ref.watch(ongoingTransactionProvider);
     final ongoingTransactionNotifier =
         ref.watch(ongoingTransactionProvider.notifier);
+    final store = ref.read(storeProvider);
+    final scanNotifier = ref.read(scanProvider.notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -125,6 +129,60 @@ class ScanPage extends HookConsumerWidget {
                   const Spacer(),
                   AsyncChild(
                     value: ongoingTransaction,
+                    errorBuilder: (error, stack) {
+                      if (error.toString().contains("required membership")) {
+                        Expanded(
+                          child: GestureDetector(
+                            child: Container(
+                              width: double.infinity,
+                              height: 50,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white.withValues(alpha: 0.8),
+                              ),
+                              child: const Text(
+                                'Valider quand même',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                            onTap: () async {
+                              final barcode = ref.read(barcodeProvider);
+                              if (barcode == null) {
+                                return;
+                              }
+                              final value = await scanNotifier
+                                  .scan(store.id, barcode, bypass: true);
+                              ongoingTransactionNotifier
+                                  .updateOngoingTransaction(value);
+                              barcodeNotifier.clearBarcode();
+                              ongoingTransactionNotifier
+                                  .clearOngoingTransaction();
+                              value.when(
+                                data: (value) {
+                                  displayToastWithContext(
+                                    TypeMsg.msg,
+                                    "Transaction validé",
+                                  );
+                                },
+                                error: (error, stack) {
+                                  displayToastWithContext(
+                                    TypeMsg.error,
+                                    error.toString(),
+                                  );
+                                },
+                                loading: () {},
+                              );
+                            },
+                          ),
+                        );
+                      }
+                      return const Text("Erreur lors du scan");
+                    },
                     builder: (context, transaction) => Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: Row(

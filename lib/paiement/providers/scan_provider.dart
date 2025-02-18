@@ -9,11 +9,12 @@ class ScanNotifier extends SingleNotifier<Transaction> {
   ScanNotifier({required this.storesRepository})
       : super(const AsyncValue.loading());
 
-  Future<AsyncValue<Transaction>> scan(String storeId, QrCodeData data) async {
+  Future<AsyncValue<Transaction>> scan(String storeId, QrCodeData data, {bool? bypass}) async {
     return await load(
       () => storesRepository.scan(
         storeId,
         data,
+        bypass,
       ),
     );
   }
