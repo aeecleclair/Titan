@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/paiement/ui/pages/stats_page/month_bar.dart';
 import 'package:myecl/paiement/ui/pages/stats_page/sum_up_chart.dart';
+import 'package:myecl/paiement/ui/pages/stats_page/transactions_detail.dart';
 import 'package:myecl/paiement/ui/paiement.dart';
 
 class StatsPage extends StatelessWidget {
@@ -16,10 +17,13 @@ class StatsPage extends StatelessWidget {
           ),
           MonthBar(),
           SizedBox(
-            height: 50,
+            height: 80,
           ),
           SumUpChart(),
-          Spacer(),
+          SizedBox(
+            height: 50,
+          ),
+          TransactionsDetail()
         ],
       ),
     );

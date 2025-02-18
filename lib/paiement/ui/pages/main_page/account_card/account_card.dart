@@ -116,7 +116,9 @@ class AccountCard extends HookConsumerWidget {
           colors: buttonGradient,
           icon: HeroIcons.chartPie,
           title: "Stats",
-          onPressed: () async {},
+          onPressed: () async {
+            QR.to(PaymentRouter.root + PaymentRouter.stats);
+          },
         ),
         MainCardButton(
           colors: buttonGradient,

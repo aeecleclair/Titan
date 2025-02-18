@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/paiement/providers/selected_month_provider.dart';
 import 'package:myecl/paiement/tools/functions.dart';
 
 class MonthBar extends HookConsumerWidget {
@@ -8,8 +8,8 @@ class MonthBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentDay = useState(DateTime.now());
-    final currentMonth = useState(currentDay.value.month);
+    final currentMonth = ref.watch(selectedMonthProvider);
+    final currentMonthNotifier = ref.watch(selectedMonthProvider.notifier);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -21,10 +21,16 @@ class MonthBar extends HookConsumerWidget {
             ),
             GestureDetector(
               onTap: () {
-                currentMonth.value = (currentMonth.value - 1) % 12;
+                final isPreviousYear = currentMonth.month == 0;
+                currentMonthNotifier.updateSelectedMonth(
+                  DateTime(
+                    currentMonth.year - (isPreviousYear ? 1 : 0),
+                    (currentMonth.month - 1) % 12,
+                  ),
+                );
               },
               child: Text(
-                getMonth((currentMonth.value - 1) % 12),
+                getMonth((currentMonth.month - 1) % 12),
                 style: const TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
@@ -35,7 +41,7 @@ class MonthBar extends HookConsumerWidget {
           ],
         ),
         Text(
-          getMonth(currentMonth.value % 12),
+          getMonth(currentMonth.month % 12),
           style: const TextStyle(
             fontSize: 20,
             color: Colors.black,
@@ -46,10 +52,16 @@ class MonthBar extends HookConsumerWidget {
           children: [
             GestureDetector(
               onTap: () {
-                currentMonth.value = (currentMonth.value + 1) % 12;
+                final isNextYear = currentMonth.month == 11;
+                currentMonthNotifier.updateSelectedMonth(
+                  DateTime(
+                    currentMonth.year + (isNextYear ? 1 : 0),
+                    (currentMonth.month + 1) % 12,
+                  ),
+                );
               },
               child: Text(
-                getMonth((currentMonth.value + 1) % 12),
+                getMonth((currentMonth.month + 1) % 12),
                 style: const TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,

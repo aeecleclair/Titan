@@ -19,7 +19,7 @@ class SumUpCard extends StatelessWidget {
     return Container(
       clipBehavior: Clip.none,
       height: 140,
-      width: 78,
+      width: 90,
       child: Container(
         height: 50,
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
