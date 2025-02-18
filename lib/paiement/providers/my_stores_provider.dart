@@ -13,7 +13,7 @@ class MyStoresNotifier extends ListNotifier<Store> {
   }
 }
 
-final myMyStoresProvider =
+final myStoresProvider =
     StateNotifierProvider<MyStoresNotifier, AsyncValue<List<Store>>>((ref) {
   final myStoresRepository = ref.watch(usersMeRepositoryProvider);
   return MyStoresNotifier(usersMeRepository: myStoresRepository)..getMyStores();
