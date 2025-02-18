@@ -34,6 +34,9 @@ class TopBar extends HookConsumerWidget {
                           case PaiementPage.scan:
                             pageNotifier.setPaiementPage(PaiementPage.main);
                             break;
+                          case PaiementPage.pay:
+                            pageNotifier.setPaiementPage(PaiementPage.main);
+                            break;
                         }
                       },
                       icon: HeroIcon(

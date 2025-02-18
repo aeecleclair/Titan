@@ -112,7 +112,7 @@ class AccountCard extends HookConsumerWidget {
                           ),
                         ]);
                     if (didAuthenticate) {
-                      pageNotifier.setPaiementPage(PaiementPage.scan);
+                      pageNotifier.setPaiementPage(PaiementPage.pay);
                     }
                   },
                 ),

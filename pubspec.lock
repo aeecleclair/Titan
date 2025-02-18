@@ -73,6 +73,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
+  charset:
+    dependency: transitive
+    description:
+      name: charset
+      sha256: c72ecf262d7afa6ca9418534aba820ada0e405bba67c21f06905d1c4b0bea525
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.4"
   checked_yaml:
     dependency: transitive
     description:
@@ -1410,6 +1418,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  zxing_lib:
+    dependency: transitive
+    description:
+      name: zxing_lib
+      sha256: f48841552941ea3889d4b4b8fd5386680b7b20c451bef46d35bb1b602523d159
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.6.0"
 sdks:
   dart: ">=3.7.0 <4.0.0"
   flutter: ">=3.29.0"
