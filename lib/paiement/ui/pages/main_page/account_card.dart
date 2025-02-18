@@ -8,17 +8,16 @@ class AccountCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+      margin: const EdgeInsets.fromLTRB(10, 10, 10, 12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
         gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color.fromARGB(255, 4, 84, 84),
+              Color.fromARGB(255, 9, 103, 103),
               Color(0xff017f80),
               Color.fromARGB(255, 4, 84, 84)
-              // Color(0xff204550)
             ]),
         boxShadow: [
           BoxShadow(
@@ -45,7 +44,7 @@ class AccountCard extends StatelessWidget {
                   Row(
                     children: const [
                       Text(
-                        'Compte Personnel',
+                        'Solde personnel',
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           color: Colors.white,
