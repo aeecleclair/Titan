@@ -3,8 +3,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/paiement/class/seller.dart';
 import 'package:myecl/paiement/providers/new_admin_provider.dart';
-import 'package:myecl/paiement/providers/selected_structure_provider.dart';
-import 'package:myecl/paiement/providers/store_provider.dart';
+import 'package:myecl/paiement/providers/selected_store_provider.dart';
 import 'package:myecl/paiement/providers/store_sellers_list_provider.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -18,14 +17,13 @@ class SearchResult extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final store = ref.watch(storeProvider);
+    final store = ref.watch(selectedStoreProvider);
     final users = ref.watch(userList);
     final usersNotifier = ref.watch(userList.notifier);
     final newAdmin = ref.watch(newAdminProvider);
     final newAdminNotifier = ref.watch(newAdminProvider.notifier);
-    final selectedStructure = ref.read(selectedStructureProvider);
     final sellerStoreNotifier =
-        ref.watch(sellerStoreProvider(selectedStructure.id).notifier);
+        ref.watch(sellerStoreProvider(store.id).notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -44,7 +42,7 @@ class SearchResult extends HookConsumerWidget {
                     children: [
                       WaitingButton(
                         onTap: () async {
-                          tokenExpireWrapper(ref, () async {
+                          await tokenExpireWrapper(ref, () async {
                             newAdminNotifier.updateNewAdmin(simpleUser);
                             queryController.text = simpleUser.getName();
                             Seller seller = Seller(

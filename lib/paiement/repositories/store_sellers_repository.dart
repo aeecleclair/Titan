@@ -8,12 +8,15 @@ class SellerStoreRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'myeclpay/stores';
 
-  Future<Seller> createSeller(String storeId, String userId) async {
-    return await create(
-      {
-        "user_id": userId,
-      },
-      suffix: "/$storeId/sellers",
+  Future<Seller> createSeller(
+    String storeId,
+    Seller seller,
+  ) async {
+    return Seller.fromJson(
+      await create(
+        seller.toJson(),
+        suffix: "/$storeId/sellers",
+      ),
     );
   }
 
