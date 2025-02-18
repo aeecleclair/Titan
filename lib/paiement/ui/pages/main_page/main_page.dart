@@ -118,7 +118,7 @@ class PaymentMainPage extends HookConsumerWidget {
                       ],
                     );
                   },
-                )
+                ),
               ],
             ),
             if (shouldDisplayCguDialog)
