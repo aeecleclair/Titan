@@ -1,5 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:custom_qr_generator/custom_qr_generator.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class QrCode extends StatelessWidget {
   const QrCode({Key? key}) : super(key: key);
@@ -21,26 +23,21 @@ class QrCode extends StatelessWidget {
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(30)),
         child: Center(
-          child: CustomPaint(
-            painter: QrPainter(
-              data:
-                  "Explicabo eos culpa hic aliquid aliquam cupiditate. Laboriosam aperiam ullam in reprehenderit. Ut et laudantium nihil sapiente dolor tenetur suscipit ut maxime. Et rem repellendus repudiandae incidunt ab natus nobis expedita temporibus. Ullam consequatur sint quasi.",
-              options: const QrOptions(
-                  shapes: QrShapes(
-                      darkPixel: QrPixelShapeRoundCorners(cornerFraction: .5),
-                      frame: QrFrameShapeRoundCorners(cornerFraction: .25),
-                      ball: QrBallShapeRoundCorners(cornerFraction: .25)),
-                  colors: QrColors(
-                    background: QrColorSolid(Colors.white),
-                    dark: QrColorLinearGradient(colors: [
-                      Color(0xff017f80),
-                      Color.fromARGB(255, 9, 103, 103),
-                    ], orientation: GradientOrientation.leftDiagonal),
-                  )),
-            ),
-            size: const Size(340, 340),
+            child: QrImageView(
+          data:
+              "Explicabo eos culpa hic aliquid aliquam cupiditate. Laboriosam aperiam ullam in reprehenderit. Ut et laudantium nihil sapiente dolor tenetur suscipit ut maxime. Et rem repellendus repudiandae incidunt ab natus nobis expedita temporibus. Ullam consequatur sint quasi.",
+          version: QrVersions.auto,
+          size: min(MediaQuery.of(context).size.width * 0.8,
+              MediaQuery.of(context).size.height * 0.8),
+          eyeStyle: const QrEyeStyle(
+            color: Colors.black,
+            eyeShape: QrEyeShape.square,
           ),
-        ),
+          dataModuleStyle: const QrDataModuleStyle(
+            dataModuleShape: QrDataModuleShape.square,
+            color: Colors.black,
+          ),
+        )),
       ),
     );
   }
