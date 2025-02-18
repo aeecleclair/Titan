@@ -4,12 +4,8 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/router.dart';
 import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/admin/ui/admin.dart';
+import 'package:myecl/admin/ui/pages/main_page/menu_card_ui.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -68,11 +64,11 @@ class AdminMainPage extends HookConsumerWidget {
             ),
             GestureDetector(
               onTap: () {
-                QR.to(AdminRouter.root + AdminRouter.associationMemberships);
+                QR.to(AdminRouter.root + AdminRouter.schools);
               },
               child: const MenuCardUi(
-                text: AdminTextConstants.memberships,
-                icon: HeroIcons.link,
+                text: AdminTextConstants.myEclPay,
+                icon: HeroIcons.creditCard,
               ),
             ),
           ],
