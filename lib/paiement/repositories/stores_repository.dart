@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/paiement/class/history.dart';
+import 'package:myecl/paiement/class/qr_code_data.dart';
 import 'package:myecl/paiement/class/store.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -21,6 +22,10 @@ class StoresRepository extends Repository {
     return List<History>.from(
       (await getList(suffix: "/$id/history")).map((e) => History.fromJson(e)),
     );
+  }
+
+  Future<bool> scan(String id, QrCodeData data) async {
+    return await create(data.toJson(), suffix: "/$id/scan");
   }
 }
 
