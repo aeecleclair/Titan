@@ -12,6 +12,7 @@ class TopBar extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final page = ref.watch(paiementPageProvider);
+    final pageNotifier = ref.watch(paiementPageProvider.notifier);
     return Column(
       children: [
         const SizedBox(
@@ -29,6 +30,9 @@ class TopBar extends HookConsumerWidget {
                         switch (page) {
                           case PaiementPage.main:
                             controllerNotifier.toggle();
+                            break;
+                          case PaiementPage.scan:
+                            pageNotifier.setPaiementPage(PaiementPage.main);
                             break;
                         }
                       },
