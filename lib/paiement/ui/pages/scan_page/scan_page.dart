@@ -13,6 +13,7 @@ import 'package:myecl/paiement/ui/pages/scan_page/scanner.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 
 class ScanPage extends HookConsumerWidget {
@@ -131,16 +132,10 @@ class ScanPage extends HookConsumerWidget {
                     value: ongoingTransaction,
                     errorBuilder: (error, stack) {
                       if (error.toString().contains("required membership")) {
-                        Expanded(
-                          child: GestureDetector(
-                            child: Container(
-                              width: double.infinity,
-                              height: 50,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white.withValues(alpha: 0.8),
-                              ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                          child: Expanded(
+                            child: WaitingButton(
                               child: const Text(
                                 'Valider quand même',
                                 style: TextStyle(
@@ -149,35 +144,45 @@ class ScanPage extends HookConsumerWidget {
                                   fontSize: 20,
                                 ),
                               ),
+                              builder: (child) => Container(
+                                width: double.infinity,
+                                height: 50,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white.withValues(alpha: 0.8),
+                                ),
+                                child: child,
+                              ),
+                              onTap: () async {
+                                final barcode = ref.read(barcodeProvider);
+                                if (barcode == null) {
+                                  return;
+                                }
+                                final value = await scanNotifier
+                                    .scan(store.id, barcode, bypass: true);
+                                ongoingTransactionNotifier
+                                    .updateOngoingTransaction(value);
+                                barcodeNotifier.clearBarcode();
+                                ongoingTransactionNotifier
+                                    .clearOngoingTransaction();
+                                value.when(
+                                  data: (value) {
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
+                                      "Transaction validé",
+                                    );
+                                  },
+                                  error: (error, stack) {
+                                    displayToastWithContext(
+                                      TypeMsg.error,
+                                      error.toString(),
+                                    );
+                                  },
+                                  loading: () {},
+                                );
+                              },
                             ),
-                            onTap: () async {
-                              final barcode = ref.read(barcodeProvider);
-                              if (barcode == null) {
-                                return;
-                              }
-                              final value = await scanNotifier
-                                  .scan(store.id, barcode, bypass: true);
-                              ongoingTransactionNotifier
-                                  .updateOngoingTransaction(value);
-                              barcodeNotifier.clearBarcode();
-                              ongoingTransactionNotifier
-                                  .clearOngoingTransaction();
-                              value.when(
-                                data: (value) {
-                                  displayToastWithContext(
-                                    TypeMsg.msg,
-                                    "Transaction validé",
-                                  );
-                                },
-                                error: (error, stack) {
-                                  displayToastWithContext(
-                                    TypeMsg.error,
-                                    error.toString(),
-                                  );
-                                },
-                                loading: () {},
-                              );
-                            },
                           ),
                         );
                       }
