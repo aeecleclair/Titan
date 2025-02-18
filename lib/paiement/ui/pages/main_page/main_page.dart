@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/paiement/providers/cgu_provider.dart';
-import 'package:myecl/paiement/providers/is_payment_admin.dart';
 import 'package:myecl/paiement/providers/my_stores_provider.dart';
 import 'package:myecl/paiement/providers/register_provider.dart';
 import 'package:myecl/paiement/providers/should_display_cgu_dialog.dart';
@@ -106,7 +105,7 @@ class PaymentMainPage extends HookConsumerWidget {
                           child: AnimatedOpacity(
                             duration: const Duration(milliseconds: 300),
                             opacity: 1 - controller.value.abs(),
-                            child: LastTransactions(),
+                            child: const LastTransactions(),
                           ),
                         ),
                         Visibility(
@@ -114,7 +113,7 @@ class PaymentMainPage extends HookConsumerWidget {
                           child: AnimatedOpacity(
                             duration: const Duration(milliseconds: 300),
                             opacity: controller.value.abs(),
-                            child: SellerList(),
+                            child: const SellerList(),
                           ),
                         ),
                       ],
