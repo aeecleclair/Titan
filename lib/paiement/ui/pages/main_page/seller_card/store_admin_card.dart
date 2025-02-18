@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:myecl/paiement/router.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class StoreAdminCard extends StatelessWidget {
   const StoreAdminCard({super.key});
@@ -8,6 +10,7 @@ class StoreAdminCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       child: Container(
         height: 70,
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -23,7 +26,7 @@ class StoreAdminCard extends StatelessWidget {
             ),
             Expanded(
               child: AutoSizeText(
-                "Gestion des admins",
+                "Gestion des assocations",
                 maxLines: 2,
                 style: TextStyle(
                   color: Color.fromARGB(255, 0, 29, 29),
@@ -43,7 +46,7 @@ class StoreAdminCard extends StatelessWidget {
         ),
       ),
       onTap: () {
-        // QR.to(PaymentRouter.root + PaymentRouter.admin);
+        QR.to(PaymentRouter.root + PaymentRouter.admin);
       },
     );
   }
