@@ -23,7 +23,7 @@ class AddDeviceButton extends StatelessWidget {
               children: [
                 WaitingButton(
                   onTap: onTap,
-                  builder: (child) => Container(
+                  builder: (child) => SizedBox(
                     height: MediaQuery.of(context).size.height - 250,
                     child: child,
                   ),
