@@ -1,17 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/paiement/class/seller.dart';
+import 'package:myecl/paiement/providers/selected_store_provider.dart';
+import 'package:myecl/paiement/providers/store_admin_list_provider.dart';
+import 'package:myecl/paiement/providers/store_sellers_list_provider.dart';
+import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
+import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 
-class SellerRightCard extends StatelessWidget {
+class SellerRightCard extends ConsumerWidget {
   final Seller storeSeller;
   const SellerRightCard({super.key, required this.storeSeller});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final store = ref.watch(selectedStoreProvider);
+    final sellerStoreNotifier =
+        ref.watch(sellerStoreProvider(store.id).notifier);
     final rightsIcons = [];
     final rightsLabel = [];
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
 
     final icons = [
       HeroIcons.viewfinderCircle,
@@ -138,13 +152,42 @@ class SellerRightCard extends StatelessWidget {
                                 const Spacer(),
                                 if (!storeSeller.storeAdmin)
                                   GestureDetector(
-                                    onTap: () {
-                                      // Navigator.of(context).pop();
+                                    onTap: () async {
+                                      tokenExpireWrapper(ref, () async {
+                                        final value = await sellerStoreNotifier
+                                            .updateStoreSeller(
+                                          storeSeller.copyWith(
+                                            canBank: i == 0
+                                                ? !sellerRights[0]
+                                                : sellerRights[0],
+                                            canSeeHistory: i == 1
+                                                ? !sellerRights[1]
+                                                : sellerRights[1],
+                                            canCancel: i == 2
+                                                ? !sellerRights[2]
+                                                : sellerRights[2],
+                                            canManageSellers: i == 3
+                                                ? !sellerRights[3]
+                                                : sellerRights[3],
+                                          ),
+                                        );
+                                        if (value) {
+                                          displayToastWithContext(
+                                            TypeMsg.msg,
+                                            "Association supprimée",
+                                          );
+                                        } else {
+                                          displayToastWithContext(
+                                            TypeMsg.error,
+                                            "Impossible de supprimer l'association",
+                                          );
+                                        }
+                                      });
                                     },
                                     child: HeroIcon(
                                       sellerRights[i]
-                                          ? HeroIcons.check
-                                          : HeroIcons.xMark,
+                                          ? HeroIcons.xMark
+                                          : HeroIcons.check,
                                       color:
                                           const Color.fromARGB(255, 0, 29, 29),
                                     ),
@@ -154,8 +197,32 @@ class SellerRightCard extends StatelessWidget {
                           ),
                       if (storeSeller.storeAdmin)
                         GestureDetector(
-                          onTap: () {
-                            // Navigator.of(context).pop();
+                          onTap: () async {
+                            await showDialog(
+                              context: context,
+                              builder: (context) => CustomDialogBox(
+                                title: "Supprimer l'association",
+                                descriptions:
+                                    "Voulez-vous vraiment supprimer cette association ?",
+                                onYes: () {
+                                  tokenExpireWrapper(ref, () async {
+                                    final value = await sellerStoreNotifier
+                                        .deleteStoreSeller(storeSeller);
+                                    if (value) {
+                                      displayToastWithContext(
+                                        TypeMsg.msg,
+                                        "Association supprimée",
+                                      );
+                                    } else {
+                                      displayToastWithContext(
+                                        TypeMsg.error,
+                                        "Impossible de supprimer l'association",
+                                      );
+                                    }
+                                  });
+                                },
+                              ),
+                            );
                           },
                           child: const Padding(
                             padding: EdgeInsets.symmetric(vertical: 10),
