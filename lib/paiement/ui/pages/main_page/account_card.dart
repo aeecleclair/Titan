@@ -98,7 +98,7 @@ class AccountCard extends HookConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                if (!kIsWeb)
+                // if (!kIsWeb)
                   AccountButton(
                     icon: HeroIcons.qrCode,
                     title: "Payer",
@@ -106,7 +106,7 @@ class AccountCard extends HookConsumerWidget {
                       QR.to(PaymentRouter.root + PaymentRouter.pay);
                     },
                   ),
-                if (!kIsWeb)
+                // if (!kIsWeb)
                   AccountButton(
                     icon: HeroIcons.viewfinderCircle,
                     title: "Scanner",

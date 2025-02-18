@@ -15,6 +15,9 @@ class PaymentMainPage extends HookConsumerWidget {
         onRefresh: () async {},
         child: Column(
           children: [
+            const SizedBox(
+              height: 10,
+            ),
             SizedBox(
               height: 250,
               width: MediaQuery.of(context).size.width,
