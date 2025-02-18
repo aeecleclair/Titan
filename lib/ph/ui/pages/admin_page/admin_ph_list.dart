@@ -7,7 +7,7 @@ import 'package:myecl/ph/router.dart';
 import 'package:myecl/ph/tools/constants.dart';
 import 'package:myecl/ph/ui/pages/admin_page/admin_ph_card.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/widgets/dialog.dart';
+import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdminPhList extends HookConsumerWidget {

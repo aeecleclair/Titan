@@ -15,7 +15,7 @@ import 'package:myecl/paiement/ui/paiement.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/widgets/dialog.dart';
+import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class DevicesPage extends HookConsumerWidget {
