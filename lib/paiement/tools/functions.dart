@@ -117,15 +117,18 @@ Future<String> getQRCodeContent(
     iat: now,
     key: keyId!,
     store: store,
-  ).toJson().toString();
-  return QrCodeData(
-    qrCodeId: id,
-    total: total,
-    creation: now,
-    walletDeviceId: keyId,
-    store: store,
-    signature: base64Encode(
-      (await keyService.signMessage(keyPair!, data.codeUnits)).bytes,
-    ),
-  ).toJson().toString();
+  ).toJson();
+  return jsonEncode(
+    QrCodeData(
+      qrCodeId: id,
+      total: total,
+      creation: now,
+      walletDeviceId: keyId,
+      store: store,
+      signature: base64Encode(
+        (await keyService.signMessage(keyPair!, jsonEncode(data).codeUnits))
+            .bytes,
+      ),
+    ).toJson(),
+  );
 }
