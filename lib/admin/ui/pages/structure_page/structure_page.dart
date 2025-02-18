@@ -16,7 +16,7 @@ import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/user/class/simple_users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 

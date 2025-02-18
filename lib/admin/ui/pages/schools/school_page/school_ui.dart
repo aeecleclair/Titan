@@ -2,13 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/class/school.dart';
-import 'package:myecl/admin/ui/components/item_card_ui.dart';
-<<<<<<< HEAD:lib/admin/ui/pages/schools/school_page/school_ui.dart
-import 'package:myecl/admin/ui/pages/schools/school_page/school_button.dart';
-=======
 import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/admin/ui/pages/school_page/school_button.dart';
->>>>>>> b0b0df12 (Feat: change admin menu UI):lib/admin/ui/pages/school_page/school_ui.dart
+import 'package:myecl/admin/ui/components/item_card_ui.dart';
+import 'package:myecl/admin/ui/pages/schools/school_page/school_button.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
