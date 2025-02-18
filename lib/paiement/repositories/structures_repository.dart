@@ -30,10 +30,15 @@ class StructuresRepository extends Repository {
   }
 
   Future<bool> initializeManagerTransfer(
-      Structure structure, String newManagerUserId) async {
-    return await create({
-      "new_manager_user_id": newManagerUserId,
-    }, suffix: "/${structure.id}/init-manager-transfer");
+    Structure structure,
+    String newManagerUserId,
+  ) async {
+    return await create(
+      {
+        "new_manager_user_id": newManagerUserId,
+      },
+      suffix: "/${structure.id}/init-manager-transfer",
+    );
   }
 
   Future<List<Store>> getStructureStores(Structure structure) async {

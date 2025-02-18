@@ -140,7 +140,7 @@ class AdminStoreCard extends ConsumerWidget {
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
     );

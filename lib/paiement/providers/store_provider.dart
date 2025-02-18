@@ -9,7 +9,6 @@ class StoreProvider extends StateNotifier<Store> {
   }
 }
 
-final storeProvider =
-    StateNotifierProvider<StoreProvider, Store>((ref) {
+final storeProvider = StateNotifierProvider<StoreProvider, Store>((ref) {
   return StoreProvider();
 });

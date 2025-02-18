@@ -10,7 +10,9 @@ class AdminTextConstants {
   static const String addingMember = "Ajout d'un membre";
   static const String addLoaningGroup = "Ajouter un groupe de prêt";
   static const String addSchool = "Ajouter une école";
+  static const String addStructure = "Ajouter une structure";
   static const String addedSchool = "École créée";
+  static const String addedStructure = "Structure ajoutée";
   static const String administration = "Administration";
   static const String associationMembership = "Adhésion";
   static const String associationMembershipName = "Nom de l'adhésion";
