@@ -1,8 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/paiement/providers/my_stores_provider.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 final isPaymentAdminProvider = StateProvider((ref) {
-  const paymentAdminGroupId = "5571adfd-47fc-4dde-a44b-6e1289476499";
   final user = ref.watch(userProvider);
-  return user.groups.map((e) => e.id).contains(paymentAdminGroupId);
+  final myStores = ref.watch(myStoresProvider);
+  return myStores.when(
+    data: (stores) => (stores
+        .map((store) => store.structure.managerUserId)
+        .contains(user.id)),
+    loading: () => false,
+    error: (error, stack) => false,
+  );
 });

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/paiement/class/store.dart' as store_class;
+import 'package:myecl/paiement/class/structure.dart';
 import 'package:myecl/paiement/providers/my_stores_provider.dart';
 import 'package:myecl/paiement/providers/store_provider.dart';
 import 'package:myecl/paiement/providers/stores_list_provider.dart';
@@ -13,6 +14,7 @@ import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditStorePage extends HookConsumerWidget {
@@ -21,12 +23,26 @@ class AddEditStorePage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final store = ref.watch(storeProvider);
+    final myStores = ref.watch(myStoresProvider);
     final storeListNotifier = ref.watch(storeListProvider.notifier);
     final key = GlobalKey<FormState>();
     final isEdit = store.id != store_class.Store.empty().id;
     final name = useTextEditingController(text: store.name);
     final type =
-        useState<store_class.AvailableAssociationMembership>(store.membership);
+        useState<Structure>(store.structure);
+
+    final myStructures = <Structure>[];
+
+    myStores.whenData(
+      (value) {
+        for (var store in value) {
+          final myStructureIds = myStructures.map((e) => e.id).toList();
+          if (!myStructureIds.contains(store.structure.id)) {
+            myStructures.add(store.structure);
+          }
+        }
+      },
+    );
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -48,7 +64,7 @@ class AddEditStorePage extends HookConsumerWidget {
               const SizedBox(height: 20),
               HorizontalListView.builder(
                 height: 40,
-                items: store_class.AvailableAssociationMembership.values,
+                items: myStructures,
                 itemBuilder: (context, value, index) {
                   final selected = type.value == value;
                   return ItemChip(
@@ -95,7 +111,7 @@ class AddEditStorePage extends HookConsumerWidget {
                                 id: "",
                                 walletId: "",
                                 name: name.text,
-                                membership: type.value,
+                                structure: type.value,
                               );
                               // final value = isEdit
                               //     ? await storeListNotifier

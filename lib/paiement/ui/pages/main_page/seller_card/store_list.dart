@@ -37,11 +37,11 @@ class StoreList extends ConsumerWidget {
           builder: (context, stores) {
             final Map<String, List<UserStore>> sortedByMembership = {};
             for (var store in stores) {
-              final membership = store.membership;
-              if (sortedByMembership[membership.name] == null) {
-                sortedByMembership[membership.name] = [];
+              final membership = store.structure.name;
+              if (sortedByMembership[membership] == null) {
+                sortedByMembership[membership] = [];
               }
-              sortedByMembership[membership.name]!.add(store);
+              sortedByMembership[membership]!.add(store);
             }
             return Column(
               children: [
