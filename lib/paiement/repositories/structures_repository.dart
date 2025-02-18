@@ -49,11 +49,14 @@ class StructuresRepository extends Repository {
   }
 
   Future<Store> addStructureStore(Structure structure, Store store) async {
-    return Store.fromJson(
+    final x = 
       await create(
         store.toJson(),
         suffix: "/${structure.id}/stores",
-      ),
+      );
+      print(x);
+    return Store.fromJson(
+      x
     );
   }
 }
