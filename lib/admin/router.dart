@@ -45,7 +45,7 @@ class AdminRouter {
   static const String schools = '/schools';
   static const String addSchool = '/add_school';
   static const String editSchool = '/edit_school';
-  static const String structure = '/structure';
+  static const String structures = '/structures';
   static const String addStructure = '/add_structure';
   static const String editStructure = '/edit_structure';
   static const String editModuleVisibility = '/edit_module_visibility';
