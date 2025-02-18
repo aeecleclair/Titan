@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_card_button.dart';
 
 class MainCardTemplate extends StatelessWidget {
@@ -6,19 +7,20 @@ class MainCardTemplate extends StatelessWidget {
   final List<Color> colors;
   final String title;
   final String value;
-  final Widget topRightWidget;
-  const MainCardTemplate(
-      {super.key,
-      required this.actionButtons,
-      required this.colors,
-      required this.title,
-      required this.value,
-      required this.topRightWidget});
+  final Function? toggle;
+  const MainCardTemplate({
+    super.key,
+    required this.actionButtons,
+    required this.colors,
+    required this.title,
+    required this.value,
+    required this.toggle,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(10, 10, 10, 12),
+      margin: const EdgeInsets.fromLTRB(30, 10, 30, 12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
         gradient: LinearGradient(
@@ -53,13 +55,23 @@ class MainCardTemplate extends StatelessWidget {
                       Text(
                         title,
                         textAlign: TextAlign.left,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
                         ),
                       ),
                       const Spacer(),
-                      topRightWidget,
+                      if (toggle != null)
+                        GestureDetector(
+                          onTap: () {
+                            toggle!();
+                          },
+                          child: const HeroIcon(
+                            HeroIcons.arrowsRightLeft,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        ),
                     ],
                   ),
                   const SizedBox(
@@ -69,7 +81,7 @@ class MainCardTemplate extends StatelessWidget {
                     alignment: Alignment.center,
                     child: Text(
                       value,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 50,
                       ),

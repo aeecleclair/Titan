@@ -11,7 +11,8 @@ class MainCardButton extends StatelessWidget {
     super.key,
     required this.icon,
     required this.onPressed,
-    required this.title, required this.colors,
+    required this.title,
+    required this.colors,
   });
 
   @override
@@ -26,7 +27,7 @@ class MainCardButton extends StatelessWidget {
           builder: (child) => Container(
             height: 40,
             width: 40,
-            padding: EdgeInsets.all(5),
+            padding: const EdgeInsets.all(7),
             decoration: BoxDecoration(
               gradient: RadialGradient(
                 colors: colors,

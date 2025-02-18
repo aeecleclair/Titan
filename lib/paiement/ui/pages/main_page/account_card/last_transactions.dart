@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/paiement/class/history.dart';
-import 'package:myecl/paiement/providers/history_provider.dart';
+import 'package:myecl/paiement/providers/my_history_provider.dart';
 import 'package:myecl/paiement/ui/pages/main_page/account_card/day_divider.dart';
 import 'package:myecl/paiement/ui/pages/main_page/transaction_card.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
@@ -12,7 +12,7 @@ class LastTransactions extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final history = ref.watch(historyProvider);
+    final history = ref.watch(myHistoryProvider);
     return Column(
       children: [
         Container(
@@ -35,7 +35,7 @@ class LastTransactions extends ConsumerWidget {
           builder: (context, history) {
             final Map<String, List<History>> groupedByDay = {};
             final Map<String, DateTime> stringDate = {};
-            history.forEach((transaction) {
+            for (var transaction in history) {
               final date = transaction.creation;
               final day = timeago.format(date, locale: 'fr_short');
               if (groupedByDay[day] == null) {
@@ -43,7 +43,7 @@ class LastTransactions extends ConsumerWidget {
                 stringDate[day] = date;
               }
               groupedByDay[day]!.add(transaction);
-            });
+            }
             final sortedByDayKeys = stringDate.keys.toList()
               ..sort((a, b) => stringDate[b]!.compareTo(stringDate[a]!));
             final sortedByDay = {

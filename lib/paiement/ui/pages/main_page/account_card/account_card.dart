@@ -17,7 +17,8 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AccountCard extends HookConsumerWidget {
-  const AccountCard({super.key});
+  final Function? toggle;
+  const AccountCard({super.key, required this.toggle});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -49,16 +50,7 @@ class AccountCard extends HookConsumerWidget {
         Color.fromARGB(255, 4, 84, 84),
       ],
       title: 'Solde personnel',
-      topRightWidget: GestureDetector(
-        onTap: () {
-          QR.to(PaymentRouter.root + PaymentRouter.stats);
-        },
-        child: const HeroIcon(
-          HeroIcons.chartPie,
-          color: Colors.white,
-          size: 30,
-        ),
-      ),
+      toggle: toggle,
       value: "348,23 €",
       actionButtons: [
         MainCardButton(
@@ -120,14 +112,11 @@ class AccountCard extends HookConsumerWidget {
             });
           },
         ),
-        // if (!kIsWeb)
         MainCardButton(
           colors: buttonGradient,
-          icon: HeroIcons.viewfinderCircle,
-          title: "Scanner",
-          onPressed: () async {
-            QR.to(PaymentRouter.root + PaymentRouter.scan);
-          },
+          icon: HeroIcons.chartPie,
+          title: "Stats",
+          onPressed: () async {},
         ),
         MainCardButton(
           colors: buttonGradient,
