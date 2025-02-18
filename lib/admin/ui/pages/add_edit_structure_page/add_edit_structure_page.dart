@@ -34,7 +34,9 @@ class AddEditStructurePage extends HookConsumerWidget {
     final isEdit = structure.id != Structure.empty().id;
     final name = useTextEditingController(text: isEdit ? structure.name : null);
     final membership = useState<AvailableAssociationMembership>(
-      isEdit ? structure.membership : AvailableAssociationMembership.AEECL,
+      isEdit
+          ? structure.membership
+          : AvailableAssociationMembership.noMembership,
     );
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -52,9 +54,11 @@ class AddEditStructurePage extends HookConsumerWidget {
             child: Column(
               children: [
                 const SizedBox(height: 20),
-                AlignLeftText(isEdit
-                    ? AdminTextConstants.editStructure
-                    : AdminTextConstants.addStructure),
+                AlignLeftText(
+                  isEdit
+                      ? AdminTextConstants.editStructure
+                      : AdminTextConstants.addStructure,
+                ),
                 const SizedBox(height: 20),
                 TextEditing(controller: name, label: AdminTextConstants.name),
                 HorizontalListView.builder(
@@ -122,7 +126,7 @@ class AddEditStructurePage extends HookConsumerWidget {
                           Structure(
                             name: name.text,
                             membership: membership.value,
-                            managerUserId: structureManager.id,
+                            managerUser: structureManager,
                             id: '',
                           ),
                         );

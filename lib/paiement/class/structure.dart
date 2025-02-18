@@ -1,59 +1,65 @@
-enum AvailableAssociationMembership { AEECL, USEECL }
+import 'package:myecl/user/class/list_users.dart';
+
+enum AvailableAssociationMembership { AEECL, USEECL, noMembership }
 
 class Structure {
   final String name;
   final AvailableAssociationMembership membership;
   final String id;
-  final String managerUserId;
+  final SimpleUser managerUser;
 
   Structure({
     required this.name,
     required this.membership,
     required this.id,
-    required this.managerUserId,
+    required this.managerUser,
   });
 
   Structure.fromJson(Map<String, dynamic> json)
       : name = json['name'],
-        membership = json['membership'] != null ? AvailableAssociationMembership.values.firstWhere(
-          (e) => e.toString().split('.').last == json['membership'],
-        ) : AvailableAssociationMembership.AEECL, //TODO: to remove, temporary fix
+        membership = json['membership'] != null
+            ? AvailableAssociationMembership.values.firstWhere(
+                (e) => e.toString().split('.').last == json['membership'],
+              )
+            : AvailableAssociationMembership.noMembership,
         id = json['id'],
-        managerUserId = json['manager_user_id'];
+        managerUser = SimpleUser.fromJson(json['manager_user']);
 
   Map<String, dynamic> toJson() {
     return {
       'name': name,
-      'membership': membership.toString().split('.').last,
+      'membership': membership == AvailableAssociationMembership.noMembership
+          ? null
+          : membership.toString().split('.').last,
       'id': id,
-      'manager_user_id': managerUserId,
+      'manager_user_id': managerUser.id,
     };
   }
 
   @override
   String toString() {
-    return 'Structure{name: $name, membership: $membership, id: $id, managerUserId: $managerUserId}';
+    return 'Structure{name: $name, membership: $membership, id: $id, managerUserId: $managerUser}';
   }
 
   Structure copyWith({
     String? name,
     AvailableAssociationMembership? membership,
     String? id,
-    String? managerUserId,
+    SimpleUser? managerUser,
   }) {
     return Structure(
       name: name ?? this.name,
       membership: membership ?? this.membership,
       id: id ?? this.id,
-      managerUserId: managerUserId ?? this.managerUserId,
+      managerUser: managerUser ?? this.managerUser,
     );
   }
 
   Structure.empty()
       : this(
           name: '',
-          membership: AvailableAssociationMembership.AEECL,
+          membership: AvailableAssociationMembership.noMembership,
           id: '',
-          managerUserId: '',
+          managerUser: SimpleUser.empty(),
         );
 }

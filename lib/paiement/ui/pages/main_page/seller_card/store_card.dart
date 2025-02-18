@@ -4,7 +4,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/paiement/providers/selected_month_provider.dart';
 import 'package:myecl/paiement/providers/selected_store_provider.dart';
-import 'package:myecl/paiement/providers/store_admin_list_provider.dart';
 import 'package:myecl/paiement/router.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_card_button.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_card_template.dart';
@@ -18,7 +17,8 @@ class StoreCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final store = ref.watch(selectedStoreProvider);
-    final storeAdminListNotifier = ref.read(storeAdminListProvider.notifier);
+    // final selectedStructure = ref.read(selectedStructureProvider);
+    // final storeAdminListNotifier = ref.read(storeAdminListProvider.notifier);
     final selectedMonthNotifier = ref.watch(selectedMonthProvider.notifier);
     final buttonGradient = [
       const Color.fromARGB(255, 6, 75, 75),
@@ -65,7 +65,7 @@ class StoreCard extends HookConsumerWidget {
             colors: buttonGradient,
             icon: HeroIcons.userGroup,
             onPressed: () async {
-              storeAdminListNotifier.getStoreAdminList(store.id);
+              // storeAdminListNotifier.getStoreAdminList(store.id);
               QR.to(PaymentRouter.root + PaymentRouter.storeAdmin);
             },
             title: 'Gestion',

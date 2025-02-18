@@ -41,17 +41,19 @@ class StructuresRepository extends Repository {
     );
   }
 
-  Future<List<Store>> getStructureStores(Structure structure) async {
+  Future<List<Store>> getStructureStores(String structureId) async {
     return List<Store>.from(
-      (await getList(suffix: "/${structure.id}/stores"))
+      (await getList(suffix: "/$structureId/stores"))
           .map((e) => Store.fromJson(e)),
     );
   }
 
   Future<Store> addStructureStore(Structure structure, Store store) async {
-    return await create(
-      store.toJson(),
-      suffix: "/${structure.id}/stores",
+    return Store.fromJson(
+      await create(
+        store.toJson(),
+        suffix: "/${structure.id}/stores",
+      ),
     );
   }
 }
