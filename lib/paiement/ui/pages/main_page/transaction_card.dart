@@ -54,7 +54,9 @@ class TransactionCard extends StatelessWidget {
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 5, vertical: 2),
+                        horizontal: 5,
+                        vertical: 2,
+                      ),
                       decoration: BoxDecoration(
                         color: transaction.status == TransactionStatus.confirmed
                             ? const Color.fromARGB(255, 21, 215, 105)

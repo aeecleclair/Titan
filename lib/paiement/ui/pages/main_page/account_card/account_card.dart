@@ -89,7 +89,9 @@ class AccountCard extends HookConsumerWidget {
               }
               if (keyId == null) {
                 displayToastWithContext(
-                    TypeMsg.error, "Erreur lors de la création de l'appareil");
+                  TypeMsg.error,
+                  "Erreur lors de la création de l'appareil",
+                );
                 return;
               }
               final device = await deviceNotifier.getDevice(keyId);
@@ -99,15 +101,21 @@ class AccountCard extends HookConsumerWidget {
                     showPayModal();
                   } else if (device.status == WalletDeviceStatus.unactive) {
                     displayToastWithContext(
-                        TypeMsg.error, "Votre appareil n'est pas activé");
+                      TypeMsg.error,
+                      "Votre appareil n'est pas activé",
+                    );
                   } else {
                     displayToastWithContext(
-                        TypeMsg.error, "Votre appareil a été révoqué");
+                      TypeMsg.error,
+                      "Votre appareil a été révoqué",
+                    );
                   }
                 },
                 error: (e, s) {
-                  displayToastWithContext(TypeMsg.error,
-                      "Erreur lors de la récupération de l'appareil");
+                  displayToastWithContext(
+                    TypeMsg.error,
+                    "Erreur lors de la récupération de l'appareil",
+                  );
                 },
                 loading: () {},
               );

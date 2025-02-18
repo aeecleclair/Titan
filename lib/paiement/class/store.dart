@@ -56,8 +56,9 @@ class Store {
 
   Store.empty()
       : this(
-            id: '',
-            name: '',
-            walletId: '',
-            membership: AvailableAssociationMembership.AEECL);
+          id: '',
+          name: '',
+          walletId: '',
+          membership: AvailableAssociationMembership.AEECL,
+        );
 }

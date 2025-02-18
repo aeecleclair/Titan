@@ -15,6 +15,7 @@ class BarcodeNotifier extends StateNotifier<QrCodeData?> {
   }
 }
 
-final barcodeProvider = StateNotifierProvider<BarcodeNotifier, QrCodeData?>((ref) {
+final barcodeProvider =
+    StateNotifierProvider<BarcodeNotifier, QrCodeData?>((ref) {
   return BarcodeNotifier();
 });

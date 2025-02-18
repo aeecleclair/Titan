@@ -10,7 +10,8 @@ class SelectedStoreNotifier extends StateNotifier<Store> {
   }
 }
 
-final selectedStoreProvider = StateNotifierProvider<SelectedStoreNotifier, Store>((ref) {
+final selectedStoreProvider =
+    StateNotifierProvider<SelectedStoreNotifier, Store>((ref) {
   final myStores = ref.watch(myStoresProvider);
   final store = myStores.maybeWhen<Store>(
     orElse: () => Store.empty(),

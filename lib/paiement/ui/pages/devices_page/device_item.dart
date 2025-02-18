@@ -10,11 +10,12 @@ class DeviceItem extends ConsumerWidget {
   final WalletDevice device;
   final bool isActual;
   final Future Function() onRevoke;
-  const DeviceItem(
-      {super.key,
-      required this.device,
-      required this.isActual,
-      required this.onRevoke});
+  const DeviceItem({
+    super.key,
+    required this.device,
+    required this.isActual,
+    required this.onRevoke,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

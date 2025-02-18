@@ -7,11 +7,12 @@ class FlipCard extends HookConsumerWidget {
   final Widget front;
   final Widget back;
   final AnimationController controller;
-  const FlipCard(
-      {super.key,
-      required this.front,
-      required this.back,
-      required this.controller});
+  const FlipCard({
+    super.key,
+    required this.front,
+    required this.back,
+    required this.controller,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

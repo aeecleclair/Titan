@@ -21,14 +21,14 @@ class StoreCard extends ConsumerWidget {
     final selectedMonthNotifier = ref.watch(selectedMonthProvider.notifier);
     final buttonGradient = [
       const Color.fromARGB(255, 6, 75, 75),
-      const Color.fromARGB(255, 0, 29, 29)
+      const Color.fromARGB(255, 0, 29, 29),
     ];
     return MainCardTemplate(
       toggle: toggle,
       colors: const [
         Color.fromARGB(255, 3, 58, 58),
         Color.fromARGB(255, 0, 68, 68),
-        Color.fromARGB(255, 0, 29, 29)
+        Color.fromARGB(255, 0, 29, 29),
       ],
       title: 'Solde associatif',
       value: store.name,

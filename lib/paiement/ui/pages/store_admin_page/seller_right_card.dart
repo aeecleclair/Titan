@@ -16,7 +16,7 @@ class SellerRightCard extends StatelessWidget {
       HeroIcons.viewfinderCircle,
       HeroIcons.wallet,
       HeroIcons.xMark,
-      HeroIcons.userGroup
+      HeroIcons.userGroup,
     ]
         .map(
           (e) => CardButton(
@@ -53,7 +53,7 @@ class SellerRightCard extends StatelessWidget {
       "Voir l'historique",
       "Annuler un paiement",
       "Gérer les vendeurs",
-      "Administrateur général"
+      "Administrateur général",
     ];
 
     final sellerRights = [
@@ -104,9 +104,9 @@ class SellerRightCard extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      const Text(
-                        "Droits de username",
-                        style: TextStyle(
+                      Text(
+                        "Droits de ${storeSeller.user.getName()}",
+                        style: const TextStyle(
                           color: Color.fromARGB(255, 0, 29, 29),
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -159,10 +159,10 @@ class SellerRightCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Center(
+            Center(
               child: Text(
-                "Seller name",
-                style: TextStyle(
+                storeSeller.user.getName(),
+                style: const TextStyle(
                   color: Color.fromARGB(255, 0, 29, 29),
                   fontSize: 14,
                 ),

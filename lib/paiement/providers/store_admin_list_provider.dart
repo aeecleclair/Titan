@@ -18,5 +18,6 @@ final storeAdminListProvider =
         (ref) {
   final storeAdminListRepository = ref.watch(sellerAdminsRepositoryProvider);
   return StoreAdminListNotifier(
-      storeAdminsRepository: storeAdminListRepository,);
+    storeAdminsRepository: storeAdminListRepository,
+  );
 });
