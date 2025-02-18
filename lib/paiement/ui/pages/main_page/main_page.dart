@@ -72,8 +72,12 @@ class PaymentMainPage extends HookConsumerWidget {
                   value: mySellers,
                   builder: (context, mySellers) {
                     if (mySellers.isEmpty) {
-                      return const AccountCard(
-                        toggle: null,
+                      return SizedBox(
+                        height: 250,
+                        width: MediaQuery.of(context).size.width,
+                        child: const AccountCard(
+                          toggle: null,
+                        ),
                       );
                     }
                     return SizedBox(
