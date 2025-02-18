@@ -3,10 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:myecl/paiement/class/create_device.dart';
 import 'package:myecl/paiement/class/wallet_device.dart';
 import 'package:myecl/paiement/providers/device_provider.dart';
 import 'package:myecl/paiement/providers/key_service_provider.dart';
+import 'package:myecl/paiement/providers/my_wallet_provider.dart';
 import 'package:myecl/paiement/providers/selected_month_provider.dart';
 import 'package:myecl/paiement/router.dart';
 import 'package:myecl/paiement/tools/platform_info.dart';
@@ -15,6 +17,7 @@ import 'package:myecl/paiement/ui/pages/main_page/main_card_template.dart';
 import 'package:myecl/paiement/ui/pages/pay_page/pay_page.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AccountCard extends HookConsumerWidget {
@@ -23,6 +26,7 @@ class AccountCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final myWallet = ref.watch(myWalletProvider);
     final keyService = ref.read(keyServiceProvider);
     final deviceNotifier = ref.watch(deviceProvider.notifier);
     final selectedMonthNotifier = ref.watch(selectedMonthProvider.notifier);
@@ -30,6 +34,7 @@ class AccountCard extends HookConsumerWidget {
       const Color(0xff017f80),
       const Color.fromARGB(255, 4, 84, 84),
     ];
+    final formatter = NumberFormat("#,##0.00", "fr_FR");
 
     void displayToastWithContext(TypeMsg type, String message) {
       displayToast(context, type, message);
@@ -137,11 +142,14 @@ class AccountCard extends HookConsumerWidget {
           onPressed: () async {},
         ),
       ],
-      child: const Text(
-        "348,23 €",
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 50,
+      child: AsyncChild(
+        value: myWallet,
+        builder: (context, wallet) => Text(
+          '${formatter.format(wallet.balance / 100)} €',
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 50,
+          ),
         ),
       ),
     );
