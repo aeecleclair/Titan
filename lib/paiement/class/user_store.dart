@@ -1,4 +1,5 @@
 import 'package:myecl/paiement/class/store.dart';
+import 'package:myecl/paiement/class/structure.dart';
 
 class UserStore extends Store {
   final bool canBank;
@@ -11,7 +12,7 @@ class UserStore extends Store {
     required super.id,
     required super.name,
     required super.walletId,
-    required super.membership,
+    required super.structure,
     required this.canBank,
     required this.canSeeHistory,
     required this.canCancel,
@@ -24,9 +25,7 @@ class UserStore extends Store {
       id: json['id'],
       name: json['name'],
       walletId: json['wallet_id'],
-      membership: json['membership'] == 'aeecl'
-          ? AvailableAssociationMembership.AEECL
-          : AvailableAssociationMembership.USEECL,
+      structure: json['structure'],
       canBank: json['can_bank'],
       canSeeHistory: json['can_see_history'],
       canCancel: json['can_cancel'],
@@ -40,9 +39,7 @@ class UserStore extends Store {
       'id': id,
       'name': name,
       'wallet_id': walletId,
-      'membership': membership == AvailableAssociationMembership.AEECL
-          ? 'aeecl'
-          : 'useecl',
+      'structure': structure,
       'can_bank': canBank,
       'can_see_history': canSeeHistory,
       'can_cancel': canCancel,
@@ -55,7 +52,7 @@ class UserStore extends Store {
     String? id,
     String? name,
     String? walletId,
-    AvailableAssociationMembership? membership,
+    Structure? structure,
     bool? canBank,
     bool? canSeeHistory,
     bool? canCancel,
@@ -66,7 +63,7 @@ class UserStore extends Store {
       id: id ?? this.id,
       name: name ?? this.name,
       walletId: walletId ?? this.walletId,
-      membership: membership ?? this.membership,
+      structure: structure ?? this.structure,
       canBank: canBank ?? this.canBank,
       canSeeHistory: canSeeHistory ?? this.canSeeHistory,
       canCancel: canCancel ?? this.canCancel,
@@ -77,7 +74,7 @@ class UserStore extends Store {
 
   @override
   String toString() {
-    return 'UserStore(id: $id, name: $name, walletId: $walletId, membership: $membership, canBank: $canBank, canSeeHistory: $canSeeHistory, canCancel: $canCancel, canManageSellers: $canManageSellers, storeAdmin: $storeAdmin)';
+    return 'UserStore(id: $id, name: $name, walletId: $walletId, structure: $structure, canBank: $canBank, canSeeHistory: $canSeeHistory, canCancel: $canCancel, canManageSellers: $canManageSellers, storeAdmin: $storeAdmin)';
   }
 
   UserStore.empty()
@@ -85,7 +82,7 @@ class UserStore extends Store {
           id: '',
           name: '',
           walletId: '',
-          membership: AvailableAssociationMembership.AEECL,
+          structure: Structure.empty(),
           canBank: false,
           canSeeHistory: false,
           canCancel: false,
