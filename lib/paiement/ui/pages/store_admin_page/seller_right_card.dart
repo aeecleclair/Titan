@@ -26,6 +26,9 @@ class SellerRightCard extends ConsumerWidget {
       displayToast(context, type, msg);
     }
 
+    final isStructureAdmin =
+        storeSeller.userId == store.structure.managerUser.id;
+
     final icons = [
       HeroIcons.viewfinderCircle,
       HeroIcons.wallet,
@@ -75,22 +78,20 @@ class SellerRightCard extends ConsumerWidget {
       storeSeller.canSeeHistory,
       storeSeller.canCancel,
       storeSeller.canManageSellers,
-      storeSeller.storeAdmin,
     ];
 
     for (var i = 0; i < sellerRights.length; i++) {
       if (sellerRights[i]) {
         rightsLabel.add(labels[i]);
-        if (i == 4) {
-          rightsIcons.add(
-            icons[i],
-          );
-        } else {
-          rightsIcons.add(
-            icons[i],
-          );
-        }
+        rightsIcons.add(
+          icons[i],
+        );
       }
+    }
+
+    if (isStructureAdmin) {
+      rightsLabel.add(labels[4]);
+      rightsIcons.add(icons[4]);
     }
 
     return Padding(
@@ -101,8 +102,9 @@ class SellerRightCard extends ConsumerWidget {
           showModalBottomSheet(
             context: context,
             backgroundColor: Colors.transparent,
-            scrollControlDisabledMaxHeightRatio: (80 + 45 * icons.length + 55) /
-                MediaQuery.of(context).size.height,
+            scrollControlDisabledMaxHeightRatio:
+                ((isStructureAdmin ? 80 : 100) + 45 * icons.length) /
+                    MediaQuery.of(context).size.height,
             builder: (context) {
               return ClipRRect(
                 borderRadius: const BorderRadius.only(
@@ -132,7 +134,7 @@ class SellerRightCard extends ConsumerWidget {
                         height: 10,
                       ),
                       for (var i = 0; i < icons.length; i++)
-                        if (i < 4 || storeSeller.storeAdmin)
+                        if (i < 4 || isStructureAdmin)
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 5),
                             child: Row(
@@ -149,7 +151,8 @@ class SellerRightCard extends ConsumerWidget {
                                   ),
                                 ),
                                 const Spacer(),
-                                if (!storeSeller.storeAdmin)
+                                if (storeSeller.canManageSellers &&
+                                    !isStructureAdmin)
                                   GestureDetector(
                                     onTap: () async {
                                       tokenExpireWrapper(ref, () async {
@@ -173,12 +176,13 @@ class SellerRightCard extends ConsumerWidget {
                                         if (value) {
                                           displayToastWithContext(
                                             TypeMsg.msg,
-                                            "Association supprimée",
+                                            "Droits mis à jour",
                                           );
+                                          Navigator.pop(context);
                                         } else {
                                           displayToastWithContext(
                                             TypeMsg.error,
-                                            "Impossible de supprimer l'association",
+                                            "Impossible de mettre à jour les droits",
                                           );
                                         }
                                       });
@@ -194,7 +198,7 @@ class SellerRightCard extends ConsumerWidget {
                               ],
                             ),
                           ),
-                      if (storeSeller.storeAdmin)
+                      if (storeSeller.canManageSellers && !isStructureAdmin)
                         GestureDetector(
                           onTap: () async {
                             await showDialog(
@@ -202,7 +206,7 @@ class SellerRightCard extends ConsumerWidget {
                               builder: (context) => CustomDialogBox(
                                 title: "Supprimer l'association",
                                 descriptions:
-                                    "Voulez-vous vraiment supprimer cette association ?",
+                                    "Voulez-vous vraiment supprimer ce vendeur ?",
                                 onYes: () {
                                   tokenExpireWrapper(ref, () async {
                                     final value = await sellerStoreNotifier
@@ -210,12 +214,12 @@ class SellerRightCard extends ConsumerWidget {
                                     if (value) {
                                       displayToastWithContext(
                                         TypeMsg.msg,
-                                        "Association supprimée",
+                                        "Vendeur supprimé",
                                       );
                                     } else {
                                       displayToastWithContext(
                                         TypeMsg.error,
-                                        "Impossible de supprimer l'association",
+                                        "Impossible de supprimer le vendeur",
                                       );
                                     }
                                   });
@@ -284,7 +288,7 @@ class SellerRightCard extends ConsumerWidget {
                 children: List.generate(rightsIcons.length, (index) {
                   return Positioned(
                     left: (icons.length - rightsIcons.length + index) * 25,
-                    child: icons[index],
+                    child: rightsIcons[index],
                   );
                 }),
               ),
