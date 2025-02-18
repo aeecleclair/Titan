@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/paiement/router.dart';
+import 'package:myecl/paiement/class/store.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_card_button.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_card_template.dart';
-import 'package:qlevar_router/qlevar_router.dart';
+import 'package:myecl/paiement/ui/pages/scan_page/scan_page.dart';
 
 class SellerCard extends StatelessWidget {
   final Function? toggle;
-  const SellerCard({super.key, required this.toggle});
+  final Store seller;
+  const SellerCard({super.key, required this.toggle, required this.seller});
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +24,20 @@ class SellerCard extends StatelessWidget {
         Color.fromARGB(255, 0, 29, 29)
       ],
       title: 'Solde associatif',
-      value: "WEI",
+      value: seller.name,
       actionButtons: [
         MainCardButton(
           colors: buttonGradient,
           icon: HeroIcons.viewfinderCircle,
           title: "Scanner",
           onPressed: () async {
-            QR.to(PaymentRouter.root + PaymentRouter.scan);
+            showModalBottomSheet(
+              context: context,
+              backgroundColor: Colors.transparent,
+              scrollControlDisabledMaxHeightRatio:
+                  (1 - 80 / MediaQuery.of(context).size.height),
+              builder: (context) => const ScanPage(),
+            );
           },
         ),
         MainCardButton(
