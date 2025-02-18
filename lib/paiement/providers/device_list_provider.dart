@@ -17,7 +17,7 @@ class DeviceListNotifier extends ListNotifier<WalletDevice> {
         (device) => devicesRepository.revokeDevice(device.id),
         (devices, device) =>
             devices..[devices.indexWhere((d) => d.id == device.id)] = device,
-        device);
+        device,);
   }
 }
 
