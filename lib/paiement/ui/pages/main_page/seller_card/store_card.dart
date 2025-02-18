@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/paiement/providers/selected_month_provider.dart';
 import 'package:myecl/paiement/providers/selected_store_provider.dart';
 import 'package:myecl/paiement/providers/store_admin_list_provider.dart';
 import 'package:myecl/paiement/router.dart';
@@ -17,6 +18,7 @@ class StoreCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final store = ref.watch(selectedStoreProvider);
     final storeAdminListNotifier = ref.read(storeAdminListProvider.notifier);
+    final selectedMonthNotifier = ref.watch(selectedMonthProvider.notifier);
     final buttonGradient = [
       const Color.fromARGB(255, 6, 75, 75),
       const Color.fromARGB(255, 0, 29, 29)
@@ -63,7 +65,10 @@ class StoreCard extends ConsumerWidget {
         MainCardButton(
           colors: buttonGradient,
           icon: HeroIcons.wallet,
-          onPressed: () async {},
+          onPressed: () async {
+            selectedMonthNotifier.clearSelectedMonth();
+            QR.to(PaymentRouter.root + PaymentRouter.storeStats);
+          },
           title: 'Historique',
         ),
       ],

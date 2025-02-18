@@ -10,6 +10,7 @@ import 'package:myecl/paiement/ui/pages/main_page/main_page.dart'
     deferred as main_page;
 import 'package:myecl/paiement/ui/pages/stats_page/stats_page.dart'
     deferred as stats_page;
+import 'package:myecl/paiement/ui/pages/store_stats_page/store_stats_page.dart' deferred as store_stats_page;
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -21,6 +22,7 @@ class PaymentRouter {
   static const String devices = '/devices';
   static const String admin = '/admin';
   static const String storeAdmin = '/storeAdmin';
+  static const String storeStats = '/storeStats';
   static final Module module = Module(
     name: "MyECLPay",
     icon: const Left(HeroIcons.creditCard),
@@ -57,6 +59,13 @@ class PaymentRouter {
             builder: () => store_admin_page.StoreAdminPage(),
             middleware: [
               DeferredLoadingMiddleware(store_admin_page.loadLibrary),
+            ],
+          ),
+          QRoute(
+            path: PaymentRouter.storeStats,
+            builder: () => store_stats_page.StoreStatsPage(),
+            middleware: [
+              DeferredLoadingMiddleware(store_stats_page.loadLibrary),
             ],
           ),
         ],
