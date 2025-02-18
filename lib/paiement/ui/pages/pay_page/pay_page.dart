@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/paiement/providers/pay_amount_provider.dart';
 import 'package:myecl/paiement/ui/pages/pay_page/confirm_button.dart';
+import 'package:myecl/paiement/ui/pages/pay_page/digit_fade_in_animation.dart';
 import 'package:myecl/paiement/ui/pages/pay_page/keyboard.dart';
-import 'package:myecl/paiement/ui/paiement.dart';
 
 class PayPage extends ConsumerWidget {
   const PayPage({super.key});
@@ -12,11 +12,14 @@ class PayPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final payAmount = ref.watch(payAmountProvider);
     final payAmountNotifier = ref.watch(payAmountProvider.notifier);
-    return PaymentTemplate(
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(40),
+        topRight: Radius.circular(40),
+      ),
       child: Container(
-        margin: const EdgeInsets.only(top: 20),
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
             colors: [
               Color(0xff017f80),
               Color.fromARGB(255, 9, 103, 103),
@@ -24,17 +27,6 @@ class PayPage extends ConsumerWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: const Color.fromARGB(255, 9, 103, 103).withOpacity(0.3),
-              blurRadius: 20,
-              offset: const Offset(0, -5),
-            ),
-          ],
         ),
         child: Column(
           children: [
@@ -44,12 +36,14 @@ class PayPage extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ...payAmount.characters.map((e) {
-                      return Text(
-                        e,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 50,
-                          fontWeight: FontWeight.bold,
+                      return DigitFadeInAnimation(
+                        child: Text(
+                          e,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 50,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       );
                     }),

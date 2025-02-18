@@ -116,25 +116,25 @@ class ConfirmButton extends ConsumerWidget {
           );
           return;
         }
-        // final bool didAuthenticate = await auth.authenticate(
-        //   localizedReason: 'Veuillez vous authentifier pour payer',
-        //   authMessages: [
-        //     const AndroidAuthMessages(
-        //       signInTitle: 'L\'authentification est requise pour payer',
-        //       cancelButton: 'Non merci',
-        //     ),
-        //     const IOSAuthMessages(
-        //       cancelButton: 'Non merci',
-        //     ),
-        //   ],
-        // );
-        // if (!didAuthenticate) {
-        //   displayToastWithContext(
-        //     TypeMsg.error,
-        //     'L\'authentification a échoué',
-        //   );
-        //   return;
-        // }
+        final bool didAuthenticate = await auth.authenticate(
+          localizedReason: 'Veuillez vous authentifier pour payer',
+          authMessages: [
+            const AndroidAuthMessages(
+              signInTitle: 'L\'authentification est requise pour payer',
+              cancelButton: 'Non merci',
+            ),
+            const IOSAuthMessages(
+              cancelButton: 'Non merci',
+            ),
+          ],
+        );
+        if (!didAuthenticate) {
+          displayToastWithContext(
+            TypeMsg.error,
+            'L\'authentification a échoué',
+          );
+          return;
+        }
         if ((await keyService.getKeyId()) == null) {
           displayToastWithContext(
             TypeMsg.error,

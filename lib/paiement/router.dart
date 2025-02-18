@@ -6,8 +6,6 @@ import 'package:myecl/paiement/ui/pages/devices_page/devices_page.dart'
     deferred as devices_page;
 import 'package:myecl/paiement/ui/pages/main_page/main_page.dart'
     deferred as main_page;
-import 'package:myecl/paiement/ui/pages/pay_page/pay_page.dart'
-    deferred as pay_page;
 import 'package:myecl/paiement/ui/pages/scan_page/scan_page.dart'
     deferred as scan_page;
 import 'package:myecl/paiement/ui/pages/stats_page/stats_page.dart'
@@ -20,7 +18,6 @@ class PaymentRouter {
   final ProviderRef ref;
   static const String root = '/payment';
   static const String stats = '/stats';
-  static const String pay = '/pay';
   static const String scan = '/scan';
   static const String devices = '/devices';
   static final Module module = Module(
@@ -40,13 +37,6 @@ class PaymentRouter {
           DeferredLoadingMiddleware(main_page.loadLibrary),
         ],
         children: [
-          QRoute(
-            path: PaymentRouter.pay,
-            builder: () => pay_page.PayPage(),
-            middleware: [
-              DeferredLoadingMiddleware(pay_page.loadLibrary),
-            ],
-          ),
           QRoute(
             path: PaymentRouter.scan,
             builder: () => scan_page.ScanPage(),
