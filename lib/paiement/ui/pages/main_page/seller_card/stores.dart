@@ -26,11 +26,11 @@ class Sellers extends ConsumerWidget {
         const SizedBox(
           height: 15,
         ),
+        // const SellerDivider(),
+        // const TransactionCard(),
+        // const TransactionCard(),
         const SellerDivider(),
-        const TransactionCard(),
-        const TransactionCard(),
-        const SellerDivider(),
-        const TransactionCard(),
+        // const TransactionCard(),
         const SizedBox(
           height: 15,
         ),

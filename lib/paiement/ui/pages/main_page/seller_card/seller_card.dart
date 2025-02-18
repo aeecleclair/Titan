@@ -9,8 +9,8 @@ class SellerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final buttonGradient = [
-      const Color.fromARGB(255, 0, 68, 68),
       const Color.fromARGB(255, 6, 75, 75),
+        Color.fromARGB(255, 0, 29, 29)
     ];
     return MainCardTemplate(
       colors: const [
