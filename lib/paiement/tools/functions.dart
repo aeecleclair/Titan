@@ -6,6 +6,8 @@ import 'package:myecl/paiement/class/qr_code_signature_data.dart';
 import 'package:myecl/paiement/class/wallet_device.dart';
 import 'package:myecl/paiement/tools/key_service.dart';
 
+enum TransferType { helloAsso, check, cash, bankTransfer }
+
 String getMonth(int m) {
   final months = [
     "Décembre",
@@ -107,4 +109,32 @@ Future<String> getQRCodeContent(
       ),
     ).toJson(),
   );
+}
+
+String transferTypeToString(TransferType type) {
+  switch (type) {
+    case TransferType.bankTransfer:
+      return "bank_transfer";
+    case TransferType.helloAsso:
+      return "hello_asso";
+    case TransferType.cash:
+      return "cash";
+    case TransferType.check:
+      return "check";
+  }
+}
+
+TransferType transferTypeFromString(String type) {
+  switch (type) {
+    case "bank_transfer":
+      return TransferType.bankTransfer;
+    case "hello_asso":
+      return TransferType.helloAsso;
+    case "cash":
+      return TransferType.cash;
+    case "check":
+      return TransferType.check;
+    default:
+      return TransferType.helloAsso;
+  }
 }
