@@ -9,9 +9,10 @@ import 'package:myecl/paiement/providers/device_provider.dart';
 import 'package:myecl/paiement/providers/key_service_provider.dart';
 import 'package:myecl/paiement/router.dart';
 import 'package:myecl/paiement/tools/platform_info.dart';
-import 'package:myecl/paiement/ui/pages/main_page/account_button.dart';
+import 'package:myecl/paiement/ui/pages/main_page/account_card/account_button.dart';
 import 'package:myecl/paiement/ui/pages/pay_page/pay_page.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AccountCard extends HookConsumerWidget {
@@ -24,6 +25,16 @@ class AccountCard extends HookConsumerWidget {
 
     void displayToastWithContext(TypeMsg type, String message) {
       displayToast(context, type, message);
+    }
+
+    void showPayModal() {
+      showModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        scrollControlDisabledMaxHeightRatio:
+            (1 - 80 / MediaQuery.of(context).size.height),
+        builder: (context) => const PayPage(),
+      );
     }
 
     return Container(
@@ -125,55 +136,51 @@ class AccountCard extends HookConsumerWidget {
                   icon: HeroIcons.qrCode,
                   title: "Payer",
                   onPressed: () async {
-                    String? keyId = await keyService.getKeyId();
-                    if (keyId == null) {
-                      final name = await getPlatformInfo();
-                      final keyPair = await keyService.generateKeyPair();
-                      final publicKey =
-                          (await keyPair.extractPublicKey()).bytes;
-                      final base64PublicKey = base64Encode(publicKey);
-                      final body = CreateDevice(
-                        name: name,
-                        ed25519PublicKey: base64PublicKey,
-                      );
-                      final value = await deviceNotifier.registerDevice(body);
-                      if (value != null) {
-                        await keyService.saveKeyPair(keyPair);
-                        await keyService.saveKeyId(value);
-                      }
-                      keyId = value;
-                    }
-                    if (keyId == null) {
-                      displayToastWithContext(
-                          TypeMsg.error, "Erreur lors de la création de l'appareil");
-                      return;
-                    }
-                    final device = await deviceNotifier.getDevice(keyId);
-                    showModalBottomSheet(
-                      context: context,
-                      backgroundColor: Colors.transparent,
-                      scrollControlDisabledMaxHeightRatio:
-                          (1 - 80 / MediaQuery.of(context).size.height),
-                      builder: (context) => const PayPage(),
-                    );
-                    device.when(
-                      data: (device) {
-                        if (device.status == WalletDeviceStatus.active) {
-                        } else if (device.status ==
-                            WalletDeviceStatus.unactive) {
-                          displayToastWithContext(
-                              TypeMsg.error, "Votre appareil n'est pas activé");
-                        } else {
-                          displayToastWithContext(
-                              TypeMsg.error, "Votre appareil a été révoqué");
+                    await tokenExpireWrapper(ref, () async {
+                      String? keyId = await keyService.getKeyId();
+                      if (keyId == null) {
+                        final name = await getPlatformInfo();
+                        final keyPair = await keyService.generateKeyPair();
+                        final publicKey =
+                            (await keyPair.extractPublicKey()).bytes;
+                        final base64PublicKey = base64Encode(publicKey);
+                        final body = CreateDevice(
+                          name: name,
+                          ed25519PublicKey: base64PublicKey,
+                        );
+                        final value = await deviceNotifier.registerDevice(body);
+                        if (value != null) {
+                          await keyService.saveKeyPair(keyPair);
+                          await keyService.saveKeyId(value);
                         }
-                      },
-                      error: (e, s) {
+                        keyId = value;
+                      }
+                      if (keyId == null) {
                         displayToastWithContext(TypeMsg.error,
-                            "Erreur lors de la récupération de l'appareil");
-                      },
-                      loading: () {},
-                    );
+                            "Erreur lors de la création de l'appareil");
+                        return;
+                      }
+                      final device = await deviceNotifier.getDevice(keyId);
+                      device.when(
+                        data: (device) {
+                          if (device.status == WalletDeviceStatus.active) {
+                            showPayModal();
+                          } else if (device.status ==
+                              WalletDeviceStatus.unactive) {
+                            displayToastWithContext(TypeMsg.error,
+                                "Votre appareil n'est pas activé");
+                          } else {
+                            displayToastWithContext(
+                                TypeMsg.error, "Votre appareil a été révoqué");
+                          }
+                        },
+                        error: (e, s) {
+                          displayToastWithContext(TypeMsg.error,
+                              "Erreur lors de la récupération de l'appareil");
+                        },
+                        loading: () {},
+                      );
+                    });
                   },
                 ),
                 // if (!kIsWeb)
