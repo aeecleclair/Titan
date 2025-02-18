@@ -6,14 +6,14 @@ class MainCardTemplate extends StatelessWidget {
   final List<MainCardButton> actionButtons;
   final List<Color> colors;
   final String title;
-  final String value;
+  final Widget child;
   final Function? toggle;
   const MainCardTemplate({
     super.key,
     required this.actionButtons,
     required this.colors,
     required this.title,
-    required this.value,
+    required this.child,
     required this.toggle,
   });
 
@@ -79,13 +79,7 @@ class MainCardTemplate extends StatelessWidget {
                   ),
                   Align(
                     alignment: Alignment.center,
-                    child: Text(
-                      value,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 50,
-                      ),
-                    ),
+                    child: child,
                   ),
                 ],
               ),
