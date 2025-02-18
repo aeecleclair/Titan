@@ -1,6 +1,6 @@
 enum HistoryType { transfer, received, given }
 
-enum TransactionStatus { confirmed, canceled }
+enum TransactionStatus { confirmed, canceled, refunded }
 
 class History {
   final String id;
