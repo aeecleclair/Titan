@@ -69,28 +69,6 @@ class SummaryCard extends StatelessWidget {
                         fontSize: 14,
                       ),
                     ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 2,
-                      ),
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 21, 215, 105)
-                            .withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: const Text(
-                        "Confirmé",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 21, 215, 105),
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
                   ],
                 ),
                 const SizedBox(
