@@ -41,20 +41,21 @@ class PaymentRouter {
         ],
         children: [
           QRoute(
-              path: PaymentRouter.pay,
-              builder: () => pay_page.PayPage(),
-              middleware: [
-                DeferredLoadingMiddleware(pay_page.loadLibrary),
-              ],
-              children: [
-                QRoute(
-                  path: PaymentRouter.qr,
-                  builder: () => qr_page.QrPage(),
-                  middleware: [
-                    DeferredLoadingMiddleware(qr_page.loadLibrary),
-                  ],
-                ),
-              ],),
+            path: PaymentRouter.pay,
+            builder: () => pay_page.PayPage(),
+            middleware: [
+              DeferredLoadingMiddleware(pay_page.loadLibrary),
+            ],
+            children: [
+              QRoute(
+                path: PaymentRouter.qr,
+                builder: () => qr_page.QrPage(),
+                middleware: [
+                  DeferredLoadingMiddleware(qr_page.loadLibrary),
+                ],
+              ),
+            ],
+          ),
           QRoute(
             path: PaymentRouter.scan,
             builder: () => scan_page.ScanPage(),
