@@ -17,7 +17,9 @@ class StoreListNotifier extends ListNotifier<Store> {
   }) : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Store>>> getStores() async {
-    return await loadList(usersMeRepository.getMyStores);
+    return await loadList(
+      () async => List<Store>.from(await usersMeRepository.getMyStores()),
+    );
   }
 
   Future<bool> createStore(Structure structure, Store store) async {
