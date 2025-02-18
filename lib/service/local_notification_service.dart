@@ -26,9 +26,7 @@ class LocalNotificationService {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/launcher_icon');
     final DarwinInitializationSettings initializationSettingsDarwin =
-        DarwinInitializationSettings(
-      onDidReceiveLocalNotification: onDidReceiveLocalNotification,
-    );
+        DarwinInitializationSettings();
     const LinuxInitializationSettings initializationSettingsLinux =
         LinuxInitializationSettings(defaultActionName: 'Open notification');
     final InitializationSettings initializationSettings =
@@ -196,21 +194,6 @@ class LocalNotificationService {
 
   Future<void> cancelAllNotifications() async {
     await _localNotificationService.cancelAll();
-  }
-
-  void onDidReceiveLocalNotification(
-    int id,
-    String? title,
-    String? body,
-    String? payload,
-  ) async {
-    if (payload == null) {
-      return;
-    }
-    final message = message_class.Message.fromJson(
-      jsonDecode(utf8.decode(payload.runes.toList())),
-    );
-    onNotificationClick.add(message);
   }
 
   Future<String> handleAction(String actionModule, String actionTable) async {
