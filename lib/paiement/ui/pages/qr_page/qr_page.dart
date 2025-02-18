@@ -3,7 +3,7 @@ import 'package:myecl/paiement/ui/pages/qr_page/qr_code.dart';
 import 'package:myecl/paiement/ui/paiement.dart';
 
 class QrPage extends StatelessWidget {
-  const QrPage({Key? key}) : super(key: key);
+  const QrPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +19,6 @@ class QrPage extends StatelessWidget {
           flex: 2,
         ),
       ],
-    ));
+    ),);
   }
 }

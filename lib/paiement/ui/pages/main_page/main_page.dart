@@ -6,7 +6,7 @@ import 'package:myecl/paiement/ui/paiement.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 
 class PaymentMainPage extends HookConsumerWidget {
-  const PaymentMainPage({Key? key}) : super(key: key);
+  const PaymentMainPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,14 +23,14 @@ class PaymentMainPage extends HookConsumerWidget {
                     itemCount: 1,
                     itemBuilder: (context, index) {
                       return const AccountCard();
-                    }),
+                    },),
               ),
               const SizedBox(
                 height: 25,
               ),
-              const LastTransactions()
+              const LastTransactions(),
             ],
-          )),
+          ),),
     );
   }
 }

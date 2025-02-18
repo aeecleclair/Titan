@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class TransactionCard extends StatelessWidget {
-  const TransactionCard({Key? key}) : super(key: key);
+  const TransactionCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class TransactionCard extends StatelessWidget {
                   style: TextStyle(
                     color: Color(0xff204550),
                     fontSize: 14,
-                  )),
+                  ),),
               SizedBox(
                 height: 5,
               ),
@@ -36,7 +36,7 @@ class TransactionCard extends StatelessWidget {
                   style: TextStyle(
                     color: Color(0xff204550),
                     fontSize: 12,
-                  )),
+                  ),),
             ],
           ),
         ),
@@ -47,8 +47,8 @@ class TransactionCard extends StatelessWidget {
             style: TextStyle(
                 color: Color(0xff204550),
                 fontSize: 18,
-                fontWeight: FontWeight.bold)),
-      ]),
+                fontWeight: FontWeight.bold,),),
+      ],),
     );
   }
 }
