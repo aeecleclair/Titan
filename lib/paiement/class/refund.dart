@@ -39,6 +39,5 @@ class Refund {
     );
   }
 
-  Refund.empty()
-      : this(walletDeviceId: '', completeRefund: false, amount: 0);
+  Refund.empty() : this(walletDeviceId: '', completeRefund: false, amount: 0);
 }

@@ -9,7 +9,6 @@ class FundingRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'myeclpay/transfer/';
 
-
   Future<FundingUrl> getPaymentUrl(Transfer transfer) async {
     return await create(transfer.toJson());
   }

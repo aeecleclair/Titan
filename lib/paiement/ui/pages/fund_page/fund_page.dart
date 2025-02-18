@@ -64,7 +64,8 @@ class FundPage extends ConsumerWidget {
               onKeyboardTap: (e) {
                 if (e != "," || !fundAmount.contains(",")) {
                   if (fundAmount.contains(",") &&
-                      fundAmount.substring(fundAmount.indexOf(",")).length < 3) {
+                      fundAmount.substring(fundAmount.indexOf(",")).length <
+                          3) {
                     fundAmountNotifier.setFundAmount(fundAmount + e.toString());
                   } else if (!fundAmount.contains(",")) {
                     fundAmountNotifier.setFundAmount(fundAmount + e.toString());
@@ -72,8 +73,8 @@ class FundPage extends ConsumerWidget {
                 }
               },
               rightButtonFn: () {
-                fundAmountNotifier
-                    .setFundAmount(fundAmount.substring(0, fundAmount.length - 1));
+                fundAmountNotifier.setFundAmount(
+                    fundAmount.substring(0, fundAmount.length - 1));
               },
             ),
             const Expanded(child: Center(child: ConfirmFundButton())),

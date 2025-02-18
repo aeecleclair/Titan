@@ -42,18 +42,15 @@ class StoreSellerListNotifier extends ListNotifier<Seller> {
         seller.userId,
         seller,
       ),
-      (sellers, seller) => sellers
-          .map((s) => s.userId == seller.userId ? seller : s)
-          .toList(),
+      (sellers, seller) =>
+          sellers.map((s) => s.userId == seller.userId ? seller : s).toList(),
       seller,
     );
   }
 }
 
 final sellerStoreProvider = StateNotifierProvider.family<
-    StoreSellerListNotifier,
-    AsyncValue<List<Seller>>,
-    String>((ref, storeId) {
+    StoreSellerListNotifier, AsyncValue<List<Seller>>, String>((ref, storeId) {
   final sellerStoreRepository = ref.watch(sellerStoreRepositoryProvider);
   return StoreSellerListNotifier(
     sellerStoreRepository: sellerStoreRepository,
