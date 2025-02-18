@@ -13,23 +13,15 @@ class StoreSellerCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedStore = ref.watch(selectedStoreProvider);
     final selectedStoreNotifier = ref.read(selectedStoreProvider.notifier);
+
+    final isSelected = store.id == selectedStore.id;
+
     return GestureDetector(
       onTap: () {
         selectedStoreNotifier.updateStore(store);
       },
+      behavior: HitTestBehavior.opaque,
       child: Container(
-        decoration: BoxDecoration(
-          color: store.id == selectedStore.id
-              ? const Color.fromARGB(255, 6, 75, 75)
-              : Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: store.id == selectedStore.id
-                ? const Color.fromARGB(255, 6, 75, 75)
-                : const Color.fromARGB(255, 0, 29, 29),
-            width: 1,
-          ),
-        ),
         height: 70,
         margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -38,9 +30,20 @@ class StoreSellerCard extends ConsumerWidget {
           children: [
             CircleAvatar(
               radius: 27,
-              backgroundColor: store.id == selectedStore.id
+              backgroundColor: isSelected
                   ? Color.fromARGB(255, 0, 29, 29)
                   : Color.fromARGB(255, 6, 75, 75),
+              child: (isSelected)
+                  ? const HeroIcon(
+                      HeroIcons.check,
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      size: 25,
+                    )
+                  : const HeroIcon(
+                      HeroIcons.arrowPath,
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      size: 25,
+                    ),
             ),
             const SizedBox(
               width: 15,
@@ -50,22 +53,12 @@ class StoreSellerCard extends ConsumerWidget {
                 store.name,
                 maxLines: 2,
                 style: TextStyle(
-                  color: store.id == selectedStore.id
-                      ? Colors.white
-                      : Color.fromARGB(255, 0, 29, 29),
+                  color: Color.fromARGB(255, 0, 29, 29),
                   fontSize: 14,
+                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 ),
               ),
             ),
-            const SizedBox(
-              width: 10,
-            ),
-            if (store.id != selectedStore.id)
-              const HeroIcon(
-                HeroIcons.arrowRight,
-                color: Color.fromARGB(255, 0, 29, 29),
-                size: 25,
-              ),
           ],
         ),
       ),
