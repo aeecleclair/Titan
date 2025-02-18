@@ -8,13 +8,15 @@ import 'package:myecl/tools/providers/list_notifier.dart';
 class StoreListNotifier extends ListNotifier<Store> {
   final StoresRepository storesRepository;
   final StructuresRepository structureRepository;
-  StoreListNotifier(
-      {required this.storesRepository, required this.structureRepository})
-      : super(const AsyncValue.loading());
+  StoreListNotifier({
+    required this.storesRepository,
+    required this.structureRepository,
+  }) : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Store>>> getStores(Structure structure) async {
     return await loadList(
-        () => structureRepository.getStructureStores(structure));
+      () => structureRepository.getStructureStores(structure),
+    );
   }
 
   Future<bool> updateStore(Store store) async {
@@ -41,7 +43,8 @@ final storeListProvider =
   final storeListRepository = ref.watch(storesRepositoryProvider);
   final structureRepository = ref.watch(structuresRepositoryProvider);
   final notifier = StoreListNotifier(
-      storesRepository: storeListRepository,
-      structureRepository: structureRepository);
+    storesRepository: storeListRepository,
+    structureRepository: structureRepository,
+  );
   return notifier;
 });

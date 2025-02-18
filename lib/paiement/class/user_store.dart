@@ -34,6 +34,7 @@ class UserStore extends Store {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -48,6 +49,7 @@ class UserStore extends Store {
     };
   }
 
+  @override
   UserStore copyWith({
     String? id,
     String? name,

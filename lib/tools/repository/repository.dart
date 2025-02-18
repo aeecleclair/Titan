@@ -149,7 +149,7 @@ abstract class Repository {
     } catch (e) {
       if (kIsWeb) {
         logger.error(
-          "GET ${ext + suffix}\nError while fetching response",
+          "GET ${ext + id + suffix}\nError while fetching response",
         );
         return <String, dynamic>{};
       }

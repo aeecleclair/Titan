@@ -41,6 +41,7 @@ final structureListProvider =
         (ref) {
   final structureRepository = ref.watch(structuresRepositoryProvider);
   final notifier =
-      StructureListNotifier(structuresRepository: structureRepository)..getStructures();
+      StructureListNotifier(structuresRepository: structureRepository)
+        ..getStructures();
   return notifier;
 });

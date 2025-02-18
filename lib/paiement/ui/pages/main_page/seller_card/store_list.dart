@@ -49,7 +49,7 @@ class StoreList extends ConsumerWidget {
                   const StoreDivider(
                     name: "Administrateur",
                   ),
-                  const StoreAdminCard()
+                  const StoreAdminCard(),
                 ],
                 ...sortedByMembership.map((membership, stores) {
                   final List<UserStore> alphabeticallyOrderedStores = stores

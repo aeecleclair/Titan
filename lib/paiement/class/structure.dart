@@ -1,6 +1,8 @@
+enum AvailableAssociationMembership { AEECL, USEECL }
+
 class Structure {
   final String name;
-  final String membership;
+  final AvailableAssociationMembership membership;
   final String id;
   final String managerUserId;
 
@@ -13,14 +15,16 @@ class Structure {
 
   Structure.fromJson(Map<String, dynamic> json)
       : name = json['name'],
-        membership = json['membership'],
+        membership = AvailableAssociationMembership.values.firstWhere(
+          (e) => e.toString().split('.').last == json['membership'],
+        ),
         id = json['id'],
         managerUserId = json['manager_user_id'];
 
   Map<String, dynamic> toJson() {
     return {
       'name': name,
-      'membership': membership,
+      'membership': membership.toString().split('.').last,
       'id': id,
       'manager_user_id': managerUserId,
     };
@@ -33,7 +37,7 @@ class Structure {
 
   Structure copyWith({
     String? name,
-    String? membership,
+    AvailableAssociationMembership? membership,
     String? id,
     String? managerUserId,
   }) {
@@ -46,5 +50,10 @@ class Structure {
   }
 
   Structure.empty()
-      : this(name: '', membership: '', id: '', managerUserId: '');
+      : this(
+          name: '',
+          membership: AvailableAssociationMembership.AEECL,
+          id: '',
+          managerUserId: '',
+        );
 }
