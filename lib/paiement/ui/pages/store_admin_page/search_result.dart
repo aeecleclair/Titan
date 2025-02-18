@@ -53,7 +53,6 @@ class SearchResult extends HookConsumerWidget {
                               canSeeHistory: true,
                               canCancel: true,
                               canManageSellers: true,
-                              storeAdmin: true,
                             );
                             final value = await sellerStoreNotifier
                                 .createStoreSeller(seller);

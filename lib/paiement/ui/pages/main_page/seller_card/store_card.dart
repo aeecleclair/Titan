@@ -45,7 +45,7 @@ class StoreCard extends HookConsumerWidget {
       ],
       title: 'Solde associatif',
       actionButtons: [
-        if (store.canBank || store.storeAdmin)
+        if (store.canBank)
           MainCardButton(
             colors: buttonGradient,
             icon: HeroIcons.viewfinderCircle,
@@ -60,7 +60,7 @@ class StoreCard extends HookConsumerWidget {
               );
             },
           ),
-        if (store.canManageSellers || store.storeAdmin)
+        if (store.canManageSellers)
           MainCardButton(
             colors: buttonGradient,
             icon: HeroIcons.userGroup,
@@ -79,7 +79,7 @@ class StoreCard extends HookConsumerWidget {
         //     },
         //     title: 'Editer',
         //   ),
-        if (store.canSeeHistory || store.storeAdmin)
+        if (store.canSeeHistory)
           MainCardButton(
             colors: buttonGradient,
             icon: HeroIcons.wallet,

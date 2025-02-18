@@ -53,7 +53,7 @@ class StructuresRepository extends Repository {
       await create(
         store.toJson(),
         suffix: "/${structure.id}/stores",
-      )
+      ),
     );
   }
 }

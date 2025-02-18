@@ -9,8 +9,6 @@ import 'package:myecl/paiement/ui/pages/store_pages/add_edit_store.dart'
     deferred as add_edit_page;
 import 'package:myecl/paiement/ui/pages/store_admin_page/store_admin_page.dart'
     deferred as store_admin_page;
-import 'package:myecl/paiement/ui/pages/admin_store_admin_page/admin_store_admin_page.dart'
-    deferred as admin_store_admin_page;
 import 'package:myecl/paiement/ui/pages/devices_page/devices_page.dart'
     deferred as devices_page;
 import 'package:myecl/paiement/ui/pages/main_page/main_page.dart'
@@ -84,15 +82,6 @@ class PaymentRouter {
                 builder: () => add_edit_page.AddEditStorePage(),
                 middleware: [
                   DeferredLoadingMiddleware(add_edit_page.loadLibrary),
-                ],
-              ),
-              QRoute(
-                path: PaymentRouter.storeAdmin,
-                builder: () => admin_store_admin_page.AdminStoreAdminPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(
-                    admin_store_admin_page.loadLibrary,
-                  ),
                 ],
               ),
             ],

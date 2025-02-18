@@ -6,7 +6,6 @@ class UserStore extends Store {
   final bool canSeeHistory;
   final bool canCancel;
   final bool canManageSellers;
-  final bool storeAdmin;
 
   UserStore({
     required super.id,
@@ -17,7 +16,6 @@ class UserStore extends Store {
     required this.canSeeHistory,
     required this.canCancel,
     required this.canManageSellers,
-    required this.storeAdmin,
   });
 
   factory UserStore.fromJson(Map<String, dynamic> json) {
@@ -30,7 +28,6 @@ class UserStore extends Store {
       canSeeHistory: json['can_see_history'],
       canCancel: json['can_cancel'],
       canManageSellers: json['can_manage_sellers'],
-      storeAdmin: json['store_admin'],
     );
   }
 
@@ -45,7 +42,6 @@ class UserStore extends Store {
       'can_see_history': canSeeHistory,
       'can_cancel': canCancel,
       'can_manage_sellers': canManageSellers,
-      'store_admin': storeAdmin,
     };
   }
 
@@ -70,13 +66,12 @@ class UserStore extends Store {
       canSeeHistory: canSeeHistory ?? this.canSeeHistory,
       canCancel: canCancel ?? this.canCancel,
       canManageSellers: canManageSellers ?? this.canManageSellers,
-      storeAdmin: storeAdmin ?? this.storeAdmin,
     );
   }
 
   @override
   String toString() {
-    return 'UserStore(id: $id, name: $name, walletId: $walletId, structure: $structure, canBank: $canBank, canSeeHistory: $canSeeHistory, canCancel: $canCancel, canManageSellers: $canManageSellers, storeAdmin: $storeAdmin)';
+    return 'UserStore(id: $id, name: $name, walletId: $walletId, structure: $structure, canBank: $canBank, canSeeHistory: $canSeeHistory, canCancel: $canCancel, canManageSellers: $canManageSellers)';
   }
 
   UserStore.empty()
@@ -89,6 +84,5 @@ class UserStore extends Store {
           canSeeHistory: false,
           canCancel: false,
           canManageSellers: false,
-          storeAdmin: false,
         );
 }
