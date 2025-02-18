@@ -78,6 +78,10 @@ class DevicesPage extends HookConsumerWidget {
                                 await keyService.saveKeyId(value);
                                 await devicesNotifier.getDeviceList();
                                 displayAddDevice.value = false;
+                                displayToastWithContext(
+                                  TypeMsg.msg,
+                                  "Demande prise en compte, consultez votre boite mail",
+                                );
                               }
                             },
                           ),
