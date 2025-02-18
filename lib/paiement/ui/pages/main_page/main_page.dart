@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/providers/cgu_provider.dart';
+import 'package:myecl/paiement/providers/tos_provider.dart';
 import 'package:myecl/paiement/providers/is_payment_admin.dart';
 import 'package:myecl/paiement/providers/my_history_provider.dart';
 import 'package:myecl/paiement/providers/my_stores_provider.dart';
 import 'package:myecl/paiement/providers/register_provider.dart';
-import 'package:myecl/paiement/providers/should_display_cgu_dialog.dart';
+import 'package:myecl/paiement/providers/should_display_tos_dialog.dart';
 import 'package:myecl/paiement/ui/pages/main_page/account_card/account_card.dart';
-import 'package:myecl/paiement/ui/pages/main_page/cgu_dialog.dart';
+import 'package:myecl/paiement/ui/pages/main_page/tos_dialog.dart';
 import 'package:myecl/paiement/ui/pages/main_page/account_card/last_transactions.dart';
 import 'package:myecl/paiement/ui/pages/main_page/flip_card.dart';
 import 'package:myecl/paiement/ui/pages/main_page/seller_card/store_card.dart';
@@ -22,11 +22,11 @@ class PaymentMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final shouldDisplayCguDialog = ref.watch(shouldDisplayCguDialogProvider);
-    final shouldDisplayCguDialogNotifier =
-        ref.read(shouldDisplayCguDialogProvider.notifier);
-    final cgu = ref.watch(cguProvider);
-    final cguNotifier = ref.read(cguProvider.notifier);
+    final shouldDisplayTosDialog = ref.watch(shouldDisplayTosDialogProvider);
+    final shouldDisplayTosDialogNotifier =
+        ref.read(shouldDisplayTosDialogProvider.notifier);
+    final tos = ref.watch(tosProvider);
+    final tosNotifier = ref.read(tosProvider.notifier);
     final registerNotifier = ref.read(registerProvider.notifier);
     final mySellers = ref.watch(myStoresProvider);
     final mySellersNotifier = ref.read(myStoresProvider.notifier);
@@ -48,7 +48,7 @@ class PaymentMainPage extends HookConsumerWidget {
       }
     }
 
-    cgu.maybeWhen(
+    tos.maybeWhen(
       orElse: () {},
       error: (e, s) async {
         final value = await registerNotifier.register();
@@ -56,7 +56,7 @@ class PaymentMainPage extends HookConsumerWidget {
           orElse: () {},
           data: (value) async {
             if (value) {
-              cguNotifier.getCGU();
+              tosNotifier.getTOS();
             }
           },
         );
@@ -133,24 +133,24 @@ class PaymentMainPage extends HookConsumerWidget {
                 ),
               ],
             ),
-            if (shouldDisplayCguDialog)
-              CGUDialogBox(
-                descriptions: cgu.maybeWhen(
+            if (shouldDisplayTosDialog)
+              TOSDialogBox(
+                descriptions: tos.maybeWhen(
                   orElse: () => '',
-                  data: (cgu) => cgu.cguContent,
+                  data: (tos) => tos.tosContent,
                 ),
-                title: "Nouvelle CGU",
+                title: "Nouvelle TOS",
                 onYes: () {
-                  cgu.maybeWhen(
+                  tos.maybeWhen(
                     orElse: () {},
-                    data: (cgu) async {
-                      final value = await cguNotifier.signCGU(
-                        cgu.copyWith(
-                          acceptedCguVersion: cgu.latestCguVersion,
+                    data: (tos) async {
+                      final value = await tosNotifier.signTOS(
+                        tos.copyWith(
+                          acceptedTosVersion: tos.latestTosVersion,
                         ),
                       );
                       if (value) {
-                        shouldDisplayCguDialogNotifier.update(false);
+                        shouldDisplayTosDialogNotifier.update(false);
                         mySellersNotifier.getMyStores();
                         myHistoryNotifier.getHistory();
                       }
@@ -158,7 +158,7 @@ class PaymentMainPage extends HookConsumerWidget {
                   );
                 },
                 onNo: () {
-                  shouldDisplayCguDialogNotifier.update(false);
+                  shouldDisplayTosDialogNotifier.update(false);
                 },
               ),
           ],
