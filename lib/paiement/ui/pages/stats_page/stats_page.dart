@@ -15,7 +15,7 @@ class StatsPage extends StatelessWidget {
           ),
           MonthBar(),
           SizedBox(
-            height: 20,
+            height: 30,
           ),
           SumUpChart(),
           Spacer(),
