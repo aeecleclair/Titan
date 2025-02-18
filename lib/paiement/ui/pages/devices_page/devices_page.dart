@@ -13,7 +13,10 @@ import 'package:myecl/paiement/tools/platform_info.dart';
 import 'package:myecl/paiement/ui/pages/devices_page/add_device_button.dart';
 import 'package:myecl/paiement/ui/pages/devices_page/device_item.dart';
 import 'package:myecl/paiement/ui/paiement.dart';
+import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class DevicesPage extends HookConsumerWidget {
@@ -28,6 +31,10 @@ class DevicesPage extends HookConsumerWidget {
     final deviceKey = keyService.getKeyId();
     final displayAddDevice = useState(true);
     final pageController = usePageController();
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
 
     return PaymentTemplate(
       child: FutureBuilder(
@@ -77,9 +84,47 @@ class DevicesPage extends HookConsumerWidget {
                         ],
                         ...devices.map((device) {
                           return DeviceItem(
-                            device: device,
-                            isActual: device.id == snapshot.data,
-                          );
+                              device: device,
+                              isActual: device.id == snapshot.data,
+                              onRevoke: () async {
+                                await showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return CustomDialogBox(
+                                      title: "Révoquer l'appareil ?",
+                                      descriptions:
+                                          "Vous ne pourrez plus utiliser cet appareil pour les paiements",
+                                      onYes: () async {
+                                        tokenExpireWrapper(ref, () async {
+                                          final value = await devicesNotifier
+                                              .revokeDevice(
+                                            device.copyWith(
+                                              status:
+                                                  WalletDeviceStatus.disabled,
+                                            ),
+                                          );
+                                          if (value) {
+                                            displayToastWithContext(
+                                              TypeMsg.msg,
+                                              "Appareil révoqué",
+                                            );
+                                            final savedId =
+                                                await keyService.getKeyId();
+                                            if (savedId == device.id) {
+                                              await keyService.clear();
+                                            }
+                                          } else {
+                                            displayToastWithContext(
+                                              TypeMsg.error,
+                                              "Erreur lors de la révocation de l'appareil",
+                                            );
+                                          }
+                                        });
+                                      },
+                                    );
+                                  },
+                                );
+                              });
                         }),
                       ],
                     ),
