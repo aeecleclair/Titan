@@ -6,10 +6,10 @@ class QrPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return const Expanded(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: const [
+      children: [
         Spacer(),
         Center(
           child: QrCode(),
