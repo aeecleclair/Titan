@@ -151,6 +151,13 @@ class AccountCard extends HookConsumerWidget {
             fontSize: 50,
           ),
         ),
+        errorBuilder: (error, stackTrace) => Text(
+          'Erreur lors de la récupération du solde : $error',
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 50,
+          ),
+        ),
       ),
     );
   }

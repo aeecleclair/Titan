@@ -73,6 +73,12 @@ class LastTransactions extends ConsumerWidget {
                   .toList(),
             );
           },
+          errorBuilder: (error, stack) => Center(
+            child: Text(
+              "Erreur lors de la récupération des transactions : $error",
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
         ),
         const SizedBox(
           height: 15,
