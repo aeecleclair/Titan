@@ -87,8 +87,8 @@ class PaymentMainPage extends HookConsumerWidget {
                       );
                       if (value) {
                         shouldDisplayTosDialogNotifier.update(false);
-                        mySellersNotifier.getMyStores();
-                        myHistoryNotifier.getHistory();
+                        await mySellersNotifier.getMyStores();
+                        await myHistoryNotifier.getHistory();
                       }
                     },
                   );
