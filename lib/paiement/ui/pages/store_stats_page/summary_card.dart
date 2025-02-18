@@ -10,18 +10,30 @@ class SummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final allConfirmed =
-        history.where((e) => e.status == TransactionStatus.confirmed);
-    if (allConfirmed.isEmpty) {
+    int total = 0;
+    int numberConfirmedTransactions = 0;
+    int numberRefundedTransactions = 0;
+
+    for (final transaction in history) {
+      switch (transaction.status) {
+        case TransactionStatus.confirmed:
+          total += transaction.total;
+          numberConfirmedTransactions++;
+          break;
+        case TransactionStatus.refunded:
+          total -= transaction.total;
+          numberRefundedTransactions++;
+          break;
+        default:
+          break;
+      }
+    }
+
+    if (numberConfirmedTransactions + numberRefundedTransactions == 0) {
       return const SizedBox();
     }
 
-    final total = allConfirmed.fold(
-      0,
-      (previousValue, element) => previousValue + element.total,
-    );
-
-    final mean = total / allConfirmed.length;
+    final mean = total / numberConfirmedTransactions;
 
     final formatter = NumberFormat("#,##0.00", "fr_FR");
     return Container(
