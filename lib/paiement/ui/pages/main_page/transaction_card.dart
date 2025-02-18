@@ -101,7 +101,7 @@ class TransactionCard extends StatelessWidget {
             width: 10,
           ),
           Text(
-            "${transaction.type == HistoryType.given ? "-" : "+"} ${formatter.format(transaction.total / 100)} €",
+            "${transaction.type == HistoryType.given ? " -" : " +"} ${formatter.format(transaction.total / 100)} €",
             style: TextStyle(
               color: const Color(0xff204550),
               fontSize: 18,
