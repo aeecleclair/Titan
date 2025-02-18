@@ -15,8 +15,7 @@ class FundingUrlNotifier extends SingleNotifier<FundingUrl> {
 }
 
 final fundingUrlProvider =
-    StateNotifierProvider<FundingUrlNotifier, AsyncValue<FundingUrl>>(
-        (ref) {
+    StateNotifierProvider<FundingUrlNotifier, AsyncValue<FundingUrl>>((ref) {
   final fundingUrlRepository = ref.watch(fundingRepositoryProvider);
   return FundingUrlNotifier(fundingRepository: fundingUrlRepository);
 });

@@ -29,7 +29,8 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
     final store = ref.read(storeProvider);
     final scanNotifier = ref.read(scanProvider.notifier);
     if (mounted && barcodes.barcodes.isNotEmpty) {
-      final data = barcodeNotifier.updateBarcode(barcodes.barcodes.firstOrNull!.rawValue!);
+      final data = barcodeNotifier
+          .updateBarcode(barcodes.barcodes.firstOrNull!.rawValue!);
       scanNotifier.scan(store.id, data);
     }
   }
