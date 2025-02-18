@@ -4,7 +4,7 @@ import 'package:myecl/paiement/ui/pages/stats_page/sum_up_chart.dart';
 import 'package:myecl/paiement/ui/paiement.dart';
 
 class StatsPage extends StatelessWidget {
-  const StatsPage({Key? key}) : super(key: key);
+  const StatsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class StatsPage extends StatelessWidget {
           ),
           MonthBar(),
           SizedBox(
-            height:50,
+            height: 50,
           ),
           SumUpChart(),
           Spacer(),

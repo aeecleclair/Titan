@@ -5,7 +5,7 @@ import 'package:myecl/paiement/ui/paiement.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class ScanPage extends StatefulWidget {
-  const ScanPage({Key? key}) : super(key: key);
+  const ScanPage({super.key});
 
   @override
   State<StatefulWidget> createState() => _ScanPageState();
@@ -66,13 +66,13 @@ class _ScanPageState extends State<ScanPage> {
           key: qrKey,
           onQRViewCreated: _onQRViewCreated,
           overlayMargin: EdgeInsets.only(
-              bottom: MediaQuery.of(context).size.height - scanArea - 350),
+              bottom: MediaQuery.of(context).size.height - scanArea - 350,),
           overlay: QrScannerOverlayShape(
               borderColor: const Color(0xff017f80),
               borderRadius: 20,
               borderLength: 30,
               borderWidth: 10,
-              cutOutSize: scanArea),
+              cutOutSize: scanArea,),
           onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
         ),
       ),

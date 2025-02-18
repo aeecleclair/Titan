@@ -7,7 +7,7 @@ import 'package:myecl/paiement/ui/pages/main_page/account_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AccountCard extends HookConsumerWidget {
-  const AccountCard({Key? key}) : super(key: key);
+  const AccountCard({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,8 +21,8 @@ class AccountCard extends HookConsumerWidget {
             colors: [
               Color.fromARGB(255, 9, 103, 103),
               Color(0xff017f80),
-              Color.fromARGB(255, 4, 84, 84)
-            ]),
+              Color.fromARGB(255, 4, 84, 84),
+            ],),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.3),
@@ -65,7 +65,7 @@ class AccountCard extends HookConsumerWidget {
                           color: Colors.white,
                           size: 30,
                         ),
-                      )
+                      ),
                     ],
                   ),
                   const SizedBox(
@@ -91,7 +91,7 @@ class AccountCard extends HookConsumerWidget {
               color: Colors.white,
               borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30)),
+                  bottomRight: Radius.circular(30),),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -119,7 +119,7 @@ class AccountCard extends HookConsumerWidget {
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

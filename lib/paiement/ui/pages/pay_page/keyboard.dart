@@ -29,7 +29,7 @@ class NumericKeyboard extends StatelessWidget {
       this.rightButtonFn,
       this.leftIcon,
       this.leftButtonFn,
-      this.mainAxisAlignment = MainAxisAlignment.spaceEvenly});
+      this.mainAxisAlignment = MainAxisAlignment.spaceEvenly,});
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +80,7 @@ class NumericKeyboard extends StatelessWidget {
                         HeroIcons.backspace,
                         color: textColor,
                         size: 35,
-                      )))
+                      ),),),
             ],
           ),
         ],
@@ -102,6 +102,6 @@ class NumericKeyboard extends StatelessWidget {
             value,
             style: TextStyle(fontSize: 26, color: textColor),
           ),
-        ));
+        ),);
   }
 }

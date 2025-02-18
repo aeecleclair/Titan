@@ -6,7 +6,7 @@ import 'package:myecl/paiement/ui/pages/pay_page/keyboard.dart';
 import 'package:myecl/paiement/ui/paiement.dart';
 
 class PayPage extends ConsumerWidget {
-  const PayPage({Key? key}) : super(key: key);
+  const PayPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

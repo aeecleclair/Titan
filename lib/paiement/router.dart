@@ -54,7 +54,7 @@ class PaymentRouter {
                     DeferredLoadingMiddleware(qr_page.loadLibrary),
                   ],
                 ),
-              ]),
+              ],),
           QRoute(
             path: PaymentRouter.scan,
             builder: () => scan_page.ScanPage(),
