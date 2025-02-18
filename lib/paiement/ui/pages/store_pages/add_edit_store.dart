@@ -14,6 +14,7 @@ import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditStorePage extends HookConsumerWidget {
   const AddEditStorePage({super.key});
@@ -26,7 +27,7 @@ class AddEditStorePage extends HookConsumerWidget {
     final key = GlobalKey<FormState>();
     final isEdit = store.id != store_class.Store.empty().id;
     final name = useTextEditingController(text: store.name);
-    final type = useState<Structure>(store.structure);
+    final structure = useState<Structure>(store.structure);
 
     final myStructures = <Structure>[];
 
@@ -63,11 +64,11 @@ class AddEditStorePage extends HookConsumerWidget {
                 height: 40,
                 items: myStructures,
                 itemBuilder: (context, value, index) {
-                  final selected = type.value == value;
+                  final selected = structure.value == value;
                   return ItemChip(
                     selected: selected,
                     onTap: () async {
-                      type.value = value;
+                      structure.value = value;
                     },
                     child: Text(
                       value.name.toUpperCase(),
@@ -108,32 +109,34 @@ class AddEditStorePage extends HookConsumerWidget {
                                 id: "",
                                 walletId: "",
                                 name: name.text,
-                                structure: type.value,
+                                structure: structure.value,
                               );
-                              // final value = isEdit
-                              //     ? await storeListNotifier
-                              //         .updateStore(newStore)
-                              //     : await storeListNotifier
-                              //         .createStore(newStore);
-                              // if (value) {
-                              //   ref
-                              //       .watch(myStoresProvider.notifier)
-                              //       .getMyStores();
-                              //   QR.back();
-                              //   displayToastWithContext(
-                              //     TypeMsg.msg,
-                              //     isEdit
-                              //         ? "L'association a été modifiée avec succès"
-                              //         : "L'association a été ajoutée avec succès",
-                              //   );
-                              // } else {
-                              //   displayToastWithContext(
-                              //     TypeMsg.error,
-                              //     isEdit
-                              //         ? "Une erreur est survenue lors de la modification de l'association"
-                              //         : "Une erreur est survenue lors de l'ajout de l'association",
-                              //   );
-                              // }
+                              final value = isEdit
+                                  ? await storeListNotifier
+                                      .updateStore(newStore)
+                                  : await storeListNotifier.createStore(
+                                      structure.value,
+                                      newStore,
+                                    );
+                              if (value) {
+                                ref
+                                    .watch(myStoresProvider.notifier)
+                                    .getMyStores();
+                                QR.back();
+                                displayToastWithContext(
+                                  TypeMsg.msg,
+                                  isEdit
+                                      ? "L'association a été modifiée avec succès"
+                                      : "L'association a été ajoutée avec succès",
+                                );
+                              } else {
+                                displayToastWithContext(
+                                  TypeMsg.error,
+                                  isEdit
+                                      ? "Une erreur est survenue lors de la modification de l'association"
+                                      : "Une erreur est survenue lors de l'ajout de l'association",
+                                );
+                              }
                             }
                           },
                           child: Text(

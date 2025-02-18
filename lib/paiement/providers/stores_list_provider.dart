@@ -19,6 +19,13 @@ class StoreListNotifier extends ListNotifier<Store> {
     );
   }
 
+  Future<bool> createStore(Structure structure, Store store) async {
+    return await add(
+      (_) => structureRepository.addStructureStore(structure, store),
+      store,
+    );
+  }
+
   Future<bool> updateStore(Store store) async {
     return await update(
       storesRepository.updateStore,
