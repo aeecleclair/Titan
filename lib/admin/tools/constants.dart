@@ -56,6 +56,7 @@ class AdminTextConstants {
   static const String removeGroupMember = "Supprimer le membre du groupe ?";
   static const String research = "Recherche";
   static const String schools = "Écoles";
+  static const String structures = "Structures";
   static const String startDate = "Date de début";
   static const String startDateMaximal = "Date de début maximale";
   static const String startDateMinimal = "Date de début minimale";
