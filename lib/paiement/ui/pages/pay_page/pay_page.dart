@@ -14,7 +14,7 @@ class PayPage extends ConsumerWidget {
     final payAmountNotifier = ref.watch(payAmountProvider.notifier);
     return PaymentTemplate(
       child: Container(
-        margin: const EdgeInsets.only(top: 10),
+        margin: const EdgeInsets.only(top: 20),
         decoration: BoxDecoration(
           gradient: const LinearGradient(
             colors: [
@@ -40,13 +40,29 @@ class PayPage extends ConsumerWidget {
           children: [
             Expanded(
               child: Center(
-                child: Text(
-                  '$payAmount ${payAmount.isNotEmpty ? '€' : ''}',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 50,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ...payAmount.characters.map((e) {
+                      return Text(
+                        e,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 50,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    }),
+                    if (payAmount.isNotEmpty)
+                      const Text(
+                        ' €',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 50,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                  ],
                 ),
               ),
             ),
