@@ -121,15 +121,23 @@ class AddEditStructurePage extends HookConsumerWidget {
                     }
                     if (key.currentState!.validate()) {
                       await tokenExpireWrapper(ref, () async {
-                        final value =
-                            await structureListNotifier.createStructure(
-                          Structure(
-                            name: name.text,
-                            membership: membership.value,
-                            managerUser: structureManager,
-                            id: '',
-                          ),
-                        );
+                        final value = isEdit
+                            ? await structureListNotifier.updateStructure(
+                                Structure(
+                                  name: name.text,
+                                  membership: membership.value,
+                                  managerUser: structureManager,
+                                  id: structure.id,
+                                ),
+                              )
+                            : await structureListNotifier.createStructure(
+                                Structure(
+                                  name: name.text,
+                                  membership: membership.value,
+                                  managerUser: structureManager,
+                                  id: '',
+                                ),
+                              );
                         if (value) {
                           QR.back();
                           structureManagerNotifier.setUser(SimpleUser.empty());
