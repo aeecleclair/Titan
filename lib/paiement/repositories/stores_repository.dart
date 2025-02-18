@@ -10,29 +10,9 @@ class StoresRepository extends Repository {
   final ext = 'myeclpay/stores';
 
   Future<List<Store>> getStores() async {
-    return [
-      Store(
-        id: "1",
-        name: "Bar",
-        walletId: "1",
-        membership: AvailableAssociationMembership.AEECL,
-      ),
-      Store(
-        id: "2",
-        name: "Bar//",
-        walletId: "2",
-        membership: AvailableAssociationMembership.AEECL,
-      ),
-      Store(
-        id: "3",
-        name: "Challenge",
-        walletId: "3",
-        membership: AvailableAssociationMembership.USEECL,
-      ),
-    ];
-    // return List<Store>.from(
-    //   (await getList()).map((e) => Store.fromJson(e)),
-    // );
+    return List<Store>.from(
+      (await getList()).map((e) => Store.fromJson(e)),
+    );
   }
 
   Future<Store> createStore(Store store) async {
