@@ -27,10 +27,6 @@ class AddEditStorePage extends HookConsumerWidget {
     final name = useTextEditingController(text: store.name);
     Structure structure = ref.watch(selectedStructureProvider);
 
-    if (store.structure != Structure.empty()) {
-      structure = store.structure;
-    }
-
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -44,7 +40,7 @@ class AddEditStorePage extends HookConsumerWidget {
             children: [
               const SizedBox(height: 10),
               AlignLeftText(
-                "${isEdit ? 'Modifier' : 'Ajouter'} une association",
+                "${isEdit ? 'Modifier' : 'Ajouter'} une association ${structure.name}",
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 color: Colors.grey,
               ),
@@ -74,9 +70,7 @@ class AddEditStorePage extends HookConsumerWidget {
                               return;
                             }
                             if (key.currentState!.validate()) {
-                              store_class.Store newStore = store_class.Store(
-                                id: "",
-                                walletId: "",
+                              store_class.Store newStore = store.copyWith(
                                 name: name.text,
                                 structure: structure,
                               );
