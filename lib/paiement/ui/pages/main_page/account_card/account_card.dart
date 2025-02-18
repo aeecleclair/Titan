@@ -12,6 +12,7 @@ import 'package:myecl/paiement/providers/my_wallet_provider.dart';
 import 'package:myecl/paiement/providers/selected_month_provider.dart';
 import 'package:myecl/paiement/router.dart';
 import 'package:myecl/paiement/tools/platform_info.dart';
+import 'package:myecl/paiement/ui/pages/fund_page/fund_page.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_card_button.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_card_template.dart';
 import 'package:myecl/paiement/ui/pages/pay_page/pay_page.dart';
@@ -47,6 +48,16 @@ class AccountCard extends HookConsumerWidget {
         scrollControlDisabledMaxHeightRatio:
             (1 - 80 / MediaQuery.of(context).size.height),
         builder: (context) => const PayPage(),
+      );
+    }
+
+    void showFundModal() {
+      showModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        scrollControlDisabledMaxHeightRatio:
+            (1 - 80 / MediaQuery.of(context).size.height),
+        builder: (context) => const FundPage(),
       );
     }
 
@@ -139,7 +150,9 @@ class AccountCard extends HookConsumerWidget {
           colors: buttonGradient,
           icon: HeroIcons.creditCard,
           title: "Alimenter",
-          onPressed: () async {},
+          onPressed: () async {
+            showFundModal();
+          },
         ),
       ],
       child: AsyncChild(
