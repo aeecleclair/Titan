@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:myecl/paiement/providers/my_wallet_provider.dart';
 import 'package:myecl/paiement/providers/pay_amount_provider.dart';
 import 'package:myecl/paiement/ui/pages/pay_page/confirm_button.dart';
 import 'package:myecl/paiement/ui/components/digit_fade_in_animation.dart';
@@ -12,6 +14,14 @@ class PayPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final payAmount = ref.watch(payAmountProvider);
     final payAmountNotifier = ref.watch(payAmountProvider.notifier);
+    final myWallet = ref.watch(myWalletProvider);
+    final currentAmount =
+        myWallet.maybeWhen(orElse: () => 0, data: (wallet) => wallet.balance);
+    final formatter = NumberFormat("#,##0.00", "fr_FR");
+
+    final amountToSub = double.tryParse(payAmount.replaceAll(",", ".")) ?? 0;
+
+    final isValid = currentAmount - amountToSub >= 0;
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(40),
@@ -30,6 +40,27 @@ class PayPage extends ConsumerWidget {
         ),
         child: Column(
           children: [
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              'Paiement',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Text(
+              'Solde théorique : ${formatter.format(currentAmount - amountToSub)} €',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 15,
+              ),
+            ),
             Expanded(
               child: Center(
                 child: Row(
@@ -39,8 +70,10 @@ class PayPage extends ConsumerWidget {
                       return DigitFadeInAnimation(
                         child: Text(
                           e,
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: isValid
+                                ? Colors.white
+                                : const Color.fromARGB(255, 91, 6, 0),
                             fontSize: 50,
                             fontWeight: FontWeight.bold,
                           ),
@@ -48,10 +81,12 @@ class PayPage extends ConsumerWidget {
                       );
                     }),
                     if (payAmount.isNotEmpty)
-                      const Text(
+                      Text(
                         ' €',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: isValid
+                              ? Colors.white
+                              : const Color.fromARGB(255, 91, 6, 0),
                           fontSize: 50,
                           fontWeight: FontWeight.bold,
                         ),
