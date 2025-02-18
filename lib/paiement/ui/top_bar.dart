@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/drawer/providers/page_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/paiement/providers/paiement_page_provider.dart';
 import 'package:myecl/paiement/tools/constants.dart';
-import 'package:myecl/home/providers/scrolled_provider.dart';
 
 class TopBar extends HookConsumerWidget {
   final SwipeControllerNotifier controllerNotifier;
@@ -14,9 +12,6 @@ class TopBar extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final page = ref.watch(paiementPageProvider);
-    final pageNotifier = ref.watch(paiementPageProvider.notifier);
-    final appPageNotifier = ref.watch(pageProvider.notifier);
-    final hasScrolledNotifier = ref.watch(hasScrolledProvider.notifier);
     return Column(
       children: [
         const SizedBox(
