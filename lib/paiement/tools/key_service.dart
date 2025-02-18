@@ -57,6 +57,9 @@ class KeyService {
       key: 'privateKey',
     );
     await _secureStorage.delete(
+      key: 'publicKey',
+    );
+    await _secureStorage.delete(
       key: 'keyId',
     );
     return true;
