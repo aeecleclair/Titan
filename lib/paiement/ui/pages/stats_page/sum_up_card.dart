@@ -18,7 +18,7 @@ class SumUpCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       clipBehavior: Clip.none,
-      height: 135,
+      height: 140,
       width: 78,
       child: Container(
         height: 50,
@@ -29,11 +29,7 @@ class SumUpCard extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
-            colors: [
-              darkColor,
-              color,
-              darkColor
-            ],
+            colors: [darkColor, color, darkColor],
           ),
           shadows: [
             BoxShadow(
