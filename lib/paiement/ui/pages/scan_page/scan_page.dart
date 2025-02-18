@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
@@ -16,6 +17,7 @@ class QRViewExample extends StatefulWidget {
 class _QRViewExampleState extends State<QRViewExample> {
   Barcode? result;
   QRViewController? controller;
+  bool cameraPaused = false;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
   // In order to get hot reload to work we need to pause the camera if the platform
@@ -34,110 +36,106 @@ class _QRViewExampleState extends State<QRViewExample> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Column(
+      child: Stack(
         children: <Widget>[
-          Expanded(flex: 4, child: _buildQrView(context)),
-          Expanded(
-            flex: 1,
-            child: FittedBox(
-              fit: BoxFit.contain,
-              child: Column(
+          _buildQrView(context),
+          Column(
+            children: <Widget>[
+              const Spacer(),
+              Container(
+                height: MediaQuery.of(context).size.height - 670,
+                color: Colors.black.withOpacity(0.48),
+              ),
+            ],
+          ),
+          Column(children: <Widget>[
+            const Spacer(),
+            SizedBox(
+              height: MediaQuery.of(context).size.height - 600,
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  if (result != null)
-                    Text(
-                        'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
-                  else
-                    const Text('Scan a code'),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: ElevatedButton(
-                            onPressed: () async {
-                              await controller?.toggleFlash();
-                              setState(() {});
-                            },
-                            child: FutureBuilder(
-                              future: controller?.getFlashStatus(),
-                              builder: (context, snapshot) {
-                                return Text('Flash: ${snapshot.data}');
-                              },
-                            )),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: ElevatedButton(
-                            onPressed: () async {
-                              await controller?.flipCamera();
-                              setState(() {});
-                            },
-                            child: FutureBuilder(
-                              future: controller?.getCameraInfo(),
-                              builder: (context, snapshot) {
-                                if (snapshot.data != null) {
-                                  return Text(
-                                      'Camera facing ${describeEnum(snapshot.data!)}');
-                                } else {
-                                  return const Text('loading');
-                                }
-                              },
-                            )),
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            await controller?.pauseCamera();
-                          },
-                          child: const Text('pause',
-                              style: TextStyle(fontSize: 20)),
+                  GestureDetector(
+                      onTap: () async {
+                        await controller?.toggleFlash();
+                        setState(() {});
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.8),
+                          borderRadius: BorderRadius.circular(25),
                         ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            await controller?.resumeCamera();
+                        child: FutureBuilder(
+                          future: controller?.getFlashStatus(),
+                          builder: (context, snapshot) {
+                            return HeroIcon(
+                                snapshot.data == true
+                                    ? HeroIcons.boltSlash
+                                    : HeroIcons.bolt,
+                                color: Colors.black,
+                                size: 50);
                           },
-                          child: const Text('resume',
-                              style: TextStyle(fontSize: 20)),
                         ),
-                      )
-                    ],
-                  ),
+                      )),
+                  GestureDetector(
+                      onTap: () async {
+                        if (cameraPaused == true) {
+                          await controller?.resumeCamera();
+                          setState(() {
+                            cameraPaused = false;
+                          });
+                        } else {
+                          await controller?.pauseCamera();
+                          setState(() {
+                            cameraPaused = true;
+                          });
+                        }
+                      },
+                      child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.8),
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          child: HeroIcon(
+                            cameraPaused ? HeroIcons.play : HeroIcons.pause,
+                            color: Colors.black,
+                            size: 50,
+                          ))),
                 ],
               ),
             ),
-          )
+          ]),
         ],
       ),
     );
   }
 
-  Widget _buildQrView(BuildContext context)  {
-    // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
-    var scanArea = 300.0;
-    // PermissionStatus status =  _getCameraPermission();
-    // if (status.isGranted) {
-        return QRView(
-      key: qrKey,
-      onQRViewCreated: _onQRViewCreated,
-      overlay: QrScannerOverlayShape(
-          borderColor: Color(0xff017f80),
-          borderRadius: 10,
-          borderLength: 30,
-          borderWidth: 10,
-          cutOutSize: scanArea),
-      onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
+  Widget _buildQrView(BuildContext context) {
+    var scanArea = (MediaQuery.of(context).size.width < 350 ||
+            MediaQuery.of(context).size.height < 350)
+        ? 250.0
+        : 320.0;
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(30),
+        topRight: Radius.circular(30),
+      ),
+      child: QRView(
+        key: qrKey,
+        onQRViewCreated: _onQRViewCreated,
+        overlayMargin: EdgeInsets.only(
+            bottom: MediaQuery.of(context).size.height - scanArea - 350),
+        overlay: QrScannerOverlayShape(
+            borderColor: const Color(0xff017f80),
+            borderRadius: 20,
+            borderLength: 30,
+            borderWidth: 10,
+            cutOutSize: scanArea),
+        onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
+      ),
     );
   }
 
