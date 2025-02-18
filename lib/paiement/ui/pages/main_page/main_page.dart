@@ -64,13 +64,13 @@ class PaymentMainPage extends HookConsumerWidget {
     );
 
     return PaymentTemplate(
-      child: Refresher(
-        onRefresh: () async {
-          await mySellersNotifier.getMyStores();
-          await myHistoryNotifier.getHistory();
-        },
-        child: shouldDisplayTosDialog
-            ? TOSDialogBox(
+      child: shouldDisplayTosDialog
+          ? Refresher(
+              onRefresh: () async {
+                await mySellersNotifier.getMyStores();
+                await myHistoryNotifier.getHistory();
+              },
+              child: TOSDialogBox(
                 descriptions: tos.maybeWhen(
                   orElse: () => '',
                   data: (tos) => tos.tosContent,
@@ -86,9 +86,9 @@ class PaymentMainPage extends HookConsumerWidget {
                         ),
                       );
                       if (value) {
-                        shouldDisplayTosDialogNotifier.update(false);
                         await mySellersNotifier.getMyStores();
                         await myHistoryNotifier.getHistory();
+                        shouldDisplayTosDialogNotifier.update(false);
                       }
                     },
                   );
@@ -96,70 +96,70 @@ class PaymentMainPage extends HookConsumerWidget {
                 onNo: () {
                   shouldDisplayTosDialogNotifier.update(false);
                 },
-              )
-            : Column(
-                children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  AsyncChild(
-                    value: mySellers,
-                    builder: (context, mySellers) {
-                      if (mySellers.isEmpty && !isAdmin) {
-                        return SizedBox(
-                          height: 250,
-                          width: MediaQuery.of(context).size.width,
-                          child: const AccountCard(
-                            toggle: null,
-                          ),
-                        );
-                      }
+              ),
+            )
+          : Column(
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                AsyncChild(
+                  value: mySellers,
+                  builder: (context, mySellers) {
+                    if (mySellers.isEmpty && !isAdmin) {
                       return SizedBox(
                         height: 250,
                         width: MediaQuery.of(context).size.width,
-                        child: FlipCard(
-                          back: StoreCard(
-                            toggle: toggle,
-                          ),
-                          front: AccountCard(
-                            toggle: toggle,
-                          ),
-                          controller: controller,
+                        child: const AccountCard(
+                          toggle: null,
                         ),
                       );
-                    },
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  AnimatedBuilder(
-                    animation: controller,
-                    builder: (context, child) {
-                      return Stack(
-                        children: [
-                          Visibility(
-                            visible: controller.value.abs() < 1,
-                            child: AnimatedOpacity(
-                              duration: const Duration(milliseconds: 300),
-                              opacity: 1 - controller.value.abs(),
-                              child: const LastTransactions(),
-                            ),
+                    }
+                    return SizedBox(
+                      height: 250,
+                      width: MediaQuery.of(context).size.width,
+                      child: FlipCard(
+                        back: StoreCard(
+                          toggle: toggle,
+                        ),
+                        front: AccountCard(
+                          toggle: toggle,
+                        ),
+                        controller: controller,
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                AnimatedBuilder(
+                  animation: controller,
+                  builder: (context, child) {
+                    return Stack(
+                      children: [
+                        Visibility(
+                          visible: controller.value.abs() < 1,
+                          child: AnimatedOpacity(
+                            duration: const Duration(milliseconds: 300),
+                            opacity: 1 - controller.value.abs(),
+                            child: const LastTransactions(),
                           ),
-                          Visibility(
-                            visible: controller.value.abs() > 0,
-                            child: AnimatedOpacity(
-                              duration: const Duration(milliseconds: 300),
-                              opacity: controller.value.abs(),
-                              child: const StoreList(),
-                            ),
+                        ),
+                        Visibility(
+                          visible: controller.value.abs() > 0,
+                          child: AnimatedOpacity(
+                            duration: const Duration(milliseconds: 300),
+                            opacity: controller.value.abs(),
+                            child: const StoreList(),
                           ),
-                        ],
-                      );
-                    },
-                  ),
-                ],
-              ),
-      ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ],
+            ),
     );
   }
 }
