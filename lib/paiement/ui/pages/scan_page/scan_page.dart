@@ -4,8 +4,8 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/paiement/providers/barcode_provider.dart';
+import 'package:myecl/paiement/ui/pages/scan_page/cancel_button.dart';
 import 'package:myecl/paiement/ui/pages/scan_page/scanner.dart';
-import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 
 class ScanPage extends HookConsumerWidget {
   const ScanPage({super.key});
@@ -139,26 +139,8 @@ class ScanPage extends HookConsumerWidget {
                             ),
                           ),
                           const SizedBox(width: 20),
-                          Expanded(
-                            child: GestureDetector(
-                              child: AddEditButtonLayout(
-                                colors: [
-                                  const Color.fromARGB(255, 138, 38, 5)
-                                      .withValues(alpha: 0.8),
-                                  const Color.fromARGB(255, 116, 29, 0)
-                                      .withValues(alpha: 0.8),
-                                ],
-                                child: const Text(
-                                  'Annuler',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                              onTap: () {},
-                            ),
+                          CancelButton(
+                            onCancel: (bool isInTime) async {},
                           ),
                         ],
                       ),
