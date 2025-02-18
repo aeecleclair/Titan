@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/paiement/ui/pages/qr_page/qr_code.dart';
+import 'package:myecl/paiement/ui/paiement.dart';
 
 class QrPage extends StatelessWidget {
   const QrPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Expanded(
+    return const PaymentTemplate(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

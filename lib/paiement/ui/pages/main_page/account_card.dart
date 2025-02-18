@@ -1,15 +1,16 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/providers/paiement_page_provider.dart';
+import 'package:myecl/paiement/router.dart';
 import 'package:myecl/paiement/ui/pages/main_page/account_button.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class AccountCard extends HookConsumerWidget {
   const AccountCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageNotifier = ref.read(paiementPageProvider.notifier);
     return Container(
       margin: const EdgeInsets.fromLTRB(10, 10, 10, 12),
       decoration: BoxDecoration(
@@ -57,7 +58,7 @@ class AccountCard extends HookConsumerWidget {
                       const Spacer(),
                       GestureDetector(
                         onTap: () {
-                          pageNotifier.setPaiementPage(PaiementPage.stats);
+                          QR.to(PaymentRouter.root + PaymentRouter.stats);
                         },
                         child: const HeroIcon(
                           HeroIcons.chartPie,
@@ -95,20 +96,22 @@ class AccountCard extends HookConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                AccountButton(
-                  icon: HeroIcons.qrCode,
-                  title: "Payer",
-                  onPressed: () {
-                    pageNotifier.setPaiementPage(PaiementPage.pay);
-                  },
-                ),
-                AccountButton(
-                  icon: HeroIcons.viewfinderCircle,
-                  title: "Scanner",
-                  onPressed: () {
-                    pageNotifier.setPaiementPage(PaiementPage.scan);
-                  },
-                ),
+                if (!kIsWeb)
+                  AccountButton(
+                    icon: HeroIcons.qrCode,
+                    title: "Payer",
+                    onPressed: () {
+                      QR.to(PaymentRouter.root + PaymentRouter.pay);
+                    },
+                  ),
+                if (!kIsWeb)
+                  AccountButton(
+                    icon: HeroIcons.viewfinderCircle,
+                    title: "Scanner",
+                    onPressed: () {
+                      QR.to(PaymentRouter.root + PaymentRouter.scan);
+                    },
+                  ),
                 AccountButton(
                   icon: HeroIcons.creditCard,
                   title: "Alimenter",

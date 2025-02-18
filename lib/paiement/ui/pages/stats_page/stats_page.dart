@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/paiement/ui/pages/stats_page/month_bar.dart';
 import 'package:myecl/paiement/ui/pages/stats_page/sum_up_chart.dart';
+import 'package:myecl/paiement/ui/paiement.dart';
 
 class StatsPage extends StatelessWidget {
   const StatsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Expanded(
+    return const PaymentTemplate(
       child: Column(
         children: [
           SizedBox(

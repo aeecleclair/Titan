@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/paiement/providers/pay_amount_provider.dart';
 import 'package:myecl/paiement/ui/pages/pay_page/confirm_button.dart';
 import 'package:myecl/paiement/ui/pages/pay_page/keyboard.dart';
-// import 'package:myecl/paiement/ui/pages/pay_page/qrcode.dart';
+import 'package:myecl/paiement/ui/paiement.dart';
 
 class PayPage extends ConsumerWidget {
   const PayPage({Key? key}) : super(key: key);
@@ -12,7 +12,7 @@ class PayPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final payAmount = ref.watch(payAmountProvider);
     final payAmountNotifier = ref.watch(payAmountProvider.notifier);
-    return Expanded(
+    return PaymentTemplate(
       child: Container(
         margin: const EdgeInsets.only(top: 10),
         decoration: BoxDecoration(
