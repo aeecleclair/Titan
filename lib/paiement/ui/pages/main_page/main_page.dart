@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/paiement/providers/cgu_provider.dart';
+import 'package:myecl/paiement/providers/register_provider.dart';
 import 'package:myecl/paiement/providers/should_display_cgu_dialog.dart';
 import 'package:myecl/paiement/ui/pages/main_page/account_card.dart';
 import 'package:myecl/paiement/ui/pages/main_page/cgu_dialog.dart';
@@ -18,6 +19,21 @@ class PaymentMainPage extends HookConsumerWidget {
         ref.read(shouldDisplayCguDialogProvider.notifier);
     final cgu = ref.watch(cguProvider);
     final cguNotifier = ref.read(cguProvider.notifier);
+    final registerNotifier = ref.read(registerProvider.notifier);
+    cgu.maybeWhen(
+      orElse: () {},
+      error: (e, s) async {
+        final value = await registerNotifier.register();
+        value.maybeWhen(
+          orElse: () {},
+          data: (value) async {
+            if (value) {
+              cguNotifier.getCGU();
+            }
+          },
+        );
+      },
+    );
     return PaymentTemplate(
       child: Refresher(
         onRefresh: () async {},
@@ -47,7 +63,10 @@ class PaymentMainPage extends HookConsumerWidget {
             ),
             if (shouldDisplayCguDialog)
               CGUDialogBox(
-                descriptions: "cgu",
+                descriptions: cgu.maybeWhen(
+                  orElse: () => '',
+                  data: (cgu) => cgu.cguContent,
+                ),
                 title: "Nouvelle CGU",
                 onYes: () {
                   cgu.maybeWhen(

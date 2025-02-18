@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class CGUDialogBox extends StatelessWidget {
   final String title, descriptions;
@@ -93,13 +94,14 @@ class CGUDialogBox extends StatelessWidget {
                           ),
                         ),
                       ),
-                      TextButton(
-                        onPressed: () async {
+                      WaitingButton(
+                        onTap: () async {
                           if (onNo == null) {
                             Navigator.of(context).pop();
                           }
                           await onYes();
                         },
+                        builder: (child) => child,
                         child: const Text(
                           "Accepter",
                           style: TextStyle(

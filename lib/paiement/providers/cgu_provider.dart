@@ -19,5 +19,5 @@ class CGUNotifier extends SingleNotifier<CGU> {
 
 final cguProvider = StateNotifierProvider<CGUNotifier, AsyncValue<CGU>>((ref) {
   final cguRepository = ref.watch(cguRepositoryProvider);
-  return CGUNotifier(cguRepository: cguRepository);
+  return CGUNotifier(cguRepository: cguRepository)..getCGU();
 });

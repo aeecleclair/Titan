@@ -13,7 +13,7 @@ class CguRepository extends Repository {
   }
 
   Future<bool> signCGU(CGU cgu) async {
-    return await create(cgu.toJson(), suffix: "signcgu");
+    return await create(cgu.toJson(), suffix: "cgu");
   }
 }
 

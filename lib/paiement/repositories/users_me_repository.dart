@@ -12,7 +12,7 @@ class UsersMeRepository extends Repository {
   }
 }
 
-final usersMeRepository = Provider<UsersMeRepository>((ref) {
+final usersMeRepositoryProvider = Provider<UsersMeRepository>((ref) {
   final token = ref.watch(tokenProvider);
   return UsersMeRepository()..setToken(token);
 });
