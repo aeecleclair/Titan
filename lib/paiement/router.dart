@@ -2,6 +2,8 @@ import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
+import 'package:myecl/paiement/ui/pages/devices_page/devices_page.dart'
+    deferred as devices_page;
 import 'package:myecl/paiement/ui/pages/main_page/main_page.dart'
     deferred as main_page;
 import 'package:myecl/paiement/ui/pages/pay_page/pay_page.dart'
@@ -23,6 +25,7 @@ class PaymentRouter {
   static const String qr = '/qr';
   static const String pay = '/pay';
   static const String scan = '/scan';
+  static const String devices = '/devices';
   static final Module module = Module(
     name: "MyECLPay",
     icon: const Left(HeroIcons.creditCard),
@@ -68,6 +71,13 @@ class PaymentRouter {
             builder: () => stats_page.StatsPage(),
             middleware: [
               DeferredLoadingMiddleware(stats_page.loadLibrary),
+            ],
+          ),
+          QRoute(
+            path: PaymentRouter.devices,
+            builder: () => devices_page.DevicesPage(),
+            middleware: [
+              DeferredLoadingMiddleware(devices_page.loadLibrary),
             ],
           ),
         ],
