@@ -1,5 +1,6 @@
 import 'package:myecl/user/class/list_users.dart';
 
+// ignore: constant_identifier_names
 enum AvailableAssociationMembership { AEECL, USEECL, noMembership }
 
 class Structure {
@@ -15,15 +16,17 @@ class Structure {
     required this.managerUser,
   });
 
-  Structure.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        membership = json['membership'] != null
+  factory Structure.fromJson(Map<String, dynamic> json) {
+    return Structure(
+        name: json['name'],
+        membership: json['membership'] != null
             ? AvailableAssociationMembership.values.firstWhere(
                 (e) => e.toString().split('.').last == json['membership'],
               )
             : AvailableAssociationMembership.noMembership,
-        id = json['id'],
-        managerUser = SimpleUser.fromJson(json['manager_user']);
+        id: json['id'],
+        managerUser: SimpleUser.fromJson(json['manager_user']));
+  }
 
   Map<String, dynamic> toJson() {
     return {

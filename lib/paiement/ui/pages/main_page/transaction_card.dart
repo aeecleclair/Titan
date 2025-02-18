@@ -60,9 +60,9 @@ class TransactionCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: transaction.status == TransactionStatus.confirmed
                             ? const Color.fromARGB(255, 21, 215, 105)
-                                .withOpacity(0.2)
+                                .withValues(alpha: 0.2)
                             : const Color.fromARGB(255, 204, 70, 25)
-                                .withOpacity(0.2),
+                                .withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Text(
@@ -107,7 +107,7 @@ class TransactionCard extends StatelessWidget {
               decoration: transaction.status == TransactionStatus.confirmed
                   ? TextDecoration.none
                   : TextDecoration.lineThrough,
-              decorationColor: const Color(0xff204550).withOpacity(0.8),
+              decorationColor: const Color(0xff204550).withValues(alpha: 0.8),
               decorationThickness: 2.85,
             ),
           ),

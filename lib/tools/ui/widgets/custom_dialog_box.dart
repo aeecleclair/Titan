@@ -109,7 +109,7 @@ class CustomDialogBox extends StatelessWidget {
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.3),
+                                    color: Colors.black.withValues(alpha: 0.3),
                                     blurRadius: 2.0,
                                     offset: const Offset(1.0, 2.0),
                                   ),
@@ -144,7 +144,7 @@ class CustomDialogBox extends StatelessWidget {
                                 color: Colors.grey.shade300,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.grey.withOpacity(0.3),
+                                    color: Colors.grey.withValues(alpha: 0.3),
                                     blurRadius: 2.0,
                                     offset: const Offset(
                                       1.0,
@@ -187,7 +187,7 @@ class CustomDialogBox extends StatelessWidget {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Consts.redGradient2.withOpacity(0.3),
+                          color: Consts.redGradient2.withValues(alpha: 0.3),
                           blurRadius: 10.0,
                           offset: const Offset(0.0, 10.0),
                         ),

@@ -84,7 +84,7 @@ class ConfirmButton extends ConsumerWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: GestureDetector(
                     child: AddEditButtonLayout(
-                      color: Colors.grey.shade200.withOpacity(0.5),
+                      color: Colors.grey.shade200.withValues(alpha: 0.5),
                       child: const Text(
                         'Fermer',
                         style: TextStyle(
@@ -147,10 +147,12 @@ class ConfirmButton extends ConsumerWidget {
         height: 75,
         width: 75,
         decoration: BoxDecoration(
-          color: enabled ? Colors.white : Colors.grey.shade200.withOpacity(0.5),
+          color: enabled
+              ? Colors.white
+              : Colors.grey.shade200.withValues(alpha: 0.5),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 5,
               offset: const Offset(1, 2),
             ),

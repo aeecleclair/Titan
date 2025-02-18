@@ -58,13 +58,13 @@ class SingleValueFlipCounter extends StatelessWidget {
   }) {
     // Try to avoid using the `Opacity` widget when possible, for performance.
     final Widget child;
-    if (color.opacity == 1) {
+    if (color.a == 1) {
       // If the text style does not involve transparency, we can modify
       // the text color directly.
       child = Text(
         value,
         textAlign: TextAlign.center,
-        style: TextStyle(color: color.withOpacity(opacity.clamp(0, 1))),
+        style: TextStyle(color: color.withValues(alpha: opacity.clamp(0, 1))),
       );
     } else {
       // Otherwise, we have to use the `Opacity` widget (less performant).

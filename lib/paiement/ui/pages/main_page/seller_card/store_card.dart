@@ -70,15 +70,15 @@ class StoreCard extends HookConsumerWidget {
             },
             title: 'Gestion',
           ),
-        if (store.canManageSellers || store.storeAdmin)
-          MainCardButton(
-            colors: buttonGradient,
-            icon: HeroIcons.pencilSquare,
-            onPressed: () async {
-              isEditing.value = !isEditing.value;
-            },
-            title: 'Editer',
-          ),
+        // if (store.canManageSellers || store.storeAdmin)
+        //   MainCardButton(
+        //     colors: buttonGradient,
+        //     icon: HeroIcons.pencilSquare,
+        //     onPressed: () async {
+        //       isEditing.value = !isEditing.value;
+        //     },
+        //     title: 'Editer',
+        //   ),
         if (store.canSeeHistory || store.storeAdmin)
           MainCardButton(
             colors: buttonGradient,
