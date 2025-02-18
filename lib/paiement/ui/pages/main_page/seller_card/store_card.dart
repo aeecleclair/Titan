@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/paiement/providers/selected_store_provider.dart';
+import 'package:myecl/paiement/providers/store_admin_list_provider.dart';
+import 'package:myecl/paiement/router.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_card_button.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_card_template.dart';
 import 'package:myecl/paiement/ui/pages/scan_page/scan_page.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class StoreCard extends ConsumerWidget {
   final Function? toggle;
@@ -13,6 +16,7 @@ class StoreCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final store = ref.watch(selectedStoreProvider);
+    final storeAdminListNotifier = ref.read(storeAdminListProvider.notifier);
     final buttonGradient = [
       const Color.fromARGB(255, 6, 75, 75),
       const Color.fromARGB(255, 0, 29, 29)
@@ -44,7 +48,10 @@ class StoreCard extends ConsumerWidget {
         MainCardButton(
           colors: buttonGradient,
           icon: HeroIcons.userGroup,
-          onPressed: () async {},
+          onPressed: () async {
+            storeAdminListNotifier.getStoreAdminList(store.id);
+            QR.to(PaymentRouter.root + PaymentRouter.storeAdmin);
+          },
           title: 'Gestion',
         ),
         MainCardButton(
