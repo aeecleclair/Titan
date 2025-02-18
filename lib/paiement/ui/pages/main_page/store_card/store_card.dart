@@ -8,9 +8,9 @@ class StoreCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   final buttonGradient = [
+    final buttonGradient = [
       Color.fromARGB(255, 255, 119, 7),
-      Color.fromARGB(255, 230, 103, 0),
+      Color.fromARGB(255, 199, 90, 1),
     ];
     return MainCardTemplate(
       colors: const [
