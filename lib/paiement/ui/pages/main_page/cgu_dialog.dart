@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/tools/constants.dart';
 
-class CustomDialogBox extends StatelessWidget {
+class CGUDialogBox extends StatelessWidget {
   final String title, descriptions;
-  static const Color titleColor = ColorConstants.gradient1;
+  static const Color titleColor = Color.fromARGB(255, 4, 84, 84);
   static const Color descriptionColor = Colors.black;
-  static const Color yesColor = ColorConstants.gradient2;
+  static const Color yesColor = Color.fromARGB(255, 9, 103, 103);
   static const Color noColor = ColorConstants.background2;
 
   final Function() onYes;
@@ -15,7 +15,7 @@ class CustomDialogBox extends StatelessWidget {
   static const double _avatarRadius = 45;
 
   static const Color background = Color(0xfffafafa);
-  const CustomDialogBox({
+  const CGUDialogBox({
     super.key,
     required this.title,
     required this.descriptions,
@@ -27,19 +27,19 @@ class CustomDialogBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(CustomDialogBox._padding),
+        borderRadius: BorderRadius.circular(CGUDialogBox._padding),
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
       child: Stack(
         children: <Widget>[
           Container(
-            padding: const EdgeInsets.all(CustomDialogBox._padding),
-            margin: const EdgeInsets.only(top: CustomDialogBox._avatarRadius),
+            padding: const EdgeInsets.all(CGUDialogBox._padding),
+            margin: const EdgeInsets.only(top: CGUDialogBox._avatarRadius),
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
-              color: CustomDialogBox.background,
-              borderRadius: BorderRadius.circular(CustomDialogBox._padding),
+              color: CGUDialogBox.background,
+              borderRadius: BorderRadius.circular(CGUDialogBox._padding),
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.shade400,
@@ -85,7 +85,7 @@ class CustomDialogBox extends StatelessWidget {
                               : onNo?.call();
                         },
                         child: const Text(
-                          "Non",
+                          "Refuser",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -101,7 +101,7 @@ class CustomDialogBox extends StatelessWidget {
                           await onYes();
                         },
                         child: const Text(
-                          "Oui",
+                          "Accepter",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
