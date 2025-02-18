@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:myecl/paiement/providers/barcode_provider.dart';
+import 'package:myecl/paiement/providers/scan_provider.dart';
+import 'package:myecl/paiement/providers/store_provider.dart';
 import 'package:myecl/paiement/ui/pages/scan_page/scan_overlay_shape.dart';
 
 class Scanner extends ConsumerStatefulWidget {
@@ -24,8 +26,11 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
 
   void _handleBarcode(BarcodeCapture barcodes) {
     final barcodeNotifier = ref.read(barcodeProvider.notifier);
+    final store = ref.read(storeProvider);
+    final scanNotifier = ref.read(scanProvider.notifier);
     if (mounted && barcodes.barcodes.isNotEmpty) {
-      barcodeNotifier.updateBarcode(barcodes.barcodes.firstOrNull!.rawValue!);
+      final data = barcodeNotifier.updateBarcode(barcodes.barcodes.firstOrNull!.rawValue!);
+      scanNotifier.scan(store.id, data);
     }
   }
 
