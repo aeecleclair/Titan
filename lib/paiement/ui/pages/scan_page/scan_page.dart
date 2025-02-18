@@ -4,6 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/paiement/providers/barcode_provider.dart';
+import 'package:myecl/paiement/providers/transaction_provider.dart';
 import 'package:myecl/paiement/ui/pages/scan_page/cancel_button.dart';
 import 'package:myecl/paiement/ui/pages/scan_page/scanner.dart';
 
@@ -15,6 +16,7 @@ class ScanPage extends HookConsumerWidget {
     final barcode = ref.watch(barcodeProvider);
     final barcodeNotifier = ref.watch(barcodeProvider.notifier);
     final formatter = NumberFormat("#,##0.00", "fr_FR");
+    final transactionNotifier = ref.watch(transactionProvider.notifier);
 
     final opacity = useAnimationController(
       duration: const Duration(seconds: 1),
@@ -140,7 +142,13 @@ class ScanPage extends HookConsumerWidget {
                           ),
                           const SizedBox(width: 20),
                           CancelButton(
-                            onCancel: (bool isInTime) async {},
+                            onCancel: (bool isInTime) async {
+                              if (isInTime) {
+                                await transactionNotifier.cancelTransaction(
+                                  barcode.transactionId,
+                                );
+                              }
+                            },
                           ),
                         ],
                       ),
