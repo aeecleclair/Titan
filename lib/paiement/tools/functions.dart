@@ -42,7 +42,7 @@ Widget getStatusTag(WalletDeviceStatus status) {
           ),
         ),
       );
-    case WalletDeviceStatus.unactive:
+    case WalletDeviceStatus.inactive:
       return Container(
         decoration: BoxDecoration(
           color: Colors.orange.withOpacity(0.2),
