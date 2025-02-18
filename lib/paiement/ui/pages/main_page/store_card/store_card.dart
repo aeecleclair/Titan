@@ -71,7 +71,7 @@ class StoreCard extends StatelessWidget {
                   const Align(
                     alignment: Alignment.center,
                     child: Text(
-                      "348,23 €",
+                      "10 Stores",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 50,
@@ -95,9 +95,19 @@ class StoreCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 StoreButton(
-                  icon: HeroIcons.userPlus,
+                  icon: HeroIcons.cog,
+                  onPressed: () async {},
+                  title: 'Gestion',
+                ),
+                StoreButton(
+                  icon: HeroIcons.plus,
                   onPressed: () async {},
                   title: 'Ajouter',
+                ),
+                StoreButton(
+                  icon: HeroIcons.wallet,
+                  onPressed: () async {},
+                  title: 'Stats',
                 ),
               ],
             ),

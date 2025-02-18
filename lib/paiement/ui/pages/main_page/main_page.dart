@@ -10,6 +10,7 @@ import 'package:myecl/paiement/ui/pages/main_page/account_card/account_card.dart
 import 'package:myecl/paiement/ui/pages/main_page/cgu_dialog.dart';
 import 'package:myecl/paiement/ui/pages/main_page/account_card/last_transactions.dart';
 import 'package:myecl/paiement/ui/pages/main_page/store_card/store_card.dart';
+import 'package:myecl/paiement/ui/pages/main_page/store_card/stores.dart';
 import 'package:myecl/paiement/ui/paiement.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/user/providers/user_provider.dart';
@@ -57,7 +58,7 @@ class PaymentMainPage extends HookConsumerWidget {
       if (isAdmin)
         [
           StoreCard(),
-          Container(color: Colors.red),
+          Stores(),
         ],
     ];
 
