@@ -17,7 +17,7 @@ import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/user/class/simple_users.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditStructurePage extends HookConsumerWidget {

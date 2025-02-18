@@ -1,4 +1,4 @@
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/user/class/simple_users.dart';
 
 // ignore: constant_identifier_names
 enum AvailableAssociationMembership { AEECL, USEECL, noMembership }

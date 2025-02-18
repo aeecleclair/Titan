@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/paiement/class/history.dart';
-import 'package:myecl/paiement/class/transaction.dart';
 import 'package:myecl/paiement/providers/selected_store_provider.dart';
 import 'package:myecl/paiement/ui/components/transaction_card.dart';
 import 'package:myecl/paiement/ui/pages/store_stats_page/refund_page.dart';

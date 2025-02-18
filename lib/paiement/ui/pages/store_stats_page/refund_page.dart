@@ -84,7 +84,7 @@ class ReFundPage extends ConsumerWidget {
                         style: TextStyle(
                           color: isValid
                               ? Colors.white
-                                : const Color.fromARGB(255, 91, 6, 0),
+                              : const Color.fromARGB(255, 91, 6, 0),
                           fontSize: 50,
                           fontWeight: FontWeight.bold,
                         ),
