@@ -47,6 +47,13 @@ class StructuresRepository extends Repository {
           .map((e) => Store.fromJson(e)),
     );
   }
+
+  Future<Store> addStructureStore(Structure structure, Store store) async {
+    return await create(
+      store.toJson(),
+      suffix: "/${structure.id}/stores",
+    );
+  }
 }
 
 final structuresRepositoryProvider = Provider<StructuresRepository>((ref) {
