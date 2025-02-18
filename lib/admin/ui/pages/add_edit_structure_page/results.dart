@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/providers/structure_manager_id_provider.dart';
+import 'package:myecl/admin/providers/structure_manager_provider.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
@@ -13,8 +13,9 @@ class MemberResults extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final users = ref.watch(userList);
-    final structureManagerIdNotifier =
-        ref.watch(structureManagerIdProvider.notifier);
+    final usersNotifier = ref.watch(userList.notifier);
+    final structureManagerNotifier =
+        ref.watch(structureManagerProvider.notifier);
 
     return AsyncChild(
       value: users,
@@ -37,7 +38,8 @@ class MemberResults extends HookConsumerWidget {
                       children: [
                         WaitingButton(
                           onTap: () async {
-                            structureManagerIdNotifier.setId(e.id);
+                            structureManagerNotifier.setUser(e);
+                            usersNotifier.clear();
                             // TODO: Confirmation dialog
                           },
                           waitingColor: ColorConstants.gradient1,

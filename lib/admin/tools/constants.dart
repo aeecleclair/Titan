@@ -33,6 +33,7 @@ class AdminTextConstants {
   static const String description = "Description";
   static const String eclSchool = "Centrale Lyon";
   static const String edit = "Modifier";
+  static const String editStructure = "Modifier la structure";
   static const String editMembership = "Modifier l'adhésion";
   static const String emptyDate = "Date vide";
   static const String emptyFieldError = "Le nom ne peut pas être vide";
@@ -47,11 +48,13 @@ class AdminTextConstants {
   static const String groups = "Groupes";
   static const String loaningGroup = "Groupe de prêt";
   static const String looking = "Recherche";
+  static const String manager = "Administrateur de la structure";
   static const String members = "Membres";
   static const String memberships = "Adhésions";
   static const String modifyModuleVisibility = "Visibilité des modules";
   static const String myEclPay = "MyEclPay";
   static const String name = "Nom";
+  static const String noManager = "Aucun manager n'est sélectionné";
   static const String noMember = "Aucun membre";
   static const String noMoreLoaner = "Aucun prêteur n'est disponible";
   static const String noSchool = "Sans école";
