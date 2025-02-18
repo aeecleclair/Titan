@@ -100,11 +100,11 @@ class AccountCard extends HookConsumerWidget {
                   onPressed: () async {
                     final bool didAuthenticate = await auth.authenticate(
                         localizedReason:
-                            'Please authenticate to show account balance',
+                            'Veuillez vous authentifier pour payer',
                         authMessages: [
                           const AndroidAuthMessages(
                             signInTitle:
-                                'Oops! Biometric authentication required!',
+                                'L\'authentification est requise pour payer',
                             cancelButton: 'No thanks',
                           ),
                           const IOSAuthMessages(
