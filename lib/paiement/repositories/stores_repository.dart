@@ -3,6 +3,7 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/paiement/class/history.dart';
 import 'package:myecl/paiement/class/qr_code_data.dart';
 import 'package:myecl/paiement/class/store.dart';
+import 'package:myecl/paiement/class/transaction.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class StoresRepository extends Repository {
@@ -24,8 +25,10 @@ class StoresRepository extends Repository {
     );
   }
 
-  Future<bool> scan(String id, QrCodeData data) async {
-    return await create(data.toJson(), suffix: "/$id/scan");
+  Future<Transaction> scan(String id, QrCodeData data) async {
+    return Transaction.fromJson(
+      await create(data.toJson(), suffix: "/$id/scan"),
+    );
   }
 }
 

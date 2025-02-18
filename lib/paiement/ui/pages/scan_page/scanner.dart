@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:myecl/paiement/providers/barcode_provider.dart';
+import 'package:myecl/paiement/providers/ongoing_transaction.dart';
 import 'package:myecl/paiement/providers/scan_provider.dart';
 import 'package:myecl/paiement/providers/store_provider.dart';
 import 'package:myecl/paiement/ui/pages/scan_page/scan_overlay_shape.dart';
@@ -24,14 +25,17 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
 
   StreamSubscription<Object?>? _subscription;
 
-  void _handleBarcode(BarcodeCapture barcodes) {
+  void _handleBarcode(BarcodeCapture barcodes) async {
     final barcodeNotifier = ref.read(barcodeProvider.notifier);
     final store = ref.read(storeProvider);
     final scanNotifier = ref.read(scanProvider.notifier);
+    final ongoingTransactionNotifier =
+        ref.read(ongoingTransactionProvider.notifier);
     if (mounted && barcodes.barcodes.isNotEmpty) {
       final data = barcodeNotifier
           .updateBarcode(barcodes.barcodes.firstOrNull!.rawValue!);
-      scanNotifier.scan(store.id, data);
+      final value = await scanNotifier.scan(store.id, data);
+      ongoingTransactionNotifier.updateOngoingTransaction(value);
     }
   }
 
@@ -69,6 +73,7 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     var scanArea = MediaQuery.of(context).size.width * 0.8;
+    final ongoingTransaction = ref.read(ongoingTransactionProvider);
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(40),
@@ -81,7 +86,11 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
             child: Container(
               decoration: ShapeDecoration(
                 shape: QrScannerOverlayShape(
-                  borderColor: Colors.white,
+                  borderColor: ongoingTransaction.when(
+                    data: (_) => Colors.green,
+                    error: (_, __) => Colors.red,
+                    loading: () => Colors.white,
+                  ),
                   borderRadius: 10,
                   borderLength: 40,
                   borderWidth: 7,
