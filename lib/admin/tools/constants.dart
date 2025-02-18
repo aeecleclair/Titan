@@ -48,6 +48,7 @@ class AdminTextConstants {
   static const String members = "Membres";
   static const String memberships = "Adhésions";
   static const String modifyModuleVisibility = "Visibilité des modules";
+  static const String myEclPay = "MyEclPay";
   static const String name = "Nom";
   static const String noMember = "Aucun membre";
   static const String noMoreLoaner = "Aucun prêteur n'est disponible";
