@@ -35,7 +35,7 @@ class AdminStoreCard extends ConsumerWidget {
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
-            color: const Color.fromARGB(255, 0, 29, 29).withOpacity(0.2),
+            color: const Color.fromARGB(255, 0, 29, 29).withValues(alpha: 0.2),
             spreadRadius: 1,
             blurRadius: 7,
             offset: const Offset(0, 3),
@@ -109,19 +109,19 @@ class AdminStoreCard extends ConsumerWidget {
                           "Voulez-vous vraiment supprimer cette association ?",
                       onYes: () {
                         tokenExpireWrapper(ref, () async {
-                          final value =
-                              await storeListNotifier.deleteStore(store);
-                          if (value) {
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              "Association supprimée",
-                            );
-                          } else {
-                            displayToastWithContext(
-                              TypeMsg.error,
-                              "Impossible de supprimer l'association",
-                            );
-                          }
+                          // final value =
+                          //     await storeListNotifier.deleteStore(store);
+                          // if (value) {
+                          //   displayToastWithContext(
+                          //     TypeMsg.msg,
+                          //     "Association supprimée",
+                          //   );
+                          // } else {
+                          //   displayToastWithContext(
+                          //     TypeMsg.error,
+                          //     "Impossible de supprimer l'association",
+                          //   );
+                          // }
                         });
                       },
                     ),

@@ -9,56 +9,56 @@ class StoresRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'myeclpay/stores';
 
-  Future<List<Store>> getStores() async {
-    return List<Store>.from(
-      (await getList()).map((e) => Store.fromJson(e)),
-    );
-  }
+  // Future<List<Store>> getStores() async {
+  //   return List<Store>.from(
+  //     (await getList()).map((e) => Store.fromJson(e)),
+  //   );
+  // }
 
-  Future<Store> createStore(Store store) async {
-    return Store.fromJson(await create(store.toJson()));
-  }
+  // Future<Store> createStore(Store store) async {
+  //   return Store.fromJson(await create(store.toJson()));
+  // }
 
   Future<bool> updateStore(Store store) async {
     return await update(store.toJson(), store.id);
   }
 
-  Future<bool> deleteStore(String id) async {
-    return await delete("/$id");
-  }
+  // Future<bool> deleteStore(String id) async {
+  //   return await delete("/$id");
+  // }
 
-  Future<List<History>> getStoreHistory(String id) async {
-    return [
-      History(
-        id: "3",
-        type: HistoryType.received,
-        otherWalletName: 'Bar//',
-        total: 200,
-        creation: DateTime.now().subtract(const Duration(days: 2)),
-        status: TransactionStatus.confirmed,
-      ),
-      History(
-        id: "3",
-        type: HistoryType.received,
-        otherWalletName: 'Bar//',
-        total: 300,
-        creation: DateTime.now().subtract(const Duration(days: 2)),
-        status: TransactionStatus.confirmed,
-      ),
-      History(
-        id: "4",
-        type: HistoryType.received,
-        otherWalletName: 'Bar//',
-        total: 20000,
-        creation: DateTime.now(),
-        status: TransactionStatus.canceled,
-      ),
-    ];
-    // return List<History>.from(
-    //   (await getList(suffix: "/$id/wallet/history"))
-    //       .map((e) => History.fromJson(e)),
-    // );
-  }
+  // Future<List<History>> getStoreHistory(String id) async {
+  //   return [
+  //     History(
+  //       id: "3",
+  //       type: HistoryType.received,
+  //       otherWalletName: 'Bar//',
+  //       total: 200,
+  //       creation: DateTime.now().subtract(const Duration(days: 2)),
+  //       status: TransactionStatus.confirmed,
+  //     ),
+  //     History(
+  //       id: "3",
+  //       type: HistoryType.received,
+  //       otherWalletName: 'Bar//',
+  //       total: 300,
+  //       creation: DateTime.now().subtract(const Duration(days: 2)),
+  //       status: TransactionStatus.confirmed,
+  //     ),
+  //     History(
+  //       id: "4",
+  //       type: HistoryType.received,
+  //       otherWalletName: 'Bar//',
+  //       total: 20000,
+  //       creation: DateTime.now(),
+  //       status: TransactionStatus.canceled,
+  //     ),
+  //   ];
+  //   // return List<History>.from(
+  //   //   (await getList(suffix: "/$id/wallet/history"))
+  //   //       .map((e) => History.fromJson(e)),
+  //   // );
+  // }
 }
 
 final storesRepositoryProvider = Provider<StoresRepository>((ref) {

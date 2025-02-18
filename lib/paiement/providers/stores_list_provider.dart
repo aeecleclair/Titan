@@ -1,20 +1,20 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/paiement/class/store.dart';
+import 'package:myecl/paiement/class/structure.dart';
 import 'package:myecl/paiement/repositories/stores_repository.dart';
+import 'package:myecl/paiement/repositories/structure_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 
 class StoreListNotifier extends ListNotifier<Store> {
   final StoresRepository storesRepository;
-  StoreListNotifier({required this.storesRepository})
+  final StructureRepository structureRepository;
+  StoreListNotifier(
+      {required this.storesRepository, required this.structureRepository})
       : super(const AsyncValue.loading());
 
-  
-  Future<AsyncValue<List<Store>>> getStores() async {
-    return await loadList(storesRepository.getStores);
-  }
-
-  Future<bool> createStore(Store store) async {
-    return await add(storesRepository.createStore, store);
+  Future<AsyncValue<List<Store>>> getStores(Structure structure) async {
+    return await loadList(
+        () => structureRepository.getStructureStores(structure));
   }
 
   Future<bool> updateStore(Store store) async {
@@ -25,20 +25,14 @@ class StoreListNotifier extends ListNotifier<Store> {
       store,
     );
   }
-
-  Future<bool> deleteStore(Store store) async {
-    return await delete(
-      storesRepository.deleteStore,
-      (stores, store) => stores..remove(store),
-      store.id,
-      store,
-    );
-  }
 }
 
 final storeListProvider =
     StateNotifierProvider<StoreListNotifier, AsyncValue<List<Store>>>((ref) {
   final storeListRepository = ref.watch(storesRepositoryProvider);
-  final notifier = StoreListNotifier(storesRepository: storeListRepository)..getStores();
+  final structureRepository = ref.watch(structureRepositoryProvider);
+  final notifier = StoreListNotifier(
+      storesRepository: storeListRepository,
+      structureRepository: structureRepository);
   return notifier;
 });

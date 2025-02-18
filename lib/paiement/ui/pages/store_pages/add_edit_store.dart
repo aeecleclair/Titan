@@ -97,30 +97,30 @@ class AddEditStorePage extends HookConsumerWidget {
                                 name: name.text,
                                 membership: type.value,
                               );
-                              final value = isEdit
-                                  ? await storeListNotifier
-                                      .updateStore(newStore)
-                                  : await storeListNotifier
-                                      .createStore(newStore);
-                              if (value) {
-                                ref
-                                    .watch(myStoresProvider.notifier)
-                                    .getMyStores();
-                                QR.back();
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  isEdit
-                                      ? "L'association a été modifiée avec succès"
-                                      : "L'association a été ajoutée avec succès",
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  isEdit
-                                      ? "Une erreur est survenue lors de la modification de l'association"
-                                      : "Une erreur est survenue lors de l'ajout de l'association",
-                                );
-                              }
+                              // final value = isEdit
+                              //     ? await storeListNotifier
+                              //         .updateStore(newStore)
+                              //     : await storeListNotifier
+                              //         .createStore(newStore);
+                              // if (value) {
+                              //   ref
+                              //       .watch(myStoresProvider.notifier)
+                              //       .getMyStores();
+                              //   QR.back();
+                              //   displayToastWithContext(
+                              //     TypeMsg.msg,
+                              //     isEdit
+                              //         ? "L'association a été modifiée avec succès"
+                              //         : "L'association a été ajoutée avec succès",
+                              //   );
+                              // } else {
+                              //   displayToastWithContext(
+                              //     TypeMsg.error,
+                              //     isEdit
+                              //         ? "Une erreur est survenue lors de la modification de l'association"
+                              //         : "Une erreur est survenue lors de l'ajout de l'association",
+                              //   );
+                              // }
                             }
                           },
                           child: Text(
