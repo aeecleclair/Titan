@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/paiement/providers/selected_transactions_provider.dart';
-import 'package:myecl/paiement/ui/pages/main_page/transaction_card.dart';
+import 'package:myecl/paiement/ui/components/transaction_card.dart';
 
 class TransactionsDetail extends ConsumerWidget {
   const TransactionsDetail({super.key});
