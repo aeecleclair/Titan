@@ -5,7 +5,7 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/widgets/dialog.dart';
+import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';

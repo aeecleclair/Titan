@@ -13,7 +13,7 @@ import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/pages/admin_page/item_card.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
-import 'package:myecl/tools/ui/widgets/dialog.dart';
+import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
