@@ -8,17 +8,18 @@ class QrPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const PaymentTemplate(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Spacer(),
-        Center(
-          child: QrCode(),
-        ),
-        Spacer(
-          flex: 2,
-        ),
-      ],
-    ),);
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Spacer(),
+          Center(
+            child: QrCode(),
+          ),
+          Spacer(
+            flex: 2,
+          ),
+        ],
+      ),
+    );
   }
 }

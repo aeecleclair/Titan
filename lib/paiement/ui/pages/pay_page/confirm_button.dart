@@ -16,16 +16,17 @@ class ConfirmButton extends ConsumerWidget {
     return GestureDetector(
       onTap: () async {
         final bool didAuthenticate = await auth.authenticate(
-            localizedReason: 'Veuillez vous authentifier pour payer',
-            authMessages: [
-              const AndroidAuthMessages(
-                signInTitle: 'L\'authentification est requise pour payer',
-                cancelButton: 'Non merci',
-              ),
-              const IOSAuthMessages(
-                cancelButton: 'Non merci',
-              ),
-            ],);
+          localizedReason: 'Veuillez vous authentifier pour payer',
+          authMessages: [
+            const AndroidAuthMessages(
+              signInTitle: 'L\'authentification est requise pour payer',
+              cancelButton: 'Non merci',
+            ),
+            const IOSAuthMessages(
+              cancelButton: 'Non merci',
+            ),
+          ],
+        );
         if (didAuthenticate) {
           QR.to(PaymentRouter.root + PaymentRouter.pay + PaymentRouter.qr);
         }

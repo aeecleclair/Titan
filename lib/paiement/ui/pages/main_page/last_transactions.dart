@@ -12,11 +12,14 @@ class LastTransactions extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           alignment: Alignment.centerLeft,
-          child: const Text("Dernières transactions",
-              style: TextStyle(
-                  color: Color(0xff204550),
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,),),
+          child: const Text(
+            "Dernières transactions",
+            style: TextStyle(
+              color: Color(0xff204550),
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
         const SizedBox(
           height: 15,

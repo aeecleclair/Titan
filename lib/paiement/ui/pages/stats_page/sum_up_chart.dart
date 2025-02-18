@@ -14,19 +14,19 @@ class SumUpChart extends HookConsumerWidget {
     List<PieChartSectionData> showingSections() {
       return [
         PieChartSectionData(
-            value: 10,
-            radius: 60 + (selected.value == 0 ? 15 : 0),
-            title: "",
+          value: 10,
+          radius: 60 + (selected.value == 0 ? 15 : 0),
+          title: "",
+          color: const Color.fromARGB(255, 255, 119, 7),
+          badgePositionPercentageOffset: 0.6,
+          badgeWidget: SumUpCard(
+            amount: '68,46€',
             color: const Color.fromARGB(255, 255, 119, 7),
-            badgePositionPercentageOffset: 0.6,
-            badgeWidget: SumUpCard(
-              amount: '68,46€',
-              color: const Color.fromARGB(255, 255, 119, 7),
-              darkColor: const Color.fromARGB(255, 230, 103, 0),
-              shadowColor:
-                  const Color.fromARGB(255, 97, 44, 0).withOpacity(0.2),
-              title: 'Bar',
-            ),),
+            darkColor: const Color.fromARGB(255, 230, 103, 0),
+            shadowColor: const Color.fromARGB(255, 97, 44, 0).withOpacity(0.2),
+            title: 'Bar',
+          ),
+        ),
         PieChartSectionData(
           value: 25,
           color: const Color(0xff017f80),
@@ -63,43 +63,47 @@ class SumUpChart extends HookConsumerWidget {
         children: [
           PieChart(
             PieChartData(
-                borderData: FlBorderData(show: true),
-                pieTouchData: PieTouchData(
-                    touchCallback: (flTouchEvent, pieTouchResponse) {
+              borderData: FlBorderData(show: true),
+              pieTouchData: PieTouchData(
+                touchCallback: (flTouchEvent, pieTouchResponse) {
                   selected.value =
                       pieTouchResponse?.touchedSection?.touchedSectionIndex ??
                           0;
-                },),
-                sectionsSpace: 8,
-                centerSpaceRadius: 80,
-                sections: showingSections(),
-                startDegreeOffset: 0,),
+                },
+              ),
+              sectionsSpace: 8,
+              centerSpaceRadius: 80,
+              sections: showingSections(),
+              startDegreeOffset: 0,
+            ),
             swapAnimationCurve: Curves.easeOutCubic,
           ),
           const SizedBox(
             height: 300,
             child: Center(
               child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Total",
-                      style: TextStyle(fontSize: 18, color: Colors.grey),
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Total",
+                    style: TextStyle(fontSize: 18, color: Colors.grey),
+                  ),
+                  SizedBox(
+                    height: 7,
+                  ),
+                  Text(
+                    "348,23€",
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 4, 84, 84),
                     ),
-                    SizedBox(
-                      height: 7,
-                    ),
-                    Text(
-                      "348,23€",
-                      style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 4, 84, 84),),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                  ],),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
             ),
           ),
         ],

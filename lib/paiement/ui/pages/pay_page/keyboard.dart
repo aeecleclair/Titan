@@ -22,14 +22,15 @@ class NumericKeyboard extends StatelessWidget {
   /// Main axis alignment [default = MainAxisAlignment.spaceEvenly]
   final MainAxisAlignment mainAxisAlignment;
 
-  const NumericKeyboard(
-      {super.key,
-      required this.onKeyboardTap,
-      this.textColor = Colors.white,
-      this.rightButtonFn,
-      this.leftIcon,
-      this.leftButtonFn,
-      this.mainAxisAlignment = MainAxisAlignment.spaceEvenly,});
+  const NumericKeyboard({
+    super.key,
+    required this.onKeyboardTap,
+    this.textColor = Colors.white,
+    this.rightButtonFn,
+    this.leftIcon,
+    this.leftButtonFn,
+    this.mainAxisAlignment = MainAxisAlignment.spaceEvenly,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -71,16 +72,18 @@ class NumericKeyboard extends StatelessWidget {
               _calcButton(','),
               _calcButton('0'),
               GestureDetector(
-                  onTap: rightButtonFn,
-                  child: Container(
-                      alignment: Alignment.center,
-                      width: 50,
-                      height: 50,
-                      child: HeroIcon(
-                        HeroIcons.backspace,
-                        color: textColor,
-                        size: 35,
-                      ),),),
+                onTap: rightButtonFn,
+                child: Container(
+                  alignment: Alignment.center,
+                  width: 50,
+                  height: 50,
+                  child: HeroIcon(
+                    HeroIcons.backspace,
+                    color: textColor,
+                    size: 35,
+                  ),
+                ),
+              ),
             ],
           ),
         ],
@@ -90,18 +93,19 @@ class NumericKeyboard extends StatelessWidget {
 
   Widget _calcButton(String value) {
     return InkWell(
-        borderRadius: BorderRadius.circular(45),
-        onTap: () {
-          onKeyboardTap(value);
-        },
-        child: Container(
-          alignment: Alignment.center,
-          width: 50,
-          height: 50,
-          child: Text(
-            value,
-            style: TextStyle(fontSize: 26, color: textColor),
-          ),
-        ),);
+      borderRadius: BorderRadius.circular(45),
+      onTap: () {
+        onKeyboardTap(value);
+      },
+      child: Container(
+        alignment: Alignment.center,
+        width: 50,
+        height: 50,
+        child: Text(
+          value,
+          style: TextStyle(fontSize: 26, color: textColor),
+        ),
+      ),
+    );
   }
 }

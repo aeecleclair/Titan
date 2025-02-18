@@ -18,11 +18,14 @@ class DayDivider extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 15),
             child: Center(
-              child: Text("Aujourd'hui",
-                  style: TextStyle(
-                      color: Color(0xff204550),
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,),),
+              child: Text(
+                "Aujourd'hui",
+                style: TextStyle(
+                  color: Color(0xff204550),
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
           Expanded(

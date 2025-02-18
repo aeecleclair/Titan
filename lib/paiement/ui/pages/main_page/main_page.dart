@@ -12,25 +12,27 @@ class PaymentMainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return PaymentTemplate(
       child: Refresher(
-          onRefresh: () async {},
-          child: Column(
-            children: [
-              SizedBox(
-                height: 250,
-                width: MediaQuery.of(context).size.width,
-                child: PageView.builder(
-                    controller: PageController(viewportFraction: 0.8),
-                    itemCount: 1,
-                    itemBuilder: (context, index) {
-                      return const AccountCard();
-                    },),
+        onRefresh: () async {},
+        child: Column(
+          children: [
+            SizedBox(
+              height: 250,
+              width: MediaQuery.of(context).size.width,
+              child: PageView.builder(
+                controller: PageController(viewportFraction: 0.8),
+                itemCount: 1,
+                itemBuilder: (context, index) {
+                  return const AccountCard();
+                },
               ),
-              const SizedBox(
-                height: 25,
-              ),
-              const LastTransactions(),
-            ],
-          ),),
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            const LastTransactions(),
+          ],
+        ),
+      ),
     );
   }
 }

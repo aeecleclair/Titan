@@ -5,11 +5,12 @@ class AccountButton extends StatelessWidget {
   final HeroIcons icon;
   final String title;
   final VoidCallback onPressed;
-  const AccountButton(
-      {super.key,
-      required this.icon,
-      required this.onPressed,
-      required this.title,});
+  const AccountButton({
+    super.key,
+    required this.icon,
+    required this.onPressed,
+    required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +26,10 @@ class AccountButton extends StatelessWidget {
             width: 40,
             decoration: BoxDecoration(
               gradient: const RadialGradient(
-                  colors: [Color(0xff017f80), Color.fromARGB(255, 4, 84, 84)],
-                  center: Alignment.topLeft,
-                  radius: 1.5,),
+                colors: [Color(0xff017f80), Color.fromARGB(255, 4, 84, 84)],
+                center: Alignment.topLeft,
+                radius: 1.5,
+              ),
               borderRadius: BorderRadius.circular(15),
               boxShadow: [
                 BoxShadow(
@@ -50,9 +52,10 @@ class AccountButton extends StatelessWidget {
           Text(
             title,
             style: const TextStyle(
-                color: Color(0xff017f80),
-                fontSize: 12,
-                fontWeight: FontWeight.bold,),
+              color: Color(0xff017f80),
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ],
       ),
