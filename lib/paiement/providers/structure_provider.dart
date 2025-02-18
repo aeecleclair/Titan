@@ -8,7 +8,7 @@ class StructureListNotifier extends ListNotifier<Structure> {
   StructureListNotifier({required this.structuresRepository})
       : super(const AsyncValue.loading());
 
-  Future<AsyncValue<List<Structure>>> getStores() async {
+  Future<AsyncValue<List<Structure>>> getStructures() async {
     return await loadList(structuresRepository.getStructures);
   }
 
