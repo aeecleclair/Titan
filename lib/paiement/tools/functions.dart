@@ -5,7 +5,6 @@ import 'package:myecl/paiement/class/qr_code_data.dart';
 import 'package:myecl/paiement/class/qr_code_signature_data.dart';
 import 'package:myecl/paiement/class/wallet_device.dart';
 import 'package:myecl/paiement/tools/key_service.dart';
-import 'package:myecl/tools/functions.dart';
 
 String getMonth(int m) {
   switch (m) {
