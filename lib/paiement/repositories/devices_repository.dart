@@ -24,7 +24,7 @@ class DevicesRepository extends Repository {
   }
 
   Future<bool> revokeDevice(String id) async {
-    return await create(id, suffix: '$id/revoke');
+    return await create(id, suffix: '/$id/revoke');
   }
 }
 

@@ -45,4 +45,20 @@ class WalletDevice {
         walletId = '',
         creation = DateTime.now(),
         status = WalletDeviceStatus.active;
+
+  WalletDevice copyWith({
+    String? id,
+    String? name,
+    String? walletId,
+    DateTime? creation,
+    WalletDeviceStatus? status,
+  }) {
+    return WalletDevice(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      walletId: walletId ?? this.walletId,
+      creation: creation ?? this.creation,
+      status: status ?? this.status,
+    );
+  }
 }
