@@ -27,7 +27,7 @@ class ConfirmButton extends ConsumerWidget {
               ),
             ]);
         if (didAuthenticate) {
-          pageNotifier.setPaiementPage(PaiementPage.pay);
+          pageNotifier.setPaiementPage(PaiementPage.qr);
         }
       },
       child: Container(

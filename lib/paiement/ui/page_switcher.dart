@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/paiement/providers/paiement_page_provider.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_page.dart';
 import 'package:myecl/paiement/ui/pages/pay_page/pay_page.dart';
+import 'package:myecl/paiement/ui/pages/qr_page/qr_page.dart';
 import 'package:myecl/paiement/ui/pages/scan_page/scan_page.dart';
 
 class PageSwitcher extends ConsumerWidget {
@@ -18,6 +19,8 @@ class PageSwitcher extends ConsumerWidget {
         return const ScanPage();
       case PaiementPage.pay:
         return const PayPage();
+      case PaiementPage.qr:
+        return const QrPage();
     }
   }
 }

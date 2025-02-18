@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-enum PaiementPage { main, scan, pay }
+enum PaiementPage { main, scan, pay, qr }
 
 class PaiementPageProvider extends StateNotifier<PaiementPage> {
   PaiementPageProvider() : super(PaiementPage.main);

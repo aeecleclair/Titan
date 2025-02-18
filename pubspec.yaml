@@ -33,6 +33,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_riverpod: ^2.1.1
+  flutter_screen: ^0.0.2
   flutter_secure_storage: ^9.2.4
   flutter_svg: ^2.0.7
   google_fonts: ^6.2.1
