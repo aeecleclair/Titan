@@ -103,7 +103,7 @@ class AccountCard extends HookConsumerWidget {
                 data: (device) {
                   if (device.status == WalletDeviceStatus.active) {
                     showPayModal();
-                  } else if (device.status == WalletDeviceStatus.unactive) {
+                  } else if (device.status == WalletDeviceStatus.inactive) {
                     displayToastWithContext(
                       TypeMsg.error,
                       "Votre appareil n'est pas activé",
