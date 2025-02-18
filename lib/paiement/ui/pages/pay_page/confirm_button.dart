@@ -3,7 +3,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:local_auth_android/local_auth_android.dart';
-import 'package:local_auth_ios/local_auth_ios.dart';
 import 'package:myecl/paiement/providers/paiement_page_provider.dart';
 
 class ConfirmButton extends ConsumerWidget {
@@ -22,9 +21,9 @@ class ConfirmButton extends ConsumerWidget {
                 signInTitle: 'L\'authentification est requise pour payer',
                 cancelButton: 'No thanks',
               ),
-              const IOSAuthMessages(
-                cancelButton: 'No thanks',
-              ),
+              //const IOSAuthMessages(
+              //  cancelButton: 'No thanks',
+              //),
             ]);
         if (didAuthenticate) {
           pageNotifier.setPaiementPage(PaiementPage.qr);
