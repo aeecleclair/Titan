@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/paiement/class/create_device.dart';
@@ -69,8 +68,9 @@ class DevicesPage extends HookConsumerWidget {
                                   (await keyPair.extractPublicKey()).bytes;
                               final base64PublicKey = base64Encode(publicKey);
                               final body = CreateDevice(
-                                  name: name,
-                                  ed25519PublicKey: base64PublicKey,);
+                                name: name,
+                                ed25519PublicKey: base64PublicKey,
+                              );
                               final value =
                                   await deviceNotifier.registerDevice(body);
                               if (value != null) {
@@ -84,47 +84,47 @@ class DevicesPage extends HookConsumerWidget {
                         ],
                         ...devices.map((device) {
                           return DeviceItem(
-                              device: device,
-                              isActual: device.id == snapshot.data,
-                              onRevoke: () async {
-                                await showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return CustomDialogBox(
-                                      title: "Révoquer l'appareil ?",
-                                      descriptions:
-                                          "Vous ne pourrez plus utiliser cet appareil pour les paiements",
-                                      onYes: () async {
-                                        tokenExpireWrapper(ref, () async {
-                                          final value = await devicesNotifier
-                                              .revokeDevice(
-                                            device.copyWith(
-                                              status:
-                                                  WalletDeviceStatus.disabled,
-                                            ),
+                            device: device,
+                            isActual: device.id == snapshot.data,
+                            onRevoke: () async {
+                              await showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return CustomDialogBox(
+                                    title: "Révoquer l'appareil ?",
+                                    descriptions:
+                                        "Vous ne pourrez plus utiliser cet appareil pour les paiements",
+                                    onYes: () async {
+                                      tokenExpireWrapper(ref, () async {
+                                        final value =
+                                            await devicesNotifier.revokeDevice(
+                                          device.copyWith(
+                                            status: WalletDeviceStatus.disabled,
+                                          ),
+                                        );
+                                        if (value) {
+                                          displayToastWithContext(
+                                            TypeMsg.msg,
+                                            "Appareil révoqué",
                                           );
-                                          if (value) {
-                                            displayToastWithContext(
-                                              TypeMsg.msg,
-                                              "Appareil révoqué",
-                                            );
-                                            final savedId =
-                                                await keyService.getKeyId();
-                                            if (savedId == device.id) {
-                                              await keyService.clear();
-                                            }
-                                          } else {
-                                            displayToastWithContext(
-                                              TypeMsg.error,
-                                              "Erreur lors de la révocation de l'appareil",
-                                            );
+                                          final savedId =
+                                              await keyService.getKeyId();
+                                          if (savedId == device.id) {
+                                            await keyService.clear();
                                           }
-                                        });
-                                      },
-                                    );
-                                  },
-                                );
-                              },);
+                                        } else {
+                                          displayToastWithContext(
+                                            TypeMsg.error,
+                                            "Erreur lors de la révocation de l'appareil",
+                                          );
+                                        }
+                                      });
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                          );
                         }),
                       ],
                     ),

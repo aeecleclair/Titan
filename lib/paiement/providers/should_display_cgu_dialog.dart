@@ -16,6 +16,7 @@ final shouldDisplayCguDialogProvider =
   return cgu.maybeWhen(
     orElse: () => ShouldDisplayCguDialog(false),
     data: (value) => ShouldDisplayCguDialog(
-        value.acceptedCguVersion != value.latestCguVersion,),
+      value.acceptedCguVersion != value.latestCguVersion,
+    ),
   );
 });

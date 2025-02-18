@@ -15,22 +15,26 @@ class DigitFadeInAnimation extends HookWidget {
       Tween<double>(
         begin: 0.0,
         end: 1.0,
-      ).animate(CurvedAnimation(
-        parent: animationController,
-        curve: Curves.easeOut,
-        reverseCurve: Curves.easeIn,
-      )),
+      ).animate(
+        CurvedAnimation(
+          parent: animationController,
+          curve: Curves.easeOut,
+          reverseCurve: Curves.easeIn,
+        ),
+      ),
     );
 
     final slideAnimation = useAnimation(
       Tween<Offset>(
         begin: const Offset(0.0, -1),
         end: Offset.zero,
-      ).animate(CurvedAnimation(
-        parent: animationController,
-        curve: Curves.easeOut,
-        reverseCurve: Curves.easeIn,
-      )),
+      ).animate(
+        CurvedAnimation(
+          parent: animationController,
+          curve: Curves.easeOut,
+          reverseCurve: Curves.easeIn,
+        ),
+      ),
     );
 
     useEffect(

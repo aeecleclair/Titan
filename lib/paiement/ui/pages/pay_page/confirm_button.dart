@@ -8,13 +8,10 @@ import 'package:local_auth_darwin/local_auth_darwin.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/paiement/providers/key_service_provider.dart';
 import 'package:myecl/paiement/providers/pay_amount_provider.dart';
-import 'package:myecl/paiement/router.dart';
 import 'package:myecl/paiement/ui/pages/pay_page/info_card.dart';
 import 'package:myecl/paiement/ui/pages/pay_page/qr_code.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
-import 'package:myecl/tools/ui/layouts/card_button.dart';
-import 'package:qlevar_router/qlevar_router.dart';
 
 class ConfirmButton extends ConsumerWidget {
   const ConfirmButton({super.key});
@@ -36,75 +33,77 @@ class ConfirmButton extends ConsumerWidget {
 
     void displayQRModal() {
       showModalBottomSheet(
-          context: context,
-          enableDrag: false,
-          scrollControlDisabledMaxHeightRatio:
-              (1 - 100 / MediaQuery.of(context).size.height),
-          backgroundColor: Colors.transparent,
-          builder: (context) {
-            return Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(40),
-              ),
-              margin: const EdgeInsets.all(30.0),
-              child: Column(
-                children: [
-                  const SizedBox(height: 30),
-                  Row(
-                    children: [
-                      const SizedBox(
-                        width: 20,
+        context: context,
+        enableDrag: false,
+        scrollControlDisabledMaxHeightRatio:
+            (1 - 100 / MediaQuery.of(context).size.height),
+        backgroundColor: Colors.transparent,
+        builder: (context) {
+          return Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(40),
+            ),
+            margin: const EdgeInsets.all(30.0),
+            child: Column(
+              children: [
+                const SizedBox(height: 30),
+                Row(
+                  children: [
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    InfoCard(
+                      icons: HeroIcons.currencyEuro,
+                      title: "Montant",
+                      value:
+                          '${formatter.format(double.parse(payAmount.replaceAll(',', '.')))} €',
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    InfoCard(
+                      icons: HeroIcons.clock,
+                      title: "Valide jusqu'à",
+                      value: processDateOnlyHour(
+                        DateTime.now().add(const Duration(minutes: 5)),
                       ),
-                      InfoCard(
-                        icons: HeroIcons.currencyEuro,
-                        title: "Montant",
-                        value:
-                            '${formatter.format(double.parse(payAmount.replaceAll(',', '.')))} €',
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      InfoCard(
-                        icons: HeroIcons.clock,
-                        title: "Valide jusqu'à",
-                        value: processDateOnlyHour(
-                            DateTime.now().add(const Duration(minutes: 5))),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  const Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: QrCode(),
-                  ),
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: GestureDetector(
-                      child: AddEditButtonLayout(
-                        color: Colors.grey.shade200.withOpacity(0.5),
-                        child: const Text(
-                          'Fermer',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                const Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: QrCode(),
+                ),
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: GestureDetector(
+                    child: AddEditButtonLayout(
+                      color: Colors.grey.shade200.withOpacity(0.5),
+                      child: const Text(
+                        'Fermer',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
                         ),
                       ),
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
                     ),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
                   ),
-                ],
-              ),
-            );
-          });
+                ),
+              ],
+            ),
+          );
+        },
+      );
     }
 
     return GestureDetector(
@@ -160,7 +159,9 @@ class ConfirmButton extends ConsumerWidget {
         ),
         child: HeroIcon(
           HeroIcons.qrCode,
-          color: enabled ? const Color(0xff017f80) : const Color.fromARGB(134, 1, 128, 128),
+          color: enabled
+              ? const Color(0xff017f80)
+              : const Color.fromARGB(134, 1, 128, 128),
           size: 65,
         ),
       ),
