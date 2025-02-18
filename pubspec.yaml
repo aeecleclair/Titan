@@ -67,6 +67,7 @@ dependencies:
   shared_preferences: ^2.5.1
   smooth_page_indicator: ^1.0.0+2
   syncfusion_flutter_calendar: ^28.1.38
+  timeago: ^3.7.0
   timezone: ^0.10.0
   tuple: ^2.0.0
   universal_html: ^2.0.8
@@ -74,7 +75,6 @@ dependencies:
   uuid: ^4.5.1
   vector_math: ^2.1.2
   zxcvbn: ^1.0.0
-  uuid: ^4.4.2
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.3

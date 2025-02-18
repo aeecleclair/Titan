@@ -17,7 +17,7 @@ class TransactionCard extends StatelessWidget {
             ? HeroIcons.arrowDownRight
             : HeroIcons.creditCard;
     return Container(
-      height: 60,
+      height: 70,
       padding: const EdgeInsets.symmetric(horizontal: 20),
       width: MediaQuery.of(context).size.width,
       child: Row(
@@ -39,40 +39,60 @@ class TransactionCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AutoSizeText(
-                  transaction.otherWalletName,
-                  maxLines: 2,
-                  style: const TextStyle(
-                    color: Color(0xff204550),
-                    fontSize: 14,
-                  ),
+                Row(
+                  children: [
+                    AutoSizeText(
+                      transaction.otherWalletName,
+                      maxLines: 2,
+                      style: const TextStyle(
+                        color: Color(0xff204550),
+                        fontSize: 14,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: transaction.status == TransactionStatus.confirmed
+                            ? const Color.fromARGB(255, 21, 215, 105)
+                                .withOpacity(0.2)
+                            : const Color.fromARGB(255, 204, 70, 25)
+                                .withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Text(
+                        transaction.status == TransactionStatus.confirmed
+                            ? "Confirmé"
+                            : "Annulé",
+                        style: TextStyle(
+                          color:
+                              transaction.status == TransactionStatus.confirmed
+                                  ? const Color.fromARGB(255, 21, 215, 105)
+                                  : const Color.fromARGB(255, 204, 70, 25),
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 5,
                 ),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: transaction.status == TransactionStatus.confirmed
-                        ? const Color.fromARGB(255, 21, 215, 105)
-                            .withOpacity(0.2)
-                        : const Color.fromARGB(255, 204, 70, 25)
-                            .withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Text(
-                    transaction.status == TransactionStatus.confirmed
-                        ? "Confirmé"
-                        : "Annulé",
-                    style: TextStyle(
-                      color: transaction.status == TransactionStatus.confirmed
-                          ? const Color.fromARGB(255, 21, 215, 105)
-                          : const Color.fromARGB(255, 204, 70, 25),
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
+                Row(
+                  children: [
+                    Text(
+                      "Le ${DateFormat("dd MMM yyyy à HH:mm").format(transaction.creation)}",
+                      style: const TextStyle(
+                        color: Color(0xff204550),
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),
