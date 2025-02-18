@@ -17,7 +17,7 @@ class AddDeviceButton extends StatelessWidget {
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
           child: Container(
-            color: Colors.grey.shade200.withOpacity(0.5),
+            color: Colors.grey.shade200.withValues(alpha: 0.5),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
