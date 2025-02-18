@@ -21,9 +21,9 @@ class KeyService {
     final privateKey = await keyPair.extractPrivateKeyBytes();
     final publicKey = await keyPair.extractPublicKey();
     await _secureStorage.write(
-        key: 'privateKey', value: String.fromCharCodes(privateKey));
+        key: 'privateKey', value: String.fromCharCodes(privateKey),);
     await _secureStorage.write(
-        key: 'publicKey', value: String.fromCharCodes(publicKey.bytes));
+        key: 'publicKey', value: String.fromCharCodes(publicKey.bytes),);
   }
 
   Future saveKeyId(String keyId) async {
@@ -66,9 +66,9 @@ class KeyService {
   }
 
   Future<Signature> signMessage(
-      SimpleKeyPair keyPair, List<int> message) async {
-    final signature = await algorithm.sign(message, keyPair: keyPair);
-
-    return signature;
+    SimpleKeyPair keyPair,
+    List<int> message,
+  ) async {
+    return await algorithm.sign(message, keyPair: keyPair);
   }
 }
