@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/providers/structure_manager_id_provider.dart';
+import 'package:myecl/admin/providers/structure_manager_provider.dart';
 import 'package:myecl/admin/providers/structure_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/ui/admin.dart';
@@ -10,12 +10,14 @@ import 'package:myecl/admin/ui/components/text_editing.dart';
 import 'package:myecl/admin/ui/pages/add_edit_structure_page/search_user.dart';
 import 'package:myecl/paiement/class/structure.dart';
 import 'package:myecl/paiement/providers/structure_list_provider.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myecl/user/class/list_users.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditStructurePage extends HookConsumerWidget {
@@ -25,9 +27,9 @@ class AddEditStructurePage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final key = GlobalKey<FormState>();
     final structure = ref.watch(structureProvider);
-    final structureManagerId = ref.watch(structureManagerIdProvider);
-    final structureManagerIdNotifier =
-        ref.watch(structureManagerIdProvider.notifier);
+    final structureManager = ref.watch(structureManagerProvider);
+    final structureManagerNotifier =
+        ref.watch(structureManagerProvider.notifier);
     final structureListNotifier = ref.watch(structureListProvider.notifier);
     final isEdit = structure.id != Structure.empty().id;
     final name = useTextEditingController(text: isEdit ? structure.name : null);
@@ -49,8 +51,11 @@ class AddEditStructurePage extends HookConsumerWidget {
             key: key,
             child: Column(
               children: [
-                const AlignLeftText(AdminTextConstants.addStructure),
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
+                AlignLeftText(isEdit
+                    ? AdminTextConstants.editStructure
+                    : AdminTextConstants.addStructure),
+                const SizedBox(height: 20),
                 TextEditing(controller: name, label: AdminTextConstants.name),
                 HorizontalListView.builder(
                   height: 40,
@@ -73,11 +78,41 @@ class AddEditStructurePage extends HookConsumerWidget {
                   },
                 ),
                 const SizedBox(height: 20),
-                if (!isEdit) const SearchUser(),
-                if (!isEdit) const SizedBox(height: 20),
+                isEdit
+                    ? Column(
+                        children: [
+                          Text(
+                            AdminTextConstants.manager,
+                            style: TextStyle(
+                              color: ColorConstants.gradient1,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            structureManager.getName(),
+                            style: TextStyle(
+                              color: ColorConstants.gradient1,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                        ],
+                      )
+                    : const SearchUser(),
+                const SizedBox(height: 20),
                 WaitingButton(
                   onTap: () async {
                     if (key.currentState == null) {
+                      return;
+                    }
+                    if (structureManager.id.isEmpty && !isEdit) {
+                      displayToastWithContext(
+                        TypeMsg.error,
+                        AdminTextConstants.noManager,
+                      );
                       return;
                     }
                     if (key.currentState!.validate()) {
@@ -87,13 +122,13 @@ class AddEditStructurePage extends HookConsumerWidget {
                           Structure(
                             name: name.text,
                             membership: membership.value,
-                            managerUserId: structureManagerId,
+                            managerUserId: structureManager.id,
                             id: '',
                           ),
                         );
                         if (value) {
                           QR.back();
-                          structureManagerIdNotifier.setId('');
+                          structureManagerNotifier.setUser(SimpleUser.empty());
                           displayToastWithContext(
                             TypeMsg.msg,
                             AdminTextConstants.addedStructure,
@@ -108,8 +143,8 @@ class AddEditStructurePage extends HookConsumerWidget {
                     }
                   },
                   builder: (child) => AdminButton(child: child),
-                  child: const Text(
-                    AdminTextConstants.add,
+                  child: Text(
+                    isEdit ? AdminTextConstants.edit : AdminTextConstants.add,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,

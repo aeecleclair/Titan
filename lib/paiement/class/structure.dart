@@ -15,9 +15,9 @@ class Structure {
 
   Structure.fromJson(Map<String, dynamic> json)
       : name = json['name'],
-        membership = AvailableAssociationMembership.values.firstWhere(
+        membership = json['membership'] != null ? AvailableAssociationMembership.values.firstWhere(
           (e) => e.toString().split('.').last == json['membership'],
-        ),
+        ) : AvailableAssociationMembership.AEECL, //TODO: to remove, temporary fix
         id = json['id'],
         managerUserId = json['manager_user_id'];
 

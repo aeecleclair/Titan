@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/providers/structure_manager_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/ui/pages/add_edit_structure_page/results.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/widgets/styled_search_bar.dart';
+import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class SearchUser extends HookConsumerWidget {
@@ -13,13 +16,19 @@ class SearchUser extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final usersNotifier = ref.watch(userList.notifier);
+    final structureManager = ref.watch(structureManagerProvider);
 
     return Column(
       children: [
         StyledSearchBar(
-          label: AdminTextConstants.members,
+          label: AdminTextConstants.manager,
           color: ColorConstants.gradient1,
           padding: const EdgeInsets.all(0),
+          editingController: useTextEditingController(
+            text: structureManager.id == SimpleUser.empty().id
+                ? ""
+                : structureManager.getName(),
+          ),
           onChanged: (value) async {
             if (value.isNotEmpty) {
               await usersNotifier.filterUsers(

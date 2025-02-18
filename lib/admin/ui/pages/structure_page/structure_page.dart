@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/providers/structure_manager_provider.dart';
 import 'package:myecl/admin/providers/structure_provider.dart';
 import 'package:myecl/admin/router.dart';
 import 'package:myecl/admin/ui/admin.dart';
@@ -15,6 +16,7 @@ import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/user/class/list_users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -26,6 +28,8 @@ class StructurePage extends HookConsumerWidget {
     final structures = ref.watch(structureListProvider);
     final structuresNotifier = ref.watch(structureListProvider.notifier);
     final structureNotifier = ref.watch(structureProvider.notifier);
+    final structureManagerNotifier =
+        ref.watch(structureManagerProvider.notifier);
     ref.watch(userList);
 
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -68,6 +72,7 @@ class StructurePage extends HookConsumerWidget {
                           GestureDetector(
                             onTap: () {
                               structureNotifier.setStructure(Structure.empty());
+                              structureManagerNotifier.setUser(SimpleUser.empty()); 
                               QR.to(
                                 AdminRouter.root +
                                     AdminRouter.structures +
@@ -91,6 +96,7 @@ class StructurePage extends HookConsumerWidget {
                               group: structure,
                               onEdit: () {
                                 structureNotifier.setStructure(structure);
+                                // structureManagerNotifier.setUser(structure.managerUserId); TODO: w8 for back end update
                                 QR.to(
                                   AdminRouter.root +
                                       AdminRouter.structures +
