@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/paiement/class/history.dart';
+import 'package:myecl/paiement/class/store.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class UsersMeRepository extends Repository {
@@ -18,6 +19,12 @@ class UsersMeRepository extends Repository {
         suffix: 'wallet/history',
       ))
           .map((e) => History.fromJson(e)),
+    );
+  }
+
+  Future<List<Store>> getMyStores() async {
+    return List<Store>.from(
+      (await getList(suffix: "stores")).map((e) => Store.fromJson(e)),
     );
   }
 }
