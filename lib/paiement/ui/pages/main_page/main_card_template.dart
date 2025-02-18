@@ -1,0 +1,100 @@
+import 'package:flutter/material.dart';
+import 'package:myecl/paiement/ui/pages/main_page/main_card_button.dart';
+
+class MainCardTemplate extends StatelessWidget {
+  final List<MainCardButton> actionButtons;
+  final List<Color> colors;
+  final String title;
+  final String value;
+  final Widget topRightWidget;
+  const MainCardTemplate(
+      {super.key,
+      required this.actionButtons,
+      required this.colors,
+      required this.title,
+      required this.value,
+      required this.topRightWidget});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(10, 10, 10, 12),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: colors,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 2,
+            blurRadius: 7,
+            offset: const Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 15,
+                    width: MediaQuery.of(context).size.width * 0.8,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        title,
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
+                      ),
+                      const Spacer(),
+                      topRightWidget,
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      value,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 50,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            height: 80,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: actionButtons,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

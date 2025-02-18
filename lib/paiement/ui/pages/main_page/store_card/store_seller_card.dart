@@ -2,8 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 
-class SellerCard extends StatelessWidget {
-  const SellerCard({super.key});
+class StoreSellerCard extends StatelessWidget {
+  const StoreSellerCard({super.key});
 
   @override
   Widget build(BuildContext context) {
