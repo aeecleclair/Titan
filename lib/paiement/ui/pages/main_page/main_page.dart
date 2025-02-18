@@ -19,7 +19,7 @@ class MainPage extends HookConsumerWidget {
                 width: MediaQuery.of(context).size.width,
                 child: PageView.builder(
                     controller: PageController(viewportFraction: 0.8),
-                    itemCount: 3,
+                    itemCount: 1,
                     itemBuilder: (context, index) {
                       return const AccountCard();
                     }),

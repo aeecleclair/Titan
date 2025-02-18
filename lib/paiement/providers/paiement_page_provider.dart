@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum PaiementPage {
   main,
+  scan
 }
 
 class PaiementPageProvider extends StateNotifier<PaiementPage> {

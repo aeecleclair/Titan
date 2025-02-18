@@ -15,6 +15,7 @@ class PaiementHomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final page = ref.watch(paiementPageProvider);
+    final pageNotifier = ref.watch(paiementPageProvider.notifier);
     return Scaffold(
         body: WillPopScope(
       onWillPop: () async {
@@ -26,6 +27,9 @@ class PaiementHomePage extends ConsumerWidget {
             } else {
               return true;
             }
+          case PaiementPage.scan:
+            pageNotifier.setPaiementPage(PaiementPage.main);
+            break;
         }
         return false;
       },

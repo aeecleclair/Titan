@@ -53,6 +53,8 @@ dependencies:
   rxdart: ^0.28.0
   qlevar_router: ^1.9.0
   qr_flutter: ^4.1.0
+  permission_handler: ^10.2.0
+  qr_code_scanner: ^1.0.1
   shared_preferences: ^2.5.1
   smooth_page_indicator: ^1.0.0+2
   syncfusion_flutter_calendar: ^28.1.38

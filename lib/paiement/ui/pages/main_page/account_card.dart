@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/paiement/providers/paiement_page_provider.dart';
 import 'package:myecl/paiement/ui/pages/main_page/account_button.dart';
 
-class AccountCard extends StatelessWidget {
+class AccountCard extends HookConsumerWidget {
   const AccountCard({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final pageNotifier = ref.read(paiementPageProvider.notifier);
     return Container(
       margin: const EdgeInsets.fromLTRB(10, 10, 10, 12),
       decoration: BoxDecoration(
@@ -95,7 +98,9 @@ class AccountCard extends StatelessWidget {
                 AccountButton(
                   icon: HeroIcons.viewfinderCircle,
                   title: "Scanner",
-                  onPressed: () {},
+                  onPressed: () {
+                    pageNotifier.setPaiementPage(PaiementPage.scan);
+                  },
                 ),
                 AccountButton(
                   icon: HeroIcons.creditCard,
