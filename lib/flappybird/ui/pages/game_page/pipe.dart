@@ -28,7 +28,7 @@ class PipeDisplay extends HookConsumerWidget {
           fit: BoxFit.fitWidth,
           clipBehavior: Clip.hardEdge,
           child: Transform.flip(
-            flipY: isBottomPipe ? false : true,
+            flipY: !isBottomPipe,
             child: pipeImage.isNotEmpty ? Image.memory(pipeImage) : Container(),
           ),
         ),
