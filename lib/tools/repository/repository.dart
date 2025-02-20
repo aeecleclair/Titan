@@ -7,7 +7,7 @@ import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/logs/logger.dart';
 
 abstract class Repository {
-  static String host = "";
+  static String host = ""; // see lib/main.dart
   static const String expiredTokenDetail = "Could not validate credentials";
   final String ext = "";
   final Map<String, String> headers = {

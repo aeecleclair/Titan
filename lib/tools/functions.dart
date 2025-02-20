@@ -465,78 +465,57 @@ Plausible? getPlausible() {
 }
 
 Future<String> getTitanHost() async {
-  // We get the host url from the .env file
-  var host = dotenv.env["${getAppFlavor().toUpperCase()}_HOST"];
+  const String minimalHyperionVersion = "4.0.0";
+  final String flavor = getAppFlavor();
 
-  if (host == null || host == "") {
-    throw StateError("Could not find host corresponding to flavor");
+  final host = await titanHostIfCompatible(flavor, minimalHyperionVersion);
+  if (host != "") {
+    return host;
+  }
+  if (flavor == "alpha") {
+    throw StateError(
+      "Minimal requirements not met for flavor alpha (current)",
+    );
   }
 
-  // Get backend version
-  final response = await http.get(Uri.parse("${host}information"));
-
-  if (response.statusCode == 200) {
-    String toDecode = response.body;
-    toDecode = utf8.decode(response.body.runes.toList());
-    var decoded = Version.fromJson(jsonDecode(toDecode));
-    final version = decoded.version;
-    final minimalHyperionVersion = "4.0.0";
-    final alphaHost = dotenv.env["ALPHA_HOST"];
-
-    // We compare the version of the backend with the minimal requirements of this front version
-    if (!isBackVersionCompatible(version, minimalHyperionVersion)) {
-      // Back outdated
-      // Check for the back in alpha
-
-      if (getAppFlavor().toUpperCase() == "ALPHA") {
-        // Already with the alpha version
-        throw StateError(
-            "Hyperion (alpha) host does not match the minimal requirements. Got $version expected at least $minimalHyperionVersion.");
-      }
-
-      if (alphaHost == null || alphaHost == "") {
-        throw StateError("Could not find alpha host corresponding to flavor");
-      }
-
-      // Else we verify the alpha version
-      final alphaResponse = await http.get(Uri.parse("${alphaHost}information"));
-      if (alphaResponse.statusCode != 200) {
-        throw StateError("Hyperion (alpha) is not responding.");
-      }
-
-      String toDecode2 = alphaResponse.body;
-      toDecode2 = utf8.decode(alphaResponse.body.runes.toList());
-      var decoded2 = Version.fromJson(jsonDecode(toDecode2));
-      final alphaVersion = decoded2.version;
-
-      if (!isBackVersionCompatible(alphaVersion, minimalHyperionVersion)) {
-        throw StateError(
-            "Hyperion and Hyperion alpha hosts don't match the minimal requirements. Got $version (Hyperion) and $alphaVersion (Hyperion alpha) expected at least $minimalHyperionVersion.");
-      }
-      return alphaHost;
-    }
+  final alphaHost =
+      await titanHostIfCompatible("alpha", minimalHyperionVersion);
+  if (alphaHost != "") {
+    return alphaHost;
   }
-
-  return host;
+  throw StateError(
+    "Minimal requirements not met for flavor $flavor (current) then alpha",
+  );
 }
 
-bool isBackVersionCompatible(String currentVersion, String minimalVersion) {
-  final List<int> currentVersionParts = currentVersion.split('.').map(int.parse).toList();
-  final int major = currentVersionParts[0];
-  final int minor = currentVersionParts[1];
-  final int patch = currentVersionParts[2];
-  final minimalVersionParts = minimalVersion.split('.').map(int.parse).toList();
-  final int minimalMajor = minimalVersionParts[0];
-  final int minimalMinor = minimalVersionParts[1];
-  final int minimalPatch = minimalVersionParts[2];
+Future<String> titanHostIfCompatible(
+  String flavor,
+  String minimalHyperionVersion,
+) async {
+  final String? host = dotenv.env["${flavor.toUpperCase()}_HOST"];
+  if (host == null || host == "") {
+    throw StateError("Could not retrieve the base URL for the $flavor flavor");
+  }
+  final response = await http.get(Uri.parse("${host}information"));
+  if (response.statusCode != 200) {
+    throw StateError("Hyperion $flavor is not responding ($host).");
+  }
+  String toDecode = utf8.decode(response.body.runes.toList());
+  final String version = Version.fromJson(jsonDecode(toDecode)).version;
+  return isVersionCompatible(version, minimalHyperionVersion) ? host : "";
+}
 
-  if (major < minimalMajor) {
-    return false;
-  }
-  if (major == minimalMajor && minor < minimalMinor) {
-    return false;
-  }
-  if (major == minimalMajor && minor == minimalMinor && patch < minimalPatch) {
+bool isVersionCompatible(String currentVersion, String minimalVersion) {
+  final [major, minor, patch] =
+      currentVersion.split('.').map(int.parse).toList();
+  final [minimalMajor, minimalMinor, minimalPatch] =
+      minimalVersion.split('.').map(int.parse).toList();
+
+  if (major < minimalMajor ||
+      (major == minimalMajor && minor < minimalMinor) ||
+      (major == minimalMajor &&
+          minor == minimalMinor &&
+          patch < minimalPatch)) {
     return false;
   }
   return true;
