@@ -130,7 +130,7 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
               ),
               ResearchBar(),
               const SizedBox(
-                height: 10,
+                height: 20,
               ),
               associationMembershipFilteredList.isEmpty
                   ? const Text(AdminTextConstants.noMember)

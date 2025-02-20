@@ -19,6 +19,8 @@ class AdminTextConstants {
   static const String createAssociationMembership = "Créer une adhésion";
   static const String createdAssociationMembership = "Adhésion créée";
   static const String creationError = "Erreur lors de la création";
+  static const String dateError =
+      "La date de début doit être avant la date de fin";
   static const String delete = "Supprimer";
   static const String deleteAssociationMembership = "Supprimer l'adhésion ?";
   static const String deletedAssociationMembership = "Adhésion supprimée";
@@ -37,16 +39,20 @@ class AdminTextConstants {
   static const String emailRegex = "Email Regex";
   static const String emptyUser = "Utilisateur vide";
   static const String endDate = "Date de fin";
-  static const String endDateMaximal = "Date de fin maximale";
-  static const String endDateMinimal = "Date de fin minimale";
   static const String error = "Erreur";
   static const String filters = "Filtres";
   static const String group = "Groupe";
   static const String groups = "Groupes";
   static const String loaningGroup = "Groupe de prêt";
   static const String looking = "Recherche";
+  static const String maximum = "Maximum";
   static const String members = "Membres";
+  static const String membershipAddingError =
+      "Erreur lors de l'ajout (surement dû à une superposition de dates)";
   static const String memberships = "Adhésions";
+  static String membershipUpdatingError =
+      "Erreur lors de la modification (surement dû à une superposition de dates)";
+  static const String minimum = "Minimum";
   static const String modifyModuleVisibility = "Visibilité des modules";
   static const String name = "Nom";
   static const String noMember = "Aucun membre";
@@ -56,8 +62,6 @@ class AdminTextConstants {
   static const String research = "Recherche";
   static const String schools = "Écoles";
   static const String startDate = "Date de début";
-  static const String startDateMaximal = "Date de début maximale";
-  static const String startDateMinimal = "Date de début minimale";
   static const String updatedAssociationMembership = "Adhésion modifiée";
   static const String updatedGroup = "Groupe modifié";
   static const String updatedMembership = "Adhésion modifiée";
