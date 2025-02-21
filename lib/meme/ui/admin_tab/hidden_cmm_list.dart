@@ -46,11 +46,12 @@ class HiddenMemeList extends ConsumerWidget {
               if (!imageSnapshot.hasData) {
                 return Center(child: CircularProgressIndicator());
               }
-              return MemeCard(
-                meme: meme,
-                image: imageSnapshot.data!,
-                page: PageType.hidden,
-              );
+              return Container();
+              // return MemeCard(
+              //   meme: meme,
+              //   image: imageSnapshot.data!,
+              //   page: PageType.hidden,
+              // );
             },
           );
         },

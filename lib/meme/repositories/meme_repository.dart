@@ -31,10 +31,12 @@ class MemeRepository extends LogoRepository {
     return await delete(id);
   }
 
-  Future<bool> addVoteToMeme(Meme meme, bool positive) async {
-    return await create(
-      meme.toJson(),
-      suffix: '${meme.id}/vote/?positive=$positive',
+  Future<Meme> addVoteToMeme(Meme meme, bool positive) async {
+    return Meme.fromJson(
+      await create(
+        meme.toJson(),
+        suffix: '${meme.id}/vote/?positive=$positive',
+      ),
     );
   }
 

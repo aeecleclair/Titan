@@ -46,11 +46,12 @@ class MyMemeList extends ConsumerWidget {
               if (!imageSnapshot.hasData) {
                 return Center(child: CircularProgressIndicator());
               }
-              return MemeCard(
-                meme: meme,
-                image: imageSnapshot.data!,
-                page: PageType.myPost,
-              );
+              return Container();
+              // return MemeCard(
+              //   meme: meme,
+              //   image: imageSnapshot.data!,
+              //   page: PageType.myPost,
+              // );
             },
           );
         },

@@ -24,6 +24,11 @@ class Meme {
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
+    data['id'] = id;
+    data['user'] = user;
+    data['my_vote'] = myVote;
+    data['vote_score'] = voteScore;
+    data['status'] = status;
     return data;
   }
 
@@ -37,6 +42,6 @@ class Meme {
 
   @override
   String toString() {
-    return 'Meme{vote_score: $voteScore, status: $status}';
+    return 'Meme{id : $id, user:$user, myVote : $myVote, vote_score: $voteScore, status: $status}';
   }
 }

@@ -38,15 +38,16 @@ class MemeList extends ConsumerWidget {
         controller: PageController(),
         itemCount: memeList.length,
         itemBuilder: (context, index) {
-          final meme = memeList[index];
           return FutureBuilder<Uint8List>(
-            future: ref.read(memeListProvider.notifier).getMemeImage(meme.id),
+            future: ref
+                .read(memeListProvider.notifier)
+                .getMemeImage(memeList[index].id),
             builder: (context, imageSnapshot) {
               if (!imageSnapshot.hasData) {
                 return Center(child: CircularProgressIndicator());
               }
               return MemeCard(
-                meme: meme,
+                memeId: memeList[index].id,
                 image: imageSnapshot.data!,
                 page: PageType.scrolling,
               );

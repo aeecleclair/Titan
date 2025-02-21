@@ -24,17 +24,42 @@ class MemeListNotifier extends ListNotifier<Meme> {
   }
 
   Future<bool> addVoteToMeme(Meme meme, bool positive) async {
-    return await _memeRepository.addVoteToMeme(meme, positive);
+    return await add(
+      (meme) => _memeRepository.addVoteToMeme(meme, positive),
+      meme,
+    );
   }
 
   Future<bool> deleteVoteToMeme(Meme meme) async {
-    return await _memeRepository.deleteVoteToMeme(meme.id);
+    return await update(
+      (meme) => _memeRepository.deleteVoteToMeme(
+        meme.id,
+      ),
+      (memes, meme) {
+        final updatedMemes = memes.map((m) {
+          if (m.id == meme.id) {
+            m.myVote = null;
+          }
+          return m;
+        }).toList();
+        return updatedMemes;
+      },
+      meme,
+    );
   }
 
   Future<bool> updateVoteToMeme(Meme meme, bool positive) async {
     return await update(
       (meme) => _memeRepository.updateVoteToMeme(meme, positive),
-      (memes, meme) => memes..[memes.indexWhere((b) => b.id == meme.id)] = meme,
+      (memes, meme) {
+        final updatedMemes = memes.map((m) {
+          if (m.id == meme.id) {
+            m.myVote = positive;
+          }
+          return m;
+        }).toList();
+        return updatedMemes;
+      },
       meme,
     );
   }
