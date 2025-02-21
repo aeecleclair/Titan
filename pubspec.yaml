@@ -6,7 +6,7 @@ version: 1.0.2+142
 
 environment:
   sdk: ^3.6.0
-  flutter: 3.27.1
+  flutter: 3.29.0
 
 dependencies:
   auto_size_text: ^3.0.0
@@ -27,7 +27,7 @@ dependencies:
   flutter_appauth: ^8.0.3
   flutter_dotenv: ^5.0.2
   flutter_hooks: ^0.20.0
-  flutter_local_notifications: 17.2.4
+  flutter_local_notifications: ^18.0.1
   flutter_localizations:
     sdk: flutter
   flutter_riverpod: ^2.1.1
@@ -39,7 +39,7 @@ dependencies:
   http: ^1.0.0
   http_parser: ^4.0.2
   image: ^4.0.15
-  image_cropper: ^8.1.0
+  image_cropper: ^9.0.0
   image_picker: ^1.0.0
   intl: ^0.19.0
   jwt_decoder: ^2.0.1
@@ -55,13 +55,13 @@ dependencies:
   qr_flutter: ^4.1.0
   shared_preferences: ^2.5.1
   smooth_page_indicator: ^1.0.0+2
-  syncfusion_flutter_calendar: ^28.1.35
-  timezone: ^0.9.0
+  syncfusion_flutter_calendar: ^28.1.38
+  timezone: ^0.10.0
   tuple: ^2.0.0
   universal_html: ^2.0.8
   vector_math: ^2.1.2
   zxcvbn: ^1.0.0
-  file_picker: ^8.0.0+1
+  file_picker: ^9.0.0
   url_launcher: ^6.2.5
   pdfx: ^2.6.0
   file_saver: ^0.2.12
