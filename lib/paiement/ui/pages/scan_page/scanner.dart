@@ -8,7 +8,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:myecl/paiement/providers/barcode_provider.dart';
 import 'package:myecl/paiement/providers/ongoing_transaction.dart';
 import 'package:myecl/paiement/providers/scan_provider.dart';
-import 'package:myecl/paiement/providers/store_provider.dart';
+import 'package:myecl/paiement/providers/selected_store_provider.dart';
 import 'package:myecl/paiement/ui/pages/scan_page/scan_overlay_shape.dart';
 
 class Scanner extends ConsumerStatefulWidget {
@@ -27,7 +27,7 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
 
   void _handleBarcode(BarcodeCapture barcodes) async {
     final barcodeNotifier = ref.read(barcodeProvider.notifier);
-    final store = ref.read(storeProvider);
+    final store = ref.read(selectedStoreProvider);
     final scanNotifier = ref.read(scanProvider.notifier);
     final ongoingTransactionNotifier =
         ref.read(ongoingTransactionProvider.notifier);
