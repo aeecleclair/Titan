@@ -77,9 +77,12 @@ class MainCardTemplate extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: child,
+                  Expanded(
+                    child: Container(
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                      child: child,
+                    ),
                   ),
                 ],
               ),
