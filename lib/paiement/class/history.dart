@@ -1,3 +1,5 @@
+import 'package:myecl/tools/functions.dart';
+
 enum HistoryType { transfer, received, given }
 
 enum TransactionStatus { confirmed, canceled, refunded }
@@ -26,7 +28,7 @@ class History {
         ),
         otherWalletName = json['other_wallet_name'],
         total = json['total'],
-        creation = json['creation'],
+        creation = processDateFromAPI(json['creation']),
         status = TransactionStatus.values.firstWhere(
           (e) => e.toString().split('.').last == json['status'],
         );
@@ -36,7 +38,7 @@ class History {
         'type': type.toString().split('.').last,
         'other_wallet_name': otherWalletName,
         'total': total,
-        'creation': creation,
+        'creation': processDateToAPI(creation),
         'status': status.toString().split('.').last,
       };
 
