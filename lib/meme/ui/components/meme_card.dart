@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/meme/class/meme.dart';
 import 'package:myecl/meme/class/utils.dart';
 import 'package:myecl/meme/providers/meme_list_provider.dart';
 import 'package:myecl/meme/providers/ban_user_list_provider.dart';
@@ -26,6 +25,8 @@ class MemeCard extends ConsumerWidget {
     required this.page,
   });
 
+  get memePictures => null;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isAdmin = ref.watch(isMemeAdminProvider);
@@ -33,10 +34,10 @@ class MemeCard extends ConsumerWidget {
     final banNotifier = ref.watch(bannedUsersProvider.notifier);
     final hiddenMemeListNotifier = ref.watch(hiddenMemeListProvider.notifier);
     final memeList = ref.watch(memeListProvider);
-    // final memePictures =
-    //     ref.watch(memePicturesProvider.select((value) => value[widget.meme]));
-    // final memePicturesNotifier = ref.watch(memePicturesProvider.notifier);
-    // final profilePictureNotifier = ref.watch(profilePictureProvider.notifier);
+    final memePictures =
+        ref.watch(memePicturesProvider.select((value) => value[memeId]));
+    final memePicturesNotifier = ref.watch(memePicturesProvider.notifier);
+    final profilePictureNotifier = ref.watch(profilePictureProvider.notifier);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -45,7 +46,7 @@ class MemeCard extends ConsumerWidget {
       value: memeList,
       builder: (context, memeList) {
         final meme = memeList.where((e) => e.id == memeId).first;
-        print(meme.myVote);
+
         return Center(
           child: Padding(
             padding: const EdgeInsets.all(
@@ -55,37 +56,37 @@ class MemeCard extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     if (widget.page == PageType.scrolling)
-                //       Padding(
-                //         padding: const EdgeInsets.all(8.0),
-                //         child: AutoLoaderChild(
-                //           group: memePictures,
-                //           notifier: memePicturesNotifier,
-                //           mapKey: widget.meme,
-                //           loader: (ref) => profilePictureNotifier
-                //               .getProfilePicture(widget.meme.user.id),
-                //           loadingBuilder: (context) => const CircleAvatar(
-                //             radius: 20,
-                //             child: CircularProgressIndicator(),
-                //           ),
-                //           dataBuilder: (context, data) => CircleAvatar(
-                //             radius: 20,
-                //             backgroundImage: data.first.image,
-                //           ),
-                //         ),
-                //       ),
-                //     if (widget.page != PageType.myPost)
-                //       Text(
-                //         widget.meme.user.nickname != null
-                //             ? widget.meme.user.nickname!
-                //             : "${widget.meme.user.firstname} ${widget.meme.user.name}",
-                //         style: const TextStyle(fontWeight: FontWeight.bold),
-                //       ),
-                //   ],
-                // ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (page == PageType.scrolling)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: AutoLoaderChild(
+                          group: memePictures,
+                          notifier: memePicturesNotifier,
+                          mapKey: memeId,
+                          loader: (ref) => profilePictureNotifier
+                              .getProfilePicture(meme.user.id),
+                          loadingBuilder: (context) => const CircleAvatar(
+                            radius: 20,
+                            child: CircularProgressIndicator(),
+                          ),
+                          dataBuilder: (context, data) => CircleAvatar(
+                            radius: 20,
+                            backgroundImage: data.first.image,
+                          ),
+                        ),
+                      ),
+                    if (page != PageType.myPost)
+                      Text(
+                        meme.user.nickname != null
+                            ? meme.user.nickname!
+                            : "${meme.user.firstname} ${meme.user.name}",
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                  ],
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: GestureDetector(

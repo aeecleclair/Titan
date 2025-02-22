@@ -5,7 +5,6 @@ import 'package:myecl/meme/class/meme.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/meme/class/utils.dart';
 import 'package:myecl/tools/repository/logo_repository.dart';
-import 'package:myecl/vote/providers/result_provider.dart';
 
 class MemeRepository extends LogoRepository {
   @override
