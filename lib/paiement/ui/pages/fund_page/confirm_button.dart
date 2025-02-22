@@ -3,10 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/class/transfert.dart';
+import 'package:myecl/paiement/class/init_info.dart';
 import 'package:myecl/paiement/providers/fund_amount_provider.dart';
 import 'package:myecl/paiement/providers/funding_url_provider.dart';
-import 'package:myecl/paiement/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:universal_html/html.dart' as html;
@@ -18,6 +17,8 @@ class ConfirmFundButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final fundAmount = ref.watch(fundAmountProvider);
     final fundingUrlNotifier = ref.watch(fundingUrlProvider.notifier);
+
+    final redirectUrl = "https://myecl.fr/static.html";
 
     final enabled = fundAmount.isNotEmpty &&
         double.parse(fundAmount.replaceAll(',', '.')) > 0;
@@ -49,21 +50,14 @@ class ConfirmFundButton extends ConsumerWidget {
       completer.future.then((_) {});
 
       void login(String data) async {
-        final receivedUri = Uri.parse(data);
-        final token = receivedUri.queryParameters["code"];
-        popupWin.close();
-        try {} on TimeoutException catch (_) {
-          throw Exception('No response from server');
-        } catch (e) {
-          rethrow;
-        }
+        final code = data.split('code=')[1];
+        print(code);
       }
 
       html.window.onMessage.listen((event) {
-        print(event.data.toString());
-        // if (event.data.toString().contains('code=')) {
-        //   login(event.data);
-        // }
+        if (event.data.toString().contains('code=')) {
+          login(event.data);
+        }
       });
     }
 
@@ -74,10 +68,10 @@ class ConfirmFundButton extends ConsumerWidget {
           return;
         }
         final value = await fundingUrlNotifier.getFundingUrl(
-          Transfer(
+          InitInfo(
             amount:
                 (double.parse(fundAmount.replaceAll(',', '.')) * 100).toInt(),
-            type: TransferType.helloAsso,
+            redirectUrl: redirectUrl,
           ),
         );
         value.when(
