@@ -100,14 +100,19 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
     return state.when(
       data: (d) async {
         try {
+          print("ici");
           final value = await f(t);
           if (!value) {
             return false;
           }
+          print(d);
+          print(t);
           d = replace(d, t);
           state = AsyncValue.data(d);
+          print("enfin");
           return true;
         } catch (error) {
+          print(error);
           state = AsyncValue.data(d);
           if (error is AppException && error.type == ErrorType.tokenExpire) {
             rethrow;

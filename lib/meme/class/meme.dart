@@ -40,6 +40,21 @@ class Meme {
     status = "neutral";
   }
 
+  Meme copyWith({
+    String? id,
+    SimpleUser? user,
+    bool? myVote,
+    int? voteScore,
+    String? status,
+  }) =>
+      Meme(
+        id: id ?? this.id,
+        user: user ?? this.user,
+        myVote: myVote,
+        voteScore: voteScore ?? this.voteScore,
+        status: status ?? this.status,
+      );
+
   @override
   String toString() {
     return 'Meme{id : $id, user:$user, myVote : $myVote, vote_score: $voteScore, status: $status}';

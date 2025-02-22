@@ -40,7 +40,7 @@ class MemeList extends ConsumerWidget {
         itemBuilder: (context, index) {
           return FutureBuilder<Uint8List>(
             future: ref
-                .read(memeListProvider.notifier)
+                .watch(memeListProvider.notifier)
                 .getMemeImage(memeList[index].id),
             builder: (context, imageSnapshot) {
               if (!imageSnapshot.hasData) {

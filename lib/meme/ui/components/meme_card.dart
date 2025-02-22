@@ -128,7 +128,8 @@ class MemeCard extends ConsumerWidget {
                                     width: double.infinity,
                                     height: double.infinity,
                                     color: Colors.black.withValues(
-                                        alpha: 0.3), // Opacité réglable
+                                      alpha: 0.3,
+                                    ), // Opacité réglable
                                   ),
                                   // Icône "œil caché" au centre
                                   Center(
@@ -171,7 +172,11 @@ class MemeCard extends ConsumerWidget {
                         icon: Icon(
                           Icons.keyboard_double_arrow_up,
                           size: 35,
-                          //color: upButtonColor,
+                          color: meme.myVote == null
+                              ? Colors.grey
+                              : meme.myVote!
+                                  ? Colors.green
+                                  : Colors.grey,
                         ),
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(
@@ -206,7 +211,11 @@ class MemeCard extends ConsumerWidget {
                         icon: Icon(
                           Icons.keyboard_double_arrow_down,
                           size: 35,
-                          //color: downButtonColor,
+                          color: meme.myVote == null
+                              ? Colors.grey
+                              : meme.myVote!
+                                  ? Colors.grey
+                                  : Colors.red,
                         ),
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(

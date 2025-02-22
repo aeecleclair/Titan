@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 enum SortingType { best, worst, trending, newest, oldest }
 
 String sortingTypeToString(SortingType t) {

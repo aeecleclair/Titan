@@ -24,48 +24,47 @@ class MemeListNotifier extends ListNotifier<Meme> {
   }
 
   Future<bool> addVoteToMeme(Meme meme, bool positive) async {
-    return await add(
+    return await update(
       (meme) => _memeRepository.addVoteToMeme(meme, positive),
-      meme,
+      (memes, meme) => memes..[memes.indexWhere((p) => p.id == meme.id)] = meme,
+      meme.copyWith(
+        myVote: positive,
+        voteScore: meme.voteScore + (positive ? 1 : -1),
+      ),
     );
   }
 
   Future<bool> deleteVoteToMeme(Meme meme) async {
     return await update(
-      (meme) => _memeRepository.deleteVoteToMeme(
-        meme.id,
+      (meme) => _memeRepository.deleteVoteToMeme(meme.id),
+      (memes, meme) => memes..[memes.indexWhere((p) => p.id == meme.id)] = meme,
+      meme.copyWith(
+        myVote: null,
+        voteScore: meme.voteScore + (meme.myVote! ? -1 : 1),
       ),
-      (memes, meme) {
-        final updatedMemes = memes.map((m) {
-          if (m.id == meme.id) {
-            m.myVote = null;
-          }
-          return m;
-        }).toList();
-        return updatedMemes;
-      },
-      meme,
     );
   }
 
   Future<bool> updateVoteToMeme(Meme meme, bool positive) async {
     return await update(
       (meme) => _memeRepository.updateVoteToMeme(meme, positive),
-      (memes, meme) {
-        final updatedMemes = memes.map((m) {
-          if (m.id == meme.id) {
-            m.myVote = positive;
-          }
-          return m;
-        }).toList();
-        return updatedMemes;
-      },
-      meme,
+      (memes, meme) => memes..[memes.indexWhere((p) => p.id == meme.id)] = meme,
+      meme.copyWith(
+        myVote: positive,
+        voteScore: meme.voteScore + (positive ? 2 : -2),
+      ),
     );
   }
 
   Future<bool> deleteMeme(Meme meme) async {
-    return await _memeRepository.deleteMeme(meme.id);
+    return await update(
+      (meme) => _memeRepository.deleteVoteToMeme(meme.id),
+      (memes, meme) => memes..[memes.indexWhere((p) => p.id == meme.id)] = meme,
+      meme.copyWith(
+        myVote: null,
+        voteScore: meme.voteScore + (meme.myVote! ? -1 : 1),
+      ),
+    );
   }
 }
 
