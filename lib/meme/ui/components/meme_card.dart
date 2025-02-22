@@ -32,6 +32,7 @@ class MemeCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isAdmin = ref.watch(isMemeAdminProvider);
     final memeListNotifier = ref.watch(memeListProvider.notifier);
+    final myMemeListNotifier = ref.watch(myMemeListProvider.notifier);
     final banNotifier = ref.watch(bannedUsersProvider.notifier);
     final hiddenMemeListNotifier = ref.watch(hiddenMemeListProvider.notifier);
     final memeList = (page == PageType.scrolling)
@@ -277,7 +278,7 @@ class MemeCard extends ConsumerWidget {
                                 descriptions: MemeTextConstant.wantToDeleteMeme,
                                 onYes: () async {
                                   final value =
-                                      await memeListNotifier.deleteMeme(meme);
+                                      await myMemeListNotifier.deleteMeme(meme);
                                   if (value) {
                                     displayToastWithContext(
                                       TypeMsg.msg,

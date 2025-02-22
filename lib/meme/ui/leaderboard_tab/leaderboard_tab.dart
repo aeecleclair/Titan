@@ -43,55 +43,62 @@ class LeaderboardTab extends ConsumerWidget {
               ? promoLeaderboard
               : floorLeaderboard,
       builder: (context, scoreList) {
-        return Refresher(
-          onRefresh: () async {
-            userLeaderBoardNotifier.getUserLeaderboard(period);
-            promoLeaderboardNotifier.getPromoLeaderboard(period);
-            floorLeaderboardNotifier.getFloorLeaderboard(period);
-          },
-          child: Column(
-            children: [
-              ExpansionTile(
-                title: const Text(MemeTextConstant.filters),
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8.0),
-                    child: SortingScoreTimeBar(),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8),
-                    child: SortingScoreEntityBar(),
-                  ),
-                ],
-              ),
-              ...scoreList.map((score) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: selectedSortingScoreEntity == Entity.user
-                      ? MemeLeaderBoardUserItem(
-                          score: score as MemeScoreUser,
-                        )
-                      : selectedSortingScoreEntity == Entity.promo
-                          ? MemeLeaderBoardPromoItem(
-                              score: score as MemeScorePromo,
-                            )
-                          : MemeLeaderBoardFloorItem(
-                              score: score as MemeScoreFloor,
-                            ),
-                );
-              }),
-              AsyncChild(
-                value: myScore,
-                builder: (context, score) {
-                  if (score.score == 0) {
-                    return Container();
-                  }
-                  return Text(score.toString());
+        return Column(
+          children: [
+            ExpansionTile(
+              title: const Text(MemeTextConstant.filters),
+              children: const [
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8.0),
+                  child: SortingScoreTimeBar(),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8),
+                  child: SortingScoreEntityBar(),
+                ),
+              ],
+            ),
+            Expanded(
+              child: Refresher(
+                onRefresh: () async {
+                  userLeaderBoardNotifier.getUserLeaderboard(period);
+                  promoLeaderboardNotifier.getPromoLeaderboard(period);
+                  floorLeaderboardNotifier.getFloorLeaderboard(period);
                 },
-                errorBuilder: (e, s) => Container(),
+                child: Column(
+                  children: [
+                    ...scoreList.map((score) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: selectedSortingScoreEntity == Entity.user
+                            ? MemeLeaderBoardUserItem(
+                                score: score as MemeScoreUser,
+                              )
+                            : selectedSortingScoreEntity == Entity.promo
+                                ? MemeLeaderBoardPromoItem(
+                                    score: score as MemeScorePromo,
+                                  )
+                                : MemeLeaderBoardFloorItem(
+                                    score: score as MemeScoreFloor,
+                                  ),
+                      );
+                    }),
+                  ],
+                ),
               ),
-            ],
-          ),
+            ),
+            Spacer(),
+            AsyncChild(
+              value: myScore,
+              builder: (context, score) {
+                if (score.score == 0) {
+                  return Container();
+                }
+                return Text(score.toString());
+              },
+              errorBuilder: (e, s) => Container(),
+            ),
+          ],
         );
       },
     );

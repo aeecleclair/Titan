@@ -21,33 +21,39 @@ class ScrollingTab extends ConsumerWidget {
     return AsyncChild(
       value: memeList,
       builder: (context, memeList) {
-        return Refresher(
-          onRefresh: () => memeListNotifier.getMeme(sortingType),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: SortingTypeBar(),
+        return Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: SortingTypeBar(),
+            ),
+            Expanded(
+              child: Refresher(
+                onRefresh: () => memeListNotifier.getMeme(sortingType),
+                child: Column(
+                  children: [
+                    ...memeList.map((meme) {
+                      return FutureBuilder<Uint8List>(
+                        future: ref
+                            .watch(memeListProvider.notifier)
+                            .getMemeImage(meme.id),
+                        builder: (context, imageSnapshot) {
+                          if (!imageSnapshot.hasData) {
+                            return Center(child: CircularProgressIndicator());
+                          }
+                          return MemeCard(
+                            memeId: meme.id,
+                            image: imageSnapshot.data!,
+                            page: PageType.scrolling,
+                          );
+                        },
+                      );
+                    }),
+                  ],
+                ),
               ),
-              ...memeList.map((meme) {
-                return FutureBuilder<Uint8List>(
-                  future: ref
-                      .watch(memeListProvider.notifier)
-                      .getMemeImage(meme.id),
-                  builder: (context, imageSnapshot) {
-                    if (!imageSnapshot.hasData) {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                    return MemeCard(
-                      memeId: meme.id,
-                      image: imageSnapshot.data!,
-                      page: PageType.scrolling,
-                    );
-                  },
-                );
-              }),
-            ],
-          ),
+            ),
+          ],
         );
       },
     );
