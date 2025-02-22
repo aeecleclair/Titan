@@ -93,24 +93,13 @@ class MemeCard extends ConsumerWidget {
                     onDoubleTap: () {
                       if (meme.myVote == null) {
                         memeListNotifier.addVoteToMeme(meme, true);
-                        // _changeColor(true, Colors.green);
-                        // updateVote(true, 1);
-                        // updateMyVote(true);
                       } else if (!meme.myVote!) {
                         memeListNotifier.updateVoteToMeme(meme, true);
-                        // _changeColor(true, Colors.green);
-                        // _changeColor(false, Colors.grey);
-                        // updateVote(true, 2);
-                        // updateMyVote(true);
                       }
                     },
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxHeight: MediaQuery.of(context).size.height - 327,
-                          maxWidth: double.infinity,
-                        ),
+                      child: Expanded(
                         child: meme.status == "neutral"
                             ? Image.memory(
                                 image,
@@ -118,26 +107,23 @@ class MemeCard extends ConsumerWidget {
                               )
                             : Stack(
                                 children: [
-                                  // Image de fond
                                   Image.memory(
                                     image,
                                     fit: BoxFit.cover,
                                     width: double.infinity,
                                   ),
-                                  // Filtre gris semi-transparent
                                   Container(
                                     width: double.infinity,
                                     height: double.infinity,
                                     color: Colors.black.withValues(
                                       alpha: 0.3,
-                                    ), // Opacité réglable
+                                    ),
                                   ),
-                                  // Icône "œil caché" au centre
                                   Center(
                                     child: Icon(
                                       Icons.visibility_off,
                                       color: Colors.white,
-                                      size: 50, // Taille réglable
+                                      size: 50,
                                     ),
                                   ),
                                 ],
@@ -154,20 +140,10 @@ class MemeCard extends ConsumerWidget {
                         onPressed: () {
                           if (meme.myVote == null) {
                             memeListNotifier.addVoteToMeme(meme, true);
-                            // _changeColor(true, Colors.green);
-                            // updateVote(true, 1);
-                            // updateMyVote(true);
                           } else if (!meme.myVote!) {
                             memeListNotifier.updateVoteToMeme(meme, true);
-                            // _changeColor(true, Colors.green);
-                            // _changeColor(false, Colors.grey);
-                            // updateVote(true, 2);
-                            // updateMyVote(true);
                           } else if (meme.myVote!) {
                             memeListNotifier.deleteVoteToMeme(meme);
-                            // _changeColor(true, Colors.grey);
-                            // updateVote(true, null);
-                            // updateMyVote(null);
                           }
                         },
                         icon: Icon(
@@ -193,20 +169,10 @@ class MemeCard extends ConsumerWidget {
                         onPressed: () {
                           if (meme.myVote == null) {
                             memeListNotifier.addVoteToMeme(meme, false);
-                            // _changeColor(false, Colors.red);
-                            // updateVote(false, -1);
-                            // updateMyVote(false);
                           } else if (meme.myVote!) {
                             memeListNotifier.updateVoteToMeme(meme, false);
-                            // _changeColor(true, Colors.grey);
-                            // _changeColor(false, Colors.red);
-                            // updateVote(false, -2);
-                            // updateMyVote(false);
                           } else if (!meme.myVote!) {
                             memeListNotifier.deleteVoteToMeme(meme);
-                            // _changeColor(false, Colors.grey);
-                            // updateVote(false, null);
-                            // updateMyVote(null);
                           }
                         },
                         icon: Icon(
