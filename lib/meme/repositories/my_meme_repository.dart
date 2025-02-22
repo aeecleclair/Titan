@@ -23,6 +23,11 @@ class MyMemeRepository extends LogoRepository {
     }
   }
 
+  Future<Uint8List> getMemeImage(String id) async {
+    final uint8List = await getLogo("", suffix: "$id/img");
+    return uint8List;
+  }
+
   Future<bool> deleteMeme(String id) async {
     return await delete(id);
   }

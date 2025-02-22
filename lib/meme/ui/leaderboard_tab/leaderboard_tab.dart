@@ -65,7 +65,6 @@ class LeaderboardTab extends ConsumerWidget {
                 ],
               ),
               ...scoreList.map((score) {
-                //print(score);
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: selectedSortingScoreEntity == Entity.user

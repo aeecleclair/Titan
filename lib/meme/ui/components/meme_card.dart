@@ -85,6 +85,45 @@ class MemeCard extends ConsumerWidget {
                             : "${meme.user.firstname} ${meme.user.name}",
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
+                    if (isAdmin)
+                      IconButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return CustomDialogBox(
+                                title: MemeTextConstant.banUser,
+                                descriptions: MemeTextConstant.wantToBanUser,
+                                onYes: () async {
+                                  final value =
+                                      await banNotifier.banUser(meme.user.id);
+                                  if (value) {
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
+                                      MemeTextConstant.bannedUser,
+                                    );
+                                  } else {
+                                    displayToastWithContext(
+                                      TypeMsg.error,
+                                      MemeTextConstant.errorBanningUser,
+                                    );
+                                  }
+                                },
+                              );
+                            },
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.block,
+                          size: 30,
+                          color: Colors.red,
+                        ),
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(
+                          minWidth: 40,
+                          minHeight: 40,
+                        ),
+                      ),
                   ],
                 ),
                 Padding(
@@ -99,32 +138,30 @@ class MemeCard extends ConsumerWidget {
                     },
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child: Expanded(
-                        child: meme.status == "neutral"
-                            ? Image.memory(
-                                image,
-                              )
-                            : Stack(
-                                children: [
-                                  Image.memory(
-                                    image,
-                                    fit: BoxFit.cover,
+                      child: meme.status == "neutral"
+                          ? Image.memory(
+                              image,
+                            )
+                          : Stack(
+                              children: [
+                                Image.memory(
+                                  image,
+                                  fit: BoxFit.cover,
+                                ),
+                                Container(
+                                  color: Colors.black.withValues(
+                                    alpha: 0.3,
                                   ),
-                                  Container(
-                                    color: Colors.black.withValues(
-                                      alpha: 0.3,
-                                    ),
+                                ),
+                                Center(
+                                  child: Icon(
+                                    Icons.visibility_off,
+                                    color: Colors.white,
+                                    size: 50,
                                   ),
-                                  Center(
-                                    child: Icon(
-                                      Icons.visibility_off,
-                                      color: Colors.white,
-                                      size: 50,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                      ),
+                                ),
+                              ],
+                            ),
                     ),
                   ),
                 ),
@@ -217,45 +254,6 @@ class MemeCard extends ConsumerWidget {
                           icon: const Icon(
                             Icons.visibility_off_outlined,
                             size: 30,
-                          ),
-                          padding: EdgeInsets.zero,
-                          constraints: const BoxConstraints(
-                            minWidth: 40,
-                            minHeight: 40,
-                          ),
-                        ),
-                      if (isAdmin)
-                        IconButton(
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return CustomDialogBox(
-                                  title: MemeTextConstant.banUser,
-                                  descriptions: MemeTextConstant.wantToBanUser,
-                                  onYes: () async {
-                                    final value =
-                                        await banNotifier.banUser(meme.user.id);
-                                    if (value) {
-                                      displayToastWithContext(
-                                        TypeMsg.msg,
-                                        MemeTextConstant.bannedUser,
-                                      );
-                                    } else {
-                                      displayToastWithContext(
-                                        TypeMsg.error,
-                                        MemeTextConstant.errorBanningUser,
-                                      );
-                                    }
-                                  },
-                                );
-                              },
-                            );
-                          },
-                          icon: const Icon(
-                            Icons.block,
-                            size: 30,
-                            color: Colors.red,
                           ),
                           padding: EdgeInsets.zero,
                           constraints: const BoxConstraints(

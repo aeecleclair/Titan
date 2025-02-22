@@ -21,9 +21,6 @@ class MemeRepository extends LogoRepository {
 
   Future<Uint8List> getMemeImage(String id) async {
     final uint8List = await getLogo("", suffix: "$id/img");
-    // if (uint8List.isEmpty) {
-    //   return Image.asset(getTitanLogo());
-    // }
     return uint8List;
   }
 
