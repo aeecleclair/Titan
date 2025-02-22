@@ -154,22 +154,21 @@ class AdminRouter {
                   ),
                 ],
               ),
+            ],
+          ),
+          QRoute(
+            path: structures,
+            builder: () => structure_page.StructurePage(),
+            middleware: [
+              DeferredLoadingMiddleware(structure_page.loadLibrary),
+            ],
+            children: [
               QRoute(
-                path: structures,
-                builder: () => structure_page.StructurePage(),
+                path: addEditStructure,
+                builder: () => add_edit_structure_page.AddEditStructurePage(),
                 middleware: [
-                  DeferredLoadingMiddleware(structure_page.loadLibrary),
-                ],
-                children: [
-                  QRoute(
-                    path: addEditStructure,
-                    builder: () =>
-                        add_edit_structure_page.AddEditStructurePage(),
-                    middleware: [
-                      DeferredLoadingMiddleware(
-                        add_edit_structure_page.loadLibrary,
-                      ),
-                    ],
+                  DeferredLoadingMiddleware(
+                    add_edit_structure_page.loadLibrary,
                   ),
                 ],
               ),
