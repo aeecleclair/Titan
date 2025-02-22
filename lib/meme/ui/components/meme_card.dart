@@ -103,18 +103,14 @@ class MemeCard extends ConsumerWidget {
                         child: meme.status == "neutral"
                             ? Image.memory(
                                 image,
-                                fit: BoxFit.cover,
                               )
                             : Stack(
                                 children: [
                                   Image.memory(
                                     image,
                                     fit: BoxFit.cover,
-                                    width: double.infinity,
                                   ),
                                   Container(
-                                    width: double.infinity,
-                                    height: double.infinity,
                                     color: Colors.black.withValues(
                                       alpha: 0.3,
                                     ),
