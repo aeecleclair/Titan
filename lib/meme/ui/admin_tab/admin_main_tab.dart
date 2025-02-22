@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/meme/ui/admin_tab/hidden_cmm_list.dart';
+import 'package:myecl/meme/ui/admin_tab/hidden_meme_list.dart';
 import 'package:myecl/meme/ui/admin_tab/user_tab.dart';
 
 class AdminTab extends ConsumerWidget {

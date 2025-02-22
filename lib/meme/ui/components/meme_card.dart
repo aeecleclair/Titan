@@ -8,6 +8,7 @@ import 'package:myecl/meme/providers/ban_user_list_provider.dart';
 import 'package:myecl/meme/providers/meme_pictures_provider.dart';
 import 'package:myecl/meme/providers/hidden_meme_list_provider.dart';
 import 'package:myecl/meme/providers/is_meme_admin_provider.dart';
+import 'package:myecl/meme/providers/my_meme_list_provider.dart';
 import 'package:myecl/phonebook/providers/profile_picture_provider.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
@@ -33,7 +34,11 @@ class MemeCard extends ConsumerWidget {
     final memeListNotifier = ref.watch(memeListProvider.notifier);
     final banNotifier = ref.watch(bannedUsersProvider.notifier);
     final hiddenMemeListNotifier = ref.watch(hiddenMemeListProvider.notifier);
-    final memeList = ref.watch(memeListProvider);
+    final memeList = (page == PageType.scrolling)
+        ? ref.watch(memeListProvider)
+        : (page == PageType.myPost)
+            ? ref.watch(myMemeListProvider)
+            : ref.watch(hiddenMemeListProvider);
     final memePictures =
         ref.watch(memePicturesProvider.select((value) => value[memeId]));
     final memePicturesNotifier = ref.watch(memePicturesProvider.notifier);
@@ -46,7 +51,6 @@ class MemeCard extends ConsumerWidget {
       value: memeList,
       builder: (context, memeList) {
         final meme = memeList.where((e) => e.id == memeId).first;
-
         return Center(
           child: Padding(
             padding: const EdgeInsets.all(
@@ -139,25 +143,21 @@ class MemeCard extends ConsumerWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: meme.status == "neutral"
-                          ? Image.memory(
-                              image,
-                            )
+                          ? Image.memory(image)
                           : Stack(
                               children: [
                                 Image.memory(
                                   image,
                                   fit: BoxFit.cover,
                                 ),
-                                Container(
-                                  color: Colors.black.withValues(
-                                    alpha: 0.3,
-                                  ),
-                                ),
-                                Center(
-                                  child: Icon(
-                                    Icons.visibility_off,
-                                    color: Colors.white,
-                                    size: 50,
+                                Positioned.fill(
+                                  child: Container(
+                                    color: Colors.black.withValues(alpha: 0.5),
+                                    child: const Icon(
+                                      Icons.visibility_off,
+                                      color: Colors.white,
+                                      size: 50,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -234,7 +234,7 @@ class MemeCard extends ConsumerWidget {
                                   descriptions: MemeTextConstant.wantToHideMeme,
                                   onYes: () async {
                                     final value = await hiddenMemeListNotifier
-                                        .hideMeme(meme.id);
+                                        .hideMeme(meme);
                                     if (value) {
                                       displayToastWithContext(
                                         TypeMsg.msg,
@@ -317,7 +317,7 @@ class MemeCard extends ConsumerWidget {
                                 descriptions: MemeTextConstant.wantToShowMeme,
                                 onYes: () async {
                                   final value = await hiddenMemeListNotifier
-                                      .showMeme(meme.id);
+                                      .showMeme(meme);
                                   if (value) {
                                     displayToastWithContext(
                                       TypeMsg.msg,
