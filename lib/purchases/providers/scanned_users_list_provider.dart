@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/purchases/repositories/scanner_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/user/class/simple_users.dart';
 
 class ScannedUsersListNotifier extends ListNotifier<SimpleUser> {
   final ScannerRepository scannerRepository = ScannerRepository();

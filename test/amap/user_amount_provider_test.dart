@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:myecl/amap/providers/user_amount_provider.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/user/class/simple_users.dart';
 import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/repositories/amap_user_repository.dart';
 
