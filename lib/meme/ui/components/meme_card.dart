@@ -108,7 +108,7 @@ class MemeCard extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(20),
                       child: ConstrainedBox(
                         constraints: BoxConstraints(
-                          maxHeight: MediaQuery.of(context).size.height - 320,
+                          maxHeight: MediaQuery.of(context).size.height - 327,
                           maxWidth: double.infinity,
                         ),
                         child: meme.status == "neutral"
