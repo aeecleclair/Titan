@@ -83,7 +83,7 @@ class MembershipCreationDialogBox extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 22,
+                  height: 20,
                 ),
                 DropdownButtonFormField<String>(
                   value: groupIdController.text,
@@ -101,6 +101,9 @@ class MembershipCreationDialogBox extends StatelessWidget {
                   decoration: const InputDecoration(
                     hintText: AdminTextConstants.group,
                   ),
+                ),
+                const SizedBox(
+                  height: 20,
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
