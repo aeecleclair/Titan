@@ -269,6 +269,7 @@ class ScanPage extends HookConsumerWidget {
                         ],
                       ),
                     ),
+                    loadingBuilder: (context) => const SizedBox(),
                   ),
                   const Spacer(),
                 ],
