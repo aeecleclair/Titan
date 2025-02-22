@@ -1,5 +1,5 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/paiement/providers/selected_month_provider.dart';
@@ -17,24 +17,11 @@ class StoreCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final store = ref.watch(selectedStoreProvider);
-    // final selectedStructure = ref.read(selectedStructureProvider);
-    // final storeAdminListNotifier = ref.read(storeAdminListProvider.notifier);
     final selectedMonthNotifier = ref.watch(selectedMonthProvider.notifier);
     final buttonGradient = [
       const Color.fromARGB(255, 6, 75, 75),
       const Color.fromARGB(255, 0, 29, 29),
     ];
-    final isEditing = useState(false);
-    final storeNameController = useTextEditingController(text: store.name);
-
-    // Reset the editing state when the store changes
-    useEffect(
-      () {
-        isEditing.value = false;
-        return null;
-      },
-      [store],
-    );
 
     return MainCardTemplate(
       toggle: toggle,
@@ -70,15 +57,6 @@ class StoreCard extends HookConsumerWidget {
             },
             title: 'Gestion',
           ),
-        // if (store.canManageSellers || store.storeAdmin)
-        //   MainCardButton(
-        //     colors: buttonGradient,
-        //     icon: HeroIcons.pencilSquare,
-        //     onPressed: () async {
-        //       isEditing.value = !isEditing.value;
-        //     },
-        //     title: 'Editer',
-        //   ),
         if (store.canSeeHistory)
           MainCardButton(
             colors: buttonGradient,
@@ -90,53 +68,18 @@ class StoreCard extends HookConsumerWidget {
             title: 'Historique',
           ),
       ],
-      child: isEditing.value
-          ? Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    style: const TextStyle(color: Colors.white),
-                    cursorColor: Colors.white,
-                    decoration: const InputDecoration(
-                      labelText: 'Nouveau nom',
-                      labelStyle: TextStyle(color: Colors.white),
-                      focusColor: Colors.white,
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                    ),
-                    controller: storeNameController,
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    isEditing.value = false;
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    padding: const EdgeInsets.all(5),
-                    child: const HeroIcon(
-                      HeroIcons.check,
-                      color: Color.fromARGB(255, 0, 29, 29),
-                      size: 30,
-                    ),
-                  ),
-                ),
-              ],
-            )
-          : Text(
-              store.name,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 50,
-              ),
-            ),
+      child: SizedBox.expand(
+        child: AutoSizeText(
+          store.name,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 50,
+          ),
+        ),
+      ),
     );
   }
 }
