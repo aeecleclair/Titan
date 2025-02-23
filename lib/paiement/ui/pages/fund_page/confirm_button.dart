@@ -1,14 +1,18 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/paiement/class/init_info.dart';
 import 'package:myecl/paiement/providers/fund_amount_provider.dart';
 import 'package:myecl/paiement/providers/funding_url_provider.dart';
+import 'package:myecl/paiement/ui/pages/fund_page/web_view_modal.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:universal_html/html.dart' as html;
+import 'package:webview_flutter/webview_flutter.dart';
 
 class ConfirmFundButton extends ConsumerWidget {
   const ConfirmFundButton({super.key});
@@ -22,6 +26,15 @@ class ConfirmFundButton extends ConsumerWidget {
 
     final enabled = fundAmount.isNotEmpty &&
         double.parse(fundAmount.replaceAll(',', '.')) > 0;
+
+    void showHABottomModal(String url) {
+      showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return WebViewExample(url: url);
+        },
+      );
+    }
 
     void displayToastWithContext(TypeMsg type, String message) {
       displayToast(context, type, message);
@@ -75,23 +88,29 @@ class ConfirmFundButton extends ConsumerWidget {
           displayToastWithContext(TypeMsg.error, "Veuillez entrer un montant");
           return;
         }
-        final value = await fundingUrlNotifier.getFundingUrl(
-          InitInfo(
-            amount:
-                (double.parse(fundAmount.replaceAll(',', '.')) * 100).toInt(),
-            redirectUrl: redirectUrl,
-          ),
-        );
-        value.when(
-          data: (fundingUrl) {
-            helloAssoCallback(fundingUrl.url);
-          },
-          loading: () {},
-          error: (error, _) {
-            displayToastWithContext(TypeMsg.error, error.toString());
-          },
-        );
+        if (kIsWeb) {
+          helloAssoCallback("https://myecl.fr/static.html");
+          return;
+        }
+        showHABottomModal("https://myecl.fr/static.html");
+        // final value = await fundingUrlNotifier.getFundingUrl(
+        //   InitInfo(
+        //     amount:
+        //         (double.parse(fundAmount.replaceAll(',', '.')) * 100).toInt(),
+        //     redirectUrl: redirectUrl,
+        //   ),
+        // );
+        // value.when(
+        //   data: (fundingUrl) {
+        //     // helloAssoCallback(fundingUrl.url);
+        //   },
+        //   loading: () {},
+        //   error: (error, _) {
+        //     displayToastWithContext(TypeMsg.error, error.toString());
+        //   },
+        // );
       },
+      waitingColor: const Color(0xff2e2f5e),
       builder: (Widget child) => Container(
         height: 75,
         width: double.infinity,
