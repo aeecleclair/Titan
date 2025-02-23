@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/cache/cache_manager.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/functions.dart';
@@ -269,6 +270,8 @@ abstract class Repository {
     final channel = WebSocketChannel.connect(
       Uri.parse('ws://172.20.10.2:8000/rplace/ws'),
     );
+    channel.sink
+        .add(jsonEncode({"token": headers["Authorization"]?.split(" ")[1]}));
     return channel;
   }
 }
