@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:myecl/rplace/class/pixel.dart';
 import 'dart:ui';
 
-const nb_ligne = 50;
-const nb_colonne = 50;
+const nbLigne = 50;
+const nbColonne = 50;
 
 class MyPainter extends CustomPainter {
   final List<Pixel> pixels;
