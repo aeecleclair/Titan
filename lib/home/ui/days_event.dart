@@ -124,7 +124,8 @@ class DaysEvent extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    event.description.split("\n").sublist(0, 1).join("\n"),
+                    event.description.split("\n").sublist(0, 1).join("\n") +
+                        (event.description.split("\n").length > 1 ? "..." : ""),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
