@@ -18,6 +18,13 @@ class PixelListNotifier extends ListNotifier<Pixel> {
   Future<bool> createPixel(Pixel pixel) async {
     return await add(_pixelRepository.createPixel, pixel);
   }
+
+  Future<bool> updatePixel(Pixel pixel) async {
+    return await add(
+      (pixel) async => pixel,
+      pixel,
+    );
+  }
 }
 
 final pixelListProvider =

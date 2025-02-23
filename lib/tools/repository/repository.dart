@@ -256,13 +256,4 @@ abstract class Repository {
       throw AppException(ErrorType.notFound, response.body);
     }
   }
-
-  Future<WebSocketChannel> connect() async {
-    final channel = WebSocketChannel.connect(
-      Uri.parse('ws://172.20.10.2:8000/rplace/ws'),
-    );
-    channel.sink
-        .add(jsonEncode({"token": headers["Authorization"]?.split(" ")[1]}));
-    return channel;
-  }
 }
