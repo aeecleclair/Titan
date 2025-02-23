@@ -6,6 +6,7 @@ import 'package:titan/tools/cache/cache_manager.dart';
 import 'package:titan/tools/exception.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/logs/logger.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 abstract class Repository {
   static final String host = getTitanHost();
@@ -253,5 +254,12 @@ abstract class Repository {
       );
       throw AppException(ErrorType.notFound, response.body);
     }
+  }
+
+  Future<WebSocketChannel> connect() async {
+    final channel = WebSocketChannel.connect(
+      Uri.parse('ws://127.0.0.1:8000/rplace/ws'),
+    );
+    return channel;
   }
 }
