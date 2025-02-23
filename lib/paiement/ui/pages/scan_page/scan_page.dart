@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
@@ -186,7 +188,13 @@ class ScanPage extends HookConsumerWidget {
                           ),
                         );
                       }
-                      return const Text("Erreur lors du scan");
+                      return Text(
+                        jsonDecode(error.toString())['detail'],
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
                     },
                     builder: (context, transaction) => Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -243,6 +251,11 @@ class ScanPage extends HookConsumerWidget {
                                                   TypeMsg.msg,
                                                   "Transaction annulée",
                                                 );
+                                                ref
+                                                    .read(
+                                                        ongoingTransactionProvider
+                                                            .notifier)
+                                                    .clearOngoingTransaction();
                                               } else {
                                                 displayToastWithContext(
                                                   TypeMsg.error,
