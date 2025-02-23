@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/paiement/class/history.dart';
+import 'package:myecl/paiement/class/refund.dart';
 import 'package:myecl/paiement/providers/refund_amount_provider.dart';
+import 'package:myecl/paiement/providers/transaction_provider.dart';
 import 'package:myecl/paiement/ui/components/digit_fade_in_animation.dart';
 import 'package:myecl/paiement/ui/components/keyboard.dart';
+import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 
 class ReFundPage extends ConsumerWidget {
   final History history;
@@ -14,11 +19,16 @@ class ReFundPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final refundAmount = ref.watch(refundAmountProvider);
     final refundAmountNotifier = ref.watch(refundAmountProvider.notifier);
+    final transactionNotifier = ref.watch(transactionProvider.notifier);
     final formatter = NumberFormat("#,##0.00", "fr_FR");
 
     final isValid = double.tryParse(refundAmount.replaceAll(",", ".")) !=
             null &&
         double.parse(refundAmount.replaceAll(",", ".")) <= history.total / 100;
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
 
     return ClipRRect(
       borderRadius: const BorderRadius.only(
@@ -113,7 +123,60 @@ class ReFundPage extends ConsumerWidget {
                 );
               },
             ),
-            const Expanded(child: Center(child: SizedBox())),
+            Expanded(
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: WaitingButton(
+                    onTap: () async {
+                      final value = await transactionNotifier.refundTransaction(
+                        history.id,
+                        Refund(
+                          completeRefund: false,
+                          amount: (double.parse(
+                                    refundAmount.replaceAll(",", "."),
+                                  ) *
+                                  100) ~/
+                              1,
+                        ),
+                      );
+                      value.when(
+                        data: (value) {
+                          displayToastWithContext(
+                            TypeMsg.msg,
+                            "Transaction effectuée",
+                          );
+                          Navigator.of(context).pop();
+                        },
+                        loading: () {},
+                        error: (error, _) {
+                          displayToastWithContext(
+                            TypeMsg.error,
+                            error.toString(),
+                          );
+                        },
+                      );
+                    },
+                    waitingColor: Colors.black,
+                    builder: (child) => AddEditButtonLayout(
+                      colors: [
+                        Colors.grey.shade100,
+                        Colors.grey.shade200,
+                      ],
+                      child: child,
+                    ),
+                    child: Text(
+                      "Rembourser",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
