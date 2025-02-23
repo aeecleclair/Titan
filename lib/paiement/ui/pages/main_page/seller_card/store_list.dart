@@ -15,68 +15,76 @@ class StoreList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final stores = ref.watch(myStoresProvider);
     final isAdmin = ref.watch(isPaymentAdminProvider);
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          alignment: Alignment.centerLeft,
-          child: const Text(
-            "Associations",
-            style: TextStyle(
-              color: Color.fromARGB(255, 0, 29, 29),
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+    return SizedBox(
+      height: MediaQuery.of(context).size.height - 332,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 25,
             ),
-          ),
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        AsyncChild(
-          value: stores,
-          builder: (context, stores) {
-            final Map<String, List<UserStore>> sortedByMembership = {};
-            for (var store in stores) {
-              final membership = store.structure.name;
-              if (sortedByMembership[membership] == null) {
-                sortedByMembership[membership] = [];
-              }
-              sortedByMembership[membership]!.add(store);
-            }
-            return Column(
-              children: [
-                if (isAdmin) ...[
-                  const StoreDivider(
-                    name: "Administrateur",
-                  ),
-                  const StoreAdminCard(),
-                ],
-                ...sortedByMembership.map((membership, stores) {
-                  final List<UserStore> alphabeticallyOrderedStores = stores
-                    ..sort((a, b) => a.name.compareTo(b.name));
-                  return MapEntry(
-                    membership,
-                    Column(
-                      children: [
-                        StoreDivider(
-                          name: membership,
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              alignment: Alignment.centerLeft,
+              child: const Text(
+                "Associations",
+                style: TextStyle(
+                  color: Color.fromARGB(255, 0, 29, 29),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            AsyncChild(
+              value: stores,
+              builder: (context, stores) {
+                final Map<String, List<UserStore>> sortedByMembership = {};
+                for (var store in stores) {
+                  final membership = store.structure.name;
+                  if (sortedByMembership[membership] == null) {
+                    sortedByMembership[membership] = [];
+                  }
+                  sortedByMembership[membership]!.add(store);
+                }
+                return Column(
+                  children: [
+                    if (isAdmin) ...[
+                      const StoreDivider(
+                        name: "Administrateur",
+                      ),
+                      const StoreAdminCard(),
+                    ],
+                    ...sortedByMembership.map((membership, stores) {
+                      final List<UserStore> alphabeticallyOrderedStores = stores
+                        ..sort((a, b) => a.name.compareTo(b.name));
+                      return MapEntry(
+                        membership,
+                        Column(
+                          children: [
+                            StoreDivider(
+                              name: membership,
+                            ),
+                            for (var store in alphabeticallyOrderedStores)
+                              StoreSellerCard(
+                                store: store,
+                              ),
+                          ],
                         ),
-                        for (var store in alphabeticallyOrderedStores)
-                          StoreSellerCard(
-                            store: store,
-                          ),
-                      ],
-                    ),
-                  );
-                }).values,
-              ],
-            );
-          },
+                      );
+                    }).values,
+                  ],
+                );
+              },
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+          ],
         ),
-        const SizedBox(
-          height: 15,
-        ),
-      ],
+      ),
     );
   }
 }

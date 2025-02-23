@@ -130,9 +130,6 @@ class PaymentMainPage extends HookConsumerWidget {
                     );
                   },
                 ),
-                const SizedBox(
-                  height: 25,
-                ),
                 AnimatedBuilder(
                   animation: controller,
                   builder: (context, child) {

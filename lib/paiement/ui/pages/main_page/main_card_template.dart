@@ -20,7 +20,7 @@ class MainCardTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(30, 10, 30, 12),
+      margin: const EdgeInsets.fromLTRB(30, 10, 30, 0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
         gradient: LinearGradient(
