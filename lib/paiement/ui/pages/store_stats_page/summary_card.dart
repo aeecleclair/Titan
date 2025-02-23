@@ -11,29 +11,28 @@ class SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int total = 0;
-    int numberConfirmedTransactions = 0;
-    int numberRefundedTransactions = 0;
+    int numberTransactions = 0;
 
     for (final transaction in history) {
       switch (transaction.status) {
         case TransactionStatus.confirmed:
           total += transaction.total;
-          numberConfirmedTransactions++;
+          numberTransactions++;
           break;
         case TransactionStatus.refunded:
           total -= transaction.total;
-          numberRefundedTransactions++;
+          numberTransactions++;
           break;
         default:
           break;
       }
     }
 
-    if (numberConfirmedTransactions + numberRefundedTransactions == 0) {
+    if (numberTransactions == 0) {
       return const SizedBox();
     }
 
-    final mean = total / numberConfirmedTransactions;
+    final mean = total / numberTransactions;
 
     final formatter = NumberFormat("#,##0.00", "fr_FR");
     return Container(
@@ -89,7 +88,7 @@ class SummaryCard extends StatelessWidget {
             width: 10,
           ),
           Text(
-            "+ ${formatter.format(total / 100)} €",
+            "${formatter.format(total / 100)} €",
             style: TextStyle(
               color: const Color(0xff204550),
               fontSize: 18,

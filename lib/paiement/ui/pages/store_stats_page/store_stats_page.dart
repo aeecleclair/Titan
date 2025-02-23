@@ -34,7 +34,7 @@ class StoreStatsPage extends ConsumerWidget {
               ),
               const MonthBar(),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               StoreTransactionsDetail(
                 history: sortedByDate,
