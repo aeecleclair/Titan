@@ -45,12 +45,15 @@ class TransactionCard extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      AutoSizeText(
-                        transaction.otherWalletName,
-                        maxLines: 2,
-                        style: const TextStyle(
-                          color: Color(0xff204550),
-                          fontSize: 14,
+                      Expanded(
+                        child: AutoSizeText(
+                          transaction.otherWalletName,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            color: Color(0xff204550),
+                            fontSize: 14,
+                          ),
                         ),
                       ),
                       const SizedBox(
