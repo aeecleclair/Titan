@@ -31,11 +31,7 @@ class rPlacePage extends HookConsumerWidget {
         if (decodedJson["command"] != "NEW_PIXEL") {
           return;
         }
-        final pixel = Pixel(
-          x: decodedJson["data"]["x"],
-          y: decodedJson["data"]["y"],
-          color: 'FFffc107',
-        );
+        final pixel = Pixel.fromJson(decodedJson["data"]);
         ref.read(pixelListProvider.notifier).updatePixel(pixel);
       });
     });
