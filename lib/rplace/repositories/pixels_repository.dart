@@ -6,7 +6,6 @@ class PixelRepository extends Repository {
   final ext = "rplace/";
 
   Future<List<Pixel>> getPixels() async {
-    await connect();
     return List<Pixel>.from(
       (await getList(suffix: "pixels")).map((e) => Pixel.fromJson(e)),
     );

@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/rplace/class/pixel.dart';
 import 'package:myecl/rplace/ui/color_picker.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 import 'my_painter.dart';
 import 'package:myecl/rplace/providers/pixels_providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
