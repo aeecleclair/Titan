@@ -258,7 +258,7 @@ abstract class Repository {
 
   Future<WebSocketChannel> connect() async {
     final channel = WebSocketChannel.connect(
-      Uri.parse('ws://127.0.0.1:8000/rplace/ws'),
+      Uri.parse('ws://172.20.10.2:8000/rplace/ws'),
     );
     return channel;
   }
