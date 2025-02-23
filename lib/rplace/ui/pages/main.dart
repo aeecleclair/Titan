@@ -1,14 +1,44 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/rplace/class/pixel.dart';
+import 'package:myecl/rplace/providers/pixels_providers.dart';
 import 'package:myecl/rplace/ui/canvas_viewer.dart';
 import 'package:myecl/tools/ui/widgets/top_bar.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/rplace/router.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class rPlacePage extends HookConsumerWidget {
   const rPlacePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final token = ref.watch(tokenProvider);
+
+    Future<WebSocketChannel> connect() async {
+      final channel = WebSocketChannel.connect(
+        Uri.parse('ws://172.20.10.2:8000/rplace/ws'),
+      );
+      channel.sink.add(jsonEncode({"token": token}));
+      return channel;
+    }
+
+    connect().then((WebSocketChannel channel) {
+      channel.stream.listen((event) {
+        final decodedJson = jsonDecode(event);
+        if (decodedJson["command"] != "NEW_PIXEL") {
+          return;
+        }
+        final pixel = Pixel(
+          x: decodedJson["data"]["x"],
+          y: decodedJson["data"]["y"],
+          color: 'FFffc107',
+        );
+        ref.read(pixelListProvider.notifier).updatePixel(pixel);
+      });
+    });
     return const SafeArea(
       child: Column(
         children: [
