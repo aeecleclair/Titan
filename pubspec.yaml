@@ -75,6 +75,8 @@ dependencies:
   uuid: ^4.5.1
   vector_math: ^2.1.2
   zxcvbn: ^1.0.0
+  webview_flutter: ^4.10.0
+  webview_flutter_web: ^0.2.3+4
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.3
