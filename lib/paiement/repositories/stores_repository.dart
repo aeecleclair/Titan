@@ -28,7 +28,7 @@ class StoresRepository extends Repository {
   Future<Transaction> scan(String id, QrCodeData data, bool? bypass) async {
     return Transaction.fromJson(
       await create(
-        {"scan_info": data.toJson(), "bypass_mmebership": bypass ?? false},
+        {...data.toJson(), "bypass_mmebership": bypass ?? false},
         suffix: "/$id/scan",
       ),
     );
