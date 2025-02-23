@@ -90,7 +90,7 @@ Future<String> getQRCodeContent(
   final now = DateTime.now();
   final total = (double.parse(payAmount.replaceAll(',', '.')) * 100) ~/ 1;
   final data = QrCodeSignatureData(
-    id: id,
+    qrCodeId: id,
     tot: total,
     iat: now,
     key: keyId!,
