@@ -13,13 +13,16 @@ class MyPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     for (final pixel in pixels) {
-      canvas.drawPoints(
-        PointMode.points,
-        [Offset(pixel.x, pixel.y)],
+      canvas.drawRect(
+        Rect.fromCenter(
+          center: Offset(pixel.x, pixel.y),
+          width: 10,
+          height: 10,
+        ),
         Paint()
           ..color = Color(int.parse(pixel.color, radix: 16))
           ..strokeWidth = 10
-          ..style = PaintingStyle.stroke,
+          ..style = PaintingStyle.fill,
       );
     }
   }

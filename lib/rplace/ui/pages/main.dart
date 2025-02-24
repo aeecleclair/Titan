@@ -19,7 +19,7 @@ class rPlacePage extends HookConsumerWidget {
 
     Future<WebSocketChannel> connect() async {
       final channel = WebSocketChannel.connect(
-        Uri.parse('ws://172.20.10.2:8000/rplace/ws'),
+        Uri.parse('wss://hyperion-2.dev.eclair.ec-lyon.fr/rplace/ws'),
       );
       channel.sink.add(jsonEncode({"token": token}));
       return channel;
