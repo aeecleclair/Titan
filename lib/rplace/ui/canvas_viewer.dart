@@ -20,6 +20,7 @@ class CanvasViewer extends HookConsumerWidget {
     final pixels = ref.watch(pixelListProvider);
 
     return InteractiveViewer(
+      constrained: false,
       minScale: 0.2,
       maxScale: 15,
       child: Center(
@@ -37,16 +38,27 @@ class CanvasViewer extends HookConsumerWidget {
 
             future.then((void value) => ());
           },
-          child: AsyncChild(
-            value: pixels,
-            builder: (context, pixels) {
-              return CustomPaint(
-                size: Size(10 * nbLigne.toDouble(), 10 * nbColonne.toDouble()),
-                painter: MyPainter(
-                  pixels: pixels,
-                ),
-              );
-            },
+          child: Stack(
+            children: [
+              SizedBox(
+                width: 10 * nbColonne.toDouble(),
+                height: 10 * nbLigne.toDouble(),
+                child: DecoratedBox(
+                    decoration: BoxDecoration(color: Color(0xFFC4C4C4))),
+              ),
+              AsyncChild(
+                value: pixels,
+                builder: (context, pixels) {
+                  return CustomPaint(
+                    size: Size(
+                        10 * nbLigne.toDouble(), 10 * nbColonne.toDouble()),
+                    painter: MyPainter(
+                      pixels: pixels,
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
         ),
       ),
