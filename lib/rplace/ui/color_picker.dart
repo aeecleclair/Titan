@@ -71,9 +71,7 @@ class ColorPicker extends StatelessWidget {
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             mainAxisSize: MainAxisSize.max,
-            //children: List.generate(nb_couleurs, (i) => colBouton(px: px, col: i, func: change_color))
             children: listeCouleurs
                 .map(
                   (colo) => ColBouton(

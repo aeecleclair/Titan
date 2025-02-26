@@ -1,7 +1,3 @@
-import 'dart:ui';
-import 'package:myecl/tools/functions.dart';
-//import 'package:myecl/user/class/list_users.dart';
-
 class Pixel {
   late final double x;
   late final double y;
