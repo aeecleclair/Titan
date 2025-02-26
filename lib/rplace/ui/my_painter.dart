@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:myecl/rplace/class/pixel.dart';
 import 'dart:ui';
 
-const nbLigne = 50;
-const nbColonne = 50;
-
 class MyPainter extends CustomPainter {
   final List<Pixel> pixels;
+  final double pixelSize;
 
-  MyPainter({required this.pixels});
+  MyPainter({required this.pixels, required this.pixelSize});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -16,12 +14,11 @@ class MyPainter extends CustomPainter {
       canvas.drawRect(
         Rect.fromCenter(
           center: Offset(pixel.x, pixel.y),
-          width: 10,
-          height: 10,
+          width: pixelSize,
+          height: pixelSize,
         ),
         Paint()
           ..color = Color(int.parse(pixel.color, radix: 16))
-          ..strokeWidth = 10
           ..style = PaintingStyle.fill,
       );
     }
