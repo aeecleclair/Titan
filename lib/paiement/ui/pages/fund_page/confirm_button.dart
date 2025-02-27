@@ -88,27 +88,27 @@ class ConfirmFundButton extends ConsumerWidget {
           displayToastWithContext(TypeMsg.error, "Veuillez entrer un montant");
           return;
         }
-        if (kIsWeb) {
-          helloAssoCallback("https://myecl.fr/static.html");
-          return;
-        }
-        showHABottomModal("https://myecl.fr/static.html");
-        // final value = await fundingUrlNotifier.getFundingUrl(
-        //   InitInfo(
-        //     amount:
-        //         (double.parse(fundAmount.replaceAll(',', '.')) * 100).toInt(),
-        //     redirectUrl: redirectUrl,
-        //   ),
-        // );
-        // value.when(
-        //   data: (fundingUrl) {
-        //     // helloAssoCallback(fundingUrl.url);
-        //   },
-        //   loading: () {},
-        //   error: (error, _) {
-        //     displayToastWithContext(TypeMsg.error, error.toString());
-        //   },
-        // );
+
+        final value = await fundingUrlNotifier.getFundingUrl(
+          InitInfo(
+            amount:
+                (double.parse(fundAmount.replaceAll(',', '.')) * 100).toInt(),
+            redirectUrl: redirectUrl,
+          ),
+        );
+        value.when(
+          data: (fundingUrl) {
+            if (kIsWeb) {
+              helloAssoCallback(fundingUrl.url);
+              return;
+            }
+            showHABottomModal(fundingUrl.url);
+          },
+          loading: () {},
+          error: (error, _) {
+            displayToastWithContext(TypeMsg.error, error.toString());
+          },
+        );
       },
       waitingColor: const Color(0xff2e2f5e),
       builder: (Widget child) => Container(
