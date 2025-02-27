@@ -24,7 +24,9 @@ class WebViewExample extends ConsumerWidget {
               final code = receivedUri.queryParameters["code"];
               if (code == "succeeded") {
                 displayToastWithContext(
-                    TypeMsg.msg, "Paiement effectué avec succès");
+                  TypeMsg.msg,
+                  "Paiement effectué avec succès",
+                );
                 ref.watch(myWalletProvider.notifier).getMyWallet();
               } else {
                 displayToastWithContext(TypeMsg.error, "Paiement annulé");

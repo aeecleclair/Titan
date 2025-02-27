@@ -18,9 +18,13 @@ class FundPage extends ConsumerWidget {
     final myWallet = ref.watch(myWalletProvider);
     final tos = ref.watch(tosProvider);
     final maxBalanceAmount = tos.maybeWhen(
-        orElse: () => 0, data: (tos) => tos.maxWalletBalance / 100);
+      orElse: () => 0,
+      data: (tos) => tos.maxWalletBalance / 100,
+    );
     final currentAmount = myWallet.maybeWhen(
-        orElse: () => 0, data: (wallet) => wallet.balance / 100);
+      orElse: () => 0,
+      data: (wallet) => wallet.balance / 100,
+    );
     final formatter = NumberFormat("#,##0.00", "fr_FR");
 
     final amountToAdd = double.tryParse(fundAmount.replaceAll(",", ".")) ?? 0;

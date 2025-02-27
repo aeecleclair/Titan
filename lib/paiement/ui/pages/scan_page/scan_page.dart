@@ -253,8 +253,9 @@ class ScanPage extends HookConsumerWidget {
                                                 );
                                                 ref
                                                     .read(
-                                                        ongoingTransactionProvider
-                                                            .notifier)
+                                                      ongoingTransactionProvider
+                                                          .notifier,
+                                                    )
                                                     .clearOngoingTransaction();
                                               } else {
                                                 displayToastWithContext(

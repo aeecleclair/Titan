@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +12,6 @@ import 'package:myecl/paiement/ui/pages/fund_page/web_view_modal.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:universal_html/html.dart' as html;
-import 'package:webview_flutter/webview_flutter.dart';
 
 class ConfirmFundButton extends ConsumerWidget {
   const ConfirmFundButton({super.key});
