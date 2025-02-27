@@ -1,56 +1,44 @@
-// Copyright 2013 The Flutter Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
-// ignore_for_file: public_member_api_docs
-
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/paiement/providers/my_wallet_provider.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class WebViewExample extends StatefulWidget {
+class WebViewExample extends ConsumerWidget {
   final String url;
   const WebViewExample({super.key, required this.url});
 
   @override
-  State<WebViewExample> createState() => _WebViewExampleState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    void displayToastWithContext(TypeMsg type, String message) {
+      displayToast(context, type, message);
+    }
 
-class _WebViewExampleState extends State<WebViewExample> {
-  late final WebViewController controller;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // #docregion webview_controller
-    controller = WebViewController()
+    final WebViewController controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
-          onProgress: (int progress) {
-            // Update loading bar.
-          },
-          onPageStarted: (String url) {},
-          onPageFinished: (String url) {},
-          onHttpError: (HttpResponseError error) {},
-          onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
-            print(request.url);
+            if (request.url.toString().contains('code=')) {
+              final receivedUri = Uri.parse(request.url);
+              final code = receivedUri.queryParameters["code"];
+              if (code == "succeeded") {
+                displayToastWithContext(
+                    TypeMsg.msg, "Paiement effectué avec succès");
+                ref.watch(myWalletProvider.notifier).getMyWallet();
+              } else {
+                displayToastWithContext(TypeMsg.error, "Paiement annulé");
+              }
+              Navigator.pop(context);
+            }
             return NavigationDecision.navigate;
           },
         ),
       )
-      ..loadRequest(Uri.parse(widget.url));
-    // #enddocregion webview_controller
-  }
-
-  // #docregion webview_widget
-  @override
-  Widget build(BuildContext context) {
+      ..loadRequest(Uri.parse(url));
     return Scaffold(
-      appBar: AppBar(title: const Text('Flutter Simple Example')),
+      appBar: AppBar(),
       body: WebViewWidget(controller: controller),
     );
   }
-  // #enddocregion webview_widget
 }

@@ -8,6 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/paiement/class/init_info.dart';
 import 'package:myecl/paiement/providers/fund_amount_provider.dart';
 import 'package:myecl/paiement/providers/funding_url_provider.dart';
+import 'package:myecl/paiement/providers/my_wallet_provider.dart';
 import 'package:myecl/paiement/ui/pages/fund_page/web_view_modal.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
@@ -41,19 +42,11 @@ class ConfirmFundButton extends ConsumerWidget {
     }
 
     void helloAssoCallback(String fundingUrl) async {
-      html.WindowBase? popupWin = html.window.open(
+      html.WindowBase popupWin = html.window.open(
         fundingUrl,
         "HelloAsso",
         "width=800, height=900, scrollbars=yes",
-      ) as html.WindowBase?;
-
-      if (popupWin == null) {
-        displayToastWithContext(
-          TypeMsg.error,
-          "Veuillez autoriser les popups pour continuer",
-        );
-        return;
-      }
+      );
 
       final completer = Completer();
       void checkWindowClosed() {
@@ -71,8 +64,15 @@ class ConfirmFundButton extends ConsumerWidget {
       completer.future.then((_) {});
 
       void login(String data) async {
-        final code = data.split('code=')[1];
-        print(code);
+        final receivedUri = Uri.parse(data);
+        final code = receivedUri.queryParameters["code"];
+        popupWin.close();
+        if (code == "succeeded") {
+          displayToastWithContext(TypeMsg.msg, "Paiement effectué avec succès");
+          ref.watch(myWalletProvider.notifier).getMyWallet();
+        } else {
+          displayToastWithContext(TypeMsg.error, "Paiement annulé");
+        }
       }
 
       html.window.onMessage.listen((event) {
