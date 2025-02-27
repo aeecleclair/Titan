@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:myecl/rplace/providers/pixelfocus_providers.dart';
 import 'package:myecl/rplace/providers/grid_providers.dart';
 import 'package:myecl/rplace/ui/color_picker.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'my_painter.dart';
 import 'package:myecl/rplace/providers/pixels_providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/rplace/class/focus.dart';
 
 class CanvasViewer extends HookConsumerWidget {
   const CanvasViewer({
@@ -15,6 +17,8 @@ class CanvasViewer extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pixels = ref.watch(pixelListProvider);
     final gridInfo = ref.watch(gridProvider);
+    final focus = ref.watch(focusProvider);
+    final focusNotifier = ref.watch(focusProvider.notifier);
 
     return AsyncChild(
       value: gridInfo,
@@ -33,6 +37,15 @@ class CanvasViewer extends HookConsumerWidget {
             child: Center(
               child: GestureDetector(
                 onTapDown: (event) {
+                  focusNotifier.setPixelFocus(
+                    PixelFocus(
+                      x: ((event.localPosition.dx) ~/ pixelSize) * pixelSize,
+                      y: ((event.localPosition.dy) ~/ pixelSize) * pixelSize,
+                      user: "",
+                      date: DateTime.now(),
+                      isFocus: true,
+                    ),
+                  );
                   Future<void> future = showModalBottomSheet(
                     context: context,
                     builder: (BuildContext context) {
@@ -47,7 +60,9 @@ class CanvasViewer extends HookConsumerWidget {
                     },
                   );
 
-                  future.then((void value) => ());
+                  future.then(
+                    (void value) => (focusNotifier.unfocus()),
+                  );
                 },
                 child: Stack(
                   children: [
@@ -72,6 +87,22 @@ class CanvasViewer extends HookConsumerWidget {
                         );
                       },
                     ),
+                    Positioned(
+                      left: focus.x,
+                      top: focus.y,
+                      child: Visibility(
+                        visible: focus.isFocus,
+                        child: SizedBox(
+                          height: pixelSize,
+                          width: pixelSize,
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.amber),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
