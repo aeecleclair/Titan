@@ -16,7 +16,7 @@ class PayPage extends ConsumerWidget {
     final payAmountNotifier = ref.watch(payAmountProvider.notifier);
     final myWallet = ref.watch(myWalletProvider);
     final currentAmount =
-        myWallet.maybeWhen(orElse: () => 0, data: (wallet) => wallet.balance);
+        myWallet.maybeWhen(orElse: () => 0, data: (wallet) => wallet.balance / 100);
     final formatter = NumberFormat("#,##0.00", "fr_FR");
 
     final amountToSub = double.tryParse(payAmount.replaceAll(",", ".")) ?? 0;
