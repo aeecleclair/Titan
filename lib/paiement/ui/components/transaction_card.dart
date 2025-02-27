@@ -17,6 +17,20 @@ class TransactionCard extends StatelessWidget {
         : transaction.type == HistoryType.received
             ? HeroIcons.arrowDownRight
             : HeroIcons.creditCard;
+
+    Color getTransactionStatusColor(TransactionStatus status) {
+      switch (status) {
+        case TransactionStatus.confirmed:
+          return const Color.fromARGB(255, 21, 215, 105);
+        case TransactionStatus.refunded:
+          return const Color.fromARGB(255, 97, 25, 204);
+        case TransactionStatus.pending:
+          return const Color.fromARGB(255, 204, 138, 25);
+        default:
+          return const Color.fromARGB(255, 204, 70, 25);
+      }
+    }
+
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
@@ -65,15 +79,8 @@ class TransactionCard extends StatelessWidget {
                           vertical: 2,
                         ),
                         decoration: BoxDecoration(
-                          color: transaction.status ==
-                                  TransactionStatus.confirmed
-                              ? const Color.fromARGB(255, 21, 215, 105)
-                                  .withValues(alpha: 0.2)
-                              : transaction.status == TransactionStatus.refunded
-                                  ? const Color.fromARGB(255, 97, 25, 204)
-                                      .withValues(alpha: 0.2)
-                                  : const Color.fromARGB(255, 204, 70, 25)
-                                      .withValues(alpha: 0.2),
+                          color: getTransactionStatusColor(transaction.status)
+                              .withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Text(
@@ -81,15 +88,13 @@ class TransactionCard extends StatelessWidget {
                               ? "Confirmé"
                               : transaction.status == TransactionStatus.refunded
                                   ? "Remboursé"
-                                  : "Annulé",
+                                  : transaction.status ==
+                                          TransactionStatus.pending
+                                      ? "En attente"
+                                      : "Annulé",
                           style: TextStyle(
-                            color: transaction.status ==
-                                    TransactionStatus.confirmed
-                                ? const Color.fromARGB(255, 21, 215, 105)
-                                : transaction.status ==
-                                        TransactionStatus.refunded
-                                    ? const Color.fromARGB(255, 97, 25, 204)
-                                    : const Color.fromARGB(255, 204, 70, 25),
+                            color:
+                                getTransactionStatusColor(transaction.status),
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                           ),
