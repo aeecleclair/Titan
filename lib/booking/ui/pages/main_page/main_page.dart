@@ -211,6 +211,7 @@ class BookingMainPage extends HookConsumerWidget {
                           decision: booking.decision,
                           applicantId: booking.applicantId,
                           applicant: Applicant.fromJson({}),
+                          creation: booking.creation,
                         );
                         return BookingCard(
                           booking: e,

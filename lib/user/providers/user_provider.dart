@@ -13,6 +13,7 @@ class UserNotifier extends SingleNotifier2<CoreUser> {
   UserNotifier({required this.userRepository}) : super(const AsyncLoading());
 
   Future<AsyncValue<CoreUser>> loadUser(String userId) async {
+    print(userRepository.usersUserIdGet(userId: userId));
     return await load(
         () async => userRepository.usersUserIdGet(userId: userId));
   }

@@ -13,7 +13,7 @@ class BookingListProvider extends ListNotifier2<BookingReturn> {
   Future<AsyncValue<List<BookingReturn>>> loadUserBookings(
       String userId) async {
     return await loadList(() async => bookingRepository
-        .bookingBookingsUsersApplicantIdGet(applicantId: userId));
+        .bookingBookingsUsersMeGet());
   }
 
   Future<bool> addBooking(BookingReturn booking) async {
@@ -28,6 +28,7 @@ class BookingListProvider extends ListNotifier2<BookingReturn> {
               key: booking.key,
               recurrenceRule: booking.recurrenceRule,
               entity: booking.entity,
+              creation: booking.creation,
             )),
         booking);
   }

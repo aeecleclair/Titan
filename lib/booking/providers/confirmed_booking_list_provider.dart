@@ -10,7 +10,8 @@ class ConfirmedBookingListProvider extends ListNotifier2<BookingReturn> {
       : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<BookingReturn>>> loadConfirmedBooking() async {
-    return await loadList(bookingRepository.bookingBookingsConfirmedGet);
+    // return await loadList(bookingRepository.bookingBookingsConfirmedGet);
+    return state;
   }
 }
 

@@ -101,29 +101,29 @@ class ListBooking extends HookConsumerWidget {
                                         BookingTextConstants.confirmBooking,
                                     onYes: () async {
                                       await tokenExpireWrapper(ref, () async {
-                                        BookingReturn newBooking = BookingReturn(
-                                            reason: e.reason,
-                                            start: e.start,
-                                            end: e.end,
-                                            roomId: e.roomId,
-                                            key: e.key,
-                                            id: e.id,
-                                            applicantId: e.applicantId,
-                                            room: e.room,
-                                            decision:
-                                                AppUtilsTypesBookingTypeDecision
-                                                    .approved);
-                                        bookingListNotifier
-                                            .toggleConfirmed(
-                                                newBooking,
-                                                AppUtilsTypesBookingTypeDecision
-                                                    .approved)
-                                            .then((value) {
-                                          if (value) {
-                                            confirmedBookingListNotifier
-                                                .loadConfirmedBooking();
-                                          }
-                                        });
+                                        // BookingReturn newBooking = BookingReturn(
+                                        //     reason: e.reason,
+                                        //     start: e.start,
+                                        //     end: e.end,
+                                        //     roomId: e.roomId,
+                                        //     key: e.key,
+                                        //     id: e.id,
+                                        //     applicantId: e.applicantId,
+                                        //     room: e.room,
+                                        //     decision:
+                                        //         AppUtilsTypesBookingTypeDecision
+                                        //             .approved);
+                                        // bookingListNotifier
+                                        //     .toggleConfirmed(
+                                        //         newBooking,
+                                        //         AppUtilsTypesBookingTypeDecision
+                                        //             .approved)
+                                        //     .then((value) {
+                                        //   if (value) {
+                                        //     confirmedBookingListNotifier
+                                        //         .loadConfirmedBooking();
+                                        //   }
+                                        // });
                                       });
                                     });
                               });
@@ -138,29 +138,29 @@ class ListBooking extends HookConsumerWidget {
                                         BookingTextConstants.declineBooking,
                                     onYes: () async {
                                       await tokenExpireWrapper(ref, () async {
-                                        BookingReturn newBooking = BookingReturn(
-                                            reason: e.reason,
-                                            start: e.start,
-                                            end: e.end,
-                                            roomId: e.roomId,
-                                            key: e.key,
-                                            id: e.id,
-                                            applicantId: e.applicantId,
-                                            room: e.room,
-                                            decision:
-                                                AppUtilsTypesBookingTypeDecision
-                                                    .approved);
-                                        bookingListNotifier
-                                            .toggleConfirmed(
-                                                newBooking,
-                                                AppUtilsTypesBookingTypeDecision
-                                                    .declined)
-                                            .then((value) {
-                                          if (value) {
-                                            confirmedBookingListNotifier
-                                                .loadConfirmedBooking();
-                                          }
-                                        });
+                                        // BookingReturn newBooking = BookingReturn(
+                                        //     reason: e.reason,
+                                        //     start: e.start,
+                                        //     end: e.end,
+                                        //     roomId: e.roomId,
+                                        //     key: e.key,
+                                        //     id: e.id,
+                                        //     applicantId: e.applicantId,
+                                        //     room: e.room,
+                                        //     decision:
+                                        //         AppUtilsTypesBookingTypeDecision
+                                        //             .approved);
+                                        // bookingListNotifier
+                                        //     .toggleConfirmed(
+                                        //         newBooking,
+                                        //         AppUtilsTypesBookingTypeDecision
+                                        //             .declined)
+                                        //     .then((value) {
+                                        //   if (value) {
+                                        //     confirmedBookingListNotifier
+                                        //         .loadConfirmedBooking();
+                                        //   }
+                                        // });
                                       });
                                     });
                               });

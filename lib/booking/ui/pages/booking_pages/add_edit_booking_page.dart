@@ -23,7 +23,6 @@ import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:myecl/user/providers/user_provider.dart';
-import 'package:qlevar_router/qlevar_router.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class AddEditBookingPage extends HookConsumerWidget {
@@ -316,54 +315,54 @@ class AddEditBookingPage extends HookConsumerWidget {
                                     DateTime.parse(
                                         processDateBackWithHour(endString)));
                               }
-                              BookingReturn newBooking = BookingReturn(
-                                  id: isEdit ? booking.id : "",
-                                  reason: motif.text,
-                                  start: DateTime.parse(
-                                      processDateBackWithHour(startString)),
-                                  end: DateTime.parse(
-                                      processDateBackWithHour(endString)),
-                                  note: note.text,
-                                  room: room.value,
-                                  roomId: room.value.id,
-                                  key: keyRequired.value,
-                                  decision: booking.decision,
-                                  recurrenceRule: recurrenceRule,
-                                  entity: entity.text,
-                                  applicantId: user.id);
-                              final value = isEdit
-                                  ? await bookingsNotifier
-                                      .updateBooking(newBooking)
-                                  : await bookingsNotifier
-                                      .addBooking(newBooking);
-                              if (value) {
-                                QR.back();
-                                if (isEdit) {
-                                  if (booking.decision ==
-                                      AppUtilsTypesBookingTypeDecision
-                                          .approved) {
-                                    await confirmedBookingListNotifier
-                                        .loadConfirmedBooking();
-                                  }
-                                  if (isAdmin) {
-                                    await adminBookingsListNotifier
-                                        .loadBookings();
-                                  }
-                                  displayToastWithContext(TypeMsg.msg,
-                                      BookingTextConstants.editedBooking);
-                                } else {
-                                  displayToastWithContext(TypeMsg.msg,
-                                      BookingTextConstants.addedBooking);
-                                }
-                              } else {
-                                if (isEdit) {
-                                  displayToastWithContext(TypeMsg.error,
-                                      BookingTextConstants.editionError);
-                                } else {
-                                  displayToastWithContext(TypeMsg.error,
-                                      BookingTextConstants.addingError);
-                                }
-                              }
+                              // BookingReturn newBooking = BookingReturn(
+                              //     id: isEdit ? booking.id : "",
+                              //     reason: motif.text,
+                              //     start: DateTime.parse(
+                              //         processDateBackWithHour(startString)),
+                              //     end: DateTime.parse(
+                              //         processDateBackWithHour(endString)),
+                              //     note: note.text,
+                              //     room: room.value,
+                              //     roomId: room.value.id,
+                              //     key: keyRequired.value,
+                              //     decision: booking.decision,
+                              //     recurrenceRule: recurrenceRule,
+                              //     entity: entity.text,
+                              //     applicantId: user.id);
+                              // final value = isEdit
+                              //     ? await bookingsNotifier
+                              //         .updateBooking(newBooking)
+                              //     : await bookingsNotifier
+                              //         .addBooking(newBooking);
+                              // if (value) {
+                              //   QR.back();
+                              //   if (isEdit) {
+                              //     if (booking.decision ==
+                              //         AppUtilsTypesBookingTypeDecision
+                              //             .approved) {
+                              //       await confirmedBookingListNotifier
+                              //           .loadConfirmedBooking();
+                              //     }
+                              //     if (isAdmin) {
+                              //       await adminBookingsListNotifier
+                              //           .loadBookings();
+                              //     }
+                              //     displayToastWithContext(TypeMsg.msg,
+                              //         BookingTextConstants.editedBooking);
+                              //   } else {
+                              //     displayToastWithContext(TypeMsg.msg,
+                              //         BookingTextConstants.addedBooking);
+                              //   }
+                              // } else {
+                              //   if (isEdit) {
+                              //     displayToastWithContext(TypeMsg.error,
+                              //         BookingTextConstants.editionError);
+                              //   } else {
+                              //     displayToastWithContext(TypeMsg.error,
+                              //         BookingTextConstants.addingError);
+                              //   }
+                              // }
                             });
                           }
                         } else {

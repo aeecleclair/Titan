@@ -94,7 +94,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                                   await raffleListNotifier.createRaffle(
                                       RaffleComplete(
                                           name: "Tombola : ${group.name}",
-                                          group: group,
+                                          // group: group,
                                           id: '',
                                           status: RaffleStatusType.creation,
                                           groupId: group.id));

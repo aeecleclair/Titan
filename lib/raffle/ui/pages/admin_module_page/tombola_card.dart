@@ -50,7 +50,7 @@ class TombolaCard extends HookConsumerWidget {
                             fontWeight: FontWeight.bold,
                             color: Colors.white)),
                     const SizedBox(height: 5),
-                    AutoSizeText(raffle.group.name,
+                    AutoSizeText(raffle.name,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(

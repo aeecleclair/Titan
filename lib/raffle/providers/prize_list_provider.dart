@@ -75,7 +75,7 @@ final prizeListProvider =
   final notifier = PrizeListNotifier(prizeRepository: prizeRepository);
   tokenExpireWrapperAuth(ref, () async {
     final raffleId = ref.watch(raffleIdProvider);
-    if (raffleId != RaffleSimple.fromJson({}).id) {
+    if (raffleId != RaffleComplete.fromJson({}).id) {
       notifier.loadPrizeList(raffleId);
     }
   });

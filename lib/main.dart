@@ -19,7 +19,7 @@ import 'package:myecl/tools/ui/layouts/app_template.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 void main() async {
-  await dotenv.load();
+  await dotenv.load(fileName: ".env");
   QR.setUrlStrategy();
   // We set the default page type to QMaterialPage
   // See https://pub.dev/packages/qlevar_router#page-transition

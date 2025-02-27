@@ -21,7 +21,7 @@ final raffleStatsProvider =
   RaffleStatsNotifier notifier =
       RaffleStatsNotifier(raffleDetailRepository: raffleDetailRepository);
   final raffleId = ref.watch(raffleIdProvider);
-  if (raffleId != RaffleSimple.fromJson({}).id) {
+  if (raffleId != RaffleComplete.fromJson({}).id) {
     notifier.loadRaffleStats(raffleId);
   }
   return notifier;

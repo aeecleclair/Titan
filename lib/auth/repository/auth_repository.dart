@@ -241,6 +241,9 @@ class AuthRepository {
 }
 
 final authRepositoryProvider = Provider((ref) {
+  print('[AuthRepository] Provider called $BASE_URL');
   final openIdRepository = Openapi.create(baseUrl: Uri.parse(BASE_URL));
+  print('[AuthRepository] Provider called $openIdRepository');
+  return
   AuthRepository(openIdRepository: openIdRepository);
 });
