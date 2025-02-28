@@ -2,27 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
-import 'package:myecl/advert/class/announcer.dart';
-import 'package:myecl/advert/providers/all_announcer_list_provider.dart';
-import 'package:myecl/advert/providers/announcer_list_provider.dart';
+import 'package:myecl/advert/providers/all_advertiser_list_provider.dart';
+import 'package:myecl/advert/providers/advertiser_list_provider.dart';
 import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/advert/ui/pages/advert.dart';
-import 'package:myecl/advert/ui/pages/form_page/announcer_card.dart';
+import 'package:myecl/advert/ui/pages/form_page/advertiser_card.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 
-class AddRemAnnouncerPage extends HookConsumerWidget {
-  const AddRemAnnouncerPage({super.key});
+class AddDeleteAdvertiserPage extends HookConsumerWidget {
+  const AddDeleteAdvertiserPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final announcerListNotifier = ref.watch(announcerListProvider.notifier);
-    final announcers = ref.watch(allAnnouncerList);
+    final advertiserListNotifier = ref.watch(advertiserListProvider.notifier);
+    final advertisers = ref.watch(allAdvertiserList);
     final groups = ref.watch(allGroupListProvider);
-    final announcerIds = announcers.map((x) => x.groupManagerId).toList();
+    final advertiserIds = advertisers.map((x) => x.groupManagerId).toList();
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -58,10 +58,10 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                       value: groups,
                       builder: (context, groupList) {
                         final canAdd = groupList
-                            .where((x) => !announcerIds.contains(x.id))
+                            .where((x) => !advertiserIds.contains(x.id))
                             .toList();
                         final canRemove = groupList
-                            .where((x) => announcerIds.contains(x.id))
+                            .where((x) => advertiserIds.contains(x.id))
                             .toList();
                         return (canAdd + canRemove).isNotEmpty
                             ? Column(
@@ -69,23 +69,22 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                         .map(
                                           (e) => GestureDetector(
                                             onTap: () {
-                                              Announcer newAnnouncer =
-                                                  Announcer(
+                                              AdvertiserBase  newAdvertiser =
+                                                  AdvertiserBase (
                                                 groupManagerId: e.id,
-                                                id: '',
                                                 name: e.name,
                                               );
                                               tokenExpireWrapper(ref, () async {
                                                 final value =
-                                                    await announcerListNotifier
-                                                        .addAnnouncer(
-                                                  newAnnouncer,
+                                                    await advertiserListNotifier
+                                                        .addAdvertiser(
+                                                  newAdvertiser,
                                                 );
                                                 if (value) {
                                                   displayToastWithContext(
                                                     TypeMsg.msg,
                                                     AdvertTextConstants
-                                                        .addedAnnouncer,
+                                                        .addedAdvertiser,
                                                   );
                                                 } else {
                                                   displayToastWithContext(
@@ -94,11 +93,11 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                                         .addingError,
                                                   );
                                                 }
-                                                announcerListNotifier
-                                                    .loadAllAnnouncerList();
+                                                advertiserListNotifier
+                                                    .loadAllAdvertiserList();
                                               });
                                             },
-                                            child: AnnouncerCard(
+                                            child: AdvertiserCard(
                                               e: e,
                                               icon: HeroIcons.plus,
                                             ),
@@ -117,14 +116,14 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                                         .deleting,
                                                     descriptions:
                                                         AdvertTextConstants
-                                                            .deleteAnnouncer,
+                                                            .deleteAdvertiser,
                                                     onYes: () {
                                                       tokenExpireWrapper(ref,
                                                           () async {
                                                         final value =
-                                                            await announcerListNotifier
-                                                                .deleteAnnouncer(
-                                                          announcers
+                                                            await advertiserListNotifier
+                                                                .deleteAdvertiser(
+                                                          advertisers
                                                               .where(
                                                                 (element) =>
                                                                     e.id ==
@@ -136,7 +135,7 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                                           displayToastWithContext(
                                                             TypeMsg.msg,
                                                             AdvertTextConstants
-                                                                .removedAnnouncer,
+                                                                .removedAdvertiser,
                                                           );
                                                         } else {
                                                           displayToastWithContext(
@@ -145,15 +144,15 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                                                 .removingError,
                                                           );
                                                         }
-                                                        announcerListNotifier
-                                                            .loadAllAnnouncerList();
+                                                        advertiserListNotifier
+                                                            .loadAllAdvertiserList();
                                                       });
                                                     },
                                                   );
                                                 },
                                               );
                                             },
-                                            child: AnnouncerCard(
+                                            child: AdvertiserCard(
                                               e: e,
                                               icon: HeroIcons.minus,
                                             ),
@@ -163,7 +162,7 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                               )
                             : const Center(
                                 child:
-                                    Text(AdvertTextConstants.noMoreAnnouncer),
+                                    Text(AdvertTextConstants.noMoreAdvertiser),
                               );
                       },
                     ),

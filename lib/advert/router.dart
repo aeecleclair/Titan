@@ -9,8 +9,8 @@ import 'package:myecl/advert/ui/pages/detail_page/detail.dart'
     deferred as detail_page;
 import 'package:myecl/advert/ui/pages/form_page/add_edit_advert_page.dart'
     deferred as add_edit_advert_page;
-import 'package:myecl/advert/ui/pages/form_page/add_rem_announcer_page.dart'
-    deferred as add_rem_announcer_page;
+import 'package:myecl/advert/ui/pages/form_page/add_delete_advertiser_page.dart'
+    deferred as add_rem_advertiser_page;
 import 'package:myecl/advert/ui/pages/main_page/main_page.dart'
     deferred as main_page;
 import 'package:myecl/drawer/class/module.dart';
@@ -24,7 +24,7 @@ class AdvertRouter {
   static const String root = '/advert';
   static const String admin = '/admin';
   static const String addEditAdvert = '/add_edit_advert';
-  static const String addRemAnnouncer = '/add_remove_announcer';
+  static const String addDeleteAdvertiser = '/add_delete_advertiser';
   static const String detail = '/detail';
   static final Module module = Module(
     name: "Annonce",
@@ -68,11 +68,11 @@ class AdvertRouter {
             middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)],
           ),
           QRoute(
-            path: addRemAnnouncer,
-            builder: () => add_rem_announcer_page.AddRemAnnouncerPage(),
+            path: addDeleteAdvertiser,
+            builder: () => add_rem_advertiser_page.AddDeleteAdvertiserPage(),
             middleware: [
               AdminMiddleware(ref, isAdminProvider),
-              DeferredLoadingMiddleware(add_rem_announcer_page.loadLibrary),
+              DeferredLoadingMiddleware(add_rem_advertiser_page.loadLibrary),
             ],
           ),
         ],

@@ -1,37 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/advert/providers/announcer_provider.dart';
-import 'package:myecl/advert/providers/announcer_list_provider.dart';
+import 'package:myecl/advert/providers/advertiser_list_provider.dart';
+import 'package:myecl/advert/providers/advertiser_provider.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 
-class AnnouncerBar extends HookConsumerWidget {
-  final bool useUserAnnouncers;
+class AdvertiserBar extends HookConsumerWidget {
+  final bool useUserAdvertisers;
   final bool multipleSelect;
   final bool isNotClickable;
-  const AnnouncerBar({
+  const AdvertiserBar({
     super.key,
     required this.multipleSelect,
-    required this.useUserAnnouncers,
+    required this.useUserAdvertisers,
     this.isNotClickable = false,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selected = ref.watch(announcerProvider);
+    final selected = ref.watch(advertiserProvider);
     final selectedId = selected.map((e) => e.id).toList();
-    final selectedNotifier = ref.read(announcerProvider.notifier);
-    final announcerList = useUserAnnouncers
-        ? ref.watch(userAnnouncerListProvider)
-        : ref.watch(announcerListProvider);
+    final selectedNotifier = ref.read(advertiserProvider.notifier);
+    final advertiserList = useUserAdvertisers
+        ? ref.watch(userAdvertiserListProvider)
+        : ref.watch(advertiserListProvider);
     final darkerColor = (isNotClickable) ? Colors.grey[800] : Colors.black;
 
     return AsyncChild(
-      value: announcerList,
-      builder: (context, userAnnouncers) => HorizontalListView.builder(
+      value: advertiserList,
+      builder: (context, userAdvertisers) => HorizontalListView.builder(
         height: 40,
-        items: userAnnouncers,
+        items: userAdvertisers,
         itemBuilder: (context, e, i) => GestureDetector(
           onTap: () {
             if (isNotClickable) {
@@ -39,13 +39,13 @@ class AnnouncerBar extends HookConsumerWidget {
             }
             if (multipleSelect) {
               selectedId.contains(e.id)
-                  ? selectedNotifier.removeAnnouncer(e)
-                  : selectedNotifier.addAnnouncer(e);
+                  ? selectedNotifier.removeAdvertiser(e)
+                  : selectedNotifier.addAdvertiser(e);
             } else {
               bool contain = selectedId.contains(e.id);
-              selectedNotifier.clearAnnouncer();
+              selectedNotifier.clearAdvertiser();
               if (!contain) {
-                selectedNotifier.addAnnouncer(e);
+                selectedNotifier.addAdvertiser(e);
               }
             }
           },
