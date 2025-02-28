@@ -1,6 +1,6 @@
 class Pixel {
-  late final double x;
-  late final double y;
+  late final int x;
+  late final int y;
   late final String color;
   //late final SimpleUser user;
 

@@ -39,8 +39,8 @@ class CanvasViewer extends HookConsumerWidget {
                 onTapDown: (event) {
                   focusNotifier.setPixelFocus(
                     PixelFocus(
-                      x: ((event.localPosition.dx) ~/ pixelSize) * pixelSize,
-                      y: ((event.localPosition.dy) ~/ pixelSize) * pixelSize,
+                      x: (event.localPosition.dx) ~/ pixelSize,
+                      y: (event.localPosition.dy) ~/ pixelSize,
                       user: "",
                       date: DateTime.now(),
                       isFocus: true,
@@ -50,12 +50,8 @@ class CanvasViewer extends HookConsumerWidget {
                     context: context,
                     builder: (BuildContext context) {
                       return ColorPicker(
-                        x: (((event.localPosition.dx) ~/ pixelSize) *
-                                pixelSize +
-                            5),
-                        y: (((event.localPosition.dy) ~/ pixelSize) *
-                                pixelSize +
-                            5),
+                        x: ((event.localPosition.dx) ~/ pixelSize),
+                        y: ((event.localPosition.dy) ~/ pixelSize),
                       );
                     },
                   );
@@ -88,8 +84,8 @@ class CanvasViewer extends HookConsumerWidget {
                       },
                     ),
                     Positioned(
-                      left: focus.x,
-                      top: focus.y,
+                      left: focus.x * pixelSize,
+                      top: focus.y * pixelSize,
                       child: Visibility(
                         visible: focus.isFocus,
                         child: SizedBox(

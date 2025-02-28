@@ -13,7 +13,7 @@ class MyPainter extends CustomPainter {
     for (final pixel in pixels) {
       canvas.drawRect(
         Rect.fromCenter(
-          center: Offset(pixel.x, pixel.y),
+          center: Offset(pixel.x * pixelSize + 5, pixel.y * pixelSize + 5),
           width: pixelSize,
           height: pixelSize,
         ),

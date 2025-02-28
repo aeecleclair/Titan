@@ -17,8 +17,8 @@ final listeCouleurs = [
 ];
 
 class ColBouton extends HookConsumerWidget {
-  final double x;
-  final double y;
+  final int x;
+  final int y;
   final String color;
 
   const ColBouton({
@@ -58,8 +58,8 @@ class ColBouton extends HookConsumerWidget {
 }
 
 class ColorPicker extends StatelessWidget {
-  final double x;
-  final double y;
+  final int x;
+  final int y;
 
   const ColorPicker({super.key, required this.x, required this.y});
 
