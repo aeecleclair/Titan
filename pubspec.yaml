@@ -77,7 +77,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   json_serializable: ^6.7.1
-  swagger_dart_code_generator: ^2.13.2
+  swagger_dart_code_generator: ^2.14.1
 
 flutter:
   assets:
