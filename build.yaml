@@ -1,14 +1,14 @@
 targets:
   $default:
     sources:
-      - lib/**
       - swaggers/**
-      - $package$
     builders:
       swagger_dart_code_generator:
         options:
           input_folder: "swaggers/"
           output_folder: "lib/generated/"
+          input_urls:
+            - url: "https://hyperion-1.dev.eclair.ec-lyon.fr/openapi.json"
           separate_models: true
           default_values_map:
             - type_name: int
