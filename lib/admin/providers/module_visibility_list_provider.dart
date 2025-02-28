@@ -1,19 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/module_visibility.dart';
-import 'package:myecl/admin/repositories/module_visibility_repository.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class ModuleVisibilityListNotifier extends ListNotifier<ModuleVisibility> {
-  ModuleVisibilityRepository repository = ModuleVisibilityRepository();
-  ModuleVisibilityListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
-    repository.setToken(token);
-  }
+class ModuleVisibilityListNotifier extends ListNotifier2<ModuleVisibility> {
+  final Openapi moduleListRepository;
+  ModuleVisibilityListNotifier({required this.moduleListRepository})
+      : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<ModuleVisibility>>> loadModuleVisibility() async {
-    return await loadList(repository.getModuleVisibilityList);
+    return await loadList(moduleListRepository.moduleVisibilityGet);
   }
 
   Future<bool> addGroupToModule(
@@ -21,8 +18,12 @@ class ModuleVisibilityListNotifier extends ListNotifier<ModuleVisibility> {
     String allowedGroupId,
   ) async {
     return await update(
-      (moduleVisibility) async =>
-          repository.addGroupToModule(moduleVisibility.root, allowedGroupId),
+      () => moduleListRepository.moduleVisibilityPost(
+        body: ModuleVisibilityCreate(
+          root: moduleVisibility.root,
+          allowedGroupId: allowedGroupId,
+        ),
+      ),
       (list, moduleVisibility) => list
         ..[list.indexWhere((m) => m.root == moduleVisibility.root)] =
             moduleVisibility,
@@ -35,9 +36,9 @@ class ModuleVisibilityListNotifier extends ListNotifier<ModuleVisibility> {
     String allowedGroupId,
   ) async {
     return await update(
-      (moduleVisibility) async => repository.deleteGroupAccessForModule(
-        moduleVisibility.root,
-        allowedGroupId,
+      () async => moduleListRepository.moduleVisibilityRootGroupsGroupIdDelete(
+        root: moduleVisibility.root,
+        groupId: allowedGroupId,
       ),
       (list, moduleVisibility) => list
         ..[list.indexWhere((m) => m.root == moduleVisibility.root)] =
@@ -46,12 +47,13 @@ class ModuleVisibilityListNotifier extends ListNotifier<ModuleVisibility> {
     );
   }
 
+  //  W8 to merge dedicated PR
   Future<bool> addAccountTypeToModule(
     ModuleVisibility moduleVisibility,
-    String allowedAccountType,
+    AccountType allowedAccountType,
   ) async {
     return await update(
-      (moduleVisibility) async => repository.addAccountTypeToModule(
+      (moduleVisibility) async => moduleListRepository.addAccountTypeToModule(
         moduleVisibility.root,
         allowedAccountType,
       ),
@@ -64,12 +66,13 @@ class ModuleVisibilityListNotifier extends ListNotifier<ModuleVisibility> {
 
   Future<bool> deleteAccountTypeAccessForModule(
     ModuleVisibility moduleVisibility,
-    String allowedAccountType,
+    AccountType allowedAccountType,
   ) async {
     return await update(
-      (moduleVisibility) async => repository.deleteAccountTypeAccessForModule(
-        moduleVisibility.root,
-        allowedAccountType,
+      () async => moduleListRepository
+          .moduleVisibilityRootAccountTypesAccountTypeDelete(
+        root: moduleVisibility.root,
+        accountType: allowedAccountType,
       ),
       (list, moduleVisibility) => list
         ..[list.indexWhere((m) => m.root == moduleVisibility.root)] =
@@ -85,9 +88,9 @@ class ModuleVisibilityListNotifier extends ListNotifier<ModuleVisibility> {
 
 final moduleVisibilityListProvider = StateNotifierProvider<
     ModuleVisibilityListNotifier, AsyncValue<List<ModuleVisibility>>>((ref) {
-  final token = ref.watch(tokenProvider);
+  final moduleListRepository = ref.watch(repositoryProvider);
   ModuleVisibilityListNotifier notifier =
-      ModuleVisibilityListNotifier(token: token);
+      ModuleVisibilityListNotifier(moduleListRepository: moduleListRepository);
   tokenExpireWrapperAuth(ref, () async {
     await notifier.loadModuleVisibility();
   });

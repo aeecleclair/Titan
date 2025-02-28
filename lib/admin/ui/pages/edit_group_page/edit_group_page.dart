@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/group.dart';
+import 'package:myecl/admin/adapters/groups.dart';
 import 'package:myecl/admin/providers/group_id_provider.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/providers/group_provider.dart';
@@ -11,6 +11,7 @@ import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/ui/admin.dart';
 import 'package:myecl/admin/ui/components/admin_button.dart';
 import 'package:myecl/admin/ui/pages/edit_group_page/search_user.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -52,7 +53,7 @@ class EditGroupPage extends HookConsumerWidget {
             loader: (groupId) async =>
                 (await groupNotifier.loadGroup(groupId)).maybeWhen(
               data: (groups) => groups,
-              orElse: () => Group.empty(),
+              orElse: () => CoreGroup.fromJson({}),
             ),
             dataBuilder: (context, groups) {
               final group = groups.first;
@@ -99,13 +100,13 @@ class EditGroupPage extends HookConsumerWidget {
                               return;
                             }
                             await tokenExpireWrapper(ref, () async {
-                              Group newGroup = group.copyWith(
+                              CoreGroup newGroup = group.copyWith(
                                 name: name.text,
                                 description: description.text,
                               );
                               groupNotifier.setGroup(newGroup);
                               final value = await groupListNotifier
-                                  .updateGroup(newGroup.toSimpleGroup());
+                                  .updateGroup(newGroup.toCoreGroupSimple());
                               if (value) {
                                 QR.back();
                                 displayToastWithContext(

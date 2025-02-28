@@ -1,8 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/adapters/users.dart';
+import 'package:myecl/user/adapters/users.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/single_notifier%20copy.dart';
 import 'package:myecl/tools/repository/repository2.dart';
@@ -24,7 +23,7 @@ class UserNotifier extends SingleNotifier2<CoreUser> {
   Future<bool> updateUser(CoreUser user) async {
     return await update(
       (user) => userRepository.usersUserIdPatch(
-        body: coreUserUpdateAdminAdapter(user),
+        body: user.toCoreUserUpdateAdmin(),
         userId: user.id,
       ),
       user,
@@ -34,7 +33,7 @@ class UserNotifier extends SingleNotifier2<CoreUser> {
   Future<bool> updateMe(CoreUser user) async {
     return await update(
       (user) async =>
-          userRepository.usersMePatch(body: coreUserUpdateAdapter(user)),
+          userRepository.usersMePatch(body: user.toCoreUserUpdate()),
       user,
     );
   }

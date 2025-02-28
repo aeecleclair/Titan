@@ -6,7 +6,9 @@ abstract class ListNotifier2<T> extends StateNotifier<AsyncValue<List<T>>> {
   ListNotifier2(AsyncValue state) : super(const AsyncLoading());
 
   Future<E> errorWrapper<E>(
-      Future<E> Function() f, E Function(Object) errorResponse) async {
+    Future<E> Function() f,
+    E Function(Object) errorResponse,
+  ) async {
     try {
       return await f();
     } catch (e) {
@@ -19,17 +21,21 @@ abstract class ListNotifier2<T> extends StateNotifier<AsyncValue<List<T>>> {
   }
 
   Future<AsyncValue<List<T>>> loadList(
-      Future<Response<List<T>>> Function() f) async {
-    return errorWrapper(() async {
-      final response = await f();
-      final data = response.body;
-      if (response.isSuccessful && data != null) {
-        state = AsyncValue.data(data);
-        return state;
-      } else {
-        throw response.error!;
-      }
-    }, (error) => AsyncValue.error(error, StackTrace.current));
+    Future<Response<List<T>>> Function() f,
+  ) async {
+    return errorWrapper(
+      () async {
+        final response = await f();
+        final data = response.body;
+        if (response.isSuccessful && data != null) {
+          state = AsyncValue.data(data);
+          return state;
+        } else {
+          throw response.error!;
+        }
+      },
+      (error) => AsyncValue.error(error, StackTrace.current),
+    );
   }
 
   Future<AsyncValue<List<T>>> loadFromList(List<T>? listT) async {
@@ -40,7 +46,7 @@ abstract class ListNotifier2<T> extends StateNotifier<AsyncValue<List<T>>> {
   }
 
   Future<bool> handleState(
-      Future<bool> Function(List<T> d) f, String errorMesage) async {
+      Future<bool> Function(List<T> d) f, String errorMessage) async {
     return state.when(
         data: (d) => errorWrapper(() async {
               return await f(d);
@@ -54,14 +60,14 @@ abstract class ListNotifier2<T> extends StateNotifier<AsyncValue<List<T>>> {
           }
         },
         loading: () {
-          state = AsyncValue.error(errorMesage, StackTrace.empty);
+          state = AsyncValue.error(errorMessage, StackTrace.empty);
           return false;
         });
   }
 
-  Future<bool> add(Future<Response<T>> Function(T) f, T t) async {
+  Future<bool> add<E>(Future<Response<T>> Function() f, E t) async {
     return handleState((d) async {
-      final response = await f(t);
+      final response = await f();
       final data = response.body;
       if (response.isSuccessful && data != null) {
         d.add(data);
@@ -73,8 +79,10 @@ abstract class ListNotifier2<T> extends StateNotifier<AsyncValue<List<T>>> {
     }, "Cannot add while loading");
   }
 
-  Future<bool> addAll(Future<Response<List<T>>> Function(List<T> listT) f,
-      List<T> listT) async {
+  Future<bool> addAll<E>(
+    Future<Response<List<T>>> Function(List<E> listT) f,
+    List<E> listT,
+  ) async {
     return handleState((d) async {
       final response = await f(listT);
       final data = response.body;
@@ -88,10 +96,13 @@ abstract class ListNotifier2<T> extends StateNotifier<AsyncValue<List<T>>> {
     }, "Cannot addAll while loading");
   }
 
-  Future<bool> update(Future<Response<dynamic>> Function(T t) f,
-      List<T> Function(List<T> listT, T t) replace, T t) async {
+  Future<bool> update(
+    Future<Response<dynamic>> Function() f,
+    List<T> Function(List<T> listT, T t) replace,
+    T t,
+  ) async {
     return handleState((d) async {
-      final response = await f(t);
+      final response = await f();
       if (response.isSuccessful) {
         d = replace(d, t);
         state = AsyncValue.data(d);
@@ -102,10 +113,13 @@ abstract class ListNotifier2<T> extends StateNotifier<AsyncValue<List<T>>> {
     }, "Cannot update while loading");
   }
 
-  Future<bool> delete(Future<Response<dynamic>> Function(String id) f,
-      List<T> Function(List<T> listT, T t) replace, String id, T t) async {
+  Future<bool> delete(
+    Future<Response<dynamic>> Function() f,
+    List<T> Function(List<T> listT, T t) replace,
+    T t,
+  ) async {
     return handleState((d) async {
-      final response = await f(id);
+      final response = await f();
       if (response.isSuccessful) {
         d = replace(d, t);
         state = AsyncValue.data(d);

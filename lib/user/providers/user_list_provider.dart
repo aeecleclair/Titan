@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier2.dart';
 import 'package:myecl/tools/repository/repository2.dart';
@@ -12,8 +11,8 @@ class UserListNotifier extends ListNotifier2<CoreUserSimple> {
 
   Future<AsyncValue<List<CoreUserSimple>>> filterUsers(
     String query, {
-    List<SimpleGroup>? includedGroups,
-    List<SimpleGroup>? excludedGroups,
+    List<CoreGroupSimple>? includedGroups,
+    List<CoreGroupSimple>? excludedGroups,
     List<AccountType>? includedAccountTypes,
     List<AccountType>? excludedAccountTypes,
   }) async {

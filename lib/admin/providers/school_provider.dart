@@ -1,17 +1,15 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/school.dart';
-import 'package:myecl/admin/repositories/school_repository.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
-class SchoolNotifier extends StateNotifier<School> {
-  final SchoolRepository schoolRepository;
-  SchoolNotifier({required this.schoolRepository}) : super(School.empty());
+class SchoolNotifier extends StateNotifier<CoreSchool> {
+  SchoolNotifier()
+      : super(CoreSchool.fromJson({}));
 
-  void setSchool(School school) {
+  void setSchool(CoreSchool school) {
     state = school;
   }
 }
 
-final schoolProvider = StateNotifierProvider<SchoolNotifier, School>((ref) {
-  final schoolRepository = ref.watch(schoolRepositoryProvider);
-  return SchoolNotifier(schoolRepository: schoolRepository);
+final schoolProvider = StateNotifierProvider<SchoolNotifier, CoreSchool>((ref) {
+  return SchoolNotifier();
 });
