@@ -15,6 +15,7 @@ import 'package:myecl/flappybird/ui/flappybird_template.dart';
 import 'package:myecl/flappybird/ui/pages/game_page/pipe_handler.dart';
 import 'package:myecl/flappybird/ui/pages/game_page/score.dart';
 import 'package:myecl/flappybird/ui/pages/game_page/start_screen.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
 import 'bird.dart';
 
@@ -102,11 +103,8 @@ class GamePage extends HookConsumerWidget {
         timerNotifier.stop();
         if (newBird.score > bestScore) {
           scoreListNotifier.createScore(
-            Score(
-              user: newBird.user,
-              value: newBird.score,
-              date: DateTime.now(),
-              position: 0,
+            FlappyBirdScoreBase(
+              $value: newBird.score,
             ),
           );
         }

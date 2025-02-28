@@ -43,7 +43,10 @@ class LeaderBoardPage extends HookConsumerWidget {
                         ),
                       );
                     }
-                    return LeaderBoardItem(score: scoreList[index - 1]);
+                    return LeaderBoardItem(
+                        user: scoreList[index - 1].user,
+                        position: index,
+                        value: scoreList[index - 1].$value,);
                   },
                 ),
                 error: (e, s) =>
@@ -60,7 +63,9 @@ class LeaderBoardPage extends HookConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: bestUserScore.when(
                   data: (score) => LeaderBoardItem(
-                    score: score,
+                    user: score.user,
+                    value: score.$value,
+                    position: score.position,
                   ),
                   error: (e, s) =>
                       Text(e.toString(), style: GoogleFonts.silkscreen()),
