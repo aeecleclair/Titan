@@ -1,26 +1,38 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/amap/class/cash.dart';
-import 'package:myecl/amap/repositories/cash_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class CashListProvider extends ListNotifier<Cash> {
-  final CashRepository cashRepository;
-  AsyncValue<List<Cash>> _cashList = const AsyncLoading();
+class CashListProvider extends ListNotifier2<CashComplete> {
+  final Openapi cashRepository;
+  AsyncValue<List<CashComplete>> _cashList = const AsyncLoading();
   CashListProvider({required this.cashRepository})
       : super(const AsyncLoading());
 
-  Future<AsyncValue<List<Cash>>> loadCashList() async {
-    return _cashList = await loadList(cashRepository.getCashList);
+  Future<AsyncValue<List<CashComplete>>> loadCashList() async {
+    return _cashList = await loadList(cashRepository.amapUsersCashGet);
   }
 
-  Future<bool> addCash(Cash cash) async {
-    return await add(cashRepository.createCash, cash);
+  Future<bool> addCash(CashComplete cash) async {
+    return await add(
+      () => cashRepository.amapUsersUserIdCashPost(
+        userId: cash.user.id,
+        body: CashEdit(balance: cash.balance),
+      ),
+      cash,
+    );
   }
 
-  Future<bool> updateCash(Cash addedCash, double previousCashAmount) async {
+  Future<bool> updateCash(
+    CashComplete addedCash,
+    double previousCashAmount,
+  ) async {
     return await update(
-      cashRepository.updateCash,
+      () => cashRepository.amapUsersUserIdCashPatch(
+        userId: addedCash.userId,
+        body: CashEdit(balance: addedCash.balance),
+      ),
       (cashList, c) => cashList
         ..[cashList.indexWhere((c) => c.user.id == addedCash.user.id)] =
             addedCash.copyWith(
@@ -30,7 +42,8 @@ class CashListProvider extends ListNotifier<Cash> {
     );
   }
 
-  Future<bool> fakeUpdateCash(Cash cash) async {
+  // To be changed
+  Future<bool> fakeUpdateCash(CashComplete cash) async {
     return await update(
       (_) async => true,
       (cashList, c) => cashList
@@ -39,7 +52,7 @@ class CashListProvider extends ListNotifier<Cash> {
     );
   }
 
-  Future<AsyncValue<List<Cash>>> filterCashList(String filter) async {
+  Future<AsyncValue<List<CashComplete>>> filterCashList(String filter) async {
     state = _cashList.whenData(
       (cashList) {
         final lowerQuery = filter.toLowerCase();
@@ -63,9 +76,9 @@ class CashListProvider extends ListNotifier<Cash> {
 }
 
 final cashListProvider =
-    StateNotifierProvider<CashListProvider, AsyncValue<List<Cash>>>(
+    StateNotifierProvider<CashListProvider, AsyncValue<List<CashComplete>>>(
   (ref) {
-    final cashRepository = ref.watch(cashRepositoryProvider);
+    final cashRepository = ref.watch(repositoryProvider);
     CashListProvider cashListProvider =
         CashListProvider(cashRepository: cashRepository);
     tokenExpireWrapperAuth(ref, () async {

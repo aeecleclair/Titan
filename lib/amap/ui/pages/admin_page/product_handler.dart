@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
 import 'package:myecl/amap/providers/product_provider.dart';
 import 'package:myecl/amap/providers/sorted_by_category_products.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/components/product_ui.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
@@ -48,7 +48,7 @@ class ProductHandler extends HookConsumerWidget {
             const SizedBox(width: 10),
             GestureDetector(
               onTap: () {
-                productNotifier.setProduct(Product.empty());
+                productNotifier.setProduct(AppModulesAmapSchemasAmapProductComplete.fromJson({}));
                 QR.to(
                   AmapRouter.root +
                       AmapRouter.admin +
@@ -79,6 +79,7 @@ class ProductHandler extends HookConsumerWidget {
                         .map(
                           (e) => ProductCard(
                             product: e,
+                            quantity: 0,
                             onDelete: () async {
                               await showDialog(
                                 context: context,

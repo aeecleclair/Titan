@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/class/order.dart';
-import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/cash_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/providers/delivery_order_list_provider.dart';
@@ -12,6 +10,7 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/amap/ui/pages/detail_delivery_page/order_detail_ui.dart';
 import 'package:myecl/amap/ui/pages/detail_delivery_page/product_detail_ui.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
@@ -35,7 +34,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
     return AmapTemplate(
       child: Refresher(
         onRefresh: () async {
-          await deliveryProductListNotifier.loadProductList(delivery.products);
+          await deliveryProductListNotifier.loadProductList(delivery.products ?? []);
           await deliveryListNotifier.loadDeliveriesList();
         },
         child: Column(
@@ -65,13 +64,13 @@ class DetailDeliveryPage extends HookConsumerWidget {
               if (deliveryOrderList != null) {
                 deliveryOrderList.maybeWhen(
                   data: (listOrders) {
-                    for (Order o in listOrders) {
-                      for (Product p in o.products) {
-                        if (!productsQuantity.containsKey(p.id)) {
-                          productsQuantity.addEntries({p.id: 0}.entries);
+                    for (OrderReturn o in listOrders) {
+                      for (ProductQuantity p in o.productsdetail) {
+                        if (!productsQuantity.containsKey(p.product.id)) {
+                          productsQuantity.addEntries({p.product.id: 0}.entries);
                         }
-                        productsQuantity[p.id] =
-                            productsQuantity[p.id]! + p.quantity;
+                        productsQuantity[p.product.id] =
+                            productsQuantity[p.product.id]! + p.quantity;
                       }
                     }
                   },

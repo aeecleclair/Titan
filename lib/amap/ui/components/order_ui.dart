@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/providers/user_amount_provider.dart';
 import 'package:myecl/amap/providers/user_order_list_provider.dart';
 import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/functions.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
@@ -15,7 +15,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class OrderUI extends HookConsumerWidget {
-  final Order order;
+  final OrderReturn order;
   final void Function()? onTap, onEdit;
   final bool showButton, isDetail;
   const OrderUI({
@@ -37,7 +37,7 @@ class OrderUI extends HookConsumerWidget {
     }
 
     return CardLayout(
-      id: order.id,
+      id: order.orderId,
       width: 195,
       height: isDetail ? 100 : 150,
       colors: const [
@@ -78,7 +78,7 @@ class OrderUI extends HookConsumerWidget {
           Row(
             children: [
               Text(
-                "${order.products.length} ${AMAPTextConstants.product}${order.products.length != 1 ? "s" : ""}",
+                "${order.productsdetail.length} ${AMAPTextConstants.product}${order.productsdetail.length != 1 ? "s" : ""}",
                 style: const TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
@@ -98,7 +98,7 @@ class OrderUI extends HookConsumerWidget {
           ),
           const SizedBox(height: 3),
           Text(
-            uiCollectionSlotToString(order.collectionSlot),
+            capitalize(order.collectionSlot.name.split('.')[1]),
             style: const TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.w700,

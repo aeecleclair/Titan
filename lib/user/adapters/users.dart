@@ -21,4 +21,14 @@ extension $CoreUser on CoreUser {
       floor: floor,
     );
   }
+
+  CoreUserSimple toCoreUserSimple() {
+    return CoreUserSimple(
+      name: name,
+      firstname: firstname,
+      id: id,
+      accountType: accountType,
+      schoolId: schoolId,
+    );
+  }
 }

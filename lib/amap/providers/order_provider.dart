@@ -1,14 +1,14 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/class/order.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
-class OrderNotifier extends StateNotifier<Order> {
-  OrderNotifier() : super(Order.empty());
+class OrderNotifier extends StateNotifier<OrderReturn> {
+  OrderNotifier() : super(OrderReturn.fromJson({}));
 
-  void setOrder(Order order) {
+  void setOrder(OrderReturn order) {
     state = order;
   }
 }
 
-final orderProvider = StateNotifierProvider<OrderNotifier, Order>((ref) {
+final orderProvider = StateNotifierProvider<OrderNotifier, OrderReturn>((ref) {
   return OrderNotifier();
 });
