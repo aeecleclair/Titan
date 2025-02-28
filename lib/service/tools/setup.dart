@@ -52,7 +52,7 @@ void setUpNotification(WidgetRef ref) {
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     message_class.Message messages =
         message_class.Message.fromJson(message.data);
-    Repository.logger
+    logger
         .writeLog(Log(message: "GOT trigger onMessage", level: LogLevel.error));
 
     message_class.Message me = message_class.Message(

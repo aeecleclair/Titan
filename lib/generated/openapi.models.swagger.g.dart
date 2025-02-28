@@ -115,7 +115,7 @@ Applicant _$ApplicantFromJson(Map<String, dynamic> json) => Applicant(
       nickname: json['nickname'] as String? ?? '',
       id: json['id'] as String? ?? '',
       email: json['email'] as String? ?? '',
-      promo: json['promo'] as int? ?? 0,
+      promo: (json['promo'] as num?)?.toInt() ?? 0,
       phone: json['phone'] as String? ?? '',
     );
 
@@ -489,7 +489,7 @@ Map<String, dynamic> _$ChangePasswordRequestToJson(
 CineSessionBase _$CineSessionBaseFromJson(Map<String, dynamic> json) =>
     CineSessionBase(
       start: DateTime.parse(json['start'] as String),
-      duration: json['duration'] as int? ?? 0,
+      duration: (json['duration'] as num?)?.toInt() ?? 0,
       name: json['name'] as String? ?? '',
       overview: json['overview'] as String? ?? '',
       genre: json['genre'] as String? ?? '',
@@ -509,7 +509,7 @@ Map<String, dynamic> _$CineSessionBaseToJson(CineSessionBase instance) =>
 CineSessionComplete _$CineSessionCompleteFromJson(Map<String, dynamic> json) =>
     CineSessionComplete(
       start: DateTime.parse(json['start'] as String),
-      duration: json['duration'] as int? ?? 0,
+      duration: (json['duration'] as num?)?.toInt() ?? 0,
       name: json['name'] as String? ?? '',
       overview: json['overview'] as String? ?? '',
       genre: json['genre'] as String? ?? '',
@@ -535,7 +535,7 @@ CineSessionUpdate _$CineSessionUpdateFromJson(Map<String, dynamic> json) =>
       start: json['start'] == null
           ? null
           : DateTime.parse(json['start'] as String),
-      duration: json['duration'] as int? ?? 0,
+      duration: (json['duration'] as num?)?.toInt() ?? 0,
       overview: json['overview'] as String? ?? '',
       genre: json['genre'] as String? ?? '',
       tagline: json['tagline'] as String? ?? '',
@@ -585,14 +585,14 @@ CoreBatchUserCreateRequest _$CoreBatchUserCreateRequestFromJson(
         Map<String, dynamic> json) =>
     CoreBatchUserCreateRequest(
       email: json['email'] as String? ?? '',
-      accountType: accountTypeNullableFromJson(json['account_type']),
+      accountType: accountTypeFromJson(json['account_type']),
     );
 
 Map<String, dynamic> _$CoreBatchUserCreateRequestToJson(
         CoreBatchUserCreateRequest instance) =>
     <String, dynamic>{
       'email': instance.email,
-      'account_type': accountTypeNullableToJson(instance.accountType),
+      'account_type': accountTypeToJson(instance.accountType),
     };
 
 CoreGroup _$CoreGroupFromJson(Map<String, dynamic> json) => CoreGroup(
@@ -654,7 +654,8 @@ CoreInformation _$CoreInformationFromJson(Map<String, dynamic> json) =>
     CoreInformation(
       ready: json['ready'] as bool? ?? false,
       version: json['version'] as String? ?? '',
-      minimalTitanVersionCode: json['minimal_titan_version_code'] as int? ?? 0,
+      minimalTitanVersionCode:
+          (json['minimal_titan_version_code'] as num?)?.toInt() ?? 0,
       minimalTitanVersion: json['minimal_titan_version'] as String? ?? '',
     );
 
@@ -703,7 +704,7 @@ CoreUser _$CoreUserFromJson(Map<String, dynamic> json) => CoreUser(
       birthday: json['birthday'] == null
           ? null
           : DateTime.parse(json['birthday'] as String),
-      promo: json['promo'] as int? ?? 0,
+      promo: (json['promo'] as num?)?.toInt() ?? 0,
       floor: floorsTypeFromJson(json['floor']),
       phone: json['phone'] as String? ?? '',
       createdOn: json['created_on'] == null
@@ -742,7 +743,7 @@ CoreUserActivateRequest _$CoreUserActivateRequestFromJson(
           : DateTime.parse(json['birthday'] as String),
       phone: json['phone'] as String? ?? '',
       floor: floorsTypeFromJson(json['floor']),
-      promo: json['promo'] as int? ?? 0,
+      promo: (json['promo'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$CoreUserActivateRequestToJson(
@@ -809,7 +810,7 @@ CoreUserUpdateAdmin _$CoreUserUpdateAdminFromJson(Map<String, dynamic> json) =>
     CoreUserUpdateAdmin(
       name: json['name'] as String? ?? '',
       firstname: json['firstname'] as String? ?? '',
-      promo: json['promo'] as int? ?? 0,
+      promo: (json['promo'] as num?)?.toInt() ?? 0,
       nickname: json['nickname'] as String? ?? '',
       birthday: json['birthday'] == null
           ? null
@@ -897,7 +898,7 @@ EventApplicant _$EventApplicantFromJson(Map<String, dynamic> json) =>
       nickname: json['nickname'] as String? ?? '',
       id: json['id'] as String? ?? '',
       email: json['email'] as String? ?? '',
-      promo: json['promo'] as int? ?? 0,
+      promo: (json['promo'] as num?)?.toInt() ?? 0,
       phone: json['phone'] as String? ?? '',
     );
 
@@ -1083,13 +1084,13 @@ Map<String, dynamic> _$InformationEditToJson(InformationEdit instance) =>
 
 Item _$ItemFromJson(Map<String, dynamic> json) => Item(
       name: json['name'] as String? ?? '',
-      suggestedCaution: json['suggested_caution'] as int? ?? 0,
-      totalQuantity: json['total_quantity'] as int? ?? 0,
+      suggestedCaution: (json['suggested_caution'] as num?)?.toInt() ?? 0,
+      totalQuantity: (json['total_quantity'] as num?)?.toInt() ?? 0,
       suggestedLendingDuration:
           (json['suggested_lending_duration'] as num?)?.toDouble() ?? 0.0,
       id: json['id'] as String? ?? '',
       loanerId: json['loaner_id'] as String? ?? '',
-      loanedQuantity: json['loaned_quantity'] as int? ?? 0,
+      loanedQuantity: (json['loaned_quantity'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
@@ -1104,8 +1105,8 @@ Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
 
 ItemBase _$ItemBaseFromJson(Map<String, dynamic> json) => ItemBase(
       name: json['name'] as String? ?? '',
-      suggestedCaution: json['suggested_caution'] as int? ?? 0,
-      totalQuantity: json['total_quantity'] as int? ?? 0,
+      suggestedCaution: (json['suggested_caution'] as num?)?.toInt() ?? 0,
+      totalQuantity: (json['total_quantity'] as num?)?.toInt() ?? 0,
       suggestedLendingDuration:
           (json['suggested_lending_duration'] as num?)?.toDouble() ?? 0.0,
     );
@@ -1119,7 +1120,7 @@ Map<String, dynamic> _$ItemBaseToJson(ItemBase instance) => <String, dynamic>{
 
 ItemBorrowed _$ItemBorrowedFromJson(Map<String, dynamic> json) => ItemBorrowed(
       itemId: json['item_id'] as String? ?? '',
-      quantity: json['quantity'] as int? ?? 0,
+      quantity: (json['quantity'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$ItemBorrowedToJson(ItemBorrowed instance) =>
@@ -1129,7 +1130,7 @@ Map<String, dynamic> _$ItemBorrowedToJson(ItemBorrowed instance) =>
     };
 
 ItemQuantity _$ItemQuantityFromJson(Map<String, dynamic> json) => ItemQuantity(
-      quantity: json['quantity'] as int? ?? 0,
+      quantity: (json['quantity'] as num?)?.toInt() ?? 0,
       itemSimple:
           ItemSimple.fromJson(json['itemSimple'] as Map<String, dynamic>),
     );
@@ -1155,8 +1156,8 @@ Map<String, dynamic> _$ItemSimpleToJson(ItemSimple instance) =>
 
 ItemUpdate _$ItemUpdateFromJson(Map<String, dynamic> json) => ItemUpdate(
       name: json['name'] as String? ?? '',
-      suggestedCaution: json['suggested_caution'] as int? ?? 0,
-      totalQuantity: json['total_quantity'] as int? ?? 0,
+      suggestedCaution: (json['suggested_caution'] as num?)?.toInt() ?? 0,
+      totalQuantity: (json['total_quantity'] as num?)?.toInt() ?? 0,
       suggestedLendingDuration:
           (json['suggested_lending_duration'] as num?)?.toDouble() ?? 0.0,
     );
@@ -1460,9 +1461,9 @@ OrderBase _$OrderBaseFromJson(Map<String, dynamic> json) => OrderBase(
               ?.map((e) => e as String)
               .toList() ??
           [],
-      collectionSlot: amapSlotTypeNullableFromJson(json['collection_slot']),
+      collectionSlot: amapSlotTypeFromJson(json['collection_slot']),
       productsQuantity: (json['products_quantity'] as List<dynamic>?)
-              ?.map((e) => e as int)
+              ?.map((e) => (e as num).toInt())
               .toList() ??
           [],
     );
@@ -1471,7 +1472,7 @@ Map<String, dynamic> _$OrderBaseToJson(OrderBase instance) => <String, dynamic>{
       'user_id': instance.userId,
       'delivery_id': instance.deliveryId,
       'products_ids': instance.productsIds,
-      'collection_slot': amapSlotTypeNullableToJson(instance.collectionSlot),
+      'collection_slot': amapSlotTypeToJson(instance.collectionSlot),
       'products_quantity': instance.productsQuantity,
     };
 
@@ -1482,7 +1483,7 @@ OrderEdit _$OrderEditFromJson(Map<String, dynamic> json) => OrderEdit(
           [],
       collectionSlot: amapSlotTypeNullableFromJson(json['collection_slot']),
       productsQuantity: (json['products_quantity'] as List<dynamic>?)
-              ?.map((e) => e as int)
+              ?.map((e) => (e as num).toInt())
               .toList() ??
           [],
     );
@@ -1500,7 +1501,7 @@ OrderReturn _$OrderReturnFromJson(Map<String, dynamic> json) => OrderReturn(
               ?.map((e) => ProductQuantity.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      collectionSlot: amapSlotTypeNullableFromJson(json['collection_slot']),
+      collectionSlot: amapSlotTypeFromJson(json['collection_slot']),
       orderId: json['order_id'] as String? ?? '',
       amount: (json['amount'] as num?)?.toDouble() ?? 0.0,
       orderingDate: DateTime.parse(json['ordering_date'] as String),
@@ -1512,7 +1513,7 @@ Map<String, dynamic> _$OrderReturnToJson(OrderReturn instance) =>
       'user': instance.user.toJson(),
       'delivery_id': instance.deliveryId,
       'productsdetail': instance.productsdetail.map((e) => e.toJson()).toList(),
-      'collection_slot': amapSlotTypeNullableToJson(instance.collectionSlot),
+      'collection_slot': amapSlotTypeToJson(instance.collectionSlot),
       'order_id': instance.orderId,
       'amount': instance.amount,
       'ordering_date': instance.orderingDate.toIso8601String(),
@@ -1522,7 +1523,7 @@ Map<String, dynamic> _$OrderReturnToJson(OrderReturn instance) =>
 PackTicketBase _$PackTicketBaseFromJson(Map<String, dynamic> json) =>
     PackTicketBase(
       price: (json['price'] as num?)?.toDouble() ?? 0.0,
-      packSize: json['pack_size'] as int? ?? 0,
+      packSize: (json['pack_size'] as num?)?.toInt() ?? 0,
       raffleId: json['raffle_id'] as String? ?? '',
     );
 
@@ -1537,7 +1538,7 @@ PackTicketEdit _$PackTicketEditFromJson(Map<String, dynamic> json) =>
     PackTicketEdit(
       raffleId: json['raffle_id'] as String? ?? '',
       price: (json['price'] as num?)?.toDouble() ?? 0.0,
-      packSize: json['pack_size'] as int? ?? 0,
+      packSize: (json['pack_size'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$PackTicketEditToJson(PackTicketEdit instance) =>
@@ -1550,7 +1551,7 @@ Map<String, dynamic> _$PackTicketEditToJson(PackTicketEdit instance) =>
 PackTicketSimple _$PackTicketSimpleFromJson(Map<String, dynamic> json) =>
     PackTicketSimple(
       price: (json['price'] as num?)?.toDouble() ?? 0.0,
-      packSize: json['pack_size'] as int? ?? 0,
+      packSize: (json['pack_size'] as num?)?.toInt() ?? 0,
       raffleId: json['raffle_id'] as String? ?? '',
       id: json['id'] as String? ?? '',
     );
@@ -1567,7 +1568,7 @@ PrizeBase _$PrizeBaseFromJson(Map<String, dynamic> json) => PrizeBase(
       name: json['name'] as String? ?? '',
       description: json['description'] as String? ?? '',
       raffleId: json['raffle_id'] as String? ?? '',
-      quantity: json['quantity'] as int? ?? 0,
+      quantity: (json['quantity'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$PrizeBaseToJson(PrizeBase instance) => <String, dynamic>{
@@ -1581,7 +1582,7 @@ PrizeEdit _$PrizeEditFromJson(Map<String, dynamic> json) => PrizeEdit(
       raffleId: json['raffle_id'] as String? ?? '',
       description: json['description'] as String? ?? '',
       name: json['name'] as String? ?? '',
-      quantity: json['quantity'] as int? ?? 0,
+      quantity: (json['quantity'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$PrizeEditToJson(PrizeEdit instance) => <String, dynamic>{
@@ -1595,7 +1596,7 @@ PrizeSimple _$PrizeSimpleFromJson(Map<String, dynamic> json) => PrizeSimple(
       name: json['name'] as String? ?? '',
       description: json['description'] as String? ?? '',
       raffleId: json['raffle_id'] as String? ?? '',
-      quantity: json['quantity'] as int? ?? 0,
+      quantity: (json['quantity'] as num?)?.toInt() ?? 0,
       id: json['id'] as String? ?? '',
     );
 
@@ -1639,7 +1640,7 @@ Map<String, dynamic> _$ProductEditToJson(ProductEdit instance) =>
 
 ProductQuantity _$ProductQuantityFromJson(Map<String, dynamic> json) =>
     ProductQuantity(
-      quantity: json['quantity'] as int? ?? 0,
+      quantity: (json['quantity'] as num?)?.toInt() ?? 0,
       product:
           ProductComplete.fromJson(json['product'] as Map<String, dynamic>),
     );
@@ -1728,7 +1729,7 @@ Map<String, dynamic> _$RaffleSimpleToJson(RaffleSimple instance) =>
     };
 
 RaffleStats _$RaffleStatsFromJson(Map<String, dynamic> json) => RaffleStats(
-      ticketsSold: json['tickets_sold'] as int? ?? 0,
+      ticketsSold: (json['tickets_sold'] as num?)?.toInt() ?? 0,
       amountRaised: (json['amount_raised'] as num?)?.toDouble() ?? 0.0,
     );
 
@@ -1815,10 +1816,8 @@ TicketComplete _$TicketCompleteFromJson(Map<String, dynamic> json) =>
       prize: json['prize'] == null
           ? null
           : PrizeSimple.fromJson(json['prize'] as Map<String, dynamic>),
-      packTicket: json['pack_ticket'] == null
-          ? null
-          : PackTicketSimple.fromJson(
-              json['pack_ticket'] as Map<String, dynamic>),
+      packTicket: PackTicketSimple.fromJson(
+          json['pack_ticket'] as Map<String, dynamic>),
       user: CoreUserSimple.fromJson(json['user'] as Map<String, dynamic>),
     );
 
@@ -1829,7 +1828,7 @@ Map<String, dynamic> _$TicketCompleteToJson(TicketComplete instance) =>
       'winning_prize': instance.winningPrize,
       'id': instance.id,
       'prize': instance.prize?.toJson(),
-      'pack_ticket': instance.packTicket?.toJson(),
+      'pack_ticket': instance.packTicket.toJson(),
       'user': instance.user.toJson(),
     };
 
@@ -1852,7 +1851,7 @@ TokenResponse _$TokenResponseFromJson(Map<String, dynamic> json) =>
     TokenResponse(
       accessToken: json['access_token'] as String? ?? '',
       tokenType: json['token_type'] as String? ?? '',
-      expiresIn: json['expires_in'] as int? ?? 0,
+      expiresIn: (json['expires_in'] as num?)?.toInt() ?? 0,
       scopes: json['scopes'] as String? ?? '',
       refreshToken: json['refresh_token'] as String? ?? '',
       idToken: json['id_token'] as String? ?? '',
@@ -1893,7 +1892,7 @@ Map<String, dynamic> _$VoteBaseToJson(VoteBase instance) => <String, dynamic>{
 
 VoteStats _$VoteStatsFromJson(Map<String, dynamic> json) => VoteStats(
       sectionId: json['section_id'] as String? ?? '',
-      count: json['count'] as int? ?? 0,
+      count: (json['count'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$VoteStatsToJson(VoteStats instance) => <String, dynamic>{
@@ -1942,7 +1941,7 @@ AppSchemasSchemasCampaignResult _$AppSchemasSchemasCampaignResultFromJson(
         Map<String, dynamic> json) =>
     AppSchemasSchemasCampaignResult(
       listId: json['list_id'] as String? ?? '',
-      count: json['count'] as int? ?? 0,
+      count: (json['count'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$AppSchemasSchemasCampaignResultToJson(

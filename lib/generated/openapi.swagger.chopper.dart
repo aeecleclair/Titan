@@ -6,6 +6,7 @@ part of 'openapi.swagger.dart';
 // ChopperGenerator
 // **************************************************************************
 
+// coverage:ignore-file
 // ignore_for_file: type=lint
 final class _$Openapi extends Openapi {
   _$Openapi([ChopperClient? client]) {
@@ -14,7 +15,7 @@ final class _$Openapi extends Openapi {
   }
 
   @override
-  final definitionType = Openapi;
+  final Type definitionType = Openapi;
 
   @override
   Future<Response<dynamic>> _sendEmailPost({
@@ -686,22 +687,23 @@ final class _$Openapi extends Openapi {
 
   @override
   Future<Response<AccessToken>> _authSimpleTokenPost(
-      {required BodyLoginForAccessTokenAuthSimpleTokenPost body}) {
+      {required Map<String, String> body}) {
     final Uri $url = Uri.parse('/auth/simple_token');
-    final List<PartValue> $parts = <PartValue>[
-      PartValue<BodyLoginForAccessTokenAuthSimpleTokenPost>(
-        'body',
-        body,
-      )
-    ];
+    final Map<String, String> $headers = {
+      'content-type': 'application/x-www-form-urlencoded',
+    };
+    final $body = body;
     final Request $request = Request(
       'POST',
       $url,
       client.baseUrl,
-      parts: $parts,
-      multipart: true,
+      body: $body,
+      headers: $headers,
     );
-    return client.send<AccessToken, AccessToken>($request);
+    return client.send<AccessToken, AccessToken>(
+      $request,
+      requestConverter: FormUrlEncodedConverter.requestFactory,
+    );
   }
 
   @override
@@ -737,70 +739,68 @@ final class _$Openapi extends Openapi {
 
   @override
   Future<Response<String>> _authAuthorizePost(
-      {required BodyPostAuthorizePageAuthAuthorizePost body}) {
+      {required Map<String, String> body}) {
     final Uri $url = Uri.parse('/auth/authorize');
-    final List<PartValue> $parts = <PartValue>[
-      PartValue<BodyPostAuthorizePageAuthAuthorizePost>(
-        'body',
-        body,
-      )
-    ];
+    final Map<String, String> $headers = {
+      'content-type': 'application/x-www-form-urlencoded',
+    };
+    final $body = body;
     final Request $request = Request(
       'POST',
       $url,
       client.baseUrl,
-      parts: $parts,
-      multipart: true,
+      body: $body,
+      headers: $headers,
     );
-    return client.send<String, String>($request);
+    return client.send<String, String>(
+      $request,
+      requestConverter: FormUrlEncodedConverter.requestFactory,
+    );
   }
 
   @override
   Future<Response<dynamic>> _authAuthorizationFlowAuthorizeValidationPost(
-      {required BodyAuthorizeValidationAuthAuthorizationFlowAuthorizeValidationPost
-          body}) {
+      {required Map<String, String> body}) {
     final Uri $url = Uri.parse('/auth/authorization-flow/authorize-validation');
-    final List<PartValue> $parts = <PartValue>[
-      PartValue<
-          BodyAuthorizeValidationAuthAuthorizationFlowAuthorizeValidationPost>(
-        'body',
-        body,
-      )
-    ];
+    final Map<String, String> $headers = {
+      'content-type': 'application/x-www-form-urlencoded',
+    };
+    final $body = body;
     final Request $request = Request(
       'POST',
       $url,
       client.baseUrl,
-      parts: $parts,
-      multipart: true,
+      body: $body,
+      headers: $headers,
     );
-    return client.send<dynamic, dynamic>($request);
+    return client.send<dynamic, dynamic>(
+      $request,
+      requestConverter: FormUrlEncodedConverter.requestFactory,
+    );
   }
 
   @override
   Future<Response<TokenResponse>> _authTokenPost({
     String? authorization,
-    required BodyTokenAuthTokenPost body,
+    required Map<String, String> body,
   }) {
     final Uri $url = Uri.parse('/auth/token');
     final Map<String, String> $headers = {
       if (authorization != null) 'authorization': authorization,
+      'content-type': 'application/x-www-form-urlencoded',
     };
-    final List<PartValue> $parts = <PartValue>[
-      PartValue<BodyTokenAuthTokenPost>(
-        'body',
-        body,
-      )
-    ];
+    final $body = body;
     final Request $request = Request(
       'POST',
       $url,
       client.baseUrl,
-      parts: $parts,
-      multipart: true,
+      body: $body,
       headers: $headers,
     );
-    return client.send<TokenResponse, TokenResponse>($request);
+    return client.send<TokenResponse, TokenResponse>(
+      $request,
+      requestConverter: FormUrlEncodedConverter.requestFactory,
+    );
   }
 
   @override
@@ -2574,7 +2574,7 @@ final class _$Openapi extends Openapi {
   }
 
   @override
-  Future<Response<CoreUser>> _usersMeGet() async {
+  Future<Response<CoreUser>> _usersMeGet() {
     final Uri $url = Uri.parse('/users/me');
     final Request $request = Request(
       'GET',

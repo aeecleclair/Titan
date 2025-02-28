@@ -1,21 +1,25 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:crypto/crypto.dart';
+import 'package:flutter_appauth/flutter_appauth.dart' show FlutterAppAuth;
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter/foundation.dart' show kDebugMode, kIsWeb;
 import 'package:myecl/auth/providers/is_connected_provider.dart';
 import 'package:myecl/auth/repository/auth_repository.dart';
-import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/auth/repository/openid_repository.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart' show TokenResponse;
 import 'package:myecl/tools/cache/cache_manager.dart';
+import 'package:myecl/tools/functions.dart';
 
 final authTokenProvider =
     StateNotifierProvider<OpenIdTokenProvider, AsyncValue<TokenResponse>>(
-        (ref) {
-  OpenIdTokenProvider openIdTokenProvider = OpenIdTokenProvider();
+        (ref) {  
+  final repository = ref.watch(authRepositoryProvider);
+  final openIdTokenProvider = OpenIdTokenProvider(userRepository: repository);
   final isConnected = ref.watch(isConnectedProvider);
   if (isConnected) {
     openIdTokenProvider.getTokenFromStorage();
@@ -106,32 +110,11 @@ final tokenProvider = Provider((ref) {
 
 class OpenIdTokenProvider
     extends StateNotifier<AsyncValue<TokenResponse>> {
-  FlutterAppAuth appAuth = const FlutterAppAuth();
-  final CacheManager cacheManager = CacheManager();
-  final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
-  final Base64Codec base64 = const Base64Codec.urlSafe();
-  final OpenIdRepository openIdRepository = OpenIdRepository();
-  final String tokenName = "my_ecl_auth_token";
-  final String clientId = "Titan";
   final String tokenKey = "token";
   final String refreshTokenKey = "refresh_token";
-  final String redirectUrl = "${getTitanPackageName()}://authorized";
-  final String redirectUrlHost = "myecl.fr";
-  final String discoveryUrl =
-      "${Repository.host}.well-known/openid-configuration";
-  final List<String> scopes = ["API"];
-  OpenIdTokenProvider() : super(const AsyncValue.loading());
-
-  String generateRandomString(int len) {
-    var r = Random.secure();
-    const chars =
-        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-    return List.generate(len, (index) => chars[r.nextInt(chars.length)]).join();
-  }
-
-  String hash(String data) {
-    return base64.encode(sha256.convert(utf8.encode(data)).bytes);
-  }
+  AuthRepository? userRepository;
+  OpenIdTokenProvider({required this.userRepository})
+      : super(const AsyncValue.loading());
 
   Future getTokenFromRequest() async {
     state = const AsyncValue.loading();

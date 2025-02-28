@@ -37,8 +37,9 @@ final logsProvider =
 });
 
 class NotificationLogsProvider extends ListNotifier<Log> {
-  Logger logger = Repository.logger;
-  NotificationLogsProvider() : super(const AsyncValue.loading());
+  final Logger logger;
+  NotificationLogsProvider({required this.logger})
+      : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Log>>> getLogs() async {
     return await loadList(() async => logger.getNotificationLogs());
@@ -60,7 +61,8 @@ class NotificationLogsProvider extends ListNotifier<Log> {
 final notificationLogsProvider =
     StateNotifierProvider<NotificationLogsProvider, AsyncValue<List<Log>>>(
         (ref) {
-  NotificationLogsProvider notifier = NotificationLogsProvider();
+  final logger = ref.watch(loggerProvider);
+  NotificationLogsProvider notifier = NotificationLogsProvider(logger: logger);
   notifier.getLogs();
   return notifier;
 });

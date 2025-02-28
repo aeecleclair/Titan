@@ -108,7 +108,7 @@ class AuthRepository {
       }
       return tokenResponse;
     } else {
-      AuthorizationTokenResponse? resp = await appAuth.authorizeAndExchangeCode(
+      AuthorizationTokenResponse resp = await appAuth.authorizeAndExchangeCode(
         AuthorizationTokenRequest(
           clientId,
           redirectUrl,
@@ -116,7 +116,7 @@ class AuthRepository {
           scopes: scopes,
         ),
       );
-      if (resp != null) {
+      if (resp.accessToken != null && resp.refreshToken != null) {
         await _secureStorage.write(key: tokenName, value: resp.refreshToken);
         tokenResponse = models.TokenResponse(
           accessToken: resp.accessToken!,
@@ -156,7 +156,7 @@ class AuthRepository {
               scopes: scopes,
               refreshToken: token,
             ));
-            if (resp != null) {
+            if (resp.accessToken != null && resp.refreshToken != null) {
               tokenResponse = models.TokenResponse(
                 accessToken: resp.accessToken!,
                 refreshToken: resp.refreshToken!,
@@ -189,7 +189,7 @@ class AuthRepository {
       authorizationCode: authorizationToken,
     ))
         .then((resp) {
-      if (resp != null) {
+      if (resp.accessToken != null && resp.refreshToken != null) {
         tokenResponse = models.TokenResponse(
           accessToken: resp.accessToken!,
           refreshToken: resp.refreshToken!,
@@ -214,7 +214,7 @@ class AuthRepository {
           refreshToken: tokenResponse.refreshToken,
         ),
       );
-      if (resp == null) {
+      if (resp.accessToken == null || resp.refreshToken == null) {
         return tokenResponse;
       }
       tokenResponse = models.TokenResponse(

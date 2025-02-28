@@ -57,7 +57,7 @@ class UserNotifier extends SingleNotifier2<CoreUser> {
 final asyncUserProvider =
     StateNotifierProvider<UserNotifier, AsyncValue<CoreUser>>((ref) {
   final token = ref.watch(tokenProvider);
-  UserNotifier userNotifier = UserNotifier(userRepository: token: token);
+  UserNotifier userNotifier = UserNotifier(userRepository: token);
   final token = ref.watch(tokenProvider);
   tokenExpireWrapperAuth(ref, () async {
     final isLoggedIn = ref.watch(isLoggedInProvider);

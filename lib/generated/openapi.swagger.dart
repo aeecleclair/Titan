@@ -28,6 +28,7 @@ abstract class Openapi extends ChopperService {
     ChopperClient? client,
     http.Client? httpClient,
     Authenticator? authenticator,
+    ErrorConverter? errorConverter,
     Converter? converter,
     Uri? baseUrl,
     Iterable<dynamic>? interceptors,
@@ -42,6 +43,7 @@ abstract class Openapi extends ChopperService {
         interceptors: interceptors ?? [],
         client: httpClient,
         authenticator: authenticator,
+        errorConverter: errorConverter,
         baseUrl: baseUrl ?? Uri.parse('http://'));
     return _$Openapi(newClient);
   }
@@ -857,7 +859,7 @@ abstract class Openapi extends ChopperService {
 
   ///Login For Access Token
   Future<chopper.Response<AccessToken>> authSimpleTokenPost(
-      {required BodyLoginForAccessTokenAuthSimpleTokenPost body}) {
+      {required Map<String, String> body}) {
     generatedMapping.putIfAbsent(
         AccessToken, () => AccessToken.fromJsonFactory);
 
@@ -867,11 +869,11 @@ abstract class Openapi extends ChopperService {
   ///Login For Access Token
   @Post(
     path: '/auth/simple_token',
-    optionalBody: true,
+    headers: {contentTypeKey: formEncodedHeaders},
   )
-  @Multipart()
+  @FactoryConverter(request: FormUrlEncodedConverter.requestFactory)
   Future<chopper.Response<AccessToken>> _authSimpleTokenPost(
-      {@Part() required BodyLoginForAccessTokenAuthSimpleTokenPost body});
+      {@Body() required Map<String, String> body});
 
   ///Get Authorize Page
   ///@param client_id
@@ -926,42 +928,39 @@ abstract class Openapi extends ChopperService {
 
   ///Post Authorize Page
   Future<chopper.Response<String>> authAuthorizePost(
-      {required BodyPostAuthorizePageAuthAuthorizePost body}) {
+      {required Map<String, String> body}) {
     return _authAuthorizePost(body: body);
   }
 
   ///Post Authorize Page
   @Post(
     path: '/auth/authorize',
-    optionalBody: true,
+    headers: {contentTypeKey: formEncodedHeaders},
   )
-  @Multipart()
+  @FactoryConverter(request: FormUrlEncodedConverter.requestFactory)
   Future<chopper.Response<String>> _authAuthorizePost(
-      {@Part() required BodyPostAuthorizePageAuthAuthorizePost body});
+      {@Body() required Map<String, String> body});
 
   ///Authorize Validation
   Future<chopper.Response> authAuthorizationFlowAuthorizeValidationPost(
-      {required BodyAuthorizeValidationAuthAuthorizationFlowAuthorizeValidationPost
-          body}) {
+      {required Map<String, String> body}) {
     return _authAuthorizationFlowAuthorizeValidationPost(body: body);
   }
 
   ///Authorize Validation
   @Post(
     path: '/auth/authorization-flow/authorize-validation',
-    optionalBody: true,
+    headers: {contentTypeKey: formEncodedHeaders},
   )
-  @Multipart()
+  @FactoryConverter(request: FormUrlEncodedConverter.requestFactory)
   Future<chopper.Response> _authAuthorizationFlowAuthorizeValidationPost(
-      {@Part()
-      required BodyAuthorizeValidationAuthAuthorizationFlowAuthorizeValidationPost
-          body});
+      {@Body() required Map<String, String> body});
 
   ///Token
   ///@param authorization
   Future<chopper.Response<TokenResponse>> authTokenPost({
     String? authorization,
-    required BodyTokenAuthTokenPost body,
+    required Map<String, String> body,
   }) {
     generatedMapping.putIfAbsent(
         TokenResponse, () => TokenResponse.fromJsonFactory);
@@ -973,12 +972,12 @@ abstract class Openapi extends ChopperService {
   ///@param authorization
   @Post(
     path: '/auth/token',
-    optionalBody: true,
+    headers: {contentTypeKey: formEncodedHeaders},
   )
-  @Multipart()
+  @FactoryConverter(request: FormUrlEncodedConverter.requestFactory)
   Future<chopper.Response<TokenResponse>> _authTokenPost({
     @Header('authorization') String? authorization,
-    @Part() required BodyTokenAuthTokenPost body,
+    @Body() required Map<String, String> body,
   });
 
   ///Auth Get Userinfo

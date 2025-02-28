@@ -5,8 +5,8 @@ import 'package:chopper/chopper.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/repository/auth_repository.dart';
 
-class MyAuthenticator implements Authenticator {
-  MyAuthenticator({required this.repo});
+class AppAuthenticator implements Authenticator {
+  AppAuthenticator({required this.repo});
 
   final AuthRepository repo;
 
@@ -16,9 +16,9 @@ class MyAuthenticator implements Authenticator {
     Response response, [
     Request? originalRequest,
   ]) async {
-    print('[MyAuthenticator] response.statusCode: ${response.statusCode}');
+    print('[AppAuthenticator] response.statusCode: ${response.statusCode}');
     print(
-      '[MyAuthenticator] request Retry-Count: ${request.headers['Retry-Count'] ?? 0}',
+      '[AppAuthenticator] request Retry-Count: ${request.headers['Retry-Count'] ?? 0}',
     );
 
     // 401
@@ -26,7 +26,7 @@ class MyAuthenticator implements Authenticator {
       // Trying to update token only 1 time
       if (request.headers['Retry-Count'] != null) {
         print(
-          '[MyAuthenticator] Unable to refresh token, retry count exceeded',
+          '[AppAuthenticator] Unable to refresh token, retry count exceeded',
         );
         return null;
       }
@@ -44,7 +44,7 @@ class MyAuthenticator implements Authenticator {
           },
         );
       } catch (e) {
-        print('[MyAuthenticator] Unable to refresh token: $e');
+        print('[AppAuthenticator] Unable to refresh token: $e');
         return null;
       }
     }
@@ -66,7 +66,7 @@ class MyAuthenticator implements Authenticator {
     _completer = completer;
 
     repo.refreshToken().then((response) {
-      print('[MyAuthenticator] Refreshed token');
+      print('[AppAuthenticator] Refreshed token');
       // Completing with a new token
       completer?.complete(response.accessToken);
     }).onError((error, stackTrace) {
@@ -84,7 +84,7 @@ class MyAuthenticator implements Authenticator {
   AuthenticationCallback? get onAuthenticationSuccessful => null;
 }
 
-final authenticatorProvider = Provider<MyAuthenticator>((ref) {
+final authenticatorProvider = Provider<AppAuthenticator>((ref) {
   final repo = ref.watch(authRepositoryProvider);
-  return MyAuthenticator(repo: repo);
+  return AppAuthenticator(repo: repo);
 });

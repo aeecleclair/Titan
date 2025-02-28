@@ -28,7 +28,7 @@ class AccessToken {
   static const fromJsonFactory = _$AccessTokenFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is AccessToken &&
             (identical(other.accessToken, accessToken) ||
@@ -91,7 +91,7 @@ class AdvertBase {
   static const fromJsonFactory = _$AdvertBaseFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is AdvertBase &&
             (identical(other.title, title) ||
@@ -177,7 +177,7 @@ class AdvertReturnComplete {
   static const fromJsonFactory = _$AdvertReturnCompleteFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is AdvertReturnComplete &&
             (identical(other.title, title) ||
@@ -276,7 +276,7 @@ class AdvertUpdate {
   static const fromJsonFactory = _$AdvertUpdateFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is AdvertUpdate &&
             (identical(other.title, title) ||
@@ -338,7 +338,7 @@ class AdvertiserBase {
   static const fromJsonFactory = _$AdvertiserBaseFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is AdvertiserBase &&
             (identical(other.name, name) ||
@@ -398,7 +398,7 @@ class AdvertiserComplete {
   static const fromJsonFactory = _$AdvertiserCompleteFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is AdvertiserComplete &&
             (identical(other.name, name) ||
@@ -463,7 +463,7 @@ class AdvertiserUpdate {
   static const fromJsonFactory = _$AdvertiserUpdateFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is AdvertiserUpdate &&
             (identical(other.name, name) ||
@@ -535,7 +535,7 @@ class Applicant {
   static const fromJsonFactory = _$ApplicantFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is Applicant &&
             (identical(other.name, name) ||
@@ -626,7 +626,7 @@ class BatchResult {
   static const fromJsonFactory = _$BatchResultFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is BatchResult &&
             (identical(other.failed, failed) ||
@@ -701,7 +701,7 @@ class BodyAuthorizeValidationAuthAuthorizationFlowAuthorizeValidationPost {
       _$BodyAuthorizeValidationAuthAuthorizationFlowAuthorizeValidationPostFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is BodyAuthorizeValidationAuthAuthorizationFlowAuthorizeValidationPost &&
             (identical(other.clientId, clientId) ||
@@ -828,7 +828,7 @@ class BodyCreateAdvertImageAdvertAdvertsAdvertIdPicturePost {
       _$BodyCreateAdvertImageAdvertAdvertsAdvertIdPicturePostFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is BodyCreateAdvertImageAdvertAdvertsAdvertIdPicturePost &&
             (identical(other.image, image) ||
@@ -879,7 +879,7 @@ class BodyCreateCampaignsLogoCampaignListsListIdLogoPost {
       _$BodyCreateCampaignsLogoCampaignListsListIdLogoPostFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is BodyCreateCampaignsLogoCampaignListsListIdLogoPost &&
             (identical(other.image, image) ||
@@ -929,7 +929,7 @@ class BodyCreateCampaignsLogoCinemaSessionsSessionIdPosterPost {
       _$BodyCreateCampaignsLogoCinemaSessionsSessionIdPosterPostFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is BodyCreateCampaignsLogoCinemaSessionsSessionIdPosterPost &&
             (identical(other.image, image) ||
@@ -980,7 +980,7 @@ class BodyCreateCurrentRaffleLogoTombolaRafflesRaffleIdLogoPost {
       _$BodyCreateCurrentRaffleLogoTombolaRafflesRaffleIdLogoPostFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is BodyCreateCurrentRaffleLogoTombolaRafflesRaffleIdLogoPost &&
             (identical(other.image, image) ||
@@ -1033,7 +1033,7 @@ class BodyCreateCurrentUserProfilePictureUsersMeProfilePicturePost {
       _$BodyCreateCurrentUserProfilePictureUsersMeProfilePicturePostFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is BodyCreateCurrentUserProfilePictureUsersMeProfilePicturePost &&
             (identical(other.image, image) ||
@@ -1084,7 +1084,7 @@ class BodyCreatePrizePictureTombolaPrizesPrizeIdPicturePost {
       _$BodyCreatePrizePictureTombolaPrizesPrizeIdPicturePostFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is BodyCreatePrizePictureTombolaPrizesPrizeIdPicturePost &&
             (identical(other.image, image) ||
@@ -1150,7 +1150,7 @@ class BodyLoginForAccessTokenAuthSimpleTokenPost {
       _$BodyLoginForAccessTokenAuthSimpleTokenPostFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is BodyLoginForAccessTokenAuthSimpleTokenPost &&
             (identical(other.grantType, grantType) ||
@@ -1263,7 +1263,7 @@ class BodyPostAuthorizePageAuthAuthorizePost {
       _$BodyPostAuthorizePageAuthAuthorizePostFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is BodyPostAuthorizePageAuthAuthorizePost &&
             (identical(other.responseType, responseType) ||
@@ -1371,7 +1371,7 @@ class BodyRecoverUserUsersRecoverPost {
   static const fromJsonFactory = _$BodyRecoverUserUsersRecoverPostFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is BodyRecoverUserUsersRecoverPost &&
             (identical(other.email, email) ||
@@ -1419,7 +1419,7 @@ class BodyRegisterFirebaseDeviceNotificationDevicesPost {
       _$BodyRegisterFirebaseDeviceNotificationDevicesPostFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is BodyRegisterFirebaseDeviceNotificationDevicesPost &&
             (identical(other.firebaseToken, firebaseToken) ||
@@ -1486,7 +1486,7 @@ class BodyTokenAuthTokenPost {
   static const fromJsonFactory = _$BodyTokenAuthTokenPostFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is BodyTokenAuthTokenPost &&
             (identical(other.refreshToken, refreshToken) ||
@@ -1606,7 +1606,7 @@ class BookingBase {
   static const fromJsonFactory = _$BookingBaseFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is BookingBase &&
             (identical(other.reason, reason) ||
@@ -1726,7 +1726,7 @@ class BookingEdit {
   static const fromJsonFactory = _$BookingEditFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is BookingEdit &&
             (identical(other.reason, reason) ||
@@ -1862,7 +1862,7 @@ class BookingReturn {
   static const fromJsonFactory = _$BookingReturnFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is BookingReturn &&
             (identical(other.reason, reason) ||
@@ -2032,7 +2032,7 @@ class BookingReturnApplicant {
   static const fromJsonFactory = _$BookingReturnApplicantFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is BookingReturnApplicant &&
             (identical(other.reason, reason) ||
@@ -2176,7 +2176,7 @@ class ChangePasswordRequest {
   static const fromJsonFactory = _$ChangePasswordRequestFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ChangePasswordRequest &&
             (identical(other.email, email) ||
@@ -2254,7 +2254,7 @@ class CineSessionBase {
   static const fromJsonFactory = _$CineSessionBaseFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is CineSessionBase &&
             (identical(other.start, start) ||
@@ -2356,7 +2356,7 @@ class CineSessionComplete {
   static const fromJsonFactory = _$CineSessionCompleteFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is CineSessionComplete &&
             (identical(other.start, start) ||
@@ -2463,7 +2463,7 @@ class CineSessionUpdate {
   static const fromJsonFactory = _$CineSessionUpdateFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is CineSessionUpdate &&
             (identical(other.name, name) ||
@@ -2547,7 +2547,7 @@ class CoreBatchDeleteMembership {
   static const fromJsonFactory = _$CoreBatchDeleteMembershipFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is CoreBatchDeleteMembership &&
             (identical(other.groupId, groupId) ||
@@ -2596,7 +2596,7 @@ class CoreBatchMembership {
   static const fromJsonFactory = _$CoreBatchMembershipFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is CoreBatchMembership &&
             (identical(other.userEmails, userEmails) ||
@@ -2659,14 +2659,14 @@ class CoreBatchUserCreateRequest {
   final String email;
   @JsonKey(
     name: 'account_type',
-    toJson: accountTypeNullableToJson,
-    fromJson: accountTypeNullableFromJson,
+    toJson: accountTypeToJson,
+    fromJson: accountTypeFromJson,
   )
-  final enums.AccountType? accountType;
+  final enums.AccountType accountType;
   static const fromJsonFactory = _$CoreBatchUserCreateRequestFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is CoreBatchUserCreateRequest &&
             (identical(other.email, email) ||
@@ -2695,7 +2695,7 @@ extension $CoreBatchUserCreateRequestExtension on CoreBatchUserCreateRequest {
   }
 
   CoreBatchUserCreateRequest copyWithWrapped(
-      {Wrapped<String>? email, Wrapped<enums.AccountType?>? accountType}) {
+      {Wrapped<String>? email, Wrapped<enums.AccountType>? accountType}) {
     return CoreBatchUserCreateRequest(
         email: (email != null ? email.value : this.email),
         accountType:
@@ -2729,7 +2729,7 @@ class CoreGroup {
   static const fromJsonFactory = _$CoreGroupFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is CoreGroup &&
             (identical(other.name, name) ||
@@ -2802,7 +2802,7 @@ class CoreGroupCreate {
   static const fromJsonFactory = _$CoreGroupCreateFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is CoreGroupCreate &&
             (identical(other.name, name) ||
@@ -2860,7 +2860,7 @@ class CoreGroupSimple {
   static const fromJsonFactory = _$CoreGroupSimpleFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is CoreGroupSimple &&
             (identical(other.name, name) ||
@@ -2923,7 +2923,7 @@ class CoreGroupUpdate {
   static const fromJsonFactory = _$CoreGroupUpdateFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is CoreGroupUpdate &&
             (identical(other.name, name) ||
@@ -2984,7 +2984,7 @@ class CoreInformation {
   static const fromJsonFactory = _$CoreInformationFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is CoreInformation &&
             (identical(other.ready, ready) ||
@@ -3067,7 +3067,7 @@ class CoreMembership {
   static const fromJsonFactory = _$CoreMembershipFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is CoreMembership &&
             (identical(other.userId, userId) ||
@@ -3132,7 +3132,7 @@ class CoreMembershipDelete {
   static const fromJsonFactory = _$CoreMembershipDeleteFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is CoreMembershipDelete &&
             (identical(other.userId, userId) ||
@@ -3216,7 +3216,7 @@ class CoreUser {
   static const fromJsonFactory = _$CoreUserFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is CoreUser &&
             (identical(other.name, name) ||
@@ -3365,7 +3365,7 @@ class CoreUserActivateRequest {
   static const fromJsonFactory = _$CoreUserActivateRequestFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is CoreUserActivateRequest &&
             (identical(other.name, name) ||
@@ -3475,7 +3475,7 @@ class CoreUserCreateRequest {
   static const fromJsonFactory = _$CoreUserCreateRequestFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is CoreUserCreateRequest &&
             (identical(other.email, email) ||
@@ -3527,7 +3527,7 @@ class CoreUserSimple {
   static const fromJsonFactory = _$CoreUserSimpleFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is CoreUserSimple &&
             (identical(other.name, name) ||
@@ -3607,7 +3607,7 @@ class CoreUserUpdate {
   static const fromJsonFactory = _$CoreUserUpdateFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is CoreUserUpdate &&
             (identical(other.nickname, nickname) ||
@@ -3699,7 +3699,7 @@ class CoreUserUpdateAdmin {
   static const fromJsonFactory = _$CoreUserUpdateAdminFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is CoreUserUpdateAdmin &&
             (identical(other.name, name) ||
@@ -3794,7 +3794,7 @@ class DeliveryBase {
   static const fromJsonFactory = _$DeliveryBaseFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is DeliveryBase &&
             (identical(other.deliveryDate, deliveryDate) ||
@@ -3849,7 +3849,7 @@ class DeliveryProductsUpdate {
   static const fromJsonFactory = _$DeliveryProductsUpdateFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is DeliveryProductsUpdate &&
             (identical(other.productsIds, productsIds) ||
@@ -3907,7 +3907,7 @@ class DeliveryReturn {
   static const fromJsonFactory = _$DeliveryReturnFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is DeliveryReturn &&
             (identical(other.deliveryDate, deliveryDate) ||
@@ -3978,7 +3978,7 @@ class DeliveryUpdate {
   static const fromJsonFactory = _$DeliveryUpdateFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is DeliveryUpdate &&
             (identical(other.deliveryDate, deliveryDate) ||
@@ -4041,7 +4041,7 @@ class EventApplicant {
   static const fromJsonFactory = _$EventApplicantFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is EventApplicant &&
             (identical(other.name, name) ||
@@ -4160,7 +4160,7 @@ class EventBase {
   static const fromJsonFactory = _$EventBaseFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is EventBase &&
             (identical(other.name, name) ||
@@ -4311,7 +4311,7 @@ class EventComplete {
   static const fromJsonFactory = _$EventCompleteFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is EventComplete &&
             (identical(other.name, name) ||
@@ -4473,7 +4473,7 @@ class EventEdit {
   static const fromJsonFactory = _$EventEditFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is EventEdit &&
             (identical(other.name, name) ||
@@ -4627,7 +4627,7 @@ class EventReturn {
   static const fromJsonFactory = _$EventReturnFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is EventReturn &&
             (identical(other.name, name) ||
@@ -4772,7 +4772,7 @@ class FirebaseDevice {
   static const fromJsonFactory = _$FirebaseDeviceFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is FirebaseDevice &&
             (identical(other.userId, userId) ||
@@ -4826,7 +4826,7 @@ class HTTPValidationError {
   static const fromJsonFactory = _$HTTPValidationErrorFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is HTTPValidationError &&
             (identical(other.detail, detail) ||
@@ -4876,7 +4876,7 @@ class Information {
   static const fromJsonFactory = _$InformationFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is Information &&
             (identical(other.manager, manager) ||
@@ -4943,7 +4943,7 @@ class InformationEdit {
   static const fromJsonFactory = _$InformationEditFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is InformationEdit &&
             (identical(other.manager, manager) ||
@@ -5022,7 +5022,7 @@ class Item {
   static const fromJsonFactory = _$ItemFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is Item &&
             (identical(other.name, name) ||
@@ -5135,7 +5135,7 @@ class ItemBase {
   static const fromJsonFactory = _$ItemBaseFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ItemBase &&
             (identical(other.name, name) ||
@@ -5216,7 +5216,7 @@ class ItemBorrowed {
   static const fromJsonFactory = _$ItemBorrowedFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ItemBorrowed &&
             (identical(other.itemId, itemId) ||
@@ -5270,7 +5270,7 @@ class ItemQuantity {
   static const fromJsonFactory = _$ItemQuantityFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ItemQuantity &&
             (identical(other.quantity, quantity) ||
@@ -5329,7 +5329,7 @@ class ItemSimple {
   static const fromJsonFactory = _$ItemSimpleFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ItemSimple &&
             (identical(other.id, id) ||
@@ -5395,7 +5395,7 @@ class ItemUpdate {
   static const fromJsonFactory = _$ItemUpdateFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ItemUpdate &&
             (identical(other.name, name) ||
@@ -5492,7 +5492,7 @@ class ListBase {
   static const fromJsonFactory = _$ListBaseFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ListBase &&
             (identical(other.name, name) ||
@@ -5594,7 +5594,7 @@ class ListEdit {
   static const fromJsonFactory = _$ListEditFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ListEdit &&
             (identical(other.name, name) ||
@@ -5675,7 +5675,7 @@ class ListMemberBase {
   static const fromJsonFactory = _$ListMemberBaseFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ListMemberBase &&
             (identical(other.userId, userId) ||
@@ -5731,7 +5731,7 @@ class ListMemberComplete {
   static const fromJsonFactory = _$ListMemberCompleteFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ListMemberComplete &&
             (identical(other.userId, userId) ||
@@ -5812,7 +5812,7 @@ class ListReturn {
   static const fromJsonFactory = _$ListReturnFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ListReturn &&
             (identical(other.id, id) ||
@@ -5934,7 +5934,7 @@ class Loan {
   static const fromJsonFactory = _$LoanFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is Loan &&
             (identical(other.borrowerId, borrowerId) ||
@@ -6075,7 +6075,7 @@ class LoanCreation {
   static const fromJsonFactory = _$LoanCreationFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is LoanCreation &&
             (identical(other.borrowerId, borrowerId) ||
@@ -6172,7 +6172,7 @@ class LoanExtend {
   static const fromJsonFactory = _$LoanExtendFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is LoanExtend &&
             (identical(other.end, end) ||
@@ -6241,7 +6241,7 @@ class LoanUpdate {
   static const fromJsonFactory = _$LoanUpdateFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is LoanUpdate &&
             (identical(other.borrowerId, borrowerId) ||
@@ -6340,7 +6340,7 @@ class Loaner {
   static const fromJsonFactory = _$LoanerFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is Loaner &&
             (identical(other.name, name) ||
@@ -6404,7 +6404,7 @@ class LoanerBase {
   static const fromJsonFactory = _$LoanerBaseFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is LoanerBase &&
             (identical(other.name, name) ||
@@ -6461,7 +6461,7 @@ class LoanerUpdate {
   static const fromJsonFactory = _$LoanerUpdateFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is LoanerUpdate &&
             (identical(other.name, name) ||
@@ -6515,7 +6515,7 @@ class MailMigrationRequest {
   static const fromJsonFactory = _$MailMigrationRequestFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is MailMigrationRequest &&
             (identical(other.newEmail, newEmail) ||
@@ -6580,7 +6580,7 @@ class Message {
   static const fromJsonFactory = _$MessageFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is Message &&
             (identical(other.context, context) ||
@@ -6690,7 +6690,7 @@ class ModuleVisibility {
   static const fromJsonFactory = _$ModuleVisibilityFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ModuleVisibility &&
             (identical(other.root, root) ||
@@ -6747,7 +6747,7 @@ class ModuleVisibilityCreate {
   static const fromJsonFactory = _$ModuleVisibilityCreateFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ModuleVisibilityCreate &&
             (identical(other.root, root) ||
@@ -6808,16 +6808,16 @@ class OrderBase {
   final List<String> productsIds;
   @JsonKey(
     name: 'collection_slot',
-    toJson: amapSlotTypeNullableToJson,
-    fromJson: amapSlotTypeNullableFromJson,
+    toJson: amapSlotTypeToJson,
+    fromJson: amapSlotTypeFromJson,
   )
-  final enums.AmapSlotType? collectionSlot;
+  final enums.AmapSlotType collectionSlot;
   @JsonKey(name: 'products_quantity', defaultValue: <int>[])
   final List<int> productsQuantity;
   static const fromJsonFactory = _$OrderBaseFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is OrderBase &&
             (identical(other.userId, userId) ||
@@ -6868,7 +6868,7 @@ extension $OrderBaseExtension on OrderBase {
       {Wrapped<String>? userId,
       Wrapped<String>? deliveryId,
       Wrapped<List<String>>? productsIds,
-      Wrapped<enums.AmapSlotType?>? collectionSlot,
+      Wrapped<enums.AmapSlotType>? collectionSlot,
       Wrapped<List<int>>? productsQuantity}) {
     return OrderBase(
         userId: (userId != null ? userId.value : this.userId),
@@ -6911,7 +6911,7 @@ class OrderEdit {
   static const fromJsonFactory = _$OrderEditFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is OrderEdit &&
             (identical(other.productsIds, productsIds) ||
@@ -6990,10 +6990,10 @@ class OrderReturn {
   final List<ProductQuantity> productsdetail;
   @JsonKey(
     name: 'collection_slot',
-    toJson: amapSlotTypeNullableToJson,
-    fromJson: amapSlotTypeNullableFromJson,
+    toJson: amapSlotTypeToJson,
+    fromJson: amapSlotTypeFromJson,
   )
-  final enums.AmapSlotType? collectionSlot;
+  final enums.AmapSlotType collectionSlot;
   @JsonKey(name: 'order_id', defaultValue: '')
   final String orderId;
   @JsonKey(name: 'amount', defaultValue: 0.0)
@@ -7005,7 +7005,7 @@ class OrderReturn {
   static const fromJsonFactory = _$OrderReturnFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is OrderReturn &&
             (identical(other.user, user) ||
@@ -7073,7 +7073,7 @@ extension $OrderReturnExtension on OrderReturn {
       {Wrapped<CoreUserSimple>? user,
       Wrapped<String>? deliveryId,
       Wrapped<List<ProductQuantity>>? productsdetail,
-      Wrapped<enums.AmapSlotType?>? collectionSlot,
+      Wrapped<enums.AmapSlotType>? collectionSlot,
       Wrapped<String>? orderId,
       Wrapped<double>? amount,
       Wrapped<DateTime>? orderingDate,
@@ -7119,7 +7119,7 @@ class PackTicketBase {
   static const fromJsonFactory = _$PackTicketBaseFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is PackTicketBase &&
             (identical(other.price, price) ||
@@ -7185,7 +7185,7 @@ class PackTicketEdit {
   static const fromJsonFactory = _$PackTicketEditFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is PackTicketEdit &&
             (identical(other.raffleId, raffleId) ||
@@ -7254,7 +7254,7 @@ class PackTicketSimple {
   static const fromJsonFactory = _$PackTicketSimpleFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is PackTicketSimple &&
             (identical(other.price, price) ||
@@ -7330,7 +7330,7 @@ class PrizeBase {
   static const fromJsonFactory = _$PrizeBaseFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is PrizeBase &&
             (identical(other.name, name) ||
@@ -7408,7 +7408,7 @@ class PrizeEdit {
   static const fromJsonFactory = _$PrizeEditFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is PrizeEdit &&
             (identical(other.raffleId, raffleId) ||
@@ -7489,7 +7489,7 @@ class PrizeSimple {
   static const fromJsonFactory = _$PrizeSimpleFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is PrizeSimple &&
             (identical(other.name, name) ||
@@ -7577,7 +7577,7 @@ class ProductComplete {
   static const fromJsonFactory = _$ProductCompleteFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ProductComplete &&
             (identical(other.name, name) ||
@@ -7649,7 +7649,7 @@ class ProductEdit {
   static const fromJsonFactory = _$ProductEditFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ProductEdit &&
             (identical(other.category, category) ||
@@ -7711,7 +7711,7 @@ class ProductQuantity {
   static const fromJsonFactory = _$ProductQuantityFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ProductQuantity &&
             (identical(other.quantity, quantity) ||
@@ -7768,7 +7768,7 @@ class ProductSimple {
   static const fromJsonFactory = _$ProductSimpleFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ProductSimple &&
             (identical(other.name, name) ||
@@ -7840,7 +7840,7 @@ class RaffleBase {
   static const fromJsonFactory = _$RaffleBaseFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is RaffleBase &&
             (identical(other.name, name) ||
@@ -7929,7 +7929,7 @@ class RaffleComplete {
   static const fromJsonFactory = _$RaffleCompleteFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is RaffleComplete &&
             (identical(other.name, name) ||
@@ -8017,7 +8017,7 @@ class RaffleEdit {
   static const fromJsonFactory = _$RaffleEditFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is RaffleEdit &&
             (identical(other.name, name) ||
@@ -8085,7 +8085,7 @@ class RaffleSimple {
   static const fromJsonFactory = _$RaffleSimpleFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is RaffleSimple &&
             (identical(other.name, name) ||
@@ -8166,7 +8166,7 @@ class RaffleStats {
   static const fromJsonFactory = _$RaffleStatsFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is RaffleStats &&
             (identical(other.ticketsSold, ticketsSold) ||
@@ -8224,7 +8224,7 @@ class ResetPasswordRequest {
   static const fromJsonFactory = _$ResetPasswordRequestFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ResetPasswordRequest &&
             (identical(other.resetToken, resetToken) ||
@@ -8280,7 +8280,7 @@ class Rights {
   static const fromJsonFactory = _$RightsFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is Rights &&
             (identical(other.view, view) ||
@@ -8328,7 +8328,7 @@ class RoomBase {
   static const fromJsonFactory = _$RoomBaseFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is RoomBase &&
             (identical(other.name, name) ||
@@ -8373,7 +8373,7 @@ class RoomComplete {
   static const fromJsonFactory = _$RoomCompleteFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is RoomComplete &&
             (identical(other.name, name) ||
@@ -8424,7 +8424,7 @@ class SectionBase {
   static const fromJsonFactory = _$SectionBaseFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is SectionBase &&
             (identical(other.name, name) ||
@@ -8482,7 +8482,7 @@ class SectionComplete {
   static const fromJsonFactory = _$SectionCompleteFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is SectionComplete &&
             (identical(other.name, name) ||
@@ -8554,13 +8554,13 @@ class TicketComplete {
   @JsonKey(name: 'prize')
   final PrizeSimple? prize;
   @JsonKey(name: 'pack_ticket')
-  final PackTicketSimple? packTicket;
+  final PackTicketSimple packTicket;
   @JsonKey(name: 'user')
   final CoreUserSimple user;
   static const fromJsonFactory = _$TicketCompleteFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is TicketComplete &&
             (identical(other.packId, packId) ||
@@ -8621,7 +8621,7 @@ extension $TicketCompleteExtension on TicketComplete {
       Wrapped<String?>? winningPrize,
       Wrapped<String>? id,
       Wrapped<PrizeSimple?>? prize,
-      Wrapped<PackTicketSimple?>? packTicket,
+      Wrapped<PackTicketSimple>? packTicket,
       Wrapped<CoreUserSimple>? user}) {
     return TicketComplete(
         packId: (packId != null ? packId.value : this.packId),
@@ -8661,7 +8661,7 @@ class TicketSimple {
   static const fromJsonFactory = _$TicketSimpleFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is TicketSimple &&
             (identical(other.packId, packId) ||
@@ -8743,7 +8743,7 @@ class TokenResponse {
   static const fromJsonFactory = _$TokenResponseFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is TokenResponse &&
             (identical(other.accessToken, accessToken) ||
@@ -8837,7 +8837,7 @@ class ValidationError {
   static const fromJsonFactory = _$ValidationErrorFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ValidationError &&
             (identical(other.loc, loc) ||
@@ -8893,7 +8893,7 @@ class VoteBase {
   static const fromJsonFactory = _$VoteBaseFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is VoteBase &&
             (identical(other.listId, listId) ||
@@ -8938,7 +8938,7 @@ class VoteStats {
   static const fromJsonFactory = _$VoteStatsFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is VoteStats &&
             (identical(other.sectionId, sectionId) ||
@@ -8992,7 +8992,7 @@ class VoteStatus {
   static const fromJsonFactory = _$VoteStatusFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is VoteStatus &&
             (identical(other.status, status) ||
@@ -9042,7 +9042,7 @@ class AppSchemasSchemasAmapCashComplete {
   static const fromJsonFactory = _$AppSchemasSchemasAmapCashCompleteFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is AppSchemasSchemasAmapCashComplete &&
             (identical(other.balance, balance) ||
@@ -9103,7 +9103,7 @@ class AppSchemasSchemasAmapCashEdit {
   static const fromJsonFactory = _$AppSchemasSchemasAmapCashEditFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is AppSchemasSchemasAmapCashEdit &&
             (identical(other.balance, balance) ||
@@ -9151,7 +9151,7 @@ class AppSchemasSchemasCampaignResult {
   static const fromJsonFactory = _$AppSchemasSchemasCampaignResultFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is AppSchemasSchemasCampaignResult &&
             (identical(other.listId, listId) ||
@@ -9210,7 +9210,7 @@ class AppSchemasSchemasRaffleCashComplete {
   static const fromJsonFactory = _$AppSchemasSchemasRaffleCashCompleteFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is AppSchemasSchemasRaffleCashComplete &&
             (identical(other.balance, balance) ||
@@ -9272,7 +9272,7 @@ class AppSchemasSchemasRaffleCashEdit {
   static const fromJsonFactory = _$AppSchemasSchemasRaffleCashEditFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is AppSchemasSchemasRaffleCashEdit &&
             (identical(other.balance, balance) ||
@@ -9318,7 +9318,7 @@ class AppUtilsTypesStandardResponsesResult {
   static const fromJsonFactory = _$AppUtilsTypesStandardResponsesResultFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is AppUtilsTypesStandardResponsesResult &&
             (identical(other.success, success) ||
@@ -9359,9 +9359,8 @@ enums.AccountType accountTypeFromJson(
   Object? accountType, [
   enums.AccountType? defaultValue,
 ]) {
-  return enums.AccountType.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          accountType?.toString().toLowerCase()) ??
+  return enums.AccountType.values
+          .firstWhereOrNull((e) => e.value == accountType) ??
       defaultValue ??
       enums.AccountType.swaggerGeneratedUnknown;
 }
@@ -9376,6 +9375,10 @@ enums.AccountType? accountTypeNullableFromJson(
   return enums.AccountType.values
           .firstWhereOrNull((e) => e.value == accountType) ??
       defaultValue;
+}
+
+String accountTypeExplodedListToJson(List<enums.AccountType>? accountType) {
+  return accountType?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> accountTypeListToJson(List<enums.AccountType>? accountType) {
@@ -9420,9 +9423,8 @@ enums.AmapSlotType amapSlotTypeFromJson(
   Object? amapSlotType, [
   enums.AmapSlotType? defaultValue,
 ]) {
-  return enums.AmapSlotType.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          amapSlotType?.toString().toLowerCase()) ??
+  return enums.AmapSlotType.values
+          .firstWhereOrNull((e) => e.value == amapSlotType) ??
       defaultValue ??
       enums.AmapSlotType.swaggerGeneratedUnknown;
 }
@@ -9437,6 +9439,10 @@ enums.AmapSlotType? amapSlotTypeNullableFromJson(
   return enums.AmapSlotType.values
           .firstWhereOrNull((e) => e.value == amapSlotType) ??
       defaultValue;
+}
+
+String amapSlotTypeExplodedListToJson(List<enums.AmapSlotType>? amapSlotType) {
+  return amapSlotType?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> amapSlotTypeListToJson(List<enums.AmapSlotType>? amapSlotType) {
@@ -9482,9 +9488,8 @@ enums.CalendarEventType calendarEventTypeFromJson(
   Object? calendarEventType, [
   enums.CalendarEventType? defaultValue,
 ]) {
-  return enums.CalendarEventType.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          calendarEventType?.toString().toLowerCase()) ??
+  return enums.CalendarEventType.values
+          .firstWhereOrNull((e) => e.value == calendarEventType) ??
       defaultValue ??
       enums.CalendarEventType.swaggerGeneratedUnknown;
 }
@@ -9499,6 +9504,11 @@ enums.CalendarEventType? calendarEventTypeNullableFromJson(
   return enums.CalendarEventType.values
           .firstWhereOrNull((e) => e.value == calendarEventType) ??
       defaultValue;
+}
+
+String calendarEventTypeExplodedListToJson(
+    List<enums.CalendarEventType>? calendarEventType) {
+  return calendarEventType?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> calendarEventTypeListToJson(
@@ -9549,9 +9559,8 @@ enums.DeliveryStatusType deliveryStatusTypeFromJson(
   Object? deliveryStatusType, [
   enums.DeliveryStatusType? defaultValue,
 ]) {
-  return enums.DeliveryStatusType.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          deliveryStatusType?.toString().toLowerCase()) ??
+  return enums.DeliveryStatusType.values
+          .firstWhereOrNull((e) => e.value == deliveryStatusType) ??
       defaultValue ??
       enums.DeliveryStatusType.swaggerGeneratedUnknown;
 }
@@ -9566,6 +9575,11 @@ enums.DeliveryStatusType? deliveryStatusTypeNullableFromJson(
   return enums.DeliveryStatusType.values
           .firstWhereOrNull((e) => e.value == deliveryStatusType) ??
       defaultValue;
+}
+
+String deliveryStatusTypeExplodedListToJson(
+    List<enums.DeliveryStatusType>? deliveryStatusType) {
+  return deliveryStatusType?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> deliveryStatusTypeListToJson(
@@ -9615,9 +9629,8 @@ enums.FloorsType floorsTypeFromJson(
   Object? floorsType, [
   enums.FloorsType? defaultValue,
 ]) {
-  return enums.FloorsType.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          floorsType?.toString().toLowerCase()) ??
+  return enums.FloorsType.values
+          .firstWhereOrNull((e) => e.value == floorsType) ??
       defaultValue ??
       enums.FloorsType.swaggerGeneratedUnknown;
 }
@@ -9632,6 +9645,10 @@ enums.FloorsType? floorsTypeNullableFromJson(
   return enums.FloorsType.values
           .firstWhereOrNull((e) => e.value == floorsType) ??
       defaultValue;
+}
+
+String floorsTypeExplodedListToJson(List<enums.FloorsType>? floorsType) {
+  return floorsType?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> floorsTypeListToJson(List<enums.FloorsType>? floorsType) {
@@ -9676,9 +9693,7 @@ enums.ListType listTypeFromJson(
   Object? listType, [
   enums.ListType? defaultValue,
 ]) {
-  return enums.ListType.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          listType?.toString().toLowerCase()) ??
+  return enums.ListType.values.firstWhereOrNull((e) => e.value == listType) ??
       defaultValue ??
       enums.ListType.swaggerGeneratedUnknown;
 }
@@ -9692,6 +9707,10 @@ enums.ListType? listTypeNullableFromJson(
   }
   return enums.ListType.values.firstWhereOrNull((e) => e.value == listType) ??
       defaultValue;
+}
+
+String listTypeExplodedListToJson(List<enums.ListType>? listType) {
+  return listType?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> listTypeListToJson(List<enums.ListType>? listType) {
@@ -9737,9 +9756,8 @@ enums.RaffleStatusType raffleStatusTypeFromJson(
   Object? raffleStatusType, [
   enums.RaffleStatusType? defaultValue,
 ]) {
-  return enums.RaffleStatusType.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          raffleStatusType?.toString().toLowerCase()) ??
+  return enums.RaffleStatusType.values
+          .firstWhereOrNull((e) => e.value == raffleStatusType) ??
       defaultValue ??
       enums.RaffleStatusType.swaggerGeneratedUnknown;
 }
@@ -9754,6 +9772,11 @@ enums.RaffleStatusType? raffleStatusTypeNullableFromJson(
   return enums.RaffleStatusType.values
           .firstWhereOrNull((e) => e.value == raffleStatusType) ??
       defaultValue;
+}
+
+String raffleStatusTypeExplodedListToJson(
+    List<enums.RaffleStatusType>? raffleStatusType) {
+  return raffleStatusType?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> raffleStatusTypeListToJson(
@@ -9803,9 +9826,8 @@ enums.StatusType statusTypeFromJson(
   Object? statusType, [
   enums.StatusType? defaultValue,
 ]) {
-  return enums.StatusType.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          statusType?.toString().toLowerCase()) ??
+  return enums.StatusType.values
+          .firstWhereOrNull((e) => e.value == statusType) ??
       defaultValue ??
       enums.StatusType.swaggerGeneratedUnknown;
 }
@@ -9820,6 +9842,10 @@ enums.StatusType? statusTypeNullableFromJson(
   return enums.StatusType.values
           .firstWhereOrNull((e) => e.value == statusType) ??
       defaultValue;
+}
+
+String statusTypeExplodedListToJson(List<enums.StatusType>? statusType) {
+  return statusType?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> statusTypeListToJson(List<enums.StatusType>? statusType) {
@@ -9870,9 +9896,7 @@ enums.AppUtilsTypesBdebookingTypeDecision
   enums.AppUtilsTypesBdebookingTypeDecision? defaultValue,
 ]) {
   return enums.AppUtilsTypesBdebookingTypeDecision.values.firstWhereOrNull(
-          (e) =>
-              e.value.toString().toLowerCase() ==
-              appUtilsTypesBdebookingTypeDecision?.toString().toLowerCase()) ??
+          (e) => e.value == appUtilsTypesBdebookingTypeDecision) ??
       defaultValue ??
       enums.AppUtilsTypesBdebookingTypeDecision.swaggerGeneratedUnknown;
 }
@@ -9888,6 +9912,13 @@ enums.AppUtilsTypesBdebookingTypeDecision?
   return enums.AppUtilsTypesBdebookingTypeDecision.values.firstWhereOrNull(
           (e) => e.value == appUtilsTypesBdebookingTypeDecision) ??
       defaultValue;
+}
+
+String appUtilsTypesBdebookingTypeDecisionExplodedListToJson(
+    List<enums.AppUtilsTypesBdebookingTypeDecision>?
+        appUtilsTypesBdebookingTypeDecision) {
+  return appUtilsTypesBdebookingTypeDecision?.map((e) => e.value!).join(',') ??
+      '';
 }
 
 List<String> appUtilsTypesBdebookingTypeDecisionListToJson(
@@ -9945,9 +9976,8 @@ enums.AppUtilsTypesCalendarTypesDecision
   Object? appUtilsTypesCalendarTypesDecision, [
   enums.AppUtilsTypesCalendarTypesDecision? defaultValue,
 ]) {
-  return enums.AppUtilsTypesCalendarTypesDecision.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          appUtilsTypesCalendarTypesDecision?.toString().toLowerCase()) ??
+  return enums.AppUtilsTypesCalendarTypesDecision.values.firstWhereOrNull(
+          (e) => e.value == appUtilsTypesCalendarTypesDecision) ??
       defaultValue ??
       enums.AppUtilsTypesCalendarTypesDecision.swaggerGeneratedUnknown;
 }
@@ -9963,6 +9993,13 @@ enums.AppUtilsTypesCalendarTypesDecision?
   return enums.AppUtilsTypesCalendarTypesDecision.values.firstWhereOrNull(
           (e) => e.value == appUtilsTypesCalendarTypesDecision) ??
       defaultValue;
+}
+
+String appUtilsTypesCalendarTypesDecisionExplodedListToJson(
+    List<enums.AppUtilsTypesCalendarTypesDecision>?
+        appUtilsTypesCalendarTypesDecision) {
+  return appUtilsTypesCalendarTypesDecision?.map((e) => e.value!).join(',') ??
+      '';
 }
 
 List<String> appUtilsTypesCalendarTypesDecisionListToJson(
