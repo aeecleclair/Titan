@@ -19,7 +19,7 @@ class SearchResult extends HookConsumerWidget {
       builder: (context, user) => Column(
         children: user
             .map(
-              (simpleUser) => GestureDetector(
+              (CoreUserSimple) => GestureDetector(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -28,10 +28,10 @@ class SearchResult extends HookConsumerWidget {
                       Container(width: 20),
                       Expanded(
                         child: Text(
-                          simpleUser.getName(),
+                          CoreUserSimple.getName(),
                           style: TextStyle(
                             fontSize: 13,
-                            fontWeight: (borrower.id == simpleUser.id)
+                            fontWeight: (borrower.id == CoreUserSimple.id)
                                 ? FontWeight.bold
                                 : FontWeight.w400,
                           ),
@@ -42,8 +42,8 @@ class SearchResult extends HookConsumerWidget {
                   ),
                 ),
                 onTap: () {
-                  borrowerNotifier.setBorrower(simpleUser);
-                  queryController.text = simpleUser.getName();
+                  borrowerNotifier.setBorrower(CoreUserSimple);
+                  queryController.text = CoreUserSimple.getName();
                   usersNotifier.clear();
                 },
               ),

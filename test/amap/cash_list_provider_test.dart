@@ -6,7 +6,7 @@ import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/providers/cash_list_provider.dart';
 import 'package:myecl/amap/repositories/cash_repository.dart';
 import 'package:myecl/tools/exception.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
 class MockCashRepository extends Mock implements CashRepository {}
 
@@ -118,17 +118,17 @@ void main() {
       final cashProvider = CashListProvider(cashRepository: mockRepository);
       final cashList = [
         Cash.empty().copyWith(
-          user: SimpleUser.empty()
+          user: CoreUserSimple.empty()
               .copyWith(name: 'John', firstname: 'Doe', nickname: 'JD'),
           balance: 100,
         ),
         Cash.empty().copyWith(
-          user: SimpleUser.empty()
+          user: CoreUserSimple.empty()
               .copyWith(name: 'Jane', firstname: 'Doe', nickname: 'JD'),
           balance: 200,
         ),
         Cash.empty().copyWith(
-          user: SimpleUser.empty()
+          user: CoreUserSimple.empty()
               .copyWith(name: 'Bob', firstname: 'Smith', nickname: null),
           balance: 300,
         ),

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
 class UserUi extends HookConsumerWidget {
-  final SimpleUser user;
+  final CoreUserSimple user;
   final void Function() onDelete;
 
   const UserUi({super.key, required this.user, required this.onDelete});

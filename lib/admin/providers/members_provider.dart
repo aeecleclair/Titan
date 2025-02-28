@@ -1,19 +1,19 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
-class MembersNotifier extends StateNotifier<List<SimpleUser>> {
+class MembersNotifier extends StateNotifier<List<CoreUserSimple>> {
   MembersNotifier() : super(const []);
 
-  void add(SimpleUser user) {
+  void add(CoreUserSimple user) {
     state = state.sublist(0)..add(user);
   }
 
-  void remove(SimpleUser user) {
+  void remove(CoreUserSimple user) {
     state = state.where((element) => element.id != user.id).toList();
   }
 }
 
 final membersProvider =
-    StateNotifierProvider<MembersNotifier, List<SimpleUser>>(
+    StateNotifierProvider<MembersNotifier, List<CoreUserSimple>>(
   (ref) => MembersNotifier(),
 );

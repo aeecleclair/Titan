@@ -1,8 +1,8 @@
 import 'package:myecl/admin/class/account_type.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
-class Member extends SimpleUser {
+class Member extends CoreUserSimple {
   late String role;
 
   Member({
@@ -55,7 +55,7 @@ class Member extends SimpleUser {
     );
   }
 
-  factory Member.fromSimpleUser(SimpleUser user, String role) {
+  factory Member.fromCoreUserSimple(CoreUserSimple user, String role) {
     return Member(
       name: user.name,
       firstname: user.firstname,

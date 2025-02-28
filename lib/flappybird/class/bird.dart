@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:myecl/flappybird/tools/functions.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
 class Bird {
-  late final SimpleUser user;
+  late final CoreUserSimple user;
   late final MaterialColor color;
   final double birdSize = 50;
   final double gravity = -4.9;
@@ -29,7 +29,7 @@ class Bird {
   });
 
   Bird copyWith({
-    SimpleUser? user,
+    CoreUserSimple? user,
     MaterialColor? color,
     Widget? birdImage,
     double? birdPosition,
@@ -61,7 +61,7 @@ class Bird {
   static Bird empty() {
     final color = Color(0xff000000 + Random().nextInt(0xffffff));
     return Bird(
-      user: SimpleUser.empty(),
+      user: CoreUserSimple.empty(),
       color: MaterialColor(getColorValue(color), getSwatch(color)),
       birdImage: Image.asset('images/bird.png'),
     );

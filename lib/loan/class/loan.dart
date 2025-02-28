@@ -1,12 +1,12 @@
 import 'package:myecl/loan/class/item_quantity.dart';
 import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
 class Loan {
   final String id;
   final Loaner loaner;
-  final SimpleUser borrower;
+  final CoreUserSimple borrower;
   final String notes;
   final DateTime start;
   final DateTime end;
@@ -30,7 +30,7 @@ class Loan {
 
   Loan.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        borrower = SimpleUser.fromJson(json['borrower']),
+        borrower = CoreUserSimple.fromJson(json['borrower']),
         loaner = Loaner.fromJson(json['loaner']),
         notes = json['notes'],
         start = processDateFromAPIWithoutHour(json['start']),
@@ -63,7 +63,7 @@ class Loan {
   Loan copyWith({
     String? id,
     Loaner? loaner,
-    SimpleUser? borrower,
+    CoreUserSimple? borrower,
     String? notes,
     DateTime? start,
     DateTime? end,
@@ -88,7 +88,7 @@ class Loan {
 
   Loan.empty()
       : id = '',
-        borrower = SimpleUser.empty(),
+        borrower = CoreUserSimple.empty(),
         loaner = Loaner.empty(),
         notes = '',
         start = DateTime.now(),

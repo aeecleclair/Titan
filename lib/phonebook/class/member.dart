@@ -1,7 +1,7 @@
 import 'package:myecl/admin/class/account_type.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
-class Member extends SimpleUser {
+class Member extends CoreUserSimple {
   Member({
     required super.name,
     required super.firstname,
@@ -60,7 +60,7 @@ class Member extends SimpleUser {
     promotion = 0;
   }
 
-  Member.fromUser(SimpleUser user)
+  Member.fromUser(CoreUserSimple user)
       : super(
           name: user.name,
           firstname: user.firstname,

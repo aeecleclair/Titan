@@ -1,8 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/class/group.dart';
 import 'package:myecl/admin/repositories/group_repository.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/user/class/list_users.dart';
 
 class GroupNotifier extends SingleNotifier<Group> {
   final GroupRepository groupRepository;
@@ -13,14 +13,14 @@ class GroupNotifier extends SingleNotifier<Group> {
     return await load(() async => groupRepository.getGroup(groupId));
   }
 
-  Future<bool> addMember(Group group, SimpleUser user) async {
+  Future<bool> addMember(Group group, CoreUserSimple user) async {
     return await update(
       (group) async => groupRepository.addMember(group, user),
       group,
     );
   }
 
-  Future<bool> deleteMember(Group group, SimpleUser user) async {
+  Future<bool> deleteMember(Group group, CoreUserSimple user) async {
     return await update(
       (group) async => groupRepository.deleteMember(group, user),
       group,

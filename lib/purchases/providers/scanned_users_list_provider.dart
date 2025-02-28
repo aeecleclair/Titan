@@ -2,9 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/purchases/repositories/scanner_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
-class ScannedUsersListNotifier extends ListNotifier<SimpleUser> {
+class ScannedUsersListNotifier extends ListNotifier<CoreUserSimple> {
   final ScannerRepository scannerRepository = ScannerRepository();
   AsyncValue<List<String>> tagList = const AsyncValue.loading();
   ScannedUsersListNotifier({required String token})
@@ -12,7 +12,7 @@ class ScannedUsersListNotifier extends ListNotifier<SimpleUser> {
     scannerRepository.setToken(token);
   }
 
-  Future<AsyncValue<List<SimpleUser>>> loadUsers(
+  Future<AsyncValue<List<CoreUserSimple>>> loadUsers(
     String sellerId,
     String productId,
     String generatorId,
@@ -26,7 +26,7 @@ class ScannedUsersListNotifier extends ListNotifier<SimpleUser> {
 }
 
 final scannedUsersListProvider = StateNotifierProvider<ScannedUsersListNotifier,
-    AsyncValue<List<SimpleUser>>>((ref) {
+    AsyncValue<List<CoreUserSimple>>>((ref) {
   final token = ref.watch(tokenProvider);
   ScannedUsersListNotifier notifier = ScannedUsersListNotifier(token: token);
   return notifier;

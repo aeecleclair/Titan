@@ -3,7 +3,7 @@ import 'package:myecl/admin/class/group.dart';
 import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:myecl/tools/exception.dart';
@@ -35,7 +35,7 @@ class GroupRepository extends Repository {
     return SimpleGroup.fromJson(await create(group.toJson()));
   }
 
-  Future<bool> addMember(Group group, SimpleUser user) async {
+  Future<bool> addMember(Group group, CoreUserSimple user) async {
     await create(
       {"user_id": user.id, "group_id": group.id},
       suffix: "membership",
@@ -43,7 +43,7 @@ class GroupRepository extends Repository {
     return true;
   }
 
-  Future<bool> deleteMember(Group group, SimpleUser user) async {
+  Future<bool> deleteMember(Group group, CoreUserSimple user) async {
     final response = await http.delete(
       Uri.parse("${Repository.host}${ext}membership"),
       headers: headers,

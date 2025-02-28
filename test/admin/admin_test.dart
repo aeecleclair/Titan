@@ -5,7 +5,7 @@ import 'package:myecl/admin/class/account_type.dart';
 import 'package:myecl/admin/class/group.dart';
 import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/admin/repositories/group_repository.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/user/class/user.dart';
 
 class MockGroupRepository extends Mock implements GroupRepository {}
@@ -84,8 +84,8 @@ void main() {
       expect(newGroup.description, 'description');
       newGroup = group.copyWith(id: 'id');
       expect(newGroup.id, 'id');
-      newGroup = group.copyWith(members: [SimpleUser.empty()]);
-      expect(newGroup.members, isA<List<SimpleUser>>());
+      newGroup = group.copyWith(members: [CoreUserSimple.empty()]);
+      expect(newGroup.members, isA<List<CoreUserSimple>>());
       expect(newGroup.members.length, 1);
     });
 
@@ -122,7 +122,7 @@ void main() {
         ],
       });
       expect(group.name, 'name');
-      expect(group.members, isA<List<SimpleUser>>());
+      expect(group.members, isA<List<CoreUserSimple>>());
       expect(group.members.length, 1);
       expect(group.members[0].name, 'Name');
     });
@@ -133,7 +133,7 @@ void main() {
         name: "name",
         description: "description",
         members: [
-          SimpleUser(
+          CoreUserSimple(
             id: "1",
             accountType: AccountType(type: "external"),
             name: "name",

@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:myecl/admin/class/account_type.dart';
 import 'package:myecl/user/class/applicant.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/user/repositories/user_repository.dart';
@@ -232,65 +232,65 @@ void main() {
     });
   });
 
-  group('Testing SimpleUser class', () {
-    test('Should return a simpleUser', () async {
-      final simpleUser = SimpleUser.empty();
-      expect(simpleUser, isA<SimpleUser>());
+  group('Testing CoreUserSimple class', () {
+    test('Should return a CoreUserSimple', () async {
+      final CoreUserSimple = CoreUserSimple.empty();
+      expect(CoreUserSimple, isA<CoreUserSimple>());
     });
 
-    test('Should return a simpleUser with a name', () async {
-      final simpleUser = SimpleUser.empty();
-      expect(simpleUser.name, 'Nom'); // capitaliseAll
+    test('Should return a CoreUserSimple with a name', () async {
+      final CoreUserSimple = CoreUserSimple.empty();
+      expect(CoreUserSimple.name, 'Nom'); // capitaliseAll
     });
 
     test('Should print properly the name', () {
-      final simpleUser = SimpleUser.empty();
-      expect(simpleUser.getName(), 'Prénom Nom');
-      final simpleUserWithNickName =
-          SimpleUser.empty().copyWith(nickname: 'nickname');
-      expect(simpleUserWithNickName.getName(), 'nickname (Prénom Nom)');
+      final CoreUserSimple = CoreUserSimple.empty();
+      expect(CoreUserSimple.getName(), 'Prénom Nom');
+      final CoreUserSimpleWithNickName =
+          CoreUserSimple.empty().copyWith(nickname: 'nickname');
+      expect(CoreUserSimpleWithNickName.getName(), 'nickname (Prénom Nom)');
     });
 
     test('Should update with new values', () async {
-      final simpleUser = SimpleUser.empty();
-      SimpleUser newSimpleUser = simpleUser.copyWith(name: 'name');
-      expect(newSimpleUser.name, 'name');
-      newSimpleUser = simpleUser.copyWith(firstname: 'firstname');
-      expect(newSimpleUser.firstname, 'firstname');
-      newSimpleUser = simpleUser.copyWith(nickname: 'nickname');
-      expect(newSimpleUser.nickname, 'nickname');
-      newSimpleUser = simpleUser.copyWith(id: 'id');
-      expect(newSimpleUser.id, 'id');
+      final CoreUserSimple = CoreUserSimple.empty();
+      CoreUserSimple newCoreUserSimple = CoreUserSimple.copyWith(name: 'name');
+      expect(newCoreUserSimple.name, 'name');
+      newCoreUserSimple = CoreUserSimple.copyWith(firstname: 'firstname');
+      expect(newCoreUserSimple.firstname, 'firstname');
+      newCoreUserSimple = CoreUserSimple.copyWith(nickname: 'nickname');
+      expect(newCoreUserSimple.nickname, 'nickname');
+      newCoreUserSimple = CoreUserSimple.copyWith(id: 'id');
+      expect(newCoreUserSimple.id, 'id');
     });
 
     test('Should print properly', () {
-      final simpleUser = SimpleUser.empty();
+      final CoreUserSimple = CoreUserSimple.empty();
       expect(
-        simpleUser.toString(),
-        'SimpleUser {name: Nom, firstname: Prénom, nickname: null, id: , accountType: external}',
+        CoreUserSimple.toString(),
+        'CoreUserSimple {name: Nom, firstname: Prénom, nickname: null, id: , accountType: external}',
       );
     });
 
-    test('Should parse an SimpleUser from json', () async {
-      final simpleUser = SimpleUser.fromJson({
+    test('Should parse an CoreUserSimple from json', () async {
+      final CoreUserSimple = CoreUserSimple.fromJson({
         "name": "name",
         "firstname": "firstname",
         "nickname": null,
         "account_type": "external",
         "id": "id",
       });
-      expect(simpleUser, isA<SimpleUser>());
+      expect(CoreUserSimple, isA<CoreUserSimple>());
     });
 
     test('Should return correct json', () async {
-      final simpleUser = SimpleUser.fromJson({
+      final CoreUserSimple = CoreUserSimple.fromJson({
         "name": "name",
         "firstname": "firstname",
         "nickname": null,
         "account_type": "external",
         "id": "id",
       });
-      expect(simpleUser.toJson(), {
+      expect(CoreUserSimple.toJson(), {
         "name": "Name",
         "firstname": "Firstname",
         "nickname": null,
@@ -301,11 +301,11 @@ void main() {
   });
 
   group('Testing User conversion', () {
-    test('Should convert user to SimpleUser', () async {
+    test('Should convert user to CoreUserSimple', () async {
       final mockUser = MockUserRepository();
       when(() => mockUser.getMe()).thenAnswer((_) async => User.empty());
       final user = await mockUser.getMe();
-      expect(user.toSimpleUser(), isA<SimpleUser>());
+      expect(user.toCoreUserSimple(), isA<CoreUserSimple>());
     });
 
     test('Should convert user to Applicant', () async {

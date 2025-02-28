@@ -1,7 +1,7 @@
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
-class UserTicket extends SimpleUser {
+class UserTicket extends CoreUserSimple {
   UserTicket({
     required super.name,
     required super.firstname,

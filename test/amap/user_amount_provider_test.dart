@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:myecl/amap/providers/user_amount_provider.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/repositories/amap_user_repository.dart';
 
@@ -19,7 +19,7 @@ void main() {
 
   group('loadCashByUser', () {
     test('returns cash for valid user id', () async {
-      final user = SimpleUser.empty().copyWith(id: '123');
+      final user = CoreUserSimple.empty().copyWith(id: '123');
       final cash = Cash(balance: 100.0, user: user);
       when(() => mockRepository.getCashByUser('123'))
           .thenAnswer((_) async => cash);
@@ -50,7 +50,7 @@ void main() {
 
   group('updateCash', () {
     test('updates cash balance', () async {
-      final cash = Cash(balance: 100.0, user: SimpleUser.empty());
+      final cash = Cash(balance: 100.0, user: CoreUserSimple.empty());
       notifier.state = AsyncValue.data(cash);
 
       await notifier.updateCash(50.0);

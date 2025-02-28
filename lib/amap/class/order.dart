@@ -1,7 +1,7 @@
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
 enum CollectionSlot { midDay, evening }
 
@@ -20,7 +20,7 @@ class Order {
     this.products = const [],
     this.expanded = false,
   });
-  late final SimpleUser user;
+  late final CoreUserSimple user;
   late final CollectionSlot collectionSlot;
   late final String id;
   late final DateTime orderingDate;
@@ -46,7 +46,7 @@ class Order {
     productsQuantity =
         List<int>.from(products.map((element) => element.quantity).toList());
     collectionSlot = apiStringToCollectionSlot(json['collection_slot']);
-    user = SimpleUser.fromJson(json['user']);
+    user = CoreUserSimple.fromJson(json['user']);
     orderingDate = processDateFromAPI(json['ordering_date']);
     deliveryDate = processDateFromAPIWithoutHour(json['delivery_date']);
   }
@@ -75,7 +75,7 @@ class Order {
     double? amount,
     double? lastAmount,
     CollectionSlot? collectionSlot,
-    SimpleUser? user,
+    CoreUserSimple? user,
   }) {
     return Order(
       id: id ?? this.id,
@@ -112,7 +112,7 @@ class Order {
       lastAmount: 0,
       collectionSlot: CollectionSlot.midDay,
       expanded: false,
-      user: SimpleUser.empty(),
+      user: CoreUserSimple.empty(),
     );
   }
 

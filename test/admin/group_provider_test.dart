@@ -4,7 +4,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:myecl/admin/class/group.dart';
 import 'package:myecl/admin/providers/group_provider.dart';
 import 'package:myecl/admin/repositories/group_repository.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
 class MockGroupRepository extends Mock implements GroupRepository {}
 
@@ -32,7 +32,7 @@ void main() {
       final groupRepository = MockGroupRepository();
       final groupNotifier = GroupNotifier(groupRepository: groupRepository);
       final group = Group.empty().copyWith(id: '1', name: 'Test Group');
-      final user = SimpleUser.empty().copyWith(id: '2', name: 'Test User');
+      final user = CoreUserSimple.empty().copyWith(id: '2', name: 'Test User');
       groupNotifier.state = AsyncData(group);
       when(() => groupRepository.addMember(group, user))
           .thenAnswer((_) async => true);
@@ -46,7 +46,7 @@ void main() {
       final groupRepository = MockGroupRepository();
       final groupNotifier = GroupNotifier(groupRepository: groupRepository);
       final group = Group.empty().copyWith(id: '1', name: 'Test Group');
-      final user = SimpleUser.empty().copyWith(id: '2', name: 'Test User');
+      final user = CoreUserSimple.empty().copyWith(id: '2', name: 'Test User');
       groupNotifier.state = AsyncData(group);
       when(() => groupRepository.deleteMember(group, user))
           .thenAnswer((_) async => true);

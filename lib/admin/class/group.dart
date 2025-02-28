@@ -1,5 +1,5 @@
 import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
 class Group {
   Group({
@@ -11,14 +11,14 @@ class Group {
   late final String name;
   late final String description;
   late final String id;
-  late final List<SimpleUser> members;
+  late final List<CoreUserSimple> members;
 
   Group.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     description = json['description'];
     id = json['id'];
-    members = List<SimpleUser>.from(
-      json['members'].map((x) => SimpleUser.fromJson(x)),
+    members = List<CoreUserSimple>.from(
+      json['members'].map((x) => CoreUserSimple.fromJson(x)),
     );
   }
 
@@ -35,7 +35,7 @@ class Group {
     String? name,
     String? description,
     String? id,
-    List<SimpleUser>? members,
+    List<CoreUserSimple>? members,
   }) =>
       Group(
         name: name ?? this.name,
@@ -48,7 +48,7 @@ class Group {
     name = 'Nom';
     description = 'Description';
     id = '';
-    members = List<SimpleUser>.from([]);
+    members = List<CoreUserSimple>.from([]);
   }
 
   SimpleGroup toSimpleGroup() {

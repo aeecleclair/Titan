@@ -4,7 +4,7 @@ import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/class/applicant.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
 void main() {
   group('Testing Room class', () {
@@ -119,7 +119,7 @@ void main() {
       newBooking = booking.copyWith(
         applicant: newUser,
       );
-      expect(newBooking.applicant, isA<SimpleUser>());
+      expect(newBooking.applicant, isA<CoreUserSimple>());
       expect(newBooking.applicant.id, "1");
       newBooking = booking.copyWith(
         applicantId: "1",
@@ -180,7 +180,7 @@ void main() {
         },
       });
       expect(booking, isA<Booking>());
-      expect(booking.applicant, isA<SimpleUser>());
+      expect(booking.applicant, isA<CoreUserSimple>());
       expect(booking.room, isA<Room>());
       expect(booking.id, "1");
       expect(booking.reason, "reason");
@@ -215,7 +215,7 @@ void main() {
         "applicant_id": "1",
       });
       expect(booking, isA<Booking>());
-      expect(booking.applicant, isA<SimpleUser>());
+      expect(booking.applicant, isA<CoreUserSimple>());
       expect(booking.room, isA<Room>());
       expect(booking.id, "1");
       expect(booking.reason, "reason");

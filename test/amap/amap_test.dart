@@ -14,7 +14,7 @@ import 'package:myecl/amap/repositories/order_list_repository.dart';
 import 'package:myecl/amap/repositories/product_repository.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
 class MockAmapUserRespository extends Mock implements AmapUserRepository {}
 
@@ -42,14 +42,15 @@ void main() {
     test('Should return a cash with a null balance and empty user', () async {
       final cash = Cash.empty();
       expect(cash.balance, 0);
-      expect(cash.user, isA<SimpleUser>());
+      expect(cash.user, isA<CoreUserSimple>());
     });
 
     test('Should update with new values', () async {
       final cash = Cash.empty();
       Cash newCash = cash.copyWith(balance: 1);
       expect(newCash.balance, 1);
-      newCash = cash.copyWith(user: SimpleUser.empty().copyWith(name: 'Name'));
+      newCash =
+          cash.copyWith(user: CoreUserSimple.empty().copyWith(name: 'Name'));
       expect(newCash.user.name, 'Name');
     });
 
@@ -57,7 +58,7 @@ void main() {
       final cash = Cash.empty();
       expect(
         cash.toString(),
-        'Cash{balance: 0.0, user: SimpleUser {name: Nom, firstname: Prénom, nickname: null, id: , accountType: external}}',
+        'Cash{balance: 0.0, user: CoreUserSimple {name: Nom, firstname: Prénom, nickname: null, id: , accountType: external}}',
       );
     });
 
@@ -222,7 +223,7 @@ void main() {
       );
       expect(newOrder.collectionSlot, CollectionSlot.midDay);
       newOrder = order.copyWith(
-        user: SimpleUser.empty().copyWith(name: 'Name'),
+        user: CoreUserSimple.empty().copyWith(name: 'Name'),
       );
       expect(newOrder.user.name, 'Name');
       newOrder = order.copyWith(
@@ -245,13 +246,13 @@ void main() {
               .copyWith(id: 'id', name: 'name', price: 0, quantity: 0),
         ],
         collectionSlot: CollectionSlot.midDay,
-        user: SimpleUser.empty().copyWith(name: 'Name'),
+        user: CoreUserSimple.empty().copyWith(name: 'Name'),
         orderingDate: DateTime.parse('2021-01-01'),
         deliveryDate: DateTime.parse('2021-01-01'),
       );
       expect(
         order.toString(),
-        'Order{id: id, orderingDate: 2021-01-01 00:00:00.000, deliveryDate: 2021-01-01 00:00:00.000, productsDetail: [id], productsQuantity: [0], deliveryId: delivery_id, products: [Product{id: id, name: name, price: 0.0, quantity: 0, category: }], amount: 0.0, lastAmount: 0.0, collectionSlot: CollectionSlot.midDay, user: SimpleUser {name: Name, firstname: Prénom, nickname: null, id: , accountType: external}, expanded: false}',
+        'Order{id: id, orderingDate: 2021-01-01 00:00:00.000, deliveryDate: 2021-01-01 00:00:00.000, productsDetail: [id], productsQuantity: [0], deliveryId: delivery_id, products: [Product{id: id, name: name, price: 0.0, quantity: 0, category: }], amount: 0.0, lastAmount: 0.0, collectionSlot: CollectionSlot.midDay, user: CoreUserSimple {name: Name, firstname: Prénom, nickname: null, id: , accountType: external}, expanded: false}',
       );
     });
 

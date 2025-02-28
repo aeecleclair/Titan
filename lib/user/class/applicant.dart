@@ -1,7 +1,7 @@
 import 'package:myecl/admin/class/account_type.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
-class Applicant extends SimpleUser {
+class Applicant extends CoreUserSimple {
   late final String? email;
   late final int? promo;
   late final String? phone;

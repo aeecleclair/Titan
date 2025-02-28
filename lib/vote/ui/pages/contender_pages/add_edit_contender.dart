@@ -13,7 +13,7 @@ import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/image_picker_on_tap.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/vote/class/members.dart';
 import 'package:myecl/vote/class/contender.dart';
@@ -51,7 +51,7 @@ class AddEditContenderPage extends HookConsumerWidget {
     final queryController = useTextEditingController();
     final role = useTextEditingController();
     final program = useTextEditingController(text: contender.program);
-    final member = useState(SimpleUser.empty());
+    final member = useState(CoreUserSimple.empty());
     final members = ref.watch(contenderMembersProvider);
     final membersNotifier = ref.read(contenderMembersProvider.notifier);
     final contenderLogosNotifier = ref.read(contenderLogosProvider.notifier);
@@ -256,14 +256,14 @@ class AddEditContenderPage extends HookConsumerWidget {
                                   if (addMemberKey.currentState!.validate()) {
                                     final value =
                                         await membersNotifier.addMember(
-                                      Member.fromSimpleUser(
+                                      Member.fromCoreUserSimple(
                                         member.value,
                                         role.text,
                                       ),
                                     );
                                     if (value) {
                                       role.text = '';
-                                      member.value = SimpleUser.empty();
+                                      member.value = CoreUserSimple.empty();
                                       queryController.text = '';
                                     } else {
                                       displayVoteToastWithContext(

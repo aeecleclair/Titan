@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:myecl/admin/class/account_type.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/vote/class/members.dart';
 import 'package:myecl/vote/class/contender.dart';
 import 'package:myecl/vote/class/result.dart';
@@ -77,9 +77,9 @@ void main() {
       );
     });
 
-    test('Should return a Member from a SimpleUser', () {
-      final member = Member.fromSimpleUser(
-        SimpleUser(
+    test('Should return a Member from a CoreUserSimple', () {
+      final member = Member.fromCoreUserSimple(
+        CoreUserSimple(
           id: 'id',
           accountType: AccountType(type: 'external'),
           name: 'name',

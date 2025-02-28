@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/user/repositories/user_list_repository.dart';
 
@@ -20,7 +20,7 @@ void main() {
     });
 
     test('initial state is loading', () {
-      expect(userListNotifier.state, isA<AsyncValue<List<SimpleUser>>>());
+      expect(userListNotifier.state, isA<AsyncValue<List<CoreUserSimple>>>());
     });
 
     test('filterUsers returns list of users', () async {
@@ -31,7 +31,7 @@ void main() {
       final excludeGroup = [
         SimpleGroup.empty().copyWith(id: '2', name: 'Group 2'),
       ];
-      final users = [SimpleUser.empty().copyWith(id: '1', name: 'User 1')];
+      final users = [CoreUserSimple.empty().copyWith(id: '1', name: 'User 1')];
 
       when(
         () => userListRepository.searchUser(
@@ -60,7 +60,7 @@ void main() {
     test('clear sets state to empty list', () async {
       await userListNotifier.clear();
 
-      expect(userListNotifier.state, isA<AsyncValue<List<SimpleUser>>>());
+      expect(userListNotifier.state, isA<AsyncValue<List<CoreUserSimple>>>());
     });
   });
 }

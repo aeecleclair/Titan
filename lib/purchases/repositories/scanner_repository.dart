@@ -1,6 +1,6 @@
 import 'package:myecl/purchases/class/ticket.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
 class ScannerRepository extends Repository {
   @override
@@ -48,18 +48,18 @@ class ScannerRepository extends Repository {
     ).where((tag) => tag.isNotEmpty).toList();
   }
 
-  Future<List<SimpleUser>> getUsersList(
+  Future<List<CoreUserSimple>> getUsersList(
     String sellerId,
     String productId,
     String generatorId,
     String tag,
   ) async {
-    return List<SimpleUser>.from(
+    return List<CoreUserSimple>.from(
       (await getList(
         suffix:
             "$sellerId/products/$productId/tickets/$generatorId/lists/$tag/",
       ))
-          .map((x) => SimpleUser.fromJson(x)),
+          .map((x) => CoreUserSimple.fromJson(x)),
     );
   }
 }
