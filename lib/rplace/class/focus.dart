@@ -1,6 +1,6 @@
 class PixelFocus {
-  late final double? x;
-  late final double? y;
+  late final int x;
+  late final int y;
   late final String? user;
   late final DateTime? date;
   late final bool isFocus;
@@ -15,8 +15,8 @@ class PixelFocus {
 
   static PixelFocus empty() {
     return PixelFocus(
-      x: null,
-      y: null,
+      x: 0,
+      y: 0,
       user: null,
       date: null,
       isFocus: false,
