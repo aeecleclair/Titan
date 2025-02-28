@@ -5,17 +5,20 @@ enum AccountType {
   @JsonValue(null)
   swaggerGeneratedUnknown(null),
 
-  @JsonValue('39691052-2ae5-4e12-99d0-7a9f5f2b0136')
-  value_396910522ae54e1299d07a9f5f2b0136(
-      '39691052-2ae5-4e12-99d0-7a9f5f2b0136'),
-  @JsonValue('ab4c7503-41b3-11ee-8177-089798f1a4a5')
-  ab4c750341b311ee8177089798f1a4a5('ab4c7503-41b3-11ee-8177-089798f1a4a5'),
-  @JsonValue('703056c4-be9d-475c-aa51-b7fc62a96aaa')
-  value_703056c4Be9d475cAa51B7fc62a96aaa(
-      '703056c4-be9d-475c-aa51-b7fc62a96aaa'),
-  @JsonValue('29751438-103c-42f2-b09b-33fbb20758a7')
-  value_29751438103c42f2B09b33fbb20758a7(
-      '29751438-103c-42f2-b09b-33fbb20758a7');
+  @JsonValue('student')
+  student('student'),
+  @JsonValue('former_student')
+  formerStudent('former_student'),
+  @JsonValue('staff')
+  staff('staff'),
+  @JsonValue('association')
+  association('association'),
+  @JsonValue('external')
+  $external('external'),
+  @JsonValue('other_school_student')
+  otherSchoolStudent('other_school_student'),
+  @JsonValue('demo')
+  demo('demo');
 
   final String? value;
 
@@ -50,14 +53,48 @@ enum CalendarEventType {
   hh('HH'),
   @JsonValue('Strass')
   strass('Strass'),
-  @JsonValue('SoirÃ©e')
-  soirE('SoirÃ©e'),
+  @JsonValue('Rewass')
+  rewass('Rewass'),
   @JsonValue('Autre')
   autre('Autre');
 
   final String? value;
 
   const CalendarEventType(this.value);
+}
+
+enum CdrStatus {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('pending')
+  pending('pending'),
+  @JsonValue('online')
+  online('online'),
+  @JsonValue('onsite')
+  onsite('onsite'),
+  @JsonValue('closed')
+  closed('closed');
+
+  final String? value;
+
+  const CdrStatus(this.value);
+}
+
+enum Decision {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('approved')
+  approved('approved'),
+  @JsonValue('declined')
+  declined('declined'),
+  @JsonValue('pending')
+  pending('pending');
+
+  final String? value;
+
+  const Decision(this.value);
 }
 
 enum DeliveryStatusType {
@@ -78,6 +115,74 @@ enum DeliveryStatusType {
   final String? value;
 
   const DeliveryStatusType(this.value);
+}
+
+enum Difficulty {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('discovery')
+  discovery('discovery'),
+  @JsonValue('sports')
+  sports('sports'),
+  @JsonValue('expert')
+  expert('expert');
+
+  final String? value;
+
+  const Difficulty(this.value);
+}
+
+enum DocumentSignatureType {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('material')
+  material('material'),
+  @JsonValue('numeric')
+  numeric('numeric');
+
+  final String? value;
+
+  const DocumentSignatureType(this.value);
+}
+
+enum DocumentType {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('idCard')
+  idcard('idCard'),
+  @JsonValue('medicalCertificate')
+  medicalcertificate('medicalCertificate'),
+  @JsonValue('studentCard')
+  studentcard('studentCard'),
+  @JsonValue('raidRules')
+  raidrules('raidRules'),
+  @JsonValue('parentAuthorization')
+  parentauthorization('parentAuthorization');
+
+  final String? value;
+
+  const DocumentType(this.value);
+}
+
+enum DocumentValidation {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('pending')
+  pending('pending'),
+  @JsonValue('accepted')
+  accepted('accepted'),
+  @JsonValue('refused')
+  refused('refused'),
+  @JsonValue('temporary')
+  temporary('temporary');
+
+  final String? value;
+
+  const DocumentValidation(this.value);
 }
 
 enum FloorsType {
@@ -138,6 +243,44 @@ enum FloorsType {
   const FloorsType(this.value);
 }
 
+enum HistoryType {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('transfer')
+  transfer('transfer'),
+  @JsonValue('received')
+  received('received'),
+  @JsonValue('given')
+  given('given');
+
+  final String? value;
+
+  const HistoryType(this.value);
+}
+
+enum Kinds {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('ComitÃ©')
+  comit('ComitÃ©'),
+  @JsonValue('Section AE')
+  sectionAe('Section AE'),
+  @JsonValue('Club AE')
+  clubAe('Club AE'),
+  @JsonValue('Section USE')
+  sectionUse('Section USE'),
+  @JsonValue('Club USE')
+  clubUse('Club USE'),
+  @JsonValue('Asso indÃ©')
+  assoInd('Asso indÃ©');
+
+  final String? value;
+
+  const Kinds(this.value);
+}
+
 enum ListType {
   @JsonValue(null)
   swaggerGeneratedUnknown(null),
@@ -154,6 +297,42 @@ enum ListType {
   const ListType(this.value);
 }
 
+enum MeetingPlace {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('centrale')
+  centrale('centrale'),
+  @JsonValue('bellecour')
+  bellecour('bellecour'),
+  @JsonValue('anyway')
+  anyway('anyway');
+
+  final String? value;
+
+  const MeetingPlace(this.value);
+}
+
+enum PaymentType {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('cash')
+  cash('cash'),
+  @JsonValue('check')
+  check('check'),
+  @JsonValue('HelloAsso')
+  helloasso('HelloAsso'),
+  @JsonValue('card')
+  card('card'),
+  @JsonValue('archived')
+  archived('archived');
+
+  final String? value;
+
+  const PaymentType(this.value);
+}
+
 enum RaffleStatusType {
   @JsonValue(null)
   swaggerGeneratedUnknown(null),
@@ -168,6 +347,28 @@ enum RaffleStatusType {
   final String? value;
 
   const RaffleStatusType(this.value);
+}
+
+enum Size {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('XS')
+  xs('XS'),
+  @JsonValue('S')
+  s('S'),
+  @JsonValue('M')
+  m('M'),
+  @JsonValue('L')
+  l('L'),
+  @JsonValue('XL')
+  xl('XL'),
+  @JsonValue('None')
+  none('None');
+
+  final String? value;
+
+  const Size(this.value);
 }
 
 enum StatusType {
@@ -190,34 +391,112 @@ enum StatusType {
   const StatusType(this.value);
 }
 
-enum AppUtilsTypesBdebookingTypeDecision {
+enum Topic {
   @JsonValue(null)
   swaggerGeneratedUnknown(null),
 
-  @JsonValue('approved')
-  approved('approved'),
-  @JsonValue('declined')
-  declined('declined'),
-  @JsonValue('pending')
-  pending('pending');
+  @JsonValue('cinema')
+  cinema('cinema'),
+  @JsonValue('advert')
+  advert('advert'),
+  @JsonValue('amap')
+  amap('amap'),
+  @JsonValue('booking')
+  booking('booking'),
+  @JsonValue('event')
+  event('event'),
+  @JsonValue('loan')
+  loan('loan'),
+  @JsonValue('raffle')
+  raffle('raffle'),
+  @JsonValue('vote')
+  vote('vote'),
+  @JsonValue('ph')
+  ph('ph'),
+  @JsonValue('test')
+  test('test');
 
   final String? value;
 
-  const AppUtilsTypesBdebookingTypeDecision(this.value);
+  const Topic(this.value);
 }
 
-enum AppUtilsTypesCalendarTypesDecision {
+enum TransactionStatus {
   @JsonValue(null)
   swaggerGeneratedUnknown(null),
 
-  @JsonValue('approved')
-  approved('approved'),
-  @JsonValue('declined')
-  declined('declined'),
-  @JsonValue('pending')
-  pending('pending');
+  @JsonValue('confirmed')
+  confirmed('confirmed'),
+  @JsonValue('canceled')
+  canceled('canceled'),
+  @JsonValue('refunded')
+  refunded('refunded');
 
   final String? value;
 
-  const AppUtilsTypesCalendarTypesDecision(this.value);
+  const TransactionStatus(this.value);
+}
+
+enum TransactionType {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('direct')
+  direct('direct'),
+  @JsonValue('request')
+  request('request'),
+  @JsonValue('refund')
+  refund('refund');
+
+  final String? value;
+
+  const TransactionType(this.value);
+}
+
+enum TransferType {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('hello_asso')
+  helloAsso('hello_asso'),
+  @JsonValue('check')
+  check('check'),
+  @JsonValue('cash')
+  cash('cash'),
+  @JsonValue('bank_transfer')
+  bankTransfer('bank_transfer');
+
+  final String? value;
+
+  const TransferType(this.value);
+}
+
+enum WalletDeviceStatus {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('inactive')
+  inactive('inactive'),
+  @JsonValue('active')
+  active('active'),
+  @JsonValue('revoked')
+  revoked('revoked');
+
+  final String? value;
+
+  const WalletDeviceStatus(this.value);
+}
+
+enum WalletType {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('user')
+  user('user'),
+  @JsonValue('store')
+  store('store');
+
+  final String? value;
+
+  const WalletType(this.value);
 }
