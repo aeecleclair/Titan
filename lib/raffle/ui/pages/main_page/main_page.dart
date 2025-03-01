@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/class/raffle.dart';
-import 'package:myecl/raffle/class/raffle_status_type.dart';
-import 'package:myecl/raffle/class/tickets.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/raffle/providers/is_raffle_admin.dart';
 import 'package:myecl/raffle/providers/raffle_list_provider.dart';
 import 'package:myecl/raffle/providers/tombola_logos_provider.dart';
@@ -18,6 +17,7 @@ import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/widgets/admin_button.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RaffleMainPage extends HookConsumerWidget {
@@ -25,10 +25,11 @@ class RaffleMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userProvider);
     final raffleList = ref.watch(raffleListProvider);
     final raffleListNotifier = ref.watch(raffleListProvider.notifier);
-    final userTicketList = ref.watch(userTicketListProvider);
-    final userTicketListNotifier = ref.watch(userTicketListProvider.notifier);
+    final userTicketList = ref.watch(userTicketListProvider(user.id));
+    final userTicketListNotifier = ref.watch(userTicketListProvider(user.id).notifier);
     final isAdmin = ref.watch(isRaffleAdminProvider);
     final tombolaLogosNotifier = ref.watch(tombolaLogosProvider.notifier);
 
@@ -36,7 +37,7 @@ class RaffleMainPage extends HookConsumerWidget {
     raffleList.whenData(
       (raffles) {
         for (var raffle in raffles) {
-          rafflesStatus[raffle.id] = raffle.raffleStatusType;
+          rafflesStatus[raffle.id] = raffle.status;
         }
       },
     );
@@ -44,7 +45,7 @@ class RaffleMainPage extends HookConsumerWidget {
     return RaffleTemplate(
       child: Refresher(
         onRefresh: () async {
-          await userTicketListNotifier.loadTicketList();
+          await userTicketListNotifier.loadTicketList(user.id);
           await raffleListNotifier.loadRaffleList();
           tombolaLogosNotifier.resetTData();
         },
@@ -81,7 +82,7 @@ class RaffleMainPage extends HookConsumerWidget {
                                     RaffleStatusType.lock),
                       )
                       .toList();
-                  final ticketSum = <String, List<Ticket>>{};
+                  final ticketSum = <String, List<TicketComplete>>{};
                   final ticketPrice = <String, double>{};
                   for (final ticket in tickets) {
                     if (ticket.prize == null) {
@@ -127,11 +128,11 @@ class RaffleMainPage extends HookConsumerWidget {
               child: AsyncChild(
                 value: raffleList,
                 builder: (context, raffles) {
-                  final incomingRaffles = <Raffle>[];
-                  final pastRaffles = <Raffle>[];
-                  final onGoingRaffles = <Raffle>[];
+                  final incomingRaffles = <RaffleComplete>[];
+                  final pastRaffles = <RaffleComplete>[];
+                  final onGoingRaffles = <RaffleComplete>[];
                   for (final raffle in raffles) {
-                    switch (raffle.raffleStatusType) {
+                    switch (raffle.status) {
                       case RaffleStatusType.creation:
                         incomingRaffles.add(raffle);
                         break;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/raffle/providers/raffle_provider.dart';
 import 'package:myecl/raffle/providers/winning_ticket_list_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/creation_edit_page/winning_ticket_card.dart';
@@ -9,7 +10,8 @@ class WinningTicketHandler extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final winningTicketList = ref.watch(winningTicketListProvider);
+    final raffle = ref.watch(raffleProvider);
+    final winningTicketList = ref.watch(winningTicketListProvider(raffle.id));
     return Column(
       children: [
         Container(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/class/pack_ticket.dart';
-import 'package:myecl/raffle/class/raffle_status_type.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/raffle/providers/pack_ticket_list_provider.dart';
 import 'package:myecl/raffle/providers/pack_ticket_provider.dart';
 import 'package:myecl/raffle/providers/raffle_provider.dart';
@@ -19,8 +19,8 @@ class TicketHandler extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final raffle = ref.watch(raffleProvider);
-    final packTickets = ref.watch(packTicketListProvider);
-    final packTicketsNotifier = ref.watch(packTicketListProvider.notifier);
+    final packTickets = ref.watch(packTicketListProvider(raffle.id));
+    final packTicketsNotifier = ref.watch(packTicketListProvider(raffle.id).notifier);
     final packTicketNotifier = ref.watch(packTicketProvider.notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -53,10 +53,10 @@ class TicketHandler extends HookConsumerWidget {
                 width: 15,
                 height: 125,
               ),
-              if (raffle.raffleStatusType == RaffleStatusType.creation)
+              if (raffle.status == RaffleStatusType.creation)
                 GestureDetector(
                   onTap: () {
-                    packTicketNotifier.setPackTicket(PackTicket.empty());
+                    packTicketNotifier.setPackTicket(PackTicketSimple.fromJson({}));
                     QR.to(
                       RaffleRouter.root +
                           RaffleRouter.detail +
@@ -111,7 +111,7 @@ class TicketHandler extends HookConsumerWidget {
                                     RaffleRouter.addEditPackTicket,
                               );
                             },
-                            showButton: raffle.raffleStatusType ==
+                            showButton: raffle.status ==
                                 RaffleStatusType.creation,
                             onDelete: () async {
                               await showDialog(

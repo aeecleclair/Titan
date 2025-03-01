@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/class/pack_ticket.dart';
-import 'package:myecl/raffle/class/raffle.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/raffle/providers/tombola_logo_provider.dart';
 import 'package:myecl/raffle/providers/tombola_logos_provider.dart';
 import 'package:myecl/raffle/providers/user_amount_provider.dart';
@@ -15,10 +14,11 @@ import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 
 class ConfirmPaymentDialog extends HookConsumerWidget {
-  final PackTicket packTicket;
-  final Raffle raffle;
+  final PackTicketSimple packTicket;
+  final RaffleComplete raffle;
   const ConfirmPaymentDialog({
     super.key,
     required this.packTicket,
@@ -27,9 +27,10 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userAmount = ref.watch(userAmountProvider);
-    final userAmountNotifier = ref.watch(userAmountProvider.notifier);
-    final userTicketListNotifier = ref.watch(userTicketListProvider.notifier);
+    final user = ref.watch(userProvider);
+    final userAmount = ref.watch(userAmountProvider(user.id));
+    final userAmountNotifier = ref.watch(userAmountProvider(user.id).notifier);
+    final userTicketListNotifier = ref.watch(userTicketListProvider(user.id).notifier);
     final tombolaLogos = ref.watch(tombolaLogosProvider);
     final tombolaLogosNotifier = ref.watch(tombolaLogosProvider.notifier);
     final tombolaLogoNotifier = ref.watch(tombolaLogoProvider.notifier);

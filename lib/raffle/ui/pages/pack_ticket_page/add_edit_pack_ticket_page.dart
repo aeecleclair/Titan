@@ -1,7 +1,8 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/raffle/class/pack_ticket.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/raffle/adapters/pack_ticket.dart';
 import 'package:myecl/raffle/providers/pack_ticket_provider.dart';
 import 'package:myecl/raffle/providers/raffle_provider.dart';
 import 'package:myecl/raffle/providers/pack_ticket_list_provider.dart';
@@ -21,7 +22,7 @@ class AddEditPackTicketPage extends HookConsumerWidget {
     final formKey = GlobalKey<FormState>();
     final raffle = ref.watch(raffleProvider);
     final packTicket = ref.watch(packTicketProvider);
-    final isEdit = packTicket.id != PackTicket.empty().id;
+    final isEdit = packTicket.id != PackTicketSimple.fromJson({}).id;
     final packSize = useTextEditingController(
       text: isEdit ? packTicket.packSize.toString() : "",
     );
@@ -131,13 +132,13 @@ class AddEditPackTicketPage extends HookConsumerWidget {
                                   isEdit ? packTicket.raffleId : raffle.id,
                               id: isEdit ? packTicket.id : "",
                             );
-                            final typeTicketNotifier =
-                                ref.watch(packTicketListProvider.notifier);
+                            final typeTicketNotifier = ref.watch(
+                                packTicketListProvider(raffle.id).notifier);
                             final value = isEdit
                                 ? await typeTicketNotifier
                                     .updatePackTicket(newPackTicket)
                                 : await typeTicketNotifier
-                                    .addPackTicket(newPackTicket);
+                                    .addPackTicket(newPackTicket.toPackTicketBase());
                             if (value) {
                               QR.back();
                               if (isEdit) {

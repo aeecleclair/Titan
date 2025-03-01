@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/class/pack_ticket.dart';
-import 'package:myecl/raffle/class/raffle.dart';
-import 'package:myecl/raffle/class/raffle_status_type.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/raffle/providers/tombola_logo_provider.dart';
 import 'package:myecl/raffle/providers/tombola_logos_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
@@ -11,8 +10,8 @@ import 'package:myecl/raffle/ui/pages/raffle_page/confirm_payment.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class BuyPackTicket extends HookConsumerWidget {
-  final PackTicket packTicket;
-  final Raffle raffle;
+  final PackTicketSimple packTicket;
+  final RaffleComplete raffle;
   const BuyPackTicket({
     super.key,
     required this.packTicket,
@@ -26,7 +25,7 @@ class BuyPackTicket extends HookConsumerWidget {
     final tombolaLogoNotifier = ref.watch(tombolaLogoProvider.notifier);
     return GestureDetector(
       onTap: () {
-        if (raffle.raffleStatusType == RaffleStatusType.open) {
+        if (raffle.status == RaffleStatusType.open) {
           showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -152,7 +151,7 @@ class BuyPackTicket extends HookConsumerWidget {
               width: 150,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: raffle.raffleStatusType != RaffleStatusType.open
+                  colors: raffle.status != RaffleStatusType.open
                       ? [
                           RaffleColorConstants.redGradient1,
                           RaffleColorConstants.redGradient2,
@@ -166,13 +165,13 @@ class BuyPackTicket extends HookConsumerWidget {
               child: FittedBox(
                 fit: BoxFit.fitWidth,
                 child: Text(
-                  raffle.raffleStatusType == RaffleStatusType.open
+                  raffle.status == RaffleStatusType.open
                       ? "Acheter ce ticket"
-                      : raffle.raffleStatusType == RaffleStatusType.lock
+                      : raffle.status == RaffleStatusType.lock
                           ? "Tombola fermée"
                           : "Pas encore disponible",
                   style: TextStyle(
-                    color: raffle.raffleStatusType != RaffleStatusType.open
+                    color: raffle.status != RaffleStatusType.open
                         ? Colors.white
                         : RaffleColorConstants.gradient2,
                     fontWeight: FontWeight.bold,

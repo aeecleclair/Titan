@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/class/prize.dart';
-import 'package:myecl/raffle/class/raffle_status_type.dart';
-import 'package:myecl/raffle/class/tickets.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/raffle/providers/prize_list_provider.dart';
 import 'package:myecl/raffle/providers/prize_provider.dart';
 import 'package:myecl/raffle/providers/raffle_provider.dart';
@@ -14,6 +13,7 @@ import 'package:myecl/raffle/ui/pages/creation_edit_page/prize_card.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
+import 'package:myecl/user/extensions/users.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class PrizeHandler extends HookConsumerWidget {
@@ -23,16 +23,16 @@ class PrizeHandler extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final raffle = ref.watch(raffleProvider);
     final prizeNotifier = ref.watch(prizeProvider.notifier);
-    final prizesNotifier = ref.watch(prizeListProvider.notifier);
-    final prizeList = ref.watch(prizeListProvider);
+    final prizesNotifier = ref.watch(prizeListProvider(raffle.id).notifier);
+    final prizeList = ref.watch(prizeListProvider(raffle.id));
     final winningTicketListNotifier =
-        ref.watch(winningTicketListProvider.notifier);
+        ref.watch(winningTicketListProvider(raffle.id).notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
 
-    void displayWinningsDialog(List<Ticket> winningTickets) {
+    void displayWinningsDialog(List<TicketComplete> winningTickets) {
       showDialog(
         context: context,
         builder: (context) {
@@ -105,10 +105,10 @@ class PrizeHandler extends HookConsumerWidget {
               const SizedBox(
                 width: 10,
               ),
-              if (raffle.raffleStatusType == RaffleStatusType.creation)
+              if (raffle.status == RaffleStatusType.creation)
                 GestureDetector(
                   onTap: () {
-                    prizeNotifier.setPrize(Prize.empty());
+                    prizeNotifier.setPrize(PrizeSimple.fromJson({}));
                     QR.to(
                       RaffleRouter.root +
                           RaffleRouter.detail +
@@ -206,7 +206,7 @@ class PrizeHandler extends HookConsumerWidget {
                                           RaffleRouter.addEditPrize,
                                     );
                                   },
-                                  status: raffle.raffleStatusType,
+                                  status: raffle.status,
                                   onDraw: () async {
                                     await showDialog(
                                       context: context,

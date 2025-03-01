@@ -149,9 +149,7 @@ class ScanDialog extends HookConsumerWidget {
                             );
                             scanner.when(
                               data: (data) {
-                                scannerNotifier.setSecret(secret
-                                  
-                                );
+                                scannerNotifier.setSecret(secret);
                               },
                               error: (error, stack) {
                                 displayToastWithContext(
