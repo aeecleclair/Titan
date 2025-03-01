@@ -53,7 +53,7 @@ class ModuleVisibilityListNotifier extends ListNotifier2<ModuleVisibility> {
     AccountType allowedAccountType,
   ) async {
     return await update(
-      (moduleVisibility) async => moduleListRepository.addAccountTypeToModule(
+      () async => moduleListRepository.addAccountTypeToModule(
         moduleVisibility.root,
         allowedAccountType,
       ),

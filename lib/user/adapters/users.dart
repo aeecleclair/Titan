@@ -31,4 +31,14 @@ extension $CoreUser on CoreUser {
       schoolId: schoolId,
     );
   }
+
+  Applicant toApplicant() {
+    return Applicant(
+        name: name,
+        firstname: firstname,
+        id: id,
+        accountType: accountType,
+        schoolId: schoolId,
+        email: email);
+  }
 }

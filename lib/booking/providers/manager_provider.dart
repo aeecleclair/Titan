@@ -1,8 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/manager.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
 class ManagerNotifier extends StateNotifier<Manager> {
-  ManagerNotifier() : super(Manager.empty());
+  ManagerNotifier() : super(Manager.fromJson({}));
 
   void setManager(Manager manager) {
     state = manager;

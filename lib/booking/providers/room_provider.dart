@@ -1,14 +1,14 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/room.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
-class RoomNotifier extends StateNotifier<Room> {
-  RoomNotifier() : super(Room.empty());
+class RoomNotifier extends StateNotifier<RoomComplete> {
+  RoomNotifier() : super(RoomComplete.fromJson({}));
 
-  void setRoom(Room room) {
+  void setRoom(RoomComplete room) {
     state = room;
   }
 }
 
-final roomProvider = StateNotifierProvider<RoomNotifier, Room>((ref) {
+final roomProvider = StateNotifierProvider<RoomNotifier, RoomComplete>((ref) {
   return RoomNotifier();
 });

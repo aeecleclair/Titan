@@ -1,11 +1,11 @@
 import 'dart:ui';
 
-import 'package:myecl/booking/class/booking.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
-class AppointmentDataSource extends CalendarDataSource<Booking> {
-  AppointmentDataSource(List<Booking> source) {
+class AppointmentDataSource extends CalendarDataSource<BookingReturn> {
+  AppointmentDataSource(List<BookingReturnSimpleApplicant> source) {
     appointments = source;
   }
 
@@ -20,8 +20,8 @@ class AppointmentDataSource extends CalendarDataSource<Booking> {
 
   @override
   String getSubject(int index) {
-    Booking booking = appointments![index];
-    return '${booking.room.name} - ${booking.reason}';
+    BookingReturn bookingReturn = appointments![index];
+    return '${bookingReturn.room.name} - ${bookingReturn.reason}';
   }
 
   @override
@@ -38,13 +38,15 @@ class AppointmentDataSource extends CalendarDataSource<Booking> {
 
   @override
   String? getRecurrenceRule(int index) {
-    Booking booking = appointments![index];
-    return booking.recurrenceRule.isNotEmpty ? booking.recurrenceRule : null;
+    BookingReturn bookingReturn = appointments![index];
+    return bookingReturn.recurrenceRule.isNotEmpty
+        ? bookingReturn.recurrenceRule
+        : null;
   }
 
   @override
-  Booking? convertAppointmentToObject(
-    Booking customData,
+  BookingReturn? convertAppointmentToObject(
+    BookingReturn customData,
     Appointment appointment,
   ) =>
       customData;

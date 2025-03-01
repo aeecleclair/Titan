@@ -44,8 +44,7 @@ class CashListProvider extends ListNotifier2<CashComplete> {
 
   // To be changed
   Future<bool> fakeUpdateCash(CashComplete cash) async {
-    return await update(
-      (_) async => true,
+    return await localUpdate(
       (cashList, c) => cashList
         ..[cashList.indexWhere((c) => c.user.id == cash.user.id)] = cash,
       cash,

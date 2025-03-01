@@ -79,6 +79,14 @@ abstract class ListNotifier2<T> extends StateNotifier<AsyncValue<List<T>>> {
     }, "Cannot add while loading");
   }
 
+  Future<bool> localAdd<E>(T t) async {
+    return handleState((d) async {
+      d.add(t);
+      state = AsyncValue.data(d);
+      return true;
+    }, "Cannot add while loading");
+  }
+
   Future<bool> addAll<E>(
     Future<Response<List<T>>> Function(List<E> listT) f,
     List<E> listT,
@@ -113,6 +121,17 @@ abstract class ListNotifier2<T> extends StateNotifier<AsyncValue<List<T>>> {
     }, "Cannot update while loading");
   }
 
+  Future<bool> localUpdate(
+    List<T> Function(List<T> listT, T t) replace,
+    T t,
+  ) async {
+    return handleState((d) async {
+      d = replace(d, t);
+      state = AsyncValue.data(d);
+      return true;
+    }, "Cannot update while loading");
+  }
+
   Future<bool> delete(
     Future<Response<dynamic>> Function() f,
     List<T> Function(List<T> listT, T t) replace,
@@ -127,6 +146,17 @@ abstract class ListNotifier2<T> extends StateNotifier<AsyncValue<List<T>>> {
       } else {
         throw response.error!;
       }
+    }, "Cannot delete while loading");
+  }
+
+  Future<bool> localDelete(
+    List<T> Function(List<T> listT, T t) replace,
+    T t,
+  ) async {
+    return handleState((d) async {
+      d = replace(d, t);
+      state = AsyncValue.data(d);
+      return true;
     }, "Cannot delete while loading");
   }
 }

@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/booking.dart';
+import 'package:myecl/booking/adapters/booking.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/is_admin_provider.dart';
@@ -16,6 +16,7 @@ import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/calendar/calendar.dart';
 import 'package:myecl/booking/ui/components/booking_card.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/admin_button.dart';
@@ -47,7 +48,7 @@ class BookingMainPage extends HookConsumerWidget {
       displayToast(context, type, message);
     }
 
-    void handleBooking(Booking booking) {
+    void handleBooking(BookingReturnApplicant booking) {
       bookingNotifier.setBooking(booking);
       final recurrentDays =
           SfCalendar.parseRRule(booking.recurrenceRule, booking.start).weekDays;
@@ -119,7 +120,8 @@ class BookingMainPage extends HookConsumerWidget {
                       height: 210,
                       firstChild: GestureDetector(
                         onTap: () {
-                          bookingNotifier.setBooking(Booking.empty());
+                          bookingNotifier
+                              .setBooking(BookingReturnApplicant.fromJson({}));
                           selectedDaysNotifier.clear();
                           QR.to(BookingRouter.root + BookingRouter.addEdit);
                         },
@@ -139,10 +141,11 @@ class BookingMainPage extends HookConsumerWidget {
                       itemBuilder: (context, e, i) => BookingCard(
                         booking: e,
                         onEdit: () {
-                          handleBooking(e);
+                          handleBooking(e.toBookingReturnApplicant());
                         },
                         onInfo: () {
-                          bookingNotifier.setBooking(e);
+                          bookingNotifier
+                              .setBooking(e.toBookingReturnApplicant());
                           QR.to(BookingRouter.root + BookingRouter.detail);
                         },
                         onDelete: () async {
@@ -178,7 +181,8 @@ class BookingMainPage extends HookConsumerWidget {
                           });
                         },
                         onCopy: () {
-                          handleBooking(e.copyWith(id: ""));
+                          handleBooking(
+                              e.toBookingReturnApplicant().copyWith(id: ""));
                         },
                       ),
                     );

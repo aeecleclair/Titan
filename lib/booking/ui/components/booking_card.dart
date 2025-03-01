@@ -1,8 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/tools/constants.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
@@ -10,7 +11,7 @@ import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class BookingCard extends StatelessWidget {
-  final Booking booking;
+  final BookingReturn booking;
   final Function()? onEdit, onConfirm, onDecline, onCopy, onInfo;
   final Future Function()? onDelete;
   final bool isAdmin, isDetail;
@@ -68,6 +69,13 @@ class BookingCard extends StatelessWidget {
           const Color.fromARGB(255, 172, 32, 10),
         ];
         darkIconBackgroundColor = const Color.fromARGB(255, 99, 13, 0);
+        break;
+      case Decision.swaggerGeneratedUnknown:
+        cardColor = [
+          Colors.white,
+          Colors.white,
+        ];
+        darkIconBackgroundColor = Colors.black;
         break;
     }
 
