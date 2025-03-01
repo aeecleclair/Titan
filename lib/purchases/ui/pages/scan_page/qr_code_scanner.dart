@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:myecl/purchases/class/ticket.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
-class QRCodeScannerScreen extends StatefulWidget {
+class QRCodeScannerScreen extends StatelessWidget {
   const QRCodeScannerScreen({
     super.key,
     required this.onScan,
@@ -14,16 +14,8 @@ class QRCodeScannerScreen extends StatefulWidget {
   final AsyncValue<Ticket> scanner;
 
   @override
-  QRCodeScannerScreenState createState() => QRCodeScannerScreenState();
-}
-
-class QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
-  String? qrCode;
-
-  final MobileScannerController controller = MobileScannerController();
-
-  @override
   Widget build(BuildContext context) {
+    final MobileScannerController controller = MobileScannerController();
     return MobileScanner(
       controller: controller,
       overlayBuilder: (context, constraints) {
@@ -34,7 +26,7 @@ class QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
-                color: widget.scanner.when(
+                color: scanner.when(
                   data: (data) => Colors.green,
                   loading: () => Colors.white,
                   error: (error, stackTrace) => Colors.red,
@@ -46,10 +38,7 @@ class QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
         );
       },
       onDetect: (BarcodeCapture capture) async {
-        setState(() {
-          qrCode = capture.barcodes.first.rawValue;
-        });
-        widget.onScan(qrCode!);
+        onScan(capture.barcodes.first.rawValue!);
       },
     );
   }

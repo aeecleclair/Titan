@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/purchases/class/product.dart';
-import 'package:myecl/purchases/class/ticket_generator.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/purchases/providers/product_id_provider.dart';
 import 'package:myecl/purchases/providers/seller_provider.dart';
 import 'package:myecl/purchases/providers/tag_list_provider.dart';
@@ -21,8 +20,8 @@ class TicketCard extends HookConsumerWidget {
     required this.onClicked,
   });
 
-  final TicketGenerator ticket;
-  final Product product;
+  final GenerateTicketComplete ticket;
+  final AppModulesCdrSchemasCdrProductComplete product;
   final VoidCallback onClicked;
 
   @override

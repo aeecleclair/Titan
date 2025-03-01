@@ -1,25 +1,19 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/purchases/class/ticket.dart';
-import 'package:myecl/purchases/repositories/scanner_repository.dart';
-import 'package:myecl/purchases/repositories/user_information_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class TicketListNotifier extends ListNotifier<Ticket> {
-  final UserInformationRepository ticketRepository =
-      UserInformationRepository();
-  final ScannerRepository scannerRepository = ScannerRepository();
-  TicketListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
-    ticketRepository.setToken(token);
-    scannerRepository.setToken(token);
-  }
+class TicketListNotifier extends ListNotifier2<Ticket> {
+  final Openapi ticketRepository;
+  TicketListNotifier({required this.ticketRepository})
+      : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Ticket>>> loadTickets() async {
-    return await loadList(ticketRepository.getTicketList);
+    return await loadList(ticketRepository.cdrUsersMeTicketsGet);
   }
 
+  // Need to go back to it
   Future<bool> consumeTicket(
     String sellerId,
     Ticket ticket,
@@ -27,11 +21,15 @@ class TicketListNotifier extends ListNotifier<Ticket> {
     String tag,
   ) async {
     return await update(
-      (Ticket fakeTicket) => scannerRepository.consumeTicket(
-        sellerId,
-        ticket,
-        generatorId,
-        tag,
+      () => ticketRepository
+          .cdrSellersSellerIdProductsProductIdTicketsGeneratorIdSecretPatch(
+        sellerId: sellerId,
+        productId: ticket.productId,
+        generatorId: generatorId,
+        secret: ticket.secret,
+        body: TicketScan(
+          tag: tag,
+        ),
       ),
       (tickets, ticket) {
         List<String> tags = ticket.tags;
@@ -47,8 +45,9 @@ class TicketListNotifier extends ListNotifier<Ticket> {
 
 final ticketListProvider =
     StateNotifierProvider<TicketListNotifier, AsyncValue<List<Ticket>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  TicketListNotifier notifier = TicketListNotifier(token: token);
+  final ticketRepository = ref.watch(repositoryProvider);
+  TicketListNotifier notifier =
+      TicketListNotifier(ticketRepository: ticketRepository);
   tokenExpireWrapperAuth(ref, () async {
     await notifier.loadTickets();
   });

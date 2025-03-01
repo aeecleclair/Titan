@@ -1,16 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/purchases/repositories/scanner_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 
-class ScannedUsersListNotifier extends ListNotifier<CoreUserSimple> {
-  final ScannerRepository scannerRepository = ScannerRepository();
-  AsyncValue<List<String>> tagList = const AsyncValue.loading();
-  ScannedUsersListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
-    scannerRepository.setToken(token);
-  }
+class ScannedUsersListNotifier extends ListNotifier2<CoreUserSimple> {
+  final Openapi scannerRepository;
+  ScannedUsersListNotifier({required this.scannerRepository})
+      : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<CoreUserSimple>>> loadUsers(
     String sellerId,
@@ -19,15 +15,21 @@ class ScannedUsersListNotifier extends ListNotifier<CoreUserSimple> {
     String tag,
   ) async {
     return await loadList(
-      () =>
-          scannerRepository.getUsersList(sellerId, productId, generatorId, tag),
+      () => scannerRepository
+          .cdrSellersSellerIdProductsProductIdTicketsGeneratorIdListsTagGet(
+        sellerId: sellerId,
+        productId: productId,
+        generatorId: generatorId,
+        tag: tag,
+      ),
     );
   }
 }
 
 final scannedUsersListProvider = StateNotifierProvider<ScannedUsersListNotifier,
     AsyncValue<List<CoreUserSimple>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  ScannedUsersListNotifier notifier = ScannedUsersListNotifier(token: token);
+  final scannerRepository = ref.watch(repositoryProvider);
+  ScannedUsersListNotifier notifier =
+      ScannedUsersListNotifier(scannerRepository: scannerRepository);
   return notifier;
 });

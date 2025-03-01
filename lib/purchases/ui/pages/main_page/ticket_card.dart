@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/purchases/class/ticket.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 
@@ -36,7 +36,7 @@ class TicketCard extends HookConsumerWidget {
                   ),
                 ),
                 Text(
-                  "${ticket.scanLeft} scan${ticket.scanLeft > 1 ? 's' : ""} restant${ticket.scanLeft > 1 ? 's' : ""} - Valide jusqu'au ${processDate(ticket.expirationDate)}",
+                  "${ticket.scanLeft} scan${ticket.scanLeft > 1 ? 's' : ""} restant${ticket.scanLeft > 1 ? 's' : ""} - Valide jusqu'au ${processDate(ticket.expiration)}",
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,

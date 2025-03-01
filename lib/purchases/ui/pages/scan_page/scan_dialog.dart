@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/purchases/class/ticket_generator.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/purchases/providers/scanner_provider.dart';
 import 'package:myecl/purchases/providers/tag_provider.dart';
 import 'package:myecl/purchases/providers/ticket_list_provider.dart';
@@ -18,7 +18,7 @@ import 'package:myecl/tools/ui/layouts/card_layout.dart';
 class ScanDialog extends HookConsumerWidget {
   final String sellerId;
   final String productId;
-  final TicketGenerator ticket;
+  final GenerateTicketComplete ticket;
   const ScanDialog({
     super.key,
     required this.ticket,
@@ -144,15 +144,12 @@ class ScanDialog extends HookConsumerWidget {
                             await scannerNotifier.scanTicket(
                               sellerId,
                               productId,
-                              secret,
                               ticket.id,
                             );
                             scanner.when(
                               data: (data) {
-                                scannerNotifier.setScanner(
-                                  data.copyWith(
-                                    qrCodeSecret: secret,
-                                  ),
+                                scannerNotifier.setSecret(secret
+                                  
                                 );
                               },
                               error: (error, stack) {
@@ -188,7 +185,7 @@ class ScanDialog extends HookConsumerWidget {
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            "Variant : ${data.productVariant.nameFR}",
+                            "Variant : ${data.productVariant.nameFr}",
                             style: const TextStyle(
                               fontSize: 16,
                               color: Colors.black,

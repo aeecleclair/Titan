@@ -12,6 +12,7 @@ import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:myecl/user/extensions/users.dart';
 
 class UserListPage extends HookConsumerWidget {
   const UserListPage({super.key});
