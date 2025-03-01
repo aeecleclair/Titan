@@ -11,6 +11,7 @@ import 'package:myecl/home/router.dart';
 import 'package:myecl/home/ui/home.dart' deferred as home_page;
 import 'package:myecl/loan/router.dart';
 import 'package:myecl/login/router.dart';
+import 'package:myecl/meme/router.dart';
 import 'package:myecl/others/ui/loading_page.dart' deferred as loading_page;
 import 'package:myecl/others/ui/no_internet_page.dart'
     deferred as no_internet_page;
@@ -96,6 +97,7 @@ class AppRouter {
       PhonebookRouter(ref).route(),
       PhRouter(ref).route(),
       PurchasesRouter(ref).route(),
+      MemeRouter(ref).route(),
     ];
   }
 }
