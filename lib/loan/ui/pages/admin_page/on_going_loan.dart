@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/class/item.dart';
-import 'package:myecl/loan/class/loan.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/end_provider.dart';
 import 'package:myecl/loan/providers/loan_focus_provider.dart';
@@ -83,7 +82,7 @@ class OnGoingLoan extends HookConsumerWidget {
               height: 170,
               firstChild: GestureDetector(
                 onTap: () async {
-                  await loanNotifier.setLoan(Loan.empty());
+                  await loanNotifier.setLoan(Loan.fromJson({}));
                   startNotifier.setStart(processDate(DateTime.now()));
                   endNotifier.setEnd("");
                   QR.to(
@@ -158,7 +157,7 @@ class OnGoingLoan extends HookConsumerWidget {
                       descriptions: LoanTextConstants.returnLoanDescription,
                       onYes: () async {
                         await tokenExpireWrapper(ref, () async {
-                          final loanItemsId = e.itemsQuantity
+                          final loanItemsId = e.itemsQty
                               .map((e) => e.itemSimple.id)
                               .toList();
                           final updatedItems = loanersItems[loaner]!

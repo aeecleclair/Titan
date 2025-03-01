@@ -6,6 +6,7 @@ import 'package:myecl/loan/ui/pages/detail_pages/item_card_in_loan.dart';
 import 'package:myecl/loan/ui/loan.dart';
 import 'package:myecl/loan/ui/pages/admin_page/loan_card.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/user/extensions/users.dart';
 
 class DetailLoanPage extends HookConsumerWidget {
   const DetailLoanPage({super.key});
@@ -72,11 +73,11 @@ class DetailLoanPage extends HookConsumerWidget {
                             ],
                           ),
                         ),
-                        loan.itemsQuantity.isNotEmpty
+                        loan.itemsQty.isNotEmpty
                             ? SingleChildScrollView(
                                 physics: const BouncingScrollPhysics(),
                                 child: Wrap(
-                                  children: loan.itemsQuantity
+                                  children: loan.itemsQty
                                       .map(
                                         (itemQty) => ItemCardInLoan(
                                           itemQty: itemQty,

@@ -1,25 +1,31 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/class/loaner.dart';
-import 'package:myecl/loan/repositories/loaner_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class LoanerListNotifier extends ListNotifier<Loaner> {
-  final LoanerRepository loanerRepository;
+class LoanerListNotifier extends ListNotifier2<Loaner> {
+  final Openapi loanerRepository;
   LoanerListNotifier({required this.loanerRepository})
       : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Loaner>>> loadLoanerList() async {
-    return await loadList(loanerRepository.getLoanerList);
+    return await loadList(loanerRepository.loansLoanersGet);
   }
 
-  Future<bool> addLoaner(Loaner loaner) async {
-    return await add(loanerRepository.createLoaner, loaner);
+  Future<bool> addLoaner(LoanerBase loaner) async {
+    return await add(
+        () => loanerRepository.loansLoanersPost(body: loaner), loaner);
   }
 
   Future<bool> updateLoaner(Loaner loaner) async {
     return await update(
-      loanerRepository.updateLoaner,
+      () => loanerRepository.loansLoanersLoanerIdPatch(
+          loanerId: loaner.id,
+          body: LoanerUpdate(
+            name: loaner.name,
+            groupManagerId: loaner.groupManagerId,
+          )),
       (loaners, loaner) =>
           loaners..[loaners.indexWhere((i) => i.id == loaner.id)] = loaner,
       loaner,
@@ -28,9 +34,8 @@ class LoanerListNotifier extends ListNotifier<Loaner> {
 
   Future<bool> deleteLoaner(Loaner loaner) async {
     return await delete(
-      loanerRepository.deleteLoaner,
+      () => loanerRepository.loansLoanersLoanerIdDelete(loanerId: loaner.id),
       (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
-      loaner.id,
       loaner,
     );
   }
@@ -39,7 +44,7 @@ class LoanerListNotifier extends ListNotifier<Loaner> {
 final loanerListProvider =
     StateNotifierProvider<LoanerListNotifier, AsyncValue<List<Loaner>>>(
   (ref) {
-    final loanerRepository = ref.watch(loanerRepositoryProvider);
+    final loanerRepository = ref.watch(repositoryProvider);
     LoanerListNotifier orderListNotifier =
         LoanerListNotifier(loanerRepository: loanerRepository);
     tokenExpireWrapperAuth(ref, () async {

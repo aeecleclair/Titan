@@ -1,4 +1,4 @@
-import 'package:myecl/loan/class/item_quantity.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/loan/tools/constants.dart';
 
 String formatItems(List<ItemQuantity> itemsQty) {

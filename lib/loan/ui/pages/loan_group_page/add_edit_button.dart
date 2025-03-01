@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/class/item_quantity.dart';
-import 'package:myecl/loan/class/loan.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/loan/adapters/item.dart';
+import 'package:myecl/loan/adapters/loan.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/borrower_provider.dart';
 import 'package:myecl/loan/providers/caution_provider.dart';
@@ -78,7 +79,7 @@ class AddEditButton extends HookConsumerWidget {
                   if (selected.isNotEmpty) {
                     Loan newLoan = Loan(
                       loaner: isEdit ? loan.loaner : loaner,
-                      itemsQuantity: selected,
+                      itemsQty: selected,
                       borrower: borrower,
                       caution: caution.text,
                       end: DateTime.parse(processDateBack(end)),
@@ -86,10 +87,13 @@ class AddEditButton extends HookConsumerWidget {
                       notes: note.text,
                       start: DateTime.parse(processDateBack(start)),
                       returned: false,
+                      borrowerId: borrower.id,
+                      loanerId: isEdit ? loan.loaner.id : loaner.id,
+                      returnedDate: DateTime.now(),
                     );
                     final value = isEdit
                         ? await loanListNotifier.updateLoan(newLoan)
-                        : await loanListNotifier.addLoan(newLoan);
+                        : await loanListNotifier.addLoan(newLoan.toLoanCreation());
                     if (value) {
                       adminLoanListNotifier.setTData(
                         isEdit ? loan.loaner : loaner,

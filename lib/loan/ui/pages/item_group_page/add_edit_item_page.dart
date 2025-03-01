@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/class/item.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/loan/adapters/item.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/item_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
@@ -26,12 +27,12 @@ class AddEditItemPage extends HookConsumerWidget {
     final itemListNotifier = ref.watch(itemListProvider.notifier);
     final loanersItemsNotifier = ref.watch(loanersItemsProvider.notifier);
     final item = ref.watch(itemProvider);
-    final isEdit = item.id != Item.empty().id;
+    final isEdit = item.id != Item.fromJson({}).id;
     final name = useTextEditingController(text: item.name);
     final quantity =
         useTextEditingController(text: item.totalQuantity.toString());
     final caution =
-        useTextEditingController(text: isEdit ? item.caution.toString() : '');
+        useTextEditingController(text: isEdit ? item.suggestedCaution.toString() : '');
     final lendingDuration = useTextEditingController(
       text: isEdit ? item.suggestedLendingDuration.toString() : '',
     );
@@ -102,11 +103,12 @@ class AddEditItemPage extends HookConsumerWidget {
                             Item newItem = Item(
                               id: isEdit ? item.id : '',
                               name: name.text,
-                              caution: int.parse(caution.text),
+                              suggestedCaution: int.parse(caution.text),
                               suggestedLendingDuration:
                                   int.parse(lendingDuration.text),
                               loanedQuantity: 1,
                               totalQuantity: int.parse(quantity.text),
+                              loanerId: loaner.id,
                             );
                             final value = isEdit
                                 ? await itemListNotifier.updateItem(
@@ -114,7 +116,7 @@ class AddEditItemPage extends HookConsumerWidget {
                                     loaner.id,
                                   )
                                 : await itemListNotifier.addItem(
-                                    newItem,
+                                    newItem.toItemBase(),
                                     loaner.id,
                                   );
                             if (value) {

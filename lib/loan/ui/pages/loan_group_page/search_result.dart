@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/providers/borrower_provider.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:myecl/user/extensions/users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class SearchResult extends HookConsumerWidget {
@@ -19,7 +20,7 @@ class SearchResult extends HookConsumerWidget {
       builder: (context, user) => Column(
         children: user
             .map(
-              (CoreUserSimple) => GestureDetector(
+              (u) => GestureDetector(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -28,10 +29,10 @@ class SearchResult extends HookConsumerWidget {
                       Container(width: 20),
                       Expanded(
                         child: Text(
-                          CoreUserSimple.getName(),
+                          u.getName(),
                           style: TextStyle(
                             fontSize: 13,
-                            fontWeight: (borrower.id == CoreUserSimple.id)
+                            fontWeight: (borrower.id == u.id)
                                 ? FontWeight.bold
                                 : FontWeight.w400,
                           ),
@@ -42,8 +43,8 @@ class SearchResult extends HookConsumerWidget {
                   ),
                 ),
                 onTap: () {
-                  borrowerNotifier.setBorrower(CoreUserSimple);
-                  queryController.text = CoreUserSimple.getName();
+                  borrowerNotifier.setBorrower(u);
+                  queryController.text = u.getName();
                   usersNotifier.clear();
                 },
               ),
