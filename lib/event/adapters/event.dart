@@ -29,3 +29,21 @@ extension $EventReturn on EventReturn {
         recurrenceRule: recurrenceRule);
   }
 }
+
+extension $EventComplete on EventComplete {
+  EventReturn toEventReturn() {
+    return EventReturn(
+        name: name,
+        organizer: organizer,
+        start: start,
+        end: end,
+        allDay: allDay,
+        location: location,
+        type: type,
+        description: description,
+        id: id,
+        decision: decision,
+        applicantId: applicantId,
+        applicant: EventApplicant.fromJson({}));
+  }
+}
