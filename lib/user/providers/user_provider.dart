@@ -22,7 +22,7 @@ class UserNotifier extends SingleNotifier2<CoreUser> {
 
   Future<bool> updateUser(CoreUser user) async {
     return await update(
-      (user) => userRepository.usersUserIdPatch(
+      () => userRepository.usersUserIdPatch(
         body: user.toCoreUserUpdateAdmin(),
         userId: user.id,
       ),
@@ -32,8 +32,7 @@ class UserNotifier extends SingleNotifier2<CoreUser> {
 
   Future<bool> updateMe(CoreUser user) async {
     return await update(
-      (user) async =>
-          userRepository.usersMePatch(body: user.toCoreUserUpdate()),
+      () async => userRepository.usersMePatch(body: user.toCoreUserUpdate()),
       user,
     );
   }
