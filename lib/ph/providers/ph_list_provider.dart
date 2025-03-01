@@ -1,47 +1,43 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/ph/class/ph.dart';
-import 'package:myecl/ph/repositories/ph_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class PhListNotifier extends ListNotifier<Ph> {
-  final PhRepository _phRepository = PhRepository();
-  PhListNotifier({required String token}) : super(const AsyncValue.loading()) {
-    _phRepository.setToken(token);
+class PhListNotifier extends ListNotifier2<PaperComplete> {
+  final Openapi phRepository;
+  PhListNotifier({required this.phRepository}) : super(const AsyncValue.loading()) ;
+
+  Future<AsyncValue<List<PaperComplete>>> loadPhList() async {
+    return await loadList(phRepository.phGet);
   }
 
-  Future<AsyncValue<List<Ph>>> loadPhList() async {
-    return await loadList(() async => _phRepository.getAllPh());
+  Future<bool> addPh(PaperBase ph) async {
+    return await add(() => phRepository.phPost(body: ph), ph);
   }
 
-  Future<bool> addPh(Ph ph) async {
-    return await add(_phRepository.addPh, ph);
-  }
-
-  Future<bool> editPh(Ph ph) async {
+  Future<bool> editPh(PaperComplete ph) async {
     return await update(
-      _phRepository.editPh,
+      () => phRepository.phPaperIdPatch(paperId: ph.id, body: PaperUpdate(name: ph.name, releaseDate: ph.releaseDate)),
       (phs, ph) =>
           phs..[phs.indexWhere((phToCheck) => phToCheck.id == ph.id)] = ph,
       ph,
     );
   }
 
-  Future<bool> deletePh(Ph ph) async {
+  Future<bool> deletePh(PaperComplete ph) async {
     return await delete(
-      _phRepository.deletePh,
+      () => phRepository.phPaperIdDelete(paperId: ph.id),
       (phs, ph) => phs..removeWhere((phToCheck) => phToCheck.id == ph.id),
-      ph.id,
       ph,
     );
   }
 }
 
 final phListProvider =
-    StateNotifierProvider<PhListNotifier, AsyncValue<List<Ph>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  final notifier = PhListNotifier(token: token);
+    StateNotifierProvider<PhListNotifier, AsyncValue<List<PaperComplete>>>((ref) {
+  final phRepository = ref.watch(repositoryProvider);
+  final notifier = PhListNotifier(phRepository: phRepository);
   tokenExpireWrapperAuth(ref, () async {
     await notifier.loadPhList();
   });

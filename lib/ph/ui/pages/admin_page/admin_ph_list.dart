@@ -27,7 +27,7 @@ class AdminPhList extends HookConsumerWidget {
         value: phList,
         builder: (context, phList) {
           final list =
-              phList.where((ph) => selectedYear.contains(ph.date.year));
+              phList.where((ph) => selectedYear.contains(ph.releaseDate.year));
           return Column(
             children: list
                 .map(

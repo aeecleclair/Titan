@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/ph/class/ph.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/ph/adapters/ph.dart';
 import 'package:myecl/ph/providers/ph_list_provider.dart';
 import 'package:myecl/ph/providers/ph_pdf_provider.dart';
 import 'package:myecl/ph/providers/ph_send_pdf_provider.dart';
@@ -27,9 +28,9 @@ class PhAddEditPhPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ph = ref.watch(phProvider);
-    final isEdit = ph.id != Ph.empty().id;
+    final isEdit = ph.id != PaperComplete.fromJson({}).id;
     final dateController =
-        TextEditingController(text: phFormatDateEntry(ph.date));
+        TextEditingController(text: phFormatDateEntry(ph.releaseDate));
     final key = GlobalKey<FormState>();
     final name = useTextEditingController(text: ph.name);
 
@@ -102,16 +103,16 @@ class PhAddEditPhPage extends HookConsumerWidget {
                             (!listEquals(phSendPdf, Uint8List(0)) || isEdit)) {
                           await tokenExpireWrapper(ref, () async {
                             final phList = ref.watch(phListProvider);
-                            Ph newPh = Ph(
+                            PaperComplete newPh = PaperComplete(
                               id: isEdit ? ph.id : '',
-                              date: DateTime.parse(
+                              releaseDate: DateTime.parse(
                                 processDateBack(dateController.text),
                               ),
                               name: name.text,
                             );
                             final value = isEdit
                                 ? await phListNotifier.editPh(newPh)
-                                : await phListNotifier.addPh(newPh);
+                                : await phListNotifier.addPh(newPh.toPaperBase());
 
                             if (value) {
                               SystemChannels.textInput

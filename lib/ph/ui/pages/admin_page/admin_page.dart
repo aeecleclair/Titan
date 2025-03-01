@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/ph/class/ph.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/ph/providers/file_picker_result_provider.dart';
 import 'package:myecl/ph/providers/ph_provider.dart';
 import 'package:myecl/ph/providers/ph_send_pdf_provider.dart';
@@ -30,7 +30,7 @@ class AdminPage extends HookConsumerWidget {
           const SizedBox(height: 20),
           GestureDetector(
             onTap: () {
-              phNotifier.setPh(Ph.empty());
+              phNotifier.setPh(PaperComplete.fromJson({}));
               phSendPdfNotifier.set(Uint8List(0));
               resultNotifier.setFilePickerResult(null);
               QR.to(PhRouter.root + PhRouter.admin + PhRouter.add_ph);
