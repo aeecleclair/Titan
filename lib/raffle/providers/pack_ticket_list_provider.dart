@@ -1,9 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
+import 'package:myecl/raffle/adapters/pack_ticket.dart';
 
-class PackTicketsListNotifier extends ListNotifier2<PackTicketSimple> {
+class PackTicketsListNotifier extends ListNotifierAPI<PackTicketSimple> {
   final Openapi packTicketsRepository;
   PackTicketsListNotifier({required this.packTicketsRepository})
       : super(const AsyncValue.loading());
@@ -25,13 +26,10 @@ class PackTicketsListNotifier extends ListNotifier2<PackTicketSimple> {
   Future<bool> updatePackTicket(PackTicketSimple packTicket) async {
     return update(
       () => packTicketsRepository.tombolaPackTicketsPackticketIdPatch(
-          packticketId: packTicket.id,
-          body: PackTicketEdit(
-              price: packTicket.price,
-              packSize: packTicket.packSize,
-              raffleId: packTicket.raffleId)),
-      (packTickets, t) =>
-          packTickets..[packTickets.indexWhere((e) => e.id == t.id)] = t,
+        packticketId: packTicket.id,
+        body: packTicket.toPackTicketEdit(),
+      ),
+      (packTicket) => packTicket.id,
       packTicket,
     );
   }
@@ -40,8 +38,7 @@ class PackTicketsListNotifier extends ListNotifier2<PackTicketSimple> {
     return await delete(
       () => packTicketsRepository.tombolaPackTicketsPackticketIdDelete(
           packticketId: packTicket.id),
-      (packTickets, t) => packTickets..removeWhere((e) => e.id == t.id),
-      packTicket,
+      (packTickets) => packTickets..removeWhere((e) => e.id == packTicket.id),
     );
   }
 }

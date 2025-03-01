@@ -2,8 +2,8 @@ import 'package:chopper/chopper.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/exception.dart';
 
-abstract class ListNotifier2<T> extends StateNotifier<AsyncValue<List<T>>> {
-  ListNotifier2(AsyncValue state) : super(const AsyncLoading());
+abstract class ListNotifierAPI<T> extends StateNotifier<AsyncValue<List<T>>> {
+  ListNotifierAPI(AsyncValue state) : super(const AsyncLoading());
 
   Future<E> errorWrapper<E>(
     Future<E> Function() f,
@@ -106,13 +106,13 @@ abstract class ListNotifier2<T> extends StateNotifier<AsyncValue<List<T>>> {
 
   Future<bool> update(
     Future<Response<dynamic>> Function() f,
-    List<T> Function(List<T> listT, T t) replace,
+    String Function(T t) getKey,
     T t,
   ) async {
     return handleState((d) async {
       final response = await f();
       if (response.isSuccessful) {
-        d = replace(d, t);
+        d[d.indexWhere((e) => getKey(e) == getKey(t))] = t;
         state = AsyncValue.data(d);
         return true;
       } else {
@@ -122,11 +122,11 @@ abstract class ListNotifier2<T> extends StateNotifier<AsyncValue<List<T>>> {
   }
 
   Future<bool> localUpdate(
-    List<T> Function(List<T> listT, T t) replace,
+    String Function(T t) getKey,
     T t,
   ) async {
     return handleState((d) async {
-      d = replace(d, t);
+      d[d.indexWhere((e) => getKey(e) == getKey(t))] = t;
       state = AsyncValue.data(d);
       return true;
     }, "Cannot update while loading");
@@ -134,13 +134,12 @@ abstract class ListNotifier2<T> extends StateNotifier<AsyncValue<List<T>>> {
 
   Future<bool> delete(
     Future<Response<dynamic>> Function() f,
-    List<T> Function(List<T> listT, T t) replace,
-    T t,
+    List<T> Function(List<T> listT) replace,
   ) async {
     return handleState((d) async {
       final response = await f();
       if (response.isSuccessful) {
-        d = replace(d, t);
+        d = replace(d);
         state = AsyncValue.data(d);
         return true;
       } else {
@@ -150,11 +149,10 @@ abstract class ListNotifier2<T> extends StateNotifier<AsyncValue<List<T>>> {
   }
 
   Future<bool> localDelete(
-    List<T> Function(List<T> listT, T t) replace,
-    T t,
+    List<T> Function(List<T> listT) replace,
   ) async {
     return handleState((d) async {
-      d = replace(d, t);
+      d = replace(d);
       state = AsyncValue.data(d);
       return true;
     }, "Cannot delete while loading");

@@ -10,4 +10,12 @@ extension $OrderReturn on OrderReturn {
       productsQuantity: productsdetail.map((p) => p.quantity).toList(),
     );
   }
+
+  OrderEdit toOrderEdit() {
+    return OrderEdit(
+      collectionSlot: collectionSlot,
+      productsIds: productsdetail.map((p) => p.product.id).toList(),
+      productsQuantity: productsdetail.map((p) => p.quantity).toList(),
+    );
+  }
 }

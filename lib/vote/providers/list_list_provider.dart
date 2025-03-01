@@ -1,10 +1,11 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/vote/adapters/list.dart';
 
-class ListListNotifier extends ListNotifier2<ListReturn> {
+class ListListNotifier extends ListNotifierAPI<ListReturn> {
   final Openapi listRepository;
   ListListNotifier({required this.listRepository})
       : super(const AsyncValue.loading());
@@ -22,15 +23,10 @@ class ListListNotifier extends ListNotifier2<ListReturn> {
   Future<bool> updateList(ListReturn list) async {
     return await update(
       () => listRepository.campaignListsListIdPatch(
-          listId: list.id,
-          body: ListEdit(
-            name: list.name,
-            description: list.description,
-            type: list.type,
-            program: list.program,
-            members: list.members.map((e) => e.userId).toList(),
-          )),
-      (lists, list) => lists..[lists.indexWhere((p) => p.id == list.id)] = list,
+        listId: list.id,
+        body: list.toListEdit(),
+      ),
+      (list) => list.id,
       list,
     );
   }
@@ -38,17 +34,15 @@ class ListListNotifier extends ListNotifier2<ListReturn> {
   Future<bool> deleteList(ListReturn list) async {
     return await delete(
       () => listRepository.campaignListsListIdDelete(listId: list.id),
-      (lists, list) => lists..removeWhere((p) => p.id == list.id),
-      list,
+      (lists) => lists..removeWhere((p) => p.id == list.id),
     );
   }
 
   Future<bool> deleteLists({ListType? type}) async {
     return await delete(
       () => listRepository.campaignListsDelete(listType: type),
-      (lists, list) =>
+      (lists) =>
           lists..removeWhere((p) => type != null ? p.type == type : true),
-      ListReturn.fromJson({}),
     );
   }
 

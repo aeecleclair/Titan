@@ -1,10 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/admin/adapters/module_visibility.dart';
 
-class ModuleVisibilityListNotifier extends ListNotifier2<ModuleVisibility> {
+class ModuleVisibilityListNotifier extends ListNotifierAPI<ModuleVisibility> {
   final Openapi moduleListRepository;
   ModuleVisibilityListNotifier({required this.moduleListRepository})
       : super(const AsyncValue.loading());
@@ -19,14 +20,9 @@ class ModuleVisibilityListNotifier extends ListNotifier2<ModuleVisibility> {
   ) async {
     return await update(
       () => moduleListRepository.moduleVisibilityPost(
-        body: ModuleVisibilityCreate(
-          root: moduleVisibility.root,
-          allowedGroupId: allowedGroupId,
-        ),
+        body: moduleVisibility.toModuleVisibilityCreate(allowedGroupId),
       ),
-      (list, moduleVisibility) => list
-        ..[list.indexWhere((m) => m.root == moduleVisibility.root)] =
-            moduleVisibility,
+      (moduleVisibility) => moduleVisibility.root,
       moduleVisibility,
     );
   }
@@ -36,30 +32,25 @@ class ModuleVisibilityListNotifier extends ListNotifier2<ModuleVisibility> {
     String allowedGroupId,
   ) async {
     return await update(
-      () async => moduleListRepository.moduleVisibilityRootGroupsGroupIdDelete(
+      () => moduleListRepository.moduleVisibilityRootGroupsGroupIdDelete(
         root: moduleVisibility.root,
         groupId: allowedGroupId,
       ),
-      (list, moduleVisibility) => list
-        ..[list.indexWhere((m) => m.root == moduleVisibility.root)] =
-            moduleVisibility,
+      (moduleVisibility) => moduleVisibility.root,
       moduleVisibility,
     );
   }
 
-  //  W8 to merge dedicated PR
   Future<bool> addAccountTypeToModule(
     ModuleVisibility moduleVisibility,
     AccountType allowedAccountType,
   ) async {
     return await update(
-      () async => moduleListRepository.addAccountTypeToModule(
-        moduleVisibility.root,
-        allowedAccountType,
+      () => moduleListRepository.moduleVisibilityPost(
+        body: moduleVisibility
+            .toModuleVisibilityCreate(allowedAccountType.toString()),
       ),
-      (list, moduleVisibility) => list
-        ..[list.indexWhere((m) => m.root == moduleVisibility.root)] =
-            moduleVisibility,
+      (moduleVisibility) => moduleVisibility.root,
       moduleVisibility,
     );
   }
@@ -69,14 +60,12 @@ class ModuleVisibilityListNotifier extends ListNotifier2<ModuleVisibility> {
     AccountType allowedAccountType,
   ) async {
     return await update(
-      () async => moduleListRepository
+      () => moduleListRepository
           .moduleVisibilityRootAccountTypesAccountTypeDelete(
         root: moduleVisibility.root,
         accountType: allowedAccountType,
       ),
-      (list, moduleVisibility) => list
-        ..[list.indexWhere((m) => m.root == moduleVisibility.root)] =
-            moduleVisibility,
+      (moduleVisibility) => moduleVisibility.root,
       moduleVisibility,
     );
   }

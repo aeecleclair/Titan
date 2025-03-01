@@ -1,10 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/amap/adapters/cash.dart';
 
-class CashListProvider extends ListNotifier2<CashComplete> {
+class CashListProvider extends ListNotifierAPI<CashComplete> {
   final Openapi cashRepository;
   AsyncValue<List<CashComplete>> _cashList = const AsyncLoading();
   CashListProvider({required this.cashRepository})
@@ -18,7 +19,7 @@ class CashListProvider extends ListNotifier2<CashComplete> {
     return await add(
       () => cashRepository.amapUsersUserIdCashPost(
         userId: cash.user.id,
-        body: CashEdit(balance: cash.balance),
+        body: cash.toCashEdit(),
       ),
       cash,
     );
@@ -31,22 +32,19 @@ class CashListProvider extends ListNotifier2<CashComplete> {
     return await update(
       () => cashRepository.amapUsersUserIdCashPatch(
         userId: addedCash.userId,
-        body: CashEdit(balance: addedCash.balance),
+        body: addedCash.toCashEdit(),
       ),
-      (cashList, c) => cashList
-        ..[cashList.indexWhere((c) => c.user.id == addedCash.user.id)] =
-            addedCash.copyWith(
-          balance: addedCash.balance + previousCashAmount,
-        ),
-      addedCash,
+      (cash) => cash.userId,
+      addedCash.copyWith(
+        balance: addedCash.balance + previousCashAmount,
+      ),
     );
   }
 
   // To be changed
   Future<bool> fakeUpdateCash(CashComplete cash) async {
     return await localUpdate(
-      (cashList, c) => cashList
-        ..[cashList.indexWhere((c) => c.user.id == cash.user.id)] = cash,
+      (cash) => cash.userId,
       cash,
     );
   }

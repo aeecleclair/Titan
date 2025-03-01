@@ -8,4 +8,13 @@ extension $PrizeSimple on PrizeSimple {
         raffleId: raffleId,
         quantity: quantity);
   }
+
+  PrizeEdit toPrizeEdit() {
+    return PrizeEdit(
+      raffleId: raffleId,
+      description: description,
+      name: name,
+      quantity: quantity,
+    );
+  }
 }

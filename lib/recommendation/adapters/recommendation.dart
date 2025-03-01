@@ -1,8 +1,8 @@
 import 'package:myecl/generated/openapi.models.swagger.dart';
 
 extension $Recommendation on Recommendation {
- RecommendationBase toRecommendationBase() {
-    return RecommendationBase(
+  RecommendationEdit toRecommendationEdit() {
+    return RecommendationEdit(
       title: title,
       description: description,
       summary: summary,

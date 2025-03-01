@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/single_notifier%20copy.dart';
+import 'package:myecl/tools/providers/single_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
-class VersionVerifierNotifier extends SingleNotifier2<CoreInformation> {
+class VersionVerifierNotifier extends SingleNotifierAPI<CoreInformation> {
   final Openapi versionRepository;
   VersionVerifierNotifier({required this.versionRepository})
       : super(const AsyncLoading());

@@ -7,4 +7,11 @@ extension $Manager on Manager {
       name: name,
     );
   }
+
+  ManagerUpdate toManagerUpdate() {
+    return ManagerUpdate(
+      groupId: groupId,
+      name: name,
+    );
+  }
 }

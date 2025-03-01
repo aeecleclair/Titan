@@ -2,8 +2,8 @@ import 'package:chopper/chopper.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/exception.dart';
 
-abstract class SingleNotifier2<T> extends StateNotifier<AsyncValue<T>> {
-  SingleNotifier2(AsyncValue state) : super(const AsyncLoading());
+abstract class SingleNotifierAPI<T> extends StateNotifier<AsyncValue<T>> {
+  SingleNotifierAPI(AsyncValue state) : super(const AsyncLoading());
 
   Future<AsyncValue<T>> load(Future<Response<T>> Function() f) async {
     try {
@@ -58,13 +58,13 @@ abstract class SingleNotifier2<T> extends StateNotifier<AsyncValue<T>> {
     });
   }
 
-  Future<bool> update(Future<Response<dynamic>> Function() f, T t) async {
+  Future<bool> update(Future<Response<dynamic>> Function(T t) f, T t) async {
     return state.when(data: (d) async {
       try {
-        final response = await f();
+        final response = await f(t);
         if (response.isSuccessful) {
-        state = AsyncValue.data(t);
-        return true;
+          state = AsyncValue.data(t);
+          return true;
         } else {
           throw response.error!;
         }
@@ -91,13 +91,13 @@ abstract class SingleNotifier2<T> extends StateNotifier<AsyncValue<T>> {
   }
 
   Future<bool> delete(
-      Future<Response<dynamic>> Function() f, T t,) async {
+      Future<Response<dynamic>> Function(String id) f, T t, String id) async {
     return state.when(data: (d) async {
       try {
-        final response = await f();
+        final response = await f(id);
         if (response.isSuccessful) {
-        state = const AsyncValue.loading();
-        return true;
+          state = const AsyncValue.loading();
+          return true;
         } else {
           throw response.error!;
         }

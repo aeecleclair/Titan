@@ -7,4 +7,11 @@ extension $PaperComplete on PaperComplete {
       releaseDate: releaseDate,
     );
   }
+
+  PaperUpdate toPaperUpdate() {
+    return PaperUpdate(
+      name: name,
+      releaseDate: releaseDate,
+    );
+  }
 }

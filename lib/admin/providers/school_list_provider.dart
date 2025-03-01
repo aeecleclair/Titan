@@ -1,10 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/admin/adapters/school.dart';
 
-class SchoolListNotifier extends ListNotifier2<CoreSchool> {
+class SchoolListNotifier extends ListNotifierAPI<CoreSchool> {
   final Openapi schoolRepository;
   SchoolListNotifier({required this.schoolRepository})
       : super(const AsyncValue.loading());
@@ -21,13 +22,9 @@ class SchoolListNotifier extends ListNotifier2<CoreSchool> {
     return await update(
       () => schoolRepository.schoolsSchoolIdPatch(
         schoolId: school.id,
-        body: CoreSchoolUpdate(
-          emailRegex: school.emailRegex,
-          name: school.name,
-        ),
+        body: school.toCoreSchoolUpdate(),
       ),
-      (schools, school) =>
-          schools..[schools.indexWhere((g) => g.id == school.id)] = school,
+      (school) => school.id,
       school,
     );
   }
@@ -35,8 +32,7 @@ class SchoolListNotifier extends ListNotifier2<CoreSchool> {
   Future<bool> deleteSchool(CoreSchool school) async {
     return await delete(
       () => schoolRepository.schoolsSchoolIdDelete(schoolId: school.id),
-      (schools, school) => schools..removeWhere((i) => i.id == school.id),
-      school,
+      (schools) => schools..removeWhere((i) => i.id == school.id),
     );
   }
 

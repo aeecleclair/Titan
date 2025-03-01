@@ -2,11 +2,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/exception.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/amap/adapters/order.dart';
 
-class UserOrderListNotifier extends ListNotifier2<OrderReturn> {
+class UserOrderListNotifier extends ListNotifierAPI<OrderReturn> {
   final Openapi userOrderListRepository;
   UserOrderListNotifier({
     required this.userOrderListRepository,
@@ -40,16 +41,9 @@ class UserOrderListNotifier extends ListNotifier2<OrderReturn> {
     return await update(
       () => userOrderListRepository.amapOrdersOrderIdPatch(
         orderId: order.orderId,
-        body: OrderEdit(
-          collectionSlot: order.collectionSlot,
-          productsIds:
-              order.productsdetail.map((product) => product.product.id),
-          productsQuantity:
-              order.productsdetail.map((product) => product.quantity),
-        ),
+        body: order.toOrderEdit(),
       ),
-      (orders, order) => orders
-        ..[orders.indexWhere((o) => o.orderId == order.orderId)] = order,
+      (order) => order.orderId,
       order,
     );
   }
@@ -58,8 +52,7 @@ class UserOrderListNotifier extends ListNotifier2<OrderReturn> {
     return await delete(
       () => userOrderListRepository.amapOrdersOrderIdDelete(
           orderId: order.orderId),
-      (orders, order) => orders..removeWhere((i) => i.orderId == order.orderId),
-      order,
+      (orders) => orders..removeWhere((i) => i.orderId == order.orderId),
     );
   }
 

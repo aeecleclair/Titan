@@ -1,10 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/cinema/adapters/session.dart';
 
-class SessionListNotifier extends ListNotifier2<CineSessionComplete> {
+class SessionListNotifier extends ListNotifierAPI<CineSessionComplete> {
   final Openapi sessionRepository;
   SessionListNotifier({required this.sessionRepository})
       : super(const AsyncValue.loading());
@@ -14,37 +15,32 @@ class SessionListNotifier extends ListNotifier2<CineSessionComplete> {
   }
 
   Future<bool> addSession(CineSessionBase session) async {
-    return await add(() => sessionRepository.cinemaSessionsPost(body: session), session);
+    return await add(
+        () => sessionRepository.cinemaSessionsPost(body: session), session);
   }
 
   Future<bool> updateSession(CineSessionComplete session) async {
     return await update(
-      () => sessionRepository.cinemaSessionsSessionIdPatch(sessionId: session.id, body: CineSessionUpdate(
-        name: session.name,
-        start: session.start,
-        duration: session.duration,
-        overview: session.overview,
-        genre: session.genre,
-        tagline: session.tagline,
-      )),
-      (sessions, session) =>
-          sessions..[sessions.indexWhere((b) => b.id == session.id)] = session,
+      () => sessionRepository.cinemaSessionsSessionIdPatch(
+        sessionId: session.id,
+        body: session.toCineSessionUpdate(),
+      ),
+      (session) => session.id,
       session,
     );
   }
 
   Future<bool> deleteSession(CineSessionComplete session) async {
     return await delete(
-      () => sessionRepository.cinemaSessionsSessionIdDelete(sessionId: session.id),
-      (sessions, session) => sessions..removeWhere((b) => b.id == session.id),
-      session,
+      () => sessionRepository.cinemaSessionsSessionIdDelete(
+          sessionId: session.id),
+      (sessions) => sessions..removeWhere((b) => b.id == session.id),
     );
   }
 }
 
-final sessionListProvider =
-    StateNotifierProvider<SessionListNotifier, AsyncValue<List<CineSessionComplete>>>(
-        (ref) {
+final sessionListProvider = StateNotifierProvider<SessionListNotifier,
+    AsyncValue<List<CineSessionComplete>>>((ref) {
   final sessionRepository = ref.watch(repositoryProvider);
   SessionListNotifier notifier = SessionListNotifier(
     sessionRepository: sessionRepository,

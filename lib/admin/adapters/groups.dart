@@ -5,3 +5,12 @@ extension $CoreGroup on CoreGroup {
     return CoreGroupSimple(name: name, id: id);
   }
 }
+
+extension $CoreGroupSimple on CoreGroupSimple {
+  CoreGroupUpdate toCoreGroupUpdate() {
+    return CoreGroupUpdate(
+      name: name,
+      description: description,
+    );
+  }
+}

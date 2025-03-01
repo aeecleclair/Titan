@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/single_notifier%20copy.dart';
+import 'package:myecl/tools/providers/single_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class AssociationKindsNotifier extends SingleNotifier2<KindsReturn> {
+class AssociationKindsNotifier extends SingleNotifierAPI<KindsReturn> {
   final Openapi associationRepository;
   AssociationKindsNotifier({required this.associationRepository})
       : super(const AsyncValue.loading());

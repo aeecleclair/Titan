@@ -1,10 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/phonebook/adapters/association.dart';
 
-class AssociationListNotifier extends ListNotifier2<AssociationComplete> {
+class AssociationListNotifier extends ListNotifierAPI<AssociationComplete> {
   final Openapi associationRepository;
   AssociationListNotifier({required this.associationRepository})
       : super(const AsyncValue.loading());
@@ -23,16 +24,10 @@ class AssociationListNotifier extends ListNotifier2<AssociationComplete> {
   Future<bool> updateAssociation(AssociationComplete association) async {
     return await update(
       () => associationRepository.phonebookAssociationsAssociationIdPatch(
-          associationId: association.id,
-          body: AssociationEdit(
-            name: association.name,
-            description: association.description,
-            kind: association.kind,
-            mandateYear: association.mandateYear,
-          )),
-      (associations, association) => associations
-        ..[associations.indexWhere((g) => g.id == association.id)] =
-            association,
+        associationId: association.id,
+        body: association.toAssociationEdit(),
+      ),
+      (association) => association.id,
       association,
     );
   }
@@ -41,9 +36,8 @@ class AssociationListNotifier extends ListNotifier2<AssociationComplete> {
     return await delete(
       () => associationRepository.phonebookAssociationsAssociationIdDelete(
           associationId: association.id),
-      (associations, association) =>
+      (associations) =>
           associations..removeWhere((i) => i.id == association.id),
-      association,
     );
   }
 
@@ -52,22 +46,18 @@ class AssociationListNotifier extends ListNotifier2<AssociationComplete> {
       () => associationRepository
           .phonebookAssociationsAssociationIdDeactivatePatch(
               associationId: association.id),
-      (associations, association) => associations
-        ..[associations.indexWhere((g) => g.id == association.id)] =
-            association.copyWith(deactivated: true),
-      association,
+      (association) => association.id,
+      association.copyWith(deactivated: true),
     );
   }
 
   Future<bool> updateAssociationGroups(AssociationComplete association) async {
     return await update(
       () => associationRepository.phonebookAssociationsAssociationIdGroupsPatch(
-          associationId: association.id,
-          body: AssociationGroupsEdit(
-              associatedGroups: association.associatedGroups)),
-      (associations, association) => associations
-        ..[associations.indexWhere((g) => g.id == association.id)] =
-            association,
+        associationId: association.id,
+        body: association.toAssociationGroupsEdit(),
+      ),
+      (association) => association.id,
       association,
     );
   }

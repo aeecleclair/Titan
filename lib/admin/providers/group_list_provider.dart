@@ -1,11 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_provider.dart';
+import 'package:myecl/admin/adapters/groups.dart';
 
-class GroupListNotifier extends ListNotifier2<CoreGroupSimple> {
+class GroupListNotifier extends ListNotifierAPI<CoreGroupSimple> {
   final Openapi groupRepository;
   GroupListNotifier({required this.groupRepository})
       : super(const AsyncValue.loading());
@@ -28,13 +29,9 @@ class GroupListNotifier extends ListNotifier2<CoreGroupSimple> {
     return await update(
       () => groupRepository.groupsGroupIdPatch(
         groupId: group.id,
-        body: CoreGroupUpdate(
-          name: group.name,
-          description: group.description,
-        ),
+        body: group.toCoreGroupUpdate(),
       ),
-      (groups, group) =>
-          groups..[groups.indexWhere((g) => g.id == group.id)] = group,
+      (g) => g.id,
       group,
     );
   }
@@ -42,8 +39,7 @@ class GroupListNotifier extends ListNotifier2<CoreGroupSimple> {
   Future<bool> deleteGroup(CoreGroupSimple group) async {
     return await delete(
       () => groupRepository.groupsGroupIdDelete(groupId: group.id),
-      (groups, group) => groups..removeWhere((i) => i.id == group.id),
-      group,
+      (groups) => groups..removeWhere((i) => i.id == group.id),
     );
   }
 

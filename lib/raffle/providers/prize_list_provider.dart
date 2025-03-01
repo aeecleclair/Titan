@@ -1,10 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/raffle/adapters/prize.dart';
 
-class PrizeListNotifier extends ListNotifier2<PrizeSimple> {
+class PrizeListNotifier extends ListNotifierAPI<PrizeSimple> {
   final Openapi prizeRepository;
   PrizeListNotifier({required this.prizeRepository})
       : super(const AsyncValue.loading());
@@ -22,14 +23,10 @@ class PrizeListNotifier extends ListNotifier2<PrizeSimple> {
   Future<bool> updatePrize(PrizeSimple prize) async {
     return await update(
       () => prizeRepository.tombolaPrizesPrizeIdPatch(
-          prizeId: prize.id,
-          body: PrizeEdit(
-            raffleId: prize.raffleId,
-            description: prize.description,
-            name: prize.name,
-            quantity: prize.quantity,
-          )),
-      (prize, t) => prize..[prize.indexWhere((e) => e.id == t.id)] = t,
+        prizeId: prize.id,
+        body: prize.toPrizeEdit(),
+      ),
+      (prize) => prize.id,
       prize,
     );
   }
@@ -37,14 +34,13 @@ class PrizeListNotifier extends ListNotifier2<PrizeSimple> {
   Future<bool> deletePrize(PrizeSimple prize) async {
     return await delete(
       () => prizeRepository.tombolaPrizesPrizeIdDelete(prizeId: prize.id),
-      (prize, t) => prize..removeWhere((e) => e.id == t.id),
-      prize,
+      (prizes) => prizes..removeWhere((e) => e.id == prize.id),
     );
   }
 
   Future<bool> setPrizeQuantityToZero(PrizeSimple prize) async {
     return await localUpdate(
-      (prize, t) => prize..[prize.indexWhere((e) => e.id == t.id)] = t,
+      (prize) => prize.id,
       prize,
     );
   }

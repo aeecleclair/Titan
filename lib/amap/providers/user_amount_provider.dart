@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/single_notifier%20copy.dart';
+import 'package:myecl/tools/providers/single_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class UserCashNotifier extends SingleNotifier2<CashComplete> {
+class UserCashNotifier extends SingleNotifierAPI<CashComplete> {
   final Openapi amapUserRepository;
   UserCashNotifier({required this.amapUserRepository})
       : super(const AsyncValue.loading());

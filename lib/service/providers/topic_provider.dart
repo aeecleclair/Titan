@@ -1,10 +1,10 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class TopicsProvider extends ListNotifier2<String> {
+class TopicsProvider extends ListNotifierAPI<String> {
   final Openapi notificationRepository;
   TopicsProvider({required this.notificationRepository})
       : super(const AsyncValue.loading());

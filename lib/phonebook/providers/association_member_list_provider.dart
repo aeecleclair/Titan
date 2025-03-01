@@ -1,12 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/phonebook/class/membership.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:chopper/chopper.dart';
+import 'package:myecl/phonebook/adapters/membership.dart';
 
-class AssociationMemberListNotifier extends ListNotifier2<MemberComplete> {
+class AssociationMemberListNotifier extends ListNotifierAPI<MemberComplete> {
   final Openapi associationMemberRepository;
   AssociationMemberListNotifier({required this.associationMemberRepository})
       : super(const AsyncValue.loading());
@@ -24,17 +25,17 @@ class AssociationMemberListNotifier extends ListNotifier2<MemberComplete> {
     );
   }
 
-  // requires work
-  Future<bool> addMember(MemberComplete member, AppModulesPhonebookSchemasPhonebookMembershipBase membership) async {
+  Future<bool> addMember(MemberComplete member,
+      AppModulesPhonebookSchemasPhonebookMembershipBase membership) async {
     return await add(
       () async {
-        final res = await associationMemberRepository
-            .phonebookAssociationsMembershipsPost(
-                body: membership);
-        if (res.isSuccessful) {
-          member.memberships.add(res.body!);
+        final response = await associationMemberRepository
+            .phonebookAssociationsMembershipsPost(body: membership);
+        if (response.isSuccessful && response.body != null) {
+          member.memberships.add(response.body!);
+          return response;
         }
-        return member;
+        throw Exception('Failed to add membership');
       },
       member,
     );
@@ -47,13 +48,8 @@ class AssociationMemberListNotifier extends ListNotifier2<MemberComplete> {
     return await update(
       () => associationMemberRepository
           .phonebookAssociationsMembershipsMembershipIdPatch(
-              membershipId: membership.id,
-              body: MembershipEdit(
-                  memberOrder: membership.memberOrder,
-                  roleName: membership.roleName,
-                  roleTags: membership.roleTags)),
-      (members, member) =>
-          members..[members.indexWhere((i) => i.id == member.id)] = member,
+              membershipId: membership.id, body: membership.toMembershipEdit()),
+      (member) => member.id,
       member,
     );
   }
@@ -68,52 +64,10 @@ class AssociationMemberListNotifier extends ListNotifier2<MemberComplete> {
       () => associationMemberRepository
           .phonebookAssociationsMembershipsMembershipIdPatch(
               membershipId: membership.id,
-              body: MembershipEdit(
-                  memberOrder: membership.memberOrder,
-                  roleName: membership.roleName,
-                  roleTags: membership.roleTags)),
-      (members, member) {
-        members.sort(
-          (a, b) => a.memberships
-              .firstWhere(
-                (e) =>
-                    e.associationId == membership.associationId &&
-                    e.mandateYear == membership.mandateYear,
-              )
-              .memberOrder
-              .compareTo(
-                b.memberships
-                    .firstWhere(
-                      (e) =>
-                          e.associationId == membership.associationId &&
-                          e.mandateYear == membership.mandateYear,
-                    )
-                    .memberOrder,
-              ),
-        );
-        members.remove(member);
-        if (oldIndex < newIndex) newIndex--;
-        members.insert(newIndex, member);
-
-        for (int i = 0; i < members.length; i++) {
-          List<MembershipComplete> memberships = members[i].memberships;
-          MembershipComplete oldMembership = memberships.firstWhere(
-            (e) =>
-                e.associationId == membership.associationId &&
-                e.mandateYear == membership.mandateYear,
-          );
-          memberships.remove(
-            memberships.firstWhere(
-              (e) =>
-                  e.associationId == membership.associationId &&
-                  e.mandateYear == membership.mandateYear,
-            ),
-          );
-          memberships.add(oldMembership.copyWith(memberOrder: i));
-          members[i].copyWith(memberships: memberships);
-        }
-        return members;
-      },
+              body: membership
+                  .copyWith(memberOrder: newIndex)
+                  .toMembershipEdit()),
+      (member) => member.id,
       member,
     );
   }
@@ -126,8 +80,7 @@ class AssociationMemberListNotifier extends ListNotifier2<MemberComplete> {
       () => associationMemberRepository
           .phonebookAssociationsMembershipsMembershipIdDelete(
               membershipId: membership.id),
-      (members, member) => members..removeWhere((i) => i.id == member.id),
-      member,
+      (members) => members..removeWhere((i) => i.id == member.id),
     );
   }
 }

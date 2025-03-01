@@ -1,9 +1,10 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/single_notifier%20copy.dart';
+import 'package:myecl/tools/providers/single_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
+import 'package:myecl/admin/adapters/core_membership.dart';
 
-class GroupNotifier extends SingleNotifier2<CoreGroup> {
+class GroupNotifier extends SingleNotifierAPI<CoreGroup> {
   final Openapi groupRepository;
   GroupNotifier({required this.groupRepository})
       : super(const AsyncValue.loading());
@@ -16,8 +17,8 @@ class GroupNotifier extends SingleNotifier2<CoreGroup> {
 
   Future<bool> addMember(CoreGroup group, CoreUserSimple user) async {
     return await update(
-      () async => groupRepository.groupsMembershipPost(
-        body: CoreMembership(userId: user.id, groupId: group.id),
+      (group) async => groupRepository.groupsMembershipPost(
+        body: group.toCoreMembership(user),
       ),
       group,
     );
@@ -25,8 +26,8 @@ class GroupNotifier extends SingleNotifier2<CoreGroup> {
 
   Future<bool> deleteMember(CoreGroup group, CoreUserSimple user) async {
     return await update(
-      () async => groupRepository.groupsMembershipDelete(
-        body: CoreMembershipDelete(userId: user.id, groupId: group.id),
+      (group) async => groupRepository.groupsMembershipDelete(
+        body: group.toCoreMembershipDelete(user),
       ),
       group,
     );

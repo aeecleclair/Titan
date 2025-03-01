@@ -1,4 +1,5 @@
 import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
 extension $AdvertReturnComplete on AdvertReturnComplete {
   AdvertBase toAdvertBase() {
@@ -6,6 +7,14 @@ extension $AdvertReturnComplete on AdvertReturnComplete {
       title: title,
       content: content,
       advertiserId: advertiserId,
+    );
+  }
+
+  AdvertUpdate toAdvertUpdate() {
+    return AdvertUpdate(
+      title: title,
+      content: content,
+      tags: tags,
     );
   }
 }

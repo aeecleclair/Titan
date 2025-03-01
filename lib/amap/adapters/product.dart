@@ -9,4 +9,16 @@ extension $AppModulesAmapSchemasAmapProductComplete
       category: category,
     );
   }
+
+  AppModulesAmapSchemasAmapProductEdit toProductEdit() {
+    return AppModulesAmapSchemasAmapProductEdit(
+      category: category,
+      name: name,
+      price: price,
+    );
+  }
+
+  DeliveryProductsUpdate toDeliveryProductsUpdate() {
+    return DeliveryProductsUpdate(productsIds: [id]);
+  }
 }

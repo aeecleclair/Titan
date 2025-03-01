@@ -1,11 +1,11 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/vote/providers/section_id_provider.dart';
 
-class SectionNotifier extends ListNotifier2<SectionComplete> {
+class SectionNotifier extends ListNotifierAPI<SectionComplete> {
   final Openapi sectionRepository;
   SectionNotifier({required this.sectionRepository})
       : super(const AsyncValue.loading());
@@ -15,12 +15,14 @@ class SectionNotifier extends ListNotifier2<SectionComplete> {
   }
 
   Future<bool> addSection(SectionBase section) async {
-    return await add(() => sectionRepository.campaignSectionsPost(body: section), section);
+    return await add(
+        () => sectionRepository.campaignSectionsPost(body: section), section);
   }
 
   Future<bool> deleteSection(SectionComplete section) async {
     return await delete(
-      () => sectionRepository.campaignSectionsSectionIdDelete(sectionId: section.id),
+      () => sectionRepository.campaignSectionsSectionIdDelete(
+          sectionId: section.id),
       (sections, section) => sections..removeWhere((s) => s.id == section.id),
       section,
     );
@@ -28,7 +30,8 @@ class SectionNotifier extends ListNotifier2<SectionComplete> {
 }
 
 final sectionsProvider =
-    StateNotifierProvider<SectionNotifier, AsyncValue<List<SectionComplete>>>((ref) {
+    StateNotifierProvider<SectionNotifier, AsyncValue<List<SectionComplete>>>(
+        (ref) {
   final sectionRepository = ref.watch(repositoryProvider);
   SectionNotifier notifier =
       SectionNotifier(sectionRepository: sectionRepository);

@@ -1,10 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
+import 'package:myecl/amap/adapters/product.dart';
 
 class DeliveryProductListNotifier
-    extends ListNotifier2<AppModulesAmapSchemasAmapProductComplete> {
+    extends ListNotifierAPI<AppModulesAmapSchemasAmapProductComplete> {
   final Openapi productListRepository;
   DeliveryProductListNotifier({required this.productListRepository})
       : super(const AsyncValue.loading());
@@ -22,8 +23,17 @@ class DeliveryProductListNotifier
     String deliveryId,
   ) async {
     return await add(
-      () => productListRepository.amapDeliveriesDeliveryIdProductsPost(
-          deliveryId: deliveryId, body: product),
+      () async {
+        final response =
+            await productListRepository.amapDeliveriesDeliveryIdProductsPost(
+          deliveryId: deliveryId,
+          body: product,
+        );
+        if (response.isSuccessful && response.body != null) {
+          return response.body!;
+        }
+        throw Exception('Failed to add product');
+      },
       product,
     );
   }
@@ -35,10 +45,9 @@ class DeliveryProductListNotifier
     return await delete(
       () async => productListRepository.amapDeliveriesDeliveryIdProductsDelete(
         deliveryId: deliveryId,
-        body: DeliveryProductsUpdate(productsIds: [product.id]),
+        body: product.toDeliveryProductsUpdate(),
       ),
-      (products, product) => products..removeWhere((i) => i.id == product.id),
-      product,
+      (products) => products..removeWhere((i) => i.id == product.id),
     );
   }
 }

@@ -2,7 +2,6 @@ import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/user/adapters/applicants.dart';
 
 extension $BookingReturnApplicant on BookingReturnApplicant {
-
   BookingReturnSimpleApplicant toBookingReturnSimpleApplicant() {
     return BookingReturnSimpleApplicant(
       reason: reason,
@@ -44,6 +43,19 @@ extension $BookingReturnApplicant on BookingReturnApplicant {
       key: key,
     );
   }
+
+  BookingEdit toBookingEdit() {
+    return BookingEdit(
+      reason: reason,
+      start: start,
+      end: end,
+      note: note,
+      roomId: roomId,
+      key: key,
+      recurrenceRule: recurrenceRule,
+      entity: entity,
+    );
+  }
 }
 
 extension $BookingReturn on BookingReturn {
@@ -71,6 +83,19 @@ extension $BookingReturn on BookingReturn {
       creation: creation,
       roomId: roomId,
       key: key,
+    );
+  }
+
+  BookingEdit toBookingEdit() {
+    return BookingEdit(
+      reason: reason,
+      start: start,
+      end: end,
+      note: note,
+      roomId: roomId,
+      key: key,
+      recurrenceRule: recurrenceRule,
+      entity: entity,
     );
   }
 }

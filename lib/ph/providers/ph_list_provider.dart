@@ -1,12 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/ph/adapters/ph.dart';
 
-class PhListNotifier extends ListNotifier2<PaperComplete> {
+class PhListNotifier extends ListNotifierAPI<PaperComplete> {
   final Openapi phRepository;
-  PhListNotifier({required this.phRepository}) : super(const AsyncValue.loading()) ;
+  PhListNotifier({required this.phRepository})
+      : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<PaperComplete>>> loadPhList() async {
     return await loadList(phRepository.phGet);
@@ -18,9 +20,11 @@ class PhListNotifier extends ListNotifier2<PaperComplete> {
 
   Future<bool> editPh(PaperComplete ph) async {
     return await update(
-      () => phRepository.phPaperIdPatch(paperId: ph.id, body: PaperUpdate(name: ph.name, releaseDate: ph.releaseDate)),
-      (phs, ph) =>
-          phs..[phs.indexWhere((phToCheck) => phToCheck.id == ph.id)] = ph,
+      () => phRepository.phPaperIdPatch(
+        paperId: ph.id,
+        body: ph.toPaperUpdate(),
+      ),
+      (ph) => ph.id,
       ph,
     );
   }
@@ -28,14 +32,14 @@ class PhListNotifier extends ListNotifier2<PaperComplete> {
   Future<bool> deletePh(PaperComplete ph) async {
     return await delete(
       () => phRepository.phPaperIdDelete(paperId: ph.id),
-      (phs, ph) => phs..removeWhere((phToCheck) => phToCheck.id == ph.id),
-      ph,
+      (phs) => phs..removeWhere((phToCheck) => phToCheck.id == ph.id),
     );
   }
 }
 
 final phListProvider =
-    StateNotifierProvider<PhListNotifier, AsyncValue<List<PaperComplete>>>((ref) {
+    StateNotifierProvider<PhListNotifier, AsyncValue<List<PaperComplete>>>(
+        (ref) {
   final phRepository = ref.watch(repositoryProvider);
   final notifier = PhListNotifier(phRepository: phRepository);
   tokenExpireWrapperAuth(ref, () async {

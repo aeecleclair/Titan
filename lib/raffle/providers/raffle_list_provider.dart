@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class RaffleListNotifier extends ListNotifier2<RaffleComplete> {
+class RaffleListNotifier extends ListNotifierAPI<RaffleComplete> {
   final Openapi raffleRepository;
   RaffleListNotifier({required this.raffleRepository})
       : super(const AsyncValue.loading());
@@ -19,15 +19,14 @@ class RaffleListNotifier extends ListNotifier2<RaffleComplete> {
 
   Future<bool> updateRaffle(RaffleComplete raffle) async {
     return await localUpdate(
-      (raffles, r) => raffles..[raffles.indexWhere((e) => e.id == r.id)] = r,
+      (raffle) => raffle.id,
       raffle,
     );
   }
 
   Future<bool> deleteRaffle(RaffleComplete raffle) async {
     return await localDelete(
-      (raffles, r) => raffles..removeWhere((e) => e.id == r.id),
-      raffle,
+      (raffles) => raffles..removeWhere((e) => e.id == raffle.id),
     );
   }
 
@@ -35,7 +34,7 @@ class RaffleListNotifier extends ListNotifier2<RaffleComplete> {
     return await update(
       () =>
           raffleRepository.tombolaRafflesRaffleIdOpenPatch(raffleId: raffle.id),
-      (raffles, r) => raffles..[raffles.indexWhere((e) => e.id == r.id)] = r,
+      (raffle) => raffle.id,
       raffle,
     );
   }
@@ -44,7 +43,7 @@ class RaffleListNotifier extends ListNotifier2<RaffleComplete> {
     return await update(
       () =>
           raffleRepository.tombolaRafflesRaffleIdLockPatch(raffleId: raffle.id),
-      (raffles, r) => raffles..[raffles.indexWhere((e) => e.id == r.id)] = r,
+      (raffle) => raffle.id,
       raffle,
     );
   }

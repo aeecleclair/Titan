@@ -2,12 +2,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/loan/providers/loaner_id_provider.dart';
 import 'package:myecl/tools/exception.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/extensions/users.dart';
+import 'package:myecl/loan/adapters/loan.dart';
 
-class LoanerLoanListNotifier extends ListNotifier2<Loan> {
+class LoanerLoanListNotifier extends ListNotifierAPI<Loan> {
   final Openapi loanRepository;
   LoanerLoanListNotifier({required this.loanRepository})
       : super(const AsyncValue.loading());
@@ -26,19 +27,8 @@ class LoanerLoanListNotifier extends ListNotifier2<Loan> {
   Future<bool> updateLoan(Loan loan) async {
     return await update(
       () => loanRepository.loansLoanIdPatch(
-          loanId: loan.id,
-          body: LoanUpdate(
-            borrowerId: loan.borrower.id,
-            start: loan.start,
-            end: loan.end,
-            notes: loan.notes,
-            caution: loan.caution,
-            returned: loan.returned,
-            itemsBorrowed: loan.itemsQty.map(
-              (e) => e.itemSimple.id,
-            ),
-          )),
-      (loans, loan) => loans..[loans.indexWhere((l) => l.id == loan.id)] = loan,
+          loanId: loan.id, body: loan.toLoanUpdate()),
+      (loan) => loan.id,
       loan,
     );
   }
@@ -46,24 +36,22 @@ class LoanerLoanListNotifier extends ListNotifier2<Loan> {
   Future<bool> deleteLoan(Loan loan) async {
     return await delete(
       () => loanRepository.loansLoanIdDelete(loanId: loan.id),
-      (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
-      loan,
+      (loans) => loans..removeWhere((i) => i.id == loan.id),
     );
   }
 
   Future<bool> returnLoan(Loan loan) async {
     return await delete(
       () => loanRepository.loansLoanIdReturnPost(loanId: loan.id),
-      (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
-      loan,
+      (loans) => loans..removeWhere((i) => i.id == loan.id),
     );
   }
 
   Future<bool> extendLoan(Loan loan, int delay) async {
     return await update(
       () => loanRepository.loansLoanIdExtendPost(
-          loanId: loan.id, body: LoanExtend(duration: delay)),
-      (loans, loan) => loans..[loans.indexWhere((l) => l.id == loan.id)] = loan,
+          loanId: loan.id, body: loan.toLoanExtend(delay)),
+      (loan) => loan.id,
       loan,
     );
   }

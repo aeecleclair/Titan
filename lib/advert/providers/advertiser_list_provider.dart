@@ -1,10 +1,11 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/advert/adapters/advertiser.dart';
 
-class AdvertiserListNotifier extends ListNotifier2<AdvertiserComplete> {
+class AdvertiserListNotifier extends ListNotifierAPI<AdvertiserComplete> {
   final Openapi advertiserRepository;
   AdvertiserListNotifier({required this.advertiserRepository})
       : super(const AsyncValue.loading());
@@ -28,13 +29,9 @@ class AdvertiserListNotifier extends ListNotifier2<AdvertiserComplete> {
     return await update(
       () => advertiserRepository.advertAdvertisersAdvertiserIdPatch(
         advertiserId: advertiser.id,
-        body: AdvertiserUpdate(
-          name: advertiser.name,
-          groupManagerId: advertiser.groupManagerId,
-        ),
+        body: advertiser.toAdvertiserUpdate(),
       ),
-      (advertisers, advertiser) => advertisers
-        ..[advertisers.indexWhere((i) => i.id == advertiser.id)] = advertiser,
+      (advertiser) => advertiser.id,
       advertiser,
     );
   }
@@ -43,8 +40,7 @@ class AdvertiserListNotifier extends ListNotifier2<AdvertiserComplete> {
     return await delete(
       () => advertiserRepository.advertAdvertisersAdvertiserIdDelete(
           advertiserId: advertiser.id),
-      (adverts, advert) => adverts..removeWhere((i) => i.id == advert.id),
-      advertiser,
+      (adverts) => adverts..removeWhere((i) => i.id == advertiser.id),
     );
   }
 }

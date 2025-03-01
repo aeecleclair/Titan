@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
-class ModuleListNotifier extends ListNotifier2<String> {
+class ModuleListNotifier extends ListNotifierAPI<String> {
   final Openapi moduleListRepository;
   ModuleListNotifier({required this.moduleListRepository})
       : super(const AsyncValue.loading());

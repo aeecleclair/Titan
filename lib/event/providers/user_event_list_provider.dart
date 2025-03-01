@@ -1,9 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
+import 'package:myecl/event/adapters/event.dart';
 
-class EventEventListProvider extends ListNotifier2<EventReturn> {
+class EventEventListProvider extends ListNotifierAPI<EventReturn> {
   final Openapi eventRepository;
   EventEventListProvider({required this.eventRepository})
       : super(const AsyncValue.loading());
@@ -22,20 +23,10 @@ class EventEventListProvider extends ListNotifier2<EventReturn> {
   Future<bool> updateEvent(EventReturn event) async {
     return await update(
       () => eventRepository.calendarEventsEventIdPatch(
-          eventId: event.id,
-          body: EventEdit(
-            name: event.name,
-            organizer: event.organizer,
-            start: event.start,
-            end: event.end,
-            allDay: event.allDay,
-            location: event.location,
-            type: event.type,
-            description: event.description,
-            recurrenceRule: event.recurrenceRule,
-          )),
-      (events, event) =>
-          events..[events.indexWhere((e) => e.id == event.id)] = event,
+        eventId: event.id,
+        body: event.toEventEdit(),
+      ),
+      (event) => event.id,
       event,
     );
   }
@@ -43,8 +34,7 @@ class EventEventListProvider extends ListNotifier2<EventReturn> {
   Future<bool> deleteEvent(EventReturn event) async {
     return await delete(
       () => eventRepository.calendarEventsEventIdDelete(eventId: event.id),
-      (events, event) => events..removeWhere((e) => e.id == event.id),
-      event,
+      (events) => events..removeWhere((e) => e.id == event.id),
     );
   }
 }

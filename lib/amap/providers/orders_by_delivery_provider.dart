@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
-class OrderByDeliveryListNotifier extends ListNotifier2<OrderReturn> {
+class OrderByDeliveryListNotifier extends ListNotifierAPI<OrderReturn> {
   final Openapi orderListRepository;
   OrderByDeliveryListNotifier({required this.orderListRepository})
       : super(const AsyncValue.loading());

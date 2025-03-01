@@ -1,10 +1,11 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/booking/adapters/room.dart';
 
-class RoomListNotifier extends ListNotifier2<RoomComplete> {
+class RoomListNotifier extends ListNotifierAPI<RoomComplete> {
   final Openapi roomRepository;
   RoomListNotifier({required this.roomRepository})
       : super(const AsyncValue.loading());
@@ -20,9 +21,8 @@ class RoomListNotifier extends ListNotifier2<RoomComplete> {
   Future<bool> updateRoom(RoomComplete room) async {
     return await update(
       () => roomRepository.bookingRoomsRoomIdPatch(
-          roomId: room.id,
-          body: RoomBase(managerId: room.managerId, name: room.name)),
-      (rooms, room) => rooms..[rooms.indexWhere((r) => r.id == room.id)] = room,
+          roomId: room.id, body: room.toRoomBase()),
+      (room) => room.id,
       room,
     );
   }
@@ -30,8 +30,7 @@ class RoomListNotifier extends ListNotifier2<RoomComplete> {
   Future<bool> deleteRoom(RoomComplete room) async {
     return await delete(
       () => roomRepository.bookingRoomsRoomIdDelete(roomId: room.id),
-      (rooms, room) => rooms..removeWhere((i) => i.id == room.id),
-      room,
+      (rooms) => rooms..removeWhere((i) => i.id == room.id),
     );
   }
 }

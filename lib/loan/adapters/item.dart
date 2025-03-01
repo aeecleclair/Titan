@@ -16,6 +16,15 @@ extension $Item on Item {
       loanerId: loanerId,
     );
   }
+
+  ItemUpdate toItemUpdate() {
+    return ItemUpdate(
+      name: name,
+      suggestedCaution: suggestedCaution,
+      totalQuantity: totalQuantity,
+      suggestedLendingDuration: suggestedLendingDuration,
+    );
+  }
 }
 
 extension $ItemSimple on ItemSimple {

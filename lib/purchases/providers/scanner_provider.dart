@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/single_notifier%20copy.dart';
+import 'package:myecl/tools/providers/single_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
-class ScannerNotifier extends SingleNotifier2<Ticket> {
+class ScannerNotifier extends SingleNotifierAPI<Ticket> {
   final Openapi scannerRepository;
   String secret = "";
   ScannerNotifier({required this.scannerRepository})

@@ -1,11 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/amap/adapters/product.dart';
 
 class ProductListNotifier
-    extends ListNotifier2<AppModulesAmapSchemasAmapProductComplete> {
+    extends ListNotifierAPI<AppModulesAmapSchemasAmapProductComplete> {
   final Openapi productListRepository;
   ProductListNotifier({required this.productListRepository})
       : super(const AsyncValue.loading());
@@ -27,14 +28,9 @@ class ProductListNotifier
     return await update(
       () => productListRepository.amapProductsProductIdPatch(
         productId: product.id,
-        body: AppModulesAmapSchemasAmapProductEdit(
-          category: product.category,
-          name: product.name,
-          price: product.price,
-        ),
+        body: product.toProductEdit(),
       ),
-      (products, product) =>
-          products..[products.indexWhere((p) => p.id == product.id)] = product,
+      (product) => product.id,
       product,
     );
   }
@@ -44,8 +40,7 @@ class ProductListNotifier
     return await delete(
       () => productListRepository.amapProductsProductIdDelete(
           productId: product.id),
-      (products, product) => products..removeWhere((i) => i.id == product.id),
-      product,
+      (products) => products..removeWhere((i) => i.id == product.id),
     );
   }
 }

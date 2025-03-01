@@ -1,4 +1,5 @@
 import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
 extension $EventReturn on EventReturn {
   EventComplete toEventComplete() {
@@ -27,6 +28,20 @@ extension $EventReturn on EventReturn {
         type: type,
         description: description,
         recurrenceRule: recurrenceRule);
+  }
+
+  EventEdit toEventEdit() {
+    return EventEdit(
+      name: name,
+      organizer: organizer,
+      start: start,
+      end: end,
+      allDay: allDay,
+      location: location,
+      type: type,
+      description: description,
+      recurrenceRule: recurrenceRule,
+    );
   }
 }
 

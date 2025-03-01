@@ -1,10 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/amap/adapters/delivery.dart';
 
-class DeliveryListNotifier extends ListNotifier2<DeliveryReturn> {
+class DeliveryListNotifier extends ListNotifierAPI<DeliveryReturn> {
   final Openapi deliveriesListRepository;
   DeliveryListNotifier({required this.deliveriesListRepository})
       : super(const AsyncValue.loading());
@@ -24,10 +25,9 @@ class DeliveryListNotifier extends ListNotifier2<DeliveryReturn> {
     return await update(
       () => deliveriesListRepository.amapDeliveriesDeliveryIdPatch(
         deliveryId: delivery.id,
-        body: DeliveryUpdate(deliveryDate: delivery.deliveryDate),
+        body: delivery.toDeliveryUpdate(),
       ),
-      (deliveries, delivery) => deliveries
-        ..[deliveries.indexWhere((d) => d.id == delivery.id)] = delivery,
+      (delivery) => delivery.id,
       delivery,
     );
   }
@@ -37,10 +37,8 @@ class DeliveryListNotifier extends ListNotifier2<DeliveryReturn> {
       () => deliveriesListRepository.amapDeliveriesDeliveryIdOpenorderingPost(
         deliveryId: delivery.id,
       ),
-      (deliveries, delivery) => deliveries
-        ..[deliveries.indexWhere((d) => d.id == delivery.id)] =
-            delivery.copyWith(status: DeliveryStatusType.orderable),
-      delivery,
+      (delivery) => delivery.id,
+      delivery.copyWith(status: DeliveryStatusType.orderable),
     );
   }
 
@@ -49,10 +47,8 @@ class DeliveryListNotifier extends ListNotifier2<DeliveryReturn> {
       () => deliveriesListRepository.amapDeliveriesDeliveryIdLockPost(
         deliveryId: delivery.id,
       ),
-      (deliveries, delivery) => deliveries
-        ..[deliveries.indexWhere((d) => d.id == delivery.id)] =
-            delivery.copyWith(status: DeliveryStatusType.locked),
-      delivery,
+      (delivery) => delivery.id,
+      delivery.copyWith(status: DeliveryStatusType.locked),
     );
   }
 
@@ -61,10 +57,8 @@ class DeliveryListNotifier extends ListNotifier2<DeliveryReturn> {
       () => deliveriesListRepository.amapDeliveriesDeliveryIdDeliveredPost(
         deliveryId: delivery.id,
       ),
-      (deliveries, delivery) => deliveries
-        ..[deliveries.indexWhere((d) => d.id == delivery.id)] =
-            delivery.copyWith(status: DeliveryStatusType.delivered),
-      delivery,
+      (delivery) => delivery.id,
+      delivery.copyWith(status: DeliveryStatusType.delivered),
     );
   }
 
@@ -73,9 +67,7 @@ class DeliveryListNotifier extends ListNotifier2<DeliveryReturn> {
       () => deliveriesListRepository.amapDeliveriesDeliveryIdArchivePost(
         deliveryId: delivery.id,
       ),
-      (deliveries, delivery) =>
-          deliveries..removeWhere((i) => i.id == delivery.id),
-      delivery,
+      (deliveries) => deliveries..removeWhere((i) => i.id == delivery.id),
     );
   }
 
@@ -84,9 +76,7 @@ class DeliveryListNotifier extends ListNotifier2<DeliveryReturn> {
       () => deliveriesListRepository.amapDeliveriesDeliveryIdDelete(
         deliveryId: delivery.id,
       ),
-      (deliveries, delivery) =>
-          deliveries..removeWhere((i) => i.id == delivery.id),
-      delivery,
+      (deliveries) => deliveries..removeWhere((i) => i.id == delivery.id),
     );
   }
 

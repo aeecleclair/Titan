@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class ProductListNotifier
-    extends ListNotifier2<AppModulesCdrSchemasCdrProductComplete> {
+    extends ListNotifierAPI<AppModulesCdrSchemasCdrProductComplete> {
   final Openapi productRepository;
   ProductListNotifier({required this.productRepository})
       : super(const AsyncValue.loading());

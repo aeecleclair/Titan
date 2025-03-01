@@ -1,11 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/loan/providers/loaner_id_provider.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/loan/adapters/item.dart';
 
-class ItemListNotifier extends ListNotifier2<Item> {
+class ItemListNotifier extends ListNotifierAPI<Item> {
   final Openapi itemRepository;
   ItemListNotifier({required this.itemRepository})
       : super(const AsyncValue.loading());
@@ -25,14 +26,11 @@ class ItemListNotifier extends ListNotifier2<Item> {
   Future<bool> updateItem(Item item, String loanerId) async {
     return await update(
       () async => itemRepository.loansLoanersLoanerIdItemsItemIdPatch(
-          loanerId: loanerId,
-          itemId: item.id,
-          body: ItemUpdate(
-              name: item.name,
-              suggestedCaution: item.suggestedCaution,
-              totalQuantity: item.totalQuantity,
-              suggestedLendingDuration: item.suggestedLendingDuration)),
-      (items, item) => items..[items.indexWhere((i) => i.id == item.id)] = item,
+        loanerId: loanerId,
+        itemId: item.id,
+        body: item.toItemUpdate(),
+      ),
+      (item) => item.id,
       item,
     );
   }
@@ -41,8 +39,7 @@ class ItemListNotifier extends ListNotifier2<Item> {
     return await delete(
       () async => itemRepository.loansLoanersLoanerIdItemsItemIdDelete(
           loanerId: loanerId, itemId: item.id),
-      (items, item) => items..removeWhere((i) => i.id == item.id),
-      item,
+      (items) => items..removeWhere((i) => i.id == item.id),
     );
   }
 

@@ -1,10 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/loan/adapters/loan.dart';
 
-class LoanListNotifier extends ListNotifier2<Loan> {
+class LoanListNotifier extends ListNotifierAPI<Loan> {
   final Openapi loanRepository;
   LoanListNotifier({required this.loanRepository})
       : super(const AsyncValue.loading());
@@ -19,16 +20,11 @@ class LoanListNotifier extends ListNotifier2<Loan> {
 
   Future<bool> updateLoan(Loan loan) async {
     return await update(
-      () => loanRepository.loansLoanIdPatch(loanId: loan.id, body: LoanUpdate(
-        borrowerId: loan.borrower.id,
-        start: loan.start,
-        end: loan.end,
-        notes: loan.notes,
-        caution: loan.caution,
-        returned: loan.returned,
-        itemsBorrowed: loan.itemsQty.map((e) => e.itemSimple.id).toList(),
-      )),
-      (loans, loan) => loans..[loans.indexWhere((l) => l.id == loan.id)],
+      () => loanRepository.loansLoanIdPatch(
+        loanId: loan.id,
+        body: loan.toLoanUpdate(),
+      ),
+      (loan) => loan.id,
       loan,
     );
   }
@@ -36,16 +32,14 @@ class LoanListNotifier extends ListNotifier2<Loan> {
   Future<bool> deleteLoan(Loan loan) async {
     return await delete(
       () => loanRepository.loansLoanIdDelete(loanId: loan.id),
-      (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
-      loan,
+      (loans) => loans..removeWhere((i) => i.id == loan.id),
     );
   }
 
   Future<bool> returnLoan(Loan loan) async {
     return await delete(
       () => loanRepository.loansLoanIdReturnPost(loanId: loan.id),
-      (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
-      loan,
+      (loans) => loans..removeWhere((i) => i.id == loan.id),
     );
   }
 }
