@@ -3,7 +3,7 @@ import 'package:myecl/admin/class/group.dart';
 import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/user/class/simple_users.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:myecl/tools/exception.dart';

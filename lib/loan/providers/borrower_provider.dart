@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/user/class/simple_users.dart';
 
 class BorrowerNotifier extends StateNotifier<SimpleUser> {
   BorrowerNotifier(super.borrower);
