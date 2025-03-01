@@ -3,7 +3,7 @@ import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/loan/providers/loaner_id_provider.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/providers/list_notifier2.dart';
-import 'package:myecl/tools/repository/repository2.dart';
+import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/extensions/users.dart';
 

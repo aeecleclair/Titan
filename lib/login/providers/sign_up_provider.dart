@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/client_index.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
-import 'package:myecl/tools/repository/repository2.dart';
+import 'package:myecl/tools/repository/repository.dart';
 
 class SignUpProvider extends StateNotifier {
   final Openapi signUpRepository;

@@ -1,7 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/single_notifier%20copy.dart';
-import 'package:myecl/tools/repository/repository2.dart';
+import 'package:myecl/tools/repository/repository.dart';
 
 class GroupNotifier extends SingleNotifier2<CoreGroup> {
   final Openapi groupRepository;

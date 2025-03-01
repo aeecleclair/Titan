@@ -4,7 +4,7 @@ import 'package:myecl/user/adapters/users.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/single_notifier%20copy.dart';
-import 'package:myecl/tools/repository/repository2.dart';
+import 'package:myecl/tools/repository/repository.dart';
 
 class UserNotifier extends SingleNotifier2<CoreUser> {
   final Openapi userRepository;
