@@ -18611,8 +18611,6 @@ class UserTicket {
       const DeepCollectionEquality().hash(floor) ^
       const DeepCollectionEquality().hash(createdOn) ^
       runtimeType.hashCode;
-
-  String getName() {}
 }
 
 extension $UserTicketExtension on UserTicket {

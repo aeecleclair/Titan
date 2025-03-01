@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/purchases/extensions/user_ticket.dart';
 import 'package:myecl/purchases/providers/scanner_provider.dart';
 import 'package:myecl/purchases/providers/tag_provider.dart';
 import 'package:myecl/purchases/providers/ticket_list_provider.dart';
