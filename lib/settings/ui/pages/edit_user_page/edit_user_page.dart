@@ -51,8 +51,8 @@ class EditUserPage extends HookConsumerWidget {
     List<DropdownMenuItem> items = Floors.values
         .map(
           (e) => DropdownMenuItem(
-            value: capitalize(e.toString().split('.').last),
-            child: Text(capitalize(e.toString().split('.').last)),
+            value: capitalize(e.name),
+            child: Text(capitalize(e.name)),
           ),
         )
         .toList();
@@ -366,9 +366,8 @@ class EditUserPage extends HookConsumerWidget {
                           phone: phoneController.value.text.isEmpty
                               ? null
                               : phoneController.value.text,
-                          floor: FloorsType.values.firstWhere((e) =>
-                              e.toString().split('.').last ==
-                              floorController.value.text),
+                          floor: FloorsType.values.firstWhere(
+                              (e) => e.name == floorController.value.text),
                         ),
                       );
                       if (value) {

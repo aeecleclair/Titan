@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/user/extensions/users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/vote/providers/display_results.dart';
 

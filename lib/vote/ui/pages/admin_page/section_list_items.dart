@@ -1,40 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/vote/class/contender.dart';
-import 'package:myecl/vote/providers/contender_list_provider.dart';
-import 'package:myecl/vote/providers/contender_members.dart';
-import 'package:myecl/vote/providers/contender_provider.dart';
-import 'package:myecl/vote/providers/sections_contender_provider.dart';
+import 'package:myecl/vote/providers/list_list_provider.dart';
+import 'package:myecl/vote/providers/list_members.dart';
+import 'package:myecl/vote/providers/list_provider.dart';
+import 'package:myecl/vote/providers/sections_list_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/ui/pages/admin_page/contender_card.dart';
+import 'package:myecl/vote/ui/pages/admin_page/list_card.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class SectionContenderItems extends HookConsumerWidget {
-  const SectionContenderItems({super.key});
+class SectionListItems extends HookConsumerWidget {
+  const SectionListItems({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sectionContender = ref.watch(sectionContenderProvider);
-    final membersNotifier = ref.read(contenderMembersProvider.notifier);
+    final sectionList = ref.watch(sectionListProvider);
+    final membersNotifier = ref.read(listMembersProvider.notifier);
     final section = ref.watch(sectionProvider);
-    final contenderListNotifier = ref.read(contenderListProvider.notifier);
-    final sectionContenderListNotifier =
-        ref.read(sectionContenderProvider.notifier);
-    final contenderNotifier = ref.read(contenderProvider.notifier);
+    final listListNotifier = ref.read(listListProvider.notifier);
+    final sectionListListNotifier =
+        ref.read(sectionListProvider.notifier);
+    final listNotifier = ref.read(listProvider.notifier);
 
     final asyncStatus = ref.watch(statusProvider);
-    Status status = Status.open;
+    VoteStatus status = VoteStatus(status: StatusType.open);
     asyncStatus.whenData((value) => status = value);
 
     void displayVoteToastWithContext(TypeMsg type, String msg) {
@@ -42,18 +42,18 @@ class SectionContenderItems extends HookConsumerWidget {
     }
 
     return AsyncChild(
-      value: sectionContender[section]!,
+      value: sectionList[section]!,
       builder: (context, data) => HorizontalListView.builder(
         height: 190,
-        firstChild: (status == Status.waiting)
+        firstChild: (status.status == StatusType.waiting)
             ? GestureDetector(
                 onTap: () {
-                  contenderNotifier.setId(Contender.empty());
+                  listNotifier.setId(ListReturn.fromJson({}));
                   membersNotifier.setMembers([]);
                   QR.to(
                     VoteRouter.root +
                         VoteRouter.admin +
-                        VoteRouter.addEditContender,
+                        VoteRouter.addEditList,
                   );
                 },
                 child: const CardLayout(
@@ -70,17 +70,17 @@ class SectionContenderItems extends HookConsumerWidget {
               )
             : null,
         items: data,
-        itemBuilder: (context, e, i) => ContenderCard(
-          contender: e,
+        itemBuilder: (context, e, i) => ListCard(
+          list: e,
           isAdmin: true,
           onEdit: () {
             tokenExpireWrapper(ref, () async {
-              contenderNotifier.setId(e);
+              listNotifier.setId(e);
               membersNotifier.setMembers(e.members);
               QR.to(
                 VoteRouter.root +
                     VoteRouter.admin +
-                    VoteRouter.addEditContender,
+                    VoteRouter.addEditList,
               );
             });
           },
@@ -94,14 +94,14 @@ class SectionContenderItems extends HookConsumerWidget {
                   onYes: () {
                     tokenExpireWrapper(ref, () async {
                       final value =
-                          await contenderListNotifier.deleteContender(e);
+                          await listListNotifier.deleteList(e);
                       if (value) {
                         displayVoteToastWithContext(
                           TypeMsg.msg,
                           VoteTextConstants.pretendanceDeleted,
                         );
-                        contenderListNotifier.copy().then((value) {
-                          sectionContenderListNotifier.setTData(
+                        listListNotifier.copy().then((value) {
+                          sectionListListNotifier.setTData(
                             section,
                             value,
                           );

@@ -6,12 +6,12 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/repository/logo_repository.dart';
 
-class ContenderLogoRepository extends LogoRepository {
+class ListLogoRepository extends LogoRepository {
   @override
   // ignore: overridden_fields
   final ext = 'campaign/lists/';
 
-  Future<Image> getContenderLogo(String id) async {
+  Future<Image> getListLogo(String id) async {
     final bytes = await getLogo(id, suffix: "/logo");
     if (bytes.isEmpty) {
       return Image.asset(getTitanLogo());
@@ -19,13 +19,13 @@ class ContenderLogoRepository extends LogoRepository {
     return Image.memory(bytes);
   }
 
-  Future<Image> addContenderLogo(Uint8List bytes, String id) async {
+  Future<Image> addListLogo(Uint8List bytes, String id) async {
     return Image.memory(await addLogo(bytes, id, suffix: "/logo"));
   }
 }
 
-final contenderLogoRepositoryProvider =
-    Provider<ContenderLogoRepository>((ref) {
+final listLogoRepositoryProvider =
+    Provider<ListLogoRepository>((ref) {
   final token = ref.watch(tokenProvider);
-  return ContenderLogoRepository()..setToken(token);
+  return ListLogoRepository()..setToken(token);
 });

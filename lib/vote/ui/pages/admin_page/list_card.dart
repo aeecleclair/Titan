@@ -2,26 +2,25 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/vote/class/contender.dart';
-import 'package:myecl/vote/providers/contender_provider.dart';
+import 'package:myecl/vote/providers/list_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/router.dart';
-import 'package:myecl/vote/ui/components/contender_logo.dart';
+import 'package:myecl/vote/ui/components/list_logo.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class ContenderCard extends HookConsumerWidget {
-  final Contender contender;
+class ListCard extends HookConsumerWidget {
+  final ListReturn list;
   final bool isAdmin, isDetail;
   final Function()? onEdit;
   final Future Function()? onDelete;
-  const ContenderCard({
+  const ListCard({
     super.key,
-    required this.contender,
+    required this.list,
     this.onEdit,
     this.onDelete,
     this.isAdmin = false,
@@ -30,15 +29,15 @@ class ContenderCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final contenderNotifier = ref.watch(contenderProvider.notifier);
+    final listNotifier = ref.watch(listProvider.notifier);
     final status = ref
         .watch(statusProvider)
-        .maybeWhen(data: (status) => status, orElse: () => Status.waiting);
+        .maybeWhen(data: (status) => status.status, orElse: () => StatusType.waiting);
     return CardLayout(
-      id: contender.id,
+      id: list.id,
       width: 250,
-      height: (contender.listType != ListType.blank &&
-              status == Status.waiting &&
+      height: (list.type != ListType.blank &&
+              status == StatusType.waiting &&
               isAdmin)
           ? 180
           : 130,
@@ -50,13 +49,13 @@ class ContenderCard extends HookConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ContenderLogo(contender),
+              ListLogo(list),
               const SizedBox(width: 10),
               Expanded(
                 child: Column(
                   children: [
                     AutoSizeText(
-                      contender.name,
+                      list.name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -67,7 +66,7 @@ class ContenderCard extends HookConsumerWidget {
                     ),
                     Text(
                       capitalize(
-                        contender.listType.toString().split('.').last,
+                        list.type.name,
                       ),
                       style: const TextStyle(
                         fontSize: 13,
@@ -80,11 +79,11 @@ class ContenderCard extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(width: 5),
-              isDetail || contender.listType == ListType.blank
+              isDetail || list.type == ListType.blank
                   ? Container(width: 30)
                   : GestureDetector(
                       onTap: () {
-                        contenderNotifier.setId(contender);
+                        listNotifier.setId(list);
                         QR.to(VoteRouter.root + VoteRouter.detail);
                       },
                       child: const HeroIcon(
@@ -97,7 +96,7 @@ class ContenderCard extends HookConsumerWidget {
           ),
           Center(
             child: Text(
-              contender.description,
+              list.description,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -108,8 +107,8 @@ class ContenderCard extends HookConsumerWidget {
             ),
           ),
           const Spacer(),
-          if (contender.listType != ListType.blank &&
-              status == Status.waiting &&
+          if (list.type != ListType.blank &&
+              status == StatusType.waiting &&
               isAdmin)
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

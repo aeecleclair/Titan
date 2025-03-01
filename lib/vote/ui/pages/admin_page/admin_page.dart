@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
@@ -11,18 +13,16 @@ import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
-import 'package:myecl/vote/class/contender.dart';
-import 'package:myecl/vote/providers/contender_list_provider.dart';
+import 'package:myecl/vote/providers/list_list_provider.dart';
 import 'package:myecl/vote/providers/result_provider.dart';
-import 'package:myecl/vote/providers/sections_contender_provider.dart';
+import 'package:myecl/vote/providers/sections_list_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/show_graph_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/ui/pages/admin_page/admin_button.dart';
 import 'package:myecl/vote/ui/pages/admin_page/section_bar.dart';
-import 'package:myecl/vote/ui/pages/admin_page/section_contender_items.dart';
+import 'package:myecl/vote/ui/pages/admin_page/section_list_items.dart';
 import 'package:myecl/vote/ui/pages/admin_page/vote_bars.dart';
 import 'package:myecl/vote/ui/pages/admin_page/vote_count.dart';
 import 'package:myecl/vote/ui/pages/admin_page/voters_bar.dart';
@@ -33,15 +33,15 @@ class AdminPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sectionContenderListNotifier =
-        ref.watch(sectionContenderProvider.notifier);
+    final sectionListListNotifier =
+        ref.watch(sectionListProvider.notifier);
     final sectionsNotifier = ref.watch(sectionsProvider.notifier);
-    final contenderList = ref.watch(contenderListProvider);
+    final listList = ref.watch(listListProvider);
     final asyncStatus = ref.watch(statusProvider);
     final statusNotifier = ref.watch(statusProvider.notifier);
     final showVotes = ref.watch(showGraphProvider);
     final showVotesNotifier = ref.watch(showGraphProvider.notifier);
-    Status status = Status.open;
+    VoteStatus status = VoteStatus(status: StatusType.open);
     asyncStatus.whenData((value) => status = value);
     ref.watch(userList);
     void displayVoteToastWithContext(TypeMsg type, String msg) {
@@ -52,23 +52,23 @@ class AdminPage extends HookConsumerWidget {
       child: Refresher(
         onRefresh: () async {
           await statusNotifier.loadStatus();
-          if (status == Status.counting || status == Status.published) {
+          if (status.status == StatusType.counting || status.status == StatusType.published) {
             await ref.watch(resultProvider.notifier).loadResult();
           }
           final sections = await sectionsNotifier.loadSectionList();
           sections.whenData((value) async {
-            List<Contender> list = [];
-            contenderList.maybeWhen(
-              data: (contenders) {
-                list = contenders;
+            List<ListReturn> list = [];
+            listList.maybeWhen(
+              data: (lists) {
+                list = lists;
               },
               orElse: () {
                 list = [];
               },
             );
-            sectionContenderListNotifier.loadTList(value);
+            sectionListListNotifier.loadTList(value);
             for (final l in value) {
-              sectionContenderListNotifier.setTData(
+              sectionListListNotifier.setTData(
                 l,
                 AsyncValue.data(
                   list.where((element) => element.section.id == l.id).toList(),
@@ -98,7 +98,7 @@ class AdminPage extends HookConsumerWidget {
                 color: Colors.grey,
               ),
               const SizedBox(height: 10),
-              const SectionContenderItems(),
+              const SectionListItems(),
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -115,7 +115,7 @@ class AdminPage extends HookConsumerWidget {
                           color: Colors.grey,
                         ),
                       ),
-                      if (showVotes && status == Status.counting)
+                      if (showVotes && status.status == StatusType.counting)
                         Expanded(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -160,8 +160,8 @@ class AdminPage extends HookConsumerWidget {
                             ],
                           ),
                         ),
-                      if (status == Status.counting ||
-                          status == Status.published)
+                      if (status.status == StatusType.counting ||
+                          status.status == StatusType.published)
                         WaitingButton(
                           builder: (child) => AdminButton(child: child),
                           onTap: () async {
@@ -178,9 +178,9 @@ class AdminPage extends HookConsumerWidget {
                                           await statusNotifier.resetVote();
                                       ref
                                           .watch(
-                                            contenderListProvider.notifier,
+                                            listListProvider.notifier,
                                           )
-                                          .loadContenderList();
+                                          .loadListList();
                                       if (value) {
                                         showVotesNotifier.toggle(false);
                                         displayVoteToastWithContext(
@@ -216,10 +216,10 @@ class AdminPage extends HookConsumerWidget {
               SizedBox(
                 height: MediaQuery.of(context).size.height -
                     500 +
-                    (status == Status.waiting ? 0 : 50),
+                    (status.status == StatusType.waiting ? 0 : 50),
                 child: Column(
                   children: [
-                    if (status == Status.counting)
+                    if (status.status == StatusType.counting)
                       showVotes
                           ? const VoteBars()
                           : GestureDetector(
@@ -252,8 +252,8 @@ class AdminPage extends HookConsumerWidget {
                                 ],
                               ),
                             ),
-                    if (status == Status.published) const VoteBars(),
-                    if (status == Status.closed)
+                    if (status.status == StatusType.published) const VoteBars(),
+                    if (status.status == StatusType.closed)
                       Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 30.0,
@@ -294,7 +294,7 @@ class AdminPage extends HookConsumerWidget {
                           ),
                         ),
                       ),
-                    if (status == Status.open)
+                    if (status.status == StatusType.open)
                       Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 30.0,
@@ -338,7 +338,7 @@ class AdminPage extends HookConsumerWidget {
                           ),
                         ),
                       ),
-                    if (status == Status.waiting)
+                    if (status.status == StatusType.waiting)
                       Expanded(
                         child: Container(
                           padding: const EdgeInsets.symmetric(
@@ -364,8 +364,8 @@ class AdminPage extends HookConsumerWidget {
                                     final value =
                                         await statusNotifier.openVote();
                                     ref
-                                        .watch(contenderListProvider.notifier)
-                                        .loadContenderList();
+                                        .watch(listListProvider.notifier)
+                                        .loadListList();
                                     if (value) {
                                       displayVoteToastWithContext(
                                         TypeMsg.msg,
@@ -426,10 +426,10 @@ class AdminPage extends HookConsumerWidget {
                                                     () async {
                                                   final value = await ref
                                                       .watch(
-                                                        contenderListProvider
+                                                        listListProvider
                                                             .notifier,
                                                       )
-                                                      .deleteContenders();
+                                                      .deleteLists();
                                                   if (value) {
                                                     displayVoteToastWithContext(
                                                       TypeMsg.msg,
@@ -502,11 +502,11 @@ class AdminPage extends HookConsumerWidget {
                                                     () async {
                                                   final value = await ref
                                                       .watch(
-                                                        contenderListProvider
+                                                        listListProvider
                                                             .notifier,
                                                       )
-                                                      .deleteContenders(
-                                                        type: ListType.fake,
+                                                      .deleteLists(
+                                                        type: ListType.pipo,
                                                       );
                                                   if (value) {
                                                     displayVoteToastWithContext(
@@ -557,7 +557,7 @@ class AdminPage extends HookConsumerWidget {
                           ),
                         ),
                       ),
-                    if (status == Status.open) const VoteCount(),
+                    if (status.status == StatusType.open) const VoteCount(),
                   ],
                 ),
               ),
