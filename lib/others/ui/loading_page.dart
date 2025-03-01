@@ -19,7 +19,7 @@ class LoadingPage extends ConsumerWidget {
     final titanVersion = ref.watch(titanVersionProvider);
     final isLoggedIn = ref.watch(isLoggedInProvider);
     final check = versionVerifier
-        .whenData((value) => value.minimalTitanVersion <= titanVersion);
+        .whenData((value) => value.minimalTitanVersionCode <= titanVersion);
     final pathForwarding = ref.read(pathForwardingProvider);
     check.when(
       data: (value) {
