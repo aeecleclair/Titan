@@ -1,14 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/cinema/class/session.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
-class SessionNotifier extends StateNotifier<Session> {
-  SessionNotifier() : super(Session.empty());
+class SessionNotifier extends StateNotifier<CineSessionComplete> {
+  SessionNotifier() : super(CineSessionComplete.fromJson({}));
 
-  void setSession(Session event) {
+  void setSession(CineSessionComplete event) {
     state = event;
   }
 }
 
-final sessionProvider = StateNotifierProvider<SessionNotifier, Session>((ref) {
+final sessionProvider = StateNotifierProvider<SessionNotifier, CineSessionComplete>((ref) {
   return SessionNotifier();
 });

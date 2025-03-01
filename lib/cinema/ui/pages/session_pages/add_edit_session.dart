@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/cinema/class/session.dart';
+import 'package:myecl/cinema/adapters/session.dart';
 import 'package:myecl/cinema/providers/session_list_provider.dart';
 import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
 import 'package:myecl/cinema/providers/session_poster_provider.dart';
@@ -14,6 +14,7 @@ import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/cinema/ui/cinema.dart';
 import 'package:myecl/cinema/ui/pages/session_pages/tmdb_button.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
@@ -30,7 +31,7 @@ class AddEditSessionPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final session = ref.watch(sessionProvider);
     final movieNotifier = ref.watch(theMovieDBMovieProvider.notifier);
-    final isEdit = session.id != Session.empty().id;
+    final isEdit = session.id != CineSessionComplete.fromJson({}).id;
     final tmdbUrl = useTextEditingController();
     final key = GlobalKey<FormState>();
     final sessionListNotifier = ref.watch(sessionListProvider.notifier);
@@ -40,7 +41,7 @@ class AddEditSessionPage extends HookConsumerWidget {
       text: isEdit ? parseDurationBack(session.duration) : '',
     );
     final genre = useTextEditingController(text: session.genre ?? '');
-    final overview = useTextEditingController(text: session.overview ?? '');
+    final overview = useTextEditingController(text: session.overview);
     final start = useTextEditingController(
       text: isEdit ? processDateWithHour(session.start) : '',
     );
@@ -110,13 +111,13 @@ class AddEditSessionPage extends HookConsumerWidget {
                                   data: (data) async {
                                     name.text = data.title;
                                     overview.text = data.overview;
-                                    posterUrl.text = data.posterUrl;
+                                    posterUrl.text = data.posterPath;
                                     genre.text = data.genres.join(', ');
                                     tagline.text = data.tagline;
                                     duration.text =
                                         parseDurationBack(data.runtime);
                                     logo.value =
-                                        await getFromUrl(data.posterUrl);
+                                        await getFromUrl(data.posterPath);
                                   },
                                   loading: () {},
                                   error: (e, s) {
@@ -235,13 +236,12 @@ class AddEditSessionPage extends HookConsumerWidget {
                         return;
                       }
                       await tokenExpireWrapper(ref, () async {
-                        Session newSession = Session(
+                        CineSessionComplete newSession = CineSessionComplete(
                           name: name.text,
                           duration: parseDuration(duration.text),
                           genre: genre.text.isEmpty ? null : genre.text,
                           id: isEdit ? session.id : '',
-                          overview:
-                              overview.text.isEmpty ? null : overview.text,
+                          overview: overview.text,
                           start: DateTime.parse(
                             processDateBackWithHour(start.text),
                           ),
@@ -250,7 +250,8 @@ class AddEditSessionPage extends HookConsumerWidget {
                         final value = isEdit
                             ? await sessionListNotifier
                                 .updateSession(newSession)
-                            : await sessionListNotifier.addSession(newSession);
+                            : await sessionListNotifier
+                                .addSession(newSession.toCineSessionBase());
                         if (value) {
                           QR.back();
                           if (isEdit) {
