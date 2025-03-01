@@ -12,8 +12,10 @@ class ScoreListNotifier extends ListNotifier2<FlappyBirdScoreInDB> {
     return await loadList(scoreRepository.flappybirdScoresGet);
   }
 
+
+  //  Fix : back bad response
   Future<bool> createScore(FlappyBirdScoreBase score) async {
-    return await add(scoreRepository.flappybirdScoresPost(body: score), score);
+    return await add(() => scoreRepository.flappybirdScoresPost(body: score), score);
   }
 }
 

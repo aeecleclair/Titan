@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/flappybird/class/bird.dart';
 import 'package:myecl/flappybird/providers/bird_image_provider.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/user/adapters/users.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 class BirdNotifier extends StateNotifier<Bird> {

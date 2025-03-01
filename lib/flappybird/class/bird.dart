@@ -61,7 +61,7 @@ class Bird {
   static Bird empty() {
     final color = Color(0xff000000 + Random().nextInt(0xffffff));
     return Bird(
-      user: CoreUserSimple.empty(),
+      user: CoreUserSimple.fromJson({}),
       color: MaterialColor(getColorValue(color), getSwatch(color)),
       birdImage: Image.asset('images/bird.png'),
     );
