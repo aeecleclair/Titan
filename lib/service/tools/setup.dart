@@ -18,7 +18,7 @@ void setUpNotification(WidgetRef ref) {
   localNotificationService.init();
 
   final user = ref.watch(userProvider);
-  final messageNotifier = ref.watch(messagesProvider.notifier);
+  final devicesNotifier = ref.watch(devicesProvider.notifier);
   final firebaseToken = ref.watch(firebaseTokenProvider);
   final topicsNotifier = ref.watch(topicsProvider.notifier);
   final logger = ref.watch(loggerProvider);
@@ -34,8 +34,7 @@ void setUpNotification(WidgetRef ref) {
           firebaseTokenExpiration.expiration != null ||
           firebaseTokenExpiration.expiration!.isBefore(now)) {
         firebaseToken.then((value) {
-          messageNotifier.setFirebaseToken(value);
-          messageNotifier.registerDevice();
+          devicesNotifier.registerDevice(value);
           firebaseTokenExpirationNotifier.saveDate(
             user.id,
             now.add(const Duration(days: 30)),

@@ -1,43 +1,30 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/service/class/message.dart';
-import 'package:myecl/service/providers/firebase_token_provider.dart';
-import 'package:myecl/service/repositories/notification_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 
-class MessagesProvider extends ListNotifier<Message> {
-  final NotificationRepository notificationRepository =
-      NotificationRepository();
-  String firebaseToken = "";
-  MessagesProvider({required String token})
-      : super(const AsyncValue.loading()) {
-    notificationRepository.setToken(token);
+class DevicesProvider extends StateNotifier<void> {
+  final Openapi notificationRepository;
+  DevicesProvider({required this.notificationRepository})
+      : super(const AsyncValue.loading());
+
+  Future<bool> registerDevice(String firebaseToken) async {
+    return (await notificationRepository.notificationDevicesPost(
+            body: BodyRegisterFirebaseDeviceNotificationDevicesPost(
+                firebaseToken: firebaseToken)))
+        .isSuccessful;
   }
 
-  void setFirebaseToken(String token) {
-    firebaseToken = token;
-  }
-
-  Future<AsyncValue<List<Message>>> getMessages() async {
-    return await loadList(
-      () async => notificationRepository.getMessages(firebaseToken),
-    );
-  }
-
-  Future<bool> registerDevice() async {
-    return await notificationRepository.registerDevice(firebaseToken);
-  }
-
-  Future<bool> forgetDevice() async {
-    return await notificationRepository.forgetDevice(firebaseToken);
+  Future<bool> forgetDevice(String firebaseToken) async {
+    return (await notificationRepository.notificationDevicesFirebaseTokenDelete(
+            firebaseToken: firebaseToken))
+        .isSuccessful;
   }
 }
 
-final messagesProvider =
-    StateNotifierProvider<MessagesProvider, AsyncValue<List<Message>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  final firebaseToken = ref.watch(firebaseTokenProvider);
-  MessagesProvider notifier = MessagesProvider(token: token);
-  firebaseToken.then((value) => notifier.setFirebaseToken(value));
+final devicesProvider =
+    StateNotifierProvider<DevicesProvider, void>((ref) {
+  final notificationRepository = ref.watch(repositoryProvider);
+  DevicesProvider notifier =
+      DevicesProvider(notificationRepository: notificationRepository);
   return notifier;
 });

@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/ui/admin.dart';
-import 'package:myecl/loan/class/loaner.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/loan/providers/all_loaner_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/tools/functions.dart';
@@ -54,9 +54,8 @@ class AddLoanerPage extends HookConsumerWidget {
                                     .map(
                                       (e) => GestureDetector(
                                         onTap: () {
-                                          Loaner newLoaner = Loaner(
+                                          LoanerBase newLoaner = LoanerBase(
                                             groupManagerId: e.id,
-                                            id: '',
                                             name: e.name,
                                           );
                                           tokenExpireWrapper(ref, () async {
