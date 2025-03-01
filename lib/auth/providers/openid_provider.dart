@@ -1,19 +1,11 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:math';
 
-import 'package:crypto/crypto.dart';
-import 'package:flutter_appauth/flutter_appauth.dart' show FlutterAppAuth;
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flutter/foundation.dart' show kDebugMode, kIsWeb;
 import 'package:myecl/auth/providers/is_connected_provider.dart';
 import 'package:myecl/auth/repository/auth_repository.dart';
-import 'package:myecl/auth/repository/openid_repository.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart' show TokenResponse;
 import 'package:myecl/tools/cache/cache_manager.dart';
-import 'package:myecl/tools/functions.dart';
 
 final authTokenProvider =
     StateNotifierProvider<OpenIdTokenProvider, AsyncValue<TokenResponse>>(

@@ -41,4 +41,15 @@ extension $CoreUser on CoreUser {
         schoolId: schoolId,
         email: email);
   }
+
+  EventApplicant toEventApplicant() {
+    return EventApplicant(
+      name: name,
+      firstname: firstname,
+      id: id,
+      accountType: accountType,
+      schoolId: schoolId,
+      email: email,
+    );
+  }
 }

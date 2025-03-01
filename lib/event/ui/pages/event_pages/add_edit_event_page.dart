@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
+import 'package:myecl/event/adapters/event.dart';
 import 'package:myecl/event/ui/event.dart';
 import 'package:myecl/event/ui/pages/event_pages/checkbox_entry.dart';
-import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/providers/selected_days_provider.dart';
 import 'package:myecl/event/providers/user_event_list_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
@@ -21,7 +22,7 @@ import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
-import 'package:myecl/user/class/applicant.dart';
+import 'package:myecl/user/adapters/users.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -38,9 +39,9 @@ class AddEditEventPage extends HookConsumerWidget {
     final event = ref.watch(eventProvider);
     final eventNotifier = ref.watch(eventProvider.notifier);
     final rooms = ref.watch(roomListProvider);
-    final isEdit = event.id != Event.empty().id;
+    final isEdit = event.id != EventReturn.fromJson({}).id;
     final key = GlobalKey<FormState>();
-    final eventListNotifier = ref.watch(eventEventListProvider.notifier);
+    final eventListNotifier = ref.watch(eventEventListProvider(user.id).notifier);
     final eventType = useState(event.type);
     final name = useTextEditingController(text: event.name);
     final organizer = useTextEditingController(text: event.organizer);
@@ -51,7 +52,7 @@ class AddEditEventPage extends HookConsumerWidget {
 
     final recurrent = useState(
       event.recurrenceRule != ""
-          ? event.recurrenceRule.contains("BYDAY")
+          ? (event.recurrenceRule as String).contains("BYDAY")
           : false,
     );
     final start = useTextEditingController(
@@ -468,7 +469,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                       ),
                                     );
                                   }
-                                  Event newEvent = Event(
+                                  EventReturn newEvent = EventReturn(
                                     id: isEdit ? event.id : "",
                                     description: description.text,
                                     end: DateTime.parse(
@@ -484,22 +485,14 @@ class AddEditEventPage extends HookConsumerWidget {
                                     type: eventType.value,
                                     recurrenceRule: recurrenceRule,
                                     applicantId: user.id,
-                                    applicant: Applicant(
-                                        name: user.name,
-                                        nickname: user.nickname,
-                                        firstname: user.firstname,
-                                        id: user.id,
-                                        email: user.email,
-                                        phone: user.phone,
-                                        promo: user.promo,
-                                      ),
+                                    applicant: user.toEventApplicant(),
                                     decision: Decision.pending,
                                   );
                                   final value = isEdit
                                       ? await eventListNotifier
                                           .updateEvent(newEvent)
                                       : await eventListNotifier
-                                          .addEvent(newEvent);
+                                          .addEvent(newEvent.toEventBase());
                                   if (value) {
                                     QR.back();
                                     if (isEdit) {

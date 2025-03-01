@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/event/class/event.dart';
+import 'package:myecl/event/adapters/event.dart';
 import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/router.dart';
 import 'package:myecl/event/ui/components/event_ui.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
@@ -17,7 +18,7 @@ import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class ListEvent extends HookConsumerWidget {
-  final List<Event> events;
+  final List<EventReturn> events;
   final bool canToggle;
   final String title;
   final bool isHistory;
@@ -112,7 +113,7 @@ class ListEvent extends HookConsumerWidget {
                             )
                                 .then((value) {
                               if (value) {
-                                confirmedEventListNotifier.addEvent(e);
+                                confirmedEventListNotifier.addEvent(e.toEventComplete());
                               }
                             });
                           });
@@ -138,7 +139,7 @@ class ListEvent extends HookConsumerWidget {
                             )
                                 .then((value) {
                               if (value) {
-                                confirmedEventListNotifier.deleteEvent(e);
+                                confirmedEventListNotifier.deleteEvent(e.toEventComplete());
                               }
                             });
                           });

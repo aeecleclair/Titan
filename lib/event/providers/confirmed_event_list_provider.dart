@@ -1,37 +1,35 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/repositories/event_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class ConfirmedEventListProvider extends ListNotifier<Event> {
-  final EventRepository eventRepository;
+class ConfirmedEventListProvider extends ListNotifier2<EventComplete> {
+  final Openapi eventRepository;
   ConfirmedEventListProvider({required this.eventRepository})
       : super(const AsyncValue.loading());
 
-  Future<AsyncValue<List<Event>>> loadConfirmedEvent() async {
-    return await loadList(eventRepository.getConfirmedEventList);
+  Future<AsyncValue<List<EventComplete>>> loadConfirmedEvent() async {
+    return await loadList(eventRepository.calendarEventsConfirmedGet);
   }
 
-  Future<bool> addEvent(Event booking) async {
-    return await add((b) async => b, booking);
+  Future<bool> addEvent(EventComplete booking) async {
+    return await localAdd(booking);
   }
 
-  Future<bool> deleteEvent(Event booking) async {
-    return await delete(
-      (_) async => true,
+  Future<bool> deleteEvent(EventComplete booking) async {
+    return await localDelete(
       (bookings, booking) =>
           bookings..removeWhere((element) => element.id == booking.id),
-      booking.id,
       booking,
     );
   }
 }
 
 final confirmedEventListProvider =
-    StateNotifierProvider<ConfirmedEventListProvider, AsyncValue<List<Event>>>(
+    StateNotifierProvider<ConfirmedEventListProvider, AsyncValue<List<EventComplete>>>(
         (ref) {
-  final eventRepository = ref.watch(eventRepositoryProvider);
+  final eventRepository = ref.watch(repositoryProvider);
   final provider = ConfirmedEventListProvider(eventRepository: eventRepository);
   tokenExpireWrapperAuth(ref, () async {
     await provider.loadConfirmedEvent();

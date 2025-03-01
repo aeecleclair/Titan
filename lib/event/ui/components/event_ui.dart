@@ -2,23 +2,24 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/tools/functions.dart';
-import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/providers/user_event_list_provider.dart';
 import 'package:myecl/event/router.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/ui/components/edit_delete_button.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class EventUi extends ConsumerWidget {
-  final Event event;
+  final EventReturn event;
   final bool isDetailPage, isAdmin;
   final Function()? onEdit, onConfirm, onDecline, onCopy, onInfo;
   const EventUi({
@@ -36,7 +37,8 @@ class EventUi extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final now = DateTime.now();
-    final eventListNotifier = ref.watch(eventEventListProvider.notifier);
+    final user = ref.watch(userProvider);
+    final eventListNotifier = ref.watch(eventEventListProvider(user.id).notifier);
     final eventNotifier = ref.watch(eventProvider.notifier);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);

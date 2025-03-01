@@ -1,14 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
 import 'package:myecl/event/tools/functions.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 
-final daySortedEventListProvider = Provider<Map<DateTime, List<Event>>>((ref) {
+final daySortedEventListProvider = Provider<Map<DateTime, List<EventComplete>>>((ref) {
   final eventList = ref.watch(confirmedEventListProvider);
   final now = DateTime.now();
   final normalizedNow = normalizedDate(now);
-  final sortedEventList = <DateTime, List<Event>>{};
+  final sortedEventList = <DateTime, List<EventComplete>>{};
   return eventList.maybeWhen(
     data: (events) {
       for (final event in events) {
