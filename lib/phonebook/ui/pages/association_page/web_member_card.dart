@@ -1,9 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/class/complete_member.dart';
-import 'package:myecl/phonebook/class/membership.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/phonebook/providers/member_pictures_provider.dart';
 import 'package:myecl/phonebook/providers/profile_picture_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
@@ -22,8 +20,8 @@ class WebMemberCard extends HookConsumerWidget {
     required this.association,
   });
 
-  final CompleteMember member;
-  final Association association;
+  final MemberComplete member;
+  final AssociationComplete association;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,7 +32,7 @@ class WebMemberCard extends HookConsumerWidget {
     final memberPicturesNotifier = ref.watch(memberPicturesProvider.notifier);
     final profilePictureNotifier = ref.watch(profilePictureProvider.notifier);
 
-    Membership? assoMembership = member.memberships.firstWhereOrNull(
+    MembershipComplete? assoMembership = member.memberships.firstWhereOrNull(
       (memberships) =>
           memberships.associationId == association.id &&
           memberships.mandateYear == association.mandateYear,
@@ -56,7 +54,7 @@ class WebMemberCard extends HookConsumerWidget {
                       element.associationId == association.id &&
                       element.mandateYear == association.mandateYear,
                 )
-                .rolesTags,
+                .roleTags,
           ),
           margin: EdgeInsets.zero,
           child: LayoutBuilder(
@@ -81,8 +79,8 @@ class WebMemberCard extends HookConsumerWidget {
                         group: memberPictures,
                         notifier: memberPicturesNotifier,
                         mapKey: member,
-                        loader: (ref) => profilePictureNotifier
-                            .getProfilePicture(member.member.id),
+                        loader: (ref) =>
+                            profilePictureNotifier.getProfilePicture(member.id),
                         loadingBuilder: (context) => const CircleAvatar(
                           radius: 40,
                           child: CircularProgressIndicator(),
@@ -101,12 +99,12 @@ class WebMemberCard extends HookConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if (member.member.nickname != null) ...[
+                          if (member.nickname != null) ...[
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SelectableText(
-                                  member.member.nickname!,
+                                  member.nickname!,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
@@ -116,7 +114,7 @@ class WebMemberCard extends HookConsumerWidget {
                                   width: 10,
                                 ),
                                 SelectableText(
-                                  "(${member.member.name} ${member.member.firstname})",
+                                  "(${member.name} ${member.firstname})",
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
@@ -127,7 +125,7 @@ class WebMemberCard extends HookConsumerWidget {
                             ),
                           ] else
                             SelectableText(
-                              "${member.member.name} ${member.member.firstname}",
+                              "${member.name} ${member.firstname}",
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
@@ -143,20 +141,20 @@ class WebMemberCard extends HookConsumerWidget {
                               children: [
                                 CardField(
                                   label: PhonebookTextConstants.promotion,
-                                  value: member.member.promotion == 0
+                                  value: member.promo == 0
                                       ? PhonebookTextConstants.promoNotGiven
-                                      : member.member.promotion < 100
-                                          ? "20${member.member.promotion}"
-                                          : member.member.promotion.toString(),
+                                      : member.promo < 100
+                                          ? "20${member.promo}"
+                                          : member.promo.toString(),
                                 ),
                                 CardField(
                                   label: PhonebookTextConstants.email,
-                                  value: member.member.email,
+                                  value: member.email,
                                 ),
-                                if (member.member.phone != null)
+                                if (member.phone != null)
                                   CardField(
                                     label: PhonebookTextConstants.phone,
-                                    value: member.member.phone!,
+                                    value: member.phone!,
                                   ),
                               ],
                             ),
@@ -171,7 +169,7 @@ class WebMemberCard extends HookConsumerWidget {
                           textAlign: TextAlign.right,
                           assoMembership == null
                               ? PhonebookTextConstants.noMemberRole
-                              : assoMembership.apparentName,
+                              : assoMembership.roleName,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
@@ -189,12 +187,12 @@ class WebMemberCard extends HookConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      if (member.member.nickname != null) ...[
+                      if (member.nickname != null) ...[
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SelectableText(
-                              member.member.nickname!,
+                              member.nickname!,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
@@ -204,7 +202,7 @@ class WebMemberCard extends HookConsumerWidget {
                               width: 10,
                             ),
                             SelectableText(
-                              "(${member.member.name} ${member.member.firstname})",
+                              "(${member.name} ${member.firstname})",
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
@@ -215,7 +213,7 @@ class WebMemberCard extends HookConsumerWidget {
                         ),
                       ] else
                         SelectableText(
-                          "${member.member.name} ${member.member.firstname}",
+                          "${member.name} ${member.firstname}",
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
@@ -226,11 +224,11 @@ class WebMemberCard extends HookConsumerWidget {
                       ),
                       CardField(
                         label: PhonebookTextConstants.promotion,
-                        value: member.member.promotion == 0
+                        value: member.promo == 0
                             ? PhonebookTextConstants.promoNotGiven
-                            : member.member.promotion < 100
-                                ? "20${member.member.promotion}"
-                                : member.member.promotion.toString(),
+                            : member.promo < 100
+                                ? "20${member.promo}"
+                                : member.promo.toString(),
                       ),
                       if (constraints.maxWidth > 500)
                         SingleChildScrollView(
@@ -239,12 +237,12 @@ class WebMemberCard extends HookConsumerWidget {
                             children: [
                               CardField(
                                 label: PhonebookTextConstants.email,
-                                value: member.member.email,
+                                value: member.email,
                               ),
-                              if (member.member.phone != null)
+                              if (member.phone != null)
                                 CardField(
                                   label: PhonebookTextConstants.phone,
-                                  value: member.member.phone!,
+                                  value: member.phone!,
                                 ),
                             ],
                           ),
@@ -254,13 +252,13 @@ class WebMemberCard extends HookConsumerWidget {
                           children: [
                             CardField(
                               label: PhonebookTextConstants.email,
-                              value: member.member.email,
+                              value: member.email,
                               showLabel: false,
                             ),
-                            if (member.member.phone != null)
+                            if (member.phone != null)
                               CardField(
                                 label: PhonebookTextConstants.phone,
-                                value: member.member.phone!,
+                                value: member.phone!,
                                 showLabel: false,
                               ),
                           ],
@@ -273,7 +271,7 @@ class WebMemberCard extends HookConsumerWidget {
                         textAlign: TextAlign.right,
                         assoMembership == null
                             ? PhonebookTextConstants.noMemberRole
-                            : assoMembership.apparentName,
+                            : assoMembership.roleName,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,

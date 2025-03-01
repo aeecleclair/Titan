@@ -100,7 +100,7 @@ class AdminPage extends HookConsumerWidget {
                             association: association,
                             isPhonebookAdmin: isPhonebookAdmin,
                             onEdit: () {
-                              kindNotifier.setKind(association.kind);
+                              kindNotifier.setKind(association.kind.name);
                               associationNotifier.setAssociation(association);
                               QR.to(
                                 PhonebookRouter.root +
@@ -109,7 +109,7 @@ class AdminPage extends HookConsumerWidget {
                               );
                             },
                             onDelete: () async {
-                              association.deactivated
+                              (association.deactivated ?? false)
                                   ? await showDialog(
                                       context: context,
                                       builder: (context) {

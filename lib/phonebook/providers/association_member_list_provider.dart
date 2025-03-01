@@ -1,37 +1,39 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/phonebook/class/complete_member.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/phonebook/class/membership.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
-import 'package:myecl/phonebook/repositories/association_member_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
-  final AssociationMemberRepository associationMemberRepository =
-      AssociationMemberRepository();
-  AssociationMemberListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
-    associationMemberRepository.setToken(token);
-  }
+class AssociationMemberListNotifier extends ListNotifier2<MemberComplete> {
+  final Openapi associationMemberRepository;
+  AssociationMemberListNotifier({required this.associationMemberRepository})
+      : super(const AsyncValue.loading());
 
-  Future<AsyncValue<List<CompleteMember>>> loadMembers(
+  Future<AsyncValue<List<MemberComplete>>> loadMembers(
     String associationId,
-    String year,
+    int year,
   ) async {
     return await loadList(
-      () async => associationMemberRepository.getAssociationMemberList(
-        associationId,
-        year,
+      () async => associationMemberRepository
+          .phonebookAssociationsAssociationIdMembersMandateYearGet(
+        associationId: associationId,
+        mandateYear: year,
       ),
     );
   }
 
-  Future<bool> addMember(CompleteMember member, Membership membership) async {
+  // requires work
+  Future<bool> addMember(MemberComplete member, AppModulesPhonebookSchemasPhonebookMembershipBase membership) async {
     return await add(
-      (member) async {
-        member.memberships
-            .add(await associationMemberRepository.addMember(membership));
+      () async {
+        final res = await associationMemberRepository
+            .phonebookAssociationsMembershipsPost(
+                body: membership);
+        if (res.isSuccessful) {
+          member.memberships.add(res.body!);
+        }
         return member;
       },
       member,
@@ -39,25 +41,37 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
   }
 
   Future<bool> updateMember(
-    CompleteMember member,
-    Membership membership,
+    MemberComplete member,
+    MembershipComplete membership,
   ) async {
     return await update(
-      (member) => associationMemberRepository.updateMember(membership),
-      (members, member) => members
-        ..[members.indexWhere((i) => i.member.id == member.member.id)] = member,
+      () => associationMemberRepository
+          .phonebookAssociationsMembershipsMembershipIdPatch(
+              membershipId: membership.id,
+              body: MembershipEdit(
+                  memberOrder: membership.memberOrder,
+                  roleName: membership.roleName,
+                  roleTags: membership.roleTags)),
+      (members, member) =>
+          members..[members.indexWhere((i) => i.id == member.id)] = member,
       member,
     );
   }
 
   Future<bool> reorderMember(
-    CompleteMember member,
-    Membership membership,
+    MemberComplete member,
+    MembershipComplete membership,
     int oldIndex,
     int newIndex,
   ) async {
     return await update(
-      (member) => associationMemberRepository.updateMember(membership),
+      () => associationMemberRepository
+          .phonebookAssociationsMembershipsMembershipIdPatch(
+              membershipId: membership.id,
+              body: MembershipEdit(
+                  memberOrder: membership.memberOrder,
+                  roleName: membership.roleName,
+                  roleTags: membership.roleTags)),
       (members, member) {
         members.sort(
           (a, b) => a.memberships
@@ -66,7 +80,7 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
                     e.associationId == membership.associationId &&
                     e.mandateYear == membership.mandateYear,
               )
-              .order
+              .memberOrder
               .compareTo(
                 b.memberships
                     .firstWhere(
@@ -74,7 +88,7 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
                           e.associationId == membership.associationId &&
                           e.mandateYear == membership.mandateYear,
                     )
-                    .order,
+                    .memberOrder,
               ),
         );
         members.remove(member);
@@ -82,8 +96,8 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
         members.insert(newIndex, member);
 
         for (int i = 0; i < members.length; i++) {
-          List<Membership> memberships = members[i].memberships;
-          Membership oldMembership = memberships.firstWhere(
+          List<MembershipComplete> memberships = members[i].memberships;
+          MembershipComplete oldMembership = memberships.firstWhere(
             (e) =>
                 e.associationId == membership.associationId &&
                 e.mandateYear == membership.mandateYear,
@@ -95,8 +109,8 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
                   e.mandateYear == membership.mandateYear,
             ),
           );
-          memberships.add(oldMembership.copyWith(order: i));
-          members[i].copyWith(membership: memberships);
+          memberships.add(oldMembership.copyWith(memberOrder: i));
+          members[i].copyWith(memberships: memberships);
         }
         return members;
       },
@@ -105,30 +119,30 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
   }
 
   Future<bool> deleteMember(
-    CompleteMember member,
-    Membership membership,
+    MemberComplete member,
+    MembershipComplete membership,
   ) async {
     return await delete(
-      associationMemberRepository.deleteMember,
-      (members, member) =>
-          members..removeWhere((i) => i.member.id == member.member.id),
-      membership.id,
+      () => associationMemberRepository
+          .phonebookAssociationsMembershipsMembershipIdDelete(
+              membershipId: membership.id),
+      (members, member) => members..removeWhere((i) => i.id == member.id),
       member,
     );
   }
 }
 
 final associationMemberListProvider = StateNotifierProvider<
-    AssociationMemberListNotifier, AsyncValue<List<CompleteMember>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  AssociationMemberListNotifier provider =
-      AssociationMemberListNotifier(token: token);
+    AssociationMemberListNotifier, AsyncValue<List<MemberComplete>>>((ref) {
+  final associationMemberRepository = ref.watch(repositoryProvider);
+  AssociationMemberListNotifier provider = AssociationMemberListNotifier(
+      associationMemberRepository: associationMemberRepository);
   tokenExpireWrapperAuth(ref, () async {
     final association = ref.watch(associationProvider);
 
     await provider.loadMembers(
       association.id,
-      association.mandateYear.toString(),
+      association.mandateYear,
     );
   });
   return provider;

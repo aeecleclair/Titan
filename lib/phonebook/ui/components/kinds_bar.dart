@@ -39,15 +39,17 @@ class KindsBar extends HookConsumerWidget {
           itemCount: kinds.kinds.length,
           itemBuilder: (context, index) {
             final item = kinds.kinds[index];
-            final selected = kind == item;
+            final selected = kind == item.name;
             return ItemChip(
               key: selected ? dataKey : null,
               onTap: () {
-                kindNotifier.setKind(!selected ? item : "");
+                kindNotifier.setKind(
+                  item.name,
+                );
               },
               selected: selected,
               child: Text(
-                item,
+                item.name,
                 style: TextStyle(
                   color: selected ? Colors.white : Colors.black,
                   fontWeight: FontWeight.bold,

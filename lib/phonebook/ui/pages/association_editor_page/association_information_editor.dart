@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/providers/is_admin_provider.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/phonebook/providers/association_kind_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
@@ -38,10 +39,10 @@ class AssociationInformationEditor extends HookConsumerWidget {
     final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
 
     final groups = ref.watch(allGroupListProvider);
-    List<SimpleGroup> selectedGroups = groups.maybeWhen(
+    List<CoreGroupSimple> selectedGroups = groups.maybeWhen(
       data: (value) {
         return value.where((element) {
-          return association.associatedGroups.contains(element.id);
+          return association.associatedGroups?.contains(element.id) ?? false;
         }).toList();
       },
       orElse: () {
@@ -52,7 +53,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
 
     return Column(
       children: [
-        isPhonebookAdmin && !association.deactivated
+        isPhonebookAdmin && !(association.deactivated ?? false)
             ? Form(
                 key: key,
                 child: Column(
@@ -172,7 +173,8 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                   association.copyWith(
                                     name: name.text,
                                     description: description.text,
-                                    kind: kind,
+                                    kind: Kinds.values.firstWhere(
+                                        (element) => element.name == kind),
                                   ),
                                 );
                                 if (value) {
@@ -207,7 +209,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Column(
                   children: [
-                    if (association.deactivated)
+                    if (association.deactivated ?? false)
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 10),
                         child: const Text(
@@ -244,7 +246,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                   ],
                 ),
               ),
-        if (isAdmin && !association.deactivated)
+        if (isAdmin && !(association.deactivated ?? false))
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Column(

@@ -53,3 +53,18 @@ extension $CoreUser on CoreUser {
     );
   }
 }
+
+
+extension $CoreUserSimple on CoreUserSimple {
+  MemberComplete toMemberComplete() {
+    return MemberComplete(
+      name: name,
+      firstname: firstname,
+      id: id,
+      accountType: accountType,
+      schoolId: schoolId,
+      email: "",
+      memberships: []
+    );
+  }
+}

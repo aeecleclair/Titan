@@ -1,9 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/class/complete_member.dart';
-import 'package:myecl/phonebook/class/membership.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/phonebook/providers/member_pictures_provider.dart';
 import 'package:myecl/phonebook/providers/profile_picture_provider.dart';
 import 'package:myecl/phonebook/router.dart';
@@ -21,8 +19,8 @@ class MemberCard extends HookConsumerWidget {
     required this.association,
   });
 
-  final CompleteMember member;
-  final Association association;
+  final MemberComplete member;
+  final AssociationComplete association;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,7 +31,7 @@ class MemberCard extends HookConsumerWidget {
     final memberPicturesNotifier = ref.watch(memberPicturesProvider.notifier);
     final profilePictureNotifier = ref.watch(profilePictureProvider.notifier);
 
-    Membership? assoMembership = member.memberships.firstWhereOrNull(
+    MembershipComplete? assoMembership = member.memberships.firstWhereOrNull(
       (memberships) =>
           memberships.associationId == association.id &&
           memberships.mandateYear == association.mandateYear,
@@ -55,7 +53,7 @@ class MemberCard extends HookConsumerWidget {
                       element.associationId == association.id &&
                       element.mandateYear == association.mandateYear,
                 )
-                .rolesTags,
+                .roleTags,
           ),
           margin: EdgeInsets.zero,
           child: Row(
@@ -81,7 +79,7 @@ class MemberCard extends HookConsumerWidget {
                       notifier: memberPicturesNotifier,
                       mapKey: member,
                       loader: (ref) => profilePictureNotifier
-                          .getProfilePicture(member.member.id),
+                          .getProfilePicture(member.id),
                       loadingBuilder: (context) => const CircleAvatar(
                         radius: 20,
                         child: CircularProgressIndicator(),
@@ -93,20 +91,20 @@ class MemberCard extends HookConsumerWidget {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  if ((member.member.nickname != null) &&
-                      (member.member.nickname != "")) ...[
+                  if ((member.nickname != null) &&
+                      (member.nickname != "")) ...[
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          member.member.nickname!,
+                          member.nickname!,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
                           ),
                         ),
                         Text(
-                          "(${member.member.name} ${member.member.firstname})",
+                          "(${member.name} ${member.firstname})",
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
@@ -117,7 +115,7 @@ class MemberCard extends HookConsumerWidget {
                     ),
                   ] else
                     Text(
-                      "${member.member.name} ${member.member.firstname}",
+                      "${member.name} ${member.firstname}",
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -130,7 +128,7 @@ class MemberCard extends HookConsumerWidget {
                   textAlign: TextAlign.right,
                   assoMembership == null
                       ? PhonebookTextConstants.noMemberRole
-                      : assoMembership.apparentName,
+                      : assoMembership.roleName,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,

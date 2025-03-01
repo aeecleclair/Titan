@@ -1,9 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/class/complete_member.dart';
-import 'package:myecl/phonebook/class/membership.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
 import 'package:myecl/phonebook/providers/member_pictures_provider.dart';
@@ -28,8 +26,8 @@ class MemberEditableCard extends HookConsumerWidget {
     required this.deactivated,
   });
 
-  final CompleteMember member;
-  final Association association;
+  final MemberComplete member;
+  final AssociationComplete association;
   final bool deactivated;
 
   @override
@@ -49,11 +47,11 @@ class MemberEditableCard extends HookConsumerWidget {
         ref.watch(memberPicturesProvider.select((value) => value[member]));
     final memberPicturesNotifier = ref.watch(memberPicturesProvider.notifier);
 
-    Membership assoMembership = member.memberships.firstWhere(
+    MembershipComplete assoMembership = member.memberships.firstWhere(
       (memberships) =>
           memberships.associationId == association.id &&
           memberships.mandateYear == association.mandateYear,
-      orElse: () => Membership.empty(),
+      orElse: () => MembershipComplete.fromJson({}),
     );
 
     return Container(
@@ -69,7 +67,7 @@ class MemberEditableCard extends HookConsumerWidget {
                     element.associationId == association.id &&
                     element.mandateYear == association.mandateYear,
               )
-              .rolesTags,
+              .roleTags,
         ),
         borderRadius: const BorderRadius.all(Radius.circular(20)),
       ),
@@ -92,7 +90,7 @@ class MemberEditableCard extends HookConsumerWidget {
               notifier: memberPicturesNotifier,
               mapKey: member,
               loader: (ref) =>
-                  profilePictureNotifier.getProfilePicture(member.member.id),
+                  profilePictureNotifier.getProfilePicture(member.id),
               loadingBuilder: (context) => const CircleAvatar(
                 radius: 20,
                 child: CircularProgressIndicator(),
@@ -107,7 +105,7 @@ class MemberEditableCard extends HookConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AutoSizeText(
-                  "${(member.member.nickname ?? member.member.firstname)} - ${member.memberships.firstWhere((element) => element.associationId == association.id && element.mandateYear == association.mandateYear).apparentName}",
+                  "${(member.nickname ?? member.firstname)} - ${member.memberships.firstWhere((element) => element.associationId == association.id && element.mandateYear == association.mandateYear).roleName}",
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
@@ -116,9 +114,9 @@ class MemberEditableCard extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 3),
                 AutoSizeText(
-                  member.member.nickname != null
-                      ? "${member.member.firstname} ${member.member.name}"
-                      : member.member.name,
+                  member.nickname != null
+                      ? "${member.firstname} ${member.name}"
+                      : member.name,
                   minFontSize: 10,
                   maxFontSize: 15,
                 ),

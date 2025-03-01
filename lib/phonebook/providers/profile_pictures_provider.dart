@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/phonebook/class/complete_member.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/tools/providers/map_provider.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class ProfilePictureNotifier extends MapNotifier<CompleteMember, Image> {
+class ProfilePictureNotifier extends MapNotifier<MemberComplete, Image> {
   ProfilePictureNotifier() : super();
 }
 
 final profilePicturesProvider = StateNotifierProvider<ProfilePictureNotifier,
-    Map<CompleteMember, AsyncValue<List<Image>>?>>((ref) {
+    Map<MemberComplete, AsyncValue<List<Image>>?>>((ref) {
   ProfilePictureNotifier profilePictureNotifier = ProfilePictureNotifier();
   tokenExpireWrapperAuth(ref, () async {
     ref.watch(associationMemberListProvider).maybeWhen(

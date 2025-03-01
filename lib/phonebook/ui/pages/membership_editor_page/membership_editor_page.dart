@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/class/membership.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/member_role_tags_provider.dart';
@@ -39,13 +39,13 @@ class MembershipEditorPage extends HookConsumerWidget {
     final member = ref.watch(completeMemberProvider);
     final membership = ref.watch(membershipProvider);
     final association = ref.watch(associationProvider);
-    final isEdit = membership.id != Membership.empty().id;
+    final isEdit = membership.id != MembershipComplete.fromJson({}).id;
     final associationMemberListNotifier =
         ref.watch(associationMemberListProvider.notifier);
     final memberRoleTagsNotifier = ref.watch(memberRoleTagsProvider.notifier);
     final memberRoleTags = ref.watch(memberRoleTagsProvider);
     final apparentNameController =
-        useTextEditingController(text: membership.apparentName);
+        useTextEditingController(text: membership.roleName);
     final associationMembers = ref.watch(associationMemberListProvider);
     final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
 
@@ -84,16 +84,17 @@ class MembershipEditorPage extends HookConsumerWidget {
                 ),
                 SearchResult(queryController: queryController),
               ] else
-                member.member.nickname == null
+                //  Use extension
+                member.nickname == null
                     ? Text(
-                        "${member.member.firstname} ${member.member.name}",
+                        "${member.firstname} ${member.name}",
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                         ),
                       )
                     : Text(
-                        "${member.member.nickname} (${member.member.firstname} ${member.member.name})",
+                        "${member.nickname} (${member.firstname} ${member.name})",
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -171,7 +172,7 @@ class MembershipEditorPage extends HookConsumerWidget {
                   ),
                 ),
                 onTap: () async {
-                  if (member.member.id == "") {
+                  if (member.id == MemberComplete.fromJson({}).id) {
                     displayToastWithContext(
                       TypeMsg.msg,
                       PhonebookTextConstants.emptyMember,
@@ -190,14 +191,9 @@ class MembershipEditorPage extends HookConsumerWidget {
                     ref,
                     () async {
                       if (isEdit) {
-                        final membershipEdit = Membership(
-                          id: membership.id,
-                          memberId: membership.memberId,
-                          associationId: membership.associationId,
-                          rolesTags: memberRoleTags,
-                          apparentName: apparentNameController.text,
-                          mandateYear: membership.mandateYear,
-                          order: membership.order,
+                        final membershipEdit = membership.copyWith(
+                          roleTags: memberRoleTags,
+                          roleName: apparentNameController.text,
                         );
                         member.memberships[member.memberships.indexWhere(
                           (membership) => membership.id == membershipEdit.id,
@@ -210,7 +206,7 @@ class MembershipEditorPage extends HookConsumerWidget {
                         if (value) {
                           associationMemberListNotifier.loadMembers(
                             association.id,
-                            association.mandateYear.toString(),
+                            association.mandateYear,
                           );
                           displayToastWithContext(
                             TypeMsg.msg,
@@ -245,17 +241,16 @@ class MembershipEditorPage extends HookConsumerWidget {
                           return;
                         }
 
-                        final membershipAdd = Membership(
-                          id: "",
-                          memberId: member.member.id,
+                        final membershipAdd =
+                            AppModulesPhonebookSchemasPhonebookMembershipBase(
                           associationId: association.id,
-                          rolesTags: memberRoleTags,
-                          apparentName: apparentNameController.text,
+                          roleName: apparentNameController.text,
                           mandateYear: association.mandateYear,
-                          order: associationMembers.maybeWhen(
+                          memberOrder: associationMembers.maybeWhen(
                             data: (members) => members.length,
                             orElse: () => 0,
                           ),
+                          userId: member.id,
                         );
                         final value = await associationMemberListNotifier
                             .addMember(member, membershipAdd);

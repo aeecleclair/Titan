@@ -1,15 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/phonebook/class/membership.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
-final membershipProvider =
-    StateNotifierProvider<MembershipProvider, Membership>((ref) {
-  return MembershipProvider();
-});
+class MembershipProvider extends StateNotifier<MembershipComplete> {
+  MembershipProvider() : super(MembershipComplete.fromJson({}));
 
-class MembershipProvider extends StateNotifier<Membership> {
-  MembershipProvider() : super(Membership.empty());
-
-  void setMembership(Membership i) {
+  void setMembership(MembershipComplete i) {
     state = i;
   }
 }
+
+final membershipProvider =
+    StateNotifierProvider<MembershipProvider, MembershipComplete>((ref) {
+  return MembershipProvider();
+});

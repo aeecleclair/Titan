@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/phonebook/class/association.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/phonebook/providers/association_kind_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
@@ -112,10 +113,11 @@ class AssociationCreationPage extends HookConsumerWidget {
                         await tokenExpireWrapper(ref, () async {
                           final value =
                               await associationListNotifier.createAssociation(
-                            Association.empty().copyWith(
+                            AssociationBase(
                               name: name.text,
                               description: description.text,
-                              kind: kind,
+                              kind: Kinds.values
+                                  .firstWhere((e) => e.name == kind),
                               mandateYear: DateTime.now().year,
                             ),
                           );

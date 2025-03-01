@@ -1,29 +1,35 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/repositories/association_repository.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier2.dart';
+import 'package:myecl/tools/repository/repository2.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class AssociationListNotifier extends ListNotifier<Association> {
-  final AssociationRepository associationRepository = AssociationRepository();
-  AsyncValue<List<Association>> associationList = const AsyncValue.loading();
-  AssociationListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
-    associationRepository.setToken(token);
+class AssociationListNotifier extends ListNotifier2<AssociationComplete> {
+  final Openapi associationRepository;
+  AssociationListNotifier({required this.associationRepository})
+      : super(const AsyncValue.loading());
+
+  Future<AsyncValue<List<AssociationComplete>>> loadAssociations() async {
+    return await loadList(associationRepository.phonebookAssociationsGet);
   }
 
-  Future<AsyncValue<List<Association>>> loadAssociations() async {
-    return await loadList(associationRepository.getAssociationList);
+  Future<bool> createAssociation(AssociationBase association) async {
+    return await add(
+        () =>
+            associationRepository.phonebookAssociationsPost(body: association),
+        association);
   }
 
-  Future<bool> createAssociation(Association association) async {
-    return await add(associationRepository.createAssociation, association);
-  }
-
-  Future<bool> updateAssociation(Association association) async {
+  Future<bool> updateAssociation(AssociationComplete association) async {
     return await update(
-      associationRepository.updateAssociation,
+      () => associationRepository.phonebookAssociationsAssociationIdPatch(
+          associationId: association.id,
+          body: AssociationEdit(
+            name: association.name,
+            description: association.description,
+            kind: association.kind,
+            mandateYear: association.mandateYear,
+          )),
       (associations, association) => associations
         ..[associations.indexWhere((g) => g.id == association.id)] =
             association,
@@ -31,19 +37,21 @@ class AssociationListNotifier extends ListNotifier<Association> {
     );
   }
 
-  Future<bool> deleteAssociation(Association association) async {
+  Future<bool> deleteAssociation(AssociationComplete association) async {
     return await delete(
-      associationRepository.deleteAssociation,
+      () => associationRepository.phonebookAssociationsAssociationIdDelete(
+          associationId: association.id),
       (associations, association) =>
           associations..removeWhere((i) => i.id == association.id),
-      association.id,
       association,
     );
   }
 
-  Future<bool> deactivateAssociation(Association association) async {
+  Future<bool> deactivateAssociation(AssociationComplete association) async {
     return await update(
-      associationRepository.deactivateAssociation,
+      () => associationRepository
+          .phonebookAssociationsAssociationIdDeactivatePatch(
+              associationId: association.id),
       (associations, association) => associations
         ..[associations.indexWhere((g) => g.id == association.id)] =
             association.copyWith(deactivated: true),
@@ -51,9 +59,12 @@ class AssociationListNotifier extends ListNotifier<Association> {
     );
   }
 
-  Future<bool> updateAssociationGroups(Association association) async {
+  Future<bool> updateAssociationGroups(AssociationComplete association) async {
     return await update(
-      associationRepository.updateAssociationGroups,
+      () => associationRepository.phonebookAssociationsAssociationIdGroupsPatch(
+          associationId: association.id,
+          body: AssociationGroupsEdit(
+              associatedGroups: association.associatedGroups)),
       (associations, association) => associations
         ..[associations.indexWhere((g) => g.id == association.id)] =
             association,
@@ -63,9 +74,10 @@ class AssociationListNotifier extends ListNotifier<Association> {
 }
 
 final associationListProvider = StateNotifierProvider<AssociationListNotifier,
-    AsyncValue<List<Association>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  AssociationListNotifier notifier = AssociationListNotifier(token: token);
+    AsyncValue<List<AssociationComplete>>>((ref) {
+  final associationRepository = ref.watch(repositoryProvider);
+  AssociationListNotifier notifier =
+      AssociationListNotifier(associationRepository: associationRepository);
   tokenExpireWrapperAuth(ref, () async {
     await notifier.loadAssociations();
   });

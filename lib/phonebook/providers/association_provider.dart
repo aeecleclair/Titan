@@ -1,18 +1,19 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/phonebook/class/association.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
-class AssociationNotifier extends Notifier<Association> {
+//  Rework for stateNotifier
+class AssociationNotifier extends Notifier<AssociationComplete> {
   @override
-  Association build() {
-    return Association.empty();
+  AssociationComplete build() {
+    return AssociationComplete.fromJson({});
   }
 
-  void setAssociation(Association association) {
+  void setAssociation(AssociationComplete association) {
     state = association;
   }
 }
 
 final associationProvider =
-    NotifierProvider<AssociationNotifier, Association>(() {
+    NotifierProvider<AssociationNotifier, AssociationComplete>(() {
   return AssociationNotifier();
 });
