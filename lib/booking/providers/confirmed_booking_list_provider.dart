@@ -12,9 +12,7 @@ class ConfirmedBookingListProvider
 
   Future<AsyncValue<List<BookingReturnSimpleApplicant>>>
       loadConfirmedBooking() async {
-    return await loadList(
-      () async => bookingRepository.bookingBookingsConfirmedGet,
-    );
+    return await loadList(bookingRepository.bookingBookingsConfirmedGet);
   }
 
   Future<bool> addBooking(BookingReturnSimpleApplicant booking) async {
