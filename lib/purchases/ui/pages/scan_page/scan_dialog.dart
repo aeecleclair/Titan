@@ -229,6 +229,8 @@ class ScanDialog extends HookConsumerWidget {
                                       final value = await ticketListNotifier
                                           .consumeTicket(
                                         sellerId,
+                                        productId,
+                                        scannerNotifier.secret,
                                         data,
                                         ticket.id,
                                         tag,

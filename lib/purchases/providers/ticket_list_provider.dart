@@ -16,6 +16,8 @@ class TicketListNotifier extends ListNotifierAPI<Ticket> {
   // Need to go back to it
   Future<bool> consumeTicket(
     String sellerId,
+    String productId,
+    String secret,
     Ticket ticket,
     String generatorId,
     String tag,
@@ -24,20 +26,14 @@ class TicketListNotifier extends ListNotifierAPI<Ticket> {
       () => ticketRepository
           .cdrSellersSellerIdProductsProductIdTicketsGeneratorIdSecretPatch(
         sellerId: sellerId,
-        productId: ticket.productId,
+        productId: productId,
         generatorId: generatorId,
-        secret: ticket.secret,
+        secret: secret,
         body: TicketScan(
           tag: tag,
         ),
       ),
-      (tickets) {
-        List<String> tags = ticket.tags;
-        tags.add(tag);
-        return tickets
-          ..[tickets.indexWhere((g) => g.id == ticket.id)] =
-              ticket.copyWith(tags: tags, scanLeft: ticket.scanLeft - 1);
-      },
+      (tickets) => tickets.id,
       ticket,
     );
   }
