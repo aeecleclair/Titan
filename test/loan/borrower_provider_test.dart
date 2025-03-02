@@ -8,7 +8,7 @@ void main() {
     test('setBorrower should update state', () {
       final container = ProviderContainer();
       final borrower =
-          CoreUserSimple.empty().copyWith(id: '2', name: 'Jane Doe');
+          CoreUserSimple.fromJson({}).copyWith(id: '2', name: 'Jane Doe');
       final notifier = container.read(borrowerProvider.notifier);
       notifier.setBorrower(borrower);
 

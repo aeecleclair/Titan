@@ -1,84 +1,187 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/repositories/booking_repository.dart';
-import 'package:myecl/booking/providers/user_booking_list_provider.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:myecl/booking/adapters/booking.dart';
+import 'package:myecl/booking/providers/user_booking_list_provider.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:chopper/chopper.dart' as chopper;
+import 'package:http/http.dart' as http;
 
-class MockBookingRepository extends Mock implements BookingRepository {}
+class MockBookingRepository extends Mock implements Openapi {}
 
 void main() {
   group('UserBookingListProvider', () {
-    late BookingRepository bookingRepository;
+    late MockBookingRepository mockRepository;
     late UserBookingListProvider provider;
+    final bookings = [
+      BookingReturn.fromJson({}).copyWith(id: '1'),
+      BookingReturn.fromJson({}).copyWith(id: '2'),
+    ];
+    final newBooking = BookingReturn.fromJson({}).copyWith(id: '3');
+    final updatedBooking = bookings.first.copyWith(reason: 'Updated');
 
     setUp(() {
-      bookingRepository = MockBookingRepository();
-      provider = UserBookingListProvider(bookingRepository: bookingRepository);
+      mockRepository = MockBookingRepository();
+      provider = UserBookingListProvider(bookingRepository: mockRepository);
     });
 
-    test('initial state is loading', () {
-      expect(provider.state, isA<AsyncLoading>());
-    });
-
-    test('loadUserBookings loads bookings from repository', () async {
-      final bookings = [
-        Booking.empty().copyWith(id: '1'),
-        Booking.empty().copyWith(id: '2'),
-      ];
-      when(() => bookingRepository.getUserBookingList())
-          .thenAnswer((_) async => bookings);
+    test('loadUserBookings returns expected data', () async {
+      when(() => mockRepository.bookingBookingsUsersMeGet()).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          bookings,
+        ),
+      );
 
       final result = await provider.loadUserBookings();
 
-      expect(result, AsyncValue.data(bookings));
-      verify(() => bookingRepository.getUserBookingList()).called(1);
-    });
-
-    test('Should add a booking', () async {
-      final mockBookingRepository = MockBookingRepository();
-      final newBooking = Booking.empty().copyWith(id: "1");
-      when(() => mockBookingRepository.getUserBookingList()).thenAnswer(
-        (_) async => [
-          Booking.empty(),
-          Booking.empty(),
-        ],
+      expect(
+        result.maybeWhen(
+          data: (data) => data,
+          orElse: () => [],
+        ),
+        bookings,
       );
-      when(() => mockBookingRepository.createBooking(newBooking))
-          .thenAnswer((_) async => newBooking);
-      final bookingListProvider =
-          UserBookingListProvider(bookingRepository: mockBookingRepository);
-      await bookingListProvider.loadUserBookings();
-      final booking = await bookingListProvider.addBooking(newBooking);
-      expect(booking, true);
     });
 
-    test('Should update a booking', () async {
-      final mockBookingRepository = MockBookingRepository();
-      final newBooking = Booking.empty().copyWith(id: "1");
-      when(() => mockBookingRepository.getUserBookingList())
-          .thenAnswer((_) async => [Booking.empty(), newBooking]);
-      when(() => mockBookingRepository.updateBooking(newBooking))
-          .thenAnswer((_) async => true);
-      final bookingListProvider =
-          UserBookingListProvider(bookingRepository: mockBookingRepository);
-      await bookingListProvider.loadUserBookings();
-      final booking = await bookingListProvider.updateBooking(newBooking);
-      expect(booking, true);
+    test('loadUserBookings handles error', () async {
+      when(() => mockRepository.bookingBookingsUsersMeGet())
+          .thenThrow(Exception('Failed to load bookings'));
+
+      final result = await provider.loadUserBookings();
+
+      expect(
+        result.maybeWhen(
+          error: (error, _) => error,
+          orElse: () => null,
+        ),
+        isA<Exception>(),
+      );
     });
 
-    test('Should delete a booking', () async {
-      final mockBookingRepository = MockBookingRepository();
-      final newBooking = Booking.empty().copyWith(id: "1");
-      when(() => mockBookingRepository.getUserBookingList())
-          .thenAnswer((_) async => [Booking.empty(), newBooking]);
-      when(() => mockBookingRepository.deleteBooking(newBooking.id))
-          .thenAnswer((_) async => true);
-      final bookingListProvider =
-          UserBookingListProvider(bookingRepository: mockBookingRepository);
-      await bookingListProvider.loadUserBookings();
-      final booking = await bookingListProvider.deleteBooking(newBooking);
-      expect(booking, true);
+    test('addBooking adds a booking to the list', () async {
+      when(() => mockRepository.bookingBookingsUsersMeGet()).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          bookings,
+        ),
+      );
+      when(() => mockRepository.bookingBookingsPost(body: any(named: 'body')))
+          .thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          newBooking,
+        ),
+      );
+
+      await provider.loadUserBookings();
+      final result = await provider.addBooking(newBooking.toBookingBase());
+
+      expect(result, true);
+      expect(
+        provider.state.maybeWhen(
+          data: (data) => data,
+          orElse: () => [],
+        ),
+        [...bookings, newBooking],
+      );
+    });
+
+    test('addBooking handles error', () async {
+      when(() => mockRepository.bookingBookingsPost(body: any(named: 'body')))
+          .thenThrow(Exception('Failed to add booking'));
+
+      final result = await provider.addBooking(newBooking.toBookingBase());
+
+      expect(result, false);
+    });
+
+    test('updateBooking updates a booking in the list', () async {
+      when(() => mockRepository.bookingBookingsUsersMeGet()).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          bookings,
+        ),
+      );
+      when(
+        () => mockRepository.bookingBookingsBookingIdPatch(
+          bookingId: any(named: 'bookingId'),
+          body: any(named: 'body'),
+        ),
+      ).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          updatedBooking,
+        ),
+      );
+
+      await provider.loadUserBookings();
+      final result = await provider.updateBooking(updatedBooking);
+
+      expect(result, true);
+      expect(
+        provider.state.maybeWhen(
+          data: (data) => data,
+          orElse: () => [],
+        ),
+        [updatedBooking, ...bookings.skip(1)],
+      );
+    });
+
+    test('updateBooking handles error', () async {
+      when(
+        () => mockRepository.bookingBookingsBookingIdPatch(
+          bookingId: any(named: 'bookingId'),
+          body: any(named: 'body'),
+        ),
+      ).thenThrow(Exception('Failed to update booking'));
+
+      final result = await provider.updateBooking(updatedBooking);
+
+      expect(result, false);
+    });
+
+    test('deleteBooking removes a booking from the list', () async {
+      when(() => mockRepository.bookingBookingsUsersMeGet()).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          bookings,
+        ),
+      );
+      when(
+        () => mockRepository.bookingBookingsBookingIdDelete(
+          bookingId: any(named: 'bookingId'),
+        ),
+      ).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          null,
+        ),
+      );
+
+      await provider.loadUserBookings();
+      final result = await provider.deleteBooking(bookings.first.id);
+
+      expect(result, true);
+      expect(
+        provider.state.maybeWhen(
+          data: (data) => data,
+          orElse: () => [],
+        ),
+        bookings.skip(1).toList(),
+      );
+    });
+
+    test('deleteBooking handles error', () async {
+      when(
+        () => mockRepository.bookingBookingsBookingIdDelete(
+          bookingId: bookings.first.id,
+        ),
+      ).thenThrow(Exception('Failed to delete booking'));
+
+      final result = await provider.deleteBooking(bookings.first.id);
+
+      expect(result, false);
     });
   });
 }

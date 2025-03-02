@@ -2,128 +2,200 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:chopper/chopper.dart' as chopper;
+import 'package:http/http.dart' as http;
 
-class MockStatusRepository extends Mock implements StatusRepository {}
+class MockStatusRepository extends Mock implements Openapi {}
 
 void main() {
   group('StatusNotifier', () {
-    late StatusRepository statusRepository;
-    late StatusNotifier statusNotifier;
+    late MockStatusRepository mockRepository;
+    late StatusNotifier provider;
+    final status = VoteStatus.fromJson({}).copyWith(status: StatusType.open);
 
     setUp(() {
-      statusRepository = MockStatusRepository();
-      statusNotifier = StatusNotifier(statusRepository: statusRepository);
+      mockRepository = MockStatusRepository();
+      provider = StatusNotifier(statusRepository: mockRepository);
     });
 
-    test('initial state is loading', () {
-      expect(statusNotifier.state, isA<AsyncValue<Status>>());
-    });
+    test('loadStatus returns expected data', () async {
+      when(() => mockRepository.campaignStatusGet()).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          status,
+        ),
+      );
 
-    test('loadStatus returns status from repository', () async {
-      const status = Status.waiting;
-      when(() => statusRepository.getStatus()).thenAnswer((_) async => status);
-
-      final result = await statusNotifier.loadStatus();
+      final result = await provider.loadStatus();
 
       expect(
-        result.when(
+        result.maybeWhen(
           data: (data) => data,
-          loading: () => Status.waiting,
-          error: (_, __) => Status.waiting,
+          orElse: () => null,
         ),
         status,
       );
     });
 
-    test('openVote updates state to open if successful', () async {
-      when(() => statusRepository.openVote()).thenAnswer((_) async => true);
+    test('loadStatus handles error', () async {
+      when(() => mockRepository.campaignStatusGet())
+          .thenThrow(Exception('Failed to load status'));
 
-      final result = await statusNotifier.openVote();
+      final result = await provider.loadStatus();
 
-      expect(result, true);
-      expect(statusNotifier.state, const AsyncData(Status.open));
+      expect(
+        result.maybeWhen(
+          error: (error, _) => error,
+          orElse: () => null,
+        ),
+        isA<Exception>(),
+      );
     });
 
-    test('openVote does not update state if unsuccessful', () async {
-      when(() => statusRepository.openVote()).thenAnswer((_) async => false);
+    test('openVote updates state to open if successful', () async {
+      when(() => mockRepository.campaignStatusOpenPost()).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          null,
+        ),
+      );
 
-      final result = await statusNotifier.openVote();
+      final result = await provider.openVote();
+
+      expect(result, true);
+      expect(
+        provider.state.maybeWhen(
+          data: (data) => data.status,
+          orElse: () => null,
+        ),
+        StatusType.open,
+      );
+    });
+
+    test('openVote handles error', () async {
+      when(() => mockRepository.campaignStatusOpenPost())
+          .thenThrow(Exception('Failed to open vote'));
+
+      final result = await provider.openVote();
 
       expect(result, false);
-      expect(statusNotifier.state, isA<AsyncValue<Status>>());
     });
 
     test('closeVote updates state to closed if successful', () async {
-      when(() => statusRepository.closeVote()).thenAnswer((_) async => true);
+      when(() => mockRepository.campaignStatusClosePost()).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          null,
+        ),
+      );
 
-      final result = await statusNotifier.closeVote();
+      final result = await provider.closeVote();
 
       expect(result, true);
-      expect(statusNotifier.state, const AsyncData(Status.closed));
+      expect(
+        provider.state.maybeWhen(
+          data: (data) => data.status,
+          orElse: () => null,
+        ),
+        StatusType.closed,
+      );
     });
 
-    test('closeVote does not update state if unsuccessful', () async {
-      when(() => statusRepository.closeVote()).thenAnswer((_) async => false);
+    test('closeVote handles error', () async {
+      when(() => mockRepository.campaignStatusClosePost())
+          .thenThrow(Exception('Failed to close vote'));
 
-      final result = await statusNotifier.closeVote();
+      final result = await provider.closeVote();
 
       expect(result, false);
-      expect(statusNotifier.state, isA<AsyncValue<Status>>());
     });
 
     test('countVote updates state to counting if successful', () async {
-      when(() => statusRepository.countVote()).thenAnswer((_) async => true);
+      when(() => mockRepository.campaignStatusCountingPost()).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          null,
+        ),
+      );
 
-      final result = await statusNotifier.countVote();
+      final result = await provider.countVote();
 
       expect(result, true);
-      expect(statusNotifier.state, const AsyncData(Status.counting));
+      expect(
+        provider.state.maybeWhen(
+          data: (data) => data.status,
+          orElse: () => null,
+        ),
+        StatusType.counting,
+      );
     });
 
-    test('countVote does not update state if unsuccessful', () async {
-      when(() => statusRepository.countVote()).thenAnswer((_) async => false);
+    test('countVote handles error', () async {
+      when(() => mockRepository.campaignStatusCountingPost())
+          .thenThrow(Exception('Failed to count vote'));
 
-      final result = await statusNotifier.countVote();
+      final result = await provider.countVote();
 
       expect(result, false);
-      expect(statusNotifier.state, isA<AsyncValue<Status>>());
     });
 
     test('resetVote updates state to waiting if successful', () async {
-      when(() => statusRepository.resetVote()).thenAnswer((_) async => true);
+      when(() => mockRepository.campaignStatusResetPost()).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          null,
+        ),
+      );
 
-      final result = await statusNotifier.resetVote();
+      final result = await provider.resetVote();
 
       expect(result, true);
-      expect(statusNotifier.state, const AsyncData(Status.waiting));
+      expect(
+        provider.state.maybeWhen(
+          data: (data) => data.status,
+          orElse: () => null,
+        ),
+        StatusType.waiting,
+      );
     });
 
-    test('resetVote does not update state if unsuccessful', () async {
-      when(() => statusRepository.resetVote()).thenAnswer((_) async => false);
+    test('resetVote handles error', () async {
+      when(() => mockRepository.campaignStatusResetPost())
+          .thenThrow(Exception('Failed to reset vote'));
 
-      final result = await statusNotifier.resetVote();
+      final result = await provider.resetVote();
 
       expect(result, false);
-      expect(statusNotifier.state, isA<AsyncValue<Status>>());
     });
 
     test('publishVote updates state to published if successful', () async {
-      when(() => statusRepository.publishVote()).thenAnswer((_) async => true);
+      when(() => mockRepository.campaignStatusPublishedPost()).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          null,
+        ),
+      );
 
-      final result = await statusNotifier.publishVote();
+      final result = await provider.publishVote();
 
       expect(result, true);
-      expect(statusNotifier.state, const AsyncData(Status.published));
+      expect(
+        provider.state.maybeWhen(
+          data: (data) => data.status,
+          orElse: () => null,
+        ),
+        StatusType.published,
+      );
     });
 
-    test('publishVote does not update state if unsuccessful', () async {
-      when(() => statusRepository.publishVote()).thenAnswer((_) async => false);
+    test('publishVote handles error', () async {
+      when(() => mockRepository.campaignStatusPublishedPost())
+          .thenThrow(Exception('Failed to publish vote'));
 
-      final result = await statusNotifier.publishVote();
+      final result = await provider.publishVote();
 
       expect(result, false);
-      expect(statusNotifier.state, isA<AsyncValue<Status>>());
     });
   });
 }

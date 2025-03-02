@@ -1,126 +1,246 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/loan/class/item.dart';
+import 'package:myecl/loan/adapters/item.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
-import 'package:myecl/loan/repositories/item_repository.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:chopper/chopper.dart' as chopper;
+import 'package:http/http.dart' as http;
 
-class MockItemRepository extends Mock implements ItemRepository {}
+class MockItemRepository extends Mock implements Openapi {}
 
 void main() {
   group('ItemListNotifier', () {
-    late ItemRepository itemRepository;
-    late ItemListNotifier itemListNotifier;
+    late MockItemRepository mockRepository;
+    late ItemListNotifier provider;
+    final items = [
+      Item.fromJson({}).copyWith(id: '1'),
+      Item.fromJson({}).copyWith(id: '2'),
+    ];
+    final newItem = Item.fromJson({}).copyWith(id: '3');
+    final updatedItem = items.first.copyWith(name: 'Updated Item');
 
     setUp(() {
-      itemRepository = MockItemRepository();
-      itemListNotifier = ItemListNotifier(itemrepository: itemRepository);
+      mockRepository = MockItemRepository();
+      provider = ItemListNotifier(itemRepository: mockRepository);
     });
 
-    test('loadItemList should return data when successful', () async {
-      const loanerId = '123';
-      final items = [
-        Item.empty().copyWith(id: '1', name: 'item1'),
-        Item.empty().copyWith(id: '2', name: 'item2'),
-      ];
-      when(() => itemRepository.getItemList(loanerId))
-          .thenAnswer((_) async => items);
+    test('loadItemList returns expected data', () async {
+      when(
+        () => mockRepository.loansLoanersLoanerIdItemsGet(
+          loanerId: any(named: 'loanerId'),
+        ),
+      ).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          items,
+        ),
+      );
 
-      final result = await itemListNotifier.loadItemList(loanerId);
+      final result = await provider.loadItemList('123');
 
       expect(
-        result.when(
-          data: (d) => d,
-          error: (e, s) => throw e,
-          loading: () => throw Exception('loading'),
+        result.maybeWhen(
+          data: (data) => data,
+          orElse: () => [],
         ),
         items,
       );
     });
 
-    test('addItem should return true when successful', () async {
-      const loanerId = '123';
-      final items = [
-        Item.empty().copyWith(id: '1', name: 'item1'),
-        Item.empty().copyWith(id: '2', name: 'item2'),
-      ];
-      final item = Item.empty().copyWith(id: '1', name: 'item1');
-      when(() => itemRepository.createItem(loanerId, item))
-          .thenAnswer((_) async => item);
-      itemListNotifier.state = AsyncValue.data(items);
+    test('loadItemList handles error', () async {
+      when(
+        () => mockRepository.loansLoanersLoanerIdItemsGet(
+          loanerId: any(named: 'loanerId'),
+        ),
+      ).thenThrow(Exception('Failed to load items'));
 
-      final result = await itemListNotifier.addItem(item, loanerId);
-
-      expect(result, true);
-    });
-
-    test('updateItem should return true when successful', () async {
-      const loanerId = '123';
-      final items = [
-        Item.empty().copyWith(id: '1', name: 'item1'),
-        Item.empty().copyWith(id: '2', name: 'item2'),
-      ];
-      final item = Item.empty().copyWith(id: '1', name: 'item1');
-      when(() => itemRepository.updateItem(loanerId, item))
-          .thenAnswer((_) async => true);
-      itemListNotifier.state = AsyncValue.data(items);
-
-      final result = await itemListNotifier.updateItem(item, loanerId);
-
-      expect(result, true);
-    });
-
-    test('deleteItem should return true when successful', () async {
-      const loanerId = '123';
-      final items = [
-        Item.empty().copyWith(id: '1', name: 'item1'),
-        Item.empty().copyWith(id: '2', name: 'item2'),
-      ];
-      final item = Item.empty().copyWith(id: '1', name: 'item1');
-      when(() => itemRepository.deleteItem(loanerId, item.id))
-          .thenAnswer((_) async => true);
-      itemListNotifier.state = AsyncValue.data(items);
-
-      final result = await itemListNotifier.deleteItem(item, loanerId);
-
-      expect(result, true);
-    });
-
-    test('copy should return a copy of the current state', () async {
-      final items = [
-        Item.empty().copyWith(id: '1', name: 'item1'),
-        Item.empty().copyWith(id: '2', name: 'item2'),
-      ];
-      itemListNotifier.state = AsyncValue.data(items);
-
-      final result = await itemListNotifier.copy();
+      final result = await provider.loadItemList('123');
 
       expect(
-        result.when(
-          data: (d) => d,
-          error: (e, s) => throw e,
-          loading: () => throw Exception('loading'),
+        result.maybeWhen(
+          error: (error, _) => error,
+          orElse: () => null,
         ),
-        items,
+        isA<Exception>(),
       );
     });
 
-    test('copy should return a copy of the current state when error', () async {
-      final error = Exception('error');
-      itemListNotifier.state = AsyncValue.error(error, StackTrace.empty);
+    test('addItem adds an item to the list', () async {
+      when(
+        () => mockRepository.loansLoanersLoanerIdItemsGet(
+          loanerId: any(named: 'loanerId'),
+        ),
+      ).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          items,
+        ),
+      );
+      when(
+        () => mockRepository.loansLoanersLoanerIdItemsPost(
+          loanerId: any(named: 'loanerId'),
+          body: any(named: 'body'),
+        ),
+      ).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          newItem,
+        ),
+      );
 
-      final result = await itemListNotifier.copy();
+      await provider.loadItemList('123');
+      final result = await provider.addItem(newItem.toItemBase(), '123');
 
-      expect(result.error, error);
+      expect(result, true);
+      expect(
+        provider.state.maybeWhen(
+          data: (data) => data,
+          orElse: () => [],
+        ),
+        [...items, newItem],
+      );
     });
 
-    test('copy should return a copy of the current state when loading',
-        () async {
-      itemListNotifier.state = const AsyncValue.loading();
+    test('addItem handles error', () async {
+      when(
+        () => mockRepository.loansLoanersLoanerIdItemsPost(
+          loanerId: any(named: 'loanerId'),
+          body: any(named: 'body'),
+        ),
+      ).thenThrow(Exception('Failed to add item'));
 
-      final result = await itemListNotifier.copy();
+      final result = await provider.addItem(newItem.toItemBase(), '123');
 
-      expect(result.isLoading, true);
+      expect(result, false);
+    });
+
+    test('updateItem updates an item in the list', () async {
+      when(
+        () => mockRepository.loansLoanersLoanerIdItemsGet(
+          loanerId: any(named: 'loanerId'),
+        ),
+      ).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          items,
+        ),
+      );
+      when(
+        () => mockRepository.loansLoanersLoanerIdItemsItemIdPatch(
+          loanerId: any(named: 'loanerId'),
+          itemId: any(named: 'itemId'),
+          body: any(named: 'body'),
+        ),
+      ).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          updatedItem,
+        ),
+      );
+
+      await provider.loadItemList('123');
+      final result = await provider.updateItem(updatedItem, '123');
+
+      expect(result, true);
+      expect(
+        provider.state.maybeWhen(
+          data: (data) => data,
+          orElse: () => [],
+        ),
+        [updatedItem, ...items.skip(1)],
+      );
+    });
+
+    test('updateItem handles error', () async {
+      when(
+        () => mockRepository.loansLoanersLoanerIdItemsItemIdPatch(
+          loanerId: any(named: 'loanerId'),
+          itemId: any(named: 'itemId'),
+          body: any(named: 'body'),
+        ),
+      ).thenThrow(Exception('Failed to update item'));
+
+      final result = await provider.updateItem(updatedItem, '123');
+
+      expect(result, false);
+    });
+
+    test('deleteItem removes an item from the list', () async {
+      when(
+        () => mockRepository.loansLoanersLoanerIdItemsGet(
+          loanerId: any(named: 'loanerId'),
+        ),
+      ).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          items,
+        ),
+      );
+      when(
+        () => mockRepository.loansLoanersLoanerIdItemsItemIdDelete(
+          loanerId: any(named: 'loanerId'),
+          itemId: any(named: 'itemId'),
+        ),
+      ).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          null,
+        ),
+      );
+
+      await provider.loadItemList('123');
+      final result = await provider.deleteItem(items.first.id, '123');
+
+      expect(result, true);
+      expect(
+        provider.state.maybeWhen(
+          data: (data) => data,
+          orElse: () => [],
+        ),
+        items.skip(1).toList(),
+      );
+    });
+
+    test('deleteItem handles error', () async {
+      when(
+        () => mockRepository.loansLoanersLoanerIdItemsItemIdDelete(
+          loanerId: any(named: 'loanerId'),
+          itemId: items.first.id,
+        ),
+      ).thenThrow(Exception('Failed to delete item'));
+
+      final result = await provider.deleteItem(items.first.id, '123');
+
+      expect(result, false);
+    });
+
+    test('filterItems filters items based on query', () async {
+      provider.state = AsyncValue.data(items);
+
+      final result = await provider.filterItems('1');
+
+      expect(
+        result.maybeWhen(
+          data: (data) => data,
+          orElse: () => [],
+        ),
+        [items.first],
+      );
+    });
+
+    test('copy returns a copy of the current state', () async {
+      provider.state = AsyncValue.data(items);
+
+      final result = await provider.copy();
+
+      expect(
+        result.maybeWhen(
+          data: (data) => data,
+          orElse: () => [],
+        ),
+        items,
+      );
     });
   });
 }

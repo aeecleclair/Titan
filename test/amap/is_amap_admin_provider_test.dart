@@ -1,8 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/amap/providers/is_amap_admin_provider.dart';
-import 'package:myecl/user/class/user.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 void main() {
@@ -11,13 +10,14 @@ void main() {
       final container = ProviderContainer(
         overrides: [
           userProvider.overrideWithValue(
-            User.empty().copyWith(
+            CoreUser.fromJson({}).copyWith(
               groups: [
-                SimpleGroup.empty().copyWith(
+                CoreGroupSimple.fromJson({}).copyWith(
                   id: '70db65ee-d533-4f6b-9ffa-a4d70a17b7ef',
                   name: 'Amap Admin',
                 ),
-                SimpleGroup.empty().copyWith(id: '123', name: 'Some Group'),
+                CoreGroupSimple.fromJson({})
+                    .copyWith(id: '123', name: 'Some Group'),
               ],
             ),
           ),
@@ -33,9 +33,10 @@ void main() {
       final container = ProviderContainer(
         overrides: [
           userProvider.overrideWithValue(
-            User.empty().copyWith(
+            CoreUser.fromJson({}).copyWith(
               groups: [
-                SimpleGroup.empty().copyWith(id: '123', name: 'Some Group'),
+                CoreGroupSimple.fromJson({})
+                    .copyWith(id: '123', name: 'Some Group'),
               ],
             ),
           ),

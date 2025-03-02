@@ -1,16 +1,30 @@
+import 'package:chopper/chopper.dart' as chopper;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 import 'package:myecl/amap/providers/user_amount_provider.dart';
-import 'package:myecl/generated/openapi.models.swagger.dart';
-import 'package:myecl/amap/class/cash.dart';
-import 'package:myecl/amap/repositories/amap_user_repository.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 
-class MockAmapUserRepository extends Mock implements AmapUserRepository {}
+class MockAmapUserRepository extends Mock implements Openapi {}
 
 void main() {
   late MockAmapUserRepository mockRepository;
   late UserCashNotifier notifier;
+
+  final user = CoreUserSimple(
+    id: '123',
+    name: 'name',
+    firstname: 'firstname',
+    nickname: null,
+    accountType: AccountType.$external,
+    schoolId: 'schoolId',
+  );
+  final cash = CashComplete(
+    balance: 100.0,
+    userId: '123',
+    user: user,
+  );
 
   setUp(() {
     mockRepository = MockAmapUserRepository();
@@ -19,10 +33,10 @@ void main() {
 
   group('loadCashByUser', () {
     test('returns cash for valid user id', () async {
-      final user = CoreUserSimple.empty().copyWith(id: '123');
-      final cash = Cash(balance: 100.0, user: user);
-      when(() => mockRepository.getCashByUser('123'))
-          .thenAnswer((_) async => cash);
+      when(() => mockRepository.amapUsersUserIdCashGet(userId: '123'))
+          .thenAnswer(
+        (_) async => chopper.Response(http.Response('[]', 200), cash),
+      );
 
       final result = await notifier.loadCashByUser(user.id);
 
@@ -34,23 +48,25 @@ void main() {
         ),
         equals(100.0),
       );
-      verify(() => mockRepository.getCashByUser('123')).called(1);
+      verify(() => mockRepository.amapUsersUserIdCashGet(userId: '123'))
+          .called(1);
     });
 
     test('returns error for invalid user id', () async {
       const error = 'User not found';
-      when(() => mockRepository.getCashByUser('123')).thenThrow(error);
+      when(() => mockRepository.amapUsersUserIdCashGet(userId: '123'))
+          .thenThrow(Exception(error));
 
       final result = await notifier.loadCashByUser('123');
 
-      expect(result.error, equals(error));
-      verify(() => mockRepository.getCashByUser('123')).called(1);
+      expect(result, isA<AsyncError>());
+      verify(() => mockRepository.amapUsersUserIdCashGet(userId: '123'))
+          .called(1);
     });
   });
 
   group('updateCash', () {
     test('updates cash balance', () async {
-      final cash = Cash(balance: 100.0, user: CoreUserSimple.empty());
       notifier.state = AsyncValue.data(cash);
 
       await notifier.updateCash(50.0);
@@ -72,7 +88,7 @@ void main() {
 
       expect(
         notifier.state,
-        const AsyncValue<Cash>.error(
+        const AsyncValue<CashComplete>.error(
           "Cannot update cash while loading",
           StackTrace.empty,
         ),

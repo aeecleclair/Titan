@@ -1,48 +1,62 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_provider.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
 void main() {
   group('EventNotifier', () {
-    test('should set the event', () {
-      final eventNotifier = EventNotifier();
-      final event = Event.empty().copyWith(
-        id: '1',
-        description: 'This is a test event',
-      );
+    late ProviderContainer container;
+    late EventNotifier notifier;
+    final event = EventReturn(
+      id: '1',
+      name: 'Test Event',
+      organizer: 'Organizer',
+      start: DateTime.now(),
+      end: DateTime.now().add(Duration(hours: 2)),
+      allDay: false,
+      location: 'Location',
+      type: CalendarEventType.eventAe,
+      description: 'Description',
+      applicantId: '123',
+      decision: Decision.approved,
+      applicant: EventApplicant(
+        id: '123',
+        name: 'Applicant',
+        firstname: 'First',
+        email: 'applicant@example.com',
+        accountType: AccountType.$external,
+        schoolId: 'school123',
+      ),
+    );
 
-      eventNotifier.setEvent(event);
-
-      expect(eventNotifier.state, equals(event));
+    setUp(() {
+      container = ProviderContainer();
+      notifier = container.read(eventProvider.notifier);
     });
-  });
 
-  group('eventProvider', () {
-    test('should return an instance of EventNotifier', () {
-      final container = ProviderContainer();
-      final eventNotifier = container.read(eventProvider.notifier);
+    test('setEvent should update state', () {
+      notifier.setEvent(event);
 
-      expect(eventNotifier, isInstanceOf<EventNotifier>());
+      expect(container.read(eventProvider).id, equals('1'));
+      expect(container.read(eventProvider).name, equals('Test Event'));
+      expect(container.read(eventProvider).location, equals('Location'));
     });
 
-    test('should return an empty event by default', () {
-      final container = ProviderContainer();
-      final event = container.read(eventProvider);
+    test('resetEvent should reset state', () {
+      notifier.setEvent(event);
+      notifier.setEvent(EventReturn.fromJson({}));
 
-      expect(event, isA<Event>());
+      expect(container.read(eventProvider).id, equals(''));
+      expect(container.read(eventProvider).name, equals(''));
+      expect(container.read(eventProvider).location, equals(''));
     });
 
-    test('should set the event', () {
-      final container = ProviderContainer();
-      final event = Event.empty().copyWith(
-        id: '1',
-        description: 'This is a test event',
-      );
+    test('setRoom should update location', () {
+      notifier.setEvent(event);
+      notifier.setRoom('New Location');
 
-      container.read(eventProvider.notifier).setEvent(event);
-
-      expect(container.read(eventProvider), equals(event));
+      expect(container.read(eventProvider).location, equals('New Location'));
     });
   });
 }

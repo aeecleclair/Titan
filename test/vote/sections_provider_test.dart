@@ -1,70 +1,142 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/vote/class/section.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
-import 'package:myecl/vote/repositories/section_repository.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:chopper/chopper.dart' as chopper;
+import 'package:http/http.dart' as http;
 
-class MockSectionRepository extends Mock implements SectionRepository {}
+class MockSectionRepository extends Mock implements Openapi {}
 
 void main() {
   group('SectionNotifier', () {
-    late SectionRepository sectionRepository;
-    late SectionNotifier sectionNotifier;
+    late MockSectionRepository mockRepository;
+    late SectionNotifier provider;
+    final sections = [
+      SectionComplete.fromJson({}).copyWith(id: '1'),
+      SectionComplete.fromJson({}).copyWith(id: '2'),
+    ];
+    final newSection = SectionComplete.fromJson({}).copyWith(id: '3');
+    final newSectionBase =
+        SectionBase(name: newSection.name, description: newSection.description);
 
     setUp(() {
-      sectionRepository = MockSectionRepository();
-      sectionNotifier = SectionNotifier(sectionRepository: sectionRepository);
+      mockRepository = MockSectionRepository();
+      provider = SectionNotifier(sectionRepository: mockRepository);
     });
 
-    test('loadSectionList should return AsyncValue<List<Section>>', () async {
-      final sections = [Section.empty().copyWith(id: '1', name: 'Section 1')];
-      when(() => sectionRepository.getSections())
-          .thenAnswer((_) async => sections);
+    test('loadSectionList returns expected data', () async {
+      when(() => mockRepository.campaignSectionsGet()).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          sections,
+        ),
+      );
 
-      final result = await sectionNotifier.loadSectionList();
+      final result = await provider.loadSectionList();
 
       expect(
-        result.when(
+        result.maybeWhen(
           data: (data) => data,
-          loading: () => [],
-          error: (_, __) => [],
+          orElse: () => [],
         ),
         sections,
       );
     });
 
-    test('addSection should return true', () async {
-      final section = Section.empty().copyWith(id: '1', name: 'Section 1');
-      when(() => sectionRepository.createSection(section))
-          .thenAnswer((_) async => section);
-      sectionNotifier.state = AsyncValue.data([section]);
+    test('loadSectionList handles error', () async {
+      when(() => mockRepository.campaignSectionsGet())
+          .thenThrow(Exception('Failed to load sections'));
 
-      final result = await sectionNotifier.addSection(section);
+      final result = await provider.loadSectionList();
 
-      expect(result, true);
+      expect(
+        result.maybeWhen(
+          error: (error, _) => error,
+          orElse: () => null,
+        ),
+        isA<Exception>(),
+      );
     });
 
-    test('updateSection should return true', () async {
-      final section = Section.empty().copyWith(id: '1', name: 'Section 1');
-      when(() => sectionRepository.updateSection(section))
-          .thenAnswer((_) async => true);
-      sectionNotifier.state = AsyncValue.data([section]);
+    test('addSection adds a section to the list', () async {
+      when(() => mockRepository.campaignSectionsGet()).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          sections,
+        ),
+      );
+      when(() => mockRepository.campaignSectionsPost(body: any(named: 'body')))
+          .thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          newSection,
+        ),
+      );
 
-      final result = await sectionNotifier.updateSection(section);
+      await provider.loadSectionList();
+      final result = await provider.addSection(newSectionBase);
 
       expect(result, true);
+      expect(
+        provider.state.maybeWhen(
+          data: (data) => data,
+          orElse: () => [],
+        ),
+        [...sections, newSection],
+      );
     });
 
-    test('deleteSection should return true', () async {
-      final section = Section.empty().copyWith(id: '1', name: 'Section 1');
-      when(() => sectionRepository.deleteSection(section.id))
-          .thenAnswer((_) async => true);
-      sectionNotifier.state = AsyncValue.data([section]);
+    test('addSection handles error', () async {
+      when(() => mockRepository.campaignSectionsPost(body: any(named: 'body')))
+          .thenThrow(Exception('Failed to add section'));
 
-      final result = await sectionNotifier.deleteSection(section);
+      final result = await provider.addSection(newSectionBase);
+
+      expect(result, false);
+    });
+
+    test('deleteSection removes a section from the list', () async {
+      when(() => mockRepository.campaignSectionsGet()).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          sections,
+        ),
+      );
+      when(
+        () => mockRepository.campaignSectionsSectionIdDelete(
+          sectionId: any(named: 'sectionId'),
+        ),
+      ).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          null,
+        ),
+      );
+
+      await provider.loadSectionList();
+      final result = await provider.deleteSection(sections.first.id);
 
       expect(result, true);
+      expect(
+        provider.state.maybeWhen(
+          data: (data) => data,
+          orElse: () => [],
+        ),
+        sections.skip(1).toList(),
+      );
+    });
+
+    test('deleteSection handles error', () async {
+      when(
+        () => mockRepository.campaignSectionsSectionIdDelete(
+          sectionId: sections.first.id,
+        ),
+      ).thenThrow(Exception('Failed to delete section'));
+
+      final result = await provider.deleteSection(sections.first.id);
+
+      expect(result, false);
     });
   });
 }
