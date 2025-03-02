@@ -24,20 +24,22 @@ class AssociationMemberListNotifier extends ListNotifierAPI<MemberComplete> {
     );
   }
 
-  Future<bool> addMember(MemberComplete member,
-      AppModulesPhonebookSchemasPhonebookMembershipBase membership) async {
-    return await add(
-      () async {
-        final response = await associationMemberRepository
-            .phonebookAssociationsMembershipsPost(body: membership);
-        if (response.isSuccessful && response.body != null) {
-          member.memberships.add(response.body!);
-          return response;
-        }
-        throw Exception('Failed to add membership');
-      },
-      member,
-    );
+  Future<bool> addMember(
+    MemberComplete member,
+    AppModulesPhonebookSchemasPhonebookMembershipBase membership,
+  ) async {
+    return await handleState((d) async {
+      final response = await associationMemberRepository
+          .phonebookAssociationsMembershipsPost(body: membership);
+      final data = response.body;
+      if (response.isSuccessful && data != null) {
+        d.add(member);
+        state = AsyncValue.data(d);
+        return true;
+      } else {
+        throw response.error!;
+      }
+    }, "Cannot add while loading");
   }
 
   Future<bool> updateMember(
