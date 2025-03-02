@@ -140,7 +140,7 @@ class ProductUiInList extends ConsumerWidget {
                   }
                 },
               ),
-              const SizedBox(width: 20)
+              const SizedBox(width: 20),
             ],
           ),
         ],

@@ -15,7 +15,9 @@ class VoterListNotifier extends ListNotifierAPI<VoterGroup> {
 
   Future<bool> addVoter(VoterGroup voter) async {
     return await add(
-        () => voterRepository.campaignVotersPost(body: voter), voter);
+      () => voterRepository.campaignVotersPost(body: voter),
+      voter,
+    );
   }
 
   Future<bool> deleteVoter(String groupId) async {

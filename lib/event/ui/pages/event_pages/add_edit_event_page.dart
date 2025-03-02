@@ -10,7 +10,6 @@ import 'package:myecl/event/providers/selected_days_provider.dart';
 import 'package:myecl/event/providers/user_event_list_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
-import 'package:myecl/generated/openapi.enums.swagger.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -41,7 +40,8 @@ class AddEditEventPage extends HookConsumerWidget {
     final rooms = ref.watch(roomListProvider);
     final isEdit = event.id != EventReturn.fromJson({}).id;
     final key = GlobalKey<FormState>();
-    final eventListNotifier = ref.watch(eventEventListProvider(user.id).notifier);
+    final eventListNotifier =
+        ref.watch(eventEventListProvider(user.id).notifier);
     final eventType = useState(event.type);
     final name = useTextEditingController(text: event.name);
     final organizer = useTextEditingController(text: event.organizer);

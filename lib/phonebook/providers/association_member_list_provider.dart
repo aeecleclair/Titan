@@ -28,18 +28,21 @@ class AssociationMemberListNotifier extends ListNotifierAPI<MemberComplete> {
     MemberComplete member,
     AppModulesPhonebookSchemasPhonebookMembershipBase membership,
   ) async {
-    return await handleState((d) async {
-      final response = await associationMemberRepository
-          .phonebookAssociationsMembershipsPost(body: membership);
-      final data = response.body;
-      if (response.isSuccessful && data != null) {
-        d.add(member);
-        state = AsyncValue.data(d);
-        return true;
-      } else {
-        throw response.error!;
-      }
-    }, "Cannot add while loading");
+    return await handleState(
+      (d) async {
+        final response = await associationMemberRepository
+            .phonebookAssociationsMembershipsPost(body: membership);
+        final data = response.body;
+        if (response.isSuccessful && data != null) {
+          d.add(member);
+          state = AsyncValue.data(d);
+          return true;
+        } else {
+          throw response.error!;
+        }
+      },
+      "Cannot add while loading",
+    );
   }
 
   Future<bool> updateMember(
@@ -49,7 +52,9 @@ class AssociationMemberListNotifier extends ListNotifierAPI<MemberComplete> {
     return await update(
       () => associationMemberRepository
           .phonebookAssociationsMembershipsMembershipIdPatch(
-              membershipId: membership.id, body: membership.toMembershipEdit()),
+        membershipId: membership.id,
+        body: membership.toMembershipEdit(),
+      ),
       (member) => member.id,
       member,
     );
@@ -64,10 +69,9 @@ class AssociationMemberListNotifier extends ListNotifierAPI<MemberComplete> {
     return await update(
       () => associationMemberRepository
           .phonebookAssociationsMembershipsMembershipIdPatch(
-              membershipId: membership.id,
-              body: membership
-                  .copyWith(memberOrder: newIndex)
-                  .toMembershipEdit()),
+        membershipId: membership.id,
+        body: membership.copyWith(memberOrder: newIndex).toMembershipEdit(),
+      ),
       (member) => member.id,
       member,
     );
@@ -80,7 +84,8 @@ class AssociationMemberListNotifier extends ListNotifierAPI<MemberComplete> {
     return await delete(
       () => associationMemberRepository
           .phonebookAssociationsMembershipsMembershipIdDelete(
-              membershipId: membershipId),
+        membershipId: membershipId,
+      ),
       (m) => m.id,
       memberId,
     );
@@ -91,7 +96,8 @@ final associationMemberListProvider = StateNotifierProvider<
     AssociationMemberListNotifier, AsyncValue<List<MemberComplete>>>((ref) {
   final associationMemberRepository = ref.watch(repositoryProvider);
   AssociationMemberListNotifier provider = AssociationMemberListNotifier(
-      associationMemberRepository: associationMemberRepository);
+    associationMemberRepository: associationMemberRepository,
+  );
   tokenExpireWrapperAuth(ref, () async {
     final association = ref.watch(associationProvider);
 

@@ -125,9 +125,10 @@ class DeliveryUi extends HookConsumerWidget {
             margin: const EdgeInsets.only(top: 15, bottom: 5),
             padding: const EdgeInsets.symmetric(horizontal: 5),
             child: Row(
-              mainAxisAlignment: (delivery.status == DeliveryStatusType.creation)
-                  ? MainAxisAlignment.spaceBetween
-                  : MainAxisAlignment.center,
+              mainAxisAlignment:
+                  (delivery.status == DeliveryStatusType.creation)
+                      ? MainAxisAlignment.spaceBetween
+                      : MainAxisAlignment.center,
               children: [
                 if (delivery.status == DeliveryStatusType.creation)
                   GestureDetector(
@@ -139,8 +140,9 @@ class DeliveryUi extends HookConsumerWidget {
                             AmapRouter.addEditDelivery,
                       );
                       final deliveryProductsIds = delivery.products
-                          ?.map((e) => e.id)
-                          .toList(growable: false) ?? [];
+                              ?.map((e) => e.id)
+                              .toList(growable: false) ??
+                          [];
                       final products = ref.watch(productListProvider);
                       final selectedNotifier =
                           ref.watch(selectedListProvider.notifier);
@@ -216,19 +218,24 @@ class DeliveryUi extends HookConsumerWidget {
                     await showDialog(
                       context: context,
                       builder: ((context) => CustomDialogBox(
-                            title: delivery.status == DeliveryStatusType.creation
-                                ? AMAPTextConstants.openDelivery
-                                : delivery.status == DeliveryStatusType.orderable
-                                    ? AMAPTextConstants.lock
-                                    : delivery.status == DeliveryStatusType.locked
-                                        ? AMAPTextConstants.deliver
-                                        : AMAPTextConstants.archive,
+                            title:
+                                delivery.status == DeliveryStatusType.creation
+                                    ? AMAPTextConstants.openDelivery
+                                    : delivery.status ==
+                                            DeliveryStatusType.orderable
+                                        ? AMAPTextConstants.lock
+                                        : delivery.status ==
+                                                DeliveryStatusType.locked
+                                            ? AMAPTextConstants.deliver
+                                            : AMAPTextConstants.archive,
                             descriptions: delivery.status ==
                                     DeliveryStatusType.creation
                                 ? AMAPTextConstants.openningDelivery
-                                : delivery.status == DeliveryStatusType.orderable
+                                : delivery.status ==
+                                        DeliveryStatusType.orderable
                                     ? AMAPTextConstants.lockingDelivery
-                                    : delivery.status == DeliveryStatusType.locked
+                                    : delivery.status ==
+                                            DeliveryStatusType.locked
                                         ? AMAPTextConstants.deliveringDelivery
                                         : AMAPTextConstants.archivingDelivery,
                             onYes: () async {
@@ -294,7 +301,8 @@ class DeliveryUi extends HookConsumerWidget {
                                       );
                                     }
                                     break;
-                                  case DeliveryStatusType.swaggerGeneratedUnknown:
+                                  case DeliveryStatusType
+                                        .swaggerGeneratedUnknown:
                                     break;
                                   case DeliveryStatusType.archived:
                                     break;
@@ -312,25 +320,27 @@ class DeliveryUi extends HookConsumerWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       gradient: LinearGradient(
-                        colors: !(delivery.status == DeliveryStatusType.creation)
-                            ? [
-                                AMAPColorConstants.redGradient1,
-                                AMAPColorConstants.redGradient2,
-                              ]
-                            : [
-                                AMAPColorConstants.greenGradient1,
-                                AMAPColorConstants.greenGradient2,
-                              ],
+                        colors:
+                            !(delivery.status == DeliveryStatusType.creation)
+                                ? [
+                                    AMAPColorConstants.redGradient1,
+                                    AMAPColorConstants.redGradient2,
+                                  ]
+                                : [
+                                    AMAPColorConstants.greenGradient1,
+                                    AMAPColorConstants.greenGradient2,
+                                  ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: !(delivery.status == DeliveryStatusType.creation)
-                              ? AMAPColorConstants.redGradient2
-                                  .withValues(alpha: 0.5)
-                              : AMAPColorConstants.greenGradient2
-                                  .withValues(alpha: 0.5),
+                          color:
+                              !(delivery.status == DeliveryStatusType.creation)
+                                  ? AMAPColorConstants.redGradient2
+                                      .withValues(alpha: 0.5)
+                                  : AMAPColorConstants.greenGradient2
+                                      .withValues(alpha: 0.5),
                           blurRadius: 10,
                           offset: const Offset(2, 3),
                         ),

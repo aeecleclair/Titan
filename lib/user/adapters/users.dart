@@ -34,12 +34,13 @@ extension $CoreUser on CoreUser {
 
   Applicant toApplicant() {
     return Applicant(
-        name: name,
-        firstname: firstname,
-        id: id,
-        accountType: accountType,
-        schoolId: schoolId,
-        email: email);
+      name: name,
+      firstname: firstname,
+      id: id,
+      accountType: accountType,
+      schoolId: schoolId,
+      email: email,
+    );
   }
 
   EventApplicant toEventApplicant() {
@@ -54,7 +55,6 @@ extension $CoreUser on CoreUser {
   }
 }
 
-
 extension $CoreUserSimple on CoreUserSimple {
   MemberComplete toMemberComplete() {
     return MemberComplete(
@@ -64,7 +64,7 @@ extension $CoreUserSimple on CoreUserSimple {
       accountType: accountType,
       schoolId: schoolId,
       email: "",
-      memberships: []
+      memberships: [],
     );
   }
 }

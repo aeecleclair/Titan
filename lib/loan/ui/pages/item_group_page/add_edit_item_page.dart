@@ -31,8 +31,9 @@ class AddEditItemPage extends HookConsumerWidget {
     final name = useTextEditingController(text: item.name);
     final quantity =
         useTextEditingController(text: item.totalQuantity.toString());
-    final caution =
-        useTextEditingController(text: isEdit ? item.suggestedCaution.toString() : '');
+    final caution = useTextEditingController(
+      text: isEdit ? item.suggestedCaution.toString() : '',
+    );
     final lendingDuration = useTextEditingController(
       text: isEdit ? item.suggestedLendingDuration.toString() : '',
     );

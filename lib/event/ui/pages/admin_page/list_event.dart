@@ -113,7 +113,8 @@ class ListEvent extends HookConsumerWidget {
                             )
                                 .then((value) {
                               if (value) {
-                                confirmedEventListNotifier.addEvent(e.toEventComplete());
+                                confirmedEventListNotifier
+                                    .addEvent(e.toEventComplete());
                               }
                             });
                           });
@@ -139,7 +140,8 @@ class ListEvent extends HookConsumerWidget {
                             )
                                 .then((value) {
                               if (value) {
-                                confirmedEventListNotifier.deleteEvent(e.toEventComplete());
+                                confirmedEventListNotifier
+                                    .deleteEvent(e.toEventComplete());
                               }
                             });
                           });

@@ -13,16 +13,19 @@ class TicketNotifier extends SingleNotifierAPI<Ticket> {
   }
 
   Future<AsyncValue<TicketSecret>> loadTicketSecret() async {
-    return state.maybeWhen(orElse: () async {
-      return AsyncValue.error('Ticket is not loaded', StackTrace.current);
-    }, data: (value) async {
-      final response = await ticketRepository
-          .cdrUsersMeTicketsTicketIdSecretGet(ticketId: value.id);
-      if (response.isSuccessful) {
-        return AsyncValue.data(response.body!);
-      }
-      return AsyncValue.error(response.error.toString(), StackTrace.current);
-    });
+    return state.maybeWhen(
+      orElse: () async {
+        return AsyncValue.error('Ticket is not loaded', StackTrace.current);
+      },
+      data: (value) async {
+        final response = await ticketRepository
+            .cdrUsersMeTicketsTicketIdSecretGet(ticketId: value.id);
+        if (response.isSuccessful) {
+          return AsyncValue.data(response.body!);
+        }
+        return AsyncValue.error(response.error.toString(), StackTrace.current);
+      },
+    );
   }
 }
 

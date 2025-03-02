@@ -23,7 +23,9 @@ class EditableAssociationCard extends HookConsumerWidget {
       margin: const EdgeInsets.symmetric(vertical: 5),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: (association.deactivated ?? false) ? Colors.grey[500] : Colors.white,
+        color: (association.deactivated ?? false)
+            ? Colors.grey[500]
+            : Colors.white,
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(

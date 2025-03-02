@@ -26,100 +26,115 @@ abstract class SingleNotifierAPI<T> extends StateNotifier<AsyncValue<T>> {
   }
 
   Future<bool> add(Future<Response<T>> Function(T t) f, T t) async {
-    return state.when(data: (d) async {
-      try {
-        final response = await f(t);
-        final data = response.body;
-        if (response.isSuccessful && data != null) {
-          state = AsyncValue.data(data);
-          return true;
-        } else {
-          throw response.error!;
+    return state.when(
+      data: (d) async {
+        try {
+          final response = await f(t);
+          final data = response.body;
+          if (response.isSuccessful && data != null) {
+            state = AsyncValue.data(data);
+            return true;
+          } else {
+            throw response.error!;
+          }
+        } catch (error) {
+          state = AsyncValue.data(d);
+          if (error is AppException && error.type == ErrorType.tokenExpire) {
+            rethrow;
+          } else {
+            return false;
+          }
         }
-      } catch (error) {
-        state = AsyncValue.data(d);
+      },
+      error: (error, s) {
         if (error is AppException && error.type == ErrorType.tokenExpire) {
-          rethrow;
+          throw error;
         } else {
+          state = AsyncValue.error(error, s);
           return false;
         }
-      }
-    }, error: (error, s) {
-      if (error is AppException && error.type == ErrorType.tokenExpire) {
-        throw error;
-      } else {
-        state = AsyncValue.error(error, s);
+      },
+      loading: () {
+        state = const AsyncValue.error(
+            "Cannot add while loading", StackTrace.empty);
         return false;
-      }
-    }, loading: () {
-      state =
-          const AsyncValue.error("Cannot add while loading", StackTrace.empty);
-      return false;
-    });
+      },
+    );
   }
 
   Future<bool> update(Future<Response<dynamic>> Function() f, T t) async {
-    return state.when(data: (d) async {
-      try {
-        final response = await f();
-        if (response.isSuccessful) {
-          state = AsyncValue.data(t);
-          return true;
-        } else {
-          throw response.error!;
+    return state.when(
+      data: (d) async {
+        try {
+          final response = await f();
+          if (response.isSuccessful) {
+            state = AsyncValue.data(t);
+            return true;
+          } else {
+            throw response.error!;
+          }
+        } catch (error) {
+          state = AsyncValue.data(d);
+          if (error is AppException && error.type == ErrorType.tokenExpire) {
+            rethrow;
+          } else {
+            return false;
+          }
         }
-      } catch (error) {
-        state = AsyncValue.data(d);
+      },
+      error: (error, s) {
         if (error is AppException && error.type == ErrorType.tokenExpire) {
-          rethrow;
+          throw error;
         } else {
+          state = AsyncValue.error(error, s);
           return false;
         }
-      }
-    }, error: (error, s) {
-      if (error is AppException && error.type == ErrorType.tokenExpire) {
-        throw error;
-      } else {
-        state = AsyncValue.error(error, s);
+      },
+      loading: () {
+        state = const AsyncValue.error(
+          "Cannot update while loading",
+          StackTrace.empty,
+        );
         return false;
-      }
-    }, loading: () {
-      state = const AsyncValue.error(
-          "Cannot update while loading", StackTrace.empty);
-      return false;
-    });
+      },
+    );
   }
 
-  Future<bool> delete(
-      Future<Response<dynamic>> Function() f) async {
-    return state.when(data: (d) async {
-      try {
-        final response = await f();
-        if (response.isSuccessful) {
-          state = const AsyncValue.loading();
-          return true;
-        } else {
-          throw response.error!;
+  Future<bool> delete(Future<Response<dynamic>> Function() f) async {
+    return state.when(
+      data: (d) async {
+        try {
+          final response = await f();
+          if (response.isSuccessful) {
+            state = const AsyncValue.loading();
+            return true;
+          } else {
+            throw response.error!;
+          }
+        } catch (error) {
+          state = AsyncValue.data(d);
+          if (error is AppException && error.type == ErrorType.tokenExpire) {
+            rethrow;
+          } else {
+            return false;
+          }
         }
-      } catch (error) {
-        state = AsyncValue.data(d);
+      },
+      error: (error, s) {
         if (error is AppException && error.type == ErrorType.tokenExpire) {
-          rethrow;
+          throw error;
         } else {
+          state = AsyncValue.error(error, s);
           return false;
         }
-      }
-    }, error: (error, s) {
-      if (error is AppException && error.type == ErrorType.tokenExpire) {
-        throw error;
-      } else {
-        state = AsyncValue.error(error, s);
+      },
+      loading: () {
+        state = const AsyncValue.error(
+          "Cannot delete while loading",
+          StackTrace.empty,
+        );
         return false;
-      }
-    }, loading: () {
-      state = const AsyncValue.error(
-          "Cannot delete while loading", StackTrace.empty);
-      return false;
-    });
+      },
+    );
   }
 }

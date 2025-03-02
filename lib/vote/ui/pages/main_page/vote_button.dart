@@ -19,8 +19,7 @@ class VoteButton extends HookConsumerWidget {
     final section = ref.watch(sectionProvider);
     final votesNotifier = ref.watch(votesProvider.notifier);
     final selectedList = ref.watch(selectedListProvider);
-    final selectedListNotifier =
-        ref.watch(selectedListProvider.notifier);
+    final selectedListNotifier = ref.watch(selectedListProvider.notifier);
     final votedSectionNotifier = ref.watch(votedSectionProvider.notifier);
     final votedSection = ref.watch(votedSectionProvider);
     List<String> alreadyVotedSection = [];
@@ -32,8 +31,10 @@ class VoteButton extends HookConsumerWidget {
     );
 
     final status = ref.watch(statusProvider);
-    final s =
-        status.maybeWhen(data: (value) => value.status, orElse: () => StatusType.closed);
+    final s = status.maybeWhen(
+      data: (value) => value.status,
+      orElse: () => StatusType.closed,
+    );
 
     void displayVoteToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);

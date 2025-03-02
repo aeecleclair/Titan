@@ -9,8 +9,10 @@ class TheMovieDBGenreNotifier extends SingleNotifierAPI<TheMovieDB> {
       : super(const AsyncValue.loading());
 
   Future<AsyncValue<TheMovieDB>> loadMovie(String id) async {
-    return await load(() => theMoviesDBRepository
-        .cinemaThemoviedbThemoviedbIdGet(themoviedbId: id));
+    return await load(
+      () => theMoviesDBRepository.cinemaThemoviedbThemoviedbIdGet(
+          themoviedbId: id),
+    );
   }
 }
 

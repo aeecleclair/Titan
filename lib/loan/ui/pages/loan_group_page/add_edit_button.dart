@@ -93,7 +93,8 @@ class AddEditButton extends HookConsumerWidget {
                     );
                     final value = isEdit
                         ? await loanListNotifier.updateLoan(newLoan)
-                        : await loanListNotifier.addLoan(newLoan.toLoanCreation());
+                        : await loanListNotifier
+                            .addLoan(newLoan.toLoanCreation());
                     if (value) {
                       adminLoanListNotifier.setTData(
                         isEdit ? loan.loaner : loaner,

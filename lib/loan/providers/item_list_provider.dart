@@ -12,15 +12,20 @@ class ItemListNotifier extends ListNotifierAPI<Item> {
       : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Item>>> loadItemList(String loanerId) async {
-    return await loadList(() async =>
-        itemRepository.loansLoanersLoanerIdItemsGet(loanerId: loanerId));
+    return await loadList(
+      () async =>
+          itemRepository.loansLoanersLoanerIdItemsGet(loanerId: loanerId),
+    );
   }
 
   Future<bool> addItem(ItemBase item, String loanerId) async {
     return await add(
-        () async => itemRepository.loansLoanersLoanerIdItemsPost(
-            loanerId: loanerId, body: item),
-        item);
+      () async => itemRepository.loansLoanersLoanerIdItemsPost(
+        loanerId: loanerId,
+        body: item,
+      ),
+      item,
+    );
   }
 
   Future<bool> updateItem(Item item, String loanerId) async {
@@ -38,7 +43,9 @@ class ItemListNotifier extends ListNotifierAPI<Item> {
   Future<bool> deleteItem(String itemId, String loanerId) async {
     return await delete(
       () async => itemRepository.loansLoanersLoanerIdItemsItemIdDelete(
-          loanerId: loanerId, itemId: itemId),
+        loanerId: loanerId,
+        itemId: itemId,
+      ),
       (i) => i.id,
       itemId,
     );

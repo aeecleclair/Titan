@@ -24,7 +24,8 @@ class ProductListNotifier
   }
 
   Future<bool> updateProduct(
-      AppModulesAmapSchemasAmapProductComplete product) async {
+    AppModulesAmapSchemasAmapProductComplete product,
+  ) async {
     return await update(
       () => productListRepository.amapProductsProductIdPatch(
         productId: product.id,
@@ -35,11 +36,11 @@ class ProductListNotifier
     );
   }
 
-  Future<bool> deleteProduct(
-      String productId) async {
+  Future<bool> deleteProduct(String productId) async {
     return await delete(
       () => productListRepository.amapProductsProductIdDelete(
-          productId: productId),
+        productId: productId,
+      ),
       (p) => p.id,
       productId,
     );

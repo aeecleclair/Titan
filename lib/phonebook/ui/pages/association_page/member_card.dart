@@ -78,8 +78,8 @@ class MemberCard extends HookConsumerWidget {
                       group: memberPictures,
                       notifier: memberPicturesNotifier,
                       mapKey: member,
-                      loader: (ref) => profilePictureNotifier
-                          .getProfilePicture(member.id),
+                      loader: (ref) =>
+                          profilePictureNotifier.getProfilePicture(member.id),
                       loadingBuilder: (context) => const CircleAvatar(
                         radius: 20,
                         child: CircularProgressIndicator(),
@@ -91,8 +91,7 @@ class MemberCard extends HookConsumerWidget {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  if ((member.nickname != null) &&
-                      (member.nickname != "")) ...[
+                  if ((member.nickname != null) && (member.nickname != "")) ...[
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

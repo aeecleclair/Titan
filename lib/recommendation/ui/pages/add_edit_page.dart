@@ -156,8 +156,9 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                       final value = isEdit
                           ? await recommendationListNotifier
                               .updateRecommendation(newRecommendation)
-                          : await recommendationListNotifier
-                              .addRecommendation(newRecommendation.toRecommendationBase());
+                          : await recommendationListNotifier.addRecommendation(
+                              newRecommendation.toRecommendationBase(),
+                            );
                       if (value) {
                         if (isEdit) {
                           recommendationNotifier

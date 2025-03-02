@@ -112,7 +112,8 @@ class PhAddEditPhPage extends HookConsumerWidget {
                             );
                             final value = isEdit
                                 ? await phListNotifier.editPh(newPh)
-                                : await phListNotifier.addPh(newPh.toPaperBase());
+                                : await phListNotifier
+                                    .addPh(newPh.toPaperBase());
 
                             if (value) {
                               SystemChannels.textInput

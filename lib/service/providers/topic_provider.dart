@@ -16,7 +16,8 @@ class TopicsProvider extends ListNotifierAPI<String> {
   Future<bool> subscribeTopic(String topic) async {
     return await update(
       () => notificationRepository.notificationTopicsTopicStrSubscribePost(
-          topicStr: topic),
+        topicStr: topic,
+      ),
       (listT) => listT,
       topic,
     );
@@ -25,7 +26,8 @@ class TopicsProvider extends ListNotifierAPI<String> {
   Future<bool> unsubscribeTopic(String topic) async {
     return await update(
       () => notificationRepository.notificationTopicsTopicStrUnsubscribePost(
-          topicStr: topic),
+        topicStr: topic,
+      ),
       (listT) => listT,
       topic,
     );

@@ -112,7 +112,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                               groupId: group.id,
                               id: '',
                               status: RaffleStatusType.creation,
-                              description: ""
+                              description: "",
                             ),
                           );
                           await raffleListNotifier.loadRaffleList();

@@ -46,62 +46,77 @@ abstract class ListNotifierAPI<T> extends StateNotifier<AsyncValue<List<T>>> {
   }
 
   Future<bool> handleState(
-      Future<bool> Function(List<T> d) f, String errorMessage) async {
+    Future<bool> Function(List<T> d) f,
+    String errorMessage,
+  ) async {
     return state.when(
-        data: (d) => errorWrapper(() async {
-              return await f(d);
-            }, (p0) => false),
-        error: (error, s) {
-          if (error is AppException && error.type == ErrorType.tokenExpire) {
-            throw error;
-          } else {
-            state = AsyncValue.error(error, s);
-            return false;
-          }
+      data: (d) => errorWrapper(
+        () async {
+          return await f(d);
         },
-        loading: () {
-          state = AsyncValue.error(errorMessage, StackTrace.empty);
+        (p0) => false,
+      ),
+      error: (error, s) {
+        if (error is AppException && error.type == ErrorType.tokenExpire) {
+          throw error;
+        } else {
+          state = AsyncValue.error(error, s);
           return false;
-        });
+        }
+      },
+      loading: () {
+        state = AsyncValue.error(errorMessage, StackTrace.empty);
+        return false;
+      },
+    );
   }
 
   Future<bool> add<E>(Future<Response<T>> Function() f, E t) async {
-    return handleState((d) async {
-      final response = await f();
-      final data = response.body;
-      if (response.isSuccessful && data != null) {
-        d.add(data);
-        state = AsyncValue.data(d);
-        return true;
-      } else {
-        throw response.error!;
-      }
-    }, "Cannot add while loading");
+    return handleState(
+      (d) async {
+        final response = await f();
+        final data = response.body;
+        if (response.isSuccessful && data != null) {
+          d.add(data);
+          state = AsyncValue.data(d);
+          return true;
+        } else {
+          throw response.error!;
+        }
+      },
+      "Cannot add while loading",
+    );
   }
 
   Future<bool> localAdd<E>(T t) async {
-    return handleState((d) async {
-      d.add(t);
-      state = AsyncValue.data(d);
-      return true;
-    }, "Cannot add while loading");
+    return handleState(
+      (d) async {
+        d.add(t);
+        state = AsyncValue.data(d);
+        return true;
+      },
+      "Cannot add while loading",
+    );
   }
 
   Future<bool> addAll<E>(
     Future<Response<List<T>>> Function(List<E> listT) f,
     List<E> listT,
   ) async {
-    return handleState((d) async {
-      final response = await f(listT);
-      final data = response.body;
-      if (response.isSuccessful && data != null) {
-        d.addAll(data);
-        state = AsyncValue.data(d);
-        return true;
-      } else {
-        throw response.error!;
-      }
-    }, "Cannot addAll while loading");
+    return handleState(
+      (d) async {
+        final response = await f(listT);
+        final data = response.body;
+        if (response.isSuccessful && data != null) {
+          d.addAll(data);
+          state = AsyncValue.data(d);
+          return true;
+        } else {
+          throw response.error!;
+        }
+      },
+      "Cannot addAll while loading",
+    );
   }
 
   Future<bool> update(
@@ -109,27 +124,33 @@ abstract class ListNotifierAPI<T> extends StateNotifier<AsyncValue<List<T>>> {
     String Function(T t) getKey,
     T t,
   ) async {
-    return handleState((d) async {
-      final response = await f();
-      if (response.isSuccessful) {
-        d[d.indexWhere((e) => getKey(e) == getKey(t))] = t;
-        state = AsyncValue.data(d);
-        return true;
-      } else {
-        throw response.error!;
-      }
-    }, "Cannot update while loading");
+    return handleState(
+      (d) async {
+        final response = await f();
+        if (response.isSuccessful) {
+          d[d.indexWhere((e) => getKey(e) == getKey(t))] = t;
+          state = AsyncValue.data(d);
+          return true;
+        } else {
+          throw response.error!;
+        }
+      },
+      "Cannot update while loading",
+    );
   }
 
   Future<bool> localUpdate(
     String Function(T t) getKey,
     T t,
   ) async {
-    return handleState((d) async {
-      d[d.indexWhere((e) => getKey(e) == getKey(t))] = t;
-      state = AsyncValue.data(d);
-      return true;
-    }, "Cannot update while loading");
+    return handleState(
+      (d) async {
+        d[d.indexWhere((e) => getKey(e) == getKey(t))] = t;
+        state = AsyncValue.data(d);
+        return true;
+      },
+      "Cannot update while loading",
+    );
   }
 
   Future<bool> delete(
@@ -137,26 +158,32 @@ abstract class ListNotifierAPI<T> extends StateNotifier<AsyncValue<List<T>>> {
     String Function(T t) getKey,
     String key,
   ) async {
-    return handleState((d) async {
-      final response = await f();
-      if (response.isSuccessful) {
-        d.removeWhere((e) => getKey(e) == key);
-        state = AsyncValue.data(d);
-        return true;
-      } else {
-        throw response.error!;
-      }
-    }, "Cannot delete while loading");
+    return handleState(
+      (d) async {
+        final response = await f();
+        if (response.isSuccessful) {
+          d.removeWhere((e) => getKey(e) == key);
+          state = AsyncValue.data(d);
+          return true;
+        } else {
+          throw response.error!;
+        }
+      },
+      "Cannot delete while loading",
+    );
   }
 
   Future<bool> localDelete(
     String Function(T t) getKey,
     String key,
   ) async {
-    return handleState((d) async {
-      d.removeWhere((e) => getKey(e) == key);
-      state = AsyncValue.data(d);
-      return true;
-    }, "Cannot delete while loading");
+    return handleState(
+      (d) async {
+        d.removeWhere((e) => getKey(e) == key);
+        state = AsyncValue.data(d);
+        return true;
+      },
+      "Cannot delete while loading",
+    );
   }
 }

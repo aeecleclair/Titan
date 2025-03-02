@@ -8,19 +8,27 @@ class SignUpProvider extends StateNotifier {
   SignUpProvider({required this.signUpRepository}) : super(null);
 
   Future<bool> createUser(String email) async {
-    return (await signUpRepository.usersCreatePost(body: CoreUserCreateRequest(email: email))).isSuccessful;
+    return (await signUpRepository.usersCreatePost(
+      body: CoreUserCreateRequest(email: email),
+    ))
+        .isSuccessful;
   }
 
   Future<bool> recoverUser(String email) async {
-    return (await signUpRepository.usersRecoverPost(body: BodyRecoverUserUsersRecoverPost(email: email))).isSuccessful;
+    return (await signUpRepository.usersRecoverPost(
+      body: BodyRecoverUserUsersRecoverPost(email: email),
+    ))
+        .isSuccessful;
   }
 
   Future<bool> activateUser(CoreUserActivateRequest createAccount) async {
-    return (await signUpRepository.usersActivatePost(body: createAccount)).isSuccessful;
+    return (await signUpRepository.usersActivatePost(body: createAccount))
+        .isSuccessful;
   }
 
   Future<bool> resetPassword(ResetPasswordRequest recoverRequest) async {
-    return (await signUpRepository.usersResetPasswordPost(body: recoverRequest)).isSuccessful;
+    return (await signUpRepository.usersResetPasswordPost(body: recoverRequest))
+        .isSuccessful;
   }
 }
 

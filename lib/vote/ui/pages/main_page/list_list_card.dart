@@ -28,8 +28,10 @@ class ListListCard extends HookConsumerWidget {
     );
 
     final status = ref.watch(statusProvider);
-    final s =
-        status.maybeWhen(data: (value) => value.status, orElse: () => StatusType.closed);
+    final s = status.maybeWhen(
+      data: (value) => value.status,
+      orElse: () => StatusType.closed,
+    );
 
     Map<String, int> results = {};
     if (s == StatusType.published) {
@@ -47,7 +49,9 @@ class ListListCard extends HookConsumerWidget {
     sectionsList[section]!.whenData(
       (listList) {
         h = listList.length *
-                ((s == StatusType.open || s == StatusType.published) ? 180 : 140) -
+                ((s == StatusType.open || s == StatusType.published)
+                    ? 180
+                    : 140) -
             MediaQuery.of(context).size.height +
             (s == StatusType.open ? 250 : 150);
         List<int> numberVotes = [];

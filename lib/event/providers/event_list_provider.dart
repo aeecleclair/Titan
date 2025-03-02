@@ -16,7 +16,9 @@ class EventListNotifier extends ListNotifierAPI<EventReturn> {
 
   Future<bool> addEvent(EventBase event) async {
     return await add(
-        () => eventRepository.calendarEventsPost(body: event), event);
+      () => eventRepository.calendarEventsPost(body: event),
+      event,
+    );
   }
 
   Future<bool> updateEvent(EventReturn event) async {
@@ -41,7 +43,9 @@ class EventListNotifier extends ListNotifierAPI<EventReturn> {
   Future<bool> toggleConfirmed(EventReturn event) async {
     return await update(
       () => eventRepository.calendarEventsEventIdReplyDecisionPatch(
-          eventId: event.id, decision: event.decision),
+        eventId: event.id,
+        decision: event.decision,
+      ),
       (event) => event.id,
       event,
     );

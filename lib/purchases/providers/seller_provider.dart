@@ -9,7 +9,8 @@ class SellerNotifier extends StateNotifier<SellerComplete> {
   }
 }
 
-final sellerProvider = StateNotifierProvider<SellerNotifier, SellerComplete>((ref) {
+final sellerProvider =
+    StateNotifierProvider<SellerNotifier, SellerComplete>((ref) {
   SellerNotifier notifier = SellerNotifier();
   return notifier;
 });

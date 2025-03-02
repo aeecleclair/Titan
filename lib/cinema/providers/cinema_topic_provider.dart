@@ -10,14 +10,17 @@ class CinemaTopicsProvider extends ListNotifierAPI<String> {
       : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<String>>> getTopics() async {
-    return await loadList(() =>
-        cinemaTopicRepository.notificationTopicsTopicGet(topic: Topic.cinema));
+    return await loadList(
+      () =>
+          cinemaTopicRepository.notificationTopicsTopicGet(topic: Topic.cinema),
+    );
   }
 
   Future<bool> subscribeSession(String topic) async {
     return await update(
       () => cinemaTopicRepository.notificationTopicsTopicStrSubscribePost(
-          topicStr: topic),
+        topicStr: topic,
+      ),
       (listT) => listT,
       topic,
     );
@@ -26,7 +29,8 @@ class CinemaTopicsProvider extends ListNotifierAPI<String> {
   Future<bool> unsubscribeSession(String topic) async {
     return await update(
       () => cinemaTopicRepository.notificationTopicsTopicStrUnsubscribePost(
-          topicStr: topic),
+        topicStr: topic,
+      ),
       (listT) => listT,
       topic,
     );

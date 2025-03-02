@@ -16,13 +16,17 @@ class UserLoanerListNotifier extends ListNotifierAPI<Loaner> {
 
   Future<bool> addLoaner(LoanerBase loaner) async {
     return await add(
-        () => loanerRepository.loansLoanersPost(body: loaner), loaner);
+      () => loanerRepository.loansLoanersPost(body: loaner),
+      loaner,
+    );
   }
 
   Future<bool> updateLoaner(Loaner loaner) async {
     return await update(
       () => loanerRepository.loansLoanersLoanerIdPatch(
-          loanerId: loaner.id, body: loaner.toLoanerUpdate()),
+        loanerId: loaner.id,
+        body: loaner.toLoanerUpdate(),
+      ),
       (loaner) => loaner.id,
       loaner,
     );

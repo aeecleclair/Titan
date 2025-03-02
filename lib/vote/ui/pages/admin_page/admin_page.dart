@@ -33,8 +33,7 @@ class AdminPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sectionListListNotifier =
-        ref.watch(sectionListProvider.notifier);
+    final sectionListListNotifier = ref.watch(sectionListProvider.notifier);
     final sectionsNotifier = ref.watch(sectionsProvider.notifier);
     final listList = ref.watch(listListProvider);
     final asyncStatus = ref.watch(statusProvider);
@@ -52,7 +51,8 @@ class AdminPage extends HookConsumerWidget {
       child: Refresher(
         onRefresh: () async {
           await statusNotifier.loadStatus();
-          if (status.status == StatusType.counting || status.status == StatusType.published) {
+          if (status.status == StatusType.counting ||
+              status.status == StatusType.published) {
             await ref.watch(resultProvider.notifier).loadResult();
           }
           final sections = await sectionsNotifier.loadSectionList();

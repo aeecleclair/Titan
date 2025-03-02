@@ -9,6 +9,7 @@ class AdvertNotifier extends StateNotifier<AdvertReturnComplete> {
   }
 }
 
-final advertProvider = StateNotifierProvider<AdvertNotifier, AdvertReturnComplete>((ref) {
+final advertProvider =
+    StateNotifierProvider<AdvertNotifier, AdvertReturnComplete>((ref) {
   return AdvertNotifier();
 });

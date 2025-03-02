@@ -14,8 +14,10 @@ class HistoryLoanerLoanListNotifier extends ListNotifierAPI<Loan> {
       : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Loan>>> loadLoan(String loanerId) async {
-    return await loadList(() async =>
-        loanRepository.loansLoanersLoanerIdLoansGet(loanerId: loanerId));
+    return await loadList(
+      () async =>
+          loanRepository.loansLoanersLoanerIdLoansGet(loanerId: loanerId),
+    );
   }
 
   Future<bool> addLoan(LoanCreation loan) async {
@@ -25,7 +27,9 @@ class HistoryLoanerLoanListNotifier extends ListNotifierAPI<Loan> {
   Future<bool> updateLoan(Loan loan) async {
     return await update(
       () => loanRepository.loansLoanIdPatch(
-          loanId: loan.id, body: loan.toLoanUpdate()),
+        loanId: loan.id,
+        body: loan.toLoanUpdate(),
+      ),
       (loan) => loan.id,
       loan,
     );
@@ -50,7 +54,9 @@ class HistoryLoanerLoanListNotifier extends ListNotifierAPI<Loan> {
   Future<bool> extendLoan(Loan loan, int delay) async {
     return await update(
       () => loanRepository.loansLoanIdExtendPost(
-          loanId: loan.id, body: loan.toLoanExtend(delay)),
+        loanId: loan.id,
+        body: loan.toLoanExtend(delay),
+      ),
       (loan) => loan.id,
       loan,
     );
@@ -63,7 +69,9 @@ class HistoryLoanerLoanListNotifier extends ListNotifierAPI<Loan> {
   Future<AsyncValue<List<Loan>>> loadHistory(String loanerId) async {
     try {
       final data = await loanRepository.loansLoanersLoanerIdLoansGet(
-          loanerId: loanerId, returned: true);
+        loanerId: loanerId,
+        returned: true,
+      );
       if (data.isSuccessful) {
         return AsyncValue.data(data.body!);
       }

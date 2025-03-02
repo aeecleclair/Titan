@@ -24,7 +24,8 @@ class RaffleInfoPage extends HookConsumerWidget {
     final balance = ref.watch(userAmountProvider(user.id));
     final balanceNotifier = ref.read(userAmountProvider(user.id).notifier);
     final packTicketList = ref.watch(packTicketListProvider(raffle.id));
-    final packTicketListNotifier = ref.read(packTicketListProvider(raffle.id).notifier);
+    final packTicketListNotifier =
+        ref.read(packTicketListProvider(raffle.id).notifier);
     final prizeList = ref.watch(prizeListProvider(raffle.id));
     final prizeListNotifier = ref.read(prizeListProvider(raffle.id).notifier);
 

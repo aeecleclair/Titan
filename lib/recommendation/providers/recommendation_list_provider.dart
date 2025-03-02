@@ -12,13 +12,15 @@ class RecommendationListNotifier extends ListNotifierAPI<Recommendation> {
 
   Future<AsyncValue<List<Recommendation>>> loadRecommendation() async {
     return await loadList(
-        recommendationRepository.recommendationRecommendationsGet);
+      recommendationRepository.recommendationRecommendationsGet,
+    );
   }
 
   Future<bool> addRecommendation(RecommendationBase recommendation) async {
     return await add(
       () => recommendationRepository.recommendationRecommendationsPost(
-          body: recommendation),
+        body: recommendation,
+      ),
       recommendation,
     );
   }
@@ -39,7 +41,8 @@ class RecommendationListNotifier extends ListNotifierAPI<Recommendation> {
     return await delete(
       () => recommendationRepository
           .recommendationRecommendationsRecommendationIdDelete(
-              recommendationId: recommendationId),
+        recommendationId: recommendationId,
+      ),
       (r) => r.id,
       recommendationId,
     );

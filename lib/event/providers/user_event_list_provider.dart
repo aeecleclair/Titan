@@ -10,14 +10,19 @@ class EventEventListProvider extends ListNotifierAPI<EventReturn> {
       : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<EventReturn>>> loadConfirmedEvent(
-      String userId) async {
-    return await loadList(() async =>
-        eventRepository.calendarEventsUserApplicantIdGet(applicantId: userId));
+    String userId,
+  ) async {
+    return await loadList(
+      () async =>
+          eventRepository.calendarEventsUserApplicantIdGet(applicantId: userId),
+    );
   }
 
   Future<bool> addEvent(EventBase event) async {
     return await add(
-        () => eventRepository.calendarEventsPost(body: event), event);
+      () => eventRepository.calendarEventsPost(body: event),
+      event,
+    );
   }
 
   Future<bool> updateEvent(EventReturn event) async {

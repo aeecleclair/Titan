@@ -24,7 +24,8 @@ class EventMainPage extends HookConsumerWidget {
     final user = ref.watch(userProvider);
     final isAdmin = ref.watch(isEventAdminProvider);
     final eventNotifier = ref.watch(eventProvider.notifier);
-    final eventListNotifier = ref.watch(eventEventListProvider(user.id).notifier);
+    final eventListNotifier =
+        ref.watch(eventEventListProvider(user.id).notifier);
     final events = ref.watch(eventEventListProvider(user.id));
     return EventTemplate(
       child: AsyncChild(

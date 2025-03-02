@@ -30,9 +30,10 @@ class ListCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final listNotifier = ref.watch(listProvider.notifier);
-    final status = ref
-        .watch(statusProvider)
-        .maybeWhen(data: (status) => status.status, orElse: () => StatusType.waiting);
+    final status = ref.watch(statusProvider).maybeWhen(
+          data: (status) => status.status,
+          orElse: () => StatusType.waiting,
+        );
     return CardLayout(
       id: list.id,
       width: 250,

@@ -5,7 +5,8 @@ import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/tools/providers/map_provider.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
-class AssociationPictureNotifier extends MapNotifier<AssociationComplete, Image> {
+class AssociationPictureNotifier
+    extends MapNotifier<AssociationComplete, Image> {
   AssociationPictureNotifier() : super();
 }
 

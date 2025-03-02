@@ -137,11 +137,12 @@ class ListBooking extends HookConsumerWidget {
                                       )
                                       .loadUserBookings();
                                   confirmedBookingListNotifier.addBooking(
-                                      newBooking
-                                          .toBookingReturnSimpleApplicant());
+                                    newBooking.toBookingReturnSimpleApplicant(),
+                                  );
                                   managerConfirmedBookingListNotifier
-                                      .addBooking(newBooking
-                                          .toBookingReturnSimpleApplicant());
+                                      .addBooking(
+                                    newBooking.toBookingReturnSimpleApplicant(),
+                                  );
                                 }
                               });
                             });
@@ -175,11 +176,12 @@ class ListBooking extends HookConsumerWidget {
                                       )
                                       .loadUserBookings();
                                   confirmedBookingListNotifier.deleteBooking(
-                                      newBooking
-                                          .toBookingReturnSimpleApplicant());
+                                    newBooking.toBookingReturnSimpleApplicant(),
+                                  );
                                   managerConfirmedBookingListNotifier
-                                      .deleteBooking(newBooking
-                                          .toBookingReturnSimpleApplicant());
+                                      .deleteBooking(
+                                    newBooking.toBookingReturnSimpleApplicant(),
+                                  );
                                 }
                               });
                             });

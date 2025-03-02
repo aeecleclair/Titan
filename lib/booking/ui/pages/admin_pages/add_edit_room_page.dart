@@ -117,7 +117,8 @@ class AddEditRoomPage extends HookConsumerWidget {
                           );
                           final value = isEdit
                               ? await roomListNotifier.updateRoom(newRoom)
-                              : await roomListNotifier.addRoom(newRoom.toRoomBase());
+                              : await roomListNotifier
+                                  .addRoom(newRoom.toRoomBase());
                           if (value) {
                             QR.back();
                             isEdit

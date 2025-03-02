@@ -50,8 +50,7 @@ class UserOrderListNotifier extends ListNotifierAPI<OrderReturn> {
 
   Future<bool> deleteOrder(String orderId) async {
     return await delete(
-      () => userOrderListRepository.amapOrdersOrderIdDelete(
-          orderId: orderId),
+      () => userOrderListRepository.amapOrdersOrderIdDelete(orderId: orderId),
       (o) => o.orderId,
       orderId,
     );
@@ -77,7 +76,7 @@ class UserOrderListNotifier extends ListNotifierAPI<OrderReturn> {
               [
                 orders[indexOrder]
                     .productsdetail[productDetailsIndex]
-                    .copyWith(quantity: newQuantity)
+                    .copyWith(quantity: newQuantity),
               ],
             ),
         );
@@ -107,12 +106,13 @@ class UserOrderListNotifier extends ListNotifierAPI<OrderReturn> {
           var newOrder = orders[indexOrder]
               .copyWith(productsdetail: newListProductQuantity);
           await userOrderListRepository.amapOrdersOrderIdPatch(
-              orderId: newOrder.orderId,
-              body: OrderEdit(
-                productsIds: newListProductQuantity.map((p) => p.product.id),
-                collectionSlot: newOrder.collectionSlot,
-                productsQuantity: newListProductQuantity.map((p) => p.quantity),
-              ));
+            orderId: newOrder.orderId,
+            body: OrderEdit(
+              productsIds: newListProductQuantity.map((p) => p.product.id),
+              collectionSlot: newOrder.collectionSlot,
+              productsQuantity: newListProductQuantity.map((p) => p.quantity),
+            ),
+          );
           orders[indexOrder] = newOrder;
           state = AsyncValue.data(orders);
           return true;

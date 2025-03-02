@@ -157,9 +157,8 @@ class OnGoingLoan extends HookConsumerWidget {
                       descriptions: LoanTextConstants.returnLoanDescription,
                       onYes: () async {
                         await tokenExpireWrapper(ref, () async {
-                          final loanItemsId = e.itemsQty
-                              .map((e) => e.itemSimple.id)
-                              .toList();
+                          final loanItemsId =
+                              e.itemsQty.map((e) => e.itemSimple.id).toList();
                           final updatedItems = loanersItems[loaner]!
                               .maybeWhen<List<Item>>(
                             data: (items) => items,

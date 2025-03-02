@@ -11,13 +11,17 @@ class PrizeListNotifier extends ListNotifierAPI<PrizeSimple> {
       : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<PrizeSimple>>> loadPrizeList(String raffleId) async {
-    return await loadList(() async =>
-        prizeRepository.tombolaRafflesRaffleIdPrizesGet(raffleId: raffleId));
+    return await loadList(
+      () async =>
+          prizeRepository.tombolaRafflesRaffleIdPrizesGet(raffleId: raffleId),
+    );
   }
 
   Future<bool> addPrize(PrizeBase prize) async {
     return await add(
-        () => prizeRepository.tombolaPrizesPost(body: prize), prize);
+      () => prizeRepository.tombolaPrizesPost(body: prize),
+      prize,
+    );
   }
 
   Future<bool> updatePrize(PrizeSimple prize) async {

@@ -10,9 +10,11 @@ class ProductListNotifier
       : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<AppModulesCdrSchemasCdrProductComplete>>> loadProducts(
-      String sellerId) async {
-    return await loadList(() =>
-        productRepository.cdrSellersSellerIdProductsGet(sellerId: sellerId));
+    String sellerId,
+  ) async {
+    return await loadList(
+      () => productRepository.cdrSellersSellerIdProductsGet(sellerId: sellerId),
+    );
   }
 }
 

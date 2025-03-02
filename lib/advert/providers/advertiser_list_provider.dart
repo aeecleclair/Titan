@@ -39,7 +39,8 @@ class AdvertiserListNotifier extends ListNotifierAPI<AdvertiserComplete> {
   Future<bool> deleteAdvertiser(String advertiserId) async {
     return await delete(
       () => advertiserRepository.advertAdvertisersAdvertiserIdDelete(
-          advertiserId: advertiserId),
+        advertiserId: advertiserId,
+      ),
       (a) => a.id,
       advertiserId,
     );

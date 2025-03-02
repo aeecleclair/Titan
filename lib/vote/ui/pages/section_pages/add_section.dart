@@ -19,8 +19,7 @@ class AddSectionPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sectionListNotifier =
-        ref.read(sectionListProvider.notifier);
+    final sectionListNotifier = ref.read(sectionListProvider.notifier);
     final sectionsNotifier = ref.read(sectionsProvider.notifier);
     final sections = ref.watch(sectionsProvider);
     final key = GlobalKey<FormState>();

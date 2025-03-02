@@ -16,7 +16,9 @@ class ManagerListNotifier extends ListNotifierAPI<Manager> {
 
   Future<bool> addManager(ManagerBase manager) async {
     return await add(
-        () => managerRepository.bookingManagersPost(body: manager), manager);
+      () => managerRepository.bookingManagersPost(body: manager),
+      manager,
+    );
   }
 
   Future<bool> updateManager(Manager manager) async {
@@ -33,7 +35,8 @@ class ManagerListNotifier extends ListNotifierAPI<Manager> {
   Future<bool> deleteManager(String managerId) async {
     return await delete(
       () => managerRepository.bookingManagersManagerIdDelete(
-          managerId: managerId),
+        managerId: managerId,
+      ),
       (m) => m.id,
       managerId,
     );

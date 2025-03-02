@@ -9,10 +9,12 @@ class TicketsListNotifier extends ListNotifierAPI<TicketComplete> {
       : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<TicketComplete>>> loadTicketList(
-      String raffleId) async {
+    String raffleId,
+  ) async {
     return await loadList(
       () async => raffleDetailRepository.tombolaRafflesRaffleIdTicketsGet(
-          raffleId: raffleId),
+        raffleId: raffleId,
+      ),
     );
   }
 }

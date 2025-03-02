@@ -10,8 +10,12 @@ class AuthInterceptor implements RequestInterceptor {
 
   @override
   FutureOr<Request> onRequest(Request request) {
-    return applyHeader(request, 'Authorization', 'Bearer $token',
-        override: true);
+    return applyHeader(
+      request,
+      'Authorization',
+      'Bearer $token',
+      override: true,
+    );
   }
 }
 

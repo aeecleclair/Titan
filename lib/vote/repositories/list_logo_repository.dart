@@ -24,8 +24,7 @@ class ListLogoRepository extends LogoRepository {
   }
 }
 
-final listLogoRepositoryProvider =
-    Provider<ListLogoRepository>((ref) {
+final listLogoRepositoryProvider = Provider<ListLogoRepository>((ref) {
   final token = ref.watch(tokenProvider);
   return ListLogoRepository()..setToken(token);
 });

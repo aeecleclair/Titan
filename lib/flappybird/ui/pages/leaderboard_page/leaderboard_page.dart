@@ -44,9 +44,10 @@ class LeaderBoardPage extends HookConsumerWidget {
                       );
                     }
                     return LeaderBoardItem(
-                        user: scoreList[index - 1].user,
-                        position: index,
-                        value: scoreList[index - 1].$value,);
+                      user: scoreList[index - 1].user,
+                      position: index,
+                      value: scoreList[index - 1].$value,
+                    );
                   },
                 ),
                 error: (e, s) =>

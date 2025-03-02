@@ -34,14 +34,15 @@ class VoteMainPage extends HookConsumerWidget {
     final sectionsNotifier = ref.watch(sectionsProvider.notifier);
     final lists = ref.watch(listListProvider);
     final listsNotifier = ref.watch(listListProvider.notifier);
-    final sectionListNotifier =
-        ref.watch(sectionListProvider.notifier);
+    final sectionListNotifier = ref.watch(sectionListProvider.notifier);
     final animation = useAnimationController(
       duration: const Duration(milliseconds: 2400),
     );
     final status = ref.watch(statusProvider);
-    final s =
-        status.maybeWhen(data: (value) => value.status, orElse: () => StatusType.closed);
+    final s = status.maybeWhen(
+      data: (value) => value.status,
+      orElse: () => StatusType.closed,
+    );
     if (s == StatusType.open) {
       ref.watch(votedSectionProvider.notifier).getVotedSections();
     }
@@ -107,7 +108,9 @@ class VoteMainPage extends HookConsumerWidget {
               sectionListNotifier.setTData(
                 l,
                 AsyncValue.data(
-                  listReturn.where((element) => element.section.id == l.id).toList(),
+                  listReturn
+                      .where((element) => element.section.id == l.id)
+                      .toList(),
                 ),
               );
             }

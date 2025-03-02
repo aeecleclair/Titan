@@ -48,7 +48,9 @@ class ProductHandler extends HookConsumerWidget {
             const SizedBox(width: 10),
             GestureDetector(
               onTap: () {
-                productNotifier.setProduct(AppModulesAmapSchemasAmapProductComplete.fromJson({}));
+                productNotifier.setProduct(
+                  AppModulesAmapSchemasAmapProductComplete.fromJson({}),
+                );
                 QR.to(
                   AmapRouter.root +
                       AmapRouter.admin +

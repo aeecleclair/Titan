@@ -16,7 +16,9 @@ class SessionListNotifier extends ListNotifierAPI<CineSessionComplete> {
 
   Future<bool> addSession(CineSessionBase session) async {
     return await add(
-        () => sessionRepository.cinemaSessionsPost(body: session), session);
+      () => sessionRepository.cinemaSessionsPost(body: session),
+      session,
+    );
   }
 
   Future<bool> updateSession(CineSessionComplete session) async {
@@ -32,8 +34,8 @@ class SessionListNotifier extends ListNotifierAPI<CineSessionComplete> {
 
   Future<bool> deleteSession(String sessionId) async {
     return await delete(
-      () => sessionRepository.cinemaSessionsSessionIdDelete(
-          sessionId: sessionId),
+      () =>
+          sessionRepository.cinemaSessionsSessionIdDelete(sessionId: sessionId),
       (s) => s.id,
       sessionId,
     );

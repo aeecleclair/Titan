@@ -46,15 +46,15 @@ VoteStatus stringToVoteStatus(String votesVoteStatus) {
 
 String votesVoteStatusToString(VoteStatus votesVoteStatus) {
   switch (votesVoteStatus.status) {
-    case StatusType .waiting:
+    case StatusType.waiting:
       return 'Waiting';
-    case StatusType .open:
+    case StatusType.open:
       return 'Open';
-    case StatusType .closed:
+    case StatusType.closed:
       return 'Closed';
-    case StatusType .counting:
+    case StatusType.counting:
       return 'Counting';
-    case StatusType .published:
+    case StatusType.published:
       return 'Published';
     case StatusType.swaggerGeneratedUnknown:
       return '';

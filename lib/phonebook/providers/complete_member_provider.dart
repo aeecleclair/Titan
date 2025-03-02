@@ -17,7 +17,8 @@ class CompleteMemberProvider extends StateNotifier<MemberComplete> {
 
   Future<bool> loadMemberComplete() async {
     try {
-      final data = await memberRepository.phonebookMemberUserIdGet(userId: state.id);
+      final data =
+          await memberRepository.phonebookMemberUserIdGet(userId: state.id);
       if (data.isSuccessful) {
         state = data.body!;
         return true;

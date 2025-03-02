@@ -95,11 +95,12 @@ class AddEditPrizePage extends HookConsumerWidget {
                               raffleId: isEdit ? prize.raffleId : raffle.id,
                               quantity: int.parse(quantity.text),
                             );
-                            final prizeNotifier =
-                                ref.watch(prizeListProvider(raffle.id).notifier);
+                            final prizeNotifier = ref
+                                .watch(prizeListProvider(raffle.id).notifier);
                             final value = isEdit
                                 ? await prizeNotifier.updatePrize(newPrize)
-                                : await prizeNotifier.addPrize(newPrize.toPrizeBase());
+                                : await prizeNotifier
+                                    .addPrize(newPrize.toPrizeBase());
                             if (value) {
                               QR.back();
                               if (isEdit) {

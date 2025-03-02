@@ -17,7 +17,8 @@ class UserTicketListNotifier extends ListNotifierAPI<TicketComplete> {
   Future<bool> buyTicket(PackTicketSimple packTicket) async {
     return addAll(
       (_) async => userTicketsRepository.tombolaTicketsBuyPackIdPost(
-          packId: packTicket.id),
+        packId: packTicket.id,
+      ),
       [],
     );
   }

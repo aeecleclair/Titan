@@ -104,50 +104,49 @@ class SearchUser extends HookConsumerWidget {
             if (add.value) const MemberResults(),
             if (!add.value)
               ...(g[0].members ?? []).map(
-                    (x) => UserUi(
-                      user: x,
-                      onDelete: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) => CustomDialogBox(
-                            descriptions: AdminTextConstants.removeGroupMember,
-                            title: AdminTextConstants.deleting,
-                            onYes: () async {
-                              await tokenExpireWrapper(ref, () async {
-                                CoreGroup newGroup = g[0].copyWith(
-                                  members: (g[0]
-                                      .members ?? [])
-                                      .where(
-                                        (element) => element.id != x.id,
-                                      )
-                                      .toList(),
-                                );
-                                final value = await groupNotifier.deleteMember(
-                                  newGroup,
-                                  x,
-                                );
-                                if (value) {
-                                  simpleGroupGroupsNotifier.setTData(
-                                    newGroup.id,
-                                    AsyncData([newGroup]),
-                                  );
-                                  displayToastWithContext(
-                                    TypeMsg.msg,
-                                    AdminTextConstants.updatedGroup,
-                                  );
-                                } else {
-                                  displayToastWithContext(
-                                    TypeMsg.msg,
-                                    AdminTextConstants.updatingError,
-                                  );
-                                }
-                              });
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                (x) => UserUi(
+                  user: x,
+                  onDelete: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) => CustomDialogBox(
+                        descriptions: AdminTextConstants.removeGroupMember,
+                        title: AdminTextConstants.deleting,
+                        onYes: () async {
+                          await tokenExpireWrapper(ref, () async {
+                            CoreGroup newGroup = g[0].copyWith(
+                              members: (g[0].members ?? [])
+                                  .where(
+                                    (element) => element.id != x.id,
+                                  )
+                                  .toList(),
+                            );
+                            final value = await groupNotifier.deleteMember(
+                              newGroup,
+                              x,
+                            );
+                            if (value) {
+                              simpleGroupGroupsNotifier.setTData(
+                                newGroup.id,
+                                AsyncData([newGroup]),
+                              );
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                AdminTextConstants.updatedGroup,
+                              );
+                            } else {
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                AdminTextConstants.updatingError,
+                              );
+                            }
+                          });
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ),
           ],
         );
       },

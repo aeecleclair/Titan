@@ -24,7 +24,9 @@ class RolesTagsNotifier extends MapNotifier<String, bool> {
   }
 
   void loadRoleTagsFromMember(
-      MemberComplete member, AssociationComplete association) {
+    MemberComplete member,
+    AssociationComplete association,
+  ) {
     List<String> roleTags = member.memberships
         .where((element) => element.associationId == association.id)
         .map((e) => e.roleTags as List<String>)

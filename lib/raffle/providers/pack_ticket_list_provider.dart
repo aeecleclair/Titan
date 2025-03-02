@@ -10,17 +10,20 @@ class PackTicketsListNotifier extends ListNotifierAPI<PackTicketSimple> {
       : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<PackTicketSimple>>> loadPackTicketList(
-      String raffleId) async {
+    String raffleId,
+  ) async {
     return await loadList(
       () async => packTicketsRepository.tombolaRafflesRaffleIdPackTicketsGet(
-          raffleId: raffleId),
+        raffleId: raffleId,
+      ),
     );
   }
 
   Future<bool> addPackTicket(PackTicketBase packTicket) async {
     return await add(
-        () => packTicketsRepository.tombolaPackTicketsPost(body: packTicket),
-        packTicket);
+      () => packTicketsRepository.tombolaPackTicketsPost(body: packTicket),
+      packTicket,
+    );
   }
 
   Future<bool> updatePackTicket(PackTicketSimple packTicket) async {
@@ -37,7 +40,8 @@ class PackTicketsListNotifier extends ListNotifierAPI<PackTicketSimple> {
   Future<bool> deletePackTicket(String packTicketId) async {
     return await delete(
       () => packTicketsRepository.tombolaPackTicketsPackticketIdDelete(
-          packticketId: packTicketId),
+        packticketId: packTicketId,
+      ),
       (p) => p.id,
       packTicketId,
     );

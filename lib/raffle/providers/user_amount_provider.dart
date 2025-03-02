@@ -10,7 +10,8 @@ class UserCashNotifier extends SingleNotifierAPI<CashComplete> {
 
   Future<AsyncValue<CashComplete>> loadCashByUser(String userId) async {
     return await load(
-        () async => cashRepository.tombolaUsersUserIdCashGet(userId: userId));
+      () async => cashRepository.tombolaUsersUserIdCashGet(userId: userId),
+    );
   }
 
   Future updateCash(double amount) async {

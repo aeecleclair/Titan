@@ -1,5 +1,3 @@
-
-
 import 'package:myecl/generated/openapi.enums.swagger.dart';
 
 Topic stringToTopic(String string) {

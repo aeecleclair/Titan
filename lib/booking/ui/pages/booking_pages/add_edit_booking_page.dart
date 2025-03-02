@@ -378,7 +378,8 @@ class AddEditBookingPage extends HookConsumerWidget {
                             await tokenExpireWrapper(
                               ref,
                               () async {
-                                BookingReturnApplicant newBooking = BookingReturnApplicant(
+                                BookingReturnApplicant newBooking =
+                                    BookingReturnApplicant(
                                   id: isEdit ? booking.id : "",
                                   reason: motif.text,
                                   start: DateTime.parse(
@@ -413,12 +414,16 @@ class AddEditBookingPage extends HookConsumerWidget {
                                             .read(
                                               userBookingListProvider.notifier,
                                             )
-                                            .updateBooking(newBooking.toBookingReturn())
+                                            .updateBooking(
+                                              newBooking.toBookingReturn(),
+                                            )
                                         : await ref
                                             .read(
                                               userBookingListProvider.notifier,
                                             )
-                                            .addBooking(newBooking.toBookingBase());
+                                            .addBooking(
+                                              newBooking.toBookingBase(),
+                                            );
                                 if (value) {
                                   QR.back();
                                   ref

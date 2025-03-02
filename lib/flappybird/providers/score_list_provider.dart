@@ -16,7 +16,9 @@ class ScoreListNotifier extends ListNotifierAPI<FlappyBirdScoreInDB> {
   //  Fix : back bad response
   Future<bool> createScore(FlappyBirdScoreBase score) async {
     return await add(
-        () => scoreRepository.flappybirdScoresPost(body: score), score);
+      () => scoreRepository.flappybirdScoresPost(body: score),
+      score,
+    );
   }
 }
 

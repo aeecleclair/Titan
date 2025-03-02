@@ -7,7 +7,8 @@ import 'package:myecl/phonebook/providers/research_filter_provider.dart';
 import 'package:myecl/phonebook/tools/function.dart';
 import 'package:diacritic/diacritic.dart';
 
-final associationFilteredListProvider = Provider<List<AssociationComplete>>((ref) {
+final associationFilteredListProvider =
+    Provider<List<AssociationComplete>>((ref) {
   final associationsProvider = ref.watch(associationListProvider);
   final associationKinds = ref.watch(associationKindsProvider);
   final kindFilter = ref.watch(associationKindProvider);

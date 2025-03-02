@@ -28,10 +28,14 @@ class ManagerBookingListProvider
   }
 
   Future<bool> toggleConfirmed(
-      BookingReturnApplicant booking, Decision decision) async {
+    BookingReturnApplicant booking,
+    Decision decision,
+  ) async {
     return await update(
       () => bookingRepository.bookingBookingsBookingIdReplyDecisionPatch(
-          bookingId: booking.id, decision: decision),
+        bookingId: booking.id,
+        decision: decision,
+      ),
       (booking) => booking.id,
       booking,
     );

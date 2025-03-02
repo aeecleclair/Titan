@@ -156,8 +156,8 @@ class BookingMainPage extends HookConsumerWidget {
                                 descriptions: BookingTextConstants
                                     .deleteBookingConfirmation,
                                 onYes: () async {
-                                  final value =
-                                      await bookingsNotifier.deleteBooking(e.id);
+                                  final value = await bookingsNotifier
+                                      .deleteBooking(e.id);
                                   if (value) {
                                     ref
                                         .read(
@@ -182,7 +182,8 @@ class BookingMainPage extends HookConsumerWidget {
                         },
                         onCopy: () {
                           handleBooking(
-                              e.toBookingReturnApplicant().copyWith(id: ""));
+                            e.toBookingReturnApplicant().copyWith(id: ""),
+                          );
                         },
                       ),
                     );

@@ -16,7 +16,9 @@ class LoanerListNotifier extends ListNotifierAPI<Loaner> {
 
   Future<bool> addLoaner(LoanerBase loaner) async {
     return await add(
-        () => loanerRepository.loansLoanersPost(body: loaner), loaner);
+      () => loanerRepository.loansLoanersPost(body: loaner),
+      loaner,
+    );
   }
 
   Future<bool> updateLoaner(Loaner loaner) async {

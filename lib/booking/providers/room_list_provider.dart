@@ -21,7 +21,9 @@ class RoomListNotifier extends ListNotifierAPI<RoomComplete> {
   Future<bool> updateRoom(RoomComplete room) async {
     return await update(
       () => roomRepository.bookingRoomsRoomIdPatch(
-          roomId: room.id, body: room.toRoomBase()),
+        roomId: room.id,
+        body: room.toRoomBase(),
+      ),
       (room) => room.id,
       room,
     );

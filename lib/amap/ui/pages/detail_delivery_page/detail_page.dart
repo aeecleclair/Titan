@@ -34,7 +34,8 @@ class DetailDeliveryPage extends HookConsumerWidget {
     return AmapTemplate(
       child: Refresher(
         onRefresh: () async {
-          await deliveryProductListNotifier.loadProductList(delivery.products ?? []);
+          await deliveryProductListNotifier
+              .loadProductList(delivery.products ?? []);
           await deliveryListNotifier.loadDeliveriesList();
         },
         child: Column(
@@ -67,7 +68,8 @@ class DetailDeliveryPage extends HookConsumerWidget {
                     for (OrderReturn o in listOrders) {
                       for (ProductQuantity p in o.productsdetail) {
                         if (!productsQuantity.containsKey(p.product.id)) {
-                          productsQuantity.addEntries({p.product.id: 0}.entries);
+                          productsQuantity
+                              .addEntries({p.product.id: 0}.entries);
                         }
                         productsQuantity[p.product.id] =
                             productsQuantity[p.product.id]! + p.quantity;

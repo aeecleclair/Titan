@@ -25,7 +25,8 @@ class AddEditProduct extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = GlobalKey<FormState>();
     final product = ref.watch(productProvider);
-    final isEdit = product.id != AppModulesAmapSchemasAmapProductComplete.fromJson({}).id;
+    final isEdit =
+        product.id != AppModulesAmapSchemasAmapProductComplete.fromJson({}).id;
     final products = ref.watch(productListProvider);
     final productsNotifier = ref.watch(productListProvider.notifier);
     final categories = ref.watch(categoryListProvider);
@@ -164,7 +165,8 @@ class AddEditProduct extends HookConsumerWidget {
                                   AMAPTextConstants.createCategory
                               ? newCategory.text
                               : categoryController;
-                          AppModulesAmapSchemasAmapProductComplete newProduct = AppModulesAmapSchemasAmapProductComplete(
+                          AppModulesAmapSchemasAmapProductComplete newProduct =
+                              AppModulesAmapSchemasAmapProductComplete(
                             id: isEdit ? product.id : "",
                             name: nameController.text,
                             price: double.parse(
@@ -176,7 +178,8 @@ class AddEditProduct extends HookConsumerWidget {
                             final value = isEdit
                                 ? await productsNotifier
                                     .updateProduct(newProduct)
-                                : await productsNotifier.addProduct(newProduct.toProductSimple());
+                                : await productsNotifier
+                                    .addProduct(newProduct.toProductSimple());
                             if (value) {
                               if (isEdit) {
                                 formKey.currentState!.reset();

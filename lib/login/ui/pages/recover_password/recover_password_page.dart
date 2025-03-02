@@ -71,7 +71,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
         isLoading: false,
         onPressed: () async {
           if (password.text.isNotEmpty && activationCode.text.isNotEmpty) {
-            ResetPasswordRequest  recoverRequest = ResetPasswordRequest(
+            ResetPasswordRequest recoverRequest = ResetPasswordRequest(
               resetToken: activationCode.text.trim(),
               newPassword: password.text,
             );

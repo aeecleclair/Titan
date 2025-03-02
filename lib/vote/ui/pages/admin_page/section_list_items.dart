@@ -29,8 +29,7 @@ class SectionListItems extends HookConsumerWidget {
     final membersNotifier = ref.read(listMembersProvider.notifier);
     final section = ref.watch(sectionProvider);
     final listListNotifier = ref.read(listListProvider.notifier);
-    final sectionListListNotifier =
-        ref.read(sectionListProvider.notifier);
+    final sectionListListNotifier = ref.read(sectionListProvider.notifier);
     final listNotifier = ref.read(listProvider.notifier);
 
     final asyncStatus = ref.watch(statusProvider);
@@ -51,9 +50,7 @@ class SectionListItems extends HookConsumerWidget {
                   listNotifier.setId(ListReturn.fromJson({}));
                   membersNotifier.setMembers([]);
                   QR.to(
-                    VoteRouter.root +
-                        VoteRouter.admin +
-                        VoteRouter.addEditList,
+                    VoteRouter.root + VoteRouter.admin + VoteRouter.addEditList,
                   );
                 },
                 child: const CardLayout(
@@ -78,9 +75,7 @@ class SectionListItems extends HookConsumerWidget {
               listNotifier.setId(e);
               membersNotifier.setMembers(e.members);
               QR.to(
-                VoteRouter.root +
-                    VoteRouter.admin +
-                    VoteRouter.addEditList,
+                VoteRouter.root + VoteRouter.admin + VoteRouter.addEditList,
               );
             });
           },
@@ -93,8 +88,7 @@ class SectionListItems extends HookConsumerWidget {
                   descriptions: VoteTextConstants.deletePretendanceDesc,
                   onYes: () {
                     tokenExpireWrapper(ref, () async {
-                      final value =
-                          await listListNotifier.deleteList(e.id);
+                      final value = await listListNotifier.deleteList(e.id);
                       if (value) {
                         displayVoteToastWithContext(
                           TypeMsg.msg,

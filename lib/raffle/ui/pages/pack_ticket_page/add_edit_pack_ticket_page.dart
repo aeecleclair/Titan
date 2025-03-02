@@ -133,12 +133,14 @@ class AddEditPackTicketPage extends HookConsumerWidget {
                               id: isEdit ? packTicket.id : "",
                             );
                             final typeTicketNotifier = ref.watch(
-                                packTicketListProvider(raffle.id).notifier);
+                              packTicketListProvider(raffle.id).notifier,
+                            );
                             final value = isEdit
                                 ? await typeTicketNotifier
                                     .updatePackTicket(newPackTicket)
-                                : await typeTicketNotifier
-                                    .addPackTicket(newPackTicket.toPackTicketBase());
+                                : await typeTicketNotifier.addPackTicket(
+                                    newPackTicket.toPackTicketBase(),
+                                  );
                             if (value) {
                               QR.back();
                               if (isEdit) {

@@ -16,9 +16,9 @@ class AssociationListNotifier extends ListNotifierAPI<AssociationComplete> {
 
   Future<bool> createAssociation(AssociationBase association) async {
     return await add(
-        () =>
-            associationRepository.phonebookAssociationsPost(body: association),
-        association);
+      () => associationRepository.phonebookAssociationsPost(body: association),
+      association,
+    );
   }
 
   Future<bool> updateAssociation(AssociationComplete association) async {
@@ -35,7 +35,8 @@ class AssociationListNotifier extends ListNotifierAPI<AssociationComplete> {
   Future<bool> deleteAssociation(String associationId) async {
     return await delete(
       () => associationRepository.phonebookAssociationsAssociationIdDelete(
-          associationId: associationId),
+        associationId: associationId,
+      ),
       (a) => a.id,
       associationId,
     );
@@ -45,7 +46,8 @@ class AssociationListNotifier extends ListNotifierAPI<AssociationComplete> {
     return await update(
       () => associationRepository
           .phonebookAssociationsAssociationIdDeactivatePatch(
-              associationId: association.id),
+        associationId: association.id,
+      ),
       (association) => association.id,
       association.copyWith(deactivated: true),
     );

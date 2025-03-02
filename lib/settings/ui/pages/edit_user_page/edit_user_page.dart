@@ -367,7 +367,8 @@ class EditUserPage extends HookConsumerWidget {
                               ? null
                               : phoneController.value.text,
                           floor: FloorsType.values.firstWhere(
-                              (e) => e.name == floorController.value.text),
+                            (e) => e.name == floorController.value.text,
+                          ),
                         ),
                       );
                       if (value) {

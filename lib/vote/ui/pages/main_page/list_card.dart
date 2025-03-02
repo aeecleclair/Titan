@@ -37,7 +37,9 @@ class ListCard extends HookConsumerWidget {
     final selectedListNotifier = ref.read(selectedListProvider.notifier);
     final status = ref.watch(statusProvider);
     final s = status.maybeWhen(
-        data: (value) => value.status, orElse: () => StatusType.closed);
+      data: (value) => value.status,
+      orElse: () => StatusType.closed,
+    );
     return Stack(
       children: [
         if (s == StatusType.published)

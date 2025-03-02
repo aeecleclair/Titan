@@ -10,7 +10,8 @@ class SectionVoteCountNotifier extends SingleNotifierAPI<VoteStats> {
 
   Future<AsyncValue<VoteStats>> loadCount(String sectionId) async {
     return await load(
-        () => repository.campaignStatsSectionIdGet(sectionId: sectionId));
+      () => repository.campaignStatsSectionIdGet(sectionId: sectionId),
+    );
   }
 }
 

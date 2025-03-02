@@ -29,7 +29,8 @@ class RaffleMainPage extends HookConsumerWidget {
     final raffleList = ref.watch(raffleListProvider);
     final raffleListNotifier = ref.watch(raffleListProvider.notifier);
     final userTicketList = ref.watch(userTicketListProvider(user.id));
-    final userTicketListNotifier = ref.watch(userTicketListProvider(user.id).notifier);
+    final userTicketListNotifier =
+        ref.watch(userTicketListProvider(user.id).notifier);
     final isAdmin = ref.watch(isRaffleAdminProvider);
     final tombolaLogosNotifier = ref.watch(tombolaLogosProvider.notifier);
 

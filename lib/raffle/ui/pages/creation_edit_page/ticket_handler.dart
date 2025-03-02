@@ -20,7 +20,8 @@ class TicketHandler extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final raffle = ref.watch(raffleProvider);
     final packTickets = ref.watch(packTicketListProvider(raffle.id));
-    final packTicketsNotifier = ref.watch(packTicketListProvider(raffle.id).notifier);
+    final packTicketsNotifier =
+        ref.watch(packTicketListProvider(raffle.id).notifier);
     final packTicketNotifier = ref.watch(packTicketProvider.notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -56,7 +57,8 @@ class TicketHandler extends HookConsumerWidget {
               if (raffle.status == RaffleStatusType.creation)
                 GestureDetector(
                   onTap: () {
-                    packTicketNotifier.setPackTicket(PackTicketSimple.fromJson({}));
+                    packTicketNotifier
+                        .setPackTicket(PackTicketSimple.fromJson({}));
                     QR.to(
                       RaffleRouter.root +
                           RaffleRouter.detail +
@@ -111,8 +113,8 @@ class TicketHandler extends HookConsumerWidget {
                                     RaffleRouter.addEditPackTicket,
                               );
                             },
-                            showButton: raffle.status ==
-                                RaffleStatusType.creation,
+                            showButton:
+                                raffle.status == RaffleStatusType.creation,
                             onDelete: () async {
                               await showDialog(
                                 context: context,

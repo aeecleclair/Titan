@@ -78,14 +78,16 @@ class AuthRepository {
         }
         try {
           if (token != null && token.isNotEmpty) {
-            final response = await openIdRepository.authTokenPost(body: {
-              "client_id": clientId,
-              "code": token,
-              "redirect_uri": redirectUri.toString(),
-              "code_verifier": codeVerifier,
-              "grant_type": "authorization_code",
-              "refresh_token": token,
-            });
+            final response = await openIdRepository.authTokenPost(
+              body: {
+                "client_id": clientId,
+                "code": token,
+                "redirect_uri": redirectUri.toString(),
+                "code_verifier": codeVerifier,
+                "grant_type": "authorization_code",
+                "refresh_token": token,
+              },
+            );
             if (response.isSuccessful && response.body != null) {
               storeToken(response.body!);
               return response.body!;
@@ -136,26 +138,30 @@ class AuthRepository {
       if (token != null) {
         try {
           if (kIsWeb) {
-            final response = await openIdRepository.authTokenPost(body: {
-              "client_id": clientId,
-              "code": token,
-              "redirect_uri": "",
-              "code_verifier": "",
-              "grant_type": "refresh_token",
-              "refresh_token": token,
-            });
+            final response = await openIdRepository.authTokenPost(
+              body: {
+                "client_id": clientId,
+                "code": token,
+                "redirect_uri": "",
+                "code_verifier": "",
+                "grant_type": "refresh_token",
+                "refresh_token": token,
+              },
+            );
             if (response.isSuccessful && response.body != null) {
               tokenResponse = response.body!;
               storeToken(tokenResponse);
             }
           } else {
-            final resp = await appAuth.token(TokenRequest(
-              clientId,
-              redirectUrl,
-              discoveryUrl: discoveryUrl,
-              scopes: scopes,
-              refreshToken: token,
-            ));
+            final resp = await appAuth.token(
+              TokenRequest(
+                clientId,
+                redirectUrl,
+                discoveryUrl: discoveryUrl,
+                scopes: scopes,
+                refreshToken: token,
+              ),
+            );
             if (resp.accessToken != null && resp.refreshToken != null) {
               tokenResponse = models.TokenResponse(
                 accessToken: resp.accessToken!,
@@ -181,13 +187,15 @@ class AuthRepository {
   Future<models.TokenResponse> getAuthToken(String authorizationToken) async {
     models.TokenResponse tokenResponse = models.TokenResponse.fromJson({});
     appAuth
-        .token(TokenRequest(
-      clientId,
-      redirectUrl,
-      discoveryUrl: discoveryUrl,
-      scopes: scopes,
-      authorizationCode: authorizationToken,
-    ))
+        .token(
+      TokenRequest(
+        clientId,
+        redirectUrl,
+        discoveryUrl: discoveryUrl,
+        scopes: scopes,
+        authorizationCode: authorizationToken,
+      ),
+    )
         .then((resp) {
       if (resp.accessToken != null && resp.refreshToken != null) {
         tokenResponse = models.TokenResponse(

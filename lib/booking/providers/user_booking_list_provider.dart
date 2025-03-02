@@ -16,7 +16,9 @@ class UserBookingListProvider extends ListNotifierAPI<BookingReturn> {
 
   Future<bool> addBooking(BookingBase booking) async {
     return await add(
-        () => bookingRepository.bookingBookingsPost(body: booking), booking);
+      () => bookingRepository.bookingBookingsPost(body: booking),
+      booking,
+    );
   }
 
   Future<bool> updateBooking(BookingReturn booking) async {
@@ -33,7 +35,8 @@ class UserBookingListProvider extends ListNotifierAPI<BookingReturn> {
   Future<bool> deleteBooking(String bookingId) async {
     return await delete(
       () => bookingRepository.bookingBookingsBookingIdDelete(
-          bookingId: bookingId),
+        bookingId: bookingId,
+      ),
       (b) => b.id,
       bookingId,
     );

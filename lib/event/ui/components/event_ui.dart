@@ -38,7 +38,8 @@ class EventUi extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final now = DateTime.now();
     final user = ref.watch(userProvider);
-    final eventListNotifier = ref.watch(eventEventListProvider(user.id).notifier);
+    final eventListNotifier =
+        ref.watch(eventEventListProvider(user.id).notifier);
     final eventNotifier = ref.watch(eventProvider.notifier);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);

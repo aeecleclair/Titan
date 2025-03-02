@@ -13,7 +13,8 @@ class RaffleStatsNotifier extends SingleNotifierAPI<RaffleStats> {
   ) async {
     return await load(
       () async => raffleDetailRepository.tombolaRafflesRaffleIdStatsGet(
-          raffleId: raffleId),
+        raffleId: raffleId,
+      ),
     );
   }
 }

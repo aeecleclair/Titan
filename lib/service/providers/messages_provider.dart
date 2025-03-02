@@ -9,20 +9,22 @@ class DevicesProvider extends StateNotifier<void> {
 
   Future<bool> registerDevice(String firebaseToken) async {
     return (await notificationRepository.notificationDevicesPost(
-            body: BodyRegisterFirebaseDeviceNotificationDevicesPost(
-                firebaseToken: firebaseToken)))
+      body: BodyRegisterFirebaseDeviceNotificationDevicesPost(
+        firebaseToken: firebaseToken,
+      ),
+    ))
         .isSuccessful;
   }
 
   Future<bool> forgetDevice(String firebaseToken) async {
     return (await notificationRepository.notificationDevicesFirebaseTokenDelete(
-            firebaseToken: firebaseToken))
+      firebaseToken: firebaseToken,
+    ))
         .isSuccessful;
   }
 }
 
-final devicesProvider =
-    StateNotifierProvider<DevicesProvider, void>((ref) {
+final devicesProvider = StateNotifierProvider<DevicesProvider, void>((ref) {
   final notificationRepository = ref.watch(repositoryProvider);
   DevicesProvider notifier =
       DevicesProvider(notificationRepository: notificationRepository);

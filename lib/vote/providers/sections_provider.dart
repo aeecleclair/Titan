@@ -16,13 +16,16 @@ class SectionNotifier extends ListNotifierAPI<SectionComplete> {
 
   Future<bool> addSection(SectionBase section) async {
     return await add(
-        () => sectionRepository.campaignSectionsPost(body: section), section);
+      () => sectionRepository.campaignSectionsPost(body: section),
+      section,
+    );
   }
 
   Future<bool> deleteSection(String sectionId) async {
     return await delete(
       () => sectionRepository.campaignSectionsSectionIdDelete(
-          sectionId: sectionId),
+        sectionId: sectionId,
+      ),
       (s) => s.id,
       sectionId,
     );

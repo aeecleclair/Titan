@@ -9,7 +9,7 @@ import 'package:myecl/tools/cache/cache_manager.dart';
 
 final authTokenProvider =
     StateNotifierProvider<OpenIdTokenProvider, AsyncValue<TokenResponse>>(
-        (ref) {  
+        (ref) {
   final repository = ref.watch(authRepositoryProvider);
   final openIdTokenProvider = OpenIdTokenProvider(userRepository: repository);
   final isConnected = ref.watch(isConnectedProvider);
@@ -100,8 +100,7 @@ final tokenProvider = Provider((ref) {
       );
 });
 
-class OpenIdTokenProvider
-    extends StateNotifier<AsyncValue<TokenResponse>> {
+class OpenIdTokenProvider extends StateNotifier<AsyncValue<TokenResponse>> {
   final String tokenKey = "token";
   final String refreshTokenKey = "refresh_token";
   AuthRepository? userRepository;

@@ -2,7 +2,6 @@ import 'package:myecl/amap/providers/delivery_provider.dart';
 import 'package:myecl/amap/providers/available_deliveries.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/ui/amap.dart';
-import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/widgets/admin_button.dart';
@@ -223,7 +222,8 @@ class AmapMainPage extends HookConsumerWidget {
                         ),
                         const SizedBox(height: 30),
                         DeliverySection(
-                          editable: order.orderId == OrderReturn.fromJson({}).orderId,
+                          editable:
+                              order.orderId == OrderReturn.fromJson({}).orderId,
                         ),
                         const SizedBox(height: 20),
                         WaitingButton(

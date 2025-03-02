@@ -9,7 +9,8 @@ class SimpleGroupsGroupsNotifier extends MapNotifier<String, CoreGroup> {
 }
 
 final simpleGroupsGroupsProvider = StateNotifierProvider<
-    SimpleGroupsGroupsNotifier, Map<String, AsyncValue<List<CoreGroup>>?>>((ref) {
+    SimpleGroupsGroupsNotifier,
+    Map<String, AsyncValue<List<CoreGroup>>?>>((ref) {
   SimpleGroupsGroupsNotifier simpleGroupsGroupsNotifier =
       SimpleGroupsGroupsNotifier();
   tokenExpireWrapperAuth(ref, () async {

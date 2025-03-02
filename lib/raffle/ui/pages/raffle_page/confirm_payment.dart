@@ -30,7 +30,8 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
     final user = ref.watch(userProvider);
     final userAmount = ref.watch(userAmountProvider(user.id));
     final userAmountNotifier = ref.watch(userAmountProvider(user.id).notifier);
-    final userTicketListNotifier = ref.watch(userTicketListProvider(user.id).notifier);
+    final userTicketListNotifier =
+        ref.watch(userTicketListProvider(user.id).notifier);
     final tombolaLogos = ref.watch(tombolaLogosProvider);
     final tombolaLogosNotifier = ref.watch(tombolaLogosProvider.notifier);
     final tombolaLogoNotifier = ref.watch(tombolaLogoProvider.notifier);

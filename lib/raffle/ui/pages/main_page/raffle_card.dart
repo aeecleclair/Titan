@@ -22,9 +22,12 @@ class RaffleWidget extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final raffleIdNotifier = ref.watch(raffleIdProvider.notifier);
     final prizeListNotifier = ref.read(prizeListProvider(raffle.id).notifier);
-    final ticketListNotifier = ref.watch(ticketsListProvider(raffle.id).notifier);
-    final packTicketListNotifier = ref.watch(packTicketListProvider(raffle.id).notifier);
-    final singleRaffleStats = ref.watch(raffleStatsProvider(raffle.id).notifier);
+    final ticketListNotifier =
+        ref.watch(ticketsListProvider(raffle.id).notifier);
+    final packTicketListNotifier =
+        ref.watch(packTicketListProvider(raffle.id).notifier);
+    final singleRaffleStats =
+        ref.watch(raffleStatsProvider(raffle.id).notifier);
     final raffleStat =
         ref.watch(raffleStatsMapProvider.select((value) => value[raffle.id]));
     final rafflesStatsNotifier = ref.watch(raffleStatsMapProvider.notifier);
@@ -84,9 +87,9 @@ class RaffleWidget extends HookConsumerWidget {
                   group: raffleStat,
                   notifier: rafflesStatsNotifier,
                   mapKey: raffle.id,
-                  loader: (raffleId) async => (await singleRaffleStats
-                          .loadRaffleStats(raffleId))
-                      .maybeWhen(
+                  loader: (raffleId) async =>
+                      (await singleRaffleStats.loadRaffleStats(raffleId))
+                          .maybeWhen(
                     data: (value) => value,
                     orElse: () => RaffleStats.fromJson({}),
                   ),
