@@ -134,12 +134,13 @@ abstract class ListNotifierAPI<T> extends StateNotifier<AsyncValue<List<T>>> {
 
   Future<bool> delete(
     Future<Response<dynamic>> Function() f,
-    List<T> Function(List<T> listT) replace,
+    String Function(T t) getKey,
+    String key,
   ) async {
     return handleState((d) async {
       final response = await f();
       if (response.isSuccessful) {
-        d = replace(d);
+        d.removeWhere((e) => getKey(e) == key);
         state = AsyncValue.data(d);
         return true;
       } else {
@@ -149,10 +150,11 @@ abstract class ListNotifierAPI<T> extends StateNotifier<AsyncValue<List<T>>> {
   }
 
   Future<bool> localDelete(
-    List<T> Function(List<T> listT) replace,
+    String Function(T t) getKey,
+    String key,
   ) async {
     return handleState((d) async {
-      d = replace(d);
+      d.removeWhere((e) => getKey(e) == key);
       state = AsyncValue.data(d);
       return true;
     }, "Cannot delete while loading");

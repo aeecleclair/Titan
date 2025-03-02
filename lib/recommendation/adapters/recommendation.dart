@@ -9,4 +9,13 @@ extension $Recommendation on Recommendation {
       code: code,
     );
   }
+
+  RecommendationBase toRecommendationBase() {
+    return RecommendationBase(
+      title: title,
+      description: description,
+      summary: summary,
+      code: code,
+    );
+  }
 }

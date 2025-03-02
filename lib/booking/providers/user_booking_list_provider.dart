@@ -34,7 +34,8 @@ class UserBookingListProvider extends ListNotifierAPI<BookingReturn> {
     return await delete(
       () => bookingRepository.bookingBookingsBookingIdDelete(
           bookingId: booking.id),
-      (bookings) => bookings..removeWhere((i) => i.id == booking.id),
+      (b) => b.id,
+      booking.id,
     );
   }
 }

@@ -34,7 +34,8 @@ class SessionListNotifier extends ListNotifierAPI<CineSessionComplete> {
     return await delete(
       () => sessionRepository.cinemaSessionsSessionIdDelete(
           sessionId: session.id),
-      (sessions) => sessions..removeWhere((b) => b.id == session.id),
+      (s) => s.id,
+      session.id,
     );
   }
 }

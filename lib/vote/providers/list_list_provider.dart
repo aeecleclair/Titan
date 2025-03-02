@@ -34,15 +34,16 @@ class ListListNotifier extends ListNotifierAPI<ListReturn> {
   Future<bool> deleteList(ListReturn list) async {
     return await delete(
       () => listRepository.campaignListsListIdDelete(listId: list.id),
-      (lists) => lists..removeWhere((p) => p.id == list.id),
+      (l) => l.id,
+      list.id,
     );
   }
 
   Future<bool> deleteLists({ListType? type}) async {
     return await delete(
       () => listRepository.campaignListsDelete(listType: type),
-      (lists) =>
-          lists..removeWhere((p) => type != null ? p.type == type : true),
+      (l) => l.type.name,
+      type?.name ?? "",
     );
   }
 

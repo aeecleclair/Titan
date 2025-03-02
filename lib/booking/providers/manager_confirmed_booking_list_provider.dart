@@ -23,9 +23,8 @@ class ManagerConfirmedBookingListProvider
 
   Future<bool> deleteBooking(BookingReturnSimpleApplicant booking) async {
     return await localDelete(
-      (bookings, booking) =>
-          bookings..removeWhere((element) => element.id == booking.id),
-      booking,
+      (b) => b.id,
+      booking.id,
     );
   }
 }

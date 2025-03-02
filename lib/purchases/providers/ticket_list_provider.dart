@@ -31,7 +31,7 @@ class TicketListNotifier extends ListNotifierAPI<Ticket> {
           tag: tag,
         ),
       ),
-      (tickets, ticket) {
+      (tickets) {
         List<String> tags = ticket.tags;
         tags.add(tag);
         return tickets

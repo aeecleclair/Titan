@@ -19,9 +19,8 @@ class ConfirmedEventListProvider extends ListNotifierAPI<EventComplete> {
 
   Future<bool> deleteEvent(EventComplete booking) async {
     return await localDelete(
-      (bookings, booking) =>
-          bookings..removeWhere((element) => element.id == booking.id),
-      booking,
+      (booking) => booking.id,
+      booking.id,
     );
   }
 }

@@ -18,7 +18,7 @@ class CinemaTopicsProvider extends ListNotifierAPI<String> {
     return await update(
       () => cinemaTopicRepository.notificationTopicsTopicStrSubscribePost(
           topicStr: topic),
-      (listT, t) => listT..add(t),
+      (listT) => listT,
       topic,
     );
   }
@@ -27,7 +27,7 @@ class CinemaTopicsProvider extends ListNotifierAPI<String> {
     return await update(
       () => cinemaTopicRepository.notificationTopicsTopicStrUnsubscribePost(
           topicStr: topic),
-      (listT, t) => listT..remove(t),
+      (listT) => listT,
       topic,
     );
   }

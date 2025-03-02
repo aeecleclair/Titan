@@ -23,8 +23,8 @@ class SectionNotifier extends ListNotifierAPI<SectionComplete> {
     return await delete(
       () => sectionRepository.campaignSectionsSectionIdDelete(
           sectionId: section.id),
-      (sections, section) => sections..removeWhere((s) => s.id == section.id),
-      section,
+      (s) => s.id,
+      section.id,
     );
   }
 }

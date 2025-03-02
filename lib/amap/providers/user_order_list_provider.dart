@@ -52,7 +52,8 @@ class UserOrderListNotifier extends ListNotifierAPI<OrderReturn> {
     return await delete(
       () => userOrderListRepository.amapOrdersOrderIdDelete(
           orderId: order.orderId),
-      (orders) => orders..removeWhere((i) => i.orderId == order.orderId),
+      (o) => o.orderId,
+      order.orderId,
     );
   }
 

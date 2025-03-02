@@ -33,7 +33,8 @@ class LoanerListNotifier extends ListNotifierAPI<Loaner> {
   Future<bool> deleteLoaner(Loaner loaner) async {
     return await delete(
       () => loanerRepository.loansLoanersLoanerIdDelete(loanerId: loaner.id),
-      (loans) => loans..removeWhere((i) => i.id == loaner.id),
+      (l) => l.id,
+      loaner.id,
     );
   }
 }

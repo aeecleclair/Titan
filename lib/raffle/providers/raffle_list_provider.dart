@@ -26,7 +26,8 @@ class RaffleListNotifier extends ListNotifierAPI<RaffleComplete> {
 
   Future<bool> deleteRaffle(RaffleComplete raffle) async {
     return await localDelete(
-      (raffles) => raffles..removeWhere((e) => e.id == raffle.id),
+      (r) => r.id,
+      raffle.id,
     );
   }
 

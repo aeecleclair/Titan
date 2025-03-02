@@ -17,7 +17,7 @@ class GroupNotifier extends SingleNotifierAPI<CoreGroup> {
 
   Future<bool> addMember(CoreGroup group, CoreUserSimple user) async {
     return await update(
-      (group) async => groupRepository.groupsMembershipPost(
+      () async => groupRepository.groupsMembershipPost(
         body: group.toCoreMembership(user),
       ),
       group,
@@ -26,7 +26,7 @@ class GroupNotifier extends SingleNotifierAPI<CoreGroup> {
 
   Future<bool> deleteMember(CoreGroup group, CoreUserSimple user) async {
     return await update(
-      (group) async => groupRepository.groupsMembershipDelete(
+      () async => groupRepository.groupsMembershipDelete(
         body: group.toCoreMembershipDelete(user),
       ),
       group,

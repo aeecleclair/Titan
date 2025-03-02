@@ -80,7 +80,8 @@ class AssociationMemberListNotifier extends ListNotifierAPI<MemberComplete> {
       () => associationMemberRepository
           .phonebookAssociationsMembershipsMembershipIdDelete(
               membershipId: membership.id),
-      (members) => members..removeWhere((i) => i.id == member.id),
+      (m) => m.id,
+      member.id,
     );
   }
 }

@@ -32,7 +32,8 @@ class SchoolListNotifier extends ListNotifierAPI<CoreSchool> {
   Future<bool> deleteSchool(CoreSchool school) async {
     return await delete(
       () => schoolRepository.schoolsSchoolIdDelete(schoolId: school.id),
-      (schools) => schools..removeWhere((i) => i.id == school.id),
+      (s) => s.id,
+      school.id,
     );
   }
 

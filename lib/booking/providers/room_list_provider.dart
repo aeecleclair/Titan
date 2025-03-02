@@ -30,7 +30,8 @@ class RoomListNotifier extends ListNotifierAPI<RoomComplete> {
   Future<bool> deleteRoom(RoomComplete room) async {
     return await delete(
       () => roomRepository.bookingRoomsRoomIdDelete(roomId: room.id),
-      (rooms) => rooms..removeWhere((i) => i.id == room.id),
+      (r) => r.id,
+      room.id,
     );
   }
 }

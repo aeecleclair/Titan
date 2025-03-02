@@ -39,7 +39,8 @@ class GroupListNotifier extends ListNotifierAPI<CoreGroupSimple> {
   Future<bool> deleteGroup(CoreGroupSimple group) async {
     return await delete(
       () => groupRepository.groupsGroupIdDelete(groupId: group.id),
-      (groups) => groups..removeWhere((i) => i.id == group.id),
+      (g) => g.id,
+      group.id,
     );
   }
 

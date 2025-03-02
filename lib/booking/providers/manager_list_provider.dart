@@ -34,7 +34,8 @@ class ManagerListNotifier extends ListNotifierAPI<Manager> {
     return await delete(
       () => managerRepository.bookingManagersManagerIdDelete(
           managerId: manager.id),
-      (managers) => managers..removeWhere((m) => m.id == manager.id),
+      (m) => m.id,
+      manager.id,
     );
   }
 }

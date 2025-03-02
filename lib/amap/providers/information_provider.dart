@@ -16,7 +16,7 @@ class InformationNotifier extends SingleNotifierAPI<Information> {
 
   Future<bool> updateInformation(Information information) async {
     return await update(
-      (information) => informationRepository.amapInformationPatch(
+      () => informationRepository.amapInformationPatch(
         body: information.toInformationEdit(),
       ),
       information,

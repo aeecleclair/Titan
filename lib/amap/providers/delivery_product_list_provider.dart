@@ -47,7 +47,8 @@ class DeliveryProductListNotifier
         deliveryId: deliveryId,
         body: product.toDeliveryProductsUpdate(),
       ),
-      (products) => products..removeWhere((i) => i.id == product.id),
+      (p) => p.id,
+      product.id,
     );
   }
 }

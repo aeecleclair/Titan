@@ -17,7 +17,7 @@ class TopicsProvider extends ListNotifierAPI<String> {
     return await update(
       () => notificationRepository.notificationTopicsTopicStrSubscribePost(
           topicStr: topic),
-      (listT, t) => listT..add(t),
+      (listT) => listT,
       topic,
     );
   }
@@ -26,7 +26,7 @@ class TopicsProvider extends ListNotifierAPI<String> {
     return await update(
       () => notificationRepository.notificationTopicsTopicStrUnsubscribePost(
           topicStr: topic),
-      (listT, t) => listT..remove(t),
+      (listT) => listT,
       topic,
     );
   }
@@ -44,12 +44,12 @@ class TopicsProvider extends ListNotifierAPI<String> {
   }
 
   Future<bool> fakeSubscribeTopic(String topic) async {
-    return await localUpdate((listT, t) => listT..add(t), topic);
+    return await localUpdate((t) => t, topic);
   }
 
   Future<bool> fakeUnsubscribeTopic(String topic) async {
     return await localUpdate(
-      (listT, t) => listT..remove(t),
+      (t) => t,
       topic,
     );
   }

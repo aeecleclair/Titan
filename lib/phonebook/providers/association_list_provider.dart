@@ -36,8 +36,8 @@ class AssociationListNotifier extends ListNotifierAPI<AssociationComplete> {
     return await delete(
       () => associationRepository.phonebookAssociationsAssociationIdDelete(
           associationId: association.id),
-      (associations) =>
-          associations..removeWhere((i) => i.id == association.id),
+      (a) => a.id,
+      association.id,
     );
   }
 

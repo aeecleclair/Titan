@@ -34,7 +34,8 @@ class EventEventListProvider extends ListNotifierAPI<EventReturn> {
   Future<bool> deleteEvent(EventReturn event) async {
     return await delete(
       () => eventRepository.calendarEventsEventIdDelete(eventId: event.id),
-      (events) => events..removeWhere((e) => e.id == event.id),
+      (e) => e.id,
+      event.id,
     );
   }
 }

@@ -58,10 +58,10 @@ abstract class SingleNotifierAPI<T> extends StateNotifier<AsyncValue<T>> {
     });
   }
 
-  Future<bool> update(Future<Response<dynamic>> Function(T t) f, T t) async {
+  Future<bool> update(Future<Response<dynamic>> Function() f, T t) async {
     return state.when(data: (d) async {
       try {
-        final response = await f(t);
+        final response = await f();
         if (response.isSuccessful) {
           state = AsyncValue.data(t);
           return true;
@@ -91,10 +91,10 @@ abstract class SingleNotifierAPI<T> extends StateNotifier<AsyncValue<T>> {
   }
 
   Future<bool> delete(
-      Future<Response<dynamic>> Function(String id) f, T t, String id) async {
+      Future<Response<dynamic>> Function() f) async {
     return state.when(data: (d) async {
       try {
-        final response = await f(id);
+        final response = await f();
         if (response.isSuccessful) {
           state = const AsyncValue.loading();
           return true;

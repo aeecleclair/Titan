@@ -21,7 +21,8 @@ class VoterListNotifier extends ListNotifierAPI<VoterGroup> {
   Future<bool> deleteVoter(VoterGroup voter) async {
     return await delete(
       () => voterRepository.campaignVotersGroupIdDelete(groupId: voter.groupId),
-      (voters) => voters..removeWhere((p) => p.groupId == voter.groupId),
+      (v) => v.groupId,
+      voter.groupId,
     );
   }
 }

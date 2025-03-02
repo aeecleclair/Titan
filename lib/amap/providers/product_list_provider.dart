@@ -40,7 +40,8 @@ class ProductListNotifier
     return await delete(
       () => productListRepository.amapProductsProductIdDelete(
           productId: product.id),
-      (products) => products..removeWhere((i) => i.id == product.id),
+      (p) => p.id,
+      product.id,
     );
   }
 }

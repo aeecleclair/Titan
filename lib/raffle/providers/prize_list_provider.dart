@@ -34,7 +34,8 @@ class PrizeListNotifier extends ListNotifierAPI<PrizeSimple> {
   Future<bool> deletePrize(PrizeSimple prize) async {
     return await delete(
       () => prizeRepository.tombolaPrizesPrizeIdDelete(prizeId: prize.id),
-      (prizes) => prizes..removeWhere((e) => e.id == prize.id),
+      (p) => p.id,
+      prize.id,
     );
   }
 

@@ -39,7 +39,8 @@ class ItemListNotifier extends ListNotifierAPI<Item> {
     return await delete(
       () async => itemRepository.loansLoanersLoanerIdItemsItemIdDelete(
           loanerId: loanerId, itemId: item.id),
-      (items) => items..removeWhere((i) => i.id == item.id),
+      (i) => i.id,
+      item.id,
     );
   }
 

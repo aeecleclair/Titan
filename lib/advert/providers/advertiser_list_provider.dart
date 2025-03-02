@@ -40,7 +40,8 @@ class AdvertiserListNotifier extends ListNotifierAPI<AdvertiserComplete> {
     return await delete(
       () => advertiserRepository.advertAdvertisersAdvertiserIdDelete(
           advertiserId: advertiser.id),
-      (adverts) => adverts..removeWhere((i) => i.id == advertiser.id),
+      (a) => a.id,
+      advertiser.id,
     );
   }
 }

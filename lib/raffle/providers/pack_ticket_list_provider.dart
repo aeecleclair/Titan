@@ -38,7 +38,8 @@ class PackTicketsListNotifier extends ListNotifierAPI<PackTicketSimple> {
     return await delete(
       () => packTicketsRepository.tombolaPackTicketsPackticketIdDelete(
           packticketId: packTicket.id),
-      (packTickets) => packTickets..removeWhere((e) => e.id == packTicket.id),
+      (p) => p.id,
+      packTicket.id,
     );
   }
 }

@@ -36,7 +36,8 @@ class AdvertListNotifier extends ListNotifierAPI<AdvertReturnComplete> {
     return await delete(
       () =>
           advertListRepository.advertAdvertsAdvertIdDelete(advertId: advert.id),
-      (adverts) => adverts..removeWhere((b) => b.id == advert.id),
+      (a) => a.id,
+      advert.id,
     );
   }
 }

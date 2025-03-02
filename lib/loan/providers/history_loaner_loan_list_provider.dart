@@ -34,14 +34,16 @@ class HistoryLoanerLoanListNotifier extends ListNotifierAPI<Loan> {
   Future<bool> deleteLoan(Loan loan) async {
     return await delete(
       () => loanRepository.loansLoanIdDelete(loanId: loan.id),
-      (loans) => loans..removeWhere((i) => i.id == loan.id),
+      (l) => l.id,
+      loan.id,
     );
   }
 
   Future<bool> returnLoan(Loan loan) async {
     return await delete(
       () => loanRepository.loansLoanIdReturnPost(loanId: loan.id),
-      (loans) => loans..removeWhere((i) => i.id == loan.id),
+      (l) => l.id,
+      loan.id,
     );
   }
 

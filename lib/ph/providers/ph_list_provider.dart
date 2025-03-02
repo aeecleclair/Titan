@@ -32,7 +32,8 @@ class PhListNotifier extends ListNotifierAPI<PaperComplete> {
   Future<bool> deletePh(PaperComplete ph) async {
     return await delete(
       () => phRepository.phPaperIdDelete(paperId: ph.id),
-      (phs) => phs..removeWhere((phToCheck) => phToCheck.id == ph.id),
+      (p) => p.id,
+      ph.id,
     );
   }
 }

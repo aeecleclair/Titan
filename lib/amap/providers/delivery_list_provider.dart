@@ -67,7 +67,8 @@ class DeliveryListNotifier extends ListNotifierAPI<DeliveryReturn> {
       () => deliveriesListRepository.amapDeliveriesDeliveryIdArchivePost(
         deliveryId: delivery.id,
       ),
-      (deliveries) => deliveries..removeWhere((i) => i.id == delivery.id),
+      (d) => d.id,
+      delivery.id,
     );
   }
 
@@ -76,7 +77,8 @@ class DeliveryListNotifier extends ListNotifierAPI<DeliveryReturn> {
       () => deliveriesListRepository.amapDeliveriesDeliveryIdDelete(
         deliveryId: delivery.id,
       ),
-      (deliveries) => deliveries..removeWhere((i) => i.id == delivery.id),
+      (d) => d.id,
+      delivery.id,
     );
   }
 

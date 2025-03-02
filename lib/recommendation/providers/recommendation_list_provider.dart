@@ -40,8 +40,8 @@ class RecommendationListNotifier extends ListNotifierAPI<Recommendation> {
       () => recommendationRepository
           .recommendationRecommendationsRecommendationIdDelete(
               recommendationId: recommendation.id),
-      (recommendations) =>
-          recommendations..removeWhere((r) => r.id == recommendation.id),
+      (r) => r.id,
+      recommendation.id,
     );
   }
 }

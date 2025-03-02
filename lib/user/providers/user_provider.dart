@@ -53,7 +53,9 @@ class UserNotifier extends SingleNotifierAPI<CoreUser> {
   }
 
   Future<bool> deletePersonal() async {
-    return (await userRepository.usersMeAskDeletionPost()).isSuccessful;
+    return await delete(
+      () => userRepository.usersMeAskDeletionPost(),
+    );
   }
 
   Future<bool> askMailMigration(String mail) async {
