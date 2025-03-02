@@ -35,12 +35,12 @@ class ItemListNotifier extends ListNotifierAPI<Item> {
     );
   }
 
-  Future<bool> deleteItem(Item item, String loanerId) async {
+  Future<bool> deleteItem(String itemId, String loanerId) async {
     return await delete(
       () async => itemRepository.loansLoanersLoanerIdItemsItemIdDelete(
-          loanerId: loanerId, itemId: item.id),
+          loanerId: loanerId, itemId: itemId),
       (i) => i.id,
-      item.id,
+      itemId,
     );
   }
 

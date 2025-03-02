@@ -32,12 +32,12 @@ class AdvertListNotifier extends ListNotifierAPI<AdvertReturnComplete> {
     );
   }
 
-  Future<bool> deleteAdvert(AdvertReturnComplete advert) async {
+  Future<bool> deleteAdvert(String advertId) async {
     return await delete(
       () =>
-          advertListRepository.advertAdvertsAdvertIdDelete(advertId: advert.id),
+          advertListRepository.advertAdvertsAdvertIdDelete(advertId: advertId),
       (a) => a.id,
-      advert.id,
+      advertId,
     );
   }
 }

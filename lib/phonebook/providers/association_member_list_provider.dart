@@ -4,7 +4,6 @@ import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:chopper/chopper.dart';
 import 'package:myecl/phonebook/adapters/membership.dart';
 
 class AssociationMemberListNotifier extends ListNotifierAPI<MemberComplete> {
@@ -73,15 +72,15 @@ class AssociationMemberListNotifier extends ListNotifierAPI<MemberComplete> {
   }
 
   Future<bool> deleteMember(
-    MemberComplete member,
-    MembershipComplete membership,
+    String memberId,
+    String membershipId,
   ) async {
     return await delete(
       () => associationMemberRepository
           .phonebookAssociationsMembershipsMembershipIdDelete(
-              membershipId: membership.id),
+              membershipId: membershipId),
       (m) => m.id,
-      member.id,
+      memberId,
     );
   }
 }

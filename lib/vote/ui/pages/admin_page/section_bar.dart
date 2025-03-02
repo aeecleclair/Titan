@@ -67,7 +67,7 @@ class SectionBar extends HookConsumerWidget {
                 title: VoteTextConstants.deleteSection,
                 descriptions: VoteTextConstants.deleteSectionDescription,
                 onYes: () async {
-                  final result = await sectionsNotifier.deleteSection(key);
+                  final result = await sectionsNotifier.deleteSection(key.id);
                   if (result) {
                     sectionListListNotifier.deleteT(key);
                     displayVoteToastWithContext(

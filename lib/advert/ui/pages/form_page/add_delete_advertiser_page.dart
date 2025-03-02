@@ -69,8 +69,8 @@ class AddDeleteAdvertiserPage extends HookConsumerWidget {
                                         .map(
                                           (e) => GestureDetector(
                                             onTap: () {
-                                              AdvertiserBase  newAdvertiser =
-                                                  AdvertiserBase (
+                                              AdvertiserBase newAdvertiser =
+                                                  AdvertiserBase(
                                                 groupManagerId: e.id,
                                                 name: e.name,
                                               );
@@ -129,7 +129,8 @@ class AddDeleteAdvertiserPage extends HookConsumerWidget {
                                                                     e.id ==
                                                                     e.id,
                                                               )
-                                                              .toList()[0],
+                                                              .toList()[0]
+                                                              .id,
                                                         );
                                                         if (value) {
                                                           displayToastWithContext(

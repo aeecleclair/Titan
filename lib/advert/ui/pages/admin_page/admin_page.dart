@@ -126,7 +126,7 @@ class AdvertAdminPage extends HookConsumerWidget {
                             title: AdvertTextConstants.deleting,
                             descriptions: AdvertTextConstants.deleteAdvert,
                             onYes: () {
-                              advertListNotifier.deleteAdvert(advert);
+                              advertListNotifier.deleteAdvert(advert.id);
                               advertPostersNotifier.deleteE(advert.id, 0);
                             },
                           );

@@ -36,11 +36,11 @@ class GroupListNotifier extends ListNotifierAPI<CoreGroupSimple> {
     );
   }
 
-  Future<bool> deleteGroup(CoreGroupSimple group) async {
+  Future<bool> deleteGroup(String groupId) async {
     return await delete(
-      () => groupRepository.groupsGroupIdDelete(groupId: group.id),
+      () => groupRepository.groupsGroupIdDelete(groupId: groupId),
       (g) => g.id,
-      group.id,
+      groupId,
     );
   }
 

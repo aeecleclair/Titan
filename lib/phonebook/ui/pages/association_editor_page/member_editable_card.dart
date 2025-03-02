@@ -154,12 +154,12 @@ class MemberEditableCard extends HookConsumerWidget {
             deletion: true,
             onDelete: () async {
               final result = await associationMemberListNotifier.deleteMember(
-                member,
+                member.id,
                 member.memberships.firstWhere(
                   (element) =>
                       element.associationId == association.id &&
                       element.mandateYear == association.mandateYear,
-                ),
+                ).id,
               );
               if (result) {
                 displayToastWithContext(

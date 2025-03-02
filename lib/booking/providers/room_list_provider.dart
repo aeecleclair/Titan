@@ -27,11 +27,11 @@ class RoomListNotifier extends ListNotifierAPI<RoomComplete> {
     );
   }
 
-  Future<bool> deleteRoom(RoomComplete room) async {
+  Future<bool> deleteRoom(String roomId) async {
     return await delete(
-      () => roomRepository.bookingRoomsRoomIdDelete(roomId: room.id),
+      () => roomRepository.bookingRoomsRoomIdDelete(roomId: roomId),
       (r) => r.id,
-      room.id,
+      roomId,
     );
   }
 }

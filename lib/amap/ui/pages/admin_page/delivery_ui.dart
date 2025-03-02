@@ -179,7 +179,7 @@ class DeliveryUi extends HookConsumerWidget {
                               onYes: () async {
                                 await tokenExpireWrapper(ref, () async {
                                   deliveryListNotifier
-                                      .deleteDelivery(delivery)
+                                      .deleteDelivery(delivery.id)
                                       .then((value) {
                                     if (value) {
                                       displayVoteWithContext(

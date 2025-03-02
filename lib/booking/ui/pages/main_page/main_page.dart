@@ -157,7 +157,7 @@ class BookingMainPage extends HookConsumerWidget {
                                     .deleteBookingConfirmation,
                                 onYes: () async {
                                   final value =
-                                      await bookingsNotifier.deleteBooking(e);
+                                      await bookingsNotifier.deleteBooking(e.id);
                                   if (value) {
                                     ref
                                         .read(

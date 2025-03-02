@@ -105,7 +105,7 @@ class SchoolsPage extends HookConsumerWidget {
                                       onYes: () async {
                                         tokenExpireWrapper(ref, () async {
                                           final value = await schoolsNotifier
-                                              .deleteSchool(school);
+                                              .deleteSchool(school.id);
                                           if (value) {
                                             displayToastWithContext(
                                               TypeMsg.msg,

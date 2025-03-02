@@ -48,12 +48,12 @@ class UserOrderListNotifier extends ListNotifierAPI<OrderReturn> {
     );
   }
 
-  Future<bool> deleteOrder(OrderReturn order) async {
+  Future<bool> deleteOrder(String orderId) async {
     return await delete(
       () => userOrderListRepository.amapOrdersOrderIdDelete(
-          orderId: order.orderId),
+          orderId: orderId),
       (o) => o.orderId,
-      order.orderId,
+      orderId,
     );
   }
 

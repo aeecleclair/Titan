@@ -72,13 +72,13 @@ class DeliveryListNotifier extends ListNotifierAPI<DeliveryReturn> {
     );
   }
 
-  Future<bool> deleteDelivery(DeliveryReturn delivery) async {
+  Future<bool> deleteDelivery(String deliveryId) async {
     return await delete(
       () => deliveriesListRepository.amapDeliveriesDeliveryIdDelete(
-        deliveryId: delivery.id,
+        deliveryId: deliveryId,
       ),
       (d) => d.id,
-      delivery.id,
+      deliveryId,
     );
   }
 

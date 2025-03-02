@@ -238,7 +238,7 @@ class EventUi extends ConsumerWidget {
                                         EventTextConstants.deletingEvent,
                                     onYes: () async {
                                       final value = await eventListNotifier
-                                          .deleteEvent(event);
+                                          .deleteEvent(event.id);
                                       if (value) {
                                         displayToastWithContext(
                                           TypeMsg.msg,

@@ -31,11 +31,11 @@ class EventEventListProvider extends ListNotifierAPI<EventReturn> {
     );
   }
 
-  Future<bool> deleteEvent(EventReturn event) async {
+  Future<bool> deleteEvent(String eventId) async {
     return await delete(
-      () => eventRepository.calendarEventsEventIdDelete(eventId: event.id),
+      () => eventRepository.calendarEventsEventIdDelete(eventId: eventId),
       (e) => e.id,
-      event.id,
+      eventId,
     );
   }
 }

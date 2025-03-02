@@ -94,7 +94,7 @@ class SectionListItems extends HookConsumerWidget {
                   onYes: () {
                     tokenExpireWrapper(ref, () async {
                       final value =
-                          await listListNotifier.deleteList(e);
+                          await listListNotifier.deleteList(e.id);
                       if (value) {
                         displayVoteToastWithContext(
                           TypeMsg.msg,

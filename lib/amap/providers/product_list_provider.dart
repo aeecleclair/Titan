@@ -36,12 +36,12 @@ class ProductListNotifier
   }
 
   Future<bool> deleteProduct(
-      AppModulesAmapSchemasAmapProductComplete product) async {
+      String productId) async {
     return await delete(
       () => productListRepository.amapProductsProductIdDelete(
-          productId: product.id),
+          productId: productId),
       (p) => p.id,
-      product.id,
+      productId,
     );
   }
 }

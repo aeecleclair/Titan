@@ -68,7 +68,7 @@ class AdminPage extends HookConsumerWidget {
                           title: CinemaTextConstants.deleting,
                           descriptions: CinemaTextConstants.deleteSession,
                           onYes: () {
-                            sessionListNotifier.deleteSession(session);
+                            sessionListNotifier.deleteSession(session.id);
                           },
                         );
                       },

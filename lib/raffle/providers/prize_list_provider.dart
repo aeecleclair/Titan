@@ -31,11 +31,11 @@ class PrizeListNotifier extends ListNotifierAPI<PrizeSimple> {
     );
   }
 
-  Future<bool> deletePrize(PrizeSimple prize) async {
+  Future<bool> deletePrize(String prizeId) async {
     return await delete(
-      () => prizeRepository.tombolaPrizesPrizeIdDelete(prizeId: prize.id),
+      () => prizeRepository.tombolaPrizesPrizeIdDelete(prizeId: prizeId),
       (p) => p.id,
-      prize.id,
+      prizeId,
     );
   }
 

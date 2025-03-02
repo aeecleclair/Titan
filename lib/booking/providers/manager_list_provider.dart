@@ -30,12 +30,12 @@ class ManagerListNotifier extends ListNotifierAPI<Manager> {
     );
   }
 
-  Future<bool> deleteManager(Manager manager) async {
+  Future<bool> deleteManager(String managerId) async {
     return await delete(
       () => managerRepository.bookingManagersManagerIdDelete(
-          managerId: manager.id),
+          managerId: managerId),
       (m) => m.id,
-      manager.id,
+      managerId,
     );
   }
 }

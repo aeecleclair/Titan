@@ -149,7 +149,7 @@ class GroupsPage extends HookConsumerWidget {
                                       onYes: () async {
                                         tokenExpireWrapper(ref, () async {
                                           final value = await groupsNotifier
-                                              .deleteGroup(group);
+                                              .deleteGroup(group.id);
                                           if (value) {
                                             displayToastWithContext(
                                               TypeMsg.msg,

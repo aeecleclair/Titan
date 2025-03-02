@@ -31,11 +31,11 @@ class ListListNotifier extends ListNotifierAPI<ListReturn> {
     );
   }
 
-  Future<bool> deleteList(ListReturn list) async {
+  Future<bool> deleteList(String listId) async {
     return await delete(
-      () => listRepository.campaignListsListIdDelete(listId: list.id),
+      () => listRepository.campaignListsListIdDelete(listId: listId),
       (l) => l.id,
-      list.id,
+      listId,
     );
   }
 

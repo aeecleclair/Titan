@@ -161,7 +161,7 @@ class AddEditRoomPage extends HookConsumerWidget {
                                   BookingTextConstants.deleteRoomConfirmation,
                               onYes: () async {
                                 final value =
-                                    await roomListNotifier.deleteRoom(room);
+                                    await roomListNotifier.deleteRoom(room.id);
                                 if (value) {
                                   QR.back();
                                   displayToastWithContext(

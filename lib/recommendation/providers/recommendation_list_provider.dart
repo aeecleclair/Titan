@@ -35,13 +35,13 @@ class RecommendationListNotifier extends ListNotifierAPI<Recommendation> {
     );
   }
 
-  Future<bool> deleteRecommendation(Recommendation recommendation) async {
+  Future<bool> deleteRecommendation(String recommendationId) async {
     return await delete(
       () => recommendationRepository
           .recommendationRecommendationsRecommendationIdDelete(
-              recommendationId: recommendation.id),
+              recommendationId: recommendationId),
       (r) => r.id,
-      recommendation.id,
+      recommendationId,
     );
   }
 }

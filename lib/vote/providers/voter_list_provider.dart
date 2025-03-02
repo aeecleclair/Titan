@@ -18,11 +18,11 @@ class VoterListNotifier extends ListNotifierAPI<VoterGroup> {
         () => voterRepository.campaignVotersPost(body: voter), voter);
   }
 
-  Future<bool> deleteVoter(VoterGroup voter) async {
+  Future<bool> deleteVoter(String groupId) async {
     return await delete(
-      () => voterRepository.campaignVotersGroupIdDelete(groupId: voter.groupId),
+      () => voterRepository.campaignVotersGroupIdDelete(groupId: groupId),
       (v) => v.groupId,
-      voter.groupId,
+      groupId,
     );
   }
 }

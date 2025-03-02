@@ -150,7 +150,7 @@ class DetailOrderUI extends HookConsumerWidget {
                                 orElse: () => -1,
                               );
                               await orderListNotifier
-                                  .deleteOrder(order)
+                                  .deleteOrder(order.orderId)
                                   .then((value) {
                                 if (value) {
                                   if (index != -1) {

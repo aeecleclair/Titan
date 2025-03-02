@@ -90,7 +90,7 @@ class ProductHandler extends HookConsumerWidget {
                                   onYes: () {
                                     tokenExpireWrapper(ref, () async {
                                       final value = await productsNotifier
-                                          .deleteProduct(e);
+                                          .deleteProduct(e.id);
                                       if (value) {
                                         displayToastWithContext(
                                           TypeMsg.msg,

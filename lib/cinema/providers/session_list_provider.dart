@@ -30,12 +30,12 @@ class SessionListNotifier extends ListNotifierAPI<CineSessionComplete> {
     );
   }
 
-  Future<bool> deleteSession(CineSessionComplete session) async {
+  Future<bool> deleteSession(String sessionId) async {
     return await delete(
       () => sessionRepository.cinemaSessionsSessionIdDelete(
-          sessionId: session.id),
+          sessionId: sessionId),
       (s) => s.id,
-      session.id,
+      sessionId,
     );
   }
 }

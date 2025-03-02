@@ -29,11 +29,11 @@ class SchoolListNotifier extends ListNotifierAPI<CoreSchool> {
     );
   }
 
-  Future<bool> deleteSchool(CoreSchool school) async {
+  Future<bool> deleteSchool(String schoolId) async {
     return await delete(
-      () => schoolRepository.schoolsSchoolIdDelete(schoolId: school.id),
+      () => schoolRepository.schoolsSchoolIdDelete(schoolId: schoolId),
       (s) => s.id,
-      school.id,
+      schoolId,
     );
   }
 

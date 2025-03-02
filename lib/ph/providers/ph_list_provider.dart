@@ -29,11 +29,11 @@ class PhListNotifier extends ListNotifierAPI<PaperComplete> {
     );
   }
 
-  Future<bool> deletePh(PaperComplete ph) async {
+  Future<bool> deletePh(String phId) async {
     return await delete(
-      () => phRepository.phPaperIdDelete(paperId: ph.id),
+      () => phRepository.phPaperIdDelete(paperId: phId),
       (p) => p.id,
-      ph.id,
+      phId,
     );
   }
 }

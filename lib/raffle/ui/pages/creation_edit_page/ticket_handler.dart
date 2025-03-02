@@ -123,7 +123,7 @@ class TicketHandler extends HookConsumerWidget {
                                   onYes: () {
                                     tokenExpireWrapper(ref, () async {
                                       final value = await packTicketsNotifier
-                                          .deletePackTicket(e);
+                                          .deletePackTicket(e.id);
                                       if (value) {
                                         displayToastWithContext(
                                           TypeMsg.msg,

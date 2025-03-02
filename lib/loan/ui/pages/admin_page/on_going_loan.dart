@@ -173,7 +173,7 @@ class OnGoingLoan extends HookConsumerWidget {
                               return item;
                             },
                           ).toList();
-                          final value = await loanListNotifier.returnLoan(e);
+                          final value = await loanListNotifier.returnLoan(e.id);
                           if (value) {
                             QR.to(
                               LoanRouter.root + LoanRouter.admin,

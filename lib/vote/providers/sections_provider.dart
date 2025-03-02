@@ -19,12 +19,12 @@ class SectionNotifier extends ListNotifierAPI<SectionComplete> {
         () => sectionRepository.campaignSectionsPost(body: section), section);
   }
 
-  Future<bool> deleteSection(SectionComplete section) async {
+  Future<bool> deleteSection(String sectionId) async {
     return await delete(
       () => sectionRepository.campaignSectionsSectionIdDelete(
-          sectionId: section.id),
+          sectionId: sectionId),
       (s) => s.id,
-      section.id,
+      sectionId,
     );
   }
 }

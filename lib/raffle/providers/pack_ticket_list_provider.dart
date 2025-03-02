@@ -34,12 +34,12 @@ class PackTicketsListNotifier extends ListNotifierAPI<PackTicketSimple> {
     );
   }
 
-  Future<bool> deletePackTicket(PackTicketSimple packTicket) async {
+  Future<bool> deletePackTicket(String packTicketId) async {
     return await delete(
       () => packTicketsRepository.tombolaPackTicketsPackticketIdDelete(
-          packticketId: packTicket.id),
+          packticketId: packTicketId),
       (p) => p.id,
-      packTicket.id,
+      packTicketId,
     );
   }
 }

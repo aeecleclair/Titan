@@ -172,7 +172,7 @@ class RecommendationCard extends HookConsumerWidget {
                                             final value =
                                                 await recommendationListNotifier
                                                     .deleteRecommendation(
-                                              recommendation,
+                                              recommendation.id,
                                             );
                                             if (value) {
                                               displayToastWithContext(

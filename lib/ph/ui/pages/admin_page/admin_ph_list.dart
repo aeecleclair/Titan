@@ -47,7 +47,7 @@ class AdminPhList extends HookConsumerWidget {
                             title: PhTextConstants.delete,
                             descriptions: PhTextConstants.irreversibleAction,
                             onYes: () {
-                              phListNotifier.deletePh(ph);
+                              phListNotifier.deletePh(ph.id);
                             },
                           );
                         },

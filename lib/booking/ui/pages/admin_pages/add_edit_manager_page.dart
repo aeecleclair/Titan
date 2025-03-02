@@ -160,7 +160,7 @@ class AddEditManagerPage extends HookConsumerWidget {
                                   .deleteManagerConfirmation,
                               onYes: () async {
                                 final value = await managerListNotifier
-                                    .deleteManager(manager);
+                                    .deleteManager(manager.groupId);
                                 if (value) {
                                   QR.back();
                                   displayToastWithContext(

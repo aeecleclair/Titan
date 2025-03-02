@@ -28,11 +28,11 @@ class UserLoanerListNotifier extends ListNotifierAPI<Loaner> {
     );
   }
 
-  Future<bool> deleteLoaner(Loaner loaner) async {
+  Future<bool> deleteLoaner(String loanerId) async {
     return await delete(
-      () => loanerRepository.loansLoanersLoanerIdDelete(loanerId: loaner.id),
+      () => loanerRepository.loansLoanersLoanerIdDelete(loanerId: loanerId),
       (l) => l.id,
-      loaner.id,
+      loanerId,
     );
   }
 }

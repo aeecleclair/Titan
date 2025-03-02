@@ -30,12 +30,12 @@ class UserBookingListProvider extends ListNotifierAPI<BookingReturn> {
     );
   }
 
-  Future<bool> deleteBooking(BookingReturn booking) async {
+  Future<bool> deleteBooking(String bookingId) async {
     return await delete(
       () => bookingRepository.bookingBookingsBookingIdDelete(
-          bookingId: booking.id),
+          bookingId: bookingId),
       (b) => b.id,
-      booking.id,
+      bookingId,
     );
   }
 }

@@ -137,7 +137,7 @@ class OrderUI extends HookConsumerWidget {
                                   onYes: () async {
                                     await tokenExpireWrapper(ref, () async {
                                       orderListNotifier
-                                          .deleteOrder(order)
+                                          .deleteOrder(order.orderId)
                                           .then((value) {
                                         if (value) {
                                           balanceNotifier

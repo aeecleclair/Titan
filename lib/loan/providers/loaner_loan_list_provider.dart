@@ -33,19 +33,19 @@ class LoanerLoanListNotifier extends ListNotifierAPI<Loan> {
     );
   }
 
-  Future<bool> deleteLoan(Loan loan) async {
+  Future<bool> deleteLoan(String loanId) async {
     return await delete(
-      () => loanRepository.loansLoanIdDelete(loanId: loan.id),
+      () => loanRepository.loansLoanIdDelete(loanId: loanId),
       (l) => l.id,
-      loan.id,
+      loanId,
     );
   }
 
-  Future<bool> returnLoan(Loan loan) async {
+  Future<bool> returnLoan(String loanId) async {
     return await delete(
-      () => loanRepository.loansLoanIdReturnPost(loanId: loan.id),
+      () => loanRepository.loansLoanIdReturnPost(loanId: loanId),
       (l) => l.id,
-      loan.id,
+      loanId,
     );
   }
 

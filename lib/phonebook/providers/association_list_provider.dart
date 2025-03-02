@@ -32,12 +32,12 @@ class AssociationListNotifier extends ListNotifierAPI<AssociationComplete> {
     );
   }
 
-  Future<bool> deleteAssociation(AssociationComplete association) async {
+  Future<bool> deleteAssociation(String associationId) async {
     return await delete(
       () => associationRepository.phonebookAssociationsAssociationIdDelete(
-          associationId: association.id),
+          associationId: associationId),
       (a) => a.id,
-      association.id,
+      associationId,
     );
   }
 
