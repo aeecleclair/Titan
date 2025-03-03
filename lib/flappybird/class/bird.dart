@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:myecl/flappybird/tools/functions.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
 class Bird {
   late final CoreUserSimple user;
@@ -61,7 +62,7 @@ class Bird {
   static Bird empty() {
     final color = Color(0xff000000 + Random().nextInt(0xffffff));
     return Bird(
-      user: CoreUserSimple.fromJson({}),
+      user: EmptyModels.empty<CoreUserSimple>(),
       color: MaterialColor(getColorValue(color), getSwatch(color)),
       birdImage: Image.asset('images/bird.png'),
     );

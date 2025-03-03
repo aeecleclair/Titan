@@ -1,11 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class CompleteMemberProvider extends StateNotifier<MemberComplete> {
   final Openapi memberRepository;
   CompleteMemberProvider({required this.memberRepository})
-      : super(MemberComplete.fromJson({}));
+      : super(EmptyModels.empty<MemberComplete>());
 
   void setCompleteMember(MemberComplete i) {
     state = i;

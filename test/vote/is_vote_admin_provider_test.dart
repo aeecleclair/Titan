@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/vote/providers/is_vote_admin_provider.dart';
 
@@ -10,9 +11,9 @@ void main() {
       final container = ProviderContainer(
         overrides: [
           userProvider.overrideWithValue(
-            CoreUser.fromJson({}).copyWith(
+            EmptyModels.empty<CoreUser>().copyWith(
               groups: [
-                CoreGroupSimple.fromJson({})
+                EmptyModels.empty<CoreGroupSimple>()
                     .copyWith(id: '6c6d7e88-fdb8-4e42-b2b5-3d3cfd12e7d6'),
               ],
             ),
@@ -29,9 +30,9 @@ void main() {
       final container = ProviderContainer(
         overrides: [
           userProvider.overrideWithValue(
-            CoreUser.fromJson({}).copyWith(
+            EmptyModels.empty<CoreUser>().copyWith(
               groups: [
-                CoreGroupSimple.fromJson({})
+                EmptyModels.empty<CoreGroupSimple>()
                     .copyWith(id: '12345678-1234-1234-1234-123456789012'),
               ],
             ),

@@ -12,7 +12,7 @@ void main() {
   group('StatusNotifier', () {
     late MockStatusRepository mockRepository;
     late StatusNotifier provider;
-    final status = VoteStatus.fromJson({}).copyWith(status: StatusType.open);
+    final status = VoteStatus(status: StatusType.open);
 
     setUp(() {
       mockRepository = MockStatusRepository();

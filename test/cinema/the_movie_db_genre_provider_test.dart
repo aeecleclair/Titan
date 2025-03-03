@@ -12,7 +12,14 @@ void main() {
   group('TheMovieDBGenreNotifier', () {
     late MockTheMovieDBRepository mockRepository;
     late TheMovieDBGenreNotifier provider;
-    final movie = TheMovieDB.fromJson({});
+    final movie = TheMovieDB(
+      genres: [],
+      overview: '',
+      posterPath: '',
+      title: '',
+      runtime: 0,
+      tagline: '',
+    );
 
     setUp(() {
       mockRepository = MockTheMovieDBRepository();

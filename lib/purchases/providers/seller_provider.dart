@@ -1,8 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
 class SellerNotifier extends StateNotifier<SellerComplete> {
-  SellerNotifier() : super(SellerComplete.fromJson({}));
+  SellerNotifier() : super(EmptyModels.empty<SellerComplete>());
 
   void setSeller(SellerComplete i) {
     state = i;

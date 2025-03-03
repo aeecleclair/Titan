@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/vote/providers/result_provider.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:chopper/chopper.dart' as chopper;
@@ -13,9 +14,9 @@ void main() {
     late MockResultRepository mockRepository;
     late ResultNotifier provider;
     final results = [
-      AppModulesCampaignSchemasCampaignResult.fromJson({})
+      EmptyModels.empty<AppModulesCampaignSchemasCampaignResult>()
           .copyWith(listId: '1'),
-      AppModulesCampaignSchemasCampaignResult.fromJson({})
+      EmptyModels.empty<AppModulesCampaignSchemasCampaignResult>()
           .copyWith(listId: '2'),
     ];
 

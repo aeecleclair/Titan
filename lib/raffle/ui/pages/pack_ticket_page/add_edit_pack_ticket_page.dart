@@ -8,6 +8,7 @@ import 'package:myecl/raffle/providers/raffle_provider.dart';
 import 'package:myecl/raffle/providers/pack_ticket_list_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/components/blue_btn.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
@@ -22,7 +23,7 @@ class AddEditPackTicketPage extends HookConsumerWidget {
     final formKey = GlobalKey<FormState>();
     final raffle = ref.watch(raffleProvider);
     final packTicket = ref.watch(packTicketProvider);
-    final isEdit = packTicket.id != PackTicketSimple.fromJson({}).id;
+    final isEdit = packTicket.id != EmptyModels.empty<PackTicketSimple>().id;
     final packSize = useTextEditingController(
       text: isEdit ? packTicket.packSize.toString() : "",
     );

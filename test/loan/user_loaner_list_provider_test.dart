@@ -5,6 +5,7 @@ import 'package:myecl/loan/providers/user_loaner_list_provider.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:chopper/chopper.dart' as chopper;
 import 'package:http/http.dart' as http;
+import 'package:myecl/tools/builders/empty_models.dart';
 
 class MockLoanerRepository extends Mock implements Openapi {}
 
@@ -13,11 +14,11 @@ void main() {
     late MockLoanerRepository mockRepository;
     late UserLoanerListNotifier provider;
     final loaners = [
-      Loaner.fromJson({}).copyWith(id: '1'),
-      Loaner.fromJson({}).copyWith(id: '2'),
+      EmptyModels.empty<Loaner>().copyWith(id: '1'),
+      EmptyModels.empty<Loaner>().copyWith(id: '2'),
     ];
-    final newLoaner = Loaner.fromJson({}).copyWith(id: '3');
-    final newLoanerBase = LoanerBase.fromJson({}).copyWith(
+    final newLoaner = EmptyModels.empty<Loaner>().copyWith(id: '3');
+    final newLoanerBase = LoanerBase(
       name: newLoaner.name,
       groupManagerId: newLoaner.groupManagerId,
     );

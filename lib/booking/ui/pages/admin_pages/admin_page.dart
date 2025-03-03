@@ -15,6 +15,7 @@ import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/calendar/calendar.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
@@ -77,7 +78,8 @@ class AdminPage extends HookConsumerWidget {
                         const SizedBox(width: 15),
                         ItemChip(
                           onTap: () {
-                            roomNotifier.setRoom(RoomComplete.fromJson({}));
+                            roomNotifier
+                                .setRoom(EmptyModels.empty<RoomComplete>());
                             managerIdNotifier.setId("");
                             QR.to(
                               BookingRouter.root +
@@ -147,7 +149,8 @@ class AdminPage extends HookConsumerWidget {
                         const SizedBox(width: 15),
                         ItemChip(
                           onTap: () {
-                            managerNotifier.setManager(Manager.fromJson({}));
+                            managerNotifier
+                                .setManager(EmptyModels.empty<Manager>());
                             groupIdNotifier.setId("");
                             QR.to(
                               BookingRouter.root +

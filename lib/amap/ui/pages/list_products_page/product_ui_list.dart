@@ -5,6 +5,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
 class ProductUiInList extends ConsumerWidget {
   final AppModulesAmapSchemasAmapProductComplete p;
@@ -17,7 +18,7 @@ class ProductUiInList extends ConsumerWidget {
     final quantity = order.productsdetail
         .firstWhere(
           (element) => element.product.id == p.id,
-          orElse: () => ProductQuantity.fromJson({}),
+          orElse: () => EmptyModels.empty<ProductQuantity>(),
         )
         .quantity;
     return Container(

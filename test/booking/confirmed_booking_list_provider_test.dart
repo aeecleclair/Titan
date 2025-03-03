@@ -6,6 +6,7 @@ import 'package:myecl/generated/client_index.dart';
 import 'package:chopper/chopper.dart' as chopper;
 import 'package:http/http.dart' as http;
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
 class MockBookingRepository extends Mock implements Openapi {}
 
@@ -14,8 +15,8 @@ void main() {
     test('loadConfirmedBooking returns expected data', () async {
       final mockRepository = MockBookingRepository();
       final bookings = [
-        BookingReturnSimpleApplicant.fromJson({}).copyWith(id: '1'),
-        BookingReturnSimpleApplicant.fromJson({}).copyWith(id: '2'),
+        EmptyModels.empty<BookingReturnSimpleApplicant>().copyWith(id: '1'),
+        EmptyModels.empty<BookingReturnSimpleApplicant>().copyWith(id: '2'),
       ];
       when(() => mockRepository.bookingBookingsConfirmedGet()).thenAnswer(
         (_) async => chopper.Response(
@@ -58,12 +59,13 @@ void main() {
     test('addBooking adds a booking to the list', () async {
       final mockRepository = MockBookingRepository();
       final bookings = [
-        BookingReturnSimpleApplicant.fromJson({}).copyWith(id: '1'),
-        BookingReturnSimpleApplicant.fromJson({}).copyWith(id: '2'),
+        EmptyModels.empty<BookingReturnSimpleApplicant>().copyWith(id: '1'),
+        EmptyModels.empty<BookingReturnSimpleApplicant>().copyWith(id: '2'),
       ];
-      final newBooking = BookingReturn.fromJson({}).copyWith(id: '3');
+      final newBooking = EmptyModels.empty<BookingReturn>()
+          .copyWith(id: '3', reason: 'New booking');
       final newBookingSimple =
-          BookingReturnSimpleApplicant.fromJson({}).copyWith(id: '3');
+          EmptyModels.empty<BookingReturnSimpleApplicant>().copyWith(id: '3');
       when(() => mockRepository.bookingBookingsConfirmedGet()).thenAnswer(
         (_) async => chopper.Response(
           http.Response('body', 200),
@@ -96,7 +98,7 @@ void main() {
     test('addBooking handles error', () async {
       final mockRepository = MockBookingRepository();
       final newBookingSimple =
-          BookingReturnSimpleApplicant.fromJson({}).copyWith(id: '3');
+          EmptyModels.empty<BookingReturnSimpleApplicant>().copyWith(id: '3');
       when(() => mockRepository.bookingBookingsPost(body: any(named: 'body')))
           .thenThrow(Exception('Failed to add booking'));
 
@@ -110,8 +112,8 @@ void main() {
     test('deleteBooking removes a booking from the list', () async {
       final mockRepository = MockBookingRepository();
       final bookings = [
-        BookingReturnSimpleApplicant.fromJson({}).copyWith(id: '1'),
-        BookingReturnSimpleApplicant.fromJson({}).copyWith(id: '2'),
+        EmptyModels.empty<BookingReturnSimpleApplicant>().copyWith(id: '1'),
+        EmptyModels.empty<BookingReturnSimpleApplicant>().copyWith(id: '2'),
       ];
       final booking = bookings.first;
       when(() => mockRepository.bookingBookingsConfirmedGet()).thenAnswer(
@@ -149,7 +151,7 @@ void main() {
     test('deleteBooking handles error', () async {
       final mockRepository = MockBookingRepository();
       final booking =
-          BookingReturnSimpleApplicant.fromJson({}).copyWith(id: '1');
+          EmptyModels.empty<BookingReturnSimpleApplicant>().copyWith(id: '1');
       when(
         () => mockRepository.bookingBookingsBookingIdDelete(
           bookingId: booking.id,
@@ -166,8 +168,8 @@ void main() {
     test('updateBooking updates a booking in the list', () async {
       final mockRepository = MockBookingRepository();
       final bookings = [
-        BookingReturnSimpleApplicant.fromJson({}).copyWith(id: '1'),
-        BookingReturnSimpleApplicant.fromJson({}).copyWith(id: '2'),
+        EmptyModels.empty<BookingReturnSimpleApplicant>().copyWith(id: '1'),
+        EmptyModels.empty<BookingReturnSimpleApplicant>().copyWith(id: '2'),
       ];
       final updatedBooking = bookings.first.copyWith(reason: 'Updated');
       when(() => mockRepository.bookingBookingsConfirmedGet()).thenAnswer(
@@ -205,7 +207,7 @@ void main() {
 
     test('updateBooking handles error', () async {
       final mockRepository = MockBookingRepository();
-      final updatedBooking = BookingReturnSimpleApplicant.fromJson({})
+      final updatedBooking = EmptyModels.empty<BookingReturnSimpleApplicant>()
           .copyWith(id: '1', reason: 'Updated');
       when(
         () => mockRepository.bookingBookingsBookingIdPatch(

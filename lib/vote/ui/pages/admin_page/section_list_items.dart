@@ -3,6 +3,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/generated/openapi.enums.swagger.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
@@ -47,7 +48,7 @@ class SectionListItems extends HookConsumerWidget {
         firstChild: (status.status == StatusType.waiting)
             ? GestureDetector(
                 onTap: () {
-                  listNotifier.setId(ListReturn.fromJson({}));
+                  listNotifier.setId(EmptyModels.empty<ListReturn>());
                   membersNotifier.setMembers([]);
                   QR.to(
                     VoteRouter.root + VoteRouter.admin + VoteRouter.addEditList,

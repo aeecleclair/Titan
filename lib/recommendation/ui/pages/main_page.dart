@@ -9,6 +9,7 @@ import 'package:myecl/recommendation/router.dart';
 import 'package:myecl/recommendation/ui/components/recommendation_card.dart';
 import 'package:myecl/recommendation/ui/components/recommendation_card_layout.dart';
 import 'package:myecl/recommendation/ui/components/recommendation_template.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -38,7 +39,7 @@ class RecommendationMainPage extends HookConsumerWidget {
                 GestureDetector(
                   onTap: () {
                     recommendationNotifier
-                        .setRecommendation(Recommendation.fromJson({}));
+                        .setRecommendation(EmptyModels.empty<Recommendation>());
                     QR.to(
                       RecommendationRouter.root + RecommendationRouter.addEdit,
                     );

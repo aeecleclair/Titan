@@ -6,6 +6,7 @@ import 'package:myecl/booking/providers/room_list_provider.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:chopper/chopper.dart' as chopper;
 import 'package:http/http.dart' as http;
+import 'package:myecl/tools/builders/empty_models.dart';
 
 class MockRoomRepository extends Mock implements Openapi {}
 
@@ -14,10 +15,10 @@ void main() {
     late MockRoomRepository mockRepository;
     late RoomListNotifier provider;
     final rooms = [
-      RoomComplete.fromJson({}).copyWith(id: '1'),
-      RoomComplete.fromJson({}).copyWith(id: '2'),
+      EmptyModels.empty<RoomComplete>().copyWith(id: '1'),
+      EmptyModels.empty<RoomComplete>().copyWith(id: '2'),
     ];
-    final newRoom = RoomComplete.fromJson({}).copyWith(id: '3');
+    final newRoom = EmptyModels.empty<RoomComplete>().copyWith(id: '3');
     final updatedRoom = rooms.first.copyWith(name: 'Updated Room');
 
     setUp(() {

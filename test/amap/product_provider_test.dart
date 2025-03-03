@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/amap/providers/product_provider.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
 void main() {
   group('ProductNotifier', () {
@@ -25,7 +26,7 @@ void main() {
       );
       expect(
         productNotifier.state.id,
-        AppModulesAmapSchemasAmapProductComplete.fromJson({}).id,
+        EmptyModels.empty<AppModulesAmapSchemasAmapProductComplete>().id,
       );
     });
 
@@ -55,7 +56,7 @@ void main() {
       expect(product, isA<AppModulesAmapSchemasAmapProductComplete>());
       expect(
         product.id,
-        AppModulesAmapSchemasAmapProductComplete.fromJson({}).id,
+        EmptyModels.empty<AppModulesAmapSchemasAmapProductComplete>().id,
       );
     });
 

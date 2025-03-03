@@ -12,6 +12,7 @@ import 'package:myecl/booking/ui/pages/admin_pages/admin_entry.dart';
 import 'package:myecl/booking/ui/pages/admin_pages/admin_scroll_chips.dart';
 import 'package:myecl/booking/ui/pages/admin_pages/admin_shrink_button.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
@@ -30,7 +31,7 @@ class AddEditRoomPage extends HookConsumerWidget {
     final roomListNotifier = ref.watch(roomListProvider.notifier);
     final key = GlobalKey<FormState>();
     final room = ref.watch(roomProvider);
-    final isEdit = room.id != RoomComplete.fromJson({}).id;
+    final isEdit = room.id != EmptyModels.empty<RoomComplete>().id;
     final name = useTextEditingController(text: room.name);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);

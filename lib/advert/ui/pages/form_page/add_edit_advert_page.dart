@@ -16,6 +16,7 @@ import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/advert/ui/pages/advert.dart';
 import 'package:myecl/advert/ui/components/advertiser_bar.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
@@ -31,7 +32,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final advert = ref.watch(advertProvider);
     final key = GlobalKey<FormState>();
-    final isEdit = advert.id != AdvertReturnComplete.fromJson({}).id;
+    final isEdit = advert.id != EmptyModels.empty<AdvertReturnComplete>().id;
     final title = useTextEditingController(text: advert.title);
     final content = useTextEditingController(text: advert.content);
     final selectedAdvertisers = ref.watch(advertiserProvider);

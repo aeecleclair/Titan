@@ -11,6 +11,7 @@ import 'package:myecl/booking/ui/pages/admin_pages/admin_entry.dart';
 import 'package:myecl/booking/ui/pages/admin_pages/admin_scroll_chips.dart';
 import 'package:myecl/booking/ui/pages/admin_pages/admin_shrink_button.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
@@ -30,7 +31,7 @@ class AddEditManagerPage extends HookConsumerWidget {
     final managerListNotifier = ref.watch(managerListProvider.notifier);
     final manager = ref.watch(managerProvider);
     final key = GlobalKey<FormState>();
-    final isEdit = manager.id != Manager.fromJson({}).id;
+    final isEdit = manager.id != EmptyModels.empty<Manager>().id;
     final name = useTextEditingController(text: manager.name);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);

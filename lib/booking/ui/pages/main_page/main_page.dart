@@ -17,6 +17,7 @@ import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/calendar/calendar.dart';
 import 'package:myecl/booking/ui/components/booking_card.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/admin_button.dart';
@@ -120,8 +121,9 @@ class BookingMainPage extends HookConsumerWidget {
                       height: 210,
                       firstChild: GestureDetector(
                         onTap: () {
-                          bookingNotifier
-                              .setBooking(BookingReturnApplicant.fromJson({}));
+                          bookingNotifier.setBooking(
+                            EmptyModels.empty<BookingReturnApplicant>(),
+                          );
                           selectedDaysNotifier.clear();
                           QR.to(BookingRouter.root + BookingRouter.addEdit);
                         },

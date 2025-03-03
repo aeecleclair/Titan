@@ -2,11 +2,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
 void main() {
   group('BookingNotifier', () {
     late BookingNotifier bookingNotifier;
-    final booking = BookingReturnApplicant.fromJson({}).copyWith(
+    final booking = EmptyModels.empty<BookingReturnApplicant>().copyWith(
       id: '123',
       reason: 'Meeting',
       start: DateTime.now(),
@@ -20,7 +21,10 @@ void main() {
 
     test('initial state is empty booking', () {
       expect(bookingNotifier.state, isA<BookingReturnApplicant>());
-      expect(bookingNotifier.state.id, BookingReturnApplicant.fromJson({}).id);
+      expect(
+        bookingNotifier.state.id,
+        EmptyModels.empty<BookingReturnApplicant>().id,
+      );
     });
 
     test('setBooking updates state', () {
@@ -30,7 +34,7 @@ void main() {
   });
 
   group('bookingProvider', () {
-    final booking = BookingReturnApplicant.fromJson({}).copyWith(
+    final booking = EmptyModels.empty<BookingReturnApplicant>().copyWith(
       id: '123',
       reason: 'Meeting',
       start: DateTime.now(),
@@ -47,7 +51,7 @@ void main() {
       final container = ProviderContainer();
       final booking = container.read(bookingProvider);
       expect(booking, isA<BookingReturnApplicant>());
-      expect(booking.id, BookingReturnApplicant.fromJson({}).id);
+      expect(booking.id, EmptyModels.empty<BookingReturnApplicant>().id);
     });
 
     test('setBooking updates booking', () {

@@ -18,6 +18,7 @@ import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/ui/pages/association_editor_page/association_information_editor.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/phonebook/ui/pages/association_editor_page/member_editable_card.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -113,10 +114,11 @@ class AssociationEditorPage extends HookConsumerWidget {
                         ? () async {
                             rolesTagsNotifier.resetChecked();
                             memberRoleTagsNotifier.reset();
-                            completeMemberNotifier
-                                .setCompleteMember(MemberComplete.fromJson({}));
+                            completeMemberNotifier.setCompleteMember(
+                              EmptyModels.empty<MemberComplete>(),
+                            );
                             membershipNotifier.setMembership(
-                              MembershipComplete.fromJson({})
+                              EmptyModels.empty<MembershipComplete>()
                                   .copyWith(associationId: association.id),
                             );
                             if (QR.currentPath

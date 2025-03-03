@@ -15,6 +15,7 @@ import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/cinema/ui/cinema.dart';
 import 'package:myecl/cinema/ui/pages/session_pages/tmdb_button.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
@@ -31,7 +32,7 @@ class AddEditSessionPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final session = ref.watch(sessionProvider);
     final movieNotifier = ref.watch(theMovieDBMovieProvider.notifier);
-    final isEdit = session.id != CineSessionComplete.fromJson({}).id;
+    final isEdit = session.id != EmptyModels.empty<CineSessionComplete>().id;
     final tmdbUrl = useTextEditingController();
     final key = GlobalKey<FormState>();
     final sessionListNotifier = ref.watch(sessionListProvider.notifier);

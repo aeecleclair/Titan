@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/loan/providers/loaner_id_provider.dart';
 import 'package:myecl/loan/providers/user_loaner_list_provider.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
 final loanerProvider = Provider((ref) {
   final loanerId = ref.watch(loanerIdProvider);
@@ -9,6 +10,6 @@ final loanerProvider = Provider((ref) {
   return loanerList.maybeWhen(
     data: (loanerList) =>
         loanerList.firstWhere((loaner) => loaner.id == loanerId),
-    orElse: () => Loaner.fromJson({}),
+    orElse: () => EmptyModels.empty<Loaner>(),
   );
 });

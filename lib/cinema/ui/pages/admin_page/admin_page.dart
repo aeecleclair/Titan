@@ -8,6 +8,7 @@ import 'package:myecl/cinema/tools/constants.dart';
 import 'package:myecl/cinema/ui/cinema.dart';
 import 'package:myecl/cinema/ui/pages/admin_page/admin_session_card.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
@@ -30,7 +31,8 @@ class AdminPage extends HookConsumerWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  sessionNotifier.setSession(CineSessionComplete.fromJson({}));
+                  sessionNotifier
+                      .setSession(EmptyModels.empty<CineSessionComplete>());
                   QR.to(
                     CinemaRouter.root +
                         CinemaRouter.admin +

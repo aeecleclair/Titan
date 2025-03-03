@@ -5,6 +5,7 @@ import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:chopper/chopper.dart' as chopper;
 import 'package:http/http.dart' as http;
+import 'package:myecl/tools/builders/empty_models.dart';
 
 class MockEventRepository extends Mock implements Openapi {}
 
@@ -13,10 +14,10 @@ void main() {
     late MockEventRepository mockRepository;
     late ConfirmedEventListProvider provider;
     final events = [
-      EventComplete.fromJson({}).copyWith(id: '1'),
-      EventComplete.fromJson({}).copyWith(id: '2'),
+      EmptyModels.empty<EventComplete>().copyWith(id: '1'),
+      EmptyModels.empty<EventComplete>().copyWith(id: '2'),
     ];
-    final newEvent = EventComplete.fromJson({}).copyWith(id: '3');
+    final newEvent = EmptyModels.empty<EventComplete>().copyWith(id: '3');
 
     setUp(() {
       mockRepository = MockEventRepository();

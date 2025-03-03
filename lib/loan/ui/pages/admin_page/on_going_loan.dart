@@ -16,6 +16,7 @@ import 'package:myecl/loan/router.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/pages/admin_page/loan_card.dart';
 import 'package:myecl/loan/ui/pages/admin_page/delay_dialog.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
@@ -82,7 +83,7 @@ class OnGoingLoan extends HookConsumerWidget {
               height: 170,
               firstChild: GestureDetector(
                 onTap: () async {
-                  await loanNotifier.setLoan(Loan.fromJson({}));
+                  await loanNotifier.setLoan(EmptyModels.empty<Loan>());
                   startNotifier.setStart(processDate(DateTime.now()));
                   endNotifier.setEnd("");
                   QR.to(

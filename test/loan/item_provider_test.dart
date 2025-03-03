@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/loan/providers/item_provider.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
 void main() {
   group('ItemNotifier', () {
@@ -32,7 +33,7 @@ void main() {
 
     test('resetItem should reset state', () {
       notifier.setItem(item);
-      notifier.setItem(Item.fromJson({}));
+      notifier.setItem(EmptyModels.empty<Item>());
 
       expect(container.read(itemProvider).id, equals(''));
       expect(container.read(itemProvider).name, equals(''));

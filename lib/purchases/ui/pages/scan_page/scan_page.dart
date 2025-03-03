@@ -10,6 +10,7 @@ import 'package:myecl/purchases/tools/constants.dart';
 import 'package:myecl/purchases/ui/pages/scan_page/ticket_card.dart';
 import 'package:myecl/purchases/ui/pages/scan_page/scan_dialog.dart';
 import 'package:myecl/purchases/ui/purchases.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
@@ -34,7 +35,7 @@ class ScanPage extends HookConsumerWidget {
       child: Refresher(
         onRefresh: () async {
           await sellersNotifier.loadSellers();
-          if (seller.id != SellerComplete.fromJson({}).id) {
+          if (seller.id != EmptyModels.empty<SellerComplete>().id) {
             await productsNotifier.loadProducts(seller.id);
           }
           scannerNotifier.reset();

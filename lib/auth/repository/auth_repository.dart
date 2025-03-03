@@ -9,6 +9,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart' as models;
 import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/cache/cache_manager.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:universal_html/html.dart' as html;
@@ -49,7 +50,8 @@ class AuthRepository {
       path: '/static.html',
     );
     final codeVerifier = generateRandomString(128);
-    models.TokenResponse tokenResponse = models.TokenResponse.fromJson({});
+    models.TokenResponse tokenResponse =
+        EmptyModels.empty<models.TokenResponse>();
 
     final authUrl =
         "${getTitanHost()}auth/authorize?client_id=$clientId&response_type=code&scope=${scopes.join(" ")}&redirect_uri=$redirectUri&code_challenge=${hash(codeVerifier)}&code_challenge_method=S256";
@@ -134,7 +136,8 @@ class AuthRepository {
   }
 
   Future<models.TokenResponse> getTokenFromStorage() async {
-    models.TokenResponse tokenResponse = models.TokenResponse.fromJson({});
+    models.TokenResponse tokenResponse =
+        EmptyModels.empty<models.TokenResponse>();
     return _secureStorage.read(key: tokenName).then((token) async {
       if (token != null) {
         try {
@@ -186,7 +189,8 @@ class AuthRepository {
   }
 
   Future<models.TokenResponse> getAuthToken(String authorizationToken) async {
-    models.TokenResponse tokenResponse = models.TokenResponse.fromJson({});
+    models.TokenResponse tokenResponse =
+        EmptyModels.empty<models.TokenResponse>();
     appAuth
         .token(
       TokenRequest(
@@ -212,7 +216,8 @@ class AuthRepository {
   }
 
   Future<models.TokenResponse> refreshToken() async {
-    models.TokenResponse tokenResponse = models.TokenResponse.fromJson({});
+    models.TokenResponse tokenResponse =
+        EmptyModels.empty<models.TokenResponse>();
     if (tokenResponse.refreshToken != "") {
       final resp = await appAuth.token(
         TokenRequest(

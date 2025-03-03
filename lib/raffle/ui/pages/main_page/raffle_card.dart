@@ -11,6 +11,7 @@ import 'package:myecl/raffle/providers/ticket_list_provider.dart';
 import 'package:myecl/raffle/router.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -91,7 +92,7 @@ class RaffleWidget extends HookConsumerWidget {
                       (await singleRaffleStats.loadRaffleStats(raffleId))
                           .maybeWhen(
                     data: (value) => value,
-                    orElse: () => RaffleStats.fromJson({}),
+                    orElse: () => EmptyModels.empty<RaffleStats>(),
                   ),
                   dataBuilder: (context, stats) {
                     final stat = stats.first;

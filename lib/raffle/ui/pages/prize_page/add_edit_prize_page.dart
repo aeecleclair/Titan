@@ -10,6 +10,7 @@ import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/components/blue_btn.dart';
 import 'package:myecl/raffle/ui/components/section_title.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
@@ -25,7 +26,7 @@ class AddEditPrizePage extends HookConsumerWidget {
     final formKey = GlobalKey<FormState>();
     final raffle = ref.watch(raffleProvider);
     final prize = ref.watch(prizeProvider);
-    final isEdit = prize.id != PrizeSimple.fromJson({}).id;
+    final isEdit = prize.id != EmptyModels.empty<PrizeSimple>().id;
     final quantity = useTextEditingController(
       text: isEdit ? prize.quantity.toString() : "1",
     );

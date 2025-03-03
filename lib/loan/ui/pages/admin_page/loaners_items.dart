@@ -11,6 +11,7 @@ import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/router.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/pages/admin_page/item_card.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
@@ -73,7 +74,7 @@ class LoanersItems extends HookConsumerWidget {
               height: 150,
               firstChild: GestureDetector(
                 onTap: () {
-                  itemNotifier.setItem(Item.fromJson({}));
+                  itemNotifier.setItem(EmptyModels.empty<Item>());
                   QR.to(
                     LoanRouter.root + LoanRouter.admin + LoanRouter.addEditItem,
                   );

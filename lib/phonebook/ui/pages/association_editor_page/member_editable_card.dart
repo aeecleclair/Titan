@@ -13,6 +13,7 @@ import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/function.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/delete_button.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/edition_button.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
@@ -51,7 +52,7 @@ class MemberEditableCard extends HookConsumerWidget {
       (memberships) =>
           memberships.associationId == association.id &&
           memberships.mandateYear == association.mandateYear,
-      orElse: () => MembershipComplete.fromJson({}),
+      orElse: () => EmptyModels.empty<MembershipComplete>(),
     );
 
     return Container(

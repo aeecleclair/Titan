@@ -8,6 +8,7 @@ import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/components/product_ui.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
@@ -49,7 +50,7 @@ class ProductHandler extends HookConsumerWidget {
             GestureDetector(
               onTap: () {
                 productNotifier.setProduct(
-                  AppModulesAmapSchemasAmapProductComplete.fromJson({}),
+                  EmptyModels.empty<AppModulesAmapSchemasAmapProductComplete>(),
                 );
                 QR.to(
                   AmapRouter.root +

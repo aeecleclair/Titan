@@ -129,8 +129,7 @@ class OpenIdTokenProvider extends StateNotifier<AsyncValue<TokenResponse>> {
 
   Future<void> getAuthToken(String authorizationToken) async {
     state = const AsyncValue.loading();
-    final tokenResponse =
-        await userRepository.getAuthToken(authorizationToken);
+    final tokenResponse = await userRepository.getAuthToken(authorizationToken);
     if (tokenResponse.accessToken != "") {
       state = AsyncValue.data(tokenResponse);
     } else {

@@ -12,6 +12,7 @@ import 'package:myecl/admin/ui/admin.dart';
 import 'package:myecl/admin/ui/components/admin_button.dart';
 import 'package:myecl/admin/ui/pages/edit_group_page/search_user.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -53,7 +54,7 @@ class EditGroupPage extends HookConsumerWidget {
             loader: (groupId) async =>
                 (await groupNotifier.loadGroup(groupId)).maybeWhen(
               data: (groups) => groups,
-              orElse: () => CoreGroup.fromJson({}),
+              orElse: () => EmptyModels.empty<CoreGroup>(),
             ),
             dataBuilder: (context, groups) {
               final group = groups.first;

@@ -12,7 +12,7 @@ void main() {
   group('VotesProvider', () {
     late MockVotesRepository mockRepository;
     late VotesProvider provider;
-    final votes = VoteBase.fromJson({}).copyWith(listId: '1');
+    final votes = VoteBase(listId: '1');
 
     setUp(() {
       mockRepository = MockVotesRepository();

@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/vote/adapters/list.dart';
 import 'package:myecl/vote/providers/list_list_provider.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
@@ -14,10 +15,10 @@ void main() {
     late MockListRepository mockRepository;
     late ListListNotifier provider;
     final lists = [
-      ListReturn.fromJson({}).copyWith(id: '1'),
-      ListReturn.fromJson({}).copyWith(id: '2'),
+      EmptyModels.empty<ListReturn>().copyWith(id: '1'),
+      EmptyModels.empty<ListReturn>().copyWith(id: '2'),
     ];
-    final newList = ListReturn.fromJson({}).copyWith(id: '3');
+    final newList = EmptyModels.empty<ListReturn>().copyWith(id: '3');
     final updatedList = lists.first.copyWith(name: 'Updated List');
 
     setUp(() {

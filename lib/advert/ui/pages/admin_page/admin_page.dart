@@ -13,6 +13,7 @@ import 'package:myecl/advert/ui/pages/admin_page/admin_advert_card.dart';
 import 'package:myecl/advert/ui/pages/advert.dart';
 import 'package:myecl/advert/router.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/layouts/column_refresher.dart';
@@ -71,7 +72,8 @@ class AdvertAdminPage extends HookConsumerWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    advertNotifier.setAdvert(AdvertReturnComplete.fromJson({}));
+                    advertNotifier
+                        .setAdvert(EmptyModels.empty<AdvertReturnComplete>());
                     QR.to(
                       AdvertRouter.root +
                           AdvertRouter.admin +

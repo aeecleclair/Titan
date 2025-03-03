@@ -5,6 +5,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -43,7 +44,7 @@ class AddEditListPage extends HookConsumerWidget {
     final listListNotifier = ref.read(listListProvider.notifier);
     final sectionsNotifier = ref.read(sectionListProvider.notifier);
     final list = ref.watch(listProvider);
-    final isEdit = list.id != ListReturn.fromJson({}).id;
+    final isEdit = list.id != EmptyModels.empty<ListReturn>().id;
     final name = useTextEditingController(text: list.name);
     final description = useTextEditingController(text: list.description);
     final listType = useState(list.type);
@@ -51,7 +52,7 @@ class AddEditListPage extends HookConsumerWidget {
     final queryController = useTextEditingController();
     final role = useTextEditingController();
     final program = useTextEditingController(text: list.program);
-    final member = useState(CoreUserSimple.fromJson({}));
+    final member = useState(EmptyModels.empty<CoreUserSimple>());
     final members = ref.watch(listMembersProvider);
     final membersNotifier = ref.read(listMembersProvider.notifier);
     final listLogosNotifier = ref.read(listLogosProvider.notifier);
@@ -265,7 +266,7 @@ class AddEditListPage extends HookConsumerWidget {
                                     if (value) {
                                       role.text = '';
                                       member.value =
-                                          CoreUserSimple.fromJson({});
+                                          EmptyModels.empty<CoreUserSimple>();
                                       queryController.text = '';
                                     } else {
                                       displayVoteToastWithContext(

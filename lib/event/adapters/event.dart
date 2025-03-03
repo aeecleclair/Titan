@@ -1,5 +1,6 @@
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
 extension $EventReturn on EventReturn {
   EventComplete toEventComplete() {
@@ -61,7 +62,7 @@ extension $EventComplete on EventComplete {
       id: id,
       decision: decision,
       applicantId: applicantId,
-      applicant: EventApplicant.fromJson({}),
+      applicant: EmptyModels.empty<EventApplicant>(),
     );
   }
 }

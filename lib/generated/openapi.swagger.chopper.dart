@@ -835,7 +835,8 @@ final class _$Openapi extends Openapi {
       $url,
       client.baseUrl,
     );
-    return client.send<List<enums.AccountType>, List<enums.AccountType>>($request);
+    return client
+        .send<List<enums.AccountType>, List<enums.AccountType>>($request);
   }
 
   @override

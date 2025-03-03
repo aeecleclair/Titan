@@ -10,6 +10,7 @@ import 'package:myecl/raffle/providers/winning_ticket_list_provider.dart';
 import 'package:myecl/raffle/router.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/creation_edit_page/prize_card.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
@@ -108,7 +109,7 @@ class PrizeHandler extends HookConsumerWidget {
               if (raffle.status == RaffleStatusType.creation)
                 GestureDetector(
                   onTap: () {
-                    prizeNotifier.setPrize(PrizeSimple.fromJson({}));
+                    prizeNotifier.setPrize(EmptyModels.empty<PrizeSimple>());
                     QR.to(
                       RaffleRouter.root +
                           RaffleRouter.detail +

@@ -3,6 +3,7 @@ import 'package:myecl/amap/providers/available_deliveries.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/widgets/admin_button.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
@@ -121,7 +122,8 @@ class AmapMainPage extends HookConsumerWidget {
                       addOrder: () {
                         balance.whenData(
                           (s) {
-                            orderNotifier.setOrder(OrderReturn.fromJson({}));
+                            orderNotifier
+                                .setOrder(EmptyModels.empty<OrderReturn>());
                             animation.forward();
                             showPanel.value = true;
                           },
@@ -222,8 +224,8 @@ class AmapMainPage extends HookConsumerWidget {
                         ),
                         const SizedBox(height: 30),
                         DeliverySection(
-                          editable:
-                              order.orderId == OrderReturn.fromJson({}).orderId,
+                          editable: order.orderId ==
+                              EmptyModels.empty<OrderReturn>().orderId,
                         ),
                         const SizedBox(height: 20),
                         WaitingButton(

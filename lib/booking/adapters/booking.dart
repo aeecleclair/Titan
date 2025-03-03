@@ -1,4 +1,5 @@
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/user/adapters/applicants.dart';
 
 extension $BookingReturnApplicant on BookingReturnApplicant {
@@ -71,7 +72,7 @@ extension $BookingReturn on BookingReturn {
       decision: decision,
       applicantId: applicantId,
       room: room,
-      applicant: Applicant.fromJson({}),
+      applicant: EmptyModels.empty<Applicant>(),
     );
   }
 

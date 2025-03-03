@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.enums.swagger.dart';
 import 'package:myecl/loan/providers/loan_provider.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
 void main() {
   group('LoanNotifier', () {
@@ -46,7 +47,7 @@ void main() {
 
     test('resetLoan should reset state', () {
       notifier.setLoan(loan);
-      notifier.setLoan(Loan.fromJson({}));
+      notifier.setLoan(EmptyModels.empty<Loan>());
 
       expect(container.read(loanProvider).id, equals(''));
       expect(container.read(loanProvider).borrowerId, equals(''));

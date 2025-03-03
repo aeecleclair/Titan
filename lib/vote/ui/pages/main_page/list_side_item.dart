@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/vote/providers/section_id_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
@@ -37,7 +38,7 @@ class ListSideItem extends HookConsumerWidget {
             isSelected: e.id == section.id,
             alreadyVoted: votedSections.contains(e.id),
             onTap: () async {
-              if (selectedList.id == ListReturn.fromJson({}).id) {
+              if (selectedList.id == EmptyModels.empty<ListReturn>().id) {
                 animation.forward(from: 0);
                 sectionIdNotifier.setId(e.id);
               } else {

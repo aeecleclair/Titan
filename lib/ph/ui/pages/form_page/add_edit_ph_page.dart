@@ -14,6 +14,7 @@ import 'package:myecl/ph/tools/constants.dart';
 import 'package:myecl/ph/tools/functions.dart';
 import 'package:myecl/ph/ui/pages/file_picker/pdf_picker.dart';
 import 'package:myecl/ph/ui/pages/ph.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
@@ -28,7 +29,7 @@ class PhAddEditPhPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ph = ref.watch(phProvider);
-    final isEdit = ph.id != PaperComplete.fromJson({}).id;
+    final isEdit = ph.id != EmptyModels.empty<PaperComplete>().id;
     final dateController =
         TextEditingController(text: phFormatDateEntry(ph.releaseDate));
     final key = GlobalKey<FormState>();

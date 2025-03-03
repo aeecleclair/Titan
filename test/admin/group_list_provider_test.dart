@@ -7,6 +7,7 @@ import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/generated/client_index.dart';
 import 'package:myecl/generated/openapi.enums.swagger.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
 class MockGroupRepository extends Mock implements Openapi {}
 
@@ -45,15 +46,17 @@ void main() {
       description: 'Existing Description',
     );
 
-    final newGroup = CoreGroupCreate.fromJson({});
-    final returnedGroup = CoreGroupSimple.fromJson({}).copyWith(id: "2");
+    final newGroup =
+        CoreGroupCreate(name: group.name, description: group.description);
+    final returnedGroup =
+        EmptyModels.empty<CoreGroupSimple>().copyWith(id: "2");
 
     test('Should return a group', () async {
       final mockGroup = MockGroupRepository();
       when(() => mockGroup.groupsGet()).thenAnswer(
         (_) async => chopper.Response(
           http.Response('[]', 200),
-          [CoreGroupSimple.fromJson({})],
+          [EmptyModels.empty<CoreGroupSimple>()],
         ),
       );
       final GroupListNotifier groupNotifier =
@@ -135,7 +138,7 @@ void main() {
       when(() => mockGroup.groupsGet()).thenAnswer(
         (_) async => chopper.Response(
           http.Response('[]', 200),
-          [CoreGroupSimple.fromJson({})],
+          [EmptyModels.empty<CoreGroupSimple>()],
         ),
       );
       when(() => mockGroup.groupsPost(body: any(named: 'body'))).thenAnswer(
@@ -163,7 +166,7 @@ void main() {
       when(() => mockGroup.groupsGet()).thenAnswer(
         (_) async => chopper.Response(
           http.Response('[]', 200),
-          [CoreGroupSimple.fromJson({}), returnedGroup],
+          [EmptyModels.empty<CoreGroupSimple>(), returnedGroup],
         ),
       );
       when(
@@ -199,7 +202,7 @@ void main() {
       when(() => mockGroup.groupsGet()).thenAnswer(
         (_) async => chopper.Response(
           http.Response('[]', 200),
-          [CoreGroupSimple.fromJson({}), returnedGroup],
+          [EmptyModels.empty<CoreGroupSimple>(), returnedGroup],
         ),
       );
       when(() => mockGroup.groupsGroupIdDelete(groupId: any(named: 'groupId')))

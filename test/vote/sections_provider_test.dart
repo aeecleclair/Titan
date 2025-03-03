@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:chopper/chopper.dart' as chopper;
@@ -13,10 +14,10 @@ void main() {
     late MockSectionRepository mockRepository;
     late SectionNotifier provider;
     final sections = [
-      SectionComplete.fromJson({}).copyWith(id: '1'),
-      SectionComplete.fromJson({}).copyWith(id: '2'),
+      EmptyModels.empty<SectionComplete>().copyWith(id: '1'),
+      EmptyModels.empty<SectionComplete>().copyWith(id: '2'),
     ];
-    final newSection = SectionComplete.fromJson({}).copyWith(id: '3');
+    final newSection = EmptyModels.empty<SectionComplete>().copyWith(id: '3');
     final newSectionBase =
         SectionBase(name: newSection.name, description: newSection.description);
 

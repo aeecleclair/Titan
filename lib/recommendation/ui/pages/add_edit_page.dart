@@ -14,6 +14,7 @@ import 'package:myecl/recommendation/providers/recommendation_logo_provider.dart
 import 'package:myecl/recommendation/providers/recommendation_provider.dart';
 import 'package:myecl/recommendation/tools/constants.dart';
 import 'package:myecl/recommendation/ui/components/recommendation_template.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
@@ -37,7 +38,7 @@ class AddEditRecommendationPage extends HookConsumerWidget {
         ref.watch(recommendationLogoProvider.notifier);
     final logoBytes = useState<Uint8List?>(null);
     final logo = useState<Image?>(null);
-    final isEdit = recommendation.id != Recommendation.fromJson({}).id;
+    final isEdit = recommendation.id != EmptyModels.empty<Recommendation>().id;
 
     final title = useTextEditingController(text: recommendation.title);
     final code = useTextEditingController(text: recommendation.code);

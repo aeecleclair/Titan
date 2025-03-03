@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/event/providers/is_admin_provider.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 void main() {
@@ -10,13 +11,14 @@ void main() {
       final container = ProviderContainer(
         overrides: [
           userProvider.overrideWithValue(
-            CoreUser.fromJson({}).copyWith(
+            EmptyModels.empty<CoreUser>().copyWith(
               groups: [
-                CoreGroupSimple.fromJson({}).copyWith(
+                EmptyModels.empty<CoreGroupSimple>().copyWith(
                   id: '53a669d6-84b1-4352-8d7c-421c1fbd9c6a',
                   name: 'Admin',
                 ),
-                CoreGroupSimple.fromJson({}).copyWith(id: '123', name: 'User'),
+                EmptyModels.empty<CoreGroupSimple>()
+                    .copyWith(id: '123', name: 'User'),
               ],
             ),
           ),
@@ -32,9 +34,10 @@ void main() {
       final container = ProviderContainer(
         overrides: [
           userProvider.overrideWithValue(
-            CoreUser.fromJson({}).copyWith(
+            EmptyModels.empty<CoreUser>().copyWith(
               groups: [
-                CoreGroupSimple.fromJson({}).copyWith(id: '123', name: 'User'),
+                EmptyModels.empty<CoreGroupSimple>()
+                    .copyWith(id: '123', name: 'User'),
               ],
             ),
           ),

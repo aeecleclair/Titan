@@ -7,6 +7,7 @@ import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/user_order_list_provider.dart';
 import 'package:myecl/amap/providers/user_amount_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -27,7 +28,7 @@ class ProductChoiceButton extends HookConsumerWidget {
     final orderListNotifier = ref.watch(userOrderListProvider.notifier);
     final userAmountNotifier = ref.watch(userAmountProvider.notifier);
     final me = ref.watch(userProvider);
-    final isEdit = order.orderId != OrderReturn.fromJson({}).orderId;
+    final isEdit = order.orderId != EmptyModels.empty<OrderReturn>().orderId;
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -156,14 +157,14 @@ class ProductChoiceButton extends HookConsumerWidget {
             ),
             onTap: () {
               if (order.amount != 0.0 ||
-                  order.orderId != OrderReturn.fromJson({}).orderId) {
+                  order.orderId != EmptyModels.empty<OrderReturn>().orderId) {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) => CustomDialogBox(
                     descriptions: AMAPTextConstants.deletingOrder,
                     title: AMAPTextConstants.deleting,
                     onYes: () {
-                      orderNotifier.setOrder(OrderReturn.fromJson({}));
+                      orderNotifier.setOrder(EmptyModels.empty<OrderReturn>());
                       QR.back();
                     },
                   ),

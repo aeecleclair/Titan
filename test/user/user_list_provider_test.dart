@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:chopper/chopper.dart' as chopper;
@@ -13,8 +14,8 @@ void main() {
     late MockUserListRepository mockRepository;
     late UserListNotifier provider;
     final users = [
-      CoreUserSimple.fromJson({}).copyWith(id: '1'),
-      CoreUserSimple.fromJson({}).copyWith(id: '2'),
+      EmptyModels.empty<CoreUserSimple>().copyWith(id: '1'),
+      EmptyModels.empty<CoreUserSimple>().copyWith(id: '2'),
     ];
 
     setUp(() {

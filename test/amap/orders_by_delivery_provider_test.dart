@@ -6,6 +6,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:myecl/amap/providers/orders_by_delivery_provider.dart';
 import 'package:myecl/generated/client_index.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
 class MockOrderListRepository extends Mock implements Openapi {}
 
@@ -14,7 +15,7 @@ void main() {
     test('Should load delivery order list', () async {
       final mockOrderByDeliveryListRepository = MockOrderListRepository();
       final orderByDeliveryList = [
-        OrderReturn.fromJson({}).copyWith(orderId: "1"),
+        EmptyModels.empty<OrderReturn>().copyWith(orderId: "1"),
       ];
       when(
         () =>

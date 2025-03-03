@@ -8,6 +8,7 @@ import 'package:myecl/raffle/providers/raffle_list_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/admin_module_page/confirm_creation.dart';
 import 'package:myecl/raffle/ui/pages/admin_module_page/tombola_card.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
 class TombolaHandler extends HookConsumerWidget {
   const TombolaHandler({super.key});
@@ -16,7 +17,7 @@ class TombolaHandler extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final groupList = ref.watch(allGroupListProvider);
     final raffleList = ref.watch(raffleListProvider);
-    final groupChoosen = useState(CoreGroupSimple.fromJson({}));
+    final groupChoosen = useState(EmptyModels.empty<CoreGroupSimple>());
 
     void displayWinningsDialog(
       List<CoreGroupSimple> groups,
@@ -133,7 +134,7 @@ class TombolaHandler extends HookConsumerWidget {
                             data: (data) {
                               displayWinningsDialog(data, () {
                                 if (groupChoosen.value.id !=
-                                    CoreGroupSimple.fromJson({}).id) {
+                                    EmptyModels.empty<CoreGroupSimple>().id) {
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) {

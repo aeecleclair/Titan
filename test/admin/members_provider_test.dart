@@ -1,11 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:myecl/admin/providers/members_provider.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
 void main() {
   group('MembersNotifier', () {
-    final user1 = CoreUserSimple.fromJson({}).copyWith(id: '1', name: 'John');
-    final user2 = CoreUserSimple.fromJson({}).copyWith(id: '2', name: 'Jane');
+    final user1 =
+        EmptyModels.empty<CoreUserSimple>().copyWith(id: '1', name: 'John');
+    final user2 =
+        EmptyModels.empty<CoreUserSimple>().copyWith(id: '2', name: 'Jane');
     test('Adding a user to the list', () {
       final membersNotifier = MembersNotifier();
       membersNotifier.add(user1);

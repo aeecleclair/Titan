@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/user/adapters/users.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
@@ -84,7 +85,7 @@ final userProvider = Provider((ref) {
   return ref.watch(asyncUserProvider).maybeWhen(
         data: (user) => user,
         orElse: () {
-          return CoreUser.fromJson({});
+          return EmptyModels.empty<CoreUser>();
         },
       );
 });

@@ -12,7 +12,7 @@ void main() {
   group('SectionVoteCountNotifier', () {
     late MockSectionVoteCountRepository mockRepository;
     late SectionVoteCountNotifier provider;
-    final voteStats = VoteStats.fromJson({}).copyWith(sectionId: '1');
+    final voteStats = VoteStats(sectionId: '1', count: 0);
 
     setUp(() {
       mockRepository = MockSectionVoteCountRepository();

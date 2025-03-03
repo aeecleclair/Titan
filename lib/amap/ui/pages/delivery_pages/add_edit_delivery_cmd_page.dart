@@ -12,6 +12,7 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/amap/ui/pages/delivery_pages/product_ui_check.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
@@ -28,7 +29,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = GlobalKey<FormState>();
     final delivery = ref.watch(deliveryProvider);
-    final isEdit = delivery.id != DeliveryReturn.fromJson({}).id;
+    final isEdit = delivery.id != EmptyModels.empty<DeliveryReturn>().id;
     final dateController = useTextEditingController(
       text: isEdit ? processDate(delivery.deliveryDate) : '',
     );

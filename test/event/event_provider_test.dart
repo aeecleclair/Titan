@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/generated/openapi.enums.swagger.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
 void main() {
   group('EventNotifier', () {
@@ -45,7 +46,7 @@ void main() {
 
     test('resetEvent should reset state', () {
       notifier.setEvent(event);
-      notifier.setEvent(EventReturn.fromJson({}));
+      notifier.setEvent(EmptyModels.empty<EventReturn>());
 
       expect(container.read(eventProvider).id, equals(''));
       expect(container.read(eventProvider).name, equals(''));

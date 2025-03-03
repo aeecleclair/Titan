@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:myecl/cinema/providers/session_provider.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
 void main() {
   group('SessionNotifier', () {
@@ -32,7 +33,7 @@ void main() {
 
     test('resetSession should reset state', () {
       notifier.setSession(session);
-      notifier.setSession(CineSessionComplete.fromJson({}));
+      notifier.setSession(EmptyModels.empty<CineSessionComplete>());
 
       expect(container.read(sessionProvider).id, equals(''));
       expect(container.read(sessionProvider).name, equals(''));

@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/vote/providers/list_provider.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
 
@@ -7,7 +8,8 @@ void main() {
   group('ListNotifier', () {
     late ProviderContainer container;
     late ListNotifier notifier;
-    final list = ListReturn.fromJson({}).copyWith(id: '123', name: 'John Doe');
+    final list =
+        EmptyModels.empty<ListReturn>().copyWith(id: '123', name: 'John Doe');
 
     setUp(() {
       container = ProviderContainer();
@@ -23,7 +25,7 @@ void main() {
 
     test('resetId should reset the state', () {
       notifier.setId(list);
-      notifier.setId(ListReturn.fromJson({}));
+      notifier.setId(EmptyModels.empty<ListReturn>());
 
       expect(container.read(listProvider).id, equals(''));
       expect(container.read(listProvider).name, equals(''));

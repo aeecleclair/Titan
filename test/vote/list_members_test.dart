@@ -1,12 +1,15 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/vote/providers/list_members.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
 
 void main() {
   group('ListMembersProvider', () {
     late ListMembersProvider provider;
-    final member = ListMemberComplete.fromJson({}).copyWith(userId: '1');
-    final member2 = ListMemberComplete.fromJson({}).copyWith(userId: '2');
+    final member =
+        EmptyModels.empty<ListMemberComplete>().copyWith(userId: '1');
+    final member2 =
+        EmptyModels.empty<ListMemberComplete>().copyWith(userId: '2');
 
     setUp(() {
       provider = ListMembersProvider();

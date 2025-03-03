@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 
@@ -12,7 +13,7 @@ void main() {
   group('UserNotifier', () {
     late MockUserRepository mockRepository;
     late UserNotifier provider;
-    final user = CoreUser.fromJson({}).copyWith(id: '1');
+    final user = EmptyModels.empty<CoreUser>().copyWith(id: '1');
 
     setUp(() {
       mockRepository = MockUserRepository();

@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/event/providers/is_admin_provider.dart';
 import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
 
@@ -74,7 +75,7 @@ void main() {
     test('Should return false if user is null', () {
       final container = ProviderContainer(
         overrides: [
-          userProvider.overrideWithValue(CoreUser.fromJson({})),
+          userProvider.overrideWithValue(EmptyModels.empty<CoreUser>()),
         ],
       );
 

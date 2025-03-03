@@ -14,6 +14,7 @@ import 'package:myecl/tools/ui/widgets/admin_button.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/user/providers/user_provider.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class EventMainPage extends HookConsumerWidget {
@@ -68,7 +69,7 @@ class EventMainPage extends HookConsumerWidget {
               const SizedBox(height: 20),
               GestureDetector(
                 onTap: () {
-                  eventNotifier.setEvent(EventReturn.fromJson({}));
+                  eventNotifier.setEvent(EmptyModels.empty<EventReturn>());
                   QR.to(EventRouter.root + EventRouter.addEdit);
                 },
                 child: CardLayout(

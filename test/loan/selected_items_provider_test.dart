@@ -16,14 +16,14 @@ void main() {
 
     // test('should initialize with loan items selected', () {
     //   final products = [
-    //     Item.fromJson({}).copyWith(id: '1', name: 'Product 1'),
-    //     Item.fromJson({}).copyWith(id: '2', name: 'Product 2'),
-    //     Item.fromJson({}).copyWith(id: '3', name: 'Product 3'),
+    //     EmptyModels.empty<Item>().copyWith(id: '1', name: 'Product 1'),
+    //     EmptyModels.empty<Item>().copyWith(id: '2', name: 'Product 2'),
+    //     EmptyModels.empty<Item>().copyWith(id: '3', name: 'Product 3'),
     //   ];
-    //   final loan = Loan.fromJson({}).copyWith(
+    //   final loan = EmptyModels.empty<Loan>().copyWith(
     //     itemsQuantity: [
-    //       ItemQuantity.fromJson({}).copyWith(id: '1', name: 'Product 1'),
-    //       ItemQuantity.fromJson({}).copyWith(id: '3', name: 'Product 3'),
+    //       ItemQuantity.empty().copyWith(id: '1', name: 'Product 1'),
+    //       ItemQuantity.empty().copyWith(id: '3', name: 'Product 3'),
     //     ],
     //   );
     //   final provider = SelectedListProvider(products);

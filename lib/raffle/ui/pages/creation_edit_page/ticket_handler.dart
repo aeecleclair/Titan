@@ -9,6 +9,7 @@ import 'package:myecl/raffle/providers/raffle_provider.dart';
 import 'package:myecl/raffle/router.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/creation_edit_page/ticket_ui.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
@@ -58,7 +59,7 @@ class TicketHandler extends HookConsumerWidget {
                 GestureDetector(
                   onTap: () {
                     packTicketNotifier
-                        .setPackTicket(PackTicketSimple.fromJson({}));
+                        .setPackTicket(EmptyModels.empty<PackTicketSimple>());
                     QR.to(
                       RaffleRouter.root +
                           RaffleRouter.detail +

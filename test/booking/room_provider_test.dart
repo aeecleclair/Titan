@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/providers/room_provider.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
 void main() {
   group('RoomNotifier', () {
@@ -28,7 +29,7 @@ void main() {
 
     test('resetRoom should reset state', () {
       notifier.setRoom(room);
-      notifier.setRoom(RoomComplete.fromJson({}));
+      notifier.setRoom(EmptyModels.empty<RoomComplete>());
 
       expect(container.read(roomProvider).id, equals(''));
       expect(container.read(roomProvider).name, equals(''));

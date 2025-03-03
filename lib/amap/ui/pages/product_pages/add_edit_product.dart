@@ -10,6 +10,7 @@ import 'package:myecl/amap/providers/selected_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
@@ -25,8 +26,8 @@ class AddEditProduct extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = GlobalKey<FormState>();
     final product = ref.watch(productProvider);
-    final isEdit =
-        product.id != AppModulesAmapSchemasAmapProductComplete.fromJson({}).id;
+    final isEdit = product.id !=
+        EmptyModels.empty<AppModulesAmapSchemasAmapProductComplete>().id;
     final products = ref.watch(productListProvider);
     final productsNotifier = ref.watch(productListProvider.notifier);
     final categories = ref.watch(categoryListProvider);

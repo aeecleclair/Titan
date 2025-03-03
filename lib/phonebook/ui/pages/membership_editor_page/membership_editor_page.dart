@@ -12,6 +12,7 @@ import 'package:myecl/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -39,7 +40,7 @@ class MembershipEditorPage extends HookConsumerWidget {
     final member = ref.watch(completeMemberProvider);
     final membership = ref.watch(membershipProvider);
     final association = ref.watch(associationProvider);
-    final isEdit = membership.id != MembershipComplete.fromJson({}).id;
+    final isEdit = membership.id != EmptyModels.empty<MembershipComplete>().id;
     final associationMemberListNotifier =
         ref.watch(associationMemberListProvider.notifier);
     final memberRoleTagsNotifier = ref.watch(memberRoleTagsProvider.notifier);
@@ -172,7 +173,7 @@ class MembershipEditorPage extends HookConsumerWidget {
                   ),
                 ),
                 onTap: () async {
-                  if (member.id == MemberComplete.fromJson({}).id) {
+                  if (member.id == EmptyModels.empty<MemberComplete>().id) {
                     displayToastWithContext(
                       TypeMsg.msg,
                       PhonebookTextConstants.emptyMember,

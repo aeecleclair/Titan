@@ -8,6 +8,7 @@ import 'package:myecl/amap/providers/user_order_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/components/order_ui.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
@@ -49,7 +50,7 @@ class OrderSection extends HookConsumerWidget {
             const SizedBox(width: 15),
             GestureDetector(
               onTap: () {
-                final e = OrderReturn.fromJson({});
+                final e = EmptyModels.empty<OrderReturn>();
                 deliveryIdNotifier.setId(e.deliveryId);
                 orderNotifier.setOrder(e);
                 addOrder();

@@ -5,6 +5,7 @@ import 'package:myecl/booking/providers/manager_booking_list_provider.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:chopper/chopper.dart' as chopper;
 import 'package:http/http.dart' as http;
+import 'package:myecl/tools/builders/empty_models.dart';
 
 class MockBookingRepository extends Mock implements Openapi {}
 
@@ -13,8 +14,8 @@ void main() {
     late MockBookingRepository mockRepository;
     late ManagerBookingListProvider provider;
     final bookings = [
-      BookingReturnApplicant.fromJson({}).copyWith(id: '1'),
-      BookingReturnApplicant.fromJson({}).copyWith(id: '2'),
+      EmptyModels.empty<BookingReturnApplicant>().copyWith(id: '1'),
+      EmptyModels.empty<BookingReturnApplicant>().copyWith(id: '2'),
     ];
     final updatedBooking = bookings.first.copyWith(reason: 'Updated');
     final booking = bookings.first.copyWith(decision: Decision.approved);

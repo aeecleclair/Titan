@@ -3,6 +3,7 @@ import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/loan/providers/history_loaner_loan_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/user_loaner_list_provider.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/providers/map_provider.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
@@ -19,7 +20,9 @@ final adminHistoryLoanListProvider = StateNotifierProvider<
     final loaner = ref.watch(loanerProvider);
     final loanListNotifier = ref.watch(historyLoanerLoanListProvider.notifier);
     adminLoanListNotifier.loadTList(loaners);
-    if (loaner.id == Loaner.fromJson({}).id) return adminLoanListNotifier;
+    if (loaner.id == EmptyModels.empty<Loaner>().id) {
+      return adminLoanListNotifier;
+    }
     loanListNotifier.loadLoan(loaner.id).then((value) {
       adminLoanListNotifier.setTData(loaner, value);
     });
