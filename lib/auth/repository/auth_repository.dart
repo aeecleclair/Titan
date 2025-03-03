@@ -10,7 +10,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart' as models;
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/cache/cache_manager.dart';
-import 'package:myecl/tools/repository/constants.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:universal_html/html.dart' as html;
 
 class AuthRepository {
@@ -23,7 +23,7 @@ class AuthRepository {
   final String clientId = "Titan";
   final String redirectUrl = "fr.myecl.titan://authorized";
   final String redirectUrlHost = "myecl.fr";
-  final String discoveryUrl = "$BASE_URL.well-known/openid-configuration";
+  final String discoveryUrl = "${getTitanHost()}.well-known/openid-configuration";
   final List<String> scopes = ["API"];
 
   AuthRepository({required this.openIdRepository});
@@ -51,7 +51,7 @@ class AuthRepository {
     models.TokenResponse tokenResponse = models.TokenResponse.fromJson({});
 
     final authUrl =
-        "${BASE_URL}auth/authorize?client_id=$clientId&response_type=code&scope=${scopes.join(" ")}&redirect_uri=$redirectUri&code_challenge=${hash(codeVerifier)}&code_challenge_method=S256";
+        "${getTitanHost()}auth/authorize?client_id=$clientId&response_type=code&scope=${scopes.join(" ")}&redirect_uri=$redirectUri&code_challenge=${hash(codeVerifier)}&code_challenge_method=S256";
 
     if (kIsWeb) {
       popupWin = html.window
@@ -249,6 +249,6 @@ class AuthRepository {
 }
 
 final authRepositoryProvider = Provider((ref) {
-  final openIdRepository = Openapi.create(baseUrl: Uri.parse(BASE_URL));
+  final openIdRepository = Openapi.create(baseUrl: Uri.parse(getTitanHost()));
   AuthRepository(openIdRepository: openIdRepository);
 });

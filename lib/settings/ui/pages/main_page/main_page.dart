@@ -10,7 +10,6 @@ import 'package:myecl/settings/router.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/main_page/settings_item.dart';
 import 'package:myecl/settings/ui/settings.dart';
-import 'package:myecl/tools/repository/constants.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
@@ -167,7 +166,7 @@ class SettingsMainPage extends HookConsumerWidget {
                     icon: HeroIcons.calendarDays,
                     onTap: () {
                       Clipboard.setData(
-                        ClipboardData(text: "${BASE_URL}calendar/ical"),
+                        ClipboardData(text: "${getTitanHost()}calendar/ical"),
                       ).then((value) {
                         displayToastWithContext(
                           TypeMsg.msg,
@@ -293,7 +292,7 @@ class SettingsMainPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 10),
                   AutoSizeText(
-                    BASE_URL,
+                    getTitanHost(),
                     maxLines: 1,
                     minFontSize: 10,
                     style: const TextStyle(

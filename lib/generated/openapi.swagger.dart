@@ -960,16 +960,15 @@ abstract class Openapi extends ChopperService {
   });
 
   ///Get Account Types
-  Future<chopper.Response<List<AccountType>>> usersAccountTypesGet() {
-    generatedMapping.putIfAbsent(
-        AccountType, () => AccountType.fromJsonFactory);
+  Future<chopper.Response<List<enums.AccountType>>> usersAccountTypesGet() {
+    generatedMapping.putIfAbsent(enums.AccountType, () => (_) => []);
 
     return _usersAccountTypesGet();
   }
 
   ///Get Account Types
   @Get(path: '/users/account-types')
-  Future<chopper.Response<List<AccountType>>> _usersAccountTypesGet();
+  Future<chopper.Response<List<enums.AccountType>>> _usersAccountTypesGet();
 
   ///Read Current User
   Future<chopper.Response<CoreUser>> usersMeGet() {
@@ -2383,7 +2382,7 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<FlappyBirdScoreInDB>>> _flappybirdScoresGet();
 
   ///Create Flappybird Score
-  Future<chopper.Response<FlappyBirdScoreBase>> flappybirdScoresPost(
+  Future<chopper.Response<FlappyBirdScoreInDB>> flappybirdScoresPost(
       {required FlappyBirdScoreBase? body}) {
     generatedMapping.putIfAbsent(
         FlappyBirdScoreBase, () => FlappyBirdScoreBase.fromJsonFactory);
@@ -2396,7 +2395,7 @@ abstract class Openapi extends ChopperService {
     path: '/flappybird/scores',
     optionalBody: true,
   )
-  Future<chopper.Response<FlappyBirdScoreBase>> _flappybirdScoresPost(
+  Future<chopper.Response<FlappyBirdScoreInDB>> _flappybirdScoresPost(
       {@Body() required FlappyBirdScoreBase? body});
 
   ///Get Current User Flappybird Personal Best

@@ -828,14 +828,14 @@ final class _$Openapi extends Openapi {
   }
 
   @override
-  Future<Response<List<InvalidType>>> _usersAccountTypesGet() {
+  Future<Response<List<enums.AccountType>>> _usersAccountTypesGet() {
     final Uri $url = Uri.parse('/users/account-types');
     final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,
     );
-    return client.send<List<InvalidType>, List<InvalidType>>($request);
+    return client.send<List<enums.AccountType>, List<enums.AccountType>>($request);
   }
 
   @override
@@ -2049,7 +2049,7 @@ final class _$Openapi extends Openapi {
   }
 
   @override
-  Future<Response<FlappyBirdScoreBase>> _flappybirdScoresPost(
+  Future<Response<FlappyBirdScoreInDB>> _flappybirdScoresPost(
       {required FlappyBirdScoreBase? body}) {
     final Uri $url = Uri.parse('/flappybird/scores');
     final $body = body;
@@ -2059,7 +2059,7 @@ final class _$Openapi extends Openapi {
       client.baseUrl,
       body: $body,
     );
-    return client.send<FlappyBirdScoreBase, FlappyBirdScoreBase>($request);
+    return client.send<FlappyBirdScoreInDB, FlappyBirdScoreBase>($request);
   }
 
   @override
