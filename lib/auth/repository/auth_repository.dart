@@ -23,7 +23,8 @@ class AuthRepository {
   final String clientId = "Titan";
   final String redirectUrl = "fr.myecl.titan://authorized";
   final String redirectUrlHost = "myecl.fr";
-  final String discoveryUrl = "${getTitanHost()}.well-known/openid-configuration";
+  final String discoveryUrl =
+      "${getTitanHost()}.well-known/openid-configuration";
   final List<String> scopes = ["API"];
 
   AuthRepository({required this.openIdRepository});
@@ -250,5 +251,5 @@ class AuthRepository {
 
 final authRepositoryProvider = Provider((ref) {
   final openIdRepository = Openapi.create(baseUrl: Uri.parse(getTitanHost()));
-  AuthRepository(openIdRepository: openIdRepository);
+  return AuthRepository(openIdRepository: openIdRepository);
 });

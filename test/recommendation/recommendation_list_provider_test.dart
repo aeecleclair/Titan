@@ -70,7 +70,8 @@ void main() {
       );
       when(
         () => mockRepository.recommendationRecommendationsPost(
-            body: any(named: 'body')),
+          body: any(named: 'body'),
+        ),
       ).thenAnswer(
         (_) async => chopper.Response(
           http.Response('body', 200),

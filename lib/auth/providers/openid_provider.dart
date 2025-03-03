@@ -103,13 +103,13 @@ final tokenProvider = Provider((ref) {
 class OpenIdTokenProvider extends StateNotifier<AsyncValue<TokenResponse>> {
   final String tokenKey = "token";
   final String refreshTokenKey = "refresh_token";
-  AuthRepository? userRepository;
+  final AuthRepository userRepository;
   OpenIdTokenProvider({required this.userRepository})
       : super(const AsyncValue.loading());
 
   Future getTokenFromRequest() async {
     state = const AsyncValue.loading();
-    final tokenResponse = await userRepository!.getTokenFromRequest();
+    final tokenResponse = await userRepository.getTokenFromRequest();
     if (tokenResponse.accessToken != "") {
       state = AsyncValue.data(tokenResponse);
     } else {
@@ -119,7 +119,7 @@ class OpenIdTokenProvider extends StateNotifier<AsyncValue<TokenResponse>> {
 
   Future getTokenFromStorage() async {
     state = const AsyncValue.loading();
-    final tokenResponse = await userRepository!.getTokenFromStorage();
+    final tokenResponse = await userRepository.getTokenFromStorage();
     if (tokenResponse.accessToken != "") {
       state = AsyncValue.data(tokenResponse);
     } else {
@@ -130,7 +130,7 @@ class OpenIdTokenProvider extends StateNotifier<AsyncValue<TokenResponse>> {
   Future<void> getAuthToken(String authorizationToken) async {
     state = const AsyncValue.loading();
     final tokenResponse =
-        await userRepository!.getAuthToken(authorizationToken);
+        await userRepository.getAuthToken(authorizationToken);
     if (tokenResponse.accessToken != "") {
       state = AsyncValue.data(tokenResponse);
     } else {
@@ -140,7 +140,7 @@ class OpenIdTokenProvider extends StateNotifier<AsyncValue<TokenResponse>> {
 
   Future<bool> refreshToken() async {
     state = const AsyncValue.loading();
-    final tokenResponse = await userRepository!.refreshToken();
+    final tokenResponse = await userRepository.refreshToken();
     if (tokenResponse.accessToken != "") {
       state = AsyncValue.data(tokenResponse);
     } else {
@@ -149,5 +149,5 @@ class OpenIdTokenProvider extends StateNotifier<AsyncValue<TokenResponse>> {
     return tokenResponse.accessToken != "";
   }
 
-  void deleteToken() => userRepository!.deleteToken();
+  void deleteToken() => userRepository.deleteToken();
 }
