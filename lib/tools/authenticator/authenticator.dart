@@ -18,7 +18,8 @@ class AppAuthenticator implements Authenticator {
     Request? originalRequest,
   ]) async {
     debugPrint(
-        '[AppAuthenticator] response.statusCode: ${response.statusCode}');
+      '[AppAuthenticator] response.statusCode: ${response.statusCode}',
+    );
     debugPrint(
       '[AppAuthenticator] request Retry-Count: ${request.headers['Retry-Count'] ?? 0}',
     );
