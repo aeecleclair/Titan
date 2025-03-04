@@ -61,12 +61,6 @@ void main() {
     });
 
     test('addRoom adds a room to the list', () async {
-      when(() => mockRepository.bookingRoomsGet()).thenAnswer(
-        (_) async => chopper.Response(
-          http.Response('body', 200),
-          rooms,
-        ),
-      );
       when(() => mockRepository.bookingRoomsPost(body: any(named: 'body')))
           .thenAnswer(
         (_) async => chopper.Response(
@@ -75,7 +69,7 @@ void main() {
         ),
       );
 
-      await provider.loadRooms();
+      provider.state = AsyncValue.data([...rooms]);
       final result = await provider.addRoom(newRoom.toRoomBase());
 
       expect(result, true);
@@ -92,18 +86,13 @@ void main() {
       when(() => mockRepository.bookingRoomsPost(body: any(named: 'body')))
           .thenThrow(Exception('Failed to add room'));
 
+      provider.state = AsyncValue.data([...rooms]);
       final result = await provider.addRoom(newRoom.toRoomBase());
 
       expect(result, false);
     });
 
     test('updateRoom updates a room in the list', () async {
-      when(() => mockRepository.bookingRoomsGet()).thenAnswer(
-        (_) async => chopper.Response(
-          http.Response('body', 200),
-          rooms,
-        ),
-      );
       when(
         () => mockRepository.bookingRoomsRoomIdPatch(
           roomId: any(named: 'roomId'),
@@ -116,7 +105,7 @@ void main() {
         ),
       );
 
-      await provider.loadRooms();
+      provider.state = AsyncValue.data([...rooms]);
       final result = await provider.updateRoom(updatedRoom);
 
       expect(result, true);
@@ -137,18 +126,13 @@ void main() {
         ),
       ).thenThrow(Exception('Failed to update room'));
 
+      provider.state = AsyncValue.data([...rooms]);
       final result = await provider.updateRoom(updatedRoom);
 
       expect(result, false);
     });
 
     test('deleteRoom removes a room from the list', () async {
-      when(() => mockRepository.bookingRoomsGet()).thenAnswer(
-        (_) async => chopper.Response(
-          http.Response('body', 200),
-          rooms,
-        ),
-      );
       when(
         () => mockRepository.bookingRoomsRoomIdDelete(
           roomId: any(named: 'roomId'),
@@ -160,7 +144,7 @@ void main() {
         ),
       );
 
-      await provider.loadRooms();
+      provider.state = AsyncValue.data([...rooms]);
       final result = await provider.deleteRoom(rooms.first.id);
 
       expect(result, true);
@@ -178,6 +162,7 @@ void main() {
         () => mockRepository.bookingRoomsRoomIdDelete(roomId: rooms.first.id),
       ).thenThrow(Exception('Failed to delete room'));
 
+      provider.state = AsyncValue.data([...rooms]);
       final result = await provider.deleteRoom(rooms.first.id);
 
       expect(result, false);

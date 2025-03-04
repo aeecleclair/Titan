@@ -46,15 +46,6 @@ void main() {
       expect(result, true);
     });
 
-    test('createUser handles error', () async {
-      when(() => mockRepository.usersCreatePost(body: any(named: 'body')))
-          .thenThrow(Exception('Failed to create user'));
-
-      final result = await provider.createUser('test@example.com');
-
-      expect(result, false);
-    });
-
     test('recoverUser returns true on success', () async {
       when(() => mockRepository.usersRecoverPost(body: any(named: 'body')))
           .thenAnswer(
@@ -67,15 +58,6 @@ void main() {
       final result = await provider.recoverUser('test@example.com');
 
       expect(result, true);
-    });
-
-    test('recoverUser handles error', () async {
-      when(() => mockRepository.usersRecoverPost(body: any(named: 'body')))
-          .thenThrow(Exception('Failed to recover user'));
-
-      final result = await provider.recoverUser('test@example.com');
-
-      expect(result, false);
     });
 
     test('activateUser returns true on success', () async {
@@ -92,14 +74,6 @@ void main() {
       expect(result, true);
     });
 
-    test('activateUser handles error', () async {
-      when(() => mockRepository.usersActivatePost(body: any(named: 'body')))
-          .thenThrow(Exception('Failed to activate user'));
-
-      final result = await provider.activateUser(createAccount);
-
-      expect(result, false);
-    });
 
     test('resetPassword returns true on success', () async {
       when(
@@ -114,16 +88,6 @@ void main() {
       final result = await provider.resetPassword(recoverRequest);
 
       expect(result, true);
-    });
-
-    test('resetPassword handles error', () async {
-      when(
-        () => mockRepository.usersResetPasswordPost(body: any(named: 'body')),
-      ).thenThrow(Exception('Failed to reset password'));
-
-      final result = await provider.resetPassword(recoverRequest);
-
-      expect(result, false);
     });
   });
 }

@@ -64,12 +64,6 @@ void main() {
     });
 
     test('addRecommendation adds a recommendation to the list', () async {
-      when(() => mockRepository.recommendationRecommendationsGet()).thenAnswer(
-        (_) async => chopper.Response(
-          http.Response('body', 200),
-          recommendations,
-        ),
-      );
       when(
         () => mockRepository.recommendationRecommendationsPost(
           body: any(named: 'body'),
@@ -81,7 +75,7 @@ void main() {
         ),
       );
 
-      await provider.loadRecommendation();
+      provider.state = AsyncValue.data([...recommendations]);
       final result = await provider
           .addRecommendation(newRecommendation.toRecommendationBase());
 
@@ -102,6 +96,7 @@ void main() {
         ),
       ).thenThrow(Exception('Failed to add recommendation'));
 
+      provider.state = AsyncValue.data([...recommendations]);
       final result = await provider
           .addRecommendation(newRecommendation.toRecommendationBase());
 
@@ -109,12 +104,6 @@ void main() {
     });
 
     test('updateRecommendation updates a recommendation in the list', () async {
-      when(() => mockRepository.recommendationRecommendationsGet()).thenAnswer(
-        (_) async => chopper.Response(
-          http.Response('body', 200),
-          recommendations,
-        ),
-      );
       when(
         () => mockRepository.recommendationRecommendationsRecommendationIdPatch(
           recommendationId: any(named: 'recommendationId'),
@@ -127,7 +116,7 @@ void main() {
         ),
       );
 
-      await provider.loadRecommendation();
+      provider.state = AsyncValue.data([...recommendations]);
       final result = await provider.updateRecommendation(updatedRecommendation);
 
       expect(result, true);
@@ -148,6 +137,7 @@ void main() {
         ),
       ).thenThrow(Exception('Failed to update recommendation'));
 
+      provider.state = AsyncValue.data([...recommendations]);
       final result = await provider.updateRecommendation(updatedRecommendation);
 
       expect(result, false);
@@ -155,12 +145,6 @@ void main() {
 
     test('deleteRecommendation removes a recommendation from the list',
         () async {
-      when(() => mockRepository.recommendationRecommendationsGet()).thenAnswer(
-        (_) async => chopper.Response(
-          http.Response('body', 200),
-          recommendations,
-        ),
-      );
       when(
         () =>
             mockRepository.recommendationRecommendationsRecommendationIdDelete(
@@ -173,7 +157,7 @@ void main() {
         ),
       );
 
-      await provider.loadRecommendation();
+      provider.state = AsyncValue.data([...recommendations]);
       final result =
           await provider.deleteRecommendation(recommendations.first.id);
 
@@ -195,6 +179,7 @@ void main() {
         ),
       ).thenThrow(Exception('Failed to delete recommendation'));
 
+      provider.state = AsyncValue.data([...recommendations]);
       final result =
           await provider.deleteRecommendation(recommendations.first.id);
 

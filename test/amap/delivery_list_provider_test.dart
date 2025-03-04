@@ -113,9 +113,8 @@ void main() {
       // Arrange
       final mockRepository = MockDeliveryListRepository();
       when(
-        () => mockRepository.amapDeliveriesDeliveryIdPatch(
+        () => mockRepository.amapDeliveriesDeliveryIdOpenorderingPost(
           deliveryId: any(named: 'deliveryId'),
-          body: any(named: 'body'),
         ),
       ).thenAnswer(
         (_) async => chopper.Response(
@@ -152,9 +151,8 @@ void main() {
       final mockRepository = MockDeliveryListRepository();
       final deliveries = [delivery];
       when(
-        () => mockRepository.amapDeliveriesDeliveryIdPatch(
+        () => mockRepository.amapDeliveriesDeliveryIdLockPost(
           deliveryId: any(named: 'deliveryId'),
-          body: any(named: 'body'),
         ),
       ).thenAnswer(
         (_) async => chopper.Response(
@@ -190,9 +188,8 @@ void main() {
       final mockRepository = MockDeliveryListRepository();
       final deliveries = [delivery];
       when(
-        () => mockRepository.amapDeliveriesDeliveryIdPatch(
+        () => mockRepository.amapDeliveriesDeliveryIdDeliveredPost(
           deliveryId: any(named: 'deliveryId'),
-          body: any(named: 'body'),
         ),
       ).thenAnswer(
         (_) async => chopper.Response(
@@ -227,7 +224,7 @@ void main() {
       final mockRepository = MockDeliveryListRepository();
       final deliveries = [delivery];
       when(
-        () => mockRepository.amapDeliveriesDeliveryIdDelete(
+        () => mockRepository.amapDeliveriesDeliveryIdArchivePost(
           deliveryId: any(named: 'deliveryId'),
         ),
       ).thenAnswer(

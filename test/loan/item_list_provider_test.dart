@@ -15,10 +15,10 @@ void main() {
     late MockItemRepository mockRepository;
     late ItemListNotifier provider;
     final items = [
-      EmptyModels.empty<Item>().copyWith(id: '1'),
-      EmptyModels.empty<Item>().copyWith(id: '2'),
+      EmptyModels.empty<Item>().copyWith(id: '1', name: 'Item 1'),
+      EmptyModels.empty<Item>().copyWith(id: '2', name: 'Item 2'),
     ];
-    final newItem = EmptyModels.empty<Item>().copyWith(id: '3');
+    final newItem = EmptyModels.empty<Item>().copyWith(id: '3', name: 'New Item');
     final updatedItem = items.first.copyWith(name: 'Updated Item');
 
     setUp(() {
@@ -69,16 +69,6 @@ void main() {
 
     test('addItem adds an item to the list', () async {
       when(
-        () => mockRepository.loansLoanersLoanerIdItemsGet(
-          loanerId: any(named: 'loanerId'),
-        ),
-      ).thenAnswer(
-        (_) async => chopper.Response(
-          http.Response('body', 200),
-          items,
-        ),
-      );
-      when(
         () => mockRepository.loansLoanersLoanerIdItemsPost(
           loanerId: any(named: 'loanerId'),
           body: any(named: 'body'),
@@ -90,7 +80,7 @@ void main() {
         ),
       );
 
-      await provider.loadItemList('123');
+      provider.state = AsyncValue.data([...items]);
       final result = await provider.addItem(newItem.toItemBase(), '123');
 
       expect(result, true);
@@ -111,22 +101,13 @@ void main() {
         ),
       ).thenThrow(Exception('Failed to add item'));
 
+      provider.state = AsyncValue.data([...items]);
       final result = await provider.addItem(newItem.toItemBase(), '123');
 
       expect(result, false);
     });
 
     test('updateItem updates an item in the list', () async {
-      when(
-        () => mockRepository.loansLoanersLoanerIdItemsGet(
-          loanerId: any(named: 'loanerId'),
-        ),
-      ).thenAnswer(
-        (_) async => chopper.Response(
-          http.Response('body', 200),
-          items,
-        ),
-      );
       when(
         () => mockRepository.loansLoanersLoanerIdItemsItemIdPatch(
           loanerId: any(named: 'loanerId'),
@@ -140,7 +121,7 @@ void main() {
         ),
       );
 
-      await provider.loadItemList('123');
+      provider.state = AsyncValue.data([...items]);
       final result = await provider.updateItem(updatedItem, '123');
 
       expect(result, true);
@@ -162,22 +143,13 @@ void main() {
         ),
       ).thenThrow(Exception('Failed to update item'));
 
+      provider.state = AsyncValue.data([...items]);
       final result = await provider.updateItem(updatedItem, '123');
 
       expect(result, false);
     });
 
     test('deleteItem removes an item from the list', () async {
-      when(
-        () => mockRepository.loansLoanersLoanerIdItemsGet(
-          loanerId: any(named: 'loanerId'),
-        ),
-      ).thenAnswer(
-        (_) async => chopper.Response(
-          http.Response('body', 200),
-          items,
-        ),
-      );
       when(
         () => mockRepository.loansLoanersLoanerIdItemsItemIdDelete(
           loanerId: any(named: 'loanerId'),
@@ -190,7 +162,7 @@ void main() {
         ),
       );
 
-      await provider.loadItemList('123');
+      provider.state = AsyncValue.data([...items]);
       final result = await provider.deleteItem(items.first.id, '123');
 
       expect(result, true);
@@ -211,14 +183,15 @@ void main() {
         ),
       ).thenThrow(Exception('Failed to delete item'));
 
+      provider.state = AsyncValue.data([...items]);
       final result = await provider.deleteItem(items.first.id, '123');
 
       expect(result, false);
     });
 
     test('filterItems filters items based on query', () async {
-      provider.state = AsyncValue.data(items);
 
+      provider.state = AsyncValue.data([...items]);
       final result = await provider.filterItems('1');
 
       expect(
@@ -231,7 +204,7 @@ void main() {
     });
 
     test('copy returns a copy of the current state', () async {
-      provider.state = AsyncValue.data(items);
+      provider.state = AsyncValue.data([...items]);
 
       final result = await provider.copy();
 

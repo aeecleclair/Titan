@@ -76,6 +76,7 @@ void main() {
       );
       final CashListProvider cashListProvider =
           CashListProvider(cashRepository: mockCashRepository);
+      cashListProvider.state = AsyncData([]);
       final result = await cashListProvider.addCash(cash1);
       expect(result, true);
     });
@@ -90,6 +91,7 @@ void main() {
       ).thenThrow(Exception('Error'));
       final CashListProvider cashListProvider =
           CashListProvider(cashRepository: mockCashRepository);
+      cashListProvider.state = AsyncData([]);
       final result = await cashListProvider.addCash(cash1);
       expect(result, false);
     });
@@ -109,6 +111,7 @@ void main() {
       );
       final CashListProvider cashListProvider =
           CashListProvider(cashRepository: mockCashRepository);
+      cashListProvider.state = AsyncData([cash1]);
       final result = await cashListProvider.updateCash(cash1, 50.0);
       expect(result, true);
     });
@@ -123,6 +126,7 @@ void main() {
       ).thenThrow(Exception('Error'));
       final CashListProvider cashListProvider =
           CashListProvider(cashRepository: mockCashRepository);
+      cashListProvider.state = AsyncData([cash1]);
       final result = await cashListProvider.updateCash(cash1, 50.0);
       expect(result, false);
     });

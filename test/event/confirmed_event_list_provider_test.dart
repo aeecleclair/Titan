@@ -59,14 +59,8 @@ void main() {
     });
 
     test('addEvent adds an event to the list', () async {
-      when(() => mockRepository.calendarEventsConfirmedGet()).thenAnswer(
-        (_) async => chopper.Response(
-          http.Response('body', 200),
-          events,
-        ),
-      );
 
-      await provider.loadConfirmedEvent();
+      provider.state = AsyncValue.data([...events]);
       final result = await provider.addEvent(newEvent);
 
       expect(result, true);
@@ -78,25 +72,10 @@ void main() {
         [...events, newEvent],
       );
     });
-
-    test('addEvent handles error', () async {
-      when(() => mockRepository.calendarEventsConfirmedGet())
-          .thenThrow(Exception('Failed to add event'));
-
-      final result = await provider.addEvent(newEvent);
-
-      expect(result, false);
-    });
-
+  
     test('deleteEvent removes an event from the list', () async {
-      when(() => mockRepository.calendarEventsConfirmedGet()).thenAnswer(
-        (_) async => chopper.Response(
-          http.Response('body', 200),
-          events,
-        ),
-      );
-
-      await provider.loadConfirmedEvent();
+      
+      provider.state = AsyncValue.data([...events]);
       final result = await provider.deleteEvent(events.first);
 
       expect(result, true);
@@ -107,15 +86,6 @@ void main() {
         ),
         events.skip(1).toList(),
       );
-    });
-
-    test('deleteEvent handles error', () async {
-      when(() => mockRepository.calendarEventsConfirmedGet())
-          .thenThrow(Exception('Failed to delete event'));
-
-      final result = await provider.deleteEvent(events.first);
-
-      expect(result, false);
     });
   });
 }

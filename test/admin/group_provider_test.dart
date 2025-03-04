@@ -16,6 +16,7 @@ void main() {
       id: "1",
       name: "name",
       description: "description",
+      members: [],
     );
     final user = CoreUserSimple(
       id: "1",
@@ -62,6 +63,7 @@ void main() {
       );
       final GroupNotifier groupNotifier =
           GroupNotifier(groupRepository: mockGroup);
+      groupNotifier.setGroup(group);
       final result = await groupNotifier.addMember(group, user);
       expect(result, true);
     });
@@ -72,6 +74,7 @@ void main() {
           .thenThrow(Exception('Error'));
       final GroupNotifier groupNotifier =
           GroupNotifier(groupRepository: mockGroup);
+      groupNotifier.setGroup(group);
       final result = await groupNotifier.addMember(group, user);
       expect(result, false);
     });
@@ -84,6 +87,7 @@ void main() {
       );
       final GroupNotifier groupNotifier =
           GroupNotifier(groupRepository: mockGroup);
+      groupNotifier.setGroup(group);
       final result = await groupNotifier.deleteMember(group, user);
       expect(result, true);
     });
@@ -94,6 +98,7 @@ void main() {
           .thenThrow(Exception('Error'));
       final GroupNotifier groupNotifier =
           GroupNotifier(groupRepository: mockGroup);
+      groupNotifier.setGroup(group);
       final result = await groupNotifier.deleteMember(group, user);
       expect(result, false);
     });

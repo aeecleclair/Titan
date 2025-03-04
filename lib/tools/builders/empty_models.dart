@@ -207,6 +207,37 @@ void registerAllEmptyFactories() {
     ),
   );
 
+  EmptyModels.register<BookingReturnSimpleApplicant>(
+    () => BookingReturnSimpleApplicant(
+      reason: '',
+      start: DateTime.now(),
+      end: DateTime.now(),
+      creation: DateTime.now(),
+      roomId: '',
+      key: false,
+      id: '',
+      decision: Decision.approved,
+      applicantId: '',
+      room: EmptyModels.empty<RoomComplete>(),
+      applicant: EmptyModels.empty<CoreUserSimple>(),
+    ),
+  );
+
+  EmptyModels.register<BookingReturn>(
+    () => BookingReturn(
+      reason: '',
+      start: DateTime.now(),
+      end: DateTime.now(),
+      creation: DateTime.now(),
+      roomId: '',
+      key: false,
+      id: '',
+      decision: Decision.approved,
+      applicantId: '',
+      room: EmptyModels.empty<RoomComplete>(),
+    ),
+  );
+
   EmptyModels.register<BookingReturnApplicant>(
     () => BookingReturnApplicant(
       reason: '',
@@ -249,6 +280,22 @@ void registerAllEmptyFactories() {
       accountType: AccountType.$external,
       schoolId: '',
       email: '',
+    ),
+  );
+
+  EmptyModels.register<EventComplete>(
+    () => EventComplete(
+      name: '',
+      organizer: '',
+      start: DateTime.now(),
+      end: DateTime.now(),
+      allDay: false,
+      location: '',
+      type: CalendarEventType.autre,
+      description: '',
+      id: '',
+      decision: Decision.approved,
+      applicantId: '',
     ),
   );
 
@@ -423,6 +470,21 @@ void registerAllEmptyFactories() {
       type: ListType.pipo,
       section: EmptyModels.empty<SectionComplete>(),
       members: [],
+    ),
+  );
+
+  EmptyModels.register<ListMemberComplete>(
+    () => ListMemberComplete(
+      user: EmptyModels.empty<CoreUserSimple>(),
+      userId: '',
+      role: '',
+    ),
+  );
+
+  EmptyModels.register<AppModulesCampaignSchemasCampaignResult>(
+    () => AppModulesCampaignSchemasCampaignResult(
+      listId: '',
+      count: 0,
     ),
   );
 }

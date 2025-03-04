@@ -61,12 +61,6 @@ void main() {
     });
 
     test('addBooking adds a booking to the list', () async {
-      when(() => mockRepository.bookingBookingsUsersMeGet()).thenAnswer(
-        (_) async => chopper.Response(
-          http.Response('body', 200),
-          bookings,
-        ),
-      );
       when(() => mockRepository.bookingBookingsPost(body: any(named: 'body')))
           .thenAnswer(
         (_) async => chopper.Response(
@@ -75,7 +69,7 @@ void main() {
         ),
       );
 
-      await provider.loadUserBookings();
+provider.state = AsyncValue.data([...bookings]);
       final result = await provider.addBooking(newBooking.toBookingBase());
 
       expect(result, true);
@@ -92,18 +86,13 @@ void main() {
       when(() => mockRepository.bookingBookingsPost(body: any(named: 'body')))
           .thenThrow(Exception('Failed to add booking'));
 
+    provider.state = AsyncValue.data([...bookings]);
       final result = await provider.addBooking(newBooking.toBookingBase());
 
       expect(result, false);
     });
 
     test('updateBooking updates a booking in the list', () async {
-      when(() => mockRepository.bookingBookingsUsersMeGet()).thenAnswer(
-        (_) async => chopper.Response(
-          http.Response('body', 200),
-          bookings,
-        ),
-      );
       when(
         () => mockRepository.bookingBookingsBookingIdPatch(
           bookingId: any(named: 'bookingId'),
@@ -116,7 +105,7 @@ void main() {
         ),
       );
 
-      await provider.loadUserBookings();
+      provider.state = AsyncValue.data([...bookings]);
       final result = await provider.updateBooking(updatedBooking);
 
       expect(result, true);
@@ -137,18 +126,13 @@ void main() {
         ),
       ).thenThrow(Exception('Failed to update booking'));
 
+      provider.state = AsyncValue.data([...bookings]);
       final result = await provider.updateBooking(updatedBooking);
 
       expect(result, false);
     });
 
     test('deleteBooking removes a booking from the list', () async {
-      when(() => mockRepository.bookingBookingsUsersMeGet()).thenAnswer(
-        (_) async => chopper.Response(
-          http.Response('body', 200),
-          bookings,
-        ),
-      );
       when(
         () => mockRepository.bookingBookingsBookingIdDelete(
           bookingId: any(named: 'bookingId'),
@@ -160,7 +144,7 @@ void main() {
         ),
       );
 
-      await provider.loadUserBookings();
+      provider.state = AsyncValue.data([...bookings]);
       final result = await provider.deleteBooking(bookings.first.id);
 
       expect(result, true);
@@ -180,6 +164,7 @@ void main() {
         ),
       ).thenThrow(Exception('Failed to delete booking'));
 
+      provider.state = AsyncValue.data([...bookings]);
       final result = await provider.deleteBooking(bookings.first.id);
 
       expect(result, false);

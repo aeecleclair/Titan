@@ -61,12 +61,6 @@ void main() {
     });
 
     test('addSection adds a section to the list', () async {
-      when(() => mockRepository.campaignSectionsGet()).thenAnswer(
-        (_) async => chopper.Response(
-          http.Response('body', 200),
-          sections,
-        ),
-      );
       when(() => mockRepository.campaignSectionsPost(body: any(named: 'body')))
           .thenAnswer(
         (_) async => chopper.Response(
@@ -75,7 +69,7 @@ void main() {
         ),
       );
 
-      await provider.loadSectionList();
+      provider.state = AsyncValue.data([...sections]);
       final result = await provider.addSection(newSectionBase);
 
       expect(result, true);
@@ -92,18 +86,13 @@ void main() {
       when(() => mockRepository.campaignSectionsPost(body: any(named: 'body')))
           .thenThrow(Exception('Failed to add section'));
 
+      provider.state = AsyncValue.data([...sections]);
       final result = await provider.addSection(newSectionBase);
 
       expect(result, false);
     });
 
     test('deleteSection removes a section from the list', () async {
-      when(() => mockRepository.campaignSectionsGet()).thenAnswer(
-        (_) async => chopper.Response(
-          http.Response('body', 200),
-          sections,
-        ),
-      );
       when(
         () => mockRepository.campaignSectionsSectionIdDelete(
           sectionId: any(named: 'sectionId'),
@@ -115,7 +104,7 @@ void main() {
         ),
       );
 
-      await provider.loadSectionList();
+      provider.state = AsyncValue.data([...sections]);
       final result = await provider.deleteSection(sections.first.id);
 
       expect(result, true);
@@ -135,6 +124,7 @@ void main() {
         ),
       ).thenThrow(Exception('Failed to delete section'));
 
+      provider.state = AsyncValue.data([...sections]);
       final result = await provider.deleteSection(sections.first.id);
 
       expect(result, false);

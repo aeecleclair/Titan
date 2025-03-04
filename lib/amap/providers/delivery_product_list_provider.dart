@@ -17,7 +17,8 @@ class DeliveryProductListNotifier
     return state = AsyncValue.data(products);
   }
 
-  // require some work
+
+  // Require back changes, should return AppModulesAmapSchemasAmapProductComplete and not taking a list
   Future<bool> addProduct(
     DeliveryProductsUpdate product,
     String deliveryId,

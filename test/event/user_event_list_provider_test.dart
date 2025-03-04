@@ -68,16 +68,6 @@ void main() {
     });
 
     test('addEvent adds an event to the list', () async {
-      when(
-        () => mockRepository.calendarEventsUserApplicantIdGet(
-          applicantId: any(named: 'applicantId'),
-        ),
-      ).thenAnswer(
-        (_) async => chopper.Response(
-          http.Response('body', 200),
-          events,
-        ),
-      );
       when(() => mockRepository.calendarEventsPost(body: any(named: 'body')))
           .thenAnswer(
         (_) async => chopper.Response(
@@ -86,7 +76,7 @@ void main() {
         ),
       );
 
-      await provider.loadConfirmedEvent('123');
+      provider.state = AsyncValue.data([...events]);
       final result = await provider.addEvent(newEvent.toEventBase());
 
       expect(result, true);
@@ -103,22 +93,13 @@ void main() {
       when(() => mockRepository.calendarEventsPost(body: any(named: 'body')))
           .thenThrow(Exception('Failed to add event'));
 
+      provider.state = AsyncValue.data([...events]);
       final result = await provider.addEvent(newEvent.toEventBase());
 
       expect(result, false);
     });
 
     test('updateEvent updates an event in the list', () async {
-      when(
-        () => mockRepository.calendarEventsUserApplicantIdGet(
-          applicantId: any(named: 'applicantId'),
-        ),
-      ).thenAnswer(
-        (_) async => chopper.Response(
-          http.Response('body', 200),
-          events,
-        ),
-      );
       when(
         () => mockRepository.calendarEventsEventIdPatch(
           eventId: any(named: 'eventId'),
@@ -131,7 +112,7 @@ void main() {
         ),
       );
 
-      await provider.loadConfirmedEvent('123');
+      provider.state = AsyncValue.data([...events]);
       final result = await provider.updateEvent(updatedEvent);
 
       expect(result, true);
@@ -152,22 +133,13 @@ void main() {
         ),
       ).thenThrow(Exception('Failed to update event'));
 
+      provider.state = AsyncValue.data([...events]);
       final result = await provider.updateEvent(updatedEvent);
 
       expect(result, false);
     });
 
     test('deleteEvent removes an event from the list', () async {
-      when(
-        () => mockRepository.calendarEventsUserApplicantIdGet(
-          applicantId: any(named: 'applicantId'),
-        ),
-      ).thenAnswer(
-        (_) async => chopper.Response(
-          http.Response('body', 200),
-          events,
-        ),
-      );
       when(
         () => mockRepository.calendarEventsEventIdDelete(
           eventId: any(named: 'eventId'),
@@ -179,7 +151,7 @@ void main() {
         ),
       );
 
-      await provider.loadConfirmedEvent('123');
+      provider.state = AsyncValue.data([...events]);
       final result = await provider.deleteEvent(events.first.id);
 
       expect(result, true);
@@ -199,6 +171,7 @@ void main() {
         ),
       ).thenThrow(Exception('Failed to delete event'));
 
+      provider.state = AsyncValue.data([...events]);
       final result = await provider.deleteEvent(events.first.id);
 
       expect(result, false);

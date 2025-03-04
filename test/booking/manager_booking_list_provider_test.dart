@@ -59,12 +59,6 @@ void main() {
       );
     });
     test('updateBooking updates a booking in the list', () async {
-      when(() => mockRepository.bookingBookingsUsersMeManageGet()).thenAnswer(
-        (_) async => chopper.Response(
-          http.Response('body', 200),
-          bookings,
-        ),
-      );
       when(
         () => mockRepository.bookingBookingsBookingIdPatch(
           bookingId: any(named: 'bookingId'),
@@ -77,7 +71,7 @@ void main() {
         ),
       );
 
-      await provider.loadUserManageBookings();
+      provider.state = AsyncValue.data(bookings);
       final result = await provider.updateBooking(updatedBooking);
 
       expect(result, true);
@@ -104,16 +98,10 @@ void main() {
     });
 
     test('toggleConfirmed confirms a booking', () async {
-      when(() => mockRepository.bookingBookingsUsersMeManageGet()).thenAnswer(
-        (_) async => chopper.Response(
-          http.Response('body', 200),
-          bookings,
-        ),
-      );
       when(
-        () => mockRepository.bookingBookingsBookingIdPatch(
+        () => mockRepository.bookingBookingsBookingIdReplyDecisionPatch(
           bookingId: any(named: 'bookingId'),
-          body: any(named: 'body'),
+          decision: any(named: 'decision'),
         ),
       ).thenAnswer(
         (_) async => chopper.Response(
@@ -122,7 +110,7 @@ void main() {
         ),
       );
 
-      await provider.loadUserManageBookings();
+      provider.state = AsyncValue.data(bookings);
       final result = await provider.toggleConfirmed(booking, Decision.approved);
 
       expect(result, true);
@@ -143,6 +131,7 @@ void main() {
         ),
       ).thenThrow(Exception('Failed to confirm booking'));
 
+      provider.state = AsyncValue.data(bookings);
       final result = await provider.toggleConfirmed(booking, Decision.approved);
 
       expect(result, false);

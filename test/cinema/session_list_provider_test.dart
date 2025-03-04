@@ -62,12 +62,6 @@ void main() {
     });
 
     test('addSession adds a session to the list', () async {
-      when(() => mockRepository.cinemaSessionsGet()).thenAnswer(
-        (_) async => chopper.Response(
-          http.Response('body', 200),
-          sessions,
-        ),
-      );
       when(() => mockRepository.cinemaSessionsPost(body: any(named: 'body')))
           .thenAnswer(
         (_) async => chopper.Response(
@@ -76,7 +70,7 @@ void main() {
         ),
       );
 
-      await provider.loadSessions();
+      provider.state = AsyncValue.data([...sessions]);
       final result = await provider.addSession(newSession.toCineSessionBase());
 
       expect(result, true);
@@ -93,18 +87,13 @@ void main() {
       when(() => mockRepository.cinemaSessionsPost(body: any(named: 'body')))
           .thenThrow(Exception('Failed to add session'));
 
+      provider.state = AsyncValue.data([...sessions]);
       final result = await provider.addSession(newSession.toCineSessionBase());
 
       expect(result, false);
     });
 
     test('updateSession updates a session in the list', () async {
-      when(() => mockRepository.cinemaSessionsGet()).thenAnswer(
-        (_) async => chopper.Response(
-          http.Response('body', 200),
-          sessions,
-        ),
-      );
       when(
         () => mockRepository.cinemaSessionsSessionIdPatch(
           sessionId: any(named: 'sessionId'),
@@ -117,7 +106,7 @@ void main() {
         ),
       );
 
-      await provider.loadSessions();
+      provider.state = AsyncValue.data([...sessions]);
       final result = await provider.updateSession(updatedSession);
 
       expect(result, true);
@@ -138,18 +127,13 @@ void main() {
         ),
       ).thenThrow(Exception('Failed to update session'));
 
+      provider.state = AsyncValue.data([...sessions]);
       final result = await provider.updateSession(updatedSession);
 
       expect(result, false);
     });
 
     test('deleteSession removes a session from the list', () async {
-      when(() => mockRepository.cinemaSessionsGet()).thenAnswer(
-        (_) async => chopper.Response(
-          http.Response('body', 200),
-          sessions,
-        ),
-      );
       when(
         () => mockRepository.cinemaSessionsSessionIdDelete(
           sessionId: any(named: 'sessionId'),
@@ -161,7 +145,7 @@ void main() {
         ),
       );
 
-      await provider.loadSessions();
+      provider.state = AsyncValue.data([...sessions]);
       final result = await provider.deleteSession(sessions.first.id);
 
       expect(result, true);
@@ -181,6 +165,7 @@ void main() {
         ),
       ).thenThrow(Exception('Failed to delete session'));
 
+      provider.state = AsyncValue.data([...sessions]);
       final result = await provider.deleteSession(sessions.first.id);
 
       expect(result, false);

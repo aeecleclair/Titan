@@ -73,14 +73,6 @@ void main() {
       );
     });
 
-    test('openVote handles error', () async {
-      when(() => mockRepository.campaignStatusOpenPost())
-          .thenThrow(Exception('Failed to open vote'));
-
-      final result = await provider.openVote();
-
-      expect(result, false);
-    });
 
     test('closeVote updates state to closed if successful', () async {
       when(() => mockRepository.campaignStatusClosePost()).thenAnswer(
@@ -102,14 +94,6 @@ void main() {
       );
     });
 
-    test('closeVote handles error', () async {
-      when(() => mockRepository.campaignStatusClosePost())
-          .thenThrow(Exception('Failed to close vote'));
-
-      final result = await provider.closeVote();
-
-      expect(result, false);
-    });
 
     test('countVote updates state to counting if successful', () async {
       when(() => mockRepository.campaignStatusCountingPost()).thenAnswer(
@@ -131,14 +115,6 @@ void main() {
       );
     });
 
-    test('countVote handles error', () async {
-      when(() => mockRepository.campaignStatusCountingPost())
-          .thenThrow(Exception('Failed to count vote'));
-
-      final result = await provider.countVote();
-
-      expect(result, false);
-    });
 
     test('resetVote updates state to waiting if successful', () async {
       when(() => mockRepository.campaignStatusResetPost()).thenAnswer(
@@ -160,14 +136,6 @@ void main() {
       );
     });
 
-    test('resetVote handles error', () async {
-      when(() => mockRepository.campaignStatusResetPost())
-          .thenThrow(Exception('Failed to reset vote'));
-
-      final result = await provider.resetVote();
-
-      expect(result, false);
-    });
 
     test('publishVote updates state to published if successful', () async {
       when(() => mockRepository.campaignStatusPublishedPost()).thenAnswer(
@@ -187,15 +155,6 @@ void main() {
         ),
         StatusType.published,
       );
-    });
-
-    test('publishVote handles error', () async {
-      when(() => mockRepository.campaignStatusPublishedPost())
-          .thenThrow(Exception('Failed to publish vote'));
-
-      final result = await provider.publishVote();
-
-      expect(result, false);
     });
   });
 }

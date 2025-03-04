@@ -65,7 +65,7 @@ void main() {
       );
       final productListNotifier =
           ProductListNotifier(productListRepository: mockProductListRepository);
-      await productListNotifier.loadProductList();
+      productListNotifier.state = AsyncValue.data(products);
       final result = await productListNotifier.addProduct(productToAdd);
       expect(result, true);
     });
@@ -84,7 +84,7 @@ void main() {
       );
       final productListNotifier =
           ProductListNotifier(productListRepository: mockProductListRepository);
-      await productListNotifier.loadProductList();
+      productListNotifier.state = AsyncValue.data(products);
       final result = await productListNotifier.updateProduct(updatedProduct);
       expect(result, true);
     });
@@ -100,7 +100,7 @@ void main() {
       );
       final productListNotifier =
           ProductListNotifier(productListRepository: mockProductListRepository);
-      await productListNotifier.loadProductList();
+      productListNotifier.state = AsyncValue.data(products);
       final result = await productListNotifier.deleteProduct(product.id);
       expect(result, true);
     });
@@ -124,6 +124,7 @@ void main() {
       ).thenThrow(Exception('Error'));
       final productListNotifier =
           ProductListNotifier(productListRepository: mockProductListRepository);
+      productListNotifier.state = AsyncValue.data(products);
       final result = await productListNotifier.addProduct(productToAdd);
       expect(result, false);
     });
@@ -138,6 +139,7 @@ void main() {
       ).thenThrow(Exception('Error'));
       final productListNotifier =
           ProductListNotifier(productListRepository: mockProductListRepository);
+      productListNotifier.state = AsyncValue.data(products);
       final result = await productListNotifier.updateProduct(product);
       expect(result, false);
     });
@@ -151,6 +153,7 @@ void main() {
       ).thenThrow(Exception('Error'));
       final productListNotifier =
           ProductListNotifier(productListRepository: mockProductListRepository);
+      productListNotifier.state = AsyncValue.data(products);
       final result = await productListNotifier.deleteProduct(product.id);
       expect(result, false);
     });
