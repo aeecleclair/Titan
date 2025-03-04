@@ -192,7 +192,7 @@ void main() {
           data: (data) => data,
           orElse: () => [],
         ),
-        isNot(equals(lists)),
+        equals(lists),
       );
     });
   });
