@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:chopper/chopper.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/repository/auth_repository.dart';
 
@@ -16,8 +17,8 @@ class AppAuthenticator implements Authenticator {
     Response response, [
     Request? originalRequest,
   ]) async {
-    print('[AppAuthenticator] response.statusCode: ${response.statusCode}');
-    print(
+    debugPrint('[AppAuthenticator] response.statusCode: ${response.statusCode}');
+    debugPrint(
       '[AppAuthenticator] request Retry-Count: ${request.headers['Retry-Count'] ?? 0}',
     );
 
@@ -25,7 +26,7 @@ class AppAuthenticator implements Authenticator {
     if (response.statusCode == HttpStatus.unauthorized) {
       // Trying to update token only 1 time
       if (request.headers['Retry-Count'] != null) {
-        print(
+        debugPrint(
           '[AppAuthenticator] Unable to refresh token, retry count exceeded',
         );
         return null;
@@ -44,7 +45,7 @@ class AppAuthenticator implements Authenticator {
           },
         );
       } catch (e) {
-        print('[AppAuthenticator] Unable to refresh token: $e');
+        debugPrint('[AppAuthenticator] Unable to refresh token: $e');
         return null;
       }
     }
@@ -58,7 +59,7 @@ class AppAuthenticator implements Authenticator {
   Future<String> _refreshToken() {
     var completer = _completer;
     if (completer != null && !completer.isCompleted) {
-      print('Token refresh is already in progress');
+      debugPrint('Token refresh is already in progress');
       return completer.future;
     }
 
@@ -66,7 +67,7 @@ class AppAuthenticator implements Authenticator {
     _completer = completer;
 
     repo.refreshToken().then((response) {
-      print('[AppAuthenticator] Refreshed token');
+      debugPrint('[AppAuthenticator] Refreshed token');
       // Completing with a new token
       completer?.complete(response.accessToken);
     }).onError((error, stackTrace) {
