@@ -69,7 +69,7 @@ void main() {
         ),
       );
 
-provider.state = AsyncValue.data([...bookings]);
+      provider.state = AsyncValue.data([...bookings]);
       final result = await provider.addBooking(newBooking.toBookingBase());
 
       expect(result, true);
@@ -86,7 +86,7 @@ provider.state = AsyncValue.data([...bookings]);
       when(() => mockRepository.bookingBookingsPost(body: any(named: 'body')))
           .thenThrow(Exception('Failed to add booking'));
 
-    provider.state = AsyncValue.data([...bookings]);
+      provider.state = AsyncValue.data([...bookings]);
       final result = await provider.addBooking(newBooking.toBookingBase());
 
       expect(result, false);

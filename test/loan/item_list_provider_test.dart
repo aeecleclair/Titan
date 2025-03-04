@@ -18,7 +18,8 @@ void main() {
       EmptyModels.empty<Item>().copyWith(id: '1', name: 'Item 1'),
       EmptyModels.empty<Item>().copyWith(id: '2', name: 'Item 2'),
     ];
-    final newItem = EmptyModels.empty<Item>().copyWith(id: '3', name: 'New Item');
+    final newItem =
+        EmptyModels.empty<Item>().copyWith(id: '3', name: 'New Item');
     final updatedItem = items.first.copyWith(name: 'Updated Item');
 
     setUp(() {
@@ -190,7 +191,6 @@ void main() {
     });
 
     test('filterItems filters items based on query', () async {
-
       provider.state = AsyncValue.data([...items]);
       final result = await provider.filterItems('1');
 

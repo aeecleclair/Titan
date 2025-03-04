@@ -59,7 +59,6 @@ void main() {
     });
 
     test('addEvent adds an event to the list', () async {
-
       provider.state = AsyncValue.data([...events]);
       final result = await provider.addEvent(newEvent);
 
@@ -72,9 +71,8 @@ void main() {
         [...events, newEvent],
       );
     });
-  
+
     test('deleteEvent removes an event from the list', () async {
-      
       provider.state = AsyncValue.data([...events]);
       final result = await provider.deleteEvent(events.first);
 

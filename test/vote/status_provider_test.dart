@@ -73,7 +73,6 @@ void main() {
       );
     });
 
-
     test('closeVote updates state to closed if successful', () async {
       when(() => mockRepository.campaignStatusClosePost()).thenAnswer(
         (_) async => chopper.Response(
@@ -93,7 +92,6 @@ void main() {
         StatusType.closed,
       );
     });
-
 
     test('countVote updates state to counting if successful', () async {
       when(() => mockRepository.campaignStatusCountingPost()).thenAnswer(
@@ -115,7 +113,6 @@ void main() {
       );
     });
 
-
     test('resetVote updates state to waiting if successful', () async {
       when(() => mockRepository.campaignStatusResetPost()).thenAnswer(
         (_) async => chopper.Response(
@@ -135,7 +132,6 @@ void main() {
         StatusType.waiting,
       );
     });
-
 
     test('publishVote updates state to published if successful', () async {
       when(() => mockRepository.campaignStatusPublishedPost()).thenAnswer(

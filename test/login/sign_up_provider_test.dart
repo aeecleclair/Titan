@@ -74,7 +74,6 @@ void main() {
       expect(result, true);
     });
 
-
     test('resetPassword returns true on success', () async {
       when(
         () => mockRepository.usersResetPasswordPost(body: any(named: 'body')),
