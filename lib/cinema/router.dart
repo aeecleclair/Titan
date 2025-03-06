@@ -14,7 +14,6 @@ import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/tools/middlewares/admin_middleware.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:myecl/tools/middlewares/deferred_middleware.dart';
-import 'package:myecl/tools/middlewares/notification_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class CinemaRouter {
@@ -37,7 +36,6 @@ class CinemaRouter {
         builder: () => main_page.CinemaMainPage(),
         middleware: [
           AuthenticatedMiddleware(ref),
-          NotificationMiddleWare(ref),
           DeferredLoadingMiddleware(main_page.loadLibrary),
         ],
         children: [
