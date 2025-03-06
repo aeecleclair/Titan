@@ -24,11 +24,11 @@ class PhList extends HookConsumerWidget {
         final list = phList
             .where(
               (ph) =>
-                  selectedYear.contains(ph.date.year) &&
-                  ph.date.isBefore(DateTime.now()),
+                  selectedYear.contains(ph.releaseDate.year) &&
+                  ph.releaseDate.isBefore(DateTime.now()),
             )
             .toList();
-        list.sort((a, b) => b.date.compareTo(a.date));
+        list.sort((a, b) => b.releaseDate.compareTo(a.releaseDate));
         return Column(
           children: [
             const YearBar(),

@@ -1,32 +1,36 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/cinema/repositories/cinema_topic_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
 
-class CinemaTopicsProvider extends ListNotifier<String> {
-  final CinemaTopicRepository cinemaTopicRepository = CinemaTopicRepository();
-  CinemaTopicsProvider({required String token})
-      : super(const AsyncValue.loading()) {
-    cinemaTopicRepository.setToken(token);
-  }
+class CinemaTopicsProvider extends ListNotifierAPI<String> {
+  final Openapi cinemaTopicRepository;
+  CinemaTopicsProvider({required this.cinemaTopicRepository})
+      : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<String>>> getTopics() async {
-    return await loadList(cinemaTopicRepository.getCinemaTopics);
+    return await loadList(
+      () =>
+          cinemaTopicRepository.notificationTopicsTopicGet(topic: Topic.cinema),
+    );
   }
 
   Future<bool> subscribeSession(String topic) async {
     return await update(
-      cinemaTopicRepository.subscribeSession,
-      (listT, t) => listT..add(t),
+      () => cinemaTopicRepository.notificationTopicsTopicStrSubscribePost(
+        topicStr: topic,
+      ),
+      (listT) => listT,
       topic,
     );
   }
 
   Future<bool> unsubscribeSession(String topic) async {
     return await update(
-      cinemaTopicRepository.unsubscribeSession,
-      (listT, t) => listT..remove(t),
+      () => cinemaTopicRepository.notificationTopicsTopicStrUnsubscribePost(
+        topicStr: topic,
+      ),
+      (listT) => listT,
       topic,
     );
   }
@@ -47,10 +51,7 @@ class CinemaTopicsProvider extends ListNotifier<String> {
 final cinemaTopicsProvider =
     StateNotifierProvider<CinemaTopicsProvider, AsyncValue<List<String>>>(
         (ref) {
-  final token = ref.watch(tokenProvider);
-  CinemaTopicsProvider notifier = CinemaTopicsProvider(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    notifier.getTopics();
-  });
-  return notifier;
+  final cinemaTopicRepository = ref.watch(repositoryProvider);
+  return CinemaTopicsProvider(cinemaTopicRepository: cinemaTopicRepository)
+    ..getTopics();
 });

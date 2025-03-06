@@ -1,21 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/purchases/class/purchase.dart';
-import 'package:myecl/purchases/repositories/user_purchase_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
 
-class PurchaseListNotifier extends ListNotifier<Purchase> {
-  final UserPurchaseRepository userPurchaseRepository =
-      UserPurchaseRepository();
-  AsyncValue<List<Purchase>> purchaseList = const AsyncValue.loading();
-  PurchaseListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
-    userPurchaseRepository.setToken(token);
-  }
+class PurchaseListNotifier extends ListNotifierAPI<PurchaseReturn> {
+  final Openapi userPurchaseRepository;
+  PurchaseListNotifier({required this.userPurchaseRepository})
+      : super(const AsyncValue.loading());
 
-  Future<AsyncValue<List<Purchase>>> loadPurchases() async {
-    return await loadList(userPurchaseRepository.getPurchaseList);
+  Future<AsyncValue<List<PurchaseReturn>>> loadPurchases() async {
+    return await loadList(userPurchaseRepository.cdrMePurchasesGet);
   }
 
   List<int> getPurchasesYears() {
@@ -23,7 +17,7 @@ class PurchaseListNotifier extends ListNotifier<Purchase> {
     state.maybeWhen(
       orElse: () => [],
       data: (value) {
-        for (Purchase purchase in value) {
+        for (PurchaseReturn purchase in value) {
           if (!years.contains(purchase.purchasedOn.year)) {
             years.add(purchase.purchasedOn.year);
           }
@@ -34,13 +28,9 @@ class PurchaseListNotifier extends ListNotifier<Purchase> {
   }
 }
 
-final purchaseListProvider =
-    StateNotifierProvider<PurchaseListNotifier, AsyncValue<List<Purchase>>>(
-        (ref) {
-  final token = ref.watch(tokenProvider);
-  PurchaseListNotifier notifier = PurchaseListNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadPurchases();
-  });
-  return notifier;
+final purchaseListProvider = StateNotifierProvider<PurchaseListNotifier,
+    AsyncValue<List<PurchaseReturn>>>((ref) {
+  final userPurchaseRepository = ref.watch(repositoryProvider);
+  return PurchaseListNotifier(userPurchaseRepository: userPurchaseRepository)
+    ..loadPurchases();
 });

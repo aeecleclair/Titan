@@ -4,18 +4,20 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/settings/router.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/edit_user_page/picture_button.dart';
 import 'package:myecl/settings/ui/pages/edit_user_page/user_field_modifier.dart';
 import 'package:myecl/settings/ui/settings.dart';
+import 'package:myecl/tools/builders/enums_cleaner.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:myecl/user/class/floors.dart';
@@ -46,11 +48,11 @@ class EditUserPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    List<DropdownMenuItem> items = Floors.values
+    List<DropdownMenuItem> items = getEnumValues(Floors.values)
         .map(
           (e) => DropdownMenuItem(
-            value: capitalize(e.toString().split('.').last),
-            child: Text(capitalize(e.toString().split('.').last)),
+            value: capitalize(e.name),
+            child: Text(capitalize(e.name)),
           ),
         )
         .toList();
@@ -350,38 +352,38 @@ class EditUserPage extends HookConsumerWidget {
                     child: child,
                   ),
                   onTap: () async {
-                    await tokenExpireWrapper(ref, () async {
-                      final value = await asyncUserNotifier.updateMe(
-                        user.copyWith(
-                          birthday: dateController.value.text.isNotEmpty
-                              ? DateTime.parse(
-                                  processDateBack(dateController.value.text),
-                                )
-                              : null,
-                          nickname: nickNameController.value.text.isEmpty
-                              ? null
-                              : nickNameController.value.text,
-                          phone: phoneController.value.text.isEmpty
-                              ? null
-                              : phoneController.value.text,
-                          floor: floorController.value.text,
+                    final value = await asyncUserNotifier.updateMe(
+                      user.copyWith(
+                        birthday: dateController.value.text.isNotEmpty
+                            ? DateTime.parse(
+                                processDateBack(dateController.value.text),
+                              )
+                            : null,
+                        nickname: nickNameController.value.text.isEmpty
+                            ? null
+                            : nickNameController.value.text,
+                        phone: phoneController.value.text.isEmpty
+                            ? null
+                            : phoneController.value.text,
+                        floor: FloorsType.values.firstWhere(
+                          (e) => e.name == floorController.value.text,
                         ),
+                      ),
+                    );
+                    if (value) {
+                      displayToastWithContext(
+                        TypeMsg.msg,
+                        SettingsTextConstants.updatedProfile,
                       );
-                      if (value) {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          SettingsTextConstants.updatedProfile,
-                        );
-                        QR.removeNavigator(
-                          SettingsRouter.root + SettingsRouter.editAccount,
-                        );
-                      } else {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          SettingsTextConstants.updatingError,
-                        );
-                      }
-                    });
+                      QR.removeNavigator(
+                        SettingsRouter.root + SettingsRouter.editAccount,
+                      );
+                    } else {
+                      displayToastWithContext(
+                        TypeMsg.error,
+                        SettingsTextConstants.updatingError,
+                      );
+                    }
                   },
                   child: const Center(
                     child: Text(

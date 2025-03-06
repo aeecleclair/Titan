@@ -1,5 +1,5 @@
-import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/tools/constants.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 Decision stringToDecision(String s) {
@@ -22,6 +22,8 @@ String decisionToString(Decision d) {
     case Decision.declined:
       return BookingTextConstants.declined;
     case Decision.pending:
+      return BookingTextConstants.pending;
+    case Decision.swaggerGeneratedUnknown:
       return BookingTextConstants.pending;
   }
 }

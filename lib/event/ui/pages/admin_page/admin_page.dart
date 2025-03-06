@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/event/ui/event.dart';
-import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/ui/pages/admin_page/list_event.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/ui/widgets/calendar.dart';
@@ -18,12 +18,12 @@ class AdminPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final events = ref.watch(eventListProvider);
 
-    final List<Event> pendingEvents = [],
+    final List<EventReturn> pendingEvents = [],
         confirmedEvents = [],
         canceledEvents = [];
     events.maybeWhen(
       data: (events) {
-        for (Event b in events) {
+        for (EventReturn b in events) {
           switch (b.decision) {
             case Decision.approved:
               confirmedEvents.add(b);
@@ -33,6 +33,8 @@ class AdminPage extends HookConsumerWidget {
               break;
             case Decision.pending:
               pendingEvents.add(b);
+              break;
+            case Decision.swaggerGeneratedUnknown:
               break;
           }
         }

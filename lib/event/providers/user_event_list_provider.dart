@@ -1,57 +1,55 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/repositories/event_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
+import 'package:myecl/event/adapters/event.dart';
 
-class EventEventListProvider extends ListNotifier<Event> {
-  final EventRepository eventRepository;
-  String userId = "";
+class EventEventListProvider extends ListNotifierAPI<EventReturn> {
+  final Openapi eventRepository;
   EventEventListProvider({required this.eventRepository})
       : super(const AsyncValue.loading());
-  void setId(String id) {
-    userId = id;
+
+  Future<AsyncValue<List<EventReturn>>> loadConfirmedEvent(
+    String userId,
+  ) async {
+    return await loadList(
+      () async =>
+          eventRepository.calendarEventsUserApplicantIdGet(applicantId: userId),
+    );
   }
 
-  Future<AsyncValue<List<Event>>> loadConfirmedEvent() async {
-    return await loadList(() async => eventRepository.getUserEventList(userId));
-  }
-
-  Future<bool> addEvent(Event event) async {
-    return await add(eventRepository.createEvent, event);
-  }
-
-  Future<bool> updateEvent(Event event) async {
-    return await update(
-      eventRepository.updateEvent,
-      (events, event) =>
-          events..[events.indexWhere((e) => e.id == event.id)] = event,
+  Future<bool> addEvent(EventBase event) async {
+    return await add(
+      () => eventRepository.calendarEventsPost(body: event),
       event,
     );
   }
 
-  Future<bool> deleteEvent(Event event) async {
-    return await delete(
-      eventRepository.deleteEvent,
-      (events, event) => events..removeWhere((e) => e.id == event.id),
-      event.id,
+  Future<bool> updateEvent(EventReturn event) async {
+    return await update(
+      () => eventRepository.calendarEventsEventIdPatch(
+        eventId: event.id,
+        body: event.toEventEdit(),
+      ),
+      (event) => event.id,
       event,
+    );
+  }
+
+  Future<bool> deleteEvent(String eventId) async {
+    return await delete(
+      () => eventRepository.calendarEventsEventIdDelete(eventId: eventId),
+      (e) => e.id,
+      eventId,
     );
   }
 }
 
-final eventEventListProvider =
-    StateNotifierProvider<EventEventListProvider, AsyncValue<List<Event>>>(
-        (ref) {
-  final eventRepository = ref.watch(eventRepositoryProvider);
-  final userId = ref.watch(idProvider);
-  final provider = EventEventListProvider(eventRepository: eventRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    userId.whenData((value) async {
-      provider.setId(value);
-      await provider.loadConfirmedEvent();
-    });
-  });
-  return provider;
+final eventEventListProvider = StateNotifierProvider.family<
+    EventEventListProvider,
+    AsyncValue<List<EventReturn>>,
+    String>((ref, userId) {
+  final eventRepository = ref.watch(repositoryProvider);
+  return EventEventListProvider(eventRepository: eventRepository)
+    ..loadConfirmedEvent(userId);
 });

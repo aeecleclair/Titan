@@ -1,22 +1,26 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/cinema/class/the_movie_db_genre.dart';
-import 'package:myecl/cinema/repositories/the_movie_db_repository.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/single_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
 
-class TheMovieDBGenreNotifier extends SingleNotifier<TheMovieDBMovie> {
-  final TheMovieDBRepository theMoviesDBRepository;
+class TheMovieDBGenreNotifier extends SingleNotifierAPI<TheMovieDB> {
+  final Openapi theMoviesDBRepository;
   TheMovieDBGenreNotifier({required this.theMoviesDBRepository})
       : super(const AsyncValue.loading());
 
-  Future<AsyncValue<TheMovieDBMovie>> loadMovie(String id) async {
-    return await load(() => theMoviesDBRepository.getMovie(id));
+  Future<AsyncValue<TheMovieDB>> loadMovie(String id) async {
+    return await load(
+      () => theMoviesDBRepository.cinemaThemoviedbThemoviedbIdGet(
+        themoviedbId: id,
+      ),
+    );
   }
 }
 
 final theMovieDBMovieProvider =
-    StateNotifierProvider<TheMovieDBGenreNotifier, AsyncValue<TheMovieDBMovie>>(
+    StateNotifierProvider<TheMovieDBGenreNotifier, AsyncValue<TheMovieDB>>(
         (ref) {
-  final theMovieDB = ref.watch(theMovieDBRepository);
+  final theMovieDB = ref.watch(repositoryProvider);
   TheMovieDBGenreNotifier notifier =
       TheMovieDBGenreNotifier(theMoviesDBRepository: theMovieDB);
   return notifier;

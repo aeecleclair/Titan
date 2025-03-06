@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/providers/is_admin_provider.dart';
 import 'package:myecl/event/providers/user_event_list_provider.dart';
@@ -9,10 +8,13 @@ import 'package:myecl/event/router.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/ui/event.dart';
 import 'package:myecl/event/ui/components/event_ui.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/ui/layouts/column_refresher.dart';
 import 'package:myecl/tools/ui/widgets/admin_button.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:myecl/user/providers/user_provider.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class EventMainPage extends HookConsumerWidget {
@@ -20,10 +22,12 @@ class EventMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userProvider);
     final isAdmin = ref.watch(isEventAdminProvider);
     final eventNotifier = ref.watch(eventProvider.notifier);
-    final eventListNotifier = ref.watch(eventEventListProvider.notifier);
-    final events = ref.watch(eventEventListProvider);
+    final eventListNotifier =
+        ref.watch(eventEventListProvider(user.id).notifier);
+    final events = ref.watch(eventEventListProvider(user.id));
     return EventTemplate(
       child: AsyncChild(
         value: events,
@@ -31,7 +35,7 @@ class EventMainPage extends HookConsumerWidget {
           eventList.sort((a, b) => b.start.compareTo(a.start));
           return ColumnRefresher(
             onRefresh: () async {
-              await eventListNotifier.loadConfirmedEvent();
+              await eventListNotifier.loadConfirmedEvent(user.id);
             },
             children: [
               const SizedBox(height: 40),
@@ -65,7 +69,7 @@ class EventMainPage extends HookConsumerWidget {
               const SizedBox(height: 20),
               GestureDetector(
                 onTap: () {
-                  eventNotifier.setEvent(Event.empty());
+                  eventNotifier.setEvent(EmptyModels.empty<EventReturn>());
                   QR.to(EventRouter.root + EventRouter.addEdit);
                 },
                 child: CardLayout(

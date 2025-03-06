@@ -1,4 +1,4 @@
-import 'package:myecl/service/class/topic.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
 
 Topic stringToTopic(String string) {
   switch (string) {
@@ -45,5 +45,9 @@ String topicToFrenchString(Topic topic) {
       return "Vote";
     case Topic.ph:
       return "PH";
+    case Topic.swaggerGeneratedUnknown:
+      return "Inconnu";
+    case Topic.test:
+      return "Test";
   }
 }

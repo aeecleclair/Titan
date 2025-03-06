@@ -1,14 +1,15 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/raffle/class/pack_ticket.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/raffle/adapters/pack_ticket.dart';
 import 'package:myecl/raffle/providers/pack_ticket_provider.dart';
 import 'package:myecl/raffle/providers/raffle_provider.dart';
 import 'package:myecl/raffle/providers/pack_ticket_list_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/components/blue_btn.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -21,7 +22,7 @@ class AddEditPackTicketPage extends HookConsumerWidget {
     final formKey = GlobalKey<FormState>();
     final raffle = ref.watch(raffleProvider);
     final packTicket = ref.watch(packTicketProvider);
-    final isEdit = packTicket.id != PackTicket.empty().id;
+    final isEdit = packTicket.id != EmptyModels.empty<PackTicketSimple>().id;
     final packSize = useTextEditingController(
       text: isEdit ? packTicket.packSize.toString() : "",
     );
@@ -123,48 +124,47 @@ class AddEditPackTicketPage extends HookConsumerWidget {
                           price.text.replaceAll(',', '.'),
                         );
                         if (ticketPrice != null && ticketPrice > 0) {
-                          await tokenExpireWrapper(ref, () async {
-                            final newPackTicket = packTicket.copyWith(
-                              price: double.parse(price.text),
-                              packSize: int.parse(packSize.text),
-                              raffleId:
-                                  isEdit ? packTicket.raffleId : raffle.id,
-                              id: isEdit ? packTicket.id : "",
-                            );
-                            final typeTicketNotifier =
-                                ref.watch(packTicketListProvider.notifier);
-                            final value = isEdit
-                                ? await typeTicketNotifier
-                                    .updatePackTicket(newPackTicket)
-                                : await typeTicketNotifier
-                                    .addPackTicket(newPackTicket);
-                            if (value) {
-                              QR.back();
-                              if (isEdit) {
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  RaffleTextConstants.editedTicket,
+                          final newPackTicket = packTicket.copyWith(
+                            price: double.parse(price.text),
+                            packSize: int.parse(packSize.text),
+                            raffleId: isEdit ? packTicket.raffleId : raffle.id,
+                            id: isEdit ? packTicket.id : "",
+                          );
+                          final typeTicketNotifier = ref.watch(
+                            packTicketListProvider(raffle.id).notifier,
+                          );
+                          final value = isEdit
+                              ? await typeTicketNotifier
+                                  .updatePackTicket(newPackTicket)
+                              : await typeTicketNotifier.addPackTicket(
+                                  newPackTicket.toPackTicketBase(),
                                 );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  RaffleTextConstants.addedTicket,
-                                );
-                              }
+                          if (value) {
+                            QR.back();
+                            if (isEdit) {
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                RaffleTextConstants.editedTicket,
+                              );
                             } else {
-                              if (isEdit) {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  RaffleTextConstants.editingError,
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  RaffleTextConstants.alreadyExistTicket,
-                                );
-                              }
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                RaffleTextConstants.addedTicket,
+                              );
                             }
-                          });
+                          } else {
+                            if (isEdit) {
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                RaffleTextConstants.editingError,
+                              );
+                            } else {
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                RaffleTextConstants.alreadyExistTicket,
+                              );
+                            }
+                          }
                         } else {
                           displayToast(
                             context,

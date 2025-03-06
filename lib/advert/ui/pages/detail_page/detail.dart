@@ -26,7 +26,7 @@ class AdvertDetailPage extends HookConsumerWidget {
     final logoNotifier = ref.watch(advertPosterProvider.notifier);
     final filteredTagList =
         advert.tags.where((element) => element != "").toList();
-    final inTagChipsList = [advert.announcer.name] + filteredTagList;
+    final inTagChipsList = [advert.advertiser.name] + filteredTagList;
 
     return Stack(
       children: [

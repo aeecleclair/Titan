@@ -10,7 +10,6 @@ import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -124,25 +123,23 @@ class ChangePassPage extends HookConsumerWidget {
                         builder: (context) => CustomDialogBox(
                           descriptions: SettingsTextConstants.changingPassword,
                           onYes: () async {
-                            await tokenExpireWrapper(ref, () async {
-                              final value = await userNotifier.changePassword(
-                                oldPassword.text,
-                                newPassword.text,
-                                user,
+                            final value = await userNotifier.changePassword(
+                              oldPassword.text,
+                              newPassword.text,
+                              user,
+                            );
+                            if (value) {
+                              QR.back();
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                SettingsTextConstants.passwordChanged,
                               );
-                              if (value) {
-                                QR.back();
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  SettingsTextConstants.passwordChanged,
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  SettingsTextConstants.updatingError,
-                                );
-                              }
-                            });
+                            } else {
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                SettingsTextConstants.updatingError,
+                              );
+                            }
                           },
                           title: SettingsTextConstants.edit,
                         ),

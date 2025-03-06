@@ -9,7 +9,7 @@ import 'package:myecl/service/providers/firebase_token_provider.dart';
 import 'package:myecl/service/providers/messages_provider.dart';
 import 'package:myecl/service/providers/topic_provider.dart';
 import 'package:myecl/tools/logs/log.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:myecl/tools/logs/logger.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 void setUpNotification(WidgetRef ref) {
@@ -18,10 +18,10 @@ void setUpNotification(WidgetRef ref) {
   localNotificationService.init();
 
   final user = ref.watch(userProvider);
-  final messageNotifier = ref.watch(messagesProvider.notifier);
+  final devicesNotifier = ref.watch(devicesProvider.notifier);
   final firebaseToken = ref.watch(firebaseTokenProvider);
   final topicsNotifier = ref.watch(topicsProvider.notifier);
-  final logger = Repository.logger;
+  final logger = ref.watch(loggerProvider);
 
   FirebaseMessaging.instance.requestPermission().then((value) {
     if (value.authorizationStatus == AuthorizationStatus.authorized) {
@@ -34,8 +34,7 @@ void setUpNotification(WidgetRef ref) {
           firebaseTokenExpiration.expiration != null ||
           firebaseTokenExpiration.expiration!.isBefore(now)) {
         firebaseToken.then((value) {
-          messageNotifier.setFirebaseToken(value);
-          messageNotifier.registerDevice();
+          devicesNotifier.registerDevice(value);
           firebaseTokenExpirationNotifier.saveDate(
             user.id,
             now.add(const Duration(days: 30)),
@@ -52,7 +51,7 @@ void setUpNotification(WidgetRef ref) {
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     message_class.Message messages =
         message_class.Message.fromJson(message.data);
-    Repository.logger
+    logger
         .writeLog(Log(message: "GOT trigger onMessage", level: LogLevel.error));
 
     message_class.Message me = message_class.Message(

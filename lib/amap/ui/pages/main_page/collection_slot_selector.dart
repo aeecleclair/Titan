@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/class/order.dart';
 import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/functions.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/enums_cleaner.dart';
 import 'package:myecl/tools/functions.dart';
 
 class CollectionSlotSelector extends HookConsumerWidget {
-  final CollectionSlot collectionSlot;
+  final AmapSlotType collectionSlot;
   const CollectionSlotSelector({super.key, required this.collectionSlot});
 
   @override
@@ -15,7 +16,7 @@ class CollectionSlotSelector extends HookConsumerWidget {
     final order = ref.watch(orderProvider);
     final orderNotifier = ref.read(orderProvider.notifier);
     final isSelected = collectionSlot == order.collectionSlot;
-    final isFirst = CollectionSlot.values.first == collectionSlot;
+    final isFirst = getEnumValues(AmapSlotType.values).first == collectionSlot;
     return Expanded(
       child: GestureDetector(
         onTap: () {
@@ -40,7 +41,7 @@ class CollectionSlotSelector extends HookConsumerWidget {
           ),
           child: Center(
             child: Text(
-              capitalize(uiCollectionSlotToString(collectionSlot)),
+              capitalize(collectionSlot.name),
               style: TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold,

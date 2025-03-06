@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
 class ProductUi extends ConsumerWidget {
-  final Product product;
+  final AppModulesAmapSchemasAmapProductComplete product;
   final Function onclick;
   final bool isModification;
   const ProductUi({

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/class/association.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 
 class AssociationCard extends HookConsumerWidget {
@@ -10,7 +10,7 @@ class AssociationCard extends HookConsumerWidget {
     required this.onClicked,
   });
 
-  final Association association;
+  final AssociationComplete association;
   final VoidCallback onClicked;
 
   @override
@@ -33,7 +33,7 @@ class AssociationCard extends HookConsumerWidget {
                   ),
                 ),
               ),
-              Text(association.kind),
+              Text(association.kind.name),
             ],
           ),
         ),

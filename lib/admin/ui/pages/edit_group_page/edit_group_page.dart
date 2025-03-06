@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/group.dart';
+import 'package:myecl/admin/adapters/groups.dart';
 import 'package:myecl/admin/providers/group_id_provider.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/providers/group_provider.dart';
@@ -11,9 +11,10 @@ import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/ui/admin.dart';
 import 'package:myecl/admin/ui/components/admin_button.dart';
 import 'package:myecl/admin/ui/pages/edit_group_page/search_user.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
@@ -52,7 +53,7 @@ class EditGroupPage extends HookConsumerWidget {
             loader: (groupId) async =>
                 (await groupNotifier.loadGroup(groupId)).maybeWhen(
               data: (groups) => groups,
-              orElse: () => Group.empty(),
+              orElse: () => EmptyModels.empty<CoreGroup>(),
             ),
             dataBuilder: (context, groups) {
               final group = groups.first;
@@ -98,27 +99,25 @@ class EditGroupPage extends HookConsumerWidget {
                             if (!key.currentState!.validate()) {
                               return;
                             }
-                            await tokenExpireWrapper(ref, () async {
-                              Group newGroup = group.copyWith(
-                                name: name.text,
-                                description: description.text,
+                            CoreGroup newGroup = group.copyWith(
+                              name: name.text,
+                              description: description.text,
+                            );
+                            groupNotifier.setGroup(newGroup);
+                            final value = await groupListNotifier
+                                .updateGroup(newGroup.toCoreGroupSimple());
+                            if (value) {
+                              QR.back();
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                AdminTextConstants.updatedGroup,
                               );
-                              groupNotifier.setGroup(newGroup);
-                              final value = await groupListNotifier
-                                  .updateGroup(newGroup.toSimpleGroup());
-                              if (value) {
-                                QR.back();
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  AdminTextConstants.updatedGroup,
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  AdminTextConstants.updatingError,
-                                );
-                              }
-                            });
+                            } else {
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                AdminTextConstants.updatingError,
+                              );
+                            }
                           },
                           builder: (child) => AdminButton(child: child),
                           child: const Text(

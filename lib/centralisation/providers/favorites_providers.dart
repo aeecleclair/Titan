@@ -1,5 +1,4 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 
@@ -46,9 +45,5 @@ class FavoritesNameNotifier extends StateNotifier<List<String>> {
 
 final favoritesNameProvider =
     StateNotifierProvider<FavoritesNameNotifier, List<String>>((ref) {
-  final favoritesNameNotifier = FavoritesNameNotifier();
-  tokenExpireWrapperAuth(ref, () async {
-    favoritesNameNotifier.loadFavorites();
-  });
-  return favoritesNameNotifier;
+  return FavoritesNameNotifier()..loadFavorites();
 });

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/advert/providers/announcer_provider.dart';
+import 'package:myecl/advert/providers/advertiser_provider.dart';
 import 'package:myecl/advert/router.dart';
 import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/tools/ui/widgets/top_bar.dart';
@@ -11,7 +11,7 @@ class AdvertTemplate extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedAnnouncersNotifier = ref.read(announcerProvider.notifier);
+    final selectedAdvertisersNotifier = ref.read(advertiserProvider.notifier);
     return Scaffold(
       body: Container(
         color: Colors.white,
@@ -22,7 +22,7 @@ class AdvertTemplate extends HookConsumerWidget {
                 title: AdvertTextConstants.advert,
                 root: AdvertRouter.root,
                 onBack: () {
-                  selectedAnnouncersNotifier.clearAnnouncer();
+                  selectedAdvertisersNotifier.clearAdvertiser();
                 },
               ),
               const SizedBox(height: 30),

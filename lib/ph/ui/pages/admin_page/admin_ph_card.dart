@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/ph/class/ph.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/ph/tools/constants.dart';
 import 'package:myecl/ph/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
@@ -8,7 +8,7 @@ import 'package:myecl/tools/ui/layouts/card_layout.dart';
 
 class AdminPhCard extends StatelessWidget {
   final VoidCallback onEdit, onDelete;
-  final Ph ph;
+  final PaperComplete ph;
   const AdminPhCard({
     super.key,
     required this.ph,
@@ -44,7 +44,7 @@ class AdminPhCard extends StatelessWidget {
                       style: TextStyle(fontWeight: FontWeight.bold),
                       textAlign: TextAlign.left,
                     ),
-                    Text(shortenText(phFormatDate(ph.date), 28)),
+                    Text(shortenText(phFormatDate(ph.releaseDate), 28)),
                   ],
                 ),
               ],

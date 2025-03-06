@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/account_type.dart';
-import 'package:myecl/admin/class/module_visibility.dart';
 import 'package:myecl/admin/providers/all_account_types_list_provider.dart';
 import 'package:myecl/admin/providers/all_groups_list_provider.dart';
 import 'package:myecl/admin/providers/is_expanded_list_provider.dart';
 import 'package:myecl/admin/providers/module_visibility_list_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
 class ModulesExpansionPanel extends HookConsumerWidget {
   final List<ModuleVisibility> modules;
@@ -69,7 +69,7 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                           child: Row(
                             children: [
                               Text(
-                                accountType.type,
+                                accountType.value.toString(),
                                 style: const TextStyle(
                                   color: Color.fromARGB(255, 0, 0, 0),
                                   fontSize: 20,
@@ -93,7 +93,7 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                                         await modulesNotifier
                                             .deleteAccountTypeAccessForModule(
                                           newModuleVisibility,
-                                          accountType.type,
+                                          accountType,
                                         );
                                       },
                                       child: const HeroIcon(
@@ -112,7 +112,7 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                                         await modulesNotifier
                                             .addAccountTypeToModule(
                                           newModuleVisibility,
-                                          accountType.type,
+                                          accountType,
                                         );
                                       },
                                       child: const HeroIcon(

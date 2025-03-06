@@ -1,20 +1,22 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class ProductCard extends StatelessWidget {
-  final Product product;
+  final AppModulesAmapSchemasAmapProductComplete product;
+  final int quantity;
   final Function()? onEdit;
   final Future Function()? onDelete;
   final bool showButton;
   const ProductCard({
     super.key,
     required this.product,
+    required this.quantity,
     this.onEdit,
     this.onDelete,
     this.showButton = true,
@@ -101,7 +103,7 @@ class ProductCard extends StatelessWidget {
               : Container(
                   margin: const EdgeInsets.only(bottom: 5),
                   child: Text(
-                    "${AMAPTextConstants.quantity} : ${product.quantity}",
+                    "${AMAPTextConstants.quantity} : $quantity",
                     style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,

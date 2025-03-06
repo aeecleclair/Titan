@@ -4,24 +4,36 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:myecl/tools/exception.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/logs/log.dart';
-import 'package:myecl/tools/repository/repository.dart';
 import 'package:http/http.dart' as http;
+import 'package:myecl/tools/logs/logger.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 
-abstract class PdfRepository extends Repository {
+abstract class PdfRepository {
+  static final String host = getTitanHost();
   static const String expiredTokenDetail = "Could not validate credentials";
+  final String ext = "";
+  final Map<String, String> headers = {
+    "Content-Type": "application/json; charset=UTF-8",
+    "Accept": "application/json",
+  };
+  static final Logger logger = Logger();
+
+  void setToken(String token) {
+    headers["Authorization"] = 'Bearer $token';
+  }
 
   Future<Uint8List> getPdf(String id, {String suffix = ""}) async {
     try {
-      final response = await http
-          .get(Uri.parse("${Repository.host}$ext$id$suffix"), headers: headers);
+      final response =
+          await http.get(Uri.parse("$host$ext$id$suffix"), headers: headers);
       if (response.statusCode == 200) {
         try {
           return response.bodyBytes;
         } catch (e) {
-          Repository.logger.writeLog(
+          logger.writeLog(
             Log(
               message: "GET $ext$id$suffix\nError while decoding response",
               level: LogLevel.error,
@@ -30,7 +42,7 @@ abstract class PdfRepository extends Repository {
           rethrow;
         }
       } else if (response.statusCode == 403) {
-        Repository.logger.writeLog(
+        logger.writeLog(
           Log(
             message:
                 "GET $ext$id$suffix\n${response.statusCode} ${response.body}",
@@ -45,7 +57,7 @@ abstract class PdfRepository extends Repository {
           throw AppException(ErrorType.notFound, decoded["detail"]);
         }
       } else {
-        Repository.logger.writeLog(
+        logger.writeLog(
           Log(
             message:
                 "GET $ext$id$suffix\n${response.statusCode} ${response.body}",
@@ -57,7 +69,7 @@ abstract class PdfRepository extends Repository {
     } on AppException {
       rethrow;
     } catch (e) {
-      Repository.logger.writeLog(
+      logger.writeLog(
         Log(
           message: "GET $ext$id$suffix\nCould not load the pdf",
           level: LogLevel.error,
@@ -74,7 +86,7 @@ abstract class PdfRepository extends Repository {
   }) async {
     final request = http.MultipartRequest(
       'POST',
-      Uri.parse("${Repository.host}$ext$id$suffix"),
+      Uri.parse("$host$ext$id$suffix"),
     )
       ..headers.addAll(headers)
       ..files.add(
@@ -91,7 +103,7 @@ abstract class PdfRepository extends Repository {
         try {
           return json.decode(value)["success"];
         } catch (e) {
-          Repository.logger.writeLog(
+          logger.writeLog(
             Log(
               message: "POST $ext$id$suffix\nError while decoding response",
               level: LogLevel.error,
@@ -100,7 +112,7 @@ abstract class PdfRepository extends Repository {
           throw AppException(ErrorType.invalidData, e.toString());
         }
       } else if (response.statusCode == 403) {
-        Repository.logger.writeLog(
+        logger.writeLog(
           Log(
             message:
                 "POST $ext$id$suffix\n${response.statusCode} ${response.reasonPhrase}",
@@ -109,7 +121,7 @@ abstract class PdfRepository extends Repository {
         );
         throw AppException(ErrorType.tokenExpire, value);
       } else {
-        Repository.logger.writeLog(
+        logger.writeLog(
           Log(
             message:
                 "POST $ext$id$suffix\n${response.statusCode} ${response.reasonPhrase}",
@@ -131,7 +143,7 @@ abstract class PdfRepository extends Repository {
         await file.writeAsBytes(response.bodyBytes);
         return file;
       } catch (e) {
-        Repository.logger.writeLog(
+        logger.writeLog(
           Log(
             message: "GET $path\nError while decoding response",
             level: LogLevel.error,
@@ -140,7 +152,7 @@ abstract class PdfRepository extends Repository {
         rethrow;
       }
     } else if (response.statusCode == 403) {
-      Repository.logger.writeLog(
+      logger.writeLog(
         Log(
           message: "GET $path\n${response.statusCode} ${response.body}",
           level: LogLevel.error,
@@ -154,7 +166,7 @@ abstract class PdfRepository extends Repository {
         throw AppException(ErrorType.notFound, decoded["detail"]);
       }
     } else {
-      Repository.logger.writeLog(
+      logger.writeLog(
         Log(
           message: "GET $path\n${response.statusCode} ${response.body}",
           level: LogLevel.error,

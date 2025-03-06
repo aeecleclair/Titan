@@ -1,37 +1,38 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/phonebook/class/complete_member.dart';
-import 'package:myecl/phonebook/class/member.dart';
-import 'package:myecl/phonebook/repositories/member_repository.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
+import 'package:myecl/tools/repository/repository.dart';
 
-final completeMemberProvider =
-    StateNotifierProvider<CompleteMemberProvider, CompleteMember>((ref) {
-  final token = ref.watch(tokenProvider);
-  return CompleteMemberProvider(token: token);
-});
+class CompleteMemberProvider extends StateNotifier<MemberComplete> {
+  final Openapi memberRepository;
+  CompleteMemberProvider({required this.memberRepository})
+      : super(EmptyModels.empty<MemberComplete>());
 
-class CompleteMemberProvider extends StateNotifier<CompleteMember> {
-  final MemberRepository memberRepository = MemberRepository();
-  CompleteMemberProvider({required String token})
-      : super(CompleteMember.empty()) {
-    memberRepository.setToken(token);
-  }
-
-  void setCompleteMember(CompleteMember i) {
+  void setCompleteMember(MemberComplete i) {
     state = i;
   }
 
-  void setMember(Member i) {
-    state = state.copyWith(member: i);
+  void setMember(MemberComplete i) {
+    state = i;
   }
 
   Future<bool> loadMemberComplete() async {
     try {
-      final data = await memberRepository.getCompleteMember(state.member.id);
-      state = state.copyWith(member: data.member, membership: data.memberships);
+      final data =
+          await memberRepository.phonebookMemberUserIdGet(userId: state.id);
+      if (data.isSuccessful) {
+        state = data.body!;
+        return true;
+      }
       return true;
     } catch (e) {
       return false;
     }
   }
 }
+
+final completeMemberProvider =
+    StateNotifierProvider<CompleteMemberProvider, MemberComplete>((ref) {
+  final memberRepository = ref.watch(repositoryProvider);
+  return CompleteMemberProvider(memberRepository: memberRepository);
+});

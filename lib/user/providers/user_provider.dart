@@ -1,71 +1,83 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
+import 'package:myecl/user/adapters/users.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/user/class/user.dart';
-import 'package:myecl/user/repositories/user_repository.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/single_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
 
-class UserNotifier extends SingleNotifier<User> {
-  final UserRepository userRepository;
-  UserNotifier({required this.userRepository})
-      : super(const AsyncValue.loading());
+class UserNotifier extends SingleNotifierAPI<CoreUser> {
+  final Openapi userRepository;
+  UserNotifier({required this.userRepository}) : super(const AsyncLoading());
 
-  Future<bool> setUser(User user) async {
-    return await add((u) async => u, user);
+  Future<AsyncValue<CoreUser>> loadUser(String userId) async {
+    return await load(
+      () async => userRepository.usersUserIdGet(userId: userId),
+    );
   }
 
-  Future<AsyncValue<User>> loadUser(String userId) async {
-    return await load(() async => userRepository.getUser(userId));
+  Future<AsyncValue<CoreUser>> loadMe() async {
+    return await load(userRepository.usersMeGet);
   }
 
-  Future<AsyncValue<User>> loadMe() async {
-    return await load(userRepository.getMe);
+  Future<bool> updateUser(CoreUser user) async {
+    return await update(
+      () => userRepository.usersUserIdPatch(
+        body: user.toCoreUserUpdateAdmin(),
+        userId: user.id,
+      ),
+      user,
+    );
   }
 
-  Future<bool> updateUser(User user) async {
-    return await update(userRepository.updateUser, user);
-  }
-
-  Future<bool> updateMe(User user) async {
-    return await update(userRepository.updateMe, user);
+  Future<bool> updateMe(CoreUser user) async {
+    return await update(
+      () async => userRepository.usersMePatch(body: user.toCoreUserUpdate()),
+      user,
+    );
   }
 
   Future<bool> changePassword(
     String oldPassword,
     String newPassword,
-    User user,
+    CoreUser user,
   ) async {
-    return await userRepository.changePassword(
-      oldPassword,
-      newPassword,
-      user.email,
-    );
+    return (await userRepository.usersChangePasswordPost(
+      body: ChangePasswordRequest(
+        email: user.email,
+        oldPassword: oldPassword,
+        newPassword: newPassword,
+      ),
+    ))
+        .isSuccessful;
   }
 
   Future<bool> deletePersonal() async {
-    return await userRepository.deletePersonalData();
+    return await delete(
+      () => userRepository.usersMeAskDeletionPost(),
+    );
   }
 
   Future<bool> askMailMigration(String mail) async {
-    return await userRepository.askMailMigration(mail);
+    return (await userRepository.usersMigrateMailPost(
+      body: MailMigrationRequest(newEmail: mail),
+    ))
+        .isSuccessful;
   }
 }
 
 final asyncUserProvider =
-    StateNotifierProvider<UserNotifier, AsyncValue<User>>((ref) {
-  final UserRepository userRepository = ref.watch(userRepositoryProvider);
+    StateNotifierProvider<UserNotifier, AsyncValue<CoreUser>>((ref) {
+  final userRepository = ref.watch(repositoryProvider);
   UserNotifier userNotifier = UserNotifier(userRepository: userRepository);
   final token = ref.watch(tokenProvider);
-  tokenExpireWrapperAuth(ref, () async {
-    final isLoggedIn = ref.watch(isLoggedInProvider);
-    final id = ref
-        .watch(idProvider)
-        .maybeWhen(data: (value) => value, orElse: () => "");
-    if (isLoggedIn && id != "" && token != "") {
-      return userNotifier..loadMe();
-    }
-  });
+  final isLoggedIn = ref.watch(isLoggedInProvider);
+  final id =
+      ref.watch(idProvider).maybeWhen(data: (value) => value, orElse: () => "");
+  if (isLoggedIn && id != "" && token != "") {
+    return userNotifier..loadMe();
+  }
   return userNotifier;
 });
 
@@ -73,7 +85,7 @@ final userProvider = Provider((ref) {
   return ref.watch(asyncUserProvider).maybeWhen(
         data: (user) => user,
         orElse: () {
-          return User.empty();
+          return EmptyModels.empty<CoreUser>();
         },
       );
 });

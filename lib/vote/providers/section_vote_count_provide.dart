@@ -1,19 +1,23 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/vote/repositories/section_vote_count_repository.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/single_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
 
-class SectionVoteCountNotifier extends SingleNotifier<int> {
-  final SectionVoteCountRepository repository;
+class SectionVoteCountNotifier extends SingleNotifierAPI<VoteStats> {
+  final Openapi repository;
   SectionVoteCountNotifier({required this.repository})
       : super(const AsyncLoading());
 
-  Future<AsyncValue<int>> loadCount(String id) async {
-    return await load(() => repository.getSectionVoteCount(id));
+  Future<AsyncValue<VoteStats>> loadCount(String sectionId) async {
+    return await load(
+      () => repository.campaignStatsSectionIdGet(sectionId: sectionId),
+    );
   }
 }
 
 final sectionVoteCountProvider =
-    StateNotifierProvider<SectionVoteCountNotifier, AsyncValue<int>>((ref) {
-  final repository = ref.watch(sectionVoteCountRepositoryProvider);
+    StateNotifierProvider<SectionVoteCountNotifier, AsyncValue<VoteStats>>(
+        (ref) {
+  final repository = ref.watch(repositoryProvider);
   return SectionVoteCountNotifier(repository: repository);
 });

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/class/prize.dart';
-import 'package:myecl/raffle/class/raffle_status_type.dart';
-import 'package:myecl/raffle/class/tickets.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/raffle/providers/prize_list_provider.dart';
 import 'package:myecl/raffle/providers/prize_provider.dart';
 import 'package:myecl/raffle/providers/raffle_provider.dart';
@@ -11,9 +10,10 @@ import 'package:myecl/raffle/providers/winning_ticket_list_provider.dart';
 import 'package:myecl/raffle/router.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/creation_edit_page/prize_card.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
+import 'package:myecl/user/extensions/users.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class PrizeHandler extends HookConsumerWidget {
@@ -23,16 +23,16 @@ class PrizeHandler extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final raffle = ref.watch(raffleProvider);
     final prizeNotifier = ref.watch(prizeProvider.notifier);
-    final prizesNotifier = ref.watch(prizeListProvider.notifier);
-    final prizeList = ref.watch(prizeListProvider);
+    final prizesNotifier = ref.watch(prizeListProvider(raffle.id).notifier);
+    final prizeList = ref.watch(prizeListProvider(raffle.id));
     final winningTicketListNotifier =
-        ref.watch(winningTicketListProvider.notifier);
+        ref.watch(winningTicketListProvider(raffle.id).notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
 
-    void displayWinningsDialog(List<Ticket> winningTickets) {
+    void displayWinningsDialog(List<TicketComplete> winningTickets) {
       showDialog(
         context: context,
         builder: (context) {
@@ -105,10 +105,10 @@ class PrizeHandler extends HookConsumerWidget {
               const SizedBox(
                 width: 10,
               ),
-              if (raffle.raffleStatusType == RaffleStatusType.creation)
+              if (raffle.status == RaffleStatusType.creation)
                 GestureDetector(
                   onTap: () {
-                    prizeNotifier.setPrize(Prize.empty());
+                    prizeNotifier.setPrize(EmptyModels.empty<PrizeSimple>());
                     QR.to(
                       RaffleRouter.root +
                           RaffleRouter.detail +
@@ -176,23 +176,20 @@ class PrizeHandler extends HookConsumerWidget {
                                         title: "Supprimer le lot",
                                         descriptions:
                                             "Voulez-vous vraiment supprimer ce lot?",
-                                        onYes: () {
-                                          tokenExpireWrapper(ref, () async {
-                                            final value = await prizesNotifier
-                                                .deletePrize(e);
-                                            if (value) {
-                                              displayToastWithContext(
-                                                TypeMsg.msg,
-                                                RaffleTextConstants.deletePrize,
-                                              );
-                                            } else {
-                                              displayToastWithContext(
-                                                TypeMsg.error,
-                                                RaffleTextConstants
-                                                    .deletingError,
-                                              );
-                                            }
-                                          });
+                                        onYes: () async {
+                                          final value = await prizesNotifier
+                                              .deletePrize(e.id);
+                                          if (value) {
+                                            displayToastWithContext(
+                                              TypeMsg.msg,
+                                              RaffleTextConstants.deletePrize,
+                                            );
+                                          } else {
+                                            displayToastWithContext(
+                                              TypeMsg.error,
+                                              RaffleTextConstants.deletingError,
+                                            );
+                                          }
                                         },
                                       ),
                                     );
@@ -206,7 +203,7 @@ class PrizeHandler extends HookConsumerWidget {
                                           RaffleRouter.addEditPrize,
                                     );
                                   },
-                                  status: raffle.raffleStatusType,
+                                  status: raffle.status,
                                   onDraw: () async {
                                     await showDialog(
                                       context: context,
@@ -214,33 +211,31 @@ class PrizeHandler extends HookConsumerWidget {
                                         title: "Tirage",
                                         descriptions:
                                             "Tirer le gagnant de ce lot ?",
-                                        onYes: () {
-                                          tokenExpireWrapper(ref, () async {
-                                            final value =
-                                                await winningTicketListNotifier
-                                                    .drawPrize(e);
-                                            value.when(
-                                              data: (winningTicketList) {
-                                                prizesNotifier
-                                                    .setPrizeQuantityToZero(
-                                                  e.copyWith(
-                                                    quantity: 0,
-                                                  ),
-                                                );
-                                                displayWinningsDialog(
-                                                  winningTicketList,
-                                                );
-                                              },
-                                              error: (e, s) {
-                                                displayToastWithContext(
-                                                  TypeMsg.error,
-                                                  RaffleTextConstants
-                                                      .drawingError,
-                                                );
-                                              },
-                                              loading: () {},
-                                            );
-                                          });
+                                        onYes: () async {
+                                          final value =
+                                              await winningTicketListNotifier
+                                                  .drawPrize(e);
+                                          value.when(
+                                            data: (winningTicketList) {
+                                              prizesNotifier
+                                                  .setPrizeQuantityToZero(
+                                                e.copyWith(
+                                                  quantity: 0,
+                                                ),
+                                              );
+                                              displayWinningsDialog(
+                                                winningTicketList,
+                                              );
+                                            },
+                                            error: (e, s) {
+                                              displayToastWithContext(
+                                                TypeMsg.error,
+                                                RaffleTextConstants
+                                                    .drawingError,
+                                              );
+                                            },
+                                            loading: () {},
+                                          );
                                         },
                                       ),
                                     );

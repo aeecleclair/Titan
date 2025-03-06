@@ -1,7 +1,8 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/raffle/class/prize.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/raffle/adapters/prize.dart';
 import 'package:myecl/raffle/providers/prize_list_provider.dart';
 import 'package:myecl/raffle/providers/prize_provider.dart';
 import 'package:myecl/raffle/providers/raffle_provider.dart';
@@ -9,8 +10,8 @@ import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/components/blue_btn.dart';
 import 'package:myecl/raffle/ui/components/section_title.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
@@ -24,7 +25,7 @@ class AddEditPrizePage extends HookConsumerWidget {
     final formKey = GlobalKey<FormState>();
     final raffle = ref.watch(raffleProvider);
     final prize = ref.watch(prizeProvider);
-    final isEdit = prize.id != Prize.empty().id;
+    final isEdit = prize.id != EmptyModels.empty<PrizeSimple>().id;
     final quantity = useTextEditingController(
       text: isEdit ? prize.quantity.toString() : "1",
     );
@@ -87,45 +88,44 @@ class AddEditPrizePage extends HookConsumerWidget {
                       builder: (child) => BlueBtn(child: child),
                       onTap: () async {
                         if (formKey.currentState!.validate()) {
-                          await tokenExpireWrapper(ref, () async {
-                            final newPrize = prize.copyWith(
-                              name: name.text,
-                              description: description.text,
-                              raffleId: isEdit ? prize.raffleId : raffle.id,
-                              quantity: int.parse(quantity.text),
-                            );
-                            final prizeNotifier =
-                                ref.watch(prizeListProvider.notifier);
-                            final value = isEdit
-                                ? await prizeNotifier.updatePrize(newPrize)
-                                : await prizeNotifier.addPrize(newPrize);
-                            if (value) {
-                              QR.back();
-                              if (isEdit) {
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  RaffleTextConstants.editedTicket,
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  RaffleTextConstants.addedTicket,
-                                );
-                              }
+                          final newPrize = prize.copyWith(
+                            name: name.text,
+                            description: description.text,
+                            raffleId: isEdit ? prize.raffleId : raffle.id,
+                            quantity: int.parse(quantity.text),
+                          );
+                          final prizeNotifier =
+                              ref.watch(prizeListProvider(raffle.id).notifier);
+                          final value = isEdit
+                              ? await prizeNotifier.updatePrize(newPrize)
+                              : await prizeNotifier
+                                  .addPrize(newPrize.toPrizeBase());
+                          if (value) {
+                            QR.back();
+                            if (isEdit) {
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                RaffleTextConstants.editedTicket,
+                              );
                             } else {
-                              if (isEdit) {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  RaffleTextConstants.editingError,
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  RaffleTextConstants.addingError,
-                                );
-                              }
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                RaffleTextConstants.addedTicket,
+                              );
                             }
-                          });
+                          } else {
+                            if (isEdit) {
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                RaffleTextConstants.editingError,
+                              );
+                            } else {
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                RaffleTextConstants.addingError,
+                              );
+                            }
+                          }
                         } else {
                           displayToast(
                             context,

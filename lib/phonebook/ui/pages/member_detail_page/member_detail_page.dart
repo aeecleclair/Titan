@@ -31,33 +31,33 @@ class MemberDetailPage extends HookConsumerWidget {
                 children: [
                   ElementField(
                     label: PhonebookTextConstants.name,
-                    value: memberProvider.member.name,
+                    value: memberProvider.name,
                   ),
                   ElementField(
                     label: PhonebookTextConstants.firstname,
-                    value: memberProvider.member.firstname,
+                    value: memberProvider.firstname,
                   ),
-                  if (memberProvider.member.nickname != null)
+                  if (memberProvider.nickname != null)
                     ElementField(
                       label: PhonebookTextConstants.nickname,
-                      value: memberProvider.member.nickname!,
+                      value: memberProvider.nickname!,
                     ),
                   ElementField(
                     label: PhonebookTextConstants.email,
-                    value: memberProvider.member.email,
+                    value: memberProvider.email,
                   ),
-                  if (memberProvider.member.phone != null)
+                  if (memberProvider.phone != null)
                     ElementField(
                       label: PhonebookTextConstants.phone,
-                      value: memberProvider.member.phone!,
+                      value: memberProvider.phone!,
                     ),
                   ElementField(
                     label: PhonebookTextConstants.promotion,
-                    value: memberProvider.member.promotion == 0
+                    value: memberProvider.promo == 0
                         ? PhonebookTextConstants.promoNotGiven
-                        : memberProvider.member.promotion < 100
-                            ? "20${memberProvider.member.promotion}"
-                            : memberProvider.member.promotion.toString(),
+                        : memberProvider.promo < 100
+                            ? "20${memberProvider.promo}"
+                            : memberProvider.promo.toString(),
                   ),
                 ],
               ),

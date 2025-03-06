@@ -1,4 +1,4 @@
-import 'package:myecl/raffle/class/raffle_status_type.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
 
 RaffleStatusType stringToRaffleStatusType(String raffleStatusType) {
   switch (raffleStatusType) {
@@ -21,5 +21,7 @@ String raffleStatusTypeToString(RaffleStatusType raffleStatusType) {
       return 'open';
     case RaffleStatusType.lock:
       return 'lock';
+    case RaffleStatusType.swaggerGeneratedUnknown:
+      return 'error';
   }
 }

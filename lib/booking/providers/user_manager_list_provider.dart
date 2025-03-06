@@ -1,29 +1,22 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/booking/class/manager.dart';
-import 'package:myecl/booking/repositories/manager_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
 
-class UserManagerListNotifier extends ListNotifier<Manager> {
-  final ManagerRepository managerRepository = ManagerRepository();
-  UserManagerListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
-    managerRepository.setToken(token);
-  }
+class UserManagerListNotifier extends ListNotifierAPI<Manager> {
+  final Openapi managerRepository;
+  UserManagerListNotifier({required this.managerRepository})
+      : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Manager>>> loadManagers() async {
-    return await loadList(managerRepository.getUserManagerList);
+    return await loadList(managerRepository.bookingManagersUsersMeGet);
   }
 }
 
 final userManagerListProvider =
     StateNotifierProvider<UserManagerListNotifier, AsyncValue<List<Manager>>>(
         (ref) {
-  final token = ref.watch(tokenProvider);
-  final provider = UserManagerListNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    await provider.loadManagers();
-  });
-  return provider;
+  final managerRepository = ref.watch(repositoryProvider);
+  return UserManagerListNotifier(managerRepository: managerRepository)
+    ..loadManagers();
 });

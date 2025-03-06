@@ -4,16 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/raffle/class/raffle.dart';
-import 'package:myecl/raffle/class/raffle_status_type.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/raffle/providers/raffle_list_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class ConfirmCreationDialog extends HookConsumerWidget {
-  final SimpleGroup group;
+  final CoreGroupSimple group;
   const ConfirmCreationDialog({super.key, required this.group});
 
   @override
@@ -106,18 +103,17 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                         child: child,
                       ),
                       onTap: () async {
-                        await tokenExpireWrapper(ref, () async {
-                          await raffleListNotifier.createRaffle(
-                            Raffle(
-                              name: "Tombola : ${group.name}",
-                              group: group,
-                              id: '',
-                              raffleStatusType: RaffleStatusType.creation,
-                            ),
-                          );
-                          await raffleListNotifier.loadRaffleList();
-                          navigationPop();
-                        });
+                        await raffleListNotifier.createRaffle(
+                          RaffleComplete(
+                            name: "Tombola : ${group.name}",
+                            groupId: group.id,
+                            id: '',
+                            status: RaffleStatusType.creation,
+                            description: "",
+                          ),
+                        );
+                        await raffleListNotifier.loadRaffleList();
+                        navigationPop();
                       },
                       child: const HeroIcon(
                         HeroIcons.check,

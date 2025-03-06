@@ -1,9 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final showGraphProvider = StateNotifierProvider<ShowGraphNotifier, bool>((ref) {
-  return ShowGraphNotifier();
-});
-
 class ShowGraphNotifier extends StateNotifier<bool> {
   ShowGraphNotifier() : super(false);
 
@@ -11,3 +7,7 @@ class ShowGraphNotifier extends StateNotifier<bool> {
     state = p;
   }
 }
+
+final showGraphProvider = StateNotifierProvider<ShowGraphNotifier, bool>((ref) {
+  return ShowGraphNotifier();
+});

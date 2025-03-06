@@ -1,11 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/class/prize.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/raffle/ui/pages/raffle_page/prize_dialog.dart';
 
 class PrizeCard extends HookConsumerWidget {
-  final Prize prize;
+  final PrizeSimple prize;
   const PrizeCard({super.key, required this.prize});
 
   @override

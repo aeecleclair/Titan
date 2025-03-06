@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/class/association.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/delete_button.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/edition_button.dart';
 
 class EditableAssociationCard extends HookConsumerWidget {
-  final Association association;
+  final AssociationComplete association;
   final bool isPhonebookAdmin;
   final void Function() onEdit;
   final Future Function() onDelete;
@@ -23,7 +23,9 @@ class EditableAssociationCard extends HookConsumerWidget {
       margin: const EdgeInsets.symmetric(vertical: 5),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: association.deactivated ? Colors.grey[500] : Colors.white,
+        color: (association.deactivated ?? false)
+            ? Colors.grey[500]
+            : Colors.white,
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
@@ -49,7 +51,7 @@ class EditableAssociationCard extends HookConsumerWidget {
           ),
           Expanded(
             child: Text(
-              association.kind,
+              association.kind.name,
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 16,
@@ -64,7 +66,7 @@ class EditableAssociationCard extends HookConsumerWidget {
               DeleteButton(
                 onDelete: onDelete,
                 deactivated: !isPhonebookAdmin,
-                deletion: association.deactivated,
+                deletion: association.deactivated ?? false,
               ),
             ],
           ),

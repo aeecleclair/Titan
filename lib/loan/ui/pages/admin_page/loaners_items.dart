@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/class/item.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/loan/providers/item_focus_provider.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/item_provider.dart';
@@ -11,11 +11,11 @@ import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/router.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/pages/admin_page/item_card.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/widgets/styled_search_bar.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -73,7 +73,7 @@ class LoanersItems extends HookConsumerWidget {
               height: 150,
               firstChild: GestureDetector(
                 onTap: () {
-                  itemNotifier.setItem(Item.empty());
+                  itemNotifier.setItem(EmptyModels.empty<Item>());
                   QR.to(
                     LoanRouter.root + LoanRouter.admin + LoanRouter.addEditItem,
                   );
@@ -100,28 +100,28 @@ class LoanersItems extends HookConsumerWidget {
                     builder: (BuildContext context) {
                       return CustomDialogBox(
                         descriptions: LoanTextConstants.deletingItem,
-                        onYes: () {
-                          tokenExpireWrapper(ref, () async {
-                            final value =
-                                await itemListNotifier.deleteItem(e, loaner.id);
-                            if (value) {
-                              itemListNotifier.copy().then((value) {
-                                loanersItemsNotifier.setTData(
-                                  loaner,
-                                  value,
-                                );
-                              });
-                              displayToastWithContext(
-                                TypeMsg.msg,
-                                LoanTextConstants.deletedItem,
+                        onYes: () async {
+                          final value = await itemListNotifier.deleteItem(
+                            e.id,
+                            loaner.id,
+                          );
+                          if (value) {
+                            itemListNotifier.copy().then((value) {
+                              loanersItemsNotifier.setTData(
+                                loaner,
+                                value,
                               );
-                            } else {
-                              displayToastWithContext(
-                                TypeMsg.error,
-                                LoanTextConstants.deletingError,
-                              );
-                            }
-                          });
+                            });
+                            displayToastWithContext(
+                              TypeMsg.msg,
+                              LoanTextConstants.deletedItem,
+                            );
+                          } else {
+                            displayToastWithContext(
+                              TypeMsg.error,
+                              LoanTextConstants.deletingError,
+                            );
+                          }
                         },
                         title: LoanTextConstants.delete,
                       );

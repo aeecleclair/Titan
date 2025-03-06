@@ -1,11 +1,18 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:myecl/flappybird/class/score.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
 class LeaderBoardItem extends StatelessWidget {
-  final Score score;
-  const LeaderBoardItem({super.key, required this.score});
+  final CoreUserSimple user;
+  final int value;
+  final int position;
+  const LeaderBoardItem({
+    super.key,
+    required this.user,
+    required this.position,
+    required this.value,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,11 +20,11 @@ class LeaderBoardItem extends StatelessWidget {
       textStyle: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.w700,
-        color: score.position == 1
+        color: position == 1
             ? Colors.yellow.shade700
-            : score.position == 2
+            : position == 2
                 ? Colors.grey.shade400
-                : score.position == 3
+                : position == 3
                     ? Colors.brown.shade400
                     : Colors.white,
       ),
@@ -32,13 +39,12 @@ class LeaderBoardItem extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  "${score.position}. ",
+                  "$position. ",
                   style: style,
                 ),
                 Expanded(
                   child: AutoSizeText(
-                    score.user.nickname ??
-                        ("${score.user.firstname} ${score.user.name}"),
+                    user.nickname ?? ("${user.firstname} ${user.name}"),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: style,
@@ -48,7 +54,7 @@ class LeaderBoardItem extends StatelessWidget {
             ),
           ),
           Text(
-            "${score.value}",
+            value.toString(),
             style: style,
           ),
         ],

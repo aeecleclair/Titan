@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/manager_booking_list_provider.dart';
 import 'package:myecl/booking/providers/manager_confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/room_list_provider.dart';
@@ -8,6 +7,8 @@ import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/calendar/calendar.dart';
 import 'package:myecl/booking/ui/pages/manager_page/list_booking.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 
 class ManagerPage extends HookConsumerWidget {
@@ -16,14 +17,14 @@ class ManagerPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bookings = ref.watch(managerBookingListProvider);
-    final List<Booking> pendingBookings = [],
+    final List<BookingReturnApplicant> pendingBookings = [],
         confirmedBookings = [],
         canceledBookings = [];
     bookings.maybeWhen(
       data: (
         bookings,
       ) {
-        for (Booking b in bookings) {
+        for (BookingReturnApplicant b in bookings) {
           switch (b.decision) {
             case Decision.approved:
               confirmedBookings.add(b);
@@ -33,6 +34,8 @@ class ManagerPage extends HookConsumerWidget {
               break;
             case Decision.pending:
               pendingBookings.add(b);
+              break;
+            case Decision.swaggerGeneratedUnknown:
               break;
           }
         }

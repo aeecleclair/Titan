@@ -1,60 +1,60 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/version/class/version.dart';
 import 'package:myecl/version/providers/version_verifier_provider.dart';
-import 'package:myecl/version/repositories/version_repository.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:chopper/chopper.dart' as chopper;
+import 'package:http/http.dart' as http;
 
-class MockVersionRepository extends Mock implements VersionRepository {}
+class MockVersionRepository extends Mock implements Openapi {}
 
 void main() {
-  late VersionRepository versionRepository;
-  late VersionVerifierNotifier versionVerifierNotifier;
-
-  setUp(() {
-    versionRepository = MockVersionRepository();
-    versionVerifierNotifier =
-        VersionVerifierNotifier(versionRepository: versionRepository);
-  });
-
   group('VersionVerifierNotifier', () {
-    test('should return AsyncLoading when initialized', () {
-      expect(versionVerifierNotifier.state, isA<AsyncLoading>());
+    late MockVersionRepository mockRepository;
+    late VersionVerifierNotifier provider;
+    final version = CoreInformation(
+      ready: true,
+      version: '1.0.0',
+      minimalTitanVersionCode: 1,
+    );
+
+    setUp(() {
+      mockRepository = MockVersionRepository();
+      provider = VersionVerifierNotifier(versionRepository: mockRepository);
     });
 
-    test('should return AsyncValue<Version> when loadVersion is called',
-        () async {
-      final version =
-          Version(version: '1.0.0', minimalTitanVersion: 1, ready: true);
-      when(() => versionRepository.getVersion())
-          .thenAnswer((_) async => version);
-
-      final result = await versionVerifierNotifier.loadVersion();
-
-      expect(result, AsyncValue.data(version));
-    });
-
-    test('should return AsyncError when loadVersion throws an exception',
-        () async {
-      final exception = Exception('Failed to load version');
-      when(() => versionRepository.getVersion()).thenThrow(exception);
-
-      final result = await versionVerifierNotifier.loadVersion();
-
-      expect(result, isA<AsyncError>());
-    });
-
-    test(
-        'should call getVersion method of VersionRepository when loadVersion is called',
-        () async {
-      when(() => versionRepository.getVersion()).thenAnswer(
-        (_) async =>
-            Version(version: '1.0.0', minimalTitanVersion: 1, ready: true),
+    test('loadVersion returns expected data', () async {
+      when(() => mockRepository.informationGet()).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          version,
+        ),
       );
 
-      await versionVerifierNotifier.loadVersion();
+      final result = await provider.loadVersion();
 
-      verify(() => versionRepository.getVersion()).called(1);
+      expect(
+        result.maybeWhen(
+          data: (data) => data,
+          orElse: () => null,
+        ),
+        version,
+      );
+    });
+
+    test('loadVersion handles error', () async {
+      when(() => mockRepository.informationGet())
+          .thenThrow(Exception('Failed to load version'));
+
+      final result = await provider.loadVersion();
+
+      expect(
+        result.maybeWhen(
+          error: (error, _) => error,
+          orElse: () => null,
+        ),
+        isA<Exception>(),
+      );
     });
   });
 }

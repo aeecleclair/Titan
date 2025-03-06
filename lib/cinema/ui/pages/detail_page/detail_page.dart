@@ -154,8 +154,8 @@ class DetailPage extends HookConsumerWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       child: Text(
-                        session.overview != null
-                            ? session.overview!
+                        session.overview.isNotEmpty
+                            ? session.overview
                             : CinemaTextConstants.noOverview,
                         textAlign: TextAlign.left,
                         style: const TextStyle(

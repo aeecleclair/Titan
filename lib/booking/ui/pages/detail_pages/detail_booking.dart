@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/booking/adapters/booking.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/tools/functions.dart';
@@ -9,6 +10,7 @@ import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/components/booking_card.dart';
 import 'package:myecl/booking/ui/pages/detail_pages/contact_button.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/user/extensions/applicants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailBookingPage extends HookConsumerWidget {
@@ -202,7 +204,7 @@ class DetailBookingPage extends HookConsumerWidget {
               padding: const EdgeInsets.all(20.0),
               child: Center(
                 child: BookingCard(
-                  booking: booking,
+                  booking: booking.toBookingReturn(),
                   isDetail: true,
                 ),
               ),

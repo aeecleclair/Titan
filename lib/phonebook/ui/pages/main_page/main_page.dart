@@ -73,7 +73,7 @@ class PhonebookMainPage extends HookConsumerWidget {
                       )
                     else
                       ...associationFilteredList.map(
-                        (association) => !association.deactivated
+                        (association) => !(association.deactivated ?? false)
                             ? AssociationCard(
                                 association: association,
                                 onClicked: () {

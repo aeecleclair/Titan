@@ -1,12 +1,12 @@
-import 'package:myecl/vote/class/contender.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
 ListType stringToListType(String type) {
   switch (type) {
     case 'Serio':
-      return ListType.serious;
+      return ListType.serio;
     case 'Pipo':
-      return ListType.fake;
+      return ListType.pipo;
     case 'Blank':
       return ListType.blank;
     default:
@@ -16,9 +16,9 @@ ListType stringToListType(String type) {
 
 String listTypeToString(ListType? type) {
   switch (type) {
-    case ListType.serious:
+    case ListType.serio:
       return 'Serio';
-    case ListType.fake:
+    case ListType.pipo:
       return 'Pipo';
     case ListType.blank:
       return 'Blank';
@@ -27,34 +27,36 @@ String listTypeToString(ListType? type) {
   }
 }
 
-Status stringToStatus(String status) {
-  switch (status) {
+VoteStatus stringToVoteStatus(String votesVoteStatus) {
+  switch (votesVoteStatus) {
     case 'waiting':
-      return Status.waiting;
+      return VoteStatus(status: StatusType.waiting);
     case 'open':
-      return Status.open;
+      return VoteStatus(status: StatusType.open);
     case 'closed':
-      return Status.closed;
+      return VoteStatus(status: StatusType.closed);
     case 'counting':
-      return Status.counting;
+      return VoteStatus(status: StatusType.counting);
     case 'published':
-      return Status.published;
+      return VoteStatus(status: StatusType.published);
     default:
-      return Status.waiting;
+      return VoteStatus(status: StatusType.swaggerGeneratedUnknown);
   }
 }
 
-String statusToString(Status status) {
-  switch (status) {
-    case Status.waiting:
+String votesVoteStatusToString(VoteStatus votesVoteStatus) {
+  switch (votesVoteStatus.status) {
+    case StatusType.waiting:
       return 'Waiting';
-    case Status.open:
+    case StatusType.open:
       return 'Open';
-    case Status.closed:
+    case StatusType.closed:
       return 'Closed';
-    case Status.counting:
+    case StatusType.counting:
       return 'Counting';
-    case Status.published:
+    case StatusType.published:
       return 'Published';
+    case StatusType.swaggerGeneratedUnknown:
+      return '';
   }
 }

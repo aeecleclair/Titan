@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/flappybird/class/bird.dart';
 import 'package:myecl/flappybird/providers/bird_image_provider.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/user/adapters/users.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 class BirdNotifier extends StateNotifier<Bird> {
@@ -18,7 +19,7 @@ class BirdNotifier extends StateNotifier<Bird> {
     state = state.copyWith(birdImage: birdImage);
   }
 
-  void setUser(SimpleUser user) {
+  void setUser(CoreUserSimple user) {
     state = state.copyWith(user: user);
   }
 
@@ -62,7 +63,7 @@ final birdProvider = StateNotifierProvider<BirdNotifier, Bird>((ref) {
   final user = ref.watch(userProvider);
   final birdImage = ref.watch(birdImageProvider);
   final birdImageNotifier = ref.watch(birdImageProvider.notifier);
-  notifier.setUser(user.toSimpleUser());
+  notifier.setUser(user.toCoreUserSimple());
   if (birdImage.isNotEmpty) {
     // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
     birdImageNotifier.switchColor(notifier.state.color).then((value) {

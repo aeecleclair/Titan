@@ -1,25 +1,39 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/providers/room_provider.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
 void main() {
   group('RoomNotifier', () {
+    late ProviderContainer container;
+    late RoomNotifier notifier;
+    final room = RoomComplete(
+      id: '1',
+      name: 'Test Room',
+      managerId: '123',
+    );
+
+    setUp(() {
+      container = ProviderContainer();
+      notifier = container.read(roomProvider.notifier);
+    });
+
     test('setRoom should update state', () {
-      final container = ProviderContainer();
-      final notifier = container.read(roomProvider.notifier);
-
-      final room = Room(
-        id: '1',
-        name: 'Test Room',
-        managerId: '123',
-      );
-
       notifier.setRoom(room);
 
       expect(container.read(roomProvider).id, equals('1'));
       expect(container.read(roomProvider).name, equals('Test Room'));
       expect(container.read(roomProvider).managerId, equals('123'));
+    });
+
+    test('resetRoom should reset state', () {
+      notifier.setRoom(room);
+      notifier.setRoom(EmptyModels.empty<RoomComplete>());
+
+      expect(container.read(roomProvider).id, equals(''));
+      expect(container.read(roomProvider).name, equals(''));
+      expect(container.read(roomProvider).managerId, equals(''));
     });
   });
 }

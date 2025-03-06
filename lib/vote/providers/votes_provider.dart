@@ -1,39 +1,30 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/vote/class/votes.dart';
-import 'package:myecl/vote/repositories/votes_repository.dart';
+import 'package:myecl/tools/repository/repository.dart';
 
-class VotesProvider extends ListNotifier<Votes> {
-  final VotesRepository votesRepository;
+class VotesProvider extends ListNotifier<void> {
+  final Openapi votesRepository;
   VotesProvider({required this.votesRepository})
       : super(const AsyncValue.loading());
 
-  Future<bool> addVote(Votes votes) async {
+  Future<bool> addVote(VoteBase votes) async {
     try {
-      await votesRepository.addVote(votes);
+      await votesRepository.campaignVotesPost(body: votes);
       return true;
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<bool> removeVote() async {
-    return await delete(
-      (_) => votesRepository.removeVote(),
-      (listVotes, votes) => [],
-      "",
-      Votes.empty(),
-    );
-  }
-
-  Future<AsyncValue<List<Votes>>> copy() async {
+  Future<AsyncValue<List<void>>> copy() async {
     return state.whenData((listVotes) => listVotes);
   }
 }
 
 final votesProvider =
-    StateNotifierProvider<VotesProvider, AsyncValue<List<Votes>>>((ref) {
-  final votesRepository = ref.watch(votesRepositoryProvider);
+    StateNotifierProvider<VotesProvider, AsyncValue<List<void>>>((ref) {
+  final votesRepository = ref.watch(repositoryProvider);
   VotesProvider votesProvider = VotesProvider(votesRepository: votesRepository);
   return votesProvider;
 });

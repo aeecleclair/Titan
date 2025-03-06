@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/module_visibility.dart';
 import 'package:myecl/admin/providers/module_visibility_list_provider.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
 class IsExpandedListProvider extends StateNotifier<List<bool>> {
   IsExpandedListProvider(List<ModuleVisibility> modules)

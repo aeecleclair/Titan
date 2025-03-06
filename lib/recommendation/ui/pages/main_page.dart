@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/recommendation/class/recommendation.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/recommendation/providers/is_recommendation_admin_provider.dart';
 import 'package:myecl/recommendation/providers/recommendation_list_provider.dart';
 import 'package:myecl/recommendation/providers/recommendation_provider.dart';
 import 'package:myecl/recommendation/router.dart';
-import 'package:myecl/recommendation/ui/widgets/recommendation_card.dart';
-import 'package:myecl/recommendation/ui/widgets/recommendation_card_layout.dart';
-import 'package:myecl/recommendation/ui/widgets/recommendation_template.dart';
+import 'package:myecl/recommendation/ui/components/recommendation_card.dart';
+import 'package:myecl/recommendation/ui/components/recommendation_card_layout.dart';
+import 'package:myecl/recommendation/ui/components/recommendation_template.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -38,7 +39,7 @@ class RecommendationMainPage extends HookConsumerWidget {
                 GestureDetector(
                   onTap: () {
                     recommendationNotifier
-                        .setRecommendation(Recommendation.empty());
+                        .setRecommendation(EmptyModels.empty<Recommendation>());
                     QR.to(
                       RecommendationRouter.root + RecommendationRouter.addEdit,
                     );
@@ -52,7 +53,7 @@ class RecommendationMainPage extends HookConsumerWidget {
                     ),
                   ),
                 ),
-              ...(data..sort((a, b) => b.creation!.compareTo(a.creation!))).map(
+              ...(data..sort((a, b) => b.creation.compareTo(a.creation))).map(
                 (e) => RecommendationCard(
                   recommendation: e,
                   isMainPage: true,

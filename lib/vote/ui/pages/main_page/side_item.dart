@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/vote/class/section.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
 class SideItem extends HookConsumerWidget {
-  final Section section;
+  final SectionComplete section;
   final bool isSelected, alreadyVoted;
   final void Function() onTap;
   const SideItem({

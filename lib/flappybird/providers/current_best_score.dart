@@ -12,7 +12,7 @@ class BestScoreNotifier extends StateNotifier<int> {
 final bestScoreProvider = StateNotifierProvider<BestScoreNotifier, int>((ref) {
   final notifier = BestScoreNotifier(0);
   ref.watch(userScoreProvider).whenData((value) {
-    notifier.setBest(value.value);
+    notifier.setBest(value.$value);
   });
   return notifier;
 });

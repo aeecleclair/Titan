@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/calendar/calendar_dialog_button.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/user/extensions/applicants.dart';
 
 class CalendarDialog extends StatelessWidget {
-  final Booking booking;
+  final BookingReturnApplicant booking;
   final bool isManager;
 
   const CalendarDialog({

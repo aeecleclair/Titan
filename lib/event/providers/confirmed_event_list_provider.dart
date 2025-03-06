@@ -1,40 +1,32 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/repositories/event_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
 
-class ConfirmedEventListProvider extends ListNotifier<Event> {
-  final EventRepository eventRepository;
+class ConfirmedEventListProvider extends ListNotifierAPI<EventComplete> {
+  final Openapi eventRepository;
   ConfirmedEventListProvider({required this.eventRepository})
       : super(const AsyncValue.loading());
 
-  Future<AsyncValue<List<Event>>> loadConfirmedEvent() async {
-    return await loadList(eventRepository.getConfirmedEventList);
+  Future<AsyncValue<List<EventComplete>>> loadConfirmedEvent() async {
+    return await loadList(eventRepository.calendarEventsConfirmedGet);
   }
 
-  Future<bool> addEvent(Event booking) async {
-    return await add((b) async => b, booking);
+  Future<bool> addEvent(EventComplete booking) async {
+    return await localAdd(booking);
   }
 
-  Future<bool> deleteEvent(Event booking) async {
-    return await delete(
-      (_) async => true,
-      (bookings, booking) =>
-          bookings..removeWhere((element) => element.id == booking.id),
+  Future<bool> deleteEvent(EventComplete booking) async {
+    return await localDelete(
+      (booking) => booking.id,
       booking.id,
-      booking,
     );
   }
 }
 
-final confirmedEventListProvider =
-    StateNotifierProvider<ConfirmedEventListProvider, AsyncValue<List<Event>>>(
-        (ref) {
-  final eventRepository = ref.watch(eventRepositoryProvider);
-  final provider = ConfirmedEventListProvider(eventRepository: eventRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await provider.loadConfirmedEvent();
-  });
-  return provider;
+final confirmedEventListProvider = StateNotifierProvider<
+    ConfirmedEventListProvider, AsyncValue<List<EventComplete>>>((ref) {
+  final eventRepository = ref.watch(repositoryProvider);
+  return ConfirmedEventListProvider(eventRepository: eventRepository)
+    ..loadConfirmedEvent();
 });

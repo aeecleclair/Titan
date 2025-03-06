@@ -1,22 +1,24 @@
 import 'dart:math';
 
-import 'package:myecl/event/class/event.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
 
 String calendarEventTypeToString(CalendarEventType type) {
   switch (type) {
-    case CalendarEventType.eventAE:
+    case CalendarEventType.eventAe:
       return "Event AE";
-    case CalendarEventType.eventUSE:
+    case CalendarEventType.eventUse:
       return "Event USE";
-    case CalendarEventType.independentAssociation:
+    case CalendarEventType.assoInd:
       return "Asso indé";
-    case CalendarEventType.happyHour:
+    case CalendarEventType.hh:
       return "HH";
-    case CalendarEventType.direction:
+    case CalendarEventType.strass:
       return "Strass";
-    case CalendarEventType.nightParty:
+    case CalendarEventType.rewass:
       return "Rewass";
-    case CalendarEventType.other:
+    case CalendarEventType.autre:
+      return "Autre";
+    case CalendarEventType.swaggerGeneratedUnknown:
       return "Autre";
   }
 }
@@ -24,21 +26,21 @@ String calendarEventTypeToString(CalendarEventType type) {
 CalendarEventType stringToCalendarEventType(String type) {
   switch (type) {
     case "Event AE":
-      return CalendarEventType.eventAE;
+      return CalendarEventType.eventAe;
     case "Event USE":
-      return CalendarEventType.eventUSE;
+      return CalendarEventType.eventUse;
     case "Asso indé":
-      return CalendarEventType.independentAssociation;
+      return CalendarEventType.assoInd;
     case "HH":
-      return CalendarEventType.happyHour;
+      return CalendarEventType.hh;
     case "Strass":
-      return CalendarEventType.direction;
+      return CalendarEventType.strass;
     case "Rewass":
-      return CalendarEventType.nightParty;
+      return CalendarEventType.rewass;
     case "Autre":
-      return CalendarEventType.other;
+      return CalendarEventType.autre;
     default:
-      return CalendarEventType.other;
+      return CalendarEventType.autre;
   }
 }
 

@@ -1,13 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/loan/class/loan.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myecl/user/extensions/users.dart';
 
 class LoanCard extends StatelessWidget {
   final Loan loan;
@@ -103,7 +104,7 @@ class LoanCard extends StatelessWidget {
             ),
             const SizedBox(height: 7),
             Text(
-              formatItems(loan.itemsQuantity),
+              formatItems(loan.itemsQty),
               style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,

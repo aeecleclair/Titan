@@ -1,25 +1,25 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/user/class/list_users.dart';
-import 'package:myecl/user/repositories/user_list_repository.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
 
-class UserListNotifier extends ListNotifier<SimpleUser> {
-  final UserListRepository userListRepository;
+class UserListNotifier extends ListNotifierAPI<CoreUserSimple> {
+  final Openapi userListRepository;
   UserListNotifier({required this.userListRepository})
       : super(const AsyncValue.loading());
 
-  Future<AsyncValue<List<SimpleUser>>> filterUsers(
+  Future<AsyncValue<List<CoreUserSimple>>> filterUsers(
     String query, {
-    List<SimpleGroup>? includeGroup,
-    List<SimpleGroup>? excludeGroup,
+    List<CoreGroupSimple>? includedGroups,
+    List<CoreGroupSimple>? excludedGroups,
+    List<AccountType>? includedAccountTypes,
+    List<AccountType>? excludedAccountTypes,
   }) async {
     return await loadList(
-      () async => userListRepository.searchUser(
-        query,
-        includeId: includeGroup?.map((e) => e.id).toList(),
-        excludeId: excludeGroup?.map((e) => e.id).toList(),
+      () async => userListRepository.usersSearchGet(
+        query: query,
+        includedGroups: includedGroups?.map((e) => e.id).toList(),
+        excludedGroups: excludedGroups?.map((e) => e.id).toList(),
       ),
     );
   }
@@ -30,14 +30,9 @@ class UserListNotifier extends ListNotifier<SimpleUser> {
 }
 
 final userList =
-    StateNotifierProvider<UserListNotifier, AsyncValue<List<SimpleUser>>>(
+    StateNotifierProvider<UserListNotifier, AsyncValue<List<CoreUserSimple>>>(
   (ref) {
-    final userListRepository = ref.watch(userListRepositoryProvider);
-    UserListNotifier userListNotifier =
-        UserListNotifier(userListRepository: userListRepository);
-    tokenExpireWrapperAuth(ref, () async {
-      userListNotifier.clear();
-    });
-    return userListNotifier;
+    final userListRepository = ref.watch(repositoryProvider);
+    return UserListNotifier(userListRepository: userListRepository)..clear();
   },
 );

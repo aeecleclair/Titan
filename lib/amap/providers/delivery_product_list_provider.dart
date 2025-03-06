@@ -1,59 +1,62 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/repositories/delivery_product_list_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
+import 'package:myecl/amap/adapters/product.dart';
 
-class DeliveryProductListNotifier extends ListNotifier<Product> {
-  final DeliveryProductListRepository productListRepository;
+class DeliveryProductListNotifier
+    extends ListNotifierAPI<AppModulesAmapSchemasAmapProductComplete> {
+  final Openapi productListRepository;
   DeliveryProductListNotifier({required this.productListRepository})
       : super(const AsyncValue.loading());
 
-  Future<AsyncValue<List<Product>>> loadProductList(
-    List<Product> products,
+  Future<AsyncValue<List<AppModulesAmapSchemasAmapProductComplete>>>
+      loadProductList(
+    List<AppModulesAmapSchemasAmapProductComplete> products,
   ) async {
     return state = AsyncValue.data(products);
   }
 
-  Future<bool> addProduct(Product product, String deliveryId) async {
+  // TODO: Require back changes, should return AppModulesAmapSchemasAmapProductComplete and not taking a list
+  Future<bool> addProduct(
+    DeliveryProductsUpdate product,
+    String deliveryId,
+  ) async {
     return await add(
-      (p) async => productListRepository.createProduct(deliveryId, p),
+      () async {
+        final response =
+            await productListRepository.amapDeliveriesDeliveryIdProductsPost(
+          deliveryId: deliveryId,
+          body: product,
+        );
+        if (response.isSuccessful && response.body != null) {
+          return response.body!;
+        }
+        throw Exception('Failed to add product');
+      },
       product,
     );
   }
 
-  Future<bool> updateProduct(Product product, String deliveryId) async {
-    return await update(
-      (p) async => productListRepository.updateProduct(deliveryId, p),
-      (products, product) =>
-          products..[products.indexWhere((p) => p.id == product.id)] = product,
-      product,
-    );
-  }
-
-  Future<bool> deleteProduct(Product product, String deliveryId) async {
+  Future<bool> deleteProduct(
+    AppModulesAmapSchemasAmapProductComplete product,
+    String deliveryId,
+  ) async {
     return await delete(
-      (id) async => productListRepository.deleteProduct(deliveryId, id),
-      (products, product) => products..removeWhere((i) => i.id == product.id),
+      () async => productListRepository.amapDeliveriesDeliveryIdProductsDelete(
+        deliveryId: deliveryId,
+        body: product.toDeliveryProductsUpdate(),
+      ),
+      (p) => p.id,
       product.id,
-      product,
-    );
-  }
-
-  Future<bool> setQuantity(Product product, int i) async {
-    return await update(
-      (p) async => true,
-      (products, product) => products
-        ..[products.indexWhere((p) => p.id == product.id)] =
-            product.copyWith(quantity: i),
-      product,
     );
   }
 }
 
 final deliveryProductListProvider = StateNotifierProvider<
-    DeliveryProductListNotifier, AsyncValue<List<Product>>>((ref) {
-  final deliveryProductListRepository =
-      ref.watch(deliveryProductListRepositoryProvider);
+    DeliveryProductListNotifier,
+    AsyncValue<List<AppModulesAmapSchemasAmapProductComplete>>>((ref) {
+  final deliveryProductListRepository = ref.watch(repositoryProvider);
   return DeliveryProductListNotifier(
     productListRepository: deliveryProductListRepository,
   );

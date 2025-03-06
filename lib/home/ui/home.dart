@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/event/adapters/event.dart';
 import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
 import 'package:myecl/event/providers/sorted_event_list_provider.dart';
 import 'package:myecl/home/router.dart';
@@ -66,7 +67,9 @@ class HomePage extends HookConsumerWidget {
                                   DaysEvent(
                                     day: key,
                                     now: now,
-                                    events: value,
+                                    events: value
+                                        .map((e) => e.toEventReturn())
+                                        .toList(),
                                   ),
                                 ),
                               )

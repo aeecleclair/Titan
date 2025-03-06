@@ -5,11 +5,11 @@ import 'package:myecl/admin/providers/is_admin_provider.dart';
 import 'package:myecl/advert/providers/advert_list_provider.dart';
 import 'package:myecl/advert/providers/advert_posters_provider.dart';
 import 'package:myecl/advert/providers/advert_provider.dart';
-import 'package:myecl/advert/providers/announcer_provider.dart';
+import 'package:myecl/advert/providers/advertiser_provider.dart';
 import 'package:myecl/advert/providers/is_advert_admin_provider.dart';
 import 'package:myecl/advert/ui/pages/advert.dart';
 import 'package:myecl/advert/router.dart';
-import 'package:myecl/advert/ui/components/announcer_bar.dart';
+import 'package:myecl/advert/ui/components/advertiser_bar.dart';
 import 'package:myecl/advert/ui/components/advert_card.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/column_refresher.dart';
@@ -26,8 +26,8 @@ class AdvertMainPage extends HookConsumerWidget {
     final advertList = ref.watch(advertListProvider);
     final advertListNotifier = ref.watch(advertListProvider.notifier);
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
-    final selected = ref.watch(announcerProvider);
-    final selectedNotifier = ref.watch(announcerProvider.notifier);
+    final selected = ref.watch(advertiserProvider);
+    final selectedNotifier = ref.watch(advertiserProvider.notifier);
     final isAdmin = ref.watch(isAdminProvider);
     final isAdvertAdmin = ref.watch(isAdvertAdminProvider);
     return AdvertTemplate(
@@ -36,12 +36,13 @@ class AdvertMainPage extends HookConsumerWidget {
           AsyncChild(
             value: advertList,
             builder: (context, advertData) {
-              final sortedAdvertData =
-                  advertData.sortedBy((element) => element.date).reversed;
+              final sortedAdvertData = advertData
+                  .sortedBy((element) => element.date as DateTime)
+                  .reversed;
               final filteredSortedAdvertData = sortedAdvertData.where(
                 (advert) =>
                     selected
-                        .where((e) => advert.announcer.name == e.name)
+                        .where((e) => advert.advertiser.name == e.name)
                         .isNotEmpty ||
                     selected.isEmpty,
               );
@@ -59,7 +60,7 @@ class AdvertMainPage extends HookConsumerWidget {
                         if (isAdvertAdmin)
                           AdminButton(
                             onTap: () {
-                              selectedNotifier.clearAnnouncer();
+                              selectedNotifier.clearAdvertiser();
                               QR.to(AdvertRouter.root + AdvertRouter.admin);
                             },
                           ),
@@ -68,7 +69,7 @@ class AdvertMainPage extends HookConsumerWidget {
                             onTap: () {
                               QR.to(
                                 AdvertRouter.root +
-                                    AdvertRouter.addRemAnnouncer,
+                                    AdvertRouter.addDeleteAdvertiser,
                               );
                             },
                             text: AdvertTextConstants.management,
@@ -79,8 +80,8 @@ class AdvertMainPage extends HookConsumerWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const AnnouncerBar(
-                    useUserAnnouncers: false,
+                  const AdvertiserBar(
+                    useUserAdvertisers: false,
                     multipleSelect: true,
                   ),
                   const SizedBox(

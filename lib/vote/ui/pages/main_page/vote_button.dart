@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/vote/providers/selected_list_provider.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/vote/class/votes.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
-import 'package:myecl/vote/providers/selected_contender_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/providers/voted_section_provider.dart';
 import 'package:myecl/vote/providers/votes_provider.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/tools/constants.dart';
 
 class VoteButton extends HookConsumerWidget {
@@ -19,9 +17,8 @@ class VoteButton extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final section = ref.watch(sectionProvider);
     final votesNotifier = ref.watch(votesProvider.notifier);
-    final selectedContender = ref.watch(selectedContenderProvider);
-    final selectedContenderNotifier =
-        ref.watch(selectedContenderProvider.notifier);
+    final selectedList = ref.watch(selectedListProvider);
+    final selectedListNotifier = ref.watch(selectedListProvider.notifier);
     final votedSectionNotifier = ref.watch(votedSectionProvider.notifier);
     final votedSection = ref.watch(votedSectionProvider);
     List<String> alreadyVotedSection = [];
@@ -33,8 +30,10 @@ class VoteButton extends HookConsumerWidget {
     );
 
     final status = ref.watch(statusProvider);
-    final s =
-        status.maybeWhen(data: (value) => value, orElse: () => Status.closed);
+    final s = status.maybeWhen(
+      data: (value) => value.status,
+      orElse: () => StatusType.closed,
+    );
 
     void displayVoteToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -44,8 +43,8 @@ class VoteButton extends HookConsumerWidget {
       padding: const EdgeInsets.only(right: 30.0),
       child: GestureDetector(
         onTap: () {
-          if (selectedContender.id != "" &&
-              s == Status.open &&
+          if (selectedList.id != "" &&
+              s == StatusType.open &&
               !alreadyVotedSection.contains(section.id)) {
             showDialog(
               context: context,
@@ -53,24 +52,22 @@ class VoteButton extends HookConsumerWidget {
                 return CustomDialogBox(
                   title: VoteTextConstants.vote,
                   descriptions: VoteTextConstants.confirmVote,
-                  onYes: () {
-                    tokenExpireWrapper(ref, () async {
-                      final result = await votesNotifier
-                          .addVote(Votes(id: selectedContender.id));
-                      if (result) {
-                        votedSectionNotifier.addVote(section.id);
-                        selectedContenderNotifier.clear();
-                        displayVoteToastWithContext(
-                          TypeMsg.msg,
-                          VoteTextConstants.voteSuccess,
-                        );
-                      } else {
-                        displayVoteToastWithContext(
-                          TypeMsg.error,
-                          VoteTextConstants.voteError,
-                        );
-                      }
-                    });
+                  onYes: () async {
+                    final result = await votesNotifier
+                        .addVote(VoteBase(listId: selectedList.id));
+                    if (result) {
+                      votedSectionNotifier.addVote(section.id);
+                      selectedListNotifier.clear();
+                      displayVoteToastWithContext(
+                        TypeMsg.msg,
+                        VoteTextConstants.voteSuccess,
+                      );
+                    } else {
+                      displayVoteToastWithContext(
+                        TypeMsg.error,
+                        VoteTextConstants.voteError,
+                      );
+                    }
                   },
                 );
               },
@@ -84,7 +81,7 @@ class VoteButton extends HookConsumerWidget {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: (selectedContender.id == "" && s != Status.open) ||
+              colors: (selectedList.id == "" && s != StatusType.open) ||
                       alreadyVotedSection.contains(section.id)
                   ? [
                       Colors.white,
@@ -104,19 +101,19 @@ class VoteButton extends HookConsumerWidget {
           ),
           child: Center(
             child: Text(
-              selectedContender.id != ""
-                  ? VoteTextConstants.voteFor + selectedContender.name
+              selectedList.id != ""
+                  ? VoteTextConstants.voteFor + selectedList.name
                   : alreadyVotedSection.contains(section.id)
                       ? VoteTextConstants.alreadyVoted
-                      : s == Status.open
+                      : s == StatusType.open
                           ? VoteTextConstants.chooseList
-                          : s == Status.waiting
+                          : s == StatusType.waiting
                               ? VoteTextConstants.notOpenedVote
-                              : s == Status.closed
+                              : s == StatusType.closed
                                   ? VoteTextConstants.closedVote
                                   : VoteTextConstants.onGoingCount,
               style: TextStyle(
-                color: (selectedContender.id == "" && s != Status.open) ||
+                color: (selectedList.id == "" && s != StatusType.open) ||
                         alreadyVotedSection.contains(section.id)
                     ? Colors.black
                     : Colors.white,

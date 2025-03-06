@@ -1,44 +1,50 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/repositories/booking_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
+import 'package:myecl/booking/adapters/booking.dart';
 
-class ManagerBookingListProvider extends ListNotifier<Booking> {
-  final BookingRepository bookingRepository;
+class ManagerBookingListProvider
+    extends ListNotifierAPI<BookingReturnApplicant> {
+  final Openapi bookingRepository;
   ManagerBookingListProvider({required this.bookingRepository})
       : super(const AsyncValue.loading());
 
-  Future<AsyncValue<List<Booking>>> loadUserManageBookings() async {
-    return await loadList(bookingRepository.getUserManageBookingList);
+  Future<AsyncValue<List<BookingReturnApplicant>>>
+      loadUserManageBookings() async {
+    return await loadList(bookingRepository.bookingBookingsUsersMeManageGet);
   }
 
-  Future<bool> updateBooking(Booking booking) async {
+  Future<bool> updateBooking(BookingReturnApplicant booking) async {
     return await update(
-      bookingRepository.updateBooking,
-      (bookings, booking) =>
-          bookings..[bookings.indexWhere((b) => b.id == booking.id)] = booking,
+      () => bookingRepository.bookingBookingsBookingIdPatch(
+        bookingId: booking.id,
+        body: booking.toBookingEdit(),
+      ),
+      (booking) => booking.id,
       booking,
     );
   }
 
-  Future<bool> toggleConfirmed(Booking booking, Decision decision) async {
+  Future<bool> toggleConfirmed(
+    BookingReturnApplicant booking,
+    Decision decision,
+  ) async {
     return await update(
-      (booking) => bookingRepository.confirmBooking(booking, decision),
-      (bookings, booking) =>
-          bookings..[bookings.indexWhere((b) => b.id == booking.id)] = booking,
+      () => bookingRepository.bookingBookingsBookingIdReplyDecisionPatch(
+        bookingId: booking.id,
+        decision: decision,
+      ),
+      (booking) => booking.id,
       booking,
     );
   }
 }
 
 final managerBookingListProvider = StateNotifierProvider<
-    ManagerBookingListProvider, AsyncValue<List<Booking>>>((ref) {
-  final bookingRepository = ref.watch(bookingRepositoryProvider);
-  final provider =
-      ManagerBookingListProvider(bookingRepository: bookingRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await provider.loadUserManageBookings();
-  });
-  return provider;
+    ManagerBookingListProvider,
+    AsyncValue<List<BookingReturnApplicant>>>((ref) {
+  final bookingRepository = ref.watch(repositoryProvider);
+  return ManagerBookingListProvider(bookingRepository: bookingRepository)
+    ..loadUserManageBookings();
 });

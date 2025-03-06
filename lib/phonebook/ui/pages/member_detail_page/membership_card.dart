@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/class/membership.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 
 class MembershipCard extends HookConsumerWidget {
@@ -12,9 +11,9 @@ class MembershipCard extends HookConsumerWidget {
     required this.onClicked,
   });
 
-  final Association association;
+  final AssociationComplete association;
   final VoidCallback onClicked;
-  final Membership membership;
+  final MembershipComplete membership;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -35,7 +34,7 @@ class MembershipCard extends HookConsumerWidget {
                 ),
               ),
               const Spacer(flex: 1),
-              Text(membership.apparentName),
+              Text(membership.roleName),
             ],
           ),
         ),

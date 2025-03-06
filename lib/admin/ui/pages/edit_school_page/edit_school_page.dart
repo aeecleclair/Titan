@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/school.dart';
 import 'package:myecl/admin/providers/school_list_provider.dart';
 import 'package:myecl/admin/providers/school_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/ui/admin.dart';
 import 'package:myecl/admin/ui/components/admin_button.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
@@ -78,27 +77,25 @@ class EditSchoolPage extends HookConsumerWidget {
                       if (!key.currentState!.validate()) {
                         return;
                       }
-                      await tokenExpireWrapper(ref, () async {
-                        School newSchool = school.copyWith(
-                          name: name.text,
-                          emailRegex: emailRegex.text,
+                      CoreSchool newSchool = school.copyWith(
+                        name: name.text,
+                        emailRegex: emailRegex.text,
+                      );
+                      schoolNotifier.setSchool(newSchool);
+                      final value =
+                          await schoolListNotifier.updateSchool(newSchool);
+                      if (value) {
+                        QR.back();
+                        displayToastWithContext(
+                          TypeMsg.msg,
+                          AdminTextConstants.updatedGroup,
                         );
-                        schoolNotifier.setSchool(newSchool);
-                        final value =
-                            await schoolListNotifier.updateSchool(newSchool);
-                        if (value) {
-                          QR.back();
-                          displayToastWithContext(
-                            TypeMsg.msg,
-                            AdminTextConstants.updatedGroup,
-                          );
-                        } else {
-                          displayToastWithContext(
-                            TypeMsg.msg,
-                            AdminTextConstants.updatingError,
-                          );
-                        }
-                      });
+                      } else {
+                        displayToastWithContext(
+                          TypeMsg.msg,
+                          AdminTextConstants.updatingError,
+                        );
+                      }
                     },
                     builder: (child) => AdminButton(child: child),
                     child: const Text(

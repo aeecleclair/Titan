@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/purchases/class/seller.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/purchases/providers/product_list_provider.dart';
 import 'package:myecl/purchases/providers/generated_ticket_provider.dart';
 import 'package:myecl/purchases/providers/scanner_provider.dart';
@@ -10,7 +10,7 @@ import 'package:myecl/purchases/tools/constants.dart';
 import 'package:myecl/purchases/ui/pages/scan_page/ticket_card.dart';
 import 'package:myecl/purchases/ui/pages/scan_page/scan_dialog.dart';
 import 'package:myecl/purchases/ui/purchases.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
@@ -34,7 +34,7 @@ class ScanPage extends HookConsumerWidget {
       child: Refresher(
         onRefresh: () async {
           await sellersNotifier.loadSellers();
-          if (seller != Seller.empty()) {
+          if (seller.id != EmptyModels.empty<SellerComplete>().id) {
             await productsNotifier.loadProducts(seller.id);
           }
           scannerNotifier.reset();
@@ -55,11 +55,8 @@ class ScanPage extends HookConsumerWidget {
                         return ItemChip(
                           selected: selected,
                           onTap: () async {
-                            await tokenExpireWrapper(ref, () async {
-                              sellerNotifier.setSeller(eachSeller);
-                              await productsNotifier
-                                  .loadProducts(eachSeller.id);
-                            });
+                            sellerNotifier.setSeller(eachSeller);
+                            await productsNotifier.loadProducts(eachSeller.id);
                           },
                           child: Text(
                             eachSeller.name,
@@ -78,8 +75,7 @@ class ScanPage extends HookConsumerWidget {
                             value: products,
                             builder: (context, products) {
                               final scannableProducts = products.where(
-                                (product) =>
-                                    product.ticketGenerators.isNotEmpty,
+                                (product) => (product.tickets ?? []).isNotEmpty,
                               );
                               if (scannableProducts.isEmpty) {
                                 return const Text(
@@ -88,7 +84,7 @@ class ScanPage extends HookConsumerWidget {
                               }
                               return Column(
                                 children: scannableProducts.map((product) {
-                                  return product.ticketGenerators.map((ticket) {
+                                  return (product.tickets ?? []).map((ticket) {
                                     return TicketCard(
                                       product: product,
                                       ticket: ticket,
@@ -114,67 +110,6 @@ class ScanPage extends HookConsumerWidget {
                 );
               },
             ),
-            // TextField(
-            //   onChanged: (value) async {
-            //     tagNotifier.setTag(value);
-            //   },
-            //   cursorColor: PurchasesColorConstants.textDark,
-            //   decoration: const InputDecoration(
-            //     isDense: true,
-            //     label: Text(
-            //       PurchasesTextConstants.tag,
-            //       style: TextStyle(
-            //         color: PurchasesColorConstants.textDark,
-            //       ),
-            //     ),
-            //     focusedBorder: UnderlineInputBorder(
-            //       borderSide: BorderSide(color: ColorConstants.gradient1),
-            //     ),
-            //   ),
-            // ),
-            // tag == ""
-            //     ? const Text(
-            //         PurchasesTextConstants.noTagGiven,
-            //         style: TextStyle(color: Colors.red),
-            //       )
-            //     : const SizedBox(),
-            // product.id == ""
-            //     ? const Text(PurchasesTextConstants.pleaseSelectProduct)
-            //     : Padding(
-            //         padding: const EdgeInsets.all(30),
-            //         child: SizedBox(
-            //           height: 300,
-            //           width: 300,
-            //           child: QRCodeScannerScreen(
-            //             product: product,
-            //             onScan: (secret) async {
-            //               await scannerNotifier.scanTicket(product.id, secret);
-            //               scanner.when(
-            //                 data: (data) {
-            //                   scannerNotifier.setScanner(
-            //                     data.copyWith(
-            //                       secret: secret,
-            //                     ),
-            //                   );
-            //                   QR.to(
-            //                     PurchasesRouter.root +
-            //                         PurchasesRouter.scan +
-            //                         PurchasesRouter.confirmation,
-            //                   );
-            //                 },
-            //                 error: (error, stack) {
-            //                   ScaffoldMessenger.of(context).showSnackBar(
-            //                     SnackBar(
-            //                       content: Text(error.toString()),
-            //                     ),
-            //                   );
-            //                 },
-            //                 loading: () {},
-            //               );
-            //             },
-            //           ),
-            //         ),
-            //       ),
           ],
         ),
       ),

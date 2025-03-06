@@ -2,11 +2,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/logs/log.dart';
 import 'package:myecl/tools/logs/logger.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/repository/repository.dart';
 
 class LogsProvider extends ListNotifier<Log> {
-  Logger logger = Repository.logger;
-  LogsProvider() : super(const AsyncValue.loading());
+  final Logger logger;
+  LogsProvider({required this.logger}) : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Log>>> getLogs() async {
     return await loadList(() async => logger.getLogs());
@@ -31,14 +30,16 @@ class LogsProvider extends ListNotifier<Log> {
 
 final logsProvider =
     StateNotifierProvider<LogsProvider, AsyncValue<List<Log>>>((ref) {
-  LogsProvider notifier = LogsProvider();
+  final logger = ref.watch(loggerProvider);
+  LogsProvider notifier = LogsProvider(logger: logger);
   notifier.getLogs();
   return notifier;
 });
 
 class NotificationLogsProvider extends ListNotifier<Log> {
-  Logger logger = Repository.logger;
-  NotificationLogsProvider() : super(const AsyncValue.loading());
+  final Logger logger;
+  NotificationLogsProvider({required this.logger})
+      : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Log>>> getLogs() async {
     return await loadList(() async => logger.getNotificationLogs());
@@ -60,7 +61,8 @@ class NotificationLogsProvider extends ListNotifier<Log> {
 final notificationLogsProvider =
     StateNotifierProvider<NotificationLogsProvider, AsyncValue<List<Log>>>(
         (ref) {
-  NotificationLogsProvider notifier = NotificationLogsProvider();
+  final logger = ref.watch(loggerProvider);
+  NotificationLogsProvider notifier = NotificationLogsProvider(logger: logger);
   notifier.getLogs();
   return notifier;
 });

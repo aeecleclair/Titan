@@ -1,41 +1,42 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/school.dart';
-import 'package:myecl/admin/repositories/school_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
+import 'package:myecl/admin/adapters/school.dart';
 
-class SchoolListNotifier extends ListNotifier<School> {
-  final SchoolRepository schoolRepository;
+class SchoolListNotifier extends ListNotifierAPI<CoreSchool> {
+  final Openapi schoolRepository;
   SchoolListNotifier({required this.schoolRepository})
       : super(const AsyncValue.loading());
 
-  Future<AsyncValue<List<School>>> loadSchools() async {
-    return await loadList(schoolRepository.getSchoolList);
+  Future<AsyncValue<List<CoreSchool>>> loadSchools() async {
+    return await loadList(schoolRepository.schoolsGet);
   }
 
-  Future<bool> createSchool(School school) async {
-    return await add(schoolRepository.createSchool, school);
+  Future<bool> createSchool(CoreSchoolBase school) async {
+    return await add(() => schoolRepository.schoolsPost(body: school), school);
   }
 
-  Future<bool> updateSchool(School school) async {
+  Future<bool> updateSchool(CoreSchool school) async {
     return await update(
-      schoolRepository.updateSchool,
-      (schools, school) =>
-          schools..[schools.indexWhere((g) => g.id == school.id)] = school,
+      () => schoolRepository.schoolsSchoolIdPatch(
+        schoolId: school.id,
+        body: school.toCoreSchoolUpdate(),
+      ),
+      (school) => school.id,
       school,
     );
   }
 
-  Future<bool> deleteSchool(School school) async {
+  Future<bool> deleteSchool(String schoolId) async {
     return await delete(
-      schoolRepository.deleteSchool,
-      (schools, school) => schools..removeWhere((i) => i.id == school.id),
-      school.id,
-      school,
+      () => schoolRepository.schoolsSchoolIdDelete(schoolId: schoolId),
+      (s) => s.id,
+      schoolId,
     );
   }
 
-  void setSchool(School school) {
+  void setSchool(CoreSchool school) {
     state.whenData(
       (d) {
         if (d.indexWhere((g) => g.id == school.id) == -1) return;
@@ -48,12 +49,8 @@ class SchoolListNotifier extends ListNotifier<School> {
 }
 
 final allSchoolListProvider =
-    StateNotifierProvider<SchoolListNotifier, AsyncValue<List<School>>>((ref) {
-  final schoolRepository = ref.watch(schoolRepositoryProvider);
-  SchoolListNotifier provider =
-      SchoolListNotifier(schoolRepository: schoolRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await provider.loadSchools();
-  });
-  return provider;
+    StateNotifierProvider<SchoolListNotifier, AsyncValue<List<CoreSchool>>>(
+        (ref) {
+  final schoolRepository = ref.watch(repositoryProvider);
+  return SchoolListNotifier(schoolRepository: schoolRepository)..loadSchools();
 });

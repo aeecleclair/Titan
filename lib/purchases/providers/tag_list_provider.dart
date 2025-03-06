@@ -1,14 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/purchases/repositories/scanner_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
 
-class TagListNotifier extends ListNotifier<String> {
-  final ScannerRepository scannerRepository = ScannerRepository();
-  AsyncValue<List<String>> tagList = const AsyncValue.loading();
-  TagListNotifier({required String token}) : super(const AsyncValue.loading()) {
-    scannerRepository.setToken(token);
-  }
+class TagListNotifier extends ListNotifierAPI<String> {
+  final Openapi scannerRepository;
+  TagListNotifier({required this.scannerRepository})
+      : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<String>>> loadTags(
     String sellerId,
@@ -16,14 +14,20 @@ class TagListNotifier extends ListNotifier<String> {
     String generatorId,
   ) async {
     return await loadList(
-      () => scannerRepository.getTags(sellerId, productId, generatorId),
+      () => scannerRepository
+          .cdrSellersSellerIdProductsProductIdTagsGeneratorIdGet(
+        sellerId: sellerId,
+        productId: productId,
+        generatorId: generatorId,
+      ),
     );
   }
 }
 
 final tagListProvider =
     StateNotifierProvider<TagListNotifier, AsyncValue<List<String>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  TagListNotifier notifier = TagListNotifier(token: token);
+  final scannerRepository = ref.watch(repositoryProvider);
+  TagListNotifier notifier =
+      TagListNotifier(scannerRepository: scannerRepository);
   return notifier;
 });

@@ -1,16 +1,18 @@
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/amap/class/order.dart';
+import 'package:myecl/amap/adapters/order.dart';
 import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/user_order_list_provider.dart';
 import 'package:myecl/amap/providers/user_amount_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/user/adapters/users.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -25,7 +27,7 @@ class ProductChoiceButton extends HookConsumerWidget {
     final orderListNotifier = ref.watch(userOrderListProvider.notifier);
     final userAmountNotifier = ref.watch(userAmountProvider.notifier);
     final me = ref.watch(userProvider);
-    final isEdit = order.id != Order.empty().id;
+    final isEdit = order.orderId != EmptyModels.empty<OrderReturn>().orderId;
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -71,44 +73,42 @@ class ProductChoiceButton extends HookConsumerWidget {
                     AMAPTextConstants.noProduct,
                   );
                 } else {
-                  Order newOrder = order.copyWith(
+                  OrderReturn newOrder = order.copyWith(
                     deliveryId: deliveryId,
-                    user: me.toSimpleUser(),
-                    lastAmount: order.amount,
+                    user: me.toCoreUserSimple(),
+                    amount: order.amount,
                   );
-                  await tokenExpireWrapper(ref, () async {
-                    final value = isEdit
-                        ? await orderListNotifier.updateOrder(newOrder)
-                        : await orderListNotifier.addOrder(newOrder);
-                    if (value) {
-                      QR.back();
-                      userAmountNotifier
-                          .updateCash(order.lastAmount - order.amount);
-                      if (isEdit) {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          AMAPTextConstants.updatedOrder,
-                        );
-                      } else {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          AMAPTextConstants.addedOrder,
-                        );
-                      }
+                  final value = isEdit
+                      ? await orderListNotifier.updateOrder(newOrder)
+                      : await orderListNotifier
+                          .addOrder(newOrder.toOrderBase());
+                  if (value) {
+                    QR.back();
+                    userAmountNotifier.updateCash(order.amount - order.amount);
+                    if (isEdit) {
+                      displayToastWithContext(
+                        TypeMsg.msg,
+                        AMAPTextConstants.updatedOrder,
+                      );
                     } else {
-                      if (isEdit) {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          AMAPTextConstants.updatingError,
-                        );
-                      } else {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          AMAPTextConstants.addingError,
-                        );
-                      }
+                      displayToastWithContext(
+                        TypeMsg.msg,
+                        AMAPTextConstants.addedOrder,
+                      );
                     }
-                  });
+                  } else {
+                    if (isEdit) {
+                      displayToastWithContext(
+                        TypeMsg.error,
+                        AMAPTextConstants.updatingError,
+                      );
+                    } else {
+                      displayToastWithContext(
+                        TypeMsg.error,
+                        AMAPTextConstants.addingError,
+                      );
+                    }
+                  }
                 }
               },
               child: Text(
@@ -152,14 +152,15 @@ class ProductChoiceButton extends HookConsumerWidget {
               ),
             ),
             onTap: () {
-              if (order.amount != 0.0 || order.id != Order.empty().id) {
+              if (order.amount != 0.0 ||
+                  order.orderId != EmptyModels.empty<OrderReturn>().orderId) {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) => CustomDialogBox(
                     descriptions: AMAPTextConstants.deletingOrder,
                     title: AMAPTextConstants.deleting,
                     onYes: () {
-                      orderNotifier.setOrder(Order.empty());
+                      orderNotifier.setOrder(EmptyModels.empty<OrderReturn>());
                       QR.back();
                     },
                   ),

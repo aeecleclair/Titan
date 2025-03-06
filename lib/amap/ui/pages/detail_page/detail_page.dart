@@ -45,12 +45,13 @@ class DetailPage extends HookConsumerWidget {
                           fontSize: 25,
                         ),
                         const SizedBox(height: 10),
-                        if (order.products.isNotEmpty)
+                        if (order.productsdetail.isNotEmpty)
                           Wrap(
-                            children: order.products
+                            children: order.productsdetail
                                 .map(
                                   (product) => ProductCard(
-                                    product: product,
+                                    product: product.product,
+                                    quantity: product.quantity,
                                     showButton: false,
                                   ),
                                 )

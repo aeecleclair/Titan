@@ -1,14 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/phonebook/class/member.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
-final memberProvider = StateNotifierProvider<MemberProvider, Member>((ref) {
-  return MemberProvider();
-});
+class MemberCompleteProvider extends StateNotifier<MemberComplete> {
+  MemberCompleteProvider() : super(EmptyModels.empty<MemberComplete>());
 
-class MemberProvider extends StateNotifier<Member> {
-  MemberProvider() : super(Member.empty());
-
-  void setMember(Member i) {
+  void setMemberComplete(MemberComplete i) {
     state = i;
   }
 }
+
+final memberProvider =
+    StateNotifierProvider<MemberCompleteProvider, MemberComplete>((ref) {
+  return MemberCompleteProvider();
+});
