@@ -40,7 +40,6 @@ class CashListProvider extends ListNotifierAPI<CashComplete> {
     );
   }
 
-  // To be changed
   Future<bool> fakeUpdateCash(CashComplete cash) async {
     return await localUpdate(
       (cash) => cash.userId,

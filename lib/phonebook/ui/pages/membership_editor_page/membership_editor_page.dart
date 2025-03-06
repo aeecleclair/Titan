@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/phonebook/extensions/members.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/member_role_tags_provider.dart';
@@ -79,22 +80,13 @@ class MembershipEditorPage extends HookConsumerWidget {
                 ),
                 SearchResult(queryController: queryController),
               ] else
-                //  Use extension
-                member.nickname == null
-                    ? Text(
-                        "${member.firstname} ${member.name}",
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      )
-                    : Text(
-                        "${member.nickname} (${member.firstname} ${member.name})",
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                Text(
+                  "${member.getName()}",
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               const SizedBox(
                 height: 10,
               ),

@@ -53,7 +53,7 @@ class TombolaCard extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 5),
-              // Require group and not groupId
+              // TODO: Require group and not groupId
               AutoSizeText(
                 raffle.groupId,
                 maxLines: 1,

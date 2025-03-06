@@ -12,7 +12,7 @@ class TicketListNotifier extends ListNotifierAPI<Ticket> {
     return await loadList(ticketRepository.cdrUsersMeTicketsGet);
   }
 
-  // Need to go back to it
+  // TODO: Need to go back to it
   Future<bool> consumeTicket(
     String sellerId,
     String productId,
