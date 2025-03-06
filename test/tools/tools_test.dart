@@ -142,12 +142,10 @@ void main() {
     testWidgets(
         'displays a toast message with the correct duration when the type is "msg"',
         (WidgetTester tester) async {
-      // Arrange
       const type = TypeMsg.msg;
       const text = 'Success!';
       final scaffoldKey = GlobalKey<ScaffoldState>();
 
-      // Act
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -164,7 +162,6 @@ void main() {
       await tester.tap(find.byType(ElevatedButton));
       await tester.pump(const Duration(milliseconds: 500));
 
-      // Assert
       expect(
         find.text(text),
         findsOneWidget,
@@ -179,12 +176,10 @@ void main() {
     testWidgets(
         'displays a toast message with the correct duration when the type is "error"',
         (WidgetTester tester) async {
-      // Arrange
       const type = TypeMsg.error;
       const text = 'Error!';
       final scaffoldKey = GlobalKey<ScaffoldState>();
 
-      // Act
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -201,7 +196,6 @@ void main() {
       await tester.tap(find.byType(ElevatedButton));
       await tester.pump(const Duration(milliseconds: 500));
 
-      // Assert
       expect(
         find.text(text),
         findsOneWidget,

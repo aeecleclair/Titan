@@ -32,7 +32,6 @@ void main() {
     test(
         'loadDeliveriesList should return the list of deliveries from the repository',
         () async {
-      // Arrange
       final mockRepository = MockDeliveryListRepository();
       when(() => mockRepository.amapDeliveriesGet()).thenAnswer(
         (_) async => chopper.Response(http.Response('[]', 200), deliveries),
@@ -40,10 +39,8 @@ void main() {
       final notifier =
           DeliveryListNotifier(deliveriesListRepository: mockRepository);
 
-      // Act
       final result = await notifier.loadDeliveriesList();
 
-      // Assert
       expect(
         result.when(
           data: (data) => data,
@@ -55,7 +52,6 @@ void main() {
     });
 
     test('addDelivery should add a new delivery to the list', () async {
-      // Arrange
       final mockRepository = MockDeliveryListRepository();
       final deliveryBase = DeliveryBase(deliveryDate: DateTime.now());
       when(() => mockRepository.amapDeliveriesPost(body: any(named: 'body')))
@@ -66,16 +62,13 @@ void main() {
           DeliveryListNotifier(deliveriesListRepository: mockRepository);
       notifier.state = AsyncValue.data(deliveries);
 
-      // Act
       final result = await notifier.addDelivery(deliveryBase);
 
-      // Assert
       expect(result, true);
     });
 
     test('updateDelivery should update an existing delivery in the list',
         () async {
-      // Arrange
       final mockRepository = MockDeliveryListRepository();
       final updatedDelivery =
           delivery.copyWith(status: DeliveryStatusType.locked);
@@ -93,10 +86,8 @@ void main() {
           DeliveryListNotifier(deliveriesListRepository: mockRepository);
       notifier.state = AsyncValue.data(deliveries);
 
-      // Act
       final result = await notifier.updateDelivery(updatedDelivery);
 
-      // Assert
       expect(result, true);
       expect(
         notifier.state.when(
@@ -110,7 +101,6 @@ void main() {
 
     test('openDelivery should update the status of a delivery to orderable',
         () async {
-      // Arrange
       final mockRepository = MockDeliveryListRepository();
       when(
         () => mockRepository.amapDeliveriesDeliveryIdOpenorderingPost(
@@ -127,10 +117,8 @@ void main() {
           DeliveryListNotifier(deliveriesListRepository: mockRepository);
       notifier.state = AsyncValue.data(deliveries);
 
-      // Act
       final result = await notifier.openDelivery(delivery);
 
-      // Assert
       expect(result, true);
       expect(
         notifier.state
@@ -147,7 +135,6 @@ void main() {
 
     test('lockDelivery should update the status of a delivery to locked',
         () async {
-      // Arrange
       final mockRepository = MockDeliveryListRepository();
       final deliveries = [delivery];
       when(
@@ -164,10 +151,8 @@ void main() {
           DeliveryListNotifier(deliveriesListRepository: mockRepository);
       notifier.state = AsyncValue.data(deliveries);
 
-      // Act
       final result = await notifier.lockDelivery(delivery);
 
-      // Assert
       expect(result, true);
       expect(
         notifier.state
@@ -184,7 +169,6 @@ void main() {
 
     test('deliverDelivery should update the status of a delivery to delivered',
         () async {
-      // Arrange
       final mockRepository = MockDeliveryListRepository();
       final deliveries = [delivery];
       when(
@@ -201,10 +185,8 @@ void main() {
           DeliveryListNotifier(deliveriesListRepository: mockRepository);
       notifier.state = AsyncValue.data(deliveries);
 
-      // Act
       final result = await notifier.deliverDelivery(delivery);
 
-      // Assert
       expect(result, true);
       expect(
         notifier.state
@@ -220,7 +202,6 @@ void main() {
     });
 
     test('archiveDelivery should remove a delivery from the list', () async {
-      // Arrange
       final mockRepository = MockDeliveryListRepository();
       final deliveries = [delivery];
       when(
@@ -234,10 +215,8 @@ void main() {
           DeliveryListNotifier(deliveriesListRepository: mockRepository);
       notifier.state = AsyncValue.data(deliveries);
 
-      // Act
       final result = await notifier.archiveDelivery(delivery);
 
-      // Assert
       expect(result, true);
       expect(
         notifier.state.when(
@@ -250,7 +229,6 @@ void main() {
     });
 
     test('deleteDelivery should remove a delivery from the list', () async {
-      // Arrange
       final mockRepository = MockDeliveryListRepository();
       final deliveries = [delivery];
       when(
@@ -264,10 +242,8 @@ void main() {
           DeliveryListNotifier(deliveriesListRepository: mockRepository);
       notifier.state = AsyncValue.data(deliveries);
 
-      // Act
       final result = await notifier.deleteDelivery(delivery.id);
 
-      // Assert
       expect(result, true);
       expect(
         notifier.state.when(
@@ -280,16 +256,13 @@ void main() {
     });
 
     test('copy should return a copy of the list of deliveries', () async {
-      // Arrange
       final notifier = DeliveryListNotifier(
         deliveriesListRepository: MockDeliveryListRepository(),
       );
 
-      // Act/Assert (loading state)
       final result1 = await notifier.copy();
       expect(result1, []);
 
-      // Act/Assert (error state)
       notifier.state = const AsyncValue<List<DeliveryReturn>>.error(
         'Error',
         StackTrace.empty,
@@ -297,7 +270,6 @@ void main() {
       final result2 = await notifier.copy();
       expect(result2, []);
 
-      // Act/Assert (data state)
       notifier.state = AsyncValue.data(deliveries);
       final result3 = await notifier.copy();
       expect(result3, deliveries);
