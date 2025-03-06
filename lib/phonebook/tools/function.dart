@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:myecl/generated/openapi.enums.swagger.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
+import 'package:myecl/tools/builders/enums_cleaner.dart';
 
 int getPosition(
   MemberComplete member,
@@ -30,9 +31,10 @@ List<AssociationComplete> sortedAssociationByKind(
 ) {
   List<AssociationComplete> sorted = [];
   List<List<AssociationComplete>> sortedByKind =
-      List.generate(Kinds.values.length, (index) => []);
+      List.generate(getEnumValues(Kinds.values).length, (index) => []);
   for (AssociationComplete association in associations) {
-    sortedByKind[Kinds.values.indexOf(association.kind)].add(association);
+    sortedByKind[getEnumValues(Kinds.values).indexOf(association.kind)]
+        .add(association);
   }
   for (List<AssociationComplete> list in sortedByKind) {
     list.sort(

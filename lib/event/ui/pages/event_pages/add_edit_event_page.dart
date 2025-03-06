@@ -11,6 +11,7 @@ import 'package:myecl/event/providers/user_event_list_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/builders/enums_cleaner.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
@@ -116,7 +117,7 @@ class AddEditEventPage extends HookConsumerWidget {
               HorizontalListView.builder(
                 key: eventTypeScrollKey,
                 height: 40,
-                items: CalendarEventType.values,
+                items: getEnumValues(CalendarEventType.values),
                 itemBuilder: (context, value, index) {
                   final selected = eventType.value == value;
                   return ItemChip(

@@ -11,6 +11,7 @@ import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/ui/components/kinds_bar.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
+import 'package:myecl/tools/builders/enums_cleaner.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
@@ -114,8 +115,8 @@ class AssociationCreationPage extends HookConsumerWidget {
                           AssociationBase(
                             name: name.text,
                             description: description.text,
-                            kind:
-                                Kinds.values.firstWhere((e) => e.name == kind),
+                            kind: getEnumValues(Kinds.values)
+                                .firstWhere((e) => e.name == kind),
                             mandateYear: DateTime.now().year,
                           ),
                         );

@@ -11,6 +11,7 @@ import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/edit_user_page/picture_button.dart';
 import 'package:myecl/settings/ui/pages/edit_user_page/user_field_modifier.dart';
 import 'package:myecl/settings/ui/settings.dart';
+import 'package:myecl/tools/builders/enums_cleaner.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
@@ -47,7 +48,7 @@ class EditUserPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    List<DropdownMenuItem> items = Floors.values
+    List<DropdownMenuItem> items = getEnumValues(Floors.values)
         .map(
           (e) => DropdownMenuItem(
             value: capitalize(e.name),

@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:myecl/generated/openapi.enums.swagger.dart';
 import 'package:myecl/tools/builders/empty_models.dart';
+import 'package:myecl/tools/builders/enums_cleaner.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
@@ -162,8 +163,9 @@ class AddEditListPage extends HookConsumerWidget {
               const SizedBox(height: 50),
               HorizontalListView.builder(
                 height: 40,
-                items:
-                    ListType.values.where((e) => e != ListType.blank).toList(),
+                items: getEnumValues(ListType.values)
+                    .where((e) => e != ListType.blank)
+                    .toList(),
                 itemBuilder: (context, e, i) => SectionChip(
                   label: capitalize(e.name),
                   selected: listType.value == e,

@@ -4,6 +4,7 @@ import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/builders/empty_models.dart';
+import 'package:myecl/tools/builders/enums_cleaner.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/widgets/admin_button.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
@@ -211,7 +212,7 @@ class AmapMainPage extends HookConsumerWidget {
                               border: Border.all(color: Colors.white, width: 2),
                             ),
                             child: Row(
-                              children: AmapSlotType.values
+                              children: getEnumValues(AmapSlotType.values)
                                   .map(
                                     (e) => CollectionSlotSelector(
                                       collectionSlot: e,

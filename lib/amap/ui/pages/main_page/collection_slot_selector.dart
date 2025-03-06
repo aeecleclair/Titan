@@ -4,6 +4,7 @@ import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/generated/openapi.enums.swagger.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/enums_cleaner.dart';
 import 'package:myecl/tools/functions.dart';
 
 class CollectionSlotSelector extends HookConsumerWidget {
@@ -15,7 +16,7 @@ class CollectionSlotSelector extends HookConsumerWidget {
     final order = ref.watch(orderProvider);
     final orderNotifier = ref.read(orderProvider.notifier);
     final isSelected = collectionSlot == order.collectionSlot;
-    final isFirst = AmapSlotType.values.first == collectionSlot;
+    final isFirst = getEnumValues(AmapSlotType.values).first == collectionSlot;
     return Expanded(
       child: GestureDetector(
         onTap: () {
@@ -40,7 +41,7 @@ class CollectionSlotSelector extends HookConsumerWidget {
           ),
           child: Center(
             child: Text(
-              capitalize(collectionSlot.name.split(".")[1]),
+              capitalize(collectionSlot.name),
               style: TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold,

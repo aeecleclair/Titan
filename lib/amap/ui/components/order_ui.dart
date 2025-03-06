@@ -97,7 +97,7 @@ class OrderUI extends HookConsumerWidget {
           ),
           const SizedBox(height: 3),
           Text(
-            capitalize(order.collectionSlot.name.split('.')[1]),
+            capitalize(order.collectionSlot.name),
             style: const TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.w700,

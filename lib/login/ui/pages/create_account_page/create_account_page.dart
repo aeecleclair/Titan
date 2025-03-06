@@ -12,6 +12,7 @@ import 'package:myecl/login/ui/components/login_field.dart';
 import 'package:myecl/login/ui/auth_page.dart';
 import 'package:myecl/login/ui/components/sign_in_up_bar.dart';
 import 'package:myecl/settings/ui/pages/change_pass/password_strength.dart';
+import 'package:myecl/tools/builders/enums_cleaner.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
@@ -39,7 +40,7 @@ class CreateAccountPage extends HookConsumerWidget {
     final phone = useTextEditingController();
     final promo = useTextEditingController();
     final lastIndex = useState(isCodeGiven ? 1 : 0);
-    List<DropdownMenuItem> items = Floors.values
+    List<DropdownMenuItem> items = getEnumValues(Floors.values)
         .map(
           (e) => DropdownMenuItem(
             value: capitalize(e.name),

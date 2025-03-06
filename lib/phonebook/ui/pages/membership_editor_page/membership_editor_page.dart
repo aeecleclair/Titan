@@ -81,7 +81,7 @@ class MembershipEditorPage extends HookConsumerWidget {
                 SearchResult(queryController: queryController),
               ] else
                 Text(
-                  "${member.getName()}",
+                  member.getName(),
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,

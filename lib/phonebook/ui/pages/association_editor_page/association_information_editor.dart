@@ -11,6 +11,7 @@ import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/ui/components/kinds_bar.dart';
+import 'package:myecl/tools/builders/enums_cleaner.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
@@ -170,7 +171,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                 association.copyWith(
                                   name: name.text,
                                   description: description.text,
-                                  kind: Kinds.values.firstWhere(
+                                  kind: getEnumValues(Kinds.values).firstWhere(
                                     (element) => element.name == kind,
                                   ),
                                 ),

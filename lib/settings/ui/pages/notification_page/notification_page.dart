@@ -6,6 +6,7 @@ import 'package:myecl/service/providers/topic_provider.dart';
 import 'package:myecl/service/tools/functions.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/settings.dart';
+import 'package:myecl/tools/builders/enums_cleaner.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
@@ -35,7 +36,7 @@ class NotificationPage extends HookConsumerWidget {
               AsyncChild(
                 value: topics,
                 builder: (context, topic) => Column(
-                  children: Topic.values
+                  children: getEnumValues(Topic.values)
                       .map(
                         (e) => Padding(
                           padding: const EdgeInsets.symmetric(vertical: 12),
