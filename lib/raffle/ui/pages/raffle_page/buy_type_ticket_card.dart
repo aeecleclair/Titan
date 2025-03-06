@@ -7,7 +7,6 @@ import 'package:myecl/raffle/providers/tombola_logo_provider.dart';
 import 'package:myecl/raffle/providers/tombola_logos_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/raffle_page/confirm_payment.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class BuyPackTicket extends HookConsumerWidget {
   final PackTicketSimple packTicket;
@@ -99,15 +98,13 @@ class BuyPackTicket extends HookConsumerWidget {
                                     const AsyncLoading(),
                                   );
                                 });
-                                tokenExpireWrapper(ref, () async {
-                                  tombolaLogoNotifier
-                                      .getLogo(raffle.id)
-                                      .then((value) {
-                                    tombolaLogosNotifier.setTData(
-                                      raffle.id,
-                                      AsyncData([value]),
-                                    );
-                                  });
+                                tombolaLogoNotifier
+                                    .getLogo(raffle.id)
+                                    .then((value) {
+                                  tombolaLogosNotifier.setTData(
+                                    raffle.id,
+                                    AsyncData([value]),
+                                  );
                                 });
                                 return const HeroIcon(
                                   HeroIcons.cubeTransparent,

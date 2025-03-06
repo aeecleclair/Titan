@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class PurchaseListNotifier extends ListNotifierAPI<PurchaseReturn> {
   final Openapi userPurchaseRepository;
@@ -32,10 +31,6 @@ class PurchaseListNotifier extends ListNotifierAPI<PurchaseReturn> {
 final purchaseListProvider = StateNotifierProvider<PurchaseListNotifier,
     AsyncValue<List<PurchaseReturn>>>((ref) {
   final userPurchaseRepository = ref.watch(repositoryProvider);
-  PurchaseListNotifier notifier =
-      PurchaseListNotifier(userPurchaseRepository: userPurchaseRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadPurchases();
-  });
-  return notifier;
+  return PurchaseListNotifier(userPurchaseRepository: userPurchaseRepository)
+    ..loadPurchases();
 });

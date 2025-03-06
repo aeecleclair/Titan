@@ -2,7 +2,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/vote/adapters/list.dart';
 
 class ListListNotifier extends ListNotifierAPI<ListReturn> {
@@ -84,9 +83,5 @@ final listListProvider =
     StateNotifierProvider<ListListNotifier, AsyncValue<List<ListReturn>>>(
         (ref) {
   final listRepository = ref.watch(repositoryProvider);
-  final listListNotifier = ListListNotifier(listRepository: listRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await listListNotifier.loadListList();
-  });
-  return listListNotifier;
+  return ListListNotifier(listRepository: listRepository)..loadListList();
 });

@@ -16,7 +16,6 @@ import 'package:myecl/ph/ui/pages/file_picker/pdf_picker.dart';
 import 'package:myecl/ph/ui/pages/ph.dart';
 import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/date_entry.dart';
@@ -102,55 +101,51 @@ class PhAddEditPhPage extends HookConsumerWidget {
                         }
                         if (true &&
                             (!listEquals(phSendPdf, Uint8List(0)) || isEdit)) {
-                          await tokenExpireWrapper(ref, () async {
-                            final phList = ref.watch(phListProvider);
-                            PaperComplete newPh = PaperComplete(
-                              id: isEdit ? ph.id : '',
-                              releaseDate: DateTime.parse(
-                                processDateBack(dateController.text),
-                              ),
-                              name: name.text,
-                            );
-                            final value = isEdit
-                                ? await phListNotifier.editPh(newPh)
-                                : await phListNotifier
-                                    .addPh(newPh.toPaperBase());
+                          final phList = ref.watch(phListProvider);
+                          PaperComplete newPh = PaperComplete(
+                            id: isEdit ? ph.id : '',
+                            releaseDate: DateTime.parse(
+                              processDateBack(dateController.text),
+                            ),
+                            name: name.text,
+                          );
+                          final value = isEdit
+                              ? await phListNotifier.editPh(newPh)
+                              : await phListNotifier.addPh(newPh.toPaperBase());
 
-                            if (value) {
-                              SystemChannels.textInput
-                                  .invokeMethod('TextInput.hide');
-                              QR.back();
-                              {
-                                if (editPdf) {
-                                  phList.maybeWhen(
-                                    data: (list) {
-                                      ref
-                                          .read(
-                                            phPdfProvider(list.last.id)
-                                                .notifier,
-                                          )
-                                          .updatePhPdf(
-                                            Uint8List.fromList(phSendPdf),
-                                          );
-                                    },
-                                    orElse: () {},
-                                  );
-                                }
-                                displayPhToastWithContext(
-                                  TypeMsg.msg,
-                                  isEdit
-                                      ? PhTextConstants.edited
-                                      : PhTextConstants.added,
+                          if (value) {
+                            SystemChannels.textInput
+                                .invokeMethod('TextInput.hide');
+                            QR.back();
+                            {
+                              if (editPdf) {
+                                phList.maybeWhen(
+                                  data: (list) {
+                                    ref
+                                        .read(
+                                          phPdfProvider(list.last.id).notifier,
+                                        )
+                                        .updatePhPdf(
+                                          Uint8List.fromList(phSendPdf),
+                                        );
+                                  },
+                                  orElse: () {},
                                 );
-                                editPdfNotifier.editPdf(false);
                               }
-                            } else {
                               displayPhToastWithContext(
-                                TypeMsg.error,
-                                PhTextConstants.addingFileError,
+                                TypeMsg.msg,
+                                isEdit
+                                    ? PhTextConstants.edited
+                                    : PhTextConstants.added,
                               );
+                              editPdfNotifier.editPdf(false);
                             }
-                          });
+                          } else {
+                            displayPhToastWithContext(
+                              TypeMsg.error,
+                              PhTextConstants.addingFileError,
+                            );
+                          }
                         } else {
                           displayToast(
                             context,

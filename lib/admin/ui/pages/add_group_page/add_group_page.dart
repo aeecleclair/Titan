@@ -8,7 +8,6 @@ import 'package:myecl/admin/ui/components/admin_button.dart';
 import 'package:myecl/admin/ui/components/text_editing.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -46,26 +45,24 @@ class AddGroupPage extends HookConsumerWidget {
                 ),
                 WaitingButton(
                   onTap: () async {
-                    await tokenExpireWrapper(ref, () async {
-                      final value = await groupListNotifier.createGroup(
-                        CoreGroupCreate(
-                          name: name.text,
-                          description: description.text,
-                        ),
+                    final value = await groupListNotifier.createGroup(
+                      CoreGroupCreate(
+                        name: name.text,
+                        description: description.text,
+                      ),
+                    );
+                    if (value) {
+                      QR.back();
+                      displayToastWithContext(
+                        TypeMsg.msg,
+                        AdminTextConstants.addedGroup,
                       );
-                      if (value) {
-                        QR.back();
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          AdminTextConstants.addedGroup,
-                        );
-                      } else {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          AdminTextConstants.addingError,
-                        );
-                      }
-                    });
+                    } else {
+                      displayToastWithContext(
+                        TypeMsg.error,
+                        AdminTextConstants.addingError,
+                      );
+                    }
                   },
                   builder: (child) => AdminButton(child: child),
                   child: const Text(

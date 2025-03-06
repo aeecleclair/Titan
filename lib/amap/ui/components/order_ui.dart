@@ -11,7 +11,6 @@ import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class OrderUI extends HookConsumerWidget {
@@ -135,24 +134,22 @@ class OrderUI extends HookConsumerWidget {
                                   title: AMAPTextConstants.delete,
                                   descriptions: AMAPTextConstants.deletingOrder,
                                   onYes: () async {
-                                    await tokenExpireWrapper(ref, () async {
-                                      orderListNotifier
-                                          .deleteOrder(order.orderId)
-                                          .then((value) {
-                                        if (value) {
-                                          balanceNotifier
-                                              .updateCash(order.amount);
-                                          displayToastWithContext(
-                                            TypeMsg.msg,
-                                            AMAPTextConstants.deletedOrder,
-                                          );
-                                        } else {
-                                          displayToastWithContext(
-                                            TypeMsg.error,
-                                            AMAPTextConstants.deletingError,
-                                          );
-                                        }
-                                      });
+                                    orderListNotifier
+                                        .deleteOrder(order.orderId)
+                                        .then((value) {
+                                      if (value) {
+                                        balanceNotifier
+                                            .updateCash(order.amount);
+                                        displayToastWithContext(
+                                          TypeMsg.msg,
+                                          AMAPTextConstants.deletedOrder,
+                                        );
+                                      } else {
+                                        displayToastWithContext(
+                                          TypeMsg.error,
+                                          AMAPTextConstants.deletingError,
+                                        );
+                                      }
                                     });
                                   },
                                 )),

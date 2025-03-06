@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/phonebook/adapters/association.dart';
 
 class AssociationListNotifier extends ListNotifierAPI<AssociationComplete> {
@@ -68,10 +67,6 @@ class AssociationListNotifier extends ListNotifierAPI<AssociationComplete> {
 final associationListProvider = StateNotifierProvider<AssociationListNotifier,
     AsyncValue<List<AssociationComplete>>>((ref) {
   final associationRepository = ref.watch(repositoryProvider);
-  AssociationListNotifier notifier =
-      AssociationListNotifier(associationRepository: associationRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadAssociations();
-  });
-  return notifier;
+  return AssociationListNotifier(associationRepository: associationRepository)
+    ..loadAssociations();
 });

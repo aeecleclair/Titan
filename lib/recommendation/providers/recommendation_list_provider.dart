@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/recommendation/adapters/recommendation.dart';
 
 class RecommendationListNotifier extends ListNotifierAPI<Recommendation> {
@@ -53,16 +52,8 @@ final recommendationListProvider = StateNotifierProvider<
     RecommendationListNotifier, AsyncValue<List<Recommendation>>>(
   (ref) {
     final recommendationRepository = ref.watch(repositoryProvider);
-    //  rename
-    final provider = RecommendationListNotifier(
+    return RecommendationListNotifier(
       recommendationRepository: recommendationRepository,
-    );
-    tokenExpireWrapperAuth(
-      ref,
-      () async {
-        await provider.loadRecommendation();
-      },
-    );
-    return provider;
+    )..loadRecommendation();
   },
 );

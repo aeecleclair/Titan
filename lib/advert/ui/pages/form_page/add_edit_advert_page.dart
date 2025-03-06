@@ -18,7 +18,6 @@ import 'package:myecl/advert/ui/components/advertiser_bar.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/image_picker_on_tap.dart';
@@ -226,64 +225,60 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                         if (key.currentState!.validate() &&
                             selectedAdvertisers.isNotEmpty &&
                             (poster.value != null || isEdit)) {
-                          await tokenExpireWrapper(ref, () async {
-                            final advertList = ref.watch(advertListProvider);
-                            AdvertReturnComplete newAdvert =
-                                AdvertReturnComplete(
-                              id: isEdit ? advert.id : '',
-                              advertiser: selectedAdvertisers[0],
-                              advertiserId: selectedAdvertisers[0].id,
-                              content: content.text,
-                              date: isEdit ? advert.date : DateTime.now(),
-                              tags: textTagsController.text.split(', '),
-                              title: title.text,
-                            );
-                            final value = isEdit
-                                ? await advertListNotifier
-                                    .updateAdvert(newAdvert)
-                                : await advertListNotifier
-                                    .addAdvert(newAdvert.toAdvertBase());
-                            if (value) {
-                              QR.back();
-                              if (isEdit) {
-                                displayAdvertToastWithContext(
-                                  TypeMsg.msg,
-                                  AdvertTextConstants.editedAdvert,
-                                );
-                                advertList.maybeWhen(
-                                  data: (list) {
-                                    if (poster.value != null) {
-                                      posterNotifier.updateAdvertPoster(
-                                        advert.id,
-                                        poster.value!,
-                                      );
-                                    }
-                                  },
-                                  orElse: () {},
-                                );
-                              } else {
-                                displayAdvertToastWithContext(
-                                  TypeMsg.msg,
-                                  AdvertTextConstants.addedAdvert,
-                                );
-                                advertList.maybeWhen(
-                                  data: (list) {
-                                    final newAdvert = list.last;
+                          final advertList = ref.watch(advertListProvider);
+                          AdvertReturnComplete newAdvert = AdvertReturnComplete(
+                            id: isEdit ? advert.id : '',
+                            advertiser: selectedAdvertisers[0],
+                            advertiserId: selectedAdvertisers[0].id,
+                            content: content.text,
+                            date: isEdit ? advert.date : DateTime.now(),
+                            tags: textTagsController.text.split(', '),
+                            title: title.text,
+                          );
+                          final value = isEdit
+                              ? await advertListNotifier.updateAdvert(newAdvert)
+                              : await advertListNotifier
+                                  .addAdvert(newAdvert.toAdvertBase());
+                          if (value) {
+                            QR.back();
+                            if (isEdit) {
+                              displayAdvertToastWithContext(
+                                TypeMsg.msg,
+                                AdvertTextConstants.editedAdvert,
+                              );
+                              advertList.maybeWhen(
+                                data: (list) {
+                                  if (poster.value != null) {
                                     posterNotifier.updateAdvertPoster(
-                                      newAdvert.id,
+                                      advert.id,
                                       poster.value!,
                                     );
-                                  },
-                                  orElse: () {},
-                                );
-                              }
+                                  }
+                                },
+                                orElse: () {},
+                              );
                             } else {
                               displayAdvertToastWithContext(
-                                TypeMsg.error,
-                                AdvertTextConstants.editingError,
+                                TypeMsg.msg,
+                                AdvertTextConstants.addedAdvert,
+                              );
+                              advertList.maybeWhen(
+                                data: (list) {
+                                  final newAdvert = list.last;
+                                  posterNotifier.updateAdvertPoster(
+                                    newAdvert.id,
+                                    poster.value!,
+                                  );
+                                },
+                                orElse: () {},
                               );
                             }
-                          });
+                          } else {
+                            displayAdvertToastWithContext(
+                              TypeMsg.error,
+                              AdvertTextConstants.editingError,
+                            );
+                          }
                         } else {
                           displayToast(
                             context,

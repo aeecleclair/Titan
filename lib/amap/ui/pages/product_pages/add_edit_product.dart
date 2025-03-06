@@ -12,7 +12,6 @@ import 'package:myecl/amap/ui/amap.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
@@ -175,48 +174,43 @@ class AddEditProduct extends HookConsumerWidget {
                             ),
                             category: cate,
                           );
-                          await tokenExpireWrapper(ref, () async {
-                            final value = isEdit
-                                ? await productsNotifier
-                                    .updateProduct(newProduct)
-                                : await productsNotifier
-                                    .addProduct(newProduct.toProductSimple());
-                            if (value) {
-                              if (isEdit) {
-                                formKey.currentState!.reset();
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  AMAPTextConstants.updatedProduct,
-                                );
-                              } else {
-                                ref
-                                    .watch(selectedListProvider.notifier)
-                                    .rebuild(
-                                      products.maybeWhen(
-                                        data: (data) => data,
-                                        orElse: () => [],
-                                      ),
-                                    );
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  AMAPTextConstants.addedProduct,
-                                );
-                              }
+                          final value = isEdit
+                              ? await productsNotifier.updateProduct(newProduct)
+                              : await productsNotifier
+                                  .addProduct(newProduct.toProductSimple());
+                          if (value) {
+                            if (isEdit) {
+                              formKey.currentState!.reset();
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                AMAPTextConstants.updatedProduct,
+                              );
                             } else {
-                              if (isEdit) {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  AMAPTextConstants.updatingError,
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  AMAPTextConstants.addingError,
-                                );
-                              }
+                              ref.watch(selectedListProvider.notifier).rebuild(
+                                    products.maybeWhen(
+                                      data: (data) => data,
+                                      orElse: () => [],
+                                    ),
+                                  );
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                AMAPTextConstants.addedProduct,
+                              );
                             }
-                            QR.back();
-                          });
+                          } else {
+                            if (isEdit) {
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                AMAPTextConstants.updatingError,
+                              );
+                            } else {
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                AMAPTextConstants.addingError,
+                              );
+                            }
+                          }
+                          QR.back();
                         }
                       },
                       child: Text(

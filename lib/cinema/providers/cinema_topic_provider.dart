@@ -2,7 +2,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class CinemaTopicsProvider extends ListNotifierAPI<String> {
   final Openapi cinemaTopicRepository;
@@ -53,10 +52,6 @@ final cinemaTopicsProvider =
     StateNotifierProvider<CinemaTopicsProvider, AsyncValue<List<String>>>(
         (ref) {
   final cinemaTopicRepository = ref.watch(repositoryProvider);
-  CinemaTopicsProvider notifier =
-      CinemaTopicsProvider(cinemaTopicRepository: cinemaTopicRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    notifier.getTopics();
-  });
-  return notifier;
+  return CinemaTopicsProvider(cinemaTopicRepository: cinemaTopicRepository)
+    ..getTopics();
 });

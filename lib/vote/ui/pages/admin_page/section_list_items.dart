@@ -8,7 +8,6 @@ import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/vote/providers/list_list_provider.dart';
 import 'package:myecl/vote/providers/list_members.dart';
@@ -72,13 +71,11 @@ class SectionListItems extends HookConsumerWidget {
           list: e,
           isAdmin: true,
           onEdit: () {
-            tokenExpireWrapper(ref, () async {
-              listNotifier.setId(e);
-              membersNotifier.setMembers(e.members);
-              QR.to(
-                VoteRouter.root + VoteRouter.admin + VoteRouter.addEditList,
-              );
-            });
+            listNotifier.setId(e);
+            membersNotifier.setMembers(e.members);
+            QR.to(
+              VoteRouter.root + VoteRouter.admin + VoteRouter.addEditList,
+            );
           },
           onDelete: () async {
             await showDialog(
@@ -87,27 +84,25 @@ class SectionListItems extends HookConsumerWidget {
                 return CustomDialogBox(
                   title: VoteTextConstants.deletePretendance,
                   descriptions: VoteTextConstants.deletePretendanceDesc,
-                  onYes: () {
-                    tokenExpireWrapper(ref, () async {
-                      final value = await listListNotifier.deleteList(e.id);
-                      if (value) {
-                        displayVoteToastWithContext(
-                          TypeMsg.msg,
-                          VoteTextConstants.pretendanceDeleted,
+                  onYes: () async {
+                    final value = await listListNotifier.deleteList(e.id);
+                    if (value) {
+                      displayVoteToastWithContext(
+                        TypeMsg.msg,
+                        VoteTextConstants.pretendanceDeleted,
+                      );
+                      listListNotifier.copy().then((value) {
+                        sectionListListNotifier.setTData(
+                          section,
+                          value,
                         );
-                        listListNotifier.copy().then((value) {
-                          sectionListListNotifier.setTData(
-                            section,
-                            value,
-                          );
-                        });
-                      } else {
-                        displayVoteToastWithContext(
-                          TypeMsg.error,
-                          VoteTextConstants.pretendanceNotDeleted,
-                        );
-                      }
-                    });
+                      });
+                    } else {
+                      displayVoteToastWithContext(
+                        TypeMsg.error,
+                        VoteTextConstants.pretendanceNotDeleted,
+                      );
+                    }
                   },
                 );
               },

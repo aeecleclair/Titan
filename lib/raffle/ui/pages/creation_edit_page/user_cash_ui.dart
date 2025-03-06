@@ -9,7 +9,6 @@ import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/raffle/providers/cash_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class UserCashUi extends HookConsumerWidget {
@@ -229,28 +228,26 @@ class UserCashUi extends HookConsumerWidget {
                                       return;
                                     }
                                     if (key.currentState!.validate()) {
-                                      await tokenExpireWrapper(ref, () async {
-                                        await ref
-                                            .read(cashProvider.notifier)
-                                            .updateCash(
-                                              cash,
-                                              int.parse(amount.text),
-                                            )
-                                            .then((value) {
-                                          if (value) {
-                                            key.currentState!.reset();
-                                            toggle();
-                                            displayVoteWithContext(
-                                              TypeMsg.msg,
-                                              RaffleTextConstants.updatedAmount,
-                                            );
-                                          } else {
-                                            displayVoteWithContext(
-                                              TypeMsg.error,
-                                              RaffleTextConstants.updatingError,
-                                            );
-                                          }
-                                        });
+                                      await ref
+                                          .read(cashProvider.notifier)
+                                          .updateCash(
+                                            cash,
+                                            int.parse(amount.text),
+                                          )
+                                          .then((value) {
+                                        if (value) {
+                                          key.currentState!.reset();
+                                          toggle();
+                                          displayVoteWithContext(
+                                            TypeMsg.msg,
+                                            RaffleTextConstants.updatedAmount,
+                                          );
+                                        } else {
+                                          displayVoteWithContext(
+                                            TypeMsg.error,
+                                            RaffleTextConstants.updatingError,
+                                          );
+                                        }
                                       });
                                     }
                                   },

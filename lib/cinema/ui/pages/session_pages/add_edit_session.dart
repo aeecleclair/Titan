@@ -17,7 +17,6 @@ import 'package:myecl/cinema/ui/pages/session_pages/tmdb_button.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/widgets/date_entry.dart';
@@ -106,29 +105,27 @@ class AddEditSessionPage extends HookConsumerWidget {
                               "www.imdb.com" => url.pathSegments[1],
                               _ => throw const FormatException(),
                             };
-                            tokenExpireWrapper(ref, () async {
-                              movieNotifier.loadMovie(movieId).then((value) {
-                                value.when(
-                                  data: (data) async {
-                                    name.text = data.title;
-                                    overview.text = data.overview;
-                                    posterUrl.text = data.posterPath;
-                                    genre.text = data.genres.join(', ');
-                                    tagline.text = data.tagline;
-                                    duration.text =
-                                        parseDurationBack(data.runtime);
-                                    logo.value =
-                                        await getFromUrl(data.posterPath);
-                                  },
-                                  loading: () {},
-                                  error: (e, s) {
-                                    displayToastWithContext(
-                                      TypeMsg.error,
-                                      e.toString(),
-                                    );
-                                  },
-                                );
-                              });
+                            movieNotifier.loadMovie(movieId).then((value) {
+                              value.when(
+                                data: (data) async {
+                                  name.text = data.title;
+                                  overview.text = data.overview;
+                                  posterUrl.text = data.posterPath;
+                                  genre.text = data.genres.join(', ');
+                                  tagline.text = data.tagline;
+                                  duration.text =
+                                      parseDurationBack(data.runtime);
+                                  logo.value =
+                                      await getFromUrl(data.posterPath);
+                                },
+                                loading: () {},
+                                error: (e, s) {
+                                  displayToastWithContext(
+                                    TypeMsg.error,
+                                    e.toString(),
+                                  );
+                                },
+                              );
                             });
                           } on FormatException catch (_) {
                             displayToastWithContext(
@@ -236,85 +233,82 @@ class AddEditSessionPage extends HookConsumerWidget {
                         );
                         return;
                       }
-                      await tokenExpireWrapper(ref, () async {
-                        CineSessionComplete newSession = CineSessionComplete(
-                          name: name.text,
-                          duration: parseDuration(duration.text),
-                          genre: genre.text.isEmpty ? null : genre.text,
-                          id: isEdit ? session.id : '',
-                          overview: overview.text,
-                          start: DateTime.parse(
-                            processDateBackWithHour(start.text),
-                          ),
-                          tagline: tagline.text.isEmpty ? null : tagline.text,
-                        );
-                        final value = isEdit
-                            ? await sessionListNotifier
-                                .updateSession(newSession)
-                            : await sessionListNotifier
-                                .addSession(newSession.toCineSessionBase());
-                        if (value) {
-                          QR.back();
-                          if (isEdit) {
-                            sessionList.maybeWhen(
-                              data: (list) async {
-                                final logoBytes = logo.value;
-                                if (logoBytes != null) {
-                                  final sessionPosterMapNotifier = ref.read(
-                                    sessionPosterMapProvider.notifier,
-                                  );
-                                  sessionPosterMapNotifier.autoLoad(
-                                    ref,
-                                    session.id,
-                                    (sessionId) => sessionPosterNotifier
-                                        .updateLogo(sessionId, logoBytes),
-                                  );
-                                }
-                              },
-                              orElse: () {},
-                            );
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              CinemaTextConstants.editedSession,
-                            );
-                          } else {
-                            sessionList.maybeWhen(
-                              data: (list) async {
-                                final newSession = list.last;
-                                final logoBytes = logo.value;
-                                if (logoBytes != null) {
-                                  final sessionPosterMapNotifier = ref.read(
-                                    sessionPosterMapProvider.notifier,
-                                  );
-                                  sessionPosterMapNotifier.autoLoad(
-                                    ref,
-                                    newSession.id,
-                                    (sessionId) => sessionPosterNotifier
-                                        .updateLogo(sessionId, logoBytes),
-                                  );
-                                }
-                              },
-                              orElse: () {},
-                            );
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              CinemaTextConstants.addedSession,
-                            );
-                          }
+                      CineSessionComplete newSession = CineSessionComplete(
+                        name: name.text,
+                        duration: parseDuration(duration.text),
+                        genre: genre.text.isEmpty ? null : genre.text,
+                        id: isEdit ? session.id : '',
+                        overview: overview.text,
+                        start: DateTime.parse(
+                          processDateBackWithHour(start.text),
+                        ),
+                        tagline: tagline.text.isEmpty ? null : tagline.text,
+                      );
+                      final value = isEdit
+                          ? await sessionListNotifier.updateSession(newSession)
+                          : await sessionListNotifier
+                              .addSession(newSession.toCineSessionBase());
+                      if (value) {
+                        QR.back();
+                        if (isEdit) {
+                          sessionList.maybeWhen(
+                            data: (list) async {
+                              final logoBytes = logo.value;
+                              if (logoBytes != null) {
+                                final sessionPosterMapNotifier = ref.read(
+                                  sessionPosterMapProvider.notifier,
+                                );
+                                sessionPosterMapNotifier.autoLoad(
+                                  ref,
+                                  session.id,
+                                  (sessionId) => sessionPosterNotifier
+                                      .updateLogo(sessionId, logoBytes),
+                                );
+                              }
+                            },
+                            orElse: () {},
+                          );
+                          displayToastWithContext(
+                            TypeMsg.msg,
+                            CinemaTextConstants.editedSession,
+                          );
                         } else {
-                          if (isEdit) {
-                            displayToastWithContext(
-                              TypeMsg.error,
-                              CinemaTextConstants.editingError,
-                            );
-                          } else {
-                            displayToastWithContext(
-                              TypeMsg.error,
-                              CinemaTextConstants.addingError,
-                            );
-                          }
+                          sessionList.maybeWhen(
+                            data: (list) async {
+                              final newSession = list.last;
+                              final logoBytes = logo.value;
+                              if (logoBytes != null) {
+                                final sessionPosterMapNotifier = ref.read(
+                                  sessionPosterMapProvider.notifier,
+                                );
+                                sessionPosterMapNotifier.autoLoad(
+                                  ref,
+                                  newSession.id,
+                                  (sessionId) => sessionPosterNotifier
+                                      .updateLogo(sessionId, logoBytes),
+                                );
+                              }
+                            },
+                            orElse: () {},
+                          );
+                          displayToastWithContext(
+                            TypeMsg.msg,
+                            CinemaTextConstants.addedSession,
+                          );
                         }
-                      });
+                      } else {
+                        if (isEdit) {
+                          displayToastWithContext(
+                            TypeMsg.error,
+                            CinemaTextConstants.editingError,
+                          );
+                        } else {
+                          displayToastWithContext(
+                            TypeMsg.error,
+                            CinemaTextConstants.addingError,
+                          );
+                        }
+                      }
                     } else {
                       displayToast(
                         context,

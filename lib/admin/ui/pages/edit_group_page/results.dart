@@ -7,7 +7,6 @@ import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/user/extensions/users.dart';
@@ -53,26 +52,24 @@ class MemberResults extends HookConsumerWidget {
                               CoreGroup newGroup = group.value!.copyWith(
                                 members: (group.value!.members ?? []) + [e],
                               );
-                              await tokenExpireWrapper(ref, () async {
-                                groupNotifier
-                                    .addMember(newGroup, e)
-                                    .then((value) {
-                                  if (value) {
-                                    simpleGroupGroupsNotifier.setTData(
-                                      newGroup.id,
-                                      AsyncData([newGroup]),
-                                    );
-                                    displayToastWithContext(
-                                      TypeMsg.msg,
-                                      AdminTextConstants.addedMember,
-                                    );
-                                  } else {
-                                    displayToastWithContext(
-                                      TypeMsg.error,
-                                      AdminTextConstants.addingError,
-                                    );
-                                  }
-                                });
+                              groupNotifier
+                                  .addMember(newGroup, e)
+                                  .then((value) {
+                                if (value) {
+                                  simpleGroupGroupsNotifier.setTData(
+                                    newGroup.id,
+                                    AsyncData([newGroup]),
+                                  );
+                                  displayToastWithContext(
+                                    TypeMsg.msg,
+                                    AdminTextConstants.addedMember,
+                                  );
+                                } else {
+                                  displayToastWithContext(
+                                    TypeMsg.error,
+                                    AdminTextConstants.addingError,
+                                  );
+                                }
                               });
                             }
                           },

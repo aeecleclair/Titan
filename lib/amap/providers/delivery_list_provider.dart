@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/amap/adapters/delivery.dart';
 
 class DeliveryListNotifier extends ListNotifierAPI<DeliveryReturn> {
@@ -93,12 +92,8 @@ class DeliveryListNotifier extends ListNotifierAPI<DeliveryReturn> {
 final deliveryListProvider = StateNotifierProvider<DeliveryListNotifier,
     AsyncValue<List<DeliveryReturn>>>((ref) {
   final deliveryListRepository = ref.read(repositoryProvider);
-  DeliveryListNotifier orderListNotifier =
-      DeliveryListNotifier(deliveriesListRepository: deliveryListRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await orderListNotifier.loadDeliveriesList();
-  });
-  return orderListNotifier;
+  return DeliveryListNotifier(deliveriesListRepository: deliveryListRepository)
+    ..loadDeliveriesList();
 });
 
 final deliveryList = Provider<List<DeliveryReturn>>((ref) {

@@ -2,7 +2,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class ScoreListNotifier extends ListNotifierAPI<FlappyBirdScoreInDB> {
   final Openapi scoreRepository;
@@ -25,9 +24,5 @@ class ScoreListNotifier extends ListNotifierAPI<FlappyBirdScoreInDB> {
 final scoreListProvider = StateNotifierProvider<ScoreListNotifier,
     AsyncValue<List<FlappyBirdScoreInDB>>>((ref) {
   final scoreRepository = ref.watch(repositoryProvider);
-  final notifier = ScoreListNotifier(scoreRepository: scoreRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.getLeaderboard();
-  });
-  return notifier;
+  return ScoreListNotifier(scoreRepository: scoreRepository)..getLeaderboard();
 });

@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class UserListNotifier extends ListNotifierAPI<CoreUserSimple> {
   final Openapi userListRepository;
@@ -34,11 +33,6 @@ final userList =
     StateNotifierProvider<UserListNotifier, AsyncValue<List<CoreUserSimple>>>(
   (ref) {
     final userListRepository = ref.watch(repositoryProvider);
-    UserListNotifier userListNotifier =
-        UserListNotifier(userListRepository: userListRepository);
-    tokenExpireWrapperAuth(ref, () async {
-      userListNotifier.clear();
-    });
-    return userListNotifier;
+    return UserListNotifier(userListRepository: userListRepository)..clear();
   },
 );

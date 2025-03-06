@@ -19,7 +19,6 @@ import 'package:myecl/booking/ui/components/booking_card.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/admin_button.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
@@ -151,36 +150,34 @@ class BookingMainPage extends HookConsumerWidget {
                           QR.to(BookingRouter.root + BookingRouter.detail);
                         },
                         onDelete: () async {
-                          await tokenExpireWrapper(ref, () async {
-                            await showDialog(
-                              context: context,
-                              builder: (context) => CustomDialogBox(
-                                descriptions: BookingTextConstants
-                                    .deleteBookingConfirmation,
-                                onYes: () async {
-                                  final value = await bookingsNotifier
-                                      .deleteBooking(e.id);
-                                  if (value) {
-                                    ref
-                                        .read(
-                                          managerBookingListProvider.notifier,
-                                        )
-                                        .loadUserManageBookings;
-                                    displayToastWithContext(
-                                      TypeMsg.msg,
-                                      BookingTextConstants.deleteBooking,
-                                    );
-                                  } else {
-                                    displayToastWithContext(
-                                      TypeMsg.error,
-                                      BookingTextConstants.deletingError,
-                                    );
-                                  }
-                                },
-                                title: BookingTextConstants.deleteBooking,
-                              ),
-                            );
-                          });
+                          await showDialog(
+                            context: context,
+                            builder: (context) => CustomDialogBox(
+                              descriptions: BookingTextConstants
+                                  .deleteBookingConfirmation,
+                              onYes: () async {
+                                final value =
+                                    await bookingsNotifier.deleteBooking(e.id);
+                                if (value) {
+                                  ref
+                                      .read(
+                                        managerBookingListProvider.notifier,
+                                      )
+                                      .loadUserManageBookings;
+                                  displayToastWithContext(
+                                    TypeMsg.msg,
+                                    BookingTextConstants.deleteBooking,
+                                  );
+                                } else {
+                                  displayToastWithContext(
+                                    TypeMsg.error,
+                                    BookingTextConstants.deletingError,
+                                  );
+                                }
+                              },
+                              title: BookingTextConstants.deleteBooking,
+                            ),
+                          );
                         },
                         onCopy: () {
                           handleBooking(

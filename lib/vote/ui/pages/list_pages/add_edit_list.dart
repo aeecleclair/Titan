@@ -8,7 +8,6 @@ import 'package:myecl/generated/openapi.enums.swagger.dart';
 import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
@@ -221,16 +220,14 @@ class AddEditListPage extends HookConsumerWidget {
                             children: <Widget>[
                               TextEntry(
                                 label: VoteTextConstants.members,
-                                onChanged: (newQuery) {
+                                onChanged: (newQuery) async {
                                   showNotifier.setId(true);
-                                  tokenExpireWrapper(ref, () async {
-                                    if (queryController.text.isNotEmpty) {
-                                      await usersNotifier
-                                          .filterUsers(queryController.text);
-                                    } else {
-                                      usersNotifier.clear();
-                                    }
-                                  });
+                                  if (queryController.text.isNotEmpty) {
+                                    await usersNotifier
+                                        .filterUsers(queryController.text);
+                                  } else {
+                                    usersNotifier.clear();
+                                  }
                                 },
                                 color: Colors.black,
                                 controller: queryController,
@@ -351,79 +348,77 @@ class AddEditListPage extends HookConsumerWidget {
                       return;
                     }
                     if (key.currentState!.validate()) {
-                      await tokenExpireWrapper(ref, () async {
-                        final listList = ref.watch(listListProvider);
-                        ListReturn newList = ListReturn(
-                          name: name.text,
-                          id: isEdit ? list.id : '',
-                          description: description.text,
-                          type: listType.value,
-                          members: members,
-                          section: section.value,
-                          program: program.text,
-                        );
-                        final value = isEdit
-                            ? await listListNotifier.updateList(newList)
-                            : await listListNotifier
-                                .addList(newList.toListBase());
-                        if (value) {
-                          QR.back();
-                          if (isEdit) {
-                            displayVoteToastWithContext(
-                              TypeMsg.msg,
-                              VoteTextConstants.editedPretendance,
-                            );
-                            listList.maybeWhen(
-                              data: (list) {
-                                final logoBytes = logo.value;
-                                if (logoBytes != null) {
-                                  listLogosNotifier.autoLoad(
-                                    ref,
-                                    newList.id,
-                                    (listId) => logoNotifier.updateLogo(
-                                      listId,
-                                      logoBytes,
-                                    ),
-                                  );
-                                }
-                              },
-                              orElse: () {},
-                            );
-                          } else {
-                            displayVoteToastWithContext(
-                              TypeMsg.msg,
-                              VoteTextConstants.addedPretendance,
-                            );
-                            listList.maybeWhen(
-                              data: (list) {
-                                final newList = list.last;
-                                final logoBytes = logo.value;
-                                if (logoBytes != null) {
-                                  listLogosNotifier.autoLoad(
-                                    ref,
-                                    newList.id,
-                                    (listId) => logoNotifier.updateLogo(
-                                      listId,
-                                      logoBytes,
-                                    ),
-                                  );
-                                }
-                              },
-                              orElse: () {},
-                            );
-                          }
-                          membersNotifier.clearMembers();
-                          sectionsNotifier.setTData(
-                            section.value,
-                            await listListNotifier.copy(),
+                      final listList = ref.watch(listListProvider);
+                      ListReturn newList = ListReturn(
+                        name: name.text,
+                        id: isEdit ? list.id : '',
+                        description: description.text,
+                        type: listType.value,
+                        members: members,
+                        section: section.value,
+                        program: program.text,
+                      );
+                      final value = isEdit
+                          ? await listListNotifier.updateList(newList)
+                          : await listListNotifier
+                              .addList(newList.toListBase());
+                      if (value) {
+                        QR.back();
+                        if (isEdit) {
+                          displayVoteToastWithContext(
+                            TypeMsg.msg,
+                            VoteTextConstants.editedPretendance,
+                          );
+                          listList.maybeWhen(
+                            data: (list) {
+                              final logoBytes = logo.value;
+                              if (logoBytes != null) {
+                                listLogosNotifier.autoLoad(
+                                  ref,
+                                  newList.id,
+                                  (listId) => logoNotifier.updateLogo(
+                                    listId,
+                                    logoBytes,
+                                  ),
+                                );
+                              }
+                            },
+                            orElse: () {},
                           );
                         } else {
                           displayVoteToastWithContext(
-                            TypeMsg.error,
-                            VoteTextConstants.editingError,
+                            TypeMsg.msg,
+                            VoteTextConstants.addedPretendance,
+                          );
+                          listList.maybeWhen(
+                            data: (list) {
+                              final newList = list.last;
+                              final logoBytes = logo.value;
+                              if (logoBytes != null) {
+                                listLogosNotifier.autoLoad(
+                                  ref,
+                                  newList.id,
+                                  (listId) => logoNotifier.updateLogo(
+                                    listId,
+                                    logoBytes,
+                                  ),
+                                );
+                              }
+                            },
+                            orElse: () {},
                           );
                         }
-                      });
+                        membersNotifier.clearMembers();
+                        sectionsNotifier.setTData(
+                          section.value,
+                          await listListNotifier.copy(),
+                        );
+                      } else {
+                        displayVoteToastWithContext(
+                          TypeMsg.error,
+                          VoteTextConstants.editingError,
+                        );
+                      }
                     } else {
                       displayToast(
                         context,

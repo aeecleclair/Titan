@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/booking/adapters/booking.dart';
 
 class UserBookingListProvider extends ListNotifierAPI<BookingReturn> {
@@ -46,10 +45,6 @@ class UserBookingListProvider extends ListNotifierAPI<BookingReturn> {
 final userBookingListProvider = StateNotifierProvider<UserBookingListProvider,
     AsyncValue<List<BookingReturn>>>((ref) {
   final bookingRepository = ref.watch(repositoryProvider);
-  final provider =
-      UserBookingListProvider(bookingRepository: bookingRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await provider.loadUserBookings();
-  });
-  return provider;
+  return UserBookingListProvider(bookingRepository: bookingRepository)
+    ..loadUserBookings();
 });

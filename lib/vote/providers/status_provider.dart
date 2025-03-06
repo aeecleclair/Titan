@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/single_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class StatusNotifier extends SingleNotifierAPI<VoteStatus> {
   final Openapi statusRepository;
@@ -57,9 +56,5 @@ class StatusNotifier extends SingleNotifierAPI<VoteStatus> {
 final statusProvider =
     StateNotifierProvider<StatusNotifier, AsyncValue<VoteStatus>>((ref) {
   final statusRepository = ref.watch(repositoryProvider);
-  final statusNotifier = StatusNotifier(statusRepository: statusRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await statusNotifier.loadStatus();
-  });
-  return statusNotifier;
+  return StatusNotifier(statusRepository: statusRepository)..loadStatus();
 });

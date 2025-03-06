@@ -18,7 +18,6 @@ import 'package:myecl/loan/ui/pages/admin_page/loan_card.dart';
 import 'package:myecl/loan/ui/pages/admin_page/delay_dialog.dart';
 import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
@@ -126,25 +125,23 @@ class OnGoingLoan extends HookConsumerWidget {
                             end: e.end.add(Duration(days: i)),
                           );
                           await loanNotifier.setLoan(newLoan);
-                          tokenExpireWrapper(ref, () async {
-                            final value =
-                                await loanListNotifier.extendLoan(newLoan, i);
-                            if (value) {
-                              adminLoanListNotifier.setTData(
-                                loaner,
-                                await loanListNotifier.copy(),
-                              );
-                              displayToastWithContext(
-                                TypeMsg.msg,
-                                LoanTextConstants.extendedLoan,
-                              );
-                            } else {
-                              displayToastWithContext(
-                                TypeMsg.error,
-                                LoanTextConstants.extendingError,
-                              );
-                            }
-                          });
+                          final value =
+                              await loanListNotifier.extendLoan(newLoan, i);
+                          if (value) {
+                            adminLoanListNotifier.setTData(
+                              loaner,
+                              await loanListNotifier.copy(),
+                            );
+                            displayToastWithContext(
+                              TypeMsg.msg,
+                              LoanTextConstants.extendedLoan,
+                            );
+                          } else {
+                            displayToastWithContext(
+                              TypeMsg.error,
+                              LoanTextConstants.extendingError,
+                            );
+                          }
                         },
                       );
                     },
@@ -157,46 +154,44 @@ class OnGoingLoan extends HookConsumerWidget {
                       title: LoanTextConstants.returnLoan,
                       descriptions: LoanTextConstants.returnLoanDescription,
                       onYes: () async {
-                        await tokenExpireWrapper(ref, () async {
-                          final loanItemsId =
-                              e.itemsQty.map((e) => e.itemSimple.id).toList();
-                          final updatedItems = loanersItems[loaner]!
-                              .maybeWhen<List<Item>>(
-                            data: (items) => items,
-                            orElse: () => [],
-                          )
-                              .map(
-                            (item) {
-                              if (loanItemsId.contains(item.id)) {
-                                return item.copyWith();
-                              }
-                              return item;
-                            },
-                          ).toList();
-                          final value = await loanListNotifier.returnLoan(e.id);
-                          if (value) {
-                            QR.to(
-                              LoanRouter.root + LoanRouter.admin,
-                            );
-                            loanersItemsNotifier.setTData(
-                              loaner,
-                              AsyncData(updatedItems),
-                            );
-                            adminLoanListNotifier.setTData(
-                              loaner,
-                              await loanListNotifier.copy(),
-                            );
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              LoanTextConstants.returnedLoan,
-                            );
-                          } else {
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              LoanTextConstants.returningError,
-                            );
-                          }
-                        });
+                        final loanItemsId =
+                            e.itemsQty.map((e) => e.itemSimple.id).toList();
+                        final updatedItems = loanersItems[loaner]!
+                            .maybeWhen<List<Item>>(
+                          data: (items) => items,
+                          orElse: () => [],
+                        )
+                            .map(
+                          (item) {
+                            if (loanItemsId.contains(item.id)) {
+                              return item.copyWith();
+                            }
+                            return item;
+                          },
+                        ).toList();
+                        final value = await loanListNotifier.returnLoan(e.id);
+                        if (value) {
+                          QR.to(
+                            LoanRouter.root + LoanRouter.admin,
+                          );
+                          loanersItemsNotifier.setTData(
+                            loaner,
+                            AsyncData(updatedItems),
+                          );
+                          adminLoanListNotifier.setTData(
+                            loaner,
+                            await loanListNotifier.copy(),
+                          );
+                          displayToastWithContext(
+                            TypeMsg.msg,
+                            LoanTextConstants.returnedLoan,
+                          );
+                        } else {
+                          displayToastWithContext(
+                            TypeMsg.msg,
+                            LoanTextConstants.returningError,
+                          );
+                        }
                       },
                     ),
                   );

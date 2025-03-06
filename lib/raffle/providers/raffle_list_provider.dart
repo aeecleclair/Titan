@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class RaffleListNotifier extends ListNotifierAPI<RaffleComplete> {
   final Openapi raffleRepository;
@@ -54,10 +53,6 @@ final raffleListProvider =
     StateNotifierProvider<RaffleListNotifier, AsyncValue<List<RaffleComplete>>>(
         (ref) {
   final raffleRepository = ref.watch(repositoryProvider);
-  RaffleListNotifier notifier =
-      RaffleListNotifier(raffleRepository: raffleRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadRaffleList();
-  });
-  return notifier;
+  return RaffleListNotifier(raffleRepository: raffleRepository)
+    ..loadRaffleList();
 });

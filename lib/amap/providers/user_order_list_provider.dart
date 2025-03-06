@@ -4,7 +4,6 @@ import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/amap/adapters/order.dart';
 
 class UserOrderListNotifier extends ListNotifierAPI<OrderReturn> {
@@ -178,11 +177,9 @@ final userOrderListProvider =
   UserOrderListNotifier userOrderListNotifier = UserOrderListNotifier(
     userOrderListRepository: userOrderListRepository,
   );
-  tokenExpireWrapperAuth(ref, () async {
-    final userId = ref.watch(idProvider);
-    userId.whenData(
-      (value) async => await userOrderListNotifier.loadOrderList(value),
-    );
-  });
+  final userId = ref.watch(idProvider);
+  userId.whenData(
+    (value) async => await userOrderListNotifier.loadOrderList(value),
+  );
   return userOrderListNotifier;
 });

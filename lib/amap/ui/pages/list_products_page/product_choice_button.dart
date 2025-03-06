@@ -10,7 +10,6 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/user/adapters/users.dart';
@@ -79,40 +78,37 @@ class ProductChoiceButton extends HookConsumerWidget {
                     user: me.toCoreUserSimple(),
                     amount: order.amount,
                   );
-                  await tokenExpireWrapper(ref, () async {
-                    final value = isEdit
-                        ? await orderListNotifier.updateOrder(newOrder)
-                        : await orderListNotifier
-                            .addOrder(newOrder.toOrderBase());
-                    if (value) {
-                      QR.back();
-                      userAmountNotifier
-                          .updateCash(order.amount - order.amount);
-                      if (isEdit) {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          AMAPTextConstants.updatedOrder,
-                        );
-                      } else {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          AMAPTextConstants.addedOrder,
-                        );
-                      }
+                  final value = isEdit
+                      ? await orderListNotifier.updateOrder(newOrder)
+                      : await orderListNotifier
+                          .addOrder(newOrder.toOrderBase());
+                  if (value) {
+                    QR.back();
+                    userAmountNotifier.updateCash(order.amount - order.amount);
+                    if (isEdit) {
+                      displayToastWithContext(
+                        TypeMsg.msg,
+                        AMAPTextConstants.updatedOrder,
+                      );
                     } else {
-                      if (isEdit) {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          AMAPTextConstants.updatingError,
-                        );
-                      } else {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          AMAPTextConstants.addingError,
-                        );
-                      }
+                      displayToastWithContext(
+                        TypeMsg.msg,
+                        AMAPTextConstants.addedOrder,
+                      );
                     }
-                  });
+                  } else {
+                    if (isEdit) {
+                      displayToastWithContext(
+                        TypeMsg.error,
+                        AMAPTextConstants.updatingError,
+                      );
+                    } else {
+                      displayToastWithContext(
+                        TypeMsg.error,
+                        AMAPTextConstants.addingError,
+                      );
+                    }
+                  }
                 }
               },
               child: Text(

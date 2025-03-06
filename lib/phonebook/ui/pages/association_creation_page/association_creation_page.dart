@@ -13,7 +13,6 @@ import 'package:myecl/phonebook/ui/components/kinds_bar.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
@@ -110,44 +109,42 @@ class AssociationCreationPage extends HookConsumerWidget {
                           );
                           return;
                         }
-                        await tokenExpireWrapper(ref, () async {
-                          final value =
-                              await associationListNotifier.createAssociation(
-                            AssociationBase(
-                              name: name.text,
-                              description: description.text,
-                              kind: Kinds.values
-                                  .firstWhere((e) => e.name == kind),
-                              mandateYear: DateTime.now().year,
-                            ),
+                        final value =
+                            await associationListNotifier.createAssociation(
+                          AssociationBase(
+                            name: name.text,
+                            description: description.text,
+                            kind:
+                                Kinds.values.firstWhere((e) => e.name == kind),
+                            mandateYear: DateTime.now().year,
+                          ),
+                        );
+                        if (value) {
+                          displayToastWithContext(
+                            TypeMsg.msg,
+                            PhonebookTextConstants.addedAssociation,
                           );
-                          if (value) {
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              PhonebookTextConstants.addedAssociation,
-                            );
-                            associations.when(
-                              data: (d) {
-                                associationNotifier.setAssociation(d.last);
-                                QR.to(
-                                  PhonebookRouter.root +
-                                      PhonebookRouter.admin +
-                                      PhonebookRouter.editAssociation,
-                                );
-                              },
-                              error: (e, s) => displayToastWithContext(
-                                TypeMsg.error,
-                                PhonebookTextConstants.errorAssociationLoading,
-                              ),
-                              loading: () {},
-                            );
-                          } else {
-                            displayToastWithContext(
+                          associations.when(
+                            data: (d) {
+                              associationNotifier.setAssociation(d.last);
+                              QR.to(
+                                PhonebookRouter.root +
+                                    PhonebookRouter.admin +
+                                    PhonebookRouter.editAssociation,
+                              );
+                            },
+                            error: (e, s) => displayToastWithContext(
                               TypeMsg.error,
-                              AdminTextConstants.addingError,
-                            );
-                          }
-                        });
+                              PhonebookTextConstants.errorAssociationLoading,
+                            ),
+                            loading: () {},
+                          );
+                        } else {
+                          displayToastWithContext(
+                            TypeMsg.error,
+                            AdminTextConstants.addingError,
+                          );
+                        }
                       },
                       child: const Text(
                         AdminTextConstants.add,

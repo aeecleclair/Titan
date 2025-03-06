@@ -15,7 +15,6 @@ import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
@@ -71,16 +70,11 @@ class MembershipEditorPage extends HookConsumerWidget {
                   label: PhonebookTextConstants.member,
                   editingController: queryController,
                   onChanged: (value) async {
-                    tokenExpireWrapper(
-                      ref,
-                      () async {
-                        if (value.isNotEmpty) {
-                          await usersNotifier.filterUsers(value);
-                        } else {
-                          usersNotifier.clear();
-                        }
-                      },
-                    );
+                    if (value.isNotEmpty) {
+                      await usersNotifier.filterUsers(value);
+                    } else {
+                      usersNotifier.clear();
+                    }
                   },
                 ),
                 SearchResult(queryController: queryController),
@@ -187,89 +181,84 @@ class MembershipEditorPage extends HookConsumerWidget {
                     );
                     return;
                   }
+                  if (isEdit) {
+                    final membershipEdit = membership.copyWith(
+                      roleTags: memberRoleTags,
+                      roleName: apparentNameController.text,
+                    );
+                    member.memberships[member.memberships.indexWhere(
+                      (membership) => membership.id == membershipEdit.id,
+                    )] = membershipEdit;
+                    final value =
+                        await associationMemberListNotifier.updateMember(
+                      member,
+                      membershipEdit,
+                    );
+                    if (value) {
+                      associationMemberListNotifier.loadMembers(
+                        association.id,
+                        association.mandateYear,
+                      );
+                      displayToastWithContext(
+                        TypeMsg.msg,
+                        PhonebookTextConstants.updatedMember,
+                      );
+                      QR.back();
+                    } else {
+                      displayToastWithContext(
+                        TypeMsg.error,
+                        PhonebookTextConstants.updatingError,
+                      );
+                    }
+                  } else {
+                    // Test if the membership already exists with (association_id,member_id,mandate_year)
+                    final memberAssociationMemberships =
+                        member.memberships.where(
+                      (membership) =>
+                          membership.associationId == association.id,
+                    );
 
-                  tokenExpireWrapper(
-                    ref,
-                    () async {
-                      if (isEdit) {
-                        final membershipEdit = membership.copyWith(
-                          roleTags: memberRoleTags,
-                          roleName: apparentNameController.text,
-                        );
-                        member.memberships[member.memberships.indexWhere(
-                          (membership) => membership.id == membershipEdit.id,
-                        )] = membershipEdit;
-                        final value =
-                            await associationMemberListNotifier.updateMember(
-                          member,
-                          membershipEdit,
-                        );
-                        if (value) {
-                          associationMemberListNotifier.loadMembers(
-                            association.id,
-                            association.mandateYear,
-                          );
-                          displayToastWithContext(
-                            TypeMsg.msg,
-                            PhonebookTextConstants.updatedMember,
-                          );
-                          QR.back();
-                        } else {
-                          displayToastWithContext(
-                            TypeMsg.error,
-                            PhonebookTextConstants.updatingError,
-                          );
-                        }
-                      } else {
-                        // Test if the membership already exists with (association_id,member_id,mandate_year)
-                        final memberAssociationMemberships =
-                            member.memberships.where(
+                    if (memberAssociationMemberships
+                        .where(
                           (membership) =>
-                              membership.associationId == association.id,
-                        );
+                              membership.mandateYear == association.mandateYear,
+                        )
+                        .isNotEmpty) {
+                      displayToastWithContext(
+                        TypeMsg.msg,
+                        PhonebookTextConstants.existingMembership,
+                      );
+                      return;
+                    }
 
-                        if (memberAssociationMemberships
-                            .where(
-                              (membership) =>
-                                  membership.mandateYear ==
-                                  association.mandateYear,
-                            )
-                            .isNotEmpty) {
-                          displayToastWithContext(
-                            TypeMsg.msg,
-                            PhonebookTextConstants.existingMembership,
-                          );
-                          return;
-                        }
-
-                        final membershipAdd =
-                            AppModulesPhonebookSchemasPhonebookMembershipBase(
-                          associationId: association.id,
-                          roleName: apparentNameController.text,
-                          mandateYear: association.mandateYear,
-                          memberOrder: associationMembers.maybeWhen(
-                            data: (members) => members.length,
-                            orElse: () => 0,
-                          ),
-                          userId: member.id,
-                        );
-                        final value = await associationMemberListNotifier
-                            .addMember(member, membershipAdd);
-                        if (value) {
-                          displayToastWithContext(
-                            TypeMsg.msg,
-                            PhonebookTextConstants.addedMember,
-                          );
-                          QR.back();
-                        } else {
-                          displayToastWithContext(
-                            TypeMsg.error,
-                            PhonebookTextConstants.addingError,
-                          );
-                        }
-                      }
-                    },
-                  );
+                    final membershipAdd =
+                        AppModulesPhonebookSchemasPhonebookMembershipBase(
+                      associationId: association.id,
+                      roleName: apparentNameController.text,
+                      mandateYear: association.mandateYear,
+                      memberOrder: associationMembers.maybeWhen(
+                        data: (members) => members.length,
+                        orElse: () => 0,
+                      ),
+                      userId: member.id,
+                    );
+                    final value = await associationMemberListNotifier.addMember(
+                      member,
+                      membershipAdd,
+                    );
+                    if (value) {
+                      displayToastWithContext(
+                        TypeMsg.msg,
+                        PhonebookTextConstants.addedMember,
+                      );
+                      QR.back();
+                    } else {
+                      displayToastWithContext(
+                        TypeMsg.error,
+                        PhonebookTextConstants.addingError,
+                      );
+                    }
+                  }
                 },
               ),
             ],

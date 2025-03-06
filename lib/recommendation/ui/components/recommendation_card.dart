@@ -12,7 +12,6 @@ import 'package:myecl/recommendation/router.dart';
 import 'package:myecl/recommendation/tools/constants.dart';
 import 'package:myecl/recommendation/ui/components/recommendation_card_layout.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
@@ -160,40 +159,35 @@ class RecommendationCard extends HookConsumerWidget {
                               const SizedBox(height: 10),
                               GestureDetector(
                                 onTap: () async {
-                                  await tokenExpireWrapper(
-                                    ref,
-                                    () async {
-                                      await showDialog(
-                                        context: context,
-                                        builder: (context) => CustomDialogBox(
-                                          descriptions: RecommendationTextConstants
-                                              .deleteRecommendationConfirmation,
-                                          onYes: () async {
-                                            final value =
-                                                await recommendationListNotifier
-                                                    .deleteRecommendation(
-                                              recommendation.id,
-                                            );
-                                            if (value) {
-                                              displayToastWithContext(
-                                                TypeMsg.msg,
-                                                RecommendationTextConstants
-                                                    .deletedRecommendation,
-                                              );
-                                              QR.back();
-                                            } else {
-                                              displayToastWithContext(
-                                                TypeMsg.error,
-                                                RecommendationTextConstants
-                                                    .deletingRecommendationError,
-                                              );
-                                            }
-                                          },
-                                          title: RecommendationTextConstants
-                                              .deleteRecommendation,
-                                        ),
-                                      );
-                                    },
+                                  await showDialog(
+                                    context: context,
+                                    builder: (context) => CustomDialogBox(
+                                      descriptions: RecommendationTextConstants
+                                          .deleteRecommendationConfirmation,
+                                      onYes: () async {
+                                        final value =
+                                            await recommendationListNotifier
+                                                .deleteRecommendation(
+                                          recommendation.id,
+                                        );
+                                        if (value) {
+                                          displayToastWithContext(
+                                            TypeMsg.msg,
+                                            RecommendationTextConstants
+                                                .deletedRecommendation,
+                                          );
+                                          QR.back();
+                                        } else {
+                                          displayToastWithContext(
+                                            TypeMsg.error,
+                                            RecommendationTextConstants
+                                                .deletingRecommendationError,
+                                          );
+                                        }
+                                      },
+                                      title: RecommendationTextConstants
+                                          .deleteRecommendation,
+                                    ),
                                   );
                                 },
                                 child: const CardButton(

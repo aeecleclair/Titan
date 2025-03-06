@@ -2,7 +2,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class VoterListNotifier extends ListNotifierAPI<VoterGroup> {
   final Openapi voterRepository;
@@ -33,9 +32,5 @@ final voterListProvider =
     StateNotifierProvider<VoterListNotifier, AsyncValue<List<VoterGroup>>>(
         (ref) {
   final voterRepository = ref.watch(repositoryProvider);
-  final voterListNotifier = VoterListNotifier(voterRepository: voterRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await voterListNotifier.loadVoterList();
-  });
-  return voterListNotifier;
+  return VoterListNotifier(voterRepository: voterRepository)..loadVoterList();
 });

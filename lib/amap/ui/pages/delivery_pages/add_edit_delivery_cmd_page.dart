@@ -14,7 +14,6 @@ import 'package:myecl/amap/ui/pages/delivery_pages/product_ui_check.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
@@ -154,53 +153,50 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                   ),
                                   status: DeliveryStatusType.creation,
                                 );
-                                await tokenExpireWrapper(ref, () async {
-                                  final deliveryNotifier = ref.watch(
-                                    deliveryListProvider.notifier,
-                                  );
-                                  final value = isEdit
-                                      ? await deliveryNotifier
-                                          .updateDelivery(del)
-                                      : await deliveryNotifier
-                                          .addDelivery(del.toDeliveryBase());
-                                  if (value) {
-                                    QR.back();
-                                    if (isEdit) {
-                                      displayToastWithContext(
-                                        TypeMsg.msg,
-                                        AMAPTextConstants.editedCommand,
-                                      );
-                                    } else {
-                                      final deliveryOrdersNotifier = ref.watch(
-                                        adminDeliveryOrderListProvider.notifier,
-                                      );
-                                      final deliveryList = ref.watch(
-                                        deliveryListProvider,
-                                      );
-                                      deliveryList.whenData((deliveries) {
-                                        deliveryOrdersNotifier.addT(
-                                          deliveries.last.id,
-                                        );
-                                      });
-                                      displayToastWithContext(
-                                        TypeMsg.msg,
-                                        AMAPTextConstants.addedCommand,
-                                      );
-                                    }
+                                final deliveryNotifier = ref.watch(
+                                  deliveryListProvider.notifier,
+                                );
+                                final value = isEdit
+                                    ? await deliveryNotifier.updateDelivery(del)
+                                    : await deliveryNotifier
+                                        .addDelivery(del.toDeliveryBase());
+                                if (value) {
+                                  QR.back();
+                                  if (isEdit) {
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
+                                      AMAPTextConstants.editedCommand,
+                                    );
                                   } else {
-                                    if (isEdit) {
-                                      displayToastWithContext(
-                                        TypeMsg.error,
-                                        AMAPTextConstants.editingError,
+                                    final deliveryOrdersNotifier = ref.watch(
+                                      adminDeliveryOrderListProvider.notifier,
+                                    );
+                                    final deliveryList = ref.watch(
+                                      deliveryListProvider,
+                                    );
+                                    deliveryList.whenData((deliveries) {
+                                      deliveryOrdersNotifier.addT(
+                                        deliveries.last.id,
                                       );
-                                    } else {
-                                      displayToastWithContext(
-                                        TypeMsg.error,
-                                        AMAPTextConstants.alreadyExistCommand,
-                                      );
-                                    }
+                                    });
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
+                                      AMAPTextConstants.addedCommand,
+                                    );
                                   }
-                                });
+                                } else {
+                                  if (isEdit) {
+                                    displayToastWithContext(
+                                      TypeMsg.error,
+                                      AMAPTextConstants.editingError,
+                                    );
+                                  } else {
+                                    displayToastWithContext(
+                                      TypeMsg.error,
+                                      AMAPTextConstants.alreadyExistCommand,
+                                    );
+                                  }
+                                }
                               } else {
                                 displayToast(
                                   context,

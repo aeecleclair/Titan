@@ -16,7 +16,6 @@ import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/widgets/styled_search_bar.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -101,30 +100,28 @@ class LoanersItems extends HookConsumerWidget {
                     builder: (BuildContext context) {
                       return CustomDialogBox(
                         descriptions: LoanTextConstants.deletingItem,
-                        onYes: () {
-                          tokenExpireWrapper(ref, () async {
-                            final value = await itemListNotifier.deleteItem(
-                              e.id,
-                              loaner.id,
+                        onYes: () async {
+                          final value = await itemListNotifier.deleteItem(
+                            e.id,
+                            loaner.id,
+                          );
+                          if (value) {
+                            itemListNotifier.copy().then((value) {
+                              loanersItemsNotifier.setTData(
+                                loaner,
+                                value,
+                              );
+                            });
+                            displayToastWithContext(
+                              TypeMsg.msg,
+                              LoanTextConstants.deletedItem,
                             );
-                            if (value) {
-                              itemListNotifier.copy().then((value) {
-                                loanersItemsNotifier.setTData(
-                                  loaner,
-                                  value,
-                                );
-                              });
-                              displayToastWithContext(
-                                TypeMsg.msg,
-                                LoanTextConstants.deletedItem,
-                              );
-                            } else {
-                              displayToastWithContext(
-                                TypeMsg.error,
-                                LoanTextConstants.deletingError,
-                              );
-                            }
-                          });
+                          } else {
+                            displayToastWithContext(
+                              TypeMsg.error,
+                              LoanTextConstants.deletingError,
+                            );
+                          }
                         },
                         title: LoanTextConstants.delete,
                       );

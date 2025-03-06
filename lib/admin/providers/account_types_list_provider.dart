@@ -3,8 +3,6 @@ import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
-import 'package:myecl/tools/token_expire_wrapper.dart';
-
 class AccountTypesNotifier extends ListNotifierAPI<AccountType> {
   final Openapi accountTypeRepository;
   AccountTypesNotifier({required this.accountTypeRepository})
@@ -19,10 +17,6 @@ final allAccountTypesListProvider =
     StateNotifierProvider<AccountTypesNotifier, AsyncValue<List<AccountType>>>(
         (ref) {
   final accountTypeRepository = ref.watch(repositoryProvider);
-  AccountTypesNotifier provider =
-      AccountTypesNotifier(accountTypeRepository: accountTypeRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await provider.loadAccountTypes();
-  });
-  return provider;
+  return AccountTypesNotifier(accountTypeRepository: accountTypeRepository)
+    ..loadAccountTypes();
 });

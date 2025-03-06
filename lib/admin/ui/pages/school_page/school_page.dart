@@ -13,7 +13,6 @@ import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -103,21 +102,19 @@ class SchoolsPage extends HookConsumerWidget {
                                       descriptions:
                                           AdminTextConstants.deleteSchool,
                                       onYes: () async {
-                                        tokenExpireWrapper(ref, () async {
-                                          final value = await schoolsNotifier
-                                              .deleteSchool(school.id);
-                                          if (value) {
-                                            displayToastWithContext(
-                                              TypeMsg.msg,
-                                              AdminTextConstants.deletedSchool,
-                                            );
-                                          } else {
-                                            displayToastWithContext(
-                                              TypeMsg.error,
-                                              AdminTextConstants.deletingError,
-                                            );
-                                          }
-                                        });
+                                        final value = await schoolsNotifier
+                                            .deleteSchool(school.id);
+                                        if (value) {
+                                          displayToastWithContext(
+                                            TypeMsg.msg,
+                                            AdminTextConstants.deletedSchool,
+                                          );
+                                        } else {
+                                          displayToastWithContext(
+                                            TypeMsg.error,
+                                            AdminTextConstants.deletingError,
+                                          );
+                                        }
                                       },
                                     );
                                   },

@@ -11,7 +11,6 @@ import 'package:myecl/purchases/tools/constants.dart';
 import 'package:myecl/purchases/ui/pages/scan_page/qr_code_scanner.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
@@ -141,31 +140,29 @@ class ScanDialog extends HookConsumerWidget {
                       child: QRCodeScannerScreen(
                         scanner: scanner,
                         onScan: (secret) async {
-                          await tokenExpireWrapper(ref, () async {
-                            await scannerNotifier.scanTicket(
-                              sellerId,
-                              productId,
-                              ticket.id,
-                            );
-                            scanner.when(
-                              data: (data) {
-                                scannerNotifier.setSecret(secret);
-                              },
-                              error: (error, stack) {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  error.toString(),
-                                );
-                                Future.delayed(
-                                  const Duration(seconds: 2),
-                                  () {
-                                    scannerNotifier.reset();
-                                  },
-                                );
-                              },
-                              loading: () {},
-                            );
-                          });
+                          await scannerNotifier.scanTicket(
+                            sellerId,
+                            productId,
+                            ticket.id,
+                          );
+                          scanner.when(
+                            data: (data) {
+                              scannerNotifier.setSecret(secret);
+                            },
+                            error: (error, stack) {
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                error.toString(),
+                              );
+                              Future.delayed(
+                                const Duration(seconds: 2),
+                                () {
+                                  scannerNotifier.reset();
+                                },
+                              );
+                            },
+                            loading: () {},
+                          );
                         },
                       ),
                     ),
@@ -225,29 +222,27 @@ class ScanDialog extends HookConsumerWidget {
                                 const Spacer(),
                                 GestureDetector(
                                   onTap: () async {
-                                    await tokenExpireWrapper(ref, () async {
-                                      final value = await ticketListNotifier
-                                          .consumeTicket(
-                                        sellerId,
-                                        productId,
-                                        scannerNotifier.secret,
-                                        data,
-                                        ticket.id,
-                                        tag,
+                                    final value =
+                                        await ticketListNotifier.consumeTicket(
+                                      sellerId,
+                                      productId,
+                                      scannerNotifier.secret,
+                                      data,
+                                      ticket.id,
+                                      tag,
+                                    );
+                                    if (value) {
+                                      displayToastWithContext(
+                                        TypeMsg.msg,
+                                        "Scan validé",
                                       );
-                                      if (value) {
-                                        displayToastWithContext(
-                                          TypeMsg.msg,
-                                          "Scan validé",
-                                        );
-                                        scannerNotifier.reset();
-                                      } else {
-                                        displayToastWithContext(
-                                          TypeMsg.error,
-                                          "Erreur lors de la validation",
-                                        );
-                                      }
-                                    });
+                                      scannerNotifier.reset();
+                                    } else {
+                                      displayToastWithContext(
+                                        TypeMsg.error,
+                                        "Erreur lors de la validation",
+                                      );
+                                    }
                                   },
                                   child: const SizedBox(
                                     width: 100,

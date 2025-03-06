@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/event/adapters/event.dart';
 
 class EventListNotifier extends ListNotifierAPI<EventReturn> {
@@ -56,10 +55,5 @@ final eventListProvider =
     StateNotifierProvider<EventListNotifier, AsyncValue<List<EventReturn>>>(
         (ref) {
   final eventRepository = ref.watch(repositoryProvider);
-  EventListNotifier notifier =
-      EventListNotifier(eventRepository: eventRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadEventList();
-  });
-  return notifier;
+  return EventListNotifier(eventRepository: eventRepository)..loadEventList();
 });

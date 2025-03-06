@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/amap/adapters/cash.dart';
 
 class CashListProvider extends ListNotifierAPI<CashComplete> {
@@ -76,11 +75,6 @@ final cashListProvider =
     StateNotifierProvider<CashListProvider, AsyncValue<List<CashComplete>>>(
   (ref) {
     final cashRepository = ref.watch(repositoryProvider);
-    CashListProvider cashListProvider =
-        CashListProvider(cashRepository: cashRepository);
-    tokenExpireWrapperAuth(ref, () async {
-      await cashListProvider.loadCashList();
-    });
-    return cashListProvider;
+    return CashListProvider(cashRepository: cashRepository)..loadCashList();
   },
 );

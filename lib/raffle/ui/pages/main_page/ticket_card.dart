@@ -9,7 +9,6 @@ import 'package:myecl/raffle/providers/tombola_logos_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/main_page/ticket_card_background.dart';
 import 'package:myecl/tools/builders/empty_models.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class TicketWidget extends HookConsumerWidget {
   final List<TicketComplete> ticket;
@@ -75,15 +74,13 @@ class TicketWidget extends HookConsumerWidget {
                                         const AsyncLoading(),
                                       );
                                     });
-                                    tokenExpireWrapper(ref, () async {
-                                      tombolaLogoNotifier
-                                          .getLogo(raffle.id)
-                                          .then((value) {
-                                        tombolaLogosNotifier.setTData(
-                                          raffle.id,
-                                          AsyncData([value]),
-                                        );
-                                      });
+                                    tombolaLogoNotifier
+                                        .getLogo(raffle.id)
+                                        .then((value) {
+                                      tombolaLogosNotifier.setTData(
+                                        raffle.id,
+                                        AsyncData([value]),
+                                      );
                                     });
                                     return const HeroIcon(
                                       HeroIcons.cubeTransparent,

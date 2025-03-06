@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/map_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class RolesTagsNotifier extends MapNotifier<String, bool> {
   final Openapi rolesTagsRepository;
@@ -42,10 +41,6 @@ class RolesTagsNotifier extends MapNotifier<String, bool> {
 final rolesTagsProvider = StateNotifierProvider<RolesTagsNotifier,
     Map<String, AsyncValue<List<bool>>?>>((ref) {
   final rolesTagsRepository = ref.watch(repositoryProvider);
-  RolesTagsNotifier notifier =
-      RolesTagsNotifier(rolesTagsRepository: rolesTagsRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadRolesTags();
-  });
-  return notifier;
+  return RolesTagsNotifier(rolesTagsRepository: rolesTagsRepository)
+    ..loadRolesTags();
 });

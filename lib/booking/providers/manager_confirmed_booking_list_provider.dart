@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class ManagerConfirmedBookingListProvider
     extends ListNotifierAPI<BookingReturnSimpleApplicant> {
@@ -34,15 +33,8 @@ final managerConfirmedBookingListProvider = StateNotifierProvider<
     AsyncValue<List<BookingReturnSimpleApplicant>>>(
   (ref) {
     final bookingRepository = ref.watch(repositoryProvider);
-    final provider = ManagerConfirmedBookingListProvider(
+    return ManagerConfirmedBookingListProvider(
       bookingRepository: bookingRepository,
-    );
-    tokenExpireWrapperAuth(
-      ref,
-      () async {
-        await provider.loadConfirmedBookingForManager();
-      },
-    );
-    return provider;
+    )..loadConfirmedBookingForManager();
   },
 );

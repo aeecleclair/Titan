@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/advert/adapters/advert.dart';
 
 class AdvertListNotifier extends ListNotifierAPI<AdvertReturnComplete> {
@@ -45,10 +44,6 @@ class AdvertListNotifier extends ListNotifierAPI<AdvertReturnComplete> {
 final advertListProvider = StateNotifierProvider<AdvertListNotifier,
     AsyncValue<List<AdvertReturnComplete>>>((ref) {
   final advertListRepository = ref.watch(repositoryProvider);
-  AdvertListNotifier notifier =
-      AdvertListNotifier(advertListRepository: advertListRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadAdverts();
-  });
-  return notifier;
+  return AdvertListNotifier(advertListRepository: advertListRepository)
+    ..loadAdverts();
 });

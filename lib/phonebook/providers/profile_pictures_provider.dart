@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/tools/providers/map_provider.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class ProfilePictureNotifier extends MapNotifier<MemberComplete, Image> {
   ProfilePictureNotifier() : super();
@@ -12,20 +11,18 @@ class ProfilePictureNotifier extends MapNotifier<MemberComplete, Image> {
 final profilePicturesProvider = StateNotifierProvider<ProfilePictureNotifier,
     Map<MemberComplete, AsyncValue<List<Image>>?>>((ref) {
   ProfilePictureNotifier profilePictureNotifier = ProfilePictureNotifier();
-  tokenExpireWrapperAuth(ref, () async {
-    ref.watch(associationMemberListProvider).maybeWhen(
-      data: (profile) {
-        profilePictureNotifier.loadTList(profile);
-        for (final l in profile) {
-          profilePictureNotifier.setTData(l, const AsyncValue.data([]));
-        }
-        return profilePictureNotifier;
-      },
-      orElse: () {
-        profilePictureNotifier.loadTList([]);
-        return profilePictureNotifier;
-      },
-    );
-  });
+  ref.watch(associationMemberListProvider).maybeWhen(
+    data: (profile) {
+      profilePictureNotifier.loadTList(profile);
+      for (final l in profile) {
+        profilePictureNotifier.setTData(l, const AsyncValue.data([]));
+      }
+      return profilePictureNotifier;
+    },
+    orElse: () {
+      profilePictureNotifier.loadTList([]);
+      return profilePictureNotifier;
+    },
+  );
   return profilePictureNotifier;
 });

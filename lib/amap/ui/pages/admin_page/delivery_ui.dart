@@ -17,7 +17,6 @@ import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -179,22 +178,20 @@ class DeliveryUi extends HookConsumerWidget {
                               descriptions:
                                   AMAPTextConstants.deleteDeliveryDescription,
                               onYes: () async {
-                                await tokenExpireWrapper(ref, () async {
-                                  deliveryListNotifier
-                                      .deleteDelivery(delivery.id)
-                                      .then((value) {
-                                    if (value) {
-                                      displayVoteWithContext(
-                                        TypeMsg.msg,
-                                        AMAPTextConstants.deletedDelivery,
-                                      );
-                                    } else {
-                                      displayVoteWithContext(
-                                        TypeMsg.error,
-                                        AMAPTextConstants.deletingError,
-                                      );
-                                    }
-                                  });
+                                deliveryListNotifier
+                                    .deleteDelivery(delivery.id)
+                                    .then((value) {
+                                  if (value) {
+                                    displayVoteWithContext(
+                                      TypeMsg.msg,
+                                      AMAPTextConstants.deletedDelivery,
+                                    );
+                                  } else {
+                                    displayVoteWithContext(
+                                      TypeMsg.error,
+                                      AMAPTextConstants.deletingError,
+                                    );
+                                  }
                                 });
                               },
                             )),
@@ -239,75 +236,72 @@ class DeliveryUi extends HookConsumerWidget {
                                         ? AMAPTextConstants.deliveringDelivery
                                         : AMAPTextConstants.archivingDelivery,
                             onYes: () async {
-                              await tokenExpireWrapper(ref, () async {
-                                switch (delivery.status) {
-                                  case DeliveryStatusType.creation:
-                                    final value = await deliveryListNotifier
-                                        .openDelivery(delivery);
-                                    if (value) {
-                                      displayVoteWithContext(
-                                        TypeMsg.msg,
-                                        AMAPTextConstants.deliveryOpened,
-                                      );
-                                    } else {
-                                      displayVoteWithContext(
-                                        TypeMsg.error,
-                                        AMAPTextConstants.deliveryNotOpened,
-                                      );
-                                    }
-                                    break;
-                                  case DeliveryStatusType.orderable:
-                                    final value = await deliveryListNotifier
-                                        .lockDelivery(delivery);
-                                    if (value) {
-                                      displayVoteWithContext(
-                                        TypeMsg.msg,
-                                        AMAPTextConstants.deliveryLocked,
-                                      );
-                                    } else {
-                                      displayVoteWithContext(
-                                        TypeMsg.error,
-                                        AMAPTextConstants.deliveryNotLocked,
-                                      );
-                                    }
-                                    break;
-                                  case DeliveryStatusType.locked:
-                                    final value = await deliveryListNotifier
-                                        .deliverDelivery(delivery);
-                                    if (value) {
-                                      displayVoteWithContext(
-                                        TypeMsg.msg,
-                                        AMAPTextConstants.deliveryDelivered,
-                                      );
-                                    } else {
-                                      displayVoteWithContext(
-                                        TypeMsg.error,
-                                        AMAPTextConstants.deliveryNotDelivered,
-                                      );
-                                    }
-                                    break;
-                                  case DeliveryStatusType.delivered:
-                                    final value = await deliveryListNotifier
-                                        .archiveDelivery(delivery);
-                                    if (value) {
-                                      displayVoteWithContext(
-                                        TypeMsg.msg,
-                                        AMAPTextConstants.deliveryArchived,
-                                      );
-                                    } else {
-                                      displayVoteWithContext(
-                                        TypeMsg.error,
-                                        AMAPTextConstants.deliveryNotArchived,
-                                      );
-                                    }
-                                    break;
-                                  case DeliveryStatusType
-                                        .swaggerGeneratedUnknown:
-                                    break;
-                                  case DeliveryStatusType.archived:
-                                    break;
-                                }
-                              });
+                              switch (delivery.status) {
+                                case DeliveryStatusType.creation:
+                                  final value = await deliveryListNotifier
+                                      .openDelivery(delivery);
+                                  if (value) {
+                                    displayVoteWithContext(
+                                      TypeMsg.msg,
+                                      AMAPTextConstants.deliveryOpened,
+                                    );
+                                  } else {
+                                    displayVoteWithContext(
+                                      TypeMsg.error,
+                                      AMAPTextConstants.deliveryNotOpened,
+                                    );
+                                  }
+                                  break;
+                                case DeliveryStatusType.orderable:
+                                  final value = await deliveryListNotifier
+                                      .lockDelivery(delivery);
+                                  if (value) {
+                                    displayVoteWithContext(
+                                      TypeMsg.msg,
+                                      AMAPTextConstants.deliveryLocked,
+                                    );
+                                  } else {
+                                    displayVoteWithContext(
+                                      TypeMsg.error,
+                                      AMAPTextConstants.deliveryNotLocked,
+                                    );
+                                  }
+                                  break;
+                                case DeliveryStatusType.locked:
+                                  final value = await deliveryListNotifier
+                                      .deliverDelivery(delivery);
+                                  if (value) {
+                                    displayVoteWithContext(
+                                      TypeMsg.msg,
+                                      AMAPTextConstants.deliveryDelivered,
+                                    );
+                                  } else {
+                                    displayVoteWithContext(
+                                      TypeMsg.error,
+                                      AMAPTextConstants.deliveryNotDelivered,
+                                    );
+                                  }
+                                  break;
+                                case DeliveryStatusType.delivered:
+                                  final value = await deliveryListNotifier
+                                      .archiveDelivery(delivery);
+                                  if (value) {
+                                    displayVoteWithContext(
+                                      TypeMsg.msg,
+                                      AMAPTextConstants.deliveryArchived,
+                                    );
+                                  } else {
+                                    displayVoteWithContext(
+                                      TypeMsg.error,
+                                      AMAPTextConstants.deliveryNotArchived,
+                                    );
+                                  }
+                                  break;
+                                case DeliveryStatusType.swaggerGeneratedUnknown:
+                                  break;
+                                case DeliveryStatusType.archived:
+                                  break;
+                              }
                             },
                           )),
                     );

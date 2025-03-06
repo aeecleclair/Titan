@@ -2,7 +2,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/advert/adapters/advertiser.dart';
 
 class AdvertiserListNotifier extends ListNotifierAPI<AdvertiserComplete> {
@@ -51,12 +50,8 @@ final advertiserListProvider = StateNotifierProvider<AdvertiserListNotifier,
     AsyncValue<List<AdvertiserComplete>>>(
   (ref) {
     final advertiserRepository = ref.watch(repositoryProvider);
-    AdvertiserListNotifier advertiserListNotifier =
-        AdvertiserListNotifier(advertiserRepository: advertiserRepository);
-    tokenExpireWrapperAuth(ref, () async {
-      await advertiserListNotifier.loadAllAdvertiserList();
-    });
-    return advertiserListNotifier;
+    return AdvertiserListNotifier(advertiserRepository: advertiserRepository)
+      ..loadAllAdvertiserList();
   },
 );
 
@@ -64,11 +59,7 @@ final userAdvertiserListProvider = StateNotifierProvider<AdvertiserListNotifier,
     AsyncValue<List<AdvertiserComplete>>>(
   (ref) {
     final advertiserRepository = ref.watch(repositoryProvider);
-    AdvertiserListNotifier advertiserListNotifier =
-        AdvertiserListNotifier(advertiserRepository: advertiserRepository);
-    tokenExpireWrapperAuth(ref, () async {
-      await advertiserListNotifier.loadMyAdvertiserList();
-    });
-    return advertiserListNotifier;
+    return AdvertiserListNotifier(advertiserRepository: advertiserRepository)
+      ..loadMyAdvertiserList();
   },
 );

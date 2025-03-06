@@ -10,7 +10,6 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/admin_page/user_cash_ui_layout.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 
@@ -151,32 +150,30 @@ class UserCashUi extends HookConsumerWidget {
                                   return;
                                 }
                                 if (key.currentState!.validate()) {
-                                  await tokenExpireWrapper(ref, () async {
-                                    await ref
-                                        .read(cashListProvider.notifier)
-                                        .updateCash(
-                                          cash.copyWith(
-                                            balance: double.parse(
-                                              amount.text.replaceAll(',', '.'),
-                                            ),
+                                  await ref
+                                      .read(cashListProvider.notifier)
+                                      .updateCash(
+                                        cash.copyWith(
+                                          balance: double.parse(
+                                            amount.text.replaceAll(',', '.'),
                                           ),
-                                          cash.balance,
-                                        )
-                                        .then((value) {
-                                      if (value) {
-                                        key.currentState!.reset();
-                                        toggle();
-                                        displayVoteWithContext(
-                                          TypeMsg.msg,
-                                          AMAPTextConstants.updatedAmount,
-                                        );
-                                      } else {
-                                        displayVoteWithContext(
-                                          TypeMsg.error,
-                                          AMAPTextConstants.updatingError,
-                                        );
-                                      }
-                                    });
+                                        ),
+                                        cash.balance,
+                                      )
+                                      .then((value) {
+                                    if (value) {
+                                      key.currentState!.reset();
+                                      toggle();
+                                      displayVoteWithContext(
+                                        TypeMsg.msg,
+                                        AMAPTextConstants.updatedAmount,
+                                      );
+                                    } else {
+                                      displayVoteWithContext(
+                                        TypeMsg.error,
+                                        AMAPTextConstants.updatingError,
+                                      );
+                                    }
                                   });
                                 }
                               },

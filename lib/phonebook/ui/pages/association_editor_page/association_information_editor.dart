@@ -13,7 +13,6 @@ import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/ui/components/kinds_bar.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 
@@ -166,29 +165,27 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                 );
                                 return;
                               }
-                              await tokenExpireWrapper(ref, () async {
-                                final value = await associationListNotifier
-                                    .updateAssociation(
-                                  association.copyWith(
-                                    name: name.text,
-                                    description: description.text,
-                                    kind: Kinds.values.firstWhere(
-                                      (element) => element.name == kind,
-                                    ),
+                              final value = await associationListNotifier
+                                  .updateAssociation(
+                                association.copyWith(
+                                  name: name.text,
+                                  description: description.text,
+                                  kind: Kinds.values.firstWhere(
+                                    (element) => element.name == kind,
                                   ),
+                                ),
+                              );
+                              if (value) {
+                                displayToastWithContext(
+                                  TypeMsg.msg,
+                                  PhonebookTextConstants.updatedAssociation,
                                 );
-                                if (value) {
-                                  displayToastWithContext(
-                                    TypeMsg.msg,
-                                    PhonebookTextConstants.updatedAssociation,
-                                  );
-                                } else {
-                                  displayToastWithContext(
-                                    TypeMsg.msg,
-                                    PhonebookTextConstants.updatingError,
-                                  );
-                                }
-                              });
+                              } else {
+                                displayToastWithContext(
+                                  TypeMsg.msg,
+                                  PhonebookTextConstants.updatingError,
+                                );
+                              }
                             },
                             child: const Text(
                               PhonebookTextConstants.edit,
@@ -334,26 +331,24 @@ class AssociationInformationEditor extends HookConsumerWidget {
                     child: child,
                   ),
                   onTap: () async {
-                    await tokenExpireWrapper(ref, () async {
-                      final value =
-                          await associationListNotifier.updateAssociationGroups(
-                        association.copyWith(
-                          associatedGroups:
-                              selectedGroups.map((e) => e.id).toList(),
-                        ),
+                    final value =
+                        await associationListNotifier.updateAssociationGroups(
+                      association.copyWith(
+                        associatedGroups:
+                            selectedGroups.map((e) => e.id).toList(),
+                      ),
+                    );
+                    if (value) {
+                      displayToastWithContext(
+                        TypeMsg.msg,
+                        PhonebookTextConstants.updatedGroups,
                       );
-                      if (value) {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          PhonebookTextConstants.updatedGroups,
-                        );
-                      } else {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          PhonebookTextConstants.updatingError,
-                        );
-                      }
-                    });
+                    } else {
+                      displayToastWithContext(
+                        TypeMsg.msg,
+                        PhonebookTextConstants.updatingError,
+                      );
+                    }
                   },
                   child: const Text(
                     PhonebookTextConstants.updateGroups,

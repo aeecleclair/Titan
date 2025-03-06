@@ -3,7 +3,6 @@ import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/phonebook/adapters/membership.dart';
 
 class AssociationMemberListNotifier extends ListNotifierAPI<MemberComplete> {
@@ -95,16 +94,11 @@ class AssociationMemberListNotifier extends ListNotifierAPI<MemberComplete> {
 final associationMemberListProvider = StateNotifierProvider<
     AssociationMemberListNotifier, AsyncValue<List<MemberComplete>>>((ref) {
   final associationMemberRepository = ref.watch(repositoryProvider);
-  AssociationMemberListNotifier provider = AssociationMemberListNotifier(
+  final association = ref.watch(associationProvider);
+  return AssociationMemberListNotifier(
     associationMemberRepository: associationMemberRepository,
-  );
-  tokenExpireWrapperAuth(ref, () async {
-    final association = ref.watch(associationProvider);
-
-    await provider.loadMembers(
+  )..loadMembers(
       association.id,
       association.mandateYear,
     );
-  });
-  return provider;
 });

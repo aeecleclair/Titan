@@ -3,7 +3,6 @@ import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/vote/providers/section_id_provider.dart';
 
 class SectionNotifier extends ListNotifierAPI<SectionComplete> {
@@ -37,12 +36,8 @@ final sectionsProvider =
     StateNotifierProvider<SectionNotifier, AsyncValue<List<SectionComplete>>>(
         (ref) {
   final sectionRepository = ref.watch(repositoryProvider);
-  SectionNotifier notifier =
-      SectionNotifier(sectionRepository: sectionRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadSectionList();
-  });
-  return notifier;
+  return SectionNotifier(sectionRepository: sectionRepository)
+    ..loadSectionList();
 });
 
 final sectionList = Provider<List<SectionComplete>>((ref) {

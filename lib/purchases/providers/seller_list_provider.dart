@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class SellerListNotifier extends ListNotifierAPI<SellerComplete> {
   final Openapi sellerRepository;
@@ -18,10 +17,5 @@ final sellerListProvider =
     StateNotifierProvider<SellerListNotifier, AsyncValue<List<SellerComplete>>>(
         (ref) {
   final sellerRepository = ref.watch(repositoryProvider);
-  SellerListNotifier notifier =
-      SellerListNotifier(sellerRepository: sellerRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadSellers();
-  });
-  return notifier;
+  return SellerListNotifier(sellerRepository: sellerRepository)..loadSellers();
 });

@@ -10,7 +10,6 @@ import 'package:myecl/advert/ui/pages/form_page/advertiser_card.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 
@@ -68,34 +67,32 @@ class AddDeleteAdvertiserPage extends HookConsumerWidget {
                                 children: canAdd
                                         .map(
                                           (e) => GestureDetector(
-                                            onTap: () {
+                                            onTap: () async {
                                               AdvertiserBase newAdvertiser =
                                                   AdvertiserBase(
                                                 groupManagerId: e.id,
                                                 name: e.name,
                                               );
-                                              tokenExpireWrapper(ref, () async {
-                                                final value =
-                                                    await advertiserListNotifier
-                                                        .addAdvertiser(
-                                                  newAdvertiser,
+                                              final value =
+                                                  await advertiserListNotifier
+                                                      .addAdvertiser(
+                                                newAdvertiser,
+                                              );
+                                              if (value) {
+                                                displayToastWithContext(
+                                                  TypeMsg.msg,
+                                                  AdvertTextConstants
+                                                      .addedAdvertiser,
                                                 );
-                                                if (value) {
-                                                  displayToastWithContext(
-                                                    TypeMsg.msg,
-                                                    AdvertTextConstants
-                                                        .addedAdvertiser,
-                                                  );
-                                                } else {
-                                                  displayToastWithContext(
-                                                    TypeMsg.error,
-                                                    AdvertTextConstants
-                                                        .addingError,
-                                                  );
-                                                }
-                                                advertiserListNotifier
-                                                    .loadAllAdvertiserList();
-                                              });
+                                              } else {
+                                                displayToastWithContext(
+                                                  TypeMsg.error,
+                                                  AdvertTextConstants
+                                                      .addingError,
+                                                );
+                                              }
+                                              advertiserListNotifier
+                                                  .loadAllAdvertiserList();
                                             },
                                             child: AdvertiserCard(
                                               e: e,
@@ -117,37 +114,33 @@ class AddDeleteAdvertiserPage extends HookConsumerWidget {
                                                     descriptions:
                                                         AdvertTextConstants
                                                             .deleteAdvertiser,
-                                                    onYes: () {
-                                                      tokenExpireWrapper(ref,
-                                                          () async {
-                                                        final value =
-                                                            await advertiserListNotifier
-                                                                .deleteAdvertiser(
-                                                          advertisers
-                                                              .where(
-                                                                (element) =>
-                                                                    e.id ==
-                                                                    e.id,
-                                                              )
-                                                              .toList()[0]
-                                                              .id,
+                                                    onYes: () async {
+                                                      final value =
+                                                          await advertiserListNotifier
+                                                              .deleteAdvertiser(
+                                                        advertisers
+                                                            .where(
+                                                              (element) =>
+                                                                  e.id == e.id,
+                                                            )
+                                                            .toList()[0]
+                                                            .id,
+                                                      );
+                                                      if (value) {
+                                                        displayToastWithContext(
+                                                          TypeMsg.msg,
+                                                          AdvertTextConstants
+                                                              .removedAdvertiser,
                                                         );
-                                                        if (value) {
-                                                          displayToastWithContext(
-                                                            TypeMsg.msg,
-                                                            AdvertTextConstants
-                                                                .removedAdvertiser,
-                                                          );
-                                                        } else {
-                                                          displayToastWithContext(
-                                                            TypeMsg.error,
-                                                            AdvertTextConstants
-                                                                .removingError,
-                                                          );
-                                                        }
-                                                        advertiserListNotifier
-                                                            .loadAllAdvertiserList();
-                                                      });
+                                                      } else {
+                                                        displayToastWithContext(
+                                                          TypeMsg.error,
+                                                          AdvertTextConstants
+                                                              .removingError,
+                                                        );
+                                                      }
+                                                      advertiserListNotifier
+                                                          .loadAllAdvertiserList();
                                                     },
                                                   );
                                                 },

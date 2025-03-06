@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/raffle/adapters/prize.dart';
 
 class PrizeListNotifier extends ListNotifierAPI<PrizeSimple> {
@@ -54,9 +53,6 @@ class PrizeListNotifier extends ListNotifierAPI<PrizeSimple> {
 final prizeListProvider = StateNotifierProvider.family<PrizeListNotifier,
     AsyncValue<List<PrizeSimple>>, String>((ref, raffleId) {
   final prizeRepository = ref.watch(repositoryProvider);
-  final notifier = PrizeListNotifier(prizeRepository: prizeRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    notifier.loadPrizeList(raffleId);
-  });
-  return notifier;
+  return PrizeListNotifier(prizeRepository: prizeRepository)
+    ..loadPrizeList(raffleId);
 });

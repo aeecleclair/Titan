@@ -13,7 +13,6 @@ import 'package:myecl/booking/ui/pages/admin_pages/admin_shrink_button.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -108,40 +107,37 @@ class AddEditManagerPage extends HookConsumerWidget {
                   ),
                   AdminShrinkButton(
                     onTap: () async {
-                      await tokenExpireWrapper(ref, () async {
-                        Manager newManager = Manager(
-                          id: isEdit ? manager.id : '',
-                          name: name.text,
-                          groupId: groupId,
-                        );
-                        final value = isEdit
-                            ? await managerListNotifier
-                                .updateManager(newManager)
-                            : await managerListNotifier
-                                .addManager(newManager.toManagerBase());
-                        if (value) {
-                          QR.back();
-                          isEdit
-                              ? displayToastWithContext(
-                                  TypeMsg.msg,
-                                  BookingTextConstants.editedManager,
-                                )
-                              : displayToastWithContext(
-                                  TypeMsg.msg,
-                                  BookingTextConstants.addedManager,
-                                );
-                        } else {
-                          isEdit
-                              ? displayToastWithContext(
-                                  TypeMsg.error,
-                                  BookingTextConstants.editionError,
-                                )
-                              : displayToastWithContext(
-                                  TypeMsg.error,
-                                  BookingTextConstants.addingError,
-                                );
-                        }
-                      });
+                      Manager newManager = Manager(
+                        id: isEdit ? manager.id : '',
+                        name: name.text,
+                        groupId: groupId,
+                      );
+                      final value = isEdit
+                          ? await managerListNotifier.updateManager(newManager)
+                          : await managerListNotifier
+                              .addManager(newManager.toManagerBase());
+                      if (value) {
+                        QR.back();
+                        isEdit
+                            ? displayToastWithContext(
+                                TypeMsg.msg,
+                                BookingTextConstants.editedManager,
+                              )
+                            : displayToastWithContext(
+                                TypeMsg.msg,
+                                BookingTextConstants.addedManager,
+                              );
+                      } else {
+                        isEdit
+                            ? displayToastWithContext(
+                                TypeMsg.error,
+                                BookingTextConstants.editionError,
+                              )
+                            : displayToastWithContext(
+                                TypeMsg.error,
+                                BookingTextConstants.addingError,
+                              );
+                      }
                     },
                     buttonText: isEdit
                         ? BookingTextConstants.edit
@@ -153,32 +149,30 @@ class AddEditManagerPage extends HookConsumerWidget {
                     ),
                     AdminShrinkButton(
                       onTap: () async {
-                        await tokenExpireWrapper(ref, () async {
-                          await showDialog(
-                            context: context,
-                            builder: (context) => CustomDialogBox(
-                              descriptions: BookingTextConstants
-                                  .deleteManagerConfirmation,
-                              onYes: () async {
-                                final value = await managerListNotifier
-                                    .deleteManager(manager.groupId);
-                                if (value) {
-                                  QR.back();
-                                  displayToastWithContext(
-                                    TypeMsg.msg,
-                                    BookingTextConstants.deletedManager,
-                                  );
-                                } else {
-                                  displayToastWithContext(
-                                    TypeMsg.error,
-                                    BookingTextConstants.deletingError,
-                                  );
-                                }
-                              },
-                              title: BookingTextConstants.deleting,
-                            ),
-                          );
-                        });
+                        await showDialog(
+                          context: context,
+                          builder: (context) => CustomDialogBox(
+                            descriptions:
+                                BookingTextConstants.deleteManagerConfirmation,
+                            onYes: () async {
+                              final value = await managerListNotifier
+                                  .deleteManager(manager.groupId);
+                              if (value) {
+                                QR.back();
+                                displayToastWithContext(
+                                  TypeMsg.msg,
+                                  BookingTextConstants.deletedManager,
+                                );
+                              } else {
+                                displayToastWithContext(
+                                  TypeMsg.error,
+                                  BookingTextConstants.deletingError,
+                                );
+                              }
+                            },
+                            title: BookingTextConstants.deleting,
+                          ),
+                        );
                       },
                       buttonText: BookingTextConstants.delete,
                     ),

@@ -2,7 +2,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class UserManagerListNotifier extends ListNotifierAPI<Manager> {
   final Openapi managerRepository;
@@ -18,10 +17,6 @@ final userManagerListProvider =
     StateNotifierProvider<UserManagerListNotifier, AsyncValue<List<Manager>>>(
         (ref) {
   final managerRepository = ref.watch(repositoryProvider);
-  final provider =
-      UserManagerListNotifier(managerRepository: managerRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await provider.loadManagers();
-  });
-  return provider;
+  return UserManagerListNotifier(managerRepository: managerRepository)
+    ..loadManagers();
 });

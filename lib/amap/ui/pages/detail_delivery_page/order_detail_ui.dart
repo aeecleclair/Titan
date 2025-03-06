@@ -11,7 +11,6 @@ import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/user/extensions/users.dart';
 
@@ -142,39 +141,37 @@ class DetailOrderUI extends HookConsumerWidget {
                           title: AMAPTextConstants.delete,
                           descriptions: AMAPTextConstants.deletingOrder,
                           onYes: () async {
-                            await tokenExpireWrapper(ref, () async {
-                              final index = orderList.maybeWhen(
-                                data: (data) => data.indexWhere(
-                                  (element) => element.orderId == order.orderId,
-                                ),
-                                orElse: () => -1,
-                              );
-                              await orderListNotifier
-                                  .deleteOrder(order.orderId)
-                                  .then((value) {
-                                if (value) {
-                                  if (index != -1) {
-                                    deliveryOrdersNotifier.deleteE(
-                                      deliveryId,
-                                      index,
-                                    );
-                                  }
-                                  cashListNotifier.fakeUpdateCash(
-                                    userCash.copyWith(
-                                      balance: userCash.balance + order.amount,
-                                    ),
-                                  );
-                                  displayToastWithContext(
-                                    TypeMsg.msg,
-                                    AMAPTextConstants.deletedOrder,
-                                  );
-                                } else {
-                                  displayToastWithContext(
-                                    TypeMsg.error,
-                                    AMAPTextConstants.deletingError,
+                            final index = orderList.maybeWhen(
+                              data: (data) => data.indexWhere(
+                                (element) => element.orderId == order.orderId,
+                              ),
+                              orElse: () => -1,
+                            );
+                            await orderListNotifier
+                                .deleteOrder(order.orderId)
+                                .then((value) {
+                              if (value) {
+                                if (index != -1) {
+                                  deliveryOrdersNotifier.deleteE(
+                                    deliveryId,
+                                    index,
                                   );
                                 }
-                              });
+                                cashListNotifier.fakeUpdateCash(
+                                  userCash.copyWith(
+                                    balance: userCash.balance + order.amount,
+                                  ),
+                                );
+                                displayToastWithContext(
+                                  TypeMsg.msg,
+                                  AMAPTextConstants.deletedOrder,
+                                );
+                              } else {
+                                displayToastWithContext(
+                                  TypeMsg.error,
+                                  AMAPTextConstants.deletingError,
+                                );
+                              }
                             });
                           },
                         )),

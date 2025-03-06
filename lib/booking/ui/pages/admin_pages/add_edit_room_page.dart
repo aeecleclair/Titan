@@ -14,7 +14,6 @@ import 'package:myecl/booking/ui/pages/admin_pages/admin_shrink_button.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -108,42 +107,37 @@ class AddEditRoomPage extends HookConsumerWidget {
                   ),
                   AdminShrinkButton(
                     onTap: () async {
-                      await tokenExpireWrapper(
-                        ref,
-                        () async {
-                          RoomComplete newRoom = RoomComplete(
-                            id: isEdit ? room.id : '',
-                            name: name.text,
-                            managerId: managerId,
-                          );
-                          final value = isEdit
-                              ? await roomListNotifier.updateRoom(newRoom)
-                              : await roomListNotifier
-                                  .addRoom(newRoom.toRoomBase());
-                          if (value) {
-                            QR.back();
-                            isEdit
-                                ? displayToastWithContext(
-                                    TypeMsg.msg,
-                                    BookingTextConstants.editedRoom,
-                                  )
-                                : displayToastWithContext(
-                                    TypeMsg.msg,
-                                    BookingTextConstants.addedRoom,
-                                  );
-                          } else {
-                            isEdit
-                                ? displayToastWithContext(
-                                    TypeMsg.error,
-                                    BookingTextConstants.editionError,
-                                  )
-                                : displayToastWithContext(
-                                    TypeMsg.error,
-                                    BookingTextConstants.addingError,
-                                  );
-                          }
-                        },
+                      RoomComplete newRoom = RoomComplete(
+                        id: isEdit ? room.id : '',
+                        name: name.text,
+                        managerId: managerId,
                       );
+                      final value = isEdit
+                          ? await roomListNotifier.updateRoom(newRoom)
+                          : await roomListNotifier
+                              .addRoom(newRoom.toRoomBase());
+                      if (value) {
+                        QR.back();
+                        isEdit
+                            ? displayToastWithContext(
+                                TypeMsg.msg,
+                                BookingTextConstants.editedRoom,
+                              )
+                            : displayToastWithContext(
+                                TypeMsg.msg,
+                                BookingTextConstants.addedRoom,
+                              );
+                      } else {
+                        isEdit
+                            ? displayToastWithContext(
+                                TypeMsg.error,
+                                BookingTextConstants.editionError,
+                              )
+                            : displayToastWithContext(
+                                TypeMsg.error,
+                                BookingTextConstants.addingError,
+                              );
+                      }
                     },
                     buttonText: isEdit
                         ? BookingTextConstants.edit
@@ -155,32 +149,30 @@ class AddEditRoomPage extends HookConsumerWidget {
                     ),
                     AdminShrinkButton(
                       onTap: () async {
-                        await tokenExpireWrapper(ref, () async {
-                          await showDialog(
-                            context: context,
-                            builder: (context) => CustomDialogBox(
-                              descriptions:
-                                  BookingTextConstants.deleteRoomConfirmation,
-                              onYes: () async {
-                                final value =
-                                    await roomListNotifier.deleteRoom(room.id);
-                                if (value) {
-                                  QR.back();
-                                  displayToastWithContext(
-                                    TypeMsg.msg,
-                                    BookingTextConstants.deletedRoom,
-                                  );
-                                } else {
-                                  displayToastWithContext(
-                                    TypeMsg.error,
-                                    BookingTextConstants.deletingError,
-                                  );
-                                }
-                              },
-                              title: BookingTextConstants.deleteBooking,
-                            ),
-                          );
-                        });
+                        await showDialog(
+                          context: context,
+                          builder: (context) => CustomDialogBox(
+                            descriptions:
+                                BookingTextConstants.deleteRoomConfirmation,
+                            onYes: () async {
+                              final value =
+                                  await roomListNotifier.deleteRoom(room.id);
+                              if (value) {
+                                QR.back();
+                                displayToastWithContext(
+                                  TypeMsg.msg,
+                                  BookingTextConstants.deletedRoom,
+                                );
+                              } else {
+                                displayToastWithContext(
+                                  TypeMsg.error,
+                                  BookingTextConstants.deletingError,
+                                );
+                              }
+                            },
+                            title: BookingTextConstants.deleteBooking,
+                          ),
+                        );
                       },
                       buttonText: BookingTextConstants.delete,
                     ),

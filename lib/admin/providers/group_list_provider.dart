@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/admin/adapters/groups.dart';
 
@@ -59,22 +58,13 @@ final allGroupListProvider =
     StateNotifierProvider<GroupListNotifier, AsyncValue<List<CoreGroupSimple>>>(
         (ref) {
   final groupRepository = ref.watch(repositoryProvider);
-  GroupListNotifier provider =
-      GroupListNotifier(groupRepository: groupRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await provider.loadGroups();
-  });
-  return provider;
+  return GroupListNotifier(groupRepository: groupRepository)..loadGroups();
 });
 
 final userGroupListNotifier =
     StateNotifierProvider<GroupListNotifier, AsyncValue<List<CoreGroupSimple>>>(
         (ref) {
   final groupRepository = ref.watch(repositoryProvider);
-  GroupListNotifier provider =
-      GroupListNotifier(groupRepository: groupRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await provider.loadGroupsFromUser(ref.watch(userProvider));
-  });
-  return provider;
+  return GroupListNotifier(groupRepository: groupRepository)
+    ..loadGroupsFromUser(ref.watch(userProvider));
 });

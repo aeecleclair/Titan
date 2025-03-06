@@ -13,7 +13,6 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -90,22 +89,20 @@ class ProductHandler extends HookConsumerWidget {
                                   title: AMAPTextConstants.deleteProduct,
                                   descriptions: AMAPTextConstants
                                       .deleteProductDescription,
-                                  onYes: () {
-                                    tokenExpireWrapper(ref, () async {
-                                      final value = await productsNotifier
-                                          .deleteProduct(e.id);
-                                      if (value) {
-                                        displayToastWithContext(
-                                          TypeMsg.msg,
-                                          AMAPTextConstants.deletedProduct,
-                                        );
-                                      } else {
-                                        displayToastWithContext(
-                                          TypeMsg.error,
-                                          AMAPTextConstants.productInDelivery,
-                                        );
-                                      }
-                                    });
+                                  onYes: () async {
+                                    final value = await productsNotifier
+                                        .deleteProduct(e.id);
+                                    if (value) {
+                                      displayToastWithContext(
+                                        TypeMsg.msg,
+                                        AMAPTextConstants.deletedProduct,
+                                      );
+                                    } else {
+                                      displayToastWithContext(
+                                        TypeMsg.error,
+                                        AMAPTextConstants.productInDelivery,
+                                      );
+                                    }
                                   },
                                 ),
                               );

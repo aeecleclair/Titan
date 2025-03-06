@@ -10,7 +10,6 @@ import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/vote/providers/list_list_provider.dart';
@@ -173,27 +172,25 @@ class AdminPage extends HookConsumerWidget {
                                   descriptions:
                                       VoteTextConstants.resetVoteDescription,
                                   onYes: () async {
-                                    await tokenExpireWrapper(ref, () async {
-                                      final value =
-                                          await statusNotifier.resetVote();
-                                      ref
-                                          .watch(
-                                            listListProvider.notifier,
-                                          )
-                                          .loadListList();
-                                      if (value) {
-                                        showVotesNotifier.toggle(false);
-                                        displayVoteToastWithContext(
-                                          TypeMsg.msg,
-                                          VoteTextConstants.resetedVotes,
-                                        );
-                                      } else {
-                                        displayVoteToastWithContext(
-                                          TypeMsg.error,
-                                          VoteTextConstants.errorResetingVotes,
-                                        );
-                                      }
-                                    });
+                                    final value =
+                                        await statusNotifier.resetVote();
+                                    ref
+                                        .watch(
+                                          listListProvider.notifier,
+                                        )
+                                        .loadListList();
+                                    if (value) {
+                                      showVotesNotifier.toggle(false);
+                                      displayVoteToastWithContext(
+                                        TypeMsg.msg,
+                                        VoteTextConstants.resetedVotes,
+                                      );
+                                    } else {
+                                      displayVoteToastWithContext(
+                                        TypeMsg.error,
+                                        VoteTextConstants.errorResetingVotes,
+                                      );
+                                    }
                                   },
                                 );
                               },
@@ -267,20 +264,18 @@ class AdminPage extends HookConsumerWidget {
                             child: child,
                           ),
                           onTap: () async {
-                            await tokenExpireWrapper(ref, () async {
-                              final value = await statusNotifier.countVote();
-                              if (value) {
-                                displayVoteToastWithContext(
-                                  TypeMsg.msg,
-                                  VoteTextConstants.votesCounted,
-                                );
-                              } else {
-                                displayVoteToastWithContext(
-                                  TypeMsg.error,
-                                  VoteTextConstants.errorCountingVotes,
-                                );
-                              }
-                            });
+                            final value = await statusNotifier.countVote();
+                            if (value) {
+                              displayVoteToastWithContext(
+                                TypeMsg.msg,
+                                VoteTextConstants.votesCounted,
+                              );
+                            } else {
+                              displayVoteToastWithContext(
+                                TypeMsg.error,
+                                VoteTextConstants.errorCountingVotes,
+                              );
+                            }
                           },
                           child: const Center(
                             child: Text(
@@ -311,20 +306,18 @@ class AdminPage extends HookConsumerWidget {
                             child: child,
                           ),
                           onTap: () async {
-                            await tokenExpireWrapper(ref, () async {
-                              final value = await statusNotifier.closeVote();
-                              if (value) {
-                                displayVoteToastWithContext(
-                                  TypeMsg.msg,
-                                  VoteTextConstants.votesClosed,
-                                );
-                              } else {
-                                displayVoteToastWithContext(
-                                  TypeMsg.error,
-                                  VoteTextConstants.errorClosingVotes,
-                                );
-                              }
-                            });
+                            final value = await statusNotifier.closeVote();
+                            if (value) {
+                              displayVoteToastWithContext(
+                                TypeMsg.msg,
+                                VoteTextConstants.votesClosed,
+                              );
+                            } else {
+                              displayVoteToastWithContext(
+                                TypeMsg.error,
+                                VoteTextConstants.errorClosingVotes,
+                              );
+                            }
                           },
                           child: const Center(
                             child: Text(
@@ -360,24 +353,21 @@ class AdminPage extends HookConsumerWidget {
                                   child: child,
                                 ),
                                 onTap: () async {
-                                  await tokenExpireWrapper(ref, () async {
-                                    final value =
-                                        await statusNotifier.openVote();
-                                    ref
-                                        .watch(listListProvider.notifier)
-                                        .loadListList();
-                                    if (value) {
-                                      displayVoteToastWithContext(
-                                        TypeMsg.msg,
-                                        VoteTextConstants.votesOpened,
-                                      );
-                                    } else {
-                                      displayVoteToastWithContext(
-                                        TypeMsg.error,
-                                        VoteTextConstants.errorOpeningVotes,
-                                      );
-                                    }
-                                  });
+                                  final value = await statusNotifier.openVote();
+                                  ref
+                                      .watch(listListProvider.notifier)
+                                      .loadListList();
+                                  if (value) {
+                                    displayVoteToastWithContext(
+                                      TypeMsg.msg,
+                                      VoteTextConstants.votesOpened,
+                                    );
+                                  } else {
+                                    displayVoteToastWithContext(
+                                      TypeMsg.error,
+                                      VoteTextConstants.errorOpeningVotes,
+                                    );
+                                  }
                                 },
                                 child: const Center(
                                   child: Text(
@@ -422,28 +412,24 @@ class AdminPage extends HookConsumerWidget {
                                               descriptions: VoteTextConstants
                                                   .deleteAllDescription,
                                               onYes: () async {
-                                                await tokenExpireWrapper(ref,
-                                                    () async {
-                                                  final value = await ref
-                                                      .watch(
-                                                        listListProvider
-                                                            .notifier,
-                                                      )
-                                                      .deleteLists();
-                                                  if (value) {
-                                                    displayVoteToastWithContext(
-                                                      TypeMsg.msg,
-                                                      VoteTextConstants
-                                                          .deletedAll,
-                                                    );
-                                                  } else {
-                                                    displayVoteToastWithContext(
-                                                      TypeMsg.error,
-                                                      VoteTextConstants
-                                                          .deletingError,
-                                                    );
-                                                  }
-                                                });
+                                                final value = await ref
+                                                    .watch(
+                                                      listListProvider.notifier,
+                                                    )
+                                                    .deleteLists();
+                                                if (value) {
+                                                  displayVoteToastWithContext(
+                                                    TypeMsg.msg,
+                                                    VoteTextConstants
+                                                        .deletedAll,
+                                                  );
+                                                } else {
+                                                  displayVoteToastWithContext(
+                                                    TypeMsg.error,
+                                                    VoteTextConstants
+                                                        .deletingError,
+                                                  );
+                                                }
                                               },
                                             ),
                                           );
@@ -498,30 +484,26 @@ class AdminPage extends HookConsumerWidget {
                                               descriptions: VoteTextConstants
                                                   .deletePipoDescription,
                                               onYes: () async {
-                                                await tokenExpireWrapper(ref,
-                                                    () async {
-                                                  final value = await ref
-                                                      .watch(
-                                                        listListProvider
-                                                            .notifier,
-                                                      )
-                                                      .deleteLists(
-                                                        type: ListType.pipo,
-                                                      );
-                                                  if (value) {
-                                                    displayVoteToastWithContext(
-                                                      TypeMsg.msg,
-                                                      VoteTextConstants
-                                                          .deletedPipo,
+                                                final value = await ref
+                                                    .watch(
+                                                      listListProvider.notifier,
+                                                    )
+                                                    .deleteLists(
+                                                      type: ListType.pipo,
                                                     );
-                                                  } else {
-                                                    displayVoteToastWithContext(
-                                                      TypeMsg.error,
-                                                      VoteTextConstants
-                                                          .deletingError,
-                                                    );
-                                                  }
-                                                });
+                                                if (value) {
+                                                  displayVoteToastWithContext(
+                                                    TypeMsg.msg,
+                                                    VoteTextConstants
+                                                        .deletedPipo,
+                                                  );
+                                                } else {
+                                                  displayVoteToastWithContext(
+                                                    TypeMsg.error,
+                                                    VoteTextConstants
+                                                        .deletingError,
+                                                  );
+                                                }
                                               },
                                             ),
                                           );

@@ -14,7 +14,6 @@ import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/components/booking_card.dart';
 import 'package:myecl/generated/openapi.enums.swagger.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -119,32 +118,29 @@ class ListBooking extends HookConsumerWidget {
                           title: BookingTextConstants.confirm,
                           descriptions: BookingTextConstants.confirmBooking,
                           onYes: () async {
-                            await tokenExpireWrapper(ref, () async {
-                              BookingReturnApplicant newBooking = e
-                                ..copyWith(
-                                  decision: Decision.approved,
+                            BookingReturnApplicant newBooking = e
+                              ..copyWith(
+                                decision: Decision.approved,
+                              );
+                            bookingListNotifier
+                                .toggleConfirmed(
+                              newBooking,
+                              Decision.approved,
+                            )
+                                .then((value) {
+                              if (value) {
+                                ref
+                                    .read(
+                                      userBookingListProvider.notifier,
+                                    )
+                                    .loadUserBookings();
+                                confirmedBookingListNotifier.addBooking(
+                                  newBooking.toBookingReturnSimpleApplicant(),
                                 );
-                              bookingListNotifier
-                                  .toggleConfirmed(
-                                newBooking,
-                                Decision.approved,
-                              )
-                                  .then((value) {
-                                if (value) {
-                                  ref
-                                      .read(
-                                        userBookingListProvider.notifier,
-                                      )
-                                      .loadUserBookings();
-                                  confirmedBookingListNotifier.addBooking(
-                                    newBooking.toBookingReturnSimpleApplicant(),
-                                  );
-                                  managerConfirmedBookingListNotifier
-                                      .addBooking(
-                                    newBooking.toBookingReturnSimpleApplicant(),
-                                  );
-                                }
-                              });
+                                managerConfirmedBookingListNotifier.addBooking(
+                                  newBooking.toBookingReturnSimpleApplicant(),
+                                );
+                              }
                             });
                           },
                         );
@@ -159,31 +155,29 @@ class ListBooking extends HookConsumerWidget {
                           title: BookingTextConstants.decline,
                           descriptions: BookingTextConstants.declineBooking,
                           onYes: () async {
-                            await tokenExpireWrapper(ref, () async {
-                              BookingReturnApplicant newBooking = e.copyWith(
-                                decision: Decision.declined,
-                              );
-                              bookingListNotifier
-                                  .toggleConfirmed(
-                                newBooking,
-                                Decision.declined,
-                              )
-                                  .then((value) {
-                                if (value) {
-                                  ref
-                                      .read(
-                                        userBookingListProvider.notifier,
-                                      )
-                                      .loadUserBookings();
-                                  confirmedBookingListNotifier.deleteBooking(
-                                    newBooking.toBookingReturnSimpleApplicant(),
-                                  );
-                                  managerConfirmedBookingListNotifier
-                                      .deleteBooking(
-                                    newBooking.toBookingReturnSimpleApplicant(),
-                                  );
-                                }
-                              });
+                            BookingReturnApplicant newBooking = e.copyWith(
+                              decision: Decision.declined,
+                            );
+                            bookingListNotifier
+                                .toggleConfirmed(
+                              newBooking,
+                              Decision.declined,
+                            )
+                                .then((value) {
+                              if (value) {
+                                ref
+                                    .read(
+                                      userBookingListProvider.notifier,
+                                    )
+                                    .loadUserBookings();
+                                confirmedBookingListNotifier.deleteBooking(
+                                  newBooking.toBookingReturnSimpleApplicant(),
+                                );
+                                managerConfirmedBookingListNotifier
+                                    .deleteBooking(
+                                  newBooking.toBookingReturnSimpleApplicant(),
+                                );
+                              }
                             });
                           },
                         );

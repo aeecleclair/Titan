@@ -2,7 +2,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class TopicsProvider extends ListNotifierAPI<String> {
   final Openapi notificationRepository;
@@ -83,10 +82,6 @@ class TopicsProvider extends ListNotifierAPI<String> {
 final topicsProvider =
     StateNotifierProvider<TopicsProvider, AsyncValue<List<String>>>((ref) {
   final notificationRepository = ref.watch(repositoryProvider);
-  TopicsProvider notifier =
-      TopicsProvider(notificationRepository: notificationRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    notifier.getTopics();
-  });
-  return notifier;
+  return TopicsProvider(notificationRepository: notificationRepository)
+    ..getTopics();
 });

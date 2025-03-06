@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class ColumnRefresher extends ConsumerWidget {
   final List<Widget> children;
@@ -30,9 +29,7 @@ class ColumnRefresher extends ConsumerWidget {
   }
 
   Widget buildAndroidList(WidgetRef ref) => RefreshIndicator(
-        onRefresh: () async {
-          tokenExpireWrapper(ref, onRefresh);
-        },
+        onRefresh: onRefresh,
         child: ListView.builder(
           itemCount: children.length,
           itemBuilder: (BuildContext context, int index) => children[index],
@@ -46,9 +43,7 @@ class ColumnRefresher extends ConsumerWidget {
         physics: const BouncingScrollPhysics(),
         slivers: [
           CupertinoSliverRefreshControl(
-            onRefresh: () async {
-              tokenExpireWrapper(ref, onRefresh);
-            },
+            onRefresh: onRefresh,
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(

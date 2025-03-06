@@ -3,7 +3,6 @@ import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/loan/providers/loaner_id_provider.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/loan/adapters/item.dart';
 
 class ItemListNotifier extends ListNotifierAPI<Item> {
@@ -69,13 +68,7 @@ class ItemListNotifier extends ListNotifierAPI<Item> {
 final itemListProvider =
     StateNotifierProvider<ItemListNotifier, AsyncValue<List<Item>>>((ref) {
   final itemRepository = ref.watch(repositoryProvider);
-  ItemListNotifier itemListNotifier =
-      ItemListNotifier(itemRepository: itemRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    final loanerId = ref.watch(loanerIdProvider);
-    if (loanerId != "") {
-      await itemListNotifier.loadItemList(loanerId);
-    }
-  });
-  return itemListNotifier;
+  final loanerId = ref.watch(loanerIdProvider);
+  return ItemListNotifier(itemRepository: itemRepository)
+    ..loadItemList(loanerId);
 });

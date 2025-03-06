@@ -15,7 +15,6 @@ import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
@@ -100,27 +99,25 @@ class EditGroupPage extends HookConsumerWidget {
                             if (!key.currentState!.validate()) {
                               return;
                             }
-                            await tokenExpireWrapper(ref, () async {
-                              CoreGroup newGroup = group.copyWith(
-                                name: name.text,
-                                description: description.text,
+                            CoreGroup newGroup = group.copyWith(
+                              name: name.text,
+                              description: description.text,
+                            );
+                            groupNotifier.setGroup(newGroup);
+                            final value = await groupListNotifier
+                                .updateGroup(newGroup.toCoreGroupSimple());
+                            if (value) {
+                              QR.back();
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                AdminTextConstants.updatedGroup,
                               );
-                              groupNotifier.setGroup(newGroup);
-                              final value = await groupListNotifier
-                                  .updateGroup(newGroup.toCoreGroupSimple());
-                              if (value) {
-                                QR.back();
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  AdminTextConstants.updatedGroup,
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  AdminTextConstants.updatingError,
-                                );
-                              }
-                            });
+                            } else {
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                AdminTextConstants.updatingError,
+                              );
+                            }
                           },
                           builder: (child) => AdminButton(child: child),
                           child: const Text(

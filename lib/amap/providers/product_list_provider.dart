@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/amap/adapters/product.dart';
 
 class ProductListNotifier
@@ -50,10 +49,6 @@ class ProductListNotifier
 final productListProvider = StateNotifierProvider<ProductListNotifier,
     AsyncValue<List<AppModulesAmapSchemasAmapProductComplete>>>((ref) {
   final productListRepository = ref.watch(repositoryProvider);
-  ProductListNotifier productListNotifier =
-      ProductListNotifier(productListRepository: productListRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    productListNotifier.loadProductList();
-  });
-  return productListNotifier;
+  return ProductListNotifier(productListRepository: productListRepository)
+    ..loadProductList();
 });

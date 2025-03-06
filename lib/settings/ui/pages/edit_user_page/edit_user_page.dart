@@ -17,7 +17,6 @@ import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:myecl/user/class/floors.dart';
@@ -352,40 +351,38 @@ class EditUserPage extends HookConsumerWidget {
                     child: child,
                   ),
                   onTap: () async {
-                    await tokenExpireWrapper(ref, () async {
-                      final value = await asyncUserNotifier.updateMe(
-                        user.copyWith(
-                          birthday: dateController.value.text.isNotEmpty
-                              ? DateTime.parse(
-                                  processDateBack(dateController.value.text),
-                                )
-                              : null,
-                          nickname: nickNameController.value.text.isEmpty
-                              ? null
-                              : nickNameController.value.text,
-                          phone: phoneController.value.text.isEmpty
-                              ? null
-                              : phoneController.value.text,
-                          floor: FloorsType.values.firstWhere(
-                            (e) => e.name == floorController.value.text,
-                          ),
+                    final value = await asyncUserNotifier.updateMe(
+                      user.copyWith(
+                        birthday: dateController.value.text.isNotEmpty
+                            ? DateTime.parse(
+                                processDateBack(dateController.value.text),
+                              )
+                            : null,
+                        nickname: nickNameController.value.text.isEmpty
+                            ? null
+                            : nickNameController.value.text,
+                        phone: phoneController.value.text.isEmpty
+                            ? null
+                            : phoneController.value.text,
+                        floor: FloorsType.values.firstWhere(
+                          (e) => e.name == floorController.value.text,
                         ),
+                      ),
+                    );
+                    if (value) {
+                      displayToastWithContext(
+                        TypeMsg.msg,
+                        SettingsTextConstants.updatedProfile,
                       );
-                      if (value) {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          SettingsTextConstants.updatedProfile,
-                        );
-                        QR.removeNavigator(
-                          SettingsRouter.root + SettingsRouter.editAccount,
-                        );
-                      } else {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          SettingsTextConstants.updatingError,
-                        );
-                      }
-                    });
+                      QR.removeNavigator(
+                        SettingsRouter.root + SettingsRouter.editAccount,
+                      );
+                    } else {
+                      displayToastWithContext(
+                        TypeMsg.error,
+                        SettingsTextConstants.updatingError,
+                      );
+                    }
                   },
                   child: const Center(
                     child: Text(

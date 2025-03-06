@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/ph/adapters/ph.dart';
 
 class PhListNotifier extends ListNotifierAPI<PaperComplete> {
@@ -42,9 +41,5 @@ final phListProvider =
     StateNotifierProvider<PhListNotifier, AsyncValue<List<PaperComplete>>>(
         (ref) {
   final phRepository = ref.watch(repositoryProvider);
-  final notifier = PhListNotifier(phRepository: phRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadPhList();
-  });
-  return notifier;
+  return PhListNotifier(phRepository: phRepository)..loadPhList();
 });

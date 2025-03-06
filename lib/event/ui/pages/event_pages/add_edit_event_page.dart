@@ -12,7 +12,6 @@ import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
@@ -420,106 +419,102 @@ class AddEditEventPage extends HookConsumerWidget {
                                   EventTextConstants.noDaySelected,
                                 );
                               } else {
-                                await tokenExpireWrapper(ref, () async {
-                                  String recurrenceRule = "";
-                                  String startString = start.text;
-                                  if (!startString.contains("/")) {
-                                    startString =
-                                        "${processDate(now)} $startString";
-                                  }
-                                  String endString = end.text;
-                                  if (!endString.contains("/")) {
-                                    endString =
-                                        "${processDate(now)} $endString";
-                                  }
-                                  if (recurrent.value) {
-                                    RecurrenceProperties recurrence =
-                                        RecurrenceProperties(startDate: now);
-                                    recurrence.recurrenceType =
-                                        RecurrenceType.weekly;
-                                    recurrence.recurrenceRange =
-                                        RecurrenceRange.endDate;
-                                    recurrence.endDate = DateTime.parse(
-                                      processDateBack(
-                                        recurrenceEndDate.text,
-                                      ),
-                                    );
-                                    recurrence.weekDays = WeekDays.values
-                                        .where(
-                                          (element) => selectedDays[(WeekDays
-                                                      .values
-                                                      .indexOf(element) -
-                                                  1) %
-                                              7],
-                                        )
-                                        .toList();
-                                    recurrence.interval =
-                                        int.parse(interval.text);
-                                    recurrenceRule = SfCalendar.generateRRule(
-                                      recurrence,
-                                      DateTime.parse(
-                                        processDateBackWithHour(
-                                          startString,
-                                        ),
-                                      ),
-                                      DateTime.parse(
-                                        processDateBackWithHour(
-                                          endString,
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                  EventReturn newEvent = EventReturn(
-                                    id: isEdit ? event.id : "",
-                                    description: description.text,
-                                    end: DateTime.parse(
-                                      processDateBack(endString),
+                                String recurrenceRule = "";
+                                String startString = start.text;
+                                if (!startString.contains("/")) {
+                                  startString =
+                                      "${processDate(now)} $startString";
+                                }
+                                String endString = end.text;
+                                if (!endString.contains("/")) {
+                                  endString = "${processDate(now)} $endString";
+                                }
+                                if (recurrent.value) {
+                                  RecurrenceProperties recurrence =
+                                      RecurrenceProperties(startDate: now);
+                                  recurrence.recurrenceType =
+                                      RecurrenceType.weekly;
+                                  recurrence.recurrenceRange =
+                                      RecurrenceRange.endDate;
+                                  recurrence.endDate = DateTime.parse(
+                                    processDateBack(
+                                      recurrenceEndDate.text,
                                     ),
-                                    name: name.text,
-                                    organizer: organizer.text,
-                                    allDay: allDay.value,
-                                    location: location.text,
-                                    start: DateTime.parse(
-                                      processDateBack(startString),
-                                    ),
-                                    type: eventType.value,
-                                    recurrenceRule: recurrenceRule,
-                                    applicantId: user.id,
-                                    applicant: user.toEventApplicant(),
-                                    decision: Decision.pending,
                                   );
-                                  final value = isEdit
-                                      ? await eventListNotifier
-                                          .updateEvent(newEvent)
-                                      : await eventListNotifier
-                                          .addEvent(newEvent.toEventBase());
-                                  if (value) {
-                                    QR.back();
-                                    if (isEdit) {
-                                      displayToastWithContext(
-                                        TypeMsg.msg,
-                                        EventTextConstants.editedEvent,
-                                      );
-                                    } else {
-                                      displayToastWithContext(
-                                        TypeMsg.msg,
-                                        EventTextConstants.addedEvent,
-                                      );
-                                    }
+                                  recurrence.weekDays = WeekDays.values
+                                      .where(
+                                        (element) => selectedDays[
+                                            (WeekDays.values.indexOf(element) -
+                                                    1) %
+                                                7],
+                                      )
+                                      .toList();
+                                  recurrence.interval =
+                                      int.parse(interval.text);
+                                  recurrenceRule = SfCalendar.generateRRule(
+                                    recurrence,
+                                    DateTime.parse(
+                                      processDateBackWithHour(
+                                        startString,
+                                      ),
+                                    ),
+                                    DateTime.parse(
+                                      processDateBackWithHour(
+                                        endString,
+                                      ),
+                                    ),
+                                  );
+                                }
+                                EventReturn newEvent = EventReturn(
+                                  id: isEdit ? event.id : "",
+                                  description: description.text,
+                                  end: DateTime.parse(
+                                    processDateBack(endString),
+                                  ),
+                                  name: name.text,
+                                  organizer: organizer.text,
+                                  allDay: allDay.value,
+                                  location: location.text,
+                                  start: DateTime.parse(
+                                    processDateBack(startString),
+                                  ),
+                                  type: eventType.value,
+                                  recurrenceRule: recurrenceRule,
+                                  applicantId: user.id,
+                                  applicant: user.toEventApplicant(),
+                                  decision: Decision.pending,
+                                );
+                                final value = isEdit
+                                    ? await eventListNotifier
+                                        .updateEvent(newEvent)
+                                    : await eventListNotifier
+                                        .addEvent(newEvent.toEventBase());
+                                if (value) {
+                                  QR.back();
+                                  if (isEdit) {
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
+                                      EventTextConstants.editedEvent,
+                                    );
                                   } else {
-                                    if (isEdit) {
-                                      displayToastWithContext(
-                                        TypeMsg.error,
-                                        EventTextConstants.editingError,
-                                      );
-                                    } else {
-                                      displayToastWithContext(
-                                        TypeMsg.error,
-                                        EventTextConstants.addingError,
-                                      );
-                                    }
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
+                                      EventTextConstants.addedEvent,
+                                    );
                                   }
-                                });
+                                } else {
+                                  if (isEdit) {
+                                    displayToastWithContext(
+                                      TypeMsg.error,
+                                      EventTextConstants.editingError,
+                                    );
+                                  } else {
+                                    displayToastWithContext(
+                                      TypeMsg.error,
+                                      EventTextConstants.addingError,
+                                    );
+                                  }
+                                }
                               }
                             }
                           },

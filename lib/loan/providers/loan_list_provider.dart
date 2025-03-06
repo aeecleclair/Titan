@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/list_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/loan/adapters/loan.dart';
 
 class LoanListNotifier extends ListNotifierAPI<Loan> {
@@ -49,10 +48,5 @@ class LoanListNotifier extends ListNotifierAPI<Loan> {
 final loanListProvider =
     StateNotifierProvider<LoanListNotifier, AsyncValue<List<Loan>>>((ref) {
   final loanRepository = ref.watch(repositoryProvider);
-  LoanListNotifier loanListNotifier =
-      LoanListNotifier(loanRepository: loanRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await loanListNotifier.loadLoanList();
-  });
-  return loanListNotifier;
+  return LoanListNotifier(loanRepository: loanRepository)..loadLoanList();
 });
