@@ -1,7 +1,7 @@
 import 'package:myecl/loan/class/item_quantity.dart';
 import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/user/class/simple_users.dart';
 
 class Loan {
   final String id;

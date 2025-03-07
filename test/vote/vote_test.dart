@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:myecl/admin/class/account_type.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/user/class/simple_users.dart';
 import 'package:myecl/vote/class/members.dart';
 import 'package:myecl/vote/class/contender.dart';
 import 'package:myecl/vote/class/result.dart';

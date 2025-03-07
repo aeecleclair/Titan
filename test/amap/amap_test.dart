@@ -14,7 +14,7 @@ import 'package:myecl/amap/repositories/order_list_repository.dart';
 import 'package:myecl/amap/repositories/product_repository.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/tools/functions.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/user/class/simple_users.dart';
 
 class MockAmapUserRespository extends Mock implements AmapUserRepository {}
 
