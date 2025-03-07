@@ -43,7 +43,7 @@ class AdminPage extends HookConsumerWidget {
     );
     List<Appointment> appointments = <Appointment>[];
     confirmedEvents.map((e) {
-      if (e.recurrenceRule != "") {
+      if ((e.recurrenceRule ?? "") != "") {
         final dates = getDateInRecurrence(e.recurrenceRule, e.start);
         dates.map((data) {
           appointments.add(

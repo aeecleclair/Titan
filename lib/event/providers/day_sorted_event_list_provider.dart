@@ -15,7 +15,7 @@ final daySortedEventListProvider =
       for (final event in events) {
         List<DateTime> normalizedDates = [];
         List<int> deltaDays = [];
-        if (event.recurrenceRule.isEmpty) {
+        if ((event.recurrenceRule ?? "").isEmpty) {
           normalizedDates.add(normalizedDate(event.start));
           deltaDays.add(event.end.difference(event.start).inDays);
         } else {
