@@ -47,7 +47,7 @@ class AdvertAdminPage extends HookConsumerWidget {
             );
             final sortedUserAdvertiserAdverts = userAdvertiserAdvert
                 .toList()
-                .sortedBy((element) => element.date as DateTime)
+                .sortedBy((element) => DateTime.parse(element.date))
                 .reversed;
             final filteredSortedUserAdvertiserAdverts =
                 sortedUserAdvertiserAdverts

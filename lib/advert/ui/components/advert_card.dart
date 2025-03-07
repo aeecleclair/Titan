@@ -30,6 +30,7 @@ class AdvertCard extends HookConsumerWidget {
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final posterNotifier = ref.watch(advertPosterProvider.notifier);
     final isWebFormat = ref.watch(isWebFormatProvider);
+    final date = DateTime.parse(advert.date);
     return GestureDetector(
       onTap: () {
         if (!isWebFormat) {
@@ -90,7 +91,7 @@ class AdvertCard extends HookConsumerWidget {
                             height: 10,
                           ),
                           AutoSizeText(
-                            formatDate(advert.date),
+                            formatDate(date),
                             maxLines: 1,
                             textAlign: TextAlign.center,
                             style: const TextStyle(
@@ -254,7 +255,7 @@ class AdvertCard extends HookConsumerWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 AutoSizeText(
-                                  DateFormat('dd').format(advert.date),
+                                  DateFormat('dd').format(date),
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
                                     color: Colors.black,
@@ -265,7 +266,7 @@ class AdvertCard extends HookConsumerWidget {
                                 ),
                                 AutoSizeText(
                                   AdvertTextConstants.months[int.parse(
-                                        DateFormat('MM').format(advert.date),
+                                        DateFormat('MM').format(date),
                                       ) -
                                       1],
                                   textAlign: TextAlign.center,

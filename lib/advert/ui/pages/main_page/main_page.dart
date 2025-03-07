@@ -37,7 +37,7 @@ class AdvertMainPage extends HookConsumerWidget {
             value: advertList,
             builder: (context, advertData) {
               final sortedAdvertData = advertData
-                  .sortedBy((element) => element.date as DateTime)
+                  .sortedBy((element) => DateTime.parse(element.date))
                   .reversed;
               final filteredSortedAdvertData = sortedAdvertData.where(
                 (advert) =>

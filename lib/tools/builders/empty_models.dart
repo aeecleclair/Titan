@@ -141,6 +141,7 @@ void registerAllEmptyFactories() {
       id: '',
       advertiserId: '',
       advertiser: EmptyModels.empty<AdvertiserComplete>(),
+      date: DateTime.now(),
     ),
   );
 
