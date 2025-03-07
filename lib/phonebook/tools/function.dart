@@ -31,10 +31,13 @@ List<AssociationComplete> sortedAssociationByKind(
 ) {
   List<AssociationComplete> sorted = [];
   List<List<AssociationComplete>> sortedByKind =
-      List.generate(getEnumValues(Kinds.values).length, (index) => []);
+      List.generate(Kinds.values.length, (index) => []);
+  final values = getEnumValues(Kinds.values).map((e) => e.value).toList();
   for (AssociationComplete association in associations) {
-    sortedByKind[getEnumValues(Kinds.values).indexOf(association.kind)]
-        .add(association);
+    if (association.kind.value == null) {
+      continue;
+    }
+    sortedByKind[values.indexOf(association.kind.value)].add(association);
   }
   for (List<AssociationComplete> list in sortedByKind) {
     list.sort(

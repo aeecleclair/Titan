@@ -13,6 +13,7 @@ class AssociationKindsNotifier extends SingleNotifierAPI<KindsReturn> {
   }
 
   Future<AsyncValue<KindsReturn>> loadAssociationKinds() async {
+    // Issue with the accent 
     return await load(associationRepository.phonebookAssociationsKindsGet);
   }
 }
