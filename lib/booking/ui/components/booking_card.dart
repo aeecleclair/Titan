@@ -30,7 +30,6 @@ class BookingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(booking);
     final isNotEnded = (booking.recurrenceRule ?? "").isNotEmpty
         ? SfCalendar.parseRRule(booking.recurrenceRule, booking.start)
             .endDate!
