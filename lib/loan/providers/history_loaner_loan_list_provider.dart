@@ -14,8 +14,10 @@ class HistoryLoanerLoanListNotifier extends ListNotifierAPI<Loan> {
 
   Future<AsyncValue<List<Loan>>> loadLoan(String loanerId) async {
     return await loadList(
-      () async =>
-          loanRepository.loansLoanersLoanerIdLoansGet(loanerId: loanerId),
+      () async => loanRepository.loansLoanersLoanerIdLoansGet(
+        loanerId: loanerId,
+        returned: true,
+      ),
     );
   }
 
