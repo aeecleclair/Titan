@@ -1,0 +1,60 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/seed-library/class/plant_complete.dart';
+import 'package:myecl/seed-library/class/plant_creation.dart';
+import 'package:myecl/seed-library/class/plant_simple.dart';
+import 'package:myecl/tools/repository/repository.dart';
+
+class PlantsRepository extends Repository {
+  @override
+  // ignore: overridden_fields
+  final ext = "seed_library/plants/";
+
+  Future<List<PlantSimple>> getPlantSimplelist() async {
+    return List<PlantSimple>.from(
+      (await getList()).map((x) => PlantSimple.fromJson(x)),
+    );
+  }
+
+  Future<PlantComplete> getPlantComplete(String plantId) async {
+    return PlantComplete.fromJson(await getOne(plantId));
+  }
+
+  Future<PlantSimple> getwaitingPlants(String plantsId) async {
+    return PlantSimple.fromJson(await getOne(plantsId));
+  }
+
+  Future<List<PlantSimple>> getListPlantSimpleAdmin(String userId) async {
+    return List<PlantSimple>.from(
+      (await getList(suffix: "user/$userId"))
+          .map((x) => PlantSimple.fromJson(x)),
+    );
+  }
+
+  Future<List<PlantSimple>> getMyPlantSimple() async {
+    return List<PlantSimple>.from(
+      (await getList(suffix: "my")).map((x) => PlantSimple.fromJson(x)),
+    );
+  }
+
+  Future<bool> deletePlants(String plantsId) async {
+    return await delete(plantsId);
+  }
+
+  Future<bool> updatePlant(PlantComplete plant) async {
+    return await update(plant.toJson(), plant.id);
+  }
+
+  Future<bool> borrowIdPlant(PlantComplete plant) async {
+    return await update({}, plant.id, suffix: "/borrowId");
+  }
+
+  Future<PlantComplete> createPlants(PlantCreation plants) async {
+    return PlantComplete.fromJson(await create(plants.toJson()));
+  }
+}
+
+final plantsRepositoryProvider = Provider((ref) {
+  final token = ref.watch(tokenProvider);
+  return PlantsRepository()..setToken(token);
+});
