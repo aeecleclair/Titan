@@ -40,11 +40,16 @@ class ConfirmFundButton extends ConsumerWidget {
     }
 
     void helloAssoCallback(String fundingUrl) async {
-      html.WindowBase popupWin = html.window.open(
+      html.WindowBase? popupWin = html.window.open(
         fundingUrl,
         "HelloAsso",
         "width=800, height=900, scrollbars=yes",
-      );
+      ) as WindowBase?;
+
+      if (popupWin == null) {
+        displayToastWithContext(TypeMsg.error, "Veuillez autoriser les popups");
+        return;
+      }
 
       final completer = Completer();
       void checkWindowClosed() {
