@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/rplace/class/pixel.dart';
+import 'package:myecl/rplace/providers/pixelinfo_providers.dart';
 import 'package:myecl/rplace/providers/pixels_providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 final listeCouleurs = [
   'FFffffff',
@@ -57,32 +61,63 @@ class ColBouton extends HookConsumerWidget {
   }
 }
 
-class ColorPicker extends StatelessWidget {
+class ColorPicker extends HookConsumerWidget {
   final int x;
   final int y;
 
   const ColorPicker({super.key, required this.x, required this.y});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final pixelinfo_value = ref.watch(pixelInfoProvider);
+
+    timeago.setLocaleMessages('fr', timeago.FrMessages());
+
     return SizedBox(
-      height: 100,
-      child: Center(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            children: listeCouleurs
-                .map(
-                  (colo) => ColBouton(
-                    x: x,
-                    y: y,
-                    color: colo,
-                  ),
-                )
-                .toList(),
+      height: 110,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          AsyncChild(
+              value: pixelinfo_value,
+              builder: (context, pixelinfo_value) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Row(
+                      children: [
+                        AutoSizeText(
+                          pixelinfo_value.user.nickname ??
+                              ("${pixelinfo_value.user.firstname} ${pixelinfo_value.user.name}"),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                    Text(
+                      timeago.format(pixelinfo_value.date, locale: 'fr'),
+                    ),
+                  ],
+                );
+              }),
+          Center(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                children: listeCouleurs
+                    .map(
+                      (colo) => ColBouton(
+                        x: x,
+                        y: y,
+                        color: colo,
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/rplace/providers/pixelfocus_providers.dart';
 import 'package:myecl/rplace/providers/grid_providers.dart';
+import 'package:myecl/rplace/providers/pixelinfo_providers.dart';
 import 'package:myecl/rplace/ui/color_picker.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'my_painter.dart';
@@ -19,6 +20,7 @@ class CanvasViewer extends HookConsumerWidget {
     final gridInfo = ref.watch(gridProvider);
     final focus = ref.watch(focusProvider);
     final focusNotifier = ref.watch(focusProvider.notifier);
+    final pixelinfo = ref.watch(pixelInfoProvider.notifier);
 
     return AsyncChild(
       value: gridInfo,
@@ -37,6 +39,10 @@ class CanvasViewer extends HookConsumerWidget {
             child: Center(
               child: GestureDetector(
                 onTapDown: (event) {
+                  pixelinfo.getPixelInfo(
+                    (event.localPosition.dx) ~/ pixelSize,
+                    (event.localPosition.dy) ~/ pixelSize,
+                  );
                   focusNotifier.setPixelFocus(
                     PixelFocus(
                       x: (event.localPosition.dx) ~/ pixelSize,
@@ -98,7 +104,7 @@ class CanvasViewer extends HookConsumerWidget {
                           ),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
