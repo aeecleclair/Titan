@@ -44,7 +44,7 @@ class ConfirmFundButton extends ConsumerWidget {
         fundingUrl,
         "HelloAsso",
         "width=800, height=900, scrollbars=yes",
-      ) as WindowBase?;
+      ) as html.WindowBase?;
 
       if (popupWin == null) {
         displayToastWithContext(TypeMsg.error, "Veuillez autoriser les popups");
