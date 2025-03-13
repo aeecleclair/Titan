@@ -9,14 +9,15 @@ import 'package:myecl/paiement/ui/pages/main_page/seller_card/store_seller_card.
 import 'package:myecl/tools/ui/builders/async_child.dart';
 
 class StoreList extends ConsumerWidget {
-  const StoreList({super.key});
+  final double maxHeight;
+  const StoreList({required this.maxHeight, super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final stores = ref.watch(myStoresProvider);
     final isAdmin = ref.watch(isPaymentAdminProvider);
     return SizedBox(
-      height: MediaQuery.of(context).size.height - 332,
+      height: maxHeight,
       child: SingleChildScrollView(
         child: Column(
           children: [

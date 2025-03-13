@@ -98,64 +98,71 @@ class PaymentMainPage extends HookConsumerWidget {
                 },
               ),
             )
-          : Column(
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                AsyncChild(
-                  value: mySellers,
-                  builder: (context, mySellers) {
-                    if (mySellers.isEmpty && !isAdmin) {
-                      return SizedBox(
-                        height: 250,
-                        width: MediaQuery.of(context).size.width,
-                        child: const AccountCard(
-                          toggle: null,
-                        ),
-                      );
-                    }
-                    return SizedBox(
-                      height: 250,
-                      width: MediaQuery.of(context).size.width,
-                      child: FlipCard(
-                        back: StoreCard(
-                          toggle: toggle,
-                        ),
-                        front: AccountCard(
-                          toggle: toggle,
-                        ),
-                        controller: controller,
-                      ),
-                    );
-                  },
-                ),
-                AnimatedBuilder(
-                  animation: controller,
-                  builder: (context, child) {
-                    return Stack(
-                      children: [
-                        Visibility(
-                          visible: controller.value.abs() < 1,
-                          child: AnimatedOpacity(
-                            duration: const Duration(milliseconds: 300),
-                            opacity: 1 - controller.value.abs(),
-                            child: const LastTransactions(),
+          : LayoutBuilder(
+              builder: (context, constraints) {
+                return Column(
+                  children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    AsyncChild(
+                      value: mySellers,
+                      builder: (context, mySellers) {
+                        if (mySellers.isEmpty && !isAdmin) {
+                          return SizedBox(
+                            height: 250,
+                            width: MediaQuery.of(context).size.width,
+                            child: const AccountCard(
+                              toggle: null,
+                            ),
+                          );
+                        }
+                        return SizedBox(
+                          height: 250,
+                          width: MediaQuery.of(context).size.width,
+                          child: FlipCard(
+                            back: StoreCard(
+                              toggle: toggle,
+                            ),
+                            front: AccountCard(
+                              toggle: toggle,
+                            ),
+                            controller: controller,
                           ),
-                        ),
-                        Visibility(
-                          visible: controller.value.abs() > 0,
-                          child: AnimatedOpacity(
-                            duration: const Duration(milliseconds: 300),
-                            opacity: controller.value.abs(),
-                            child: const StoreList(),
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ],
+                        );
+                      },
+                    ),
+                    AnimatedBuilder(
+                      animation: controller,
+                      builder: (context, child) {
+                        return Stack(
+                          children: [
+                            Visibility(
+                              visible: controller.value.abs() < 1,
+                              child: AnimatedOpacity(
+                                duration: const Duration(milliseconds: 300),
+                                opacity: 1 - controller.value.abs(),
+                                child: LastTransactions(
+                                  maxHeight: constraints.maxHeight - 260,
+                                ),
+                              ),
+                            ),
+                            Visibility(
+                              visible: controller.value.abs() > 0,
+                              child: AnimatedOpacity(
+                                duration: const Duration(milliseconds: 300),
+                                opacity: controller.value.abs(),
+                                child: StoreList(
+                                  maxHeight: constraints.maxHeight - 260,),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ],
+                );
+              },
             ),
     );
   }

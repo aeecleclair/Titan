@@ -8,13 +8,14 @@ import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class LastTransactions extends ConsumerWidget {
-  const LastTransactions({super.key});
+  final double maxHeight;
+  const LastTransactions({required this.maxHeight, super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final history = ref.watch(myHistoryProvider);
     return SizedBox(
-      height: MediaQuery.of(context).size.height - 332,
+      height: maxHeight,
       child: SingleChildScrollView(
         child: Column(
           children: [
