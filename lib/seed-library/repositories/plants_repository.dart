@@ -3,6 +3,7 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/seed-library/class/plant_complete.dart';
 import 'package:myecl/seed-library/class/plant_creation.dart';
 import 'package:myecl/seed-library/class/plant_simple.dart';
+import 'package:myecl/seed-library/tools/fake_data.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class PlantsRepository extends Repository {
@@ -11,9 +12,10 @@ class PlantsRepository extends Repository {
   final ext = "seed_library/plants/";
 
   Future<List<PlantSimple>> getPlantSimplelist() async {
-    return List<PlantSimple>.from(
-      (await getList()).map((x) => PlantSimple.fromJson(x)),
-    );
+    return plantList;
+    // return List<PlantSimple>.from(
+    //   (await getList()).map((x) => PlantSimple.fromJson(x)),
+    // );
   }
 
   Future<PlantComplete> getPlantComplete(String plantId) async {
@@ -32,9 +34,10 @@ class PlantsRepository extends Repository {
   }
 
   Future<List<PlantSimple>> getMyPlantSimple() async {
-    return List<PlantSimple>.from(
-      (await getList(suffix: "my")).map((x) => PlantSimple.fromJson(x)),
-    );
+    return myPlantList;
+    // return List<PlantSimple>.from(
+    //   (await getList(suffix: "me")).map((x) => PlantSimple.fromJson(x)),
+    // );
   }
 
   Future<bool> deletePlants(String plantsId) async {

@@ -2,11 +2,9 @@ import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
-import 'package:myecl/seed-library/ui/pages/loan-detail_page/loan_detail_page.dart';
 import 'package:myecl/seed-library/ui/pages/main_page/main_page.dart';
-import 'package:myecl/seed-library/ui/pages/stock_page/stock_page.dart';
-import 'package:myecl/seed-library/ui/pages/add_seed_deposit_page/add_seed_deposit_page.dart';
-import 'package:myecl/seed-library/ui/seed_deposit_page/seed_deposit_page.dart';
+import 'package:myecl/seed-library/ui/pages/plants_page/plants_page.dart';
+import 'package:myecl/seed-library/ui/pages/stock_page/stocks_page.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -41,82 +39,82 @@ class SeedLibraryRouter {
           AuthenticatedMiddleware(ref),
         ],
         children: [
-          QRoute(
-            path: admin,
-            builder: () => AdminPage(),
-            middleware: [
-              AdminMiddleware(ref, isAdminProvider),
-            ],
-            children: [
-              QRoute(
-                path: plants,
-                builder: () => AdminPlantPage(),
-                children: [
-                  QRoute(
-                    path: addEditPlant,
-                    builder: () => AddEditPlantPage(),
-                  ),
-                ],
-              ),
-              QRoute(
-                path: stock,
-                builder: () => AdminStockPage(),
-                children: [
-                  QRoute(
-                    path: addStock,
-                    builder: () => AddStockPage(),
-                  ),
-                ],
-              ),
-              QRoute(
-                path: species,
-                builder: () => AdminSpeciesPage(),
-                children: [
-                  QRoute(
-                    path: addEditSpecies,
-                    builder: () => AddEditSpeciesPage(),
-                  ),
-                ],
-              ),
-            ],
-          ),
+          // QRoute(
+          //   path: admin,
+          //   builder: () => AdminPage(),
+          //   middleware: [
+          //     AdminMiddleware(ref, isAdminProvider),
+          //   ],
+          //   children: [
+          //     QRoute(
+          //       path: plants,
+          //       builder: () => AdminPlantPage(),
+          //       children: [
+          //         QRoute(
+          //           path: addEditPlant,
+          //           builder: () => AddEditPlantPage(),
+          //         ),
+          //       ],
+          //     ),
+          //     QRoute(
+          //       path: stock,
+          //       builder: () => AdminStockPage(),
+          //       children: [
+          //         QRoute(
+          //           path: addStock,
+          //           builder: () => AddStockPage(),
+          //         ),
+          //       ],
+          //     ),
+          //     QRoute(
+          //       path: species,
+          //       builder: () => AdminSpeciesPage(),
+          //       children: [
+          //         QRoute(
+          //           path: addEditSpecies,
+          //           builder: () => AddEditSpeciesPage(),
+          //         ),
+          //       ],
+          //     ),
+          //   ],
+          // ),
           QRoute(
             path: plants,
             builder: () => PlantsPage(),
             middleware: [],
-            children: [
-              QRoute(
-                path: plantDetail,
-                builder: () => PlantDetailPage(),
-                children: [
-                  QRoute(
-                    path: userEditPlant,
-                    builder: () => UserEditPlantPage(),
-                  ),
-                ],
-              ),
-            ],
+            // children: [
+            //   // QRoute(
+            //   //   path: plantDetail,
+            //   //   builder: () => PlantDetailPage(),
+            //   //   children: [
+            //   //     QRoute(
+            //   //       path: userEditPlant,
+            //   //       builder: () => UserEditPlantPage(),
+            //   //     ),
+            //   //   ],
+            //   // ),
+            // ],
           ),
           QRoute(
             path: stock,
             builder: () => StockPage(),
-            children: [
-              QRoute(
-                path: loanDetail,
-                builder: () => LoanDetailPage(),
-              ),
-            ],
+            // children: [
+            //   QRoute(
+            //     path: loanDetail,
+            //     builder: () => LoanDetailPage(),
+            //   ),
+            // ],
           ),
-          QRoute(
-            path: seedDeposit,
-            builder: () => SeedDepositPage(),
-            children: [
-              QRoute(
-                path: addSeedDeposit,
-                builder: () => AddSeedDepositPage(),
-              ),
-            ],
-          ),
+          // QRoute(
+          //   path: seedDeposit,
+          //   builder: () => SeedDepositPage(),
+          //   children: [
+          //     QRoute(
+          //       path: addSeedDeposit,
+          //       builder: () => AddSeedDepositPage(),
+          //     ),
+          //   ],
+          // ),
         ],
       );
 }

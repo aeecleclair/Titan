@@ -11,15 +11,14 @@ import 'package:myecl/seed-library/ui/seed_library.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class PlantsPage extends HookConsumerWidget {
-  const PlantsPage({super.key});
+class StockPage extends HookConsumerWidget {
+  const StockPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final plantNotifier = ref.watch(plantProvider.notifier);
     final plantListNotifier = ref.watch(plantListProvider.notifier);
-    final plantFilteredList = ref.watch(myPlantsFilteredListProvider);
-    print('plantFilteredList: $plantFilteredList');
+    final plantFilteredList = ref.watch(plantsFilteredListProvider);
 
     return SeedLibraryTemplate(
       child: Refresher(
@@ -27,35 +26,23 @@ class PlantsPage extends HookConsumerWidget {
           await plantListNotifier.loadPlants();
         },
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              Row(
-                children: [
-                  const ResearchBar(),
-                ],
-              ),
-              const SizedBox(height: 10),
+              const ResearchBar(),
               const FiltersBar(),
               const SizedBox(height: 10),
-              SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                  children: [
-                    ...plantFilteredList.map(
-                      (plant) => PlantCard(
-                        plant: plant,
-                        onClicked: () {
-                          plantNotifier.loadPlant(plant.id);
-                          QR.to(
-                            SeedLibraryRouter.root +
-                                SeedLibraryRouter.plants +
-                                SeedLibraryRouter.plantDetail,
-                          );
-                        },
-                      ),
-                    ),
-                  ],
+              ...plantFilteredList.map(
+                (plant) => PlantCard(
+                  plant: plant,
+                  onClicked: () {
+                    plantNotifier.loadPlant(plant.id);
+                    QR.to(
+                      SeedLibraryRouter.root +
+                          SeedLibraryRouter.stock +
+                          SeedLibraryRouter.plantDetail,
+                    );
+                  },
                 ),
               ),
             ],

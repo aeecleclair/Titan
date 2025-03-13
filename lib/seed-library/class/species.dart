@@ -1,6 +1,6 @@
 import 'dart:core';
 
-enum TypeSpecies { aromatic, vegetable, fruit, other }
+enum TypeSpecies { aromatic, vegetable, fruit, other, all }
 
 class Species {
   final String id; // UUID

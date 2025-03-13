@@ -6,7 +6,7 @@ final difficultyFilterProvider =
 });
 
 class FilterNotifier extends StateNotifier<int> {
-  FilterNotifier() : super(-1);
+  FilterNotifier() : super(0);
 
   void setFilter(int i) {
     state = i;

@@ -41,3 +41,11 @@ final speciesListProvider =
   });
   return provider;
 });
+
+final syncSpeciesListProvider = Provider<List<Species>>((ref) {
+  final speciesList = ref.watch(speciesListProvider);
+  return speciesList.maybeWhen(
+    orElse: () => [],
+    data: (species) => species,
+  );
+});

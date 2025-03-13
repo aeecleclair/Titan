@@ -14,6 +14,10 @@ class PlantListNotifier extends ListNotifier<PlantSimple> {
     return await loadList(plantsRepository.getPlantSimplelist);
   }
 
+  Future<AsyncValue<List<PlantSimple>>> loadMyPlants() async {
+    return await loadList(plantsRepository.getMyPlantSimple);
+  }
+
   Future<bool> createPlant(PlantCreation plant) async {
     return await add(
       (plantSimple) => plantsRepository.createPlants(plant),
@@ -39,6 +43,18 @@ final plantListProvider =
       PlantListNotifier(plantsRepository: plantRepository);
   tokenExpireWrapperAuth(ref, () async {
     await provider.loadPlants();
+  });
+  return provider;
+});
+
+final myPlantListProvider =
+    StateNotifierProvider<PlantListNotifier, AsyncValue<List<PlantSimple>>>(
+        (ref) {
+  final plantRepository = ref.watch(plantsRepositoryProvider);
+  PlantListNotifier provider =
+      PlantListNotifier(plantsRepository: plantRepository);
+  tokenExpireWrapperAuth(ref, () async {
+    await provider.loadMyPlants();
   });
   return provider;
 });

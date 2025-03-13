@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final filterProvider = StateNotifierProvider<FilterNotifier, String>((ref) {
+final searchFilterProvider =
+    StateNotifierProvider<FilterNotifier, String>((ref) {
   return FilterNotifier();
 });
 
