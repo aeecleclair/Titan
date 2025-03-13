@@ -67,6 +67,7 @@ dependencies:
   file_saver: ^0.2.12
   uuid: ^4.4.2
   web_socket_channel: ^3.0.2
+  timeago: ^3.7.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.3
