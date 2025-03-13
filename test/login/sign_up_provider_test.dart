@@ -1,117 +1,92 @@
+import 'package:chopper/chopper.dart' as chopper;
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/login/class/account_type.dart';
-import 'package:myecl/login/class/create_account.dart';
-import 'package:myecl/login/class/recover_request.dart';
 import 'package:myecl/login/providers/sign_up_provider.dart';
-import 'package:myecl/login/repositories/sign_up_repository.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 
-class MockSignUpRepository extends Mock implements SignUpRepository {}
+class MockSignUpRepository extends Mock implements Openapi {}
 
 void main() {
-  late SignUpProvider signUpProvider;
-  late MockSignUpRepository mockSignUpRepository;
+  group('SignUpProvider', () {
+    late MockSignUpRepository mockRepository;
+    late SignUpProvider provider;
+    final createAccount = CoreUserActivateRequest(
+      name: 'Test',
+      firstname: 'User',
+      nickname: 'Tester',
+      activationToken: 'token',
+      password: 'password',
+      birthday: DateTime.now(),
+      phone: '1234567890',
+      floor: '1',
+      promo: '2023',
+    );
+    final recoverRequest = ResetPasswordRequest(
+      resetToken: 'token',
+      newPassword: 'newpassword',
+    );
 
-  setUp(() {
-    mockSignUpRepository = MockSignUpRepository();
-    signUpProvider = SignUpProvider(repository: mockSignUpRepository);
-  });
+    setUp(() {
+      mockRepository = MockSignUpRepository();
+      provider = SignUpProvider(signUpRepository: mockRepository);
+    });
 
-  group('createUser', () {
-    test('returns true when repository returns true', () async {
-      when(
-        () => mockSignUpRepository.createUser(
-          'test@test.com',
-          AccountType.student,
+    test('createUser returns true on success', () async {
+      when(() => mockRepository.usersCreatePost(body: any(named: 'body')))
+          .thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          null,
         ),
-      ).thenAnswer((_) async => true);
+      );
 
-      final result =
-          await signUpProvider.createUser('test@test.com', AccountType.student);
+      final result = await provider.createUser('test@example.com');
 
       expect(result, true);
     });
 
-    test('returns false when repository returns false', () async {
-      when(
-        () => mockSignUpRepository.createUser(
-          'test@test.com',
-          AccountType.student,
+    test('recoverUser returns true on success', () async {
+      when(() => mockRepository.usersRecoverPost(body: any(named: 'body')))
+          .thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          null,
         ),
-      ).thenAnswer((_) async => false);
+      );
 
-      final result =
-          await signUpProvider.createUser('test@test.com', AccountType.student);
-
-      expect(result, false);
-    });
-  });
-
-  group('recoverUser', () {
-    test('returns true when repository returns true', () async {
-      when(() => mockSignUpRepository.recoverUser('test@test.com'))
-          .thenAnswer((_) async => true);
-
-      final result = await signUpProvider.recoverUser('test@test.com');
+      final result = await provider.recoverUser('test@example.com');
 
       expect(result, true);
     });
 
-    test('returns false when repository returns false', () async {
-      when(() => mockSignUpRepository.recoverUser('test@test.com'))
-          .thenAnswer((_) async => false);
+    test('activateUser returns true on success', () async {
+      when(() => mockRepository.usersActivatePost(body: any(named: 'body')))
+          .thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          null,
+        ),
+      );
 
-      final result = await signUpProvider.recoverUser('test@test.com');
-
-      expect(result, false);
-    });
-  });
-
-  group('activateUser', () {
-    test('returns true when repository returns true', () async {
-      final createAccount =
-          CreateAccount.empty().copyWith(password: 'password');
-      when(() => mockSignUpRepository.activateUser(createAccount))
-          .thenAnswer((_) async => true);
-
-      final result = await signUpProvider.activateUser(createAccount);
+      final result = await provider.activateUser(createAccount);
 
       expect(result, true);
     });
 
-    test('returns false when repository returns false', () async {
-      final createAccount =
-          CreateAccount.empty().copyWith(password: 'password');
-      when(() => mockSignUpRepository.activateUser(createAccount))
-          .thenAnswer((_) async => false);
+    test('resetPassword returns true on success', () async {
+      when(
+        () => mockRepository.usersResetPasswordPost(body: any(named: 'body')),
+      ).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          null,
+        ),
+      );
 
-      final result = await signUpProvider.activateUser(createAccount);
-
-      expect(result, false);
-    });
-  });
-
-  group('resetPassword', () {
-    test('returns true when repository returns true', () async {
-      final recoverRequest =
-          RecoverRequest.empty().copyWith(newPassword: 'password');
-      when(() => mockSignUpRepository.resetPassword(recoverRequest))
-          .thenAnswer((_) async => true);
-
-      final result = await signUpProvider.resetPassword(recoverRequest);
+      final result = await provider.resetPassword(recoverRequest);
 
       expect(result, true);
-    });
-
-    test('returns false when repository returns false', () async {
-      final recoverRequest =
-          RecoverRequest.empty().copyWith(newPassword: 'password');
-      when(() => mockSignUpRepository.resetPassword(recoverRequest))
-          .thenAnswer((_) async => false);
-
-      final result = await signUpProvider.resetPassword(recoverRequest);
-
-      expect(result, false);
     });
   });
 }

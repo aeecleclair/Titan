@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/booking.dart';
+import 'package:myecl/booking/adapters/booking.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/manager_booking_list_provider.dart';
 import 'package:myecl/booking/providers/booking_provider.dart';
@@ -12,14 +12,15 @@ import 'package:myecl/booking/providers/selected_days_provider.dart';
 import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/components/booking_card.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class ListBooking extends HookConsumerWidget {
-  final List<Booking> bookings;
+  final List<BookingReturnApplicant> bookings;
   final bool canToggle;
   final String title;
   const ListBooking({
@@ -41,7 +42,7 @@ class ListBooking extends HookConsumerWidget {
 
     final toggle = useState(!canToggle);
 
-    void handleBooking(Booking booking) {
+    void handleBooking(BookingReturnApplicant booking) {
       bookingNotifier.setBooking(booking);
       final recurrentDays =
           SfCalendar.parseRRule(booking.recurrenceRule, booking.start).weekDays;
@@ -95,7 +96,7 @@ class ListBooking extends HookConsumerWidget {
                 horizontalSpace: 10,
                 items: bookings,
                 itemBuilder: (context, e, i) => BookingCard(
-                  booking: e,
+                  booking: e.toBookingReturn(),
                   isAdmin: true,
                   isDetail: false,
                   onEdit: () {
@@ -117,28 +118,29 @@ class ListBooking extends HookConsumerWidget {
                           title: BookingTextConstants.confirm,
                           descriptions: BookingTextConstants.confirmBooking,
                           onYes: () async {
-                            await tokenExpireWrapper(ref, () async {
-                              Booking newBooking = e.copyWith(
+                            BookingReturnApplicant newBooking = e
+                              ..copyWith(
                                 decision: Decision.approved,
                               );
-                              bookingListNotifier
-                                  .toggleConfirmed(
-                                newBooking,
-                                Decision.approved,
-                              )
-                                  .then((value) {
-                                if (value) {
-                                  ref
-                                      .read(
-                                        userBookingListProvider.notifier,
-                                      )
-                                      .loadUserBookings();
-                                  confirmedBookingListNotifier
-                                      .addBooking(newBooking);
-                                  managerConfirmedBookingListNotifier
-                                      .addBooking(newBooking);
-                                }
-                              });
+                            bookingListNotifier
+                                .toggleConfirmed(
+                              newBooking,
+                              Decision.approved,
+                            )
+                                .then((value) {
+                              if (value) {
+                                ref
+                                    .read(
+                                      userBookingListProvider.notifier,
+                                    )
+                                    .loadUserBookings();
+                                confirmedBookingListNotifier.addBooking(
+                                  newBooking.toBookingReturnSimpleApplicant(),
+                                );
+                                managerConfirmedBookingListNotifier.addBooking(
+                                  newBooking.toBookingReturnSimpleApplicant(),
+                                );
+                              }
                             });
                           },
                         );
@@ -153,28 +155,29 @@ class ListBooking extends HookConsumerWidget {
                           title: BookingTextConstants.decline,
                           descriptions: BookingTextConstants.declineBooking,
                           onYes: () async {
-                            await tokenExpireWrapper(ref, () async {
-                              Booking newBooking = e.copyWith(
-                                decision: Decision.declined,
-                              );
-                              bookingListNotifier
-                                  .toggleConfirmed(
-                                newBooking,
-                                Decision.declined,
-                              )
-                                  .then((value) {
-                                if (value) {
-                                  ref
-                                      .read(
-                                        userBookingListProvider.notifier,
-                                      )
-                                      .loadUserBookings();
-                                  confirmedBookingListNotifier
-                                      .deleteBooking(newBooking);
-                                  managerConfirmedBookingListNotifier
-                                      .deleteBooking(newBooking);
-                                }
-                              });
+                            BookingReturnApplicant newBooking = e.copyWith(
+                              decision: Decision.declined,
+                            );
+                            bookingListNotifier
+                                .toggleConfirmed(
+                              newBooking,
+                              Decision.declined,
+                            )
+                                .then((value) {
+                              if (value) {
+                                ref
+                                    .read(
+                                      userBookingListProvider.notifier,
+                                    )
+                                    .loadUserBookings();
+                                confirmedBookingListNotifier.deleteBooking(
+                                  newBooking.toBookingReturnSimpleApplicant(),
+                                );
+                                managerConfirmedBookingListNotifier
+                                    .deleteBooking(
+                                  newBooking.toBookingReturnSimpleApplicant(),
+                                );
+                              }
                             });
                           },
                         );

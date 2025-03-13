@@ -1,10 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/event/class/event.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
-class EventNotifier extends StateNotifier<Event> {
-  EventNotifier() : super(Event.empty());
+class EventNotifier extends StateNotifier<EventReturn> {
+  EventNotifier() : super(EmptyModels.empty<EventReturn>());
 
-  void setEvent(Event event) {
+  void setEvent(EventReturn event) {
     state = event;
   }
 
@@ -13,6 +14,6 @@ class EventNotifier extends StateNotifier<Event> {
   }
 }
 
-final eventProvider = StateNotifierProvider<EventNotifier, Event>((ref) {
+final eventProvider = StateNotifierProvider<EventNotifier, EventReturn>((ref) {
   return EventNotifier();
 });

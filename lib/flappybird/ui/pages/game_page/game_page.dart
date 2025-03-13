@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/flappybird/class/score.dart';
 import 'package:myecl/flappybird/providers/bird_provider.dart';
 import 'package:myecl/flappybird/providers/current_best_score.dart';
 import 'package:myecl/flappybird/providers/game_loop_provider.dart';
@@ -15,6 +14,7 @@ import 'package:myecl/flappybird/ui/flappybird_template.dart';
 import 'package:myecl/flappybird/ui/pages/game_page/pipe_handler.dart';
 import 'package:myecl/flappybird/ui/pages/game_page/score.dart';
 import 'package:myecl/flappybird/ui/pages/game_page/start_screen.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 
 import 'bird.dart';
 
@@ -102,11 +102,8 @@ class GamePage extends HookConsumerWidget {
         timerNotifier.stop();
         if (newBird.score > bestScore) {
           scoreListNotifier.createScore(
-            Score(
-              user: newBird.user,
-              value: newBird.score,
-              date: DateTime.now(),
-              position: 0,
+            FlappyBirdScoreBase(
+              $value: newBird.score,
             ),
           );
         }

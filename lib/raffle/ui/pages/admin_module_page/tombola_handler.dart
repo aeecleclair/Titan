@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/raffle/providers/raffle_list_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/admin_module_page/confirm_creation.dart';
 import 'package:myecl/raffle/ui/pages/admin_module_page/tombola_card.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
 class TombolaHandler extends HookConsumerWidget {
   const TombolaHandler({super.key});
@@ -16,9 +17,12 @@ class TombolaHandler extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final groupList = ref.watch(allGroupListProvider);
     final raffleList = ref.watch(raffleListProvider);
-    final groupChoosen = useState(SimpleGroup.empty());
+    final groupChoosen = useState(EmptyModels.empty<CoreGroupSimple>());
 
-    void displayWinningsDialog(List<SimpleGroup> groups, Function callback) {
+    void displayWinningsDialog(
+      List<CoreGroupSimple> groups,
+      Function callback,
+    ) {
       showDialog(
         context: context,
         builder: (context) {
@@ -130,7 +134,7 @@ class TombolaHandler extends HookConsumerWidget {
                             data: (data) {
                               displayWinningsDialog(data, () {
                                 if (groupChoosen.value.id !=
-                                    SimpleGroup.empty().id) {
+                                    EmptyModels.empty<CoreGroupSimple>().id) {
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) {

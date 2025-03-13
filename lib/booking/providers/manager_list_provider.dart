@@ -1,40 +1,43 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/booking/class/manager.dart';
-import 'package:myecl/booking/repositories/manager_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
+import 'package:myecl/booking/adapters/manager.dart';
 
-class ManagerListNotifier extends ListNotifier<Manager> {
-  final ManagerRepository _repository = ManagerRepository();
-  ManagerListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
-    _repository.setToken(token);
-  }
+class ManagerListNotifier extends ListNotifierAPI<Manager> {
+  final Openapi managerRepository;
+  ManagerListNotifier({required this.managerRepository})
+      : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Manager>>> loadManagers() async {
-    return await loadList(_repository.getManagerList);
+    return await loadList(managerRepository.bookingManagersGet);
   }
 
-  Future<bool> addManager(Manager manager) async {
-    return await add(_repository.createManager, manager);
-  }
-
-  Future<bool> updateManager(Manager manager) async {
-    return await update(
-      _repository.updateManager,
-      (managers, manager) =>
-          managers..[managers.indexWhere((m) => m.id == manager.id)] = manager,
+  Future<bool> addManager(ManagerBase manager) async {
+    return await add(
+      () => managerRepository.bookingManagersPost(body: manager),
       manager,
     );
   }
 
-  Future<bool> deleteManager(Manager manager) async {
-    return await delete(
-      _repository.deleteManager,
-      (managers, manager) => managers..removeWhere((m) => m.id == manager.id),
-      manager.id,
+  Future<bool> updateManager(Manager manager) async {
+    return await update(
+      () => managerRepository.bookingManagersManagerIdPatch(
+        managerId: manager.id,
+        body: manager.toManagerUpdate(),
+      ),
+      (manager) => manager.id,
       manager,
+    );
+  }
+
+  Future<bool> deleteManager(String managerId) async {
+    return await delete(
+      () => managerRepository.bookingManagersManagerIdDelete(
+        managerId: managerId,
+      ),
+      (m) => m.id,
+      managerId,
     );
   }
 }
@@ -42,10 +45,7 @@ class ManagerListNotifier extends ListNotifier<Manager> {
 final managerListProvider =
     StateNotifierProvider<ManagerListNotifier, AsyncValue<List<Manager>>>(
         (ref) {
-  final token = ref.watch(tokenProvider);
-  final provider = ManagerListNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    await provider.loadManagers();
-  });
-  return provider;
+  final managerRepository = ref.watch(repositoryProvider);
+  return ManagerListNotifier(managerRepository: managerRepository)
+    ..loadManagers();
 });

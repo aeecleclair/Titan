@@ -1,22 +1,29 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
-import 'package:myecl/booking/repositories/booking_repository.dart';
+import 'package:myecl/generated/client_index.dart';
+import 'package:chopper/chopper.dart' as chopper;
+import 'package:http/http.dart' as http;
+import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
-class MockBookingRepository extends Mock implements BookingRepository {}
+class MockBookingRepository extends Mock implements Openapi {}
 
 void main() {
   group('ConfirmedBookingListProvider', () {
     test('loadConfirmedBooking returns expected data', () async {
       final mockRepository = MockBookingRepository();
       final bookings = [
-        Booking.empty().copyWith(id: '1'),
-        Booking.empty().copyWith(id: '2'),
+        EmptyModels.empty<BookingReturnSimpleApplicant>().copyWith(id: '1'),
+        EmptyModels.empty<BookingReturnSimpleApplicant>().copyWith(id: '2'),
       ];
-      when(() => mockRepository.getConfirmedBookingList())
-          .thenAnswer((_) async => bookings);
+      when(() => mockRepository.bookingBookingsConfirmedGet()).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          bookings,
+        ),
+      );
 
       final provider =
           ConfirmedBookingListProvider(bookingRepository: mockRepository);
@@ -31,20 +38,37 @@ void main() {
       );
     });
 
-    test('addBooking adds a booking to the list', () async {
+    test('loadConfirmedBooking handles error', () async {
       final mockRepository = MockBookingRepository();
-      final bookings = [
-        Booking.empty().copyWith(id: '1'),
-        Booking.empty().copyWith(id: '2'),
-      ];
-      final newBooking = Booking.empty().copyWith(id: '3');
-      when(() => mockRepository.getConfirmedBookingList())
-          .thenAnswer((_) async => bookings.sublist(0));
+      when(() => mockRepository.bookingBookingsConfirmedGet())
+          .thenThrow(Exception('Failed to load bookings'));
 
       final provider =
           ConfirmedBookingListProvider(bookingRepository: mockRepository);
-      await provider.loadConfirmedBooking();
-      final result = await provider.addBooking(newBooking);
+      final result = await provider.loadConfirmedBooking();
+
+      expect(
+        result.maybeWhen(
+          error: (error, _) => error,
+          orElse: () => null,
+        ),
+        isA<Exception>(),
+      );
+    });
+
+    test('addBooking adds a booking to the list', () async {
+      final mockRepository = MockBookingRepository();
+      final bookings = [
+        EmptyModels.empty<BookingReturnSimpleApplicant>().copyWith(id: '1'),
+        EmptyModels.empty<BookingReturnSimpleApplicant>().copyWith(id: '2'),
+      ];
+      final newBookingSimple =
+          EmptyModels.empty<BookingReturnSimpleApplicant>().copyWith(id: '3');
+
+      final provider =
+          ConfirmedBookingListProvider(bookingRepository: mockRepository);
+      provider.state = AsyncValue.data([...bookings]);
+      final result = await provider.addBooking(newBookingSimple);
 
       expect(result, true);
       expect(
@@ -52,23 +76,21 @@ void main() {
           data: (data) => data,
           orElse: () => [],
         ),
-        [...bookings, newBooking],
+        [...bookings, newBookingSimple],
       );
     });
 
     test('deleteBooking removes a booking from the list', () async {
       final mockRepository = MockBookingRepository();
       final bookings = [
-        Booking.empty().copyWith(id: '1'),
-        Booking.empty().copyWith(id: '2'),
+        EmptyModels.empty<BookingReturnSimpleApplicant>().copyWith(id: '1'),
+        EmptyModels.empty<BookingReturnSimpleApplicant>().copyWith(id: '2'),
       ];
       final booking = bookings.first;
-      when(() => mockRepository.getConfirmedBookingList())
-          .thenAnswer((_) async => bookings.sublist(0));
 
       final provider =
           ConfirmedBookingListProvider(bookingRepository: mockRepository);
-      await provider.loadConfirmedBooking();
+      provider.state = AsyncValue.data([...bookings]);
       final result = await provider.deleteBooking(booking);
 
       expect(result, true);
@@ -77,24 +99,22 @@ void main() {
           data: (data) => data,
           orElse: () => [],
         ),
-        bookings.skip(1),
+        bookings.skip(1).toList(),
       );
     });
 
     test('updateBooking updates a booking in the list', () async {
       final mockRepository = MockBookingRepository();
       final bookings = [
-        Booking.empty().copyWith(id: '1'),
-        Booking.empty().copyWith(id: '2'),
+        EmptyModels.empty<BookingReturnSimpleApplicant>().copyWith(id: '1'),
+        EmptyModels.empty<BookingReturnSimpleApplicant>().copyWith(id: '2'),
       ];
-      final booking = bookings.first.copyWith(reason: 'Updated');
-      when(() => mockRepository.getConfirmedBookingList())
-          .thenAnswer((_) async => bookings.sublist(0));
+      final updatedBooking = bookings.first.copyWith(reason: 'Updated');
 
       final provider =
           ConfirmedBookingListProvider(bookingRepository: mockRepository);
-      await provider.loadConfirmedBooking();
-      final result = await provider.updateBooking(booking);
+      provider.state = AsyncValue.data([...bookings]);
+      final result = await provider.updateBooking(updatedBooking);
 
       expect(result, true);
       expect(
@@ -102,7 +122,7 @@ void main() {
           data: (data) => data,
           orElse: () => [],
         ),
-        [booking, ...bookings.skip(1)],
+        [updatedBooking, ...bookings.skip(1)],
       );
     });
   });

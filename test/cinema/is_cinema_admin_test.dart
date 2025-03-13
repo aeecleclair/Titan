@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/cinema/providers/is_cinema_admin.dart';
-import 'package:myecl/user/class/user.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 void main() {
@@ -11,9 +11,9 @@ void main() {
       final container = ProviderContainer(
         overrides: [
           userProvider.overrideWithValue(
-            User.empty().copyWith(
+            EmptyModels.empty<CoreUser>().copyWith(
               groups: [
-                SimpleGroup.empty().copyWith(
+                EmptyModels.empty<CoreGroupSimple>().copyWith(
                   id: 'ce5f36e6-5377-489f-9696-de70e2477300',
                   name: 'Cinema Admin',
                 ),
@@ -32,10 +32,12 @@ void main() {
       final container = ProviderContainer(
         overrides: [
           userProvider.overrideWithValue(
-            User.empty().copyWith(
+            EmptyModels.empty<CoreUser>().copyWith(
               groups: [
-                SimpleGroup.empty().copyWith(id: '123', name: 'Group 1'),
-                SimpleGroup.empty().copyWith(id: '456', name: 'Group 2'),
+                EmptyModels.empty<CoreGroupSimple>()
+                    .copyWith(id: '123', name: 'Group 1'),
+                EmptyModels.empty<CoreGroupSimple>()
+                    .copyWith(id: '456', name: 'Group 2'),
               ],
             ),
           ),

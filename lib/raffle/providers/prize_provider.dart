@@ -1,14 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/raffle/class/prize.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
-class PrizeNotifier extends StateNotifier<Prize> {
-  PrizeNotifier() : super(Prize.empty());
+class PrizeNotifier extends StateNotifier<PrizeSimple> {
+  PrizeNotifier() : super(EmptyModels.empty<PrizeSimple>());
 
-  void setPrize(Prize lot) {
+  void setPrize(PrizeSimple lot) {
     state = lot;
   }
 }
 
-final prizeProvider = StateNotifierProvider<PrizeNotifier, Prize>((ref) {
+final prizeProvider = StateNotifierProvider<PrizeNotifier, PrizeSimple>((ref) {
   return PrizeNotifier();
 });

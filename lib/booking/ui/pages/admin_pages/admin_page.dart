@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/group_id_provider.dart';
-import 'package:myecl/booking/class/manager.dart';
-import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:myecl/booking/providers/manager_list_provider.dart';
 import 'package:myecl/booking/providers/manager_id_provider.dart';
@@ -16,6 +14,8 @@ import 'package:myecl/booking/router.dart';
 import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/calendar/calendar.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
@@ -69,7 +69,7 @@ class AdminPage extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 20),
                 roomList.when(
-                  data: (List<Room> data) => SingleChildScrollView(
+                  data: (data) => SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     physics: const BouncingScrollPhysics(),
                     child: Row(
@@ -78,7 +78,8 @@ class AdminPage extends HookConsumerWidget {
                         const SizedBox(width: 15),
                         ItemChip(
                           onTap: () {
-                            roomNotifier.setRoom(Room.empty());
+                            roomNotifier
+                                .setRoom(EmptyModels.empty<RoomComplete>());
                             managerIdNotifier.setId("");
                             QR.to(
                               BookingRouter.root +
@@ -139,7 +140,7 @@ class AdminPage extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 20),
                 managerList.when(
-                  data: (List<Manager> data) => SingleChildScrollView(
+                  data: (data) => SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     physics: const BouncingScrollPhysics(),
                     child: Row(
@@ -148,7 +149,8 @@ class AdminPage extends HookConsumerWidget {
                         const SizedBox(width: 15),
                         ItemChip(
                           onTap: () {
-                            managerNotifier.setManager(Manager.empty());
+                            managerNotifier
+                                .setManager(EmptyModels.empty<Manager>());
                             groupIdNotifier.setId("");
                             QR.to(
                               BookingRouter.root +

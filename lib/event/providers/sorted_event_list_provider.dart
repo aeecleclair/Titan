@@ -1,12 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
 import 'package:myecl/event/tools/functions.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 
-final sortedEventListProvider = Provider<Map<String, List<Event>>>((ref) {
+final sortedEventListProvider =
+    Provider<Map<String, List<EventComplete>>>((ref) {
   final eventList = ref.watch(confirmedEventListProvider);
-  final sortedEventList = <String, List<Event>>{};
+  final sortedEventList = <String, List<EventComplete>>{};
   final dateTitle = <String, DateTime>{};
   final now = DateTime.now();
   final normalizedNow = normalizedDate(now);
@@ -15,7 +16,7 @@ final sortedEventListProvider = Provider<Map<String, List<Event>>>((ref) {
       for (final event in events) {
         List<DateTime> normalizedDates = [];
         List<int> deltaDays = [];
-        if (event.recurrenceRule.isEmpty) {
+        if ((event.recurrenceRule ?? "").isEmpty) {
           normalizedDates.add(normalizedDate(event.start));
           deltaDays.add(event.end.difference(event.start).inDays);
         } else {

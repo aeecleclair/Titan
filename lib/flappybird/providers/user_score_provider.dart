@@ -1,27 +1,23 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/flappybird/class/score.dart';
-import 'package:myecl/flappybird/repositories/score_repository.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/single_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
 
-class ScoreListNotifier extends SingleNotifier<Score> {
-  final ScoreRepository _scoreRepository = ScoreRepository();
-  ScoreListNotifier({required String token}) : super(const AsyncLoading()) {
-    _scoreRepository.setToken(token);
-  }
+class ScoreListNotifier
+    extends SingleNotifierAPI<FlappyBirdScoreCompleteFeedBack> {
+  final Openapi scoreRepository;
+  ScoreListNotifier({required this.scoreRepository})
+      : super(const AsyncLoading());
 
-  Future<AsyncValue<Score>> getLeaderBoardPosition() async {
-    return await load(_scoreRepository.getLeaderBoardPosition);
+  Future<AsyncValue<FlappyBirdScoreCompleteFeedBack>>
+      getLeaderBoardPosition() async {
+    return await load(scoreRepository.flappybirdScoresMeGet);
   }
 }
 
-final userScoreProvider =
-    StateNotifierProvider<ScoreListNotifier, AsyncValue<Score>>((ref) {
-  final token = ref.watch(tokenProvider);
-  final notifier = ScoreListNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.getLeaderBoardPosition();
-  });
-  return notifier;
+final userScoreProvider = StateNotifierProvider<ScoreListNotifier,
+    AsyncValue<FlappyBirdScoreCompleteFeedBack>>((ref) {
+  final scoreRepository = ref.watch(repositoryProvider);
+  return ScoreListNotifier(scoreRepository: scoreRepository)
+    ..getLeaderBoardPosition();
 });

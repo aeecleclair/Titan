@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/class/item.dart';
-import 'package:myecl/loan/class/loan.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
 import 'package:myecl/loan/providers/end_provider.dart';
 import 'package:myecl/loan/providers/loan_focus_provider.dart';
@@ -17,8 +16,8 @@ import 'package:myecl/loan/router.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/pages/admin_page/loan_card.dart';
 import 'package:myecl/loan/ui/pages/admin_page/delay_dialog.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
@@ -83,7 +82,7 @@ class OnGoingLoan extends HookConsumerWidget {
               height: 170,
               firstChild: GestureDetector(
                 onTap: () async {
-                  await loanNotifier.setLoan(Loan.empty());
+                  await loanNotifier.setLoan(EmptyModels.empty<Loan>());
                   startNotifier.setStart(processDate(DateTime.now()));
                   endNotifier.setEnd("");
                   QR.to(
@@ -126,25 +125,23 @@ class OnGoingLoan extends HookConsumerWidget {
                             end: e.end.add(Duration(days: i)),
                           );
                           await loanNotifier.setLoan(newLoan);
-                          tokenExpireWrapper(ref, () async {
-                            final value =
-                                await loanListNotifier.extendLoan(newLoan, i);
-                            if (value) {
-                              adminLoanListNotifier.setTData(
-                                loaner,
-                                await loanListNotifier.copy(),
-                              );
-                              displayToastWithContext(
-                                TypeMsg.msg,
-                                LoanTextConstants.extendedLoan,
-                              );
-                            } else {
-                              displayToastWithContext(
-                                TypeMsg.error,
-                                LoanTextConstants.extendingError,
-                              );
-                            }
-                          });
+                          final value =
+                              await loanListNotifier.extendLoan(newLoan, i);
+                          if (value) {
+                            adminLoanListNotifier.setTData(
+                              loaner,
+                              await loanListNotifier.copy(),
+                            );
+                            displayToastWithContext(
+                              TypeMsg.msg,
+                              LoanTextConstants.extendedLoan,
+                            );
+                          } else {
+                            displayToastWithContext(
+                              TypeMsg.error,
+                              LoanTextConstants.extendingError,
+                            );
+                          }
                         },
                       );
                     },
@@ -157,47 +154,44 @@ class OnGoingLoan extends HookConsumerWidget {
                       title: LoanTextConstants.returnLoan,
                       descriptions: LoanTextConstants.returnLoanDescription,
                       onYes: () async {
-                        await tokenExpireWrapper(ref, () async {
-                          final loanItemsId = e.itemsQuantity
-                              .map((e) => e.itemSimple.id)
-                              .toList();
-                          final updatedItems = loanersItems[loaner]!
-                              .maybeWhen<List<Item>>(
-                            data: (items) => items,
-                            orElse: () => [],
-                          )
-                              .map(
-                            (item) {
-                              if (loanItemsId.contains(item.id)) {
-                                return item.copyWith();
-                              }
-                              return item;
-                            },
-                          ).toList();
-                          final value = await loanListNotifier.returnLoan(e);
-                          if (value) {
-                            QR.to(
-                              LoanRouter.root + LoanRouter.admin,
-                            );
-                            loanersItemsNotifier.setTData(
-                              loaner,
-                              AsyncData(updatedItems),
-                            );
-                            adminLoanListNotifier.setTData(
-                              loaner,
-                              await loanListNotifier.copy(),
-                            );
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              LoanTextConstants.returnedLoan,
-                            );
-                          } else {
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              LoanTextConstants.returningError,
-                            );
-                          }
-                        });
+                        final loanItemsId =
+                            e.itemsQty.map((e) => e.itemSimple.id).toList();
+                        final updatedItems = loanersItems[loaner]!
+                            .maybeWhen<List<Item>>(
+                          data: (items) => items,
+                          orElse: () => [],
+                        )
+                            .map(
+                          (item) {
+                            if (loanItemsId.contains(item.id)) {
+                              return item.copyWith();
+                            }
+                            return item;
+                          },
+                        ).toList();
+                        final value = await loanListNotifier.returnLoan(e.id);
+                        if (value) {
+                          QR.to(
+                            LoanRouter.root + LoanRouter.admin,
+                          );
+                          loanersItemsNotifier.setTData(
+                            loaner,
+                            AsyncData(updatedItems),
+                          );
+                          adminLoanListNotifier.setTData(
+                            loaner,
+                            await loanListNotifier.copy(),
+                          );
+                          displayToastWithContext(
+                            TypeMsg.msg,
+                            LoanTextConstants.returnedLoan,
+                          );
+                        } else {
+                          displayToastWithContext(
+                            TypeMsg.msg,
+                            LoanTextConstants.returningError,
+                          );
+                        }
                       },
                     ),
                   );

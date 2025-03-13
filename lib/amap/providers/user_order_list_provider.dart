@@ -1,68 +1,82 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/amap/class/order.dart';
-import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/repositories/amap_user_repository.dart';
-import 'package:myecl/amap/repositories/order_list_repository.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/exception.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
+import 'package:myecl/amap/adapters/order.dart';
 
-class UserOrderListNotifier extends ListNotifier<Order> {
-  final OrderListRepository orderListRepository;
-  final AmapUserRepository userRepository;
+class UserOrderListNotifier extends ListNotifierAPI<OrderReturn> {
+  final Openapi userOrderListRepository;
   UserOrderListNotifier({
-    required this.userRepository,
-    required this.orderListRepository,
+    required this.userOrderListRepository,
   }) : super(const AsyncValue.loading());
 
-  Future<AsyncValue<List<Order>>> loadOrderList(String userId) async {
-    return await loadList(() async => userRepository.getOrderList(userId));
+  Future<AsyncValue<List<OrderReturn>>> loadOrderList(String userId) async {
+    return await loadList(
+      () async =>
+          userOrderListRepository.amapUsersUserIdOrdersGet(userId: userId),
+    );
   }
 
-  Future<AsyncValue<List<Order>>> loadDeliveryOrderList(
+  Future<AsyncValue<List<OrderReturn>>> loadDeliveryOrderList(
     String deliveryId,
   ) async {
     return await loadList(
-      () async => orderListRepository.getDeliveryOrderList(deliveryId),
+      () async => userOrderListRepository.amapDeliveriesDeliveryIdOrdersGet(
+        deliveryId: deliveryId,
+      ),
     );
   }
 
-  Future<bool> addOrder(Order order) async {
-    return await add(orderListRepository.createOrder, order);
+  Future<bool> addOrder(OrderBase order) async {
+    return await add(
+      () => userOrderListRepository.amapOrdersPost(body: order),
+      order,
+    );
   }
 
-  Future<bool> updateOrder(Order order) async {
+  Future<bool> updateOrder(OrderReturn order) async {
     return await update(
-      orderListRepository.updateOrder,
-      (orders, order) =>
-          orders..[orders.indexWhere((o) => o.id == order.id)] = order,
+      () => userOrderListRepository.amapOrdersOrderIdPatch(
+        orderId: order.orderId,
+        body: order.toOrderEdit(),
+      ),
+      (order) => order.orderId,
       order,
     );
   }
 
-  Future<bool> deleteOrder(Order order) async {
+  Future<bool> deleteOrder(String orderId) async {
     return await delete(
-      orderListRepository.deleteOrder,
-      (orders, order) => orders..removeWhere((i) => i.id == order.id),
-      order.id,
-      order,
+      () => userOrderListRepository.amapOrdersOrderIdDelete(orderId: orderId),
+      (o) => o.orderId,
+      orderId,
     );
   }
 
   void setProductQuantity(
     int indexOrder,
-    Product product,
+    AppModulesAmapSchemasAmapProductComplete product,
     int newQuantity,
   ) async {
     state.when(
       data: (orders) async {
+        final productDetailsIndex = orders[indexOrder]
+            .productsdetail
+            .map((p) => p.product.id)
+            .toList()
+            .indexOf(product.id);
         orders[indexOrder] = orders[indexOrder].copyWith(
-          products: orders[indexOrder].products
+          productsdetail: orders[indexOrder].productsdetail
             ..replaceRange(
-              orders[indexOrder].products.indexOf(product),
+              productDetailsIndex,
               1,
-              [product.copyWith(quantity: newQuantity)],
+              [
+                orders[indexOrder]
+                    .productsdetail[productDetailsIndex]
+                    .copyWith(quantity: newQuantity),
+              ],
             ),
         );
         state = AsyncValue.data(orders);
@@ -79,36 +93,25 @@ class UserOrderListNotifier extends ListNotifier<Order> {
     );
   }
 
-  void toggleExpanded(int indexOrder) async {
-    state.when(
-      data: (orders) async {
-        orders[indexOrder] =
-            orders[indexOrder].copyWith(expanded: !orders[indexOrder].expanded);
-        state = AsyncValue.data(orders);
-      },
-      error: (error, stackTrace) {
-        state = AsyncValue.error(error, stackTrace);
-      },
-      loading: () {
-        state = const AsyncValue.error(
-          "Cannot toggle expanded while loading",
-          StackTrace.empty,
-        );
-      },
-    );
-  }
-
   Future<bool> setProducts(
     int indexOrder,
-    List<Product> newListProduct,
+    List<ProductQuantity> newListProductQuantity,
     String deliveryId,
     String userId,
   ) async {
     return state.when(
       data: (orders) async {
         try {
-          var newOrder = orders[indexOrder].copyWith(products: newListProduct);
-          await orderListRepository.updateOrder(newOrder);
+          var newOrder = orders[indexOrder]
+              .copyWith(productsdetail: newListProductQuantity);
+          await userOrderListRepository.amapOrdersOrderIdPatch(
+            orderId: newOrder.orderId,
+            body: OrderEdit(
+              productsIds: newListProductQuantity.map((p) => p.product.id),
+              collectionSlot: newOrder.collectionSlot,
+              productsQuantity: newListProductQuantity.map((p) => p.quantity),
+            ),
+          );
           orders[indexOrder] = newOrder;
           state = AsyncValue.data(orders);
           return true;
@@ -141,8 +144,9 @@ class UserOrderListNotifier extends ListNotifier<Order> {
     try {
       state.when(
         data: (orders) async {
-          price = orders[indexOrder].products.fold(0, (previousValue, element) {
-            return previousValue + element.price * element.quantity;
+          price = orders[indexOrder].productsdetail.fold(0,
+              (previousValue, element) {
+            return previousValue + element.product.price * element.quantity;
           });
         },
         error: (error, stackTrace) {
@@ -161,25 +165,21 @@ class UserOrderListNotifier extends ListNotifier<Order> {
     return price;
   }
 
-  Future<AsyncValue<List<Order>>> copy() async {
+  Future<AsyncValue<List<OrderReturn>>> copy() async {
     return state.whenData((orders) => orders.sublist(0));
   }
 }
 
 final userOrderListProvider =
-    StateNotifierProvider<UserOrderListNotifier, AsyncValue<List<Order>>>(
+    StateNotifierProvider<UserOrderListNotifier, AsyncValue<List<OrderReturn>>>(
         (ref) {
-  final amapUserRepository = ref.watch(amapUserRepositoryProvider);
-  final orderListRepository = ref.watch(orderListRepositoryProvider);
+  final userOrderListRepository = ref.watch(repositoryProvider);
   UserOrderListNotifier userOrderListNotifier = UserOrderListNotifier(
-    userRepository: amapUserRepository,
-    orderListRepository: orderListRepository,
+    userOrderListRepository: userOrderListRepository,
   );
-  tokenExpireWrapperAuth(ref, () async {
-    final userId = ref.watch(idProvider);
-    userId.whenData(
-      (value) async => await userOrderListNotifier.loadOrderList(value),
-    );
-  });
+  final userId = ref.watch(idProvider);
+  userId.whenData(
+    (value) async => await userOrderListNotifier.loadOrderList(value),
+  );
   return userOrderListNotifier;
 });

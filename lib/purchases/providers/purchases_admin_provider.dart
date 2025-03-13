@@ -5,7 +5,7 @@ import 'package:myecl/user/providers/user_provider.dart';
 final isPurchasesAdminProvider = StateProvider<bool>((ref) {
   final user = ref.watch(userProvider);
   final sellers = ref.watch(sellerListProvider);
-  if (user.groups
+  if ((user.groups ?? [])
       .map((e) => e.id)
       .contains("c1275229-46b2-4e53-a7c4-305513bb1a2a")) {
     return true;

@@ -1,48 +1,70 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/cinema/class/the_movie_db_genre.dart';
 import 'package:myecl/cinema/providers/the_movie_db_genre_provider.dart';
-import 'package:myecl/cinema/repositories/the_movie_db_repository.dart';
-import 'package:myecl/tools/exception.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:chopper/chopper.dart' as chopper;
+import 'package:http/http.dart' as http;
 
-class MockTheMovieDBRepository extends Mock implements TheMovieDBRepository {}
+class MockTheMovieDBRepository extends Mock implements Openapi {}
 
 void main() {
   group('TheMovieDBGenreNotifier', () {
-    late TheMovieDBRepository theMovieDBRepository;
-    late TheMovieDBGenreNotifier notifier;
-    test('loadMovie returns AsyncValue with movie data', () async {
-      theMovieDBRepository = MockTheMovieDBRepository();
-      when(() => theMovieDBRepository.getMovie(any()))
-          .thenAnswer((_) async => TheMovieDBMovie.empty());
-      notifier =
-          TheMovieDBGenreNotifier(theMoviesDBRepository: theMovieDBRepository);
-      const movieId = '123';
-      final result = await notifier.loadMovie(movieId);
+    late MockTheMovieDBRepository mockRepository;
+    late TheMovieDBGenreNotifier provider;
+    final movie = TheMovieDB(
+      genres: [],
+      overview: '',
+      posterPath: '',
+      title: '',
+      runtime: 0,
+      tagline: '',
+    );
+
+    setUp(() {
+      mockRepository = MockTheMovieDBRepository();
+      provider = TheMovieDBGenreNotifier(theMoviesDBRepository: mockRepository);
+    });
+
+    test('loadMovie returns expected data', () async {
+      when(
+        () => mockRepository.cinemaThemoviedbThemoviedbIdGet(
+          themoviedbId: any(named: 'themoviedbId'),
+        ),
+      ).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          movie,
+        ),
+      );
+
+      final result = await provider.loadMovie('1');
 
       expect(
-        result.when(
+        result.maybeWhen(
           data: (data) => data,
-          loading: () => null,
-          error: (error, stack) => null,
+          orElse: () => null,
         ),
-        isA<TheMovieDBMovie>(),
+        movie,
       );
     });
 
-    test('loadMovie returns AsyncValue with error when movie not found',
-        () async {
-      theMovieDBRepository = MockTheMovieDBRepository();
-      when(() => theMovieDBRepository.getMovie(any())).thenThrow(
-        (_) async => AppException(ErrorType.notFound, 'Not found'),
-      );
-      notifier =
-          TheMovieDBGenreNotifier(theMoviesDBRepository: theMovieDBRepository);
-      const movieId = 'invalid_id';
-      final result = await notifier.loadMovie(movieId);
+    test('loadMovie handles error', () async {
+      when(
+        () => mockRepository.cinemaThemoviedbThemoviedbIdGet(
+          themoviedbId: any(named: 'themoviedbId'),
+        ),
+      ).thenThrow(Exception('Failed to load movie'));
 
-      expect(result, isA<AsyncError>());
+      final result = await provider.loadMovie('1');
+
+      expect(
+        result.maybeWhen(
+          error: (error, _) => error,
+          orElse: () => null,
+        ),
+        isA<Exception>(),
+      );
     });
   });
 }

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
-import 'package:myecl/vote/class/section.dart';
-import 'package:myecl/vote/providers/sections_contender_provider.dart';
+import 'package:myecl/vote/providers/sections_list_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/tools/constants.dart';
 import 'package:myecl/vote/ui/vote.dart';
@@ -19,9 +18,8 @@ class AddSectionPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sectionContenderNotifier =
-        ref.read(sectionContenderProvider.notifier);
-    final sectionListNotifier = ref.read(sectionsProvider.notifier);
+    final sectionListNotifier = ref.read(sectionListProvider.notifier);
+    final sectionsNotifier = ref.read(sectionsProvider.notifier);
     final sections = ref.watch(sectionsProvider);
     final key = GlobalKey<FormState>();
     final name = useTextEditingController();
@@ -58,30 +56,27 @@ class AddSectionPage extends HookConsumerWidget {
                   WaitingButton(
                     builder: (child) => AddEditButtonLayout(child: child),
                     onTap: () async {
-                      await tokenExpireWrapper(ref, () async {
-                        final value = await sectionListNotifier.addSection(
-                          Section(
-                            name: name.text,
-                            id: '',
-                            description: description.text,
-                          ),
+                      final value = await sectionsNotifier.addSection(
+                        SectionBase(
+                          name: name.text,
+                          description: description.text,
+                        ),
+                      );
+                      if (value) {
+                        QR.back();
+                        sections.whenData((value) {
+                          sectionListNotifier.addT(value.last);
+                        });
+                        displayVoteToastWithContext(
+                          TypeMsg.msg,
+                          VoteTextConstants.addedSection,
                         );
-                        if (value) {
-                          QR.back();
-                          sections.whenData((value) {
-                            sectionContenderNotifier.addT(value.last);
-                          });
-                          displayVoteToastWithContext(
-                            TypeMsg.msg,
-                            VoteTextConstants.addedSection,
-                          );
-                        } else {
-                          displayVoteToastWithContext(
-                            TypeMsg.error,
-                            VoteTextConstants.addingError,
-                          );
-                        }
-                      });
+                      } else {
+                        displayVoteToastWithContext(
+                          TypeMsg.error,
+                          VoteTextConstants.addingError,
+                        );
+                      }
                     },
                     child: const Text(
                       VoteTextConstants.add,

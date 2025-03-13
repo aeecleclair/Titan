@@ -4,8 +4,8 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/login/router.dart';
 import 'package:myecl/router.dart';
 import 'package:myecl/tools/providers/path_forwarding_provider.dart';
-import 'package:myecl/tools/ui/widgets/loader.dart';
 import 'package:myecl/user/providers/user_provider.dart';
+import 'package:myecl/tools/ui/widgets/loader.dart';
 import 'package:myecl/version/providers/titan_version_provider.dart';
 import 'package:myecl/version/providers/version_verifier_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -19,7 +19,7 @@ class LoadingPage extends ConsumerWidget {
     final titanVersion = ref.watch(titanVersionProvider);
     final isLoggedIn = ref.watch(isLoggedInProvider);
     final check = versionVerifier
-        .whenData((value) => value.minimalTitanVersion <= titanVersion);
+        .whenData((value) => value.minimalTitanVersionCode <= titanVersion);
     final pathForwarding = ref.read(pathForwardingProvider);
     check.when(
       data: (value) {

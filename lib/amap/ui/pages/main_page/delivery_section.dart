@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/main_page/delivery_ui.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 
@@ -21,9 +21,9 @@ class DeliverySection extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final deliveryIdNotifier = ref.read(deliveryIdProvider.notifier);
     final deliveries = ref.watch(deliveryListProvider);
-    final availableDeliveries = deliveries.maybeWhen<List<Delivery>>(
+    final availableDeliveries = deliveries.maybeWhen<List<DeliveryReturn>>(
       data: (data) => data
-          .where((element) => element.status == DeliveryStatus.available)
+          .where((element) => element.status == DeliveryStatusType.orderable)
           .toList(),
       orElse: () => [],
     )..sort((a, b) => a.deliveryDate.compareTo(b.deliveryDate));

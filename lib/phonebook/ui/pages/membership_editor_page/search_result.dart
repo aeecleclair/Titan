@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/class/member.dart';
 import 'package:myecl/phonebook/providers/complete_member_provider.dart';
+import 'package:myecl/user/adapters/users.dart';
+import 'package:myecl/user/extensions/users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class SearchResult extends HookConsumerWidget {
@@ -58,7 +59,7 @@ class SearchResult extends HookConsumerWidget {
                     ),
                   ),
                   onTap: () {
-                    memberNotifier.setMember(Member.fromUser(user));
+                    memberNotifier.setMember(user.toMemberComplete());
                     queryController.text = user.getName();
                     usersNotifier.clear();
                     memberNotifier.loadMemberComplete();

@@ -1,12 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/class/raffle.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/tools/functions.dart';
 
 class TombolaCard extends HookConsumerWidget {
-  final Raffle raffle;
+  final RaffleComplete raffle;
   const TombolaCard({super.key, required this.raffle});
 
   @override
@@ -53,8 +53,9 @@ class TombolaCard extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 5),
+              // TODO: Require group and not groupId
               AutoSizeText(
-                raffle.group.name,
+                raffle.groupId,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -65,7 +66,7 @@ class TombolaCard extends HookConsumerWidget {
               ),
               const SizedBox(height: 5),
               AutoSizeText(
-                raffleStatusTypeToString(raffle.raffleStatusType),
+                raffleStatusTypeToString(raffle.status),
                 maxLines: 1,
                 minFontSize: 10,
                 overflow: TextOverflow.ellipsis,

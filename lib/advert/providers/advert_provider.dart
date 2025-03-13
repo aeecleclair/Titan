@@ -1,14 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/advert/class/advert.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
-class AdvertNotifier extends StateNotifier<Advert> {
-  AdvertNotifier() : super(Advert.empty());
+class AdvertNotifier extends StateNotifier<AdvertReturnComplete> {
+  AdvertNotifier() : super(EmptyModels.empty<AdvertReturnComplete>());
 
-  void setAdvert(Advert i) {
+  void setAdvert(AdvertReturnComplete i) {
     state = i;
   }
 }
 
-final advertProvider = StateNotifierProvider<AdvertNotifier, Advert>((ref) {
+final advertProvider =
+    StateNotifierProvider<AdvertNotifier, AdvertReturnComplete>((ref) {
   return AdvertNotifier();
 });

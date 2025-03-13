@@ -1,50 +1,49 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/advert/class/advert.dart';
-import 'package:myecl/advert/repositories/advert_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
+import 'package:myecl/advert/adapters/advert.dart';
 
-class AdvertListNotifier extends ListNotifier<Advert> {
-  AdvertRepository repository = AdvertRepository();
-  AdvertListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
-    repository.setToken(token);
+class AdvertListNotifier extends ListNotifierAPI<AdvertReturnComplete> {
+  final Openapi advertListRepository;
+  AdvertListNotifier({required this.advertListRepository})
+      : super(const AsyncValue.loading());
+
+  Future<AsyncValue<List<AdvertReturnComplete>>> loadAdverts() async {
+    return await loadList(advertListRepository.advertAdvertsGet);
   }
 
-  Future<AsyncValue<List<Advert>>> loadAdverts() async {
-    return await loadList(repository.getAllAdvert);
-  }
-
-  Future<bool> addAdvert(Advert advert) async {
-    return await add(repository.addAdvert, advert);
-  }
-
-  Future<bool> updateAdvert(Advert advert) async {
-    return await update(
-      repository.updateAdvert,
-      (adverts, advert) =>
-          adverts..[adverts.indexWhere((b) => b.id == advert.id)] = advert,
+  Future<bool> addAdvert(AdvertBase advert) async {
+    return await add(
+      () => advertListRepository.advertAdvertsPost(body: advert),
       advert,
     );
   }
 
-  Future<bool> deleteAdvert(Advert advert) async {
-    return await delete(
-      repository.deleteAdvert,
-      (adverts, advert) => adverts..removeWhere((b) => b.id == advert.id),
-      advert.id,
+  Future<bool> updateAdvert(AdvertReturnComplete advert) async {
+    return await update(
+      () => advertListRepository.advertAdvertsAdvertIdPatch(
+        advertId: advert.id,
+        body: advert.toAdvertUpdate(),
+      ),
+      (advert) => advert.id,
       advert,
+    );
+  }
+
+  Future<bool> deleteAdvert(String advertId) async {
+    return await delete(
+      () =>
+          advertListRepository.advertAdvertsAdvertIdDelete(advertId: advertId),
+      (a) => a.id,
+      advertId,
     );
   }
 }
 
-final advertListProvider =
-    StateNotifierProvider<AdvertListNotifier, AsyncValue<List<Advert>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  AdvertListNotifier notifier = AdvertListNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadAdverts();
-  });
-  return notifier;
+final advertListProvider = StateNotifierProvider<AdvertListNotifier,
+    AsyncValue<List<AdvertReturnComplete>>>((ref) {
+  final advertListRepository = ref.watch(repositoryProvider);
+  return AdvertListNotifier(advertListRepository: advertListRepository)
+    ..loadAdverts();
 });

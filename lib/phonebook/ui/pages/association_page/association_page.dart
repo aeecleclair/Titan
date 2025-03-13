@@ -38,7 +38,7 @@ class AssociationPage extends HookConsumerWidget {
         onRefresh: () async {
           await associationMemberListNotifier.loadMembers(
             association.id,
-            association.mandateYear.toString(),
+            association.mandateYear,
           );
           await associationPictureNotifier
               .getAssociationPicture(association.id);
@@ -56,7 +56,7 @@ class AssociationPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    association.kind,
+                    association.kind.name,
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                   const SizedBox(height: 10),
@@ -101,7 +101,7 @@ class AssociationPage extends HookConsumerWidget {
                   right: 20,
                   child: GestureDetector(
                     onTap: () {
-                      kindNotifier.setKind(association.kind);
+                      kindNotifier.setKind(association.kind.name);
                       QR.to(
                         PhonebookRouter.root +
                             PhonebookRouter.associationDetail +

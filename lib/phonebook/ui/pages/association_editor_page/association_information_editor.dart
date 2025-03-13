@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/providers/is_admin_provider.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/phonebook/providers/association_kind_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_provider.dart';
 import 'package:myecl/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/ui/components/kinds_bar.dart';
+import 'package:myecl/tools/builders/enums_cleaner.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 
@@ -38,10 +38,10 @@ class AssociationInformationEditor extends HookConsumerWidget {
     final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
 
     final groups = ref.watch(allGroupListProvider);
-    List<SimpleGroup> selectedGroups = groups.maybeWhen(
+    List<CoreGroupSimple> selectedGroups = groups.maybeWhen(
       data: (value) {
         return value.where((element) {
-          return association.associatedGroups.contains(element.id);
+          return association.associatedGroups?.contains(element.id) ?? false;
         }).toList();
       },
       orElse: () {
@@ -52,7 +52,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
 
     return Column(
       children: [
-        isPhonebookAdmin && !association.deactivated
+        isPhonebookAdmin && !(association.deactivated ?? false)
             ? Form(
                 key: key,
                 child: Column(
@@ -166,27 +166,27 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                 );
                                 return;
                               }
-                              await tokenExpireWrapper(ref, () async {
-                                final value = await associationListNotifier
-                                    .updateAssociation(
-                                  association.copyWith(
-                                    name: name.text,
-                                    description: description.text,
-                                    kind: kind,
+                              final value = await associationListNotifier
+                                  .updateAssociation(
+                                association.copyWith(
+                                  name: name.text,
+                                  description: description.text,
+                                  kind: getEnumValues(Kinds.values).firstWhere(
+                                    (element) => element.name == kind,
                                   ),
+                                ),
+                              );
+                              if (value) {
+                                displayToastWithContext(
+                                  TypeMsg.msg,
+                                  PhonebookTextConstants.updatedAssociation,
                                 );
-                                if (value) {
-                                  displayToastWithContext(
-                                    TypeMsg.msg,
-                                    PhonebookTextConstants.updatedAssociation,
-                                  );
-                                } else {
-                                  displayToastWithContext(
-                                    TypeMsg.msg,
-                                    PhonebookTextConstants.updatingError,
-                                  );
-                                }
-                              });
+                              } else {
+                                displayToastWithContext(
+                                  TypeMsg.msg,
+                                  PhonebookTextConstants.updatingError,
+                                );
+                              }
                             },
                             child: const Text(
                               PhonebookTextConstants.edit,
@@ -207,7 +207,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Column(
                   children: [
-                    if (association.deactivated)
+                    if (association.deactivated ?? false)
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 10),
                         child: const Text(
@@ -244,7 +244,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                   ],
                 ),
               ),
-        if (isAdmin && !association.deactivated)
+        if (isAdmin && !(association.deactivated ?? false))
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Column(
@@ -332,26 +332,24 @@ class AssociationInformationEditor extends HookConsumerWidget {
                     child: child,
                   ),
                   onTap: () async {
-                    await tokenExpireWrapper(ref, () async {
-                      final value =
-                          await associationListNotifier.updateAssociationGroups(
-                        association.copyWith(
-                          associatedGroups:
-                              selectedGroups.map((e) => e.id).toList(),
-                        ),
+                    final value =
+                        await associationListNotifier.updateAssociationGroups(
+                      association.copyWith(
+                        associatedGroups:
+                            selectedGroups.map((e) => e.id).toList(),
+                      ),
+                    );
+                    if (value) {
+                      displayToastWithContext(
+                        TypeMsg.msg,
+                        PhonebookTextConstants.updatedGroups,
                       );
-                      if (value) {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          PhonebookTextConstants.updatedGroups,
-                        );
-                      } else {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          PhonebookTextConstants.updatingError,
-                        );
-                      }
-                    });
+                    } else {
+                      displayToastWithContext(
+                        TypeMsg.msg,
+                        PhonebookTextConstants.updatingError,
+                      );
+                    }
                   },
                   child: const Text(
                     PhonebookTextConstants.updateGroups,

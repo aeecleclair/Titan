@@ -1,32 +1,27 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/phonebook/class/association_kinds.dart';
-import 'package:myecl/phonebook/repositories/association_repository.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/single_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
 
-class AssociationKindsNotifier extends SingleNotifier<AssociationKinds> {
-  final AssociationRepository associationRepository = AssociationRepository();
-  AssociationKindsNotifier({required String token})
-      : super(const AsyncValue.loading()) {
-    associationRepository.setToken(token);
-  }
+class AssociationKindsNotifier extends SingleNotifierAPI<KindsReturn> {
+  final Openapi associationRepository;
+  AssociationKindsNotifier({required this.associationRepository})
+      : super(const AsyncValue.loading());
 
-  void setKind(AssociationKinds i) {
+  void setKind(KindsReturn i) {
     state = AsyncValue.data(i);
   }
 
-  Future<AsyncValue<AssociationKinds>> loadAssociationKinds() async {
-    return await load(associationRepository.getAssociationKinds);
+  Future<AsyncValue<KindsReturn>> loadAssociationKinds() async {
+    // Issue with the accent 
+    return await load(associationRepository.phonebookAssociationsKindsGet);
   }
 }
 
-final associationKindsProvider = StateNotifierProvider<AssociationKindsNotifier,
-    AsyncValue<AssociationKinds>>((ref) {
-  final token = ref.watch(tokenProvider);
-  AssociationKindsNotifier notifier = AssociationKindsNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadAssociationKinds();
-  });
-  return notifier;
+final associationKindsProvider =
+    StateNotifierProvider<AssociationKindsNotifier, AsyncValue<KindsReturn>>(
+        (ref) {
+  final associationRepository = ref.watch(repositoryProvider);
+  return AssociationKindsNotifier(associationRepository: associationRepository)
+    ..loadAssociationKinds();
 });

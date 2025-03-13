@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:load_switch/load_switch.dart';
-import 'package:myecl/service/class/topic.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
 import 'package:myecl/service/providers/topic_provider.dart';
 import 'package:myecl/service/tools/functions.dart';
 import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/settings.dart';
+import 'package:myecl/tools/builders/enums_cleaner.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
@@ -35,7 +36,7 @@ class NotificationPage extends HookConsumerWidget {
               AsyncChild(
                 value: topics,
                 builder: (context, topic) => Column(
-                  children: Topic.values
+                  children: getEnumValues(Topic.values)
                       .map(
                         (e) => Padding(
                           padding: const EdgeInsets.symmetric(vertical: 12),
@@ -51,9 +52,9 @@ class NotificationPage extends HookConsumerWidget {
                                 ),
                               ),
                               LoadSwitch(
-                                value: topic.contains(e),
+                                value: topic.contains(e.name),
                                 future: () =>
-                                    topicsNotifier.toggleSubscription(e),
+                                    topicsNotifier.toggleSubscription(e.name),
                                 height: 30,
                                 width: 60,
                                 curveIn: Curves.easeInBack,

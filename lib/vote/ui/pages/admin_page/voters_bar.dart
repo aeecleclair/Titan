@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/vote/class/voter.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/providers/voter_list_provider.dart';
 import 'package:myecl/vote/providers/voting_group_list_provider.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/ui/pages/admin_page/voter_chip.dart';
 
 class VotersBar extends HookConsumerWidget {
@@ -19,7 +19,7 @@ class VotersBar extends HookConsumerWidget {
     final votersGroupId = voters.map((e) => e.id).toList();
     final groups = ref.watch(allGroupListProvider);
     final asyncStatus = ref.watch(statusProvider);
-    Status status = Status.open;
+    VoteStatus status = VoteStatus(status: StatusType.open);
     asyncStatus.whenData((value) => status = value);
     return SizedBox(
       height: 40,
@@ -36,16 +36,12 @@ class VotersBar extends HookConsumerWidget {
                   label: capitalize(e.name),
                   selected: votersGroupId.contains(e.id),
                   onTap: () async {
-                    if (status == Status.waiting) {
+                    if (status.status == StatusType.waiting) {
                       if (votersGroupId.contains(e.id)) {
-                        await votersNotifier.deleteVoter(
-                          Voter(
-                            groupId: e.id,
-                          ),
-                        );
+                        await votersNotifier.deleteVoter(e.id);
                       } else {
                         await votersNotifier.addVoter(
-                          Voter(
+                          VoterGroup(
                             groupId: e.id,
                           ),
                         );

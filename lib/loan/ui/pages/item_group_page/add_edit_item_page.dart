@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/class/item.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/loan/adapters/item.dart';
 import 'package:myecl/loan/providers/item_list_provider.dart';
 import 'package:myecl/loan/providers/item_provider.dart';
 import 'package:myecl/loan/providers/loaner_provider.dart';
 import 'package:myecl/loan/providers/loaners_items_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/loan/ui/loan.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
@@ -26,12 +27,13 @@ class AddEditItemPage extends HookConsumerWidget {
     final itemListNotifier = ref.watch(itemListProvider.notifier);
     final loanersItemsNotifier = ref.watch(loanersItemsProvider.notifier);
     final item = ref.watch(itemProvider);
-    final isEdit = item.id != Item.empty().id;
+    final isEdit = item.id != EmptyModels.empty<Item>().id;
     final name = useTextEditingController(text: item.name);
     final quantity =
         useTextEditingController(text: item.totalQuantity.toString());
-    final caution =
-        useTextEditingController(text: isEdit ? item.caution.toString() : '');
+    final caution = useTextEditingController(
+      text: isEdit ? item.suggestedCaution.toString() : '',
+    );
     final lendingDuration = useTextEditingController(
       text: isEdit ? item.suggestedLendingDuration.toString() : '',
     );
@@ -98,56 +100,55 @@ class AddEditItemPage extends HookConsumerWidget {
                           return;
                         }
                         if (key.currentState!.validate()) {
-                          await tokenExpireWrapper(ref, () async {
-                            Item newItem = Item(
-                              id: isEdit ? item.id : '',
-                              name: name.text,
-                              caution: int.parse(caution.text),
-                              suggestedLendingDuration:
-                                  int.parse(lendingDuration.text),
-                              loanedQuantity: 1,
-                              totalQuantity: int.parse(quantity.text),
+                          Item newItem = Item(
+                            id: isEdit ? item.id : '',
+                            name: name.text,
+                            suggestedCaution: int.parse(caution.text),
+                            suggestedLendingDuration:
+                                int.parse(lendingDuration.text),
+                            loanedQuantity: 1,
+                            totalQuantity: int.parse(quantity.text),
+                            loanerId: loaner.id,
+                          );
+                          final value = isEdit
+                              ? await itemListNotifier.updateItem(
+                                  newItem,
+                                  loaner.id,
+                                )
+                              : await itemListNotifier.addItem(
+                                  newItem.toItemBase(),
+                                  loaner.id,
+                                );
+                          if (value) {
+                            QR.back();
+                            loanersItemsNotifier.setTData(
+                              loaner,
+                              await itemListNotifier.copy(),
                             );
-                            final value = isEdit
-                                ? await itemListNotifier.updateItem(
-                                    newItem,
-                                    loaner.id,
-                                  )
-                                : await itemListNotifier.addItem(
-                                    newItem,
-                                    loaner.id,
-                                  );
-                            if (value) {
-                              QR.back();
-                              loanersItemsNotifier.setTData(
-                                loaner,
-                                await itemListNotifier.copy(),
+                            if (isEdit) {
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                LoanTextConstants.updatedItem,
                               );
-                              if (isEdit) {
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  LoanTextConstants.updatedItem,
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  LoanTextConstants.addedObject,
-                                );
-                              }
                             } else {
-                              if (isEdit) {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  LoanTextConstants.updatingError,
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  LoanTextConstants.addingError,
-                                );
-                              }
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                LoanTextConstants.addedObject,
+                              );
                             }
-                          });
+                          } else {
+                            if (isEdit) {
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                LoanTextConstants.updatingError,
+                              );
+                            } else {
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                LoanTextConstants.addingError,
+                              );
+                            }
+                          }
                         } else {
                           displayToast(
                             context,

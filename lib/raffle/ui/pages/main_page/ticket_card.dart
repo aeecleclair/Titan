@@ -2,17 +2,16 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/class/raffle.dart';
-import 'package:myecl/raffle/class/tickets.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/raffle/providers/raffle_list_provider.dart';
 import 'package:myecl/raffle/providers/tombola_logo_provider.dart';
 import 'package:myecl/raffle/providers/tombola_logos_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/main_page/ticket_card_background.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
 class TicketWidget extends HookConsumerWidget {
-  final List<Ticket> ticket;
+  final List<TicketComplete> ticket;
   final double price;
   const TicketWidget({super.key, required this.ticket, required this.price});
 
@@ -24,7 +23,7 @@ class TicketWidget extends HookConsumerWidget {
       data: (data) => data.firstWhere(
         (element) => element.id == ticket[0].packTicket.raffleId,
       ),
-      orElse: () => Raffle.empty(),
+      orElse: () => EmptyModels.empty<RaffleComplete>(),
     );
     final tombolaLogos = ref.watch(tombolaLogosProvider);
     final tombolaLogosNotifier = ref.watch(tombolaLogosProvider.notifier);
@@ -75,15 +74,13 @@ class TicketWidget extends HookConsumerWidget {
                                         const AsyncLoading(),
                                       );
                                     });
-                                    tokenExpireWrapper(ref, () async {
-                                      tombolaLogoNotifier
-                                          .getLogo(raffle.id)
-                                          .then((value) {
-                                        tombolaLogosNotifier.setTData(
-                                          raffle.id,
-                                          AsyncData([value]),
-                                        );
-                                      });
+                                    tombolaLogoNotifier
+                                        .getLogo(raffle.id)
+                                        .then((value) {
+                                      tombolaLogosNotifier.setTData(
+                                        raffle.id,
+                                        AsyncData([value]),
+                                      );
                                     });
                                     return const HeroIcon(
                                       HeroIcons.cubeTransparent,

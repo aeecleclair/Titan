@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/ui/widgets/admin_button.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/vote/class/contender.dart';
 import 'package:myecl/vote/providers/can_vote_provider.dart';
 import 'package:myecl/vote/providers/is_vote_admin_provider.dart';
-import 'package:myecl/vote/providers/contender_list_provider.dart';
-import 'package:myecl/vote/providers/contender_logo_provider.dart';
-import 'package:myecl/vote/providers/contender_logos_provider.dart';
-import 'package:myecl/vote/providers/sections_contender_provider.dart';
+import 'package:myecl/vote/providers/list_list_provider.dart';
+import 'package:myecl/vote/providers/list_logo_provider.dart';
+import 'package:myecl/vote/providers/list_logos_provider.dart';
+import 'package:myecl/vote/providers/sections_list_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/providers/voted_section_provider.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/ui/pages/main_page/list_contender_card.dart';
+import 'package:myecl/vote/ui/pages/main_page/list_list_card.dart';
 import 'package:myecl/vote/ui/pages/main_page/list_side_item.dart';
 import 'package:myecl/vote/ui/pages/main_page/section_title.dart';
 import 'package:myecl/vote/ui/pages/main_page/vote_button.dart';
@@ -33,21 +32,22 @@ class VoteMainPage extends HookConsumerWidget {
     final isAdmin = ref.watch(isVoteAdminProvider);
     final sections = ref.watch(sectionsProvider);
     final sectionsNotifier = ref.watch(sectionsProvider.notifier);
-    final contenders = ref.watch(contenderListProvider);
-    final contendersNotifier = ref.watch(contenderListProvider.notifier);
-    final sectionContenderNotifier =
-        ref.watch(sectionContenderProvider.notifier);
+    final lists = ref.watch(listListProvider);
+    final listsNotifier = ref.watch(listListProvider.notifier);
+    final sectionListNotifier = ref.watch(sectionListProvider.notifier);
     final animation = useAnimationController(
       duration: const Duration(milliseconds: 2400),
     );
     final status = ref.watch(statusProvider);
-    final s =
-        status.maybeWhen(data: (value) => value, orElse: () => Status.closed);
-    if (s == Status.open) {
+    final s = status.maybeWhen(
+      data: (value) => value.status,
+      orElse: () => StatusType.closed,
+    );
+    if (s == StatusType.open) {
       ref.watch(votedSectionProvider.notifier).getVotedSections();
     }
-    final logosNotifier = ref.watch(contenderLogoProvider.notifier);
-    final contenderLogosNotifier = ref.watch(contenderLogosProvider.notifier);
+    final logosNotifier = ref.watch(listLogoProvider.notifier);
+    final listLogosNotifier = ref.watch(listLogosProvider.notifier);
 
     final canVote = ref.watch(canVoteProvider);
 
@@ -91,31 +91,33 @@ class VoteMainPage extends HookConsumerWidget {
       child: Refresher(
         onRefresh: () async {
           await statusNotifier.loadStatus();
-          if (s == Status.open) {
+          if (s == StatusType.open) {
             await ref.watch(votedSectionProvider.notifier).getVotedSections();
           }
-          await contendersNotifier.loadContenderList();
+          await listsNotifier.loadListList();
           final sections = await sectionsNotifier.loadSectionList();
           sections.whenData((value) {
-            List<Contender> list = [];
-            contenders.whenData((contender) {
-              list = contender;
+            List<ListReturn> listReturn = [];
+            lists.whenData((list) {
+              listReturn = list;
             });
-            sectionContenderNotifier.loadTList(value);
-            contenderLogosNotifier
-                .loadTList(list.map((contender) => contender.id).toList());
+            sectionListNotifier.loadTList(value);
+            listLogosNotifier
+                .loadTList(listReturn.map((list) => list.id).toList());
             for (final l in value) {
-              sectionContenderNotifier.setTData(
+              sectionListNotifier.setTData(
                 l,
                 AsyncValue.data(
-                  list.where((element) => element.section.id == l.id).toList(),
+                  listReturn
+                      .where((element) => element.section.id == l.id)
+                      .toList(),
                 ),
               );
             }
-            for (final contender in list) {
-              logosNotifier.getLogo(contender.id).then(
-                    (value) => contenderLogosNotifier.setTData(
-                      contender.id,
+            for (final list in listReturn) {
+              logosNotifier.getLogo(list.id).then(
+                    (value) => listLogosNotifier.setTData(
+                      list.id,
                       AsyncValue.data([value]),
                     ),
                   );
@@ -137,7 +139,7 @@ class VoteMainPage extends HookConsumerWidget {
                     children: [
                       SizedBox(
                         height: MediaQuery.of(context).size.height -
-                            (s == Status.open
+                            (s == StatusType.open
                                 ? isAdmin
                                     ? 215
                                     : 220
@@ -181,7 +183,7 @@ class VoteMainPage extends HookConsumerWidget {
                                     ),
                                     const SizedBox(height: 15),
                                     Expanded(
-                                      child: ListContenderCard(
+                                      child: ListListCard(
                                         animation: animation,
                                       ),
                                     ),
@@ -193,7 +195,7 @@ class VoteMainPage extends HookConsumerWidget {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      if (sectionList.isNotEmpty && s == Status.open)
+                      if (sectionList.isNotEmpty && s == StatusType.open)
                         const VoteButton(),
                       const SizedBox(height: 20),
                     ],

@@ -1,17 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/amap/class/cash.dart';
-import 'package:myecl/amap/repositories/amap_user_repository.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/single_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
 
-class UserCashNotifier extends SingleNotifier<Cash> {
-  final AmapUserRepository amapUserRepository;
+class UserCashNotifier extends SingleNotifierAPI<CashComplete> {
+  final Openapi amapUserRepository;
   UserCashNotifier({required this.amapUserRepository})
       : super(const AsyncValue.loading());
 
-  Future<AsyncValue<Cash>> loadCashByUser(String userId) async {
-    return await load(() async => amapUserRepository.getCashByUser(userId));
+  Future<AsyncValue<CashComplete>> loadCashByUser(String userId) async {
+    return await load(
+      () async => amapUserRepository.amapUsersUserIdCashGet(userId: userId),
+    );
   }
 
   Future updateCash(double amount) async {
@@ -34,16 +35,13 @@ class UserCashNotifier extends SingleNotifier<Cash> {
 }
 
 final userAmountProvider =
-    StateNotifierProvider<UserCashNotifier, AsyncValue<Cash>>((ref) {
-  final AmapUserRepository amapUserRepository =
-      ref.watch(amapUserRepositoryProvider);
+    StateNotifierProvider<UserCashNotifier, AsyncValue<CashComplete>>((ref) {
+  final amapUserRepository = ref.watch(repositoryProvider);
   UserCashNotifier userCashNotifier =
       UserCashNotifier(amapUserRepository: amapUserRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    final userId = ref.watch(idProvider);
-    userId.whenData(
-      (value) async => await userCashNotifier.loadCashByUser(value),
-    );
-  });
+  final userId = ref.watch(idProvider);
+  userId.whenData(
+    (value) async => await userCashNotifier.loadCashByUser(value),
+  );
   return userCashNotifier;
 });

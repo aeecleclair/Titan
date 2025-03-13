@@ -1,46 +1,45 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/room.dart';
-import 'package:myecl/booking/repositories/rooms_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
+import 'package:myecl/booking/adapters/room.dart';
 
-class RoomListNotifier extends ListNotifier<Room> {
-  final RoomRepository roomRepository;
+class RoomListNotifier extends ListNotifierAPI<RoomComplete> {
+  final Openapi roomRepository;
   RoomListNotifier({required this.roomRepository})
       : super(const AsyncValue.loading());
 
-  Future<AsyncValue<List<Room>>> loadRooms() async {
-    return await loadList(roomRepository.getRoomList);
+  Future<AsyncValue<List<RoomComplete>>> loadRooms() async {
+    return await loadList(roomRepository.bookingRoomsGet);
   }
 
-  Future<bool> addRoom(Room room) async {
-    return await add(roomRepository.createRoom, room);
+  Future<bool> addRoom(RoomBase room) async {
+    return await add(() => roomRepository.bookingRoomsPost(body: room), room);
   }
 
-  Future<bool> updateRoom(Room room) async {
+  Future<bool> updateRoom(RoomComplete room) async {
     return await update(
-      roomRepository.updateRoom,
-      (rooms, room) => rooms..[rooms.indexWhere((r) => r.id == room.id)] = room,
+      () => roomRepository.bookingRoomsRoomIdPatch(
+        roomId: room.id,
+        body: room.toRoomBase(),
+      ),
+      (room) => room.id,
       room,
     );
   }
 
-  Future<bool> deleteRoom(Room room) async {
+  Future<bool> deleteRoom(String roomId) async {
     return await delete(
-      roomRepository.deleteRoom,
-      (rooms, room) => rooms..removeWhere((i) => i.id == room.id),
-      room.id,
-      room,
+      () => roomRepository.bookingRoomsRoomIdDelete(roomId: roomId),
+      (r) => r.id,
+      roomId,
     );
   }
 }
 
 final roomListProvider =
-    StateNotifierProvider<RoomListNotifier, AsyncValue<List<Room>>>((ref) {
-  final roomRepository = ref.watch(roomRepositoryProvider);
-  final provider = RoomListNotifier(roomRepository: roomRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await provider.loadRooms();
-  });
-  return provider;
+    StateNotifierProvider<RoomListNotifier, AsyncValue<List<RoomComplete>>>(
+        (ref) {
+  final roomRepository = ref.watch(repositoryProvider);
+  return RoomListNotifier(roomRepository: roomRepository)..loadRooms();
 });

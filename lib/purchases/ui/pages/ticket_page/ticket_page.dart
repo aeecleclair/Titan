@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/purchases/providers/scanner_provider.dart';
 import 'package:myecl/purchases/providers/ticket_provider.dart';
 import 'package:myecl/purchases/tools/constants.dart';
 import 'package:myecl/purchases/ui/purchases.dart';
@@ -16,6 +17,7 @@ class TicketPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ticket = ref.watch(ticketProvider);
+    final ticketSecret = ref.watch(scannerProvider.notifier);
     final ticketNotifier = ref.watch(ticketProvider.notifier);
 
     return PurchasesTemplate(
@@ -35,13 +37,13 @@ class TicketPage extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  data.productVariant.nameFR,
+                  data.productVariant.nameFr,
                   style: TextStyle(fontSize: 20, color: Colors.grey[700]),
                 ),
                 const SizedBox(height: 10),
-                data.qrCodeSecret != ""
+                ticketSecret.secret != ""
                     ? QrImageView(
-                        data: data.qrCodeSecret,
+                        data: ticketSecret.secret,
                         version: QrVersions.auto,
                         size: min(
                           MediaQuery.of(context).size.width * 0.8,
@@ -68,12 +70,12 @@ class TicketPage extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  data.productVariant.descriptionFR,
+                  data.productVariant.descriptionFr,
                   style: const TextStyle(fontSize: 15, color: Colors.black),
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  data.productVariant.descriptionEN,
+                  data.productVariant.descriptionEn ?? "",
                   style: TextStyle(fontSize: 15, color: Colors.grey[700]),
                 ),
               ],

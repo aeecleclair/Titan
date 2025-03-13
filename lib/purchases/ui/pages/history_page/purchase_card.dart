@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/purchases/class/purchase.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/purchases/tools/constants.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 
@@ -11,7 +11,7 @@ class PurchaseCard extends HookConsumerWidget {
     required this.onClicked,
   });
 
-  final Purchase purchase;
+  final PurchaseReturn purchase;
   final VoidCallback onClicked;
 
   @override
@@ -27,7 +27,7 @@ class PurchaseCard extends HookConsumerWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
-                  purchase.product.nameFR,
+                  purchase.product.nameFr,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

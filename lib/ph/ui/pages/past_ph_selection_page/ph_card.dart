@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/ph/class/ph.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/ph/providers/ph_cover_provider.dart';
 import 'package:myecl/ph/providers/ph_provider.dart';
 import 'package:myecl/ph/providers/ph_pdf_provider.dart';
@@ -16,7 +16,7 @@ import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class PhCard extends HookConsumerWidget {
-  final Ph ph;
+  final PaperComplete ph;
 
   const PhCard({
     super.key,

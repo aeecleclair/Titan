@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/class/complete_member.dart';
-import 'package:myecl/phonebook/class/membership.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/phonebook/providers/association_kind_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
@@ -19,9 +18,9 @@ import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/ui/pages/association_editor_page/association_information_editor.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/phonebook/ui/pages/association_editor_page/member_editable_card.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
@@ -61,7 +60,7 @@ class AssociationEditorPage extends HookConsumerWidget {
         onRefresh: () async {
           await associationMemberListNotifier.loadMembers(
             association.id,
-            association.mandateYear.toString(),
+            association.mandateYear,
           );
           await associationPictureNotifier
               .getAssociationPicture(association.id);
@@ -102,7 +101,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                       height: 40,
                       decoration: BoxDecoration(
                         color: (isPhonebookAdmin || isAssociationPresident) &&
-                                !association.deactivated
+                                !(association.deactivated ?? false)
                             ? ColorConstants.gradient1
                             : ColorConstants.deactivated1,
                         borderRadius: BorderRadius.circular(10),
@@ -110,14 +109,15 @@ class AssociationEditorPage extends HookConsumerWidget {
                       child: child,
                     ),
                     onTap: (isPhonebookAdmin || isAssociationPresident) &&
-                            !association.deactivated
+                            !(association.deactivated ?? false)
                         ? () async {
                             rolesTagsNotifier.resetChecked();
                             memberRoleTagsNotifier.reset();
-                            completeMemberNotifier
-                                .setCompleteMember(CompleteMember.empty());
+                            completeMemberNotifier.setCompleteMember(
+                              EmptyModels.empty<MemberComplete>(),
+                            );
                             membershipNotifier.setMembership(
-                              Membership.empty()
+                              EmptyModels.empty<MembershipComplete>()
                                   .copyWith(associationId: association.id),
                             );
                             if (QR.currentPath
@@ -156,7 +156,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                       .isEmpty
                   ? const Text(PhonebookTextConstants.noMember)
                   : (isPhonebookAdmin || isAssociationPresident) &&
-                          !association.deactivated
+                          !(association.deactivated ?? false)
                       ? SizedBox(
                           height: 400,
                           child: ReorderableListView(
@@ -169,45 +169,39 @@ class AssociationEditorPage extends HookConsumerWidget {
                               );
                             },
                             onReorder: (int oldIndex, int newIndex) async {
-                              await tokenExpireWrapper(
-                                ref,
-                                () async {
-                                  final result =
-                                      await associationMemberListNotifier
-                                          .reorderMember(
-                                    associationMemberSortedList[oldIndex],
-                                    associationMemberSortedList[oldIndex]
-                                        .memberships
-                                        .firstWhere(
-                                          (element) =>
-                                              element.associationId ==
-                                                  association.id &&
-                                              element.mandateYear ==
-                                                  association.mandateYear,
-                                        )
-                                        .copyWith(order: newIndex),
-                                    oldIndex,
-                                    newIndex,
-                                  );
-                                  if (result) {
-                                    displayToastWithContext(
-                                      TypeMsg.msg,
-                                      PhonebookTextConstants.memberReordered,
-                                    );
-                                  } else {
-                                    displayToastWithContext(
-                                      TypeMsg.error,
-                                      PhonebookTextConstants.reorderingError,
-                                    );
-                                  }
-                                },
+                              final result = await associationMemberListNotifier
+                                  .reorderMember(
+                                associationMemberSortedList[oldIndex],
+                                associationMemberSortedList[oldIndex]
+                                    .memberships
+                                    .firstWhere(
+                                      (element) =>
+                                          element.associationId ==
+                                              association.id &&
+                                          element.mandateYear ==
+                                              association.mandateYear,
+                                    )
+                                    .copyWith(memberOrder: newIndex),
+                                oldIndex,
+                                newIndex,
                               );
+                              if (result) {
+                                displayToastWithContext(
+                                  TypeMsg.msg,
+                                  PhonebookTextConstants.memberReordered,
+                                );
+                              } else {
+                                displayToastWithContext(
+                                  TypeMsg.error,
+                                  PhonebookTextConstants.reorderingError,
+                                );
+                              }
                             },
                             children: associationMemberSortedList
                                 .map(
                                   (member) => MemberEditableCard(
                                     deactivated: false,
-                                    key: ValueKey(member.member.id),
+                                    key: ValueKey(member.id),
                                     member: member,
                                     association: association,
                                   ),
@@ -223,7 +217,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                               return MemberEditableCard(
                                 deactivated: true,
                                 key: ValueKey(
-                                  associationMembers[index].member.id,
+                                  associationMembers[index].id,
                                 ),
                                 member: associationMembers[index],
                                 association: association,
@@ -239,18 +233,19 @@ class AssociationEditorPage extends HookConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: WaitingButton(
                 builder: (child) => AddEditButtonLayout(
-                  colors: isPhonebookAdmin && !association.deactivated
-                      ? [
-                          ColorConstants.gradient1,
-                          ColorConstants.gradient2,
-                        ]
-                      : [
-                          ColorConstants.deactivated1,
-                          ColorConstants.deactivated2,
-                        ],
+                  colors:
+                      isPhonebookAdmin && !(association.deactivated ?? false)
+                          ? [
+                              ColorConstants.gradient1,
+                              ColorConstants.gradient2,
+                            ]
+                          : [
+                              ColorConstants.deactivated1,
+                              ColorConstants.deactivated2,
+                            ],
                   child: child,
                 ),
-                onTap: isPhonebookAdmin && !association.deactivated
+                onTap: isPhonebookAdmin && !(association.deactivated ?? false)
                     ? () async {
                         showDialog(
                           context: context,
@@ -271,43 +266,40 @@ class AssociationEditorPage extends HookConsumerWidget {
                               TextButton(
                                 onPressed: () async {
                                   Navigator.pop(context);
-                                  await tokenExpireWrapper(ref, () async {
-                                    final value = await associationListNotifier
-                                        .updateAssociation(
+                                  final value = await associationListNotifier
+                                      .updateAssociation(
+                                    association.copyWith(
+                                      mandateYear: association.mandateYear + 1,
+                                    ),
+                                  );
+                                  if (value) {
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
+                                      PhonebookTextConstants
+                                          .newMandateConfirmed,
+                                    );
+                                    associationNotifier.setAssociation(
                                       association.copyWith(
                                         mandateYear:
                                             association.mandateYear + 1,
                                       ),
                                     );
-                                    if (value) {
-                                      displayToastWithContext(
-                                        TypeMsg.msg,
-                                        PhonebookTextConstants
-                                            .newMandateConfirmed,
-                                      );
-                                      associationNotifier.setAssociation(
-                                        association.copyWith(
-                                          mandateYear:
-                                              association.mandateYear + 1,
-                                        ),
-                                      );
-                                      if (QR.currentPath.contains(
-                                        PhonebookRouter.associationDetail,
-                                      )) {
-                                        kindNotifier.setKind("");
-                                        QR.to(
-                                          PhonebookRouter.root +
-                                              PhonebookRouter.associationDetail,
-                                        );
-                                      }
-                                    } else {
-                                      displayToastWithContext(
-                                        TypeMsg.error,
-                                        PhonebookTextConstants
-                                            .mandateChangingError,
+                                    if (QR.currentPath.contains(
+                                      PhonebookRouter.associationDetail,
+                                    )) {
+                                      kindNotifier.setKind("");
+                                      QR.to(
+                                        PhonebookRouter.root +
+                                            PhonebookRouter.associationDetail,
                                       );
                                     }
-                                  });
+                                  } else {
+                                    displayToastWithContext(
+                                      TypeMsg.error,
+                                      PhonebookTextConstants
+                                          .mandateChangingError,
+                                    );
+                                  }
                                 },
                                 child: const Text(
                                   PhonebookTextConstants.validation,

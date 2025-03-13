@@ -1,59 +1,64 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/loan/class/loan.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/loan/providers/loaner_id_provider.dart';
-import 'package:myecl/loan/repositories/loan_repository.dart';
 import 'package:myecl/tools/exception.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
+import 'package:myecl/user/extensions/users.dart';
+import 'package:myecl/loan/adapters/loan.dart';
 
-class HistoryLoanerLoanListNotifier extends ListNotifier<Loan> {
-  final LoanRepository loanRepository = LoanRepository();
-  HistoryLoanerLoanListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
-    loanRepository.setToken(token);
-  }
+class HistoryLoanerLoanListNotifier extends ListNotifierAPI<Loan> {
+  final Openapi loanRepository;
+  HistoryLoanerLoanListNotifier({required this.loanRepository})
+      : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Loan>>> loadLoan(String loanerId) async {
-    return await loadList(() async => loanRepository.getHistory(loanerId));
+    return await loadList(
+      () async => loanRepository.loansLoanersLoanerIdLoansGet(
+        loanerId: loanerId,
+        returned: true,
+      ),
+    );
   }
 
-  Future<bool> addLoan(Loan loan) async {
-    return await add(loanRepository.createLoan, loan);
+  Future<bool> addLoan(LoanCreation loan) async {
+    return await add(() => loanRepository.loansPost(body: loan), loan);
   }
 
   Future<bool> updateLoan(Loan loan) async {
     return await update(
-      loanRepository.updateLoan,
-      (loans, loan) => loans..[loans.indexWhere((l) => l.id == loan.id)] = loan,
+      () => loanRepository.loansLoanIdPatch(
+        loanId: loan.id,
+        body: loan.toLoanUpdate(),
+      ),
+      (loan) => loan.id,
       loan,
     );
   }
 
-  Future<bool> deleteLoan(Loan loan) async {
+  Future<bool> deleteLoan(String loanId) async {
     return await delete(
-      loanRepository.deleteLoan,
-      (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
-      loan.id,
-      loan,
+      () => loanRepository.loansLoanIdDelete(loanId: loanId),
+      (l) => l.id,
+      loanId,
     );
   }
 
-  Future<bool> returnLoan(Loan loan) async {
+  Future<bool> returnLoan(String loanId) async {
     return await delete(
-      loanRepository.returnLoan,
-      (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
-      loan.id,
-      loan,
+      () => loanRepository.loansLoanIdReturnPost(loanId: loanId),
+      (l) => l.id,
+      loanId,
     );
   }
 
   Future<bool> extendLoan(Loan loan, int delay) async {
     return await update(
-      (l) async {
-        return loanRepository.extendLoan(l, delay);
-      },
-      (loans, loan) => loans..[loans.indexWhere((l) => l.id == loan.id)] = loan,
+      () => loanRepository.loansLoanIdExtendPost(
+        loanId: loan.id,
+        body: loan.toLoanExtend(delay),
+      ),
+      (loan) => loan.id,
       loan,
     );
   }
@@ -64,8 +69,14 @@ class HistoryLoanerLoanListNotifier extends ListNotifier<Loan> {
 
   Future<AsyncValue<List<Loan>>> loadHistory(String loanerId) async {
     try {
-      final data = await loanRepository.getHistory(loanerId);
-      return AsyncValue.data(data);
+      final data = await loanRepository.loansLoanersLoanerIdLoansGet(
+        loanerId: loanerId,
+        returned: true,
+      );
+      if (data.isSuccessful) {
+        return AsyncValue.data(data.body!);
+      }
+      return AsyncValue.error("Error", StackTrace.current);
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
       if (e is AppException && e.type == ErrorType.tokenExpire) {
@@ -85,7 +96,7 @@ class HistoryLoanerLoanListNotifier extends ListNotifier<Loan> {
                     .getName()
                     .toLowerCase()
                     .contains(query.toLowerCase()) ||
-                loan.itemsQuantity
+                loan.itemsQty
                     .map(
                       (e) => e.itemSimple.name
                           .toLowerCase()
@@ -100,14 +111,12 @@ class HistoryLoanerLoanListNotifier extends ListNotifier<Loan> {
 
 final historyLoanerLoanListProvider = StateNotifierProvider<
     HistoryLoanerLoanListNotifier, AsyncValue<List<Loan>>>((ref) {
-  final token = ref.watch(tokenProvider);
+  final loanRepository = ref.watch(repositoryProvider);
   HistoryLoanerLoanListNotifier historyLoanerLoanListNotifier =
-      HistoryLoanerLoanListNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    final loanerId = ref.watch(loanerIdProvider);
-    if (loanerId != "") {
-      historyLoanerLoanListNotifier.loadLoan(loanerId);
-    }
-  });
+      HistoryLoanerLoanListNotifier(loanRepository: loanRepository);
+  final loanerId = ref.watch(loanerIdProvider);
+  if (loanerId != "") {
+    historyLoanerLoanListNotifier.loadLoan(loanerId);
+  }
   return historyLoanerLoanListNotifier;
 });

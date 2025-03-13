@@ -1,26 +1,26 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/purchases/class/ticket.dart';
-import 'package:myecl/purchases/repositories/scanner_repository.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/single_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
 
-class ScannerNotifier extends SingleNotifier<Ticket> {
-  final ScannerRepository scannerRepository = ScannerRepository();
-  ScannerNotifier({required String token}) : super(const AsyncValue.loading()) {
-    scannerRepository.setToken(token);
-  }
+class ScannerNotifier extends SingleNotifierAPI<Ticket> {
+  final Openapi scannerRepository;
+  String secret = "";
+  ScannerNotifier({required this.scannerRepository})
+      : super(const AsyncValue.loading());
+
   Future<AsyncValue<Ticket>> scanTicket(
     String sellerId,
     String productId,
-    String ticketSecret,
     String generatorId,
   ) async {
     return await load(
-      () => scannerRepository.scanTicket(
-        sellerId,
-        productId,
-        ticketSecret,
-        generatorId,
+      () => scannerRepository
+          .cdrSellersSellerIdProductsProductIdTicketsGeneratorIdSecretGet(
+        sellerId: sellerId,
+        productId: productId,
+        generatorId: generatorId,
+        secret: secret,
       ),
     );
   }
@@ -31,12 +31,18 @@ class ScannerNotifier extends SingleNotifier<Ticket> {
 
   void reset() {
     state = const AsyncValue.loading();
+    secret = "";
+  }
+
+  void setSecret(String secret) {
+    this.secret = secret;
   }
 }
 
 final scannerProvider =
     StateNotifierProvider<ScannerNotifier, AsyncValue<Ticket>>((ref) {
-  final token = ref.watch(tokenProvider);
-  ScannerNotifier notifier = ScannerNotifier(token: token);
+  final scannerRepository = ref.watch(repositoryProvider);
+  ScannerNotifier notifier =
+      ScannerNotifier(scannerRepository: scannerRepository);
   return notifier;
 });

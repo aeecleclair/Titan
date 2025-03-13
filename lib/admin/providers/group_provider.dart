@@ -1,39 +1,45 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/group.dart';
-import 'package:myecl/admin/repositories/group_repository.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/single_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
+import 'package:myecl/admin/adapters/core_membership.dart';
 
-class GroupNotifier extends SingleNotifier<Group> {
-  final GroupRepository groupRepository;
+class GroupNotifier extends SingleNotifierAPI<CoreGroup> {
+  final Openapi groupRepository;
   GroupNotifier({required this.groupRepository})
       : super(const AsyncValue.loading());
 
-  Future<AsyncValue<Group>> loadGroup(String groupId) async {
-    return await load(() async => groupRepository.getGroup(groupId));
+  Future<AsyncValue<CoreGroup>> loadGroup(String groupId) async {
+    return await load(
+      () async => groupRepository.groupsGroupIdGet(groupId: groupId),
+    );
   }
 
-  Future<bool> addMember(Group group, SimpleUser user) async {
+  Future<bool> addMember(CoreGroup group, CoreUserSimple user) async {
     return await update(
-      (group) async => groupRepository.addMember(group, user),
+      () async => groupRepository.groupsMembershipPost(
+        body: group.toCoreMembership(user),
+      ),
       group,
     );
   }
 
-  Future<bool> deleteMember(Group group, SimpleUser user) async {
+  Future<bool> deleteMember(CoreGroup group, CoreUserSimple user) async {
     return await update(
-      (group) async => groupRepository.deleteMember(group, user),
+      () async => groupRepository.groupsMembershipDelete(
+        body: group.toCoreMembershipDelete(user),
+      ),
       group,
     );
   }
 
-  void setGroup(Group group) {
+  void setGroup(CoreGroup group) {
     state = AsyncValue.data(group);
   }
 }
 
 final groupProvider =
-    StateNotifierProvider<GroupNotifier, AsyncValue<Group>>((ref) {
-  final groupRepository = ref.watch(groupRepositoryProvider);
+    StateNotifierProvider<GroupNotifier, AsyncValue<CoreGroup>>((ref) {
+  final groupRepository = ref.watch(repositoryProvider);
   return GroupNotifier(groupRepository: groupRepository);
 });

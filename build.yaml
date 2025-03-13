@@ -1,0 +1,26 @@
+targets:
+  $default:
+    sources:
+      - swaggers/**
+    builders:
+      swagger_dart_code_generator:
+        options:
+          input_folder: "swaggers/"
+          output_folder: "lib/generated/"
+          input_urls:
+            - url: "https://hyperion-1.dev.eclair.ec-lyon.fr/openapi.json"
+          separate_models: true
+          default_values_map:
+            - type_name: int
+              default_value: '0'
+            - type_name: String
+              default_value: ''
+            - type_name: bool
+              default_value: 'false'
+            - type_name: 'List'
+              default_value: '[]'
+            - type_name: 'Map'
+              default_value: '{}'
+            - type_name: 'double'
+              default_value: '0.0'
+            

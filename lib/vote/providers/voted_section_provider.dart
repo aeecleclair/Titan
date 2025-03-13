@@ -1,14 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/vote/repositories/voted_sections_repository.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
 
-class VotedSectionProvider extends ListNotifier<String> {
-  final VotedSectionRepository votesRepository;
+class VotedSectionProvider extends ListNotifierAPI<String> {
+  final Openapi votesRepository;
   VotedSectionProvider({required this.votesRepository})
       : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<String>>> getVotedSections() async {
-    return await loadList(votesRepository.getVotes);
+    return await loadList(votesRepository.campaignVotesGet);
   }
 
   void addVote(String id) {
@@ -24,7 +25,7 @@ class VotedSectionProvider extends ListNotifier<String> {
 final votedSectionProvider =
     StateNotifierProvider<VotedSectionProvider, AsyncValue<List<String>>>(
         (ref) {
-  final votesRepository = ref.watch(votedSectionRepositoryProvider);
+  final votesRepository = ref.watch(repositoryProvider);
   VotedSectionProvider votesProvider = VotedSectionProvider(
     votesRepository: votesRepository,
   );

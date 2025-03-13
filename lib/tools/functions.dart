@@ -200,14 +200,14 @@ List<String> parseDate(DateTime date) {
 String formatRecurrenceRule(
   DateTime dateStart,
   DateTime dateEnd,
-  String recurrenceRule,
+  String? recurrenceRule,
   bool allDay,
 ) {
   final start = parseDate(dateStart);
   final end = parseDate(dateEnd);
   final displayYear = dateEnd.year != DateTime.now().year;
   String r = "";
-  if (recurrenceRule.isEmpty) {
+  if ((recurrenceRule ?? "").isEmpty) {
     if (start[0] == end[0]) {
       r +=
           "Le ${start[0].substring(0, start[0].length - (displayYear ? 0 : 5))} ";
@@ -226,8 +226,8 @@ String formatRecurrenceRule(
   ];
   final listDayShort = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
 
-  if (recurrenceRule.isNotEmpty) {
-    final days = recurrenceRule.split("BYDAY=")[1].split(";")[0].split(",");
+  if ((recurrenceRule ?? "").isNotEmpty) {
+    final days = recurrenceRule!.split("BYDAY=")[1].split(";")[0].split(",");
     final endDay = recurrenceRule.split("UNTIL=")[1].split(";")[0];
     String res = "";
     if (days.length > 1) {

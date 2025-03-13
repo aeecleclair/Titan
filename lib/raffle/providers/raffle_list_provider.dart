@@ -1,65 +1,58 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/raffle/class/raffle.dart';
-import 'package:myecl/raffle/repositories/raffle_repositories.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
 
-class RaffleListNotifier extends ListNotifier<Raffle> {
-  final RaffleRepository raffleRepository = RaffleRepository();
-  RaffleListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
-    raffleRepository.setToken(token);
+class RaffleListNotifier extends ListNotifierAPI<RaffleComplete> {
+  final Openapi raffleRepository;
+  RaffleListNotifier({required this.raffleRepository})
+      : super(const AsyncValue.loading());
+
+  Future<AsyncValue<List<RaffleComplete>>> loadRaffleList() async {
+    return await loadList(raffleRepository.tombolaRafflesGet);
   }
 
-  Future<AsyncValue<List<Raffle>>> loadRaffleList() async {
-    return await loadList(() async => raffleRepository.getRaffleList());
+  Future<bool> createRaffle(RaffleComplete raffle) async {
+    return await localAdd(raffle);
   }
 
-  Future<bool> createRaffle(Raffle raffle) async {
-    return await add((raffle) async => raffle, raffle);
-  }
-
-  Future<bool> updateRaffle(Raffle raffle) async {
-    return await update(
-      (raffle) async => false,
-      (raffles, r) => raffles..[raffles.indexWhere((e) => e.id == r.id)] = r,
+  Future<bool> updateRaffle(RaffleComplete raffle) async {
+    return await localUpdate(
+      (raffle) => raffle.id,
       raffle,
     );
   }
 
-  Future<bool> deleteRaffle(Raffle raffle) async {
-    return await delete(
-      (raffle) async => false,
-      (raffles, r) => raffles..removeWhere((e) => e.id == r.id),
+  Future<bool> deleteRaffle(RaffleComplete raffle) async {
+    return await localDelete(
+      (r) => r.id,
       raffle.id,
+    );
+  }
+
+  Future<bool> openRaffle(RaffleComplete raffle) async {
+    return await update(
+      () =>
+          raffleRepository.tombolaRafflesRaffleIdOpenPatch(raffleId: raffle.id),
+      (raffle) => raffle.id,
       raffle,
     );
   }
 
-  Future<bool> openRaffle(Raffle openedRaffle) async {
+  Future<bool> lockRaffle(RaffleComplete raffle) async {
     return await update(
-      raffleRepository.updateRaffle,
-      (raffles, r) => raffles..[raffles.indexWhere((e) => e.id == r.id)] = r,
-      openedRaffle,
-    );
-  }
-
-  Future<bool> lockRaffle(Raffle lockedRaffle) async {
-    return await update(
-      raffleRepository.updateRaffle,
-      (raffles, r) => raffles..[raffles.indexWhere((e) => e.id == r.id)] = r,
-      lockedRaffle,
+      () =>
+          raffleRepository.tombolaRafflesRaffleIdLockPatch(raffleId: raffle.id),
+      (raffle) => raffle.id,
+      raffle,
     );
   }
 }
 
 final raffleListProvider =
-    StateNotifierProvider<RaffleListNotifier, AsyncValue<List<Raffle>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  RaffleListNotifier notifier = RaffleListNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadRaffleList();
-  });
-  return notifier;
+    StateNotifierProvider<RaffleListNotifier, AsyncValue<List<RaffleComplete>>>(
+        (ref) {
+  final raffleRepository = ref.watch(repositoryProvider);
+  return RaffleListNotifier(raffleRepository: raffleRepository)
+    ..loadRaffleList();
 });

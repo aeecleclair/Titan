@@ -1,22 +1,21 @@
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/class/association_kinds.dart';
-import 'package:myecl/phonebook/class/complete_member.dart';
-import 'package:myecl/phonebook/class/membership.dart';
+import 'package:myecl/generated/openapi.enums.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
+import 'package:myecl/tools/builders/enums_cleaner.dart';
 
 int getPosition(
-  CompleteMember member,
+  MemberComplete member,
   String associationId,
 ) {
-  Membership membership = member.memberships
+  MembershipComplete membership = member.memberships
       .firstWhere((element) => element.associationId == associationId);
-  return membership.order;
+  return membership.memberOrder;
 }
 
-List<CompleteMember> sortedMembers(
-  List<CompleteMember> members,
+List<MemberComplete> sortedMembers(
+  List<MemberComplete> members,
   String associationId,
 ) {
   return members
@@ -26,17 +25,21 @@ List<CompleteMember> sortedMembers(
     );
 }
 
-List<Association> sortedAssociationByKind(
-  List<Association> associations,
-  AssociationKinds kinds,
+List<AssociationComplete> sortedAssociationByKind(
+  List<AssociationComplete> associations,
+  KindsReturn kinds,
 ) {
-  List<Association> sorted = [];
-  List<List<Association>> sortedByKind =
-      List.generate(kinds.kinds.length, (index) => []);
-  for (Association association in associations) {
-    sortedByKind[kinds.kinds.indexOf(association.kind)].add(association);
+  List<AssociationComplete> sorted = [];
+  List<List<AssociationComplete>> sortedByKind =
+      List.generate(Kinds.values.length, (index) => []);
+  final values = getEnumValues(Kinds.values).map((e) => e.value).toList();
+  for (AssociationComplete association in associations) {
+    if (association.kind.value == null) {
+      continue;
+    }
+    sortedByKind[values.indexOf(association.kind.value)].add(association);
   }
-  for (List<Association> list in sortedByKind) {
+  for (List<AssociationComplete> list in sortedByKind) {
     list.sort(
       (a, b) => removeDiacritics(a.name)
           .toLowerCase()

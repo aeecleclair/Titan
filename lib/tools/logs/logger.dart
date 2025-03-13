@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:myecl/service/class/message.dart';
 import 'package:myecl/tools/logs/file_logger_output.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/tools/logs/log.dart';
 import 'package:myecl/tools/logs/logger_output.dart';
 import 'package:myecl/tools/logs/print_logger_output.dart';
@@ -73,3 +74,5 @@ class Logger {
     writeLog(Log(message: messageString, level: LogLevel.notification));
   }
 }
+
+final loggerProvider = Provider((ref) => Logger());

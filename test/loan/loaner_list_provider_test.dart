@@ -1,74 +1,176 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
-import 'package:myecl/loan/repositories/loaner_repository.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:chopper/chopper.dart' as chopper;
+import 'package:http/http.dart' as http;
+import 'package:myecl/tools/builders/empty_models.dart';
 
-class MockLoanerRepository extends Mock implements LoanerRepository {}
+class MockLoanerRepository extends Mock implements Openapi {}
 
 void main() {
   group('LoanerListNotifier', () {
-    late LoanerRepository loanerRepository;
-    late LoanerListNotifier loanerListNotifier;
+    late MockLoanerRepository mockRepository;
+    late LoanerListNotifier provider;
+    final loaners = [
+      EmptyModels.empty<Loaner>().copyWith(id: '1'),
+      EmptyModels.empty<Loaner>().copyWith(id: '2'),
+    ];
+    final newLoaner = EmptyModels.empty<Loaner>().copyWith(id: '3');
+    final newLoanerBase = LoanerBase(
+      name: newLoaner.name,
+      groupManagerId: newLoaner.groupManagerId,
+    );
+    final updatedLoaner = loaners.first.copyWith(name: 'Updated Loaner');
 
     setUp(() {
-      loanerRepository = MockLoanerRepository();
-      loanerListNotifier =
-          LoanerListNotifier(loanerRepository: loanerRepository);
+      mockRepository = MockLoanerRepository();
+      provider = LoanerListNotifier(loanerRepository: mockRepository);
     });
 
-    test('loadLoanerList', () async {
-      final loanerList = [
-        Loaner.empty().copyWith(id: '1', name: 'John'),
-        Loaner.empty().copyWith(id: '2', name: 'Jane'),
-      ];
-      when(() => loanerRepository.getLoanerList())
-          .thenAnswer((_) async => loanerList);
+    test('loadLoanerList returns expected data', () async {
+      when(() => mockRepository.loansLoanersGet()).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          loaners,
+        ),
+      );
 
-      final result = await loanerListNotifier.loadLoanerList();
+      final result = await provider.loadLoanerList();
 
       expect(
-        result.when(
-          data: (d) => d,
-          error: (e, s) => throw e,
-          loading: () => throw Exception('loading'),
+        result.maybeWhen(
+          data: (data) => data,
+          orElse: () => [],
         ),
-        loanerList,
+        loaners,
       );
     });
 
-    test('addLoaner', () async {
-      final loaner = Loaner.empty().copyWith(id: '1', name: 'John');
-      when(() => loanerRepository.createLoaner(loaner))
-          .thenAnswer((_) async => loaner);
-      loanerListNotifier.state = AsyncValue.data([Loaner.empty()]);
+    test('loadLoanerList handles error', () async {
+      when(() => mockRepository.loansLoanersGet())
+          .thenThrow(Exception('Failed to load loaners'));
 
-      final result = await loanerListNotifier.addLoaner(loaner);
+      final result = await provider.loadLoanerList();
 
-      expect(result, true);
+      expect(
+        result.maybeWhen(
+          error: (error, _) => error,
+          orElse: () => null,
+        ),
+        isA<Exception>(),
+      );
     });
 
-    test('updateLoaner', () async {
-      final loaner = Loaner.empty().copyWith(id: '1', name: 'John');
-      when(() => loanerRepository.updateLoaner(loaner))
-          .thenAnswer((_) async => true);
-      loanerListNotifier.state = AsyncValue.data([loaner]);
+    test('addLoaner adds a loaner to the list', () async {
+      when(() => mockRepository.loansLoanersPost(body: any(named: 'body')))
+          .thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          newLoaner,
+        ),
+      );
 
-      final result = await loanerListNotifier.updateLoaner(loaner);
+      provider.state = AsyncValue.data([...loaners]);
+      final result = await provider.addLoaner(newLoanerBase);
 
       expect(result, true);
+      expect(
+        provider.state.maybeWhen(
+          data: (data) => data,
+          orElse: () => [],
+        ),
+        [...loaners, newLoaner],
+      );
     });
 
-    test('deleteLoaner', () async {
-      final loaner = Loaner.empty().copyWith(id: '1', name: 'John');
-      when(() => loanerRepository.deleteLoaner(loaner.id))
-          .thenAnswer((_) async => true);
-      loanerListNotifier.state = AsyncValue.data([loaner]);
+    test('addLoaner handles error', () async {
+      when(() => mockRepository.loansLoanersPost(body: any(named: 'body')))
+          .thenThrow(Exception('Failed to add loaner'));
 
-      final result = await loanerListNotifier.deleteLoaner(loaner);
+      provider.state = AsyncValue.data([...loaners]);
+      final result = await provider.addLoaner(newLoanerBase);
+
+      expect(result, false);
+    });
+
+    test('updateLoaner updates a loaner in the list', () async {
+      when(
+        () => mockRepository.loansLoanersLoanerIdPatch(
+          loanerId: any(named: 'loanerId'),
+          body: any(named: 'body'),
+        ),
+      ).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          updatedLoaner,
+        ),
+      );
+
+      provider.state = AsyncValue.data([...loaners]);
+      final result = await provider.updateLoaner(updatedLoaner);
 
       expect(result, true);
+      expect(
+        provider.state.maybeWhen(
+          data: (data) => data,
+          orElse: () => [],
+        ),
+        [updatedLoaner, ...loaners.skip(1)],
+      );
+    });
+
+    test('updateLoaner handles error', () async {
+      when(
+        () => mockRepository.loansLoanersLoanerIdPatch(
+          loanerId: any(named: 'loanerId'),
+          body: any(named: 'body'),
+        ),
+      ).thenThrow(Exception('Failed to update loaner'));
+
+      provider.state = AsyncValue.data([...loaners]);
+      final result = await provider.updateLoaner(updatedLoaner);
+
+      expect(result, false);
+    });
+
+    test('deleteLoaner removes a loaner from the list', () async {
+      when(
+        () => mockRepository.loansLoanersLoanerIdDelete(
+          loanerId: any(named: 'loanerId'),
+        ),
+      ).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('body', 200),
+          null,
+        ),
+      );
+
+      provider.state = AsyncValue.data([...loaners]);
+      final result = await provider.deleteLoaner(loaners.first.id);
+
+      expect(result, true);
+      expect(
+        provider.state.maybeWhen(
+          data: (data) => data,
+          orElse: () => [],
+        ),
+        loaners.skip(1).toList(),
+      );
+    });
+
+    test('deleteLoaner handles error', () async {
+      when(
+        () => mockRepository.loansLoanersLoanerIdDelete(
+          loanerId: loaners.first.id,
+        ),
+      ).thenThrow(Exception('Failed to delete loaner'));
+
+      provider.state = AsyncValue.data([...loaners]);
+      final result = await provider.deleteLoaner(loaners.first.id);
+
+      expect(result, false);
     });
   });
 }

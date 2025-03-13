@@ -1,38 +1,38 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/service/class/topic.dart';
-import 'package:myecl/service/repositories/notification_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/tools/providers/list_notifier_api.dart';
+import 'package:myecl/tools/repository/repository.dart';
 
-class TopicsProvider extends ListNotifier<Topic> {
-  final NotificationRepository notificationRepository =
-      NotificationRepository();
-  TopicsProvider({required String token}) : super(const AsyncValue.loading()) {
-    notificationRepository.setToken(token);
+class TopicsProvider extends ListNotifierAPI<String> {
+  final Openapi notificationRepository;
+  TopicsProvider({required this.notificationRepository})
+      : super(const AsyncValue.loading());
+
+  Future<AsyncValue<List<String>>> getTopics() async {
+    return await loadList(notificationRepository.notificationTopicsGet);
   }
 
-  Future<AsyncValue<List<Topic>>> getTopics() async {
-    return await loadList(notificationRepository.getTopics);
-  }
-
-  Future<bool> subscribeTopic(Topic topic) async {
+  Future<bool> subscribeTopic(String topic) async {
     return await update(
-      notificationRepository.subscribeTopic,
-      (listT, t) => listT..add(t),
+      () => notificationRepository.notificationTopicsTopicStrSubscribePost(
+        topicStr: topic,
+      ),
+      (listT) => listT,
       topic,
     );
   }
 
-  Future<bool> unsubscribeTopic(Topic topic) async {
+  Future<bool> unsubscribeTopic(String topic) async {
     return await update(
-      notificationRepository.unsubscribeTopic,
-      (listT, t) => listT..remove(t),
+      () => notificationRepository.notificationTopicsTopicStrUnsubscribePost(
+        topicStr: topic,
+      ),
+      (listT) => listT,
       topic,
     );
   }
 
-  Future<bool> toggleSubscription(Topic topic) async {
+  Future<bool> toggleSubscription(String topic) async {
     return state.maybeWhen(
       data: (data) {
         if (data.contains(topic)) {
@@ -44,19 +44,18 @@ class TopicsProvider extends ListNotifier<Topic> {
     );
   }
 
-  Future<bool> fakeSubscribeTopic(Topic topic) async {
-    return await update((_) async => true, (listT, t) => listT..add(t), topic);
+  Future<bool> fakeSubscribeTopic(String topic) async {
+    return await localUpdate((t) => t, topic);
   }
 
-  Future<bool> fakeUnsubscribeTopic(Topic topic) async {
-    return await update(
-      (_) async => true,
-      (listT, t) => listT..remove(t),
+  Future<bool> fakeUnsubscribeTopic(String topic) async {
+    return await localUpdate(
+      (t) => t,
       topic,
     );
   }
 
-  Future<bool> fakeToggleSubscription(Topic topic) async {
+  Future<bool> fakeToggleSubscription(String topic) async {
     return state.maybeWhen(
       data: (data) {
         if (data.contains(topic)) {
@@ -81,11 +80,8 @@ class TopicsProvider extends ListNotifier<Topic> {
 }
 
 final topicsProvider =
-    StateNotifierProvider<TopicsProvider, AsyncValue<List<Topic>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  TopicsProvider notifier = TopicsProvider(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    notifier.getTopics();
-  });
-  return notifier;
+    StateNotifierProvider<TopicsProvider, AsyncValue<List<String>>>((ref) {
+  final notificationRepository = ref.watch(repositoryProvider);
+  return TopicsProvider(notificationRepository: notificationRepository)
+    ..getTopics();
 });

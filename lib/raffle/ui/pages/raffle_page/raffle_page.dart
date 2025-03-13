@@ -1,6 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/raffle/providers/pack_ticket_list_provider.dart';
 import 'package:myecl/raffle/providers/user_amount_provider.dart';
 import 'package:myecl/raffle/providers/prize_list_provider.dart';
@@ -13,29 +12,29 @@ import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 
 class RaffleInfoPage extends HookConsumerWidget {
   const RaffleInfoPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userId = ref.watch(idProvider);
+    final user = ref.watch(userProvider);
     final raffle = ref.watch(raffleProvider);
-    final balance = ref.watch(userAmountProvider);
-    final balanceNotifier = ref.read(userAmountProvider.notifier);
-    final packTicketList = ref.watch(packTicketListProvider);
-    final packTicketListNotifier = ref.read(packTicketListProvider.notifier);
-    final prizeList = ref.watch(prizeListProvider);
-    final prizeListNotifier = ref.read(prizeListProvider.notifier);
+    final balance = ref.watch(userAmountProvider(user.id));
+    final balanceNotifier = ref.read(userAmountProvider(user.id).notifier);
+    final packTicketList = ref.watch(packTicketListProvider(raffle.id));
+    final packTicketListNotifier =
+        ref.read(packTicketListProvider(raffle.id).notifier);
+    final prizeList = ref.watch(prizeListProvider(raffle.id));
+    final prizeListNotifier = ref.read(prizeListProvider(raffle.id).notifier);
 
     return RaffleTemplate(
       child: Refresher(
         onRefresh: () async {
-          userId.whenData(
-            (value) async => await balanceNotifier.loadCashByUser(value),
-          );
-          await packTicketListNotifier.loadPackTicketList();
-          await prizeListNotifier.loadPrizeList();
+          await balanceNotifier.loadCashByUser(user.id);
+          await packTicketListNotifier.loadPackTicketList(raffle.id);
+          await prizeListNotifier.loadPrizeList(raffle.id);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

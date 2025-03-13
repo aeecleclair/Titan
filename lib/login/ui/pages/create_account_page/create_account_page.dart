@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/login/class/create_account.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/login/providers/sign_up_provider.dart';
 import 'package:myecl/login/router.dart';
 import 'package:myecl/login/tools/constants.dart';
@@ -12,6 +12,7 @@ import 'package:myecl/login/ui/components/login_field.dart';
 import 'package:myecl/login/ui/auth_page.dart';
 import 'package:myecl/login/ui/components/sign_in_up_bar.dart';
 import 'package:myecl/settings/ui/pages/change_pass/password_strength.dart';
+import 'package:myecl/tools/builders/enums_cleaner.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
@@ -39,11 +40,11 @@ class CreateAccountPage extends HookConsumerWidget {
     final phone = useTextEditingController();
     final promo = useTextEditingController();
     final lastIndex = useState(isCodeGiven ? 1 : 0);
-    List<DropdownMenuItem> items = Floors.values
+    List<DropdownMenuItem> items = getEnumValues(Floors.values)
         .map(
           (e) => DropdownMenuItem(
-            value: capitalize(e.toString().split('.').last),
-            child: Text(capitalize(e.toString().split('.').last)),
+            value: capitalize(e.name),
+            child: Text(capitalize(e.name)),
           ),
         )
         .toList();
@@ -263,7 +264,8 @@ class CreateAccountPage extends HookConsumerWidget {
               activationCode.text.isNotEmpty &&
               passwordConfirmation.text.isNotEmpty &&
               password.text == passwordConfirmation.text) {
-            CreateAccount finalCreateAccount = CreateAccount(
+            CoreUserActivateRequest finalCreateAccount =
+                CoreUserActivateRequest(
               name: name.text,
               firstname: firstname.text,
               nickname: nickname.text.isEmpty ? null : nickname.text,

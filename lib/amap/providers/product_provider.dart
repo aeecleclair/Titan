@@ -1,14 +1,18 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/class/product.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/tools/builders/empty_models.dart';
 
-class ProductNotifier extends StateNotifier<Product> {
-  ProductNotifier() : super(Product.empty());
+class ProductNotifier
+    extends StateNotifier<AppModulesAmapSchemasAmapProductComplete> {
+  ProductNotifier()
+      : super(EmptyModels.empty<AppModulesAmapSchemasAmapProductComplete>());
 
-  void setProduct(Product product) {
+  void setProduct(AppModulesAmapSchemasAmapProductComplete product) {
     state = product;
   }
 }
 
-final productProvider = StateNotifierProvider<ProductNotifier, Product>((ref) {
+final productProvider = StateNotifierProvider<ProductNotifier,
+    AppModulesAmapSchemasAmapProductComplete>((ref) {
   return ProductNotifier();
 });
