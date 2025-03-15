@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/seed-library/class/species.dart';
+import 'package:myecl/seed-library/class/species_type.dart';
 import 'package:myecl/seed-library/providers/difficulty_filter_provider.dart';
 import 'package:myecl/seed-library/providers/season_filter_provider.dart';
 import 'package:myecl/seed-library/providers/species_type_filter_provider.dart';
+import 'package:myecl/seed-library/providers/species_type_list_provider.dart';
 
 class FiltersBar extends HookConsumerWidget {
   const FiltersBar({super.key});
@@ -14,6 +15,7 @@ class FiltersBar extends HookConsumerWidget {
     final difficultyNotifier = ref.watch(difficultyFilterProvider.notifier);
     final season = ref.watch(seasonFilterProvider);
     final seasonNotifier = ref.watch(seasonFilterProvider.notifier);
+    final speciesTypeList = ref.watch(syncSpeciesTypeListProvider);
     final speciesType = ref.watch(speciesTypeFilterProvider);
     final speciesTypeNotifier = ref.watch(speciesTypeFilterProvider.notifier);
 
@@ -66,14 +68,14 @@ class FiltersBar extends HookConsumerWidget {
             Column(
               children: [
                 Text('Species type: '),
-                DropdownButton<TypeSpecies>(
+                DropdownButton<SpeciesType>(
                   value: speciesType,
-                  onChanged: (TypeSpecies? newValue) {
+                  onChanged: (SpeciesType? newValue) {
                     speciesTypeNotifier.setFilter(newValue!);
                   },
-                  items: TypeSpecies.values
-                      .map<DropdownMenuItem<TypeSpecies>>((TypeSpecies value) {
-                    return DropdownMenuItem<TypeSpecies>(
+                  items: speciesTypeList
+                      .map<DropdownMenuItem<SpeciesType>>((SpeciesType value) {
+                    return DropdownMenuItem<SpeciesType>(
                       value: value,
                       child: Text(value.name),
                     );

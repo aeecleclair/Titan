@@ -1,4 +1,5 @@
 import 'package:myecl/seed-library/class/plant_simple.dart';
+import 'package:myecl/tools/functions.dart';
 
 class PlantComplete extends PlantSimple {
   final String? previousNote;
@@ -30,13 +31,17 @@ class PlantComplete extends PlantSimple {
   Map<String, dynamic> toJson() {
     final json = super.toJson();
     json.addAll({
-      'previousNote': previousNote,
-      'nbSeedsEnvelope': nbSeedsEnvelope,
-      'ancestorId': ancestorId,
-      'currentNote': currentNote,
+      'previous_note': previousNote,
+      'nbSeeds_envelope': nbSeedsEnvelope,
+      'ancestor_id': ancestorId,
+      'currentenote': currentNote,
       'confidential': confidential,
-      'plantingDate': plantingDate?.toIso8601String(),
-      'borrowingDate': borrowingDate?.toIso8601String(),
+      'planting_date': plantingDate != null
+          ? processDateToAPIWithoutHour(plantingDate!)
+          : null,
+      'borrowing_date': borrowingDate != null
+          ? processDateToAPIWithoutHour(borrowingDate!)
+          : null,
     });
     return json;
   }
@@ -44,23 +49,23 @@ class PlantComplete extends PlantSimple {
   factory PlantComplete.fromJson(Map<String, dynamic> json) {
     return PlantComplete(
       state: State.values.byName(json['state']),
-      speciesId: json['speciesId'],
+      speciesId: json['species_id'],
       propagationMethod:
-          PropagationMethod.values.byName(json['propagationMethod']),
+          PropagationMethod.values.byName(json['propagation_method']),
       id: json['id'],
-      plantReference: json['plantReference'],
-      borrowerId: json['borrowerId'],
+      plantReference: json['plant_reference'],
+      borrowerId: json['borrower_id'],
       nickname: json['nickname'],
-      previousNote: json['previousNote'],
-      nbSeedsEnvelope: json['nbSeedsEnvelope'],
-      ancestorId: json['ancestorId'],
-      currentNote: json['currentNote'],
+      previousNote: json['previous_note'],
+      nbSeedsEnvelope: json['nb_seeds_envelope'],
+      ancestorId: json['ancestor_id'],
+      currentNote: json['current_note'],
       confidential: json['confidential'] ?? false,
-      plantingDate: json['plantingDate'] != null
-          ? DateTime.parse(json['plantingDate'])
+      plantingDate: json['planting_date'] != null
+          ? processDateFromAPIWithoutHour(json['planting_date'])
           : null,
-      borrowingDate: json['borrowingDate'] != null
-          ? DateTime.parse(json['borrowingDate'])
+      borrowingDate: json['borrowing_date'] != null
+          ? processDateFromAPIWithoutHour(json['borrowing_date'])
           : null,
     );
   }

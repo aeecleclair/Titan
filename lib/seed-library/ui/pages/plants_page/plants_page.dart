@@ -19,7 +19,6 @@ class PlantsPage extends HookConsumerWidget {
     final plantNotifier = ref.watch(plantProvider.notifier);
     final plantListNotifier = ref.watch(plantListProvider.notifier);
     final plantFilteredList = ref.watch(myPlantsFilteredListProvider);
-    print('plantFilteredList: $plantFilteredList');
 
     return SeedLibraryTemplate(
       child: Refresher(

@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:myecl/seed-library/class/plant_simple.dart';
 import 'package:myecl/seed-library/class/species.dart';
+import 'package:myecl/seed-library/class/species_type.dart';
 import 'package:myecl/seed-library/providers/difficulty_filter_provider.dart';
 import 'package:myecl/seed-library/providers/plants_list_provider.dart';
 import 'package:myecl/seed-library/providers/season_filter_provider.dart';
@@ -30,7 +31,7 @@ List<Species> filterSpeciesWithFilters(
   String searchFilter,
   String seasonsTypeFilter,
   int difficultyTypeFilter,
-  TypeSpecies speciesTypeFilter,
+  SpeciesType speciesTypeFilter,
 ) {
   List<Species> filteredSpecies = speciesList
       .where(
@@ -58,9 +59,11 @@ List<Species> filterSpeciesWithFilters(
       )
       .toList();
   filteredSpecies = filteredSpecies
-      .where((species) => speciesTypeFilter == TypeSpecies.all
-          ? true
-          : species.type == speciesTypeFilter)
+      .where(
+        (species) => speciesTypeFilter == SpeciesType(name: "all")
+            ? true
+            : species.type == speciesTypeFilter,
+      )
       .toList();
   return filteredSpecies;
 }
@@ -100,36 +103,24 @@ final plantsFilteredListProvider = Provider<List<PlantSimple>>((ref) {
 });
 
 final myPlantsFilteredListProvider = Provider<List<PlantSimple>>((ref) {
-  final plantsProvider = ref.watch(myPlantListProvider);
-  final speciesProvider = ref.watch(speciesListProvider);
+  final plants = ref.watch(syncMyPlantListProvider);
+  final species = ref.watch(syncSpeciesListProvider);
   final speciesTypeFilter = ref.watch(speciesTypeFilterProvider);
   final seasonsTypeFilter = ref.watch(seasonFilterProvider);
   final difficultyTypeFilter = ref.watch(difficultyFilterProvider);
   final searchFilter = ref.watch(searchFilterProvider);
-  List<Species> filteredSpecies = [];
-  speciesProvider.maybeWhen(
-    data: (speciesList) {
-      filteredSpecies = filterSpeciesWithFilters(
-        speciesList,
-        searchFilter,
-        seasonsTypeFilter,
-        difficultyTypeFilter,
-        speciesTypeFilter,
-      );
-    },
-    orElse: () => null,
+
+  List<Species> filteredSpecies = filterSpeciesWithFilters(
+    species,
+    searchFilter,
+    seasonsTypeFilter,
+    difficultyTypeFilter,
+    speciesTypeFilter,
   );
   final speciesId = filteredSpecies.map((species) => species.id).toList();
-  return plantsProvider.maybeWhen(
-    data: (plants) {
-      print(plants);
-      List<PlantSimple> filteredPlants = plants
-          .where(
-            (plant) => speciesId.contains(plant.speciesId),
-          )
-          .toList();
-      return filteredPlants;
-    },
-    orElse: () => [],
-  );
+  return plants
+      .where(
+        (plant) => speciesId.contains(plant.speciesId),
+      )
+      .toList();
 });

@@ -60,4 +60,21 @@ class SeedLibraryTextConstants {
   static const String unableToOpen = "Impossible d'ouvrir le lien";
   static const String helpSheets = "Fiches sur les plantes";
   static const String forum = "Oskour maman j'ai tué ma plante - Forum d'aide";
+
+  static const String addPlant = "Ajouter une plante";
+
+  static const String ancestor = "Ancêtre";
+
+  static const String species = "Espèce";
+
+  static const String seedQuantity = "Quantité de graines";
+
+  static const String notes = "Notes";
+
+  static const String emptyFieldError = "Veuillez remplir tous les champs";
+
+  static const String writeReference =
+      "Veuillez écrire la référence suivante : ";
+
+  static const String ok = "OK";
 }

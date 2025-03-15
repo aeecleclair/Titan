@@ -4,6 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/seed-library/ui/pages/main_page/main_page.dart';
 import 'package:myecl/seed-library/ui/pages/plants_page/plants_page.dart';
+import 'package:myecl/seed-library/ui/pages/seed_deposit_page/seed_deposit_page.dart';
 import 'package:myecl/seed-library/ui/pages/stock_page/stocks_page.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -105,16 +106,10 @@ class SeedLibraryRouter {
             //   ),
             // ],
           ),
-          // QRoute(
-          //   path: seedDeposit,
-          //   builder: () => SeedDepositPage(),
-          //   children: [
-          //     QRoute(
-          //       path: addSeedDeposit,
-          //       builder: () => AddSeedDepositPage(),
-          //     ),
-          //   ],
-          // ),
+          QRoute(
+            path: seedDeposit,
+            builder: () => SeedDepositPage(),
+          ),
         ],
       );
 }

@@ -47,6 +47,14 @@ final plantListProvider =
   return provider;
 });
 
+final syncPlantListProvider = Provider<List<PlantSimple>>((ref) {
+  final plantList = ref.watch(plantListProvider);
+  return plantList.maybeWhen(
+    orElse: () => [],
+    data: (plants) => plants,
+  );
+});
+
 final myPlantListProvider =
     StateNotifierProvider<PlantListNotifier, AsyncValue<List<PlantSimple>>>(
         (ref) {
@@ -57,4 +65,12 @@ final myPlantListProvider =
     await provider.loadMyPlants();
   });
   return provider;
+});
+
+final syncMyPlantListProvider = Provider<List<PlantSimple>>((ref) {
+  final plantList = ref.watch(myPlantListProvider);
+  return plantList.maybeWhen(
+    orElse: () => [],
+    data: (plants) => plants,
+  );
 });

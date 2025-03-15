@@ -1,6 +1,6 @@
 import 'dart:core';
 
-enum TypeSpecies { aromatic, vegetable, fruit, other, all }
+import 'package:myecl/seed-library/class/species_type.dart';
 
 class Species {
   final String id; // UUID
@@ -9,7 +9,7 @@ class Species {
   final int difficulty;
   final String? card;
   final int? nbSeedsRecommended;
-  final TypeSpecies type;
+  final SpeciesType type;
   final DateTime? startSeason;
   final DateTime? endSeason;
   final int? timeMaturation; // in days
@@ -52,7 +52,7 @@ class Species {
       difficulty: json['difficulty'],
       card: json['card'],
       nbSeedsRecommended: json['nbSeedsRecommended'],
-      type: TypeSpecies.values.byName(json['type']),
+      type: SpeciesType.fromString(json['type']),
       startSeason: json['startSeason'] != null
           ? DateTime.parse(json['startSeason'])
           : null,
@@ -65,9 +65,9 @@ class Species {
   Species.empty()
       : id = '',
         prefix = '',
-        name = 'Unknown',
+        name = '',
         difficulty = 0,
-        type = TypeSpecies.fruit,
+        type = SpeciesType.fromString('Unknown'),
         card = null,
         nbSeedsRecommended = null,
         startSeason = null,
@@ -81,7 +81,7 @@ class Species {
     int? difficulty,
     String? card,
     int? nbSeedsRecommended,
-    TypeSpecies? type,
+    SpeciesType? type,
     DateTime? startSeason,
     DateTime? endSeason,
     int? timeMaturation,
@@ -99,4 +99,19 @@ class Species {
       timeMaturation: timeMaturation ?? this.timeMaturation,
     );
   }
+
+  @override
+  String toString() {
+    return 'Species(id: $id, prefix: $prefix, name: $name, difficulty: $difficulty, card: $card, nbSeedsRecommended: $nbSeedsRecommended, type: $type, startSeason: $startSeason, endSeason: $endSeason, timeMaturation: $timeMaturation)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Species && other.id == id;
+  }
+
+  @override
+  int get hashCode => id.hashCode;
 }

@@ -1,5 +1,6 @@
 import 'package:myecl/seed-library/class/plant_simple.dart';
 import 'package:myecl/seed-library/class/species.dart';
+import 'package:myecl/seed-library/class/species_type.dart';
 
 final speciesList = [
   Species(
@@ -7,42 +8,42 @@ final speciesList = [
     prefix: "AZE",
     name: "Tomato",
     difficulty: 1,
-    type: TypeSpecies.other,
+    type: SpeciesType.fromString("fruit"),
   ),
   Species(
     id: "qsdfgh",
     prefix: "QSD",
     name: "Potato",
     difficulty: 2,
-    type: TypeSpecies.aromatic,
+    type: SpeciesType.fromString("vegetable"),
   ),
   Species(
     id: "wxcvbn",
     prefix: "WXC",
     name: "Rose",
     difficulty: 3,
-    type: TypeSpecies.vegetable,
+    type: SpeciesType.fromString("flower"),
   ),
   Species(
     id: "yuiop",
     prefix: "YUI",
     name: "Lettuce",
     difficulty: 4,
-    type: TypeSpecies.fruit,
+    type: SpeciesType.fromString("vegetable"),
   ),
   Species(
     id: "hjklm",
     prefix: "HJK",
     name: "Cucumber",
     difficulty: 5,
-    type: TypeSpecies.fruit,
+    type: SpeciesType.fromString("vegetable"),
   ),
   Species(
     id: "cvbnm",
     prefix: "CVB",
     name: "Strawberry",
     difficulty: 1,
-    type: TypeSpecies.other,
+    type: SpeciesType.fromString("fruit"),
   ),
 ];
 

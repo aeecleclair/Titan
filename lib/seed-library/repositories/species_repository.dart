@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/seed-library/class/species.dart';
+import 'package:myecl/seed-library/class/species_type.dart';
 import 'package:myecl/seed-library/tools/fake_data.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -14,6 +15,14 @@ class SpeciesRepository extends Repository {
     // return List<Species>.from(
     //   (await getList()).map((x) => Species.fromJson(x)),
     // );
+  }
+
+  Future<List<SpeciesType>> getSpeciesTypeList() async {
+    return [SpeciesType(name: "all")] +
+        List<SpeciesType>.from(
+          (await getList(suffix: "/types"))
+              .map((x) => SpeciesType.fromString(x)),
+        );
   }
 
   Future<Species> getSpecies(String speciesId) async {
