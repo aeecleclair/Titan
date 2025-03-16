@@ -10,4 +10,10 @@ class SpeciesType {
       name: name,
     );
   }
+
+  factory SpeciesType.empty() {
+    return SpeciesType(
+      name: "",
+    );
+  }
 }

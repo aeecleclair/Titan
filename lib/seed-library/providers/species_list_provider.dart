@@ -13,10 +13,20 @@ class SpeciesListNotifier extends ListNotifier<Species> {
     return await loadList(speciesRepository.getSpeciesList);
   }
 
-  Future<bool> createSpecies(Species specie) async {
+  Future<bool> createSpecies(Species species) async {
     return await add(
-      (specie) => speciesRepository.createSpecies(specie),
-      Species.empty(),
+      speciesRepository.createSpecies,
+      species,
+    );
+  }
+
+  Future<bool> updateSpecies(Species species) async {
+    return await update(
+      speciesRepository.updateSpecies,
+      (species, specie) => species
+        ..removeWhere((i) => i.id == specie.id)
+        ..add(specie),
+      species,
     );
   }
 

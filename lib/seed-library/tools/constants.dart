@@ -77,4 +77,29 @@ class SeedLibraryTextConstants {
       "Veuillez écrire la référence suivante : ";
 
   static const String ok = "OK";
+
+  static const String nbSeedsRecommendedError =
+      "Veuillez entrer un nombre de graines recommandé supérieur à 0";
+
+  static const String nbSeedsRecommended = "Nombre de graines recommandées";
+
+  static const String card = "Carte";
+
+  static const String prefix = "Préfixe";
+
+  static const String name = "Nom";
+
+  static const String prefixError = "Prefixe déjà utilisé";
+
+  static const String editSpecies = "Modifier l'espèce";
+
+  static const String addSpecies = "Ajouter une espèce";
+
+  static const String emptyTypeError = "Veuillez choisir un type de plante";
+
+  static const String emptyDifficultyError = "Veuillez choisir une difficulté";
+
+  static const String updatedSpecies = "Espèce modifiée";
+
+  static const String updatingError = "Erreur lors de la modification";
 }

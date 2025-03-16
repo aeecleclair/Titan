@@ -101,7 +101,7 @@ class SeedDepositPage extends HookConsumerWidget {
                   DropdownButton(
                     value: selectedSpecies,
                     onChanged: (Species? newValue) {
-                      selectedSpeciesNotifier.setPlant(newValue!);
+                      selectedSpeciesNotifier.setSpecies(newValue!);
                     },
                     items: ([Species.empty()] + species)
                         .map<DropdownMenuItem<Species>>((e) {
@@ -131,12 +131,12 @@ class SeedDepositPage extends HookConsumerWidget {
                   TextEntry(
                     controller: seedQuantity,
                     label: SeedLibraryTextConstants.seedQuantity,
-                    validator: (p0) {
-                      if (p0 == '' &&
+                    validator: (quantity) {
+                      if (quantity == '' &&
                           propagationMethod == PropagationMethod.seed) {
                         return SeedLibraryTextConstants.noValue;
                       }
-                      if (int.parse(p0) < 0) {
+                      if (int.parse(quantity) < 0) {
                         return SeedLibraryTextConstants.positiveNumber;
                       }
                       return null;
@@ -221,7 +221,7 @@ class SeedDepositPage extends HookConsumerWidget {
                           AdminTextConstants.addingError,
                         );
                       }
-                      selectedSpeciesNotifier.setPlant(Species.empty());
+                      selectedSpeciesNotifier.setSpecies(Species.empty());
                       selectedAncestorNotifier.setPlant(PlantSimple.empty());
                       seedQuantity.clear();
                       notes.clear();

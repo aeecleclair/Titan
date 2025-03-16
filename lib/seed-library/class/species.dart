@@ -67,7 +67,7 @@ class Species {
         prefix = '',
         name = '',
         difficulty = 0,
-        type = SpeciesType.fromString('Unknown'),
+        type = SpeciesType.empty(),
         card = null,
         nbSeedsRecommended = null,
         startSeason = null,

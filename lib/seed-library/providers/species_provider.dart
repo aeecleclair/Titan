@@ -8,7 +8,7 @@ final speciesProvider = StateNotifierProvider<SpeciesNotifier, Species>((ref) {
 class SpeciesNotifier extends StateNotifier<Species> {
   SpeciesNotifier() : super(Species.empty());
 
-  void setPlant(Species i) {
+  void setSpecies(Species i) {
     state = i;
   }
 }
