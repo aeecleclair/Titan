@@ -14,32 +14,37 @@ class ResearchBar extends HookConsumerWidget {
     final editingController = useTextEditingController();
     final filterNotifier = ref.watch(filterProvider.notifier);
 
-    return Expanded(
-      child: TextField(
-        onChanged: (value) {
-          filterNotifier.setFilter(value);
-        },
-        focusNode: focusNode,
-        controller: editingController,
-        cursorColor: PhonebookColorConstants.textDark,
-        decoration: const InputDecoration(
-          isDense: true,
-          suffixIcon: Icon(
-            Icons.search,
-            color: PhonebookColorConstants.textDark,
-            size: 30,
-          ),
-          label: Text(
-            PhonebookTextConstants.research,
-            style: TextStyle(
-              color: PhonebookColorConstants.textDark,
+    return Flex(
+      direction: Axis.horizontal,
+      children: [
+        Expanded(
+          child: TextField(
+            onChanged: (value) {
+              filterNotifier.setFilter(value);
+            },
+            focusNode: focusNode,
+            controller: editingController,
+            cursorColor: PhonebookColorConstants.textDark,
+            decoration: const InputDecoration(
+              isDense: true,
+              suffixIcon: Icon(
+                Icons.search,
+                color: PhonebookColorConstants.textDark,
+                size: 30,
+              ),
+              label: Text(
+                PhonebookTextConstants.research,
+                style: TextStyle(
+                  color: PhonebookColorConstants.textDark,
+                ),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: ColorConstants.gradient1),
+              ),
             ),
           ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: ColorConstants.gradient1),
-          ),
         ),
-      ),
+      ],
     );
   }
 }

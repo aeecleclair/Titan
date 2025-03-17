@@ -32,11 +32,11 @@ class Species {
     return {
       'id': id,
       'prefix': prefix,
-      'name': name,
+      'species_name': name,
       'difficulty': difficulty,
       'card': card,
       'nbSeedsRecommended': nbSeedsRecommended,
-      'type': type.name,
+      'species_type': type.name,
       'startSeason': startSeason?.toIso8601String(),
       'endSeason': endSeason?.toIso8601String(),
       'timeMaturation': timeMaturation,
@@ -48,11 +48,11 @@ class Species {
     return Species(
       id: json['id'],
       prefix: json['prefix'],
-      name: json['name'],
+      name: json['species_name'],
       difficulty: json['difficulty'],
       card: json['card'],
       nbSeedsRecommended: json['nbSeedsRecommended'],
-      type: SpeciesType.fromString(json['type']),
+      type: SpeciesType.fromString(json['species_type']),
       startSeason: json['startSeason'] != null
           ? DateTime.parse(json['startSeason'])
           : null,

@@ -126,14 +126,14 @@ class SeedDepositPage extends HookConsumerWidget {
                     }),
                   ],
                 ),
-                if (propagationMethod == PropagationMethod.seed) ...[
+                if (propagationMethod == PropagationMethod.graine) ...[
                   const SizedBox(height: 30),
                   TextEntry(
                     controller: seedQuantity,
                     label: SeedLibraryTextConstants.seedQuantity,
                     validator: (quantity) {
                       if (quantity == '' &&
-                          propagationMethod == PropagationMethod.seed) {
+                          propagationMethod == PropagationMethod.graine) {
                         return SeedLibraryTextConstants.noValue;
                       }
                       if (int.parse(quantity) < 0) {
@@ -184,7 +184,7 @@ class SeedDepositPage extends HookConsumerWidget {
                               : selectedAncestor.speciesId,
                           propagationMethod: propagationMethod,
                           nbSeedsEnvelope:
-                              propagationMethod == PropagationMethod.seed
+                              propagationMethod == PropagationMethod.graine
                                   ? int.parse(seedQuantity.text)
                                   : 1,
                           previousNote: notes.text,

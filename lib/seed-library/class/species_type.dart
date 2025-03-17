@@ -16,4 +16,17 @@ class SpeciesType {
       name: "",
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is SpeciesType && other.name == name;
+  }
+
+  @override
+  String toString() => 'SpeciesType(name: $name)';
+
+  @override
+  int get hashCode => name.hashCode;
 }

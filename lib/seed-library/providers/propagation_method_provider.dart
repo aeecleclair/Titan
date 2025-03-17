@@ -7,7 +7,7 @@ final propagationMethodProvider =
 });
 
 class PropagationMethodNotifier extends StateNotifier<PropagationMethod> {
-  PropagationMethodNotifier() : super(PropagationMethod.seed);
+  PropagationMethodNotifier() : super(PropagationMethod.graine);
 
   void setPropagationMethod(PropagationMethod i) {
     state = i;

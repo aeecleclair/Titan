@@ -2,7 +2,7 @@ import 'dart:core';
 
 enum State { pending, retrieved, consumed }
 
-enum PropagationMethod { cutting, seed }
+enum PropagationMethod { bouture, graine }
 
 class PlantSimple {
   final State state;
@@ -53,7 +53,7 @@ class PlantSimple {
   PlantSimple.empty()
       : state = State.pending,
         speciesId = '',
-        propagationMethod = PropagationMethod.seed,
+        propagationMethod = PropagationMethod.graine,
         id = '',
         plantReference = '',
         borrowerId = null,

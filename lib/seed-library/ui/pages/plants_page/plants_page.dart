@@ -29,11 +29,7 @@ class PlantsPage extends HookConsumerWidget {
           padding: const EdgeInsets.all(15.0),
           child: Column(
             children: [
-              Row(
-                children: [
-                  const ResearchBar(),
-                ],
-              ),
+              const ResearchBar(),
               const SizedBox(height: 10),
               const FiltersBar(),
               const SizedBox(height: 10),

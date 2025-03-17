@@ -2,10 +2,14 @@ import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
+import 'package:myecl/seed-library/providers/is_seed_library_admin_provider.dart';
+import 'package:myecl/seed-library/ui/pages/add_edit_species_page/add_edit_species_page.dart';
 import 'package:myecl/seed-library/ui/pages/main_page/main_page.dart';
 import 'package:myecl/seed-library/ui/pages/plants_page/plants_page.dart';
 import 'package:myecl/seed-library/ui/pages/seed_deposit_page/seed_deposit_page.dart';
+import 'package:myecl/seed-library/ui/pages/species_page/species_page.dart';
 import 'package:myecl/seed-library/ui/pages/stock_page/stocks_page.dart';
+import 'package:myecl/tools/middlewares/admin_middleware.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -67,16 +71,19 @@ class SeedLibraryRouter {
           //         ),
           //       ],
           //     ),
-          //     QRoute(
-          //       path: species,
-          //       builder: () => AdminSpeciesPage(),
-          //       children: [
-          //         QRoute(
-          //           path: addEditSpecies,
-          //           builder: () => AddEditSpeciesPage(),
-          //         ),
-          //       ],
-          //     ),
+          QRoute(
+            path: species,
+            builder: () => SpeciesPage(),
+            children: [
+              QRoute(
+                path: addEditSpecies,
+                builder: () => AddEditSpeciesPage(),
+              ),
+            ],
+            middleware: [
+              AdminMiddleware(ref, isSeedLibraryAdminProvider),
+            ],
+          ),
           //   ],
           // ),
           QRoute(

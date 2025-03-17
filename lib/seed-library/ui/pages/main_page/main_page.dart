@@ -4,6 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/centralisation/tools/functions.dart';
 import 'package:myecl/seed-library/providers/information_provider.dart';
+import 'package:myecl/seed-library/providers/is_seed_library_admin_provider.dart';
 import 'package:myecl/seed-library/router.dart';
 import 'package:myecl/seed-library/tools/constants.dart';
 import 'package:myecl/seed-library/ui/pages/main_page/menu_card_ui.dart';
@@ -15,6 +16,7 @@ class SeedLibraryMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isSeedLibraryAdmin = ref.watch(isSeedLibraryAdminProvider);
     final information = ref.watch(syncInformationProvider);
 
     final controller = ScrollController();
@@ -34,6 +36,16 @@ class SeedLibraryMainPage extends HookConsumerWidget {
                 : 1.5,
           ),
           children: [
+            if (isSeedLibraryAdmin)
+              GestureDetector(
+                onTap: () {
+                  QR.to(SeedLibraryRouter.root + SeedLibraryRouter.species);
+                },
+                child: const MenuCardUi(
+                  text: SeedLibraryTextConstants.species,
+                  icon: HeroIcons.wallet,
+                ),
+              ),
             GestureDetector(
               onTap: () {
                 QR.to(
