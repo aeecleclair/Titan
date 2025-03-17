@@ -7,7 +7,7 @@ class Species {
   final String prefix; // UUID
   final String name;
   final int difficulty;
-  final String? card;
+  final String card;
   final int? nbSeedsRecommended;
   final SpeciesType type;
   final DateTime? startSeason;
@@ -20,7 +20,7 @@ class Species {
     required this.name,
     required this.difficulty,
     required this.type,
-    this.card,
+    required this.card,
     this.nbSeedsRecommended,
     this.startSeason,
     this.endSeason,
@@ -35,11 +35,11 @@ class Species {
       'species_name': name,
       'difficulty': difficulty,
       'card': card,
-      'nbSeedsRecommended': nbSeedsRecommended,
+      'nb_seeds_recommended': nbSeedsRecommended,
       'species_type': type.name,
-      'startSeason': startSeason?.toIso8601String(),
-      'endSeason': endSeason?.toIso8601String(),
-      'timeMaturation': timeMaturation,
+      'start_season': startSeason?.toIso8601String(),
+      'end_season': endSeason?.toIso8601String(),
+      'time_maturation': timeMaturation,
     };
   }
 
@@ -51,14 +51,15 @@ class Species {
       name: json['species_name'],
       difficulty: json['difficulty'],
       card: json['card'],
-      nbSeedsRecommended: json['nbSeedsRecommended'],
+      nbSeedsRecommended: json['nb_seeds_recommended'],
       type: SpeciesType.fromString(json['species_type']),
-      startSeason: json['startSeason'] != null
-          ? DateTime.parse(json['startSeason'])
+      startSeason: json['start_season'] != null
+          ? DateTime.parse(json['start_season'])
           : null,
-      endSeason:
-          json['endSeason'] != null ? DateTime.parse(json['endSeason']) : null,
-      timeMaturation: json['timeMaturation'],
+      endSeason: json['end_season'] != null
+          ? DateTime.parse(json['end_season'])
+          : null,
+      timeMaturation: json['time_saturation'],
     );
   }
 
@@ -68,7 +69,7 @@ class Species {
         name = '',
         difficulty = 0,
         type = SpeciesType.empty(),
-        card = null,
+        card = '',
         nbSeedsRecommended = null,
         startSeason = null,
         endSeason = null,
