@@ -22,6 +22,7 @@ import 'package:myecl/purchases/router.dart';
 import 'package:myecl/recommendation/router.dart';
 import 'package:myecl/settings/router.dart';
 import 'package:myecl/raffle/router.dart';
+import 'package:myecl/greenhouse/router.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:myecl/tools/middlewares/deferred_middleware.dart';
 import 'package:myecl/vote/router.dart';
@@ -96,6 +97,7 @@ class AppRouter {
       PhonebookRouter(ref).route(),
       PhRouter(ref).route(),
       PurchasesRouter(ref).route(),
+      GreenHouseRouter(ref).route(),
     ];
   }
 }

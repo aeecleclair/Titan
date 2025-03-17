@@ -17,6 +17,7 @@ import 'package:myecl/purchases/router.dart';
 import 'package:myecl/raffle/router.dart';
 import 'package:myecl/recommendation/router.dart';
 import 'package:myecl/vote/router.dart';
+import 'package:myecl/greenhouse/router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final modulesProvider =
@@ -48,6 +49,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     EventRouter.module,
     VoteRouter.module,
     RaffleRouter.module,
+    GreenHouseRouter.module,
   ];
   ModulesNotifier() : super([]);
 
