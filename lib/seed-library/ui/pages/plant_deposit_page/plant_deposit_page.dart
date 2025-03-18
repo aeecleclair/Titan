@@ -6,6 +6,7 @@ import 'package:myecl/seed-library/class/plant_creation.dart';
 import 'package:myecl/seed-library/class/plant_simple.dart';
 import 'package:myecl/seed-library/class/species.dart';
 import 'package:myecl/seed-library/providers/is_seed_library_admin_provider.dart';
+import 'package:myecl/seed-library/providers/plant_complete_provider.dart';
 import 'package:myecl/seed-library/providers/plant_simple_provider.dart';
 import 'package:myecl/seed-library/providers/plants_list_provider.dart';
 import 'package:myecl/seed-library/providers/propagation_method_provider.dart';
@@ -21,19 +22,18 @@ import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 
-class SeedDepositPage extends HookConsumerWidget {
+class PlantDepositPage extends HookConsumerWidget {
   final scrollKey = GlobalKey();
-  SeedDepositPage({super.key});
+  PlantDepositPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final seedLibraryAdmin = ref.watch(isSeedLibraryAdminProvider);
     final key = GlobalKey<FormState>();
-    final seedQuantity = useTextEditingController();
-    final notes = useTextEditingController();
     final species = ref.watch(syncSpeciesListProvider);
     final plantList = ref.watch(syncPlantListProvider);
     final plantListNotifier = ref.watch(plantListProvider.notifier);
+    final plantNotifier = ref.watch(plantProvider.notifier);
     final myPlants = ref.watch(syncMyPlantListProvider);
     final selectedAncestor = ref.watch(plantSimpleProvider);
     final selectedAncestorNotifier = ref.watch(plantSimpleProvider.notifier);
@@ -42,6 +42,9 @@ class SeedDepositPage extends HookConsumerWidget {
     final propagationMethod = ref.watch(propagationMethodProvider);
     final propagationMethodNotifier =
         ref.watch(propagationMethodProvider.notifier);
+
+    final seedQuantity = useTextEditingController();
+    final notes = useTextEditingController();
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -91,8 +94,14 @@ class SeedDepositPage extends HookConsumerWidget {
                       child: Text(e.nickname ?? e.plantReference),
                     );
                   }).toList(),
-                  onChanged: (PlantSimple? newValue) {
+                  onChanged: (PlantSimple? newValue) async {
                     selectedAncestorNotifier.setPlant(newValue!);
+                    final previousNotes =
+                        await plantNotifier.loadPlant(newValue.id);
+                    notes.text = previousNotes.maybeWhen(
+                      data: (value) => value.currentNote ?? '',
+                      orElse: () => '',
+                    );
                   },
                   value: selectedAncestor,
                 ),
@@ -131,22 +140,14 @@ class SeedDepositPage extends HookConsumerWidget {
                   TextEntry(
                     controller: seedQuantity,
                     label: SeedLibraryTextConstants.seedQuantity,
-                    validator: (quantity) {
-                      if (quantity == '' &&
-                          propagationMethod == PropagationMethod.graine) {
-                        return SeedLibraryTextConstants.noValue;
-                      }
-                      if (int.parse(quantity) < 0) {
-                        return SeedLibraryTextConstants.positiveNumber;
-                      }
-                      return null;
-                    },
+                    isInt: true,
                   ),
                 ],
                 const SizedBox(height: 30),
                 TextEntry(
                   controller: notes,
                   label: SeedLibraryTextConstants.notes,
+                  maxLines: 1000,
                   canBeEmpty: true,
                 ),
                 const SizedBox(height: 50),

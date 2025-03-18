@@ -6,7 +6,7 @@ import 'package:myecl/seed-library/providers/is_seed_library_admin_provider.dart
 import 'package:myecl/seed-library/ui/pages/add_edit_species_page/add_edit_species_page.dart';
 import 'package:myecl/seed-library/ui/pages/main_page/main_page.dart';
 import 'package:myecl/seed-library/ui/pages/plants_page/plants_page.dart';
-import 'package:myecl/seed-library/ui/pages/seed_deposit_page/seed_deposit_page.dart';
+import 'package:myecl/seed-library/ui/pages/plant_deposit_page/plant_deposit_page.dart';
 import 'package:myecl/seed-library/ui/pages/species_page/species_page.dart';
 import 'package:myecl/seed-library/ui/pages/stock_page/stocks_page.dart';
 import 'package:myecl/tools/middlewares/admin_middleware.dart';
@@ -115,7 +115,7 @@ class SeedLibraryRouter {
           ),
           QRoute(
             path: seedDeposit,
-            builder: () => SeedDepositPage(),
+            builder: () => PlantDepositPage(),
           ),
         ],
       );
