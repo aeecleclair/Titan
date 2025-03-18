@@ -81,7 +81,7 @@ class DetailOrderUI extends HookConsumerWidget {
                 SizedBox(
                   width: 90,
                   child: Text(
-                    "${product.quantity} (${(product.quantity * product.price).toStringAsFixed(2)}€)",
+                    "${product.quantity} (${((product.quantity * product.price) / 100).toStringAsFixed(2)}€)",
                     textAlign: TextAlign.right,
                     style: const TextStyle(
                       fontSize: 17,
@@ -113,7 +113,7 @@ class DetailOrderUI extends HookConsumerWidget {
               ),
               const Spacer(),
               Text(
-                "${order.amount.toStringAsFixed(2)}€",
+                "${(order.amount / 100).toStringAsFixed(2)}€",
                 style: const TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
@@ -126,7 +126,7 @@ class DetailOrderUI extends HookConsumerWidget {
           Row(
             children: [
               Text(
-                "${AMAPTextConstants.amount} : ${userCash.balance.toStringAsFixed(2)}€",
+                "${AMAPTextConstants.amount} : ${(userCash.balance / 100).toStringAsFixed(2)}€",
                 style: const TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
