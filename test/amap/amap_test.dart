@@ -420,7 +420,7 @@ void main() {
       );
       expect(newProduct.name, "name");
       newProduct = product.copyWith(
-        price: 0.0,
+        price: 0,
       );
       expect(newProduct.price, 0.0);
       newProduct = product.copyWith(
@@ -437,7 +437,7 @@ void main() {
       final product = Product.empty().copyWith(
         id: "id",
         name: "name",
-        price: 0.0,
+        price: 0,
         category: "category",
         quantity: 0,
       );
