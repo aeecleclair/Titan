@@ -86,7 +86,7 @@ class ScanPage extends HookConsumerWidget {
                                     ),
                                   ),
                                   Text(
-                                    '${formatter.format(barcode.total / 100)} €',
+                                    '${formatter.format(barcode.tot / 100)} €',
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,

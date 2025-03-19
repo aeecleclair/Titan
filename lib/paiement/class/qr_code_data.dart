@@ -1,65 +1,65 @@
 import 'package:myecl/tools/functions.dart';
 
 class QrCodeData {
-  final String qrCodeId;
-  final int total;
-  final DateTime creation;
-  final String walletDeviceId;
+  final String id;
+  final int tot;
+  final DateTime iat;
+  final String key;
   final bool store;
   final String signature;
 
   QrCodeData({
-    required this.qrCodeId,
-    required this.total,
-    required this.creation,
-    required this.walletDeviceId,
+    required this.id,
+    required this.tot,
+    required this.iat,
+    required this.key,
     required this.store,
     required this.signature,
   });
 
   QrCodeData.fromJson(Map<String, dynamic> json)
-      : qrCodeId = json['qr_code_id'],
-        total = json['total'],
-        creation = processDateFromAPI(json['creation']),
-        walletDeviceId = json['wallet_device_id'],
+      : id = json['id'],
+        tot = json['tot'],
+        iat = processDateFromAPI(json['iat']),
+        key = json['key'],
         store = json['store'],
         signature = json['signature'];
 
   Map<String, dynamic> toJson() => {
-        'qr_code_id': qrCodeId,
-        'total': total,
-        'creation': processDateToAPI(creation),
-        'wallet_device_id': walletDeviceId,
+        'id': id,
+        'tot': tot,
+        'iat': processDateToAPI(iat),
+        'key': key,
         'store': store,
         'signature': signature,
       };
 
   @override
   String toString() {
-    return 'QrCodeData {qrCodeId: $qrCodeId, total: $total, creation: $creation, walletDeviceId: $walletDeviceId, store: $store, signature: $signature}';
+    return 'QrCodeData {id: $id, tot: $tot, iat: $iat, key: $key, store: $store, signature: $signature}';
   }
 
   QrCodeData.empty()
-      : qrCodeId = '',
-        total = 0,
-        creation = DateTime.now(),
-        walletDeviceId = '',
+      : id = '',
+        tot = 0,
+        iat = DateTime.now(),
+        key = '',
         store = false,
         signature = '';
 
   QrCodeData copyWith({
-    String? qrCodeId,
-    int? total,
-    DateTime? creation,
-    String? walletDeviceId,
+    String? id,
+    int? tot,
+    DateTime? iat,
+    String? key,
     bool? store,
     String? signature,
   }) {
     return QrCodeData(
-      qrCodeId: qrCodeId ?? this.qrCodeId,
-      total: total ?? this.total,
-      creation: creation ?? this.creation,
-      walletDeviceId: walletDeviceId ?? this.walletDeviceId,
+      id: id ?? this.id,
+      tot: tot ?? this.tot,
+      iat: iat ?? this.iat,
+      key: key ?? this.key,
       store: store ?? this.store,
       signature: signature ?? this.signature,
     );

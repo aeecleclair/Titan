@@ -1,14 +1,14 @@
 import 'package:myecl/tools/functions.dart';
 
 class QrCodeSignatureData {
-  final String qrCodeId;
+  final String id;
   final int tot;
   final DateTime iat;
   final String key;
   final bool store;
 
   QrCodeSignatureData({
-    required this.qrCodeId,
+    required this.id,
     required this.tot,
     required this.iat,
     required this.key,
@@ -16,14 +16,14 @@ class QrCodeSignatureData {
   });
 
   QrCodeSignatureData.fromJson(Map<String, dynamic> json)
-      : qrCodeId = json['qr_code_id'],
+      : id = json['qr_code_id'],
         tot = json['tot'],
         iat = processDateFromAPI(json['iat']),
         key = json['key'],
         store = json['store'];
 
   Map<String, dynamic> toJson() => {
-        'qr_code_id': qrCodeId,
+        'qr_code_id': id,
         'tot': tot,
         'iat': processDateToAPI(iat),
         'key': key,
@@ -32,25 +32,25 @@ class QrCodeSignatureData {
 
   @override
   String toString() {
-    return 'QrCodeSignatureData {qrCodeId: $qrCodeId, tot: $tot, iat: $iat, key: $key, store: $store}';
+    return 'QrCodeSignatureData {id: $id, tot: $tot, iat: $iat, key: $key, store: $store}';
   }
 
   QrCodeSignatureData.empty()
-      : qrCodeId = '',
+      : id = '',
         tot = 0,
         iat = DateTime.now(),
         key = '',
         store = false;
 
   QrCodeSignatureData copyWith({
-    String? qrCodeId,
+    String? id,
     int? tot,
     DateTime? iat,
     String? key,
     bool? store,
   }) {
     return QrCodeSignatureData(
-      qrCodeId: qrCodeId ?? this.qrCodeId,
+      id: id ?? this.id,
       tot: tot ?? this.tot,
       iat: iat ?? this.iat,
       key: key ?? this.key,
