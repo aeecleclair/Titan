@@ -72,7 +72,7 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     var scanArea = MediaQuery.of(context).size.width * 0.8;
-    final ongoingTransaction = ref.read(ongoingTransactionProvider);
+    final ongoingTransaction = ref.watch(ongoingTransactionProvider);
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(40),
@@ -105,11 +105,10 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
 
   @override
   Future<void> dispose() async {
+    super.dispose();
     WidgetsBinding.instance.removeObserver(this);
     unawaited(_subscription?.cancel());
     _subscription = null;
-    ref.read(ongoingTransactionProvider.notifier).clearOngoingTransaction();
     await controller.dispose();
-    super.dispose();
   }
 }
