@@ -15,10 +15,13 @@ class AdminPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final storeList = ref.watch(storeListProvider);
+    final storeListNotifier = ref.read(storeListProvider.notifier);
     final structure = ref.watch(selectedStructureProvider);
     return PaymentTemplate(
       child: Refresher(
-        onRefresh: () async {},
+        onRefresh: () async {
+          await storeListNotifier.getStores();
+        },
         child: Column(
           children: [
             const SizedBox(height: 10),
