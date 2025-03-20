@@ -89,23 +89,27 @@ Future<String> getQRCodeContent(
   final keyPair = await keyService.getKeyPair();
   final now = DateTime.now();
   final total = (double.parse(payAmount.replaceAll(',', '.')) * 100) ~/ 1;
-  final data = jsonEncode(QrCodeSignatureData(
-    id: id,
-    tot: total,
-    iat: now,
-    key: keyId!,
-    store: store,
-  ).toJson());
-  return jsonEncode(QrCodeData(
-    id: id,
-    tot: total,
-    iat: now,
-    key: keyId,
-    store: store,
-    signature: base64Encode(
-      (await keyService.signMessage(keyPair!, data.codeUnits)).bytes,
-    ),
-  ).toJson());
+  final data = jsonEncode(
+    QrCodeSignatureData(
+      id: id,
+      tot: total,
+      iat: now,
+      key: keyId!,
+      store: store,
+    ).toJson(),
+  );
+  return jsonEncode(
+    QrCodeData(
+      id: id,
+      tot: total,
+      iat: now,
+      key: keyId,
+      store: store,
+      signature: base64Encode(
+        (await keyService.signMessage(keyPair!, data.codeUnits)).bytes,
+      ),
+    ).toJson(),
+  );
 }
 
 String transferTypeToString(TransferType type) {

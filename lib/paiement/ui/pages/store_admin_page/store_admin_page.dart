@@ -21,7 +21,8 @@ class StoreAdminPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final store = ref.watch(selectedStoreProvider);
     final storeSellers = ref.watch(sellerStoreProvider(store.id));
-    final storeSellersNotifier = ref.read(sellerStoreProvider(store.id).notifier);
+    final storeSellersNotifier =
+        ref.read(sellerStoreProvider(store.id).notifier);
     final usersNotifier = ref.watch(userList.notifier);
     final queryController = useTextEditingController();
     final isSearching = useState(false);

@@ -8,7 +8,7 @@ class Refund {
   });
 
   Refund.fromJson(Map<String, dynamic> json)
-       : completeRefund = json['complete_refund'],
+      : completeRefund = json['complete_refund'],
         amount = json['amount'];
 
   Map<String, dynamic> toJson() {
