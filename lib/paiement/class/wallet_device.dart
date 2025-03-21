@@ -1,6 +1,6 @@
 import 'package:myecl/tools/functions.dart';
 
-enum WalletDeviceStatus { active, inactive, disabled }
+enum WalletDeviceStatus { active, inactive, revoked }
 
 class WalletDevice {
   final String id;

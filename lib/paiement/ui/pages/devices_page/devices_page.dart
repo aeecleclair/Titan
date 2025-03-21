@@ -56,7 +56,7 @@ class DevicesPage extends HookConsumerWidget {
                                     .where((e) => e.id == snapshot.data)
                                     .first
                                     .status ==
-                                WalletDeviceStatus.disabled) &&
+                                WalletDeviceStatus.revoked) &&
                         displayAddDevice.value;
                     return Column(
                       children: [
@@ -115,7 +115,7 @@ class DevicesPage extends HookConsumerWidget {
                                                       .revokeDevice(
                                                 device.copyWith(
                                                   status: WalletDeviceStatus
-                                                      .disabled,
+                                                      .revoked,
                                                 ),
                                               );
                                               if (value) {

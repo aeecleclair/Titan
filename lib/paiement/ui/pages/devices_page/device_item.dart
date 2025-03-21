@@ -51,7 +51,7 @@ class DeviceItem extends ConsumerWidget {
                     const SizedBox(
                       width: 10,
                     ),
-                    if (device.status != WalletDeviceStatus.disabled) ...[
+                    if (device.status != WalletDeviceStatus.revoked) ...[
                       const SizedBox(
                         width: 20,
                       ),

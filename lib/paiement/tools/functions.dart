@@ -60,7 +60,7 @@ Widget getStatusTag(WalletDeviceStatus status) {
           ),
         ),
       );
-    case WalletDeviceStatus.disabled:
+    case WalletDeviceStatus.revoked:
       return Container(
         decoration: BoxDecoration(
           color: Colors.red.withValues(alpha: 0.2),
