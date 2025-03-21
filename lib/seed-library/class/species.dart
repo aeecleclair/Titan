@@ -7,7 +7,7 @@ class Species {
   final String prefix; // UUID
   final String name;
   final int difficulty;
-  final String card;
+  final String? card;
   final int? nbSeedsRecommended;
   final SpeciesType type;
   final DateTime? startSeason;
@@ -20,7 +20,7 @@ class Species {
     required this.name,
     required this.difficulty,
     required this.type,
-    required this.card,
+    this.card,
     this.nbSeedsRecommended,
     this.startSeason,
     this.endSeason,
@@ -69,7 +69,7 @@ class Species {
         name = '',
         difficulty = 0,
         type = SpeciesType.empty(),
-        card = '',
+        card = null,
         nbSeedsRecommended = null,
         startSeason = null,
         endSeason = null,

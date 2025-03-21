@@ -4,7 +4,9 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/seed-library/providers/is_seed_library_admin_provider.dart';
 import 'package:myecl/seed-library/ui/pages/add_edit_species_page/add_edit_species_page.dart';
+import 'package:myecl/seed-library/ui/pages/edit_plant_detail_page/edit_plant_detail_page.dart';
 import 'package:myecl/seed-library/ui/pages/main_page/main_page.dart';
+import 'package:myecl/seed-library/ui/pages/plant_detail_page/plant_detail_page.dart';
 import 'package:myecl/seed-library/ui/pages/plants_page/plants_page.dart';
 import 'package:myecl/seed-library/ui/pages/plant_deposit_page/plant_deposit_page.dart';
 import 'package:myecl/seed-library/ui/pages/species_page/species_page.dart';
@@ -90,28 +92,28 @@ class SeedLibraryRouter {
             path: plants,
             builder: () => PlantsPage(),
             middleware: [],
-            // children: [
-            //   // QRoute(
-            //   //   path: plantDetail,
-            //   //   builder: () => PlantDetailPage(),
-            //   //   children: [
-            //   //     QRoute(
-            //   //       path: userEditPlant,
-            //   //       builder: () => UserEditPlantPage(),
-            //   //     ),
-            //   //   ],
-            //   // ),
-            // ],
+            children: [
+              QRoute(
+                path: plantDetail,
+                builder: () => EditPlantDetailPage(),
+                // children: [
+                //   QRoute(
+                //     path: userEditPlant,
+                //     builder: () => UserEditPlantPage(),
+                //   ),
+                // ],
+              ),
+            ],
           ),
           QRoute(
             path: stock,
             builder: () => StockPage(),
-            // children: [
-            //   QRoute(
-            //     path: loanDetail,
-            //     builder: () => LoanDetailPage(),
-            //   ),
-            // ],
+            children: [
+              QRoute(
+                path: plantDetail,
+                builder: () => PlantDetailPage(),
+              ),
+            ],
           ),
           QRoute(
             path: seedDeposit,

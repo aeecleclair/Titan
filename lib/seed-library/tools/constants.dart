@@ -102,4 +102,8 @@ class SeedLibraryTextConstants {
   static const String updatedSpecies = "Espèce modifiée";
 
   static const String updatingError = "Erreur lors de la modification";
+
+  static const String borrowedPlant = "Plante empruntée";
+
+  static const String borrowPlant = "Emprunter la plante";
 }

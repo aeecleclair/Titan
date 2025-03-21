@@ -1,8 +1,6 @@
 import 'dart:core';
 
-enum State { pending, retrieved, consumed }
-
-enum PropagationMethod { bouture, graine }
+import 'package:myecl/seed-library/tools/functions.dart';
 
 class PlantSimple {
   final State state;
@@ -26,12 +24,12 @@ class PlantSimple {
   // Convert object to JSON
   Map<String, dynamic> toJson() {
     return {
-      'state': state.name,
-      'speciesId': speciesId,
-      'propagationMethod': propagationMethod.name,
+      'state': getStateValue(state),
+      'species_id': speciesId,
+      'propagation_method': getPropagationMethodValue(propagationMethod),
       'id': id,
-      'plantReference': plantReference,
-      'borrowerId': borrowerId,
+      'plant_reference': plantReference,
+      'borrower_id': borrowerId,
       'nickname': nickname,
     };
   }
@@ -39,13 +37,13 @@ class PlantSimple {
   // Create an object from JSON
   factory PlantSimple.fromJson(Map<String, dynamic> json) {
     return PlantSimple(
-      state: State.values.byName(json['state']),
-      speciesId: json['speciesId'],
+      state: getStateByValue(json['state']),
+      speciesId: json['species_id'],
       propagationMethod:
-          PropagationMethod.values.byName(json['propagationMethod']),
+          getPropagationMethodByValue(json['propagation_method']),
       id: json['id'],
-      plantReference: json['plantReference'],
-      borrowerId: json['borrowerId'],
+      plantReference: json['plant_reference'],
+      borrowerId: json['borrower_id'],
       nickname: json['nickname'],
     );
   }

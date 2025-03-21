@@ -28,14 +28,14 @@ class PlantsRepository extends Repository {
 
   Future<List<PlantSimple>> getListPlantSimpleAdmin(String userId) async {
     return List<PlantSimple>.from(
-      (await getList(suffix: "user/$userId"))
+      (await getList(suffix: "users/$userId"))
           .map((x) => PlantSimple.fromJson(x)),
     );
   }
 
   Future<List<PlantSimple>> getMyPlantSimple() async {
     return List<PlantSimple>.from(
-      (await getList(suffix: "me")).map((x) => PlantSimple.fromJson(x)),
+      (await getList(suffix: "users/me")).map((x) => PlantSimple.fromJson(x)),
     );
   }
 
@@ -48,11 +48,11 @@ class PlantsRepository extends Repository {
   }
 
   Future<bool> borrowIdPlant(PlantComplete plant) async {
-    return await update({}, plant.id, suffix: "/borrowId");
+    return await update({}, plant.id, suffix: "/borrow");
   }
 
-  Future<PlantComplete> createPlants(PlantCreation plants) async {
-    return PlantComplete.fromJson(await create(plants.toJson()));
+  Future<PlantSimple> createPlants(PlantCreation plants) async {
+    return PlantSimple.fromJson(await create(plants.toJson()));
   }
 }
 

@@ -26,6 +26,7 @@ class EditablePlantDetail extends HookConsumerWidget {
       width: double.infinity,
       height: double.infinity,
       padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.lightGreen.withAlpha(100),
         borderRadius: BorderRadius.circular(10),
@@ -51,7 +52,7 @@ class EditablePlantDetail extends HookConsumerWidget {
             SizedBox(height: 10),
           ],
           Text(
-            'Méthode de propagation: ${plant.propagationMethod}',
+            'Méthode de propagation: ${plant.propagationMethod.name}',
           ),
           SizedBox(height: 10),
           Text(
@@ -104,7 +105,7 @@ class EditablePlantDetail extends HookConsumerWidget {
           TextEntry(
             controller: notes,
             label: 'Notes',
-            maxLines: 1000,
+            maxLines: 10,
             keyboardType: TextInputType.multiline,
             onChanged: (value) {
               plantNotifier.updatePlant(

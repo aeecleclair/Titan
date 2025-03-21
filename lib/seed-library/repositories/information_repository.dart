@@ -12,16 +12,8 @@ class InformationRepository extends Repository {
     return Information.fromJson(await getOne(""));
   }
 
-  Future<Information> createInformation(Information information) async {
-    return Information.fromJson(await create(information.toJson()));
-  }
-
   Future<bool> updateInformation(Information information) async {
     return await update(information.toJson(), "");
-  }
-
-  Future<bool> deleteInformation(String id) async {
-    return await delete(id);
   }
 }
 

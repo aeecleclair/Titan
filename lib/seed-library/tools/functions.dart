@@ -8,3 +8,51 @@ void openLink(String url) async {
     throw '${SeedLibraryTextConstants.unableToOpen} $url';
   }
 }
+
+enum State { pending, retrieved, consumed }
+
+enum PropagationMethod { bouture, graine }
+
+State getStateByValue(String value) {
+  switch (value) {
+    case 'en attente':
+      return State.pending;
+    case 'récupéré':
+      return State.retrieved;
+    case 'consommé':
+      return State.consumed;
+    default:
+      return State.pending;
+  }
+}
+
+String getStateValue(State state) {
+  switch (state) {
+    case State.pending:
+      return 'en attente';
+    case State.retrieved:
+      return 'récupéré';
+    case State.consumed:
+      return 'consommé';
+  }
+}
+
+PropagationMethod getPropagationMethodByValue(String value) {
+  switch (value) {
+    case 'bouture':
+      return PropagationMethod.bouture;
+    case 'graine':
+      return PropagationMethod.graine;
+    default:
+      return PropagationMethod.bouture;
+  }
+}
+
+String getPropagationMethodValue(PropagationMethod propagationMethod) {
+  switch (propagationMethod) {
+    case PropagationMethod.bouture:
+      return 'bouture';
+    case PropagationMethod.graine:
+      return 'graine';
+  }
+}

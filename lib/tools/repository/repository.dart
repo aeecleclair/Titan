@@ -173,6 +173,7 @@ abstract class Repository {
       headers: headers,
       body: jsonEncode(t),
     );
+    print(response.body);
     if (response.statusCode == 201) {
       try {
         String toDecode = response.body;
@@ -214,6 +215,7 @@ abstract class Repository {
       headers: headers,
       body: jsonEncode(t),
     );
+    print(response.headers);
     if (response.statusCode == 204 || response.statusCode == 200) {
       return true;
     } else if (response.statusCode == 403) {

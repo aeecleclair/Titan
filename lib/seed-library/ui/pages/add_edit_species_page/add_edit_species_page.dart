@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/seed-library/providers/difficulty_filter_provider.dart';
 import 'package:myecl/seed-library/providers/species_list_provider.dart';
 import 'package:myecl/seed-library/providers/species_provider.dart';
 import 'package:myecl/seed-library/providers/species_type_provider.dart';
 import 'package:myecl/seed-library/tools/constants.dart';
 import 'package:myecl/seed-library/ui/components/types_bar.dart';
+import 'package:myecl/seed-library/ui/seed_library.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -45,7 +45,7 @@ class AddEditSpeciesPage extends HookConsumerWidget {
     List<String> prefixes = speciesList.map((e) => e.prefix).toList();
     prefixes.removeWhere((element) => element == species.prefix);
 
-    return PhonebookTemplate(
+    return SeedLibraryTemplate(
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(
           parent: BouncingScrollPhysics(),

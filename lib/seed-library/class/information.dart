@@ -1,9 +1,5 @@
 import 'dart:core';
 
-enum State { pending, retrieved, consumed }
-
-enum PropagationMethod { cutting, seed }
-
 class Information {
   final String facebookUrl;
   final String forumUrl;

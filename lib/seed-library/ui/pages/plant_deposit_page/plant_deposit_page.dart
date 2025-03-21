@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/seed-library/class/plant_creation.dart';
 import 'package:myecl/seed-library/class/plant_simple.dart';
 import 'package:myecl/seed-library/class/species.dart';
@@ -13,6 +12,7 @@ import 'package:myecl/seed-library/providers/propagation_method_provider.dart';
 import 'package:myecl/seed-library/providers/species_list_provider.dart';
 import 'package:myecl/seed-library/providers/species_provider.dart';
 import 'package:myecl/seed-library/tools/constants.dart';
+import 'package:myecl/seed-library/tools/functions.dart';
 import 'package:myecl/seed-library/ui/components/radio_chip.dart';
 import 'package:myecl/seed-library/ui/seed_library.dart';
 import 'package:myecl/tools/constants.dart';
@@ -147,8 +147,9 @@ class PlantDepositPage extends HookConsumerWidget {
                 TextEntry(
                   controller: notes,
                   label: SeedLibraryTextConstants.notes,
-                  maxLines: 1000,
+                  maxLines: 10,
                   canBeEmpty: true,
+                  keyboardType: TextInputType.multiline,
                 ),
                 const SizedBox(height: 50),
                 WaitingButton(
@@ -202,7 +203,7 @@ class PlantDepositPage extends HookConsumerWidget {
                             return AlertDialog(
                               title: Text(
                                 SeedLibraryTextConstants.writeReference +
-                                    plantList[-1].plantReference,
+                                    plantList.last.plantReference,
                               ),
                               actions: [
                                 TextButton(
@@ -219,7 +220,7 @@ class PlantDepositPage extends HookConsumerWidget {
                       } else {
                         displayToastWithContext(
                           TypeMsg.error,
-                          AdminTextConstants.addingError,
+                          SeedLibraryTextConstants.addingError,
                         );
                       }
                       selectedSpeciesNotifier.setSpecies(Species.empty());
@@ -229,7 +230,7 @@ class PlantDepositPage extends HookConsumerWidget {
                     });
                   },
                   child: const Text(
-                    AdminTextConstants.add,
+                    SeedLibraryTextConstants.add,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,

@@ -20,6 +20,7 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
   }
 
   Future<bool> add(Future<T> Function(T t) f, T t) async {
+    print(state);
     return state.when(
       data: (d) async {
         try {

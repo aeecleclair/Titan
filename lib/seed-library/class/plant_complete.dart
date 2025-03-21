@@ -1,4 +1,5 @@
 import 'package:myecl/seed-library/class/plant_simple.dart';
+import 'package:myecl/seed-library/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 
 class PlantComplete extends PlantSimple {
@@ -48,10 +49,10 @@ class PlantComplete extends PlantSimple {
 
   factory PlantComplete.fromJson(Map<String, dynamic> json) {
     return PlantComplete(
-      state: State.values.byName(json['state']),
+      state: getStateByValue(json['state']),
       speciesId: json['species_id'],
       propagationMethod:
-          PropagationMethod.values.byName(json['propagation_method']),
+          getPropagationMethodByValue(json['propagation_method']),
       id: json['id'],
       plantReference: json['plant_reference'],
       borrowerId: json['borrower_id'],

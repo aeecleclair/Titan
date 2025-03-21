@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/seed-library/class/plant_simple.dart';
+import 'package:myecl/seed-library/tools/functions.dart';
 
 final propagationMethodProvider =
     StateNotifierProvider<PropagationMethodNotifier, PropagationMethod>((ref) {

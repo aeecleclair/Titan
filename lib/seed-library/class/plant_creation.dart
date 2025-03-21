@@ -1,6 +1,6 @@
 import 'dart:core';
 
-import 'package:myecl/seed-library/class/plant_simple.dart';
+import 'package:myecl/seed-library/tools/functions.dart';
 
 class PlantCreation {
   final String speciesId; // UUID

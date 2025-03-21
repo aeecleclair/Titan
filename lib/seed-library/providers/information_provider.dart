@@ -12,20 +12,8 @@ class InformationNotifier extends SingleNotifier<Information> {
     return await load(informationRepository.getInformation);
   }
 
-  Future<bool> createInformation(Information information) async {
-    return await add(informationRepository.createInformation, information);
-  }
-
   Future<bool> updateInformation(Information information) async {
     return await update(informationRepository.updateInformation, information);
-  }
-
-  Future<bool> deleteInformation(Information information) async {
-    return await delete(
-      informationRepository.deleteInformation,
-      information,
-      "",
-    );
   }
 }
 
