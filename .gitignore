@@ -31,6 +31,7 @@
 .pub/
 /build/
 /windows/flutter/generated_*
+.cxx
 
 # Symbolication related
 app.*.symbols
