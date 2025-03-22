@@ -14,7 +14,7 @@ void main() {
             User.empty().copyWith(
               groups: [
                 SimpleGroup.empty().copyWith(
-                  id: '0a25cb76-4b63-4fd3-b939-da6d9feabf28',
+                  id: '53a669d6-84b1-4352-8d7c-421c1fbd9c6a', // BDE
                   name: 'Booking Admin',
                 ),
                 SimpleGroup.empty().copyWith(id: '123', name: 'Other Group'),
