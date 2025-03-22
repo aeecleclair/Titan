@@ -6,7 +6,7 @@ import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/providers/cash_list_provider.dart';
 import 'package:myecl/amap/repositories/cash_repository.dart';
 import 'package:myecl/tools/exception.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/user/class/simple_users.dart';
 
 class MockCashRepository extends Mock implements CashRepository {}
 
