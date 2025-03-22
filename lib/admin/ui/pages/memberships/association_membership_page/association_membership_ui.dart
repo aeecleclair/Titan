@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/school.dart';
-import 'package:myecl/admin/tools/constants.dart';
+import 'package:myecl/admin/class/association_membership_simple.dart';
 import 'package:myecl/admin/ui/components/item_card_ui.dart';
-import 'package:myecl/admin/ui/pages/school_page/school_button.dart';
+import 'package:myecl/admin/ui/pages/memberships/association_membership_page/association_membership_button.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
-class SchoolUi extends HookConsumerWidget {
-  final School school;
+class AssociationMembershipUi extends HookConsumerWidget {
+  final AssociationMembership associationMembership;
   final void Function() onEdit;
   final Future Function() onDelete;
-  const SchoolUi({
+  const AssociationMembershipUi({
     super.key,
-    required this.school,
+    required this.associationMembership,
     required this.onEdit,
     required this.onDelete,
   });
@@ -26,7 +25,7 @@ class SchoolUi extends HookConsumerWidget {
         const SizedBox(width: 10),
         Expanded(
           child: Text(
-            school.name,
+            associationMembership.name,
             style: const TextStyle(
               color: Colors.black,
               fontSize: 20,
@@ -39,7 +38,7 @@ class SchoolUi extends HookConsumerWidget {
           children: [
             GestureDetector(
               onTap: onEdit,
-              child: SchoolButton(
+              child: AssociationMembershipButton(
                 gradient1: Colors.grey.shade800,
                 gradient2: Colors.grey.shade900,
                 child: const HeroIcon(
@@ -49,20 +48,18 @@ class SchoolUi extends HookConsumerWidget {
               ),
             ),
             const SizedBox(width: 10),
-            if (school.id != SchoolIdConstant.noSchool.value &&
-                school.id != SchoolIdConstant.eclSchool.value)
-              WaitingButton(
-                onTap: onDelete,
-                builder: (child) => SchoolButton(
-                  gradient1: ColorConstants.gradient1,
-                  gradient2: ColorConstants.gradient2,
-                  child: child,
-                ),
-                child: const HeroIcon(
-                  HeroIcons.xMark,
-                  color: Colors.white,
-                ),
+            WaitingButton(
+              onTap: onDelete,
+              builder: (child) => AssociationMembershipButton(
+                gradient1: ColorConstants.gradient1,
+                gradient2: ColorConstants.gradient2,
+                child: child,
               ),
+              child: const HeroIcon(
+                HeroIcons.xMark,
+                color: Colors.white,
+              ),
+            ),
           ],
         ),
       ],

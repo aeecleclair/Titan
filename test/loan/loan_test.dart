@@ -5,7 +5,7 @@ import 'package:myecl/loan/class/item_quantity.dart';
 import 'package:myecl/loan/class/item_simple.dart';
 import 'package:myecl/loan/class/loan.dart';
 import 'package:myecl/loan/class/loaner.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/user/class/simple_users.dart';
 
 void main() {
   group('Testing Item class', () {

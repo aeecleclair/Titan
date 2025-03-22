@@ -5,7 +5,7 @@ import 'package:myecl/admin/class/account_type.dart';
 import 'package:myecl/admin/class/group.dart';
 import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/admin/repositories/group_repository.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/user/class/simple_users.dart';
 import 'package:myecl/user/class/user.dart';
 
 class MockGroupRepository extends Mock implements GroupRepository {}
