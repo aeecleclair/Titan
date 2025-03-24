@@ -16,14 +16,14 @@ class QrCodeSignatureData {
   });
 
   QrCodeSignatureData.fromJson(Map<String, dynamic> json)
-      : id = json['qr_code_id'],
+      : id = json['id'],
         tot = json['tot'],
         iat = processDateFromAPI(json['iat']),
         key = json['key'],
         store = json['store'];
 
   Map<String, dynamic> toJson() => {
-        'qr_code_id': id,
+        'id': id,
         'tot': tot,
         'iat': processDateToAPI(iat),
         'key': key,
