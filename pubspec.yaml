@@ -66,6 +66,7 @@ dependencies:
   pdfx: ^2.6.0
   file_saver: ^0.2.12
   uuid: ^4.4.2
+  infinite_scroll_pagination:
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.3
