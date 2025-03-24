@@ -4,8 +4,10 @@ import 'package:myecl/rplace/providers/grid_providers.dart';
 import 'package:myecl/rplace/providers/pixelinfo_providers.dart';
 import 'package:myecl/rplace/ui/color_picker.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:timeago/timeago.dart' as timeago;
 import 'my_painter.dart';
 import 'package:myecl/rplace/providers/pixels_providers.dart';
+import 'package:myecl/rplace/providers/userinfo_providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/rplace/class/focus.dart';
 
@@ -21,6 +23,8 @@ class CanvasViewer extends HookConsumerWidget {
     final focus = ref.watch(focusProvider);
     final focusNotifier = ref.watch(focusProvider.notifier);
     final pixelinfo = ref.watch(pixelInfoProvider.notifier);
+    final userinfo = ref.watch(userinfoProvider);
+    final userinfoNotifier = ref.watch(userinfoProvider.notifier);
 
     return AsyncChild(
       value: gridInfo,
@@ -28,6 +32,7 @@ class CanvasViewer extends HookConsumerWidget {
         final int nbLigne = gridInfo.nbLigne;
         final int nbColonne = gridInfo.nbColonne;
         final double pixelSize = gridInfo.pixelSize;
+        final Duration cooldown = gridInfo.cooldown;
 
         return InteractiveViewer(
           constrained: false,
@@ -38,7 +43,8 @@ class CanvasViewer extends HookConsumerWidget {
             height: 10 * MediaQuery.of(context).size.height,
             child: Center(
               child: GestureDetector(
-                onTapDown: (event) {
+                onTapDown: (event) async {
+                  await userinfoNotifier.getLastPlacedDate();
                   pixelinfo.getPixelInfo(
                     (event.localPosition.dx) ~/ pixelSize,
                     (event.localPosition.dy) ~/ pixelSize,
@@ -47,17 +53,31 @@ class CanvasViewer extends HookConsumerWidget {
                     PixelFocus(
                       x: (event.localPosition.dx) ~/ pixelSize,
                       y: (event.localPosition.dy) ~/ pixelSize,
-                      user: "",
-                      date: DateTime.now(),
                       isFocus: true,
                     ),
                   );
                   Future<void> future = showModalBottomSheet(
+                    barrierColor: Color.fromARGB(50, 0, 0, 0),
                     context: context,
                     builder: (BuildContext context) {
-                      return ColorPicker(
-                        x: ((event.localPosition.dx) ~/ pixelSize),
-                        y: ((event.localPosition.dy) ~/ pixelSize),
+                      return AsyncChild(
+                        value: userinfo,
+                        builder: (context, userinfo) {
+                          if (DateTime.now().difference(userinfo.lastplaced) <
+                              cooldown) {
+                            return SizedBox(
+                              height: 110,
+                              child: Text(
+                                "${cooldown - DateTime.now().difference(userinfo.lastplaced)}",
+                              ),
+                            );
+                          } else {
+                            return ColorPicker(
+                              x: ((event.localPosition.dx) ~/ pixelSize),
+                              y: ((event.localPosition.dy) ~/ pixelSize),
+                            );
+                          }
+                        },
                       );
                     },
                   );
@@ -99,7 +119,11 @@ class CanvasViewer extends HookConsumerWidget {
                           width: pixelSize,
                           child: DecoratedBox(
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.amber),
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 1,
+                                strokeAlign: 1,
+                              ),
                             ),
                           ),
                         ),
