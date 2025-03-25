@@ -7,6 +7,8 @@ import 'package:local_auth_android/local_auth_android.dart';
 import 'package:local_auth_darwin/local_auth_darwin.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/paiement/providers/key_service_provider.dart';
+import 'package:myecl/paiement/providers/my_history_provider.dart';
+import 'package:myecl/paiement/providers/my_wallet_provider.dart';
 import 'package:myecl/paiement/providers/pay_amount_provider.dart';
 import 'package:myecl/paiement/ui/pages/pay_page/info_card.dart';
 import 'package:myecl/paiement/ui/pages/pay_page/qr_code.dart';
@@ -20,6 +22,8 @@ class ConfirmButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final keyService = ref.watch(keyServiceProvider);
     final payAmount = ref.watch(payAmountProvider);
+    final myHistoryNotifier = ref.read(myHistoryProvider.notifier);
+    final myWalletNotifier = ref.read(myWalletProvider.notifier);
     final LocalAuthentication auth = LocalAuthentication();
 
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -103,7 +107,10 @@ class ConfirmButton extends ConsumerWidget {
             ),
           );
         },
-      );
+      ).then((_) async {
+        await myHistoryNotifier.getHistory();
+        await myWalletNotifier.getMyWallet();
+      });
     }
 
     return GestureDetector(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/paiement/providers/my_wallet_provider.dart';
 import 'package:myecl/paiement/providers/tos_provider.dart';
 import 'package:myecl/paiement/providers/is_payment_admin.dart';
 import 'package:myecl/paiement/providers/my_history_provider.dart';
@@ -31,6 +32,7 @@ class PaymentMainPage extends HookConsumerWidget {
     final mySellers = ref.watch(myStoresProvider);
     final mySellersNotifier = ref.read(myStoresProvider.notifier);
     final myHistoryNotifier = ref.read(myHistoryProvider.notifier);
+    final myWalletNotifier = ref.read(myWalletProvider.notifier);
     final isAdmin = ref.watch(isPaymentAdminProvider);
     final flipped = useState(true);
 
@@ -83,6 +85,7 @@ class PaymentMainPage extends HookConsumerWidget {
                     if (value) {
                       await mySellersNotifier.getMyStores();
                       await myHistoryNotifier.getHistory();
+                      await myWalletNotifier.getMyWallet();
                       shouldDisplayTosDialogNotifier.update(false);
                     }
                   },
@@ -98,6 +101,7 @@ class PaymentMainPage extends HookConsumerWidget {
                   onRefresh: () async {
                     await mySellersNotifier.getMyStores();
                     await myHistoryNotifier.getHistory();
+                    await myWalletNotifier.getMyWallet();
                   },
                   child: Column(
                     children: [
