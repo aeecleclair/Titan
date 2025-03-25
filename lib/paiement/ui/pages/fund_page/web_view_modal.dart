@@ -19,20 +19,21 @@ class WebViewExample extends ConsumerWidget {
       ..setNavigationDelegate(
         NavigationDelegate(
           onNavigationRequest: (NavigationRequest request) {
-            if (request.url.toString().contains('code=')) {
-              final receivedUri = Uri.parse(request.url);
-              final code = receivedUri.queryParameters["code"];
-              if (code == "succeeded") {
-                displayToastWithContext(
-                  TypeMsg.msg,
-                  "Paiement effectué avec succès",
-                );
-                ref.watch(myWalletProvider.notifier).getMyWallet();
-              } else {
-                displayToastWithContext(TypeMsg.error, "Paiement annulé");
-              }
-              Navigator.pop(context);
-            }
+            print(request.url);
+            // if (request.url.toString().contains('code=')) {
+            //   final receivedUri = Uri.parse(request.url);
+            //   final code = receivedUri.queryParameters["code"];
+            //   if (code == "succeeded") {
+            //     displayToastWithContext(
+            //       TypeMsg.msg,
+            //       "Paiement effectué avec succès",
+            //     );
+            //     ref.watch(myWalletProvider.notifier).getMyWallet();
+            //   } else {
+            //     displayToastWithContext(TypeMsg.error, "Paiement annulé");
+            //   }
+            //   Navigator.pop(context);
+            // }
             return NavigationDecision.navigate;
           },
         ),

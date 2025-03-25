@@ -29,6 +29,8 @@ class ConfirmFundButton extends ConsumerWidget {
     void showHABottomModal(String url) {
       showModalBottomSheet(
         context: context,
+        scrollControlDisabledMaxHeightRatio:
+            (1 - 50 / MediaQuery.of(context).size.height),
         builder: (context) {
           return WebViewExample(url: url);
         },
