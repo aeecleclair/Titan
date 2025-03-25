@@ -23,6 +23,7 @@ class ConfirmButton extends ConsumerWidget {
     final keyService = ref.watch(keyServiceProvider);
     final payAmount = ref.watch(payAmountProvider);
     final myHistoryNotifier = ref.read(myHistoryProvider.notifier);
+    final myWallet = ref.watch(myWalletProvider);
     final myWalletNotifier = ref.read(myWalletProvider.notifier);
     final LocalAuthentication auth = LocalAuthentication();
 
@@ -30,8 +31,14 @@ class ConfirmButton extends ConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    final enabled = payAmount.isNotEmpty &&
-        double.parse(payAmount.replaceAll(',', '.')) > 0;
+    final myWalletBalance =
+        myWallet.maybeWhen(orElse: () => 0, data: (wallet) => wallet.balance);
+
+    final amount = payAmount.isNotEmpty
+        ? double.parse(payAmount.replaceAll(',', '.'))
+        : 0.0;
+
+    final enabled = amount > 0 && amount * 100 <= myWalletBalance;
 
     final formatter = NumberFormat("#,##0.00", "fr_FR");
 
