@@ -18,8 +18,8 @@ class WebViewExample extends ConsumerWidget {
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
-          onNavigationRequest: (NavigationRequest request) {
-            print(request.url);
+          onUrlChange: (UrlChange change) {
+            print(change.url);
             // if (request.url.toString().contains('code=')) {
             //   final receivedUri = Uri.parse(request.url);
             //   final code = receivedUri.queryParameters["code"];
@@ -34,7 +34,6 @@ class WebViewExample extends ConsumerWidget {
             //   }
             //   Navigator.pop(context);
             // }
-            return NavigationDecision.navigate;
           },
         ),
       )
