@@ -42,7 +42,8 @@ class LastTransactions extends ConsumerWidget {
               builder: (context, history) {
                 final Map<String, List<History>> groupedByDay = {};
                 final Map<String, DateTime> stringDate = {};
-                for (var transaction in history) {
+                for (var transaction in history
+                    .where((h) => h.status != TransactionStatus.pending)) {
                   final date = transaction.creation;
                   final day = timeago.format(date, locale: 'fr_short');
                   if (groupedByDay[day] == null) {
