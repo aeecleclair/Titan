@@ -8,9 +8,11 @@ import 'package:myecl/paiement/class/init_info.dart';
 import 'package:myecl/paiement/providers/fund_amount_provider.dart';
 import 'package:myecl/paiement/providers/funding_url_provider.dart';
 import 'package:myecl/paiement/providers/my_wallet_provider.dart';
+import 'package:myecl/paiement/router.dart';
 import 'package:myecl/paiement/ui/pages/fund_page/web_view_modal.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:universal_html/html.dart' as html;
 
 class ConfirmFundButton extends ConsumerWidget {
@@ -25,17 +27,6 @@ class ConfirmFundButton extends ConsumerWidget {
 
     final enabled = fundAmount.isNotEmpty &&
         double.parse(fundAmount.replaceAll(',', '.')) > 0;
-
-    void showHABottomModal(String url) {
-      showModalBottomSheet(
-        context: context,
-        scrollControlDisabledMaxHeightRatio:
-            (1 - 50 / MediaQuery.of(context).size.height),
-        builder: (context) {
-          return WebViewExample(url: url);
-        },
-      );
-    }
 
     void displayToastWithContext(TypeMsg type, String message) {
       displayToast(context, type, message);
@@ -107,7 +98,8 @@ class ConfirmFundButton extends ConsumerWidget {
               helloAssoCallback(fundingUrl.url);
               return;
             }
-            showHABottomModal(fundingUrl.url);
+            QR.to(
+                "${PaymentRouter.root}${PaymentRouter.fund}?path=${fundingUrl.url}");
           },
           loading: () {},
           error: (error, _) {

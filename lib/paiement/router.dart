@@ -5,6 +5,8 @@ import 'package:myecl/drawer/class/module.dart';
 import 'package:myecl/paiement/providers/is_payment_admin.dart';
 import 'package:myecl/paiement/ui/pages/admin_page/admin_page.dart'
     deferred as admin_page;
+import 'package:myecl/paiement/ui/pages/fund_page/web_view_modal.dart'
+    deferred as fund_page;
 import 'package:myecl/paiement/ui/pages/store_pages/add_edit_store.dart'
     deferred as add_edit_page;
 import 'package:myecl/paiement/ui/pages/store_admin_page/store_admin_page.dart'
@@ -28,6 +30,7 @@ class PaymentRouter {
   static const String stats = '/stats';
   static const String devices = '/devices';
   static const String admin = '/admin';
+  static const String fund = '/fund';
   static const String addEditStore = '/addEditStore';
   static const String storeAdmin = '/storeAdmin';
   static const String storeStats = '/storeStats';
@@ -93,6 +96,13 @@ class PaymentRouter {
               DeferredLoadingMiddleware(store_stats_page.loadLibrary),
             ],
           ),
+          QRoute(
+            path: PaymentRouter.fund,
+            builder: () => fund_page.WebViewExample(),
+            middleware: [
+              DeferredLoadingMiddleware(fund_page.loadLibrary),
+            ],
+          )
         ],
       );
 }
