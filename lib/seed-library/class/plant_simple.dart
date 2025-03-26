@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:myecl/seed-library/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 
 class PlantSimple {
   final State state;
@@ -10,6 +11,8 @@ class PlantSimple {
   final String id; //UUID
   final String? borrowerId;
   final String? nickname;
+  final int nbSeedsEnvelope;
+  final DateTime? plantingDate;
 
   PlantSimple({
     required this.state,
@@ -17,6 +20,8 @@ class PlantSimple {
     required this.propagationMethod,
     required this.id,
     required this.plantReference,
+    required this.nbSeedsEnvelope,
+    this.plantingDate,
     this.borrowerId,
     this.nickname,
   });
@@ -28,9 +33,13 @@ class PlantSimple {
       'species_id': speciesId,
       'propagation_method': getPropagationMethodValue(propagationMethod),
       'id': id,
-      'plant_reference': plantReference,
+      'reference': plantReference,
       'borrower_id': borrowerId,
       'nickname': nickname,
+      'nb_seeds_envelope': nbSeedsEnvelope,
+      'planting_date': plantingDate != null
+          ? processDateToAPIWithoutHour(plantingDate!)
+          : null,
     };
   }
 
@@ -42,9 +51,13 @@ class PlantSimple {
       propagationMethod:
           getPropagationMethodByValue(json['propagation_method']),
       id: json['id'],
-      plantReference: json['plant_reference'],
+      plantReference: json['reference'],
       borrowerId: json['borrower_id'],
       nickname: json['nickname'],
+      nbSeedsEnvelope: json['nb_seeds_envelope'],
+      plantingDate: json['planting_date'] != null
+          ? processDateFromAPIWithoutHour(json['planting_date'])
+          : null,
     );
   }
 
@@ -55,7 +68,9 @@ class PlantSimple {
         id = '',
         plantReference = '',
         borrowerId = null,
-        nickname = null;
+        nickname = null,
+        nbSeedsEnvelope = 0,
+        plantingDate = null;
 
   PlantSimple copyWith({
     State? state,
@@ -65,6 +80,8 @@ class PlantSimple {
     String? plantReference,
     String? borrowerId,
     String? nickname,
+    int? nbSeedsEnvelope,
+    DateTime? plantingDate,
   }) {
     return PlantSimple(
       state: state ?? this.state,
@@ -74,6 +91,8 @@ class PlantSimple {
       plantReference: plantReference ?? this.plantReference,
       borrowerId: borrowerId ?? this.borrowerId,
       nickname: nickname ?? this.nickname,
+      nbSeedsEnvelope: nbSeedsEnvelope ?? this.nbSeedsEnvelope,
+      plantingDate: plantingDate ?? this.plantingDate,
     );
   }
 

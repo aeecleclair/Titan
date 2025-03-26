@@ -3,8 +3,14 @@ import 'package:flutter/widgets.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/centralisation/tools/functions.dart';
+import 'package:myecl/seed-library/class/species.dart';
+import 'package:myecl/seed-library/class/species_type.dart';
+import 'package:myecl/seed-library/providers/difficulty_filter_provider.dart';
 import 'package:myecl/seed-library/providers/information_provider.dart';
 import 'package:myecl/seed-library/providers/is_seed_library_admin_provider.dart';
+import 'package:myecl/seed-library/providers/species_provider.dart';
+import 'package:myecl/seed-library/providers/species_type_filter_provider.dart';
+import 'package:myecl/seed-library/providers/string_provider.dart';
 import 'package:myecl/seed-library/router.dart';
 import 'package:myecl/seed-library/tools/constants.dart';
 import 'package:myecl/seed-library/ui/pages/main_page/menu_card_ui.dart';
@@ -18,6 +24,19 @@ class SeedLibraryMainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isSeedLibraryAdmin = ref.watch(isSeedLibraryAdminProvider);
     final information = ref.watch(syncInformationProvider);
+    final speciesNotifier = ref.watch(speciesProvider.notifier);
+    final seasonNotifier = ref.watch(seasonFilterProvider.notifier);
+    final difficultyNotifier = ref.watch(difficultyFilterProvider.notifier);
+    final searchNotifier = ref.watch(searchFilterProvider.notifier);
+    final speciesTypeNotifier = ref.watch(speciesTypeFilterProvider.notifier);
+
+    void resetNotifier() {
+      speciesNotifier.setSpecies(Species.empty());
+      seasonNotifier.setString('Toutes');
+      difficultyNotifier.setFilter(0);
+      searchNotifier.setString('');
+      speciesTypeNotifier.setFilter(SpeciesType.empty());
+    }
 
     final controller = ScrollController();
 
@@ -39,6 +58,7 @@ class SeedLibraryMainPage extends HookConsumerWidget {
             if (isSeedLibraryAdmin)
               GestureDetector(
                 onTap: () {
+                  resetNotifier();
                   QR.to(SeedLibraryRouter.root + SeedLibraryRouter.species);
                 },
                 child: const MenuCardUi(
@@ -48,6 +68,7 @@ class SeedLibraryMainPage extends HookConsumerWidget {
               ),
             GestureDetector(
               onTap: () {
+                resetNotifier();
                 QR.to(
                   SeedLibraryRouter.root + SeedLibraryRouter.plants,
                 );
@@ -59,6 +80,7 @@ class SeedLibraryMainPage extends HookConsumerWidget {
             ),
             GestureDetector(
               onTap: () {
+                resetNotifier();
                 QR.to(SeedLibraryRouter.root + SeedLibraryRouter.stock);
               },
               child: const MenuCardUi(
@@ -68,6 +90,7 @@ class SeedLibraryMainPage extends HookConsumerWidget {
             ),
             GestureDetector(
               onTap: () {
+                resetNotifier();
                 QR.to(SeedLibraryRouter.root + SeedLibraryRouter.seedDeposit);
               },
               child: const MenuCardUi(

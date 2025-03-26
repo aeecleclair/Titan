@@ -14,6 +14,8 @@ import 'package:myecl/seed-library/providers/species_provider.dart';
 import 'package:myecl/seed-library/tools/constants.dart';
 import 'package:myecl/seed-library/tools/functions.dart';
 import 'package:myecl/seed-library/ui/components/radio_chip.dart';
+import 'package:myecl/seed-library/ui/components/small_plant_card.dart';
+import 'package:myecl/seed-library/ui/components/small_species_card.dart';
 import 'package:myecl/seed-library/ui/seed_library.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
@@ -83,42 +85,58 @@ class PlantDepositPage extends HookConsumerWidget {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: ColorConstants.gradient1,
                   ),
                 ),
-                DropdownButton(
-                  items: ([PlantSimple.empty()] + myPlants)
-                      .map<DropdownMenuItem<PlantSimple>>((e) {
-                    return DropdownMenuItem<PlantSimple>(
-                      value: e,
-                      child: Text(e.nickname ?? e.plantReference),
-                    );
-                  }).toList(),
-                  onChanged: (PlantSimple? newValue) async {
-                    selectedAncestorNotifier.setPlant(newValue!);
-                    final previousNotes =
-                        await plantNotifier.loadPlant(newValue.id);
-                    notes.text = previousNotes.maybeWhen(
-                      data: (value) => value.currentNote ?? '',
-                      orElse: () => '',
-                    );
-                  },
-                  value: selectedAncestor,
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      ...myPlants.map((e) {
+                        return SmallPlantCard(
+                          plant: e,
+                          species: species,
+                          onClicked: () async {
+                            selectedAncestor.id == e.id
+                                ? selectedAncestorNotifier
+                                    .setPlant(PlantSimple.empty())
+                                : selectedAncestorNotifier.setPlant(e);
+                            final plant = await plantNotifier.loadPlant(e.id);
+                            plant.whenData(
+                              (value) => notes.text = value.currentNote ?? '',
+                            );
+                          },
+                          selected: selectedAncestor.id == e.id,
+                        );
+                      }),
+                    ],
+                  ),
                 ),
                 if (selectedAncestor.id == '' && seedLibraryAdmin) ...[
-                  Text(SeedLibraryTextConstants.species),
-                  DropdownButton(
-                    value: selectedSpecies,
-                    onChanged: (Species? newValue) {
-                      selectedSpeciesNotifier.setSpecies(newValue!);
-                    },
-                    items: ([Species.empty()] + species)
-                        .map<DropdownMenuItem<Species>>((e) {
-                      return DropdownMenuItem<Species>(
-                        value: e,
-                        child: Text(e.name),
-                      );
-                    }).toList(),
+                  Text(
+                    SeedLibraryTextConstants.species,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        ...species.map((e) {
+                          return SmallSpeciesCard(
+                            species: e,
+                            onClicked: () {
+                              selectedSpecies.id == e.id
+                                  ? selectedSpeciesNotifier
+                                      .setSpecies(Species.empty())
+                                  : selectedSpeciesNotifier.setSpecies(e);
+                            },
+                            selected: selectedSpecies.id == e.id,
+                          );
+                        }),
+                      ],
+                    ),
                   ),
                 ],
                 const SizedBox(height: 30),
@@ -147,7 +165,6 @@ class PlantDepositPage extends HookConsumerWidget {
                 TextEntry(
                   controller: notes,
                   label: SeedLibraryTextConstants.notes,
-                  maxLines: 10,
                   canBeEmpty: true,
                   keyboardType: TextInputType.multiline,
                 ),

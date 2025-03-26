@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:myecl/seed-library/class/species_type.dart';
+import 'package:myecl/tools/functions.dart';
 
 class Species {
   final String id; // UUID
@@ -32,13 +33,16 @@ class Species {
     return {
       'id': id,
       'prefix': prefix,
-      'species_name': name,
+      'name': name,
       'difficulty': difficulty,
       'card': card,
       'nb_seeds_recommended': nbSeedsRecommended,
       'species_type': type.name,
-      'start_season': startSeason?.toIso8601String(),
-      'end_season': endSeason?.toIso8601String(),
+      'start_season': startSeason != null
+          ? processDateToAPIWithoutHour(startSeason!)
+          : null,
+      'end_season':
+          endSeason != null ? processDateToAPIWithoutHour(endSeason!) : null,
       'time_maturation': timeMaturation,
     };
   }
@@ -48,16 +52,16 @@ class Species {
     return Species(
       id: json['id'],
       prefix: json['prefix'],
-      name: json['species_name'],
+      name: json['name'],
       difficulty: json['difficulty'],
       card: json['card'],
       nbSeedsRecommended: json['nb_seeds_recommended'],
       type: SpeciesType.fromString(json['species_type']),
       startSeason: json['start_season'] != null
-          ? DateTime.parse(json['start_season'])
+          ? processDateFromAPIWithoutHour(json['start_season'])
           : null,
       endSeason: json['end_season'] != null
-          ? DateTime.parse(json['end_season'])
+          ? processDateFromAPIWithoutHour(json['end_season'])
           : null,
       timeMaturation: json['time_saturation'],
     );

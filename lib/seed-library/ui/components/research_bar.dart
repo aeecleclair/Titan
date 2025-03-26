@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/providers/research_filter_provider.dart';
-import 'package:myecl/phonebook/tools/constants.dart';
+import 'package:myecl/seed-library/providers/string_provider.dart';
+import 'package:myecl/seed-library/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
 
 class ResearchBar extends HookConsumerWidget {
@@ -12,7 +12,7 @@ class ResearchBar extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final focusNode = useFocusNode();
     final editingController = useTextEditingController();
-    final filterNotifier = ref.watch(filterProvider.notifier);
+    final filterNotifier = ref.watch(searchFilterProvider.notifier);
 
     return Flex(
       direction: Axis.horizontal,
@@ -20,23 +20,19 @@ class ResearchBar extends HookConsumerWidget {
         Expanded(
           child: TextField(
             onChanged: (value) {
-              filterNotifier.setFilter(value);
+              filterNotifier.setString(value);
             },
             focusNode: focusNode,
             controller: editingController,
-            cursorColor: PhonebookColorConstants.textDark,
             decoration: const InputDecoration(
               isDense: true,
               suffixIcon: Icon(
                 Icons.search,
-                color: PhonebookColorConstants.textDark,
                 size: 30,
               ),
               label: Text(
-                PhonebookTextConstants.research,
-                style: TextStyle(
-                  color: PhonebookColorConstants.textDark,
-                ),
+                SeedLibraryTextConstants.research,
+                style: TextStyle(),
               ),
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: ColorConstants.gradient1),

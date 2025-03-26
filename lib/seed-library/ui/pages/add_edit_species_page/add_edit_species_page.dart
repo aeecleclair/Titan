@@ -5,6 +5,7 @@ import 'package:myecl/seed-library/providers/difficulty_filter_provider.dart';
 import 'package:myecl/seed-library/providers/species_list_provider.dart';
 import 'package:myecl/seed-library/providers/species_provider.dart';
 import 'package:myecl/seed-library/providers/species_type_provider.dart';
+import 'package:myecl/seed-library/providers/string_provider.dart';
 import 'package:myecl/seed-library/tools/constants.dart';
 import 'package:myecl/seed-library/ui/components/types_bar.dart';
 import 'package:myecl/seed-library/ui/seed_library.dart';
@@ -14,6 +15,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditSpeciesPage extends HookConsumerWidget {
   final scrollKey = GlobalKey();
@@ -28,9 +30,6 @@ class AddEditSpeciesPage extends HookConsumerWidget {
     final type = ref.watch(speciesTypeProvider);
     final difficulty = ref.watch(difficultyFilterProvider);
     final difficultyNotifier = ref.watch(difficultyFilterProvider.notifier);
-    void displayToastWithContext(TypeMsg type, String msg) {
-      displayToast(context, type, msg);
-    }
 
     bool isEdit = species.id != '';
     final name = useTextEditingController(text: species.name);
@@ -41,6 +40,19 @@ class AddEditSpeciesPage extends HookConsumerWidget {
           ? species.nbSeedsRecommended.toString()
           : '',
     );
+    final startMonth = ref.watch(startMonthProvider);
+    final endMonth = ref.watch(endMonthProvider);
+    final startMonthNotifier = ref.watch(startMonthProvider.notifier);
+    final endMonthNotifier = ref.watch(endMonthProvider.notifier);
+    final maturationTime = useTextEditingController(
+      text: species.timeMaturation != null
+          ? species.timeMaturation.toString()
+          : '',
+    );
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
 
     List<String> prefixes = speciesList.map((e) => e.prefix).toList();
     prefixes.removeWhere((element) => element == species.prefix);
@@ -138,6 +150,63 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                           : null,
                     ),
                     const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        const Spacer(),
+                        Column(
+                          children: [
+                            Text('Start month: '),
+                            DropdownButton(
+                              items: ["", ...SeedLibraryTextConstants.months]
+                                  .map(
+                                    (e) => DropdownMenuItem<String>(
+                                      value: e,
+                                      child: Text(
+                                        e,
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (String? value) {
+                                startMonthNotifier.setString(value!);
+                              },
+                              value: startMonth,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(width: 20),
+                        Column(
+                          children: [
+                            Text('End month: '),
+                            DropdownButton(
+                              items: ["", ...SeedLibraryTextConstants.months]
+                                  .map(
+                                    (e) => DropdownMenuItem<String>(
+                                      value: e,
+                                      child: Text(
+                                        e,
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (String? value) {
+                                endMonthNotifier.setString(value!);
+                              },
+                              value: endMonth,
+                            ),
+                          ],
+                        ),
+                        const Spacer(),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    TextEntry(
+                      controller: maturationTime,
+                      label: SeedLibraryTextConstants.maturationTime,
+                      canBeEmpty: true,
+                      isInt: true,
+                    ),
+                    const SizedBox(height: 20),
                     WaitingButton(
                       builder: (child) => AddEditButtonLayout(
                         colors: const [
@@ -180,6 +249,24 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                                 card: card.text,
                                 nbSeedsRecommended:
                                     int.tryParse(nbSeedsRecommended.text),
+                                startSeason: startMonth.isNotEmpty
+                                    ? DateTime(
+                                        2021,
+                                        SeedLibraryTextConstants.months
+                                                .indexOf(startMonth) +
+                                            1,
+                                        1,
+                                      )
+                                    : null,
+                                endSeason: endMonth.isNotEmpty
+                                    ? DateTime(
+                                        2021,
+                                        SeedLibraryTextConstants.months
+                                                .indexOf(endMonth) +
+                                            1,
+                                        1,
+                                      )
+                                    : null,
                               ),
                             );
                             if (value) {
@@ -193,6 +280,7 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                                 SeedLibraryTextConstants.updatingError,
                               );
                             }
+                            QR.back();
                           });
                           return;
                         }
@@ -206,6 +294,24 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                               card: card.text,
                               nbSeedsRecommended:
                                   int.tryParse(nbSeedsRecommended.text),
+                              startSeason: startMonth.isNotEmpty
+                                  ? DateTime(
+                                      2021,
+                                      SeedLibraryTextConstants.months
+                                              .indexOf(startMonth) +
+                                          1,
+                                      1,
+                                    )
+                                  : null,
+                              endSeason: endMonth.isNotEmpty
+                                  ? DateTime(
+                                      2021,
+                                      SeedLibraryTextConstants.months
+                                              .indexOf(endMonth) +
+                                          1,
+                                      1,
+                                    )
+                                  : null,
                             ),
                           );
                           if (value) {
@@ -219,6 +325,7 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                               SeedLibraryTextConstants.addingError,
                             );
                           }
+                          QR.back();
                         });
                       },
                       child: const Text(

@@ -33,6 +33,31 @@ class PlantListNotifier extends ListNotifier<PlantSimple> {
       plant,
     );
   }
+
+  void deletePlantFromList(String id) {
+    state = state.maybeWhen(
+      orElse: () => state,
+      data: (plants) => AsyncValue.data(
+        plants..removeWhere((i) => i.id == id),
+      ),
+    );
+  }
+
+  void addPlantToList(PlantSimple plant) {
+    state = state.maybeWhen(
+      orElse: () => state,
+      data: (plants) => AsyncValue.data([...plants, plant]),
+    );
+  }
+
+  void updatePlantInList(PlantSimple plant) {
+    state = state.maybeWhen(
+      orElse: () => state,
+      data: (plants) => AsyncValue.data(
+        plants.map((i) => i.id == plant.id ? plant : i).toList(),
+      ),
+    );
+  }
 }
 
 final plantListProvider =

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/seed-library/class/species_type.dart';
 import 'package:myecl/seed-library/providers/difficulty_filter_provider.dart';
-import 'package:myecl/seed-library/providers/season_filter_provider.dart';
 import 'package:myecl/seed-library/providers/species_type_filter_provider.dart';
 import 'package:myecl/seed-library/providers/species_type_list_provider.dart';
+import 'package:myecl/seed-library/providers/string_provider.dart';
+import 'package:myecl/seed-library/tools/constants.dart';
 
 class FiltersBar extends HookConsumerWidget {
   const FiltersBar({super.key});
@@ -22,23 +23,22 @@ class FiltersBar extends HookConsumerWidget {
     return ExpansionTile(
       title: Text('Filters'),
       children: [
-        Row(
+        Column(
           children: [
-            Spacer(),
             Column(
               children: [
-                Text('Season: '),
+                Text('Saison: '),
                 DropdownButton<String>(
                   value: season,
                   onChanged: (String? newValue) {
-                    seasonNotifier.setFilter(newValue!);
+                    seasonNotifier.setString(newValue!);
                   },
                   items: <String>[
-                    'toutes',
-                    'printemps',
-                    'été',
-                    'automne',
-                    'hiver',
+                    SeedLibraryTextConstants.all,
+                    SeedLibraryTextConstants.spring,
+                    SeedLibraryTextConstants.summer,
+                    SeedLibraryTextConstants.autumn,
+                    SeedLibraryTextConstants.winter,
                   ].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
@@ -48,32 +48,35 @@ class FiltersBar extends HookConsumerWidget {
                 ),
               ],
             ),
-            Spacer(),
-            Column(
-              children: [
-                Text('Difficulty: '),
-                Slider(
-                  value: difficulty.toDouble(),
-                  min: 0,
-                  max: 5,
-                  divisions: 5,
-                  label: difficulty.toString(),
-                  onChanged: (double value) {
-                    difficultyNotifier.setFilter(value.toInt());
-                  },
-                ),
-              ],
+            const SizedBox(height: 10),
+            SizedBox(
+              width: 300,
+              child: Column(
+                children: [
+                  Text('Difficulty: '),
+                  Slider(
+                    value: difficulty.toDouble(),
+                    min: 0,
+                    max: 5,
+                    divisions: 5,
+                    label: difficulty.toString(),
+                    onChanged: (double value) {
+                      difficultyNotifier.setFilter(value.toInt());
+                    },
+                  ),
+                ],
+              ),
             ),
-            Spacer(),
+            const SizedBox(height: 10),
             Column(
               children: [
-                Text('Species type: '),
+                Text('Type de plante: '),
                 DropdownButton<SpeciesType>(
                   value: speciesType,
                   onChanged: (SpeciesType? newValue) {
                     speciesTypeNotifier.setFilter(newValue!);
                   },
-                  items: speciesTypeList
+                  items: [SpeciesType.empty(), ...speciesTypeList]
                       .map<DropdownMenuItem<SpeciesType>>((SpeciesType value) {
                     return DropdownMenuItem<SpeciesType>(
                       value: value,
@@ -83,7 +86,6 @@ class FiltersBar extends HookConsumerWidget {
                 ),
               ],
             ),
-            Spacer(),
           ],
         ),
       ],

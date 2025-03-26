@@ -4,11 +4,9 @@ import 'package:myecl/tools/functions.dart';
 
 class PlantComplete extends PlantSimple {
   final String? previousNote;
-  final int nbSeedsEnvelope;
   final String? ancestorId;
   final String? currentNote;
   final bool confidential;
-  final DateTime? plantingDate;
   final DateTime? borrowingDate;
 
   PlantComplete({
@@ -17,14 +15,14 @@ class PlantComplete extends PlantSimple {
     required super.propagationMethod,
     required super.id,
     required super.plantReference,
+    required super.nbSeedsEnvelope,
     super.borrowerId,
     super.nickname,
+    super.plantingDate,
     this.previousNote,
-    required this.nbSeedsEnvelope,
     this.ancestorId,
     this.currentNote,
     this.confidential = false,
-    this.plantingDate,
     this.borrowingDate,
   });
 
@@ -54,7 +52,7 @@ class PlantComplete extends PlantSimple {
       propagationMethod:
           getPropagationMethodByValue(json['propagation_method']),
       id: json['id'],
-      plantReference: json['plant_reference'],
+      plantReference: json['reference'],
       borrowerId: json['borrower_id'],
       nickname: json['nickname'],
       previousNote: json['previous_note'],
@@ -103,6 +101,20 @@ class PlantComplete extends PlantSimple {
       confidential: confidential ?? this.confidential,
       plantingDate: plantingDate ?? this.plantingDate,
       borrowingDate: borrowingDate ?? this.borrowingDate,
+    );
+  }
+
+  PlantSimple toPlantSimple() {
+    return PlantSimple(
+      state: state,
+      speciesId: speciesId,
+      propagationMethod: propagationMethod,
+      id: id,
+      plantReference: plantReference,
+      borrowerId: borrowerId,
+      nickname: nickname,
+      nbSeedsEnvelope: nbSeedsEnvelope,
+      plantingDate: plantingDate,
     );
   }
 }

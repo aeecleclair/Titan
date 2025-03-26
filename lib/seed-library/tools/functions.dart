@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:myecl/seed-library/tools/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -54,5 +55,26 @@ String getPropagationMethodValue(PropagationMethod propagationMethod) {
       return 'bouture';
     case PropagationMethod.graine:
       return 'graine';
+  }
+}
+
+String monthToString(int month) {
+  return SeedLibraryTextConstants.months[month - 1];
+}
+
+Color getColorFromDifficulty(int difficulty) {
+  switch (difficulty) {
+    case 1:
+      return Colors.green;
+    case 2:
+      return Colors.yellow;
+    case 3:
+      return Colors.orange;
+    case 4:
+      return Colors.red;
+    case 5:
+      return Colors.black;
+    default:
+      return Colors.grey;
   }
 }

@@ -1,3 +1,5 @@
+import 'package:myecl/seed-library/tools/constants.dart';
+
 class SpeciesType {
   final String name;
 
@@ -13,7 +15,7 @@ class SpeciesType {
 
   factory SpeciesType.empty() {
     return SpeciesType(
-      name: "",
+      name: SeedLibraryTextConstants.all,
     );
   }
 

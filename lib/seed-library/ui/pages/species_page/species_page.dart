@@ -5,11 +5,17 @@ import 'package:myecl/seed-library/providers/difficulty_filter_provider.dart';
 import 'package:myecl/seed-library/providers/species_list_provider.dart';
 import 'package:myecl/seed-library/providers/species_provider.dart';
 import 'package:myecl/seed-library/providers/species_type_provider.dart';
+import 'package:myecl/seed-library/providers/string_provider.dart';
 import 'package:myecl/seed-library/router.dart';
+import 'package:myecl/seed-library/tools/constants.dart';
+import 'package:myecl/seed-library/tools/functions.dart';
 import 'package:myecl/seed-library/ui/components/species_card.dart';
 import 'package:myecl/seed-library/ui/seed_library.dart';
+import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class SpeciesPage extends HookConsumerWidget {
@@ -21,7 +27,13 @@ class SpeciesPage extends HookConsumerWidget {
     final difficultyNotifier = ref.watch(difficultyFilterProvider.notifier);
     final speciesTypeNotifier = ref.watch(speciesTypeProvider.notifier);
     final speciesListNotifier = ref.watch(speciesListProvider.notifier);
-    final species = ref.watch(syncSpeciesListProvider);
+    final species = ref.watch(speciesListProvider);
+    final startMonthNotifier = ref.watch(startMonthProvider.notifier);
+    final endMonthNotifier = ref.watch(endMonthProvider.notifier);
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
 
     return SeedLibraryTemplate(
       child: Refresher(
@@ -60,20 +72,70 @@ class SpeciesPage extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              ...species.map(
-                (species) => SpeciesCard(
-                  species: species,
-                  onClicked: () {
-                    difficultyNotifier.setFilter(species.difficulty);
-                    speciesTypeNotifier.setType(species.type);
-                    speciesNotifier.setSpecies(species);
-                    QR.to(
-                      SeedLibraryRouter.root +
-                          SeedLibraryRouter.species +
-                          SeedLibraryRouter.addEditSpecies,
-                    );
-                  },
-                ),
+              AsyncChild(
+                value: species,
+                builder: (context, speciesList) => speciesList.isEmpty
+                    ? const Text('No species found')
+                    : Column(
+                        children: [
+                          ...speciesList.map(
+                            (species) => SpeciesCard(
+                              species: species,
+                              onEdit: () {
+                                difficultyNotifier
+                                    .setFilter(species.difficulty);
+                                speciesTypeNotifier.setType(species.type);
+                                speciesNotifier.setSpecies(species);
+                                startMonthNotifier.setString(
+                                  species.startSeason != null
+                                      ? monthToString(
+                                          species.startSeason!.month)
+                                      : '',
+                                );
+                                endMonthNotifier.setString(
+                                  species.endSeason != null
+                                      ? monthToString(species.endSeason!.month)
+                                      : '',
+                                );
+                                QR.to(
+                                  SeedLibraryRouter.root +
+                                      SeedLibraryRouter.species +
+                                      SeedLibraryRouter.addEditSpecies,
+                                );
+                              },
+                              onDelete: () async {
+                                await showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return CustomDialogBox(
+                                      title: SeedLibraryTextConstants.deleting,
+                                      descriptions: SeedLibraryTextConstants
+                                          .deleteSpecies,
+                                      onYes: () async {
+                                        final result = await speciesListNotifier
+                                            .deleteSpecie(species);
+                                        if (result) {
+                                          displayToastWithContext(
+                                            TypeMsg.msg,
+                                            SeedLibraryTextConstants
+                                                .deletedSpecies,
+                                          );
+                                        } else {
+                                          displayToastWithContext(
+                                            TypeMsg.error,
+                                            SeedLibraryTextConstants
+                                                .deletingError,
+                                          );
+                                        }
+                                      },
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
               ),
             ],
           ),

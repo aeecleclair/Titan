@@ -16,11 +16,10 @@ class SpeciesRepository extends Repository {
   }
 
   Future<List<SpeciesType>> getSpeciesTypeList() async {
-    return [SpeciesType(name: "all")] +
-        List<SpeciesType>.from(
-          (await getOne("types"))["species_type"]
-              .map((x) => SpeciesType.fromString(x)),
-        );
+    return List<SpeciesType>.from(
+      (await getOne("types"))["species_type"]
+          .map((x) => SpeciesType.fromString(x)),
+    );
   }
 
   Future<Species> getSpecies(String speciesId) async {

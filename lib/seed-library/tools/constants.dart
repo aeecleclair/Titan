@@ -106,4 +106,20 @@ class SeedLibraryTextConstants {
   static const String borrowedPlant = "Plante empruntée";
 
   static const String borrowPlant = "Emprunter la plante";
+
+  static const String maturationTime = "Temps de maturation";
+
+  static const String research = "Recherche";
+
+  static const String deletingError = "Erreur lors de la suppression";
+
+  static const String deletedSpecies = "Espèce supprimée";
+  static const String winter = "Hiver";
+  static const String autumn = "Automne";
+  static const String summer = "Été";
+  static const String spring = "Printemps";
+
+  static const String seeds = "graines";
+
+  static const String updatedPlant = "Plante modifiée";
 }

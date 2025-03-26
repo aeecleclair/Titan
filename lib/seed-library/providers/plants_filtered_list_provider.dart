@@ -5,22 +5,22 @@ import 'package:myecl/seed-library/class/species.dart';
 import 'package:myecl/seed-library/class/species_type.dart';
 import 'package:myecl/seed-library/providers/difficulty_filter_provider.dart';
 import 'package:myecl/seed-library/providers/plants_list_provider.dart';
-import 'package:myecl/seed-library/providers/season_filter_provider.dart';
 import 'package:myecl/seed-library/providers/species_type_filter_provider.dart';
-import 'package:myecl/seed-library/providers/search_filter_provider.dart';
+import 'package:myecl/seed-library/providers/string_provider.dart';
 import 'package:myecl/seed-library/providers/species_list_provider.dart';
+import 'package:myecl/seed-library/tools/constants.dart';
 
 List<int> getMonthsBySeason(String season) {
-  if (season == "printemps") {
+  if (season == SeedLibraryTextConstants.spring) {
     return [4, 5, 6];
   }
-  if (season == "été") {
+  if (season == SeedLibraryTextConstants.summer) {
     return [7, 8, 9];
   }
-  if (season == "automne") {
+  if (season == SeedLibraryTextConstants.autumn) {
     return [10, 11, 12];
   }
-  if (season == "hiver") {
+  if (season == SeedLibraryTextConstants.winter) {
     return [1, 2, 3];
   }
   return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -43,7 +43,7 @@ List<Species> filterSpeciesWithFilters(
       .toList();
   filteredSpecies = filteredSpecies
       .where(
-        (species) => seasonsTypeFilter == "all"
+        (species) => seasonsTypeFilter == SeedLibraryTextConstants.all
             ? true
             : species.startSeason == null
                 ? true
@@ -60,9 +60,10 @@ List<Species> filterSpeciesWithFilters(
       .toList();
   filteredSpecies = filteredSpecies
       .where(
-        (species) => speciesTypeFilter == SpeciesType(name: "all")
-            ? true
-            : species.type == speciesTypeFilter,
+        (species) =>
+            speciesTypeFilter == SpeciesType(name: SeedLibraryTextConstants.all)
+                ? true
+                : species.type == speciesTypeFilter,
       )
       .toList();
   return filteredSpecies;
@@ -91,11 +92,13 @@ final plantsFilteredListProvider = Provider<List<PlantSimple>>((ref) {
   final speciesId = filteredSpecies.map((species) => species.id).toList();
   return plantsProvider.maybeWhen(
     data: (plants) {
-      List<PlantSimple> filteredPlants = plants
+      final filteredPlants = plants
           .where(
             (plant) => speciesId.contains(plant.speciesId),
           )
           .toList();
+      filteredPlants
+          .sort((a, b) => a.plantReference.compareTo(b.plantReference));
       return filteredPlants;
     },
     orElse: () => [],
@@ -118,9 +121,11 @@ final myPlantsFilteredListProvider = Provider<List<PlantSimple>>((ref) {
     speciesTypeFilter,
   );
   final speciesId = filteredSpecies.map((species) => species.id).toList();
-  return plants
+  final filteredPlants = plants
       .where(
         (plant) => speciesId.contains(plant.speciesId),
       )
       .toList();
+  filteredPlants.sort((a, b) => a.plantReference.compareTo(b.plantReference));
+  return filteredPlants;
 });

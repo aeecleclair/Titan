@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/seed-library/class/plant_simple.dart';
 import 'package:myecl/seed-library/providers/species_list_provider.dart';
+import 'package:myecl/seed-library/tools/constants.dart';
+import 'package:myecl/seed-library/tools/functions.dart';
+import 'package:myecl/tools/functions.dart';
 
 class PlantCard extends HookConsumerWidget {
   const PlantCard({
@@ -28,26 +31,66 @@ class PlantCard extends HookConsumerWidget {
           borderRadius: BorderRadius.circular(15),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
           child: Row(
             children: [
-              CircleAvatar(
-                radius: 30,
-                backgroundColor: Colors.red,
-              ),
-              SizedBox(width: 10),
               Column(
                 children: [
+                  Text(
+                    plantSpecies.name,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
                   Text(plant.nickname ?? plant.plantReference),
+                ],
+              ),
+              const Spacer(),
+              Column(
+                children: [
+                  Text(plantSpecies.type.name),
                   Row(
-                    children: [
-                      Text(plantSpecies.name),
-                      SizedBox(width: 10),
-                      Text(plantSpecies.type.name),
-                    ],
+                    children: List.generate(plantSpecies.difficulty, (index) {
+                      return Icon(
+                        Icons.star,
+                        color: getColorFromDifficulty(plantSpecies.difficulty),
+                        size: 15,
+                      );
+                    }),
                   ),
                 ],
               ),
+              const Spacer(),
+              Column(
+                children: [
+                  Text("Type : ${plant.propagationMethod.name}"),
+                  plant.propagationMethod == PropagationMethod.graine
+                      ? Text(
+                          "(${plant.nbSeedsEnvelope.toString()} ${plant.nbSeedsEnvelope > 1 ? SeedLibraryTextConstants.seeds : SeedLibraryTextConstants.seed})",
+                        )
+                      : const SizedBox(),
+                ],
+              ),
+              plant.plantingDate != null
+                  ? Column(
+                      children: [
+                        const Text('Planté le :'),
+                        Text(
+                          processDate(plant.plantingDate!),
+                        ),
+                        const SizedBox(height: 10),
+                        ...plantSpecies.timeMaturation != null
+                            ? [
+                                const Text('Temps avant maturation :'),
+                                Text(
+                                  "${(plantSpecies.timeMaturation! - DateTime.now().difference(plant.plantingDate!).inDays).toString()} jours",
+                                ),
+                              ]
+                            : [],
+                      ],
+                    )
+                  : const SizedBox(),
             ],
           ),
         ),
