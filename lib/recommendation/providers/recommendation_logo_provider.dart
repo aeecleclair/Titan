@@ -11,6 +11,7 @@ class RecommendationLogoNotifier extends SingleNotifier<Image> {
       : super(const AsyncValue.loading());
 
   Future<Image> getRecommendationLogo(String id) async {
+    await Future.delayed(const Duration(seconds: 5));
     return await recommendationLogoRepository.getRecommendationLogo(id);
   }
 

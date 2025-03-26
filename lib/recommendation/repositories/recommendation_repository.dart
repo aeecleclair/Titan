@@ -9,6 +9,7 @@ class RecommendationRepository extends Repository {
   final ext = 'recommendation/recommendations';
 
   Future<List<Recommendation>> getRecommendationList() async {
+    await Future.delayed(const Duration(seconds: 3));
     return List<Recommendation>.from(
       (await getList()).map((x) => Recommendation.fromJson(x)),
     );
