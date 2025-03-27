@@ -29,40 +29,42 @@ class SpeciesCard extends HookConsumerWidget {
         child: Row(
           children: [
             SizedBox(width: 10),
-            Column(
-              children: [
-                Text(species.name),
-                Text(species.prefix),
-              ],
+            SizedBox(
+              width: 100,
+              child: Column(
+                children: [
+                  Text(species.name, textAlign: TextAlign.center),
+                  Text(species.prefix, textAlign: TextAlign.center),
+                ],
+              ),
             ),
             const Spacer(),
-            Column(
-              children: [
-                Text(species.type.name),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Difficulté:',
-                      style: const TextStyle(
-                        fontSize: 16,
+            SizedBox(
+              width: 100,
+              child: Column(
+                children: [
+                  Text(
+                    species.type.name,
+                    textAlign: TextAlign.center,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ...List.generate(
+                        species.difficulty,
+                        (index) {
+                          return Icon(
+                            Icons.star,
+                            color: function
+                                .getColorFromDifficulty(species.difficulty),
+                            size: 15,
+                          );
+                        },
                       ),
-                    ),
-                    const SizedBox(width: 10),
-                    ...List.generate(
-                      species.difficulty,
-                      (index) {
-                        return Icon(
-                          Icons.star,
-                          color: function
-                              .getColorFromDifficulty(species.difficulty),
-                          size: 15,
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
             const Spacer(),
             EditionButton(onEdition: onEdit, deactivated: false),

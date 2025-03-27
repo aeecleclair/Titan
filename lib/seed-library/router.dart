@@ -52,16 +52,18 @@ class SeedLibraryRouter {
         ],
         children: [
           QRoute(
-              path: SeedLibraryRouter.information,
-              builder: () => InformationPage(),
-              children: [
-                QRoute(
-                    path: SeedLibraryRouter.editInformation,
-                    builder: () => EditInformationPage(),
-                    middleware: [
-                      AdminMiddleware(ref, isSeedLibraryAdminProvider),
-                    ]),
-              ]),
+            path: SeedLibraryRouter.information,
+            builder: () => InformationPage(),
+            children: [
+              QRoute(
+                path: SeedLibraryRouter.editInformation,
+                builder: () => EditInformationPage(),
+                middleware: [
+                  AdminMiddleware(ref, isSeedLibraryAdminProvider),
+                ],
+              ),
+            ],
+          ),
           QRoute(
             path: species,
             builder: () => SpeciesPage(),

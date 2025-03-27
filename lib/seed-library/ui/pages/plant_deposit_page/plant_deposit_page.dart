@@ -32,6 +32,7 @@ class PlantDepositPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final seedLibraryAdmin = ref.watch(isSeedLibraryAdminProvider);
     final key = GlobalKey<FormState>();
+    final scrollController = useScrollController();
     final species = ref.watch(syncSpeciesListProvider);
     final plantList = ref.watch(syncPlantListProvider);
     final plantListNotifier = ref.watch(plantListProvider.notifier);
@@ -48,98 +49,100 @@ class PlantDepositPage extends HookConsumerWidget {
     final seedQuantity = useTextEditingController();
     final notes = useTextEditingController();
 
+    final plantSpecies = selectedAncestor.id != ""
+        ? species.firstWhere(
+            (element) => element.id == selectedAncestor.speciesId,
+          )
+        : selectedSpecies;
+
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
 
     return SeedLibraryTemplate(
-      child: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(
-          parent: BouncingScrollPhysics(),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Form(
-            key: key,
+        child: SingleChildScrollView(
+      controller: scrollController,
+      physics: const AlwaysScrollableScrollPhysics(
+        parent: BouncingScrollPhysics(),
+      ),
+      child: Form(
+        key: key,
+        child: Column(children: [
+          Text(
+            SeedLibraryTextConstants.addPlant,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          const Text(
+            SeedLibraryTextConstants.ancestor,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                ...myPlants.map((e) {
+                  return SmallPlantCard(
+                    plant: e,
+                    species: species,
+                    onClicked: () async {
+                      selectedAncestor.id == e.id
+                          ? selectedAncestorNotifier
+                              .setPlant(PlantSimple.empty())
+                          : selectedAncestorNotifier.setPlant(e);
+                      final plant = await plantNotifier.loadPlant(e.id);
+                      plant.whenData(
+                        (value) => notes.text = value.currentNote ?? '',
+                      );
+                    },
+                    selected: selectedAncestor.id == e.id,
+                  );
+                }),
+              ],
+            ),
+          ),
+          if (selectedAncestor.id == '' && seedLibraryAdmin) ...[
+            Text(
+              SeedLibraryTextConstants.speciesSimple,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  ...species.map((e) {
+                    return SmallSpeciesCard(
+                      species: e,
+                      onClicked: () {
+                        selectedSpecies.id == e.id
+                            ? selectedSpeciesNotifier
+                                .setSpecies(Species.empty())
+                            : selectedSpeciesNotifier.setSpecies(e);
+                      },
+                      selected: selectedSpecies.id == e.id,
+                    );
+                  }),
+                ],
+              ),
+            ),
+          ],
+          const SizedBox(height: 30),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Column(
               children: [
-                const SizedBox(
-                  height: 30,
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    SeedLibraryTextConstants.addPlant,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: ColorConstants.gradient1,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                const Text(
-                  SeedLibraryTextConstants.ancestor,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      ...myPlants.map((e) {
-                        return SmallPlantCard(
-                          plant: e,
-                          species: species,
-                          onClicked: () async {
-                            selectedAncestor.id == e.id
-                                ? selectedAncestorNotifier
-                                    .setPlant(PlantSimple.empty())
-                                : selectedAncestorNotifier.setPlant(e);
-                            final plant = await plantNotifier.loadPlant(e.id);
-                            plant.whenData(
-                              (value) => notes.text = value.currentNote ?? '',
-                            );
-                          },
-                          selected: selectedAncestor.id == e.id,
-                        );
-                      }),
-                    ],
-                  ),
-                ),
-                if (selectedAncestor.id == '' && seedLibraryAdmin) ...[
-                  Text(
-                    SeedLibraryTextConstants.species,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        ...species.map((e) {
-                          return SmallSpeciesCard(
-                            species: e,
-                            onClicked: () {
-                              selectedSpecies.id == e.id
-                                  ? selectedSpeciesNotifier
-                                      .setSpecies(Species.empty())
-                                  : selectedSpeciesNotifier.setSpecies(e);
-                            },
-                            selected: selectedSpecies.id == e.id,
-                          );
-                        }),
-                      ],
-                    ),
-                  ),
-                ],
-                const SizedBox(height: 30),
                 Row(
                   children: [
                     ...PropagationMethod.values.map((e) {
@@ -157,7 +160,9 @@ class PlantDepositPage extends HookConsumerWidget {
                   const SizedBox(height: 30),
                   TextEntry(
                     controller: seedQuantity,
-                    label: SeedLibraryTextConstants.seedQuantity,
+                    label:
+                        "${SeedLibraryTextConstants.seedQuantitySimple}${plantSpecies.nbSeedsRecommended != null ? ' (${SeedLibraryTextConstants.around} ${plantSpecies.nbSeedsRecommended})' : ''}",
+                    keyboardType: TextInputType.number,
                     isInt: true,
                   ),
                 ],
@@ -258,8 +263,8 @@ class PlantDepositPage extends HookConsumerWidget {
               ],
             ),
           ),
-        ),
+        ]),
       ),
-    );
+    ));
   }
 }

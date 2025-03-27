@@ -25,7 +25,7 @@ class EditablePlantDetail extends HookConsumerWidget {
     final myPlantsNotifier = ref.watch(myPlantListProvider.notifier);
     final name =
         TextEditingController(text: plant.nickname ?? plant.plantReference);
-    final notes = TextEditingController(text: plant.currentNote);
+    final notes = TextEditingController(text: plant.currentNote ?? '');
     final plantationDate = TextEditingController(
       text: plant.plantingDate != null ? processDate(plant.plantingDate!) : '',
     );
@@ -51,7 +51,7 @@ class EditablePlantDetail extends HookConsumerWidget {
         child: Column(
           children: [
             Text(
-              'Détails de la plante',
+              SeedLibraryTextConstants.plantDetail,
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -59,25 +59,25 @@ class EditablePlantDetail extends HookConsumerWidget {
             ),
             TextEntry(
               controller: name,
-              label: 'Nom',
+              label: SeedLibraryTextConstants.name,
             ),
             const SizedBox(height: 20),
             if (plant.nickname != null) ...[
               Text(
-                'Référence: ${plant.plantReference}',
+                '${SeedLibraryTextConstants.reference} ${plant.plantReference}',
                 style: const TextStyle(
                   fontSize: 16,
                 ),
               ),
             ],
             Text(
-              'Espèce: ${plantSpecies.name}',
+              '${SeedLibraryTextConstants.species} ${plantSpecies.name}',
               style: const TextStyle(
                 fontSize: 16,
               ),
             ),
             Text(
-              'Type: ${plantSpecies.type.name}',
+              '${SeedLibraryTextConstants.type} ${plantSpecies.type.name}',
               style: const TextStyle(
                 fontSize: 16,
               ),
@@ -86,7 +86,7 @@ class EditablePlantDetail extends HookConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Difficulté:',
+                  SeedLibraryTextConstants.difficulty,
                   style: const TextStyle(
                     fontSize: 16,
                   ),
@@ -116,7 +116,7 @@ class EditablePlantDetail extends HookConsumerWidget {
                   child: child,
                 ),
                 child: const Text(
-                  "Aide sur l'espèce",
+                  SeedLibraryTextConstants.speciesHelp,
                   style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
                 onTap: () {
@@ -127,19 +127,19 @@ class EditablePlantDetail extends HookConsumerWidget {
             ],
             const SizedBox(height: 20),
             Text(
-              'Méthode de propagation: ${plant.propagationMethod.name}',
+              '${SeedLibraryTextConstants.propagationMethod} ${plant.propagationMethod.name}',
               style: const TextStyle(
                 fontSize: 16,
               ),
             ),
             Text(
-              'Nombre de graines: ${plant.nbSeedsEnvelope}',
+              '${SeedLibraryTextConstants.seedQuantity} ${plant.nbSeedsEnvelope}',
               style: const TextStyle(
                 fontSize: 16,
               ),
             ),
             Text(
-              'Date de prêt: ${processDate(plant.borrowingDate!)}',
+              '${SeedLibraryTextConstants.borrowingDate} ${processDate(plant.borrowingDate!)}',
               style: const TextStyle(
                 fontSize: 16,
               ),
@@ -154,6 +154,7 @@ class EditablePlantDetail extends HookConsumerWidget {
                     ),
                   );
                   plantationDate.text = processDate(DateTime.now());
+                  myPlantsNotifier.updatePlantInList(plant.toPlantSimple());
                   return Future.value();
                 },
                 builder: (child) => AddEditButtonLayout(
@@ -165,7 +166,7 @@ class EditablePlantDetail extends HookConsumerWidget {
                 ),
                 waitingColor: Colors.green,
                 child: const Text(
-                  "Je la plante maintenant",
+                  SeedLibraryTextConstants.plantingNow,
                   style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
               ),
@@ -179,8 +180,8 @@ class EditablePlantDetail extends HookConsumerWidget {
                     context: context,
                     builder: (context) {
                       return CustomDialogBox(
-                        title: SeedLibraryTextConstants.recoltOrDead,
-                        descriptions: SeedLibraryTextConstants.recoltOrDeadMsg,
+                        title: SeedLibraryTextConstants.deadPlant,
+                        descriptions: SeedLibraryTextConstants.deadMsg,
                         onYes: () async {
                           final result = await plantNotifier.updatePlant(
                             plant.copyWith(
@@ -223,7 +224,7 @@ class EditablePlantDetail extends HookConsumerWidget {
                 ),
                 waitingColor: ColorConstants.gradient1,
                 child: const Text(
-                  "La plante est récoltée/morte",
+                  SeedLibraryTextConstants.deadPlant,
                   style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
               ),
@@ -232,8 +233,8 @@ class EditablePlantDetail extends HookConsumerWidget {
             DateEntry(
               controller: plantationDate,
               label: plant.state == function.State.consumed
-                  ? 'Date de récolte'
-                  : 'Date de plantation',
+                  ? SeedLibraryTextConstants.deathDate
+                  : SeedLibraryTextConstants.plantingDate,
               onTap: () {
                 getOnlyDayDate(
                   context,
@@ -254,15 +255,8 @@ class EditablePlantDetail extends HookConsumerWidget {
             SizedBox(height: 10),
             TextEntry(
               controller: notes,
-              label: 'Notes',
+              label: SeedLibraryTextConstants.notes,
               keyboardType: TextInputType.multiline,
-              onChanged: (value) {
-                plantNotifier.updatePlant(
-                  plant.copyWith(
-                    currentNote: value,
-                  ),
-                );
-              },
             ),
             SizedBox(height: 30),
             WaitingButton(
@@ -292,7 +286,6 @@ class EditablePlantDetail extends HookConsumerWidget {
                     SeedLibraryTextConstants.updatingError,
                   );
                 }
-                ;
               },
               builder: (child) => AddEditButtonLayout(
                 colors: const [
@@ -303,7 +296,7 @@ class EditablePlantDetail extends HookConsumerWidget {
               ),
               waitingColor: Colors.green,
               child: const Text(
-                "Enregistrer les modifications",
+                SeedLibraryTextConstants.saveChanges,
                 style: TextStyle(color: Colors.white, fontSize: 18),
               ),
             ),

@@ -32,7 +32,7 @@ class SeedLibraryMainPage extends HookConsumerWidget {
 
     void resetNotifier() {
       speciesNotifier.setSpecies(Species.empty());
-      seasonNotifier.setString('Toutes');
+      seasonNotifier.setString(SeedLibraryTextConstants.all);
       difficultyNotifier.setFilter(0);
       searchNotifier.setString('');
       speciesTypeNotifier.setFilter(SpeciesType.empty());
@@ -62,7 +62,7 @@ class SeedLibraryMainPage extends HookConsumerWidget {
                   QR.to(SeedLibraryRouter.root + SeedLibraryRouter.species);
                 },
                 child: const MenuCardUi(
-                  text: SeedLibraryTextConstants.species,
+                  text: SeedLibraryTextConstants.speciesSimple,
                   icon: HeroIcons.wallet,
                 ),
               ),

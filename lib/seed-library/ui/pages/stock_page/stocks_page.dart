@@ -4,6 +4,7 @@ import 'package:myecl/seed-library/providers/plant_complete_provider.dart';
 import 'package:myecl/seed-library/providers/plants_filtered_list_provider.dart';
 import 'package:myecl/seed-library/providers/plants_list_provider.dart';
 import 'package:myecl/seed-library/router.dart';
+import 'package:myecl/seed-library/tools/constants.dart';
 import 'package:myecl/seed-library/ui/components/filters_bar.dart';
 import 'package:myecl/seed-library/ui/pages/stock_page/plant_card.dart';
 import 'package:myecl/seed-library/ui/components/research_bar.dart';
@@ -29,6 +30,10 @@ class StockPage extends HookConsumerWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
+              const Text(
+                SeedLibraryTextConstants.stocks,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
               const ResearchBar(),
               const FiltersBar(),
               const SizedBox(height: 10),

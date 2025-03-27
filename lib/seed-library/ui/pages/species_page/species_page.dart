@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/seed-library/class/species.dart';
+import 'package:myecl/seed-library/class/species_type.dart';
 import 'package:myecl/seed-library/providers/difficulty_filter_provider.dart';
 import 'package:myecl/seed-library/providers/species_list_provider.dart';
 import 'package:myecl/seed-library/providers/species_provider.dart';
@@ -41,11 +43,24 @@ class SpeciesPage extends HookConsumerWidget {
           await speciesListNotifier.loadSpecies();
         },
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(5.0),
           child: Column(
             children: [
+              Text(
+                SeedLibraryTextConstants.speciesPlural,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 20),
               GestureDetector(
                 onTap: () {
+                  speciesNotifier.setSpecies(Species.empty());
+                  speciesTypeNotifier.setType(SpeciesType.empty());
+                  difficultyNotifier.setFilter(0);
+                  startMonthNotifier.setString('');
+                  endMonthNotifier.setString('');
                   QR.to(
                     SeedLibraryRouter.root +
                         SeedLibraryRouter.species +
@@ -56,8 +71,8 @@ class SpeciesPage extends HookConsumerWidget {
                   margin: const EdgeInsets.only(
                     bottom: 10,
                     top: 20,
-                    left: 40,
-                    right: 40,
+                    left: 20,
+                    right: 20,
                   ),
                   width: double.infinity,
                   height: 100,
@@ -75,7 +90,13 @@ class SpeciesPage extends HookConsumerWidget {
               AsyncChild(
                 value: species,
                 builder: (context, speciesList) => speciesList.isEmpty
-                    ? const Text('No species found')
+                    ? const Text(
+                        SeedLibraryTextConstants.noSpecies,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
                     : Column(
                         children: [
                           ...speciesList.map(

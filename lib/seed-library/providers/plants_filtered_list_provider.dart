@@ -75,8 +75,8 @@ final plantsFilteredListProvider = Provider<List<PlantSimple>>((ref) {
   final plantsProvider = ref.watch(plantListProvider);
   final speciesProvider = ref.watch(speciesListProvider);
   final speciesTypeFilter = ref.watch(speciesTypeFilterProvider);
-  final seasonsTypeFilter = ref.watch(seasonFilterProvider);
-  final difficultyTypeFilter = ref.watch(difficultyFilterProvider);
+  final seasonsFilter = ref.watch(seasonFilterProvider);
+  final difficultyFilter = ref.watch(difficultyFilterProvider);
   final searchFilter = ref.watch(searchFilterProvider);
   List<Species> filteredSpecies = [];
   speciesProvider.maybeWhen(
@@ -84,8 +84,8 @@ final plantsFilteredListProvider = Provider<List<PlantSimple>>((ref) {
       filteredSpecies = filterSpeciesWithFilters(
         speciesList,
         searchFilter,
-        seasonsTypeFilter,
-        difficultyTypeFilter,
+        seasonsFilter,
+        difficultyFilter,
         speciesTypeFilter,
       );
     },
@@ -111,26 +111,27 @@ final myPlantsFilteredListProvider = Provider<List<PlantSimple>>((ref) {
   final plants = ref.watch(syncMyPlantListProvider);
   final species = ref.watch(syncSpeciesListProvider);
   final speciesTypeFilter = ref.watch(speciesTypeFilterProvider);
-  final seasonsTypeFilter = ref.watch(seasonFilterProvider);
-  final difficultyTypeFilter = ref.watch(difficultyFilterProvider);
+  final seasonsFilter = ref.watch(seasonFilterProvider);
+  final difficultyFilter = ref.watch(difficultyFilterProvider);
   final searchFilter = ref.watch(searchFilterProvider);
   final consummedFilter = ref.watch(consumedFilterProvider);
 
   List<Species> filteredSpecies = filterSpeciesWithFilters(
     species,
     searchFilter,
-    seasonsTypeFilter,
-    difficultyTypeFilter,
+    seasonsFilter,
+    difficultyFilter,
     speciesTypeFilter,
   );
   final speciesId = filteredSpecies.map((species) => species.id).toList();
   final filteredPlants = plants
       .where(
-        (plant) => speciesId.contains(plant.speciesId) && consummedFilter
-            ? true
-            : plant.state != State.consumed,
+        (plant) => speciesId.contains(plant.speciesId),
       )
       .toList();
+  if (!consummedFilter) {
+    filteredPlants.removeWhere((plant) => plant.state == State.consumed);
+  }
   filteredPlants.sort((a, b) => a.plantReference.compareTo(b.plantReference));
   return filteredPlants;
 });

@@ -66,6 +66,7 @@ class EditInformationPage extends HookConsumerWidget {
                     TextEntry(
                       controller: description,
                       label: SeedLibraryTextConstants.description,
+                      keyboardType: TextInputType.multiline,
                     ),
                     const SizedBox(height: 20),
                     TextEntry(
@@ -128,7 +129,7 @@ class EditInformationPage extends HookConsumerWidget {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
-                          color: Color.fromARGB(255, 255, 255, 255),
+                          color: Colors.white,
                         ),
                       ),
                     ),

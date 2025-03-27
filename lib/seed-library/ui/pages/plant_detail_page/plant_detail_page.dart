@@ -33,7 +33,7 @@ class PlantDetailPage extends HookConsumerWidget {
       child: Column(
         children: [
           Text(
-            'Détail de la plante',
+            SeedLibraryTextConstants.plantDetail,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
           AsyncChild(
@@ -53,19 +53,19 @@ class PlantDetailPage extends HookConsumerWidget {
                 child: Column(
                   children: [
                     Text(
-                      'Référence : ${plantComplete.plantReference}',
+                      '${SeedLibraryTextConstants.reference} ${plantComplete.plantReference}',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      'Espèce: ${plantSpecies.name}',
+                      '${SeedLibraryTextConstants.species} ${plantSpecies.name}',
                       style: const TextStyle(
                         fontSize: 15,
                       ),
                     ),
                     Text(
-                      'Type: ${plantSpecies.type.name}',
+                      '${SeedLibraryTextConstants.type} ${plantSpecies.type.name}',
                       style: const TextStyle(
                         fontSize: 15,
                       ),
@@ -74,7 +74,7 @@ class PlantDetailPage extends HookConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Difficulté:',
+                          SeedLibraryTextConstants.difficulty,
                           style: const TextStyle(
                             fontSize: 16,
                           ),
@@ -97,13 +97,13 @@ class PlantDetailPage extends HookConsumerWidget {
                     if (plantSpecies.startSeason != null &&
                         plantSpecies.endSeason != null) ...[
                       Text(
-                        'Période de plantation : ${monthToString(plantSpecies.startSeason!.month)} - ${monthToString(plantSpecies.endSeason!.month)}',
+                        '${SeedLibraryTextConstants.plantationPeriod} ${monthToString(plantSpecies.startSeason!.month)} - ${monthToString(plantSpecies.endSeason!.month)}',
                         style: TextStyle(fontSize: 15),
                       ),
                     ],
                     if (plantSpecies.timeMaturation != null) ...[
                       Text(
-                        'Temps avant maturation : ${plantSpecies.timeMaturation!} jours',
+                        '${SeedLibraryTextConstants.timeUntilMaturation} ${plantSpecies.timeMaturation!} ${SeedLibraryTextConstants.days}',
                         style: TextStyle(fontSize: 15),
                       ),
                     ],
@@ -119,7 +119,7 @@ class PlantDetailPage extends HookConsumerWidget {
                           child: child,
                         ),
                         child: const Text(
-                          "Aide sur l'espèce",
+                          SeedLibraryTextConstants.speciesHelp,
                           style: TextStyle(color: Colors.white, fontSize: 18),
                         ),
                         onTap: () {
@@ -130,13 +130,13 @@ class PlantDetailPage extends HookConsumerWidget {
                     ],
                     const SizedBox(height: 10),
                     Text(
-                      'Méthode de propagation : ${plantComplete.propagationMethod.name}',
+                      '${SeedLibraryTextConstants.propagationMethod} ${plantComplete.propagationMethod.name}',
                       style: TextStyle(fontSize: 15),
                     ),
                     if (plantComplete.propagationMethod ==
                         PropagationMethod.graine) ...[
                       Text(
-                        'Nombre de graines : ${plantComplete.nbSeedsEnvelope}',
+                        '${SeedLibraryTextConstants.seedQuantity} ${plantComplete.nbSeedsEnvelope}',
                         style: TextStyle(fontSize: 15),
                       ),
                     ],
@@ -144,7 +144,7 @@ class PlantDetailPage extends HookConsumerWidget {
                     if (plantComplete.previousNote != null &&
                         plantComplete.previousNote != "") ...[
                       Text(
-                        'Notes :',
+                        SeedLibraryTextConstants.notes,
                         style: TextStyle(fontSize: 15),
                       ),
                       Text(

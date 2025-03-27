@@ -21,13 +21,13 @@ class FiltersBar extends HookConsumerWidget {
     final speciesTypeNotifier = ref.watch(speciesTypeFilterProvider.notifier);
 
     return ExpansionTile(
-      title: Text('Filters'),
+      title: Text('Filtres'),
       children: [
         Column(
           children: [
             Column(
               children: [
-                Text('Saison: '),
+                Text(SeedLibraryTextConstants.season),
                 DropdownButton<String>(
                   value: season,
                   onChanged: (String? newValue) {
@@ -53,13 +53,12 @@ class FiltersBar extends HookConsumerWidget {
               width: 300,
               child: Column(
                 children: [
-                  Text('Difficulty: '),
+                  Text(SeedLibraryTextConstants.difficulty),
                   Slider(
                     value: difficulty.toDouble(),
                     min: 0,
                     max: 5,
                     divisions: 5,
-                    label: difficulty.toString(),
                     onChanged: (double value) {
                       difficultyNotifier.setFilter(value.toInt());
                     },
@@ -70,7 +69,7 @@ class FiltersBar extends HookConsumerWidget {
             const SizedBox(height: 10),
             Column(
               children: [
-                Text('Type de plante: '),
+                Text(SeedLibraryTextConstants.speciesType),
                 DropdownButton<SpeciesType>(
                   value: speciesType,
                   onChanged: (SpeciesType? newValue) {

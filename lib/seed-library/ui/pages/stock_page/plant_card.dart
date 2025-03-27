@@ -84,7 +84,7 @@ class PlantCard extends HookConsumerWidget {
                 child: Column(
                   children: [
                     Text(
-                      "Type : ${plant.propagationMethod.name}",
+                      "${SeedLibraryTextConstants.type} ${plant.propagationMethod.name}",
                       textAlign: TextAlign.center,
                     ),
                     plant.propagationMethod == PropagationMethod.graine

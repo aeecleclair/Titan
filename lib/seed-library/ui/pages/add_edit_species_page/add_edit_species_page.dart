@@ -70,26 +70,23 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                 const SizedBox(
                   height: 30,
                 ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: isEdit
-                      ? Text(
-                          SeedLibraryTextConstants.editSpecies,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            color: ColorConstants.gradient1,
-                          ),
-                        )
-                      : Text(
-                          SeedLibraryTextConstants.addSpecies,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            color: ColorConstants.gradient1,
-                          ),
+                isEdit
+                    ? Text(
+                        SeedLibraryTextConstants.editSpecies,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
-                ),
+                        textAlign: TextAlign.center,
+                      )
+                    : Text(
+                        SeedLibraryTextConstants.addSpecies,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                 const SizedBox(
                   height: 30,
                 ),
@@ -117,7 +114,9 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                           : null,
                     ),
                     const SizedBox(height: 20),
-                    Text('Difficulty: '),
+                    Text(
+                      SeedLibraryTextConstants.difficulty,
+                    ),
                     Slider(
                       value: difficulty.toDouble(),
                       min: 0,
@@ -149,12 +148,16 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                           : null,
                     ),
                     const SizedBox(height: 20),
+                    const Text(
+                      SeedLibraryTextConstants.plantationPeriod,
+                      style: TextStyle(fontSize: 18),
+                    ),
                     Row(
                       children: [
                         const Spacer(),
                         Column(
                           children: [
-                            Text('Start month: '),
+                            Text(SeedLibraryTextConstants.startMonth),
                             DropdownButton(
                               items: ["", ...SeedLibraryTextConstants.months]
                                   .map(
@@ -176,7 +179,7 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                         const SizedBox(width: 20),
                         Column(
                           children: [
-                            Text('End month: '),
+                            Text(SeedLibraryTextConstants.endMonth),
                             DropdownButton(
                               items: ["", ...SeedLibraryTextConstants.months]
                                   .map(

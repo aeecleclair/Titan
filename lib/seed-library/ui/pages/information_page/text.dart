@@ -43,7 +43,7 @@ class InformationPage extends HookConsumerWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: const Text(
-                        'Modifier les informations',
+                        SeedLibraryTextConstants.editInformation,
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,

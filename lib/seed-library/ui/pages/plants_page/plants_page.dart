@@ -5,6 +5,7 @@ import 'package:myecl/seed-library/providers/plant_complete_provider.dart';
 import 'package:myecl/seed-library/providers/plants_filtered_list_provider.dart';
 import 'package:myecl/seed-library/providers/plants_list_provider.dart';
 import 'package:myecl/seed-library/router.dart';
+import 'package:myecl/seed-library/tools/constants.dart';
 import 'package:myecl/seed-library/ui/components/filters_bar.dart';
 import 'package:myecl/seed-library/ui/pages/plants_page/personal_plant_card.dart';
 import 'package:myecl/seed-library/ui/components/research_bar.dart';
@@ -32,6 +33,10 @@ class PlantsPage extends HookConsumerWidget {
           padding: const EdgeInsets.all(15.0),
           child: Column(
             children: [
+              const Text(
+                SeedLibraryTextConstants.myPlants,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
               const ResearchBar(),
               const SizedBox(height: 10),
               const FiltersBar(),
@@ -39,10 +44,11 @@ class PlantsPage extends HookConsumerWidget {
               Row(
                 children: [
                   Checkbox(
-                      value: consumedFilter,
-                      onChanged: (value) =>
-                          consumedFilterNotifier.setBool(value ?? false)),
-                  Text('Afficher les plantes récoltées/mortes'),
+                    value: consumedFilter,
+                    onChanged: (value) =>
+                        consumedFilterNotifier.setBool(value ?? false),
+                  ),
+                  Text(SeedLibraryTextConstants.showDeadPlants),
                 ],
               ),
               SingleChildScrollView(

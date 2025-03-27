@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/seed-library/class/plant_simple.dart';
 import 'package:myecl/seed-library/providers/species_list_provider.dart';
+import 'package:myecl/seed-library/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/seed-library/tools/functions.dart' as function;
 
@@ -31,7 +32,7 @@ class PersonalPlantCard extends HookConsumerWidget {
           borderRadius: BorderRadius.circular(15),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+          padding: const EdgeInsets.all(10),
           child: Row(
             children: [
               SizedBox(
@@ -44,6 +45,7 @@ class PersonalPlantCard extends HookConsumerWidget {
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                     AutoSizeText(
                       plant.nickname ?? plant.plantReference,
@@ -61,8 +63,8 @@ class PersonalPlantCard extends HookConsumerWidget {
                         children: [
                           Text(
                             plant.state == function.State.consumed
-                                ? 'Récoltée le :'
-                                : 'Plantée le :',
+                                ? SeedLibraryTextConstants.deathDate
+                                : SeedLibraryTextConstants.plantingDate,
                           ),
                           Text(
                             processDate(plant.plantingDate!),
@@ -70,9 +72,10 @@ class PersonalPlantCard extends HookConsumerWidget {
                           ...plantSpecies.timeMaturation != null &&
                                   plant.state != function.State.consumed
                               ? [
-                                  const Text('Temps avant maturation :'),
+                                  Text(SeedLibraryTextConstants
+                                      .timeUntilMaturation),
                                   Text(
-                                    "${(plantSpecies.timeMaturation! - DateTime.now().difference(plant.plantingDate!).inDays).toString()} jours",
+                                    "${(plantSpecies.timeMaturation! - DateTime.now().difference(plant.plantingDate!).inDays).toString()} ${SeedLibraryTextConstants.days}",
                                     style: TextStyle(
                                       color: plantSpecies.timeMaturation! -
                                                   DateTime.now()

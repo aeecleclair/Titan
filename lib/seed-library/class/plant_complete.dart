@@ -33,7 +33,7 @@ class PlantComplete extends PlantSimple {
       'previous_note': previousNote,
       'nbSeeds_envelope': nbSeedsEnvelope,
       'ancestor_id': ancestorId,
-      'currentenote': currentNote,
+      'current_note': currentNote,
       'confidential': confidential,
       'planting_date': plantingDate != null
           ? processDateToAPIWithoutHour(plantingDate!)
@@ -42,10 +42,12 @@ class PlantComplete extends PlantSimple {
           ? processDateToAPIWithoutHour(borrowingDate!)
           : null,
     });
+    print(json);
     return json;
   }
 
   factory PlantComplete.fromJson(Map<String, dynamic> json) {
+    print(json);
     return PlantComplete(
       state: getStateByValue(json['state']),
       speciesId: json['species_id'],
