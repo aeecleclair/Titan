@@ -72,8 +72,10 @@ class PersonalPlantCard extends HookConsumerWidget {
                           ...plantSpecies.timeMaturation != null &&
                                   plant.state != function.State.consumed
                               ? [
-                                  Text(SeedLibraryTextConstants
-                                      .timeUntilMaturation),
+                                  Text(
+                                    SeedLibraryTextConstants
+                                        .timeUntilMaturation,
+                                  ),
                                   Text(
                                     "${(plantSpecies.timeMaturation! - DateTime.now().difference(plant.plantingDate!).inDays).toString()} ${SeedLibraryTextConstants.days}",
                                     style: TextStyle(
