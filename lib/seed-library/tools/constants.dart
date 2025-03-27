@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
+
 class SeedLibraryTextConstants {
-  static const String seedLibraryistration = 'Grainothèque';
+  static const String seedLibrary = 'Grainothèque';
   static const String myPlants = 'Mes plantes';
   static const String stock = 'Stock disponible';
   static const String seedDeposit = 'Dépôt de plantes';
@@ -43,18 +45,18 @@ class SeedLibraryTextConstants {
       "La taille de l'image ne doit pas dépasser 4 Mio";
 
   static const List<String> months = [
-    'Janv.',
-    'Févr.',
+    'Janvier',
+    'Février',
     'Mars',
-    'Avr.',
+    'Avril',
     'Mai',
     'Juin',
-    'Juill.',
+    'Juillet',
     'Août',
-    'Sept.',
-    'Oct.',
-    'Nov.',
-    'Déc.',
+    'Septembre',
+    'Octobre',
+    'Novembre',
+    'Décembre',
   ];
 
   static const String unableToOpen = "Impossible d'ouvrir le lien";
@@ -122,4 +124,29 @@ class SeedLibraryTextConstants {
   static const String seeds = "graines";
 
   static const String updatedPlant = "Plante modifiée";
+
+  static const String update = "Modifier";
+
+  static const String recoltOrDead = "Plante récoltée/morte";
+
+  static const String recoltOrDeadMsg =
+      "Voulez-vous récolter ou déclarer la plante morte ?";
+
+  static const String information = "Informations :";
+  static const String contact = "Contact :";
+
+  static const String description = "Description";
+
+  static const String facebookUrl = "Lien Facebook";
+
+  static const String forumUrl = "Lien Forum";
+
+  static const String editInformation = "Modifier les informations";
+
+  static const String updatedInformation = "Informations modifiées";
+}
+
+class SeedLibraryColorConstants {
+  static const Color greenGradient1 = Color(0xff79a400);
+  static const Color textDark = Color(0xff255000);
 }

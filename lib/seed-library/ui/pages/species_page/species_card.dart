@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/seed-library/class/species.dart';
+import 'package:myecl/seed-library/tools/functions.dart' as function;
 import 'package:myecl/seed-library/ui/components/delete_button.dart';
 import 'package:myecl/seed-library/ui/components/edition_button.dart';
 
@@ -38,7 +39,29 @@ class SpeciesCard extends HookConsumerWidget {
             Column(
               children: [
                 Text(species.type.name),
-                Text("Difficulté : ${species.difficulty.toString()}"),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Difficulté:',
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    ...List.generate(
+                      species.difficulty,
+                      (index) {
+                        return Icon(
+                          Icons.star,
+                          color: function
+                              .getColorFromDifficulty(species.difficulty),
+                          size: 15,
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ],
             ),
             const Spacer(),

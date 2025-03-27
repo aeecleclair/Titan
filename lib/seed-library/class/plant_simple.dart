@@ -105,4 +105,9 @@ class PlantSimple {
 
   @override
   int get hashCode => id.hashCode;
+
+  @override
+  String toString() {
+    return 'PlantSimple(state: $state, speciesId: $speciesId, propagationMethod: $propagationMethod, id: $id, plantReference: $plantReference, borrowerId: $borrowerId, nickname: $nickname, nbSeedsEnvelope: $nbSeedsEnvelope, plantingDate: $plantingDate)';
+  }
 }

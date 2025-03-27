@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/seed-library/class/plant_complete.dart';
 import 'package:myecl/seed-library/providers/plant_complete_provider.dart';
 import 'package:myecl/seed-library/providers/plants_list_provider.dart';
+import 'package:myecl/seed-library/providers/species_list_provider.dart';
 import 'package:myecl/seed-library/tools/constants.dart';
+import 'package:myecl/seed-library/tools/functions.dart' as function;
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/date_entry.dart';
+import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 
 class EditablePlantDetail extends HookConsumerWidget {
@@ -16,13 +20,18 @@ class EditablePlantDetail extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final species = ref.watch(syncSpeciesListProvider);
     final plantNotifier = ref.watch(plantProvider.notifier);
     final myPlantsNotifier = ref.watch(myPlantListProvider.notifier);
     final name =
-        useTextEditingController(text: plant.nickname ?? plant.plantReference);
-    final notes = useTextEditingController(text: plant.currentNote);
-    final plantationDate = useTextEditingController(
+        TextEditingController(text: plant.nickname ?? plant.plantReference);
+    final notes = TextEditingController(text: plant.currentNote);
+    final plantationDate = TextEditingController(
       text: plant.plantingDate != null ? processDate(plant.plantingDate!) : '',
+    );
+
+    final plantSpecies = species.firstWhere(
+      (element) => element.id == plant.speciesId,
     );
 
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -41,74 +50,208 @@ class EditablePlantDetail extends HookConsumerWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
+            Text(
+              'Détails de la plante',
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             TextEntry(
               controller: name,
               label: 'Nom',
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 20),
             if (plant.nickname != null) ...[
               Text(
                 'Référence: ${plant.plantReference}',
+                style: const TextStyle(
+                  fontSize: 16,
+                ),
               ),
-              SizedBox(height: 10),
             ],
             Text(
-              'Méthode de propagation: ${plant.propagationMethod.name}',
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Nombre de graines: ${plant.nbSeedsEnvelope}',
-            ),
-            SizedBox(height: 30),
-            if (plant.borrowingDate != null) ...[
-              Text(
-                'Date de prêt: ${processDate(plant.borrowingDate!)}',
+              'Espèce: ${plantSpecies.name}',
+              style: const TextStyle(
+                fontSize: 16,
               ),
-              SizedBox(height: 10),
-              if (plant.plantingDate == null) ...[
-                WaitingButton(
-                  onTap: () {
-                    plantNotifier.updatePlant(
-                      plant.copyWith(
-                        plantingDate: DateTime.now(),
-                      ),
-                    );
-                    return Future.value();
-                  },
-                  builder: (child) => child,
-                  waitingColor: Colors.green,
-                  child: Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Text("Je la plante maintenant")),
+            ),
+            Text(
+              'Type: ${plantSpecies.type.name}',
+              style: const TextStyle(
+                fontSize: 16,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Difficulté:',
+                  style: const TextStyle(
+                    fontSize: 16,
+                  ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(width: 10),
+                ...List.generate(
+                  plantSpecies.difficulty,
+                  (index) {
+                    return Icon(
+                      Icons.star,
+                      color: function
+                          .getColorFromDifficulty(plantSpecies.difficulty),
+                      size: 15,
+                    );
+                  },
+                ),
               ],
-              DateEntry(
-                controller: plantationDate,
-                label: 'Date de plantation',
+            ),
+            if (plantSpecies.card != null && plantSpecies.card != "") ...[
+              const SizedBox(height: 10),
+              WaitingButton(
+                builder: (child) => AddEditButtonLayout(
+                  colors: const [
+                    Color.fromARGB(255, 58, 188, 26),
+                    Color.fromARGB(255, 19, 116, 16),
+                  ],
+                  child: child,
+                ),
+                child: const Text(
+                  "Aide sur l'espèce",
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
                 onTap: () {
-                  getOnlyDayDate(
-                    context,
-                    plantationDate,
-                    firstDate: plant.borrowingDate,
-                    lastDate: DateTime.now(),
-                    initialDate: DateTime.now(),
-                  );
-                  plantNotifier.updatePlant(
-                    plant.copyWith(
-                      plantingDate: plantationDate.text.isNotEmpty
-                          ? DateTime.parse(processDateBack(plantationDate.text))
-                          : null,
-                    ),
-                  );
+                  function.openLink(plantSpecies.card!);
+                  return Future.value();
                 },
               ),
-              SizedBox(height: 30),
             ],
+            const SizedBox(height: 20),
+            Text(
+              'Méthode de propagation: ${plant.propagationMethod.name}',
+              style: const TextStyle(
+                fontSize: 16,
+              ),
+            ),
+            Text(
+              'Nombre de graines: ${plant.nbSeedsEnvelope}',
+              style: const TextStyle(
+                fontSize: 16,
+              ),
+            ),
+            Text(
+              'Date de prêt: ${processDate(plant.borrowingDate!)}',
+              style: const TextStyle(
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(height: 10),
+            if (plant.plantingDate == null) ...[
+              WaitingButton(
+                onTap: () {
+                  plantNotifier.updatePlant(
+                    plant.copyWith(
+                      plantingDate: DateTime.now(),
+                    ),
+                  );
+                  plantationDate.text = processDate(DateTime.now());
+                  return Future.value();
+                },
+                builder: (child) => AddEditButtonLayout(
+                  colors: const [
+                    Color.fromARGB(255, 58, 188, 26),
+                    Color.fromARGB(255, 19, 116, 16),
+                  ],
+                  child: child,
+                ),
+                waitingColor: Colors.green,
+                child: const Text(
+                  "Je la plante maintenant",
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+              ),
+              SizedBox(height: 10),
+            ],
+            if (plant.plantingDate != null &&
+                plant.state != function.State.consumed) ...[
+              WaitingButton(
+                onTap: () async {
+                  await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return CustomDialogBox(
+                        title: SeedLibraryTextConstants.recoltOrDead,
+                        descriptions: SeedLibraryTextConstants.recoltOrDeadMsg,
+                        onYes: () async {
+                          final result = await plantNotifier.updatePlant(
+                            plant.copyWith(
+                              state: function.State.consumed,
+                              plantingDate: DateTime.now(),
+                            ),
+                          );
+                          if (result) {
+                            displayToastWithContext(
+                              TypeMsg.msg,
+                              SeedLibraryTextConstants.updatedPlant,
+                            );
+                            myPlantsNotifier.updatePlantInList(
+                              plant
+                                  .copyWith(
+                                    state: function.State.consumed,
+                                    plantingDate: DateTime.now(),
+                                  )
+                                  .toPlantSimple(),
+                            );
+                            plantationDate.text = processDate(DateTime.now());
+                          } else {
+                            displayToastWithContext(
+                              TypeMsg.error,
+                              SeedLibraryTextConstants.updatingError,
+                            );
+                          }
+                        },
+                      );
+                    },
+                  );
+                  return Future.value();
+                },
+                builder: (child) => AddEditButtonLayout(
+                  colors: const [
+                    ColorConstants.gradient1,
+                    ColorConstants.gradient2,
+                  ],
+                  child: child,
+                ),
+                waitingColor: ColorConstants.gradient1,
+                child: const Text(
+                  "La plante est récoltée/morte",
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+              ),
+              SizedBox(height: 10),
+            ],
+            DateEntry(
+              controller: plantationDate,
+              label: plant.state == function.State.consumed
+                  ? 'Date de récolte'
+                  : 'Date de plantation',
+              onTap: () {
+                getOnlyDayDate(
+                  context,
+                  plantationDate,
+                  firstDate: plant.borrowingDate,
+                  lastDate: DateTime.now(),
+                  initialDate: DateTime.now(),
+                );
+                plantNotifier.updatePlant(
+                  plant.copyWith(
+                    plantingDate: plantationDate.text.isNotEmpty
+                        ? DateTime.parse(processDateBack(plantationDate.text))
+                        : null,
+                  ),
+                );
+              },
+            ),
+            SizedBox(height: 10),
             TextEntry(
               controller: notes,
               label: 'Notes',
@@ -151,15 +294,17 @@ class EditablePlantDetail extends HookConsumerWidget {
                 }
                 ;
               },
-              builder: (child) => child,
+              builder: (child) => AddEditButtonLayout(
+                colors: const [
+                  Color.fromARGB(255, 58, 188, 26),
+                  Color.fromARGB(255, 19, 116, 16),
+                ],
+                child: child,
+              ),
               waitingColor: Colors.green,
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.green,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: const Text("Enregistrer les modifications"),
+              child: const Text(
+                "Enregistrer les modifications",
+                style: TextStyle(color: Colors.white, fontSize: 18),
               ),
             ),
           ],

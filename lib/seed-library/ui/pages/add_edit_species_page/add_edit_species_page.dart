@@ -18,8 +18,7 @@ import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditSpeciesPage extends HookConsumerWidget {
-  final scrollKey = GlobalKey();
-  AddEditSpeciesPage({super.key});
+  const AddEditSpeciesPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -267,6 +266,8 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                                         1,
                                       )
                                     : null,
+                                timeMaturation:
+                                    int.tryParse(maturationTime.text),
                               ),
                             );
                             if (value) {
@@ -312,6 +313,7 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                                       1,
                                     )
                                   : null,
+                              timeMaturation: int.tryParse(maturationTime.text),
                             ),
                           );
                           if (value) {
@@ -328,8 +330,10 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                           QR.back();
                         });
                       },
-                      child: const Text(
-                        SeedLibraryTextConstants.add,
+                      child: Text(
+                        isEdit
+                            ? SeedLibraryTextConstants.update
+                            : SeedLibraryTextConstants.add,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,

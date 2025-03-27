@@ -63,7 +63,7 @@ class Species {
       endSeason: json['end_season'] != null
           ? processDateFromAPIWithoutHour(json['end_season'])
           : null,
-      timeMaturation: json['time_saturation'],
+      timeMaturation: json['time_maturation'],
     );
   }
 

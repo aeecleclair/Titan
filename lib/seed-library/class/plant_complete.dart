@@ -69,6 +69,17 @@ class PlantComplete extends PlantSimple {
     );
   }
 
+  factory PlantComplete.empty() {
+    return PlantComplete(
+      state: State.pending,
+      speciesId: '',
+      propagationMethod: PropagationMethod.graine,
+      id: '',
+      plantReference: '',
+      nbSeedsEnvelope: 0,
+    );
+  }
+
   @override
   PlantComplete copyWith({
     State? state,

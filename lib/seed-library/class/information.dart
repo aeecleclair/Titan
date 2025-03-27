@@ -15,7 +15,12 @@ class Information {
 
   // Convert object to JSON
   Map<String, dynamic> toJson() {
-    return {};
+    return {
+      'facebook_url': facebookUrl,
+      'forum_url': forumUrl,
+      'description': description,
+      'contact': contact,
+    };
   }
 
   // Create an object from JSON

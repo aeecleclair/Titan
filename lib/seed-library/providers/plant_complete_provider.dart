@@ -25,6 +25,10 @@ class PlantNotifier extends SingleNotifier<PlantComplete> {
       plant,
     );
   }
+
+  void setPlant(PlantComplete plant) {
+    state = AsyncValue.data(plant);
+  }
 }
 
 final plantProvider =

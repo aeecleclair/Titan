@@ -3,12 +3,14 @@ import 'package:diacritic/diacritic.dart';
 import 'package:myecl/seed-library/class/plant_simple.dart';
 import 'package:myecl/seed-library/class/species.dart';
 import 'package:myecl/seed-library/class/species_type.dart';
+import 'package:myecl/seed-library/providers/consumed_filter_provider.dart';
 import 'package:myecl/seed-library/providers/difficulty_filter_provider.dart';
 import 'package:myecl/seed-library/providers/plants_list_provider.dart';
 import 'package:myecl/seed-library/providers/species_type_filter_provider.dart';
 import 'package:myecl/seed-library/providers/string_provider.dart';
 import 'package:myecl/seed-library/providers/species_list_provider.dart';
 import 'package:myecl/seed-library/tools/constants.dart';
+import 'package:myecl/seed-library/tools/functions.dart';
 
 List<int> getMonthsBySeason(String season) {
   if (season == SeedLibraryTextConstants.spring) {
@@ -112,6 +114,7 @@ final myPlantsFilteredListProvider = Provider<List<PlantSimple>>((ref) {
   final seasonsTypeFilter = ref.watch(seasonFilterProvider);
   final difficultyTypeFilter = ref.watch(difficultyFilterProvider);
   final searchFilter = ref.watch(searchFilterProvider);
+  final consummedFilter = ref.watch(consumedFilterProvider);
 
   List<Species> filteredSpecies = filterSpeciesWithFilters(
     species,
@@ -123,7 +126,9 @@ final myPlantsFilteredListProvider = Provider<List<PlantSimple>>((ref) {
   final speciesId = filteredSpecies.map((species) => species.id).toList();
   final filteredPlants = plants
       .where(
-        (plant) => speciesId.contains(plant.speciesId),
+        (plant) => speciesId.contains(plant.speciesId) && consummedFilter
+            ? true
+            : plant.state != State.consumed,
       )
       .toList();
   filteredPlants.sort((a, b) => a.plantReference.compareTo(b.plantReference));

@@ -9,7 +9,7 @@ import 'package:myecl/seed-library/providers/string_provider.dart';
 import 'package:myecl/seed-library/router.dart';
 import 'package:myecl/seed-library/tools/constants.dart';
 import 'package:myecl/seed-library/tools/functions.dart';
-import 'package:myecl/seed-library/ui/components/species_card.dart';
+import 'package:myecl/seed-library/ui/pages/species_page/species_card.dart';
 import 'package:myecl/seed-library/ui/seed_library.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
@@ -89,7 +89,8 @@ class SpeciesPage extends HookConsumerWidget {
                                 startMonthNotifier.setString(
                                   species.startSeason != null
                                       ? monthToString(
-                                          species.startSeason!.month)
+                                          species.startSeason!.month,
+                                        )
                                       : '',
                                 );
                                 endMonthNotifier.setString(

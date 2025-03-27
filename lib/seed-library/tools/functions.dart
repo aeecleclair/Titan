@@ -18,9 +18,9 @@ State getStateByValue(String value) {
   switch (value) {
     case 'en attente':
       return State.pending;
-    case 'récupéré':
+    case 'récupérée':
       return State.retrieved;
-    case 'consommé':
+    case 'consommée':
       return State.consumed;
     default:
       return State.pending;
@@ -32,9 +32,9 @@ String getStateValue(State state) {
     case State.pending:
       return 'en attente';
     case State.retrieved:
-      return 'récupéré';
+      return 'récupérée';
     case State.consumed:
-      return 'consommé';
+      return 'consommée';
   }
 }
 
