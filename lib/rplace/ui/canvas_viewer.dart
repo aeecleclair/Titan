@@ -24,7 +24,6 @@ class CanvasViewer extends HookConsumerWidget {
     final focusNotifier = ref.watch(focusProvider.notifier);
     final pixelinfo = ref.watch(pixelInfoProvider.notifier);
     final userinfo = ref.watch(userinfoProvider);
-    final userinfoNotifier = ref.watch(userinfoProvider.notifier);
 
     return AsyncChild(
       value: gridInfo,
@@ -43,8 +42,7 @@ class CanvasViewer extends HookConsumerWidget {
             height: 10 * MediaQuery.of(context).size.height,
             child: Center(
               child: GestureDetector(
-                onTapDown: (event) async {
-                  await userinfoNotifier.getLastPlacedDate();
+                onTapDown: (event) {
                   pixelinfo.getPixelInfo(
                     (event.localPosition.dx) ~/ pixelSize,
                     (event.localPosition.dy) ~/ pixelSize,
