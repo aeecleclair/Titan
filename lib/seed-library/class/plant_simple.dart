@@ -97,16 +97,6 @@ class PlantSimple {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is PlantSimple && other.id == id;
-  }
-
-  @override
-  int get hashCode => id.hashCode;
-
-  @override
   String toString() {
     return 'PlantSimple(state: $state, speciesId: $speciesId, propagationMethod: $propagationMethod, id: $id, plantReference: $plantReference, borrowerId: $borrowerId, nickname: $nickname, nbSeedsEnvelope: $nbSeedsEnvelope, plantingDate: $plantingDate)';
   }

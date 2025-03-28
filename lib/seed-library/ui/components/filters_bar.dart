@@ -21,7 +21,7 @@ class FiltersBar extends HookConsumerWidget {
     final speciesTypeNotifier = ref.watch(speciesTypeFilterProvider.notifier);
 
     return ExpansionTile(
-      title: Text('Filtres'),
+      title: Text(SeedLibraryTextConstants.filters),
       children: [
         Column(
           children: [

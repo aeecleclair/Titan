@@ -27,8 +27,8 @@ class SpeciesType {
   }
 
   @override
-  String toString() => 'SpeciesType(name: $name)';
+  int get hashCode => name.hashCode;
 
   @override
-  int get hashCode => name.hashCode;
+  String toString() => 'SpeciesType(name: $name)';
 }

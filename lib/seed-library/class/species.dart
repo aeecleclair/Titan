@@ -109,14 +109,4 @@ class Species {
   String toString() {
     return 'Species(id: $id, prefix: $prefix, name: $name, difficulty: $difficulty, card: $card, nbSeedsRecommended: $nbSeedsRecommended, type: $type, startSeason: $startSeason, endSeason: $endSeason, timeMaturation: $timeMaturation)';
   }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is Species && other.id == id;
-  }
-
-  @override
-  int get hashCode => id.hashCode;
 }

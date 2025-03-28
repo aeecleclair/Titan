@@ -50,6 +50,7 @@ class SeedLibraryTextConstants {
   static const String endMonth = "Mois de fin :";
 
   static const String facebookUrl = "Lien Facebook";
+  static const String filters = "Filtres";
   static const String forum = "Oskour maman j'ai tué ma plante - Forum d'aide";
   static const String forumUrl = "Lien Forum";
 
