@@ -61,7 +61,7 @@ jobs:
         env:
           PROD_HOST: ${{ vars.PROD_HOST }}
           ALPHA_HOST: ${{ vars.ALPHA_HOST }}
-          
+
       - name: Configure Alpha env
         if: needs.extract-version.outputs.isAlpha == 'true'
         run: |
@@ -91,6 +91,18 @@ jobs:
         run: |
           cp -f web/Prod/favicon.png web/favicon.png
           cp -f web/Prod/icons/* web/icons/
+
+      - name: Set up deeplink configuration alpha
+        if: needs.extract-version.outputs.isAlpha == 'true'
+        run: |
+          sed -i "s|{{ FLAVOR }}|alpha|g" web/.well-known/apple-app-site-association
+          sed -i "s|{{ TEAM_ID }}|${{ secrets.APPLE_TEAM_ID }}|g" web/.well-known/apple-app-site-association
+
+      - name: Set up deeplink configuration alpha
+        if: needs.extract-version.outputs.isAlpha == 'true'
+        run: |
+          sed -i "s|{{ FLAVOR }}|prod|g" web/.well-known/apple-app-site-association
+          sed -i "s|{{ TEAM_ID }}|${{ secrets.APPLE_TEAM_ID }}|g" web/.well-known/apple-app-site-association
 
       - name: Build Alpha 🔧
         if: needs.extract-version.outputs.isAlpha == 'true'

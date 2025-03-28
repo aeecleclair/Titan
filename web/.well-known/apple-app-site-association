@@ -1,0 +1,13 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appIDs": ["{{ TEAM_ID }}.fr.myecl.titan.{{ FLAVOR }}"],
+                "paths": ["*"],
+                "components": [{"/": "/*"}]
+            }
+        ]
+    },
+    "webcredentials": {"apps": ["{{ TEAM_ID }}.fr.myecl.titan.{{ FLAVOR }}"]}
+}
