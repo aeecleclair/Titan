@@ -3,6 +3,7 @@ import 'package:myecl/rplace/class/pixel.dart';
 import 'package:myecl/rplace/providers/pixelinfo_providers.dart';
 import 'package:myecl/rplace/providers/pixels_providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/rplace/providers/userinfo_providers.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -35,6 +36,7 @@ class ColBouton extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pixelListNotifier = ref.read(pixelListProvider.notifier);
+    final userinfoNotifier = ref.watch(userinfoProvider.notifier);
 
     return Container(
       width: 40,
@@ -45,8 +47,8 @@ class ColBouton extends HookConsumerWidget {
         style: TextButton.styleFrom(
           backgroundColor: Color(int.parse(color, radix: 16)),
         ),
-        onPressed: () => {
-          pixelListNotifier.createPixel(
+        onPressed: () async => {
+          await pixelListNotifier.createPixel(
             Pixel(
               x: x,
               y: y,
@@ -54,6 +56,7 @@ class ColBouton extends HookConsumerWidget {
             ),
           ),
           Navigator.pop(context),
+          userinfoNotifier.getLastPlacedDate(),
         },
         child: null,
       ),
