@@ -3,11 +3,11 @@
         "apps": [],
         "details": [
             {
-                "appIDs": ["{{ TEAM_ID }}.fr.myecl.titan.{{ FLAVOR }}"],
+                "appIDs": ["D7YW2UB8DQ.fr.myecl.titan.{{ FLAVOR }}"],
                 "paths": ["*"],
                 "components": [{"/": "/*"}]
             }
         ]
     },
-    "webcredentials": {"apps": ["{{ TEAM_ID }}.fr.myecl.titan.{{ FLAVOR }}"]}
+    "webcredentials": {"apps": ["D7YW2UB8DQ.fr.myecl.titan.{{ FLAVOR }}"]}
 }

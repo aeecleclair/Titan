@@ -96,13 +96,11 @@ jobs:
         if: needs.extract-version.outputs.isAlpha == 'true'
         run: |
           sed -i "s|{{ FLAVOR }}|alpha|g" web/.well-known/apple-app-site-association
-          sed -i "s|{{ TEAM_ID }}|${{ secrets.APPLE_TEAM_ID }}|g" web/.well-known/apple-app-site-association
 
       - name: Set up deeplink configuration alpha
         if: needs.extract-version.outputs.isAlpha == 'true'
         run: |
           sed -i "s|{{ FLAVOR }}|prod|g" web/.well-known/apple-app-site-association
-          sed -i "s|{{ TEAM_ID }}|${{ secrets.APPLE_TEAM_ID }}|g" web/.well-known/apple-app-site-association
 
       - name: Build Alpha 🔧
         if: needs.extract-version.outputs.isAlpha == 'true'
