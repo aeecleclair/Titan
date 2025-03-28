@@ -42,12 +42,10 @@ class PlantComplete extends PlantSimple {
           ? processDateToAPIWithoutHour(borrowingDate!)
           : null,
     });
-    print(json);
     return json;
   }
 
   factory PlantComplete.fromJson(Map<String, dynamic> json) {
-    print(json);
     return PlantComplete(
       state: getStateByValue(json['state']),
       speciesId: json['species_id'],

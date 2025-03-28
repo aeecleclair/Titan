@@ -11,10 +11,8 @@ class PlantsRepository extends Repository {
   final ext = "seed_library/plants/";
 
   Future<List<PlantSimple>> getPlantSimplelist() async {
-    final result = await getList(suffix: "waiting");
-    print(result);
     return List<PlantSimple>.from(
-      result.map((x) => PlantSimple.fromJson(x)),
+      (await getList(suffix: "waiting")).map((x) => PlantSimple.fromJson(x)),
     );
   }
 
@@ -34,10 +32,8 @@ class PlantsRepository extends Repository {
   }
 
   Future<List<PlantSimple>> getMyPlantSimple() async {
-    final result = await getList(suffix: "users/me");
-    print(result);
     return List<PlantSimple>.from(
-      (result).map((x) => PlantSimple.fromJson(x)),
+      (await getList(suffix: "users/me")).map((x) => PlantSimple.fromJson(x)),
     );
   }
 
