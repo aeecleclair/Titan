@@ -108,9 +108,11 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                       controller: prefix,
                       label: SeedLibraryTextConstants.prefix,
                       validator: (p0) => p0.isNotEmpty
-                          ? prefixes.contains(p0)
-                              ? SeedLibraryTextConstants.prefixError
-                              : null
+                          ? p0.length != 3
+                              ? SeedLibraryTextConstants.prefixLengthError
+                              : prefixes.contains(p0)
+                                  ? SeedLibraryTextConstants.prefixError
+                                  : null
                           : null,
                     ),
                     const SizedBox(height: 20),
@@ -225,7 +227,7 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                           );
                           return;
                         }
-                        if (type.name == "") {
+                        if (type.name == SeedLibraryTextConstants.all) {
                           displayToastWithContext(
                             TypeMsg.error,
                             SeedLibraryTextConstants.emptyTypeError,
@@ -278,13 +280,13 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                                 TypeMsg.msg,
                                 SeedLibraryTextConstants.updatedSpecies,
                               );
+                              QR.back();
                             } else {
                               displayToastWithContext(
                                 TypeMsg.error,
                                 SeedLibraryTextConstants.updatingError,
                               );
                             }
-                            QR.back();
                           });
                           return;
                         }
@@ -324,13 +326,13 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                               TypeMsg.msg,
                               SeedLibraryTextConstants.addedSpecies,
                             );
+                            QR.back();
                           } else {
                             displayToastWithContext(
                               TypeMsg.error,
                               SeedLibraryTextConstants.addingError,
                             );
                           }
-                          QR.back();
                         });
                       },
                       child: Text(

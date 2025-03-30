@@ -18,6 +18,7 @@ class PlantsPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final plantList = ref.watch(syncMyPlantListProvider);
     final plantNotifier = ref.watch(plantProvider.notifier);
     final plantListNotifier = ref.watch(plantListProvider.notifier);
     final plantFilteredList = ref.watch(myPlantsFilteredListProvider);
@@ -51,26 +52,43 @@ class PlantsPage extends HookConsumerWidget {
                   Text(SeedLibraryTextConstants.showDeadPlants),
                 ],
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                  children: [
-                    ...plantFilteredList.map(
-                      (plant) => PersonalPlantCard(
-                        plant: plant,
-                        onClicked: () async {
-                          plantNotifier.loadPlant(plant.id);
-                          QR.to(
-                            SeedLibraryRouter.root +
-                                SeedLibraryRouter.plants +
-                                SeedLibraryRouter.plantDetail,
-                          );
-                        },
+              const SizedBox(height: 10),
+              plantList.isEmpty
+                  ? const Text(
+                      SeedLibraryTextConstants.noPersonalPlants,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
                       ),
-                    ),
-                  ],
-                ),
-              ),
+                    )
+                  : plantFilteredList.isEmpty
+                      ? const Text(
+                          SeedLibraryTextConstants.noFilteredPlants,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        )
+                      : SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: Column(
+                            children: [
+                              ...plantFilteredList.map(
+                                (plant) => PersonalPlantCard(
+                                  plant: plant,
+                                  onClicked: () async {
+                                    plantNotifier.loadPlant(plant.id);
+                                    QR.to(
+                                      SeedLibraryRouter.root +
+                                          SeedLibraryRouter.plants +
+                                          SeedLibraryRouter.plantDetail,
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
             ],
           ),
         ),

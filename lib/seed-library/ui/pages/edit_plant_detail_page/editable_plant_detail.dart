@@ -154,7 +154,11 @@ class EditablePlantDetail extends HookConsumerWidget {
                     ),
                   );
                   plantationDate.text = processDate(DateTime.now());
-                  myPlantsNotifier.updatePlantInList(plant.toPlantSimple());
+                  myPlantsNotifier.updatePlantInList(plant
+                      .copyWith(
+                        plantingDate: DateTime.now(),
+                      )
+                      .toPlantSimple());
                   return Future.value();
                 },
                 builder: (child) => AddEditButtonLayout(
@@ -263,7 +267,7 @@ class EditablePlantDetail extends HookConsumerWidget {
               onTap: () async {
                 bool value = await plantNotifier.updatePlant(
                   plant.copyWith(
-                    nickname: name.text,
+                    nickname: name.text != plant.nickname ? name.text : null,
                     currentNote: notes.text,
                   ),
                 );
@@ -275,7 +279,8 @@ class EditablePlantDetail extends HookConsumerWidget {
                   myPlantsNotifier.updatePlantInList(
                     plant
                         .copyWith(
-                          nickname: name.text,
+                          nickname:
+                              name.text != plant.nickname ? name.text : null,
                           currentNote: notes.text,
                         )
                         .toPlantSimple(),

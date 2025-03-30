@@ -7,8 +7,6 @@ class SeedLibraryTextConstants {
   static const String addingError = 'Erreur lors de l\'ajout';
   static const String addPlant = "Déposer une plante";
   static const String addSpecies = "Ajouter une espèce";
-  static const String admin = 'Admin';
-  static const String adminPage = "Page Administrateur";
   static const String all = "Toutes";
   static const String ancestor = "Ancêtre";
   static const String around = "environ";
@@ -18,14 +16,12 @@ class SeedLibraryTextConstants {
   static const String borrowingDate = "Date d'emprunt :";
   static const String borrowPlant = "Emprunter la plante";
 
-  static const String cancel = 'Annuler';
   static const String card = "Carte";
-  static const String choosingPlant = 'Veuillez choisir une plante';
-  static const String choosingPoster = 'Veuillez choisir une image';
+  static String choosingAncestor = "Veuillez choisir un ancêtre";
   static const String choosingSpecies = "Veuillez choisir une espèce";
+  static String choosingSpeciesOrAncestor =
+      "Veuillez choisir une espèce ou un ancêtre";
   static const String contact = "Contact :";
-  static const String content = 'Contenu';
-  static const String cutting = 'Bouture';
 
   static const String days = "jours";
   static const String deadMsg = "Voulez-vous déclarer la plante morte ?";
@@ -33,9 +29,10 @@ class SeedLibraryTextConstants {
   static const String deathDate = "Date de mort";
   static const String deletedSpecies = "Espèce supprimée";
   static const String deleteSpecies = "Supprimer l'espèce ?";
-  static const String deletePlant = 'Supprimer la plante ?';
   static const String deleting = 'Suppression';
   static const String deletingError = "Erreur lors de la suppression";
+  static const String depositNotAvailable =
+      "Le dépôt de plantes n'est pas possible sans emprunter une plante au préalable";
   static const String description = "Description";
   static const String difficulty = "Difficulté :";
 
@@ -56,16 +53,8 @@ class SeedLibraryTextConstants {
 
   static const String helpSheets = "Fiches sur les plantes";
 
-  static const String imageSizeTooBig =
-      "La taille de l'image ne doit pas dépasser 4 Mio";
-  static const String imageTooBig =
-      "La taille de l'image ne doit pas dépasser 4 Mio";
-  static const String incorrectOrMissingFields =
-      'Champs incorrects ou manquants';
   static const String information = "Informations :";
-  static const String invalidNumber = 'Veuillez entrer un nombre';
 
-  static const String management = 'Gestion';
   static const String maturationTime = "Temps de maturation";
   static const List<String> months = [
     'Janvier',
@@ -88,10 +77,14 @@ class SeedLibraryTextConstants {
   static const String nbSeedsRecommendedError =
       "Veuillez entrer un nombre de graines recommandé supérieur à 0";
   static const String noDateError = "Veuillez entrer une date";
+  static const String noFilteredPlants =
+      "Aucune plante ne correspond à votre recherche. Essayez d'autres filtres.";
   static const String noMorePlant = 'Aucune plante n\'est disponible';
+  static const String noPersonalPlants =
+      "Vous n'avez pas encore de plantes dans votre grainothèque. Vous pouvez en ajouter en allant dans les stocks.";
   static const String noSpecies = "Aucune espèce trouvée";
+  static const String noStockPlants = "Aucune plante disponible dans le stock";
   static const String notes = "Notes";
-  static const String noValue = 'Veuillez entrer une valeur';
 
   static const String ok = "OK";
 
@@ -100,9 +93,9 @@ class SeedLibraryTextConstants {
   static const String plantDetail = "Détail de la plante";
   static const String plantingDate = "Date de plantation";
   static const String plantingNow = "Je la plante maintenant";
-  static const String positiveNumber = 'Veuillez entrer un nombre positif';
   static const String prefix = "Préfixe";
   static const String prefixError = "Prefixe déjà utilisé";
+  static const String prefixLengthError = "Le préfixe doit faire 3 caractères";
   static const String propagationMethod = "Méthode de propagation :";
 
   static const String reference = "Référence :";

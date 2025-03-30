@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 
@@ -9,8 +10,7 @@ class MenuCardUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -32,10 +32,11 @@ class MenuCardUi extends StatelessWidget {
             size: 40,
           ),
           const SizedBox(width: 10),
-          Text(
+          AutoSizeText(
             text,
             style: const TextStyle(fontSize: 20),
             textAlign: TextAlign.center,
+            maxLines: 3,
           ),
         ],
       ),

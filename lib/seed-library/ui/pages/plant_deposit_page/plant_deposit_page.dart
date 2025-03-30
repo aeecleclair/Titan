@@ -65,211 +65,238 @@ class PlantDepositPage extends HookConsumerWidget {
         physics: const AlwaysScrollableScrollPhysics(
           parent: BouncingScrollPhysics(),
         ),
-        child: Form(
-          key: key,
-          child: Column(
-            children: [
-              Text(
-                SeedLibraryTextConstants.addPlant,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              const Text(
-                SeedLibraryTextConstants.ancestor,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    ...myPlants.map((e) {
-                      return SmallPlantCard(
-                        plant: e,
-                        species: species,
-                        onClicked: () async {
-                          selectedAncestor.id == e.id
-                              ? selectedAncestorNotifier
-                                  .setPlant(PlantSimple.empty())
-                              : selectedAncestorNotifier.setPlant(e);
-                          final plant = await plantNotifier.loadPlant(e.id);
-                          plant.whenData(
-                            (value) => notes.text = value.currentNote ?? '',
-                          );
-                        },
-                        selected: selectedAncestor.id == e.id,
-                      );
-                    }),
-                  ],
-                ),
-              ),
-              if (selectedAncestor.id == '' && seedLibraryAdmin) ...[
-                Text(
-                  SeedLibraryTextConstants.speciesSimple,
+        child: (myPlants.isEmpty && seedLibraryAdmin)
+            ? const Center(
+                child: Text(
+                  SeedLibraryTextConstants.depositNotAvailable,
                   style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      ...species.map((e) {
-                        return SmallSpeciesCard(
-                          species: e,
-                          onClicked: () {
-                            selectedSpecies.id == e.id
-                                ? selectedSpeciesNotifier
-                                    .setSpecies(Species.empty())
-                                : selectedSpeciesNotifier.setSpecies(e);
-                          },
-                          selected: selectedSpecies.id == e.id,
-                        );
-                      }),
-                    ],
-                  ),
-                ),
-              ],
-              const SizedBox(height: 30),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              )
+            : Form(
+                key: key,
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        ...PropagationMethod.values.map((e) {
-                          return RadioChip(
-                            label: e.name,
-                            selected: propagationMethod == e,
-                            onTap: () {
-                              propagationMethodNotifier.setPropagationMethod(e);
-                            },
-                          );
-                        }),
-                      ],
-                    ),
-                    if (propagationMethod == PropagationMethod.graine) ...[
-                      const SizedBox(height: 30),
-                      TextEntry(
-                        controller: seedQuantity,
-                        label:
-                            "${SeedLibraryTextConstants.seedQuantitySimple}${plantSpecies.nbSeedsRecommended != null ? ' (${SeedLibraryTextConstants.around} ${plantSpecies.nbSeedsRecommended})' : ''}",
-                        keyboardType: TextInputType.number,
-                        isInt: true,
+                    Text(
+                      SeedLibraryTextConstants.addPlant,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
-                    ],
-                    const SizedBox(height: 30),
-                    TextEntry(
-                      controller: notes,
-                      label: SeedLibraryTextConstants.notes,
-                      canBeEmpty: true,
-                      keyboardType: TextInputType.multiline,
+                      textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 50),
-                    WaitingButton(
-                      builder: (child) => AddEditButtonLayout(
-                        colors: const [
-                          ColorConstants.gradient1,
-                          ColorConstants.gradient2,
-                        ],
-                        child: child,
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    const Text(
+                      SeedLibraryTextConstants.ancestor,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
                       ),
-                      onTap: () async {
-                        if (!key.currentState!.validate()) {
-                          displayToastWithContext(
-                            TypeMsg.error,
-                            SeedLibraryTextConstants.emptyFieldError,
-                          );
-                          return;
-                        }
-                        if (selectedAncestor.id == '' &&
-                            selectedSpecies.id == '') {
-                          displayToastWithContext(
-                            TypeMsg.error,
-                            SeedLibraryTextConstants.choosingSpecies,
-                          );
-                          return;
-                        }
-                        await tokenExpireWrapper(ref, () async {
-                          final value = await plantListNotifier.createPlant(
-                            PlantCreation(
-                              ancestorId: selectedAncestor.id == ''
-                                  ? null
-                                  : selectedAncestor.id,
-                              speciesId: selectedAncestor.id == ''
-                                  ? selectedSpecies.id
-                                  : selectedAncestor.speciesId,
-                              propagationMethod: propagationMethod,
-                              nbSeedsEnvelope:
-                                  propagationMethod == PropagationMethod.graine
-                                      ? int.parse(seedQuantity.text)
-                                      : 1,
-                              previousNote: notes.text,
-                            ),
-                          );
-                          if (value) {
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              SeedLibraryTextConstants.addedPlant,
-                            );
-                            showDialog(
-                              context: context.mounted ? context : context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: Text(
-                                    SeedLibraryTextConstants.writeReference +
-                                        plantList.last.plantReference,
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const Text(
-                                        SeedLibraryTextConstants.ok,
-                                      ),
-                                    ),
-                                  ],
+                    ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          ...myPlants.map((e) {
+                            return SmallPlantCard(
+                              plant: e,
+                              species: species,
+                              onClicked: () async {
+                                selectedAncestor.id == e.id
+                                    ? selectedAncestorNotifier
+                                        .setPlant(PlantSimple.empty())
+                                    : selectedAncestorNotifier.setPlant(e);
+                                final plant =
+                                    await plantNotifier.loadPlant(e.id);
+                                plant.whenData(
+                                  (value) =>
+                                      notes.text = value.currentNote ?? '',
                                 );
                               },
+                              selected: selectedAncestor.id == e.id,
                             );
-                          } else {
-                            displayToastWithContext(
-                              TypeMsg.error,
-                              SeedLibraryTextConstants.addingError,
-                            );
-                          }
-                          selectedSpeciesNotifier.setSpecies(Species.empty());
-                          selectedAncestorNotifier
-                              .setPlant(PlantSimple.empty());
-                          seedQuantity.clear();
-                          notes.clear();
-                        });
-                      },
-                      child: const Text(
-                        SeedLibraryTextConstants.add,
+                          }),
+                        ],
+                      ),
+                    ),
+                    if (selectedAncestor.id == '' && seedLibraryAdmin) ...[
+                      Text(
+                        SeedLibraryTextConstants.speciesSimple,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
-                          color: Color.fromARGB(255, 255, 255, 255),
                         ),
+                      ),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            ...species.map((e) {
+                              return SmallSpeciesCard(
+                                species: e,
+                                onClicked: () {
+                                  selectedSpecies.id == e.id
+                                      ? selectedSpeciesNotifier
+                                          .setSpecies(Species.empty())
+                                      : selectedSpeciesNotifier.setSpecies(e);
+                                },
+                                selected: selectedSpecies.id == e.id,
+                              );
+                            }),
+                          ],
+                        ),
+                      ),
+                    ],
+                    const SizedBox(height: 30),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              ...PropagationMethod.values.map((e) {
+                                return RadioChip(
+                                  label: e.name,
+                                  selected: propagationMethod == e,
+                                  onTap: () {
+                                    propagationMethodNotifier
+                                        .setPropagationMethod(e);
+                                  },
+                                );
+                              }),
+                            ],
+                          ),
+                          if (propagationMethod ==
+                              PropagationMethod.graine) ...[
+                            const SizedBox(height: 30),
+                            TextEntry(
+                              controller: seedQuantity,
+                              label:
+                                  "${SeedLibraryTextConstants.seedQuantitySimple}${plantSpecies.nbSeedsRecommended != null ? ' (${SeedLibraryTextConstants.around} ${plantSpecies.nbSeedsRecommended})' : ''}",
+                              keyboardType: TextInputType.number,
+                              isInt: true,
+                            ),
+                          ],
+                          const SizedBox(height: 30),
+                          TextEntry(
+                            controller: notes,
+                            label: SeedLibraryTextConstants.notes,
+                            canBeEmpty: true,
+                            keyboardType: TextInputType.multiline,
+                          ),
+                          const SizedBox(height: 50),
+                          WaitingButton(
+                            builder: (child) => AddEditButtonLayout(
+                              colors: const [
+                                ColorConstants.gradient1,
+                                ColorConstants.gradient2,
+                              ],
+                              child: child,
+                            ),
+                            onTap: () async {
+                              if (!key.currentState!.validate()) {
+                                displayToastWithContext(
+                                  TypeMsg.error,
+                                  SeedLibraryTextConstants.emptyFieldError,
+                                );
+                                return;
+                              }
+                              if (selectedAncestor.id == '' &&
+                                  selectedSpecies.id == '') {
+                                if (seedLibraryAdmin) {
+                                  displayToastWithContext(
+                                    TypeMsg.error,
+                                    SeedLibraryTextConstants
+                                        .choosingSpeciesOrAncestor,
+                                  );
+                                } else {
+                                  displayToastWithContext(
+                                    TypeMsg.error,
+                                    SeedLibraryTextConstants.choosingAncestor,
+                                  );
+                                }
+
+                                return;
+                              }
+                              await tokenExpireWrapper(ref, () async {
+                                final value =
+                                    await plantListNotifier.createPlant(
+                                  PlantCreation(
+                                    ancestorId: selectedAncestor.id == ''
+                                        ? null
+                                        : selectedAncestor.id,
+                                    speciesId: selectedAncestor.id == ''
+                                        ? selectedSpecies.id
+                                        : selectedAncestor.speciesId,
+                                    propagationMethod: propagationMethod,
+                                    nbSeedsEnvelope: propagationMethod ==
+                                            PropagationMethod.graine
+                                        ? int.parse(seedQuantity.text)
+                                        : 1,
+                                    previousNote: notes.text,
+                                  ),
+                                );
+                                if (value) {
+                                  displayToastWithContext(
+                                    TypeMsg.msg,
+                                    SeedLibraryTextConstants.addedPlant,
+                                  );
+                                  showDialog(
+                                    context:
+                                        context.mounted ? context : context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: Text(
+                                          SeedLibraryTextConstants
+                                                  .writeReference +
+                                              plantList.last.plantReference,
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text(
+                                              SeedLibraryTextConstants.ok,
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                } else {
+                                  displayToastWithContext(
+                                    TypeMsg.error,
+                                    SeedLibraryTextConstants.addingError,
+                                  );
+                                }
+                                selectedSpeciesNotifier
+                                    .setSpecies(Species.empty());
+                                selectedAncestorNotifier
+                                    .setPlant(PlantSimple.empty());
+                                seedQuantity.clear();
+                                notes.clear();
+                              });
+                            },
+                            child: const Text(
+                              SeedLibraryTextConstants.add,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
-            ],
-          ),
-        ),
       ),
     );
   }
