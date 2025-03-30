@@ -39,7 +39,7 @@ class StockPage extends HookConsumerWidget {
               const SizedBox(height: 10),
               plantFilteredList.isEmpty
                   ? const Text(
-                      SeedLibraryTextConstants.noPlants,
+                      SeedLibraryTextConstants.noStockPlants,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,

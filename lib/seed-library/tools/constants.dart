@@ -81,6 +81,7 @@ class SeedLibraryTextConstants {
   static const String noPersonalPlants =
       "Vous n'avez pas encore de plantes dans votre grainothèque. Vous pouvez en ajouter en allant dans les stocks.";
   static const String noSpecies = "Aucune espèce trouvée";
+  static const String noStockPlants = "Aucune plante disponible dans le stock";
   static const String notes = "Notes";
 
   static const String ok = "OK";
@@ -133,8 +134,6 @@ class SeedLibraryTextConstants {
   static const String winter = "Hiver";
   static const String writeReference =
       "Veuillez écrire la référence suivante : ";
-
-  static const String noPlants = "Aucune plante disponible dans le stock";
 }
 
 class SeedLibraryColorConstants {
