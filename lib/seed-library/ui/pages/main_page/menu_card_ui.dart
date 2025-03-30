@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 
@@ -32,10 +33,11 @@ class MenuCardUi extends StatelessWidget {
             size: 40,
           ),
           const SizedBox(width: 10),
-          Text(
+          AutoSizeText(
             text,
             style: const TextStyle(fontSize: 20),
             textAlign: TextAlign.center,
+            maxLines: 3,
           ),
         ],
       ),

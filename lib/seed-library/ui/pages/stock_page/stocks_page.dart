@@ -37,19 +37,34 @@ class StockPage extends HookConsumerWidget {
               const ResearchBar(),
               const FiltersBar(),
               const SizedBox(height: 10),
-              ...plantFilteredList.map(
-                (plant) => PlantCard(
-                  plant: plant,
-                  onClicked: () {
-                    plantNotifier.loadPlant(plant.id);
-                    QR.to(
-                      SeedLibraryRouter.root +
-                          SeedLibraryRouter.stock +
-                          SeedLibraryRouter.plantDetail,
-                    );
-                  },
-                ),
-              ),
+              plantFilteredList.isEmpty
+                  ? const Text(
+                      SeedLibraryTextConstants.noPlants,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    )
+                  : SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(
+                        children: [
+                          ...plantFilteredList.map(
+                            (plant) => PlantCard(
+                              plant: plant,
+                              onClicked: () {
+                                plantNotifier.loadPlant(plant.id);
+                                QR.to(
+                                  SeedLibraryRouter.root +
+                                      SeedLibraryRouter.stock +
+                                      SeedLibraryRouter.plantDetail,
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
             ],
           ),
         ),
