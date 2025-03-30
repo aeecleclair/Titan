@@ -42,7 +42,7 @@ class SeedLibraryMainPage extends HookConsumerWidget {
 
     return SeedLibraryTemplate(
       child: Padding(
-        padding: const EdgeInsets.all(40),
+        padding: const EdgeInsets.all(10),
         child: GridView(
           controller: controller,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
