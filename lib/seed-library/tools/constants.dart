@@ -77,6 +77,8 @@ class SeedLibraryTextConstants {
   static const String nbSeedsRecommendedError =
       "Veuillez entrer un nombre de graines recommandé supérieur à 0";
   static const String noDateError = "Veuillez entrer une date";
+  static const String noFilteredPlants =
+      "Aucune plante ne correspond à votre recherche. Essayez d'autres filtres.";
   static const String noMorePlant = 'Aucune plante n\'est disponible';
   static const String noPersonalPlants =
       "Vous n'avez pas encore de plantes dans votre grainothèque. Vous pouvez en ajouter en allant dans les stocks.";
