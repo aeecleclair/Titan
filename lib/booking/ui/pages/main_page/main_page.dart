@@ -77,13 +77,13 @@ class BookingMainPage extends HookConsumerWidget {
                     children: [
                       if (isManager)
                         AdminButton(
+                          text: BookingTextConstants.management,
                           onTap: () {
                             QR.to(BookingRouter.root + BookingRouter.manager);
                           },
                         ),
                       if (isAdmin)
                         AdminButton(
-                          text: "Gestion",
                           onTap: () {
                             QR.to(BookingRouter.root + BookingRouter.admin);
                           },
