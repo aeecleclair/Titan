@@ -65,7 +65,7 @@ class PlantDepositPage extends HookConsumerWidget {
         physics: const AlwaysScrollableScrollPhysics(
           parent: BouncingScrollPhysics(),
         ),
-        child: (myPlants.isEmpty && seedLibraryAdmin)
+        child: (myPlants.isEmpty && !seedLibraryAdmin)
             ? const Center(
                 child: Text(
                   SeedLibraryTextConstants.depositNotAvailable,
