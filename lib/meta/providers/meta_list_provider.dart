@@ -24,7 +24,7 @@ class MetaListNotifier extends ListNotifier<Advert> {
     return await add(repository.addMeta, advert);
   }
 
-  /*Future<void> loadMoreMetas() async {
+  Future<void> loadMoreMetas() async {
     if (!_hasMore) return; // Ne charge pas si toutes les données sont déjà récupérées
 
     final result = await addAll(
@@ -40,7 +40,7 @@ class MetaListNotifier extends ListNotifier<Advert> {
     } else {
       _page++; // Passe à la page suivante
     }
-  }*/
+  }
 
   Future<bool> updateAdvert(Advert advert) async {
     return await update(

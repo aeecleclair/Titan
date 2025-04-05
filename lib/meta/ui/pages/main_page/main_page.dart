@@ -1,17 +1,12 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/is_admin_provider.dart';
-import 'package:myecl/advert/providers/advert_list_provider.dart';
 import 'package:myecl/meta/providers/meta_list_provider.dart';
 import 'package:myecl/advert/providers/advert_posters_provider.dart';
 import 'package:myecl/advert/providers/advert_provider.dart';
 import 'package:myecl/advert/providers/announcer_provider.dart';
 import 'package:myecl/advert/providers/is_advert_admin_provider.dart';
-import 'package:myecl/advert/ui/pages/advert.dart';
 import 'package:myecl/advert/router.dart';
-import 'package:myecl/advert/ui/components/announcer_bar.dart';
-import 'package:myecl/advert/ui/components/advert_card.dart';
 import 'package:myecl/meta/ui/components/meta_card.dart';
 import 'package:myecl/meta/ui/pages/meta.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
@@ -26,10 +21,9 @@ class MetaMainPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final advertNotifier = ref.watch(advertProvider.notifier);
-    final metaList = ref.watch(advertListProvider);
-    final advertListNotifier = ref.watch(advertListProvider.notifier);
-    final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
-    final selected = ref.watch(announcerProvider);
+    final metaList = ref.watch(metaListProvider);
+    final metaListNotifier = ref.watch(metaListProvider.notifier);
+    final metaPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final selectedNotifier = ref.watch(announcerProvider.notifier);
     final isAdmin = ref.watch(isAdminProvider);
     final isAdvertAdmin = ref.watch(isAdvertAdminProvider);
@@ -81,7 +75,7 @@ class MetaMainPage extends HookConsumerWidget {
                       final events =
                           advertData; //.where((advert) => advert.type == 'event');
                       return _buildPaginatedAdvertList(events, advertNotifier,
-                          advertListNotifier, advertPostersNotifier);
+                          metaListNotifier, metaPostersNotifier);
                     },
                   ),
                   // Annonces Tab
@@ -91,7 +85,7 @@ class MetaMainPage extends HookConsumerWidget {
                       final annonces = advertData;
                       //.where((advert) => advert.type == 'annonce');
                       return _buildPaginatedAdvertList(annonces, advertNotifier,
-                          advertListNotifier, advertPostersNotifier);
+                          metaListNotifier, metaPostersNotifier);
                     },
                   ),
                   // Shotgun Tab
@@ -101,7 +95,7 @@ class MetaMainPage extends HookConsumerWidget {
                       final shotguns = advertData;
                       //.where((advert) => advert.type == 'shotgun');
                       return _buildPaginatedAdvertList(shotguns, advertNotifier,
-                          advertListNotifier, advertPostersNotifier);
+                          metaListNotifier, metaPostersNotifier);
                     },
                   ),
                 ],
@@ -114,9 +108,9 @@ class MetaMainPage extends HookConsumerWidget {
   }
 
   Widget _buildPaginatedAdvertList(
-    Iterable? adverts, // Ajout de null safety
+    Iterable? adverts,
     AdvertNotifier advertNotifier,
-    AdvertListNotifier metaListNotifier,
+    MetaListNotifier metaListNotifier,
     AdvertPostersNotifier advertPostersNotifier,
   ) {
     if (adverts == null || adverts.isEmpty) {
@@ -129,45 +123,52 @@ class MetaMainPage extends HookConsumerWidget {
       );
     }
 
-    final scrollController = ScrollController();
-    scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
-        debugPrint('Chargement de plus de données...');
-        // metaListNotifier.loadMoreAdverts(); // Charger plus de données
-      }
-    });
-
-    return ColumnRefresher(
+    return RefreshIndicator(
       onRefresh: () async {
         debugPrint('Rafraîchissement des données...');
-        await metaListNotifier.loadAdverts();
+        await metaListNotifier.loadMetas();
         advertPostersNotifier.resetTData();
       },
-      children: [
-        ListView.builder(
-          // Supprimé le widget Expanded
-          controller: scrollController,
-          itemCount: adverts.length,
-          shrinkWrap: true, // Ajouté pour permettre à ListView de s'adapter
-          physics:
-              const ClampingScrollPhysics(), // Ajouté pour éviter les conflits de défilement
-          itemBuilder: (context, index) {
-            final advert = adverts.elementAt(index);
-            debugPrint('Affichage de l\'élément $index : $advert');
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: MetaCard(
-                onTap: () {
-                  advertNotifier.setAdvert(advert);
-                  QR.to(AdvertRouter.root + AdvertRouter.detail);
+      child: NotificationListener<ScrollNotification>(
+        onNotification: (scrollNotification) {
+          // Déclenche le chargement quand on approche des 100 pixels de la fin
+          if (scrollNotification.metrics.pixels >=
+              scrollNotification.metrics.maxScrollExtent - 100) {
+            debugPrint('Chargement de plus de données...');
+            metaListNotifier.loadMoreMetas();
+          }
+          return false;
+        },
+        child: CustomScrollView(
+          slivers: [
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  final advert = adverts.elementAt(index);
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: MetaCard(
+                      onTap: () {
+                        advertNotifier.setAdvert(advert);
+                        QR.to(AdvertRouter.root + AdvertRouter.detail);
+                      },
+                      meta: advert,
+                    ),
+                  );
                 },
-                meta: advert,
-              )
-            );
-          },
+                childCount: adverts.length,
+              ),
+            ),
+            // Optionnel : affichage d'un indicateur de chargement en bas de la liste
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Center(child: CircularProgressIndicator()),
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
