@@ -27,16 +27,16 @@ class MetaListNotifier extends ListNotifier<Advert> {
   Future<void> loadMoreMetas() async {
     if (!_hasMore) return; // Ne charge pas si toutes les données sont déjà récupérées
 
-    final result = await addAll(
+    final result = await appendAll(
       (currentList) => repository.getMetas(
         limit: _limit,
         after: currentList.isNotEmpty ? currentList.last.id : null,
       ),
-      state.value ?? [], // Passe la liste actuelle comme paramètre
+      state.value ?? [],
     );
 
     if (!result) {
-      _hasMore = false; // Plus de données à charger si l'ajout échoue
+      _hasMore = false; // Plus de données à charger si l'ajout échoue ou si la nouvelle liste est vide
     } else {
       _page++; // Passe à la page suivante
     }
