@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
@@ -73,6 +72,7 @@ class MetaCard extends HookConsumerWidget {
     double width = 340;
     double height = 300;
     double imageHeight = 120;
+    double maxImageHeight = 180;
     double maxHeight = MediaQuery.of(context).size.height - 344;
     final posters = ref.watch(
       advertPostersProvider.select((advertPosters) => advertPosters[meta.id]),
@@ -162,7 +162,6 @@ class MetaCard extends HookConsumerWidget {
             : Container(
                 margin: const EdgeInsets.symmetric(vertical: 4),
                 width: width,
-                height: height,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   boxShadow: const [
@@ -175,122 +174,124 @@ class MetaCard extends HookConsumerWidget {
                   ],
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Stack(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Column(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.only(
-                              top: 20, left: 10, right: 10),
-                          width: width,
-                          height: height - imageHeight,
-                          child: Column(
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: 20, left: 10, right: 10, bottom: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
+                                  CircleAvatar(
+                                    radius: 20,
+                                    backgroundColor: Colors.grey.shade300,
+                                    child: const Icon(
+                                      Icons.person,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      CircleAvatar(
-                                        radius: 20,
-                                        backgroundColor: Colors.grey.shade300,
-                                        child: const Icon(
-                                          Icons.person,
-                                          color: Colors.white,
-                                          size: 20,
+                                      Text(
+                                        meta.announcer.name.trim(),
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      const SizedBox(width: 8),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            meta.announcer.name.trim(),
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          Text(
-                                            "Jutssou".trim(),
-                                            style: TextStyle(
-                                              color: Colors.grey.shade600,
-                                              fontSize: 14,
-                                            ),
-                                          ),
-                                        ],
+                                      Text(
+                                        "Jutssou",
+                                        style: TextStyle(
+                                          color: Colors.grey.shade600,
+                                          fontSize: 14,
+                                        ),
                                       ),
                                     ],
                                   ),
-                                  Text(
-                                    DateFormat('HH:mm dd/MM/yy')
-                                        .format(meta.date),
-                                    style: const TextStyle(
-                                        color: Colors.grey, fontSize: 14),
-                                  ),
                                 ],
                               ),
-                              Column(
-                                children: [
-                                  Container(
-                                    width: width,
-                                    margin: const EdgeInsets.only(bottom: 5),
-                                    child: AutoSizeText(
-                                      meta.title.trim(),
-                                      textAlign: TextAlign.left,
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
-                                      minFontSize: 15,
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                              Text(
+                                DateFormat('HH:mm dd/MM/yy').format(meta.date),
+                                style: const TextStyle(
+                                    color: Colors.grey, fontSize: 14),
                               ),
-                              Expanded(
-                                child: TextWithHyperLink(
-                                  meta.content.trim(),
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.justify,
-                                  maxLines: false ? 3 : 6,
-                                  minFontSize: 13,
-                                  maxFontSize: 15,
-                                  style: const TextStyle(
-                                      color: Colors.black, fontSize: 15),
-                                ),
-                              ),
-                              /*if (false)
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 6),
-                                  child: Center(
-                                    // <-- Ajout du centrage
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize
-                                          .min, // <-- Permet au Row de s'ajuster à son contenu
-                                      children: [
-                                        const Icon(Icons.timer,
-                                            size: 20, color: Colors.red),
-                                        const SizedBox(width: 4),
-                                        Text(
-                                          _countdown,
-                                          style: const TextStyle(
-                                              fontSize: 16, color: Colors.red),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),*/
                             ],
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 10),
+                          Container(
+                            width: width,
+                            margin: const EdgeInsets.only(bottom: 5),
+                            child: AutoSizeText(
+                              meta.title.trim(),
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              minFontSize: 15,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          TextWithHyperLink(
+                            meta.content.trim(),
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.justify,
+                            maxLines: 6,
+                            minFontSize: 13,
+                            maxFontSize: 15,
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 15),
+                          ),
+                        ],
+                      ),
                     ),
+                    if (true)//if (meta.image != null && meta.image.isNotEmpty)
+                      AutoLoaderChild(
+                        group: posters,
+                        notifier: advertPostersNotifier,
+                        mapKey: meta.id,
+                        loader: (advertId) =>
+                            posterNotifier.getAdvertPoster(advertId),
+                        loadingBuilder: (context) => Container(
+                          height: maxImageHeight,
+                          width: width,
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(10),
+                              bottomRight: Radius.circular(10),
+                            ),
+                            color: Colors.grey[300],
+                          ),
+                        ),
+                        dataBuilder: (context, value) => Container(
+                          height: maxImageHeight,
+                          width: width,
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(10),
+                              bottomRight: Radius.circular(10),
+                            ),
+                            image: DecorationImage(
+                              image: value.first.image,
+                              fit: BoxFit.cover,
+                              alignment: Alignment.center,
+                            ),
+                          ),
+                        ),
+                      ),
                   ],
                 ),
               ),
