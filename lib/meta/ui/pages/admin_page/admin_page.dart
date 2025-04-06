@@ -12,6 +12,7 @@ import 'package:myecl/meta/ui/pages/meta.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:myecl/tools/ui/components/paginated_list.dart';
 
 class MetaAdminPage extends HookConsumerWidget {
   const MetaAdminPage({super.key});
@@ -66,66 +67,40 @@ class MetaAdminPage extends HookConsumerWidget {
       data: (adverts) {
         final filteredList =
             adverts; //where((advert) => advert.type == type).toList();
-        return RefreshIndicator(
+        return PaginatedList<Advert>(
+          items: filteredList,
           onRefresh: () async {
             await metaListNotifier.loadMetas();
             metaPostersNotifier.resetTData();
           },
-          child: NotificationListener<ScrollNotification>(
-            onNotification: (scrollNotification) {
-              if (scrollNotification.metrics.pixels >=
-                  scrollNotification.metrics.maxScrollExtent - 100) {
-                metaListNotifier.loadMoreMetas();
-              }
-              return false;
+          loadMore: metaListNotifier.loadMoreMetas,
+          itemBuilder: (context, advert) => AdminAdvertCard(
+            advert: advert,
+            onTap: () {
+              advertNotifier.setAdvert(advert);
+              QR.to(MetaRouter.root + MetaRouter.detail);
             },
-            child: CustomScrollView(
-              slivers: [
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      if (index < filteredList.length) {
-                        final advert = filteredList[index];
-                        return AdminAdvertCard(
-                          advert: advert,
-                          onTap: () {
-                            advertNotifier.setAdvert(advert);
-                            QR.to(MetaRouter.root + MetaRouter.detail);
-                          },
-                          onEdit: () {
-                            advertNotifier.setAdvert(advert);
-                            QR.to(MetaRouter.root +
-                                MetaRouter.admin +
-                                MetaRouter.addEditAdvert);
-                          },
-                          onDelete: () async {
-                            await showDialog(
-                              context: context,
-                              builder: (context) {
-                                return CustomDialogBox(
-                                  title: MetaTextConstants.deleting,
-                                  descriptions: MetaTextConstants.deleteAdvert,
-                                  onYes: () {
-                                    metaListNotifier.deleteMeta(advert);
-                                    metaPostersNotifier.deleteE(advert.id, 0);
-                                  },
-                                );
-                              },
-                            );
-                          },
-                        );
-                      } else {
-                        return const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 16),
-                          child: Center(child: CircularProgressIndicator()),
-                        );
-                      }
+            onEdit: () {
+              advertNotifier.setAdvert(advert);
+              QR.to(MetaRouter.root +
+                  MetaRouter.admin +
+                  MetaRouter.addEditAdvert);
+            },
+            onDelete: () async {
+              await showDialog(
+                context: context,
+                builder: (context) {
+                  return CustomDialogBox(
+                    title: MetaTextConstants.deleting,
+                    descriptions: MetaTextConstants.deleteAdvert,
+                    onYes: () {
+                      metaListNotifier.deleteMeta(advert);
+                      metaPostersNotifier.deleteE(advert.id, 0);
                     },
-                    childCount: filteredList.length + 1,
-                  ),
-                ),
-              ],
-            ),
+                  );
+                },
+              );
+            },
           ),
         );
       },

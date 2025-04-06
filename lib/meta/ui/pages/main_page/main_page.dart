@@ -14,6 +14,7 @@ import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/admin_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:myecl/advert/tools/constants.dart';
+import 'package:myecl/tools/ui/components/paginated_list.dart';
 
 class MetaMainPage extends HookConsumerWidget {
   const MetaMainPage({super.key});
@@ -123,50 +124,22 @@ class MetaMainPage extends HookConsumerWidget {
       );
     }
 
-    return RefreshIndicator(
+    return PaginatedList(
+      items: adverts.toList(),
       onRefresh: () async {
         debugPrint('Rafraîchissement des données...');
         await metaListNotifier.loadMetas();
         advertPostersNotifier.resetTData();
       },
-      child: NotificationListener<ScrollNotification>(
-        onNotification: (scrollNotification) {
-          // Déclenche le chargement quand on approche des 100 pixels de la fin
-          if (scrollNotification.metrics.pixels >=
-              scrollNotification.metrics.maxScrollExtent - 100) {
-            debugPrint('Chargement de plus de données...');
-            metaListNotifier.loadMoreMetas();
-          }
-          return false;
-        },
-        child: CustomScrollView(
-          slivers: [
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  final advert = adverts.elementAt(index);
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5),
-                    child: MetaCard(
-                      onTap: () {
-                        advertNotifier.setAdvert(advert);
-                        QR.to(AdvertRouter.root + AdvertRouter.detail);
-                      },
-                      meta: advert,
-                    ),
-                  );
-                },
-                childCount: adverts.length,
-              ),
-            ),
-            // Optionnel : affichage d'un indicateur de chargement en bas de la liste
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Center(child: CircularProgressIndicator()),
-              ),
-            ),
-          ],
+      loadMore: metaListNotifier.loadMoreMetas,
+      itemBuilder: (context, advert) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5),
+        child: MetaCard(
+          onTap: () {
+            advertNotifier.setAdvert(advert);
+            QR.to(AdvertRouter.root + AdvertRouter.detail);
+          },
+          meta: advert,
         ),
       ),
     );
