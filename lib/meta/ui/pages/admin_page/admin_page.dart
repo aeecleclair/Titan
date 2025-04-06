@@ -22,7 +22,6 @@ class MetaAdminPage extends HookConsumerWidget {
     final advertList = ref.watch(advertListProvider);
     final advertListNotifier = ref.watch(advertListProvider.notifier);
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
-    // Modification: MetaTemplate now wraps the DefaultTabController.
     return MetaTemplate(
       child: DefaultTabController(
         length: 3,
@@ -72,68 +71,61 @@ class MetaAdminPage extends HookConsumerWidget {
             await metaListNotifier.loadMetas();
             metaPostersNotifier.resetTData();
           },
-          child: ListView(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  advertNotifier.setAdvert(Advert.empty());
-                  QR.to(
-                    MetaRouter.root +
-                        MetaRouter.admin +
-                        MetaRouter.addEditAdvert,
-                  );
-                },
-                child: CardLayout(
-                  margin: const EdgeInsets.all(10),
-                  width: 300,
-                  height: 100,
-                  colors: [
-                    Colors.white,
-                    Colors.grey.shade100,
-                  ],
-                  shadowColor: Colors.grey.withValues(alpha: 0.2),
-                  child: Center(
-                    child: HeroIcon(
-                      HeroIcons.plus,
-                      size: 40,
-                      color: Colors.grey.shade500,
-                    ),
-                  ),
-                ),
-              ),
-              ...filteredList.map(
-                (advert) => AdminAdvertCard(
-                  advert: advert,
-                  onTap: () {
-                    advertNotifier.setAdvert(advert);
-                    QR.to(MetaRouter.root + MetaRouter.detail);
-                  },
-                  onEdit: () {
-                    advertNotifier.setAdvert(advert);
-                    QR.to(
-                      MetaRouter.root +
-                          MetaRouter.admin +
-                          MetaRouter.addEditAdvert,
-                    );
-                  },
-                  onDelete: () async {
-                    await showDialog(
-                      context: context,
-                      builder: (context) {
-                        return CustomDialogBox(
-                          title: MetaTextConstants.deleting,
-                          descriptions: MetaTextConstants.deleteAdvert,
-                          onYes: () {
-                            metaListNotifier.deleteMeta(advert);
-                            metaPostersNotifier.deleteE(advert.id, 0);
+          child: NotificationListener<ScrollNotification>(
+            onNotification: (scrollNotification) {
+              if (scrollNotification.metrics.pixels >=
+                  scrollNotification.metrics.maxScrollExtent - 100) {
+                metaListNotifier.loadMoreMetas();
+              }
+              return false;
+            },
+            child: CustomScrollView(
+              slivers: [
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      if (index < filteredList.length) {
+                        final advert = filteredList[index];
+                        return AdminAdvertCard(
+                          advert: advert,
+                          onTap: () {
+                            advertNotifier.setAdvert(advert);
+                            QR.to(MetaRouter.root + MetaRouter.detail);
+                          },
+                          onEdit: () {
+                            advertNotifier.setAdvert(advert);
+                            QR.to(MetaRouter.root +
+                                MetaRouter.admin +
+                                MetaRouter.addEditAdvert);
+                          },
+                          onDelete: () async {
+                            await showDialog(
+                              context: context,
+                              builder: (context) {
+                                return CustomDialogBox(
+                                  title: MetaTextConstants.deleting,
+                                  descriptions: MetaTextConstants.deleteAdvert,
+                                  onYes: () {
+                                    metaListNotifier.deleteMeta(advert);
+                                    metaPostersNotifier.deleteE(advert.id, 0);
+                                  },
+                                );
+                              },
+                            );
                           },
                         );
-                      },
-                    );
-                  },
+                      } else {
+                        return const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 16),
+                          child: Center(child: CircularProgressIndicator()),
+                        );
+                      }
+                    },
+                    childCount: filteredList.length + 1,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
