@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:myecl/admin/providers/is_admin_provider.dart';
 import 'package:myecl/advert/providers/is_advert_admin_provider.dart';
-import 'package:myecl/advert/ui/pages/admin_page/admin_page.dart'
+import 'package:myecl/meta/ui/pages/admin_page/admin_page.dart'
     deferred as admin_page;
 import 'package:myecl/advert/ui/pages/detail_page/detail.dart'
     deferred as detail_page;
@@ -45,7 +45,7 @@ class MetaRouter {
         children: [
           QRoute(
             path: admin,
-            builder: () => admin_page.AdvertAdminPage(),
+            builder: () => admin_page.MetaAdminPage(),
             middleware: [
               AdminMiddleware(ref, isAdvertAdminProvider),
               DeferredLoadingMiddleware(admin_page.loadLibrary),

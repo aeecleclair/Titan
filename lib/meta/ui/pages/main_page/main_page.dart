@@ -7,6 +7,7 @@ import 'package:myecl/advert/providers/advert_provider.dart';
 import 'package:myecl/advert/providers/announcer_provider.dart';
 import 'package:myecl/advert/providers/is_advert_admin_provider.dart';
 import 'package:myecl/advert/router.dart';
+import 'package:myecl/meta/router.dart';
 import 'package:myecl/meta/ui/components/meta_card.dart';
 import 'package:myecl/meta/ui/pages/meta.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
@@ -40,14 +41,14 @@ class MetaMainPage extends HookConsumerWidget {
                     AdminButton(
                       onTap: () {
                         selectedNotifier.clearAnnouncer();
-                        QR.to(AdvertRouter.root + AdvertRouter.admin);
+                        QR.to(MetaRouter.root + MetaRouter.admin);
                       },
                     ),
                   if (isAdmin)
                     AdminButton(
                       onTap: () {
                         QR.to(
-                          AdvertRouter.root + AdvertRouter.addRemAnnouncer,
+                          MetaRouter.root + MetaRouter.addRemAnnouncer,
                         );
                       },
                       text: AdvertTextConstants.management,
