@@ -1,51 +1,51 @@
 import 'package:myecl/advert/class/announcer.dart';
+import 'package:myecl/meta/class/meta.dart';
 import 'package:myecl/tools/functions.dart';
 
-class Advert {
-  late final String id;
-  late final String title;
-  late final String content;
-  late final DateTime date;
-  late final Announcer announcer;
-  late final List<String> tags;
-
+class Advert extends Meta {
   Advert({
-    required this.id,
-    required this.title,
-    required this.content,
-    required this.date,
-    required this.announcer,
-    required this.tags,
+    required super.id,
+    required super.title,
+    required super.content,
+    required super.date,
+    required super.announcer,
+    required super.tags,
   });
 
-  Advert.fromJson(Map<String, dynamic> json) {
-    id = json["id"];
-    title = json["title"];
-    content = json["content"];
-    date = processDateFromAPI(json["date"]);
-    announcer = Announcer.fromJson(json["advertiser"]);
-    tags = json["tags"].split(', ');
-  }
+  Advert.fromJson(Map<String, dynamic> json)
+      : super(
+          id: json["id"],
+          title: json["title"],
+          content: json["content"],
+          date: processDateFromAPI(json["date"]),
+          announcer: Announcer.fromJson(json["advertiser"]),
+          tags: json["tags"].split(', '),
+        );
 
+  @override
   Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data["id"] = id;
-    data["title"] = title;
-    data["content"] = content;
-    data["date"] = processDateToAPI(date);
+    final data = super.toJson();
     data["advertiser_id"] = announcer.id;
-    data["tags"] = tags.join(', ');
     return data;
   }
 
-  Advert copyWith({id, title, content, date, author, announcer, tags}) {
+  @override
+  Advert copyWith({
+    dynamic id,
+    dynamic title,
+    dynamic content,
+    dynamic date,
+    dynamic announcer,
+    dynamic author,
+    dynamic tags,
+  }) {
     return Advert(
       id: id ?? this.id,
       title: title ?? this.title,
       content: content ?? this.content,
       date: date ?? this.date,
-      announcer: announcer ?? this.announcer,
-      tags: tags ?? this.tags,
+      announcer: announcer is Announcer ? announcer : this.announcer,
+      tags: tags is List<String> ? tags : this.tags,
     );
   }
 

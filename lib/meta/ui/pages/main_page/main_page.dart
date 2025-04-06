@@ -20,8 +20,8 @@ class MetaMainPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final advertNotifier = ref.watch(advertProvider.notifier);
-    final metaList = ref.watch(metaListProvider);
-    final metaListNotifier = ref.watch(metaListProvider.notifier);
+    final advertList = ref.watch(advertListProvider);
+    final advertListNotifier = ref.watch(advertListProvider.notifier);
     final metaPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final selectedNotifier = ref.watch(announcerProvider.notifier);
     final isAdmin = ref.watch(isAdminProvider);
@@ -69,32 +69,32 @@ class MetaMainPage extends HookConsumerWidget {
                 children: [
                   // Events Tab
                   AsyncChild(
-                    value: metaList,
+                    value: advertList,
                     builder: (context, advertData) {
                       final events =
                           advertData; //.where((advert) => advert.type == 'event');
                       return _buildPaginatedAdvertList(events, advertNotifier,
-                          metaListNotifier, metaPostersNotifier);
+                          advertListNotifier, metaPostersNotifier);
                     },
                   ),
                   // Annonces Tab
                   AsyncChild(
-                    value: metaList,
+                    value: advertList,
                     builder: (context, advertData) {
                       final annonces = advertData;
                       //.where((advert) => advert.type == 'annonce');
                       return _buildPaginatedAdvertList(annonces, advertNotifier,
-                          metaListNotifier, metaPostersNotifier);
+                          advertListNotifier, metaPostersNotifier);
                     },
                   ),
                   // Shotgun Tab
                   AsyncChild(
-                    value: metaList,
+                    value: advertList,
                     builder: (context, advertData) {
                       final shotguns = advertData;
                       //.where((advert) => advert.type == 'shotgun');
                       return _buildPaginatedAdvertList(shotguns, advertNotifier,
-                          metaListNotifier, metaPostersNotifier);
+                          advertListNotifier, metaPostersNotifier);
                     },
                   ),
                 ],
