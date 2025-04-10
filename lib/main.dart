@@ -17,9 +17,12 @@ import 'package:myecl/router.dart';
 import 'package:myecl/service/tools/setup.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/plausible/plausible_observer.dart';
+import 'package:myecl/tools/providers/path_forwarding_provider.dart';
 import 'package:myecl/tools/ui/layouts/app_template.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:qlevar_router/qlevar_router.dart' as qqr;
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:app_links/app_links.dart';
 
 void main() async {
   await dotenv.load();
@@ -37,11 +40,11 @@ void main() async {
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   timeago.setLocaleMessages('fr', timeago.FrMessages());
   timeago.setLocaleMessages('fr_short', timeago.FrShortMessages());
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends HookConsumerWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -51,7 +54,40 @@ class MyApp extends HookConsumerWidget {
     final animationNotifier = ref.read(backgroundAnimationProvider.notifier);
     final navigatorKey = GlobalKey<NavigatorState>();
     final plausible = getPlausible();
+    final pathForwardingNotifier = ref.watch(pathForwardingProvider.notifier);
     Future(() => animationNotifier.setController(animationController));
+
+    useEffect(
+      () {
+        print("Initialisation de l'écoute des liens profonds");
+        final appLinks = AppLinks();
+
+        Future<void> initDeepLinks() async {
+          try {
+            appLinks.uriLinkStream.listen((Uri? uri) {
+              if (uri != null) {
+                final queryParams = uri.queryParameters.entries
+                    .map((e) => "${e.key}=${e.value}")
+                    .join("&");
+
+                final newPath = queryParams.isNotEmpty
+                    ? "/${uri.host}?$queryParams"
+                    : "/${uri.host}";
+
+                pathForwardingNotifier.forward(newPath);
+                QR.toName(newPath);
+              }
+            });
+          } catch (err) {
+            print("Erreur lors de l'écoute des liens : $err");
+          }
+        }
+
+        initDeepLinks();
+        return null;
+      },
+      [],
+    );
 
     final popScope = PopScope(
       canPop: false,
@@ -105,15 +141,16 @@ class MyApp extends HookConsumerWidget {
         ),
       ),
     );
+    return popScope;
 
-    if (kIsWeb) {
-      return popScope;
-    }
-    return MaterialApp(
-      initialRoute: '/',
-      debugShowCheckedModeBanner: false,
-      home: popScope,
-    );
+    // if (kIsWeb) {
+    //   return popScope;
+    // }
+    // return MaterialApp(
+    //   initialRoute: '/',
+    //   debugShowCheckedModeBanner: false,
+    //   home: popScope,
+    // );
   }
 }
 

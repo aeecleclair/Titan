@@ -14,6 +14,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:universal_html/html.dart' as html;
+import 'package:url_launcher/url_launcher.dart';
 
 class ConfirmFundButton extends ConsumerWidget {
   const ConfirmFundButton({super.key});
@@ -23,13 +24,20 @@ class ConfirmFundButton extends ConsumerWidget {
     final fundAmount = ref.watch(fundAmountProvider);
     final fundingUrlNotifier = ref.watch(fundingUrlProvider.notifier);
 
-    final redirectUrl = "https://myecl.fr/static.html";
+    final redirectUrl = "titan.alpha://payment";
 
     final enabled = fundAmount.isNotEmpty &&
         double.parse(fundAmount.replaceAll(',', '.')) > 0;
 
     void displayToastWithContext(TypeMsg type, String message) {
       displayToast(context, type, message);
+    }
+
+    Future<void> _launchUrl(url) async {
+      if (!await launchUrl(Uri.parse(url),
+          mode: LaunchMode.externalApplication)) {
+        throw Exception('Could not launch google');
+      }
     }
 
     void helloAssoCallback(String fundingUrl) async {
@@ -98,8 +106,7 @@ class ConfirmFundButton extends ConsumerWidget {
               helloAssoCallback(fundingUrl.url);
               return;
             }
-            QR.to(
-                "${PaymentRouter.root}${PaymentRouter.fund}?path=${fundingUrl.url}");
+            _launchUrl(fundingUrl.url);
           },
           loading: () {},
           error: (error, _) {

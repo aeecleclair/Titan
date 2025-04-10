@@ -32,6 +32,18 @@ class AmapMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final params = QR.params;
+    final success = params['code'];
+    if (success.toString() == 'succeeded') {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        displayToast(
+          context,
+          TypeMsg.msg,
+          "Le rechargement de votre compte a été effectué avec succès",
+          duration: 5000,
+        );
+      });
+    }
     final order = ref.watch(orderProvider);
     final orderNotifier = ref.read(orderProvider.notifier);
     final isAdmin = ref.watch(isAmapAdminProvider);
