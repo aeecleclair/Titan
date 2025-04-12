@@ -42,8 +42,6 @@ void displayToast(
       break;
   }
 
-  bool _isFlashShown = false;
-
   showFlash(
     context: context,
     duration: Duration(milliseconds: duration),

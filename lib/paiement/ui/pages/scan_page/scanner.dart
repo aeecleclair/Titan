@@ -27,11 +27,7 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
   StreamSubscription<Object?>? _subscription;
 
   void _handleBarcode(BarcodeCapture barcodes) async {
-    print('ok');
     final barcode = ref.watch(barcodeProvider);
-    print(barcode);
-    print(mounted);
-    print(barcodes.barcodes.isNotEmpty);
     final barcodeNotifier = ref.read(barcodeProvider.notifier);
     final store = ref.read(selectedStoreProvider);
     final scanNotifier = ref.read(scanProvider.notifier);
@@ -42,6 +38,9 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
           .updateBarcode(barcodes.barcodes.firstOrNull!.rawValue!);
       final value = await scanNotifier.scan(store.id, data);
       ongoingTransactionNotifier.updateOngoingTransaction(value);
+      value.whenData((data) {
+        barcodeNotifier.clearBarcode();
+      });
     }
   }
 
@@ -59,7 +58,6 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
       return;
     }
 
-    print(state);
     switch (state) {
       case AppLifecycleState.detached:
       case AppLifecycleState.hidden:
