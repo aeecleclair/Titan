@@ -8,11 +8,8 @@ import 'package:myecl/paiement/class/init_info.dart';
 import 'package:myecl/paiement/providers/fund_amount_provider.dart';
 import 'package:myecl/paiement/providers/funding_url_provider.dart';
 import 'package:myecl/paiement/providers/my_wallet_provider.dart';
-import 'package:myecl/paiement/router.dart';
-import 'package:myecl/paiement/ui/pages/fund_page/web_view_modal.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:qlevar_router/qlevar_router.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -33,9 +30,11 @@ class ConfirmFundButton extends ConsumerWidget {
       displayToast(context, type, message);
     }
 
-    Future<void> _launchUrl(url) async {
-      if (!await launchUrl(Uri.parse(url),
-          mode: LaunchMode.externalApplication)) {
+    Future<void> tryLaunchUrl(url) async {
+      if (!await launchUrl(
+        Uri.parse(url),
+        mode: LaunchMode.externalApplication,
+      )) {
         throw Exception('Could not launch google');
       }
     }
@@ -106,7 +105,7 @@ class ConfirmFundButton extends ConsumerWidget {
               helloAssoCallback(fundingUrl.url);
               return;
             }
-            _launchUrl(fundingUrl.url);
+            tryLaunchUrl(fundingUrl.url);
           },
           loading: () {},
           error: (error, _) {

@@ -157,7 +157,6 @@ class ScanPage extends HookConsumerWidget {
                                 child: child,
                               ),
                               onTap: () async {
-                                final barcode = ref.read(barcodeProvider);
                                 if (barcode == null) {
                                   return;
                                 }

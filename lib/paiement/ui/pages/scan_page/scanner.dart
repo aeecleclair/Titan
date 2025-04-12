@@ -21,14 +21,17 @@ class Scanner extends ConsumerStatefulWidget {
 class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
   final controller = MobileScannerController(
     autoStart: false,
-    torchEnabled: true,
     useNewCameraSelector: true,
   );
 
   StreamSubscription<Object?>? _subscription;
 
   void _handleBarcode(BarcodeCapture barcodes) async {
+    print('ok');
     final barcode = ref.watch(barcodeProvider);
+    print(barcode);
+    print(mounted);
+    print(barcodes.barcodes.isNotEmpty);
     final barcodeNotifier = ref.read(barcodeProvider.notifier);
     final store = ref.read(selectedStoreProvider);
     final scanNotifier = ref.read(scanProvider.notifier);
