@@ -27,6 +27,10 @@ class PaymentMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    resetHandledKeys() {
+      _handledKeys.clear();
+    }
+
     final shouldDisplayTosDialog = ref.watch(shouldDisplayTosDialogProvider);
     final shouldDisplayTosDialogNotifier =
         ref.read(shouldDisplayTosDialogProvider.notifier);
@@ -134,8 +138,9 @@ class PaymentMainPage extends HookConsumerWidget {
                             return SizedBox(
                               height: 250,
                               width: MediaQuery.of(context).size.width,
-                              child: const AccountCard(
+                              child: AccountCard(
                                 toggle: null,
+                                resetHandledKeys: resetHandledKeys,
                               ),
                             );
                           }
@@ -148,6 +153,7 @@ class PaymentMainPage extends HookConsumerWidget {
                               ),
                               front: AccountCard(
                                 toggle: toggle,
+                                resetHandledKeys: resetHandledKeys,
                               ),
                               controller: controller,
                             ),

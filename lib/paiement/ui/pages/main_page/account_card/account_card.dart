@@ -23,7 +23,9 @@ import 'package:qlevar_router/qlevar_router.dart';
 
 class AccountCard extends HookConsumerWidget {
   final Function? toggle;
-  const AccountCard({super.key, required this.toggle});
+  final Function resetHandledKeys;
+  const AccountCard(
+      {super.key, required this.toggle, required this.resetHandledKeys});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -52,6 +54,7 @@ class AccountCard extends HookConsumerWidget {
     }
 
     void showFundModal() {
+      resetHandledKeys();
       showModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
