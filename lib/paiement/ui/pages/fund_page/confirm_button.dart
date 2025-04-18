@@ -112,6 +112,9 @@ class ConfirmFundButton extends ConsumerWidget {
             displayToastWithContext(TypeMsg.error, error.toString());
           },
         );
+        if (context.mounted) {
+          Navigator.pop(context);
+        }
       },
       waitingColor: const Color(0xff2e2f5e),
       builder: (Widget child) => Container(

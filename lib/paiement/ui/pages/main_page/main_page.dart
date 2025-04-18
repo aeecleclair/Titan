@@ -16,12 +16,14 @@ import 'package:myecl/paiement/ui/pages/main_page/seller_card/store_card.dart';
 import 'package:myecl/paiement/ui/pages/main_page/seller_card/store_list.dart';
 import 'package:myecl/paiement/ui/paiement.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/providers/path_forwarding_provider.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:qlevar_router/qlevar_router.dart';
 
 class PaymentMainPage extends HookConsumerWidget {
   const PaymentMainPage({super.key});
+
+  static final Set<String> _handledKeys = {};
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -38,22 +40,20 @@ class PaymentMainPage extends HookConsumerWidget {
     final isAdmin = ref.watch(isPaymentAdminProvider);
     final flipped = useState(true);
 
-    final params = QR.params;
-    final success = params['code'];
-    var displaySuccessPopup = (success.toString() == 'succeeded');
-    print("here");
-    if (displaySuccessPopup) {
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        await myWalletNotifier.getMyWallet();
-        displayToast(
-          context,
-          TypeMsg.msg,
-          "Le rechargement de votre compte a été effectué avec succès",
-          duration: 5000,
-        );
-      });
-      displaySuccessPopup = false;
-    }
+    ref.listen(pathForwardingProvider, (previous, next) async {
+      final params = next.queryParameters;
+      if (params != null &&
+          params["code"] == "succeeded" &&
+          !_handledKeys.contains("code")) {
+        _handledKeys.add("code");
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          displayToast(context, TypeMsg.msg, "Paiement réussi");
+        });
+      }
+      await mySellersNotifier.getMyStores();
+      await myHistoryNotifier.getHistory();
+      await myWalletNotifier.getMyWallet();
+    });
 
     final controller = useAnimationController(
       duration: const Duration(milliseconds: 500),

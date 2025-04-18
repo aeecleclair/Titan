@@ -4,8 +4,12 @@ import 'package:myecl/tools/class/path_forwarding.dart';
 class PathForwardingProvider extends StateNotifier<PathForwarding> {
   PathForwardingProvider() : super(PathForwarding.empty());
 
-  void forward(String path) {
-    state = state.copyWith(path: path);
+  void forward(String path, {Map<String, String>? queryParameters}) {
+    state = state.copyWith(path: path, queryParameters: queryParameters);
+  }
+
+  void clearParams() {
+    state = state.copyWith(queryParameters: null);
   }
 
   void login() {

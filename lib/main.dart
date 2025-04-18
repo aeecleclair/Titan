@@ -66,15 +66,15 @@ class MyApp extends HookConsumerWidget {
           try {
             appLinks.uriLinkStream.listen((Uri? uri) {
               if (uri != null) {
-                final queryParams = uri.queryParameters.entries
-                    .map((e) => "${e.key}=${e.value}")
-                    .join("&");
+                final Map<String, String> queryParams = uri.queryParameters;
 
-                final newPath = queryParams.isNotEmpty
-                    ? "/${uri.host}?$queryParams"
-                    : "/${uri.host}";
-
-                pathForwardingNotifier.forward(newPath);
+                final newPath = "/${uri.host}";
+                pathForwardingNotifier.forward(
+                  newPath,
+                  queryParameters: queryParams,
+                );
+                final pathForwarding = ref.read(pathForwardingProvider);
+                print(pathForwarding);
                 QR.toName(newPath);
               }
             });
