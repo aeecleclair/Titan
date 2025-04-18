@@ -262,6 +262,9 @@ class ScanPage extends HookConsumerWidget {
                                                   "Erreur lors de l'annulation",
                                                 );
                                               }
+                                              ongoingTransactionNotifier
+                                                  .clearOngoingTransaction();
+                                              barcodeNotifier.clearBarcode();
                                             },
                                             error: (error, stack) {
                                               displayToastWithContext(

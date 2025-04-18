@@ -38,9 +38,9 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
           .updateBarcode(barcodes.barcodes.firstOrNull!.rawValue!);
       final value = await scanNotifier.scan(store.id, data);
       ongoingTransactionNotifier.updateOngoingTransaction(value);
-      value.whenData((data) {
-        barcodeNotifier.clearBarcode();
-      });
+      // value.whenData((data) {
+      //   barcodeNotifier.clearBarcode();
+      // });
     }
   }
 

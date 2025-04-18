@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/paiement/providers/barcode_provider.dart';
 import 'package:myecl/paiement/providers/ongoing_transaction.dart';
 import 'package:myecl/paiement/providers/selected_month_provider.dart';
 import 'package:myecl/paiement/providers/selected_store_provider.dart';
@@ -20,6 +21,8 @@ class StoreCard extends HookConsumerWidget {
     final store = ref.watch(selectedStoreProvider);
     final ongoingTransactionNotifier =
         ref.read(ongoingTransactionProvider.notifier);
+    // final scanNotifier = ref.read(scanProvider.notifier);
+    final barcodeNotifier = ref.read(barcodeProvider.notifier);
     final selectedMonthNotifier = ref.watch(selectedMonthProvider.notifier);
     final buttonGradient = [
       const Color.fromARGB(255, 6, 75, 75),
@@ -47,9 +50,10 @@ class StoreCard extends HookConsumerWidget {
                 scrollControlDisabledMaxHeightRatio:
                     (1 - 80 / MediaQuery.of(context).size.height),
                 builder: (context) => const ScanPage(),
-              ).then(
-                (_) => ongoingTransactionNotifier.clearOngoingTransaction(),
-              );
+              ).then((_) {
+                ongoingTransactionNotifier.clearOngoingTransaction();
+                barcodeNotifier.clearBarcode();
+              });
             },
           ),
         if (store.canManageSellers)

@@ -14,9 +14,9 @@ class ScanNotifier extends SingleNotifier<Transaction> {
     QrCodeData data, {
     bool? bypass,
   }) async {
-    print(data);
-    print(data.toJson());
-    print({...data.toJson(), "bypass_mmebership": bypass ?? false});
+    // print(data);
+    // print(data.toJson());
+    // print({...data.toJson(), "bypass_mmebership": bypass ?? false});
     return await load(
       () => storesRepository.scan(
         storeId,
