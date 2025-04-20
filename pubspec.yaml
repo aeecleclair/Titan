@@ -16,22 +16,22 @@ dependencies:
   crypto: ^3.0.2
   cryptography_plus: ^2.0.0
   datetime_picker_formfield: ^2.0.1
-  device_info_plus: ^10.1.2
+  device_info_plus: ^11.3.3
   diacritic: ^0.1.5
   dotenv: ^4.0.1
   either_dart: ^1.0.0
-  file_picker: ^8.0.0+1
+  file_picker: ^10.1.2
   file_saver: ^0.2.12
   firebase_core: ^3.9.0
   firebase_messaging: ^15.2.2
-  fl_chart: ^0.70.2
+  fl_chart: ^0.71.0
   flash: ^3.1.1
   flutter:
     sdk: flutter
-  flutter_appauth: ^8.0.3
+  flutter_appauth: ^9.0.0
   flutter_dotenv: ^5.0.2
-  flutter_hooks: ^0.20.0
-  flutter_local_notifications: ^18.0.1
+  flutter_hooks: ^0.21.2
+  flutter_local_notifications: ^19.1.0
   flutter_localizations:
     sdk: flutter
   flutter_riverpod: ^2.1.1
@@ -62,11 +62,11 @@ dependencies:
   rxdart: ^0.28.0
   qlevar_router: ^1.9.0
   qr_flutter: ^4.1.0
-  permission_handler: ^11.0.0
+  permission_handler: ^12.0.0+1
   qr_code_scanner_plus: ^2.0.0
   shared_preferences: ^2.5.1
   smooth_page_indicator: ^1.0.0+2
-  syncfusion_flutter_calendar: ^28.1.38
+  syncfusion_flutter_calendar: ^29.1.38
   timeago: ^3.7.0
   timezone: ^0.10.0
   tuple: ^2.0.0
