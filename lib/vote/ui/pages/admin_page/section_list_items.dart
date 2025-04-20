@@ -40,6 +40,10 @@ class SectionListItems extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
+    if (sectionList[section] == null) {
+      return const SizedBox.shrink();
+    }
+
     return AsyncChild(
       value: sectionList[section]!,
       builder: (context, data) => HorizontalListView.builder(

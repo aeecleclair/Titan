@@ -15,10 +15,10 @@ class DetailPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final listLogos = ref.watch(listLogosProvider);
+    // final listLogos = ref.watch(listLogosProvider);
     final list = ref.watch(listProvider);
-    final listLogosNotifier = ref.watch(listLogosProvider.notifier);
-    final logoNotifier = ref.watch(listLogoProvider.notifier);
+    // final listLogosNotifier = ref.watch(listLogosProvider.notifier);
+    // final logoNotifier = ref.watch(listLogoProvider.notifier);
     return VoteTemplate(
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -53,58 +53,58 @@ class DetailPage extends HookConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               const SizedBox(height: 30),
-                              if (listLogos[list.id] == null)
-                                const SizedBox.shrink()
-                              else
-                                SizedBox(
-                                  height: 140,
-                                  width: 140,
-                                  child: AsyncChild(
-                                    value: listLogos[list.id]!,
-                                    builder: (context, data) {
-                                      if (data.isEmpty) {
-                                        logoNotifier
-                                            .getLogo(list.id)
-                                            .then((value) {
-                                          listLogosNotifier.setTData(
-                                            list.id,
-                                            AsyncData([value]),
-                                          );
-                                        });
-                                        return const HeroIcon(
-                                          HeroIcons.userCircle,
-                                          size: 40,
-                                        );
-                                      }
-                                      return Container(
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.grey.shade50,
-                                          image: DecorationImage(
-                                            image: data.first.image,
-                                            fit: BoxFit.cover,
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey
-                                                  .withValues(alpha: 0.2),
-                                              blurRadius: 10,
-                                              spreadRadius: 5,
-                                              offset: const Offset(0, 5),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                    errorBuilder: (error, stack) =>
-                                        const Center(
-                                      child: HeroIcon(
-                                        HeroIcons.exclamationCircle,
-                                        size: 40,
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                              // if (listLogos[list.id] == null)
+                              //   const SizedBox.shrink()
+                              // else
+                              //   SizedBox(
+                              //     height: 140,
+                              //     width: 140,
+                              //     child: AsyncChild(
+                              //       value: listLogos[list.id]!,
+                              //       builder: (context, data) {
+                              //         if (data.isEmpty) {
+                              //           logoNotifier
+                              //               .getLogo(list.id)
+                              //               .then((value) {
+                              //             listLogosNotifier.setTData(
+                              //               list.id,
+                              //               AsyncData([value]),
+                              //             );
+                              //           });
+                              //           return const HeroIcon(
+                              //             HeroIcons.userCircle,
+                              //             size: 40,
+                              //           );
+                              //         }
+                              //         return Container(
+                              //           decoration: BoxDecoration(
+                              //             shape: BoxShape.circle,
+                              //             color: Colors.grey.shade50,
+                              //             image: DecorationImage(
+                              //               image: data.first.image,
+                              //               fit: BoxFit.cover,
+                              //             ),
+                              //             boxShadow: [
+                              //               BoxShadow(
+                              //                 color: Colors.grey
+                              //                     .withValues(alpha: 0.2),
+                              //                 blurRadius: 10,
+                              //                 spreadRadius: 5,
+                              //                 offset: const Offset(0, 5),
+                              //               ),
+                              //             ],
+                              //           ),
+                              //         );
+                              //       },
+                              //       errorBuilder: (error, stack) =>
+                              //           const Center(
+                              //         child: HeroIcon(
+                              //           HeroIcons.exclamationCircle,
+                              //           size: 40,
+                              //         ),
+                              //       ),
+                              //     ),
+                                // ),
                               const SizedBox(height: 20),
                               Text(
                                 list.section.name,

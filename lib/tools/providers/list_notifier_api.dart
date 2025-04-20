@@ -12,6 +12,7 @@ abstract class ListNotifierAPI<T> extends StateNotifier<AsyncValue<List<T>>> {
     try {
       return await f();
     } catch (e) {
+      print(e);
       if (e is AppException && e.type == ErrorType.tokenExpire) {
         rethrow;
       } else {
@@ -57,6 +58,7 @@ abstract class ListNotifierAPI<T> extends StateNotifier<AsyncValue<List<T>>> {
         (p0) => false,
       ),
       error: (error, s) {
+        print(error);
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           throw error;
         } else {
@@ -124,8 +126,10 @@ abstract class ListNotifierAPI<T> extends StateNotifier<AsyncValue<List<T>>> {
     String Function(T t) getKey,
     T t,
   ) async {
+    print(state);
     return handleState(
       (d) async {
+        print('ok');
         final response = await f();
         if (response.isSuccessful) {
           d[d.indexWhere((e) => getKey(e) == getKey(t))] = t;

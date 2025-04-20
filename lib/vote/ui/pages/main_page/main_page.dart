@@ -46,8 +46,8 @@ class VoteMainPage extends HookConsumerWidget {
     if (s == StatusType.open) {
       ref.watch(votedSectionProvider.notifier).getVotedSections();
     }
-    final logosNotifier = ref.watch(listLogoProvider.notifier);
-    final listLogosNotifier = ref.watch(listLogosProvider.notifier);
+    // final logosNotifier = ref.watch(listLogoProvider.notifier);
+    // final listLogosNotifier = ref.watch(listLogosProvider.notifier);
 
     final canVote = ref.watch(canVoteProvider);
 
@@ -102,8 +102,8 @@ class VoteMainPage extends HookConsumerWidget {
               listReturn = list;
             });
             sectionListNotifier.loadTList(value);
-            listLogosNotifier
-                .loadTList(listReturn.map((list) => list.id).toList());
+            // listLogosNotifier
+            //     .loadTList(listReturn.map((list) => list.id).toList());
             for (final l in value) {
               sectionListNotifier.setTData(
                 l,
@@ -115,12 +115,12 @@ class VoteMainPage extends HookConsumerWidget {
               );
             }
             for (final list in listReturn) {
-              logosNotifier.getLogo(list.id).then(
-                    (value) => listLogosNotifier.setTData(
-                      list.id,
-                      AsyncValue.data([value]),
-                    ),
-                  );
+              // logosNotifier.getLogo(list.id).then(
+              //       (value) => listLogosNotifier.setTData(
+              //         list.id,
+              //         AsyncValue.data([value]),
+              //       ),
+              //     );
             }
           });
         },

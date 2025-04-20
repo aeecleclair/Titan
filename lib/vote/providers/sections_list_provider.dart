@@ -11,22 +11,16 @@ class SectionList extends MapNotifier<SectionComplete, ListReturn> {
 final sectionListProvider = StateNotifierProvider<SectionList,
     Map<SectionComplete, AsyncValue<List<ListReturn>>?>>((ref) {
   SectionList sectionListNotifier = SectionList();
-  final loaners = ref.watch(sectionList);
+  final sections = ref.watch(sectionList);
   final lists = ref.watch(listListProvider);
   List<ListReturn> list = [];
-  lists.when(
-    data: (list) {
-      list = list;
-    },
-    error: (error, stackTrace) {
-      list = [];
-    },
-    loading: () {
-      list = [];
+  lists.whenData(
+    (l) {
+      list = l;
     },
   );
-  sectionListNotifier.loadTList(loaners);
-  for (final l in loaners) {
+  sectionListNotifier.loadTList(sections);
+  for (final l in sections) {
     sectionListNotifier.setTData(
       l,
       AsyncValue.data(

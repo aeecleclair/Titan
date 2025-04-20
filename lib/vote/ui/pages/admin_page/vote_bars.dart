@@ -23,52 +23,53 @@ class VoteBars extends HookConsumerWidget {
 
     List<BarChartGroupData> listBars = [];
     List<String> sectionNames = [];
-    Map<String, int> voteValue = {};
-    results.whenData(
-      (votes) {
-        for (var i = 0; i < votes.length; i++) {
-          voteValue[votes[i].listId] = votes[i].count;
-        }
-      },
-    );
 
     final Map<int, String> sectionIds = {};
+    Map<String, int> voteValue = {};
     int total = 0;
 
     if (sectionsList[section] != null) {
-      sectionsList[section]!.maybeWhen(
-        data: ((data) {
-          sectionNames = data.map((e) => e.name).toList();
-          sectionIds.addAll({for (var e in data) data.indexOf(e): e.id});
-          total = data.map((e) => voteValue[e.id]).reduce(
-                    (value, element) => (value ?? 0) + (element ?? 0),
-                  ) ??
-              0;
-          listBars = data
-              .map(
-                (x) => BarChartGroupData(
-                  x: data.indexOf(x),
-                  barRods: [
-                    BarChartRodData(
-                      toY: (voteValue[sectionIds[data.indexOf(x)]] ?? 0)
-                          .toDouble(),
-                      color: isTouched.value ? Colors.grey.shade800 : barColor,
-                      width: 40,
-                      borderSide: isTouched.value
-                          ? const BorderSide(color: Colors.white, width: 2)
-                          : const BorderSide(color: Colors.white, width: 0),
-                      backDrawRodData: BackgroundBarChartRodData(
-                        show: true,
-                        color: barBackgroundColor,
-                      ),
+      sectionsList[section]!.whenData((data) {
+        sectionNames = data.map((e) => e.name).toList();
+        sectionIds.addAll({for (var e in data) data.indexOf(e): e.id});
+        results.whenData(
+          (value) {
+            for (var i = 0; i < value.length; i++) {
+              voteValue[value[i].listId] = value[i].count;
+            }
+            total = data
+                .map((e) => value.where((t) => t.listId == e.id).first.count)
+                .reduce(
+                  (value, element) => (value) + (element),
+                );
+          },
+        );
+        if (data.isEmpty) {
+          return;
+        }
+        listBars = data
+            .map(
+              (x) => BarChartGroupData(
+                x: data.indexOf(x),
+                barRods: [
+                  BarChartRodData(
+                    toY: (voteValue[sectionIds[data.indexOf(x)]] ?? 0)
+                        .toDouble(),
+                    color: isTouched.value ? Colors.grey.shade800 : barColor,
+                    width: 40,
+                    borderSide: isTouched.value
+                        ? const BorderSide(color: Colors.white, width: 2)
+                        : const BorderSide(color: Colors.white, width: 0),
+                    backDrawRodData: BackgroundBarChartRodData(
+                      show: true,
+                      color: barBackgroundColor,
                     ),
-                  ],
-                ),
-              )
-              .toList();
-        }),
-        orElse: () {},
-      );
+                  ),
+                ],
+              ),
+            )
+            .toList();
+      });
     }
 
     return Expanded(

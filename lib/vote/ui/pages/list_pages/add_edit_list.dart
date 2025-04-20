@@ -55,26 +55,28 @@ class AddEditListPage extends HookConsumerWidget {
     final member = useState(EmptyModels.empty<CoreUserSimple>());
     final members = ref.watch(listMembersProvider);
     final membersNotifier = ref.read(listMembersProvider.notifier);
-    final listLogosNotifier = ref.read(listLogosProvider.notifier);
-    final logoNotifier = ref.read(listLogoProvider.notifier);
+    // final listLogosNotifier = ref.read(listLogosProvider.notifier);
+    // final logoNotifier = ref.read(listLogoProvider.notifier);
     final logo = useState<Uint8List?>(null);
     final logoFile = useState<Image?>(null);
     final showNotifier = ref.read(displayResult.notifier);
 
-    final listLogos = ref.watch(listLogosProvider);
-    if (listLogos[list.id] != null) {
-      listLogos[list.id]!.whenData((data) {
-        if (data.isNotEmpty) {
-          logoFile.value = data.first;
-        }
-      });
-    }
+    // final listLogos = ref.watch(listLogosProvider);
+    // if (listLogos[list.id] != null) {
+    //   listLogos[list.id]!.whenData((data) {
+    //     if (data.isNotEmpty) {
+    //       logoFile.value = data.first;
+    //     }
+    //   });
+    // }
 
     final ImagePicker picker = ImagePicker();
 
     void displayVoteToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
+
+    print(list);
 
     return VoteTemplate(
       child: SingleChildScrollView(
@@ -360,6 +362,7 @@ class AddEditListPage extends HookConsumerWidget {
                         section: section.value,
                         program: program.text,
                       );
+                      print(newList);
                       final value = isEdit
                           ? await listListNotifier.updateList(newList)
                           : await listListNotifier
@@ -375,14 +378,14 @@ class AddEditListPage extends HookConsumerWidget {
                             data: (list) {
                               final logoBytes = logo.value;
                               if (logoBytes != null) {
-                                listLogosNotifier.autoLoad(
-                                  ref,
-                                  newList.id,
-                                  (listId) => logoNotifier.updateLogo(
-                                    listId,
-                                    logoBytes,
-                                  ),
-                                );
+                                // listLogosNotifier.autoLoad(
+                                //   ref,
+                                //   newList.id,
+                                //   (listId) => logoNotifier.updateLogo(
+                                //     listId,
+                                //     logoBytes,
+                                //   ),
+                                // );
                               }
                             },
                             orElse: () {},
@@ -397,14 +400,14 @@ class AddEditListPage extends HookConsumerWidget {
                               final newList = list.last;
                               final logoBytes = logo.value;
                               if (logoBytes != null) {
-                                listLogosNotifier.autoLoad(
-                                  ref,
-                                  newList.id,
-                                  (listId) => logoNotifier.updateLogo(
-                                    listId,
-                                    logoBytes,
-                                  ),
-                                );
+                                // listLogosNotifier.autoLoad(
+                                //   ref,
+                                //   newList.id,
+                                //   (listId) => logoNotifier.updateLogo(
+                                //     listId,
+                                //     logoBytes,
+                                //   ),
+                                // );
                               }
                             },
                             orElse: () {},
@@ -429,8 +432,8 @@ class AddEditListPage extends HookConsumerWidget {
                       );
                     }
                   },
-                  child: const Text(
-                    VoteTextConstants.edit,
+                  child: Text(
+                    isEdit ? VoteTextConstants.edit : VoteTextConstants.add,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 25,

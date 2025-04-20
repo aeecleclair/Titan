@@ -50,7 +50,7 @@ class ListCard extends HookConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ListLogo(list),
+              // ListLogo(list),
               const SizedBox(width: 10),
               Expanded(
                 child: Column(

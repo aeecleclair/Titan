@@ -20,6 +20,7 @@ class ListListNotifier extends ListNotifierAPI<ListReturn> {
   }
 
   Future<bool> updateList(ListReturn list) async {
+    print("updateList ${list.id} ${list.name} ${list.type}");
     return await update(
       () => listRepository.campaignListsListIdPatch(
         listId: list.id,

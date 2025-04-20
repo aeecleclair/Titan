@@ -12,31 +12,34 @@ class VoteCount extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final section = ref.watch(sectionProvider);
     final sectionVoteNotifier = ref.watch(sectionVoteCountProvider.notifier);
-    final stats =
-        ref.watch(sectionsStatsProvider.select((value) => value[section]));
-    final statsNotifier = ref.read(sectionsStatsProvider.notifier);
-    return AutoLoaderChild(
-      group: stats,
-      notifier: statsNotifier,
-      mapKey: section,
-      loader: (section) async =>
-          (await sectionVoteNotifier.loadCount(section.id))
-              .maybeWhen(data: (data) => data.count, orElse: () => -1),
-      dataBuilder: (context, data) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50),
-          child: Center(
-            child: Text(
-              '$data votes',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-        );
-      },
-    );
+    // final stats =
+    //     ref.watch(sectionsStatsProvider.select((value) => value[section]));
+    // final statsNotifier = ref.read(sectionsStatsProvider.notifier);
+
+    return Container();
+
+    // return AutoLoaderChild(
+    //   group: stats,
+    //   notifier: statsNotifier,
+    //   mapKey: section,
+    //   loader: (section) async =>
+    //       (await sectionVoteNotifier.loadCount(section.id))
+    //           .maybeWhen(data: (data) => data.count, orElse: () => -1),
+    //   dataBuilder: (context, data) {
+    //     return Padding(
+    //       padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50),
+    //       child: Center(
+    //         child: Text(
+    //           '$data votes',
+    //           style: const TextStyle(
+    //             color: Colors.white,
+    //             fontSize: 20,
+    //             fontWeight: FontWeight.w700,
+    //           ),
+    //         ),
+    //       ),
+    //     );
+    //   },
+    // );
   }
 }

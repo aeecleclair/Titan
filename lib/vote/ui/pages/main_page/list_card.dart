@@ -167,9 +167,10 @@ class ListCard extends HookConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      list.type != ListType.blank
-                          ? ListLogo(list)
-                          : const HeroIcon(
+                      // list.type != ListType.blank
+                      //     ? ListLogo(list)
+                      //     : 
+                          const HeroIcon(
                               HeroIcons.cubeTransparent,
                               size: 40,
                             ),

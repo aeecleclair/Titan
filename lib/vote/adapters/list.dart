@@ -19,7 +19,7 @@ extension $ListReturn on ListReturn {
       description: description,
       type: type,
       program: program,
-      members: members.map((e) => e.userId).toList(),
+      members: members.map((e) => e.toMemberBase()).toList(),
     );
   }
 }
