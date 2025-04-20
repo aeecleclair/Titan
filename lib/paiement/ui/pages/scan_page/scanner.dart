@@ -10,6 +10,8 @@ import 'package:myecl/paiement/providers/ongoing_transaction.dart';
 import 'package:myecl/paiement/providers/scan_provider.dart';
 import 'package:myecl/paiement/providers/selected_store_provider.dart';
 import 'package:myecl/paiement/ui/pages/scan_page/scan_overlay_shape.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 
 class Scanner extends ConsumerStatefulWidget {
   const Scanner({super.key});
@@ -26,6 +28,26 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
 
   StreamSubscription<Object?>? _subscription;
 
+  void showWithoutMembershipDialog(
+    Function() onYes,
+  ) async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return CustomDialogBox(
+          title: "Pas d'adhésion",
+          descriptions:
+              "Ce produit n'est pas disponnible pour les non-adhérents. Confirmer l'encaissement ?",
+          onYes: () async {
+            tokenExpireWrapper(ref, () async {
+              onYes.call();
+            });
+          },
+        );
+      },
+    );
+  }
+
   void _handleBarcode(BarcodeCapture barcodes) async {
     final barcode = ref.watch(barcodeProvider);
     final barcodeNotifier = ref.read(barcodeProvider.notifier);
@@ -36,11 +58,16 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
     if (mounted && barcodes.barcodes.isNotEmpty && barcode == null) {
       final data = barcodeNotifier
           .updateBarcode(barcodes.barcodes.firstOrNull!.rawValue!);
+      final canScan = await scanNotifier.canScan(store.id, data);
+      if (!canScan) {
+        showWithoutMembershipDialog(() async {
+          final value = await scanNotifier.scan(store.id, data, bypass: true);
+          ongoingTransactionNotifier.updateOngoingTransaction(value);
+        });
+        return;
+      }
       final value = await scanNotifier.scan(store.id, data);
       ongoingTransactionNotifier.updateOngoingTransaction(value);
-      // value.whenData((data) {
-      //   barcodeNotifier.clearBarcode();
-      // });
     }
   }
 

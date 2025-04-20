@@ -23,6 +23,18 @@ class ScanNotifier extends SingleNotifier<Transaction> {
     );
   }
 
+  Future<bool> canScan(
+    String storeId,
+    QrCodeData data, {
+    bool? bypass,
+  }) async {
+    return storesRepository.canScan(
+      storeId,
+      data,
+      bypass,
+    );
+  }
+
   void reset() {
     state = const AsyncValue.loading();
   }
