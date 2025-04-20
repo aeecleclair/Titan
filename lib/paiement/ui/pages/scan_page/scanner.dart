@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:myecl/paiement/providers/barcode_provider.dart';
+import 'package:myecl/paiement/providers/bypass_provider.dart';
 import 'package:myecl/paiement/providers/ongoing_transaction.dart';
 import 'package:myecl/paiement/providers/scan_provider.dart';
 import 'package:myecl/paiement/providers/selected_store_provider.dart';
@@ -49,6 +50,7 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
   }
 
   void _handleBarcode(BarcodeCapture barcodes) async {
+    final bypass = ref.watch(bypassProvider);
     final barcode = ref.watch(barcodeProvider);
     final barcodeNotifier = ref.read(barcodeProvider.notifier);
     final store = ref.read(selectedStoreProvider);
@@ -58,13 +60,18 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
     if (mounted && barcodes.barcodes.isNotEmpty && barcode == null) {
       final data = barcodeNotifier
           .updateBarcode(barcodes.barcodes.firstOrNull!.rawValue!);
-      final canScan = await scanNotifier.canScan(store.id, data);
-      if (!canScan) {
-        showWithoutMembershipDialog(() async {
-          final value = await scanNotifier.scan(store.id, data, bypass: true);
-          ongoingTransactionNotifier.updateOngoingTransaction(value);
-        });
-        return;
+      if (!bypass) {
+        final canScan = await scanNotifier.canScan(store.id, data);
+        if (!canScan) {
+          showWithoutMembershipDialog(
+            () async {
+              final value =
+                  await scanNotifier.scan(store.id, data, bypass: true);
+              ongoingTransactionNotifier.updateOngoingTransaction(value);
+            },
+          );
+          return;
+        }
       }
       final value = await scanNotifier.scan(store.id, data);
       ongoingTransactionNotifier.updateOngoingTransaction(value);

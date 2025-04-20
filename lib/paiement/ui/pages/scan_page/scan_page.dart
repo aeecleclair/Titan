@@ -6,16 +6,15 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/paiement/providers/barcode_provider.dart';
+import 'package:myecl/paiement/providers/bypass_provider.dart';
 import 'package:myecl/paiement/providers/ongoing_transaction.dart';
-import 'package:myecl/paiement/providers/scan_provider.dart';
-import 'package:myecl/paiement/providers/store_provider.dart';
+import 'package:myecl/paiement/providers/selected_store_provider.dart';
 import 'package:myecl/paiement/providers/transaction_provider.dart';
 import 'package:myecl/paiement/ui/pages/scan_page/cancel_button.dart';
 import 'package:myecl/paiement/ui/pages/scan_page/scanner.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 
 class ScanPage extends HookConsumerWidget {
@@ -23,6 +22,9 @@ class ScanPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final bypass = ref.watch(bypassProvider);
+    final store = ref.watch(selectedStoreProvider);
+    final bypassNotifier = ref.watch(bypassProvider.notifier);
     final barcode = ref.watch(barcodeProvider);
     final barcodeNotifier = ref.watch(barcodeProvider.notifier);
     final formatter = NumberFormat("#,##0.00", "fr_FR");
@@ -30,8 +32,6 @@ class ScanPage extends HookConsumerWidget {
     final ongoingTransaction = ref.watch(ongoingTransactionProvider);
     final ongoingTransactionNotifier =
         ref.watch(ongoingTransactionProvider.notifier);
-    final store = ref.read(storeProvider);
-    final scanNotifier = ref.read(scanProvider.notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -44,16 +44,59 @@ class ScanPage extends HookConsumerWidget {
       children: [
         const Scanner(),
         Positioned(
-          top: 20,
-          right: 20,
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: const HeroIcon(
-              HeroIcons.xMark,
-              size: 20,
-              color: Colors.white,
+          top: 10,
+          left: 20,
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width - 40,
+            child: Row(
+              children: [
+                GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    bypassNotifier.setBypass(!bypass);
+                  },
+                  child: Row(
+                    children: [
+                      Checkbox(
+                        value: !bypass,
+                        checkColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        side: const BorderSide(
+                          color: Colors.white,
+                          width: 1.5,
+                        ),
+                        activeColor: Colors.white,
+                        onChanged: (value) {
+                          bypassNotifier.setBypass(!bypass);
+                        },
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        bypass
+                            ? "Pas d'adhésion obligatoire"
+                            : "Limité à ${store.name}",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Spacer(),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const HeroIcon(
+                    HeroIcons.xMark,
+                    size: 20,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -62,7 +105,7 @@ class ScanPage extends HookConsumerWidget {
             Expanded(
               child: Column(
                 children: [
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 40),
                   barcode != null
                       ? Row(
                           children: [
@@ -133,60 +176,6 @@ class ScanPage extends HookConsumerWidget {
                   AsyncChild(
                     value: ongoingTransaction,
                     errorBuilder: (error, stack) {
-                      if (error.toString().contains("required membership")) {
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 30),
-                          child: Expanded(
-                            child: WaitingButton(
-                              child: const Text(
-                                'Valider quand même',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              builder: (child) => Container(
-                                width: double.infinity,
-                                height: 50,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.white.withValues(alpha: 0.8),
-                                ),
-                                child: child,
-                              ),
-                              onTap: () async {
-                                if (barcode == null) {
-                                  return;
-                                }
-                                final value = await scanNotifier
-                                    .scan(store.id, barcode, bypass: true);
-                                ongoingTransactionNotifier
-                                    .updateOngoingTransaction(value);
-                                barcodeNotifier.clearBarcode();
-                                ongoingTransactionNotifier
-                                    .clearOngoingTransaction();
-                                value.when(
-                                  data: (value) {
-                                    displayToastWithContext(
-                                      TypeMsg.msg,
-                                      "Transaction validé",
-                                    );
-                                  },
-                                  error: (error, stack) {
-                                    displayToastWithContext(
-                                      TypeMsg.error,
-                                      error.toString(),
-                                    );
-                                  },
-                                  loading: () {},
-                                );
-                              },
-                            ),
-                          ),
-                        );
-                      }
                       return Text(
                         jsonDecode(error.toString())['detail'],
                         style: TextStyle(
