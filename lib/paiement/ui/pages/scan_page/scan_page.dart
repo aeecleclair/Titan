@@ -105,7 +105,7 @@ class ScanPage extends HookConsumerWidget {
             Expanded(
               child: Column(
                 children: [
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 60),
                   barcode != null
                       ? Row(
                           children: [
