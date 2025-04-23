@@ -76,7 +76,7 @@ class ScanPage extends HookConsumerWidget {
                       Text(
                         bypass
                             ? "Pas d'adhésion obligatoire"
-                            : "Limité à ${store.name}",
+                            : "Limité à ${store.structure.membership.name}",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 15,
@@ -105,7 +105,7 @@ class ScanPage extends HookConsumerWidget {
             Expanded(
               child: Column(
                 children: [
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 60),
                   barcode != null
                       ? Row(
                           children: [
