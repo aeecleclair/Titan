@@ -37,7 +37,7 @@ class StoresRepository extends Repository {
   Future<bool> canScan(String id, QrCodeData data, bool? bypass) async {
     return await create(
       {...data.toJson(), "bypass_membership": bypass ?? false},
-      suffix: "/$id/scan/validate",
+      suffix: "/$id/scan/check",
     );
   }
 }
