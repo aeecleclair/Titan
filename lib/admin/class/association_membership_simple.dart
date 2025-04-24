@@ -11,14 +11,14 @@ class AssociationMembership {
   AssociationMembership.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    groupId = json['group_id'];
+    groupId = json['manager_group_id'];
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['id'] = id;
     data['name'] = name;
-    data['group_id'] = groupId;
+    data['manager_group_id'] = groupId;
     return data;
   }
 
@@ -35,7 +35,7 @@ class AssociationMembership {
 
   AssociationMembership.empty() {
     id = '';
-    name = 'Nom';
+    name = "Pas de structure";
     groupId = '';
   }
 

@@ -1,17 +1,15 @@
+import 'package:myecl/admin/class/association_membership_simple.dart';
 import 'package:myecl/user/class/simple_users.dart';
-
-// ignore: constant_identifier_names
-enum AvailableAssociationMembership { AEECL, USEECL, noMembership }
 
 class Structure {
   final String name;
-  final AvailableAssociationMembership membership;
+  final AssociationMembership? associationMembership;
   final String id;
   final SimpleUser managerUser;
 
   Structure({
     required this.name,
-    required this.membership,
+    this.associationMembership,
     required this.id,
     required this.managerUser,
   });
@@ -19,11 +17,9 @@ class Structure {
   factory Structure.fromJson(Map<String, dynamic> json) {
     return Structure(
       name: json['name'],
-      membership: json['membership'] != null
-          ? AvailableAssociationMembership.values.firstWhere(
-              (e) => e.toString().split('.').last == json['membership'],
-            )
-          : AvailableAssociationMembership.noMembership,
+      associationMembership: json['association_membership'] != null
+          ? AssociationMembership.fromJson(json['association_membership'])
+          : AssociationMembership.empty(),
       id: json['id'],
       managerUser: SimpleUser.fromJson(json['manager_user']),
     );
@@ -32,9 +28,8 @@ class Structure {
   Map<String, dynamic> toJson() {
     return {
       'name': name,
-      'membership': membership == AvailableAssociationMembership.noMembership
-          ? null
-          : membership.toString().split('.').last,
+      'association_membership':
+          associationMembership ?? AssociationMembership.empty(),
       'id': id,
       'manager_user_id': managerUser.id,
     };
@@ -42,18 +37,19 @@ class Structure {
 
   @override
   String toString() {
-    return 'Structure{name: $name, membership: $membership, id: $id, managerUserId: $managerUser}';
+    return 'Structure{name: $name, associationMembership: $associationMembership, id: $id, managerUserId: $managerUser}';
   }
 
   Structure copyWith({
     String? name,
-    AvailableAssociationMembership? membership,
+    AssociationMembership? associationMembership,
     String? id,
     SimpleUser? managerUser,
   }) {
     return Structure(
       name: name ?? this.name,
-      membership: membership ?? this.membership,
+      associationMembership:
+          associationMembership ?? this.associationMembership,
       id: id ?? this.id,
       managerUser: managerUser ?? this.managerUser,
     );
@@ -62,7 +58,7 @@ class Structure {
   Structure.empty()
       : this(
           name: '',
-          membership: AvailableAssociationMembership.noMembership,
+          associationMembership: AssociationMembership.empty(),
           id: '',
           managerUser: SimpleUser.empty(),
         );

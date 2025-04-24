@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/class/association_membership_simple.dart';
+import 'package:myecl/admin/providers/association_membership_list_provider.dart';
 import 'package:myecl/admin/providers/structure_manager_provider.dart';
 import 'package:myecl/admin/providers/structure_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
@@ -13,6 +15,7 @@ import 'package:myecl/paiement/providers/structure_list_provider.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
@@ -31,12 +34,14 @@ class AddEditStructurePage extends HookConsumerWidget {
     final structureManagerNotifier =
         ref.watch(structureManagerProvider.notifier);
     final structureListNotifier = ref.watch(structureListProvider.notifier);
-    final isEdit = structure.id != Structure.empty().id;
+    final isEdit = structure.id != '';
     final name = useTextEditingController(text: isEdit ? structure.name : null);
-    final membership = useState<AvailableAssociationMembership>(
-      isEdit
-          ? structure.membership
-          : AvailableAssociationMembership.noMembership,
+    final allAssociationMembershipList =
+        ref.watch(allAssociationMembershipListProvider);
+    final currentMembership = useState<AssociationMembership>(
+      (isEdit && structure.associationMembership != null)
+          ? structure.associationMembership!
+          : AssociationMembership.empty(),
     );
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -61,23 +66,32 @@ class AddEditStructurePage extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 20),
                 TextEditing(controller: name, label: AdminTextConstants.name),
-                HorizontalListView.builder(
-                  height: 40,
-                  items: AvailableAssociationMembership.values,
-                  itemBuilder: (context, value, index) {
-                    final selected = membership.value == value;
-                    return ItemChip(
-                      selected: selected,
-                      onTap: () async {
-                        membership.value = value;
+                AsyncChild(
+                  value: allAssociationMembershipList,
+                  builder: (context, allAssociationMembershipList) {
+                    return HorizontalListView.builder(
+                      height: 40,
+                      items: [
+                        ...allAssociationMembershipList,
+                        AssociationMembership.empty(),
+                      ],
+                      itemBuilder: (context, associationMembership, index) {
+                        final selected = currentMembership.value.id ==
+                            associationMembership.id;
+                        return ItemChip(
+                          selected: selected,
+                          onTap: () async {
+                            currentMembership.value = associationMembership;
+                          },
+                          child: Text(
+                            associationMembership.name.toUpperCase(),
+                            style: TextStyle(
+                              color: selected ? Colors.white : Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        );
                       },
-                      child: Text(
-                        value.name.toUpperCase(),
-                        style: TextStyle(
-                          color: selected ? Colors.white : Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
                     );
                   },
                 ),
@@ -125,7 +139,8 @@ class AddEditStructurePage extends HookConsumerWidget {
                             ? await structureListNotifier.updateStructure(
                                 Structure(
                                   name: name.text,
-                                  membership: membership.value,
+                                  associationMembership:
+                                      currentMembership.value,
                                   managerUser: structureManager,
                                   id: structure.id,
                                 ),
@@ -133,7 +148,8 @@ class AddEditStructurePage extends HookConsumerWidget {
                             : await structureListNotifier.createStructure(
                                 Structure(
                                   name: name.text,
-                                  membership: membership.value,
+                                  associationMembership:
+                                      currentMembership.value,
                                   managerUser: structureManager,
                                   id: '',
                                 ),
@@ -143,7 +159,9 @@ class AddEditStructurePage extends HookConsumerWidget {
                           structureManagerNotifier.setUser(SimpleUser.empty());
                           displayToastWithContext(
                             TypeMsg.msg,
-                            AdminTextConstants.addedStructure,
+                            isEdit
+                                ? AdminTextConstants.editedStructure
+                                : AdminTextConstants.addedStructure,
                           );
                         } else {
                           displayToastWithContext(
