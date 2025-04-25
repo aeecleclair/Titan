@@ -173,7 +173,18 @@ abstract class Repository {
       headers: headers,
       body: jsonEncode(t),
     );
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
+      try {
+        String toDecode = response.body;
+        toDecode = utf8.decode(response.body.runes.toList());
+        return jsonDecode(toDecode);
+      } catch (e) {
+        logger.error(
+          "POST ${ext + suffix}\nError while decoding response",
+        );
+        throw AppException(ErrorType.invalidData, e.toString());
+      }
+    } else if (response.statusCode == 201) {
       try {
         String toDecode = response.body;
         toDecode = utf8.decode(response.body.runes.toList());

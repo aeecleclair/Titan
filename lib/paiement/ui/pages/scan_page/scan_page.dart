@@ -43,63 +43,65 @@ class ScanPage extends HookConsumerWidget {
     return Stack(
       children: [
         const Scanner(),
-        Positioned(
-          top: 10,
-          left: 20,
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width - 40,
-            child: Row(
-              children: [
-                GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () {
-                    bypassNotifier.setBypass(!bypass);
-                  },
-                  child: Row(
-                    children: [
-                      Checkbox(
-                        value: !bypass,
-                        checkColor: Colors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
+        if (store.structure.associationMembership != null &&
+            store.structure.associationMembership!.id != '')
+          Positioned(
+            top: 10,
+            left: 20,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width - 40,
+              child: Row(
+                children: [
+                  GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () {
+                      bypassNotifier.setBypass(!bypass);
+                    },
+                    child: Row(
+                      children: [
+                        Checkbox(
+                          value: !bypass,
+                          checkColor: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          side: const BorderSide(
+                            color: Colors.white,
+                            width: 1.5,
+                          ),
+                          activeColor: Colors.white,
+                          onChanged: (value) {
+                            bypassNotifier.setBypass(!bypass);
+                          },
                         ),
-                        side: const BorderSide(
-                          color: Colors.white,
-                          width: 1.5,
+                        const SizedBox(width: 5),
+                        Text(
+                          bypass
+                              ? "Pas d'adhésion obligatoire"
+                              : "Limité à ${store.structure.associationMembership!.name}",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                          ),
                         ),
-                        activeColor: Colors.white,
-                        onChanged: (value) {
-                          bypassNotifier.setBypass(!bypass);
-                        },
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        bypass
-                            ? "Pas d'adhésion obligatoire"
-                            : "Limité à ${store.structure.membership.name}",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Spacer(),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: const HeroIcon(
-                    HeroIcons.xMark,
-                    size: 20,
-                    color: Colors.white,
+                  Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: const HeroIcon(
+                      HeroIcons.xMark,
+                      size: 20,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
         Column(
           children: [
             Expanded(
