@@ -11,6 +11,7 @@ import 'package:myecl/paiement/providers/ongoing_transaction.dart';
 import 'package:myecl/paiement/providers/scan_provider.dart';
 import 'package:myecl/paiement/providers/selected_store_provider.dart';
 import 'package:myecl/paiement/ui/pages/scan_page/scan_overlay_shape.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 
@@ -49,6 +50,10 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
     );
   }
 
+  void displayToastWithContext(TypeMsg type, String msg) {
+    displayToast(context, type, msg);
+  }
+
   void _handleBarcode(BarcodeCapture barcodes) async {
     final bypass = ref.watch(bypassProvider);
     final barcode = ref.watch(barcodeProvider);
@@ -67,6 +72,15 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
             () async {
               final value =
                   await scanNotifier.scan(store.id, data, bypass: true);
+              if (value == null) {
+                displayToastWithContext(
+                  TypeMsg.error,
+                  "QR Code déjà utilisé",
+                );
+                barcodeNotifier.clearBarcode();
+                ongoingTransactionNotifier.clearOngoingTransaction();
+                return;
+              }
               ongoingTransactionNotifier.updateOngoingTransaction(value);
             },
           );
@@ -74,7 +88,17 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
         }
       }
       final value = await scanNotifier.scan(store.id, data);
-      ongoingTransactionNotifier.updateOngoingTransaction(value);
+      if (value == null) {
+        displayToastWithContext(
+          TypeMsg.error,
+          "QR Code déjà utilisé",
+        );
+        barcodeNotifier.clearBarcode();
+        ongoingTransactionNotifier.clearOngoingTransaction();
+        return;
+      } else {
+        ongoingTransactionNotifier.updateOngoingTransaction(value);
+      }
     }
   }
 

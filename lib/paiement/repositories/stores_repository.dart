@@ -25,13 +25,17 @@ class StoresRepository extends Repository {
     );
   }
 
-  Future<Transaction> scan(String id, QrCodeData data, bool? bypass) async {
-    return Transaction.fromJson(
-      await create(
-        {...data.toJson(), "bypass_membership": bypass ?? false},
-        suffix: "/$id/scan",
-      ),
+  Future<Transaction?> scan(String id, QrCodeData data, bool? bypass) async {
+    var response = await create(
+      {...data.toJson(), "bypass_membership": bypass ?? false},
+      suffix: "/$id/scan",
     );
+    if (response["error"] != null &&
+        response["error"] == "QR Code already used") {
+      return null;
+    } else {
+      return Transaction.fromJson(response);
+    }
   }
 
   Future<bool> canScan(String id, QrCodeData data, bool? bypass) async {
