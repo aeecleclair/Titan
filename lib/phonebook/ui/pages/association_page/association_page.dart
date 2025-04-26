@@ -79,6 +79,7 @@ class AssociationPage extends HookConsumerWidget {
                     style: TextStyle(
                       fontSize: 15,
                       color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
