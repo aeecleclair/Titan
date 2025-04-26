@@ -51,7 +51,7 @@ class AssociationCreationPage extends HookConsumerWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    AdminTextConstants.addAssociation,
+                    PhonebookTextConstants.addAssociation,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,

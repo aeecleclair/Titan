@@ -1,19 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/providers/group_id_provider.dart';
-import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/router.dart';
-import 'package:myecl/admin/ui/admin.dart';
-import 'package:myecl/admin/ui/pages/main_page/association_ui.dart';
-import 'package:myecl/admin/ui/pages/main_page/card_ui.dart';
-import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/widgets/dialog.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myecl/admin/ui/admin.dart';
+import 'package:myecl/admin/ui/pages/main_page/menu_card_ui.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -22,153 +14,64 @@ class AdminMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final groups = ref.watch(allGroupListProvider);
-    final groupsNotifier = ref.watch(allGroupListProvider.notifier);
-    final groupIdNotifier = ref.watch(groupIdProvider.notifier);
-    final loans = ref.watch(loanerListProvider);
-    final loanListNotifier = ref.watch(loanerListProvider.notifier);
     ref.watch(userList);
-    void displayToastWithContext(TypeMsg type, String msg) {
-      displayToast(context, type, msg);
-    }
 
-    final List<String> loanersId = loans.maybeWhen(
-      data: (value) => value.map((e) => e.groupManagerId).toList(),
-      orElse: () => [],
-    );
+    final controller = ScrollController();
 
     return AdminTemplate(
-      child: Refresher(
-        onRefresh: () async {
-          await groupsNotifier.loadGroups();
-          await loanListNotifier.loadLoanerList();
-        },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: AsyncChild(
-            value: groups,
-            builder: (context, g) {
-              g.sort(
-                (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()),
-              );
-              return Column(
-                children: [
-                  Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          QR.to(
-                            AdminRouter.root + AdminRouter.editModuleVisibility,
-                          );
-                        },
-                        child: CardUi(
-                          children: [
-                            const Spacer(),
-                            HeroIcon(
-                              HeroIcons.eye,
-                              color: Theme.of(context).colorScheme.tertiary,
-                              size: 40,
-                            ),
-                            const Spacer(),
-                          ],
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          QR.to(AdminRouter.root + AdminRouter.addAssociation);
-                        },
-                        child: CardUi(
-                          children: [
-                            const Spacer(),
-                            HeroIcon(
-                              HeroIcons.plus,
-                              color: Theme.of(context).colorScheme.tertiary,
-                              size: 40,
-                            ),
-                            const Spacer(),
-                          ],
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          QR.to(AdminRouter.root + AdminRouter.addLoaner);
-                        },
-                        child: CardUi(
-                          children: [
-                            const Spacer(),
-                            Stack(
-                              clipBehavior: Clip.none,
-                              children: [
-                                HeroIcon(
-                                  HeroIcons.buildingLibrary,
-                                  color: Theme.of(context).colorScheme.tertiary,
-                                  size: 40,
-                                ),
-                                Positioned(
-                                  right: -2,
-                                  top: -2,
-                                  child: HeroIcon(
-                                    HeroIcons.plus,
-                                    size: 15,
-                                    color:
-                                        Theme.of(context).colorScheme.tertiary,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const Spacer(),
-                          ],
-                        ),
-                      ),
-                      ...g.map(
-                        (group) => AssociationUi(
-                          group: group,
-                          isLoaner: loanersId.contains(group.id),
-                          onEdit: () {
-                            groupIdNotifier.setId(group.id);
-                            QR.to(
-                              AdminRouter.root + AdminRouter.editAssociation,
-                            );
-                          },
-                          onDelete: () async {
-                            await showDialog(
-                              context: context,
-                              builder: (context) {
-                                return CustomDialogBox(
-                                  title: AdminTextConstants.deleting,
-                                  descriptions:
-                                      AdminTextConstants.deleteAssociation,
-                                  onYes: () async {
-                                    tokenExpireWrapper(ref, () async {
-                                      final value = await groupsNotifier
-                                          .deleteGroup(group);
-                                      if (value) {
-                                        displayToastWithContext(
-                                          TypeMsg.msg,
-                                          AdminTextConstants.deletedAssociation,
-                                        );
-                                      } else {
-                                        displayToastWithContext(
-                                          TypeMsg.error,
-                                          AdminTextConstants.deletingError,
-                                        );
-                                      }
-                                    });
-                                  },
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                    ],
-                  ),
-                ],
-              );
-            },
-            loaderColor: Theme.of(context).colorScheme.primaryContainer,
+      child: Padding(
+        padding: const EdgeInsets.all(40),
+        child: GridView(
+          controller: controller,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 20,
+            crossAxisSpacing: 20,
+            childAspectRatio: MediaQuery.of(context).size.width <
+                    MediaQuery.of(context).size.height
+                ? 0.75
+                : 1.5,
           ),
+          children: [
+            GestureDetector(
+              onTap: () {
+                QR.to(
+                  AdminRouter.root + AdminRouter.editModuleVisibility,
+                );
+              },
+              child: const MenuCardUi(
+                text: AdminTextConstants.visibilities,
+                icon: HeroIcons.eye,
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                QR.to(AdminRouter.root + AdminRouter.groups);
+              },
+              child: const MenuCardUi(
+                text: AdminTextConstants.groups,
+                icon: HeroIcons.users,
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                QR.to(AdminRouter.root + AdminRouter.schools);
+              },
+              child: const MenuCardUi(
+                text: AdminTextConstants.schools,
+                icon: HeroIcons.academicCap,
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                QR.to(AdminRouter.root + AdminRouter.associationMemberships);
+              },
+              child: const MenuCardUi(
+                text: AdminTextConstants.memberships,
+                icon: HeroIcons.link,
+              ),
+            ),
+          ],
         ),
       ),
     );

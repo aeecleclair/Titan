@@ -304,7 +304,7 @@ Future<TimeOfDay?> _getTime(BuildContext context) async {
             surface: Colors.white,
             onSurface: Colors.black,
           ),
-          dialogBackgroundColor: Colors.white,
+          dialogTheme: DialogThemeData(backgroundColor: Colors.white),
         ),
         child: child!,
       );
@@ -333,7 +333,7 @@ Future<DateTime?> _getDate(
             surface: Colors.white,
             onSurface: Colors.black,
           ),
-          dialogBackgroundColor: Colors.white,
+          dialogTheme: DialogThemeData(backgroundColor: Colors.white),
         ),
         child: child!,
       );

@@ -3,6 +3,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/membership.dart';
+import 'package:myecl/phonebook/providers/association_kind_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
 import 'package:myecl/phonebook/providers/association_member_sorted_list_provider.dart';
@@ -47,6 +48,8 @@ class AssociationEditorPage extends HookConsumerWidget {
     final completeMemberNotifier = ref.watch(completeMemberProvider.notifier);
     final memberRoleTagsNotifier = ref.watch(memberRoleTagsProvider.notifier);
     final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
+    final isAssociationPresident = ref.watch(isAssociationPresidentProvider);
+    final kindNotifier = ref.watch(associationKindProvider.notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -97,14 +100,16 @@ class AssociationEditorPage extends HookConsumerWidget {
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: isPhonebookAdmin && !association.deactivated
+                        color: (isPhonebookAdmin || isAssociationPresident) &&
+                                !association.deactivated
                             ? Theme.of(context).colorScheme.primaryContainer
                             : Theme.of(context).colorScheme.tertiary,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: child,
                     ),
-                    onTap: isPhonebookAdmin && !association.deactivated
+                    onTap: (isPhonebookAdmin || isAssociationPresident) &&
+                            !association.deactivated
                         ? () async {
                             rolesTagsNotifier.resetChecked();
                             memberRoleTagsNotifier.reset();
@@ -149,7 +154,8 @@ class AssociationEditorPage extends HookConsumerWidget {
               builder: (context, associationMembers) => associationMembers
                       .isEmpty
                   ? const Text(PhonebookTextConstants.noMember)
-                  : isPhonebookAdmin && !association.deactivated
+                  : (isPhonebookAdmin || isAssociationPresident) &&
+                          !association.deactivated
                       ? SizedBox(
                           height: 400,
                           child: ReorderableListView(
@@ -284,6 +290,15 @@ class AssociationEditorPage extends HookConsumerWidget {
                                               association.mandateYear + 1,
                                         ),
                                       );
+                                      if (QR.currentPath.contains(
+                                        PhonebookRouter.associationDetail,
+                                      )) {
+                                        kindNotifier.setKind("");
+                                        QR.to(
+                                          PhonebookRouter.root +
+                                              PhonebookRouter.associationDetail,
+                                        );
+                                      }
                                     } else {
                                       displayToastWithContext(
                                         TypeMsg.error,
