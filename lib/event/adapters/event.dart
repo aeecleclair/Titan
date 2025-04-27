@@ -37,8 +37,8 @@ extension $EventReturn on EventReturn {
     return EventEdit(
       name: name,
       organizer: organizer,
-      start: start,
-      end: end,
+      start: start.toIso8601String().split("T").first,
+      end: end.toIso8601String().split("T").first,
       allDay: allDay,
       location: location,
       type: type,

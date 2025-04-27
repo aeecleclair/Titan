@@ -233,7 +233,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                       margin: const EdgeInsets.symmetric(vertical: 10),
                       child: SizedBox(
                         child: Text(
-                          association.description,
+                          association.description ?? "",
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,

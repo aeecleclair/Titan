@@ -21,7 +21,7 @@ final sortedEventListProvider =
           deltaDays.add(event.end.difference(event.start).inDays);
         } else {
           for (final date
-              in getDateInRecurrence(event.recurrenceRule, event.start)) {
+              in getDateInRecurrence(event.recurrenceRule ?? "", event.start)) {
             normalizedDates.add(normalizedDate(date));
             deltaDays.add(event.end.difference(event.start).inDays);
           }

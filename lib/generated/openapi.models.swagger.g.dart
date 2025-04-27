@@ -21,21 +21,21 @@ AdminTransferInfo _$AdminTransferInfoFromJson(Map<String, dynamic> json) =>
     AdminTransferInfo(
       amount: (json['amount'] as num?)?.toInt() ?? 0,
       transferType: transferTypeFromJson(json['transfer_type']),
-      creditedUserId: json['creditedUserId'],
+      creditedUserId: json['credited_user_id'] as String?,
     );
 
 Map<String, dynamic> _$AdminTransferInfoToJson(AdminTransferInfo instance) =>
     <String, dynamic>{
       'amount': instance.amount,
       'transfer_type': transferTypeToJson(instance.transferType),
-      'creditedUserId': instance.creditedUserId,
+      'credited_user_id': instance.creditedUserId,
     };
 
 AdvertBase _$AdvertBaseFromJson(Map<String, dynamic> json) => AdvertBase(
       title: json['title'] as String? ?? '',
       content: json['content'] as String? ?? '',
       advertiserId: json['advertiser_id'] as String? ?? '',
-      tags: json['tags'],
+      tags: json['tags'] as String?,
     );
 
 Map<String, dynamic> _$AdvertBaseToJson(AdvertBase instance) =>
@@ -52,11 +52,11 @@ AdvertReturnComplete _$AdvertReturnCompleteFromJson(
       title: json['title'] as String? ?? '',
       content: json['content'] as String? ?? '',
       advertiserId: json['advertiser_id'] as String? ?? '',
-      tags: json['tags'],
+      tags: json['tags'] as String?,
       id: json['id'] as String? ?? '',
       advertiser: AdvertiserComplete.fromJson(
           json['advertiser'] as Map<String, dynamic>),
-      date: json['date'],
+      date: json['date'] as String?,
     );
 
 Map<String, dynamic> _$AdvertReturnCompleteToJson(
@@ -72,9 +72,9 @@ Map<String, dynamic> _$AdvertReturnCompleteToJson(
     };
 
 AdvertUpdate _$AdvertUpdateFromJson(Map<String, dynamic> json) => AdvertUpdate(
-      title: json['title'],
-      content: json['content'],
-      tags: json['tags'],
+      title: json['title'] as String?,
+      content: json['content'] as String?,
+      tags: json['tags'] as String?,
     );
 
 Map<String, dynamic> _$AdvertUpdateToJson(AdvertUpdate instance) =>
@@ -112,26 +112,26 @@ Map<String, dynamic> _$AdvertiserCompleteToJson(AdvertiserComplete instance) =>
 
 AdvertiserUpdate _$AdvertiserUpdateFromJson(Map<String, dynamic> json) =>
     AdvertiserUpdate(
-      name: json['name'],
-      groupManagerId: json['groupManagerId'],
+      name: json['name'] as String?,
+      groupManagerId: json['group_manager_id'] as String?,
     );
 
 Map<String, dynamic> _$AdvertiserUpdateToJson(AdvertiserUpdate instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'groupManagerId': instance.groupManagerId,
+      'group_manager_id': instance.groupManagerId,
     };
 
 Applicant _$ApplicantFromJson(Map<String, dynamic> json) => Applicant(
       name: json['name'] as String? ?? '',
       firstname: json['firstname'] as String? ?? '',
-      nickname: json['nickname'],
+      nickname: json['nickname'] as String?,
       id: json['id'] as String? ?? '',
       accountType: accountTypeFromJson(json['account_type']),
       schoolId: json['school_id'] as String? ?? '',
       email: json['email'] as String? ?? '',
-      promo: json['promo'],
-      phone: json['phone'],
+      promo: (json['promo'] as num?)?.toInt(),
+      phone: json['phone'] as String?,
     );
 
 Map<String, dynamic> _$ApplicantToJson(Applicant instance) => <String, dynamic>{
@@ -151,11 +151,10 @@ AssociationBase _$AssociationBaseFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String? ?? '',
       kind: kindsFromJson(json['kind']),
       mandateYear: (json['mandate_year'] as num?)?.toInt() ?? 0,
-      description: json['description'],
+      description: json['description'] as String?,
       associatedGroups: (json['associated_groups'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          [],
+          ?.map((e) => e as String)
+          .toList(),
       deactivated: json['deactivated'] as bool? ?? false,
     );
 
@@ -174,11 +173,10 @@ AssociationComplete _$AssociationCompleteFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String? ?? '',
       kind: kindsFromJson(json['kind']),
       mandateYear: (json['mandate_year'] as num?)?.toInt() ?? 0,
-      description: json['description'],
+      description: json['description'] as String?,
       associatedGroups: (json['associated_groups'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          [],
+          ?.map((e) => e as String)
+          .toList(),
       deactivated: json['deactivated'] as bool? ?? false,
       id: json['id'] as String? ?? '',
     );
@@ -197,27 +195,26 @@ Map<String, dynamic> _$AssociationCompleteToJson(
 
 AssociationEdit _$AssociationEditFromJson(Map<String, dynamic> json) =>
     AssociationEdit(
-      name: json['name'],
-      kind: json['kind'],
-      description: json['description'],
-      mandateYear: json['mandateYear'],
+      name: json['name'] as String?,
+      kind: kindsNullableFromJson(json['kind']),
+      description: json['description'] as String?,
+      mandateYear: (json['mandate_year'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$AssociationEditToJson(AssociationEdit instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'kind': instance.kind,
+      'kind': kindsNullableToJson(instance.kind),
       'description': instance.description,
-      'mandateYear': instance.mandateYear,
+      'mandate_year': instance.mandateYear,
     };
 
 AssociationGroupsEdit _$AssociationGroupsEditFromJson(
         Map<String, dynamic> json) =>
     AssociationGroupsEdit(
       associatedGroups: (json['associated_groups'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          [],
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$AssociationGroupsEditToJson(
@@ -240,13 +237,13 @@ BodyAuthorizeValidationAuthAuthorizationFlowAuthorizeValidationPost
             Map<String, dynamic> json) =>
         BodyAuthorizeValidationAuthAuthorizationFlowAuthorizeValidationPost(
           clientId: json['client_id'] as String? ?? '',
-          redirectUri: json['redirectUri'],
+          redirectUri: json['redirect_uri'] as String?,
           responseType: json['response_type'] as String? ?? '',
-          scope: json['scope'],
-          state: json['state'],
-          nonce: json['nonce'],
-          codeChallenge: json['codeChallenge'],
-          codeChallengeMethod: json['codeChallengeMethod'],
+          scope: json['scope'] as String?,
+          state: json['state'] as String?,
+          nonce: json['nonce'] as String?,
+          codeChallenge: json['code_challenge'] as String?,
+          codeChallengeMethod: json['code_challenge_method'] as String?,
           email: json['email'] as String? ?? '',
           password: json['password'] as String? ?? '',
         );
@@ -257,13 +254,13 @@ Map<String, dynamic>
                 instance) =>
         <String, dynamic>{
           'client_id': instance.clientId,
-          'redirectUri': instance.redirectUri,
+          'redirect_uri': instance.redirectUri,
           'response_type': instance.responseType,
           'scope': instance.scope,
           'state': instance.state,
           'nonce': instance.nonce,
-          'codeChallenge': instance.codeChallenge,
-          'codeChallengeMethod': instance.codeChallengeMethod,
+          'code_challenge': instance.codeChallenge,
+          'code_challenge_method': instance.codeChallengeMethod,
           'email': instance.email,
           'password': instance.password,
         };
@@ -399,41 +396,41 @@ BodyIntrospectAuthIntrospectPost _$BodyIntrospectAuthIntrospectPostFromJson(
         Map<String, dynamic> json) =>
     BodyIntrospectAuthIntrospectPost(
       token: json['token'] as String? ?? '',
-      tokenTypeHint: json['tokenTypeHint'],
-      clientId: json['clientId'],
-      clientSecret: json['clientSecret'],
+      tokenTypeHint: json['token_type_hint'] as String?,
+      clientId: json['client_id'] as String?,
+      clientSecret: json['client_secret'] as String?,
     );
 
 Map<String, dynamic> _$BodyIntrospectAuthIntrospectPostToJson(
         BodyIntrospectAuthIntrospectPost instance) =>
     <String, dynamic>{
       'token': instance.token,
-      'tokenTypeHint': instance.tokenTypeHint,
-      'clientId': instance.clientId,
-      'clientSecret': instance.clientSecret,
+      'token_type_hint': instance.tokenTypeHint,
+      'client_id': instance.clientId,
+      'client_secret': instance.clientSecret,
     };
 
 BodyLoginForAccessTokenAuthSimpleTokenPost
     _$BodyLoginForAccessTokenAuthSimpleTokenPostFromJson(
             Map<String, dynamic> json) =>
         BodyLoginForAccessTokenAuthSimpleTokenPost(
-          grantType: json['grantType'],
+          grantType: json['grant_type'] as String?,
           username: json['username'] as String? ?? '',
           password: json['password'] as String? ?? '',
           scope: json['scope'] as String? ?? '',
-          clientId: json['clientId'],
-          clientSecret: json['clientSecret'],
+          clientId: json['client_id'] as String?,
+          clientSecret: json['client_secret'] as String?,
         );
 
 Map<String, dynamic> _$BodyLoginForAccessTokenAuthSimpleTokenPostToJson(
         BodyLoginForAccessTokenAuthSimpleTokenPost instance) =>
     <String, dynamic>{
-      'grantType': instance.grantType,
+      'grant_type': instance.grantType,
       'username': instance.username,
       'password': instance.password,
       'scope': instance.scope,
-      'clientId': instance.clientId,
-      'clientSecret': instance.clientSecret,
+      'client_id': instance.clientId,
+      'client_secret': instance.clientSecret,
     };
 
 BodyPostAuthorizePageAuthAuthorizePost
@@ -443,11 +440,11 @@ BodyPostAuthorizePageAuthAuthorizePost
           responseType: json['response_type'] as String? ?? '',
           clientId: json['client_id'] as String? ?? '',
           redirectUri: json['redirect_uri'] as String? ?? '',
-          scope: json['scope'],
-          state: json['state'],
-          nonce: json['nonce'],
-          codeChallenge: json['codeChallenge'],
-          codeChallengeMethod: json['codeChallengeMethod'],
+          scope: json['scope'] as String?,
+          state: json['state'] as String?,
+          nonce: json['nonce'] as String?,
+          codeChallenge: json['code_challenge'] as String?,
+          codeChallengeMethod: json['code_challenge_method'] as String?,
         );
 
 Map<String, dynamic> _$BodyPostAuthorizePageAuthAuthorizePostToJson(
@@ -459,9 +456,83 @@ Map<String, dynamic> _$BodyPostAuthorizePageAuthAuthorizePostToJson(
       'scope': instance.scope,
       'state': instance.state,
       'nonce': instance.nonce,
-      'codeChallenge': instance.codeChallenge,
-      'codeChallengeMethod': instance.codeChallengeMethod,
+      'code_challenge': instance.codeChallenge,
+      'code_challenge_method': instance.codeChallengeMethod,
     };
+
+BodyReadAssociationsMembershipsMembershipsGet
+    _$BodyReadAssociationsMembershipsMembershipsGetFromJson(
+            Map<String, dynamic> json) =>
+        BodyReadAssociationsMembershipsMembershipsGet(
+          excludedGroups: (json['excluded_groups'] as List<dynamic>?)
+              ?.map((e) => $enumDecode(_$GroupTypeEnumMap, e))
+              .toList(),
+          includedGroups: (json['included_groups'] as List<dynamic>?)
+              ?.map((e) => $enumDecode(_$GroupTypeEnumMap, e))
+              .toList(),
+          excludedAccountTypes:
+              (json['excluded_account_types'] as List<dynamic>?)
+                  ?.map((e) => $enumDecode(_$AccountTypeEnumMap, e))
+                  .toList(),
+          includedAccountTypes:
+              (json['included_account_types'] as List<dynamic>?)
+                  ?.map((e) => $enumDecode(_$AccountTypeEnumMap, e))
+                  .toList(),
+        );
+
+Map<String, dynamic> _$BodyReadAssociationsMembershipsMembershipsGetToJson(
+        BodyReadAssociationsMembershipsMembershipsGet instance) =>
+    <String, dynamic>{
+      'excluded_groups':
+          instance.excludedGroups?.map((e) => _$GroupTypeEnumMap[e]).toList(),
+      'included_groups':
+          instance.includedGroups?.map((e) => _$GroupTypeEnumMap[e]).toList(),
+      'excluded_account_types': instance.excludedAccountTypes
+          ?.map((e) => _$AccountTypeEnumMap[e])
+          .toList(),
+      'included_account_types': instance.includedAccountTypes
+          ?.map((e) => _$AccountTypeEnumMap[e])
+          .toList(),
+    };
+
+const _$GroupTypeEnumMap = {
+  GroupType.swaggerGeneratedUnknown: null,
+  GroupType.value_0a25cb764b634fd3B939Da6d9feabf28:
+      '0a25cb76-4b63-4fd3-b939-da6d9feabf28',
+  GroupType.value_45649735866a49dfB04bA13c74fd5886:
+      '45649735-866a-49df-b04b-a13c74fd5886',
+  GroupType.value_70db65eeD5334f6b9ffaA4d70a17b7ef:
+      '70db65ee-d533-4f6b-9ffa-a4d70a17b7ef',
+  GroupType.value_53a669d684b143528d7c421c1fbd9c6a:
+      '53a669d6-84b1-4352-8d7c-421c1fbd9c6a',
+  GroupType.value_6c6d7e88Fdb84e42B2b53d3cfd12e7d6:
+      '6c6d7e88-fdb8-4e42-b2b5-3d3cfd12e7d6',
+  GroupType.ce5f36e65377489f9696De70e2477300:
+      'ce5f36e6-5377-489f-9696-de70e2477300',
+  GroupType.e9e6e3d39f5f4e9b8e5f9f5f4e9b8e5f:
+      'e9e6e3d3-9f5f-4e9b-8e5f-9f5f4e9b8e5f',
+  GroupType.value_4ec5ae77F955430996a519cc3c8be71c:
+      '4ec5ae77-f955-4309-96a5-19cc3c8be71c',
+  GroupType.c127522946b24e53A7c4305513bb1a2a:
+      'c1275229-46b2-4e53-a7c4-305513bb1a2a',
+  GroupType.value_1f841bd900be41a796e1860a18a46105:
+      '1f841bd9-00be-41a7-96e1-860a18a46105',
+  GroupType.value_61af3e527ef94608823a39d51e83d1db:
+      '61af3e52-7ef9-4608-823a-39d51e83d1db',
+  GroupType.value_09153d2a14f449a4Be575d0f265261b9:
+      '09153d2a-14f4-49a4-be57-5d0f265261b9',
+};
+
+const _$AccountTypeEnumMap = {
+  AccountType.swaggerGeneratedUnknown: null,
+  AccountType.student: 'student',
+  AccountType.formerStudent: 'former_student',
+  AccountType.staff: 'staff',
+  AccountType.association: 'association',
+  AccountType.$external: 'external',
+  AccountType.otherSchoolStudent: 'other_school_student',
+  AccountType.demo: 'demo',
+};
 
 BodyRecoverUserUsersRecoverPost _$BodyRecoverUserUsersRecoverPostFromJson(
         Map<String, dynamic> json) =>
@@ -491,25 +562,25 @@ Map<String, dynamic> _$BodyRegisterFirebaseDeviceNotificationDevicesPostToJson(
 BodyTokenAuthTokenPost _$BodyTokenAuthTokenPostFromJson(
         Map<String, dynamic> json) =>
     BodyTokenAuthTokenPost(
-      refreshToken: json['refreshToken'],
+      refreshToken: json['refresh_token'] as String?,
       grantType: json['grant_type'] as String? ?? '',
-      code: json['code'],
-      redirectUri: json['redirectUri'],
-      clientId: json['clientId'],
-      clientSecret: json['clientSecret'],
-      codeVerifier: json['codeVerifier'],
+      code: json['code'] as String?,
+      redirectUri: json['redirect_uri'] as String?,
+      clientId: json['client_id'] as String?,
+      clientSecret: json['client_secret'] as String?,
+      codeVerifier: json['code_verifier'] as String?,
     );
 
 Map<String, dynamic> _$BodyTokenAuthTokenPostToJson(
         BodyTokenAuthTokenPost instance) =>
     <String, dynamic>{
-      'refreshToken': instance.refreshToken,
+      'refresh_token': instance.refreshToken,
       'grant_type': instance.grantType,
       'code': instance.code,
-      'redirectUri': instance.redirectUri,
-      'clientId': instance.clientId,
-      'clientSecret': instance.clientSecret,
-      'codeVerifier': instance.codeVerifier,
+      'redirect_uri': instance.redirectUri,
+      'client_id': instance.clientId,
+      'client_secret': instance.clientSecret,
+      'code_verifier': instance.codeVerifier,
     };
 
 BodyUploadDocumentRaidDocumentDocumentTypePost
@@ -530,11 +601,11 @@ BookingBase _$BookingBaseFromJson(Map<String, dynamic> json) => BookingBase(
       start: DateTime.parse(json['start'] as String),
       end: DateTime.parse(json['end'] as String),
       creation: DateTime.parse(json['creation'] as String),
-      note: json['note'],
+      note: json['note'] as String?,
       roomId: json['room_id'] as String? ?? '',
       key: json['key'] as bool? ?? false,
-      recurrenceRule: json['recurrenceRule'],
-      entity: json['entity'],
+      recurrenceRule: json['recurrence_rule'] as String?,
+      entity: json['entity'] as String?,
     );
 
 Map<String, dynamic> _$BookingBaseToJson(BookingBase instance) =>
@@ -546,19 +617,19 @@ Map<String, dynamic> _$BookingBaseToJson(BookingBase instance) =>
       'note': instance.note,
       'room_id': instance.roomId,
       'key': instance.key,
-      'recurrenceRule': instance.recurrenceRule,
+      'recurrence_rule': instance.recurrenceRule,
       'entity': instance.entity,
     };
 
 BookingEdit _$BookingEditFromJson(Map<String, dynamic> json) => BookingEdit(
-      reason: json['reason'],
-      start: json['start'],
-      end: json['end'],
-      note: json['note'],
-      roomId: json['roomId'],
-      key: json['key'],
-      recurrenceRule: json['recurrenceRule'],
-      entity: json['entity'],
+      reason: json['reason'] as String?,
+      start: json['start'] as String?,
+      end: json['end'] as String?,
+      note: json['note'] as String?,
+      roomId: json['room_id'] as String?,
+      key: json['key'] as bool?,
+      recurrenceRule: json['recurrence_rule'] as String?,
+      entity: json['entity'] as String?,
     );
 
 Map<String, dynamic> _$BookingEditToJson(BookingEdit instance) =>
@@ -567,9 +638,9 @@ Map<String, dynamic> _$BookingEditToJson(BookingEdit instance) =>
       'start': instance.start,
       'end': instance.end,
       'note': instance.note,
-      'roomId': instance.roomId,
+      'room_id': instance.roomId,
       'key': instance.key,
-      'recurrenceRule': instance.recurrenceRule,
+      'recurrence_rule': instance.recurrenceRule,
       'entity': instance.entity,
     };
 
@@ -579,11 +650,11 @@ BookingReturn _$BookingReturnFromJson(Map<String, dynamic> json) =>
       start: DateTime.parse(json['start'] as String),
       end: DateTime.parse(json['end'] as String),
       creation: DateTime.parse(json['creation'] as String),
-      note: json['note'],
+      note: json['note'] as String?,
       roomId: json['room_id'] as String? ?? '',
       key: json['key'] as bool? ?? false,
-      recurrenceRule: json['recurrenceRule'],
-      entity: json['entity'],
+      recurrenceRule: json['recurrence_rule'] as String?,
+      entity: json['entity'] as String?,
       id: json['id'] as String? ?? '',
       decision: decisionFromJson(json['decision']),
       applicantId: json['applicant_id'] as String? ?? '',
@@ -599,7 +670,7 @@ Map<String, dynamic> _$BookingReturnToJson(BookingReturn instance) =>
       'note': instance.note,
       'room_id': instance.roomId,
       'key': instance.key,
-      'recurrenceRule': instance.recurrenceRule,
+      'recurrence_rule': instance.recurrenceRule,
       'entity': instance.entity,
       'id': instance.id,
       'decision': decisionToJson(instance.decision),
@@ -614,11 +685,11 @@ BookingReturnApplicant _$BookingReturnApplicantFromJson(
       start: DateTime.parse(json['start'] as String),
       end: DateTime.parse(json['end'] as String),
       creation: DateTime.parse(json['creation'] as String),
-      note: json['note'],
+      note: json['note'] as String?,
       roomId: json['room_id'] as String? ?? '',
       key: json['key'] as bool? ?? false,
-      recurrenceRule: json['recurrenceRule'],
-      entity: json['entity'],
+      recurrenceRule: json['recurrence_rule'] as String?,
+      entity: json['entity'] as String?,
       id: json['id'] as String? ?? '',
       decision: decisionFromJson(json['decision']),
       applicantId: json['applicant_id'] as String? ?? '',
@@ -636,7 +707,7 @@ Map<String, dynamic> _$BookingReturnApplicantToJson(
       'note': instance.note,
       'room_id': instance.roomId,
       'key': instance.key,
-      'recurrenceRule': instance.recurrenceRule,
+      'recurrence_rule': instance.recurrenceRule,
       'entity': instance.entity,
       'id': instance.id,
       'decision': decisionToJson(instance.decision),
@@ -652,11 +723,11 @@ BookingReturnSimpleApplicant _$BookingReturnSimpleApplicantFromJson(
       start: DateTime.parse(json['start'] as String),
       end: DateTime.parse(json['end'] as String),
       creation: DateTime.parse(json['creation'] as String),
-      note: json['note'],
+      note: json['note'] as String?,
       roomId: json['room_id'] as String? ?? '',
       key: json['key'] as bool? ?? false,
-      recurrenceRule: json['recurrenceRule'],
-      entity: json['entity'],
+      recurrenceRule: json['recurrence_rule'] as String?,
+      entity: json['entity'] as String?,
       id: json['id'] as String? ?? '',
       decision: decisionFromJson(json['decision']),
       applicantId: json['applicant_id'] as String? ?? '',
@@ -675,7 +746,7 @@ Map<String, dynamic> _$BookingReturnSimpleApplicantToJson(
       'note': instance.note,
       'room_id': instance.roomId,
       'key': instance.key,
-      'recurrenceRule': instance.recurrenceRule,
+      'recurrence_rule': instance.recurrenceRule,
       'entity': instance.entity,
       'id': instance.id,
       'decision': decisionToJson(instance.decision),
@@ -708,16 +779,19 @@ Map<String, dynamic> _$CashEditToJson(CashEdit instance) => <String, dynamic>{
 CdrUser _$CdrUserFromJson(Map<String, dynamic> json) => CdrUser(
       name: json['name'] as String? ?? '',
       firstname: json['firstname'] as String? ?? '',
-      nickname: json['nickname'],
+      nickname: json['nickname'] as String?,
       id: json['id'] as String? ?? '',
       accountType: accountTypeFromJson(json['account_type']),
       schoolId: json['school_id'] as String? ?? '',
-      curriculum: json['curriculum'],
-      promo: json['promo'],
+      curriculum: json['curriculum'] == null
+          ? null
+          : CurriculumComplete.fromJson(
+              json['curriculum'] as Map<String, dynamic>),
+      promo: (json['promo'] as num?)?.toInt(),
       email: json['email'] as String? ?? '',
-      birthday: json['birthday'],
-      phone: json['phone'],
-      floor: json['floor'],
+      birthday: json['birthday'] as String?,
+      phone: json['phone'] as String?,
+      floor: floorsTypeNullableFromJson(json['floor']),
     );
 
 Map<String, dynamic> _$CdrUserToJson(CdrUser instance) => <String, dynamic>{
@@ -727,23 +801,26 @@ Map<String, dynamic> _$CdrUserToJson(CdrUser instance) => <String, dynamic>{
       'id': instance.id,
       'account_type': accountTypeToJson(instance.accountType),
       'school_id': instance.schoolId,
-      'curriculum': instance.curriculum,
+      'curriculum': instance.curriculum?.toJson(),
       'promo': instance.promo,
       'email': instance.email,
       'birthday': instance.birthday,
       'phone': instance.phone,
-      'floor': instance.floor,
+      'floor': floorsTypeNullableToJson(instance.floor),
     };
 
 CdrUserPreview _$CdrUserPreviewFromJson(Map<String, dynamic> json) =>
     CdrUserPreview(
       name: json['name'] as String? ?? '',
       firstname: json['firstname'] as String? ?? '',
-      nickname: json['nickname'],
+      nickname: json['nickname'] as String?,
       id: json['id'] as String? ?? '',
       accountType: accountTypeFromJson(json['account_type']),
       schoolId: json['school_id'] as String? ?? '',
-      curriculum: json['curriculum'],
+      curriculum: json['curriculum'] == null
+          ? null
+          : CurriculumComplete.fromJson(
+              json['curriculum'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$CdrUserPreviewToJson(CdrUserPreview instance) =>
@@ -754,17 +831,17 @@ Map<String, dynamic> _$CdrUserPreviewToJson(CdrUserPreview instance) =>
       'id': instance.id,
       'account_type': accountTypeToJson(instance.accountType),
       'school_id': instance.schoolId,
-      'curriculum': instance.curriculum,
+      'curriculum': instance.curriculum?.toJson(),
     };
 
 CdrUserUpdate _$CdrUserUpdateFromJson(Map<String, dynamic> json) =>
     CdrUserUpdate(
-      promo: json['promo'],
-      nickname: json['nickname'],
-      email: json['email'],
-      birthday: json['birthday'],
-      phone: json['phone'],
-      floor: json['floor'],
+      promo: (json['promo'] as num?)?.toInt(),
+      nickname: json['nickname'] as String?,
+      email: json['email'] as String?,
+      birthday: json['birthday'] as String?,
+      phone: json['phone'] as String?,
+      floor: floorsTypeNullableFromJson(json['floor']),
     );
 
 Map<String, dynamic> _$CdrUserUpdateToJson(CdrUserUpdate instance) =>
@@ -774,7 +851,7 @@ Map<String, dynamic> _$CdrUserUpdateToJson(CdrUserUpdate instance) =>
       'email': instance.email,
       'birthday': instance.birthday,
       'phone': instance.phone,
-      'floor': instance.floor,
+      'floor': floorsTypeNullableToJson(instance.floor),
     };
 
 ChangePasswordRequest _$ChangePasswordRequestFromJson(
@@ -836,8 +913,8 @@ CineSessionBase _$CineSessionBaseFromJson(Map<String, dynamic> json) =>
       duration: (json['duration'] as num?)?.toInt() ?? 0,
       name: json['name'] as String? ?? '',
       overview: json['overview'] as String? ?? '',
-      genre: json['genre'],
-      tagline: json['tagline'],
+      genre: json['genre'] as String?,
+      tagline: json['tagline'] as String?,
     );
 
 Map<String, dynamic> _$CineSessionBaseToJson(CineSessionBase instance) =>
@@ -856,8 +933,8 @@ CineSessionComplete _$CineSessionCompleteFromJson(Map<String, dynamic> json) =>
       duration: (json['duration'] as num?)?.toInt() ?? 0,
       name: json['name'] as String? ?? '',
       overview: json['overview'] as String? ?? '',
-      genre: json['genre'],
-      tagline: json['tagline'],
+      genre: json['genre'] as String?,
+      tagline: json['tagline'] as String?,
       id: json['id'] as String? ?? '',
     );
 
@@ -875,12 +952,12 @@ Map<String, dynamic> _$CineSessionCompleteToJson(
 
 CineSessionUpdate _$CineSessionUpdateFromJson(Map<String, dynamic> json) =>
     CineSessionUpdate(
-      name: json['name'],
-      start: json['start'],
-      duration: json['duration'],
-      overview: json['overview'],
-      genre: json['genre'],
-      tagline: json['tagline'],
+      name: json['name'] as String?,
+      start: json['start'] as String?,
+      duration: (json['duration'] as num?)?.toInt(),
+      overview: json['overview'] as String?,
+      genre: json['genre'] as String?,
+      tagline: json['tagline'] as String?,
     );
 
 Map<String, dynamic> _$CineSessionUpdateToJson(CineSessionUpdate instance) =>
@@ -912,7 +989,7 @@ CoreBatchMembership _$CoreBatchMembershipFromJson(Map<String, dynamic> json) =>
               .toList() ??
           [],
       groupId: json['group_id'] as String? ?? '',
-      description: json['description'],
+      description: json['description'] as String?,
     );
 
 Map<String, dynamic> _$CoreBatchMembershipToJson(
@@ -937,12 +1014,11 @@ Map<String, dynamic> _$CoreBatchUserCreateRequestToJson(
 
 CoreGroup _$CoreGroupFromJson(Map<String, dynamic> json) => CoreGroup(
       name: json['name'] as String? ?? '',
-      description: json['description'],
+      description: json['description'] as String?,
       id: json['id'] as String? ?? '',
       members: (json['members'] as List<dynamic>?)
-              ?.map((e) => CoreUserSimple.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
+          ?.map((e) => CoreUserSimple.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$CoreGroupToJson(CoreGroup instance) => <String, dynamic>{
@@ -955,7 +1031,7 @@ Map<String, dynamic> _$CoreGroupToJson(CoreGroup instance) => <String, dynamic>{
 CoreGroupCreate _$CoreGroupCreateFromJson(Map<String, dynamic> json) =>
     CoreGroupCreate(
       name: json['name'] as String? ?? '',
-      description: json['description'],
+      description: json['description'] as String?,
     );
 
 Map<String, dynamic> _$CoreGroupCreateToJson(CoreGroupCreate instance) =>
@@ -967,7 +1043,7 @@ Map<String, dynamic> _$CoreGroupCreateToJson(CoreGroupCreate instance) =>
 CoreGroupSimple _$CoreGroupSimpleFromJson(Map<String, dynamic> json) =>
     CoreGroupSimple(
       name: json['name'] as String? ?? '',
-      description: json['description'],
+      description: json['description'] as String?,
       id: json['id'] as String? ?? '',
     );
 
@@ -980,8 +1056,8 @@ Map<String, dynamic> _$CoreGroupSimpleToJson(CoreGroupSimple instance) =>
 
 CoreGroupUpdate _$CoreGroupUpdateFromJson(Map<String, dynamic> json) =>
     CoreGroupUpdate(
-      name: json['name'],
-      description: json['description'],
+      name: json['name'] as String?,
+      description: json['description'] as String?,
     );
 
 Map<String, dynamic> _$CoreGroupUpdateToJson(CoreGroupUpdate instance) =>
@@ -1009,7 +1085,7 @@ CoreMembership _$CoreMembershipFromJson(Map<String, dynamic> json) =>
     CoreMembership(
       userId: json['user_id'] as String? ?? '',
       groupId: json['group_id'] as String? ?? '',
-      description: json['description'],
+      description: json['description'] as String?,
     );
 
 Map<String, dynamic> _$CoreMembershipToJson(CoreMembership instance) =>
@@ -1060,34 +1136,35 @@ Map<String, dynamic> _$CoreSchoolBaseToJson(CoreSchoolBase instance) =>
 
 CoreSchoolUpdate _$CoreSchoolUpdateFromJson(Map<String, dynamic> json) =>
     CoreSchoolUpdate(
-      name: json['name'],
-      emailRegex: json['emailRegex'],
+      name: json['name'] as String?,
+      emailRegex: json['email_regex'] as String?,
     );
 
 Map<String, dynamic> _$CoreSchoolUpdateToJson(CoreSchoolUpdate instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'emailRegex': instance.emailRegex,
+      'email_regex': instance.emailRegex,
     };
 
 CoreUser _$CoreUserFromJson(Map<String, dynamic> json) => CoreUser(
       name: json['name'] as String? ?? '',
       firstname: json['firstname'] as String? ?? '',
-      nickname: json['nickname'],
+      nickname: json['nickname'] as String?,
       id: json['id'] as String? ?? '',
       accountType: accountTypeFromJson(json['account_type']),
       schoolId: json['school_id'] as String? ?? '',
       email: json['email'] as String? ?? '',
-      birthday: json['birthday'],
-      promo: json['promo'],
-      floor: json['floor'],
-      phone: json['phone'],
-      createdOn: json['createdOn'],
+      birthday: json['birthday'] as String?,
+      promo: (json['promo'] as num?)?.toInt(),
+      floor: floorsTypeNullableFromJson(json['floor']),
+      phone: json['phone'] as String?,
+      createdOn: json['created_on'] as String?,
       groups: (json['groups'] as List<dynamic>?)
-              ?.map((e) => CoreGroupSimple.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
-      school: json['school'],
+          ?.map((e) => CoreGroupSimple.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      school: json['school'] == null
+          ? null
+          : CoreSchool.fromJson(json['school'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$CoreUserToJson(CoreUser instance) => <String, dynamic>{
@@ -1100,11 +1177,11 @@ Map<String, dynamic> _$CoreUserToJson(CoreUser instance) => <String, dynamic>{
       'email': instance.email,
       'birthday': instance.birthday,
       'promo': instance.promo,
-      'floor': instance.floor,
+      'floor': floorsTypeNullableToJson(instance.floor),
       'phone': instance.phone,
-      'createdOn': instance.createdOn,
+      'created_on': instance.createdOn,
       'groups': instance.groups?.map((e) => e.toJson()).toList(),
-      'school': instance.school,
+      'school': instance.school?.toJson(),
     };
 
 CoreUserActivateRequest _$CoreUserActivateRequestFromJson(
@@ -1112,13 +1189,13 @@ CoreUserActivateRequest _$CoreUserActivateRequestFromJson(
     CoreUserActivateRequest(
       name: json['name'] as String? ?? '',
       firstname: json['firstname'] as String? ?? '',
-      nickname: json['nickname'],
+      nickname: json['nickname'] as String?,
       activationToken: json['activation_token'] as String? ?? '',
       password: json['password'] as String? ?? '',
-      birthday: json['birthday'],
-      phone: json['phone'],
-      floor: json['floor'],
-      promo: json['promo'],
+      birthday: json['birthday'] as String?,
+      phone: json['phone'] as String?,
+      floor: floorsTypeNullableFromJson(json['floor']),
+      promo: (json['promo'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$CoreUserActivateRequestToJson(
@@ -1131,7 +1208,7 @@ Map<String, dynamic> _$CoreUserActivateRequestToJson(
       'password': instance.password,
       'birthday': instance.birthday,
       'phone': instance.phone,
-      'floor': instance.floor,
+      'floor': floorsTypeNullableToJson(instance.floor),
       'promo': instance.promo,
     };
 
@@ -1139,14 +1216,14 @@ CoreUserCreateRequest _$CoreUserCreateRequestFromJson(
         Map<String, dynamic> json) =>
     CoreUserCreateRequest(
       email: json['email'] as String? ?? '',
-      acceptExternal: json['acceptExternal'],
+      acceptExternal: json['accept_external'] as bool?,
     );
 
 Map<String, dynamic> _$CoreUserCreateRequestToJson(
         CoreUserCreateRequest instance) =>
     <String, dynamic>{
       'email': instance.email,
-      'acceptExternal': instance.acceptExternal,
+      'accept_external': instance.acceptExternal,
     };
 
 CoreUserFusionRequest _$CoreUserFusionRequestFromJson(
@@ -1167,7 +1244,7 @@ CoreUserSimple _$CoreUserSimpleFromJson(Map<String, dynamic> json) =>
     CoreUserSimple(
       name: json['name'] as String? ?? '',
       firstname: json['firstname'] as String? ?? '',
-      nickname: json['nickname'],
+      nickname: json['nickname'] as String?,
       id: json['id'] as String? ?? '',
       accountType: accountTypeFromJson(json['account_type']),
       schoolId: json['school_id'] as String? ?? '',
@@ -1185,10 +1262,10 @@ Map<String, dynamic> _$CoreUserSimpleToJson(CoreUserSimple instance) =>
 
 CoreUserUpdate _$CoreUserUpdateFromJson(Map<String, dynamic> json) =>
     CoreUserUpdate(
-      nickname: json['nickname'],
-      birthday: json['birthday'],
-      phone: json['phone'],
-      floor: json['floor'],
+      nickname: json['nickname'] as String?,
+      birthday: json['birthday'] as String?,
+      phone: json['phone'] as String?,
+      floor: floorsTypeNullableFromJson(json['floor']),
     );
 
 Map<String, dynamic> _$CoreUserUpdateToJson(CoreUserUpdate instance) =>
@@ -1196,36 +1273,36 @@ Map<String, dynamic> _$CoreUserUpdateToJson(CoreUserUpdate instance) =>
       'nickname': instance.nickname,
       'birthday': instance.birthday,
       'phone': instance.phone,
-      'floor': instance.floor,
+      'floor': floorsTypeNullableToJson(instance.floor),
     };
 
 CoreUserUpdateAdmin _$CoreUserUpdateAdminFromJson(Map<String, dynamic> json) =>
     CoreUserUpdateAdmin(
-      email: json['email'],
-      schoolId: json['schoolId'],
-      accountType: json['accountType'],
-      name: json['name'],
-      firstname: json['firstname'],
-      promo: json['promo'],
-      nickname: json['nickname'],
-      birthday: json['birthday'],
-      phone: json['phone'],
-      floor: json['floor'],
+      email: json['email'] as String?,
+      schoolId: json['school_id'] as String?,
+      accountType: accountTypeNullableFromJson(json['account_type']),
+      name: json['name'] as String?,
+      firstname: json['firstname'] as String?,
+      promo: (json['promo'] as num?)?.toInt(),
+      nickname: json['nickname'] as String?,
+      birthday: json['birthday'] as String?,
+      phone: json['phone'] as String?,
+      floor: floorsTypeNullableFromJson(json['floor']),
     );
 
 Map<String, dynamic> _$CoreUserUpdateAdminToJson(
         CoreUserUpdateAdmin instance) =>
     <String, dynamic>{
       'email': instance.email,
-      'schoolId': instance.schoolId,
-      'accountType': instance.accountType,
+      'school_id': instance.schoolId,
+      'account_type': accountTypeNullableToJson(instance.accountType),
       'name': instance.name,
       'firstname': instance.firstname,
       'promo': instance.promo,
       'nickname': instance.nickname,
       'birthday': instance.birthday,
       'phone': instance.phone,
-      'floor': instance.floor,
+      'floor': floorsTypeNullableToJson(instance.floor),
     };
 
 CurriculumBase _$CurriculumBaseFromJson(Map<String, dynamic> json) =>
@@ -1307,9 +1384,8 @@ Map<String, dynamic> _$CustomDataFieldCompleteToJson(
 DeliveryBase _$DeliveryBaseFromJson(Map<String, dynamic> json) => DeliveryBase(
       deliveryDate: DateTime.parse(json['delivery_date'] as String),
       productsIds: (json['products_ids'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          [],
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$DeliveryBaseToJson(DeliveryBase instance) =>
@@ -1337,10 +1413,9 @@ DeliveryReturn _$DeliveryReturnFromJson(Map<String, dynamic> json) =>
     DeliveryReturn(
       deliveryDate: DateTime.parse(json['delivery_date'] as String),
       products: (json['products'] as List<dynamic>?)
-              ?.map((e) => AppModulesAmapSchemasAmapProductComplete.fromJson(
-                  e as Map<String, dynamic>))
-              .toList() ??
-          [],
+          ?.map((e) => AppModulesAmapSchemasAmapProductComplete.fromJson(
+              e as Map<String, dynamic>))
+          .toList(),
       id: json['id'] as String? ?? '',
       status: deliveryStatusTypeFromJson(json['status']),
     );
@@ -1355,12 +1430,12 @@ Map<String, dynamic> _$DeliveryReturnToJson(DeliveryReturn instance) =>
 
 DeliveryUpdate _$DeliveryUpdateFromJson(Map<String, dynamic> json) =>
     DeliveryUpdate(
-      deliveryDate: json['deliveryDate'],
+      deliveryDate: json['delivery_date'] as String?,
     );
 
 Map<String, dynamic> _$DeliveryUpdateToJson(DeliveryUpdate instance) =>
     <String, dynamic>{
-      'deliveryDate': instance.deliveryDate,
+      'delivery_date': instance.deliveryDate,
     };
 
 Document _$DocumentFromJson(Map<String, dynamic> json) => Document(
@@ -1414,9 +1489,9 @@ Map<String, dynamic> _$DocumentCreationToJson(DocumentCreation instance) =>
 
 EmergencyContact _$EmergencyContactFromJson(Map<String, dynamic> json) =>
     EmergencyContact(
-      firstname: json['firstname'],
-      name: json['name'],
-      phone: json['phone'],
+      firstname: json['firstname'] as String?,
+      name: json['name'] as String?,
+      phone: json['phone'] as String?,
     );
 
 Map<String, dynamic> _$EmergencyContactToJson(EmergencyContact instance) =>
@@ -1430,13 +1505,13 @@ EventApplicant _$EventApplicantFromJson(Map<String, dynamic> json) =>
     EventApplicant(
       name: json['name'] as String? ?? '',
       firstname: json['firstname'] as String? ?? '',
-      nickname: json['nickname'],
+      nickname: json['nickname'] as String?,
       id: json['id'] as String? ?? '',
       accountType: accountTypeFromJson(json['account_type']),
       schoolId: json['school_id'] as String? ?? '',
       email: json['email'] as String? ?? '',
-      promo: json['promo'],
-      phone: json['phone'],
+      promo: (json['promo'] as num?)?.toInt(),
+      phone: json['phone'] as String?,
     );
 
 Map<String, dynamic> _$EventApplicantToJson(EventApplicant instance) =>
@@ -1461,7 +1536,7 @@ EventBase _$EventBaseFromJson(Map<String, dynamic> json) => EventBase(
       location: json['location'] as String? ?? '',
       type: calendarEventTypeFromJson(json['type']),
       description: json['description'] as String? ?? '',
-      recurrenceRule: json['recurrenceRule'],
+      recurrenceRule: json['recurrence_rule'] as String?,
     );
 
 Map<String, dynamic> _$EventBaseToJson(EventBase instance) => <String, dynamic>{
@@ -1473,7 +1548,7 @@ Map<String, dynamic> _$EventBaseToJson(EventBase instance) => <String, dynamic>{
       'location': instance.location,
       'type': calendarEventTypeToJson(instance.type),
       'description': instance.description,
-      'recurrenceRule': instance.recurrenceRule,
+      'recurrence_rule': instance.recurrenceRule,
     };
 
 EventComplete _$EventCompleteFromJson(Map<String, dynamic> json) =>
@@ -1486,7 +1561,7 @@ EventComplete _$EventCompleteFromJson(Map<String, dynamic> json) =>
       location: json['location'] as String? ?? '',
       type: calendarEventTypeFromJson(json['type']),
       description: json['description'] as String? ?? '',
-      recurrenceRule: json['recurrenceRule'],
+      recurrenceRule: json['recurrence_rule'] as String?,
       id: json['id'] as String? ?? '',
       decision: decisionFromJson(json['decision']),
       applicantId: json['applicant_id'] as String? ?? '',
@@ -1502,22 +1577,22 @@ Map<String, dynamic> _$EventCompleteToJson(EventComplete instance) =>
       'location': instance.location,
       'type': calendarEventTypeToJson(instance.type),
       'description': instance.description,
-      'recurrenceRule': instance.recurrenceRule,
+      'recurrence_rule': instance.recurrenceRule,
       'id': instance.id,
       'decision': decisionToJson(instance.decision),
       'applicant_id': instance.applicantId,
     };
 
 EventEdit _$EventEditFromJson(Map<String, dynamic> json) => EventEdit(
-      name: json['name'],
-      organizer: json['organizer'],
-      start: json['start'],
-      end: json['end'],
-      allDay: json['allDay'],
-      location: json['location'],
-      type: json['type'],
-      description: json['description'],
-      recurrenceRule: json['recurrenceRule'],
+      name: json['name'] as String?,
+      organizer: json['organizer'] as String?,
+      start: json['start'] as String?,
+      end: json['end'] as String?,
+      allDay: json['all_day'] as bool?,
+      location: json['location'] as String?,
+      type: calendarEventTypeNullableFromJson(json['type']),
+      description: json['description'] as String?,
+      recurrenceRule: json['recurrence_rule'] as String?,
     );
 
 Map<String, dynamic> _$EventEditToJson(EventEdit instance) => <String, dynamic>{
@@ -1525,11 +1600,11 @@ Map<String, dynamic> _$EventEditToJson(EventEdit instance) => <String, dynamic>{
       'organizer': instance.organizer,
       'start': instance.start,
       'end': instance.end,
-      'allDay': instance.allDay,
+      'all_day': instance.allDay,
       'location': instance.location,
-      'type': instance.type,
+      'type': calendarEventTypeNullableToJson(instance.type),
       'description': instance.description,
-      'recurrenceRule': instance.recurrenceRule,
+      'recurrence_rule': instance.recurrenceRule,
     };
 
 EventReturn _$EventReturnFromJson(Map<String, dynamic> json) => EventReturn(
@@ -1541,7 +1616,7 @@ EventReturn _$EventReturnFromJson(Map<String, dynamic> json) => EventReturn(
       location: json['location'] as String? ?? '',
       type: calendarEventTypeFromJson(json['type']),
       description: json['description'] as String? ?? '',
-      recurrenceRule: json['recurrenceRule'],
+      recurrenceRule: json['recurrence_rule'] as String?,
       id: json['id'] as String? ?? '',
       decision: decisionFromJson(json['decision']),
       applicantId: json['applicant_id'] as String? ?? '',
@@ -1559,7 +1634,7 @@ Map<String, dynamic> _$EventReturnToJson(EventReturn instance) =>
       'location': instance.location,
       'type': calendarEventTypeToJson(instance.type),
       'description': instance.description,
-      'recurrenceRule': instance.recurrenceRule,
+      'recurrence_rule': instance.recurrenceRule,
       'id': instance.id,
       'decision': decisionToJson(instance.decision),
       'applicant_id': instance.applicantId,
@@ -1661,9 +1736,8 @@ Map<String, dynamic> _$GenerateTicketCompleteToJson(
 HTTPValidationError _$HTTPValidationErrorFromJson(Map<String, dynamic> json) =>
     HTTPValidationError(
       detail: (json['detail'] as List<dynamic>?)
-              ?.map((e) => ValidationError.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
+          ?.map((e) => ValidationError.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$HTTPValidationErrorToJson(
@@ -1705,9 +1779,9 @@ Map<String, dynamic> _$InformationToJson(Information instance) =>
 
 InformationEdit _$InformationEditFromJson(Map<String, dynamic> json) =>
     InformationEdit(
-      manager: json['manager'],
-      link: json['link'],
-      description: json['description'],
+      manager: json['manager'] as String?,
+      link: json['link'] as String?,
+      description: json['description'] as String?,
     );
 
 Map<String, dynamic> _$InformationEditToJson(InformationEdit instance) =>
@@ -1813,22 +1887,25 @@ Map<String, dynamic> _$ItemSimpleToJson(ItemSimple instance) =>
     };
 
 ItemUpdate _$ItemUpdateFromJson(Map<String, dynamic> json) => ItemUpdate(
-      name: json['name'],
-      suggestedCaution: json['suggestedCaution'],
-      totalQuantity: json['totalQuantity'],
-      suggestedLendingDuration: json['suggestedLendingDuration'],
+      name: json['name'] as String?,
+      suggestedCaution: (json['suggested_caution'] as num?)?.toInt(),
+      totalQuantity: (json['total_quantity'] as num?)?.toInt(),
+      suggestedLendingDuration:
+          (json['suggested_lending_duration'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$ItemUpdateToJson(ItemUpdate instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'suggestedCaution': instance.suggestedCaution,
-      'totalQuantity': instance.totalQuantity,
-      'suggestedLendingDuration': instance.suggestedLendingDuration,
+      'suggested_caution': instance.suggestedCaution,
+      'total_quantity': instance.totalQuantity,
+      'suggested_lending_duration': instance.suggestedLendingDuration,
     };
 
 KindsReturn _$KindsReturnFromJson(Map<String, dynamic> json) => KindsReturn(
-      kinds: kindsListFromJson(json['kinds'] as List?),
+      kinds: json['kinds'] == null
+          ? []
+          : kindsListFromJson(json['kinds'] as List?),
     );
 
 Map<String, dynamic> _$KindsReturnToJson(KindsReturn instance) =>
@@ -1845,7 +1922,7 @@ ListBase _$ListBaseFromJson(Map<String, dynamic> json) => ListBase(
               ?.map((e) => ListMemberBase.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      program: json['program'],
+      program: json['program'] as String?,
     );
 
 Map<String, dynamic> _$ListBaseToJson(ListBase instance) => <String, dynamic>{
@@ -1858,18 +1935,20 @@ Map<String, dynamic> _$ListBaseToJson(ListBase instance) => <String, dynamic>{
     };
 
 ListEdit _$ListEditFromJson(Map<String, dynamic> json) => ListEdit(
-      name: json['name'],
-      description: json['description'],
-      type: json['type'],
-      members: json['members'],
-      program: json['program'],
+      name: json['name'] as String?,
+      description: json['description'] as String?,
+      type: listTypeNullableFromJson(json['type']),
+      members: (json['members'] as List<dynamic>?)
+          ?.map((e) => ListMemberBase.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      program: json['program'] as String?,
     );
 
 Map<String, dynamic> _$ListEditToJson(ListEdit instance) => <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
-      'type': instance.type,
-      'members': instance.members,
+      'type': listTypeNullableToJson(instance.type),
+      'members': instance.members?.map((e) => e.toJson()).toList(),
       'program': instance.program,
     };
 
@@ -1911,7 +1990,7 @@ ListReturn _$ListReturnFromJson(Map<String, dynamic> json) => ListReturn(
                   (e) => ListMemberComplete.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      program: json['program'],
+      program: json['program'] as String?,
     );
 
 Map<String, dynamic> _$ListReturnToJson(ListReturn instance) =>
@@ -1930,11 +2009,11 @@ Loan _$LoanFromJson(Map<String, dynamic> json) => Loan(
       loanerId: json['loaner_id'] as String? ?? '',
       start: DateTime.parse(json['start'] as String),
       end: DateTime.parse(json['end'] as String),
-      notes: json['notes'],
-      caution: json['caution'],
+      notes: json['notes'] as String?,
+      caution: json['caution'] as String?,
       id: json['id'] as String? ?? '',
       returned: json['returned'] as bool? ?? false,
-      returnedDate: json['returnedDate'],
+      returnedDate: json['returned_date'] as String,
       itemsQty: (json['items_qty'] as List<dynamic>?)
               ?.map((e) => ItemQuantity.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -1953,7 +2032,7 @@ Map<String, dynamic> _$LoanToJson(Loan instance) => <String, dynamic>{
       'caution': instance.caution,
       'id': instance.id,
       'returned': instance.returned,
-      'returnedDate': instance.returnedDate,
+      'returned_date': instance.returnedDate,
       'items_qty': instance.itemsQty.map((e) => e.toJson()).toList(),
       'borrower': instance.borrower.toJson(),
       'loaner': instance.loaner.toJson(),
@@ -1964,8 +2043,8 @@ LoanCreation _$LoanCreationFromJson(Map<String, dynamic> json) => LoanCreation(
       loanerId: json['loaner_id'] as String? ?? '',
       start: DateTime.parse(json['start'] as String),
       end: DateTime.parse(json['end'] as String),
-      notes: json['notes'],
-      caution: json['caution'],
+      notes: json['notes'] as String?,
+      caution: json['caution'] as String?,
       itemsBorrowed: (json['items_borrowed'] as List<dynamic>?)
               ?.map((e) => ItemBorrowed.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -1984,8 +2063,8 @@ Map<String, dynamic> _$LoanCreationToJson(LoanCreation instance) =>
     };
 
 LoanExtend _$LoanExtendFromJson(Map<String, dynamic> json) => LoanExtend(
-      end: json['end'],
-      duration: json['duration'],
+      end: json['end'] as String?,
+      duration: (json['duration'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$LoanExtendToJson(LoanExtend instance) =>
@@ -1995,24 +2074,26 @@ Map<String, dynamic> _$LoanExtendToJson(LoanExtend instance) =>
     };
 
 LoanUpdate _$LoanUpdateFromJson(Map<String, dynamic> json) => LoanUpdate(
-      borrowerId: json['borrowerId'],
-      start: json['start'],
-      end: json['end'],
-      notes: json['notes'],
-      caution: json['caution'],
-      returned: json['returned'],
-      itemsBorrowed: json['itemsBorrowed'],
+      borrowerId: json['borrower_id'] as String?,
+      start: json['start'] as String?,
+      end: json['end'] as String?,
+      notes: json['notes'] as String?,
+      caution: json['caution'] as String?,
+      returned: json['returned'] as bool?,
+      itemsBorrowed: (json['items_borrowed'] as List<dynamic>?)
+          ?.map((e) => ItemBorrowed.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$LoanUpdateToJson(LoanUpdate instance) =>
     <String, dynamic>{
-      'borrowerId': instance.borrowerId,
+      'borrower_id': instance.borrowerId,
       'start': instance.start,
       'end': instance.end,
       'notes': instance.notes,
       'caution': instance.caution,
       'returned': instance.returned,
-      'itemsBorrowed': instance.itemsBorrowed,
+      'items_borrowed': instance.itemsBorrowed?.map((e) => e.toJson()).toList(),
     };
 
 Loaner _$LoanerFromJson(Map<String, dynamic> json) => Loaner(
@@ -2039,14 +2120,14 @@ Map<String, dynamic> _$LoanerBaseToJson(LoanerBase instance) =>
     };
 
 LoanerUpdate _$LoanerUpdateFromJson(Map<String, dynamic> json) => LoanerUpdate(
-      name: json['name'],
-      groupManagerId: json['groupManagerId'],
+      name: json['name'] as String?,
+      groupManagerId: json['group_manager_id'] as String?,
     );
 
 Map<String, dynamic> _$LoanerUpdateToJson(LoanerUpdate instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'groupManagerId': instance.groupManagerId,
+      'group_manager_id': instance.groupManagerId,
     };
 
 MailMigrationRequest _$MailMigrationRequestFromJson(
@@ -2086,27 +2167,27 @@ Map<String, dynamic> _$ManagerBaseToJson(ManagerBase instance) =>
 
 ManagerUpdate _$ManagerUpdateFromJson(Map<String, dynamic> json) =>
     ManagerUpdate(
-      name: json['name'],
-      groupId: json['groupId'],
+      name: json['name'] as String?,
+      groupId: json['group_id'] as String?,
     );
 
 Map<String, dynamic> _$ManagerUpdateToJson(ManagerUpdate instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'groupId': instance.groupId,
+      'group_id': instance.groupId,
     };
 
 MemberComplete _$MemberCompleteFromJson(Map<String, dynamic> json) =>
     MemberComplete(
       name: json['name'] as String? ?? '',
       firstname: json['firstname'] as String? ?? '',
-      nickname: json['nickname'],
+      nickname: json['nickname'] as String?,
       id: json['id'] as String? ?? '',
       accountType: accountTypeFromJson(json['account_type']),
       schoolId: json['school_id'] as String? ?? '',
       email: json['email'] as String? ?? '',
-      phone: json['phone'],
-      promo: json['promo'],
+      phone: json['phone'] as String?,
+      promo: (json['promo'] as num?)?.toInt(),
       memberships: (json['memberships'] as List<dynamic>?)
               ?.map(
                   (e) => MembershipComplete.fromJson(e as Map<String, dynamic>))
@@ -2134,7 +2215,7 @@ MembershipComplete _$MembershipCompleteFromJson(Map<String, dynamic> json) =>
       associationId: json['association_id'] as String? ?? '',
       mandateYear: (json['mandate_year'] as num?)?.toInt() ?? 0,
       roleName: json['role_name'] as String? ?? '',
-      roleTags: json['roleTags'],
+      roleTags: json['role_tags'] as String?,
       memberOrder: (json['member_order'] as num?)?.toInt() ?? 0,
       id: json['id'] as String? ?? '',
     );
@@ -2145,36 +2226,36 @@ Map<String, dynamic> _$MembershipCompleteToJson(MembershipComplete instance) =>
       'association_id': instance.associationId,
       'mandate_year': instance.mandateYear,
       'role_name': instance.roleName,
-      'roleTags': instance.roleTags,
+      'role_tags': instance.roleTags,
       'member_order': instance.memberOrder,
       'id': instance.id,
     };
 
 MembershipEdit _$MembershipEditFromJson(Map<String, dynamic> json) =>
     MembershipEdit(
-      roleName: json['roleName'],
-      roleTags: json['roleTags'],
-      memberOrder: json['memberOrder'],
+      roleName: json['role_name'] as String?,
+      roleTags: json['role_tags'] as String?,
+      memberOrder: (json['member_order'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$MembershipEditToJson(MembershipEdit instance) =>
     <String, dynamic>{
-      'roleName': instance.roleName,
-      'roleTags': instance.roleTags,
-      'memberOrder': instance.memberOrder,
+      'role_name': instance.roleName,
+      'role_tags': instance.roleTags,
+      'member_order': instance.memberOrder,
     };
 
 MembershipSimple _$MembershipSimpleFromJson(Map<String, dynamic> json) =>
     MembershipSimple(
       name: json['name'] as String? ?? '',
-      groupId: json['group_id'] as String? ?? '',
+      managerGroupId: json['manager_group_id'] as String? ?? '',
       id: json['id'] as String? ?? '',
     );
 
 Map<String, dynamic> _$MembershipSimpleToJson(MembershipSimple instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'group_id': instance.groupId,
+      'manager_group_id': instance.managerGroupId,
       'id': instance.id,
     };
 
@@ -2201,8 +2282,9 @@ ModuleVisibility _$ModuleVisibilityFromJson(Map<String, dynamic> json) =>
               ?.map((e) => e as String)
               .toList() ??
           [],
-      allowedAccountTypes:
-          accountTypeListFromJson(json['allowed_account_types'] as List?),
+      allowedAccountTypes: json['allowed_account_types'] == null
+          ? []
+          : accountTypeListFromJson(json['allowed_account_types'] as List?),
     );
 
 Map<String, dynamic> _$ModuleVisibilityToJson(ModuleVisibility instance) =>
@@ -2217,16 +2299,18 @@ ModuleVisibilityCreate _$ModuleVisibilityCreateFromJson(
         Map<String, dynamic> json) =>
     ModuleVisibilityCreate(
       root: json['root'] as String? ?? '',
-      allowedGroupId: json['allowedGroupId'],
-      allowedAccountType: json['allowedAccountType'],
+      allowedGroupId: json['allowed_group_id'] as String?,
+      allowedAccountType:
+          accountTypeNullableFromJson(json['allowed_account_type']),
     );
 
 Map<String, dynamic> _$ModuleVisibilityCreateToJson(
         ModuleVisibilityCreate instance) =>
     <String, dynamic>{
       'root': instance.root,
-      'allowedGroupId': instance.allowedGroupId,
-      'allowedAccountType': instance.allowedAccountType,
+      'allowed_group_id': instance.allowedGroupId,
+      'allowed_account_type':
+          accountTypeNullableToJson(instance.allowedAccountType),
     };
 
 OrderBase _$OrderBaseFromJson(Map<String, dynamic> json) => OrderBase(
@@ -2252,15 +2336,19 @@ Map<String, dynamic> _$OrderBaseToJson(OrderBase instance) => <String, dynamic>{
     };
 
 OrderEdit _$OrderEditFromJson(Map<String, dynamic> json) => OrderEdit(
-      productsIds: json['productsIds'],
-      collectionSlot: json['collectionSlot'],
-      productsQuantity: json['productsQuantity'],
+      productsIds: (json['products_ids'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      collectionSlot: amapSlotTypeNullableFromJson(json['collection_slot']),
+      productsQuantity: (json['products_quantity'] as List<dynamic>?)
+          ?.map((e) => (e as num).toInt())
+          .toList(),
     );
 
 Map<String, dynamic> _$OrderEditToJson(OrderEdit instance) => <String, dynamic>{
-      'productsIds': instance.productsIds,
-      'collectionSlot': instance.collectionSlot,
-      'productsQuantity': instance.productsQuantity,
+      'products_ids': instance.productsIds,
+      'collection_slot': amapSlotTypeNullableToJson(instance.collectionSlot),
+      'products_quantity': instance.productsQuantity,
     };
 
 OrderReturn _$OrderReturnFromJson(Map<String, dynamic> json) => OrderReturn(
@@ -2305,16 +2393,16 @@ Map<String, dynamic> _$PackTicketBaseToJson(PackTicketBase instance) =>
 
 PackTicketEdit _$PackTicketEditFromJson(Map<String, dynamic> json) =>
     PackTicketEdit(
-      raffleId: json['raffleId'],
-      price: json['price'],
-      packSize: json['packSize'],
+      raffleId: json['raffle_id'] as String?,
+      price: json['price'] as num?,
+      packSize: (json['pack_size'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$PackTicketEditToJson(PackTicketEdit instance) =>
     <String, dynamic>{
-      'raffleId': instance.raffleId,
+      'raffle_id': instance.raffleId,
       'price': instance.price,
-      'packSize': instance.packSize,
+      'pack_size': instance.packSize,
     };
 
 PackTicketSimple _$PackTicketSimpleFromJson(Map<String, dynamic> json) =>
@@ -2358,14 +2446,14 @@ Map<String, dynamic> _$PaperCompleteToJson(PaperComplete instance) =>
     };
 
 PaperUpdate _$PaperUpdateFromJson(Map<String, dynamic> json) => PaperUpdate(
-      name: json['name'],
-      releaseDate: json['releaseDate'],
+      name: json['name'] as String?,
+      releaseDate: json['release_date'] as String?,
     );
 
 Map<String, dynamic> _$PaperUpdateToJson(PaperUpdate instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'releaseDate': instance.releaseDate,
+      'release_date': instance.releaseDate,
     };
 
 Participant _$ParticipantFromJson(Map<String, dynamic> json) => Participant(
@@ -2375,9 +2463,9 @@ Participant _$ParticipantFromJson(Map<String, dynamic> json) => Participant(
       phone: json['phone'] as String? ?? '',
       email: json['email'] as String? ?? '',
       id: json['id'] as String? ?? '',
-      bikeSize: json['bikeSize'],
-      tShirtSize: json['tShirtSize'],
-      situation: json['situation'],
+      bikeSize: sizeFromJson(json['bike_size']),
+      tShirtSize: sizeFromJson(json['t_shirt_size']),
+      situation: json['situation'] as String,
       validationProgress:
           (json['validation_progress'] as num?)?.toDouble() ?? 0.0,
       payment: json['payment'] as bool? ?? false,
@@ -2385,16 +2473,25 @@ Participant _$ParticipantFromJson(Map<String, dynamic> json) => Participant(
       numberOfDocument: (json['number_of_document'] as num?)?.toInt() ?? 0,
       numberOfValidatedDocument:
           (json['number_of_validated_document'] as num?)?.toInt() ?? 0,
-      address: json['address'],
-      otherSchool: json['otherSchool'],
-      company: json['company'],
-      diet: json['diet'],
-      idCard: json['idCard'],
-      medicalCertificate: json['medicalCertificate'],
-      securityFile: json['securityFile'],
-      studentCard: json['studentCard'],
-      raidRules: json['raidRules'],
-      parentAuthorization: json['parentAuthorization'],
+      address: json['address'] as String,
+      otherSchool: json['other_school'] as String?,
+      company: json['company'] as String?,
+      diet: json['diet'] as String?,
+      idCard: Document.fromJson(json['id_card'] as Map<String, dynamic>),
+      medicalCertificate: Document.fromJson(
+          json['medical_certificate'] as Map<String, dynamic>),
+      securityFile:
+          SecurityFile.fromJson(json['security_file'] as Map<String, dynamic>),
+      studentCard: json['student_card'] == null
+          ? null
+          : Document.fromJson(json['student_card'] as Map<String, dynamic>),
+      raidRules: json['raid_rules'] == null
+          ? null
+          : Document.fromJson(json['raid_rules'] as Map<String, dynamic>),
+      parentAuthorization: json['parent_authorization'] == null
+          ? null
+          : Document.fromJson(
+              json['parent_authorization'] as Map<String, dynamic>),
       attestationOnHonour: json['attestation_on_honour'] as bool? ?? false,
       isMinor: json['is_minor'] as bool? ?? false,
     );
@@ -2407,8 +2504,8 @@ Map<String, dynamic> _$ParticipantToJson(Participant instance) =>
       'phone': instance.phone,
       'email': instance.email,
       'id': instance.id,
-      'bikeSize': instance.bikeSize,
-      'tShirtSize': instance.tShirtSize,
+      'bike_size': sizeToJson(instance.bikeSize),
+      't_shirt_size': sizeToJson(instance.tShirtSize),
       'situation': instance.situation,
       'validation_progress': instance.validationProgress,
       'payment': instance.payment,
@@ -2416,15 +2513,15 @@ Map<String, dynamic> _$ParticipantToJson(Participant instance) =>
       'number_of_document': instance.numberOfDocument,
       'number_of_validated_document': instance.numberOfValidatedDocument,
       'address': instance.address,
-      'otherSchool': instance.otherSchool,
+      'other_school': instance.otherSchool,
       'company': instance.company,
       'diet': instance.diet,
-      'idCard': instance.idCard,
-      'medicalCertificate': instance.medicalCertificate,
-      'securityFile': instance.securityFile,
-      'studentCard': instance.studentCard,
-      'raidRules': instance.raidRules,
-      'parentAuthorization': instance.parentAuthorization,
+      'id_card': instance.idCard.toJson(),
+      'medical_certificate': instance.medicalCertificate.toJson(),
+      'security_file': instance.securityFile.toJson(),
+      'student_card': instance.studentCard?.toJson(),
+      'raid_rules': instance.raidRules?.toJson(),
+      'parent_authorization': instance.parentAuthorization?.toJson(),
       'attestation_on_honour': instance.attestationOnHonour,
       'is_minor': instance.isMinor,
     };
@@ -2455,9 +2552,9 @@ ParticipantPreview _$ParticipantPreviewFromJson(Map<String, dynamic> json) =>
       phone: json['phone'] as String? ?? '',
       email: json['email'] as String? ?? '',
       id: json['id'] as String? ?? '',
-      bikeSize: json['bikeSize'],
-      tShirtSize: json['tShirtSize'],
-      situation: json['situation'],
+      bikeSize: sizeFromJson(json['bike_size']),
+      tShirtSize: sizeFromJson(json['t_shirt_size']),
+      situation: json['situation'] as String,
       validationProgress:
           (json['validation_progress'] as num?)?.toDouble() ?? 0.0,
       payment: json['payment'] as bool? ?? false,
@@ -2475,8 +2572,8 @@ Map<String, dynamic> _$ParticipantPreviewToJson(ParticipantPreview instance) =>
       'phone': instance.phone,
       'email': instance.email,
       'id': instance.id,
-      'bikeSize': instance.bikeSize,
-      'tShirtSize': instance.tShirtSize,
+      'bike_size': sizeToJson(instance.bikeSize),
+      't_shirt_size': sizeToJson(instance.tShirtSize),
       'situation': instance.situation,
       'validation_progress': instance.validationProgress,
       'payment': instance.payment,
@@ -2487,25 +2584,25 @@ Map<String, dynamic> _$ParticipantPreviewToJson(ParticipantPreview instance) =>
 
 ParticipantUpdate _$ParticipantUpdateFromJson(Map<String, dynamic> json) =>
     ParticipantUpdate(
-      name: json['name'],
-      firstname: json['firstname'],
-      birthday: json['birthday'],
-      address: json['address'],
-      phone: json['phone'],
-      email: json['email'],
-      bikeSize: json['bikeSize'],
-      tShirtSize: json['tShirtSize'],
-      situation: json['situation'],
-      otherSchool: json['otherSchool'],
-      company: json['company'],
-      diet: json['diet'],
-      attestationOnHonour: json['attestationOnHonour'],
-      idCardId: json['idCardId'],
-      medicalCertificateId: json['medicalCertificateId'],
-      securityFileId: json['securityFileId'],
-      studentCardId: json['studentCardId'],
-      raidRulesId: json['raidRulesId'],
-      parentAuthorizationId: json['parentAuthorizationId'],
+      name: json['name'] as String?,
+      firstname: json['firstname'] as String?,
+      birthday: json['birthday'] as String?,
+      address: json['address'] as String?,
+      phone: json['phone'] as String?,
+      email: json['email'] as String?,
+      bikeSize: sizeNullableFromJson(json['bike_size']),
+      tShirtSize: sizeNullableFromJson(json['t_shirt_size']),
+      situation: json['situation'] as String?,
+      otherSchool: json['other_school'] as String?,
+      company: json['company'] as String?,
+      diet: json['diet'] as String?,
+      attestationOnHonour: json['attestation_on_honour'] as bool?,
+      idCardId: json['id_card_id'] as String?,
+      medicalCertificateId: json['medical_certificate_id'] as String?,
+      securityFileId: json['security_file_id'] as String?,
+      studentCardId: json['student_card_id'] as String?,
+      raidRulesId: json['raid_rules_id'] as String?,
+      parentAuthorizationId: json['parent_authorization_id'] as String?,
     );
 
 Map<String, dynamic> _$ParticipantUpdateToJson(ParticipantUpdate instance) =>
@@ -2516,19 +2613,19 @@ Map<String, dynamic> _$ParticipantUpdateToJson(ParticipantUpdate instance) =>
       'address': instance.address,
       'phone': instance.phone,
       'email': instance.email,
-      'bikeSize': instance.bikeSize,
-      'tShirtSize': instance.tShirtSize,
+      'bike_size': sizeNullableToJson(instance.bikeSize),
+      't_shirt_size': sizeNullableToJson(instance.tShirtSize),
       'situation': instance.situation,
-      'otherSchool': instance.otherSchool,
+      'other_school': instance.otherSchool,
       'company': instance.company,
       'diet': instance.diet,
-      'attestationOnHonour': instance.attestationOnHonour,
-      'idCardId': instance.idCardId,
-      'medicalCertificateId': instance.medicalCertificateId,
-      'securityFileId': instance.securityFileId,
-      'studentCardId': instance.studentCardId,
-      'raidRulesId': instance.raidRulesId,
-      'parentAuthorizationId': instance.parentAuthorizationId,
+      'attestation_on_honour': instance.attestationOnHonour,
+      'id_card_id': instance.idCardId,
+      'medical_certificate_id': instance.medicalCertificateId,
+      'security_file_id': instance.securityFileId,
+      'student_card_id': instance.studentCardId,
+      'raid_rules_id': instance.raidRulesId,
+      'parent_authorization_id': instance.parentAuthorizationId,
     };
 
 PaymentBase _$PaymentBaseFromJson(Map<String, dynamic> json) => PaymentBase(
@@ -2567,6 +2664,105 @@ Map<String, dynamic> _$PaymentUrlToJson(PaymentUrl instance) =>
       'url': instance.url,
     };
 
+PlantComplete _$PlantCompleteFromJson(Map<String, dynamic> json) =>
+    PlantComplete(
+      id: json['id'] as String? ?? '',
+      reference: json['reference'] as String? ?? '',
+      state: plantStateFromJson(json['state']),
+      speciesId: json['species_id'] as String? ?? '',
+      propagationMethod: propagationMethodFromJson(json['propagation_method']),
+      nbSeedsEnvelope: (json['nb_seeds_envelope'] as num?)?.toInt() ?? 0,
+      plantingDate: json['planting_date'] as String?,
+      borrowerId: json['borrower_id'] as String?,
+      nickname: json['nickname'] as String?,
+      previousNote: json['previous_note'] as String?,
+      currentNote: json['current_note'] as String?,
+      borrowingDate: json['borrowing_date'] as String?,
+      ancestorId: json['ancestor_id'] as String?,
+      confidential: json['confidential'] as bool? ?? false,
+    );
+
+Map<String, dynamic> _$PlantCompleteToJson(PlantComplete instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'reference': instance.reference,
+      'state': plantStateToJson(instance.state),
+      'species_id': instance.speciesId,
+      'propagation_method': propagationMethodToJson(instance.propagationMethod),
+      'nb_seeds_envelope': instance.nbSeedsEnvelope,
+      'planting_date': instance.plantingDate,
+      'borrower_id': instance.borrowerId,
+      'nickname': instance.nickname,
+      'previous_note': instance.previousNote,
+      'current_note': instance.currentNote,
+      'borrowing_date': instance.borrowingDate,
+      'ancestor_id': instance.ancestorId,
+      'confidential': instance.confidential,
+    };
+
+PlantCreation _$PlantCreationFromJson(Map<String, dynamic> json) =>
+    PlantCreation(
+      speciesId: json['species_id'] as String? ?? '',
+      propagationMethod: propagationMethodFromJson(json['propagation_method']),
+      nbSeedsEnvelope: (json['nb_seeds_envelope'] as num?)?.toInt() ?? 0,
+      ancestorId: json['ancestor_id'] as String?,
+      previousNote: json['previous_note'] as String?,
+      confidential: json['confidential'] as bool? ?? false,
+    );
+
+Map<String, dynamic> _$PlantCreationToJson(PlantCreation instance) =>
+    <String, dynamic>{
+      'species_id': instance.speciesId,
+      'propagation_method': propagationMethodToJson(instance.propagationMethod),
+      'nb_seeds_envelope': instance.nbSeedsEnvelope,
+      'ancestor_id': instance.ancestorId,
+      'previous_note': instance.previousNote,
+      'confidential': instance.confidential,
+    };
+
+PlantEdit _$PlantEditFromJson(Map<String, dynamic> json) => PlantEdit(
+      state: plantStateNullableFromJson(json['state']),
+      currentNote: json['current_note'] as String?,
+      confidential: json['confidential'] as bool? ?? false,
+      plantingDate: json['planting_date'] as String?,
+      borrowingDate: json['borrowing_date'] as String?,
+      nickname: json['nickname'] as String?,
+    );
+
+Map<String, dynamic> _$PlantEditToJson(PlantEdit instance) => <String, dynamic>{
+      'state': plantStateNullableToJson(instance.state),
+      'current_note': instance.currentNote,
+      'confidential': instance.confidential,
+      'planting_date': instance.plantingDate,
+      'borrowing_date': instance.borrowingDate,
+      'nickname': instance.nickname,
+    };
+
+PlantSimple _$PlantSimpleFromJson(Map<String, dynamic> json) => PlantSimple(
+      id: json['id'] as String? ?? '',
+      reference: json['reference'] as String? ?? '',
+      state: plantStateFromJson(json['state']),
+      speciesId: json['species_id'] as String? ?? '',
+      propagationMethod: propagationMethodFromJson(json['propagation_method']),
+      nbSeedsEnvelope: (json['nb_seeds_envelope'] as num?)?.toInt() ?? 0,
+      plantingDate: json['planting_date'] as String?,
+      borrowerId: json['borrower_id'] as String?,
+      nickname: json['nickname'] as String?,
+    );
+
+Map<String, dynamic> _$PlantSimpleToJson(PlantSimple instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'reference': instance.reference,
+      'state': plantStateToJson(instance.state),
+      'species_id': instance.speciesId,
+      'propagation_method': propagationMethodToJson(instance.propagationMethod),
+      'nb_seeds_envelope': instance.nbSeedsEnvelope,
+      'planting_date': instance.plantingDate,
+      'borrower_id': instance.borrowerId,
+      'nickname': instance.nickname,
+    };
+
 PrizeBase _$PrizeBaseFromJson(Map<String, dynamic> json) => PrizeBase(
       name: json['name'] as String? ?? '',
       description: json['description'] as String? ?? '',
@@ -2582,14 +2778,14 @@ Map<String, dynamic> _$PrizeBaseToJson(PrizeBase instance) => <String, dynamic>{
     };
 
 PrizeEdit _$PrizeEditFromJson(Map<String, dynamic> json) => PrizeEdit(
-      raffleId: json['raffleId'],
-      description: json['description'],
-      name: json['name'],
-      quantity: json['quantity'],
+      raffleId: json['raffle_id'] as String?,
+      description: json['description'] as String?,
+      name: json['name'] as String?,
+      quantity: (json['quantity'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$PrizeEditToJson(PrizeEdit instance) => <String, dynamic>{
-      'raffleId': instance.raffleId,
+      'raffle_id': instance.raffleId,
       'description': instance.description,
       'name': instance.name,
       'quantity': instance.quantity,
@@ -2614,16 +2810,17 @@ Map<String, dynamic> _$PrizeSimpleToJson(PrizeSimple instance) =>
 
 ProductBase _$ProductBaseFromJson(Map<String, dynamic> json) => ProductBase(
       nameFr: json['name_fr'] as String? ?? '',
-      nameEn: json['nameEn'],
-      descriptionFr: json['descriptionFr'],
-      descriptionEn: json['descriptionEn'],
+      nameEn: json['name_en'] as String?,
+      descriptionFr: json['description_fr'] as String?,
+      descriptionEn: json['description_en'] as String?,
       availableOnline: json['available_online'] as bool? ?? false,
-      relatedMembership: json['relatedMembership'],
+      relatedMembership: json['related_membership'] == null
+          ? null
+          : MembershipSimple.fromJson(
+              json['related_membership'] as Map<String, dynamic>),
       tickets: (json['tickets'] as List<dynamic>?)
-              ?.map(
-                  (e) => GenerateTicketBase.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
+          ?.map((e) => GenerateTicketBase.fromJson(e as Map<String, dynamic>))
+          .toList(),
       productConstraints: (json['product_constraints'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
@@ -2637,11 +2834,11 @@ ProductBase _$ProductBaseFromJson(Map<String, dynamic> json) => ProductBase(
 Map<String, dynamic> _$ProductBaseToJson(ProductBase instance) =>
     <String, dynamic>{
       'name_fr': instance.nameFr,
-      'nameEn': instance.nameEn,
-      'descriptionFr': instance.descriptionFr,
-      'descriptionEn': instance.descriptionEn,
+      'name_en': instance.nameEn,
+      'description_fr': instance.descriptionFr,
+      'description_en': instance.descriptionEn,
       'available_online': instance.availableOnline,
-      'relatedMembership': instance.relatedMembership,
+      'related_membership': instance.relatedMembership?.toJson(),
       'tickets': instance.tickets?.map((e) => e.toJson()).toList(),
       'product_constraints': instance.productConstraints,
       'document_constraints': instance.documentConstraints,
@@ -2651,18 +2848,20 @@ ProductCompleteNoConstraint _$ProductCompleteNoConstraintFromJson(
         Map<String, dynamic> json) =>
     ProductCompleteNoConstraint(
       nameFr: json['name_fr'] as String? ?? '',
-      nameEn: json['nameEn'],
-      descriptionFr: json['descriptionFr'],
-      descriptionEn: json['descriptionEn'],
+      nameEn: json['name_en'] as String?,
+      descriptionFr: json['description_fr'] as String?,
+      descriptionEn: json['description_en'] as String?,
       availableOnline: json['available_online'] as bool? ?? false,
       id: json['id'] as String? ?? '',
       sellerId: json['seller_id'] as String? ?? '',
       variants: (json['variants'] as List<dynamic>?)
-              ?.map((e) =>
-                  ProductVariantComplete.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
-      relatedMembership: json['relatedMembership'],
+          ?.map(
+              (e) => ProductVariantComplete.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      relatedMembership: json['related_membership'] == null
+          ? null
+          : MembershipSimple.fromJson(
+              json['related_membership'] as Map<String, dynamic>),
       tickets: (json['tickets'] as List<dynamic>?)
               ?.map((e) =>
                   GenerateTicketComplete.fromJson(e as Map<String, dynamic>))
@@ -2674,14 +2873,14 @@ Map<String, dynamic> _$ProductCompleteNoConstraintToJson(
         ProductCompleteNoConstraint instance) =>
     <String, dynamic>{
       'name_fr': instance.nameFr,
-      'nameEn': instance.nameEn,
-      'descriptionFr': instance.descriptionFr,
-      'descriptionEn': instance.descriptionEn,
+      'name_en': instance.nameEn,
+      'description_fr': instance.descriptionFr,
+      'description_en': instance.descriptionEn,
       'available_online': instance.availableOnline,
       'id': instance.id,
       'seller_id': instance.sellerId,
       'variants': instance.variants?.map((e) => e.toJson()).toList(),
-      'relatedMembership': instance.relatedMembership,
+      'related_membership': instance.relatedMembership?.toJson(),
       'tickets': instance.tickets.map((e) => e.toJson()).toList(),
     };
 
@@ -2715,9 +2914,9 @@ Map<String, dynamic> _$ProductSimpleToJson(ProductSimple instance) =>
 ProductVariantBase _$ProductVariantBaseFromJson(Map<String, dynamic> json) =>
     ProductVariantBase(
       nameFr: json['name_fr'] as String? ?? '',
-      nameEn: json['nameEn'],
-      descriptionFr: json['descriptionFr'],
-      descriptionEn: json['descriptionEn'],
+      nameEn: json['name_en'] as String?,
+      descriptionFr: json['description_fr'] as String?,
+      descriptionEn: json['description_en'] as String?,
       price: (json['price'] as num?)?.toInt() ?? 0,
       enabled: json['enabled'] as bool? ?? false,
       unique: json['unique'] as bool? ?? false,
@@ -2725,20 +2924,22 @@ ProductVariantBase _$ProductVariantBaseFromJson(Map<String, dynamic> json) =>
               ?.map((e) => e as String)
               .toList() ??
           [],
-      relatedMembershipAddedDuration: json['relatedMembershipAddedDuration'],
+      relatedMembershipAddedDuration:
+          json['related_membership_added_duration'] as String?,
     );
 
 Map<String, dynamic> _$ProductVariantBaseToJson(ProductVariantBase instance) =>
     <String, dynamic>{
       'name_fr': instance.nameFr,
-      'nameEn': instance.nameEn,
-      'descriptionFr': instance.descriptionFr,
-      'descriptionEn': instance.descriptionEn,
+      'name_en': instance.nameEn,
+      'description_fr': instance.descriptionFr,
+      'description_en': instance.descriptionEn,
       'price': instance.price,
       'enabled': instance.enabled,
       'unique': instance.unique,
       'allowed_curriculum': instance.allowedCurriculum,
-      'relatedMembershipAddedDuration': instance.relatedMembershipAddedDuration,
+      'related_membership_added_duration':
+          instance.relatedMembershipAddedDuration,
     };
 
 ProductVariantComplete _$ProductVariantCompleteFromJson(
@@ -2747,18 +2948,17 @@ ProductVariantComplete _$ProductVariantCompleteFromJson(
       id: json['id'] as String? ?? '',
       productId: json['product_id'] as String? ?? '',
       nameFr: json['name_fr'] as String? ?? '',
-      nameEn: json['nameEn'],
-      descriptionFr: json['descriptionFr'],
-      descriptionEn: json['descriptionEn'],
+      nameEn: json['name_en'] as String?,
+      descriptionFr: json['description_fr'] as String?,
+      descriptionEn: json['description_en'] as String?,
       price: (json['price'] as num?)?.toInt() ?? 0,
       enabled: json['enabled'] as bool? ?? false,
       unique: json['unique'] as bool? ?? false,
       allowedCurriculum: (json['allowed_curriculum'] as List<dynamic>?)
-              ?.map(
-                  (e) => CurriculumComplete.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
-      relatedMembershipAddedDuration: json['relatedMembershipAddedDuration'],
+          ?.map((e) => CurriculumComplete.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      relatedMembershipAddedDuration:
+          json['related_membership_added_duration'] as String?,
     );
 
 Map<String, dynamic> _$ProductVariantCompleteToJson(
@@ -2767,41 +2967,46 @@ Map<String, dynamic> _$ProductVariantCompleteToJson(
       'id': instance.id,
       'product_id': instance.productId,
       'name_fr': instance.nameFr,
-      'nameEn': instance.nameEn,
-      'descriptionFr': instance.descriptionFr,
-      'descriptionEn': instance.descriptionEn,
+      'name_en': instance.nameEn,
+      'description_fr': instance.descriptionFr,
+      'description_en': instance.descriptionEn,
       'price': instance.price,
       'enabled': instance.enabled,
       'unique': instance.unique,
       'allowed_curriculum':
           instance.allowedCurriculum?.map((e) => e.toJson()).toList(),
-      'relatedMembershipAddedDuration': instance.relatedMembershipAddedDuration,
+      'related_membership_added_duration':
+          instance.relatedMembershipAddedDuration,
     };
 
 ProductVariantEdit _$ProductVariantEditFromJson(Map<String, dynamic> json) =>
     ProductVariantEdit(
-      nameFr: json['nameFr'],
-      nameEn: json['nameEn'],
-      descriptionFr: json['descriptionFr'],
-      descriptionEn: json['descriptionEn'],
-      price: json['price'],
-      enabled: json['enabled'],
-      unique: json['unique'],
-      allowedCurriculum: json['allowedCurriculum'],
-      relatedMembershipAddedDuration: json['relatedMembershipAddedDuration'],
+      nameFr: json['name_fr'] as String?,
+      nameEn: json['name_en'] as String?,
+      descriptionFr: json['description_fr'] as String?,
+      descriptionEn: json['description_en'] as String?,
+      price: (json['price'] as num?)?.toInt(),
+      enabled: json['enabled'] as bool?,
+      unique: json['unique'] as bool?,
+      allowedCurriculum: (json['allowed_curriculum'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      relatedMembershipAddedDuration:
+          json['related_membership_added_duration'] as String?,
     );
 
 Map<String, dynamic> _$ProductVariantEditToJson(ProductVariantEdit instance) =>
     <String, dynamic>{
-      'nameFr': instance.nameFr,
-      'nameEn': instance.nameEn,
-      'descriptionFr': instance.descriptionFr,
-      'descriptionEn': instance.descriptionEn,
+      'name_fr': instance.nameFr,
+      'name_en': instance.nameEn,
+      'description_fr': instance.descriptionFr,
+      'description_en': instance.descriptionEn,
       'price': instance.price,
       'enabled': instance.enabled,
       'unique': instance.unique,
-      'allowedCurriculum': instance.allowedCurriculum,
-      'relatedMembershipAddedDuration': instance.relatedMembershipAddedDuration,
+      'allowed_curriculum': instance.allowedCurriculum,
+      'related_membership_added_duration':
+          instance.relatedMembershipAddedDuration,
     };
 
 PurchaseBase _$PurchaseBaseFromJson(Map<String, dynamic> json) => PurchaseBase(
@@ -2858,15 +3063,15 @@ Map<String, dynamic> _$PurchaseReturnToJson(PurchaseReturn instance) =>
 
 RaffleBase _$RaffleBaseFromJson(Map<String, dynamic> json) => RaffleBase(
       name: json['name'] as String? ?? '',
-      status: json['status'],
-      description: json['description'],
+      status: raffleStatusTypeNullableFromJson(json['status']),
+      description: json['description'] as String?,
       groupId: json['group_id'] as String? ?? '',
     );
 
 Map<String, dynamic> _$RaffleBaseToJson(RaffleBase instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'status': instance.status,
+      'status': raffleStatusTypeNullableToJson(instance.status),
       'description': instance.description,
       'group_id': instance.groupId,
     };
@@ -2874,8 +3079,8 @@ Map<String, dynamic> _$RaffleBaseToJson(RaffleBase instance) =>
 RaffleComplete _$RaffleCompleteFromJson(Map<String, dynamic> json) =>
     RaffleComplete(
       name: json['name'] as String? ?? '',
-      status: json['status'],
-      description: json['description'],
+      status: raffleStatusTypeNullableFromJson(json['status']),
+      description: json['description'] as String?,
       groupId: json['group_id'] as String? ?? '',
       id: json['id'] as String? ?? '',
     );
@@ -2883,15 +3088,15 @@ RaffleComplete _$RaffleCompleteFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$RaffleCompleteToJson(RaffleComplete instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'status': instance.status,
+      'status': raffleStatusTypeNullableToJson(instance.status),
       'description': instance.description,
       'group_id': instance.groupId,
       'id': instance.id,
     };
 
 RaffleEdit _$RaffleEditFromJson(Map<String, dynamic> json) => RaffleEdit(
-      name: json['name'],
-      description: json['description'],
+      name: json['name'] as String?,
+      description: json['description'] as String?,
     );
 
 Map<String, dynamic> _$RaffleEditToJson(RaffleEdit instance) =>
@@ -2925,50 +3130,61 @@ Map<String, dynamic> _$RaidDriveFoldersCreationToJson(
 
 RaidInformation _$RaidInformationFromJson(Map<String, dynamic> json) =>
     RaidInformation(
-      raidStartDate: json['raidStartDate'],
-      raidEndDate: json['raidEndDate'],
-      raidRegisteringEndDate: json['raidRegisteringEndDate'],
-      paymentLink: json['paymentLink'],
-      contact: json['contact'],
-      president: json['president'],
-      volunteerResponsible: json['volunteerResponsible'],
-      securityResponsible: json['securityResponsible'],
-      rescue: json['rescue'],
-      raidRulesId: json['raidRulesId'],
-      raidInformationId: json['raidInformationId'],
+      raidStartDate: json['raid_start_date'] as String?,
+      raidEndDate: json['raid_end_date'] as String?,
+      raidRegisteringEndDate: json['raid_registering_end_date'] as String?,
+      paymentLink: json['payment_link'] as String?,
+      contact: json['contact'] as String?,
+      president: json['president'] == null
+          ? null
+          : EmergencyContact.fromJson(
+              json['president'] as Map<String, dynamic>),
+      volunteerResponsible: json['volunteer_responsible'] == null
+          ? null
+          : EmergencyContact.fromJson(
+              json['volunteer_responsible'] as Map<String, dynamic>),
+      securityResponsible: json['security_responsible'] == null
+          ? null
+          : EmergencyContact.fromJson(
+              json['security_responsible'] as Map<String, dynamic>),
+      rescue: json['rescue'] == null
+          ? null
+          : EmergencyContact.fromJson(json['rescue'] as Map<String, dynamic>),
+      raidRulesId: json['raid_rules_id'] as String?,
+      raidInformationId: json['raid_information_id'] as String?,
     );
 
 Map<String, dynamic> _$RaidInformationToJson(RaidInformation instance) =>
     <String, dynamic>{
-      'raidStartDate': instance.raidStartDate,
-      'raidEndDate': instance.raidEndDate,
-      'raidRegisteringEndDate': instance.raidRegisteringEndDate,
-      'paymentLink': instance.paymentLink,
+      'raid_start_date': instance.raidStartDate,
+      'raid_end_date': instance.raidEndDate,
+      'raid_registering_end_date': instance.raidRegisteringEndDate,
+      'payment_link': instance.paymentLink,
       'contact': instance.contact,
-      'president': instance.president,
-      'volunteerResponsible': instance.volunteerResponsible,
-      'securityResponsible': instance.securityResponsible,
-      'rescue': instance.rescue,
-      'raidRulesId': instance.raidRulesId,
-      'raidInformationId': instance.raidInformationId,
+      'president': instance.president?.toJson(),
+      'volunteer_responsible': instance.volunteerResponsible?.toJson(),
+      'security_responsible': instance.securityResponsible?.toJson(),
+      'rescue': instance.rescue?.toJson(),
+      'raid_rules_id': instance.raidRulesId,
+      'raid_information_id': instance.raidInformationId,
     };
 
 RaidPrice _$RaidPriceFromJson(Map<String, dynamic> json) => RaidPrice(
-      studentPrice: json['studentPrice'],
-      partnerPrice: json['partnerPrice'],
-      tShirtPrice: json['tShirtPrice'],
+      studentPrice: (json['student_price'] as num?)?.toInt(),
+      partnerPrice: (json['partner_price'] as num?)?.toInt(),
+      tShirtPrice: (json['t_shirt_price'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$RaidPriceToJson(RaidPrice instance) => <String, dynamic>{
-      'studentPrice': instance.studentPrice,
-      'partnerPrice': instance.partnerPrice,
-      'tShirtPrice': instance.tShirtPrice,
+      'student_price': instance.studentPrice,
+      'partner_price': instance.partnerPrice,
+      't_shirt_price': instance.tShirtPrice,
     };
 
 Recommendation _$RecommendationFromJson(Map<String, dynamic> json) =>
     Recommendation(
       title: json['title'] as String? ?? '',
-      code: json['code'],
+      code: json['code'] as String?,
       summary: json['summary'] as String? ?? '',
       description: json['description'] as String? ?? '',
       id: json['id'] as String? ?? '',
@@ -2988,7 +3204,7 @@ Map<String, dynamic> _$RecommendationToJson(Recommendation instance) =>
 RecommendationBase _$RecommendationBaseFromJson(Map<String, dynamic> json) =>
     RecommendationBase(
       title: json['title'] as String? ?? '',
-      code: json['code'],
+      code: json['code'] as String?,
       summary: json['summary'] as String? ?? '',
       description: json['description'] as String? ?? '',
     );
@@ -3003,10 +3219,10 @@ Map<String, dynamic> _$RecommendationBaseToJson(RecommendationBase instance) =>
 
 RecommendationEdit _$RecommendationEditFromJson(Map<String, dynamic> json) =>
     RecommendationEdit(
-      title: json['title'],
-      code: json['code'],
-      summary: json['summary'],
-      description: json['description'],
+      title: json['title'] as String?,
+      code: json['code'] as String?,
+      summary: json['summary'] as String?,
+      description: json['description'] as String?,
     );
 
 Map<String, dynamic> _$RecommendationEditToJson(RecommendationEdit instance) =>
@@ -3022,7 +3238,7 @@ Refund _$RefundFromJson(Map<String, dynamic> json) => Refund(
       total: (json['total'] as num?)?.toInt() ?? 0,
       creation: DateTime.parse(json['creation'] as String),
       transactionId: json['transaction_id'] as String? ?? '',
-      sellerUserId: json['sellerUserId'],
+      sellerUserId: json['seller_user_id'] as String?,
       creditedWalletId: json['credited_wallet_id'] as String? ?? '',
       debitedWalletId: json['debited_wallet_id'] as String? ?? '',
       transaction:
@@ -3038,7 +3254,7 @@ Map<String, dynamic> _$RefundToJson(Refund instance) => <String, dynamic>{
       'total': instance.total,
       'creation': instance.creation.toIso8601String(),
       'transaction_id': instance.transactionId,
-      'sellerUserId': instance.sellerUserId,
+      'seller_user_id': instance.sellerUserId,
       'credited_wallet_id': instance.creditedWalletId,
       'debited_wallet_id': instance.debitedWalletId,
       'transaction': instance.transaction.toJson(),
@@ -3048,7 +3264,7 @@ Map<String, dynamic> _$RefundToJson(Refund instance) => <String, dynamic>{
 
 RefundInfo _$RefundInfoFromJson(Map<String, dynamic> json) => RefundInfo(
       completeRefund: json['complete_refund'] as bool? ?? false,
-      amount: json['amount'],
+      amount: (json['amount'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$RefundInfoToJson(RefundInfo instance) =>
@@ -3107,20 +3323,20 @@ Map<String, dynamic> _$RoomCompleteToJson(RoomComplete instance) =>
     };
 
 ScanInfo _$ScanInfoFromJson(Map<String, dynamic> json) => ScanInfo(
-      qrCodeId: json['qr_code_id'] as String? ?? '',
-      total: (json['total'] as num?)?.toInt() ?? 0,
-      creation: DateTime.parse(json['creation'] as String),
-      walletDeviceId: json['wallet_device_id'] as String? ?? '',
+      id: json['id'] as String? ?? '',
+      tot: (json['tot'] as num?)?.toInt() ?? 0,
+      iat: DateTime.parse(json['iat'] as String),
+      key: json['key'] as String? ?? '',
       store: json['store'] as bool? ?? false,
       signature: json['signature'] as String? ?? '',
       bypassMembership: json['bypass_membership'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$ScanInfoToJson(ScanInfo instance) => <String, dynamic>{
-      'qr_code_id': instance.qrCodeId,
-      'total': instance.total,
-      'creation': instance.creation.toIso8601String(),
-      'wallet_device_id': instance.walletDeviceId,
+      'id': instance.id,
+      'tot': instance.tot,
+      'iat': instance.iat.toIso8601String(),
+      'key': instance.key,
       'store': instance.store,
       'signature': instance.signature,
       'bypass_membership': instance.bypassMembership,
@@ -3152,20 +3368,20 @@ Map<String, dynamic> _$SectionCompleteToJson(SectionComplete instance) =>
     };
 
 SecurityFile _$SecurityFileFromJson(Map<String, dynamic> json) => SecurityFile(
-      allergy: json['allergy'],
+      allergy: json['allergy'] as String?,
       asthma: json['asthma'] as bool? ?? false,
-      intensiveCareUnit: json['intensiveCareUnit'],
-      intensiveCareUnitWhen: json['intensiveCareUnitWhen'],
-      ongoingTreatment: json['ongoingTreatment'],
-      sicknesses: json['sicknesses'],
-      hospitalization: json['hospitalization'],
-      surgicalOperation: json['surgicalOperation'],
-      trauma: json['trauma'],
-      family: json['family'],
-      emergencyPersonFirstname: json['emergencyPersonFirstname'],
-      emergencyPersonName: json['emergencyPersonName'],
-      emergencyPersonPhone: json['emergencyPersonPhone'],
-      fileId: json['fileId'],
+      intensiveCareUnit: json['intensive_care_unit'] as bool?,
+      intensiveCareUnitWhen: json['intensive_care_unit_when'] as String?,
+      ongoingTreatment: json['ongoing_treatment'] as String?,
+      sicknesses: json['sicknesses'] as String?,
+      hospitalization: json['hospitalization'] as String?,
+      surgicalOperation: json['surgical_operation'] as String?,
+      trauma: json['trauma'] as String?,
+      family: json['family'] as String?,
+      emergencyPersonFirstname: json['emergency_person_firstname'] as String?,
+      emergencyPersonName: json['emergency_person_name'] as String?,
+      emergencyPersonPhone: json['emergency_person_phone'] as String?,
+      fileId: json['file_id'] as String?,
       validation: documentValidationFromJson(json['validation']),
       id: json['id'] as String? ?? '',
     );
@@ -3174,56 +3390,74 @@ Map<String, dynamic> _$SecurityFileToJson(SecurityFile instance) =>
     <String, dynamic>{
       'allergy': instance.allergy,
       'asthma': instance.asthma,
-      'intensiveCareUnit': instance.intensiveCareUnit,
-      'intensiveCareUnitWhen': instance.intensiveCareUnitWhen,
-      'ongoingTreatment': instance.ongoingTreatment,
+      'intensive_care_unit': instance.intensiveCareUnit,
+      'intensive_care_unit_when': instance.intensiveCareUnitWhen,
+      'ongoing_treatment': instance.ongoingTreatment,
       'sicknesses': instance.sicknesses,
       'hospitalization': instance.hospitalization,
-      'surgicalOperation': instance.surgicalOperation,
+      'surgical_operation': instance.surgicalOperation,
       'trauma': instance.trauma,
       'family': instance.family,
-      'emergencyPersonFirstname': instance.emergencyPersonFirstname,
-      'emergencyPersonName': instance.emergencyPersonName,
-      'emergencyPersonPhone': instance.emergencyPersonPhone,
-      'fileId': instance.fileId,
+      'emergency_person_firstname': instance.emergencyPersonFirstname,
+      'emergency_person_name': instance.emergencyPersonName,
+      'emergency_person_phone': instance.emergencyPersonPhone,
+      'file_id': instance.fileId,
       'validation': documentValidationToJson(instance.validation),
       'id': instance.id,
     };
 
 SecurityFileBase _$SecurityFileBaseFromJson(Map<String, dynamic> json) =>
     SecurityFileBase(
-      allergy: json['allergy'],
+      allergy: json['allergy'] as String?,
       asthma: json['asthma'] as bool? ?? false,
-      intensiveCareUnit: json['intensiveCareUnit'],
-      intensiveCareUnitWhen: json['intensiveCareUnitWhen'],
-      ongoingTreatment: json['ongoingTreatment'],
-      sicknesses: json['sicknesses'],
-      hospitalization: json['hospitalization'],
-      surgicalOperation: json['surgicalOperation'],
-      trauma: json['trauma'],
-      family: json['family'],
-      emergencyPersonFirstname: json['emergencyPersonFirstname'],
-      emergencyPersonName: json['emergencyPersonName'],
-      emergencyPersonPhone: json['emergencyPersonPhone'],
-      fileId: json['fileId'],
+      intensiveCareUnit: json['intensive_care_unit'] as bool?,
+      intensiveCareUnitWhen: json['intensive_care_unit_when'] as String?,
+      ongoingTreatment: json['ongoing_treatment'] as String?,
+      sicknesses: json['sicknesses'] as String?,
+      hospitalization: json['hospitalization'] as String?,
+      surgicalOperation: json['surgical_operation'] as String?,
+      trauma: json['trauma'] as String?,
+      family: json['family'] as String?,
+      emergencyPersonFirstname: json['emergency_person_firstname'] as String?,
+      emergencyPersonName: json['emergency_person_name'] as String?,
+      emergencyPersonPhone: json['emergency_person_phone'] as String?,
+      fileId: json['file_id'] as String?,
     );
 
 Map<String, dynamic> _$SecurityFileBaseToJson(SecurityFileBase instance) =>
     <String, dynamic>{
       'allergy': instance.allergy,
       'asthma': instance.asthma,
-      'intensiveCareUnit': instance.intensiveCareUnit,
-      'intensiveCareUnitWhen': instance.intensiveCareUnitWhen,
-      'ongoingTreatment': instance.ongoingTreatment,
+      'intensive_care_unit': instance.intensiveCareUnit,
+      'intensive_care_unit_when': instance.intensiveCareUnitWhen,
+      'ongoing_treatment': instance.ongoingTreatment,
       'sicknesses': instance.sicknesses,
       'hospitalization': instance.hospitalization,
-      'surgicalOperation': instance.surgicalOperation,
+      'surgical_operation': instance.surgicalOperation,
       'trauma': instance.trauma,
       'family': instance.family,
-      'emergencyPersonFirstname': instance.emergencyPersonFirstname,
-      'emergencyPersonName': instance.emergencyPersonName,
-      'emergencyPersonPhone': instance.emergencyPersonPhone,
-      'fileId': instance.fileId,
+      'emergency_person_firstname': instance.emergencyPersonFirstname,
+      'emergency_person_name': instance.emergencyPersonName,
+      'emergency_person_phone': instance.emergencyPersonPhone,
+      'file_id': instance.fileId,
+    };
+
+SeedLibraryInformation _$SeedLibraryInformationFromJson(
+        Map<String, dynamic> json) =>
+    SeedLibraryInformation(
+      facebookUrl: json['facebook_url'] as String? ?? '',
+      forumUrl: json['forum_url'] as String? ?? '',
+      description: json['description'] as String? ?? '',
+      contact: json['contact'] as String? ?? '',
+    );
+
+Map<String, dynamic> _$SeedLibraryInformationToJson(
+        SeedLibraryInformation instance) =>
+    <String, dynamic>{
+      'facebook_url': instance.facebookUrl,
+      'forum_url': instance.forumUrl,
+      'description': instance.description,
+      'contact': instance.contact,
     };
 
 Seller _$SellerFromJson(Map<String, dynamic> json) => Seller(
@@ -3294,49 +3528,49 @@ Map<String, dynamic> _$SellerCreationToJson(SellerCreation instance) =>
     };
 
 SellerEdit _$SellerEditFromJson(Map<String, dynamic> json) => SellerEdit(
-      name: json['name'],
-      groupId: json['groupId'],
-      order: json['order'],
+      name: json['name'] as String?,
+      groupId: json['group_id'] as String?,
+      order: (json['order'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$SellerEditToJson(SellerEdit instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'groupId': instance.groupId,
+      'group_id': instance.groupId,
       'order': instance.order,
     };
 
 SellerUpdate _$SellerUpdateFromJson(Map<String, dynamic> json) => SellerUpdate(
-      canBank: json['canBank'],
-      canSeeHistory: json['canSeeHistory'],
-      canCancel: json['canCancel'],
-      canManageSellers: json['canManageSellers'],
+      canBank: json['can_bank'] as bool?,
+      canSeeHistory: json['can_see_history'] as bool?,
+      canCancel: json['can_cancel'] as bool?,
+      canManageSellers: json['can_manage_sellers'] as bool?,
     );
 
 Map<String, dynamic> _$SellerUpdateToJson(SellerUpdate instance) =>
     <String, dynamic>{
-      'canBank': instance.canBank,
-      'canSeeHistory': instance.canSeeHistory,
-      'canCancel': instance.canCancel,
-      'canManageSellers': instance.canManageSellers,
+      'can_bank': instance.canBank,
+      'can_see_history': instance.canSeeHistory,
+      'can_cancel': instance.canCancel,
+      'can_manage_sellers': instance.canManageSellers,
     };
 
 SignatureBase _$SignatureBaseFromJson(Map<String, dynamic> json) =>
     SignatureBase(
       signatureType: documentSignatureTypeFromJson(json['signature_type']),
-      numericSignatureId: json['numericSignatureId'],
+      numericSignatureId: json['numeric_signature_id'] as String?,
     );
 
 Map<String, dynamic> _$SignatureBaseToJson(SignatureBase instance) =>
     <String, dynamic>{
       'signature_type': documentSignatureTypeToJson(instance.signatureType),
-      'numericSignatureId': instance.numericSignatureId,
+      'numeric_signature_id': instance.numericSignatureId,
     };
 
 SignatureComplete _$SignatureCompleteFromJson(Map<String, dynamic> json) =>
     SignatureComplete(
       signatureType: documentSignatureTypeFromJson(json['signature_type']),
-      numericSignatureId: json['numericSignatureId'],
+      numericSignatureId: json['numeric_signature_id'] as String?,
       userId: json['user_id'] as String? ?? '',
       documentId: json['document_id'] as String? ?? '',
     );
@@ -3344,9 +3578,99 @@ SignatureComplete _$SignatureCompleteFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$SignatureCompleteToJson(SignatureComplete instance) =>
     <String, dynamic>{
       'signature_type': documentSignatureTypeToJson(instance.signatureType),
-      'numericSignatureId': instance.numericSignatureId,
+      'numeric_signature_id': instance.numericSignatureId,
       'user_id': instance.userId,
       'document_id': instance.documentId,
+    };
+
+SpeciesBase _$SpeciesBaseFromJson(Map<String, dynamic> json) => SpeciesBase(
+      prefix: json['prefix'] as String? ?? '',
+      name: json['name'] as String? ?? '',
+      difficulty: (json['difficulty'] as num?)?.toInt() ?? 0,
+      speciesType: speciesTypeFromJson(json['species_type']),
+      card: json['card'] as String?,
+      nbSeedsRecommended: (json['nb_seeds_recommended'] as num?)?.toInt(),
+      startSeason: json['start_season'] as String?,
+      endSeason: json['end_season'] as String?,
+      timeMaturation: (json['time_maturation'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$SpeciesBaseToJson(SpeciesBase instance) =>
+    <String, dynamic>{
+      'prefix': instance.prefix,
+      'name': instance.name,
+      'difficulty': instance.difficulty,
+      'species_type': speciesTypeToJson(instance.speciesType),
+      'card': instance.card,
+      'nb_seeds_recommended': instance.nbSeedsRecommended,
+      'start_season': instance.startSeason,
+      'end_season': instance.endSeason,
+      'time_maturation': instance.timeMaturation,
+    };
+
+SpeciesComplete _$SpeciesCompleteFromJson(Map<String, dynamic> json) =>
+    SpeciesComplete(
+      prefix: json['prefix'] as String? ?? '',
+      name: json['name'] as String? ?? '',
+      difficulty: (json['difficulty'] as num?)?.toInt() ?? 0,
+      speciesType: speciesTypeFromJson(json['species_type']),
+      card: json['card'] as String?,
+      nbSeedsRecommended: (json['nb_seeds_recommended'] as num?)?.toInt(),
+      startSeason: json['start_season'] as String?,
+      endSeason: json['end_season'] as String?,
+      timeMaturation: (json['time_maturation'] as num?)?.toInt(),
+      id: json['id'] as String? ?? '',
+    );
+
+Map<String, dynamic> _$SpeciesCompleteToJson(SpeciesComplete instance) =>
+    <String, dynamic>{
+      'prefix': instance.prefix,
+      'name': instance.name,
+      'difficulty': instance.difficulty,
+      'species_type': speciesTypeToJson(instance.speciesType),
+      'card': instance.card,
+      'nb_seeds_recommended': instance.nbSeedsRecommended,
+      'start_season': instance.startSeason,
+      'end_season': instance.endSeason,
+      'time_maturation': instance.timeMaturation,
+      'id': instance.id,
+    };
+
+SpeciesEdit _$SpeciesEditFromJson(Map<String, dynamic> json) => SpeciesEdit(
+      name: json['name'] as String?,
+      prefix: json['prefix'] as String?,
+      difficulty: (json['difficulty'] as num?)?.toInt(),
+      card: json['card'] as String?,
+      speciesType: speciesTypeNullableFromJson(json['species_type']),
+      nbSeedsRecommended: (json['nb_seeds_recommended'] as num?)?.toInt(),
+      startSeason: json['start_season'] as String?,
+      endSeason: json['end_season'] as String?,
+      timeMaturation: (json['time_maturation'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$SpeciesEditToJson(SpeciesEdit instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'prefix': instance.prefix,
+      'difficulty': instance.difficulty,
+      'card': instance.card,
+      'species_type': speciesTypeNullableToJson(instance.speciesType),
+      'nb_seeds_recommended': instance.nbSeedsRecommended,
+      'start_season': instance.startSeason,
+      'end_season': instance.endSeason,
+      'time_maturation': instance.timeMaturation,
+    };
+
+SpeciesTypesReturn _$SpeciesTypesReturnFromJson(Map<String, dynamic> json) =>
+    SpeciesTypesReturn(
+      speciesType: json['species_type'] == null
+          ? []
+          : speciesTypeListFromJson(json['species_type'] as List?),
+    );
+
+Map<String, dynamic> _$SpeciesTypesReturnToJson(SpeciesTypesReturn instance) =>
+    <String, dynamic>{
+      'species_type': speciesTypeListToJson(instance.speciesType),
     };
 
 Status _$StatusFromJson(Map<String, dynamic> json) => Status(
@@ -3382,7 +3706,7 @@ Map<String, dynamic> _$StoreBaseToJson(StoreBase instance) => <String, dynamic>{
     };
 
 StoreUpdate _$StoreUpdateFromJson(Map<String, dynamic> json) => StoreUpdate(
-      name: json['name'],
+      name: json['name'] as String?,
     );
 
 Map<String, dynamic> _$StoreUpdateToJson(StoreUpdate instance) =>
@@ -3392,34 +3716,35 @@ Map<String, dynamic> _$StoreUpdateToJson(StoreUpdate instance) =>
 
 Structure _$StructureFromJson(Map<String, dynamic> json) => Structure(
       name: json['name'] as String? ?? '',
-      associationMembershipId: json['associationMembershipId'],
+      associationMembershipId: json['association_membership_id'] as String?,
       managerUserId: json['manager_user_id'] as String? ?? '',
       id: json['id'] as String? ?? '',
       managerUser:
           CoreUserSimple.fromJson(json['manager_user'] as Map<String, dynamic>),
-      associationMembership: json['associationMembership'],
+      associationMembership: MembershipSimple.fromJson(
+          json['association_membership'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$StructureToJson(Structure instance) => <String, dynamic>{
       'name': instance.name,
-      'associationMembershipId': instance.associationMembershipId,
+      'association_membership_id': instance.associationMembershipId,
       'manager_user_id': instance.managerUserId,
       'id': instance.id,
       'manager_user': instance.managerUser.toJson(),
-      'associationMembership': instance.associationMembership,
+      'association_membership': instance.associationMembership.toJson(),
     };
 
 StructureBase _$StructureBaseFromJson(Map<String, dynamic> json) =>
     StructureBase(
       name: json['name'] as String? ?? '',
-      associationMembershipId: json['associationMembershipId'],
+      associationMembershipId: json['association_membership_id'] as String?,
       managerUserId: json['manager_user_id'] as String? ?? '',
     );
 
 Map<String, dynamic> _$StructureBaseToJson(StructureBase instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'associationMembershipId': instance.associationMembershipId,
+      'association_membership_id': instance.associationMembershipId,
       'manager_user_id': instance.managerUserId,
     };
 
@@ -3435,14 +3760,14 @@ Map<String, dynamic> _$StructureTranfertToJson(StructureTranfert instance) =>
 
 StructureUpdate _$StructureUpdateFromJson(Map<String, dynamic> json) =>
     StructureUpdate(
-      name: json['name'],
-      associationMembershipId: json['associationMembershipId'],
+      name: json['name'] as String?,
+      associationMembershipId: json['association_membership_id'] as String?,
     );
 
 Map<String, dynamic> _$StructureUpdateToJson(StructureUpdate instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'associationMembershipId': instance.associationMembershipId,
+      'association_membership_id': instance.associationMembershipId,
     };
 
 TOSSignature _$TOSSignatureFromJson(Map<String, dynamic> json) => TOSSignature(
@@ -3478,14 +3803,14 @@ Map<String, dynamic> _$TOSSignatureResponseToJson(
 Team _$TeamFromJson(Map<String, dynamic> json) => Team(
       name: json['name'] as String? ?? '',
       id: json['id'] as String? ?? '',
-      number: json['number'],
+      number: (json['number'] as num).toInt(),
       captain: Participant.fromJson(json['captain'] as Map<String, dynamic>),
-      second: json['second'],
-      difficulty: json['difficulty'],
-      meetingPlace: json['meetingPlace'],
+      second: Participant.fromJson(json['second'] as Map<String, dynamic>),
+      difficulty: difficultyFromJson(json['difficulty']),
+      meetingPlace: meetingPlaceFromJson(json['meeting_place']),
       validationProgress:
           (json['validation_progress'] as num?)?.toDouble() ?? 0.0,
-      fileId: json['fileId'],
+      fileId: json['file_id'] as String,
     );
 
 Map<String, dynamic> _$TeamToJson(Team instance) => <String, dynamic>{
@@ -3493,11 +3818,11 @@ Map<String, dynamic> _$TeamToJson(Team instance) => <String, dynamic>{
       'id': instance.id,
       'number': instance.number,
       'captain': instance.captain.toJson(),
-      'second': instance.second,
-      'difficulty': instance.difficulty,
-      'meetingPlace': instance.meetingPlace,
+      'second': instance.second.toJson(),
+      'difficulty': difficultyToJson(instance.difficulty),
+      'meeting_place': meetingPlaceToJson(instance.meetingPlace),
       'validation_progress': instance.validationProgress,
-      'fileId': instance.fileId,
+      'file_id': instance.fileId,
     };
 
 TeamBase _$TeamBaseFromJson(Map<String, dynamic> json) => TeamBase(
@@ -3511,12 +3836,13 @@ Map<String, dynamic> _$TeamBaseToJson(TeamBase instance) => <String, dynamic>{
 TeamPreview _$TeamPreviewFromJson(Map<String, dynamic> json) => TeamPreview(
       name: json['name'] as String? ?? '',
       id: json['id'] as String? ?? '',
-      number: json['number'],
+      number: (json['number'] as num).toInt(),
       captain:
           ParticipantPreview.fromJson(json['captain'] as Map<String, dynamic>),
-      second: json['second'],
-      difficulty: json['difficulty'],
-      meetingPlace: json['meetingPlace'],
+      second:
+          ParticipantPreview.fromJson(json['second'] as Map<String, dynamic>),
+      difficulty: difficultyFromJson(json['difficulty']),
+      meetingPlace: meetingPlaceFromJson(json['meeting_place']),
       validationProgress:
           (json['validation_progress'] as num?)?.toDouble() ?? 0.0,
     );
@@ -3527,25 +3853,25 @@ Map<String, dynamic> _$TeamPreviewToJson(TeamPreview instance) =>
       'id': instance.id,
       'number': instance.number,
       'captain': instance.captain.toJson(),
-      'second': instance.second,
-      'difficulty': instance.difficulty,
-      'meetingPlace': instance.meetingPlace,
+      'second': instance.second.toJson(),
+      'difficulty': difficultyToJson(instance.difficulty),
+      'meeting_place': meetingPlaceToJson(instance.meetingPlace),
       'validation_progress': instance.validationProgress,
     };
 
 TeamUpdate _$TeamUpdateFromJson(Map<String, dynamic> json) => TeamUpdate(
-      name: json['name'],
-      number: json['number'],
-      difficulty: json['difficulty'],
-      meetingPlace: json['meetingPlace'],
+      name: json['name'] as String?,
+      number: (json['number'] as num?)?.toInt(),
+      difficulty: difficultyNullableFromJson(json['difficulty']),
+      meetingPlace: meetingPlaceNullableFromJson(json['meeting_place']),
     );
 
 Map<String, dynamic> _$TeamUpdateToJson(TeamUpdate instance) =>
     <String, dynamic>{
       'name': instance.name,
       'number': instance.number,
-      'difficulty': instance.difficulty,
-      'meetingPlace': instance.meetingPlace,
+      'difficulty': difficultyNullableToJson(instance.difficulty),
+      'meeting_place': meetingPlaceNullableToJson(instance.meetingPlace),
     };
 
 TheMovieDB _$TheMovieDBFromJson(Map<String, dynamic> json) => TheMovieDB(
@@ -3595,9 +3921,11 @@ TicketComplete _$TicketCompleteFromJson(Map<String, dynamic> json) =>
     TicketComplete(
       packId: json['pack_id'] as String? ?? '',
       userId: json['user_id'] as String? ?? '',
-      winningPrize: json['winningPrize'],
+      winningPrize: json['winning_prize'] as String?,
       id: json['id'] as String? ?? '',
-      prize: json['prize'],
+      prize: json['prize'] == null
+          ? null
+          : PrizeSimple.fromJson(json['prize'] as Map<String, dynamic>),
       packTicket: PackTicketSimple.fromJson(
           json['pack_ticket'] as Map<String, dynamic>),
       user: CoreUserSimple.fromJson(json['user'] as Map<String, dynamic>),
@@ -3607,9 +3935,9 @@ Map<String, dynamic> _$TicketCompleteToJson(TicketComplete instance) =>
     <String, dynamic>{
       'pack_id': instance.packId,
       'user_id': instance.userId,
-      'winningPrize': instance.winningPrize,
+      'winning_prize': instance.winningPrize,
       'id': instance.id,
-      'prize': instance.prize,
+      'prize': instance.prize?.toJson(),
       'pack_ticket': instance.packTicket.toJson(),
       'user': instance.user.toJson(),
     };
@@ -3635,7 +3963,7 @@ Map<String, dynamic> _$TicketSecretToJson(TicketSecret instance) =>
 TicketSimple _$TicketSimpleFromJson(Map<String, dynamic> json) => TicketSimple(
       packId: json['pack_id'] as String? ?? '',
       userId: json['user_id'] as String? ?? '',
-      winningPrize: json['winningPrize'],
+      winningPrize: json['winning_prize'] as String?,
       id: json['id'] as String? ?? '',
     );
 
@@ -3643,7 +3971,7 @@ Map<String, dynamic> _$TicketSimpleToJson(TicketSimple instance) =>
     <String, dynamic>{
       'pack_id': instance.packId,
       'user_id': instance.userId,
-      'winningPrize': instance.winningPrize,
+      'winning_prize': instance.winningPrize,
       'id': instance.id,
     };
 
@@ -3654,7 +3982,7 @@ TokenResponse _$TokenResponseFromJson(Map<String, dynamic> json) =>
       expiresIn: (json['expires_in'] as num?)?.toInt() ?? 0,
       scope: json['scope'] as String? ?? '',
       refreshToken: json['refresh_token'] as String? ?? '',
-      idToken: json['idToken'],
+      idToken: json['id_token'] as String?,
     );
 
 Map<String, dynamic> _$TokenResponseToJson(TokenResponse instance) =>
@@ -3664,7 +3992,7 @@ Map<String, dynamic> _$TokenResponseToJson(TokenResponse instance) =>
       'expires_in': instance.expiresIn,
       'scope': instance.scope,
       'refresh_token': instance.refreshToken,
-      'idToken': instance.idToken,
+      'id_token': instance.idToken,
     };
 
 Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
@@ -3672,7 +4000,7 @@ Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
       debitedWalletId: json['debited_wallet_id'] as String? ?? '',
       creditedWalletId: json['credited_wallet_id'] as String? ?? '',
       transactionType: transactionTypeFromJson(json['transaction_type']),
-      sellerUserId: json['sellerUserId'],
+      sellerUserId: json['seller_user_id'] as String,
       total: (json['total'] as num?)?.toInt() ?? 0,
       creation: DateTime.parse(json['creation'] as String),
       status: transactionStatusFromJson(json['status']),
@@ -3684,7 +4012,7 @@ Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
       'debited_wallet_id': instance.debitedWalletId,
       'credited_wallet_id': instance.creditedWalletId,
       'transaction_type': transactionTypeToJson(instance.transactionType),
-      'sellerUserId': instance.sellerUserId,
+      'seller_user_id': instance.sellerUserId,
       'total': instance.total,
       'creation': instance.creation.toIso8601String(),
       'status': transactionStatusToJson(instance.status),
@@ -3694,7 +4022,7 @@ Transfer _$TransferFromJson(Map<String, dynamic> json) => Transfer(
       id: json['id'] as String? ?? '',
       type: transferTypeFromJson(json['type']),
       transferIdentifier: json['transfer_identifier'] as String? ?? '',
-      approverUserId: json['approverUserId'],
+      approverUserId: json['approver_user_id'] as String,
       walletId: json['wallet_id'] as String? ?? '',
       total: (json['total'] as num?)?.toInt() ?? 0,
       creation: DateTime.parse(json['creation'] as String),
@@ -3705,7 +4033,7 @@ Map<String, dynamic> _$TransferToJson(Transfer instance) => <String, dynamic>{
       'id': instance.id,
       'type': transferTypeToJson(instance.type),
       'transfer_identifier': instance.transferIdentifier,
-      'approverUserId': instance.approverUserId,
+      'approver_user_id': instance.approverUserId,
       'wallet_id': instance.walletId,
       'total': instance.total,
       'creation': instance.creation.toIso8601String(),
@@ -3763,14 +4091,14 @@ Map<String, dynamic> _$UserMembershipCompleteToJson(
 
 UserMembershipEdit _$UserMembershipEditFromJson(Map<String, dynamic> json) =>
     UserMembershipEdit(
-      startDate: json['startDate'],
-      endDate: json['endDate'],
+      startDate: json['start_date'] as String?,
+      endDate: json['end_date'] as String?,
     );
 
 Map<String, dynamic> _$UserMembershipEditToJson(UserMembershipEdit instance) =>
     <String, dynamic>{
-      'startDate': instance.startDate,
-      'endDate': instance.endDate,
+      'start_date': instance.startDate,
+      'end_date': instance.endDate,
     };
 
 UserStore _$UserStoreFromJson(Map<String, dynamic> json) => UserStore(
@@ -3800,13 +4128,13 @@ Map<String, dynamic> _$UserStoreToJson(UserStore instance) => <String, dynamic>{
 UserTicket _$UserTicketFromJson(Map<String, dynamic> json) => UserTicket(
       name: json['name'] as String? ?? '',
       firstname: json['firstname'] as String? ?? '',
-      nickname: json['nickname'],
+      nickname: json['nickname'] as String?,
       id: json['id'] as String? ?? '',
       accountType: accountTypeFromJson(json['account_type']),
       schoolId: json['school_id'] as String? ?? '',
-      promo: json['promo'],
-      floor: json['floor'],
-      createdOn: json['createdOn'],
+      promo: (json['promo'] as num?)?.toInt(),
+      floor: floorsTypeNullableFromJson(json['floor']),
+      createdOn: json['created_on'] as String?,
     );
 
 Map<String, dynamic> _$UserTicketToJson(UserTicket instance) =>
@@ -3818,8 +4146,8 @@ Map<String, dynamic> _$UserTicketToJson(UserTicket instance) =>
       'account_type': accountTypeToJson(instance.accountType),
       'school_id': instance.schoolId,
       'promo': instance.promo,
-      'floor': instance.floor,
-      'createdOn': instance.createdOn,
+      'floor': floorsTypeNullableToJson(instance.floor),
+      'created_on': instance.createdOn,
     };
 
 ValidationError _$ValidationErrorFromJson(Map<String, dynamic> json) =>
@@ -3877,16 +4205,16 @@ Wallet _$WalletFromJson(Map<String, dynamic> json) => Wallet(
       id: json['id'] as String? ?? '',
       type: walletTypeFromJson(json['type']),
       balance: (json['balance'] as num?)?.toInt() ?? 0,
-      store: json['store'],
-      user: json['user'],
+      store: Store.fromJson(json['store'] as Map<String, dynamic>),
+      user: CoreUser.fromJson(json['user'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$WalletToJson(Wallet instance) => <String, dynamic>{
       'id': instance.id,
       'type': walletTypeToJson(instance.type),
       'balance': instance.balance,
-      'store': instance.store,
-      'user': instance.user,
+      'store': instance.store.toJson(),
+      'user': instance.user.toJson(),
     };
 
 WalletDevice _$WalletDeviceFromJson(Map<String, dynamic> json) => WalletDevice(
@@ -3923,14 +4251,14 @@ Map<String, dynamic> _$WalletDeviceCreationToJson(
 WalletInfo _$WalletInfoFromJson(Map<String, dynamic> json) => WalletInfo(
       id: json['id'] as String? ?? '',
       type: walletTypeFromJson(json['type']),
-      ownerName: json['ownerName'],
+      ownerName: json['owner_name'] as String,
     );
 
 Map<String, dynamic> _$WalletInfoToJson(WalletInfo instance) =>
     <String, dynamic>{
       'id': instance.id,
       'type': walletTypeToJson(instance.type),
-      'ownerName': instance.ownerName,
+      'owner_name': instance.ownerName,
     };
 
 AppCoreMembershipsSchemasMembershipsMembershipBase
@@ -3938,14 +4266,14 @@ AppCoreMembershipsSchemasMembershipsMembershipBase
             Map<String, dynamic> json) =>
         AppCoreMembershipsSchemasMembershipsMembershipBase(
           name: json['name'] as String? ?? '',
-          groupId: json['group_id'] as String? ?? '',
+          managerGroupId: json['manager_group_id'] as String? ?? '',
         );
 
 Map<String, dynamic> _$AppCoreMembershipsSchemasMembershipsMembershipBaseToJson(
         AppCoreMembershipsSchemasMembershipsMembershipBase instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'group_id': instance.groupId,
+      'manager_group_id': instance.managerGroupId,
     };
 
 AppModulesAmapSchemasAmapProductComplete
@@ -3970,9 +4298,9 @@ Map<String, dynamic> _$AppModulesAmapSchemasAmapProductCompleteToJson(
 AppModulesAmapSchemasAmapProductEdit
     _$AppModulesAmapSchemasAmapProductEditFromJson(Map<String, dynamic> json) =>
         AppModulesAmapSchemasAmapProductEdit(
-          category: json['category'],
-          name: json['name'],
-          price: json['price'],
+          category: json['category'] as String?,
+          name: json['name'] as String?,
+          price: json['price'] as num?,
         );
 
 Map<String, dynamic> _$AppModulesAmapSchemasAmapProductEditToJson(
@@ -4003,47 +4331,45 @@ AppModulesCdrSchemasCdrProductComplete
             Map<String, dynamic> json) =>
         AppModulesCdrSchemasCdrProductComplete(
           nameFr: json['name_fr'] as String? ?? '',
-          nameEn: json['nameEn'],
-          descriptionFr: json['descriptionFr'],
-          descriptionEn: json['descriptionEn'],
+          nameEn: json['name_en'] as String?,
+          descriptionFr: json['description_fr'] as String?,
+          descriptionEn: json['description_en'] as String?,
           availableOnline: json['available_online'] as bool? ?? false,
           id: json['id'] as String? ?? '',
           sellerId: json['seller_id'] as String? ?? '',
           variants: (json['variants'] as List<dynamic>?)
-                  ?.map((e) => ProductVariantComplete.fromJson(
-                      e as Map<String, dynamic>))
-                  .toList() ??
-              [],
-          relatedMembership: json['relatedMembership'],
+              ?.map((e) =>
+                  ProductVariantComplete.fromJson(e as Map<String, dynamic>))
+              .toList(),
+          relatedMembership: json['related_membership'] == null
+              ? null
+              : MembershipSimple.fromJson(
+                  json['related_membership'] as Map<String, dynamic>),
           productConstraints: (json['product_constraints'] as List<dynamic>?)
-                  ?.map((e) => ProductCompleteNoConstraint.fromJson(
-                      e as Map<String, dynamic>))
-                  .toList() ??
-              [],
+              ?.map((e) => ProductCompleteNoConstraint.fromJson(
+                  e as Map<String, dynamic>))
+              .toList(),
           documentConstraints: (json['document_constraints'] as List<dynamic>?)
-                  ?.map((e) =>
-                      DocumentComplete.fromJson(e as Map<String, dynamic>))
-                  .toList() ??
-              [],
+              ?.map((e) => DocumentComplete.fromJson(e as Map<String, dynamic>))
+              .toList(),
           tickets: (json['tickets'] as List<dynamic>?)
-                  ?.map((e) => GenerateTicketComplete.fromJson(
-                      e as Map<String, dynamic>))
-                  .toList() ??
-              [],
+              ?.map((e) =>
+                  GenerateTicketComplete.fromJson(e as Map<String, dynamic>))
+              .toList(),
         );
 
 Map<String, dynamic> _$AppModulesCdrSchemasCdrProductCompleteToJson(
         AppModulesCdrSchemasCdrProductComplete instance) =>
     <String, dynamic>{
       'name_fr': instance.nameFr,
-      'nameEn': instance.nameEn,
-      'descriptionFr': instance.descriptionFr,
-      'descriptionEn': instance.descriptionEn,
+      'name_en': instance.nameEn,
+      'description_fr': instance.descriptionFr,
+      'description_en': instance.descriptionEn,
       'available_online': instance.availableOnline,
       'id': instance.id,
       'seller_id': instance.sellerId,
       'variants': instance.variants?.map((e) => e.toJson()).toList(),
-      'relatedMembership': instance.relatedMembership,
+      'related_membership': instance.relatedMembership?.toJson(),
       'product_constraints':
           instance.productConstraints?.map((e) => e.toJson()).toList(),
       'document_constraints':
@@ -4054,29 +4380,36 @@ Map<String, dynamic> _$AppModulesCdrSchemasCdrProductCompleteToJson(
 AppModulesCdrSchemasCdrProductEdit _$AppModulesCdrSchemasCdrProductEditFromJson(
         Map<String, dynamic> json) =>
     AppModulesCdrSchemasCdrProductEdit(
-      nameFr: json['nameFr'],
-      nameEn: json['nameEn'],
-      descriptionFr: json['descriptionFr'],
-      descriptionEn: json['descriptionEn'],
-      description: json['description'],
-      availableOnline: json['availableOnline'],
-      relatedMembership: json['relatedMembership'],
-      productConstraints: json['productConstraints'],
-      documentConstraints: json['documentConstraints'],
+      nameFr: json['name_fr'] as String?,
+      nameEn: json['name_en'] as String?,
+      descriptionFr: json['description_fr'] as String?,
+      descriptionEn: json['description_en'] as String?,
+      description: json['description'] as String?,
+      availableOnline: json['available_online'] as bool?,
+      relatedMembership: json['related_membership'] == null
+          ? null
+          : MembershipSimple.fromJson(
+              json['related_membership'] as Map<String, dynamic>),
+      productConstraints: (json['product_constraints'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      documentConstraints: (json['document_constraints'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$AppModulesCdrSchemasCdrProductEditToJson(
         AppModulesCdrSchemasCdrProductEdit instance) =>
     <String, dynamic>{
-      'nameFr': instance.nameFr,
-      'nameEn': instance.nameEn,
-      'descriptionFr': instance.descriptionFr,
-      'descriptionEn': instance.descriptionEn,
+      'name_fr': instance.nameFr,
+      'name_en': instance.nameEn,
+      'description_fr': instance.descriptionFr,
+      'description_en': instance.descriptionEn,
       'description': instance.description,
-      'availableOnline': instance.availableOnline,
-      'relatedMembership': instance.relatedMembership,
-      'productConstraints': instance.productConstraints,
-      'documentConstraints': instance.documentConstraints,
+      'available_online': instance.availableOnline,
+      'related_membership': instance.relatedMembership?.toJson(),
+      'product_constraints': instance.productConstraints,
+      'document_constraints': instance.documentConstraints,
     };
 
 AppModulesPhonebookSchemasPhonebookMembershipBase
@@ -4087,7 +4420,7 @@ AppModulesPhonebookSchemasPhonebookMembershipBase
           associationId: json['association_id'] as String? ?? '',
           mandateYear: (json['mandate_year'] as num?)?.toInt() ?? 0,
           roleName: json['role_name'] as String? ?? '',
-          roleTags: json['roleTags'],
+          roleTags: json['role_tags'] as String?,
           memberOrder: (json['member_order'] as num?)?.toInt() ?? 0,
         );
 
@@ -4098,7 +4431,7 @@ Map<String, dynamic> _$AppModulesPhonebookSchemasPhonebookMembershipBaseToJson(
       'association_id': instance.associationId,
       'mandate_year': instance.mandateYear,
       'role_name': instance.roleName,
-      'roleTags': instance.roleTags,
+      'role_tags': instance.roleTags,
       'member_order': instance.memberOrder,
     };
 

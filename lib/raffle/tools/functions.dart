@@ -13,7 +13,7 @@ RaffleStatusType stringToRaffleStatusType(String raffleStatusType) {
   }
 }
 
-String raffleStatusTypeToString(RaffleStatusType raffleStatusType) {
+String raffleStatusTypeToString(RaffleStatusType? raffleStatusType) {
   switch (raffleStatusType) {
     case RaffleStatusType.creation:
       return 'creation';
@@ -22,6 +22,8 @@ String raffleStatusTypeToString(RaffleStatusType raffleStatusType) {
     case RaffleStatusType.lock:
       return 'lock';
     case RaffleStatusType.swaggerGeneratedUnknown:
+      return 'error';
+    case null:
       return 'error';
   }
 }

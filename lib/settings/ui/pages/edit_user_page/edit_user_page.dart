@@ -35,9 +35,7 @@ class EditUserPage extends HookConsumerWidget {
     final user = ref.watch(userProvider);
     final profilePicture = ref.watch(profilePictureProvider);
     final profilePictureNotifier = ref.watch(profilePictureProvider.notifier);
-    final dateController = useTextEditingController(
-      text: user.birthday != null ? processDate(user.birthday!) : "",
-    );
+    final dateController = useTextEditingController(text: user.birthday);
     final nickNameController =
         useTextEditingController(text: user.nickname ?? '');
     final phoneController = useTextEditingController(text: user.phone ?? '');
@@ -260,7 +258,9 @@ class EditUserPage extends HookConsumerWidget {
                       onTap: () => getOnlyDayDate(
                         context,
                         dateController,
-                        initialDate: user.birthday,
+                        initialDate: user.birthday == null
+                            ? DateTime.now().subtract(const Duration(days: 365 * 21))
+                            : DateTime.parse(user.birthday!),
                         firstDate: DateTime(1900),
                         lastDate: DateTime.now(),
                       ),
@@ -354,11 +354,7 @@ class EditUserPage extends HookConsumerWidget {
                   onTap: () async {
                     final value = await asyncUserNotifier.updateMe(
                       user.copyWith(
-                        birthday: dateController.value.text.isNotEmpty
-                            ? DateTime.parse(
-                                processDateBack(dateController.value.text),
-                              )
-                            : null,
+                        birthday: dateController.value.text,
                         nickname: nickNameController.value.text.isEmpty
                             ? null
                             : nickNameController.value.text,

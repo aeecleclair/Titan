@@ -58,7 +58,7 @@ class EditGroupPage extends HookConsumerWidget {
             dataBuilder: (context, groups) {
               final group = groups.first;
               name.text = group.name;
-              description.text = group.description;
+              description.text = group.description ?? "";
               return Column(
                 children: [
                   const AlignLeftText(

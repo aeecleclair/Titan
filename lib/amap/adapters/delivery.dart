@@ -7,7 +7,7 @@ extension $DeliveryReturn on DeliveryReturn {
 
   DeliveryUpdate toDeliveryUpdate() {
     return DeliveryUpdate(
-      deliveryDate: deliveryDate,
+      deliveryDate: deliveryDate.toIso8601String().split("T").first,
     );
   }
 }

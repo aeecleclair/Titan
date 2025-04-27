@@ -10,7 +10,7 @@ class PrizeCard extends StatelessWidget {
   final PrizeSimple lot;
   final Function() onEdit;
   final Future Function() onDelete, onDraw;
-  final RaffleStatusType status;
+  final RaffleStatusType? status;
   const PrizeCard({
     super.key,
     required this.lot,

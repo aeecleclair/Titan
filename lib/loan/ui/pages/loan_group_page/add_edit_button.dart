@@ -87,7 +87,7 @@ class AddEditButton extends HookConsumerWidget {
                     returned: false,
                     borrowerId: borrower.id,
                     loanerId: isEdit ? loan.loaner.id : loaner.id,
-                    returnedDate: DateTime.now(),
+                    returnedDate: "",
                   );
                   final value = isEdit
                       ? await loanListNotifier.updateLoan(newLoan)

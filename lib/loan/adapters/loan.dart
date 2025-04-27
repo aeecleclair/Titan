@@ -16,12 +16,12 @@ extension $Loan on Loan {
   LoanUpdate toLoanUpdate() {
     return LoanUpdate(
       borrowerId: borrower.id,
-      start: start,
-      end: end,
+      start: start.toIso8601String().split("T").first,
+      end: end.toIso8601String().split("T").first,
       notes: notes,
       caution: caution,
       returned: returned,
-      itemsBorrowed: itemsQty.map((e) => e.itemSimple.id).toList(),
+      itemsBorrowed: itemsQty.map((e) => e.itemSimple.toItemBorrowed(e.quantity)).toList(),
     );
   }
 

@@ -48,8 +48,8 @@ extension $BookingReturnApplicant on BookingReturnApplicant {
   BookingEdit toBookingEdit() {
     return BookingEdit(
       reason: reason,
-      start: start,
-      end: end,
+      start: start.toIso8601String().split("T").first,
+      end: end.toIso8601String().split("T").first,
       note: note,
       roomId: roomId,
       key: key,
@@ -90,8 +90,8 @@ extension $BookingReturn on BookingReturn {
   BookingEdit toBookingEdit() {
     return BookingEdit(
       reason: reason,
-      start: start,
-      end: end,
+      start: start.toIso8601String().split("T").first,
+      end: end.toIso8601String().split("T").first,
       note: note,
       roomId: roomId,
       key: key,

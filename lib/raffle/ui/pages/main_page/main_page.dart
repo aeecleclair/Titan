@@ -143,6 +143,10 @@ class RaffleMainPage extends HookConsumerWidget {
                       case RaffleStatusType.lock:
                         pastRaffles.add(raffle);
                         break;
+                      case null:
+                        break;
+                      case RaffleStatusType.swaggerGeneratedUnknown:
+                        break;
                     }
                   }
                   return Column(

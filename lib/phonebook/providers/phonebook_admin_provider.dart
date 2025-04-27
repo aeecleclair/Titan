@@ -31,13 +31,13 @@ final isAssociationPresidentProvider = StateProvider<bool>((ref) {
   bool isPresident = false;
   membersList.whenData((members) {
     if (members.map((e) => e.id).contains(me.id)) {
-      if (members
+      if ((members
           .firstWhere((completeMember) => completeMember.id == me.id)
           .memberships
           .firstWhere(
             (membership) => membership.associationId == association.id,
           )
-          .roleTags
+          .roleTags ?? "")
           .contains(PhonebookTextConstants.presidentRoleTag)) {
         isPresident = true;
       }

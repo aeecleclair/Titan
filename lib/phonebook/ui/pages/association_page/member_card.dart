@@ -53,7 +53,7 @@ class MemberCard extends HookConsumerWidget {
                       element.associationId == association.id &&
                       element.mandateYear == association.mandateYear,
                 )
-                .roleTags,
+                .roleTags?.split(",") ?? [],
           ),
           margin: EdgeInsets.zero,
           child: Row(

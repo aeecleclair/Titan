@@ -11,7 +11,7 @@ extension $PaperComplete on PaperComplete {
   PaperUpdate toPaperUpdate() {
     return PaperUpdate(
       name: name,
-      releaseDate: releaseDate,
+      releaseDate: releaseDate.toIso8601String().split("T").first,
     );
   }
 }

@@ -55,7 +55,7 @@ class MemberDetailPage extends HookConsumerWidget {
                     label: PhonebookTextConstants.promotion,
                     value: memberProvider.promo == 0
                         ? PhonebookTextConstants.promoNotGiven
-                        : memberProvider.promo < 100
+                        : (memberProvider.promo ?? 0) < 100
                             ? "20${memberProvider.promo}"
                             : memberProvider.promo.toString(),
                   ),

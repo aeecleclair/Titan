@@ -51,7 +51,7 @@ class BookingMainPage extends HookConsumerWidget {
     void handleBooking(BookingReturnApplicant booking) {
       bookingNotifier.setBooking(booking);
       final recurrentDays =
-          SfCalendar.parseRRule(booking.recurrenceRule, booking.start).weekDays;
+          SfCalendar.parseRRule(booking.recurrenceRule ?? "", booking.start).weekDays;
       selectedDaysNotifier.setSelectedDays(recurrentDays);
       QR.to(BookingRouter.root + BookingRouter.addEdit);
     }

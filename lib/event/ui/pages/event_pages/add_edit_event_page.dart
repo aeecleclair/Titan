@@ -79,14 +79,14 @@ class AddEditEventPage extends HookConsumerWidget {
     );
     final interval = useTextEditingController(
       text: (event.recurrenceRule ?? "") != ""
-          ? event.recurrenceRule.split(";INTERVAL=")[1].split(";")[0]
+          ? event.recurrenceRule!.split(";INTERVAL=")[1].split(";")[0]
           : "1",
     );
     final recurrenceEndDate = useTextEditingController(
       text: (event.recurrenceRule ?? "") != ""
           ? processDate(
               DateTime.parse(
-                event.recurrenceRule.split(";UNTIL=")[1].split(";")[0],
+                event.recurrenceRule!.split(";UNTIL=")[1].split(";")[0],
               ),
             )
           : "",

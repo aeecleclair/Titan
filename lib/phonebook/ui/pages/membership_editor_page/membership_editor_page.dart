@@ -175,7 +175,7 @@ class MembershipEditorPage extends HookConsumerWidget {
                   }
                   if (isEdit) {
                     final membershipEdit = membership.copyWith(
-                      roleTags: memberRoleTags,
+                      roleTags: memberRoleTags.join(", "),
                       roleName: apparentNameController.text,
                     );
                     member.memberships[member.memberships.indexWhere(

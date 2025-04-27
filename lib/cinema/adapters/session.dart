@@ -13,7 +13,7 @@ extension $CineSessionComplete on CineSessionComplete {
   CineSessionUpdate toCineSessionUpdate() {
     return CineSessionUpdate(
       name: name,
-      start: start,
+      start: start.toIso8601String().split("T").first,
       duration: duration,
       overview: overview,
       genre: genre,

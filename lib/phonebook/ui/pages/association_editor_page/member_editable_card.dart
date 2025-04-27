@@ -68,7 +68,7 @@ class MemberEditableCard extends HookConsumerWidget {
                     element.associationId == association.id &&
                     element.mandateYear == association.mandateYear,
               )
-              .roleTags,
+              .roleTags?.split(', ') ?? [],
         ),
         borderRadius: const BorderRadius.all(Radius.circular(20)),
       ),

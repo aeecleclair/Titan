@@ -117,7 +117,7 @@ class DetailBookingPage extends HookConsumerWidget {
                                 ),
                               ),
                               const SizedBox(height: 30),
-                              if (booking.entity.isNotEmpty)
+                              if (booking.entity != null && booking.entity!.isNotEmpty)
                                 Column(
                                   children: [
                                     AutoSizeText(

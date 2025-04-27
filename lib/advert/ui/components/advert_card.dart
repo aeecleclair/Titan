@@ -30,7 +30,9 @@ class AdvertCard extends HookConsumerWidget {
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final posterNotifier = ref.watch(advertPosterProvider.notifier);
     final isWebFormat = ref.watch(isWebFormatProvider);
-    final date = DateTime.parse(advert.date);
+    final date = advert.date == null
+        ? DateTime.fromMillisecondsSinceEpoch(0)
+        : DateTime.parse(advert.date!);
     return GestureDetector(
       onTap: () {
         if (!isWebFormat) {

@@ -37,8 +37,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
     final selectedAdvertisers = ref.watch(advertiserProvider);
 
     final tags = advert.tags;
-    var textTags = tags.join(', ');
-    final textTagsController = useTextEditingController(text: textTags);
+    final textTagsController = useTextEditingController(text: tags);
     final advertPosters = ref.watch(advertPostersProvider);
     final advertListNotifier = ref.watch(advertListProvider.notifier);
     final posterNotifier = ref.watch(advertPosterProvider.notifier);
@@ -231,8 +230,8 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                             advertiser: selectedAdvertisers[0],
                             advertiserId: selectedAdvertisers[0].id,
                             content: content.text,
-                            date: isEdit ? advert.date : DateTime.now(),
-                            tags: textTagsController.text.split(', '),
+                            date: isEdit ? advert.date : null,
+                            tags: textTagsController.text,
                             title: title.text,
                           );
                           final value = isEdit

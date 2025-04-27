@@ -115,7 +115,7 @@ class LoanCard extends StatelessWidget {
             ),
             const SizedBox(height: 5),
             Text(
-              loan.caution,
+              loan.caution ?? "",
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -142,8 +142,8 @@ class LoanCard extends StatelessWidget {
                 ),
                 Text(
                   (loan.returned)
-                      ? loan.returnedDate != null
-                          ? processDate(loan.returnedDate!)
+                      ? loan.returnedDate.isNotEmpty
+                          ? loan.returnedDate
                           : LoanTextConstants.noReturnedDate
                       : processDate(loan.end),
                   style: TextStyle(

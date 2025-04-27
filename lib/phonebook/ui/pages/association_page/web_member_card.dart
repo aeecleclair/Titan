@@ -54,7 +54,7 @@ class WebMemberCard extends HookConsumerWidget {
                       element.associationId == association.id &&
                       element.mandateYear == association.mandateYear,
                 )
-                .roleTags,
+                .roleTags?.split(",") ?? [],
           ),
           margin: EdgeInsets.zero,
           child: LayoutBuilder(
@@ -143,7 +143,7 @@ class WebMemberCard extends HookConsumerWidget {
                                   label: PhonebookTextConstants.promotion,
                                   value: member.promo == 0
                                       ? PhonebookTextConstants.promoNotGiven
-                                      : member.promo < 100
+                                      : (member.promo ?? 0) < 100
                                           ? "20${member.promo}"
                                           : member.promo.toString(),
                                 ),
@@ -226,7 +226,7 @@ class WebMemberCard extends HookConsumerWidget {
                         label: PhonebookTextConstants.promotion,
                         value: member.promo == 0
                             ? PhonebookTextConstants.promoNotGiven
-                            : member.promo < 100
+                            : (member.promo ?? 0) < 100
                                 ? "20${member.promo}"
                                 : member.promo.toString(),
                       ),

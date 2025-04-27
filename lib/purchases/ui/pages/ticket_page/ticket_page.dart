@@ -70,7 +70,7 @@ class TicketPage extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  data.productVariant.descriptionFr,
+                  data.productVariant.descriptionFr ?? "",
                   style: const TextStyle(fontSize: 15, color: Colors.black),
                 ),
                 const SizedBox(height: 10),

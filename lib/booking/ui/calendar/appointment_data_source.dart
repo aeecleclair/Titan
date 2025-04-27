@@ -39,7 +39,7 @@ class AppointmentDataSource extends CalendarDataSource<BookingReturn> {
   @override
   String? getRecurrenceRule(int index) {
     BookingReturn bookingReturn = appointments![index];
-    return bookingReturn.recurrenceRule.isNotEmpty
+    return (bookingReturn.recurrenceRule ?? "").isNotEmpty
         ? bookingReturn.recurrenceRule
         : null;
   }

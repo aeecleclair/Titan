@@ -34,7 +34,7 @@ class AddEditLoanPage extends HookConsumerWidget {
     final note = useTextEditingController(text: loan.notes);
     final caution = ref.watch(cautionProvider);
     final cautionNotifier = ref.watch(cautionProvider.notifier);
-    cautionNotifier.setCaution(loan.caution);
+    cautionNotifier.setCaution(loan.caution ?? "");
     final usersNotifier = ref.watch(userList.notifier);
     final loaner = ref.watch(loanerProvider);
     final loanersItemsNotifier = ref.watch(loanersItemsProvider.notifier);

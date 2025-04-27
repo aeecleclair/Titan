@@ -78,15 +78,15 @@ class AddEditBookingPage extends HookConsumerWidget {
     final selectedDays = ref.watch(selectedDaysProvider);
     final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
     final interval = useTextEditingController(
-      text: booking.recurrenceRule != ""
-          ? booking.recurrenceRule.split(";INTERVAL=")[1].split(";")[0]
+      text: (booking.recurrenceRule ?? "") != ""
+          ? booking.recurrenceRule!.split(";INTERVAL=")[1].split(";")[0]
           : "1",
     );
     final recurrenceEndDate = useTextEditingController(
-      text: booking.recurrenceRule != ""
+      text: (booking.recurrenceRule ?? "") != ""
           ? processDate(
               DateTime.parse(
-                booking.recurrenceRule.split(";UNTIL=")[1].split(";")[0],
+                booking.recurrenceRule!.split(";UNTIL=")[1].split(";")[0],
               ),
             )
           : "",

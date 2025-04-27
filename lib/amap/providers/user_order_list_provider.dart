@@ -107,9 +107,9 @@ class UserOrderListNotifier extends ListNotifierAPI<OrderReturn> {
           await userOrderListRepository.amapOrdersOrderIdPatch(
             orderId: newOrder.orderId,
             body: OrderEdit(
-              productsIds: newListProductQuantity.map((p) => p.product.id),
+              productsIds: newListProductQuantity.map((p) => p.product.id).toList(),
               collectionSlot: newOrder.collectionSlot,
-              productsQuantity: newListProductQuantity.map((p) => p.quantity),
+              productsQuantity: newListProductQuantity.map((p) => p.quantity).toList(),
             ),
           );
           orders[indexOrder] = newOrder;

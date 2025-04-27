@@ -5,6 +5,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/login/providers/sign_up_provider.dart';
 import 'package:myecl/login/router.dart';
 import 'package:myecl/login/tools/constants.dart';
@@ -269,10 +270,11 @@ class CreateAccountPage extends HookConsumerWidget {
               name: name.text,
               firstname: firstname.text,
               nickname: nickname.text.isEmpty ? null : nickname.text,
-              birthday: DateTime.parse(processDateBack(birthday.text)),
+              birthday: birthday.text,
               phone: phone.text.isEmpty ? null : phone.text,
               promo: promo.text.isEmpty ? null : int.parse(promo.text),
-              floor: floor.text,
+              floor: FloorsType.values
+                  .firstWhere((element) => element.name == floor.text),
               activationToken: activationCode.text.trim(),
               password: password.text,
             );
