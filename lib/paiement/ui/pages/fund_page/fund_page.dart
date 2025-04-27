@@ -112,14 +112,23 @@ class FundPage extends ConsumerWidget {
                           3) {
                     fundAmountNotifier.setFundAmount(fundAmount + e.toString());
                   } else if (!fundAmount.contains(",")) {
-                    fundAmountNotifier.setFundAmount(fundAmount + e.toString());
+                    if (e == "," && fundAmount.isEmpty) {
+                      fundAmountNotifier.setFundAmount("0,");
+                    } else {
+                      fundAmountNotifier
+                          .setFundAmount(fundAmount + e.toString());
+                    }
                   }
                 }
               },
               rightButtonFn: () {
-                fundAmountNotifier.setFundAmount(
-                  fundAmount.substring(0, fundAmount.length - 1),
-                );
+                if (fundAmount == "0,") {
+                  fundAmountNotifier.setFundAmount("");
+                } else if (fundAmount.isNotEmpty) {
+                  fundAmountNotifier.setFundAmount(
+                    fundAmount.substring(0, fundAmount.length - 1),
+                  );
+                }
               },
             ),
             const Expanded(child: Center(child: ConfirmFundButton())),

@@ -112,15 +112,23 @@ class ReFundPage extends ConsumerWidget {
                     refundAmountNotifier
                         .setRefundAmount(refundAmount + e.toString());
                   } else if (!refundAmount.contains(",")) {
-                    refundAmountNotifier
-                        .setRefundAmount(refundAmount + e.toString());
+                    if (e == "," && refundAmount.isEmpty) {
+                      refundAmountNotifier.setRefundAmount("0,");
+                    } else {
+                      refundAmountNotifier
+                          .setRefundAmount(refundAmount + e.toString());
+                    }
                   }
                 }
               },
               rightButtonFn: () {
-                refundAmountNotifier.setRefundAmount(
-                  refundAmount.substring(0, refundAmount.length - 1),
-                );
+                if (refundAmount == "0,") {
+                  refundAmountNotifier.setRefundAmount("");
+                } else if (refundAmount.isNotEmpty) {
+                  refundAmountNotifier.setRefundAmount(
+                    refundAmount.substring(0, refundAmount.length - 1),
+                  );
+                }
               },
             ),
             Expanded(

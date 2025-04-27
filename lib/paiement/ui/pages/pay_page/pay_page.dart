@@ -104,13 +104,22 @@ class PayPage extends ConsumerWidget {
                       payAmount.substring(payAmount.indexOf(",")).length < 3) {
                     payAmountNotifier.setPayAmount(payAmount + e.toString());
                   } else if (!payAmount.contains(",")) {
-                    payAmountNotifier.setPayAmount(payAmount + e.toString());
+                    if (e == "0" && payAmount.isEmpty) {
+                      payAmountNotifier.setPayAmount("0,");
+                    } else {
+                      payAmountNotifier.setPayAmount(payAmount + e.toString());
+                    }
                   }
                 }
               },
               rightButtonFn: () {
-                payAmountNotifier
-                    .setPayAmount(payAmount.substring(0, payAmount.length - 1));
+                if (payAmount == "0,") {
+                  payAmountNotifier.setPayAmount("");
+                } else if (payAmount.isNotEmpty) {
+                  payAmountNotifier.setPayAmount(
+                    payAmount.substring(0, payAmount.length - 1),
+                  );
+                }
               },
             ),
             const Expanded(child: Center(child: ConfirmButton())),
