@@ -9,7 +9,6 @@ import 'package:myecl/admin/ui/components/item_card_ui.dart';
 import 'package:myecl/admin/ui/pages/groups/group_page/group_ui.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
@@ -49,14 +48,14 @@ class GroupsPage extends HookConsumerWidget {
           child: Column(
             children: [
               const SizedBox(height: 20),
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   AdminTextConstants.groups,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
-                    color: ColorConstants.gradient1,
+                    color: Theme.of(context).colorScheme.primaryContainer,
                   ),
                 ),
               ),
@@ -85,7 +84,9 @@ class GroupsPage extends HookConsumerWidget {
                                 const Spacer(),
                                 HeroIcon(
                                   HeroIcons.plus,
-                                  color: Colors.grey.shade700,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .secondaryContainer,
                                   size: 40,
                                 ),
                                 const Spacer(),
@@ -108,7 +109,9 @@ class GroupsPage extends HookConsumerWidget {
                                   children: [
                                     HeroIcon(
                                       HeroIcons.buildingLibrary,
-                                      color: Colors.grey.shade700,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondaryContainer,
                                       size: 40,
                                     ),
                                     Positioned(
@@ -117,7 +120,9 @@ class GroupsPage extends HookConsumerWidget {
                                       child: HeroIcon(
                                         HeroIcons.plus,
                                         size: 15,
-                                        color: Colors.grey.shade700,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondaryContainer,
                                       ),
                                     ),
                                   ],
@@ -175,7 +180,7 @@ class GroupsPage extends HookConsumerWidget {
                     ],
                   );
                 },
-                loaderColor: ColorConstants.gradient1,
+                loaderColor: Theme.of(context).colorScheme.primaryContainer,
               ),
             ],
           ),

@@ -29,7 +29,7 @@ class GroupUi extends HookConsumerWidget {
             children: [
               HeroIcon(
                 HeroIcons.buildingLibrary,
-                color: Theme.of(context).colorScheme.secondaryFixed,
+                color: Theme.of(context).colorScheme.secondaryContainer,
               ),
               const SizedBox(width: 15),
             ],
