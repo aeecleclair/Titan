@@ -8,7 +8,6 @@ import 'package:myecl/admin/providers/school_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/ui/admin.dart';
 import 'package:myecl/admin/ui/components/admin_button.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
@@ -40,10 +39,10 @@ class EditSchoolPage extends HookConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
         child: Column(
           children: [
-            const AlignLeftText(
+            AlignLeftText(
               AdminTextConstants.edit,
               fontSize: 20,
-              color: ColorConstants.gradient1,
+              color: Theme.of(context).colorScheme.primaryContainer,
             ),
             const SizedBox(height: 20),
             Form(
@@ -55,7 +54,7 @@ class EditSchoolPage extends HookConsumerWidget {
                     alignment: Alignment.centerLeft,
                     child: TextEntry(
                       controller: name,
-                      color: ColorConstants.gradient1,
+                      color: Theme.of(context).colorScheme.primaryContainer,
                       label: AdminTextConstants.name,
                       suffixIcon: const HeroIcon(HeroIcons.pencil),
                       enabledColor: Colors.transparent,
@@ -66,7 +65,7 @@ class EditSchoolPage extends HookConsumerWidget {
                     alignment: Alignment.centerLeft,
                     child: TextEntry(
                       controller: emailRegex,
-                      color: ColorConstants.gradient1,
+                      color: Theme.of(context).colorScheme.primaryContainer,
                       label: AdminTextConstants.emailRegex,
                       suffixIcon: const HeroIcon(HeroIcons.pencil),
                       enabledColor: Colors.transparent,
@@ -101,12 +100,12 @@ class EditSchoolPage extends HookConsumerWidget {
                       });
                     },
                     builder: (child) => AdminButton(child: child),
-                    child: const Text(
+                    child: Text(
                       AdminTextConstants.edit,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
                       ),
                     ),
                   ),
