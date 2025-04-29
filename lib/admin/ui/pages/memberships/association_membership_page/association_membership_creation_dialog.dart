@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/tools/constants.dart';
 
 class MembershipCreationDialogBox extends StatelessWidget {
-  static const Color titleColor = ColorConstants.gradient1;
-  static const Color descriptionColor = Colors.black;
-  static const Color yesColor = ColorConstants.gradient2;
-  static const Color noColor = ColorConstants.background2;
-
   final Function() onYes;
   final Function()? onNo;
   final TextEditingController nameController;
@@ -18,7 +12,6 @@ class MembershipCreationDialogBox extends StatelessWidget {
   static const double _padding = 20;
   static const double _avatarRadius = 45;
 
-  static const Color background = Color(0xfffafafa);
   const MembershipCreationDialogBox({
     super.key,
     required this.nameController,
@@ -51,12 +44,12 @@ class MembershipCreationDialogBox extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
-              color: MembershipCreationDialogBox.background,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius:
                   BorderRadius.circular(MembershipCreationDialogBox._padding),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.shade700,
+                  color: Theme.of(context).shadowColor,
                   offset: const Offset(0, 5),
                   blurRadius: 5,
                 ),
@@ -67,10 +60,10 @@ class MembershipCreationDialogBox extends StatelessWidget {
               children: <Widget>[
                 Text(
                   AdminTextConstants.createAssociationMembership,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w800,
-                    color: titleColor,
+                    color: Theme.of(context).colorScheme.primaryContainer,
                   ),
                 ),
                 const SizedBox(
@@ -115,12 +108,12 @@ class MembershipCreationDialogBox extends StatelessWidget {
                           Navigator.of(context).pop();
                           await onYes();
                         },
-                        child: const Text(
+                        child: Text(
                           "Créer",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
-                            color: noColor,
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
                       ),
@@ -131,12 +124,12 @@ class MembershipCreationDialogBox extends StatelessWidget {
                           }
                           onNo?.call();
                         },
-                        child: const Text(
+                        child: Text(
                           "Annuler",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
-                            color: yesColor,
+                            color: Theme.of(context).colorScheme.error,
                           ),
                         ),
                       ),

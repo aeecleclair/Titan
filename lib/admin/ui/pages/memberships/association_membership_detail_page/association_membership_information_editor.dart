@@ -6,7 +6,6 @@ import 'package:myecl/admin/providers/all_groups_list_provider.dart';
 import 'package:myecl/admin/providers/association_membership_list_provider.dart';
 import 'package:myecl/admin/providers/association_membership_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
@@ -30,7 +29,7 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
     final name = useTextEditingController(text: associationMembership.name);
     final groups = ref.watch(allGroupList);
     final groupIdController =
-        useTextEditingController(text: associationMembership.groupId);
+        useTextEditingController(text: associationMembership.managerGroupId);
     final associationMembershipListNotifier =
         ref.watch(allAssociationMembershipListProvider.notifier);
     final key = GlobalKey<FormState>();
@@ -52,7 +51,8 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                     SizedBox(
                       child: TextFormField(
                         controller: name,
-                        cursorColor: ColorConstants.gradient1,
+                        cursorColor:
+                            Theme.of(context).colorScheme.primaryContainer,
                         decoration: InputDecoration(
                           labelText: AdminTextConstants.name,
                           labelStyle: const TextStyle(
@@ -70,9 +70,11 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                               color: Colors.transparent,
                             ),
                           ),
-                          focusedBorder: const UnderlineInputBorder(
+                          focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: ColorConstants.gradient1,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer,
                             ),
                           ),
                         ),
@@ -118,9 +120,9 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
               ),
               WaitingButton(
                 builder: (child) => AddEditButtonLayout(
-                  colors: const [
-                    ColorConstants.gradient1,
-                    ColorConstants.gradient2,
+                  colors: [
+                    Theme.of(context).colorScheme.primaryContainer,
+                    Theme.of(context).colorScheme.primaryFixed,
                   ],
                   child: child,
                 ),
@@ -140,7 +142,7 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                       associationMembershipNotifier.setAssociationMembership(
                         associationMembership.copyWith(
                           name: name.text,
-                          groupId: groupIdController.text,
+                          managerGroupId: groupIdController.text,
                         ),
                       );
                       displayToastWithContext(
@@ -155,12 +157,12 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                     }
                   });
                 },
-                child: const Text(
+                child: Text(
                   AdminTextConstants.edit,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: Color.fromARGB(255, 255, 255, 255),
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
                   ),
                 ),
               ),

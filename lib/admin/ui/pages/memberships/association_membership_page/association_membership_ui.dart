@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/class/association_membership_simple.dart';
 import 'package:myecl/admin/ui/components/item_card_ui.dart';
 import 'package:myecl/admin/ui/pages/memberships/association_membership_page/association_membership_button.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class AssociationMembershipUi extends HookConsumerWidget {
@@ -26,8 +25,8 @@ class AssociationMembershipUi extends HookConsumerWidget {
         Expanded(
           child: Text(
             associationMembership.name,
-            style: const TextStyle(
-              color: Colors.black,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurface,
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
@@ -39,11 +38,11 @@ class AssociationMembershipUi extends HookConsumerWidget {
             GestureDetector(
               onTap: onEdit,
               child: AssociationMembershipButton(
-                gradient1: Colors.grey.shade800,
-                gradient2: Colors.grey.shade900,
-                child: const HeroIcon(
+                gradient1: Theme.of(context).colorScheme.secondaryContainer,
+                gradient2: Theme.of(context).colorScheme.secondary,
+                child: HeroIcon(
                   HeroIcons.eye,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onSecondary,
                 ),
               ),
             ),
@@ -51,13 +50,13 @@ class AssociationMembershipUi extends HookConsumerWidget {
             WaitingButton(
               onTap: onDelete,
               builder: (child) => AssociationMembershipButton(
-                gradient1: ColorConstants.gradient1,
-                gradient2: ColorConstants.gradient2,
+                gradient1: Theme.of(context).colorScheme.primaryContainer,
+                gradient2: Theme.of(context).colorScheme.primaryFixed,
                 child: child,
               ),
-              child: const HeroIcon(
+              child: HeroIcon(
                 HeroIcons.xMark,
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
               ),
             ),
           ],
