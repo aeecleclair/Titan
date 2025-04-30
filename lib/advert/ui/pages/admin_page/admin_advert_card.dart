@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/advert/class/advert.dart';
-import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/advert/ui/components/advert_card.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
@@ -39,27 +38,34 @@ class AdminAdvertCard extends HookConsumerWidget {
                     onTap: onEdit,
                     child: CardButton(
                       colors: [
-                        Colors.grey.shade100,
-                        Colors.grey.shade400,
+                        Theme.of(context).colorScheme.surface,
+                        Theme.of(context).colorScheme.secondaryFixed,
                       ],
-                      shadowColor: Colors.grey.shade300.withValues(alpha: 0.2),
-                      child:
-                          const HeroIcon(HeroIcons.pencil, color: Colors.black),
+                      shadowColor: Theme.of(context).shadowColor,
+                      child: HeroIcon(
+                        HeroIcons.pencil,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
                     ),
                   ),
                   const SizedBox(width: 20),
                   WaitingButton(
                     onTap: onDelete,
                     builder: (child) => CardButton(
-                      colors: const [
-                        AdvertColorConstants.redGradient1,
-                        AdvertColorConstants.redGradient2,
+                      colors: [
+                        Theme.of(context).colorScheme.primaryContainer,
+                        Theme.of(context).colorScheme.primaryFixed,
                       ],
-                      shadowColor: AdvertColorConstants.redGradient2
+                      shadowColor: Theme.of(context)
+                          .colorScheme
+                          .primaryFixed
                           .withValues(alpha: 0.2),
                       child: child,
                     ),
-                    child: const HeroIcon(HeroIcons.trash, color: Colors.white),
+                    child: HeroIcon(
+                      HeroIcons.trash,
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
+                    ),
                   ),
                 ],
               ),
