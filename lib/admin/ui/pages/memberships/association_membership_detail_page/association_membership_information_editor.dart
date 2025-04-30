@@ -30,7 +30,7 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
     final name = useTextEditingController(text: associationMembership.name);
     final groups = ref.watch(allGroupList);
     final groupIdController =
-        useTextEditingController(text: associationMembership.groupId);
+        useTextEditingController(text: associationMembership.managerGroupId);
     final associationMembershipListNotifier =
         ref.watch(allAssociationMembershipListProvider.notifier);
     final key = GlobalKey<FormState>();
@@ -140,7 +140,7 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                       associationMembershipNotifier.setAssociationMembership(
                         associationMembership.copyWith(
                           name: name.text,
-                          groupId: groupIdController.text,
+                          managerGroupId: groupIdController.text,
                         ),
                       );
                       displayToastWithContext(
