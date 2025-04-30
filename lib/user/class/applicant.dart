@@ -1,5 +1,5 @@
 import 'package:myecl/admin/class/account_type.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/user/class/simple_users.dart';
 
 class Applicant extends SimpleUser {
   late final String? email;
