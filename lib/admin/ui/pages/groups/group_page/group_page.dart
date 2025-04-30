@@ -6,7 +6,7 @@ import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/router.dart';
 import 'package:myecl/admin/ui/admin.dart';
 import 'package:myecl/admin/ui/components/item_card_ui.dart';
-import 'package:myecl/admin/ui/pages/group_page/group_ui.dart';
+import 'package:myecl/admin/ui/pages/groups/group_page/group_ui.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';

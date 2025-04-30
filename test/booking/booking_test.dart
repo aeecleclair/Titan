@@ -4,7 +4,7 @@ import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/class/applicant.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:myecl/user/class/simple_users.dart';
 
 void main() {
   group('Testing Room class', () {
