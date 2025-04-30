@@ -37,10 +37,10 @@ class DetailBookingPage extends HookConsumerWidget {
                     width: double.infinity,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: Colors.grey.shade50,
+                      color: Theme.of(context).colorScheme.surface,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withValues(alpha: 0.2),
+                          color: Theme.of(context).shadowColor,
                           blurRadius: 10,
                           offset: const Offset(0, 10),
                         ),
@@ -154,10 +154,12 @@ class DetailBookingPage extends HookConsumerWidget {
                                         }
                                       }
                                     },
-                                    child: const ContactButton(
+                                    child: ContactButton(
                                       child: HeroIcon(
                                         HeroIcons.phone,
-                                        color: Colors.black,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface,
                                       ),
                                     ),
                                   ),
@@ -179,10 +181,12 @@ class DetailBookingPage extends HookConsumerWidget {
                                         }
                                       }
                                     },
-                                    child: const ContactButton(
+                                    child: ContactButton(
                                       child: HeroIcon(
                                         HeroIcons.chatBubbleBottomCenterText,
-                                        color: Colors.black,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface,
                                       ),
                                     ),
                                   ),

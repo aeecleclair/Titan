@@ -13,7 +13,7 @@ class ContactButton extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
         border: Border.all(
-          color: Theme.of(context).colorScheme.onPrimary,
+          color: Theme.of(context).colorScheme.onSurface,
           width: 2,
         ),
         color: Theme.of(context).colorScheme.secondaryFixed,

@@ -28,10 +28,10 @@ class CalendarDialog extends StatelessWidget {
             children: [
               Text(
                 '${booking.room.name} - ${booking.reason}',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
               const SizedBox(height: 10),
@@ -44,7 +44,7 @@ class CalendarDialog extends StatelessWidget {
                 ),
                 style: TextStyle(
                   fontWeight: FontWeight.w400,
-                  color: Colors.grey.shade400,
+                  color: Theme.of(context).colorScheme.tertiary,
                   fontSize: 15,
                 ),
               ),
@@ -65,9 +65,9 @@ class CalendarDialog extends StatelessWidget {
                 if (booking.note != null)
                   Text(
                     booking.note!,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.w400,
-                      color: Colors.grey,
+                      color: Theme.of(context).colorScheme.tertiary,
                       fontSize: 15,
                     ),
                   ),
@@ -133,10 +133,10 @@ class CalendarDialog extends StatelessWidget {
                 width: 40,
                 padding: const EdgeInsets.all(7),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.shade500.withValues(alpha: 0.3),
+                      color: Theme.of(context).shadowColor,
                       blurRadius: 5,
                       spreadRadius: 1,
                     ),
