@@ -468,7 +468,7 @@ Plausible? getPlausible() {
 Future<String> getTitanVersion() async {
   final String pubspecString = await rootBundle.loadString("pubspec.yaml");
   final YamlMap pubspec = loadYaml(pubspecString);
-  final String minimalHyperionVersion = pubspec["minimal_hyperion_hersion"];
+  final String minimalHyperionVersion = pubspec["minimal_hyperion_version"];
   return minimalHyperionVersion;
 }
 
