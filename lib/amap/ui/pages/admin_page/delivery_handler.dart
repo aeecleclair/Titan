@@ -13,6 +13,7 @@ import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
 
 class DeliveryHandler extends HookConsumerWidget {
   const DeliveryHandler({super.key});
@@ -22,12 +23,13 @@ class DeliveryHandler extends HookConsumerWidget {
     final deliveries = ref.watch(deliveryListProvider);
     final deliveryIdNotifier = ref.watch(deliveryIdProvider.notifier);
     final selectedNotifier = ref.watch(selectedListProvider.notifier);
+    final isDarkTheme = ref.watch(themeProvider);
     return Column(
       children: [
-        const AlignLeftText(
+        AlignLeftText(
           AMAPTextConstants.deliveries,
-          padding: EdgeInsets.symmetric(horizontal: 30),
-          color: AMAPColorConstants.textDark,
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          color: AMAPColors(isDarkTheme).textOnPrimary,
         ),
         const SizedBox(height: 10),
         HorizontalListView(
@@ -47,11 +49,13 @@ class DeliveryHandler extends HookConsumerWidget {
               child: CardLayout(
                 height: 160,
                 width: 100,
-                shadowColor: AMAPColorConstants.textDark.withValues(alpha: 0.2),
-                child: const Center(
+                shadowColor: AMAPColors(isDarkTheme)
+                    .textOnPrimary
+                    .withValues(alpha: 0.2),
+                child: Center(
                   child: HeroIcon(
                     HeroIcons.plus,
-                    color: AMAPColorConstants.textDark,
+                    color: AMAPColors(isDarkTheme).textOnPrimary,
                     size: 50,
                   ),
                 ),
@@ -65,7 +69,7 @@ class DeliveryHandler extends HookConsumerWidget {
                   children: data.map((e) => DeliveryUi(delivery: e)).toList(),
                 );
               },
-              loaderColor: AMAPColorConstants.greenGradient2,
+              loaderColor: AMAPColors(isDarkTheme).greenGradientSecondary,
             ),
             const SizedBox(width: 5),
           ],

@@ -10,6 +10,7 @@ import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/list_products_page/product_ui_list.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
 
 class CategoryPage extends HookConsumerWidget {
   final String category;
@@ -29,6 +30,7 @@ class CategoryPage extends HookConsumerWidget {
     final scrollController = ref.watch(scrollControllerProvider(hideAnimation));
 
     final scroll = ref.watch(scrollProvider);
+    final isDarkTheme = ref.watch(themeProvider);
 
     double minScale = 0.8;
     double scale = 1;
@@ -70,7 +72,7 @@ class CategoryPage extends HookConsumerWidget {
                       capitalize(category),
                       padding:
                           const EdgeInsets.only(left: 20, top: 20, right: 20),
-                      color: AMAPColorConstants.textDark,
+                      color: AMAPColors(isDarkTheme).textOnPrimary,
                       fontSize: 25,
                     ),
                   ),
@@ -96,7 +98,8 @@ class CategoryPage extends HookConsumerWidget {
                             ),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: AMAPColorConstants.background2
+                                color: AMAPColors(isDarkTheme)
+                                    .background2
                                     .withValues(alpha: 0.5),
                               ),
                               child: Column(
@@ -127,17 +130,19 @@ class CategoryPage extends HookConsumerWidget {
                                 width: 150,
                                 height: 50,
                                 decoration: BoxDecoration(
-                                  gradient: const LinearGradient(
+                                  gradient: LinearGradient(
                                     colors: [
-                                      AMAPColorConstants.green1,
-                                      AMAPColorConstants.green2,
+                                      AMAPColors(isDarkTheme).primaryFixedGreen,
+                                      AMAPColors(isDarkTheme)
+                                          .secondaryFixedGreen,
                                     ],
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,
                                   ),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: AMAPColorConstants.green2
+                                      color: AMAPColors(isDarkTheme)
+                                          .secondaryFixedGreen
                                           .withValues(alpha: 0.4),
                                       offset: const Offset(2, 3),
                                       blurRadius: 5,
@@ -155,13 +160,14 @@ class CategoryPage extends HookConsumerWidget {
                                     HeroIcon(
                                       HeroIcons.chevronDoubleDown,
                                       size: 15,
-                                      color: AMAPColorConstants.background,
+                                      color: AMAPColors(isDarkTheme).background,
                                     ),
                                     Text(
                                       AMAPTextConstants.seeMore,
                                       style: TextStyle(
                                         fontSize: 18,
-                                        color: AMAPColorConstants.background,
+                                        color:
+                                            AMAPColors(isDarkTheme).background,
                                       ),
                                     ),
                                   ],
@@ -180,7 +186,8 @@ class CategoryPage extends HookConsumerWidget {
                       filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: AMAPColorConstants.background2
+                          color: AMAPColors(isDarkTheme)
+                              .background2
                               .withValues(alpha: 0.5),
                         ),
                         child: Column(children: listWidgetProduct),

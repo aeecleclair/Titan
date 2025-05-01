@@ -5,6 +5,7 @@ import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/providers/cash_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/user/class/simple_users.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
 
 class AddingUserCard extends HookConsumerWidget {
   final SimpleUser user;
@@ -14,6 +15,7 @@ class AddingUserCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cashNotifier = ref.watch(cashListProvider.notifier);
+    final isDarkTheme = ref.watch(themeProvider);
     return GestureDetector(
       onTap: () {
         cashNotifier.addCash(
@@ -30,7 +32,7 @@ class AddingUserCard extends HookConsumerWidget {
           width: 140,
           height: 75,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(25),
           ),
           child: Padding(
@@ -43,10 +45,10 @@ class AddingUserCard extends HookConsumerWidget {
                   user.nickname ?? user.firstname,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: AMAPColorConstants.textLight,
+                    color: AMAPColors(isDarkTheme).textOnSecondary,
                   ),
                 ),
                 const SizedBox(height: 2),
@@ -56,10 +58,10 @@ class AddingUserCard extends HookConsumerWidget {
                       : user.name,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
-                    color: AMAPColorConstants.textDark,
+                    color: AMAPColors(isDarkTheme).textOnPrimary,
                   ),
                 ),
                 const SizedBox(height: 3),

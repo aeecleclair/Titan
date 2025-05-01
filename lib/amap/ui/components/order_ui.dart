@@ -13,6 +13,7 @@ import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
 
 class OrderUI extends HookConsumerWidget {
   final Order order;
@@ -32,6 +33,7 @@ class OrderUI extends HookConsumerWidget {
     final orderListNotifier = ref.watch(userOrderListProvider.notifier);
     final orderNotifier = ref.watch(orderProvider.notifier);
     final balanceNotifier = ref.watch(userAmountProvider.notifier);
+    final isDarkTheme = ref.watch(themeProvider);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -40,9 +42,9 @@ class OrderUI extends HookConsumerWidget {
       id: order.id,
       width: 195,
       height: isDetail ? 100 : 150,
-      colors: const [
-        AMAPColorConstants.lightGradient1,
-        AMAPColorConstants.greenGradient1,
+      colors: [
+        AMAPColors(isDarkTheme).lightGradientPrimary,
+        AMAPColors(isDarkTheme).greenGradientPrimary,
       ],
       padding: const EdgeInsets.symmetric(horizontal: 17.0, vertical: 12),
       child: Column(
@@ -54,10 +56,10 @@ class OrderUI extends HookConsumerWidget {
             children: [
               Text(
                 '${AMAPTextConstants.the} ${processDate(order.deliveryDate)}',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: AMAPColorConstants.textDark,
+                  color: AMAPColors(isDarkTheme).textOnPrimary,
                 ),
               ),
               if (!isDetail)
@@ -66,9 +68,9 @@ class OrderUI extends HookConsumerWidget {
                     orderNotifier.setOrder(order);
                     onTap?.call();
                   },
-                  child: const HeroIcon(
+                  child: HeroIcon(
                     HeroIcons.informationCircle,
-                    color: AMAPColorConstants.textDark,
+                    color: AMAPColors(isDarkTheme).textOnPrimary,
                     size: 30,
                   ),
                 ),
@@ -79,19 +81,19 @@ class OrderUI extends HookConsumerWidget {
             children: [
               Text(
                 "${order.products.length} ${AMAPTextConstants.product}${order.products.length != 1 ? "s" : ""}",
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onSecondary,
                 ),
               ),
               const Spacer(),
               Text(
                 "${order.amount.toStringAsFixed(2)}€",
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onSecondary,
                 ),
               ),
             ],
@@ -99,10 +101,10 @@ class OrderUI extends HookConsumerWidget {
           const SizedBox(height: 3),
           Text(
             uiCollectionSlotToString(order.collectionSlot),
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.w700,
-              color: AMAPColorConstants.textDark,
+              color: AMAPColors(isDarkTheme).textOnPrimary,
             ),
           ),
           const Spacer(),
@@ -115,14 +117,14 @@ class OrderUI extends HookConsumerWidget {
                           orderNotifier.setOrder(order);
                           onEdit?.call();
                         },
-                        child: const CardButton(
+                        child: CardButton(
                           colors: [
-                            AMAPColorConstants.greenGradient1,
-                            AMAPColorConstants.greenGradient2,
+                            AMAPColors(isDarkTheme).greenGradientPrimary,
+                            AMAPColors(isDarkTheme).greenGradientSecondary,
                           ],
                           child: HeroIcon(
                             HeroIcons.pencil,
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.onSecondary,
                           ),
                         ),
                       ),
@@ -159,25 +161,25 @@ class OrderUI extends HookConsumerWidget {
                           );
                         },
                         builder: (child) => CardButton(
-                          colors: const [
-                            AMAPColorConstants.redGradient1,
-                            AMAPColorConstants.redGradient2,
+                          colors: [
+                            AMAPColors(isDarkTheme).redGradientPrimary,
+                            AMAPColors(isDarkTheme).redGradientSecondary,
                           ],
                           child: child,
                         ),
-                        child: const HeroIcon(
+                        child: HeroIcon(
                           HeroIcons.trash,
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.onSecondary,
                         ),
                       ),
                     ],
                   )
-                : const Text(
+                : Text(
                     AMAPTextConstants.locked,
                     style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w700,
-                      color: AMAPColorConstants.textDark,
+                      color: AMAPColors(isDarkTheme).textOnPrimary,
                     ),
                   ),
         ],

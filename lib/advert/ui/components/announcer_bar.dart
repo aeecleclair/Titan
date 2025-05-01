@@ -25,7 +25,6 @@ class AnnouncerBar extends HookConsumerWidget {
     final announcerList = useUserAnnouncers
         ? ref.watch(userAnnouncerListProvider)
         : ref.watch(announcerListProvider);
-    final darkerColor = (isNotClickable) ? Colors.grey[800] : Colors.black;
 
     return AsyncChild(
       value: announcerList,
@@ -54,7 +53,11 @@ class AnnouncerBar extends HookConsumerWidget {
             child: Text(
               e.name,
               style: TextStyle(
-                color: selectedId.contains(e.id) ? Colors.white : darkerColor,
+                color: selectedId.contains(e.id)
+                    ? Theme.of(context).colorScheme.onSecondary
+                    : isNotClickable
+                        ? Theme.of(context).colorScheme.secondaryContainer
+                        : Theme.of(context).colorScheme.onSurface,
                 fontWeight: FontWeight.bold,
               ),
             ),

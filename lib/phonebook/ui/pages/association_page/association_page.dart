@@ -52,22 +52,34 @@ class AssociationPage extends HookConsumerWidget {
                   const SizedBox(height: 20),
                   Text(
                     association.name,
-                    style: const TextStyle(fontSize: 40, color: Colors.black),
+                    style: TextStyle(
+                      fontSize: 40,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                   ),
                   const SizedBox(height: 10),
                   Text(
                     association.kind,
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                   ),
                   const SizedBox(height: 10),
                   Text(
                     association.description,
-                    style: const TextStyle(fontSize: 15, color: Colors.black),
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                   ),
                   const SizedBox(height: 10),
                   Text(
                     "${PhonebookTextConstants.activeMandate} ${association.mandateYear}",
-                    style: const TextStyle(fontSize: 15, color: Colors.black),
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
@@ -115,18 +127,17 @@ class AssociationPage extends HookConsumerWidget {
                       ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        gradient: const RadialGradient(
+                        gradient: RadialGradient(
                           colors: [
-                            Color.fromARGB(255, 98, 98, 98),
-                            Color.fromARGB(255, 27, 27, 27),
+                            Theme.of(context).colorScheme.tertiary,
+                            Theme.of(context).colorScheme.secondary,
                           ],
                           center: Alignment.topLeft,
                           radius: 1.3,
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color.fromARGB(255, 27, 27, 27)
-                                .withValues(alpha: 0.3),
+                            color: Theme.of(context).shadowColor,
                             spreadRadius: 5,
                             blurRadius: 10,
                             offset: const Offset(
@@ -136,8 +147,10 @@ class AssociationPage extends HookConsumerWidget {
                           ),
                         ],
                       ),
-                      child:
-                          const HeroIcon(HeroIcons.pencil, color: Colors.white),
+                      child: HeroIcon(
+                        HeroIcons.pencil,
+                        color: Theme.of(context).colorScheme.onSecondary,
+                      ),
                     ),
                   ),
                 ),

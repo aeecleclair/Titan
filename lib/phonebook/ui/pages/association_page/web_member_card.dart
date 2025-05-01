@@ -70,7 +70,7 @@ class WebMemberCard extends HookConsumerWidget {
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.1),
+                            color: Theme.of(context).shadowColor,
                             spreadRadius: 5,
                             blurRadius: 10,
                             offset: const Offset(2, 3),
@@ -117,10 +117,11 @@ class WebMemberCard extends HookConsumerWidget {
                                 ),
                                 SelectableText(
                                   "(${member.member.name} ${member.member.firstname})",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
-                                    color: Color.fromARGB(255, 115, 115, 115),
+                                    color:
+                                        Theme.of(context).colorScheme.tertiary,
                                   ),
                                 ),
                               ],
@@ -205,10 +206,10 @@ class WebMemberCard extends HookConsumerWidget {
                             ),
                             SelectableText(
                               "(${member.member.name} ${member.member.firstname})",
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
-                                color: Color.fromARGB(255, 115, 115, 115),
+                                color: Theme.of(context).colorScheme.tertiary,
                               ),
                             ),
                           ],

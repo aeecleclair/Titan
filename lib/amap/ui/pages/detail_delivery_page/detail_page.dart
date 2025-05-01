@@ -17,6 +17,7 @@ import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/loader.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
 
 class DetailDeliveryPage extends HookConsumerWidget {
   const DetailDeliveryPage({super.key});
@@ -32,6 +33,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
     final sortedByCategoryDeliveryProducts =
         ref.watch(sortedByCategoryDeliveryProductsProvider);
     final cash = ref.watch(cashListProvider);
+    final isDarkTheme = ref.watch(themeProvider);
     return AmapTemplate(
       child: Refresher(
         onRefresh: () async {
@@ -52,9 +54,9 @@ class DetailDeliveryPage extends HookConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const AlignLeftText(
+                  AlignLeftText(
                     "${AMAPTextConstants.products} :",
-                    color: AMAPColorConstants.textDark,
+                    color: AMAPColors(isDarkTheme).textOnPrimary,
                   ),
                 ],
               ),
@@ -109,19 +111,22 @@ class DetailDeliveryPage extends HookConsumerWidget {
               );
             }).values,
             const SizedBox(height: 20),
-            const AlignLeftText(
+            AlignLeftText(
               "${AMAPTextConstants.orders} :",
-              padding: EdgeInsets.only(left: 30),
-              color: AMAPColorConstants.textDark,
+              padding: const EdgeInsets.only(left: 30),
+              color: AMAPColors(isDarkTheme).textOnPrimary,
             ),
             const SizedBox(height: 30),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 10),
               child: orders == null
-                  ? const Loader(color: AMAPColorConstants.greenGradient2)
+                  ? Loader(
+                      color: AMAPColors(isDarkTheme).greenGradientSecondary,
+                    )
                   : AsyncChild(
                       value: orders,
-                      loaderColor: AMAPColorConstants.greenGradient2,
+                      loaderColor:
+                          AMAPColors(isDarkTheme).greenGradientSecondary,
                       builder: (context, data) {
                         if (data.isEmpty) {
                           return Container(
@@ -133,7 +138,8 @@ class DetailDeliveryPage extends HookConsumerWidget {
                         }
                         return AsyncChild(
                           value: cash,
-                          loaderColor: AMAPColorConstants.greenGradient2,
+                          loaderColor:
+                              AMAPColors(isDarkTheme).greenGradientSecondary,
                           builder: (context, cash) {
                             return Wrap(
                               spacing: 20,

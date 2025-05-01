@@ -87,15 +87,17 @@ class ItemBar extends HookConsumerWidget {
                             Container(
                               padding: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
-                                color: Colors.black,
+                                color: Theme.of(context).colorScheme.secondary,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: GestureDetector(
                                 child: HeroIcon(
                                   HeroIcons.minus,
                                   color: currentValue == 0
-                                      ? Colors.grey.shade400
-                                      : Colors.white,
+                                      ? Theme.of(context).colorScheme.tertiary
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .onSecondary,
                                 ),
                                 onTap: () {
                                   if (currentValue > 0) {
@@ -145,15 +147,15 @@ class ItemBar extends HookConsumerWidget {
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                   color: currentValue == 0
-                                      ? Colors.grey.shade400
-                                      : Colors.black,
+                                      ? Theme.of(context).colorScheme.tertiary
+                                      : Theme.of(context).colorScheme.onPrimary,
                                 ),
                               ),
                             ),
                             Container(
                               padding: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
-                                color: Colors.black,
+                                color: Theme.of(context).colorScheme.secondary,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: GestureDetector(
@@ -161,8 +163,10 @@ class ItemBar extends HookConsumerWidget {
                                   HeroIcons.plus,
                                   color: currentValue ==
                                           e.totalQuantity - e.loanedQuantity
-                                      ? Colors.grey.shade400
-                                      : Colors.white,
+                                      ? Theme.of(context).colorScheme.tertiary
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .onSecondary,
                                 ),
                                 onTap: () {
                                   if (currentValue <

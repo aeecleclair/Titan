@@ -5,6 +5,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:myecl/amap/class/product.dart';
 import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
 
 class ProductUiInList extends ConsumerWidget {
   final Product p;
@@ -20,6 +21,7 @@ class ProductUiInList extends ConsumerWidget {
           orElse: () => Product.empty(),
         )
         .quantity;
+    final isDarkTheme = ref.watch(themeProvider);
     return Container(
       height: 50,
       alignment: Alignment.centerLeft,
@@ -54,8 +56,10 @@ class ProductUiInList extends ConsumerWidget {
                     HeroIcons.minus,
                     size: 22,
                     color: quantity > 0
-                        ? AMAPColorConstants.green2.withValues(alpha: 0.8)
-                        : AMAPColorConstants.background3,
+                        ? AMAPColors(isDarkTheme)
+                            .secondaryFixedGreen
+                            .withValues(alpha: 0.8)
+                        : AMAPColors(isDarkTheme).background3,
                   ),
                 ),
                 onTap: () {
@@ -107,7 +111,9 @@ class ProductUiInList extends ConsumerWidget {
                   child: HeroIcon(
                     HeroIcons.plus,
                     size: 22,
-                    color: AMAPColorConstants.green2.withValues(alpha: 0.8),
+                    color: AMAPColors(isDarkTheme)
+                        .secondaryFixedGreen
+                        .withValues(alpha: 0.8),
                   ),
                 ),
                 onTap: () {

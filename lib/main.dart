@@ -11,14 +11,15 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:myecl/drawer/providers/animation_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/providers/top_bar_callback_provider.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/router.dart';
 import 'package:myecl/service/tools/setup.dart';
+import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/plausible/plausible_observer.dart';
 import 'package:myecl/tools/ui/layouts/app_template.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
 
 void main() async {
   await dotenv.load();
@@ -49,6 +50,7 @@ class MyApp extends HookConsumerWidget {
     final navigatorKey = GlobalKey<NavigatorState>();
     final plausible = getPlausible();
     Future(() => animationNotifier.setController(animationController));
+    final isDarkTheme = ref.watch(themeProvider);
 
     final popScope = PopScope(
       canPop: false,
@@ -82,11 +84,9 @@ class MyApp extends HookConsumerWidget {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        theme: ThemeData(
-          primarySwatch: Colors.orange,
-          textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
-          brightness: Brightness.light,
-        ),
+        theme: ThemeConstants(context).lightTheme,
+        darkTheme: ThemeConstants(context).darkTheme,
+        themeMode: isDarkTheme ? ThemeMode.dark : ThemeMode.light,
         routeInformationParser: const QRouteInformationParser(),
         builder: (context, child) {
           if (child == null) {

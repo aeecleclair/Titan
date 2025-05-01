@@ -104,7 +104,7 @@ class SessionCard extends HookConsumerWidget {
                 borderRadius: BorderRadius.circular(30),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withValues(alpha: 0.2),
+                    color: Theme.of(context).shadowColor,
                     spreadRadius: 5,
                     blurRadius: 7,
                     offset: const Offset(0, 3),
@@ -191,7 +191,9 @@ class SessionCard extends HookConsumerWidget {
                                 border: (selected &&
                                         session.start.isAfter(DateTime.now()))
                                     ? Border.all(
-                                        color: Colors.black,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
                                         width: 3,
                                       )
                                     : null,
@@ -205,18 +207,21 @@ class SessionCard extends HookConsumerWidget {
                                 child: Container(
                                   width: 80,
                                   height: 60,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.only(
+                                  decoration: BoxDecoration(
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                    borderRadius: const BorderRadius.only(
                                       topRight: Radius.circular(30),
                                       bottomLeft: Radius.circular(30),
                                     ),
                                   ),
-                                  child: const Center(
+                                  child: Center(
                                     child: HeroIcon(
                                       HeroIcons.bell,
                                       size: 30,
-                                      color: Colors.red,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primaryFixed,
                                     ),
                                   ),
                                 ),

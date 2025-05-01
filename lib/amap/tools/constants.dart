@@ -2,23 +2,50 @@ import 'package:flutter/material.dart';
 import 'package:myecl/tools/constants.dart';
 
 class AMAPColorConstants extends ColorConstants {
-  static final Color background = Colors.grey.shade100;
-  static final Color background2 = Colors.grey.shade200;
-  static final Color background3 = Colors.grey.shade300;
+  static const Color enabled = Color(0xff6b9200);
+  static const Color red = Color(0xFFC91717);
+}
+
+class AMAPColors {
+  bool isDarkTheme;
+  AMAPColors(this.isDarkTheme);
   static const Color greenGradient1 = Color(0xff79a400);
   static const Color greenGradient2 = Color(0xff387200);
   static const Color darkGreen = Color(0xff204300);
+  static const Color lightGreen = Color(0xFFF4FFB7); // former green3
   static const Color textDark = Color(0xff255000);
   static const Color textLight = Color(0xff528700);
   static const Color green1 = Color(0xdfa8c700);
   static const Color green2 = Color(0xdF79a400);
-  static const Color green3 = Color(0xFFF4FFB7);
   static const Color lightGradient1 = Color(0xffB6D40A);
   static const Color lightGradient2 = Color(0xff6C9300);
   static const Color enabled = Color(0xff6b9200);
   static const Color red = Color(0xFFC91717);
   static const Color redGradient1 = Color(0xFF9E131F);
   static const Color redGradient2 = Color(0xFF590512);
+
+  Color get background =>
+      isDarkTheme ? Colors.grey.shade900 : Colors.grey.shade100;
+  Color get background2 =>
+      isDarkTheme ? Colors.grey.shade800 : Colors.grey.shade200;
+  Color get background3 =>
+      isDarkTheme ? Colors.grey.shade700 : Colors.grey.shade300;
+  Color get greenGradientPrimary =>
+      isDarkTheme ? greenGradient2 : greenGradient1;
+  Color get greenGradientSecondary =>
+      isDarkTheme ? greenGradient1 : greenGradient2;
+  Color get primaryGreen => isDarkTheme ? darkGreen : lightGreen;
+  Color get secondaryGreen => isDarkTheme ? lightGreen : darkGreen;
+  Color get textOnPrimary => isDarkTheme ? textLight : textDark;
+  Color get textOnSecondary => isDarkTheme ? textDark : textLight;
+  Color get primaryFixedGreen => isDarkTheme ? green2 : green1;
+  Color get secondaryFixedGreen => isDarkTheme ? green1 : green2;
+  Color get lightGradientPrimary =>
+      isDarkTheme ? lightGradient2 : lightGradient1;
+  Color get lightGradientSecondary =>
+      isDarkTheme ? lightGradient1 : lightGradient2;
+  Color get redGradientPrimary => isDarkTheme ? redGradient2 : redGradient1;
+  Color get redGradientSecondary => isDarkTheme ? redGradient1 : redGradient2;
 }
 
 class AMAPTextConstants {

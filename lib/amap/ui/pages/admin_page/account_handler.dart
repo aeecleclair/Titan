@@ -11,6 +11,7 @@ import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/widgets/styled_search_bar.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
 
 class AccountHandler extends HookConsumerWidget {
   const AccountHandler({super.key});
@@ -23,12 +24,13 @@ class AccountHandler extends HookConsumerWidget {
     final searchingAmapUser = ref.watch(searchingAmapUserProvider);
     final searchingAmapUserNotifier =
         ref.read(searchingAmapUserProvider.notifier);
+    final isDarkTheme = ref.watch(themeProvider);
 
     return Column(
       children: [
         StyledSearchBar(
           label: AMAPTextConstants.accounts,
-          color: AMAPColorConstants.textDark,
+          color: AMAPColors(isDarkTheme).textOnPrimary,
           onChanged: (value) async {
             if (!searchingAmapUser) {
               if (value.isNotEmpty) {
@@ -68,17 +70,19 @@ class AccountHandler extends HookConsumerWidget {
               child: CardLayout(
                 height: 100,
                 width: 100,
-                colors: const [
-                  AMAPColorConstants.green1,
-                  AMAPColorConstants.textLight,
+                colors: [
+                  AMAPColors(isDarkTheme).primaryFixedGreen,
+                  AMAPColors(isDarkTheme).textOnSecondary,
                 ],
-                shadowColor: AMAPColorConstants.textDark.withValues(alpha: 0.2),
+                shadowColor: AMAPColors(isDarkTheme)
+                    .textOnPrimary
+                    .withValues(alpha: 0.2),
                 padding: const EdgeInsets.symmetric(horizontal: 17.0),
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12.0),
                   child: HeroIcon(
                     searchingAmapUser ? HeroIcons.plus : HeroIcons.xMark,
-                    color: AMAPColorConstants.green3,
+                    color: AMAPColors(isDarkTheme).primaryGreen,
                     size: 50,
                   ),
                 ),

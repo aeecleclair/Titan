@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 
 class CardButton extends StatelessWidget {
   final Widget child;
-  final Color color;
+  final Color? color;
   final List<Color>? colors;
-  final Color shadowColor;
+  final Color? shadowColor;
   final Color? borderColor;
   final double? size;
   final BorderRadiusGeometry? borderRadius;
   const CardButton({
     super.key,
     required this.child,
-    this.color = const Color(0xFFEEEEEE),
+    this.color,
     this.colors,
-    this.shadowColor = const Color(0x339E9E9E),
+    this.shadowColor,
     this.borderColor,
     this.size = 40,
     this.borderRadius = const BorderRadius.all(Radius.circular(15)),
@@ -22,14 +22,15 @@ class CardButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final useColors = colors != null && colors!.length > 1;
-    final useShadow = !useColors || (useColors && colors!.last == Colors.white);
+    final useShadow = !useColors ||
+        (useColors && colors!.last == Theme.of(context).colorScheme.primary);
     return Container(
       width: size,
       height: size,
       padding: const EdgeInsets.all(7),
       decoration: BoxDecoration(
         borderRadius: borderRadius,
-        color: color,
+        color: color ?? Theme.of(context).colorScheme.secondaryFixed,
         gradient: useColors
             ? RadialGradient(
                 colors: colors!,
@@ -42,9 +43,10 @@ class CardButton extends StatelessWidget {
             : null,
         boxShadow: [
           BoxShadow(
-            color: (useShadow || !useColors)
-                ? shadowColor
-                : colors!.last.withValues(alpha: 0.5),
+            color: (useShadow
+                    ? shadowColor
+                    : colors!.last.withValues(alpha: 0.5)) ??
+                Theme.of(context).shadowColor,
             blurRadius: 10,
             offset: const Offset(2, 3),
           ),

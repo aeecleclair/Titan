@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/constants.dart';
 
 class EditionButton extends HookConsumerWidget {
   const EditionButton({
@@ -19,18 +18,22 @@ class EditionButton extends HookConsumerWidget {
       child: Container(
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color:
-              !deactivated ? Colors.grey.shade200 : ColorConstants.deactivated1,
+          color: !deactivated
+              ? Theme.of(context).colorScheme.secondaryFixed
+              : Theme.of(context).colorScheme.tertiary,
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withValues(alpha: 0.2),
+              color: Theme.of(context).shadowColor,
               blurRadius: 10,
               offset: const Offset(2, 3),
             ),
           ],
         ),
-        child: const HeroIcon(HeroIcons.pencil, color: Colors.black),
+        child: HeroIcon(
+          HeroIcons.pencil,
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
       ),
     );
   }

@@ -19,7 +19,6 @@ import 'package:myecl/phonebook/tools/constants.dart';
 import 'package:myecl/phonebook/ui/pages/association_editor_page/association_information_editor.dart';
 import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/phonebook/ui/pages/association_editor_page/member_editable_card.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
@@ -74,12 +73,12 @@ class AssociationEditorPage extends HookConsumerWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               alignment: Alignment.centerLeft,
-              child: const Text(
+              child: Text(
                 PhonebookTextConstants.edit,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
-                  color: ColorConstants.gradient1,
+                  color: Theme.of(context).colorScheme.primaryContainer,
                 ),
               ),
             ),
@@ -103,8 +102,8 @@ class AssociationEditorPage extends HookConsumerWidget {
                       decoration: BoxDecoration(
                         color: (isPhonebookAdmin || isAssociationPresident) &&
                                 !association.deactivated
-                            ? ColorConstants.gradient1
-                            : ColorConstants.deactivated1,
+                            ? Theme.of(context).colorScheme.primaryContainer
+                            : Theme.of(context).colorScheme.tertiary,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: child,
@@ -138,10 +137,10 @@ class AssociationEditorPage extends HookConsumerWidget {
                             }
                           }
                         : () async {},
-                    child: const HeroIcon(
+                    child: HeroIcon(
                       HeroIcons.plus,
                       size: 30,
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                   ),
                 ],
@@ -241,12 +240,12 @@ class AssociationEditorPage extends HookConsumerWidget {
                 builder: (child) => AddEditButtonLayout(
                   colors: isPhonebookAdmin && !association.deactivated
                       ? [
-                          ColorConstants.gradient1,
-                          ColorConstants.gradient2,
+                          Theme.of(context).colorScheme.primaryContainer,
+                          Theme.of(context).colorScheme.primaryFixed,
                         ]
                       : [
-                          ColorConstants.deactivated1,
-                          ColorConstants.deactivated2,
+                          Theme.of(context).colorScheme.secondaryFixed,
+                          Theme.of(context).colorScheme.tertiary,
                         ],
                   child: child,
                 ),
@@ -320,10 +319,10 @@ class AssociationEditorPage extends HookConsumerWidget {
                     : () async {},
                 child: Text(
                   "${PhonebookTextConstants.changeMandate} ${association.mandateYear + 1}",
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: Color.fromARGB(255, 255, 255, 255),
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
                   ),
                 ),
               ),

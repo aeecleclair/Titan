@@ -8,8 +8,10 @@ import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
 
-class BookingCard extends StatelessWidget {
+class BookingCard extends ConsumerWidget {
   final Booking booking;
   final Function()? onEdit, onConfirm, onDecline, onCopy, onInfo;
   final Future Function()? onDelete;
@@ -28,7 +30,7 @@ class BookingCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isNotEnded = booking.recurrenceRule.isNotEmpty
         ? SfCalendar.parseRRule(booking.recurrenceRule, booking.start)
             .endDate!
@@ -36,53 +38,67 @@ class BookingCard extends StatelessWidget {
         : booking.end.isAfter(DateTime.now());
     final showButton =
         (isNotEnded && booking.decision == Decision.pending) || isAdmin;
+    final isDarkTheme = ref.watch(themeProvider);
     final List<Color> cardColor;
     final Color smallTextColor;
     final Color bigTextColor;
-    final Color darkIconBackgroundColor;
-    final Color lightIconBackgroundColor;
-    final Color lightIconColor;
+    final Color secondaryIconBackgroundColor;
+    final Color primaryIconBackgroundColor;
+    final Color primaryIconColor;
     final Color cardBoxShadow;
     final Color informationCircleColor;
 
     switch (booking.decision) {
       case Decision.pending:
         cardColor = [
-          Colors.white,
-          Colors.white,
+          Theme.of(context).colorScheme.surface,
+          Theme.of(context).colorScheme.surface,
         ];
-        darkIconBackgroundColor = Colors.black;
-
+        secondaryIconBackgroundColor = Theme.of(context).colorScheme.secondary;
         break;
+
       case Decision.approved:
-        cardColor = [
-          const Color(0xff79a400),
-          const Color(0xff387200),
-        ];
-
-        darkIconBackgroundColor = const Color.fromARGB(255, 26, 53, 0);
+        cardColor = isDarkTheme
+            ? [
+                const Color(0xFF387000),
+                const Color(0xFF54a800),
+              ]
+            : [
+                const Color(0xFF54A800),
+                const Color(0xFF387000),
+              ];
+        secondaryIconBackgroundColor =
+            isDarkTheme ? const Color(0xFF7EFC00) : const Color(0xFF1C3800);
         break;
+
       case Decision.declined:
-        cardColor = [
-          const Color.fromARGB(255, 250, 66, 38),
-          const Color.fromARGB(255, 172, 32, 10),
-        ];
-        darkIconBackgroundColor = const Color.fromARGB(255, 99, 13, 0);
+        cardColor = isDarkTheme
+            ? [
+                const Color(0xFFA82A00),
+                const Color(0xFFFC3F00),
+              ]
+            : [
+                const Color(0xFFFC3F00),
+                const Color(0xFFA82A00),
+              ];
+        secondaryIconBackgroundColor =
+            isDarkTheme ? const Color(0xFFFF2A00) : const Color(0xFF541500);
         break;
     }
 
-    lightIconColor = darkIconBackgroundColor;
+    primaryIconColor = secondaryIconBackgroundColor;
 
     if (booking.decision == Decision.pending) {
-      smallTextColor = Colors.grey.shade400;
-      cardBoxShadow = Colors.grey.shade200.withValues(alpha: 0.5);
-      lightIconBackgroundColor = Colors.white;
-      bigTextColor = Colors.black;
+      smallTextColor = Theme.of(context).colorScheme.tertiary;
+      cardBoxShadow = Theme.of(context).shadowColor;
+      primaryIconBackgroundColor = Theme.of(context).colorScheme.surface;
+      bigTextColor = Theme.of(context).colorScheme.onSurface;
     } else {
-      smallTextColor = Colors.white.withValues(alpha: 0.8);
-      cardBoxShadow = darkIconBackgroundColor;
-      lightIconBackgroundColor = Colors.grey.shade200;
-      bigTextColor = Colors.white;
+      smallTextColor =
+          Theme.of(context).colorScheme.onSecondary.withValues(alpha: 0.8);
+      cardBoxShadow = secondaryIconBackgroundColor;
+      primaryIconBackgroundColor = Theme.of(context).colorScheme.secondaryFixed;
+      bigTextColor = Theme.of(context).colorScheme.onSecondary;
     }
     informationCircleColor = bigTextColor;
 
@@ -187,11 +203,11 @@ class BookingCard extends StatelessWidget {
                   GestureDetector(
                     onTap: onEdit,
                     child: CardButton(
-                      color: lightIconBackgroundColor,
-                      shadowColor: Colors.grey.withValues(alpha: 0.2),
+                      color: primaryIconBackgroundColor,
+                      shadowColor: Theme.of(context).shadowColor,
                       child: HeroIcon(
                         HeroIcons.pencil,
-                        color: lightIconColor,
+                        color: primaryIconColor,
                       ),
                     ),
                   ),
@@ -199,11 +215,11 @@ class BookingCard extends StatelessWidget {
                 GestureDetector(
                   onTap: onCopy,
                   child: CardButton(
-                    color: lightIconBackgroundColor,
-                    shadowColor: Colors.grey.withValues(alpha: 0.2),
+                    color: primaryIconBackgroundColor,
+                    shadowColor: Theme.of(context).shadowColor,
                     child: HeroIcon(
                       HeroIcons.documentDuplicate,
-                      color: lightIconColor,
+                      color: primaryIconColor,
                     ),
                   ),
                 ),
@@ -212,16 +228,16 @@ class BookingCard extends StatelessWidget {
                   GestureDetector(
                     onTap: onConfirm,
                     child: CardButton(
-                      color: lightIconBackgroundColor,
+                      color: primaryIconBackgroundColor,
                       borderColor: isAdmin
                           ? booking.decision == Decision.approved
-                              ? darkIconBackgroundColor
+                              ? secondaryIconBackgroundColor
                               : Colors.transparent
                           : Colors.transparent,
-                      shadowColor: Colors.grey.withValues(alpha: 0.2),
+                      shadowColor: Theme.of(context).shadowColor,
                       child: HeroIcon(
                         HeroIcons.check,
-                        color: darkIconBackgroundColor,
+                        color: secondaryIconBackgroundColor,
                       ),
                     ),
                   ),
@@ -230,16 +246,18 @@ class BookingCard extends StatelessWidget {
                   GestureDetector(
                     onTap: onDecline,
                     child: CardButton(
-                      color: darkIconBackgroundColor,
+                      color: secondaryIconBackgroundColor,
                       borderColor: isAdmin
                           ? booking.decision == Decision.declined
-                              ? Colors.white
+                              ? Theme.of(context).colorScheme.onSecondary
                               : Colors.transparent
                           : Colors.transparent,
                       shadowColor:
-                          darkIconBackgroundColor.withValues(alpha: 0.2),
-                      child:
-                          const HeroIcon(HeroIcons.xMark, color: Colors.white),
+                          secondaryIconBackgroundColor.withValues(alpha: 0.2),
+                      child: HeroIcon(
+                        HeroIcons.xMark,
+                        color: Theme.of(context).colorScheme.onSecondary,
+                      ),
                     ),
                   ),
                 if (!isAdmin) const Spacer(),
@@ -247,12 +265,15 @@ class BookingCard extends StatelessWidget {
                   WaitingButton(
                     onTap: onDelete,
                     builder: (child) => CardButton(
-                      color: darkIconBackgroundColor,
+                      color: secondaryIconBackgroundColor,
                       shadowColor:
-                          darkIconBackgroundColor.withValues(alpha: 0.2),
+                          secondaryIconBackgroundColor.withValues(alpha: 0.2),
                       child: child,
                     ),
-                    child: const HeroIcon(HeroIcons.trash, color: Colors.white),
+                    child: HeroIcon(
+                      HeroIcons.trash,
+                      color: Theme.of(context).colorScheme.onSecondary,
+                    ),
                   ),
               ],
             ),

@@ -5,7 +5,6 @@ import 'package:myecl/admin/class/school.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/admin/ui/components/item_card_ui.dart';
 import 'package:myecl/admin/ui/pages/schools/school_page/school_button.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class SchoolUi extends HookConsumerWidget {
@@ -27,8 +26,8 @@ class SchoolUi extends HookConsumerWidget {
         Expanded(
           child: Text(
             school.name,
-            style: const TextStyle(
-              color: Colors.black,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurface,
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
@@ -40,11 +39,11 @@ class SchoolUi extends HookConsumerWidget {
             GestureDetector(
               onTap: onEdit,
               child: SchoolButton(
-                gradient1: Colors.grey.shade800,
-                gradient2: Colors.grey.shade900,
-                child: const HeroIcon(
+                gradient1: Theme.of(context).colorScheme.secondaryContainer,
+                gradient2: Theme.of(context).colorScheme.secondary,
+                child: HeroIcon(
                   HeroIcons.eye,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onSecondary,
                 ),
               ),
             ),
@@ -54,13 +53,13 @@ class SchoolUi extends HookConsumerWidget {
               WaitingButton(
                 onTap: onDelete,
                 builder: (child) => SchoolButton(
-                  gradient1: ColorConstants.gradient1,
-                  gradient2: ColorConstants.gradient2,
+                  gradient1: Theme.of(context).colorScheme.primaryContainer,
+                  gradient2: Theme.of(context).colorScheme.primaryFixed,
                   child: child,
                 ),
-                child: const HeroIcon(
+                child: HeroIcon(
                   HeroIcons.xMark,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
                 ),
               ),
           ],

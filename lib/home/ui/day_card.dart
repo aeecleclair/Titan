@@ -35,7 +35,7 @@ class DayCard extends HookConsumerWidget {
           borderRadius: BorderRadius.circular(70),
           border: Border.all(
             color: (selectedDay == index && !isToday)
-                ? Colors.black
+                ? Theme.of(context).colorScheme.onPrimary
                 : Colors.transparent,
             width: 2,
           ),
@@ -44,19 +44,25 @@ class DayCard extends HookConsumerWidget {
             end: Alignment.bottomRight,
             colors: isToday
                 ? [
-                    HomeColorConstants.gradient1,
-                    HomeColorConstants.gradient2,
+                    Theme.of(context).colorScheme.primaryContainer,
+                    Theme.of(context).colorScheme.primaryFixed,
                   ]
                 : [
-                    Colors.white,
-                    Colors.grey.shade100,
+                    Theme.of(context).colorScheme.primary,
+                    Theme.of(context).colorScheme.secondaryFixed,
                   ],
           ),
           boxShadow: [
             BoxShadow(
               color: isToday
-                  ? HomeColorConstants.gradient2.withValues(alpha: 0.2)
-                  : Colors.grey.withValues(alpha: 0.2),
+                  ? Theme.of(context)
+                      .colorScheme
+                      .primaryFixed
+                      .withValues(alpha: 0.2)
+                  : Theme.of(context)
+                      .colorScheme
+                      .secondaryFixed
+                      .withValues(alpha: 0.2),
               spreadRadius: 5,
               blurRadius: 10,
               offset: const Offset(3, 3),
@@ -74,7 +80,9 @@ class DayCard extends HookConsumerWidget {
                 day.day.toString(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: isToday ? Colors.white : Colors.black,
+                  color: isToday
+                      ? Theme.of(context).colorScheme.onPrimaryContainer
+                      : Theme.of(context).colorScheme.onPrimary,
                   fontWeight: FontWeight.bold,
                   fontSize: 30,
                 ),
@@ -87,7 +95,9 @@ class DayCard extends HookConsumerWidget {
                     .translateDayShort[DateFormat('E').format(day)]!,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: isToday ? Colors.white : Colors.black,
+                  color: isToday
+                      ? Theme.of(context).colorScheme.onPrimaryContainer
+                      : Theme.of(context).colorScheme.onPrimary,
                   fontWeight: FontWeight.bold,
                   fontSize: 12,
                 ),
@@ -104,7 +114,11 @@ class DayCard extends HookConsumerWidget {
                             width: 7,
                             child: Icon(
                               Icons.circle,
-                              color: isToday ? Colors.white : Colors.black,
+                              color: isToday
+                                  ? Theme.of(context)
+                                      .colorScheme
+                                      .onPrimaryContainer
+                                  : Theme.of(context).colorScheme.onPrimary,
                               size: 5,
                             ),
                           ),
@@ -115,7 +129,9 @@ class DayCard extends HookConsumerWidget {
                       child: Text(
                         "$numberOfEvent",
                         style: TextStyle(
-                          color: isToday ? Colors.white : Colors.black,
+                          color: isToday
+                              ? Theme.of(context).colorScheme.onPrimaryContainer
+                              : Theme.of(context).colorScheme.onPrimary,
                           fontWeight: FontWeight.bold,
                           fontSize: 12,
                         ),

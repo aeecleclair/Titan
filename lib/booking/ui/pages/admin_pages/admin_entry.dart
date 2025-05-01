@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/tools/constants.dart';
 
 class AdminEntry extends StatelessWidget {
   final String name;
@@ -13,19 +12,22 @@ class AdminEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      style: const TextStyle(
-        color: ColorConstants.background2,
+      style: TextStyle(
+        color: Theme.of(context).colorScheme.secondaryContainer,
       ),
       controller: nameController,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).colorScheme.onPrimary,
       decoration: InputDecoration(
         labelText: name,
-        floatingLabelStyle: const TextStyle(
-          color: Colors.black,
+        floatingLabelStyle: TextStyle(
+          color: Theme.of(context).colorScheme.onPrimary,
           fontWeight: FontWeight.bold,
         ),
-        focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.black, width: 2.0),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Theme.of(context).colorScheme.onPrimary,
+            width: 2.0,
+          ),
         ),
       ),
     );

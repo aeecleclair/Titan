@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// This component seems to be used nowhere...
+
 class RadioChip extends StatelessWidget {
   final bool selected;
   final String label;
@@ -23,12 +25,16 @@ class RadioChip extends StatelessWidget {
             child: Text(
               label,
               style: TextStyle(
-                color: selected ? Colors.white : Colors.black,
+                color: selected
+                    ? Theme.of(context).colorScheme.onSecondary
+                    : Theme.of(context).colorScheme.onSurface,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
-          backgroundColor: selected ? Colors.black : Colors.grey.shade200,
+          backgroundColor: selected
+              ? Theme.of(context).colorScheme.secondary
+              : Theme.of(context).colorScheme.secondaryFixed,
         ),
       ),
     );

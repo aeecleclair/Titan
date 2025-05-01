@@ -9,7 +9,6 @@ import 'package:myecl/settings/tools/constants.dart';
 import 'package:myecl/settings/ui/pages/edit_user_page/picture_button.dart';
 import 'package:myecl/settings/ui/pages/edit_user_page/user_field_modifier.dart';
 import 'package:myecl/settings/ui/settings.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
@@ -67,9 +66,9 @@ class EditUserPage extends HookConsumerWidget {
             child: Column(
               children: [
                 const SizedBox(height: 20),
-                const AlignLeftText(
+                AlignLeftText(
                   SettingsTextConstants.editAccount,
-                  color: Colors.grey,
+                  color: Theme.of(context).colorScheme.tertiary,
                 ),
                 const SizedBox(height: 40),
                 AsyncChild(
@@ -84,7 +83,10 @@ class EditUserPage extends HookConsumerWidget {
                               shape: BoxShape.circle,
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.1),
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onPrimary
+                                      .withValues(alpha: 0.1),
                                   spreadRadius: 5,
                                   blurRadius: 10,
                                   offset: const Offset(2, 3),
@@ -207,7 +209,6 @@ class EditUserPage extends HookConsumerWidget {
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
-                        color: Colors.black,
                       ),
                     ),
                   ),
@@ -217,7 +218,6 @@ class EditUserPage extends HookConsumerWidget {
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
-                    color: Colors.black,
                   ),
                 ),
                 const SizedBox(height: 50),
@@ -242,7 +242,7 @@ class EditUserPage extends HookConsumerWidget {
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
-                          color: Colors.grey.shade500,
+                          color: Theme.of(context).colorScheme.tertiary,
                         ),
                       ),
                     ),
@@ -266,17 +266,19 @@ class EditUserPage extends HookConsumerWidget {
                         margin: const EdgeInsets.only(left: 30),
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          gradient: const LinearGradient(
+                          gradient: LinearGradient(
                             colors: [
-                              ColorConstants.gradient1,
-                              ColorConstants.gradient2,
+                              Theme.of(context).colorScheme.primaryContainer,
+                              Theme.of(context).colorScheme.primaryFixed,
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: ColorConstants.gradient2
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryFixed
                                   .withValues(alpha: 0.5),
                               spreadRadius: 1,
                               blurRadius: 7,
@@ -285,10 +287,11 @@ class EditUserPage extends HookConsumerWidget {
                           ],
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: const HeroIcon(
+                        child: HeroIcon(
                           HeroIcons.calendar,
                           size: 25,
-                          color: Colors.white,
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
                         ),
                       ),
                     ),
@@ -304,7 +307,7 @@ class EditUserPage extends HookConsumerWidget {
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
-                          color: Colors.grey.shade500,
+                          color: Theme.of(context).colorScheme.tertiary,
                         ),
                       ),
                     ),
@@ -317,7 +320,9 @@ class EditUserPage extends HookConsumerWidget {
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w400,
-                            color: Colors.grey.shade500,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .tertiary, //not sure whether it's possible to make it appear
                           ),
                         ),
                         onChanged: (value) {
@@ -325,14 +330,17 @@ class EditUserPage extends HookConsumerWidget {
                         },
                         style: TextStyle(
                           fontSize: 20,
-                          color: Colors.grey.shade800,
+                          color:
+                              Theme.of(context).colorScheme.secondaryContainer,
                         ),
-                        decoration: const InputDecoration(
-                          contentPadding: EdgeInsets.all(10),
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.all(10),
                           isDense: true,
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: ColorConstants.gradient1,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer,
                             ),
                           ),
                         ),
@@ -343,9 +351,9 @@ class EditUserPage extends HookConsumerWidget {
                 const SizedBox(height: 50),
                 WaitingButton(
                   builder: (child) => AddEditButtonLayout(
-                    colors: const [
-                      ColorConstants.gradient1,
-                      ColorConstants.gradient2,
+                    colors: [
+                      Theme.of(context).colorScheme.primaryContainer,
+                      Theme.of(context).colorScheme.primaryFixed,
                     ],
                     child: child,
                   ),
@@ -383,13 +391,13 @@ class EditUserPage extends HookConsumerWidget {
                       }
                     });
                   },
-                  child: const Center(
+                  child: Center(
                     child: Text(
                       SettingsTextConstants.save,
                       style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.w400,
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
                       ),
                     ),
                   ),

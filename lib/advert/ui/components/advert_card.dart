@@ -125,11 +125,11 @@ class AdvertCard extends HookConsumerWidget {
                 width: width,
                 height: height,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: const [
+                  color: Theme.of(context).colorScheme.surface,
+                  boxShadow: [
                     BoxShadow(
                       blurRadius: 5,
-                      color: Color(0x33000000),
+                      color: Theme.of(context).shadowColor,
                       offset: Offset(2, 2),
                       spreadRadius: 3,
                     ),
@@ -196,8 +196,10 @@ class AdvertCard extends HookConsumerWidget {
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
                                       minFontSize: 15,
-                                      style: const TextStyle(
-                                        color: Colors.black,
+                                      style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface,
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -212,8 +214,9 @@ class AdvertCard extends HookConsumerWidget {
                                 maxLines: 3,
                                 minFontSize: 13,
                                 maxFontSize: 15,
-                                style: const TextStyle(
-                                  color: Colors.black,
+                                style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface,
                                   fontSize: 15,
                                 ),
                               ),
@@ -232,7 +235,7 @@ class AdvertCard extends HookConsumerWidget {
                           boxShadow: [
                             BoxShadow(
                               blurRadius: 5,
-                              color: Colors.black.withValues(alpha: 0.3),
+                              color: Theme.of(context).shadowColor,
                               offset: const Offset(2, 2),
                               spreadRadius: 3,
                             ),
@@ -242,7 +245,7 @@ class AdvertCard extends HookConsumerWidget {
                           borderRadius:
                               const BorderRadius.all(Radius.circular(8)),
                           child: Container(
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.surface,
                             height: 50,
                             width: 50,
                             padding: const EdgeInsets.symmetric(
@@ -256,8 +259,9 @@ class AdvertCard extends HookConsumerWidget {
                                 AutoSizeText(
                                   DateFormat('dd').format(advert.date),
                                   textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    color: Colors.black,
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.onSurface,
                                     fontSize: 22,
                                     fontWeight: FontWeight.bold,
                                     height: 1.0,
@@ -269,8 +273,9 @@ class AdvertCard extends HookConsumerWidget {
                                       ) -
                                       1],
                                   textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    color: Colors.black,
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.onSurface,
                                     fontSize: 11,
                                     fontWeight: FontWeight.bold,
                                     height: 1.0,
@@ -292,7 +297,7 @@ class AdvertCard extends HookConsumerWidget {
                           boxShadow: [
                             BoxShadow(
                               blurRadius: 5,
-                              color: Colors.black.withValues(alpha: 0.3),
+                              color: Theme.of(context).shadowColor,
                               offset: const Offset(2, 2),
                               spreadRadius: 3,
                             ),
@@ -302,7 +307,7 @@ class AdvertCard extends HookConsumerWidget {
                           borderRadius:
                               const BorderRadius.all(Radius.circular(8)),
                           child: Container(
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.surface,
                             height: 30,
                             padding: const EdgeInsets.symmetric(
                               vertical: 5,
@@ -312,8 +317,8 @@ class AdvertCard extends HookConsumerWidget {
                             child: AutoSizeText(
                               advert.announcer.name,
                               textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                color: Colors.black,
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.onSurface,
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
                               ),

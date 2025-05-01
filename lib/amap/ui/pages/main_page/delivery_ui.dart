@@ -4,6 +4,7 @@ import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/providers/delivery_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/providers/theme_provider.dart';
 
 class DeliveryUi extends HookConsumerWidget {
   final Delivery delivery;
@@ -20,6 +21,7 @@ class DeliveryUi extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedDelivery = ref.watch(deliveryProvider);
     final selected = selectedDelivery.id == delivery.id;
+    final isDarkTheme = ref.watch(themeProvider);
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -32,16 +34,17 @@ class DeliveryUi extends HookConsumerWidget {
           gradient: LinearGradient(
             colors: [
               (selected && showSelected)
-                  ? AMAPColorConstants.greenGradient2
-                  : Colors.white,
+                  ? AMAPColors(isDarkTheme).greenGradientSecondary
+                  : Theme.of(context).colorScheme.surface,
               (selected && showSelected)
-                  ? AMAPColorConstants.textDark
-                  : Colors.white,
+                  ? AMAPColors(isDarkTheme).textOnPrimary
+                  : Theme.of(context).colorScheme.surface,
             ],
           ),
           boxShadow: [
             BoxShadow(
-              color: AMAPColorConstants.textDark.withValues(alpha: 0.2),
+              color:
+                  AMAPColors(isDarkTheme).textOnPrimary.withValues(alpha: 0.2),
               spreadRadius: 5,
               blurRadius: 10,
               offset: const Offset(3, 3),
@@ -60,8 +63,8 @@ class DeliveryUi extends HookConsumerWidget {
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: (selected && showSelected)
-                      ? Colors.white
-                      : AMAPColorConstants.textDark,
+                      ? Theme.of(context).colorScheme.onSecondary
+                      : AMAPColors(isDarkTheme).textOnPrimary,
                 ),
               ),
               const Spacer(),
@@ -71,8 +74,8 @@ class DeliveryUi extends HookConsumerWidget {
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
                   color: (selected && showSelected)
-                      ? Colors.white
-                      : AMAPColorConstants.textLight,
+                      ? Theme.of(context).colorScheme.onSecondary
+                      : AMAPColors(isDarkTheme).textOnSecondary,
                 ),
               ),
               const SizedBox(width: 10),

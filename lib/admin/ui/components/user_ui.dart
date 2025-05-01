@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/constants.dart';
 import 'package:myecl/user/class/simple_users.dart';
 
 class UserUi extends HookConsumerWidget {
@@ -29,14 +28,20 @@ class UserUi extends HookConsumerWidget {
             child: Container(
               padding: const EdgeInsets.all(7),
               decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [ColorConstants.background2, Colors.black],
+                gradient: LinearGradient(
+                  colors: [
+                    Theme.of(context).colorScheme.secondaryContainer,
+                    Theme.of(context).colorScheme.secondary,
+                  ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: ColorConstants.background2.withValues(alpha: 0.4),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .secondaryContainer
+                        .withValues(alpha: 0.4),
                     offset: const Offset(2, 3),
                     blurRadius: 5,
                   ),
@@ -46,7 +51,6 @@ class UserUi extends HookConsumerWidget {
               child: const HeroIcon(
                 HeroIcons.trash,
                 size: 20,
-                color: Colors.white,
               ),
             ),
           ),

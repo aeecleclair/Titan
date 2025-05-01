@@ -12,11 +12,11 @@ class MenuCardUi extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 10),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.2),
+            color: Theme.of(context).shadowColor,
             blurRadius: 5,
             spreadRadius: 2,
           ),
@@ -28,7 +28,7 @@ class MenuCardUi extends StatelessWidget {
         children: [
           HeroIcon(
             icon,
-            color: Colors.grey.shade700,
+            color: Theme.of(context).colorScheme.secondaryContainer,
             size: 40,
           ),
           const SizedBox(width: 10),
