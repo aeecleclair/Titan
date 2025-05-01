@@ -104,7 +104,7 @@ class PayPage extends ConsumerWidget {
                       payAmount.substring(payAmount.indexOf(",")).length < 3) {
                     payAmountNotifier.setPayAmount(payAmount + e.toString());
                   } else if (!payAmount.contains(",")) {
-                    if (e == "0" && payAmount.isEmpty) {
+                    if (e == "," && payAmount.isEmpty) {
                       payAmountNotifier.setPayAmount("0,");
                     } else {
                       payAmountNotifier.setPayAmount(payAmount + e.toString());
