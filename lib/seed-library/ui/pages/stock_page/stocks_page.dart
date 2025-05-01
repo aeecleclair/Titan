@@ -64,7 +64,7 @@ class StockPage extends HookConsumerWidget {
                           ),
                         ],
                       ),
-                    )
+                    ),
             ],
           ),
         ),

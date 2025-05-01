@@ -154,11 +154,13 @@ class EditablePlantDetail extends HookConsumerWidget {
                     ),
                   );
                   plantationDate.text = processDate(DateTime.now());
-                  myPlantsNotifier.updatePlantInList(plant
-                      .copyWith(
-                        plantingDate: DateTime.now(),
-                      )
-                      .toPlantSimple());
+                  myPlantsNotifier.updatePlantInList(
+                    plant
+                        .copyWith(
+                          plantingDate: DateTime.now(),
+                        )
+                        .toPlantSimple(),
+                  );
                   return Future.value();
                 },
                 builder: (child) => AddEditButtonLayout(
