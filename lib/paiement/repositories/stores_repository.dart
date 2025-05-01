@@ -4,6 +4,7 @@ import 'package:myecl/paiement/class/history.dart';
 import 'package:myecl/paiement/class/qr_code_data.dart';
 import 'package:myecl/paiement/class/store.dart';
 import 'package:myecl/paiement/class/transaction.dart';
+import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class StoresRepository extends Repository {
@@ -26,15 +27,17 @@ class StoresRepository extends Repository {
   }
 
   Future<Transaction?> scan(String id, QrCodeData data, bool? bypass) async {
-    var response = await create(
-      {...data.toJson(), "bypass_membership": bypass ?? false},
-      suffix: "/$id/scan",
-    );
-    if (response["error"] != null &&
-        response["error"] == "QR Code already used") {
-      return null;
-    } else {
+    try {
+      var response = await create(
+        {...data.toJson(), "bypass_membership": bypass ?? false},
+        suffix: "/$id/scan",
+      );
       return Transaction.fromJson(response);
+    } on AppException catch (e) {
+      if (e.type == ErrorType.conflict) {
+        return null;
+      }
+      rethrow; // Pour relancer l'exception si c’est un autre type
     }
   }
 

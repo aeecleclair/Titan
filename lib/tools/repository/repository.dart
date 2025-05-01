@@ -209,6 +209,14 @@ abstract class Repository {
       } else {
         throw AppException(ErrorType.notFound, decoded["detail"]);
       }
+    } else if (response.statusCode == 409) {
+      logger.error(
+        "POST ${ext + suffix}\n${response.statusCode} ${response.body}",
+      );
+      String toDecode = response.body;
+      toDecode = utf8.decode(response.body.runes.toList());
+      final decoded = jsonDecode(toDecode);
+      throw AppException(ErrorType.conflict, decoded["detail"]);
     } else {
       logger.error(
         "POST ${ext + suffix}\n${response.statusCode} ${response.body}",
