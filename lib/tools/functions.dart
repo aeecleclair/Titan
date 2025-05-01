@@ -1,18 +1,19 @@
 import 'dart:convert';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:myecl/tools/constants.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:myecl/tools/plausible/plausible.dart';
 import 'package:myecl/version/class/version.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
-import 'package:http/http.dart' as http;
+import 'package:yaml/yaml.dart';
 
 enum TypeMsg { msg, error }
 
@@ -464,8 +465,15 @@ Plausible? getPlausible() {
   return null;
 }
 
+Future<String> getTitanVersion() async {
+  final String pubspecString = await rootBundle.loadString("pubspec.yaml");
+  final YamlMap pubspec = loadYaml(pubspecString);
+  final String minimalHyperionVersion = pubspec["minimal_hyperion_hersion"];
+  return minimalHyperionVersion;
+}
+
 Future<String> getTitanHost() async {
-  const String minimalHyperionVersion = "4.0.0";
+  final String minimalHyperionVersion = await getTitanVersion();
   final String flavor = getAppFlavor();
 
   final host = await titanHostIfCompatible(flavor, minimalHyperionVersion);
