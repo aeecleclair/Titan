@@ -4,12 +4,15 @@ import 'package:chopper/chopper.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/logs/logger.dart';
 
-class LogInterceptor implements ResponseInterceptor {
+class LogInterceptor implements Interceptor {
   final Logger logger;
   LogInterceptor({required this.logger});
 
   @override
-  FutureOr<Response> onResponse(Response response) {
+  FutureOr<Response<BodyType>> intercept<BodyType>(
+      Chain<BodyType> chain) async {
+    final request = chain.request;
+    final response = await chain.proceed(request);
     if (response.statusCode >= 400) {
       logger.error(
         "Response: ${response.statusCode} ${response.bodyString}",
