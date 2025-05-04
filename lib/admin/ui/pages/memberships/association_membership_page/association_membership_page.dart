@@ -90,7 +90,8 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                                                 .createAssociationMembership(
                                           AssociationMembership.empty()
                                               .copyWith(
-                                            groupId: groupIdController.text,
+                                            managerGroupId:
+                                                groupIdController.text,
                                             name: nameController.text,
                                           ),
                                         );
