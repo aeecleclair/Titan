@@ -25,7 +25,6 @@ class Scanner extends ConsumerStatefulWidget {
 class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
   final controller = MobileScannerController(
     autoStart: false,
-    useNewCameraSelector: true,
   );
 
   StreamSubscription<Object?>? _subscription;

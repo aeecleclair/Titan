@@ -8,7 +8,6 @@ class BypassNotifier extends StateNotifier<bool> {
   }
 }
 
-final bypassProvider =
-    StateNotifierProvider<BypassNotifier, bool>((ref) {
+final bypassProvider = StateNotifierProvider<BypassNotifier, bool>((ref) {
   return BypassNotifier();
 });

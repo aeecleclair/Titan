@@ -44,7 +44,7 @@ void main() async {
 }
 
 class MyApp extends HookConsumerWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

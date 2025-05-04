@@ -102,7 +102,7 @@ class PaymentRouter {
             middleware: [
               DeferredLoadingMiddleware(fund_page.loadLibrary),
             ],
-          )
+          ),
         ],
       );
 }
