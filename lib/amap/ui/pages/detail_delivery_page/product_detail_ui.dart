@@ -52,7 +52,7 @@ class ProductDetailCard extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           AutoSizeText(
-            '${(product.price * quantity).toStringAsFixed(2)} €',
+            '${((product.price * quantity) / 100).toStringAsFixed(2)} €',
             maxLines: 1,
             minFontSize: 10,
             overflow: TextOverflow.ellipsis,
