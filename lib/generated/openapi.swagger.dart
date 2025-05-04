@@ -1,11 +1,17 @@
 // ignore_for_file: type=lint
 
+import 'package:json_annotation/json_annotation.dart';
+import 'package:json_annotation/json_annotation.dart' as json;
+import 'package:collection/collection.dart';
+import 'dart:convert';
+
 import 'openapi.models.swagger.dart';
 import 'package:chopper/chopper.dart';
 
 import 'client_mapping.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart' show MultipartFile;
 import 'package:chopper/chopper.dart' as chopper;
 import 'openapi.enums.swagger.dart' as enums;
 export 'openapi.enums.swagger.dart';
@@ -26,27 +32,30 @@ abstract class Openapi extends ChopperService {
     ErrorConverter? errorConverter,
     Converter? converter,
     Uri? baseUrl,
-    Iterable<dynamic>? interceptors,
+    List<Interceptor>? interceptors,
   }) {
     if (client != null) {
       return _$Openapi(client);
     }
 
     final newClient = ChopperClient(
-        services: [_$Openapi()],
-        converter: converter ?? $JsonSerializableConverter(),
-        interceptors: interceptors ?? [],
-        client: httpClient,
-        authenticator: authenticator,
-        errorConverter: errorConverter,
-        baseUrl: baseUrl ?? Uri.parse('http://'));
+      services: [_$Openapi()],
+      converter: converter ?? $JsonSerializableConverter(),
+      interceptors: interceptors ?? [],
+      client: httpClient,
+      authenticator: authenticator,
+      errorConverter: errorConverter,
+      baseUrl: baseUrl ?? Uri.parse('http://'),
+    );
     return _$Openapi(newClient);
   }
 
   ///Get Devices
   Future<chopper.Response<List<FirebaseDevice>>> notificationDevicesGet() {
     generatedMapping.putIfAbsent(
-        FirebaseDevice, () => FirebaseDevice.fromJsonFactory);
+      FirebaseDevice,
+      () => FirebaseDevice.fromJsonFactory,
+    );
 
     return _notificationDevicesGet();
   }
@@ -56,54 +65,55 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<FirebaseDevice>>> _notificationDevicesGet();
 
   ///Register Firebase Device
-  Future<chopper.Response> notificationDevicesPost(
-      {required BodyRegisterFirebaseDeviceNotificationDevicesPost? body}) {
+  Future<chopper.Response> notificationDevicesPost({
+    required BodyRegisterFirebaseDeviceNotificationDevicesPost? body,
+  }) {
     return _notificationDevicesPost(body: body);
   }
 
   ///Register Firebase Device
-  @Post(
-    path: '/notification/devices',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _notificationDevicesPost(
-      {@Body()
-      required BodyRegisterFirebaseDeviceNotificationDevicesPost? body});
+  @Post(path: '/notification/devices', optionalBody: true)
+  Future<chopper.Response> _notificationDevicesPost({
+    @Body() required BodyRegisterFirebaseDeviceNotificationDevicesPost? body,
+  });
 
   ///Unregister Firebase Device
   ///@param firebase_token
-  Future<chopper.Response> notificationDevicesFirebaseTokenDelete(
-      {required String? firebaseToken}) {
+  Future<chopper.Response> notificationDevicesFirebaseTokenDelete({
+    required String? firebaseToken,
+  }) {
     return _notificationDevicesFirebaseTokenDelete(
-        firebaseToken: firebaseToken);
+      firebaseToken: firebaseToken,
+    );
   }
 
   ///Unregister Firebase Device
   ///@param firebase_token
   @Delete(path: '/notification/devices/{firebase_token}')
-  Future<chopper.Response> _notificationDevicesFirebaseTokenDelete(
-      {@Path('firebase_token') required String? firebaseToken});
+  Future<chopper.Response> _notificationDevicesFirebaseTokenDelete({
+    @Path('firebase_token') required String? firebaseToken,
+  });
 
   ///Subscribe To Topic
   ///@param topic_str The topic to subscribe to. The Topic may be followed by an additional identifier (ex: cinema_4c029b5f-2bf7-4b70-85d4-340a4bd28653)
-  Future<chopper.Response> notificationTopicsTopicStrSubscribePost(
-      {required String? topicStr}) {
+  Future<chopper.Response> notificationTopicsTopicStrSubscribePost({
+    required String? topicStr,
+  }) {
     return _notificationTopicsTopicStrSubscribePost(topicStr: topicStr);
   }
 
   ///Subscribe To Topic
   ///@param topic_str The topic to subscribe to. The Topic may be followed by an additional identifier (ex: cinema_4c029b5f-2bf7-4b70-85d4-340a4bd28653)
-  @Post(
-    path: '/notification/topics/{topic_str}/subscribe',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _notificationTopicsTopicStrSubscribePost(
-      {@Path('topic_str') required String? topicStr});
+  @Post(path: '/notification/topics/{topic_str}/subscribe', optionalBody: true)
+  Future<chopper.Response> _notificationTopicsTopicStrSubscribePost({
+    @Path('topic_str') required String? topicStr,
+  });
 
   ///Unsubscribe To Topic
   ///@param topic_str
-  Future<chopper.Response> notificationTopicsTopicStrUnsubscribePost(
-      {required String? topicStr}) {
+  Future<chopper.Response> notificationTopicsTopicStrUnsubscribePost({
+    required String? topicStr,
+  }) {
     return _notificationTopicsTopicStrUnsubscribePost(topicStr: topicStr);
   }
 
@@ -113,8 +123,9 @@ abstract class Openapi extends ChopperService {
     path: '/notification/topics/{topic_str}/unsubscribe',
     optionalBody: true,
   )
-  Future<chopper.Response> _notificationTopicsTopicStrUnsubscribePost(
-      {@Path('topic_str') required String? topicStr});
+  Future<chopper.Response> _notificationTopicsTopicStrUnsubscribePost({
+    @Path('topic_str') required String? topicStr,
+  });
 
   ///Get Topic
   Future<chopper.Response<List<String>>> notificationTopicsGet() {
@@ -127,16 +138,18 @@ abstract class Openapi extends ChopperService {
 
   ///Get Topic Identifier
   ///@param topic
-  Future<chopper.Response<List<String>>> notificationTopicsTopicGet(
-      {required enums.Topic? topic}) {
+  Future<chopper.Response<List<String>>> notificationTopicsTopicGet({
+    required enums.Topic? topic,
+  }) {
     return _notificationTopicsTopicGet(topic: topic?.value?.toString());
   }
 
   ///Get Topic Identifier
   ///@param topic
   @Get(path: '/notification/topics/{topic}')
-  Future<chopper.Response<List<String>>> _notificationTopicsTopicGet(
-      {@Path('topic') required String? topic});
+  Future<chopper.Response<List<String>>> _notificationTopicsTopicGet({
+    @Path('topic') required String? topic,
+  });
 
   ///Send Notification
   Future<chopper.Response> notificationSendPost() {
@@ -144,10 +157,7 @@ abstract class Openapi extends ChopperService {
   }
 
   ///Send Notification
-  @Post(
-    path: '/notification/send',
-    optionalBody: true,
-  )
+  @Post(path: '/notification/send', optionalBody: true)
   Future<chopper.Response> _notificationSendPost();
 
   ///Send Future Notification
@@ -156,10 +166,7 @@ abstract class Openapi extends ChopperService {
   }
 
   ///Send Future Notification
-  @Post(
-    path: '/notification/send/future',
-    optionalBody: true,
-  )
+  @Post(path: '/notification/send/future', optionalBody: true)
   Future<chopper.Response> _notificationSendFuturePost();
 
   ///Send Notification Topic
@@ -168,10 +175,7 @@ abstract class Openapi extends ChopperService {
   }
 
   ///Send Notification Topic
-  @Post(
-    path: '/notification/send/topic',
-    optionalBody: true,
-  )
+  @Post(path: '/notification/send/topic', optionalBody: true)
   Future<chopper.Response> _notificationSendTopicPost();
 
   ///Send Future Notification Topic
@@ -180,10 +184,7 @@ abstract class Openapi extends ChopperService {
   }
 
   ///Send Future Notification Topic
-  @Post(
-    path: '/notification/send/topic/future',
-    optionalBody: true,
-  )
+  @Post(path: '/notification/send/topic/future', optionalBody: true)
   Future<chopper.Response> _notificationSendTopicFuturePost();
 
   ///Google Api Callback
@@ -207,20 +208,19 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<Structure>>> _myeclpayStructuresGet();
 
   ///Create Structure
-  Future<chopper.Response<Structure>> myeclpayStructuresPost(
-      {required StructureBase? body}) {
+  Future<chopper.Response<Structure>> myeclpayStructuresPost({
+    required StructureBase? body,
+  }) {
     generatedMapping.putIfAbsent(Structure, () => Structure.fromJsonFactory);
 
     return _myeclpayStructuresPost(body: body);
   }
 
   ///Create Structure
-  @Post(
-    path: '/myeclpay/structures',
-    optionalBody: true,
-  )
-  Future<chopper.Response<Structure>> _myeclpayStructuresPost(
-      {@Body() required StructureBase? body});
+  @Post(path: '/myeclpay/structures', optionalBody: true)
+  Future<chopper.Response<Structure>> _myeclpayStructuresPost({
+    @Body() required StructureBase? body,
+  });
 
   ///Update Structure
   ///@param structure_id
@@ -229,15 +229,14 @@ abstract class Openapi extends ChopperService {
     required StructureUpdate? body,
   }) {
     return _myeclpayStructuresStructureIdPatch(
-        structureId: structureId, body: body);
+      structureId: structureId,
+      body: body,
+    );
   }
 
   ///Update Structure
   ///@param structure_id
-  @Patch(
-    path: '/myeclpay/structures/{structure_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/myeclpay/structures/{structure_id}', optionalBody: true)
   Future<chopper.Response> _myeclpayStructuresStructureIdPatch({
     @Path('structure_id') required String? structureId,
     @Body() required StructureUpdate? body,
@@ -245,52 +244,58 @@ abstract class Openapi extends ChopperService {
 
   ///Delete Structure
   ///@param structure_id
-  Future<chopper.Response> myeclpayStructuresStructureIdDelete(
-      {required String? structureId}) {
+  Future<chopper.Response> myeclpayStructuresStructureIdDelete({
+    required String? structureId,
+  }) {
     return _myeclpayStructuresStructureIdDelete(structureId: structureId);
   }
 
   ///Delete Structure
   ///@param structure_id
   @Delete(path: '/myeclpay/structures/{structure_id}')
-  Future<chopper.Response> _myeclpayStructuresStructureIdDelete(
-      {@Path('structure_id') required String? structureId});
+  Future<chopper.Response> _myeclpayStructuresStructureIdDelete({
+    @Path('structure_id') required String? structureId,
+  });
 
-  ///Init Update Structure Manager
+  ///Init Transfer Structure Manager
   ///@param structure_id
   Future<chopper.Response>
-      myeclpayStructuresStructureIdInitManagerTransferPost({
+  myeclpayStructuresStructureIdInitManagerTransferPost({
     required String? structureId,
     required StructureTranfert? body,
   }) {
     return _myeclpayStructuresStructureIdInitManagerTransferPost(
-        structureId: structureId, body: body);
+      structureId: structureId,
+      body: body,
+    );
   }
 
-  ///Init Update Structure Manager
+  ///Init Transfer Structure Manager
   ///@param structure_id
   @Post(
     path: '/myeclpay/structures/{structure_id}/init-manager-transfer',
     optionalBody: true,
   )
   Future<chopper.Response>
-      _myeclpayStructuresStructureIdInitManagerTransferPost({
+  _myeclpayStructuresStructureIdInitManagerTransferPost({
     @Path('structure_id') required String? structureId,
     @Body() required StructureTranfert? body,
   });
 
-  ///Update Structure Manager
+  ///Confirm Structure Manager Transfer
   ///@param token
-  Future<chopper.Response> myeclpayStructuresConfirmManagerTransferGet(
-      {required String? token}) {
+  Future<chopper.Response> myeclpayStructuresConfirmManagerTransferGet({
+    required String? token,
+  }) {
     return _myeclpayStructuresConfirmManagerTransferGet(token: token);
   }
 
-  ///Update Structure Manager
+  ///Confirm Structure Manager Transfer
   ///@param token
   @Get(path: '/myeclpay/structures/confirm-manager-transfer')
-  Future<chopper.Response> _myeclpayStructuresConfirmManagerTransferGet(
-      {@Query('token') required String? token});
+  Future<chopper.Response> _myeclpayStructuresConfirmManagerTransferGet({
+    @Query('token') required String? token,
+  });
 
   ///Create Store
   ///@param structure_id
@@ -301,15 +306,14 @@ abstract class Openapi extends ChopperService {
     generatedMapping.putIfAbsent(Store, () => Store.fromJsonFactory);
 
     return _myeclpayStructuresStructureIdStoresPost(
-        structureId: structureId, body: body);
+      structureId: structureId,
+      body: body,
+    );
   }
 
   ///Create Store
   ///@param structure_id
-  @Post(
-    path: '/myeclpay/structures/{structure_id}/stores',
-    optionalBody: true,
-  )
+  @Post(path: '/myeclpay/structures/{structure_id}/stores', optionalBody: true)
   Future<chopper.Response<Store>> _myeclpayStructuresStructureIdStoresPost({
     @Path('structure_id') required String? structureId,
     @Body() required StoreBase? body,
@@ -317,8 +321,9 @@ abstract class Openapi extends ChopperService {
 
   ///Get Store History
   ///@param store_id
-  Future<chopper.Response<List<History>>> myeclpayStoresStoreIdHistoryGet(
-      {required String? storeId}) {
+  Future<chopper.Response<List<History>>> myeclpayStoresStoreIdHistoryGet({
+    required String? storeId,
+  }) {
     generatedMapping.putIfAbsent(History, () => History.fromJsonFactory);
 
     return _myeclpayStoresStoreIdHistoryGet(storeId: storeId);
@@ -327,8 +332,9 @@ abstract class Openapi extends ChopperService {
   ///Get Store History
   ///@param store_id
   @Get(path: '/myeclpay/stores/{store_id}/history')
-  Future<chopper.Response<List<History>>> _myeclpayStoresStoreIdHistoryGet(
-      {@Path('store_id') required String? storeId});
+  Future<chopper.Response<List<History>>> _myeclpayStoresStoreIdHistoryGet({
+    @Path('store_id') required String? storeId,
+  });
 
   ///Get User Stores
   Future<chopper.Response<List<UserStore>>> myeclpayUsersMeStoresGet() {
@@ -352,10 +358,7 @@ abstract class Openapi extends ChopperService {
 
   ///Update Store
   ///@param store_id
-  @Patch(
-    path: '/myeclpay/stores/{store_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/myeclpay/stores/{store_id}', optionalBody: true)
   Future<chopper.Response> _myeclpayStoresStoreIdPatch({
     @Path('store_id') required String? storeId,
     @Body() required StoreUpdate? body,
@@ -363,16 +366,18 @@ abstract class Openapi extends ChopperService {
 
   ///Delete Store
   ///@param store_id
-  Future<chopper.Response> myeclpayStoresStoreIdDelete(
-      {required String? storeId}) {
+  Future<chopper.Response> myeclpayStoresStoreIdDelete({
+    required String? storeId,
+  }) {
     return _myeclpayStoresStoreIdDelete(storeId: storeId);
   }
 
   ///Delete Store
   ///@param store_id
   @Delete(path: '/myeclpay/stores/{store_id}')
-  Future<chopper.Response> _myeclpayStoresStoreIdDelete(
-      {@Path('store_id') required String? storeId});
+  Future<chopper.Response> _myeclpayStoresStoreIdDelete({
+    @Path('store_id') required String? storeId,
+  });
 
   ///Create Store Seller
   ///@param store_id
@@ -387,10 +392,7 @@ abstract class Openapi extends ChopperService {
 
   ///Create Store Seller
   ///@param store_id
-  @Post(
-    path: '/myeclpay/stores/{store_id}/sellers',
-    optionalBody: true,
-  )
+  @Post(path: '/myeclpay/stores/{store_id}/sellers', optionalBody: true)
   Future<chopper.Response<Seller>> _myeclpayStoresStoreIdSellersPost({
     @Path('store_id') required String? storeId,
     @Body() required SellerCreation? body,
@@ -398,8 +400,9 @@ abstract class Openapi extends ChopperService {
 
   ///Get Store Sellers
   ///@param store_id
-  Future<chopper.Response<List<Seller>>> myeclpayStoresStoreIdSellersGet(
-      {required String? storeId}) {
+  Future<chopper.Response<List<Seller>>> myeclpayStoresStoreIdSellersGet({
+    required String? storeId,
+  }) {
     generatedMapping.putIfAbsent(Seller, () => Seller.fromJsonFactory);
 
     return _myeclpayStoresStoreIdSellersGet(storeId: storeId);
@@ -408,8 +411,9 @@ abstract class Openapi extends ChopperService {
   ///Get Store Sellers
   ///@param store_id
   @Get(path: '/myeclpay/stores/{store_id}/sellers')
-  Future<chopper.Response<List<Seller>>> _myeclpayStoresStoreIdSellersGet(
-      {@Path('store_id') required String? storeId});
+  Future<chopper.Response<List<Seller>>> _myeclpayStoresStoreIdSellersGet({
+    @Path('store_id') required String? storeId,
+  });
 
   ///Update Store Seller
   ///@param store_id
@@ -420,7 +424,10 @@ abstract class Openapi extends ChopperService {
     required SellerUpdate? body,
   }) {
     return _myeclpayStoresStoreIdSellersSellerUserIdPatch(
-        storeId: storeId, sellerUserId: sellerUserId, body: body);
+      storeId: storeId,
+      sellerUserId: sellerUserId,
+      body: body,
+    );
   }
 
   ///Update Store Seller
@@ -444,7 +451,9 @@ abstract class Openapi extends ChopperService {
     required String? sellerUserId,
   }) {
     return _myeclpayStoresStoreIdSellersSellerUserIdDelete(
-        storeId: storeId, sellerUserId: sellerUserId);
+      storeId: storeId,
+      sellerUserId: sellerUserId,
+    );
   }
 
   ///Delete Store Seller
@@ -455,6 +464,15 @@ abstract class Openapi extends ChopperService {
     @Path('store_id') required String? storeId,
     @Path('seller_user_id') required String? sellerUserId,
   });
+
+  ///Register User
+  Future<chopper.Response> myeclpayUsersMeRegisterPost() {
+    return _myeclpayUsersMeRegisterPost();
+  }
+
+  ///Register User
+  @Post(path: '/myeclpay/users/me/register', optionalBody: true)
+  Future<chopper.Response> _myeclpayUsersMeRegisterPost();
 
   ///Get Tos
   Future<chopper.Response> myeclpayTosGet() {
@@ -468,7 +486,9 @@ abstract class Openapi extends ChopperService {
   ///Get User Tos
   Future<chopper.Response<TOSSignatureResponse>> myeclpayUsersMeTosGet() {
     generatedMapping.putIfAbsent(
-        TOSSignatureResponse, () => TOSSignatureResponse.fromJsonFactory);
+      TOSSignatureResponse,
+      () => TOSSignatureResponse.fromJsonFactory,
+    );
 
     return _myeclpayUsersMeTosGet();
   }
@@ -478,36 +498,25 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<TOSSignatureResponse>> _myeclpayUsersMeTosGet();
 
   ///Sign Tos
-  Future<chopper.Response> myeclpayUsersMeTosPost(
-      {required TOSSignature? body}) {
+  Future<chopper.Response> myeclpayUsersMeTosPost({
+    required TOSSignature? body,
+  }) {
     return _myeclpayUsersMeTosPost(body: body);
   }
 
   ///Sign Tos
-  @Post(
-    path: '/myeclpay/users/me/tos',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _myeclpayUsersMeTosPost(
-      {@Body() required TOSSignature? body});
-
-  ///Register User
-  Future<chopper.Response> myeclpayUsersMeRegisterPost() {
-    return _myeclpayUsersMeRegisterPost();
-  }
-
-  ///Register User
-  @Post(
-    path: '/myeclpay/users/me/register',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _myeclpayUsersMeRegisterPost();
+  @Post(path: '/myeclpay/users/me/tos', optionalBody: true)
+  Future<chopper.Response> _myeclpayUsersMeTosPost({
+    @Body() required TOSSignature? body,
+  });
 
   ///Get User Devices
   Future<chopper.Response<List<WalletDevice>>>
-      myeclpayUsersMeWalletDevicesGet() {
+  myeclpayUsersMeWalletDevicesGet() {
     generatedMapping.putIfAbsent(
-        WalletDevice, () => WalletDevice.fromJsonFactory);
+      WalletDevice,
+      () => WalletDevice.fromJsonFactory,
+    );
 
     return _myeclpayUsersMeWalletDevicesGet();
   }
@@ -515,43 +524,49 @@ abstract class Openapi extends ChopperService {
   ///Get User Devices
   @Get(path: '/myeclpay/users/me/wallet/devices')
   Future<chopper.Response<List<WalletDevice>>>
-      _myeclpayUsersMeWalletDevicesGet();
+  _myeclpayUsersMeWalletDevicesGet();
 
   ///Create User Devices
-  Future<chopper.Response<WalletDevice>> myeclpayUsersMeWalletDevicesPost(
-      {required WalletDeviceCreation? body}) {
+  Future<chopper.Response<WalletDevice>> myeclpayUsersMeWalletDevicesPost({
+    required WalletDeviceCreation? body,
+  }) {
     generatedMapping.putIfAbsent(
-        WalletDevice, () => WalletDevice.fromJsonFactory);
+      WalletDevice,
+      () => WalletDevice.fromJsonFactory,
+    );
 
     return _myeclpayUsersMeWalletDevicesPost(body: body);
   }
 
   ///Create User Devices
-  @Post(
-    path: '/myeclpay/users/me/wallet/devices',
-    optionalBody: true,
-  )
-  Future<chopper.Response<WalletDevice>> _myeclpayUsersMeWalletDevicesPost(
-      {@Body() required WalletDeviceCreation? body});
+  @Post(path: '/myeclpay/users/me/wallet/devices', optionalBody: true)
+  Future<chopper.Response<WalletDevice>> _myeclpayUsersMeWalletDevicesPost({
+    @Body() required WalletDeviceCreation? body,
+  });
 
   ///Get User Device
   ///@param wallet_device_id
   Future<chopper.Response<WalletDevice>>
-      myeclpayUsersMeWalletDevicesWalletDeviceIdGet(
-          {required String? walletDeviceId}) {
+  myeclpayUsersMeWalletDevicesWalletDeviceIdGet({
+    required String? walletDeviceId,
+  }) {
     generatedMapping.putIfAbsent(
-        WalletDevice, () => WalletDevice.fromJsonFactory);
+      WalletDevice,
+      () => WalletDevice.fromJsonFactory,
+    );
 
     return _myeclpayUsersMeWalletDevicesWalletDeviceIdGet(
-        walletDeviceId: walletDeviceId);
+      walletDeviceId: walletDeviceId,
+    );
   }
 
   ///Get User Device
   ///@param wallet_device_id
   @Get(path: '/myeclpay/users/me/wallet/devices/{wallet_device_id}')
   Future<chopper.Response<WalletDevice>>
-      _myeclpayUsersMeWalletDevicesWalletDeviceIdGet(
-          {@Path('wallet_device_id') required String? walletDeviceId});
+  _myeclpayUsersMeWalletDevicesWalletDeviceIdGet({
+    @Path('wallet_device_id') required String? walletDeviceId,
+  });
 
   ///Get User Wallet
   Future<chopper.Response<Wallet>> myeclpayUsersMeWalletGet() {
@@ -566,23 +581,28 @@ abstract class Openapi extends ChopperService {
 
   ///Activate User Device
   ///@param token
-  Future<chopper.Response> myeclpayDevicesActivateGet(
-      {required String? token}) {
+  Future<chopper.Response> myeclpayDevicesActivateGet({
+    required String? token,
+  }) {
     return _myeclpayDevicesActivateGet(token: token);
   }
 
   ///Activate User Device
   ///@param token
   @Get(path: '/myeclpay/devices/activate')
-  Future<chopper.Response> _myeclpayDevicesActivateGet(
-      {@Query('token') required String? token});
+  Future<chopper.Response> _myeclpayDevicesActivateGet({
+    @Query('token') required String? token,
+  });
 
   ///Revoke User Devices
   ///@param wallet_device_id
-  Future<chopper.Response> myeclpayUsersMeWalletDevicesWalletDeviceIdRevokePost(
-      {required String? walletDeviceId}) {
+  Future<chopper.Response>
+  myeclpayUsersMeWalletDevicesWalletDeviceIdRevokePost({
+    required String? walletDeviceId,
+  }) {
     return _myeclpayUsersMeWalletDevicesWalletDeviceIdRevokePost(
-        walletDeviceId: walletDeviceId);
+      walletDeviceId: walletDeviceId,
+    );
   }
 
   ///Revoke User Devices
@@ -592,8 +612,9 @@ abstract class Openapi extends ChopperService {
     optionalBody: true,
   )
   Future<chopper.Response>
-      _myeclpayUsersMeWalletDevicesWalletDeviceIdRevokePost(
-          {@Path('wallet_device_id') required String? walletDeviceId});
+  _myeclpayUsersMeWalletDevicesWalletDeviceIdRevokePost({
+    @Path('wallet_device_id') required String? walletDeviceId,
+  });
 
   ///Get User Wallet History
   Future<chopper.Response<List<History>>> myeclpayUsersMeWalletHistoryGet() {
@@ -607,54 +628,109 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<History>>> _myeclpayUsersMeWalletHistoryGet();
 
   ///Add Transfer By Admin
-  Future<chopper.Response> myeclpayTransferAdminPost(
-      {required AdminTransferInfo? body}) {
+  Future<chopper.Response> myeclpayTransferAdminPost({
+    required AdminTransferInfo? body,
+  }) {
     return _myeclpayTransferAdminPost(body: body);
   }
 
   ///Add Transfer By Admin
-  @Post(
-    path: '/myeclpay/transfer/admin',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _myeclpayTransferAdminPost(
-      {@Body() required AdminTransferInfo? body});
+  @Post(path: '/myeclpay/transfer/admin', optionalBody: true)
+  Future<chopper.Response> _myeclpayTransferAdminPost({
+    @Body() required AdminTransferInfo? body,
+  });
 
   ///Init Ha Transfer
-  Future<chopper.Response<PaymentUrl>> myeclpayTransferInitPost(
-      {required TransferInfo? body}) {
+  Future<chopper.Response<PaymentUrl>> myeclpayTransferInitPost({
+    required TransferInfo? body,
+  }) {
     generatedMapping.putIfAbsent(PaymentUrl, () => PaymentUrl.fromJsonFactory);
 
     return _myeclpayTransferInitPost(body: body);
   }
 
   ///Init Ha Transfer
-  @Post(
-    path: '/myeclpay/transfer/init',
-    optionalBody: true,
-  )
-  Future<chopper.Response<PaymentUrl>> _myeclpayTransferInitPost(
-      {@Body() required TransferInfo? body});
+  @Post(path: '/myeclpay/transfer/init', optionalBody: true)
+  Future<chopper.Response<PaymentUrl>> _myeclpayTransferInitPost({
+    @Body() required TransferInfo? body,
+  });
 
-  ///Store Scan Qrcode
+  ///Redirect From Ha Transfer
+  ///@param url
+  ///@param checkoutIntentId
+  ///@param code
+  ///@param orderId
+  ///@param error
+  Future<chopper.Response<PaymentUrl>> myeclpayTransferRedirectGet({
+    required String? url,
+    String? checkoutIntentId,
+    String? code,
+    String? orderId,
+    String? error,
+  }) {
+    generatedMapping.putIfAbsent(PaymentUrl, () => PaymentUrl.fromJsonFactory);
+
+    return _myeclpayTransferRedirectGet(
+      url: url,
+      checkoutIntentId: checkoutIntentId,
+      code: code,
+      orderId: orderId,
+      error: error,
+    );
+  }
+
+  ///Redirect From Ha Transfer
+  ///@param url
+  ///@param checkoutIntentId
+  ///@param code
+  ///@param orderId
+  ///@param error
+  @Get(path: '/myeclpay/transfer/redirect')
+  Future<chopper.Response<PaymentUrl>> _myeclpayTransferRedirectGet({
+    @Query('url') required String? url,
+    @Query('checkoutIntentId') String? checkoutIntentId,
+    @Query('code') String? code,
+    @Query('orderId') String? orderId,
+    @Query('error') String? error,
+  });
+
+  ///Validate Can Scan Qrcode
   ///@param store_id
-  Future<chopper.Response<Transaction>> myeclpayStoresStoreIdScanPost({
+  Future<chopper.Response<AppTypesStandardResponsesResult>>
+  myeclpayStoresStoreIdScanCheckPost({
     required String? storeId,
     required ScanInfo? body,
   }) {
     generatedMapping.putIfAbsent(
-        Transaction, () => Transaction.fromJsonFactory);
+      AppTypesStandardResponsesResult,
+      () => AppTypesStandardResponsesResult.fromJsonFactory,
+    );
 
+    return _myeclpayStoresStoreIdScanCheckPost(storeId: storeId, body: body);
+  }
+
+  ///Validate Can Scan Qrcode
+  ///@param store_id
+  @Post(path: '/myeclpay/stores/{store_id}/scan/check', optionalBody: true)
+  Future<chopper.Response<AppTypesStandardResponsesResult>>
+  _myeclpayStoresStoreIdScanCheckPost({
+    @Path('store_id') required String? storeId,
+    @Body() required ScanInfo? body,
+  });
+
+  ///Store Scan Qrcode
+  ///@param store_id
+  Future<chopper.Response> myeclpayStoresStoreIdScanPost({
+    required String? storeId,
+    required ScanInfo? body,
+  }) {
     return _myeclpayStoresStoreIdScanPost(storeId: storeId, body: body);
   }
 
   ///Store Scan Qrcode
   ///@param store_id
-  @Post(
-    path: '/myeclpay/stores/{store_id}/scan',
-    optionalBody: true,
-  )
-  Future<chopper.Response<Transaction>> _myeclpayStoresStoreIdScanPost({
+  @Post(path: '/myeclpay/stores/{store_id}/scan', optionalBody: true)
+  Future<chopper.Response> _myeclpayStoresStoreIdScanPost({
     @Path('store_id') required String? storeId,
     @Body() required ScanInfo? body,
   });
@@ -666,7 +742,9 @@ abstract class Openapi extends ChopperService {
     required RefundInfo? body,
   }) {
     return _myeclpayTransactionsTransactionIdRefundPost(
-        transactionId: transactionId, body: body);
+      transactionId: transactionId,
+      body: body,
+    );
   }
 
   ///Refund Transaction
@@ -682,10 +760,12 @@ abstract class Openapi extends ChopperService {
 
   ///Cancel Transaction
   ///@param transaction_id
-  Future<chopper.Response> myeclpayTransactionsTransactionIdCancelPost(
-      {required String? transactionId}) {
+  Future<chopper.Response> myeclpayTransactionsTransactionIdCancelPost({
+    required String? transactionId,
+  }) {
     return _myeclpayTransactionsTransactionIdCancelPost(
-        transactionId: transactionId);
+      transactionId: transactionId,
+    );
   }
 
   ///Cancel Transaction
@@ -694,8 +774,9 @@ abstract class Openapi extends ChopperService {
     path: '/myeclpay/transactions/{transaction_id}/cancel',
     optionalBody: true,
   )
-  Future<chopper.Response> _myeclpayTransactionsTransactionIdCancelPost(
-      {@Path('transaction_id') required String? transactionId});
+  Future<chopper.Response> _myeclpayTransactionsTransactionIdCancelPost({
+    @Path('transaction_id') required String? transactionId,
+  });
 
   ///Get Data For Integrity Check
   Future<chopper.Response> myeclpayIntegrityCheckGet() {
@@ -707,10 +788,13 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response> _myeclpayIntegrityCheckGet();
 
   ///Login For Access Token
-  Future<chopper.Response<AccessToken>> authSimpleTokenPost(
-      {required Map<String, String> body}) {
+  Future<chopper.Response<AccessToken>> authSimpleTokenPost({
+    required Map<String, String> body,
+  }) {
     generatedMapping.putIfAbsent(
-        AccessToken, () => AccessToken.fromJsonFactory);
+      AccessToken,
+      () => AccessToken.fromJsonFactory,
+    );
 
     return _authSimpleTokenPost(body: body);
   }
@@ -721,8 +805,9 @@ abstract class Openapi extends ChopperService {
     headers: {contentTypeKey: formEncodedHeaders},
   )
   @FactoryConverter(request: FormUrlEncodedConverter.requestFactory)
-  Future<chopper.Response<AccessToken>> _authSimpleTokenPost(
-      {@Body() required Map<String, String> body});
+  Future<chopper.Response<AccessToken>> _authSimpleTokenPost({
+    @Body() required Map<String, String> body,
+  });
 
   ///Get Authorize Page
   ///@param client_id
@@ -744,14 +829,15 @@ abstract class Openapi extends ChopperService {
     String? codeChallengeMethod,
   }) {
     return _authAuthorizeGet(
-        clientId: clientId,
-        redirectUri: redirectUri,
-        responseType: responseType,
-        scope: scope,
-        state: state,
-        nonce: nonce,
-        codeChallenge: codeChallenge,
-        codeChallengeMethod: codeChallengeMethod);
+      clientId: clientId,
+      redirectUri: redirectUri,
+      responseType: responseType,
+      scope: scope,
+      state: state,
+      nonce: nonce,
+      codeChallenge: codeChallenge,
+      codeChallengeMethod: codeChallengeMethod,
+    );
   }
 
   ///Get Authorize Page
@@ -776,23 +862,23 @@ abstract class Openapi extends ChopperService {
   });
 
   ///Post Authorize Page
-  Future<chopper.Response<String>> authAuthorizePost(
-      {required Map<String, String> body}) {
+  Future<chopper.Response<String>> authAuthorizePost({
+    required Map<String, String> body,
+  }) {
     return _authAuthorizePost(body: body);
   }
 
   ///Post Authorize Page
-  @Post(
-    path: '/auth/authorize',
-    headers: {contentTypeKey: formEncodedHeaders},
-  )
+  @Post(path: '/auth/authorize', headers: {contentTypeKey: formEncodedHeaders})
   @FactoryConverter(request: FormUrlEncodedConverter.requestFactory)
-  Future<chopper.Response<String>> _authAuthorizePost(
-      {@Body() required Map<String, String> body});
+  Future<chopper.Response<String>> _authAuthorizePost({
+    @Body() required Map<String, String> body,
+  });
 
   ///Authorize Validation
-  Future<chopper.Response> authAuthorizationFlowAuthorizeValidationPost(
-      {required Map<String, String> body}) {
+  Future<chopper.Response> authAuthorizationFlowAuthorizeValidationPost({
+    required Map<String, String> body,
+  }) {
     return _authAuthorizationFlowAuthorizeValidationPost(body: body);
   }
 
@@ -802,8 +888,9 @@ abstract class Openapi extends ChopperService {
     headers: {contentTypeKey: formEncodedHeaders},
   )
   @FactoryConverter(request: FormUrlEncodedConverter.requestFactory)
-  Future<chopper.Response> _authAuthorizationFlowAuthorizeValidationPost(
-      {@Body() required Map<String, String> body});
+  Future<chopper.Response> _authAuthorizationFlowAuthorizeValidationPost({
+    @Body() required Map<String, String> body,
+  });
 
   ///Token
   ///@param authorization
@@ -812,17 +899,16 @@ abstract class Openapi extends ChopperService {
     required Map<String, String> body,
   }) {
     generatedMapping.putIfAbsent(
-        TokenResponse, () => TokenResponse.fromJsonFactory);
+      TokenResponse,
+      () => TokenResponse.fromJsonFactory,
+    );
 
     return _authTokenPost(authorization: authorization?.toString(), body: body);
   }
 
   ///Token
   ///@param authorization
-  @Post(
-    path: '/auth/token',
-    headers: {contentTypeKey: formEncodedHeaders},
-  )
+  @Post(path: '/auth/token', headers: {contentTypeKey: formEncodedHeaders})
   @FactoryConverter(request: FormUrlEncodedConverter.requestFactory)
   Future<chopper.Response<TokenResponse>> _authTokenPost({
     @Header('authorization') String? authorization,
@@ -836,18 +922,19 @@ abstract class Openapi extends ChopperService {
     required Map<String, String> body,
   }) {
     generatedMapping.putIfAbsent(
-        IntrospectTokenResponse, () => IntrospectTokenResponse.fromJsonFactory);
+      IntrospectTokenResponse,
+      () => IntrospectTokenResponse.fromJsonFactory,
+    );
 
     return _authIntrospectPost(
-        authorization: authorization?.toString(), body: body);
+      authorization: authorization?.toString(),
+      body: body,
+    );
   }
 
   ///Introspect
   ///@param authorization
-  @Post(
-    path: '/auth/introspect',
-    headers: {contentTypeKey: formEncodedHeaders},
-  )
+  @Post(path: '/auth/introspect', headers: {contentTypeKey: formEncodedHeaders})
   @FactoryConverter(request: FormUrlEncodedConverter.requestFactory)
   Future<chopper.Response<IntrospectTokenResponse>> _authIntrospectPost({
     @Header('authorization') String? authorization,
@@ -892,10 +979,13 @@ abstract class Openapi extends ChopperService {
 
   ///Read Users
   ///@param accountTypes
-  Future<chopper.Response<List<CoreUserSimple>>> usersGet(
-      {List<enums.AccountType>? accountTypes}) {
+  Future<chopper.Response<List<CoreUserSimple>>> usersGet({
+    List<enums.AccountType>? accountTypes,
+  }) {
     generatedMapping.putIfAbsent(
-        CoreUserSimple, () => CoreUserSimple.fromJsonFactory);
+      CoreUserSimple,
+      () => CoreUserSimple.fromJsonFactory,
+    );
 
     return _usersGet(accountTypes: accountTypeListToJson(accountTypes));
   }
@@ -903,8 +993,9 @@ abstract class Openapi extends ChopperService {
   ///Read Users
   ///@param accountTypes
   @Get(path: '/users')
-  Future<chopper.Response<List<CoreUserSimple>>> _usersGet(
-      {@Query('accountTypes') List<Object?>? accountTypes});
+  Future<chopper.Response<List<CoreUserSimple>>> _usersGet({
+    @Query('accountTypes') List<Object?>? accountTypes,
+  });
 
   ///Count Users
   Future<chopper.Response<int>> usersCountGet() {
@@ -929,14 +1020,17 @@ abstract class Openapi extends ChopperService {
     List<String>? excludedGroups,
   }) {
     generatedMapping.putIfAbsent(
-        CoreUserSimple, () => CoreUserSimple.fromJsonFactory);
+      CoreUserSimple,
+      () => CoreUserSimple.fromJsonFactory,
+    );
 
     return _usersSearchGet(
-        query: query,
-        includedAccountTypes: accountTypeListToJson(includedAccountTypes),
-        excludedAccountTypes: accountTypeListToJson(excludedAccountTypes),
-        includedGroups: includedGroups,
-        excludedGroups: excludedGroups);
+      query: query,
+      includedAccountTypes: accountTypeListToJson(includedAccountTypes),
+      excludedAccountTypes: accountTypeListToJson(excludedAccountTypes),
+      includedGroups: includedGroups,
+      excludedGroups: excludedGroups,
+    );
   }
 
   ///Search Users
@@ -955,15 +1049,18 @@ abstract class Openapi extends ChopperService {
   });
 
   ///Get Account Types
-  Future<chopper.Response<List<enums.AccountType>>> usersAccountTypesGet() {
-    generatedMapping.putIfAbsent(enums.AccountType, () => (_) => []);
+  Future<chopper.Response<List<AccountType>>> usersAccountTypesGet() {
+    generatedMapping.putIfAbsent(
+      AccountType,
+      () => AccountType.fromJsonFactory,
+    );
 
     return _usersAccountTypesGet();
   }
 
   ///Get Account Types
   @Get(path: '/users/account-types')
-  Future<chopper.Response<List<enums.AccountType>>> _usersAccountTypesGet();
+  Future<chopper.Response<List<AccountType>>> _usersAccountTypesGet();
 
   ///Read Current User
   Future<chopper.Response<CoreUser>> usersMeGet() {
@@ -982,158 +1079,158 @@ abstract class Openapi extends ChopperService {
   }
 
   ///Update Current User
-  @Patch(
-    path: '/users/me',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _usersMePatch(
-      {@Body() required CoreUserUpdate? body});
+  @Patch(path: '/users/me', optionalBody: true)
+  Future<chopper.Response> _usersMePatch({
+    @Body() required CoreUserUpdate? body,
+  });
 
   ///Create User By User
-  Future<chopper.Response<AppTypesStandardResponsesResult>> usersCreatePost(
-      {required CoreUserCreateRequest? body}) {
-    generatedMapping.putIfAbsent(AppTypesStandardResponsesResult,
-        () => AppTypesStandardResponsesResult.fromJsonFactory);
+  Future<chopper.Response<AppTypesStandardResponsesResult>> usersCreatePost({
+    required CoreUserCreateRequest? body,
+  }) {
+    generatedMapping.putIfAbsent(
+      AppTypesStandardResponsesResult,
+      () => AppTypesStandardResponsesResult.fromJsonFactory,
+    );
 
     return _usersCreatePost(body: body);
   }
 
   ///Create User By User
-  @Post(
-    path: '/users/create',
-    optionalBody: true,
-  )
-  Future<chopper.Response<AppTypesStandardResponsesResult>> _usersCreatePost(
-      {@Body() required CoreUserCreateRequest? body});
+  @Post(path: '/users/create', optionalBody: true)
+  Future<chopper.Response<AppTypesStandardResponsesResult>> _usersCreatePost({
+    @Body() required CoreUserCreateRequest? body,
+  });
 
   ///Batch Create Users
-  Future<chopper.Response<BatchResult>> usersBatchCreationPost(
-      {required List<CoreBatchUserCreateRequest>? body}) {
+  Future<chopper.Response<BatchResult>> usersBatchCreationPost({
+    required List<CoreBatchUserCreateRequest>? body,
+  }) {
     generatedMapping.putIfAbsent(
-        BatchResult, () => BatchResult.fromJsonFactory);
+      BatchResult,
+      () => BatchResult.fromJsonFactory,
+    );
 
     return _usersBatchCreationPost(body: body);
   }
 
   ///Batch Create Users
-  @Post(
-    path: '/users/batch-creation',
-    optionalBody: true,
-  )
-  Future<chopper.Response<BatchResult>> _usersBatchCreationPost(
-      {@Body() required List<CoreBatchUserCreateRequest>? body});
+  @Post(path: '/users/batch-creation', optionalBody: true)
+  Future<chopper.Response<BatchResult>> _usersBatchCreationPost({
+    @Body() required List<CoreBatchUserCreateRequest>? body,
+  });
 
   ///Activate User
-  Future<chopper.Response<AppTypesStandardResponsesResult>> usersActivatePost(
-      {required CoreUserActivateRequest? body}) {
-    generatedMapping.putIfAbsent(AppTypesStandardResponsesResult,
-        () => AppTypesStandardResponsesResult.fromJsonFactory);
+  Future<chopper.Response<AppTypesStandardResponsesResult>> usersActivatePost({
+    required CoreUserActivateRequest? body,
+  }) {
+    generatedMapping.putIfAbsent(
+      AppTypesStandardResponsesResult,
+      () => AppTypesStandardResponsesResult.fromJsonFactory,
+    );
 
     return _usersActivatePost(body: body);
   }
 
   ///Activate User
-  @Post(
-    path: '/users/activate',
-    optionalBody: true,
-  )
-  Future<chopper.Response<AppTypesStandardResponsesResult>> _usersActivatePost(
-      {@Body() required CoreUserActivateRequest? body});
+  @Post(path: '/users/activate', optionalBody: true)
+  Future<chopper.Response<AppTypesStandardResponsesResult>> _usersActivatePost({
+    @Body() required CoreUserActivateRequest? body,
+  });
 
   ///Make Admin
   Future<chopper.Response<AppTypesStandardResponsesResult>>
-      usersMakeAdminPost() {
-    generatedMapping.putIfAbsent(AppTypesStandardResponsesResult,
-        () => AppTypesStandardResponsesResult.fromJsonFactory);
+  usersMakeAdminPost() {
+    generatedMapping.putIfAbsent(
+      AppTypesStandardResponsesResult,
+      () => AppTypesStandardResponsesResult.fromJsonFactory,
+    );
 
     return _usersMakeAdminPost();
   }
 
   ///Make Admin
-  @Post(
-    path: '/users/make-admin',
-    optionalBody: true,
-  )
+  @Post(path: '/users/make-admin', optionalBody: true)
   Future<chopper.Response<AppTypesStandardResponsesResult>>
-      _usersMakeAdminPost();
+  _usersMakeAdminPost();
 
   ///Recover User
-  Future<chopper.Response<AppTypesStandardResponsesResult>> usersRecoverPost(
-      {required BodyRecoverUserUsersRecoverPost? body}) {
-    generatedMapping.putIfAbsent(AppTypesStandardResponsesResult,
-        () => AppTypesStandardResponsesResult.fromJsonFactory);
+  Future<chopper.Response<AppTypesStandardResponsesResult>> usersRecoverPost({
+    required BodyRecoverUserUsersRecoverPost? body,
+  }) {
+    generatedMapping.putIfAbsent(
+      AppTypesStandardResponsesResult,
+      () => AppTypesStandardResponsesResult.fromJsonFactory,
+    );
 
     return _usersRecoverPost(body: body);
   }
 
   ///Recover User
-  @Post(
-    path: '/users/recover',
-    optionalBody: true,
-  )
-  Future<chopper.Response<AppTypesStandardResponsesResult>> _usersRecoverPost(
-      {@Body() required BodyRecoverUserUsersRecoverPost? body});
+  @Post(path: '/users/recover', optionalBody: true)
+  Future<chopper.Response<AppTypesStandardResponsesResult>> _usersRecoverPost({
+    @Body() required BodyRecoverUserUsersRecoverPost? body,
+  });
 
   ///Reset Password
   Future<chopper.Response<AppTypesStandardResponsesResult>>
-      usersResetPasswordPost({required ResetPasswordRequest? body}) {
-    generatedMapping.putIfAbsent(AppTypesStandardResponsesResult,
-        () => AppTypesStandardResponsesResult.fromJsonFactory);
+  usersResetPasswordPost({required ResetPasswordRequest? body}) {
+    generatedMapping.putIfAbsent(
+      AppTypesStandardResponsesResult,
+      () => AppTypesStandardResponsesResult.fromJsonFactory,
+    );
 
     return _usersResetPasswordPost(body: body);
   }
 
   ///Reset Password
-  @Post(
-    path: '/users/reset-password',
-    optionalBody: true,
-  )
+  @Post(path: '/users/reset-password', optionalBody: true)
   Future<chopper.Response<AppTypesStandardResponsesResult>>
-      _usersResetPasswordPost({@Body() required ResetPasswordRequest? body});
+  _usersResetPasswordPost({@Body() required ResetPasswordRequest? body});
 
   ///Migrate Mail
-  Future<chopper.Response> usersMigrateMailPost(
-      {required MailMigrationRequest? body}) {
+  Future<chopper.Response> usersMigrateMailPost({
+    required MailMigrationRequest? body,
+  }) {
     return _usersMigrateMailPost(body: body);
   }
 
   ///Migrate Mail
-  @Post(
-    path: '/users/migrate-mail',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _usersMigrateMailPost(
-      {@Body() required MailMigrationRequest? body});
+  @Post(path: '/users/migrate-mail', optionalBody: true)
+  Future<chopper.Response> _usersMigrateMailPost({
+    @Body() required MailMigrationRequest? body,
+  });
 
   ///Migrate Mail Confirm
   ///@param token
-  Future<chopper.Response> usersMigrateMailConfirmGet(
-      {required String? token}) {
+  Future<chopper.Response> usersMigrateMailConfirmGet({
+    required String? token,
+  }) {
     return _usersMigrateMailConfirmGet(token: token);
   }
 
   ///Migrate Mail Confirm
   ///@param token
   @Get(path: '/users/migrate-mail-confirm')
-  Future<chopper.Response> _usersMigrateMailConfirmGet(
-      {@Query('token') required String? token});
+  Future<chopper.Response> _usersMigrateMailConfirmGet({
+    @Query('token') required String? token,
+  });
 
   ///Change Password
   Future<chopper.Response<AppTypesStandardResponsesResult>>
-      usersChangePasswordPost({required ChangePasswordRequest? body}) {
-    generatedMapping.putIfAbsent(AppTypesStandardResponsesResult,
-        () => AppTypesStandardResponsesResult.fromJsonFactory);
+  usersChangePasswordPost({required ChangePasswordRequest? body}) {
+    generatedMapping.putIfAbsent(
+      AppTypesStandardResponsesResult,
+      () => AppTypesStandardResponsesResult.fromJsonFactory,
+    );
 
     return _usersChangePasswordPost(body: body);
   }
 
   ///Change Password
-  @Post(
-    path: '/users/change-password',
-    optionalBody: true,
-  )
+  @Post(path: '/users/change-password', optionalBody: true)
   Future<chopper.Response<AppTypesStandardResponsesResult>>
-      _usersChangePasswordPost({@Body() required ChangePasswordRequest? body});
+  _usersChangePasswordPost({@Body() required ChangePasswordRequest? body});
 
   ///Read User
   ///@param user_id
@@ -1146,8 +1243,9 @@ abstract class Openapi extends ChopperService {
   ///Read User
   ///@param user_id
   @Get(path: '/users/{user_id}')
-  Future<chopper.Response<CoreUser>> _usersUserIdGet(
-      {@Path('user_id') required String? userId});
+  Future<chopper.Response<CoreUser>> _usersUserIdGet({
+    @Path('user_id') required String? userId,
+  });
 
   ///Update User
   ///@param user_id
@@ -1160,10 +1258,7 @@ abstract class Openapi extends ChopperService {
 
   ///Update User
   ///@param user_id
-  @Patch(
-    path: '/users/{user_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/users/{user_id}', optionalBody: true)
   Future<chopper.Response> _usersUserIdPatch({
     @Path('user_id') required String? userId,
     @Body() required CoreUserUpdateAdmin? body,
@@ -1175,25 +1270,21 @@ abstract class Openapi extends ChopperService {
   }
 
   ///Delete User
-  @Post(
-    path: '/users/me/ask-deletion',
-    optionalBody: true,
-  )
+  @Post(path: '/users/me/ask-deletion', optionalBody: true)
   Future<chopper.Response> _usersMeAskDeletionPost();
 
   ///Merge Users
-  Future<chopper.Response> usersMergePost(
-      {required CoreUserFusionRequest? body}) {
+  Future<chopper.Response> usersMergePost({
+    required CoreUserFusionRequest? body,
+  }) {
     return _usersMergePost(body: body);
   }
 
   ///Merge Users
-  @Post(
-    path: '/users/merge',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _usersMergePost(
-      {@Body() required CoreUserFusionRequest? body});
+  @Post(path: '/users/merge', optionalBody: true)
+  Future<chopper.Response> _usersMergePost({
+    @Body() required CoreUserFusionRequest? body,
+  });
 
   ///Read Own Profile Picture
   Future<chopper.Response> usersMeProfilePictureGet() {
@@ -1206,39 +1297,35 @@ abstract class Openapi extends ChopperService {
 
   ///Create Current User Profile Picture
   Future<chopper.Response<AppTypesStandardResponsesResult>>
-      usersMeProfilePicturePost(
-          {required BodyCreateCurrentUserProfilePictureUsersMeProfilePicturePost
-              body}) {
-    generatedMapping.putIfAbsent(AppTypesStandardResponsesResult,
-        () => AppTypesStandardResponsesResult.fromJsonFactory);
+  usersMeProfilePicturePost({required MultipartFile image}) {
+    generatedMapping.putIfAbsent(
+      AppTypesStandardResponsesResult,
+      () => AppTypesStandardResponsesResult.fromJsonFactory,
+    );
 
-    return _usersMeProfilePicturePost(body: body);
+    return _usersMeProfilePicturePost(image: image);
   }
 
   ///Create Current User Profile Picture
-  @Post(
-    path: '/users/me/profile-picture',
-    optionalBody: true,
-  )
+  @Post(path: '/users/me/profile-picture', optionalBody: true)
   @Multipart()
   Future<chopper.Response<AppTypesStandardResponsesResult>>
-      _usersMeProfilePicturePost(
-          {@Part()
-          required BodyCreateCurrentUserProfilePictureUsersMeProfilePicturePost
-              body});
+  _usersMeProfilePicturePost({@PartFile('image') required MultipartFile image});
 
   ///Read User Profile Picture
   ///@param user_id
-  Future<chopper.Response> usersUserIdProfilePictureGet(
-      {required String? userId}) {
+  Future<chopper.Response> usersUserIdProfilePictureGet({
+    required String? userId,
+  }) {
     return _usersUserIdProfilePictureGet(userId: userId);
   }
 
   ///Read User Profile Picture
   ///@param user_id
   @Get(path: '/users/{user_id}/profile-picture')
-  Future<chopper.Response> _usersUserIdProfilePictureGet(
-      {@Path('user_id') required String? userId});
+  Future<chopper.Response> _usersUserIdProfilePictureGet({
+    @Path('user_id') required String? userId,
+  });
 
   ///Read Schools
   Future<chopper.Response<List<CoreSchool>>> schoolsGet() {
@@ -1252,25 +1339,25 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<CoreSchool>>> _schoolsGet();
 
   ///Create School
-  Future<chopper.Response<CoreSchool>> schoolsPost(
-      {required CoreSchoolBase? body}) {
+  Future<chopper.Response<CoreSchool>> schoolsPost({
+    required CoreSchoolBase? body,
+  }) {
     generatedMapping.putIfAbsent(CoreSchool, () => CoreSchool.fromJsonFactory);
 
     return _schoolsPost(body: body);
   }
 
   ///Create School
-  @Post(
-    path: '/schools/',
-    optionalBody: true,
-  )
-  Future<chopper.Response<CoreSchool>> _schoolsPost(
-      {@Body() required CoreSchoolBase? body});
+  @Post(path: '/schools/', optionalBody: true)
+  Future<chopper.Response<CoreSchool>> _schoolsPost({
+    @Body() required CoreSchoolBase? body,
+  });
 
   ///Read School
   ///@param school_id
-  Future<chopper.Response<CoreSchool>> schoolsSchoolIdGet(
-      {required String? schoolId}) {
+  Future<chopper.Response<CoreSchool>> schoolsSchoolIdGet({
+    required String? schoolId,
+  }) {
     generatedMapping.putIfAbsent(CoreSchool, () => CoreSchool.fromJsonFactory);
 
     return _schoolsSchoolIdGet(schoolId: schoolId);
@@ -1279,8 +1366,9 @@ abstract class Openapi extends ChopperService {
   ///Read School
   ///@param school_id
   @Get(path: '/schools/{school_id}')
-  Future<chopper.Response<CoreSchool>> _schoolsSchoolIdGet(
-      {@Path('school_id') required String? schoolId});
+  Future<chopper.Response<CoreSchool>> _schoolsSchoolIdGet({
+    @Path('school_id') required String? schoolId,
+  });
 
   ///Update School
   ///@param school_id
@@ -1293,10 +1381,7 @@ abstract class Openapi extends ChopperService {
 
   ///Update School
   ///@param school_id
-  @Patch(
-    path: '/schools/{school_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/schools/{school_id}', optionalBody: true)
   Future<chopper.Response> _schoolsSchoolIdPatch({
     @Path('school_id') required String? schoolId,
     @Body() required CoreSchoolUpdate? body,
@@ -1311,13 +1396,16 @@ abstract class Openapi extends ChopperService {
   ///Delete School
   ///@param school_id
   @Delete(path: '/schools/{school_id}')
-  Future<chopper.Response> _schoolsSchoolIdDelete(
-      {@Path('school_id') required String? schoolId});
+  Future<chopper.Response> _schoolsSchoolIdDelete({
+    @Path('school_id') required String? schoolId,
+  });
 
   ///Read Information
   Future<chopper.Response<CoreInformation>> informationGet() {
     generatedMapping.putIfAbsent(
-        CoreInformation, () => CoreInformation.fromJsonFactory);
+      CoreInformation,
+      () => CoreInformation.fromJsonFactory,
+    );
 
     return _informationGet();
   }
@@ -1389,8 +1477,9 @@ abstract class Openapi extends ChopperService {
   ///Get Style File
   ///@param file
   @Get(path: '/style/{file}.css')
-  Future<chopper.Response> _styleFileCssGet(
-      {@Path('file') required String? file});
+  Future<chopper.Response> _styleFileCssGet({
+    @Path('file') required String? file,
+  });
 
   ///Get Favicon
   Future<chopper.Response> faviconIcoGet() {
@@ -1404,7 +1493,9 @@ abstract class Openapi extends ChopperService {
   ///Get Module Visibility
   Future<chopper.Response<List<ModuleVisibility>>> moduleVisibilityGet() {
     generatedMapping.putIfAbsent(
-        ModuleVisibility, () => ModuleVisibility.fromJsonFactory);
+      ModuleVisibility,
+      () => ModuleVisibility.fromJsonFactory,
+    );
 
     return _moduleVisibilityGet();
   }
@@ -1414,18 +1505,17 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<ModuleVisibility>>> _moduleVisibilityGet();
 
   ///Add Module Visibility
-  Future<chopper.Response> moduleVisibilityPost(
-      {required ModuleVisibilityCreate? body}) {
+  Future<chopper.Response> moduleVisibilityPost({
+    required ModuleVisibilityCreate? body,
+  }) {
     return _moduleVisibilityPost(body: body);
   }
 
   ///Add Module Visibility
-  @Post(
-    path: '/module-visibility/',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _moduleVisibilityPost(
-      {@Body() required ModuleVisibilityCreate? body});
+  @Post(path: '/module-visibility/', optionalBody: true)
+  Future<chopper.Response> _moduleVisibilityPost({
+    @Body() required ModuleVisibilityCreate? body,
+  });
 
   ///Get User Modules Visibility
   Future<chopper.Response<List<String>>> moduleVisibilityMeGet() {
@@ -1444,7 +1534,9 @@ abstract class Openapi extends ChopperService {
     required String? groupId,
   }) {
     return _moduleVisibilityRootGroupsGroupIdDelete(
-        root: root, groupId: groupId);
+      root: root,
+      groupId: groupId,
+    );
   }
 
   ///Delete Module Group Visibility
@@ -1464,7 +1556,9 @@ abstract class Openapi extends ChopperService {
     required enums.AccountType? accountType,
   }) {
     return _moduleVisibilityRootAccountTypesAccountTypeDelete(
-        root: root, accountType: accountType?.value?.toString());
+      root: root,
+      accountType: accountType?.value?.toString(),
+    );
   }
 
   ///Delete Module Account Type Visibility
@@ -1482,16 +1576,15 @@ abstract class Openapi extends ChopperService {
   }
 
   ///Webhook
-  @Post(
-    path: '/payment/helloasso/webhook',
-    optionalBody: true,
-  )
+  @Post(path: '/payment/helloasso/webhook', optionalBody: true)
   Future<chopper.Response> _paymentHelloassoWebhookPost();
 
   ///Read Groups
   Future<chopper.Response<List<CoreGroupSimple>>> groupsGet() {
     generatedMapping.putIfAbsent(
-        CoreGroupSimple, () => CoreGroupSimple.fromJsonFactory);
+      CoreGroupSimple,
+      () => CoreGroupSimple.fromJsonFactory,
+    );
 
     return _groupsGet();
   }
@@ -1501,26 +1594,28 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<CoreGroupSimple>>> _groupsGet();
 
   ///Create Group
-  Future<chopper.Response<CoreGroupSimple>> groupsPost(
-      {required CoreGroupCreate? body}) {
+  Future<chopper.Response<CoreGroupSimple>> groupsPost({
+    required CoreGroupCreate? body,
+  }) {
     generatedMapping.putIfAbsent(
-        CoreGroupSimple, () => CoreGroupSimple.fromJsonFactory);
+      CoreGroupSimple,
+      () => CoreGroupSimple.fromJsonFactory,
+    );
 
     return _groupsPost(body: body);
   }
 
   ///Create Group
-  @Post(
-    path: '/groups/',
-    optionalBody: true,
-  )
-  Future<chopper.Response<CoreGroupSimple>> _groupsPost(
-      {@Body() required CoreGroupCreate? body});
+  @Post(path: '/groups/', optionalBody: true)
+  Future<chopper.Response<CoreGroupSimple>> _groupsPost({
+    @Body() required CoreGroupCreate? body,
+  });
 
   ///Read Group
   ///@param group_id
-  Future<chopper.Response<CoreGroup>> groupsGroupIdGet(
-      {required String? groupId}) {
+  Future<chopper.Response<CoreGroup>> groupsGroupIdGet({
+    required String? groupId,
+  }) {
     generatedMapping.putIfAbsent(CoreGroup, () => CoreGroup.fromJsonFactory);
 
     return _groupsGroupIdGet(groupId: groupId);
@@ -1529,8 +1624,9 @@ abstract class Openapi extends ChopperService {
   ///Read Group
   ///@param group_id
   @Get(path: '/groups/{group_id}')
-  Future<chopper.Response<CoreGroup>> _groupsGroupIdGet(
-      {@Path('group_id') required String? groupId});
+  Future<chopper.Response<CoreGroup>> _groupsGroupIdGet({
+    @Path('group_id') required String? groupId,
+  });
 
   ///Update Group
   ///@param group_id
@@ -1543,10 +1639,7 @@ abstract class Openapi extends ChopperService {
 
   ///Update Group
   ///@param group_id
-  @Patch(
-    path: '/groups/{group_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/groups/{group_id}', optionalBody: true)
   Future<chopper.Response> _groupsGroupIdPatch({
     @Path('group_id') required String? groupId,
     @Body() required CoreGroupUpdate? body,
@@ -1561,90 +1654,103 @@ abstract class Openapi extends ChopperService {
   ///Delete Group
   ///@param group_id
   @Delete(path: '/groups/{group_id}')
-  Future<chopper.Response> _groupsGroupIdDelete(
-      {@Path('group_id') required String? groupId});
+  Future<chopper.Response> _groupsGroupIdDelete({
+    @Path('group_id') required String? groupId,
+  });
 
   ///Create Membership
-  Future<chopper.Response<CoreGroup>> groupsMembershipPost(
-      {required CoreMembership? body}) {
+  Future<chopper.Response<CoreGroup>> groupsMembershipPost({
+    required CoreMembership? body,
+  }) {
     generatedMapping.putIfAbsent(CoreGroup, () => CoreGroup.fromJsonFactory);
 
     return _groupsMembershipPost(body: body);
   }
 
   ///Create Membership
-  @Post(
-    path: '/groups/membership',
-    optionalBody: true,
-  )
-  Future<chopper.Response<CoreGroup>> _groupsMembershipPost(
-      {@Body() required CoreMembership? body});
+  @Post(path: '/groups/membership', optionalBody: true)
+  Future<chopper.Response<CoreGroup>> _groupsMembershipPost({
+    @Body() required CoreMembership? body,
+  });
 
   ///Delete Membership
-  Future<chopper.Response> groupsMembershipDelete(
-      {required CoreMembershipDelete? body}) {
+  Future<chopper.Response> groupsMembershipDelete({
+    required CoreMembershipDelete? body,
+  }) {
     return _groupsMembershipDelete(body: body);
   }
 
   ///Delete Membership
   @Delete(path: '/groups/membership')
-  Future<chopper.Response> _groupsMembershipDelete(
-      {@Body() required CoreMembershipDelete? body});
+  Future<chopper.Response> _groupsMembershipDelete({
+    @Body() required CoreMembershipDelete? body,
+  });
 
   ///Create Batch Membership
-  Future<chopper.Response> groupsBatchMembershipPost(
-      {required CoreBatchMembership? body}) {
+  Future<chopper.Response> groupsBatchMembershipPost({
+    required CoreBatchMembership? body,
+  }) {
     return _groupsBatchMembershipPost(body: body);
   }
 
   ///Create Batch Membership
-  @Post(
-    path: '/groups/batch-membership',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _groupsBatchMembershipPost(
-      {@Body() required CoreBatchMembership? body});
+  @Post(path: '/groups/batch-membership', optionalBody: true)
+  Future<chopper.Response> _groupsBatchMembershipPost({
+    @Body() required CoreBatchMembership? body,
+  });
 
   ///Delete Batch Membership
-  Future<chopper.Response> groupsBatchMembershipDelete(
-      {required CoreBatchDeleteMembership? body}) {
+  Future<chopper.Response> groupsBatchMembershipDelete({
+    required CoreBatchDeleteMembership? body,
+  }) {
     return _groupsBatchMembershipDelete(body: body);
   }
 
   ///Delete Batch Membership
   @Delete(path: '/groups/batch-membership')
-  Future<chopper.Response> _groupsBatchMembershipDelete(
-      {@Body() required CoreBatchDeleteMembership? body});
+  Future<chopper.Response> _groupsBatchMembershipDelete({
+    @Body() required CoreBatchDeleteMembership? body,
+  });
 
   ///Read Associations Memberships
-  Future<chopper.Response<List<MembershipSimple>>> membershipsGet() {
+  ///@param exclude_external
+  Future<chopper.Response<List<MembershipSimple>>> membershipsGet({
+    bool? excludeExternal,
+    required BodyReadAssociationsMembershipsMembershipsGet? body,
+  }) {
     generatedMapping.putIfAbsent(
-        MembershipSimple, () => MembershipSimple.fromJsonFactory);
+      MembershipSimple,
+      () => MembershipSimple.fromJsonFactory,
+    );
 
-    return _membershipsGet();
+    return _membershipsGet(excludeExternal: excludeExternal, body: body);
   }
 
   ///Read Associations Memberships
+  ///@param exclude_external
   @Get(path: '/memberships/')
-  Future<chopper.Response<List<MembershipSimple>>> _membershipsGet();
+  Future<chopper.Response<List<MembershipSimple>>> _membershipsGet({
+    @Query('exclude_external') bool? excludeExternal,
+    @Body() required BodyReadAssociationsMembershipsMembershipsGet? body,
+  });
 
   ///Create Association Membership
-  Future<chopper.Response<MembershipSimple>> membershipsPost(
-      {required AppCoreMembershipsSchemasMembershipsMembershipBase? body}) {
+  Future<chopper.Response<MembershipSimple>> membershipsPost({
+    required AppCoreMembershipsSchemasMembershipsMembershipBase? body,
+  }) {
     generatedMapping.putIfAbsent(
-        MembershipSimple, () => MembershipSimple.fromJsonFactory);
+      MembershipSimple,
+      () => MembershipSimple.fromJsonFactory,
+    );
 
     return _membershipsPost(body: body);
   }
 
   ///Create Association Membership
-  @Post(
-    path: '/memberships/',
-    optionalBody: true,
-  )
-  Future<chopper.Response<MembershipSimple>> _membershipsPost(
-      {@Body()
-      required AppCoreMembershipsSchemasMembershipsMembershipBase? body});
+  @Post(path: '/memberships/', optionalBody: true)
+  Future<chopper.Response<MembershipSimple>> _membershipsPost({
+    @Body() required AppCoreMembershipsSchemasMembershipsMembershipBase? body,
+  });
 
   ///Read Association Membership
   ///@param association_membership_id
@@ -1653,7 +1759,7 @@ abstract class Openapi extends ChopperService {
   ///@param minimalEndDate
   ///@param maximalEndDate
   Future<chopper.Response<List<UserMembershipComplete>>>
-      membershipsAssociationMembershipIdMembersGet({
+  membershipsAssociationMembershipIdMembersGet({
     required String? associationMembershipId,
     String? minimalStartDate,
     String? maximalStartDate,
@@ -1661,14 +1767,17 @@ abstract class Openapi extends ChopperService {
     String? maximalEndDate,
   }) {
     generatedMapping.putIfAbsent(
-        UserMembershipComplete, () => UserMembershipComplete.fromJsonFactory);
+      UserMembershipComplete,
+      () => UserMembershipComplete.fromJsonFactory,
+    );
 
     return _membershipsAssociationMembershipIdMembersGet(
-        associationMembershipId: associationMembershipId,
-        minimalStartDate: minimalStartDate,
-        maximalStartDate: maximalStartDate,
-        minimalEndDate: minimalEndDate,
-        maximalEndDate: maximalEndDate);
+      associationMembershipId: associationMembershipId,
+      minimalStartDate: minimalStartDate,
+      maximalStartDate: maximalStartDate,
+      minimalEndDate: minimalEndDate,
+      maximalEndDate: maximalEndDate,
+    );
   }
 
   ///Read Association Membership
@@ -1679,7 +1788,7 @@ abstract class Openapi extends ChopperService {
   ///@param maximalEndDate
   @Get(path: '/memberships/{association_membership_id}/members')
   Future<chopper.Response<List<UserMembershipComplete>>>
-      _membershipsAssociationMembershipIdMembersGet({
+  _membershipsAssociationMembershipIdMembersGet({
     @Path('association_membership_id') required String? associationMembershipId,
     @Query('minimalStartDate') String? minimalStartDate,
     @Query('maximalStartDate') String? maximalStartDate,
@@ -1694,15 +1803,14 @@ abstract class Openapi extends ChopperService {
     required AppCoreMembershipsSchemasMembershipsMembershipBase? body,
   }) {
     return _membershipsAssociationMembershipIdPatch(
-        associationMembershipId: associationMembershipId, body: body);
+      associationMembershipId: associationMembershipId,
+      body: body,
+    );
   }
 
   ///Update Association Membership
   ///@param association_membership_id
-  @Patch(
-    path: '/memberships/{association_membership_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/memberships/{association_membership_id}', optionalBody: true)
   Future<chopper.Response> _membershipsAssociationMembershipIdPatch({
     @Path('association_membership_id') required String? associationMembershipId,
     @Body() required AppCoreMembershipsSchemasMembershipsMembershipBase? body,
@@ -1710,25 +1818,29 @@ abstract class Openapi extends ChopperService {
 
   ///Delete Association Membership
   ///@param association_membership_id
-  Future<chopper.Response> membershipsAssociationMembershipIdDelete(
-      {required String? associationMembershipId}) {
+  Future<chopper.Response> membershipsAssociationMembershipIdDelete({
+    required String? associationMembershipId,
+  }) {
     return _membershipsAssociationMembershipIdDelete(
-        associationMembershipId: associationMembershipId);
+      associationMembershipId: associationMembershipId,
+    );
   }
 
   ///Delete Association Membership
   ///@param association_membership_id
   @Delete(path: '/memberships/{association_membership_id}')
-  Future<chopper.Response> _membershipsAssociationMembershipIdDelete(
-      {@Path('association_membership_id')
-      required String? associationMembershipId});
+  Future<chopper.Response> _membershipsAssociationMembershipIdDelete({
+    @Path('association_membership_id') required String? associationMembershipId,
+  });
 
   ///Read User Memberships
   ///@param user_id
   Future<chopper.Response<List<UserMembershipComplete>>>
-      membershipsUsersUserIdGet({required String? userId}) {
+  membershipsUsersUserIdGet({required String? userId}) {
     generatedMapping.putIfAbsent(
-        UserMembershipComplete, () => UserMembershipComplete.fromJsonFactory);
+      UserMembershipComplete,
+      () => UserMembershipComplete.fromJsonFactory,
+    );
 
     return _membershipsUsersUserIdGet(userId: userId);
   }
@@ -1737,7 +1849,7 @@ abstract class Openapi extends ChopperService {
   ///@param user_id
   @Get(path: '/memberships/users/{user_id}')
   Future<chopper.Response<List<UserMembershipComplete>>>
-      _membershipsUsersUserIdGet({@Path('user_id') required String? userId});
+  _membershipsUsersUserIdGet({@Path('user_id') required String? userId});
 
   ///Create User Membership
   ///@param user_id
@@ -1746,17 +1858,16 @@ abstract class Openapi extends ChopperService {
     required UserMembershipBase? body,
   }) {
     generatedMapping.putIfAbsent(
-        UserMembershipComplete, () => UserMembershipComplete.fromJsonFactory);
+      UserMembershipComplete,
+      () => UserMembershipComplete.fromJsonFactory,
+    );
 
     return _membershipsUsersUserIdPost(userId: userId, body: body);
   }
 
   ///Create User Membership
   ///@param user_id
-  @Post(
-    path: '/memberships/users/{user_id}',
-    optionalBody: true,
-  )
+  @Post(path: '/memberships/users/{user_id}', optionalBody: true)
   Future<chopper.Response<UserMembershipComplete>> _membershipsUsersUserIdPost({
     @Path('user_id') required String? userId,
     @Body() required UserMembershipBase? body,
@@ -1766,15 +1877,19 @@ abstract class Openapi extends ChopperService {
   ///@param user_id
   ///@param association_membership_id
   Future<chopper.Response<List<UserMembershipComplete>>>
-      membershipsUsersUserIdAssociationMembershipIdGet({
+  membershipsUsersUserIdAssociationMembershipIdGet({
     required String? userId,
     required String? associationMembershipId,
   }) {
     generatedMapping.putIfAbsent(
-        UserMembershipComplete, () => UserMembershipComplete.fromJsonFactory);
+      UserMembershipComplete,
+      () => UserMembershipComplete.fromJsonFactory,
+    );
 
     return _membershipsUsersUserIdAssociationMembershipIdGet(
-        userId: userId, associationMembershipId: associationMembershipId);
+      userId: userId,
+      associationMembershipId: associationMembershipId,
+    );
   }
 
   ///Read User Association Membership History
@@ -1782,7 +1897,7 @@ abstract class Openapi extends ChopperService {
   ///@param association_membership_id
   @Get(path: '/memberships/users/{user_id}/{association_membership_id}')
   Future<chopper.Response<List<UserMembershipComplete>>>
-      _membershipsUsersUserIdAssociationMembershipIdGet({
+  _membershipsUsersUserIdAssociationMembershipIdGet({
     @Path('user_id') required String? userId,
     @Path('association_membership_id') required String? associationMembershipId,
   });
@@ -1790,15 +1905,19 @@ abstract class Openapi extends ChopperService {
   ///Add Batch Membership
   ///@param association_membership_id
   Future<chopper.Response<List<MembershipUserMappingEmail>>>
-      membershipsAssociationMembershipIdAddBatchPost({
+  membershipsAssociationMembershipIdAddBatchPost({
     required String? associationMembershipId,
     required List<MembershipUserMappingEmail>? body,
   }) {
-    generatedMapping.putIfAbsent(MembershipUserMappingEmail,
-        () => MembershipUserMappingEmail.fromJsonFactory);
+    generatedMapping.putIfAbsent(
+      MembershipUserMappingEmail,
+      () => MembershipUserMappingEmail.fromJsonFactory,
+    );
 
     return _membershipsAssociationMembershipIdAddBatchPost(
-        associationMembershipId: associationMembershipId, body: body);
+      associationMembershipId: associationMembershipId,
+      body: body,
+    );
   }
 
   ///Add Batch Membership
@@ -1808,7 +1927,7 @@ abstract class Openapi extends ChopperService {
     optionalBody: true,
   )
   Future<chopper.Response<List<MembershipUserMappingEmail>>>
-      _membershipsAssociationMembershipIdAddBatchPost({
+  _membershipsAssociationMembershipIdAddBatchPost({
     @Path('association_membership_id') required String? associationMembershipId,
     @Body() required List<MembershipUserMappingEmail>? body,
   });
@@ -1820,15 +1939,14 @@ abstract class Openapi extends ChopperService {
     required UserMembershipEdit? body,
   }) {
     return _membershipsUsersMembershipIdPatch(
-        membershipId: membershipId, body: body);
+      membershipId: membershipId,
+      body: body,
+    );
   }
 
   ///Update User Membership
   ///@param membership_id
-  @Patch(
-    path: '/memberships/users/{membership_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/memberships/users/{membership_id}', optionalBody: true)
   Future<chopper.Response> _membershipsUsersMembershipIdPatch({
     @Path('membership_id') required String? membershipId,
     @Body() required UserMembershipEdit? body,
@@ -1836,21 +1954,25 @@ abstract class Openapi extends ChopperService {
 
   ///Delete User Membership
   ///@param membership_id
-  Future<chopper.Response> membershipsUsersMembershipIdDelete(
-      {required String? membershipId}) {
+  Future<chopper.Response> membershipsUsersMembershipIdDelete({
+    required String? membershipId,
+  }) {
     return _membershipsUsersMembershipIdDelete(membershipId: membershipId);
   }
 
   ///Delete User Membership
   ///@param membership_id
   @Delete(path: '/memberships/users/{membership_id}')
-  Future<chopper.Response> _membershipsUsersMembershipIdDelete(
-      {@Path('membership_id') required String? membershipId});
+  Future<chopper.Response> _membershipsUsersMembershipIdDelete({
+    @Path('membership_id') required String? membershipId,
+  });
 
   ///Get Raffle
   Future<chopper.Response<List<RaffleComplete>>> tombolaRafflesGet() {
     generatedMapping.putIfAbsent(
-        RaffleComplete, () => RaffleComplete.fromJsonFactory);
+      RaffleComplete,
+      () => RaffleComplete.fromJsonFactory,
+    );
 
     return _tombolaRafflesGet();
   }
@@ -1860,21 +1982,22 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<RaffleComplete>>> _tombolaRafflesGet();
 
   ///Create Raffle
-  Future<chopper.Response<RaffleComplete>> tombolaRafflesPost(
-      {required RaffleBase? body}) {
+  Future<chopper.Response<RaffleComplete>> tombolaRafflesPost({
+    required RaffleBase? body,
+  }) {
     generatedMapping.putIfAbsent(
-        RaffleComplete, () => RaffleComplete.fromJsonFactory);
+      RaffleComplete,
+      () => RaffleComplete.fromJsonFactory,
+    );
 
     return _tombolaRafflesPost(body: body);
   }
 
   ///Create Raffle
-  @Post(
-    path: '/tombola/raffles',
-    optionalBody: true,
-  )
-  Future<chopper.Response<RaffleComplete>> _tombolaRafflesPost(
-      {@Body() required RaffleBase? body});
+  @Post(path: '/tombola/raffles', optionalBody: true)
+  Future<chopper.Response<RaffleComplete>> _tombolaRafflesPost({
+    @Body() required RaffleBase? body,
+  });
 
   ///Edit Raffle
   ///@param raffle_id
@@ -1887,10 +2010,7 @@ abstract class Openapi extends ChopperService {
 
   ///Edit Raffle
   ///@param raffle_id
-  @Patch(
-    path: '/tombola/raffles/{raffle_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/tombola/raffles/{raffle_id}', optionalBody: true)
   Future<chopper.Response> _tombolaRafflesRaffleIdPatch({
     @Path('raffle_id') required String? raffleId,
     @Body() required RaffleEdit? body,
@@ -1898,23 +2018,28 @@ abstract class Openapi extends ChopperService {
 
   ///Delete Raffle
   ///@param raffle_id
-  Future<chopper.Response> tombolaRafflesRaffleIdDelete(
-      {required String? raffleId}) {
+  Future<chopper.Response> tombolaRafflesRaffleIdDelete({
+    required String? raffleId,
+  }) {
     return _tombolaRafflesRaffleIdDelete(raffleId: raffleId);
   }
 
   ///Delete Raffle
   ///@param raffle_id
   @Delete(path: '/tombola/raffles/{raffle_id}')
-  Future<chopper.Response> _tombolaRafflesRaffleIdDelete(
-      {@Path('raffle_id') required String? raffleId});
+  Future<chopper.Response> _tombolaRafflesRaffleIdDelete({
+    @Path('raffle_id') required String? raffleId,
+  });
 
   ///Get Raffles By Group Id
   ///@param group_id
-  Future<chopper.Response<List<RaffleComplete>>> tombolaGroupGroupIdRafflesGet(
-      {required String? groupId}) {
+  Future<chopper.Response<List<RaffleComplete>>> tombolaGroupGroupIdRafflesGet({
+    required String? groupId,
+  }) {
     generatedMapping.putIfAbsent(
-        RaffleComplete, () => RaffleComplete.fromJsonFactory);
+      RaffleComplete,
+      () => RaffleComplete.fromJsonFactory,
+    );
 
     return _tombolaGroupGroupIdRafflesGet(groupId: groupId);
   }
@@ -1922,15 +2047,18 @@ abstract class Openapi extends ChopperService {
   ///Get Raffles By Group Id
   ///@param group_id
   @Get(path: '/tombola/group/{group_id}/raffles')
-  Future<chopper.Response<List<RaffleComplete>>> _tombolaGroupGroupIdRafflesGet(
-      {@Path('group_id') required String? groupId});
+  Future<chopper.Response<List<RaffleComplete>>>
+  _tombolaGroupGroupIdRafflesGet({@Path('group_id') required String? groupId});
 
   ///Get Raffle Stats
   ///@param raffle_id
-  Future<chopper.Response<RaffleStats>> tombolaRafflesRaffleIdStatsGet(
-      {required String? raffleId}) {
+  Future<chopper.Response<RaffleStats>> tombolaRafflesRaffleIdStatsGet({
+    required String? raffleId,
+  }) {
     generatedMapping.putIfAbsent(
-        RaffleStats, () => RaffleStats.fromJsonFactory);
+      RaffleStats,
+      () => RaffleStats.fromJsonFactory,
+    );
 
     return _tombolaRafflesRaffleIdStatsGet(raffleId: raffleId);
   }
@@ -1938,53 +2066,56 @@ abstract class Openapi extends ChopperService {
   ///Get Raffle Stats
   ///@param raffle_id
   @Get(path: '/tombola/raffles/{raffle_id}/stats')
-  Future<chopper.Response<RaffleStats>> _tombolaRafflesRaffleIdStatsGet(
-      {@Path('raffle_id') required String? raffleId});
+  Future<chopper.Response<RaffleStats>> _tombolaRafflesRaffleIdStatsGet({
+    @Path('raffle_id') required String? raffleId,
+  });
 
   ///Create Current Raffle Logo
   ///@param raffle_id
   Future<chopper.Response<AppTypesStandardResponsesResult>>
-      tombolaRafflesRaffleIdLogoPost({
+  tombolaRafflesRaffleIdLogoPost({
     required String? raffleId,
-    required BodyCreateCurrentRaffleLogoTombolaRafflesRaffleIdLogoPost body,
+    required MultipartFile image,
   }) {
-    generatedMapping.putIfAbsent(AppTypesStandardResponsesResult,
-        () => AppTypesStandardResponsesResult.fromJsonFactory);
+    generatedMapping.putIfAbsent(
+      AppTypesStandardResponsesResult,
+      () => AppTypesStandardResponsesResult.fromJsonFactory,
+    );
 
-    return _tombolaRafflesRaffleIdLogoPost(raffleId: raffleId, body: body);
+    return _tombolaRafflesRaffleIdLogoPost(raffleId: raffleId, image: image);
   }
 
   ///Create Current Raffle Logo
   ///@param raffle_id
-  @Post(
-    path: '/tombola/raffles/{raffle_id}/logo',
-    optionalBody: true,
-  )
+  @Post(path: '/tombola/raffles/{raffle_id}/logo', optionalBody: true)
   @Multipart()
   Future<chopper.Response<AppTypesStandardResponsesResult>>
-      _tombolaRafflesRaffleIdLogoPost({
+  _tombolaRafflesRaffleIdLogoPost({
     @Path('raffle_id') required String? raffleId,
-    @Part()
-    required BodyCreateCurrentRaffleLogoTombolaRafflesRaffleIdLogoPost body,
+    @PartFile('image') required MultipartFile image,
   });
 
   ///Read Raffle Logo
   ///@param raffle_id
-  Future<chopper.Response> tombolaRafflesRaffleIdLogoGet(
-      {required String? raffleId}) {
+  Future<chopper.Response> tombolaRafflesRaffleIdLogoGet({
+    required String? raffleId,
+  }) {
     return _tombolaRafflesRaffleIdLogoGet(raffleId: raffleId);
   }
 
   ///Read Raffle Logo
   ///@param raffle_id
   @Get(path: '/tombola/raffles/{raffle_id}/logo')
-  Future<chopper.Response> _tombolaRafflesRaffleIdLogoGet(
-      {@Path('raffle_id') required String? raffleId});
+  Future<chopper.Response> _tombolaRafflesRaffleIdLogoGet({
+    @Path('raffle_id') required String? raffleId,
+  });
 
   ///Get Pack Tickets
   Future<chopper.Response<List<PackTicketSimple>>> tombolaPackTicketsGet() {
     generatedMapping.putIfAbsent(
-        PackTicketSimple, () => PackTicketSimple.fromJsonFactory);
+      PackTicketSimple,
+      () => PackTicketSimple.fromJsonFactory,
+    );
 
     return _tombolaPackTicketsGet();
   }
@@ -1994,21 +2125,22 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<PackTicketSimple>>> _tombolaPackTicketsGet();
 
   ///Create Packticket
-  Future<chopper.Response<PackTicketSimple>> tombolaPackTicketsPost(
-      {required PackTicketBase? body}) {
+  Future<chopper.Response<PackTicketSimple>> tombolaPackTicketsPost({
+    required PackTicketBase? body,
+  }) {
     generatedMapping.putIfAbsent(
-        PackTicketSimple, () => PackTicketSimple.fromJsonFactory);
+      PackTicketSimple,
+      () => PackTicketSimple.fromJsonFactory,
+    );
 
     return _tombolaPackTicketsPost(body: body);
   }
 
   ///Create Packticket
-  @Post(
-    path: '/tombola/pack_tickets',
-    optionalBody: true,
-  )
-  Future<chopper.Response<PackTicketSimple>> _tombolaPackTicketsPost(
-      {@Body() required PackTicketBase? body});
+  @Post(path: '/tombola/pack_tickets', optionalBody: true)
+  Future<chopper.Response<PackTicketSimple>> _tombolaPackTicketsPost({
+    @Body() required PackTicketBase? body,
+  });
 
   ///Edit Packticket
   ///@param packticket_id
@@ -2017,15 +2149,14 @@ abstract class Openapi extends ChopperService {
     required PackTicketEdit? body,
   }) {
     return _tombolaPackTicketsPackticketIdPatch(
-        packticketId: packticketId, body: body);
+      packticketId: packticketId,
+      body: body,
+    );
   }
 
   ///Edit Packticket
   ///@param packticket_id
-  @Patch(
-    path: '/tombola/pack_tickets/{packticket_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/tombola/pack_tickets/{packticket_id}', optionalBody: true)
   Future<chopper.Response> _tombolaPackTicketsPackticketIdPatch({
     @Path('packticket_id') required String? packticketId,
     @Body() required PackTicketEdit? body,
@@ -2033,23 +2164,27 @@ abstract class Openapi extends ChopperService {
 
   ///Delete Packticket
   ///@param packticket_id
-  Future<chopper.Response> tombolaPackTicketsPackticketIdDelete(
-      {required String? packticketId}) {
+  Future<chopper.Response> tombolaPackTicketsPackticketIdDelete({
+    required String? packticketId,
+  }) {
     return _tombolaPackTicketsPackticketIdDelete(packticketId: packticketId);
   }
 
   ///Delete Packticket
   ///@param packticket_id
   @Delete(path: '/tombola/pack_tickets/{packticket_id}')
-  Future<chopper.Response> _tombolaPackTicketsPackticketIdDelete(
-      {@Path('packticket_id') required String? packticketId});
+  Future<chopper.Response> _tombolaPackTicketsPackticketIdDelete({
+    @Path('packticket_id') required String? packticketId,
+  });
 
   ///Get Pack Tickets By Raffle Id
   ///@param raffle_id
   Future<chopper.Response<List<PackTicketSimple>>>
-      tombolaRafflesRaffleIdPackTicketsGet({required String? raffleId}) {
+  tombolaRafflesRaffleIdPackTicketsGet({required String? raffleId}) {
     generatedMapping.putIfAbsent(
-        PackTicketSimple, () => PackTicketSimple.fromJsonFactory);
+      PackTicketSimple,
+      () => PackTicketSimple.fromJsonFactory,
+    );
 
     return _tombolaRafflesRaffleIdPackTicketsGet(raffleId: raffleId);
   }
@@ -2058,13 +2193,16 @@ abstract class Openapi extends ChopperService {
   ///@param raffle_id
   @Get(path: '/tombola/raffles/{raffle_id}/pack_tickets')
   Future<chopper.Response<List<PackTicketSimple>>>
-      _tombolaRafflesRaffleIdPackTicketsGet(
-          {@Path('raffle_id') required String? raffleId});
+  _tombolaRafflesRaffleIdPackTicketsGet({
+    @Path('raffle_id') required String? raffleId,
+  });
 
   ///Get Tickets
   Future<chopper.Response<List<TicketSimple>>> tombolaTicketsGet() {
     generatedMapping.putIfAbsent(
-        TicketSimple, () => TicketSimple.fromJsonFactory);
+      TicketSimple,
+      () => TicketSimple.fromJsonFactory,
+    );
 
     return _tombolaTicketsGet();
   }
@@ -2075,29 +2213,33 @@ abstract class Openapi extends ChopperService {
 
   ///Buy Ticket
   ///@param pack_id
-  Future<chopper.Response<List<TicketComplete>>> tombolaTicketsBuyPackIdPost(
-      {required String? packId}) {
+  Future<chopper.Response<List<TicketComplete>>> tombolaTicketsBuyPackIdPost({
+    required String? packId,
+  }) {
     generatedMapping.putIfAbsent(
-        TicketComplete, () => TicketComplete.fromJsonFactory);
+      TicketComplete,
+      () => TicketComplete.fromJsonFactory,
+    );
 
     return _tombolaTicketsBuyPackIdPost(packId: packId);
   }
 
   ///Buy Ticket
   ///@param pack_id
-  @Post(
-    path: '/tombola/tickets/buy/{pack_id}',
-    optionalBody: true,
-  )
-  Future<chopper.Response<List<TicketComplete>>> _tombolaTicketsBuyPackIdPost(
-      {@Path('pack_id') required String? packId});
+  @Post(path: '/tombola/tickets/buy/{pack_id}', optionalBody: true)
+  Future<chopper.Response<List<TicketComplete>>> _tombolaTicketsBuyPackIdPost({
+    @Path('pack_id') required String? packId,
+  });
 
   ///Get Tickets By Userid
   ///@param user_id
-  Future<chopper.Response<List<TicketComplete>>> tombolaUsersUserIdTicketsGet(
-      {required String? userId}) {
+  Future<chopper.Response<List<TicketComplete>>> tombolaUsersUserIdTicketsGet({
+    required String? userId,
+  }) {
     generatedMapping.putIfAbsent(
-        TicketComplete, () => TicketComplete.fromJsonFactory);
+      TicketComplete,
+      () => TicketComplete.fromJsonFactory,
+    );
 
     return _tombolaUsersUserIdTicketsGet(userId: userId);
   }
@@ -2105,15 +2247,18 @@ abstract class Openapi extends ChopperService {
   ///Get Tickets By Userid
   ///@param user_id
   @Get(path: '/tombola/users/{user_id}/tickets')
-  Future<chopper.Response<List<TicketComplete>>> _tombolaUsersUserIdTicketsGet(
-      {@Path('user_id') required String? userId});
+  Future<chopper.Response<List<TicketComplete>>> _tombolaUsersUserIdTicketsGet({
+    @Path('user_id') required String? userId,
+  });
 
   ///Get Tickets By Raffleid
   ///@param raffle_id
   Future<chopper.Response<List<TicketComplete>>>
-      tombolaRafflesRaffleIdTicketsGet({required String? raffleId}) {
+  tombolaRafflesRaffleIdTicketsGet({required String? raffleId}) {
     generatedMapping.putIfAbsent(
-        TicketComplete, () => TicketComplete.fromJsonFactory);
+      TicketComplete,
+      () => TicketComplete.fromJsonFactory,
+    );
 
     return _tombolaRafflesRaffleIdTicketsGet(raffleId: raffleId);
   }
@@ -2122,13 +2267,16 @@ abstract class Openapi extends ChopperService {
   ///@param raffle_id
   @Get(path: '/tombola/raffles/{raffle_id}/tickets')
   Future<chopper.Response<List<TicketComplete>>>
-      _tombolaRafflesRaffleIdTicketsGet(
-          {@Path('raffle_id') required String? raffleId});
+  _tombolaRafflesRaffleIdTicketsGet({
+    @Path('raffle_id') required String? raffleId,
+  });
 
   ///Get Prizes
   Future<chopper.Response<List<PrizeSimple>>> tombolaPrizesGet() {
     generatedMapping.putIfAbsent(
-        PrizeSimple, () => PrizeSimple.fromJsonFactory);
+      PrizeSimple,
+      () => PrizeSimple.fromJsonFactory,
+    );
 
     return _tombolaPrizesGet();
   }
@@ -2138,21 +2286,22 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<PrizeSimple>>> _tombolaPrizesGet();
 
   ///Create Prize
-  Future<chopper.Response<PrizeSimple>> tombolaPrizesPost(
-      {required PrizeBase? body}) {
+  Future<chopper.Response<PrizeSimple>> tombolaPrizesPost({
+    required PrizeBase? body,
+  }) {
     generatedMapping.putIfAbsent(
-        PrizeSimple, () => PrizeSimple.fromJsonFactory);
+      PrizeSimple,
+      () => PrizeSimple.fromJsonFactory,
+    );
 
     return _tombolaPrizesPost(body: body);
   }
 
   ///Create Prize
-  @Post(
-    path: '/tombola/prizes',
-    optionalBody: true,
-  )
-  Future<chopper.Response<PrizeSimple>> _tombolaPrizesPost(
-      {@Body() required PrizeBase? body});
+  @Post(path: '/tombola/prizes', optionalBody: true)
+  Future<chopper.Response<PrizeSimple>> _tombolaPrizesPost({
+    @Body() required PrizeBase? body,
+  });
 
   ///Edit Prize
   ///@param prize_id
@@ -2165,10 +2314,7 @@ abstract class Openapi extends ChopperService {
 
   ///Edit Prize
   ///@param prize_id
-  @Patch(
-    path: '/tombola/prizes/{prize_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/tombola/prizes/{prize_id}', optionalBody: true)
   Future<chopper.Response> _tombolaPrizesPrizeIdPatch({
     @Path('prize_id') required String? prizeId,
     @Body() required PrizeEdit? body,
@@ -2176,23 +2322,28 @@ abstract class Openapi extends ChopperService {
 
   ///Delete Prize
   ///@param prize_id
-  Future<chopper.Response> tombolaPrizesPrizeIdDelete(
-      {required String? prizeId}) {
+  Future<chopper.Response> tombolaPrizesPrizeIdDelete({
+    required String? prizeId,
+  }) {
     return _tombolaPrizesPrizeIdDelete(prizeId: prizeId);
   }
 
   ///Delete Prize
   ///@param prize_id
   @Delete(path: '/tombola/prizes/{prize_id}')
-  Future<chopper.Response> _tombolaPrizesPrizeIdDelete(
-      {@Path('prize_id') required String? prizeId});
+  Future<chopper.Response> _tombolaPrizesPrizeIdDelete({
+    @Path('prize_id') required String? prizeId,
+  });
 
   ///Get Prizes By Raffleid
   ///@param raffle_id
-  Future<chopper.Response<List<PrizeSimple>>> tombolaRafflesRaffleIdPrizesGet(
-      {required String? raffleId}) {
+  Future<chopper.Response<List<PrizeSimple>>> tombolaRafflesRaffleIdPrizesGet({
+    required String? raffleId,
+  }) {
     generatedMapping.putIfAbsent(
-        PrizeSimple, () => PrizeSimple.fromJsonFactory);
+      PrizeSimple,
+      () => PrizeSimple.fromJsonFactory,
+    );
 
     return _tombolaRafflesRaffleIdPrizesGet(raffleId: raffleId);
   }
@@ -2200,52 +2351,56 @@ abstract class Openapi extends ChopperService {
   ///Get Prizes By Raffleid
   ///@param raffle_id
   @Get(path: '/tombola/raffles/{raffle_id}/prizes')
-  Future<chopper.Response<List<PrizeSimple>>> _tombolaRafflesRaffleIdPrizesGet(
-      {@Path('raffle_id') required String? raffleId});
+  Future<chopper.Response<List<PrizeSimple>>> _tombolaRafflesRaffleIdPrizesGet({
+    @Path('raffle_id') required String? raffleId,
+  });
 
   ///Create Prize Picture
   ///@param prize_id
   Future<chopper.Response<AppTypesStandardResponsesResult>>
-      tombolaPrizesPrizeIdPicturePost({
+  tombolaPrizesPrizeIdPicturePost({
     required String? prizeId,
-    required BodyCreatePrizePictureTombolaPrizesPrizeIdPicturePost body,
+    required MultipartFile image,
   }) {
-    generatedMapping.putIfAbsent(AppTypesStandardResponsesResult,
-        () => AppTypesStandardResponsesResult.fromJsonFactory);
+    generatedMapping.putIfAbsent(
+      AppTypesStandardResponsesResult,
+      () => AppTypesStandardResponsesResult.fromJsonFactory,
+    );
 
-    return _tombolaPrizesPrizeIdPicturePost(prizeId: prizeId, body: body);
+    return _tombolaPrizesPrizeIdPicturePost(prizeId: prizeId, image: image);
   }
 
   ///Create Prize Picture
   ///@param prize_id
-  @Post(
-    path: '/tombola/prizes/{prize_id}/picture',
-    optionalBody: true,
-  )
+  @Post(path: '/tombola/prizes/{prize_id}/picture', optionalBody: true)
   @Multipart()
   Future<chopper.Response<AppTypesStandardResponsesResult>>
-      _tombolaPrizesPrizeIdPicturePost({
+  _tombolaPrizesPrizeIdPicturePost({
     @Path('prize_id') required String? prizeId,
-    @Part() required BodyCreatePrizePictureTombolaPrizesPrizeIdPicturePost body,
+    @PartFile('image') required MultipartFile image,
   });
 
   ///Read Prize Logo
   ///@param prize_id
-  Future<chopper.Response> tombolaPrizesPrizeIdPictureGet(
-      {required String? prizeId}) {
+  Future<chopper.Response> tombolaPrizesPrizeIdPictureGet({
+    required String? prizeId,
+  }) {
     return _tombolaPrizesPrizeIdPictureGet(prizeId: prizeId);
   }
 
   ///Read Prize Logo
   ///@param prize_id
   @Get(path: '/tombola/prizes/{prize_id}/picture')
-  Future<chopper.Response> _tombolaPrizesPrizeIdPictureGet(
-      {@Path('prize_id') required String? prizeId});
+  Future<chopper.Response> _tombolaPrizesPrizeIdPictureGet({
+    @Path('prize_id') required String? prizeId,
+  });
 
   ///Get Users Cash
   Future<chopper.Response<List<CashComplete>>> tombolaUsersCashGet() {
     generatedMapping.putIfAbsent(
-        CashComplete, () => CashComplete.fromJsonFactory);
+      CashComplete,
+      () => CashComplete.fromJsonFactory,
+    );
 
     return _tombolaUsersCashGet();
   }
@@ -2256,10 +2411,13 @@ abstract class Openapi extends ChopperService {
 
   ///Get Cash By Id
   ///@param user_id
-  Future<chopper.Response<CashComplete>> tombolaUsersUserIdCashGet(
-      {required String? userId}) {
+  Future<chopper.Response<CashComplete>> tombolaUsersUserIdCashGet({
+    required String? userId,
+  }) {
     generatedMapping.putIfAbsent(
-        CashComplete, () => CashComplete.fromJsonFactory);
+      CashComplete,
+      () => CashComplete.fromJsonFactory,
+    );
 
     return _tombolaUsersUserIdCashGet(userId: userId);
   }
@@ -2267,8 +2425,9 @@ abstract class Openapi extends ChopperService {
   ///Get Cash By Id
   ///@param user_id
   @Get(path: '/tombola/users/{user_id}/cash')
-  Future<chopper.Response<CashComplete>> _tombolaUsersUserIdCashGet(
-      {@Path('user_id') required String? userId});
+  Future<chopper.Response<CashComplete>> _tombolaUsersUserIdCashGet({
+    @Path('user_id') required String? userId,
+  });
 
   ///Create Cash Of User
   ///@param user_id
@@ -2277,17 +2436,16 @@ abstract class Openapi extends ChopperService {
     required CashEdit? body,
   }) {
     generatedMapping.putIfAbsent(
-        CashComplete, () => CashComplete.fromJsonFactory);
+      CashComplete,
+      () => CashComplete.fromJsonFactory,
+    );
 
     return _tombolaUsersUserIdCashPost(userId: userId, body: body);
   }
 
   ///Create Cash Of User
   ///@param user_id
-  @Post(
-    path: '/tombola/users/{user_id}/cash',
-    optionalBody: true,
-  )
+  @Post(path: '/tombola/users/{user_id}/cash', optionalBody: true)
   Future<chopper.Response<CashComplete>> _tombolaUsersUserIdCashPost({
     @Path('user_id') required String? userId,
     @Body() required CashEdit? body,
@@ -2304,10 +2462,7 @@ abstract class Openapi extends ChopperService {
 
   ///Edit Cash By Id
   ///@param user_id
-  @Patch(
-    path: '/tombola/users/{user_id}/cash',
-    optionalBody: true,
-  )
+  @Patch(path: '/tombola/users/{user_id}/cash', optionalBody: true)
   Future<chopper.Response> _tombolaUsersUserIdCashPatch({
     @Path('user_id') required String? userId,
     @Body() required CashEdit? body,
@@ -2315,59 +2470,60 @@ abstract class Openapi extends ChopperService {
 
   ///Draw Winner
   ///@param prize_id
-  Future<chopper.Response<List<TicketComplete>>> tombolaPrizesPrizeIdDrawPost(
-      {required String? prizeId}) {
+  Future<chopper.Response<List<TicketComplete>>> tombolaPrizesPrizeIdDrawPost({
+    required String? prizeId,
+  }) {
     generatedMapping.putIfAbsent(
-        TicketComplete, () => TicketComplete.fromJsonFactory);
+      TicketComplete,
+      () => TicketComplete.fromJsonFactory,
+    );
 
     return _tombolaPrizesPrizeIdDrawPost(prizeId: prizeId);
   }
 
   ///Draw Winner
   ///@param prize_id
-  @Post(
-    path: '/tombola/prizes/{prize_id}/draw',
-    optionalBody: true,
-  )
-  Future<chopper.Response<List<TicketComplete>>> _tombolaPrizesPrizeIdDrawPost(
-      {@Path('prize_id') required String? prizeId});
+  @Post(path: '/tombola/prizes/{prize_id}/draw', optionalBody: true)
+  Future<chopper.Response<List<TicketComplete>>> _tombolaPrizesPrizeIdDrawPost({
+    @Path('prize_id') required String? prizeId,
+  });
 
   ///Open Raffle
   ///@param raffle_id
-  Future<chopper.Response> tombolaRafflesRaffleIdOpenPatch(
-      {required String? raffleId}) {
+  Future<chopper.Response> tombolaRafflesRaffleIdOpenPatch({
+    required String? raffleId,
+  }) {
     return _tombolaRafflesRaffleIdOpenPatch(raffleId: raffleId);
   }
 
   ///Open Raffle
   ///@param raffle_id
-  @Patch(
-    path: '/tombola/raffles/{raffle_id}/open',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _tombolaRafflesRaffleIdOpenPatch(
-      {@Path('raffle_id') required String? raffleId});
+  @Patch(path: '/tombola/raffles/{raffle_id}/open', optionalBody: true)
+  Future<chopper.Response> _tombolaRafflesRaffleIdOpenPatch({
+    @Path('raffle_id') required String? raffleId,
+  });
 
   ///Lock Raffle
   ///@param raffle_id
-  Future<chopper.Response> tombolaRafflesRaffleIdLockPatch(
-      {required String? raffleId}) {
+  Future<chopper.Response> tombolaRafflesRaffleIdLockPatch({
+    required String? raffleId,
+  }) {
     return _tombolaRafflesRaffleIdLockPatch(raffleId: raffleId);
   }
 
   ///Lock Raffle
   ///@param raffle_id
-  @Patch(
-    path: '/tombola/raffles/{raffle_id}/lock',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _tombolaRafflesRaffleIdLockPatch(
-      {@Path('raffle_id') required String? raffleId});
+  @Patch(path: '/tombola/raffles/{raffle_id}/lock', optionalBody: true)
+  Future<chopper.Response> _tombolaRafflesRaffleIdLockPatch({
+    @Path('raffle_id') required String? raffleId,
+  });
 
   ///Get Flappybird Score
   Future<chopper.Response<List<FlappyBirdScoreInDB>>> flappybirdScoresGet() {
     generatedMapping.putIfAbsent(
-        FlappyBirdScoreInDB, () => FlappyBirdScoreInDB.fromJsonFactory);
+      FlappyBirdScoreInDB,
+      () => FlappyBirdScoreInDB.fromJsonFactory,
+    );
 
     return _flappybirdScoresGet();
   }
@@ -2377,27 +2533,30 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<FlappyBirdScoreInDB>>> _flappybirdScoresGet();
 
   ///Create Flappybird Score
-  Future<chopper.Response<FlappyBirdScoreInDB>> flappybirdScoresPost(
-      {required FlappyBirdScoreBase? body}) {
+  Future<chopper.Response<FlappyBirdScoreBase>> flappybirdScoresPost({
+    required FlappyBirdScoreBase? body,
+  }) {
     generatedMapping.putIfAbsent(
-        FlappyBirdScoreBase, () => FlappyBirdScoreBase.fromJsonFactory);
+      FlappyBirdScoreBase,
+      () => FlappyBirdScoreBase.fromJsonFactory,
+    );
 
     return _flappybirdScoresPost(body: body);
   }
 
   ///Create Flappybird Score
-  @Post(
-    path: '/flappybird/scores',
-    optionalBody: true,
-  )
-  Future<chopper.Response<FlappyBirdScoreInDB>> _flappybirdScoresPost(
-      {@Body() required FlappyBirdScoreBase? body});
+  @Post(path: '/flappybird/scores', optionalBody: true)
+  Future<chopper.Response<FlappyBirdScoreBase>> _flappybirdScoresPost({
+    @Body() required FlappyBirdScoreBase? body,
+  });
 
   ///Get Current User Flappybird Personal Best
   Future<chopper.Response<FlappyBirdScoreCompleteFeedBack>>
-      flappybirdScoresMeGet() {
-    generatedMapping.putIfAbsent(FlappyBirdScoreCompleteFeedBack,
-        () => FlappyBirdScoreCompleteFeedBack.fromJsonFactory);
+  flappybirdScoresMeGet() {
+    generatedMapping.putIfAbsent(
+      FlappyBirdScoreCompleteFeedBack,
+      () => FlappyBirdScoreCompleteFeedBack.fromJsonFactory,
+    );
 
     return _flappybirdScoresMeGet();
   }
@@ -2405,21 +2564,24 @@ abstract class Openapi extends ChopperService {
   ///Get Current User Flappybird Personal Best
   @Get(path: '/flappybird/scores/me')
   Future<chopper.Response<FlappyBirdScoreCompleteFeedBack>>
-      _flappybirdScoresMeGet();
+  _flappybirdScoresMeGet();
 
   ///Remove Flappybird Score
   ///@param targeted_user_id
-  Future<chopper.Response> flappybirdScoresTargetedUserIdDelete(
-      {required String? targetedUserId}) {
+  Future<chopper.Response> flappybirdScoresTargetedUserIdDelete({
+    required String? targetedUserId,
+  }) {
     return _flappybirdScoresTargetedUserIdDelete(
-        targetedUserId: targetedUserId);
+      targetedUserId: targetedUserId,
+    );
   }
 
   ///Remove Flappybird Score
   ///@param targeted_user_id
   @Delete(path: '/flappybird/scores/{targeted_user_id}')
-  Future<chopper.Response> _flappybirdScoresTargetedUserIdDelete(
-      {@Path('targeted_user_id') required String? targetedUserId});
+  Future<chopper.Response> _flappybirdScoresTargetedUserIdDelete({
+    @Path('targeted_user_id') required String? targetedUserId,
+  });
 
   ///Get Paper Pdf
   ///@param paper_id
@@ -2430,34 +2592,34 @@ abstract class Openapi extends ChopperService {
   ///Get Paper Pdf
   ///@param paper_id
   @Get(path: '/ph/{paper_id}/pdf')
-  Future<chopper.Response> _phPaperIdPdfGet(
-      {@Path('paper_id') required String? paperId});
+  Future<chopper.Response> _phPaperIdPdfGet({
+    @Path('paper_id') required String? paperId,
+  });
 
   ///Create Paper Pdf And Cover
   ///@param paper_id
   Future<chopper.Response> phPaperIdPdfPost({
     required String? paperId,
-    required BodyCreatePaperPdfAndCoverPhPaperIdPdfPost body,
+    required MultipartFile pdf,
   }) {
-    return _phPaperIdPdfPost(paperId: paperId, body: body);
+    return _phPaperIdPdfPost(paperId: paperId, pdf: pdf);
   }
 
   ///Create Paper Pdf And Cover
   ///@param paper_id
-  @Post(
-    path: '/ph/{paper_id}/pdf',
-    optionalBody: true,
-  )
+  @Post(path: '/ph/{paper_id}/pdf', optionalBody: true)
   @Multipart()
   Future<chopper.Response> _phPaperIdPdfPost({
     @Path('paper_id') required String? paperId,
-    @Part() required BodyCreatePaperPdfAndCoverPhPaperIdPdfPost body,
+    @PartFile('pdf') required MultipartFile pdf,
   });
 
   ///Get Papers
   Future<chopper.Response<List<PaperComplete>>> phGet() {
     generatedMapping.putIfAbsent(
-        PaperComplete, () => PaperComplete.fromJsonFactory);
+      PaperComplete,
+      () => PaperComplete.fromJsonFactory,
+    );
 
     return _phGet();
   }
@@ -2469,23 +2631,25 @@ abstract class Openapi extends ChopperService {
   ///Create Paper
   Future<chopper.Response<PaperComplete>> phPost({required PaperBase? body}) {
     generatedMapping.putIfAbsent(
-        PaperComplete, () => PaperComplete.fromJsonFactory);
+      PaperComplete,
+      () => PaperComplete.fromJsonFactory,
+    );
 
     return _phPost(body: body);
   }
 
   ///Create Paper
-  @Post(
-    path: '/ph/',
-    optionalBody: true,
-  )
-  Future<chopper.Response<PaperComplete>> _phPost(
-      {@Body() required PaperBase? body});
+  @Post(path: '/ph/', optionalBody: true)
+  Future<chopper.Response<PaperComplete>> _phPost({
+    @Body() required PaperBase? body,
+  });
 
   ///Get Papers Admin
   Future<chopper.Response<List<PaperComplete>>> phAdminGet() {
     generatedMapping.putIfAbsent(
-        PaperComplete, () => PaperComplete.fromJsonFactory);
+      PaperComplete,
+      () => PaperComplete.fromJsonFactory,
+    );
 
     return _phAdminGet();
   }
@@ -2503,8 +2667,9 @@ abstract class Openapi extends ChopperService {
   ///Get Cover
   ///@param paper_id
   @Get(path: '/ph/{paper_id}/cover')
-  Future<chopper.Response> _phPaperIdCoverGet(
-      {@Path('paper_id') required String? paperId});
+  Future<chopper.Response> _phPaperIdCoverGet({
+    @Path('paper_id') required String? paperId,
+  });
 
   ///Update Paper
   ///@param paper_id
@@ -2517,10 +2682,7 @@ abstract class Openapi extends ChopperService {
 
   ///Update Paper
   ///@param paper_id
-  @Patch(
-    path: '/ph/{paper_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/ph/{paper_id}', optionalBody: true)
   Future<chopper.Response> _phPaperIdPatch({
     @Path('paper_id') required String? paperId,
     @Body() required PaperUpdate? body,
@@ -2535,13 +2697,15 @@ abstract class Openapi extends ChopperService {
   ///Delete Paper
   ///@param paper_id
   @Delete(path: '/ph/{paper_id}')
-  Future<chopper.Response> _phPaperIdDelete(
-      {@Path('paper_id') required String? paperId});
+  Future<chopper.Response> _phPaperIdDelete({
+    @Path('paper_id') required String? paperId,
+  });
 
   ///Get Movie
   ///@param themoviedb_id
-  Future<chopper.Response<TheMovieDB>> cinemaThemoviedbThemoviedbIdGet(
-      {required String? themoviedbId}) {
+  Future<chopper.Response<TheMovieDB>> cinemaThemoviedbThemoviedbIdGet({
+    required String? themoviedbId,
+  }) {
     generatedMapping.putIfAbsent(TheMovieDB, () => TheMovieDB.fromJsonFactory);
 
     return _cinemaThemoviedbThemoviedbIdGet(themoviedbId: themoviedbId);
@@ -2550,13 +2714,16 @@ abstract class Openapi extends ChopperService {
   ///Get Movie
   ///@param themoviedb_id
   @Get(path: '/cinema/themoviedb/{themoviedb_id}')
-  Future<chopper.Response<TheMovieDB>> _cinemaThemoviedbThemoviedbIdGet(
-      {@Path('themoviedb_id') required String? themoviedbId});
+  Future<chopper.Response<TheMovieDB>> _cinemaThemoviedbThemoviedbIdGet({
+    @Path('themoviedb_id') required String? themoviedbId,
+  });
 
   ///Get Sessions
   Future<chopper.Response<List<CineSessionComplete>>> cinemaSessionsGet() {
     generatedMapping.putIfAbsent(
-        CineSessionComplete, () => CineSessionComplete.fromJsonFactory);
+      CineSessionComplete,
+      () => CineSessionComplete.fromJsonFactory,
+    );
 
     return _cinemaSessionsGet();
   }
@@ -2566,21 +2733,22 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<CineSessionComplete>>> _cinemaSessionsGet();
 
   ///Create Session
-  Future<chopper.Response<CineSessionComplete>> cinemaSessionsPost(
-      {required CineSessionBase? body}) {
+  Future<chopper.Response<CineSessionComplete>> cinemaSessionsPost({
+    required CineSessionBase? body,
+  }) {
     generatedMapping.putIfAbsent(
-        CineSessionComplete, () => CineSessionComplete.fromJsonFactory);
+      CineSessionComplete,
+      () => CineSessionComplete.fromJsonFactory,
+    );
 
     return _cinemaSessionsPost(body: body);
   }
 
   ///Create Session
-  @Post(
-    path: '/cinema/sessions',
-    optionalBody: true,
-  )
-  Future<chopper.Response<CineSessionComplete>> _cinemaSessionsPost(
-      {@Body() required CineSessionBase? body});
+  @Post(path: '/cinema/sessions', optionalBody: true)
+  Future<chopper.Response<CineSessionComplete>> _cinemaSessionsPost({
+    @Body() required CineSessionBase? body,
+  });
 
   ///Update Session
   ///@param session_id
@@ -2593,10 +2761,7 @@ abstract class Openapi extends ChopperService {
 
   ///Update Session
   ///@param session_id
-  @Patch(
-    path: '/cinema/sessions/{session_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/cinema/sessions/{session_id}', optionalBody: true)
   Future<chopper.Response> _cinemaSessionsSessionIdPatch({
     @Path('session_id') required String? sessionId,
     @Body() required CineSessionUpdate? body,
@@ -2604,61 +2769,68 @@ abstract class Openapi extends ChopperService {
 
   ///Delete Session
   ///@param session_id
-  Future<chopper.Response> cinemaSessionsSessionIdDelete(
-      {required String? sessionId}) {
+  Future<chopper.Response> cinemaSessionsSessionIdDelete({
+    required String? sessionId,
+  }) {
     return _cinemaSessionsSessionIdDelete(sessionId: sessionId);
   }
 
   ///Delete Session
   ///@param session_id
   @Delete(path: '/cinema/sessions/{session_id}')
-  Future<chopper.Response> _cinemaSessionsSessionIdDelete(
-      {@Path('session_id') required String? sessionId});
+  Future<chopper.Response> _cinemaSessionsSessionIdDelete({
+    @Path('session_id') required String? sessionId,
+  });
 
   ///Create Campaigns Logo
   ///@param session_id
   Future<chopper.Response<AppTypesStandardResponsesResult>>
-      cinemaSessionsSessionIdPosterPost({
+  cinemaSessionsSessionIdPosterPost({
     required String? sessionId,
-    required BodyCreateCampaignsLogoCinemaSessionsSessionIdPosterPost body,
+    required MultipartFile image,
   }) {
-    generatedMapping.putIfAbsent(AppTypesStandardResponsesResult,
-        () => AppTypesStandardResponsesResult.fromJsonFactory);
+    generatedMapping.putIfAbsent(
+      AppTypesStandardResponsesResult,
+      () => AppTypesStandardResponsesResult.fromJsonFactory,
+    );
 
-    return _cinemaSessionsSessionIdPosterPost(sessionId: sessionId, body: body);
+    return _cinemaSessionsSessionIdPosterPost(
+      sessionId: sessionId,
+      image: image,
+    );
   }
 
   ///Create Campaigns Logo
   ///@param session_id
-  @Post(
-    path: '/cinema/sessions/{session_id}/poster',
-    optionalBody: true,
-  )
+  @Post(path: '/cinema/sessions/{session_id}/poster', optionalBody: true)
   @Multipart()
   Future<chopper.Response<AppTypesStandardResponsesResult>>
-      _cinemaSessionsSessionIdPosterPost({
+  _cinemaSessionsSessionIdPosterPost({
     @Path('session_id') required String? sessionId,
-    @Part()
-    required BodyCreateCampaignsLogoCinemaSessionsSessionIdPosterPost body,
+    @PartFile('image') required MultipartFile image,
   });
 
   ///Read Session Poster
   ///@param session_id
-  Future<chopper.Response> cinemaSessionsSessionIdPosterGet(
-      {required String? sessionId}) {
+  Future<chopper.Response> cinemaSessionsSessionIdPosterGet({
+    required String? sessionId,
+  }) {
     return _cinemaSessionsSessionIdPosterGet(sessionId: sessionId);
   }
 
   ///Read Session Poster
   ///@param session_id
   @Get(path: '/cinema/sessions/{session_id}/poster')
-  Future<chopper.Response> _cinemaSessionsSessionIdPosterGet(
-      {@Path('session_id') required String? sessionId});
+  Future<chopper.Response> _cinemaSessionsSessionIdPosterGet({
+    @Path('session_id') required String? sessionId,
+  });
 
   ///Get Events
   Future<chopper.Response<List<EventReturn>>> calendarEventsGet() {
     generatedMapping.putIfAbsent(
-        EventReturn, () => EventReturn.fromJsonFactory);
+      EventReturn,
+      () => EventReturn.fromJsonFactory,
+    );
 
     return _calendarEventsGet();
   }
@@ -2668,26 +2840,29 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<EventReturn>>> _calendarEventsGet();
 
   ///Add Event
-  Future<chopper.Response<EventReturn>> calendarEventsPost(
-      {required EventBase? body}) {
+  Future<chopper.Response<EventReturn>> calendarEventsPost({
+    required EventBase? body,
+  }) {
     generatedMapping.putIfAbsent(
-        EventReturn, () => EventReturn.fromJsonFactory);
+      EventReturn,
+      () => EventReturn.fromJsonFactory,
+    );
 
     return _calendarEventsPost(body: body);
   }
 
   ///Add Event
-  @Post(
-    path: '/calendar/events/',
-    optionalBody: true,
-  )
-  Future<chopper.Response<EventReturn>> _calendarEventsPost(
-      {@Body() required EventBase? body});
+  @Post(path: '/calendar/events/', optionalBody: true)
+  Future<chopper.Response<EventReturn>> _calendarEventsPost({
+    @Body() required EventBase? body,
+  });
 
   ///Get Confirmed Events
   Future<chopper.Response<List<EventComplete>>> calendarEventsConfirmedGet() {
     generatedMapping.putIfAbsent(
-        EventComplete, () => EventComplete.fromJsonFactory);
+      EventComplete,
+      () => EventComplete.fromJsonFactory,
+    );
 
     return _calendarEventsConfirmedGet();
   }
@@ -2698,10 +2873,13 @@ abstract class Openapi extends ChopperService {
 
   ///Get Applicant Bookings
   ///@param applicant_id
-  Future<chopper.Response<List<EventReturn>>> calendarEventsUserApplicantIdGet(
-      {required String? applicantId}) {
+  Future<chopper.Response<List<EventReturn>>> calendarEventsUserApplicantIdGet({
+    required String? applicantId,
+  }) {
     generatedMapping.putIfAbsent(
-        EventReturn, () => EventReturn.fromJsonFactory);
+      EventReturn,
+      () => EventReturn.fromJsonFactory,
+    );
 
     return _calendarEventsUserApplicantIdGet(applicantId: applicantId);
   }
@@ -2709,15 +2887,20 @@ abstract class Openapi extends ChopperService {
   ///Get Applicant Bookings
   ///@param applicant_id
   @Get(path: '/calendar/events/user/{applicant_id}')
-  Future<chopper.Response<List<EventReturn>>> _calendarEventsUserApplicantIdGet(
-      {@Path('applicant_id') required String? applicantId});
+  Future<chopper.Response<List<EventReturn>>>
+  _calendarEventsUserApplicantIdGet({
+    @Path('applicant_id') required String? applicantId,
+  });
 
   ///Get Event By Id
   ///@param event_id
-  Future<chopper.Response<EventComplete>> calendarEventsEventIdGet(
-      {required String? eventId}) {
+  Future<chopper.Response<EventComplete>> calendarEventsEventIdGet({
+    required String? eventId,
+  }) {
     generatedMapping.putIfAbsent(
-        EventComplete, () => EventComplete.fromJsonFactory);
+      EventComplete,
+      () => EventComplete.fromJsonFactory,
+    );
 
     return _calendarEventsEventIdGet(eventId: eventId);
   }
@@ -2725,8 +2908,9 @@ abstract class Openapi extends ChopperService {
   ///Get Event By Id
   ///@param event_id
   @Get(path: '/calendar/events/{event_id}')
-  Future<chopper.Response<EventComplete>> _calendarEventsEventIdGet(
-      {@Path('event_id') required String? eventId});
+  Future<chopper.Response<EventComplete>> _calendarEventsEventIdGet({
+    @Path('event_id') required String? eventId,
+  });
 
   ///Edit Bookings Id
   ///@param event_id
@@ -2739,10 +2923,7 @@ abstract class Openapi extends ChopperService {
 
   ///Edit Bookings Id
   ///@param event_id
-  @Patch(
-    path: '/calendar/events/{event_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/calendar/events/{event_id}', optionalBody: true)
   Future<chopper.Response> _calendarEventsEventIdPatch({
     @Path('event_id') required String? eventId,
     @Body() required EventEdit? body,
@@ -2750,23 +2931,28 @@ abstract class Openapi extends ChopperService {
 
   ///Delete Bookings Id
   ///@param event_id
-  Future<chopper.Response> calendarEventsEventIdDelete(
-      {required Object? eventId}) {
+  Future<chopper.Response> calendarEventsEventIdDelete({
+    required Object? eventId,
+  }) {
     return _calendarEventsEventIdDelete(eventId: eventId);
   }
 
   ///Delete Bookings Id
   ///@param event_id
   @Delete(path: '/calendar/events/{event_id}')
-  Future<chopper.Response> _calendarEventsEventIdDelete(
-      {@Path('event_id') required Object? eventId});
+  Future<chopper.Response> _calendarEventsEventIdDelete({
+    @Path('event_id') required Object? eventId,
+  });
 
   ///Get Event Applicant
   ///@param event_id
-  Future<chopper.Response<EventApplicant>> calendarEventsEventIdApplicantGet(
-      {required String? eventId}) {
+  Future<chopper.Response<EventApplicant>> calendarEventsEventIdApplicantGet({
+    required String? eventId,
+  }) {
     generatedMapping.putIfAbsent(
-        EventApplicant, () => EventApplicant.fromJsonFactory);
+      EventApplicant,
+      () => EventApplicant.fromJsonFactory,
+    );
 
     return _calendarEventsEventIdApplicantGet(eventId: eventId);
   }
@@ -2774,8 +2960,9 @@ abstract class Openapi extends ChopperService {
   ///Get Event Applicant
   ///@param event_id
   @Get(path: '/calendar/events/{event_id}/applicant')
-  Future<chopper.Response<EventApplicant>> _calendarEventsEventIdApplicantGet(
-      {@Path('event_id') required String? eventId});
+  Future<chopper.Response<EventApplicant>> _calendarEventsEventIdApplicantGet({
+    @Path('event_id') required String? eventId,
+  });
 
   ///Confirm Booking
   ///@param event_id
@@ -2785,7 +2972,9 @@ abstract class Openapi extends ChopperService {
     required enums.Decision? decision,
   }) {
     return _calendarEventsEventIdReplyDecisionPatch(
-        eventId: eventId, decision: decision?.value?.toString());
+      eventId: eventId,
+      decision: decision?.value?.toString(),
+    );
   }
 
   ///Confirm Booking
@@ -2806,10 +2995,7 @@ abstract class Openapi extends ChopperService {
   }
 
   ///Recreate Ical File
-  @Post(
-    path: '/calendar/ical/create',
-    optionalBody: true,
-  )
+  @Post(path: '/calendar/ical/create', optionalBody: true)
   Future<chopper.Response> _calendarIcalCreatePost();
 
   ///Get Icalendar File
@@ -2823,9 +3009,11 @@ abstract class Openapi extends ChopperService {
 
   ///Get All Associations
   Future<chopper.Response<List<AssociationComplete>>>
-      phonebookAssociationsGet() {
+  phonebookAssociationsGet() {
     generatedMapping.putIfAbsent(
-        AssociationComplete, () => AssociationComplete.fromJsonFactory);
+      AssociationComplete,
+      () => AssociationComplete.fromJsonFactory,
+    );
 
     return _phonebookAssociationsGet();
   }
@@ -2833,29 +3021,32 @@ abstract class Openapi extends ChopperService {
   ///Get All Associations
   @Get(path: '/phonebook/associations/')
   Future<chopper.Response<List<AssociationComplete>>>
-      _phonebookAssociationsGet();
+  _phonebookAssociationsGet();
 
   ///Create Association
-  Future<chopper.Response<AssociationComplete>> phonebookAssociationsPost(
-      {required AssociationBase? body}) {
+  Future<chopper.Response<AssociationComplete>> phonebookAssociationsPost({
+    required AssociationBase? body,
+  }) {
     generatedMapping.putIfAbsent(
-        AssociationComplete, () => AssociationComplete.fromJsonFactory);
+      AssociationComplete,
+      () => AssociationComplete.fromJsonFactory,
+    );
 
     return _phonebookAssociationsPost(body: body);
   }
 
   ///Create Association
-  @Post(
-    path: '/phonebook/associations/',
-    optionalBody: true,
-  )
-  Future<chopper.Response<AssociationComplete>> _phonebookAssociationsPost(
-      {@Body() required AssociationBase? body});
+  @Post(path: '/phonebook/associations/', optionalBody: true)
+  Future<chopper.Response<AssociationComplete>> _phonebookAssociationsPost({
+    @Body() required AssociationBase? body,
+  });
 
   ///Get All Role Tags
   Future<chopper.Response<RoleTagsReturn>> phonebookRoletagsGet() {
     generatedMapping.putIfAbsent(
-        RoleTagsReturn, () => RoleTagsReturn.fromJsonFactory);
+      RoleTagsReturn,
+      () => RoleTagsReturn.fromJsonFactory,
+    );
 
     return _phonebookRoletagsGet();
   }
@@ -2867,7 +3058,9 @@ abstract class Openapi extends ChopperService {
   ///Get All Kinds
   Future<chopper.Response<KindsReturn>> phonebookAssociationsKindsGet() {
     generatedMapping.putIfAbsent(
-        KindsReturn, () => KindsReturn.fromJsonFactory);
+      KindsReturn,
+      () => KindsReturn.fromJsonFactory,
+    );
 
     return _phonebookAssociationsKindsGet();
   }
@@ -2883,15 +3076,14 @@ abstract class Openapi extends ChopperService {
     required AssociationEdit? body,
   }) {
     return _phonebookAssociationsAssociationIdPatch(
-        associationId: associationId, body: body);
+      associationId: associationId,
+      body: body,
+    );
   }
 
   ///Update Association
   ///@param association_id
-  @Patch(
-    path: '/phonebook/associations/{association_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/phonebook/associations/{association_id}', optionalBody: true)
   Future<chopper.Response> _phonebookAssociationsAssociationIdPatch({
     @Path('association_id') required String? associationId,
     @Body() required AssociationEdit? body,
@@ -2899,17 +3091,20 @@ abstract class Openapi extends ChopperService {
 
   ///Delete Association
   ///@param association_id
-  Future<chopper.Response> phonebookAssociationsAssociationIdDelete(
-      {required String? associationId}) {
+  Future<chopper.Response> phonebookAssociationsAssociationIdDelete({
+    required String? associationId,
+  }) {
     return _phonebookAssociationsAssociationIdDelete(
-        associationId: associationId);
+      associationId: associationId,
+    );
   }
 
   ///Delete Association
   ///@param association_id
   @Delete(path: '/phonebook/associations/{association_id}')
-  Future<chopper.Response> _phonebookAssociationsAssociationIdDelete(
-      {@Path('association_id') required String? associationId});
+  Future<chopper.Response> _phonebookAssociationsAssociationIdDelete({
+    @Path('association_id') required String? associationId,
+  });
 
   ///Update Association Groups
   ///@param association_id
@@ -2918,7 +3113,9 @@ abstract class Openapi extends ChopperService {
     required AssociationGroupsEdit? body,
   }) {
     return _phonebookAssociationsAssociationIdGroupsPatch(
-        associationId: associationId, body: body);
+      associationId: associationId,
+      body: body,
+    );
   }
 
   ///Update Association Groups
@@ -2934,10 +3131,12 @@ abstract class Openapi extends ChopperService {
 
   ///Deactivate Association
   ///@param association_id
-  Future<chopper.Response> phonebookAssociationsAssociationIdDeactivatePatch(
-      {required String? associationId}) {
+  Future<chopper.Response> phonebookAssociationsAssociationIdDeactivatePatch({
+    required String? associationId,
+  }) {
     return _phonebookAssociationsAssociationIdDeactivatePatch(
-        associationId: associationId);
+      associationId: associationId,
+    );
   }
 
   ///Deactivate Association
@@ -2946,41 +3145,51 @@ abstract class Openapi extends ChopperService {
     path: '/phonebook/associations/{association_id}/deactivate',
     optionalBody: true,
   )
-  Future<chopper.Response> _phonebookAssociationsAssociationIdDeactivatePatch(
-      {@Path('association_id') required String? associationId});
+  Future<chopper.Response> _phonebookAssociationsAssociationIdDeactivatePatch({
+    @Path('association_id') required String? associationId,
+  });
 
   ///Get Association Members
   ///@param association_id
   Future<chopper.Response<List<MemberComplete>>>
-      phonebookAssociationsAssociationIdMembersGet(
-          {required String? associationId}) {
+  phonebookAssociationsAssociationIdMembersGet({
+    required String? associationId,
+  }) {
     generatedMapping.putIfAbsent(
-        MemberComplete, () => MemberComplete.fromJsonFactory);
+      MemberComplete,
+      () => MemberComplete.fromJsonFactory,
+    );
 
     return _phonebookAssociationsAssociationIdMembersGet(
-        associationId: associationId);
+      associationId: associationId,
+    );
   }
 
   ///Get Association Members
   ///@param association_id
   @Get(path: '/phonebook/associations/{association_id}/members/')
   Future<chopper.Response<List<MemberComplete>>>
-      _phonebookAssociationsAssociationIdMembersGet(
-          {@Path('association_id') required String? associationId});
+  _phonebookAssociationsAssociationIdMembersGet({
+    @Path('association_id') required String? associationId,
+  });
 
   ///Get Association Members By Mandate Year
   ///@param association_id
   ///@param mandate_year
   Future<chopper.Response<List<MemberComplete>>>
-      phonebookAssociationsAssociationIdMembersMandateYearGet({
+  phonebookAssociationsAssociationIdMembersMandateYearGet({
     required String? associationId,
     required int? mandateYear,
   }) {
     generatedMapping.putIfAbsent(
-        MemberComplete, () => MemberComplete.fromJsonFactory);
+      MemberComplete,
+      () => MemberComplete.fromJsonFactory,
+    );
 
     return _phonebookAssociationsAssociationIdMembersMandateYearGet(
-        associationId: associationId, mandateYear: mandateYear);
+      associationId: associationId,
+      mandateYear: mandateYear,
+    );
   }
 
   ///Get Association Members By Mandate Year
@@ -2988,17 +3197,20 @@ abstract class Openapi extends ChopperService {
   ///@param mandate_year
   @Get(path: '/phonebook/associations/{association_id}/members/{mandate_year}')
   Future<chopper.Response<List<MemberComplete>>>
-      _phonebookAssociationsAssociationIdMembersMandateYearGet({
+  _phonebookAssociationsAssociationIdMembersMandateYearGet({
     @Path('association_id') required String? associationId,
     @Path('mandate_year') required int? mandateYear,
   });
 
   ///Get Member Details
   ///@param user_id
-  Future<chopper.Response<MemberComplete>> phonebookMemberUserIdGet(
-      {required String? userId}) {
+  Future<chopper.Response<MemberComplete>> phonebookMemberUserIdGet({
+    required String? userId,
+  }) {
     generatedMapping.putIfAbsent(
-        MemberComplete, () => MemberComplete.fromJsonFactory);
+      MemberComplete,
+      () => MemberComplete.fromJsonFactory,
+    );
 
     return _phonebookMemberUserIdGet(userId: userId);
   }
@@ -3006,28 +3218,29 @@ abstract class Openapi extends ChopperService {
   ///Get Member Details
   ///@param user_id
   @Get(path: '/phonebook/member/{user_id}')
-  Future<chopper.Response<MemberComplete>> _phonebookMemberUserIdGet(
-      {@Path('user_id') required String? userId});
+  Future<chopper.Response<MemberComplete>> _phonebookMemberUserIdGet({
+    @Path('user_id') required String? userId,
+  });
 
   ///Create Membership
   Future<chopper.Response<MembershipComplete>>
-      phonebookAssociationsMembershipsPost(
-          {required AppModulesPhonebookSchemasPhonebookMembershipBase? body}) {
+  phonebookAssociationsMembershipsPost({
+    required AppModulesPhonebookSchemasPhonebookMembershipBase? body,
+  }) {
     generatedMapping.putIfAbsent(
-        MembershipComplete, () => MembershipComplete.fromJsonFactory);
+      MembershipComplete,
+      () => MembershipComplete.fromJsonFactory,
+    );
 
     return _phonebookAssociationsMembershipsPost(body: body);
   }
 
   ///Create Membership
-  @Post(
-    path: '/phonebook/associations/memberships',
-    optionalBody: true,
-  )
+  @Post(path: '/phonebook/associations/memberships', optionalBody: true)
   Future<chopper.Response<MembershipComplete>>
-      _phonebookAssociationsMembershipsPost(
-          {@Body()
-          required AppModulesPhonebookSchemasPhonebookMembershipBase? body});
+  _phonebookAssociationsMembershipsPost({
+    @Body() required AppModulesPhonebookSchemasPhonebookMembershipBase? body,
+  });
 
   ///Update Membership
   ///@param membership_id
@@ -3036,7 +3249,9 @@ abstract class Openapi extends ChopperService {
     required MembershipEdit? body,
   }) {
     return _phonebookAssociationsMembershipsMembershipIdPatch(
-        membershipId: membershipId, body: body);
+      membershipId: membershipId,
+      body: body,
+    );
   }
 
   ///Update Membership
@@ -3052,31 +3267,37 @@ abstract class Openapi extends ChopperService {
 
   ///Delete Membership
   ///@param membership_id
-  Future<chopper.Response> phonebookAssociationsMembershipsMembershipIdDelete(
-      {required String? membershipId}) {
+  Future<chopper.Response> phonebookAssociationsMembershipsMembershipIdDelete({
+    required String? membershipId,
+  }) {
     return _phonebookAssociationsMembershipsMembershipIdDelete(
-        membershipId: membershipId);
+      membershipId: membershipId,
+    );
   }
 
   ///Delete Membership
   ///@param membership_id
   @Delete(path: '/phonebook/associations/memberships/{membership_id}')
-  Future<chopper.Response> _phonebookAssociationsMembershipsMembershipIdDelete(
-      {@Path('membership_id') required String? membershipId});
+  Future<chopper.Response> _phonebookAssociationsMembershipsMembershipIdDelete({
+    @Path('membership_id') required String? membershipId,
+  });
 
   ///Create Association Logo
   ///@param association_id
   Future<chopper.Response<AppTypesStandardResponsesResult>>
-      phonebookAssociationsAssociationIdPicturePost({
+  phonebookAssociationsAssociationIdPicturePost({
     required String? associationId,
-    required BodyCreateAssociationLogoPhonebookAssociationsAssociationIdPicturePost
-        body,
+    required MultipartFile image,
   }) {
-    generatedMapping.putIfAbsent(AppTypesStandardResponsesResult,
-        () => AppTypesStandardResponsesResult.fromJsonFactory);
+    generatedMapping.putIfAbsent(
+      AppTypesStandardResponsesResult,
+      () => AppTypesStandardResponsesResult.fromJsonFactory,
+    );
 
     return _phonebookAssociationsAssociationIdPicturePost(
-        associationId: associationId, body: body);
+      associationId: associationId,
+      image: image,
+    );
   }
 
   ///Create Association Logo
@@ -3087,32 +3308,35 @@ abstract class Openapi extends ChopperService {
   )
   @Multipart()
   Future<chopper.Response<AppTypesStandardResponsesResult>>
-      _phonebookAssociationsAssociationIdPicturePost({
+  _phonebookAssociationsAssociationIdPicturePost({
     @Path('association_id') required String? associationId,
-    @Part()
-    required BodyCreateAssociationLogoPhonebookAssociationsAssociationIdPicturePost
-        body,
+    @PartFile('image') required MultipartFile image,
   });
 
   ///Read Association Logo
   ///@param association_id
-  Future<chopper.Response> phonebookAssociationsAssociationIdPictureGet(
-      {required String? associationId}) {
+  Future<chopper.Response> phonebookAssociationsAssociationIdPictureGet({
+    required String? associationId,
+  }) {
     return _phonebookAssociationsAssociationIdPictureGet(
-        associationId: associationId);
+      associationId: associationId,
+    );
   }
 
   ///Read Association Logo
   ///@param association_id
   @Get(path: '/phonebook/associations/{association_id}/picture')
-  Future<chopper.Response> _phonebookAssociationsAssociationIdPictureGet(
-      {@Path('association_id') required String? associationId});
+  Future<chopper.Response> _phonebookAssociationsAssociationIdPictureGet({
+    @Path('association_id') required String? associationId,
+  });
 
   ///Get Products
   Future<chopper.Response<List<AppModulesAmapSchemasAmapProductComplete>>>
-      amapProductsGet() {
-    generatedMapping.putIfAbsent(AppModulesAmapSchemasAmapProductComplete,
-        () => AppModulesAmapSchemasAmapProductComplete.fromJsonFactory);
+  amapProductsGet() {
+    generatedMapping.putIfAbsent(
+      AppModulesAmapSchemasAmapProductComplete,
+      () => AppModulesAmapSchemasAmapProductComplete.fromJsonFactory,
+    );
 
     return _amapProductsGet();
   }
@@ -3120,31 +3344,32 @@ abstract class Openapi extends ChopperService {
   ///Get Products
   @Get(path: '/amap/products')
   Future<chopper.Response<List<AppModulesAmapSchemasAmapProductComplete>>>
-      _amapProductsGet();
+  _amapProductsGet();
 
   ///Create Product
   Future<chopper.Response<AppModulesAmapSchemasAmapProductComplete>>
-      amapProductsPost({required ProductSimple? body}) {
-    generatedMapping.putIfAbsent(AppModulesAmapSchemasAmapProductComplete,
-        () => AppModulesAmapSchemasAmapProductComplete.fromJsonFactory);
+  amapProductsPost({required ProductSimple? body}) {
+    generatedMapping.putIfAbsent(
+      AppModulesAmapSchemasAmapProductComplete,
+      () => AppModulesAmapSchemasAmapProductComplete.fromJsonFactory,
+    );
 
     return _amapProductsPost(body: body);
   }
 
   ///Create Product
-  @Post(
-    path: '/amap/products',
-    optionalBody: true,
-  )
+  @Post(path: '/amap/products', optionalBody: true)
   Future<chopper.Response<AppModulesAmapSchemasAmapProductComplete>>
-      _amapProductsPost({@Body() required ProductSimple? body});
+  _amapProductsPost({@Body() required ProductSimple? body});
 
   ///Get Product By Id
   ///@param product_id
   Future<chopper.Response<AppModulesAmapSchemasAmapProductComplete>>
-      amapProductsProductIdGet({required String? productId}) {
-    generatedMapping.putIfAbsent(AppModulesAmapSchemasAmapProductComplete,
-        () => AppModulesAmapSchemasAmapProductComplete.fromJsonFactory);
+  amapProductsProductIdGet({required String? productId}) {
+    generatedMapping.putIfAbsent(
+      AppModulesAmapSchemasAmapProductComplete,
+      () => AppModulesAmapSchemasAmapProductComplete.fromJsonFactory,
+    );
 
     return _amapProductsProductIdGet(productId: productId);
   }
@@ -3153,8 +3378,7 @@ abstract class Openapi extends ChopperService {
   ///@param product_id
   @Get(path: '/amap/products/{product_id}')
   Future<chopper.Response<AppModulesAmapSchemasAmapProductComplete>>
-      _amapProductsProductIdGet(
-          {@Path('product_id') required String? productId});
+  _amapProductsProductIdGet({@Path('product_id') required String? productId});
 
   ///Edit Product
   ///@param product_id
@@ -3167,10 +3391,7 @@ abstract class Openapi extends ChopperService {
 
   ///Edit Product
   ///@param product_id
-  @Patch(
-    path: '/amap/products/{product_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/amap/products/{product_id}', optionalBody: true)
   Future<chopper.Response> _amapProductsProductIdPatch({
     @Path('product_id') required String? productId,
     @Body() required AppModulesAmapSchemasAmapProductEdit? body,
@@ -3178,21 +3399,25 @@ abstract class Openapi extends ChopperService {
 
   ///Delete Product
   ///@param product_id
-  Future<chopper.Response> amapProductsProductIdDelete(
-      {required String? productId}) {
+  Future<chopper.Response> amapProductsProductIdDelete({
+    required String? productId,
+  }) {
     return _amapProductsProductIdDelete(productId: productId);
   }
 
   ///Delete Product
   ///@param product_id
   @Delete(path: '/amap/products/{product_id}')
-  Future<chopper.Response> _amapProductsProductIdDelete(
-      {@Path('product_id') required String? productId});
+  Future<chopper.Response> _amapProductsProductIdDelete({
+    @Path('product_id') required String? productId,
+  });
 
   ///Get Deliveries
   Future<chopper.Response<List<DeliveryReturn>>> amapDeliveriesGet() {
     generatedMapping.putIfAbsent(
-        DeliveryReturn, () => DeliveryReturn.fromJsonFactory);
+      DeliveryReturn,
+      () => DeliveryReturn.fromJsonFactory,
+    );
 
     return _amapDeliveriesGet();
   }
@@ -3202,34 +3427,37 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<DeliveryReturn>>> _amapDeliveriesGet();
 
   ///Create Delivery
-  Future<chopper.Response<DeliveryReturn>> amapDeliveriesPost(
-      {required DeliveryBase? body}) {
+  Future<chopper.Response<DeliveryReturn>> amapDeliveriesPost({
+    required DeliveryBase? body,
+  }) {
     generatedMapping.putIfAbsent(
-        DeliveryReturn, () => DeliveryReturn.fromJsonFactory);
+      DeliveryReturn,
+      () => DeliveryReturn.fromJsonFactory,
+    );
 
     return _amapDeliveriesPost(body: body);
   }
 
   ///Create Delivery
-  @Post(
-    path: '/amap/deliveries',
-    optionalBody: true,
-  )
-  Future<chopper.Response<DeliveryReturn>> _amapDeliveriesPost(
-      {@Body() required DeliveryBase? body});
+  @Post(path: '/amap/deliveries', optionalBody: true)
+  Future<chopper.Response<DeliveryReturn>> _amapDeliveriesPost({
+    @Body() required DeliveryBase? body,
+  });
 
   ///Delete Delivery
   ///@param delivery_id
-  Future<chopper.Response> amapDeliveriesDeliveryIdDelete(
-      {required String? deliveryId}) {
+  Future<chopper.Response> amapDeliveriesDeliveryIdDelete({
+    required String? deliveryId,
+  }) {
     return _amapDeliveriesDeliveryIdDelete(deliveryId: deliveryId);
   }
 
   ///Delete Delivery
   ///@param delivery_id
   @Delete(path: '/amap/deliveries/{delivery_id}')
-  Future<chopper.Response> _amapDeliveriesDeliveryIdDelete(
-      {@Path('delivery_id') required String? deliveryId});
+  Future<chopper.Response> _amapDeliveriesDeliveryIdDelete({
+    @Path('delivery_id') required String? deliveryId,
+  });
 
   ///Edit Delivery
   ///@param delivery_id
@@ -3242,10 +3470,7 @@ abstract class Openapi extends ChopperService {
 
   ///Edit Delivery
   ///@param delivery_id
-  @Patch(
-    path: '/amap/deliveries/{delivery_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/amap/deliveries/{delivery_id}', optionalBody: true)
   Future<chopper.Response> _amapDeliveriesDeliveryIdPatch({
     @Path('delivery_id') required String? deliveryId,
     @Body() required DeliveryUpdate? body,
@@ -3258,15 +3483,14 @@ abstract class Openapi extends ChopperService {
     required DeliveryProductsUpdate? body,
   }) {
     return _amapDeliveriesDeliveryIdProductsPost(
-        deliveryId: deliveryId, body: body);
+      deliveryId: deliveryId,
+      body: body,
+    );
   }
 
   ///Add Product To Delivery
   ///@param delivery_id
-  @Post(
-    path: '/amap/deliveries/{delivery_id}/products',
-    optionalBody: true,
-  )
+  @Post(path: '/amap/deliveries/{delivery_id}/products', optionalBody: true)
   Future<chopper.Response> _amapDeliveriesDeliveryIdProductsPost({
     @Path('delivery_id') required String? deliveryId,
     @Body() required DeliveryProductsUpdate? body,
@@ -3279,7 +3503,9 @@ abstract class Openapi extends ChopperService {
     required DeliveryProductsUpdate? body,
   }) {
     return _amapDeliveriesDeliveryIdProductsDelete(
-        deliveryId: deliveryId, body: body);
+      deliveryId: deliveryId,
+      body: body,
+    );
   }
 
   ///Remove Product From Delivery
@@ -3292,10 +3518,12 @@ abstract class Openapi extends ChopperService {
 
   ///Get Orders From Delivery
   ///@param delivery_id
-  Future<chopper.Response<List<OrderReturn>>> amapDeliveriesDeliveryIdOrdersGet(
-      {required String? deliveryId}) {
+  Future<chopper.Response<List<OrderReturn>>>
+  amapDeliveriesDeliveryIdOrdersGet({required String? deliveryId}) {
     generatedMapping.putIfAbsent(
-        OrderReturn, () => OrderReturn.fromJsonFactory);
+      OrderReturn,
+      () => OrderReturn.fromJsonFactory,
+    );
 
     return _amapDeliveriesDeliveryIdOrdersGet(deliveryId: deliveryId);
   }
@@ -3304,15 +3532,19 @@ abstract class Openapi extends ChopperService {
   ///@param delivery_id
   @Get(path: '/amap/deliveries/{delivery_id}/orders')
   Future<chopper.Response<List<OrderReturn>>>
-      _amapDeliveriesDeliveryIdOrdersGet(
-          {@Path('delivery_id') required String? deliveryId});
+  _amapDeliveriesDeliveryIdOrdersGet({
+    @Path('delivery_id') required String? deliveryId,
+  });
 
   ///Get Order By Id
   ///@param order_id
-  Future<chopper.Response<OrderReturn>> amapOrdersOrderIdGet(
-      {required String? orderId}) {
+  Future<chopper.Response<OrderReturn>> amapOrdersOrderIdGet({
+    required String? orderId,
+  }) {
     generatedMapping.putIfAbsent(
-        OrderReturn, () => OrderReturn.fromJsonFactory);
+      OrderReturn,
+      () => OrderReturn.fromJsonFactory,
+    );
 
     return _amapOrdersOrderIdGet(orderId: orderId);
   }
@@ -3320,8 +3552,9 @@ abstract class Openapi extends ChopperService {
   ///Get Order By Id
   ///@param order_id
   @Get(path: '/amap/orders/{order_id}')
-  Future<chopper.Response<OrderReturn>> _amapOrdersOrderIdGet(
-      {@Path('order_id') required String? orderId});
+  Future<chopper.Response<OrderReturn>> _amapOrdersOrderIdGet({
+    @Path('order_id') required String? orderId,
+  });
 
   ///Edit Order From Delivery
   ///@param order_id
@@ -3334,10 +3567,7 @@ abstract class Openapi extends ChopperService {
 
   ///Edit Order From Delivery
   ///@param order_id
-  @Patch(
-    path: '/amap/orders/{order_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/amap/orders/{order_id}', optionalBody: true)
   Future<chopper.Response> _amapOrdersOrderIdPatch({
     @Path('order_id') required String? orderId,
     @Body() required OrderEdit? body,
@@ -3352,94 +3582,94 @@ abstract class Openapi extends ChopperService {
   ///Remove Order
   ///@param order_id
   @Delete(path: '/amap/orders/{order_id}')
-  Future<chopper.Response> _amapOrdersOrderIdDelete(
-      {@Path('order_id') required String? orderId});
+  Future<chopper.Response> _amapOrdersOrderIdDelete({
+    @Path('order_id') required String? orderId,
+  });
 
   ///Add Order To Delievery
-  Future<chopper.Response<OrderReturn>> amapOrdersPost(
-      {required OrderBase? body}) {
+  Future<chopper.Response<OrderReturn>> amapOrdersPost({
+    required OrderBase? body,
+  }) {
     generatedMapping.putIfAbsent(
-        OrderReturn, () => OrderReturn.fromJsonFactory);
+      OrderReturn,
+      () => OrderReturn.fromJsonFactory,
+    );
 
     return _amapOrdersPost(body: body);
   }
 
   ///Add Order To Delievery
-  @Post(
-    path: '/amap/orders',
-    optionalBody: true,
-  )
-  Future<chopper.Response<OrderReturn>> _amapOrdersPost(
-      {@Body() required OrderBase? body});
+  @Post(path: '/amap/orders', optionalBody: true)
+  Future<chopper.Response<OrderReturn>> _amapOrdersPost({
+    @Body() required OrderBase? body,
+  });
 
   ///Open Ordering Of Delivery
   ///@param delivery_id
-  Future<chopper.Response> amapDeliveriesDeliveryIdOpenorderingPost(
-      {required String? deliveryId}) {
+  Future<chopper.Response> amapDeliveriesDeliveryIdOpenorderingPost({
+    required String? deliveryId,
+  }) {
     return _amapDeliveriesDeliveryIdOpenorderingPost(deliveryId: deliveryId);
   }
 
   ///Open Ordering Of Delivery
   ///@param delivery_id
-  @Post(
-    path: '/amap/deliveries/{delivery_id}/openordering',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _amapDeliveriesDeliveryIdOpenorderingPost(
-      {@Path('delivery_id') required String? deliveryId});
+  @Post(path: '/amap/deliveries/{delivery_id}/openordering', optionalBody: true)
+  Future<chopper.Response> _amapDeliveriesDeliveryIdOpenorderingPost({
+    @Path('delivery_id') required String? deliveryId,
+  });
 
   ///Lock Delivery
   ///@param delivery_id
-  Future<chopper.Response> amapDeliveriesDeliveryIdLockPost(
-      {required String? deliveryId}) {
+  Future<chopper.Response> amapDeliveriesDeliveryIdLockPost({
+    required String? deliveryId,
+  }) {
     return _amapDeliveriesDeliveryIdLockPost(deliveryId: deliveryId);
   }
 
   ///Lock Delivery
   ///@param delivery_id
-  @Post(
-    path: '/amap/deliveries/{delivery_id}/lock',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _amapDeliveriesDeliveryIdLockPost(
-      {@Path('delivery_id') required String? deliveryId});
+  @Post(path: '/amap/deliveries/{delivery_id}/lock', optionalBody: true)
+  Future<chopper.Response> _amapDeliveriesDeliveryIdLockPost({
+    @Path('delivery_id') required String? deliveryId,
+  });
 
   ///Mark Delivery As Delivered
   ///@param delivery_id
-  Future<chopper.Response> amapDeliveriesDeliveryIdDeliveredPost(
-      {required String? deliveryId}) {
+  Future<chopper.Response> amapDeliveriesDeliveryIdDeliveredPost({
+    required String? deliveryId,
+  }) {
     return _amapDeliveriesDeliveryIdDeliveredPost(deliveryId: deliveryId);
   }
 
   ///Mark Delivery As Delivered
   ///@param delivery_id
-  @Post(
-    path: '/amap/deliveries/{delivery_id}/delivered',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _amapDeliveriesDeliveryIdDeliveredPost(
-      {@Path('delivery_id') required String? deliveryId});
+  @Post(path: '/amap/deliveries/{delivery_id}/delivered', optionalBody: true)
+  Future<chopper.Response> _amapDeliveriesDeliveryIdDeliveredPost({
+    @Path('delivery_id') required String? deliveryId,
+  });
 
   ///Archive Of Delivery
   ///@param delivery_id
-  Future<chopper.Response> amapDeliveriesDeliveryIdArchivePost(
-      {required String? deliveryId}) {
+  Future<chopper.Response> amapDeliveriesDeliveryIdArchivePost({
+    required String? deliveryId,
+  }) {
     return _amapDeliveriesDeliveryIdArchivePost(deliveryId: deliveryId);
   }
 
   ///Archive Of Delivery
   ///@param delivery_id
-  @Post(
-    path: '/amap/deliveries/{delivery_id}/archive',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _amapDeliveriesDeliveryIdArchivePost(
-      {@Path('delivery_id') required String? deliveryId});
+  @Post(path: '/amap/deliveries/{delivery_id}/archive', optionalBody: true)
+  Future<chopper.Response> _amapDeliveriesDeliveryIdArchivePost({
+    @Path('delivery_id') required String? deliveryId,
+  });
 
   ///Get Users Cash
   Future<chopper.Response<List<CashComplete>>> amapUsersCashGet() {
     generatedMapping.putIfAbsent(
-        CashComplete, () => CashComplete.fromJsonFactory);
+      CashComplete,
+      () => CashComplete.fromJsonFactory,
+    );
 
     return _amapUsersCashGet();
   }
@@ -3450,10 +3680,13 @@ abstract class Openapi extends ChopperService {
 
   ///Get Cash By Id
   ///@param user_id
-  Future<chopper.Response<CashComplete>> amapUsersUserIdCashGet(
-      {required String? userId}) {
+  Future<chopper.Response<CashComplete>> amapUsersUserIdCashGet({
+    required String? userId,
+  }) {
     generatedMapping.putIfAbsent(
-        CashComplete, () => CashComplete.fromJsonFactory);
+      CashComplete,
+      () => CashComplete.fromJsonFactory,
+    );
 
     return _amapUsersUserIdCashGet(userId: userId);
   }
@@ -3461,8 +3694,9 @@ abstract class Openapi extends ChopperService {
   ///Get Cash By Id
   ///@param user_id
   @Get(path: '/amap/users/{user_id}/cash')
-  Future<chopper.Response<CashComplete>> _amapUsersUserIdCashGet(
-      {@Path('user_id') required String? userId});
+  Future<chopper.Response<CashComplete>> _amapUsersUserIdCashGet({
+    @Path('user_id') required String? userId,
+  });
 
   ///Create Cash Of User
   ///@param user_id
@@ -3471,17 +3705,16 @@ abstract class Openapi extends ChopperService {
     required CashEdit? body,
   }) {
     generatedMapping.putIfAbsent(
-        CashComplete, () => CashComplete.fromJsonFactory);
+      CashComplete,
+      () => CashComplete.fromJsonFactory,
+    );
 
     return _amapUsersUserIdCashPost(userId: userId, body: body);
   }
 
   ///Create Cash Of User
   ///@param user_id
-  @Post(
-    path: '/amap/users/{user_id}/cash',
-    optionalBody: true,
-  )
+  @Post(path: '/amap/users/{user_id}/cash', optionalBody: true)
   Future<chopper.Response<CashComplete>> _amapUsersUserIdCashPost({
     @Path('user_id') required String? userId,
     @Body() required CashEdit? body,
@@ -3498,10 +3731,7 @@ abstract class Openapi extends ChopperService {
 
   ///Edit Cash By Id
   ///@param user_id
-  @Patch(
-    path: '/amap/users/{user_id}/cash',
-    optionalBody: true,
-  )
+  @Patch(path: '/amap/users/{user_id}/cash', optionalBody: true)
   Future<chopper.Response> _amapUsersUserIdCashPatch({
     @Path('user_id') required String? userId,
     @Body() required CashEdit? body,
@@ -3509,10 +3739,13 @@ abstract class Openapi extends ChopperService {
 
   ///Get Orders Of User
   ///@param user_id
-  Future<chopper.Response<List<OrderReturn>>> amapUsersUserIdOrdersGet(
-      {required String? userId}) {
+  Future<chopper.Response<List<OrderReturn>>> amapUsersUserIdOrdersGet({
+    required String? userId,
+  }) {
     generatedMapping.putIfAbsent(
-        OrderReturn, () => OrderReturn.fromJsonFactory);
+      OrderReturn,
+      () => OrderReturn.fromJsonFactory,
+    );
 
     return _amapUsersUserIdOrdersGet(userId: userId);
   }
@@ -3520,13 +3753,16 @@ abstract class Openapi extends ChopperService {
   ///Get Orders Of User
   ///@param user_id
   @Get(path: '/amap/users/{user_id}/orders')
-  Future<chopper.Response<List<OrderReturn>>> _amapUsersUserIdOrdersGet(
-      {@Path('user_id') required String? userId});
+  Future<chopper.Response<List<OrderReturn>>> _amapUsersUserIdOrdersGet({
+    @Path('user_id') required String? userId,
+  });
 
   ///Get Information
   Future<chopper.Response<Information>> amapInformationGet() {
     generatedMapping.putIfAbsent(
-        Information, () => Information.fromJsonFactory);
+      Information,
+      () => Information.fromJsonFactory,
+    );
 
     return _amapInformationGet();
   }
@@ -3536,25 +3772,27 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<Information>> _amapInformationGet();
 
   ///Edit Information
-  Future<chopper.Response> amapInformationPatch(
-      {required InformationEdit? body}) {
+  Future<chopper.Response> amapInformationPatch({
+    required InformationEdit? body,
+  }) {
     return _amapInformationPatch(body: body);
   }
 
   ///Edit Information
-  @Patch(
-    path: '/amap/information',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _amapInformationPatch(
-      {@Body() required InformationEdit? body});
+  @Patch(path: '/amap/information', optionalBody: true)
+  Future<chopper.Response> _amapInformationPatch({
+    @Body() required InformationEdit? body,
+  });
 
   ///Get Participant By Id
   ///@param participant_id
-  Future<chopper.Response<Participant>> raidParticipantsParticipantIdGet(
-      {required String? participantId}) {
+  Future<chopper.Response<Participant>> raidParticipantsParticipantIdGet({
+    required String? participantId,
+  }) {
     generatedMapping.putIfAbsent(
-        Participant, () => Participant.fromJsonFactory);
+      Participant,
+      () => Participant.fromJsonFactory,
+    );
 
     return _raidParticipantsParticipantIdGet(participantId: participantId);
   }
@@ -3562,8 +3800,9 @@ abstract class Openapi extends ChopperService {
   ///Get Participant By Id
   ///@param participant_id
   @Get(path: '/raid/participants/{participant_id}')
-  Future<chopper.Response<Participant>> _raidParticipantsParticipantIdGet(
-      {@Path('participant_id') required String? participantId});
+  Future<chopper.Response<Participant>> _raidParticipantsParticipantIdGet({
+    @Path('participant_id') required String? participantId,
+  });
 
   ///Update Participant
   ///@param participant_id
@@ -3572,41 +3811,43 @@ abstract class Openapi extends ChopperService {
     required ParticipantUpdate? body,
   }) {
     return _raidParticipantsParticipantIdPatch(
-        participantId: participantId, body: body);
+      participantId: participantId,
+      body: body,
+    );
   }
 
   ///Update Participant
   ///@param participant_id
-  @Patch(
-    path: '/raid/participants/{participant_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/raid/participants/{participant_id}', optionalBody: true)
   Future<chopper.Response> _raidParticipantsParticipantIdPatch({
     @Path('participant_id') required String? participantId,
     @Body() required ParticipantUpdate? body,
   });
 
   ///Create Participant
-  Future<chopper.Response<Participant>> raidParticipantsPost(
-      {required ParticipantBase? body}) {
+  Future<chopper.Response<Participant>> raidParticipantsPost({
+    required ParticipantBase? body,
+  }) {
     generatedMapping.putIfAbsent(
-        Participant, () => Participant.fromJsonFactory);
+      Participant,
+      () => Participant.fromJsonFactory,
+    );
 
     return _raidParticipantsPost(body: body);
   }
 
   ///Create Participant
-  @Post(
-    path: '/raid/participants',
-    optionalBody: true,
-  )
-  Future<chopper.Response<Participant>> _raidParticipantsPost(
-      {@Body() required ParticipantBase? body});
+  @Post(path: '/raid/participants', optionalBody: true)
+  Future<chopper.Response<Participant>> _raidParticipantsPost({
+    @Body() required ParticipantBase? body,
+  });
 
   ///Get All Teams
   Future<chopper.Response<List<TeamPreview>>> raidTeamsGet() {
     generatedMapping.putIfAbsent(
-        TeamPreview, () => TeamPreview.fromJsonFactory);
+      TeamPreview,
+      () => TeamPreview.fromJsonFactory,
+    );
 
     return _raidTeamsGet();
   }
@@ -3623,12 +3864,10 @@ abstract class Openapi extends ChopperService {
   }
 
   ///Create Team
-  @Post(
-    path: '/raid/teams',
-    optionalBody: true,
-  )
-  Future<chopper.Response<Team>> _raidTeamsPost(
-      {@Body() required TeamBase? body});
+  @Post(path: '/raid/teams', optionalBody: true)
+  Future<chopper.Response<Team>> _raidTeamsPost({
+    @Body() required TeamBase? body,
+  });
 
   ///Delete All Teams
   Future<chopper.Response> raidTeamsDelete() {
@@ -3645,16 +3884,14 @@ abstract class Openapi extends ChopperService {
   }
 
   ///Generate Teams Pdf
-  @Post(
-    path: '/raid/teams/generate-pdf',
-    optionalBody: true,
-  )
+  @Post(path: '/raid/teams/generate-pdf', optionalBody: true)
   Future<chopper.Response> _raidTeamsGeneratePdfPost();
 
   ///Get Team By Participant Id
   ///@param participant_id
-  Future<chopper.Response<Team>> raidParticipantsParticipantIdTeamGet(
-      {required String? participantId}) {
+  Future<chopper.Response<Team>> raidParticipantsParticipantIdTeamGet({
+    required String? participantId,
+  }) {
     generatedMapping.putIfAbsent(Team, () => Team.fromJsonFactory);
 
     return _raidParticipantsParticipantIdTeamGet(participantId: participantId);
@@ -3663,8 +3900,9 @@ abstract class Openapi extends ChopperService {
   ///Get Team By Participant Id
   ///@param participant_id
   @Get(path: '/raid/participants/{participant_id}/team')
-  Future<chopper.Response<Team>> _raidParticipantsParticipantIdTeamGet(
-      {@Path('participant_id') required String? participantId});
+  Future<chopper.Response<Team>> _raidParticipantsParticipantIdTeamGet({
+    @Path('participant_id') required String? participantId,
+  });
 
   ///Get Team By Id
   ///@param team_id
@@ -3677,8 +3915,9 @@ abstract class Openapi extends ChopperService {
   ///Get Team By Id
   ///@param team_id
   @Get(path: '/raid/teams/{team_id}')
-  Future<chopper.Response<Team>> _raidTeamsTeamIdGet(
-      {@Path('team_id') required String? teamId});
+  Future<chopper.Response<Team>> _raidTeamsTeamIdGet({
+    @Path('team_id') required String? teamId,
+  });
 
   ///Update Team
   ///@param team_id
@@ -3691,10 +3930,7 @@ abstract class Openapi extends ChopperService {
 
   ///Update Team
   ///@param team_id
-  @Patch(
-    path: '/raid/teams/{team_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/raid/teams/{team_id}', optionalBody: true)
   Future<chopper.Response> _raidTeamsTeamIdPatch({
     @Path('team_id') required String? teamId,
     @Body() required TeamUpdate? body,
@@ -3709,46 +3945,50 @@ abstract class Openapi extends ChopperService {
   ///Delete Team
   ///@param team_id
   @Delete(path: '/raid/teams/{team_id}')
-  Future<chopper.Response> _raidTeamsTeamIdDelete(
-      {@Path('team_id') required String? teamId});
+  Future<chopper.Response> _raidTeamsTeamIdDelete({
+    @Path('team_id') required String? teamId,
+  });
 
   ///Upload Document
   ///@param document_type
   Future<chopper.Response<DocumentCreation>> raidDocumentDocumentTypePost({
     required enums.DocumentType? documentType,
-    required BodyUploadDocumentRaidDocumentDocumentTypePost body,
+    required MultipartFile file,
   }) {
     generatedMapping.putIfAbsent(
-        DocumentCreation, () => DocumentCreation.fromJsonFactory);
+      DocumentCreation,
+      () => DocumentCreation.fromJsonFactory,
+    );
 
     return _raidDocumentDocumentTypePost(
-        documentType: documentType?.value?.toString(), body: body);
+      documentType: documentType?.value?.toString(),
+      file: file,
+    );
   }
 
   ///Upload Document
   ///@param document_type
-  @Post(
-    path: '/raid/document/{document_type}',
-    optionalBody: true,
-  )
+  @Post(path: '/raid/document/{document_type}', optionalBody: true)
   @Multipart()
   Future<chopper.Response<DocumentCreation>> _raidDocumentDocumentTypePost({
     @Path('document_type') required String? documentType,
-    @Part() required BodyUploadDocumentRaidDocumentDocumentTypePost body,
+    @PartFile('file') required MultipartFile file,
   });
 
   ///Read Document
   ///@param document_id
-  Future<chopper.Response> raidDocumentDocumentIdGet(
-      {required String? documentId}) {
+  Future<chopper.Response> raidDocumentDocumentIdGet({
+    required String? documentId,
+  }) {
     return _raidDocumentDocumentIdGet(documentId: documentId);
   }
 
   ///Read Document
   ///@param document_id
   @Get(path: '/raid/document/{document_id}')
-  Future<chopper.Response> _raidDocumentDocumentIdGet(
-      {@Path('document_id') required String? documentId});
+  Future<chopper.Response> _raidDocumentDocumentIdGet({
+    @Path('document_id') required String? documentId,
+  });
 
   ///Validate Document
   ///@param document_id
@@ -3758,16 +3998,15 @@ abstract class Openapi extends ChopperService {
     required enums.DocumentValidation? validation,
   }) {
     return _raidDocumentDocumentIdValidatePost(
-        documentId: documentId, validation: validation?.value?.toString());
+      documentId: documentId,
+      validation: validation?.value?.toString(),
+    );
   }
 
   ///Validate Document
   ///@param document_id
   ///@param validation
-  @Post(
-    path: '/raid/document/{document_id}/validate',
-    optionalBody: true,
-  )
+  @Post(path: '/raid/document/{document_id}/validate', optionalBody: true)
   Future<chopper.Response> _raidDocumentDocumentIdValidatePost({
     @Path('document_id') required String? documentId,
     @Query('validation') required String? validation,
@@ -3780,17 +4019,16 @@ abstract class Openapi extends ChopperService {
     required SecurityFileBase? body,
   }) {
     generatedMapping.putIfAbsent(
-        SecurityFile, () => SecurityFile.fromJsonFactory);
+      SecurityFile,
+      () => SecurityFile.fromJsonFactory,
+    );
 
     return _raidSecurityFilePost(participantId: participantId, body: body);
   }
 
   ///Set Security File
   ///@param participant_id
-  @Post(
-    path: '/raid/security_file/',
-    optionalBody: true,
-  )
+  @Post(path: '/raid/security_file/', optionalBody: true)
   Future<chopper.Response<SecurityFile>> _raidSecurityFilePost({
     @Query('participant_id') required String? participantId,
     @Body() required SecurityFileBase? body,
@@ -3798,27 +4036,29 @@ abstract class Openapi extends ChopperService {
 
   ///Confirm Payment
   ///@param participant_id
-  Future<chopper.Response> raidParticipantParticipantIdPaymentPost(
-      {required String? participantId}) {
+  Future<chopper.Response> raidParticipantParticipantIdPaymentPost({
+    required String? participantId,
+  }) {
     return _raidParticipantParticipantIdPaymentPost(
-        participantId: participantId);
+      participantId: participantId,
+    );
   }
 
   ///Confirm Payment
   ///@param participant_id
-  @Post(
-    path: '/raid/participant/{participant_id}/payment',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _raidParticipantParticipantIdPaymentPost(
-      {@Path('participant_id') required String? participantId});
+  @Post(path: '/raid/participant/{participant_id}/payment', optionalBody: true)
+  Future<chopper.Response> _raidParticipantParticipantIdPaymentPost({
+    @Path('participant_id') required String? participantId,
+  });
 
   ///Confirm T Shirt Payment
   ///@param participant_id
-  Future<chopper.Response> raidParticipantParticipantIdTShirtPaymentPost(
-      {required String? participantId}) {
+  Future<chopper.Response> raidParticipantParticipantIdTShirtPaymentPost({
+    required String? participantId,
+  }) {
     return _raidParticipantParticipantIdTShirtPaymentPost(
-        participantId: participantId);
+      participantId: participantId,
+    );
   }
 
   ///Confirm T Shirt Payment
@@ -3827,44 +4067,46 @@ abstract class Openapi extends ChopperService {
     path: '/raid/participant/{participant_id}/t_shirt_payment',
     optionalBody: true,
   )
-  Future<chopper.Response> _raidParticipantParticipantIdTShirtPaymentPost(
-      {@Path('participant_id') required String? participantId});
+  Future<chopper.Response> _raidParticipantParticipantIdTShirtPaymentPost({
+    @Path('participant_id') required String? participantId,
+  });
 
   ///Validate Attestation On Honour
   ///@param participant_id
-  Future<chopper.Response> raidParticipantParticipantIdHonourPost(
-      {required String? participantId}) {
+  Future<chopper.Response> raidParticipantParticipantIdHonourPost({
+    required String? participantId,
+  }) {
     return _raidParticipantParticipantIdHonourPost(
-        participantId: participantId);
+      participantId: participantId,
+    );
   }
 
   ///Validate Attestation On Honour
   ///@param participant_id
-  @Post(
-    path: '/raid/participant/{participant_id}/honour',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _raidParticipantParticipantIdHonourPost(
-      {@Path('participant_id') required String? participantId});
+  @Post(path: '/raid/participant/{participant_id}/honour', optionalBody: true)
+  Future<chopper.Response> _raidParticipantParticipantIdHonourPost({
+    @Path('participant_id') required String? participantId,
+  });
 
   ///Create Invite Token
   ///@param team_id
-  Future<chopper.Response<InviteToken>> raidTeamsTeamIdInvitePost(
-      {required String? teamId}) {
+  Future<chopper.Response<InviteToken>> raidTeamsTeamIdInvitePost({
+    required String? teamId,
+  }) {
     generatedMapping.putIfAbsent(
-        InviteToken, () => InviteToken.fromJsonFactory);
+      InviteToken,
+      () => InviteToken.fromJsonFactory,
+    );
 
     return _raidTeamsTeamIdInvitePost(teamId: teamId);
   }
 
   ///Create Invite Token
   ///@param team_id
-  @Post(
-    path: '/raid/teams/{team_id}/invite',
-    optionalBody: true,
-  )
-  Future<chopper.Response<InviteToken>> _raidTeamsTeamIdInvitePost(
-      {@Path('team_id') required String? teamId});
+  @Post(path: '/raid/teams/{team_id}/invite', optionalBody: true)
+  Future<chopper.Response<InviteToken>> _raidTeamsTeamIdInvitePost({
+    @Path('team_id') required String? teamId,
+  });
 
   ///Join Team
   ///@param token
@@ -3874,12 +4116,10 @@ abstract class Openapi extends ChopperService {
 
   ///Join Team
   ///@param token
-  @Post(
-    path: '/raid/teams/join/{token}',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _raidTeamsJoinTokenPost(
-      {@Path('token') required String? token});
+  @Post(path: '/raid/teams/join/{token}', optionalBody: true)
+  Future<chopper.Response> _raidTeamsJoinTokenPost({
+    @Path('token') required String? token,
+  });
 
   ///Kick Team Member
   ///@param team_id
@@ -3891,16 +4131,15 @@ abstract class Openapi extends ChopperService {
     generatedMapping.putIfAbsent(Team, () => Team.fromJsonFactory);
 
     return _raidTeamsTeamIdKickParticipantIdPost(
-        teamId: teamId, participantId: participantId);
+      teamId: teamId,
+      participantId: participantId,
+    );
   }
 
   ///Kick Team Member
   ///@param team_id
   ///@param participant_id
-  @Post(
-    path: '/raid/teams/{team_id}/kick/{participant_id}',
-    optionalBody: true,
-  )
+  @Post(path: '/raid/teams/{team_id}/kick/{participant_id}', optionalBody: true)
   Future<chopper.Response<Team>> _raidTeamsTeamIdKickParticipantIdPost({
     @Path('team_id') required String? teamId,
     @Path('participant_id') required String? participantId,
@@ -3921,10 +4160,7 @@ abstract class Openapi extends ChopperService {
   ///Merge Teams
   ///@param team1_id
   ///@param team2_id
-  @Post(
-    path: '/raid/teams/merge',
-    optionalBody: true,
-  )
+  @Post(path: '/raid/teams/merge', optionalBody: true)
   Future<chopper.Response<Team>> _raidTeamsMergePost({
     @Query('team1_id') required String? team1Id,
     @Query('team2_id') required String? team2Id,
@@ -3933,7 +4169,9 @@ abstract class Openapi extends ChopperService {
   ///Get Raid Information
   Future<chopper.Response<RaidInformation>> raidInformationGet() {
     generatedMapping.putIfAbsent(
-        RaidInformation, () => RaidInformation.fromJsonFactory);
+      RaidInformation,
+      () => RaidInformation.fromJsonFactory,
+    );
 
     return _raidInformationGet();
   }
@@ -3943,23 +4181,24 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<RaidInformation>> _raidInformationGet();
 
   ///Update Raid Information
-  Future<chopper.Response> raidInformationPatch(
-      {required RaidInformation? body}) {
+  Future<chopper.Response> raidInformationPatch({
+    required RaidInformation? body,
+  }) {
     return _raidInformationPatch(body: body);
   }
 
   ///Update Raid Information
-  @Patch(
-    path: '/raid/information',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _raidInformationPatch(
-      {@Body() required RaidInformation? body});
+  @Patch(path: '/raid/information', optionalBody: true)
+  Future<chopper.Response> _raidInformationPatch({
+    @Body() required RaidInformation? body,
+  });
 
   ///Get Drive Folders
   Future<chopper.Response<RaidDriveFoldersCreation>> raidDriveGet() {
-    generatedMapping.putIfAbsent(RaidDriveFoldersCreation,
-        () => RaidDriveFoldersCreation.fromJsonFactory);
+    generatedMapping.putIfAbsent(
+      RaidDriveFoldersCreation,
+      () => RaidDriveFoldersCreation.fromJsonFactory,
+    );
 
     return _raidDriveGet();
   }
@@ -3969,18 +4208,17 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<RaidDriveFoldersCreation>> _raidDriveGet();
 
   ///Update Drive Folders
-  Future<chopper.Response> raidDrivePatch(
-      {required RaidDriveFoldersCreation? body}) {
+  Future<chopper.Response> raidDrivePatch({
+    required RaidDriveFoldersCreation? body,
+  }) {
     return _raidDrivePatch(body: body);
   }
 
   ///Update Drive Folders
-  @Patch(
-    path: '/raid/drive',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _raidDrivePatch(
-      {@Body() required RaidDriveFoldersCreation? body});
+  @Patch(path: '/raid/drive', optionalBody: true)
+  Future<chopper.Response> _raidDrivePatch({
+    @Body() required RaidDriveFoldersCreation? body,
+  });
 
   ///Get Raid Price
   Future<chopper.Response<RaidPrice>> raidPriceGet() {
@@ -3999,10 +4237,7 @@ abstract class Openapi extends ChopperService {
   }
 
   ///Update Raid Price
-  @Patch(
-    path: '/raid/price',
-    optionalBody: true,
-  )
+  @Patch(path: '/raid/price', optionalBody: true)
   Future<chopper.Response> _raidPricePatch({@Body() required RaidPrice? body});
 
   ///Get Payment Url
@@ -4019,7 +4254,9 @@ abstract class Openapi extends ChopperService {
   ///Get Cdr Users
   Future<chopper.Response<List<CdrUserPreview>>> cdrUsersGet() {
     generatedMapping.putIfAbsent(
-        CdrUserPreview, () => CdrUserPreview.fromJsonFactory);
+      CdrUserPreview,
+      () => CdrUserPreview.fromJsonFactory,
+    );
 
     return _cdrUsersGet();
   }
@@ -4031,7 +4268,9 @@ abstract class Openapi extends ChopperService {
   ///Get Cdr Users Pending Validation
   Future<chopper.Response<List<CdrUserPreview>>> cdrUsersPendingGet() {
     generatedMapping.putIfAbsent(
-        CdrUserPreview, () => CdrUserPreview.fromJsonFactory);
+      CdrUserPreview,
+      () => CdrUserPreview.fromJsonFactory,
+    );
 
     return _cdrUsersPendingGet();
   }
@@ -4042,8 +4281,9 @@ abstract class Openapi extends ChopperService {
 
   ///Get Cdr User
   ///@param user_id
-  Future<chopper.Response<CdrUser>> cdrUsersUserIdGet(
-      {required String? userId}) {
+  Future<chopper.Response<CdrUser>> cdrUsersUserIdGet({
+    required String? userId,
+  }) {
     generatedMapping.putIfAbsent(CdrUser, () => CdrUser.fromJsonFactory);
 
     return _cdrUsersUserIdGet(userId: userId);
@@ -4052,8 +4292,9 @@ abstract class Openapi extends ChopperService {
   ///Get Cdr User
   ///@param user_id
   @Get(path: '/cdr/users/{user_id}/')
-  Future<chopper.Response<CdrUser>> _cdrUsersUserIdGet(
-      {@Path('user_id') required String? userId});
+  Future<chopper.Response<CdrUser>> _cdrUsersUserIdGet({
+    @Path('user_id') required String? userId,
+  });
 
   ///Update Cdr User
   ///@param user_id
@@ -4066,10 +4307,7 @@ abstract class Openapi extends ChopperService {
 
   ///Update Cdr User
   ///@param user_id
-  @Patch(
-    path: '/cdr/users/{user_id}/',
-    optionalBody: true,
-  )
+  @Patch(path: '/cdr/users/{user_id}/', optionalBody: true)
   Future<chopper.Response> _cdrUsersUserIdPatch({
     @Path('user_id') required String? userId,
     @Body() required CdrUserUpdate? body,
@@ -4078,7 +4316,9 @@ abstract class Openapi extends ChopperService {
   ///Get Sellers
   Future<chopper.Response<List<SellerComplete>>> cdrSellersGet() {
     generatedMapping.putIfAbsent(
-        SellerComplete, () => SellerComplete.fromJsonFactory);
+      SellerComplete,
+      () => SellerComplete.fromJsonFactory,
+    );
 
     return _cdrSellersGet();
   }
@@ -4088,26 +4328,29 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<SellerComplete>>> _cdrSellersGet();
 
   ///Create Seller
-  Future<chopper.Response<SellerComplete>> cdrSellersPost(
-      {required SellerBase? body}) {
+  Future<chopper.Response<SellerComplete>> cdrSellersPost({
+    required SellerBase? body,
+  }) {
     generatedMapping.putIfAbsent(
-        SellerComplete, () => SellerComplete.fromJsonFactory);
+      SellerComplete,
+      () => SellerComplete.fromJsonFactory,
+    );
 
     return _cdrSellersPost(body: body);
   }
 
   ///Create Seller
-  @Post(
-    path: '/cdr/sellers/',
-    optionalBody: true,
-  )
-  Future<chopper.Response<SellerComplete>> _cdrSellersPost(
-      {@Body() required SellerBase? body});
+  @Post(path: '/cdr/sellers/', optionalBody: true)
+  Future<chopper.Response<SellerComplete>> _cdrSellersPost({
+    @Body() required SellerBase? body,
+  });
 
   ///Get Sellers By User Id
   Future<chopper.Response<List<SellerComplete>>> cdrUsersMeSellersGet() {
     generatedMapping.putIfAbsent(
-        SellerComplete, () => SellerComplete.fromJsonFactory);
+      SellerComplete,
+      () => SellerComplete.fromJsonFactory,
+    );
 
     return _cdrUsersMeSellersGet();
   }
@@ -4119,7 +4362,9 @@ abstract class Openapi extends ChopperService {
   ///Get Online Sellers
   Future<chopper.Response<List<SellerComplete>>> cdrOnlineSellersGet() {
     generatedMapping.putIfAbsent(
-        SellerComplete, () => SellerComplete.fromJsonFactory);
+      SellerComplete,
+      () => SellerComplete.fromJsonFactory,
+    );
 
     return _cdrOnlineSellersGet();
   }
@@ -4130,22 +4375,26 @@ abstract class Openapi extends ChopperService {
 
   ///Send Seller Results
   ///@param seller_id
-  Future<chopper.Response> cdrSellersSellerIdResultsGet(
-      {required String? sellerId}) {
+  Future<chopper.Response> cdrSellersSellerIdResultsGet({
+    required String? sellerId,
+  }) {
     return _cdrSellersSellerIdResultsGet(sellerId: sellerId);
   }
 
   ///Send Seller Results
   ///@param seller_id
   @Get(path: '/cdr/sellers/{seller_id}/results/')
-  Future<chopper.Response> _cdrSellersSellerIdResultsGet(
-      {@Path('seller_id') required String? sellerId});
+  Future<chopper.Response> _cdrSellersSellerIdResultsGet({
+    @Path('seller_id') required String? sellerId,
+  });
 
   ///Get All Available Online Products
   Future<chopper.Response<List<AppModulesCdrSchemasCdrProductComplete>>>
-      cdrOnlineProductsGet() {
-    generatedMapping.putIfAbsent(AppModulesCdrSchemasCdrProductComplete,
-        () => AppModulesCdrSchemasCdrProductComplete.fromJsonFactory);
+  cdrOnlineProductsGet() {
+    generatedMapping.putIfAbsent(
+      AppModulesCdrSchemasCdrProductComplete,
+      () => AppModulesCdrSchemasCdrProductComplete.fromJsonFactory,
+    );
 
     return _cdrOnlineProductsGet();
   }
@@ -4153,13 +4402,15 @@ abstract class Openapi extends ChopperService {
   ///Get All Available Online Products
   @Get(path: '/cdr/online/products/')
   Future<chopper.Response<List<AppModulesCdrSchemasCdrProductComplete>>>
-      _cdrOnlineProductsGet();
+  _cdrOnlineProductsGet();
 
   ///Get All Products
   Future<chopper.Response<List<AppModulesCdrSchemasCdrProductComplete>>>
-      cdrProductsGet() {
-    generatedMapping.putIfAbsent(AppModulesCdrSchemasCdrProductComplete,
-        () => AppModulesCdrSchemasCdrProductComplete.fromJsonFactory);
+  cdrProductsGet() {
+    generatedMapping.putIfAbsent(
+      AppModulesCdrSchemasCdrProductComplete,
+      () => AppModulesCdrSchemasCdrProductComplete.fromJsonFactory,
+    );
 
     return _cdrProductsGet();
   }
@@ -4167,7 +4418,7 @@ abstract class Openapi extends ChopperService {
   ///Get All Products
   @Get(path: '/cdr/products/')
   Future<chopper.Response<List<AppModulesCdrSchemasCdrProductComplete>>>
-      _cdrProductsGet();
+  _cdrProductsGet();
 
   ///Update Seller
   ///@param seller_id
@@ -4180,10 +4431,7 @@ abstract class Openapi extends ChopperService {
 
   ///Update Seller
   ///@param seller_id
-  @Patch(
-    path: '/cdr/sellers/{seller_id}/',
-    optionalBody: true,
-  )
+  @Patch(path: '/cdr/sellers/{seller_id}/', optionalBody: true)
   Future<chopper.Response> _cdrSellersSellerIdPatch({
     @Path('seller_id') required String? sellerId,
     @Body() required SellerEdit? body,
@@ -4191,23 +4439,27 @@ abstract class Openapi extends ChopperService {
 
   ///Delete Seller
   ///@param seller_id
-  Future<chopper.Response> cdrSellersSellerIdDelete(
-      {required String? sellerId}) {
+  Future<chopper.Response> cdrSellersSellerIdDelete({
+    required String? sellerId,
+  }) {
     return _cdrSellersSellerIdDelete(sellerId: sellerId);
   }
 
   ///Delete Seller
   ///@param seller_id
   @Delete(path: '/cdr/sellers/{seller_id}/')
-  Future<chopper.Response> _cdrSellersSellerIdDelete(
-      {@Path('seller_id') required String? sellerId});
+  Future<chopper.Response> _cdrSellersSellerIdDelete({
+    @Path('seller_id') required String? sellerId,
+  });
 
   ///Get Products By Seller Id
   ///@param seller_id
   Future<chopper.Response<List<AppModulesCdrSchemasCdrProductComplete>>>
-      cdrSellersSellerIdProductsGet({required String? sellerId}) {
-    generatedMapping.putIfAbsent(AppModulesCdrSchemasCdrProductComplete,
-        () => AppModulesCdrSchemasCdrProductComplete.fromJsonFactory);
+  cdrSellersSellerIdProductsGet({required String? sellerId}) {
+    generatedMapping.putIfAbsent(
+      AppModulesCdrSchemasCdrProductComplete,
+      () => AppModulesCdrSchemasCdrProductComplete.fromJsonFactory,
+    );
 
     return _cdrSellersSellerIdProductsGet(sellerId: sellerId);
   }
@@ -4216,30 +4468,30 @@ abstract class Openapi extends ChopperService {
   ///@param seller_id
   @Get(path: '/cdr/sellers/{seller_id}/products/')
   Future<chopper.Response<List<AppModulesCdrSchemasCdrProductComplete>>>
-      _cdrSellersSellerIdProductsGet(
-          {@Path('seller_id') required String? sellerId});
+  _cdrSellersSellerIdProductsGet({
+    @Path('seller_id') required String? sellerId,
+  });
 
   ///Create Product
   ///@param seller_id
   Future<chopper.Response<AppModulesCdrSchemasCdrProductComplete>>
-      cdrSellersSellerIdProductsPost({
+  cdrSellersSellerIdProductsPost({
     required String? sellerId,
     required ProductBase? body,
   }) {
-    generatedMapping.putIfAbsent(AppModulesCdrSchemasCdrProductComplete,
-        () => AppModulesCdrSchemasCdrProductComplete.fromJsonFactory);
+    generatedMapping.putIfAbsent(
+      AppModulesCdrSchemasCdrProductComplete,
+      () => AppModulesCdrSchemasCdrProductComplete.fromJsonFactory,
+    );
 
     return _cdrSellersSellerIdProductsPost(sellerId: sellerId, body: body);
   }
 
   ///Create Product
   ///@param seller_id
-  @Post(
-    path: '/cdr/sellers/{seller_id}/products/',
-    optionalBody: true,
-  )
+  @Post(path: '/cdr/sellers/{seller_id}/products/', optionalBody: true)
   Future<chopper.Response<AppModulesCdrSchemasCdrProductComplete>>
-      _cdrSellersSellerIdProductsPost({
+  _cdrSellersSellerIdProductsPost({
     @Path('seller_id') required String? sellerId,
     @Body() required ProductBase? body,
   });
@@ -4247,9 +4499,11 @@ abstract class Openapi extends ChopperService {
   ///Get Available Online Products
   ///@param seller_id
   Future<chopper.Response<List<AppModulesCdrSchemasCdrProductComplete>>>
-      cdrOnlineSellersSellerIdProductsGet({required String? sellerId}) {
-    generatedMapping.putIfAbsent(AppModulesCdrSchemasCdrProductComplete,
-        () => AppModulesCdrSchemasCdrProductComplete.fromJsonFactory);
+  cdrOnlineSellersSellerIdProductsGet({required String? sellerId}) {
+    generatedMapping.putIfAbsent(
+      AppModulesCdrSchemasCdrProductComplete,
+      () => AppModulesCdrSchemasCdrProductComplete.fromJsonFactory,
+    );
 
     return _cdrOnlineSellersSellerIdProductsGet(sellerId: sellerId);
   }
@@ -4258,8 +4512,9 @@ abstract class Openapi extends ChopperService {
   ///@param seller_id
   @Get(path: '/cdr/online/sellers/{seller_id}/products/')
   Future<chopper.Response<List<AppModulesCdrSchemasCdrProductComplete>>>
-      _cdrOnlineSellersSellerIdProductsGet(
-          {@Path('seller_id') required String? sellerId});
+  _cdrOnlineSellersSellerIdProductsGet({
+    @Path('seller_id') required String? sellerId,
+  });
 
   ///Update Product
   ///@param seller_id
@@ -4270,7 +4525,10 @@ abstract class Openapi extends ChopperService {
     required AppModulesCdrSchemasCdrProductEdit? body,
   }) {
     return _cdrSellersSellerIdProductsProductIdPatch(
-        sellerId: sellerId, productId: productId, body: body);
+      sellerId: sellerId,
+      productId: productId,
+      body: body,
+    );
   }
 
   ///Update Product
@@ -4294,7 +4552,9 @@ abstract class Openapi extends ChopperService {
     required String? productId,
   }) {
     return _cdrSellersSellerIdProductsProductIdDelete(
-        sellerId: sellerId, productId: productId);
+      sellerId: sellerId,
+      productId: productId,
+    );
   }
 
   ///Delete Product
@@ -4310,16 +4570,21 @@ abstract class Openapi extends ChopperService {
   ///@param seller_id
   ///@param product_id
   Future<chopper.Response<ProductVariantComplete>>
-      cdrSellersSellerIdProductsProductIdVariantsPost({
+  cdrSellersSellerIdProductsProductIdVariantsPost({
     required String? sellerId,
     required String? productId,
     required ProductVariantBase? body,
   }) {
     generatedMapping.putIfAbsent(
-        ProductVariantComplete, () => ProductVariantComplete.fromJsonFactory);
+      ProductVariantComplete,
+      () => ProductVariantComplete.fromJsonFactory,
+    );
 
     return _cdrSellersSellerIdProductsProductIdVariantsPost(
-        sellerId: sellerId, productId: productId, body: body);
+      sellerId: sellerId,
+      productId: productId,
+      body: body,
+    );
   }
 
   ///Create Product Variant
@@ -4330,7 +4595,7 @@ abstract class Openapi extends ChopperService {
     optionalBody: true,
   )
   Future<chopper.Response<ProductVariantComplete>>
-      _cdrSellersSellerIdProductsProductIdVariantsPost({
+  _cdrSellersSellerIdProductsProductIdVariantsPost({
     @Path('seller_id') required String? sellerId,
     @Path('product_id') required String? productId,
     @Body() required ProductVariantBase? body,
@@ -4341,17 +4606,18 @@ abstract class Openapi extends ChopperService {
   ///@param product_id
   ///@param variant_id
   Future<chopper.Response>
-      cdrSellersSellerIdProductsProductIdVariantsVariantIdPatch({
+  cdrSellersSellerIdProductsProductIdVariantsVariantIdPatch({
     required String? sellerId,
     required String? productId,
     required String? variantId,
     required ProductVariantEdit? body,
   }) {
     return _cdrSellersSellerIdProductsProductIdVariantsVariantIdPatch(
-        sellerId: sellerId,
-        productId: productId,
-        variantId: variantId,
-        body: body);
+      sellerId: sellerId,
+      productId: productId,
+      variantId: variantId,
+      body: body,
+    );
   }
 
   ///Update Product Variant
@@ -4364,7 +4630,7 @@ abstract class Openapi extends ChopperService {
     optionalBody: true,
   )
   Future<chopper.Response>
-      _cdrSellersSellerIdProductsProductIdVariantsVariantIdPatch({
+  _cdrSellersSellerIdProductsProductIdVariantsVariantIdPatch({
     @Path('seller_id') required String? sellerId,
     @Path('product_id') required String? productId,
     @Path('variant_id') required String? variantId,
@@ -4376,13 +4642,16 @@ abstract class Openapi extends ChopperService {
   ///@param product_id
   ///@param variant_id
   Future<chopper.Response>
-      cdrSellersSellerIdProductsProductIdVariantsVariantIdDelete({
+  cdrSellersSellerIdProductsProductIdVariantsVariantIdDelete({
     required String? sellerId,
     required String? productId,
     required String? variantId,
   }) {
     return _cdrSellersSellerIdProductsProductIdVariantsVariantIdDelete(
-        sellerId: sellerId, productId: productId, variantId: variantId);
+      sellerId: sellerId,
+      productId: productId,
+      variantId: variantId,
+    );
   }
 
   ///Delete Product Variant
@@ -4390,10 +4659,11 @@ abstract class Openapi extends ChopperService {
   ///@param product_id
   ///@param variant_id
   @Delete(
-      path:
-          '/cdr/sellers/{seller_id}/products/{product_id}/variants/{variant_id}/')
+    path:
+        '/cdr/sellers/{seller_id}/products/{product_id}/variants/{variant_id}/',
+  )
   Future<chopper.Response>
-      _cdrSellersSellerIdProductsProductIdVariantsVariantIdDelete({
+  _cdrSellersSellerIdProductsProductIdVariantsVariantIdDelete({
     @Path('seller_id') required String? sellerId,
     @Path('product_id') required String? productId,
     @Path('variant_id') required String? variantId,
@@ -4402,9 +4672,11 @@ abstract class Openapi extends ChopperService {
   ///Get Seller Documents
   ///@param seller_id
   Future<chopper.Response<List<DocumentComplete>>>
-      cdrSellersSellerIdDocumentsGet({required String? sellerId}) {
+  cdrSellersSellerIdDocumentsGet({required String? sellerId}) {
     generatedMapping.putIfAbsent(
-        DocumentComplete, () => DocumentComplete.fromJsonFactory);
+      DocumentComplete,
+      () => DocumentComplete.fromJsonFactory,
+    );
 
     return _cdrSellersSellerIdDocumentsGet(sellerId: sellerId);
   }
@@ -4413,8 +4685,9 @@ abstract class Openapi extends ChopperService {
   ///@param seller_id
   @Get(path: '/cdr/sellers/{seller_id}/documents/')
   Future<chopper.Response<List<DocumentComplete>>>
-      _cdrSellersSellerIdDocumentsGet(
-          {@Path('seller_id') required String? sellerId});
+  _cdrSellersSellerIdDocumentsGet({
+    @Path('seller_id') required String? sellerId,
+  });
 
   ///Create Document
   ///@param seller_id
@@ -4423,17 +4696,16 @@ abstract class Openapi extends ChopperService {
     required DocumentBase? body,
   }) {
     generatedMapping.putIfAbsent(
-        DocumentComplete, () => DocumentComplete.fromJsonFactory);
+      DocumentComplete,
+      () => DocumentComplete.fromJsonFactory,
+    );
 
     return _cdrSellersSellerIdDocumentsPost(sellerId: sellerId, body: body);
   }
 
   ///Create Document
   ///@param seller_id
-  @Post(
-    path: '/cdr/sellers/{seller_id}/documents/',
-    optionalBody: true,
-  )
+  @Post(path: '/cdr/sellers/{seller_id}/documents/', optionalBody: true)
   Future<chopper.Response<DocumentComplete>> _cdrSellersSellerIdDocumentsPost({
     @Path('seller_id') required String? sellerId,
     @Body() required DocumentBase? body,
@@ -4442,7 +4714,9 @@ abstract class Openapi extends ChopperService {
   ///Get All Sellers Documents
   Future<chopper.Response<List<DocumentComplete>>> cdrDocumentsGet() {
     generatedMapping.putIfAbsent(
-        DocumentComplete, () => DocumentComplete.fromJsonFactory);
+      DocumentComplete,
+      () => DocumentComplete.fromJsonFactory,
+    );
 
     return _cdrDocumentsGet();
   }
@@ -4459,7 +4733,9 @@ abstract class Openapi extends ChopperService {
     required String? documentId,
   }) {
     return _cdrSellersSellerIdDocumentsDocumentIdDelete(
-        sellerId: sellerId, documentId: documentId);
+      sellerId: sellerId,
+      documentId: documentId,
+    );
   }
 
   ///Delete Document
@@ -4473,10 +4749,13 @@ abstract class Openapi extends ChopperService {
 
   ///Get Purchases By User Id
   ///@param user_id
-  Future<chopper.Response<List<PurchaseReturn>>> cdrUsersUserIdPurchasesGet(
-      {required String? userId}) {
+  Future<chopper.Response<List<PurchaseReturn>>> cdrUsersUserIdPurchasesGet({
+    required String? userId,
+  }) {
     generatedMapping.putIfAbsent(
-        PurchaseReturn, () => PurchaseReturn.fromJsonFactory);
+      PurchaseReturn,
+      () => PurchaseReturn.fromJsonFactory,
+    );
 
     return _cdrUsersUserIdPurchasesGet(userId: userId);
   }
@@ -4484,13 +4763,16 @@ abstract class Openapi extends ChopperService {
   ///Get Purchases By User Id
   ///@param user_id
   @Get(path: '/cdr/users/{user_id}/purchases/')
-  Future<chopper.Response<List<PurchaseReturn>>> _cdrUsersUserIdPurchasesGet(
-      {@Path('user_id') required String? userId});
+  Future<chopper.Response<List<PurchaseReturn>>> _cdrUsersUserIdPurchasesGet({
+    @Path('user_id') required String? userId,
+  });
 
   ///Get My Purchases
   Future<chopper.Response<List<PurchaseReturn>>> cdrMePurchasesGet() {
     generatedMapping.putIfAbsent(
-        PurchaseReturn, () => PurchaseReturn.fromJsonFactory);
+      PurchaseReturn,
+      () => PurchaseReturn.fromJsonFactory,
+    );
 
     return _cdrMePurchasesGet();
   }
@@ -4503,15 +4785,19 @@ abstract class Openapi extends ChopperService {
   ///@param seller_id
   ///@param user_id
   Future<chopper.Response<List<PurchaseReturn>>>
-      cdrSellersSellerIdUsersUserIdPurchasesGet({
+  cdrSellersSellerIdUsersUserIdPurchasesGet({
     required String? sellerId,
     required String? userId,
   }) {
     generatedMapping.putIfAbsent(
-        PurchaseReturn, () => PurchaseReturn.fromJsonFactory);
+      PurchaseReturn,
+      () => PurchaseReturn.fromJsonFactory,
+    );
 
     return _cdrSellersSellerIdUsersUserIdPurchasesGet(
-        sellerId: sellerId, userId: userId);
+      sellerId: sellerId,
+      userId: userId,
+    );
   }
 
   ///Get Purchases By User Id By Seller Id
@@ -4519,7 +4805,7 @@ abstract class Openapi extends ChopperService {
   ///@param user_id
   @Get(path: '/cdr/sellers/{seller_id}/users/{user_id}/purchases/')
   Future<chopper.Response<List<PurchaseReturn>>>
-      _cdrSellersSellerIdUsersUserIdPurchasesGet({
+  _cdrSellersSellerIdUsersUserIdPurchasesGet({
     @Path('seller_id') required String? sellerId,
     @Path('user_id') required String? userId,
   });
@@ -4528,16 +4814,21 @@ abstract class Openapi extends ChopperService {
   ///@param user_id
   ///@param product_variant_id
   Future<chopper.Response<PurchaseComplete>>
-      cdrUsersUserIdPurchasesProductVariantIdPost({
+  cdrUsersUserIdPurchasesProductVariantIdPost({
     required String? userId,
     required String? productVariantId,
     required PurchaseBase? body,
   }) {
     generatedMapping.putIfAbsent(
-        PurchaseComplete, () => PurchaseComplete.fromJsonFactory);
+      PurchaseComplete,
+      () => PurchaseComplete.fromJsonFactory,
+    );
 
     return _cdrUsersUserIdPurchasesProductVariantIdPost(
-        userId: userId, productVariantId: productVariantId, body: body);
+      userId: userId,
+      productVariantId: productVariantId,
+      body: body,
+    );
   }
 
   ///Create Purchase
@@ -4548,7 +4839,7 @@ abstract class Openapi extends ChopperService {
     optionalBody: true,
   )
   Future<chopper.Response<PurchaseComplete>>
-      _cdrUsersUserIdPurchasesProductVariantIdPost({
+  _cdrUsersUserIdPurchasesProductVariantIdPost({
     @Path('user_id') required String? userId,
     @Path('product_variant_id') required String? productVariantId,
     @Body() required PurchaseBase? body,
@@ -4562,7 +4853,9 @@ abstract class Openapi extends ChopperService {
     required String? productVariantId,
   }) {
     return _cdrUsersUserIdPurchasesProductVariantIdDelete(
-        userId: userId, productVariantId: productVariantId);
+      userId: userId,
+      productVariantId: productVariantId,
+    );
   }
 
   ///Delete Purchase
@@ -4579,15 +4872,16 @@ abstract class Openapi extends ChopperService {
   ///@param product_variant_id
   ///@param validated
   Future<chopper.Response>
-      cdrUsersUserIdPurchasesProductVariantIdValidatedPatch({
+  cdrUsersUserIdPurchasesProductVariantIdValidatedPatch({
     required String? userId,
     required String? productVariantId,
     required bool? validated,
   }) {
     return _cdrUsersUserIdPurchasesProductVariantIdValidatedPatch(
-        userId: userId,
-        productVariantId: productVariantId,
-        validated: validated);
+      userId: userId,
+      productVariantId: productVariantId,
+      validated: validated,
+    );
   }
 
   ///Mark Purchase As Validated
@@ -4599,7 +4893,7 @@ abstract class Openapi extends ChopperService {
     optionalBody: true,
   )
   Future<chopper.Response>
-      _cdrUsersUserIdPurchasesProductVariantIdValidatedPatch({
+  _cdrUsersUserIdPurchasesProductVariantIdValidatedPatch({
     @Path('user_id') required String? userId,
     @Path('product_variant_id') required String? productVariantId,
     @Query('validated') required bool? validated,
@@ -4607,10 +4901,12 @@ abstract class Openapi extends ChopperService {
 
   ///Get Signatures By User Id
   ///@param user_id
-  Future<chopper.Response<List<SignatureComplete>>> cdrUsersUserIdSignaturesGet(
-      {required String? userId}) {
+  Future<chopper.Response<List<SignatureComplete>>>
+  cdrUsersUserIdSignaturesGet({required String? userId}) {
     generatedMapping.putIfAbsent(
-        SignatureComplete, () => SignatureComplete.fromJsonFactory);
+      SignatureComplete,
+      () => SignatureComplete.fromJsonFactory,
+    );
 
     return _cdrUsersUserIdSignaturesGet(userId: userId);
   }
@@ -4619,21 +4915,25 @@ abstract class Openapi extends ChopperService {
   ///@param user_id
   @Get(path: '/cdr/users/{user_id}/signatures/')
   Future<chopper.Response<List<SignatureComplete>>>
-      _cdrUsersUserIdSignaturesGet({@Path('user_id') required String? userId});
+  _cdrUsersUserIdSignaturesGet({@Path('user_id') required String? userId});
 
   ///Get Signatures By User Id By Seller Id
   ///@param seller_id
   ///@param user_id
   Future<chopper.Response<List<SignatureComplete>>>
-      cdrSellersSellerIdUsersUserIdSignaturesGet({
+  cdrSellersSellerIdUsersUserIdSignaturesGet({
     required String? sellerId,
     required String? userId,
   }) {
     generatedMapping.putIfAbsent(
-        SignatureComplete, () => SignatureComplete.fromJsonFactory);
+      SignatureComplete,
+      () => SignatureComplete.fromJsonFactory,
+    );
 
     return _cdrSellersSellerIdUsersUserIdSignaturesGet(
-        sellerId: sellerId, userId: userId);
+      sellerId: sellerId,
+      userId: userId,
+    );
   }
 
   ///Get Signatures By User Id By Seller Id
@@ -4641,7 +4941,7 @@ abstract class Openapi extends ChopperService {
   ///@param user_id
   @Get(path: '/cdr/sellers/{seller_id}/users/{user_id}/signatures/')
   Future<chopper.Response<List<SignatureComplete>>>
-      _cdrSellersSellerIdUsersUserIdSignaturesGet({
+  _cdrSellersSellerIdUsersUserIdSignaturesGet({
     @Path('seller_id') required String? sellerId,
     @Path('user_id') required String? userId,
   });
@@ -4650,16 +4950,21 @@ abstract class Openapi extends ChopperService {
   ///@param user_id
   ///@param document_id
   Future<chopper.Response<SignatureComplete>>
-      cdrUsersUserIdSignaturesDocumentIdPost({
+  cdrUsersUserIdSignaturesDocumentIdPost({
     required String? userId,
     required String? documentId,
     required SignatureBase? body,
   }) {
     generatedMapping.putIfAbsent(
-        SignatureComplete, () => SignatureComplete.fromJsonFactory);
+      SignatureComplete,
+      () => SignatureComplete.fromJsonFactory,
+    );
 
     return _cdrUsersUserIdSignaturesDocumentIdPost(
-        userId: userId, documentId: documentId, body: body);
+      userId: userId,
+      documentId: documentId,
+      body: body,
+    );
   }
 
   ///Create Signature
@@ -4670,7 +4975,7 @@ abstract class Openapi extends ChopperService {
     optionalBody: true,
   )
   Future<chopper.Response<SignatureComplete>>
-      _cdrUsersUserIdSignaturesDocumentIdPost({
+  _cdrUsersUserIdSignaturesDocumentIdPost({
     @Path('user_id') required String? userId,
     @Path('document_id') required String? documentId,
     @Body() required SignatureBase? body,
@@ -4684,7 +4989,9 @@ abstract class Openapi extends ChopperService {
     required String? documentId,
   }) {
     return _cdrUsersUserIdSignaturesDocumentIdDelete(
-        userId: userId, documentId: documentId);
+      userId: userId,
+      documentId: documentId,
+    );
   }
 
   ///Delete Signature
@@ -4699,7 +5006,9 @@ abstract class Openapi extends ChopperService {
   ///Get Curriculums
   Future<chopper.Response<List<CurriculumComplete>>> cdrCurriculumsGet() {
     generatedMapping.putIfAbsent(
-        CurriculumComplete, () => CurriculumComplete.fromJsonFactory);
+      CurriculumComplete,
+      () => CurriculumComplete.fromJsonFactory,
+    );
 
     return _cdrCurriculumsGet();
   }
@@ -4709,34 +5018,37 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<CurriculumComplete>>> _cdrCurriculumsGet();
 
   ///Create Curriculum
-  Future<chopper.Response<CurriculumComplete>> cdrCurriculumsPost(
-      {required CurriculumBase? body}) {
+  Future<chopper.Response<CurriculumComplete>> cdrCurriculumsPost({
+    required CurriculumBase? body,
+  }) {
     generatedMapping.putIfAbsent(
-        CurriculumComplete, () => CurriculumComplete.fromJsonFactory);
+      CurriculumComplete,
+      () => CurriculumComplete.fromJsonFactory,
+    );
 
     return _cdrCurriculumsPost(body: body);
   }
 
   ///Create Curriculum
-  @Post(
-    path: '/cdr/curriculums/',
-    optionalBody: true,
-  )
-  Future<chopper.Response<CurriculumComplete>> _cdrCurriculumsPost(
-      {@Body() required CurriculumBase? body});
+  @Post(path: '/cdr/curriculums/', optionalBody: true)
+  Future<chopper.Response<CurriculumComplete>> _cdrCurriculumsPost({
+    @Body() required CurriculumBase? body,
+  });
 
   ///Delete Curriculum
   ///@param curriculum_id
-  Future<chopper.Response> cdrCurriculumsCurriculumIdDelete(
-      {required String? curriculumId}) {
+  Future<chopper.Response> cdrCurriculumsCurriculumIdDelete({
+    required String? curriculumId,
+  }) {
     return _cdrCurriculumsCurriculumIdDelete(curriculumId: curriculumId);
   }
 
   ///Delete Curriculum
   ///@param curriculum_id
   @Delete(path: '/cdr/curriculums/{curriculum_id}/')
-  Future<chopper.Response> _cdrCurriculumsCurriculumIdDelete(
-      {@Path('curriculum_id') required String? curriculumId});
+  Future<chopper.Response> _cdrCurriculumsCurriculumIdDelete({
+    @Path('curriculum_id') required String? curriculumId,
+  });
 
   ///Create Curriculum Membership
   ///@param user_id
@@ -4746,7 +5058,9 @@ abstract class Openapi extends ChopperService {
     required String? curriculumId,
   }) {
     return _cdrUsersUserIdCurriculumsCurriculumIdPost(
-        userId: userId, curriculumId: curriculumId);
+      userId: userId,
+      curriculumId: curriculumId,
+    );
   }
 
   ///Create Curriculum Membership
@@ -4769,7 +5083,9 @@ abstract class Openapi extends ChopperService {
     required String? curriculumId,
   }) {
     return _cdrUsersUserIdCurriculumsCurriculumIdPatch(
-        userId: userId, curriculumId: curriculumId);
+      userId: userId,
+      curriculumId: curriculumId,
+    );
   }
 
   ///Update Curriculum Membership
@@ -4792,7 +5108,9 @@ abstract class Openapi extends ChopperService {
     required String? curriculumId,
   }) {
     return _cdrUsersUserIdCurriculumsCurriculumIdDelete(
-        userId: userId, curriculumId: curriculumId);
+      userId: userId,
+      curriculumId: curriculumId,
+    );
   }
 
   ///Delete Curriculum Membership
@@ -4806,10 +5124,13 @@ abstract class Openapi extends ChopperService {
 
   ///Get Payments By User Id
   ///@param user_id
-  Future<chopper.Response<List<PaymentComplete>>> cdrUsersUserIdPaymentsGet(
-      {required String? userId}) {
+  Future<chopper.Response<List<PaymentComplete>>> cdrUsersUserIdPaymentsGet({
+    required String? userId,
+  }) {
     generatedMapping.putIfAbsent(
-        PaymentComplete, () => PaymentComplete.fromJsonFactory);
+      PaymentComplete,
+      () => PaymentComplete.fromJsonFactory,
+    );
 
     return _cdrUsersUserIdPaymentsGet(userId: userId);
   }
@@ -4817,8 +5138,9 @@ abstract class Openapi extends ChopperService {
   ///Get Payments By User Id
   ///@param user_id
   @Get(path: '/cdr/users/{user_id}/payments/')
-  Future<chopper.Response<List<PaymentComplete>>> _cdrUsersUserIdPaymentsGet(
-      {@Path('user_id') required String? userId});
+  Future<chopper.Response<List<PaymentComplete>>> _cdrUsersUserIdPaymentsGet({
+    @Path('user_id') required String? userId,
+  });
 
   ///Create Payment
   ///@param user_id
@@ -4827,17 +5149,16 @@ abstract class Openapi extends ChopperService {
     required PaymentBase? body,
   }) {
     generatedMapping.putIfAbsent(
-        PaymentComplete, () => PaymentComplete.fromJsonFactory);
+      PaymentComplete,
+      () => PaymentComplete.fromJsonFactory,
+    );
 
     return _cdrUsersUserIdPaymentsPost(userId: userId, body: body);
   }
 
   ///Create Payment
   ///@param user_id
-  @Post(
-    path: '/cdr/users/{user_id}/payments/',
-    optionalBody: true,
-  )
+  @Post(path: '/cdr/users/{user_id}/payments/', optionalBody: true)
   Future<chopper.Response<PaymentComplete>> _cdrUsersUserIdPaymentsPost({
     @Path('user_id') required String? userId,
     @Body() required PaymentBase? body,
@@ -4851,7 +5172,9 @@ abstract class Openapi extends ChopperService {
     required String? paymentId,
   }) {
     return _cdrUsersUserIdPaymentsPaymentIdDelete(
-        userId: userId, paymentId: paymentId);
+      userId: userId,
+      paymentId: paymentId,
+    );
   }
 
   ///Delete Payment
@@ -4871,10 +5194,7 @@ abstract class Openapi extends ChopperService {
   }
 
   ///Get Payment Url
-  @Post(
-    path: '/cdr/pay/',
-    optionalBody: true,
-  )
+  @Post(path: '/cdr/pay/', optionalBody: true)
   Future<chopper.Response<PaymentUrl>> _cdrPayPost();
 
   ///Get Status
@@ -4894,10 +5214,7 @@ abstract class Openapi extends ChopperService {
   }
 
   ///Update Status
-  @Patch(
-    path: '/cdr/status/',
-    optionalBody: true,
-  )
+  @Patch(path: '/cdr/status/', optionalBody: true)
   Future<chopper.Response> _cdrStatusPatch({@Body() required Status? body});
 
   ///Get My Tickets
@@ -4913,8 +5230,9 @@ abstract class Openapi extends ChopperService {
 
   ///Get Tickets Of User
   ///@param user_id
-  Future<chopper.Response<List<Ticket>>> cdrUsersUserIdTicketsGet(
-      {required String? userId}) {
+  Future<chopper.Response<List<Ticket>>> cdrUsersUserIdTicketsGet({
+    required String? userId,
+  }) {
     generatedMapping.putIfAbsent(Ticket, () => Ticket.fromJsonFactory);
 
     return _cdrUsersUserIdTicketsGet(userId: userId);
@@ -4923,15 +5241,19 @@ abstract class Openapi extends ChopperService {
   ///Get Tickets Of User
   ///@param user_id
   @Get(path: '/cdr/users/{user_id}/tickets/')
-  Future<chopper.Response<List<Ticket>>> _cdrUsersUserIdTicketsGet(
-      {@Path('user_id') required String? userId});
+  Future<chopper.Response<List<Ticket>>> _cdrUsersUserIdTicketsGet({
+    @Path('user_id') required String? userId,
+  });
 
   ///Get Ticket Secret
   ///@param ticket_id
-  Future<chopper.Response<TicketSecret>> cdrUsersMeTicketsTicketIdSecretGet(
-      {required String? ticketId}) {
+  Future<chopper.Response<TicketSecret>> cdrUsersMeTicketsTicketIdSecretGet({
+    required String? ticketId,
+  }) {
     generatedMapping.putIfAbsent(
-        TicketSecret, () => TicketSecret.fromJsonFactory);
+      TicketSecret,
+      () => TicketSecret.fromJsonFactory,
+    );
 
     return _cdrUsersMeTicketsTicketIdSecretGet(ticketId: ticketId);
   }
@@ -4939,8 +5261,9 @@ abstract class Openapi extends ChopperService {
   ///Get Ticket Secret
   ///@param ticket_id
   @Get(path: '/cdr/users/me/tickets/{ticket_id}/secret/')
-  Future<chopper.Response<TicketSecret>> _cdrUsersMeTicketsTicketIdSecretGet(
-      {@Path('ticket_id') required String? ticketId});
+  Future<chopper.Response<TicketSecret>> _cdrUsersMeTicketsTicketIdSecretGet({
+    @Path('ticket_id') required String? ticketId,
+  });
 
   ///Get Ticket By Secret
   ///@param seller_id
@@ -4948,7 +5271,7 @@ abstract class Openapi extends ChopperService {
   ///@param generator_id
   ///@param secret
   Future<chopper.Response<Ticket>>
-      cdrSellersSellerIdProductsProductIdTicketsGeneratorIdSecretGet({
+  cdrSellersSellerIdProductsProductIdTicketsGeneratorIdSecretGet({
     required String? sellerId,
     required String? productId,
     required String? generatorId,
@@ -4957,10 +5280,11 @@ abstract class Openapi extends ChopperService {
     generatedMapping.putIfAbsent(Ticket, () => Ticket.fromJsonFactory);
 
     return _cdrSellersSellerIdProductsProductIdTicketsGeneratorIdSecretGet(
-        sellerId: sellerId,
-        productId: productId,
-        generatorId: generatorId,
-        secret: secret);
+      sellerId: sellerId,
+      productId: productId,
+      generatorId: generatorId,
+      secret: secret,
+    );
   }
 
   ///Get Ticket By Secret
@@ -4969,10 +5293,11 @@ abstract class Openapi extends ChopperService {
   ///@param generator_id
   ///@param secret
   @Get(
-      path:
-          '/cdr/sellers/{seller_id}/products/{product_id}/tickets/{generator_id}/{secret}/')
+    path:
+        '/cdr/sellers/{seller_id}/products/{product_id}/tickets/{generator_id}/{secret}/',
+  )
   Future<chopper.Response<Ticket>>
-      _cdrSellersSellerIdProductsProductIdTicketsGeneratorIdSecretGet({
+  _cdrSellersSellerIdProductsProductIdTicketsGeneratorIdSecretGet({
     @Path('seller_id') required String? sellerId,
     @Path('product_id') required String? productId,
     @Path('generator_id') required String? generatorId,
@@ -4985,7 +5310,7 @@ abstract class Openapi extends ChopperService {
   ///@param generator_id
   ///@param secret
   Future<chopper.Response>
-      cdrSellersSellerIdProductsProductIdTicketsGeneratorIdSecretPatch({
+  cdrSellersSellerIdProductsProductIdTicketsGeneratorIdSecretPatch({
     required String? sellerId,
     required String? productId,
     required String? generatorId,
@@ -4993,11 +5318,12 @@ abstract class Openapi extends ChopperService {
     required TicketScan? body,
   }) {
     return _cdrSellersSellerIdProductsProductIdTicketsGeneratorIdSecretPatch(
-        sellerId: sellerId,
-        productId: productId,
-        generatorId: generatorId,
-        secret: secret,
-        body: body);
+      sellerId: sellerId,
+      productId: productId,
+      generatorId: generatorId,
+      secret: secret,
+      body: body,
+    );
   }
 
   ///Scan Ticket
@@ -5011,7 +5337,7 @@ abstract class Openapi extends ChopperService {
     optionalBody: true,
   )
   Future<chopper.Response>
-      _cdrSellersSellerIdProductsProductIdTicketsGeneratorIdSecretPatch({
+  _cdrSellersSellerIdProductsProductIdTicketsGeneratorIdSecretPatch({
     @Path('seller_id') required String? sellerId,
     @Path('product_id') required String? productId,
     @Path('generator_id') required String? generatorId,
@@ -5025,20 +5351,23 @@ abstract class Openapi extends ChopperService {
   ///@param generator_id
   ///@param tag
   Future<chopper.Response<List<CoreUserSimple>>>
-      cdrSellersSellerIdProductsProductIdTicketsGeneratorIdListsTagGet({
+  cdrSellersSellerIdProductsProductIdTicketsGeneratorIdListsTagGet({
     required String? sellerId,
     required String? productId,
     required String? generatorId,
     required String? tag,
   }) {
     generatedMapping.putIfAbsent(
-        CoreUserSimple, () => CoreUserSimple.fromJsonFactory);
+      CoreUserSimple,
+      () => CoreUserSimple.fromJsonFactory,
+    );
 
     return _cdrSellersSellerIdProductsProductIdTicketsGeneratorIdListsTagGet(
-        sellerId: sellerId,
-        productId: productId,
-        generatorId: generatorId,
-        tag: tag);
+      sellerId: sellerId,
+      productId: productId,
+      generatorId: generatorId,
+      tag: tag,
+    );
   }
 
   ///Get Users By Tag
@@ -5047,10 +5376,11 @@ abstract class Openapi extends ChopperService {
   ///@param generator_id
   ///@param tag
   @Get(
-      path:
-          '/cdr/sellers/{seller_id}/products/{product_id}/tickets/{generator_id}/lists/{tag}/')
+    path:
+        '/cdr/sellers/{seller_id}/products/{product_id}/tickets/{generator_id}/lists/{tag}/',
+  )
   Future<chopper.Response<List<CoreUserSimple>>>
-      _cdrSellersSellerIdProductsProductIdTicketsGeneratorIdListsTagGet({
+  _cdrSellersSellerIdProductsProductIdTicketsGeneratorIdListsTagGet({
     @Path('seller_id') required String? sellerId,
     @Path('product_id') required String? productId,
     @Path('generator_id') required String? generatorId,
@@ -5062,13 +5392,16 @@ abstract class Openapi extends ChopperService {
   ///@param product_id
   ///@param generator_id
   Future<chopper.Response<List<String>>>
-      cdrSellersSellerIdProductsProductIdTagsGeneratorIdGet({
+  cdrSellersSellerIdProductsProductIdTagsGeneratorIdGet({
     required String? sellerId,
     required String? productId,
     required String? generatorId,
   }) {
     return _cdrSellersSellerIdProductsProductIdTagsGeneratorIdGet(
-        sellerId: sellerId, productId: productId, generatorId: generatorId);
+      sellerId: sellerId,
+      productId: productId,
+      generatorId: generatorId,
+    );
   }
 
   ///Get Tags Of Ticket
@@ -5076,10 +5409,10 @@ abstract class Openapi extends ChopperService {
   ///@param product_id
   ///@param generator_id
   @Get(
-      path:
-          '/cdr/sellers/{seller_id}/products/{product_id}/tags/{generator_id}/')
+    path: '/cdr/sellers/{seller_id}/products/{product_id}/tags/{generator_id}/',
+  )
   Future<chopper.Response<List<String>>>
-      _cdrSellersSellerIdProductsProductIdTagsGeneratorIdGet({
+  _cdrSellersSellerIdProductsProductIdTagsGeneratorIdGet({
     @Path('seller_id') required String? sellerId,
     @Path('product_id') required String? productId,
     @Path('generator_id') required String? generatorId,
@@ -5089,16 +5422,21 @@ abstract class Openapi extends ChopperService {
   ///@param seller_id
   ///@param product_id
   Future<chopper.Response<AppModulesCdrSchemasCdrProductComplete>>
-      cdrSellersSellerIdProductsProductIdTicketsPost({
+  cdrSellersSellerIdProductsProductIdTicketsPost({
     required String? sellerId,
     required String? productId,
     required GenerateTicketBase? body,
   }) {
-    generatedMapping.putIfAbsent(AppModulesCdrSchemasCdrProductComplete,
-        () => AppModulesCdrSchemasCdrProductComplete.fromJsonFactory);
+    generatedMapping.putIfAbsent(
+      AppModulesCdrSchemasCdrProductComplete,
+      () => AppModulesCdrSchemasCdrProductComplete.fromJsonFactory,
+    );
 
     return _cdrSellersSellerIdProductsProductIdTicketsPost(
-        sellerId: sellerId, productId: productId, body: body);
+      sellerId: sellerId,
+      productId: productId,
+      body: body,
+    );
   }
 
   ///Generate Ticket For Product
@@ -5109,7 +5447,7 @@ abstract class Openapi extends ChopperService {
     optionalBody: true,
   )
   Future<chopper.Response<AppModulesCdrSchemasCdrProductComplete>>
-      _cdrSellersSellerIdProductsProductIdTicketsPost({
+  _cdrSellersSellerIdProductsProductIdTicketsPost({
     @Path('seller_id') required String? sellerId,
     @Path('product_id') required String? productId,
     @Body() required GenerateTicketBase? body,
@@ -5120,15 +5458,16 @@ abstract class Openapi extends ChopperService {
   ///@param product_id
   ///@param ticket_generator_id
   Future<chopper.Response>
-      cdrSellersSellerIdProductsProductIdTicketsTicketGeneratorIdDelete({
+  cdrSellersSellerIdProductsProductIdTicketsTicketGeneratorIdDelete({
     required String? sellerId,
     required String? productId,
     required String? ticketGeneratorId,
   }) {
     return _cdrSellersSellerIdProductsProductIdTicketsTicketGeneratorIdDelete(
-        sellerId: sellerId,
-        productId: productId,
-        ticketGeneratorId: ticketGeneratorId);
+      sellerId: sellerId,
+      productId: productId,
+      ticketGeneratorId: ticketGeneratorId,
+    );
   }
 
   ///Delete Ticket Generator For Product
@@ -5136,10 +5475,11 @@ abstract class Openapi extends ChopperService {
   ///@param product_id
   ///@param ticket_generator_id
   @Delete(
-      path:
-          '/cdr/sellers/{seller_id}/products/{product_id}/tickets/{ticket_generator_id}')
+    path:
+        '/cdr/sellers/{seller_id}/products/{product_id}/tickets/{ticket_generator_id}',
+  )
   Future<chopper.Response>
-      _cdrSellersSellerIdProductsProductIdTicketsTicketGeneratorIdDelete({
+  _cdrSellersSellerIdProductsProductIdTicketsTicketGeneratorIdDelete({
     @Path('seller_id') required String? sellerId,
     @Path('product_id') required String? productId,
     @Path('ticket_generator_id') required String? ticketGeneratorId,
@@ -5149,15 +5489,19 @@ abstract class Openapi extends ChopperService {
   ///@param seller_id
   ///@param product_id
   Future<chopper.Response<List<CustomDataFieldComplete>>>
-      cdrSellersSellerIdProductsProductIdDataGet({
+  cdrSellersSellerIdProductsProductIdDataGet({
     required String? sellerId,
     required String? productId,
   }) {
     generatedMapping.putIfAbsent(
-        CustomDataFieldComplete, () => CustomDataFieldComplete.fromJsonFactory);
+      CustomDataFieldComplete,
+      () => CustomDataFieldComplete.fromJsonFactory,
+    );
 
     return _cdrSellersSellerIdProductsProductIdDataGet(
-        sellerId: sellerId, productId: productId);
+      sellerId: sellerId,
+      productId: productId,
+    );
   }
 
   ///Get Custom Data Fields
@@ -5165,7 +5509,7 @@ abstract class Openapi extends ChopperService {
   ///@param product_id
   @Get(path: '/cdr/sellers/{seller_id}/products/{product_id}/data/')
   Future<chopper.Response<List<CustomDataFieldComplete>>>
-      _cdrSellersSellerIdProductsProductIdDataGet({
+  _cdrSellersSellerIdProductsProductIdDataGet({
     @Path('seller_id') required String? sellerId,
     @Path('product_id') required String? productId,
   });
@@ -5174,16 +5518,21 @@ abstract class Openapi extends ChopperService {
   ///@param seller_id
   ///@param product_id
   Future<chopper.Response<CustomDataFieldComplete>>
-      cdrSellersSellerIdProductsProductIdDataPost({
+  cdrSellersSellerIdProductsProductIdDataPost({
     required String? sellerId,
     required String? productId,
     required CustomDataFieldBase? body,
   }) {
     generatedMapping.putIfAbsent(
-        CustomDataFieldComplete, () => CustomDataFieldComplete.fromJsonFactory);
+      CustomDataFieldComplete,
+      () => CustomDataFieldComplete.fromJsonFactory,
+    );
 
     return _cdrSellersSellerIdProductsProductIdDataPost(
-        sellerId: sellerId, productId: productId, body: body);
+      sellerId: sellerId,
+      productId: productId,
+      body: body,
+    );
   }
 
   ///Create Custom Data Field
@@ -5194,7 +5543,7 @@ abstract class Openapi extends ChopperService {
     optionalBody: true,
   )
   Future<chopper.Response<CustomDataFieldComplete>>
-      _cdrSellersSellerIdProductsProductIdDataPost({
+  _cdrSellersSellerIdProductsProductIdDataPost({
     @Path('seller_id') required String? sellerId,
     @Path('product_id') required String? productId,
     @Body() required CustomDataFieldBase? body,
@@ -5205,13 +5554,16 @@ abstract class Openapi extends ChopperService {
   ///@param product_id
   ///@param field_id
   Future<chopper.Response>
-      cdrSellersSellerIdProductsProductIdDataFieldIdDelete({
+  cdrSellersSellerIdProductsProductIdDataFieldIdDelete({
     required String? sellerId,
     required String? productId,
     required String? fieldId,
   }) {
     return _cdrSellersSellerIdProductsProductIdDataFieldIdDelete(
-        sellerId: sellerId, productId: productId, fieldId: fieldId);
+      sellerId: sellerId,
+      productId: productId,
+      fieldId: fieldId,
+    );
   }
 
   ///Delete Customdata Field
@@ -5219,9 +5571,10 @@ abstract class Openapi extends ChopperService {
   ///@param product_id
   ///@param field_id
   @Delete(
-      path: '/cdr/sellers/{seller_id}/products/{product_id}/data/{field_id}/')
+    path: '/cdr/sellers/{seller_id}/products/{product_id}/data/{field_id}/',
+  )
   Future<chopper.Response>
-      _cdrSellersSellerIdProductsProductIdDataFieldIdDelete({
+  _cdrSellersSellerIdProductsProductIdDataFieldIdDelete({
     @Path('seller_id') required String? sellerId,
     @Path('product_id') required String? productId,
     @Path('field_id') required String? fieldId,
@@ -5233,20 +5586,23 @@ abstract class Openapi extends ChopperService {
   ///@param user_id
   ///@param field_id
   Future<chopper.Response<CustomDataComplete>>
-      cdrSellersSellerIdProductsProductIdUsersUserIdDataFieldIdGet({
+  cdrSellersSellerIdProductsProductIdUsersUserIdDataFieldIdGet({
     required String? sellerId,
     required String? productId,
     required String? userId,
     required String? fieldId,
   }) {
     generatedMapping.putIfAbsent(
-        CustomDataComplete, () => CustomDataComplete.fromJsonFactory);
+      CustomDataComplete,
+      () => CustomDataComplete.fromJsonFactory,
+    );
 
     return _cdrSellersSellerIdProductsProductIdUsersUserIdDataFieldIdGet(
-        sellerId: sellerId,
-        productId: productId,
-        userId: userId,
-        fieldId: fieldId);
+      sellerId: sellerId,
+      productId: productId,
+      userId: userId,
+      fieldId: fieldId,
+    );
   }
 
   ///Get Customdata
@@ -5255,10 +5611,11 @@ abstract class Openapi extends ChopperService {
   ///@param user_id
   ///@param field_id
   @Get(
-      path:
-          '/cdr/sellers/{seller_id}/products/{product_id}/users/{user_id}/data/{field_id}/')
+    path:
+        '/cdr/sellers/{seller_id}/products/{product_id}/users/{user_id}/data/{field_id}/',
+  )
   Future<chopper.Response<CustomDataComplete>>
-      _cdrSellersSellerIdProductsProductIdUsersUserIdDataFieldIdGet({
+  _cdrSellersSellerIdProductsProductIdUsersUserIdDataFieldIdGet({
     @Path('seller_id') required String? sellerId,
     @Path('product_id') required String? productId,
     @Path('user_id') required String? userId,
@@ -5271,7 +5628,7 @@ abstract class Openapi extends ChopperService {
   ///@param user_id
   ///@param field_id
   Future<chopper.Response<CustomDataComplete>>
-      cdrSellersSellerIdProductsProductIdUsersUserIdDataFieldIdPost({
+  cdrSellersSellerIdProductsProductIdUsersUserIdDataFieldIdPost({
     required String? sellerId,
     required String? productId,
     required String? userId,
@@ -5279,14 +5636,17 @@ abstract class Openapi extends ChopperService {
     required CustomDataBase? body,
   }) {
     generatedMapping.putIfAbsent(
-        CustomDataComplete, () => CustomDataComplete.fromJsonFactory);
+      CustomDataComplete,
+      () => CustomDataComplete.fromJsonFactory,
+    );
 
     return _cdrSellersSellerIdProductsProductIdUsersUserIdDataFieldIdPost(
-        sellerId: sellerId,
-        productId: productId,
-        userId: userId,
-        fieldId: fieldId,
-        body: body);
+      sellerId: sellerId,
+      productId: productId,
+      userId: userId,
+      fieldId: fieldId,
+      body: body,
+    );
   }
 
   ///Create Custom Data
@@ -5300,7 +5660,7 @@ abstract class Openapi extends ChopperService {
     optionalBody: true,
   )
   Future<chopper.Response<CustomDataComplete>>
-      _cdrSellersSellerIdProductsProductIdUsersUserIdDataFieldIdPost({
+  _cdrSellersSellerIdProductsProductIdUsersUserIdDataFieldIdPost({
     @Path('seller_id') required String? sellerId,
     @Path('product_id') required String? productId,
     @Path('user_id') required String? userId,
@@ -5314,7 +5674,7 @@ abstract class Openapi extends ChopperService {
   ///@param user_id
   ///@param field_id
   Future<chopper.Response>
-      cdrSellersSellerIdProductsProductIdUsersUserIdDataFieldIdPatch({
+  cdrSellersSellerIdProductsProductIdUsersUserIdDataFieldIdPatch({
     required String? sellerId,
     required String? productId,
     required String? userId,
@@ -5322,11 +5682,12 @@ abstract class Openapi extends ChopperService {
     required CustomDataBase? body,
   }) {
     return _cdrSellersSellerIdProductsProductIdUsersUserIdDataFieldIdPatch(
-        sellerId: sellerId,
-        productId: productId,
-        userId: userId,
-        fieldId: fieldId,
-        body: body);
+      sellerId: sellerId,
+      productId: productId,
+      userId: userId,
+      fieldId: fieldId,
+      body: body,
+    );
   }
 
   ///Update Custom Data
@@ -5340,7 +5701,7 @@ abstract class Openapi extends ChopperService {
     optionalBody: true,
   )
   Future<chopper.Response>
-      _cdrSellersSellerIdProductsProductIdUsersUserIdDataFieldIdPatch({
+  _cdrSellersSellerIdProductsProductIdUsersUserIdDataFieldIdPatch({
     @Path('seller_id') required String? sellerId,
     @Path('product_id') required String? productId,
     @Path('user_id') required String? userId,
@@ -5354,17 +5715,18 @@ abstract class Openapi extends ChopperService {
   ///@param user_id
   ///@param field_id
   Future<chopper.Response>
-      cdrSellersSellerIdProductsProductIdUsersUserIdDataFieldIdDelete({
+  cdrSellersSellerIdProductsProductIdUsersUserIdDataFieldIdDelete({
     required String? sellerId,
     required String? productId,
     required String? userId,
     required String? fieldId,
   }) {
     return _cdrSellersSellerIdProductsProductIdUsersUserIdDataFieldIdDelete(
-        sellerId: sellerId,
-        productId: productId,
-        userId: userId,
-        fieldId: fieldId);
+      sellerId: sellerId,
+      productId: productId,
+      userId: userId,
+      fieldId: fieldId,
+    );
   }
 
   ///Delete Customdata
@@ -5373,20 +5735,278 @@ abstract class Openapi extends ChopperService {
   ///@param user_id
   ///@param field_id
   @Delete(
-      path:
-          '/cdr/sellers/{seller_id}/products/{product_id}/users/{user_id}/data/{field_id}/')
+    path:
+        '/cdr/sellers/{seller_id}/products/{product_id}/users/{user_id}/data/{field_id}/',
+  )
   Future<chopper.Response>
-      _cdrSellersSellerIdProductsProductIdUsersUserIdDataFieldIdDelete({
+  _cdrSellersSellerIdProductsProductIdUsersUserIdDataFieldIdDelete({
     @Path('seller_id') required String? sellerId,
     @Path('product_id') required String? productId,
     @Path('user_id') required String? userId,
     @Path('field_id') required String? fieldId,
   });
 
+  ///Get All Species
+  Future<chopper.Response<List<SpeciesComplete>>> seedLibrarySpeciesGet() {
+    generatedMapping.putIfAbsent(
+      SpeciesComplete,
+      () => SpeciesComplete.fromJsonFactory,
+    );
+
+    return _seedLibrarySpeciesGet();
+  }
+
+  ///Get All Species
+  @Get(path: '/seed_library/species/')
+  Future<chopper.Response<List<SpeciesComplete>>> _seedLibrarySpeciesGet();
+
+  ///Create Species
+  Future<chopper.Response<SpeciesComplete>> seedLibrarySpeciesPost({
+    required SpeciesBase? body,
+  }) {
+    generatedMapping.putIfAbsent(
+      SpeciesComplete,
+      () => SpeciesComplete.fromJsonFactory,
+    );
+
+    return _seedLibrarySpeciesPost(body: body);
+  }
+
+  ///Create Species
+  @Post(path: '/seed_library/species/', optionalBody: true)
+  Future<chopper.Response<SpeciesComplete>> _seedLibrarySpeciesPost({
+    @Body() required SpeciesBase? body,
+  });
+
+  ///Get All Species Types
+  Future<chopper.Response<SpeciesTypesReturn>> seedLibrarySpeciesTypesGet() {
+    generatedMapping.putIfAbsent(
+      SpeciesTypesReturn,
+      () => SpeciesTypesReturn.fromJsonFactory,
+    );
+
+    return _seedLibrarySpeciesTypesGet();
+  }
+
+  ///Get All Species Types
+  @Get(path: '/seed_library/species/types')
+  Future<chopper.Response<SpeciesTypesReturn>> _seedLibrarySpeciesTypesGet();
+
+  ///Update Species
+  ///@param species_id
+  Future<chopper.Response> seedLibrarySpeciesSpeciesIdPatch({
+    required String? speciesId,
+    required SpeciesEdit? body,
+  }) {
+    return _seedLibrarySpeciesSpeciesIdPatch(speciesId: speciesId, body: body);
+  }
+
+  ///Update Species
+  ///@param species_id
+  @Patch(path: '/seed_library/species/{species_id}', optionalBody: true)
+  Future<chopper.Response> _seedLibrarySpeciesSpeciesIdPatch({
+    @Path('species_id') required String? speciesId,
+    @Body() required SpeciesEdit? body,
+  });
+
+  ///Delete Species
+  ///@param species_id
+  Future<chopper.Response> seedLibrarySpeciesSpeciesIdDelete({
+    required String? speciesId,
+  }) {
+    return _seedLibrarySpeciesSpeciesIdDelete(speciesId: speciesId);
+  }
+
+  ///Delete Species
+  ///@param species_id
+  @Delete(path: '/seed_library/species/{species_id}')
+  Future<chopper.Response> _seedLibrarySpeciesSpeciesIdDelete({
+    @Path('species_id') required String? speciesId,
+  });
+
+  ///Get Waiting Plants
+  Future<chopper.Response<List<PlantSimple>>> seedLibraryPlantsWaitingGet() {
+    generatedMapping.putIfAbsent(
+      PlantSimple,
+      () => PlantSimple.fromJsonFactory,
+    );
+
+    return _seedLibraryPlantsWaitingGet();
+  }
+
+  ///Get Waiting Plants
+  @Get(path: '/seed_library/plants/waiting')
+  Future<chopper.Response<List<PlantSimple>>> _seedLibraryPlantsWaitingGet();
+
+  ///Get My Plants
+  Future<chopper.Response<List<PlantSimple>>> seedLibraryPlantsUsersMeGet() {
+    generatedMapping.putIfAbsent(
+      PlantSimple,
+      () => PlantSimple.fromJsonFactory,
+    );
+
+    return _seedLibraryPlantsUsersMeGet();
+  }
+
+  ///Get My Plants
+  @Get(path: '/seed_library/plants/users/me')
+  Future<chopper.Response<List<PlantSimple>>> _seedLibraryPlantsUsersMeGet();
+
+  ///Get Plants By User Id
+  ///@param user_id
+  Future<chopper.Response<List<PlantSimple>>> seedLibraryPlantsUsersUserIdGet({
+    required String? userId,
+  }) {
+    generatedMapping.putIfAbsent(
+      PlantSimple,
+      () => PlantSimple.fromJsonFactory,
+    );
+
+    return _seedLibraryPlantsUsersUserIdGet(userId: userId);
+  }
+
+  ///Get Plants By User Id
+  ///@param user_id
+  @Get(path: '/seed_library/plants/users/{user_id}')
+  Future<chopper.Response<List<PlantSimple>>> _seedLibraryPlantsUsersUserIdGet({
+    @Path('user_id') required String? userId,
+  });
+
+  ///Get Plant By Id
+  ///@param plant_id
+  Future<chopper.Response<PlantComplete>> seedLibraryPlantsPlantIdGet({
+    required String? plantId,
+  }) {
+    generatedMapping.putIfAbsent(
+      PlantComplete,
+      () => PlantComplete.fromJsonFactory,
+    );
+
+    return _seedLibraryPlantsPlantIdGet(plantId: plantId);
+  }
+
+  ///Get Plant By Id
+  ///@param plant_id
+  @Get(path: '/seed_library/plants/{plant_id}')
+  Future<chopper.Response<PlantComplete>> _seedLibraryPlantsPlantIdGet({
+    @Path('plant_id') required String? plantId,
+  });
+
+  ///Update Plant
+  ///@param plant_id
+  Future<chopper.Response> seedLibraryPlantsPlantIdPatch({
+    required String? plantId,
+    required PlantEdit? body,
+  }) {
+    return _seedLibraryPlantsPlantIdPatch(plantId: plantId, body: body);
+  }
+
+  ///Update Plant
+  ///@param plant_id
+  @Patch(path: '/seed_library/plants/{plant_id}', optionalBody: true)
+  Future<chopper.Response> _seedLibraryPlantsPlantIdPatch({
+    @Path('plant_id') required String? plantId,
+    @Body() required PlantEdit? body,
+  });
+
+  ///Delete Plant
+  ///@param plant_id
+  Future<chopper.Response> seedLibraryPlantsPlantIdDelete({
+    required String? plantId,
+  }) {
+    return _seedLibraryPlantsPlantIdDelete(plantId: plantId);
+  }
+
+  ///Delete Plant
+  ///@param plant_id
+  @Delete(path: '/seed_library/plants/{plant_id}')
+  Future<chopper.Response> _seedLibraryPlantsPlantIdDelete({
+    @Path('plant_id') required String? plantId,
+  });
+
+  ///Create Plant
+  Future<chopper.Response<PlantComplete>> seedLibraryPlantsPost({
+    required PlantCreation? body,
+  }) {
+    generatedMapping.putIfAbsent(
+      PlantComplete,
+      () => PlantComplete.fromJsonFactory,
+    );
+
+    return _seedLibraryPlantsPost(body: body);
+  }
+
+  ///Create Plant
+  @Post(path: '/seed_library/plants/', optionalBody: true)
+  Future<chopper.Response<PlantComplete>> _seedLibraryPlantsPost({
+    @Body() required PlantCreation? body,
+  });
+
+  ///Update Plant Admin
+  ///@param plant_id
+  Future<chopper.Response> seedLibraryPlantsPlantIdAdminPatch({
+    required String? plantId,
+    required PlantEdit? body,
+  }) {
+    return _seedLibraryPlantsPlantIdAdminPatch(plantId: plantId, body: body);
+  }
+
+  ///Update Plant Admin
+  ///@param plant_id
+  @Patch(path: '/seed_library/plants/{plant_id}/admin', optionalBody: true)
+  Future<chopper.Response> _seedLibraryPlantsPlantIdAdminPatch({
+    @Path('plant_id') required String? plantId,
+    @Body() required PlantEdit? body,
+  });
+
+  ///Borrow Plant
+  ///@param plant_id
+  Future<chopper.Response> seedLibraryPlantsPlantIdBorrowPatch({
+    required String? plantId,
+  }) {
+    return _seedLibraryPlantsPlantIdBorrowPatch(plantId: plantId);
+  }
+
+  ///Borrow Plant
+  ///@param plant_id
+  @Patch(path: '/seed_library/plants/{plant_id}/borrow', optionalBody: true)
+  Future<chopper.Response> _seedLibraryPlantsPlantIdBorrowPatch({
+    @Path('plant_id') required String? plantId,
+  });
+
+  ///Get Seed Library Information
+  Future<chopper.Response<SeedLibraryInformation>> seedLibraryInformationGet() {
+    generatedMapping.putIfAbsent(
+      SeedLibraryInformation,
+      () => SeedLibraryInformation.fromJsonFactory,
+    );
+
+    return _seedLibraryInformationGet();
+  }
+
+  ///Get Seed Library Information
+  @Get(path: '/seed_library/information')
+  Future<chopper.Response<SeedLibraryInformation>> _seedLibraryInformationGet();
+
+  ///Update Seed Library Information
+  Future<chopper.Response> seedLibraryInformationPatch({
+    required SeedLibraryInformation? body,
+  }) {
+    return _seedLibraryInformationPatch(body: body);
+  }
+
+  ///Update Seed Library Information
+  @Patch(path: '/seed_library/information', optionalBody: true)
+  Future<chopper.Response> _seedLibraryInformationPatch({
+    @Body() required SeedLibraryInformation? body,
+  });
+
   ///Read Advertisers
   Future<chopper.Response<List<AdvertiserComplete>>> advertAdvertisersGet() {
     generatedMapping.putIfAbsent(
-        AdvertiserComplete, () => AdvertiserComplete.fromJsonFactory);
+      AdvertiserComplete,
+      () => AdvertiserComplete.fromJsonFactory,
+    );
 
     return _advertAdvertisersGet();
   }
@@ -5396,34 +6016,37 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<AdvertiserComplete>>> _advertAdvertisersGet();
 
   ///Create Advertiser
-  Future<chopper.Response<AdvertiserComplete>> advertAdvertisersPost(
-      {required AdvertiserBase? body}) {
+  Future<chopper.Response<AdvertiserComplete>> advertAdvertisersPost({
+    required AdvertiserBase? body,
+  }) {
     generatedMapping.putIfAbsent(
-        AdvertiserComplete, () => AdvertiserComplete.fromJsonFactory);
+      AdvertiserComplete,
+      () => AdvertiserComplete.fromJsonFactory,
+    );
 
     return _advertAdvertisersPost(body: body);
   }
 
   ///Create Advertiser
-  @Post(
-    path: '/advert/advertisers',
-    optionalBody: true,
-  )
-  Future<chopper.Response<AdvertiserComplete>> _advertAdvertisersPost(
-      {@Body() required AdvertiserBase? body});
+  @Post(path: '/advert/advertisers', optionalBody: true)
+  Future<chopper.Response<AdvertiserComplete>> _advertAdvertisersPost({
+    @Body() required AdvertiserBase? body,
+  });
 
   ///Delete Advertiser
   ///@param advertiser_id
-  Future<chopper.Response> advertAdvertisersAdvertiserIdDelete(
-      {required String? advertiserId}) {
+  Future<chopper.Response> advertAdvertisersAdvertiserIdDelete({
+    required String? advertiserId,
+  }) {
     return _advertAdvertisersAdvertiserIdDelete(advertiserId: advertiserId);
   }
 
   ///Delete Advertiser
   ///@param advertiser_id
   @Delete(path: '/advert/advertisers/{advertiser_id}')
-  Future<chopper.Response> _advertAdvertisersAdvertiserIdDelete(
-      {@Path('advertiser_id') required String? advertiserId});
+  Future<chopper.Response> _advertAdvertisersAdvertiserIdDelete({
+    @Path('advertiser_id') required String? advertiserId,
+  });
 
   ///Update Advertiser
   ///@param advertiser_id
@@ -5432,15 +6055,14 @@ abstract class Openapi extends ChopperService {
     required AdvertiserUpdate? body,
   }) {
     return _advertAdvertisersAdvertiserIdPatch(
-        advertiserId: advertiserId, body: body);
+      advertiserId: advertiserId,
+      body: body,
+    );
   }
 
   ///Update Advertiser
   ///@param advertiser_id
-  @Patch(
-    path: '/advert/advertisers/{advertiser_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/advert/advertisers/{advertiser_id}', optionalBody: true)
   Future<chopper.Response> _advertAdvertisersAdvertiserIdPatch({
     @Path('advertiser_id') required String? advertiserId,
     @Body() required AdvertiserUpdate? body,
@@ -5449,7 +6071,9 @@ abstract class Openapi extends ChopperService {
   ///Get Current User Advertisers
   Future<chopper.Response<List<AdvertiserComplete>>> advertMeAdvertisersGet() {
     generatedMapping.putIfAbsent(
-        AdvertiserComplete, () => AdvertiserComplete.fromJsonFactory);
+      AdvertiserComplete,
+      () => AdvertiserComplete.fromJsonFactory,
+    );
 
     return _advertMeAdvertisersGet();
   }
@@ -5460,10 +6084,13 @@ abstract class Openapi extends ChopperService {
 
   ///Read Adverts
   ///@param advertisers
-  Future<chopper.Response<List<AdvertReturnComplete>>> advertAdvertsGet(
-      {List<String>? advertisers}) {
+  Future<chopper.Response<List<AdvertReturnComplete>>> advertAdvertsGet({
+    List<String>? advertisers,
+  }) {
     generatedMapping.putIfAbsent(
-        AdvertReturnComplete, () => AdvertReturnComplete.fromJsonFactory);
+      AdvertReturnComplete,
+      () => AdvertReturnComplete.fromJsonFactory,
+    );
 
     return _advertAdvertsGet(advertisers: advertisers);
   }
@@ -5471,32 +6098,37 @@ abstract class Openapi extends ChopperService {
   ///Read Adverts
   ///@param advertisers
   @Get(path: '/advert/adverts')
-  Future<chopper.Response<List<AdvertReturnComplete>>> _advertAdvertsGet(
-      {@Query('advertisers') List<String>? advertisers});
+  Future<chopper.Response<List<AdvertReturnComplete>>> _advertAdvertsGet({
+    @Query('advertisers') List<String>? advertisers,
+  });
 
   ///Create Advert
-  Future<chopper.Response<AdvertReturnComplete>> advertAdvertsPost(
-      {required AdvertBase? body}) {
+  Future<chopper.Response<AdvertReturnComplete>> advertAdvertsPost({
+    required AdvertBase? body,
+  }) {
     generatedMapping.putIfAbsent(
-        AdvertReturnComplete, () => AdvertReturnComplete.fromJsonFactory);
+      AdvertReturnComplete,
+      () => AdvertReturnComplete.fromJsonFactory,
+    );
 
     return _advertAdvertsPost(body: body);
   }
 
   ///Create Advert
-  @Post(
-    path: '/advert/adverts',
-    optionalBody: true,
-  )
-  Future<chopper.Response<AdvertReturnComplete>> _advertAdvertsPost(
-      {@Body() required AdvertBase? body});
+  @Post(path: '/advert/adverts', optionalBody: true)
+  Future<chopper.Response<AdvertReturnComplete>> _advertAdvertsPost({
+    @Body() required AdvertBase? body,
+  });
 
   ///Read Advert
   ///@param advert_id
-  Future<chopper.Response<AdvertReturnComplete>> advertAdvertsAdvertIdGet(
-      {required String? advertId}) {
+  Future<chopper.Response<AdvertReturnComplete>> advertAdvertsAdvertIdGet({
+    required String? advertId,
+  }) {
     generatedMapping.putIfAbsent(
-        AdvertReturnComplete, () => AdvertReturnComplete.fromJsonFactory);
+      AdvertReturnComplete,
+      () => AdvertReturnComplete.fromJsonFactory,
+    );
 
     return _advertAdvertsAdvertIdGet(advertId: advertId);
   }
@@ -5504,8 +6136,9 @@ abstract class Openapi extends ChopperService {
   ///Read Advert
   ///@param advert_id
   @Get(path: '/advert/adverts/{advert_id}')
-  Future<chopper.Response<AdvertReturnComplete>> _advertAdvertsAdvertIdGet(
-      {@Path('advert_id') required String? advertId});
+  Future<chopper.Response<AdvertReturnComplete>> _advertAdvertsAdvertIdGet({
+    @Path('advert_id') required String? advertId,
+  });
 
   ///Update Advert
   ///@param advert_id
@@ -5518,10 +6151,7 @@ abstract class Openapi extends ChopperService {
 
   ///Update Advert
   ///@param advert_id
-  @Patch(
-    path: '/advert/adverts/{advert_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/advert/adverts/{advert_id}', optionalBody: true)
   Future<chopper.Response> _advertAdvertsAdvertIdPatch({
     @Path('advert_id') required String? advertId,
     @Body() required AdvertUpdate? body,
@@ -5529,60 +6159,65 @@ abstract class Openapi extends ChopperService {
 
   ///Delete Advert
   ///@param advert_id
-  Future<chopper.Response> advertAdvertsAdvertIdDelete(
-      {required String? advertId}) {
+  Future<chopper.Response> advertAdvertsAdvertIdDelete({
+    required String? advertId,
+  }) {
     return _advertAdvertsAdvertIdDelete(advertId: advertId);
   }
 
   ///Delete Advert
   ///@param advert_id
   @Delete(path: '/advert/adverts/{advert_id}')
-  Future<chopper.Response> _advertAdvertsAdvertIdDelete(
-      {@Path('advert_id') required String? advertId});
+  Future<chopper.Response> _advertAdvertsAdvertIdDelete({
+    @Path('advert_id') required String? advertId,
+  });
 
   ///Read Advert Image
   ///@param advert_id
-  Future<chopper.Response> advertAdvertsAdvertIdPictureGet(
-      {required String? advertId}) {
+  Future<chopper.Response> advertAdvertsAdvertIdPictureGet({
+    required String? advertId,
+  }) {
     return _advertAdvertsAdvertIdPictureGet(advertId: advertId);
   }
 
   ///Read Advert Image
   ///@param advert_id
   @Get(path: '/advert/adverts/{advert_id}/picture')
-  Future<chopper.Response> _advertAdvertsAdvertIdPictureGet(
-      {@Path('advert_id') required String? advertId});
+  Future<chopper.Response> _advertAdvertsAdvertIdPictureGet({
+    @Path('advert_id') required String? advertId,
+  });
 
   ///Create Advert Image
   ///@param advert_id
   Future<chopper.Response<AppTypesStandardResponsesResult>>
-      advertAdvertsAdvertIdPicturePost({
+  advertAdvertsAdvertIdPicturePost({
     required String? advertId,
-    required BodyCreateAdvertImageAdvertAdvertsAdvertIdPicturePost body,
+    required MultipartFile image,
   }) {
-    generatedMapping.putIfAbsent(AppTypesStandardResponsesResult,
-        () => AppTypesStandardResponsesResult.fromJsonFactory);
+    generatedMapping.putIfAbsent(
+      AppTypesStandardResponsesResult,
+      () => AppTypesStandardResponsesResult.fromJsonFactory,
+    );
 
-    return _advertAdvertsAdvertIdPicturePost(advertId: advertId, body: body);
+    return _advertAdvertsAdvertIdPicturePost(advertId: advertId, image: image);
   }
 
   ///Create Advert Image
   ///@param advert_id
-  @Post(
-    path: '/advert/adverts/{advert_id}/picture',
-    optionalBody: true,
-  )
+  @Post(path: '/advert/adverts/{advert_id}/picture', optionalBody: true)
   @Multipart()
   Future<chopper.Response<AppTypesStandardResponsesResult>>
-      _advertAdvertsAdvertIdPicturePost({
+  _advertAdvertsAdvertIdPicturePost({
     @Path('advert_id') required String? advertId,
-    @Part() required BodyCreateAdvertImageAdvertAdvertsAdvertIdPicturePost body,
+    @PartFile('image') required MultipartFile image,
   });
 
   ///Get Sections
   Future<chopper.Response<List<SectionComplete>>> campaignSectionsGet() {
     generatedMapping.putIfAbsent(
-        SectionComplete, () => SectionComplete.fromJsonFactory);
+      SectionComplete,
+      () => SectionComplete.fromJsonFactory,
+    );
 
     return _campaignSectionsGet();
   }
@@ -5592,34 +6227,37 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<SectionComplete>>> _campaignSectionsGet();
 
   ///Add Section
-  Future<chopper.Response<SectionComplete>> campaignSectionsPost(
-      {required SectionBase? body}) {
+  Future<chopper.Response<SectionComplete>> campaignSectionsPost({
+    required SectionBase? body,
+  }) {
     generatedMapping.putIfAbsent(
-        SectionComplete, () => SectionComplete.fromJsonFactory);
+      SectionComplete,
+      () => SectionComplete.fromJsonFactory,
+    );
 
     return _campaignSectionsPost(body: body);
   }
 
   ///Add Section
-  @Post(
-    path: '/campaign/sections',
-    optionalBody: true,
-  )
-  Future<chopper.Response<SectionComplete>> _campaignSectionsPost(
-      {@Body() required SectionBase? body});
+  @Post(path: '/campaign/sections', optionalBody: true)
+  Future<chopper.Response<SectionComplete>> _campaignSectionsPost({
+    @Body() required SectionBase? body,
+  });
 
   ///Delete Section
   ///@param section_id
-  Future<chopper.Response> campaignSectionsSectionIdDelete(
-      {required String? sectionId}) {
+  Future<chopper.Response> campaignSectionsSectionIdDelete({
+    required String? sectionId,
+  }) {
     return _campaignSectionsSectionIdDelete(sectionId: sectionId);
   }
 
   ///Delete Section
   ///@param section_id
   @Delete(path: '/campaign/sections/{section_id}')
-  Future<chopper.Response> _campaignSectionsSectionIdDelete(
-      {@Path('section_id') required String? sectionId});
+  Future<chopper.Response> _campaignSectionsSectionIdDelete({
+    @Path('section_id') required String? sectionId,
+  });
 
   ///Get Lists
   Future<chopper.Response<List<ListReturn>>> campaignListsGet() {
@@ -5633,33 +6271,34 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<ListReturn>>> _campaignListsGet();
 
   ///Add List
-  Future<chopper.Response<ListReturn>> campaignListsPost(
-      {required ListBase? body}) {
+  Future<chopper.Response<ListReturn>> campaignListsPost({
+    required ListBase? body,
+  }) {
     generatedMapping.putIfAbsent(ListReturn, () => ListReturn.fromJsonFactory);
 
     return _campaignListsPost(body: body);
   }
 
   ///Add List
-  @Post(
-    path: '/campaign/lists',
-    optionalBody: true,
-  )
-  Future<chopper.Response<ListReturn>> _campaignListsPost(
-      {@Body() required ListBase? body});
+  @Post(path: '/campaign/lists', optionalBody: true)
+  Future<chopper.Response<ListReturn>> _campaignListsPost({
+    @Body() required ListBase? body,
+  });
 
   ///Delete List
   ///@param list_id
-  Future<chopper.Response> campaignListsListIdDelete(
-      {required String? listId}) {
+  Future<chopper.Response> campaignListsListIdDelete({
+    required String? listId,
+  }) {
     return _campaignListsListIdDelete(listId: listId);
   }
 
   ///Delete List
   ///@param list_id
   @Delete(path: '/campaign/lists/{list_id}')
-  Future<chopper.Response> _campaignListsListIdDelete(
-      {@Path('list_id') required String? listId});
+  Future<chopper.Response> _campaignListsListIdDelete({
+    @Path('list_id') required String? listId,
+  });
 
   ///Update List
   ///@param list_id
@@ -5672,10 +6311,7 @@ abstract class Openapi extends ChopperService {
 
   ///Update List
   ///@param list_id
-  @Patch(
-    path: '/campaign/lists/{list_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/campaign/lists/{list_id}', optionalBody: true)
   Future<chopper.Response> _campaignListsListIdPatch({
     @Path('list_id') required String? listId,
     @Body() required ListEdit? body,
@@ -5690,8 +6326,9 @@ abstract class Openapi extends ChopperService {
   ///Delete Lists By Type
   ///@param list_type
   @Delete(path: '/campaign/lists/')
-  Future<chopper.Response> _campaignListsDelete(
-      {@Query('list_type') Object? listType});
+  Future<chopper.Response> _campaignListsDelete({
+    @Query('list_type') Object? listType,
+  });
 
   ///Get Voters
   Future<chopper.Response<List<VoterGroup>>> campaignVotersGet() {
@@ -5705,20 +6342,19 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<VoterGroup>>> _campaignVotersGet();
 
   ///Add Voter
-  Future<chopper.Response<VoterGroup>> campaignVotersPost(
-      {required VoterGroup? body}) {
+  Future<chopper.Response<VoterGroup>> campaignVotersPost({
+    required VoterGroup? body,
+  }) {
     generatedMapping.putIfAbsent(VoterGroup, () => VoterGroup.fromJsonFactory);
 
     return _campaignVotersPost(body: body);
   }
 
   ///Add Voter
-  @Post(
-    path: '/campaign/voters',
-    optionalBody: true,
-  )
-  Future<chopper.Response<VoterGroup>> _campaignVotersPost(
-      {@Body() required VoterGroup? body});
+  @Post(path: '/campaign/voters', optionalBody: true)
+  Future<chopper.Response<VoterGroup>> _campaignVotersPost({
+    @Body() required VoterGroup? body,
+  });
 
   ///Delete Voters
   Future<chopper.Response> campaignVotersDelete() {
@@ -5731,16 +6367,18 @@ abstract class Openapi extends ChopperService {
 
   ///Delete Voter By Group Id
   ///@param group_id
-  Future<chopper.Response> campaignVotersGroupIdDelete(
-      {required String? groupId}) {
+  Future<chopper.Response> campaignVotersGroupIdDelete({
+    required String? groupId,
+  }) {
     return _campaignVotersGroupIdDelete(groupId: groupId);
   }
 
   ///Delete Voter By Group Id
   ///@param group_id
   @Delete(path: '/campaign/voters/{group_id}')
-  Future<chopper.Response> _campaignVotersGroupIdDelete(
-      {@Path('group_id') required String? groupId});
+  Future<chopper.Response> _campaignVotersGroupIdDelete({
+    @Path('group_id') required String? groupId,
+  });
 
   ///Open Vote
   Future<chopper.Response> campaignStatusOpenPost() {
@@ -5748,10 +6386,7 @@ abstract class Openapi extends ChopperService {
   }
 
   ///Open Vote
-  @Post(
-    path: '/campaign/status/open',
-    optionalBody: true,
-  )
+  @Post(path: '/campaign/status/open', optionalBody: true)
   Future<chopper.Response> _campaignStatusOpenPost();
 
   ///Close Vote
@@ -5760,10 +6395,7 @@ abstract class Openapi extends ChopperService {
   }
 
   ///Close Vote
-  @Post(
-    path: '/campaign/status/close',
-    optionalBody: true,
-  )
+  @Post(path: '/campaign/status/close', optionalBody: true)
   Future<chopper.Response> _campaignStatusClosePost();
 
   ///Count Voting
@@ -5772,10 +6404,7 @@ abstract class Openapi extends ChopperService {
   }
 
   ///Count Voting
-  @Post(
-    path: '/campaign/status/counting',
-    optionalBody: true,
-  )
+  @Post(path: '/campaign/status/counting', optionalBody: true)
   Future<chopper.Response> _campaignStatusCountingPost();
 
   ///Publish Vote
@@ -5784,10 +6413,7 @@ abstract class Openapi extends ChopperService {
   }
 
   ///Publish Vote
-  @Post(
-    path: '/campaign/status/published',
-    optionalBody: true,
-  )
+  @Post(path: '/campaign/status/published', optionalBody: true)
   Future<chopper.Response> _campaignStatusPublishedPost();
 
   ///Reset Vote
@@ -5796,10 +6422,7 @@ abstract class Openapi extends ChopperService {
   }
 
   ///Reset Vote
-  @Post(
-    path: '/campaign/status/reset',
-    optionalBody: true,
-  )
+  @Post(path: '/campaign/status/reset', optionalBody: true)
   Future<chopper.Response> _campaignStatusResetPost();
 
   ///Get Sections Already Voted
@@ -5817,18 +6440,18 @@ abstract class Openapi extends ChopperService {
   }
 
   ///Vote
-  @Post(
-    path: '/campaign/votes',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _campaignVotesPost(
-      {@Body() required VoteBase? body});
+  @Post(path: '/campaign/votes', optionalBody: true)
+  Future<chopper.Response> _campaignVotesPost({
+    @Body() required VoteBase? body,
+  });
 
   ///Get Results
   Future<chopper.Response<List<AppModulesCampaignSchemasCampaignResult>>>
-      campaignResultsGet() {
-    generatedMapping.putIfAbsent(AppModulesCampaignSchemasCampaignResult,
-        () => AppModulesCampaignSchemasCampaignResult.fromJsonFactory);
+  campaignResultsGet() {
+    generatedMapping.putIfAbsent(
+      AppModulesCampaignSchemasCampaignResult,
+      () => AppModulesCampaignSchemasCampaignResult.fromJsonFactory,
+    );
 
     return _campaignResultsGet();
   }
@@ -5836,7 +6459,7 @@ abstract class Openapi extends ChopperService {
   ///Get Results
   @Get(path: '/campaign/results')
   Future<chopper.Response<List<AppModulesCampaignSchemasCampaignResult>>>
-      _campaignResultsGet();
+  _campaignResultsGet();
 
   ///Get Status Vote
   Future<chopper.Response<VoteStatus>> campaignStatusGet() {
@@ -5851,8 +6474,9 @@ abstract class Openapi extends ChopperService {
 
   ///Get Stats For Section
   ///@param section_id
-  Future<chopper.Response<VoteStats>> campaignStatsSectionIdGet(
-      {required String? sectionId}) {
+  Future<chopper.Response<VoteStats>> campaignStatsSectionIdGet({
+    required String? sectionId,
+  }) {
     generatedMapping.putIfAbsent(VoteStats, () => VoteStats.fromJsonFactory);
 
     return _campaignStatsSectionIdGet(sectionId: sectionId);
@@ -5861,53 +6485,57 @@ abstract class Openapi extends ChopperService {
   ///Get Stats For Section
   ///@param section_id
   @Get(path: '/campaign/stats/{section_id}')
-  Future<chopper.Response<VoteStats>> _campaignStatsSectionIdGet(
-      {@Path('section_id') required String? sectionId});
+  Future<chopper.Response<VoteStats>> _campaignStatsSectionIdGet({
+    @Path('section_id') required String? sectionId,
+  });
 
   ///Create Campaigns Logo
   ///@param list_id
   Future<chopper.Response<AppTypesStandardResponsesResult>>
-      campaignListsListIdLogoPost({
+  campaignListsListIdLogoPost({
     required String? listId,
-    required BodyCreateCampaignsLogoCampaignListsListIdLogoPost body,
+    required MultipartFile image,
   }) {
-    generatedMapping.putIfAbsent(AppTypesStandardResponsesResult,
-        () => AppTypesStandardResponsesResult.fromJsonFactory);
+    generatedMapping.putIfAbsent(
+      AppTypesStandardResponsesResult,
+      () => AppTypesStandardResponsesResult.fromJsonFactory,
+    );
 
-    return _campaignListsListIdLogoPost(listId: listId, body: body);
+    return _campaignListsListIdLogoPost(listId: listId, image: image);
   }
 
   ///Create Campaigns Logo
   ///@param list_id
-  @Post(
-    path: '/campaign/lists/{list_id}/logo',
-    optionalBody: true,
-  )
+  @Post(path: '/campaign/lists/{list_id}/logo', optionalBody: true)
   @Multipart()
   Future<chopper.Response<AppTypesStandardResponsesResult>>
-      _campaignListsListIdLogoPost({
+  _campaignListsListIdLogoPost({
     @Path('list_id') required String? listId,
-    @Part() required BodyCreateCampaignsLogoCampaignListsListIdLogoPost body,
+    @PartFile('image') required MultipartFile image,
   });
 
   ///Read Campaigns Logo
   ///@param list_id
-  Future<chopper.Response> campaignListsListIdLogoGet(
-      {required String? listId}) {
+  Future<chopper.Response> campaignListsListIdLogoGet({
+    required String? listId,
+  }) {
     return _campaignListsListIdLogoGet(listId: listId);
   }
 
   ///Read Campaigns Logo
   ///@param list_id
   @Get(path: '/campaign/lists/{list_id}/logo')
-  Future<chopper.Response> _campaignListsListIdLogoGet(
-      {@Path('list_id') required String? listId});
+  Future<chopper.Response> _campaignListsListIdLogoGet({
+    @Path('list_id') required String? listId,
+  });
 
   ///Get Recommendation
   Future<chopper.Response<List<Recommendation>>>
-      recommendationRecommendationsGet() {
+  recommendationRecommendationsGet() {
     generatedMapping.putIfAbsent(
-        Recommendation, () => Recommendation.fromJsonFactory);
+      Recommendation,
+      () => Recommendation.fromJsonFactory,
+    );
 
     return _recommendationRecommendationsGet();
   }
@@ -5915,24 +6543,25 @@ abstract class Openapi extends ChopperService {
   ///Get Recommendation
   @Get(path: '/recommendation/recommendations')
   Future<chopper.Response<List<Recommendation>>>
-      _recommendationRecommendationsGet();
+  _recommendationRecommendationsGet();
 
   ///Create Recommendation
-  Future<chopper.Response<Recommendation>> recommendationRecommendationsPost(
-      {required RecommendationBase? body}) {
+  Future<chopper.Response<Recommendation>> recommendationRecommendationsPost({
+    required RecommendationBase? body,
+  }) {
     generatedMapping.putIfAbsent(
-        Recommendation, () => Recommendation.fromJsonFactory);
+      Recommendation,
+      () => Recommendation.fromJsonFactory,
+    );
 
     return _recommendationRecommendationsPost(body: body);
   }
 
   ///Create Recommendation
-  @Post(
-    path: '/recommendation/recommendations',
-    optionalBody: true,
-  )
-  Future<chopper.Response<Recommendation>> _recommendationRecommendationsPost(
-      {@Body() required RecommendationBase? body});
+  @Post(path: '/recommendation/recommendations', optionalBody: true)
+  Future<chopper.Response<Recommendation>> _recommendationRecommendationsPost({
+    @Body() required RecommendationBase? body,
+  });
 
   ///Edit Recommendation
   ///@param recommendation_id
@@ -5941,7 +6570,9 @@ abstract class Openapi extends ChopperService {
     required RecommendationEdit? body,
   }) {
     return _recommendationRecommendationsRecommendationIdPatch(
-        recommendationId: recommendationId, body: body);
+      recommendationId: recommendationId,
+      body: body,
+    );
   }
 
   ///Edit Recommendation
@@ -5957,47 +6588,57 @@ abstract class Openapi extends ChopperService {
 
   ///Delete Recommendation
   ///@param recommendation_id
-  Future<chopper.Response> recommendationRecommendationsRecommendationIdDelete(
-      {required String? recommendationId}) {
+  Future<chopper.Response> recommendationRecommendationsRecommendationIdDelete({
+    required String? recommendationId,
+  }) {
     return _recommendationRecommendationsRecommendationIdDelete(
-        recommendationId: recommendationId);
+      recommendationId: recommendationId,
+    );
   }
 
   ///Delete Recommendation
   ///@param recommendation_id
   @Delete(path: '/recommendation/recommendations/{recommendation_id}')
-  Future<chopper.Response> _recommendationRecommendationsRecommendationIdDelete(
-      {@Path('recommendation_id') required String? recommendationId});
+  Future<chopper.Response>
+  _recommendationRecommendationsRecommendationIdDelete({
+    @Path('recommendation_id') required String? recommendationId,
+  });
 
   ///Read Recommendation Image
   ///@param recommendation_id
   Future<chopper.Response>
-      recommendationRecommendationsRecommendationIdPictureGet(
-          {required String? recommendationId}) {
+  recommendationRecommendationsRecommendationIdPictureGet({
+    required String? recommendationId,
+  }) {
     return _recommendationRecommendationsRecommendationIdPictureGet(
-        recommendationId: recommendationId);
+      recommendationId: recommendationId,
+    );
   }
 
   ///Read Recommendation Image
   ///@param recommendation_id
   @Get(path: '/recommendation/recommendations/{recommendation_id}/picture')
   Future<chopper.Response>
-      _recommendationRecommendationsRecommendationIdPictureGet(
-          {@Path('recommendation_id') required String? recommendationId});
+  _recommendationRecommendationsRecommendationIdPictureGet({
+    @Path('recommendation_id') required String? recommendationId,
+  });
 
   ///Create Recommendation Image
   ///@param recommendation_id
   Future<chopper.Response<AppTypesStandardResponsesResult>>
-      recommendationRecommendationsRecommendationIdPicturePost({
+  recommendationRecommendationsRecommendationIdPicturePost({
     required String? recommendationId,
-    required BodyCreateRecommendationImageRecommendationRecommendationsRecommendationIdPicturePost
-        body,
+    required MultipartFile image,
   }) {
-    generatedMapping.putIfAbsent(AppTypesStandardResponsesResult,
-        () => AppTypesStandardResponsesResult.fromJsonFactory);
+    generatedMapping.putIfAbsent(
+      AppTypesStandardResponsesResult,
+      () => AppTypesStandardResponsesResult.fromJsonFactory,
+    );
 
     return _recommendationRecommendationsRecommendationIdPicturePost(
-        recommendationId: recommendationId, body: body);
+      recommendationId: recommendationId,
+      image: image,
+    );
   }
 
   ///Create Recommendation Image
@@ -6008,11 +6649,9 @@ abstract class Openapi extends ChopperService {
   )
   @Multipart()
   Future<chopper.Response<AppTypesStandardResponsesResult>>
-      _recommendationRecommendationsRecommendationIdPicturePost({
+  _recommendationRecommendationsRecommendationIdPicturePost({
     @Path('recommendation_id') required String? recommendationId,
-    @Part()
-    required BodyCreateRecommendationImageRecommendationRecommendationsRecommendationIdPicturePost
-        body,
+    @PartFile('image') required MultipartFile image,
   });
 
   ///Read Loaners
@@ -6027,33 +6666,34 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<Loaner>>> _loansLoanersGet();
 
   ///Create Loaner
-  Future<chopper.Response<Loaner>> loansLoanersPost(
-      {required LoanerBase? body}) {
+  Future<chopper.Response<Loaner>> loansLoanersPost({
+    required LoanerBase? body,
+  }) {
     generatedMapping.putIfAbsent(Loaner, () => Loaner.fromJsonFactory);
 
     return _loansLoanersPost(body: body);
   }
 
   ///Create Loaner
-  @Post(
-    path: '/loans/loaners/',
-    optionalBody: true,
-  )
-  Future<chopper.Response<Loaner>> _loansLoanersPost(
-      {@Body() required LoanerBase? body});
+  @Post(path: '/loans/loaners/', optionalBody: true)
+  Future<chopper.Response<Loaner>> _loansLoanersPost({
+    @Body() required LoanerBase? body,
+  });
 
   ///Delete Loaner
   ///@param loaner_id
-  Future<chopper.Response> loansLoanersLoanerIdDelete(
-      {required String? loanerId}) {
+  Future<chopper.Response> loansLoanersLoanerIdDelete({
+    required String? loanerId,
+  }) {
     return _loansLoanersLoanerIdDelete(loanerId: loanerId);
   }
 
   ///Delete Loaner
   ///@param loaner_id
   @Delete(path: '/loans/loaners/{loaner_id}')
-  Future<chopper.Response> _loansLoanersLoanerIdDelete(
-      {@Path('loaner_id') required String? loanerId});
+  Future<chopper.Response> _loansLoanersLoanerIdDelete({
+    @Path('loaner_id') required String? loanerId,
+  });
 
   ///Update Loaner
   ///@param loaner_id
@@ -6066,10 +6706,7 @@ abstract class Openapi extends ChopperService {
 
   ///Update Loaner
   ///@param loaner_id
-  @Patch(
-    path: '/loans/loaners/{loaner_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/loans/loaners/{loaner_id}', optionalBody: true)
   Future<chopper.Response> _loansLoanersLoanerIdPatch({
     @Path('loaner_id') required String? loanerId,
     @Body() required LoanerUpdate? body,
@@ -6085,7 +6722,9 @@ abstract class Openapi extends ChopperService {
     generatedMapping.putIfAbsent(Loan, () => Loan.fromJsonFactory);
 
     return _loansLoanersLoanerIdLoansGet(
-        loanerId: loanerId, returned: returned);
+      loanerId: loanerId,
+      returned: returned,
+    );
   }
 
   ///Get Loans By Loaner
@@ -6099,8 +6738,9 @@ abstract class Openapi extends ChopperService {
 
   ///Get Items By Loaner
   ///@param loaner_id
-  Future<chopper.Response<List<Item>>> loansLoanersLoanerIdItemsGet(
-      {required String? loanerId}) {
+  Future<chopper.Response<List<Item>>> loansLoanersLoanerIdItemsGet({
+    required String? loanerId,
+  }) {
     generatedMapping.putIfAbsent(Item, () => Item.fromJsonFactory);
 
     return _loansLoanersLoanerIdItemsGet(loanerId: loanerId);
@@ -6109,8 +6749,9 @@ abstract class Openapi extends ChopperService {
   ///Get Items By Loaner
   ///@param loaner_id
   @Get(path: '/loans/loaners/{loaner_id}/items')
-  Future<chopper.Response<List<Item>>> _loansLoanersLoanerIdItemsGet(
-      {@Path('loaner_id') required String? loanerId});
+  Future<chopper.Response<List<Item>>> _loansLoanersLoanerIdItemsGet({
+    @Path('loaner_id') required String? loanerId,
+  });
 
   ///Create Items For Loaner
   ///@param loaner_id
@@ -6125,10 +6766,7 @@ abstract class Openapi extends ChopperService {
 
   ///Create Items For Loaner
   ///@param loaner_id
-  @Post(
-    path: '/loans/loaners/{loaner_id}/items',
-    optionalBody: true,
-  )
+  @Post(path: '/loans/loaners/{loaner_id}/items', optionalBody: true)
   Future<chopper.Response<Item>> _loansLoanersLoanerIdItemsPost({
     @Path('loaner_id') required String? loanerId,
     @Body() required ItemBase? body,
@@ -6143,16 +6781,16 @@ abstract class Openapi extends ChopperService {
     required ItemUpdate? body,
   }) {
     return _loansLoanersLoanerIdItemsItemIdPatch(
-        loanerId: loanerId, itemId: itemId, body: body);
+      loanerId: loanerId,
+      itemId: itemId,
+      body: body,
+    );
   }
 
   ///Update Items For Loaner
   ///@param loaner_id
   ///@param item_id
-  @Patch(
-    path: '/loans/loaners/{loaner_id}/items/{item_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/loans/loaners/{loaner_id}/items/{item_id}', optionalBody: true)
   Future<chopper.Response> _loansLoanersLoanerIdItemsItemIdPatch({
     @Path('loaner_id') required String? loanerId,
     @Path('item_id') required String? itemId,
@@ -6167,7 +6805,9 @@ abstract class Openapi extends ChopperService {
     required String? itemId,
   }) {
     return _loansLoanersLoanerIdItemsItemIdDelete(
-        loanerId: loanerId, itemId: itemId);
+      loanerId: loanerId,
+      itemId: itemId,
+    );
   }
 
   ///Delete Loaner Item
@@ -6190,8 +6830,9 @@ abstract class Openapi extends ChopperService {
   ///Get Current User Loans
   ///@param returned
   @Get(path: '/loans/users/me')
-  Future<chopper.Response<List<Loan>>> _loansUsersMeGet(
-      {@Query('returned') bool? returned});
+  Future<chopper.Response<List<Loan>>> _loansUsersMeGet({
+    @Query('returned') bool? returned,
+  });
 
   ///Get Current User Loaners
   Future<chopper.Response<List<Loaner>>> loansUsersMeLoanersGet() {
@@ -6212,12 +6853,10 @@ abstract class Openapi extends ChopperService {
   }
 
   ///Create Loan
-  @Post(
-    path: '/loans/',
-    optionalBody: true,
-  )
-  Future<chopper.Response<Loan>> _loansPost(
-      {@Body() required LoanCreation? body});
+  @Post(path: '/loans/', optionalBody: true)
+  Future<chopper.Response<Loan>> _loansPost({
+    @Body() required LoanCreation? body,
+  });
 
   ///Update Loan
   ///@param loan_id
@@ -6230,10 +6869,7 @@ abstract class Openapi extends ChopperService {
 
   ///Update Loan
   ///@param loan_id
-  @Patch(
-    path: '/loans/{loan_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/loans/{loan_id}', optionalBody: true)
   Future<chopper.Response> _loansLoanIdPatch({
     @Path('loan_id') required String? loanId,
     @Body() required LoanUpdate? body,
@@ -6248,8 +6884,9 @@ abstract class Openapi extends ChopperService {
   ///Delete Loan
   ///@param loan_id
   @Delete(path: '/loans/{loan_id}')
-  Future<chopper.Response> _loansLoanIdDelete(
-      {@Path('loan_id') required String? loanId});
+  Future<chopper.Response> _loansLoanIdDelete({
+    @Path('loan_id') required String? loanId,
+  });
 
   ///Return Loan
   ///@param loan_id
@@ -6259,12 +6896,10 @@ abstract class Openapi extends ChopperService {
 
   ///Return Loan
   ///@param loan_id
-  @Post(
-    path: '/loans/{loan_id}/return',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _loansLoanIdReturnPost(
-      {@Path('loan_id') required String? loanId});
+  @Post(path: '/loans/{loan_id}/return', optionalBody: true)
+  Future<chopper.Response> _loansLoanIdReturnPost({
+    @Path('loan_id') required String? loanId,
+  });
 
   ///Extend Loan
   ///@param loan_id
@@ -6277,10 +6912,7 @@ abstract class Openapi extends ChopperService {
 
   ///Extend Loan
   ///@param loan_id
-  @Post(
-    path: '/loans/{loan_id}/extend',
-    optionalBody: true,
-  )
+  @Post(path: '/loans/{loan_id}/extend', optionalBody: true)
   Future<chopper.Response> _loansLoanIdExtendPost({
     @Path('loan_id') required String? loanId,
     @Body() required LoanExtend? body,
@@ -6298,20 +6930,19 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<Manager>>> _bookingManagersGet();
 
   ///Create Manager
-  Future<chopper.Response<Manager>> bookingManagersPost(
-      {required ManagerBase? body}) {
+  Future<chopper.Response<Manager>> bookingManagersPost({
+    required ManagerBase? body,
+  }) {
     generatedMapping.putIfAbsent(Manager, () => Manager.fromJsonFactory);
 
     return _bookingManagersPost(body: body);
   }
 
   ///Create Manager
-  @Post(
-    path: '/booking/managers',
-    optionalBody: true,
-  )
-  Future<chopper.Response<Manager>> _bookingManagersPost(
-      {@Body() required ManagerBase? body});
+  @Post(path: '/booking/managers', optionalBody: true)
+  Future<chopper.Response<Manager>> _bookingManagersPost({
+    @Body() required ManagerBase? body,
+  });
 
   ///Update Manager
   ///@param manager_id
@@ -6324,10 +6955,7 @@ abstract class Openapi extends ChopperService {
 
   ///Update Manager
   ///@param manager_id
-  @Patch(
-    path: '/booking/managers/{manager_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/booking/managers/{manager_id}', optionalBody: true)
   Future<chopper.Response> _bookingManagersManagerIdPatch({
     @Path('manager_id') required String? managerId,
     @Body() required ManagerUpdate? body,
@@ -6335,16 +6963,18 @@ abstract class Openapi extends ChopperService {
 
   ///Delete Manager
   ///@param manager_id
-  Future<chopper.Response> bookingManagersManagerIdDelete(
-      {required String? managerId}) {
+  Future<chopper.Response> bookingManagersManagerIdDelete({
+    required String? managerId,
+  }) {
     return _bookingManagersManagerIdDelete(managerId: managerId);
   }
 
   ///Delete Manager
   ///@param manager_id
   @Delete(path: '/booking/managers/{manager_id}')
-  Future<chopper.Response> _bookingManagersManagerIdDelete(
-      {@Path('manager_id') required String? managerId});
+  Future<chopper.Response> _bookingManagersManagerIdDelete({
+    @Path('manager_id') required String? managerId,
+  });
 
   ///Get Current User Managers
   Future<chopper.Response<List<Manager>>> bookingManagersUsersMeGet() {
@@ -6359,9 +6989,11 @@ abstract class Openapi extends ChopperService {
 
   ///Get Bookings For Manager
   Future<chopper.Response<List<BookingReturnApplicant>>>
-      bookingBookingsUsersMeManageGet() {
+  bookingBookingsUsersMeManageGet() {
     generatedMapping.putIfAbsent(
-        BookingReturnApplicant, () => BookingReturnApplicant.fromJsonFactory);
+      BookingReturnApplicant,
+      () => BookingReturnApplicant.fromJsonFactory,
+    );
 
     return _bookingBookingsUsersMeManageGet();
   }
@@ -6369,13 +7001,15 @@ abstract class Openapi extends ChopperService {
   ///Get Bookings For Manager
   @Get(path: '/booking/bookings/users/me/manage')
   Future<chopper.Response<List<BookingReturnApplicant>>>
-      _bookingBookingsUsersMeManageGet();
+  _bookingBookingsUsersMeManageGet();
 
   ///Get Confirmed Bookings For Manager
   Future<chopper.Response<List<BookingReturnApplicant>>>
-      bookingBookingsConfirmedUsersMeManageGet() {
+  bookingBookingsConfirmedUsersMeManageGet() {
     generatedMapping.putIfAbsent(
-        BookingReturnApplicant, () => BookingReturnApplicant.fromJsonFactory);
+      BookingReturnApplicant,
+      () => BookingReturnApplicant.fromJsonFactory,
+    );
 
     return _bookingBookingsConfirmedUsersMeManageGet();
   }
@@ -6383,13 +7017,15 @@ abstract class Openapi extends ChopperService {
   ///Get Confirmed Bookings For Manager
   @Get(path: '/booking/bookings/confirmed/users/me/manage')
   Future<chopper.Response<List<BookingReturnApplicant>>>
-      _bookingBookingsConfirmedUsersMeManageGet();
+  _bookingBookingsConfirmedUsersMeManageGet();
 
   ///Get Confirmed Bookings
   Future<chopper.Response<List<BookingReturnSimpleApplicant>>>
-      bookingBookingsConfirmedGet() {
-    generatedMapping.putIfAbsent(BookingReturnSimpleApplicant,
-        () => BookingReturnSimpleApplicant.fromJsonFactory);
+  bookingBookingsConfirmedGet() {
+    generatedMapping.putIfAbsent(
+      BookingReturnSimpleApplicant,
+      () => BookingReturnSimpleApplicant.fromJsonFactory,
+    );
 
     return _bookingBookingsConfirmedGet();
   }
@@ -6397,12 +7033,14 @@ abstract class Openapi extends ChopperService {
   ///Get Confirmed Bookings
   @Get(path: '/booking/bookings/confirmed')
   Future<chopper.Response<List<BookingReturnSimpleApplicant>>>
-      _bookingBookingsConfirmedGet();
+  _bookingBookingsConfirmedGet();
 
   ///Get Applicant Bookings
   Future<chopper.Response<List<BookingReturn>>> bookingBookingsUsersMeGet() {
     generatedMapping.putIfAbsent(
-        BookingReturn, () => BookingReturn.fromJsonFactory);
+      BookingReturn,
+      () => BookingReturn.fromJsonFactory,
+    );
 
     return _bookingBookingsUsersMeGet();
   }
@@ -6412,21 +7050,22 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<BookingReturn>>> _bookingBookingsUsersMeGet();
 
   ///Create Booking
-  Future<chopper.Response<BookingReturn>> bookingBookingsPost(
-      {required BookingBase? body}) {
+  Future<chopper.Response<BookingReturn>> bookingBookingsPost({
+    required BookingBase? body,
+  }) {
     generatedMapping.putIfAbsent(
-        BookingReturn, () => BookingReturn.fromJsonFactory);
+      BookingReturn,
+      () => BookingReturn.fromJsonFactory,
+    );
 
     return _bookingBookingsPost(body: body);
   }
 
   ///Create Booking
-  @Post(
-    path: '/booking/bookings',
-    optionalBody: true,
-  )
-  Future<chopper.Response<BookingReturn>> _bookingBookingsPost(
-      {@Body() required BookingBase? body});
+  @Post(path: '/booking/bookings', optionalBody: true)
+  Future<chopper.Response<BookingReturn>> _bookingBookingsPost({
+    @Body() required BookingBase? body,
+  });
 
   ///Edit Booking
   ///@param booking_id
@@ -6439,10 +7078,7 @@ abstract class Openapi extends ChopperService {
 
   ///Edit Booking
   ///@param booking_id
-  @Patch(
-    path: '/booking/bookings/{booking_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/booking/bookings/{booking_id}', optionalBody: true)
   Future<chopper.Response> _bookingBookingsBookingIdPatch({
     @Path('booking_id') required String? bookingId,
     @Body() required BookingEdit? body,
@@ -6450,16 +7086,18 @@ abstract class Openapi extends ChopperService {
 
   ///Delete Booking
   ///@param booking_id
-  Future<chopper.Response> bookingBookingsBookingIdDelete(
-      {required String? bookingId}) {
+  Future<chopper.Response> bookingBookingsBookingIdDelete({
+    required String? bookingId,
+  }) {
     return _bookingBookingsBookingIdDelete(bookingId: bookingId);
   }
 
   ///Delete Booking
   ///@param booking_id
   @Delete(path: '/booking/bookings/{booking_id}')
-  Future<chopper.Response> _bookingBookingsBookingIdDelete(
-      {@Path('booking_id') required String? bookingId});
+  Future<chopper.Response> _bookingBookingsBookingIdDelete({
+    @Path('booking_id') required String? bookingId,
+  });
 
   ///Confirm Booking
   ///@param booking_id
@@ -6469,7 +7107,9 @@ abstract class Openapi extends ChopperService {
     required enums.Decision? decision,
   }) {
     return _bookingBookingsBookingIdReplyDecisionPatch(
-        bookingId: bookingId, decision: decision?.value?.toString());
+      bookingId: bookingId,
+      decision: decision?.value?.toString(),
+    );
   }
 
   ///Confirm Booking
@@ -6487,7 +7127,9 @@ abstract class Openapi extends ChopperService {
   ///Get Rooms
   Future<chopper.Response<List<RoomComplete>>> bookingRoomsGet() {
     generatedMapping.putIfAbsent(
-        RoomComplete, () => RoomComplete.fromJsonFactory);
+      RoomComplete,
+      () => RoomComplete.fromJsonFactory,
+    );
 
     return _bookingRoomsGet();
   }
@@ -6497,21 +7139,22 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<RoomComplete>>> _bookingRoomsGet();
 
   ///Create Room
-  Future<chopper.Response<RoomComplete>> bookingRoomsPost(
-      {required RoomBase? body}) {
+  Future<chopper.Response<RoomComplete>> bookingRoomsPost({
+    required RoomBase? body,
+  }) {
     generatedMapping.putIfAbsent(
-        RoomComplete, () => RoomComplete.fromJsonFactory);
+      RoomComplete,
+      () => RoomComplete.fromJsonFactory,
+    );
 
     return _bookingRoomsPost(body: body);
   }
 
   ///Create Room
-  @Post(
-    path: '/booking/rooms',
-    optionalBody: true,
-  )
-  Future<chopper.Response<RoomComplete>> _bookingRoomsPost(
-      {@Body() required RoomBase? body});
+  @Post(path: '/booking/rooms', optionalBody: true)
+  Future<chopper.Response<RoomComplete>> _bookingRoomsPost({
+    @Body() required RoomBase? body,
+  });
 
   ///Edit Room
   ///@param room_id
@@ -6524,10 +7167,7 @@ abstract class Openapi extends ChopperService {
 
   ///Edit Room
   ///@param room_id
-  @Patch(
-    path: '/booking/rooms/{room_id}',
-    optionalBody: true,
-  )
+  @Patch(path: '/booking/rooms/{room_id}', optionalBody: true)
   Future<chopper.Response> _bookingRoomsRoomIdPatch({
     @Path('room_id') required String? roomId,
     @Body() required RoomBase? body,
@@ -6542,8 +7182,9 @@ abstract class Openapi extends ChopperService {
   ///Delete Room
   ///@param room_id
   @Delete(path: '/booking/rooms/{room_id}')
-  Future<chopper.Response> _bookingRoomsRoomIdDelete(
-      {@Path('room_id') required String? roomId});
+  Future<chopper.Response> _bookingRoomsRoomIdDelete({
+    @Path('room_id') required String? roomId,
+  });
 }
 
 typedef $JsonFactory<T> = T Function(Map<String, dynamic> json);
@@ -6593,7 +7234,8 @@ class $CustomJsonDecoder {
 class $JsonSerializableConverter extends chopper.JsonConverter {
   @override
   FutureOr<chopper.Response<ResultType>> convertResponse<ResultType, Item>(
-      chopper.Response response) async {
+    chopper.Response response,
+  ) async {
     if (response.bodyString.isEmpty) {
       // In rare cases, when let's say 204 (no content) is returned -
       // we cannot decode the missing json with the result type specified
@@ -6606,13 +7248,16 @@ class $JsonSerializableConverter extends chopper.JsonConverter {
 
     if (ResultType == DateTime) {
       return response.copyWith(
-          body: DateTime.parse((response.body as String).replaceAll('"', ''))
-              as ResultType);
+        body:
+            DateTime.parse((response.body as String).replaceAll('"', ''))
+                as ResultType,
+      );
     }
 
     final jsonRes = await super.convertResponse(response);
     return jsonRes.copyWith<ResultType>(
-        body: $jsonDecoder.decode<Item>(jsonRes.body) as ResultType);
+      body: $jsonDecoder.decode<Item>(jsonRes.body) as ResultType,
+    );
   }
 }
 

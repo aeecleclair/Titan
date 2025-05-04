@@ -1,3 +1,4 @@
+// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'openapi.swagger.dart';
@@ -370,6 +371,17 @@ final class _$Openapi extends Openapi {
   }
 
   @override
+  Future<Response<dynamic>> _myeclpayUsersMeRegisterPost() {
+    final Uri $url = Uri.parse('/myeclpay/users/me/register');
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
   Future<Response<dynamic>> _myeclpayTosGet() {
     final Uri $url = Uri.parse('/myeclpay/tos');
     final Request $request = Request(
@@ -401,17 +413,6 @@ final class _$Openapi extends Openapi {
       $url,
       client.baseUrl,
       body: $body,
-    );
-    return client.send<dynamic, dynamic>($request);
-  }
-
-  @override
-  Future<Response<dynamic>> _myeclpayUsersMeRegisterPost() {
-    final Uri $url = Uri.parse('/myeclpay/users/me/register');
-    final Request $request = Request(
-      'POST',
-      $url,
-      client.baseUrl,
     );
     return client.send<dynamic, dynamic>($request);
   }
@@ -533,7 +534,50 @@ final class _$Openapi extends Openapi {
   }
 
   @override
-  Future<Response<Transaction>> _myeclpayStoresStoreIdScanPost({
+  Future<Response<PaymentUrl>> _myeclpayTransferRedirectGet({
+    required String? url,
+    String? checkoutIntentId,
+    String? code,
+    String? orderId,
+    String? error,
+  }) {
+    final Uri $url = Uri.parse('/myeclpay/transfer/redirect');
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'url': url,
+      'checkoutIntentId': checkoutIntentId,
+      'code': code,
+      'orderId': orderId,
+      'error': error,
+    };
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+    );
+    return client.send<PaymentUrl, PaymentUrl>($request);
+  }
+
+  @override
+  Future<Response<AppTypesStandardResponsesResult>>
+      _myeclpayStoresStoreIdScanCheckPost({
+    required String? storeId,
+    required ScanInfo? body,
+  }) {
+    final Uri $url = Uri.parse('/myeclpay/stores/${storeId}/scan/check');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<AppTypesStandardResponsesResult,
+        AppTypesStandardResponsesResult>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _myeclpayStoresStoreIdScanPost({
     required String? storeId,
     required ScanInfo? body,
   }) {
@@ -545,7 +589,7 @@ final class _$Openapi extends Openapi {
       client.baseUrl,
       body: $body,
     );
-    return client.send<Transaction, Transaction>($request);
+    return client.send<dynamic, dynamic>($request);
   }
 
   @override
@@ -828,15 +872,14 @@ final class _$Openapi extends Openapi {
   }
 
   @override
-  Future<Response<List<enums.AccountType>>> _usersAccountTypesGet() {
+  Future<Response<List<InvalidType>>> _usersAccountTypesGet() {
     final Uri $url = Uri.parse('/users/account-types');
     final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,
     );
-    return client
-        .send<List<enums.AccountType>, List<enums.AccountType>>($request);
+    return client.send<List<InvalidType>, InvalidType>($request);
   }
 
   @override
@@ -1057,13 +1100,12 @@ final class _$Openapi extends Openapi {
 
   @override
   Future<Response<AppTypesStandardResponsesResult>> _usersMeProfilePicturePost(
-      {required BodyCreateCurrentUserProfilePictureUsersMeProfilePicturePost
-          body}) {
+      {required MultipartFile image}) {
     final Uri $url = Uri.parse('/users/me/profile-picture');
     final List<PartValue> $parts = <PartValue>[
-      PartValue<BodyCreateCurrentUserProfilePictureUsersMeProfilePicturePost>(
-        'body',
-        body,
+      PartValueFile<MultipartFile>(
+        'image',
+        image,
       )
     ];
     final Request $request = Request(
@@ -1448,12 +1490,21 @@ final class _$Openapi extends Openapi {
   }
 
   @override
-  Future<Response<List<MembershipSimple>>> _membershipsGet() {
+  Future<Response<List<MembershipSimple>>> _membershipsGet({
+    bool? excludeExternal,
+    required BodyReadAssociationsMembershipsMembershipsGet? body,
+  }) {
     final Uri $url = Uri.parse('/memberships/');
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'exclude_external': excludeExternal
+    };
+    final $body = body;
     final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,
+      body: $body,
+      parameters: $params,
     );
     return client.send<List<MembershipSimple>, MembershipSimple>($request);
   }
@@ -1702,13 +1753,13 @@ final class _$Openapi extends Openapi {
   Future<Response<AppTypesStandardResponsesResult>>
       _tombolaRafflesRaffleIdLogoPost({
     required String? raffleId,
-    required BodyCreateCurrentRaffleLogoTombolaRafflesRaffleIdLogoPost body,
+    required MultipartFile image,
   }) {
     final Uri $url = Uri.parse('/tombola/raffles/${raffleId}/logo');
     final List<PartValue> $parts = <PartValue>[
-      PartValue<BodyCreateCurrentRaffleLogoTombolaRafflesRaffleIdLogoPost>(
-        'body',
-        body,
+      PartValueFile<MultipartFile>(
+        'image',
+        image,
       )
     ];
     final Request $request = Request(
@@ -1914,13 +1965,13 @@ final class _$Openapi extends Openapi {
   Future<Response<AppTypesStandardResponsesResult>>
       _tombolaPrizesPrizeIdPicturePost({
     required String? prizeId,
-    required BodyCreatePrizePictureTombolaPrizesPrizeIdPicturePost body,
+    required MultipartFile image,
   }) {
     final Uri $url = Uri.parse('/tombola/prizes/${prizeId}/picture');
     final List<PartValue> $parts = <PartValue>[
-      PartValue<BodyCreatePrizePictureTombolaPrizesPrizeIdPicturePost>(
-        'body',
-        body,
+      PartValueFile<MultipartFile>(
+        'image',
+        image,
       )
     ];
     final Request $request = Request(
@@ -2050,7 +2101,7 @@ final class _$Openapi extends Openapi {
   }
 
   @override
-  Future<Response<FlappyBirdScoreInDB>> _flappybirdScoresPost(
+  Future<Response<FlappyBirdScoreBase>> _flappybirdScoresPost(
       {required FlappyBirdScoreBase? body}) {
     final Uri $url = Uri.parse('/flappybird/scores');
     final $body = body;
@@ -2060,7 +2111,7 @@ final class _$Openapi extends Openapi {
       client.baseUrl,
       body: $body,
     );
-    return client.send<FlappyBirdScoreInDB, FlappyBirdScoreBase>($request);
+    return client.send<FlappyBirdScoreBase, FlappyBirdScoreBase>($request);
   }
 
   @override
@@ -2101,13 +2152,13 @@ final class _$Openapi extends Openapi {
   @override
   Future<Response<dynamic>> _phPaperIdPdfPost({
     required String? paperId,
-    required BodyCreatePaperPdfAndCoverPhPaperIdPdfPost body,
+    required MultipartFile pdf,
   }) {
     final Uri $url = Uri.parse('/ph/${paperId}/pdf');
     final List<PartValue> $parts = <PartValue>[
-      PartValue<BodyCreatePaperPdfAndCoverPhPaperIdPdfPost>(
-        'body',
-        body,
+      PartValueFile<MultipartFile>(
+        'pdf',
+        pdf,
       )
     ];
     final Request $request = Request(
@@ -2263,13 +2314,13 @@ final class _$Openapi extends Openapi {
   Future<Response<AppTypesStandardResponsesResult>>
       _cinemaSessionsSessionIdPosterPost({
     required String? sessionId,
-    required BodyCreateCampaignsLogoCinemaSessionsSessionIdPosterPost body,
+    required MultipartFile image,
   }) {
     final Uri $url = Uri.parse('/cinema/sessions/${sessionId}/poster');
     final List<PartValue> $parts = <PartValue>[
-      PartValue<BodyCreateCampaignsLogoCinemaSessionsSessionIdPosterPost>(
-        'body',
-        body,
+      PartValueFile<MultipartFile>(
+        'image',
+        image,
       )
     ];
     final Request $request = Request(
@@ -2627,16 +2678,14 @@ final class _$Openapi extends Openapi {
   Future<Response<AppTypesStandardResponsesResult>>
       _phonebookAssociationsAssociationIdPicturePost({
     required String? associationId,
-    required BodyCreateAssociationLogoPhonebookAssociationsAssociationIdPicturePost
-        body,
+    required MultipartFile image,
   }) {
     final Uri $url =
         Uri.parse('/phonebook/associations/${associationId}/picture');
     final List<PartValue> $parts = <PartValue>[
-      PartValue<
-          BodyCreateAssociationLogoPhonebookAssociationsAssociationIdPicturePost>(
-        'body',
-        body,
+      PartValueFile<MultipartFile>(
+        'image',
+        image,
       )
     ];
     final Request $request = Request(
@@ -3163,13 +3212,13 @@ final class _$Openapi extends Openapi {
   @override
   Future<Response<DocumentCreation>> _raidDocumentDocumentTypePost({
     required String? documentType,
-    required BodyUploadDocumentRaidDocumentDocumentTypePost body,
+    required MultipartFile file,
   }) {
     final Uri $url = Uri.parse('/raid/document/${documentType}');
     final List<PartValue> $parts = <PartValue>[
-      PartValue<BodyUploadDocumentRaidDocumentDocumentTypePost>(
-        'body',
-        body,
+      PartValueFile<MultipartFile>(
+        'file',
+        file,
       )
     ];
     final Request $request = Request(
@@ -4354,6 +4403,212 @@ final class _$Openapi extends Openapi {
   }
 
   @override
+  Future<Response<List<SpeciesComplete>>> _seedLibrarySpeciesGet() {
+    final Uri $url = Uri.parse('/seed_library/species/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<SpeciesComplete>, SpeciesComplete>($request);
+  }
+
+  @override
+  Future<Response<SpeciesComplete>> _seedLibrarySpeciesPost(
+      {required SpeciesBase? body}) {
+    final Uri $url = Uri.parse('/seed_library/species/');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<SpeciesComplete, SpeciesComplete>($request);
+  }
+
+  @override
+  Future<Response<SpeciesTypesReturn>> _seedLibrarySpeciesTypesGet() {
+    final Uri $url = Uri.parse('/seed_library/species/types');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<SpeciesTypesReturn, SpeciesTypesReturn>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _seedLibrarySpeciesSpeciesIdPatch({
+    required String? speciesId,
+    required SpeciesEdit? body,
+  }) {
+    final Uri $url = Uri.parse('/seed_library/species/${speciesId}');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _seedLibrarySpeciesSpeciesIdDelete(
+      {required String? speciesId}) {
+    final Uri $url = Uri.parse('/seed_library/species/${speciesId}');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<List<PlantSimple>>> _seedLibraryPlantsWaitingGet() {
+    final Uri $url = Uri.parse('/seed_library/plants/waiting');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<PlantSimple>, PlantSimple>($request);
+  }
+
+  @override
+  Future<Response<List<PlantSimple>>> _seedLibraryPlantsUsersMeGet() {
+    final Uri $url = Uri.parse('/seed_library/plants/users/me');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<PlantSimple>, PlantSimple>($request);
+  }
+
+  @override
+  Future<Response<List<PlantSimple>>> _seedLibraryPlantsUsersUserIdGet(
+      {required String? userId}) {
+    final Uri $url = Uri.parse('/seed_library/plants/users/${userId}');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<PlantSimple>, PlantSimple>($request);
+  }
+
+  @override
+  Future<Response<PlantComplete>> _seedLibraryPlantsPlantIdGet(
+      {required String? plantId}) {
+    final Uri $url = Uri.parse('/seed_library/plants/${plantId}');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<PlantComplete, PlantComplete>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _seedLibraryPlantsPlantIdPatch({
+    required String? plantId,
+    required PlantEdit? body,
+  }) {
+    final Uri $url = Uri.parse('/seed_library/plants/${plantId}');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _seedLibraryPlantsPlantIdDelete(
+      {required String? plantId}) {
+    final Uri $url = Uri.parse('/seed_library/plants/${plantId}');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<PlantComplete>> _seedLibraryPlantsPost(
+      {required PlantCreation? body}) {
+    final Uri $url = Uri.parse('/seed_library/plants/');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<PlantComplete, PlantComplete>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _seedLibraryPlantsPlantIdAdminPatch({
+    required String? plantId,
+    required PlantEdit? body,
+  }) {
+    final Uri $url = Uri.parse('/seed_library/plants/${plantId}/admin');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _seedLibraryPlantsPlantIdBorrowPatch(
+      {required String? plantId}) {
+    final Uri $url = Uri.parse('/seed_library/plants/${plantId}/borrow');
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<SeedLibraryInformation>> _seedLibraryInformationGet() {
+    final Uri $url = Uri.parse('/seed_library/information');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client
+        .send<SeedLibraryInformation, SeedLibraryInformation>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _seedLibraryInformationPatch(
+      {required SeedLibraryInformation? body}) {
+    final Uri $url = Uri.parse('/seed_library/information');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
   Future<Response<List<AdvertiserComplete>>> _advertAdvertisersGet() {
     final Uri $url = Uri.parse('/advert/advertisers');
     final Request $request = Request(
@@ -4504,13 +4759,13 @@ final class _$Openapi extends Openapi {
   Future<Response<AppTypesStandardResponsesResult>>
       _advertAdvertsAdvertIdPicturePost({
     required String? advertId,
-    required BodyCreateAdvertImageAdvertAdvertsAdvertIdPicturePost body,
+    required MultipartFile image,
   }) {
     final Uri $url = Uri.parse('/advert/adverts/${advertId}/picture');
     final List<PartValue> $parts = <PartValue>[
-      PartValue<BodyCreateAdvertImageAdvertAdvertsAdvertIdPicturePost>(
-        'body',
-        body,
+      PartValueFile<MultipartFile>(
+        'image',
+        image,
       )
     ];
     final Request $request = Request(
@@ -4795,13 +5050,13 @@ final class _$Openapi extends Openapi {
   Future<Response<AppTypesStandardResponsesResult>>
       _campaignListsListIdLogoPost({
     required String? listId,
-    required BodyCreateCampaignsLogoCampaignListsListIdLogoPost body,
+    required MultipartFile image,
   }) {
     final Uri $url = Uri.parse('/campaign/lists/${listId}/logo');
     final List<PartValue> $parts = <PartValue>[
-      PartValue<BodyCreateCampaignsLogoCampaignListsListIdLogoPost>(
-        'body',
-        body,
+      PartValueFile<MultipartFile>(
+        'image',
+        image,
       )
     ];
     final Request $request = Request(
@@ -4902,16 +5157,14 @@ final class _$Openapi extends Openapi {
   Future<Response<AppTypesStandardResponsesResult>>
       _recommendationRecommendationsRecommendationIdPicturePost({
     required String? recommendationId,
-    required BodyCreateRecommendationImageRecommendationRecommendationsRecommendationIdPicturePost
-        body,
+    required MultipartFile image,
   }) {
     final Uri $url = Uri.parse(
         '/recommendation/recommendations/${recommendationId}/picture');
     final List<PartValue> $parts = <PartValue>[
-      PartValue<
-          BodyCreateRecommendationImageRecommendationRecommendationsRecommendationIdPicturePost>(
-        'body',
-        body,
+      PartValueFile<MultipartFile>(
+        'image',
+        image,
       )
     ];
     final Request $request = Request(

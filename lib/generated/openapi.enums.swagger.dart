@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:collection/collection.dart';
 
 enum AccountType {
   @JsonValue(null)
@@ -242,6 +243,58 @@ enum FloorsType {
   const FloorsType(this.value);
 }
 
+enum GroupType {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('0a25cb76-4b63-4fd3-b939-da6d9feabf28')
+  value_0a25cb764b634fd3B939Da6d9feabf28(
+    '0a25cb76-4b63-4fd3-b939-da6d9feabf28',
+  ),
+  @JsonValue('45649735-866a-49df-b04b-a13c74fd5886')
+  value_45649735866a49dfB04bA13c74fd5886(
+    '45649735-866a-49df-b04b-a13c74fd5886',
+  ),
+  @JsonValue('70db65ee-d533-4f6b-9ffa-a4d70a17b7ef')
+  value_70db65eeD5334f6b9ffaA4d70a17b7ef(
+    '70db65ee-d533-4f6b-9ffa-a4d70a17b7ef',
+  ),
+  @JsonValue('53a669d6-84b1-4352-8d7c-421c1fbd9c6a')
+  value_53a669d684b143528d7c421c1fbd9c6a(
+    '53a669d6-84b1-4352-8d7c-421c1fbd9c6a',
+  ),
+  @JsonValue('6c6d7e88-fdb8-4e42-b2b5-3d3cfd12e7d6')
+  value_6c6d7e88Fdb84e42B2b53d3cfd12e7d6(
+    '6c6d7e88-fdb8-4e42-b2b5-3d3cfd12e7d6',
+  ),
+  @JsonValue('ce5f36e6-5377-489f-9696-de70e2477300')
+  ce5f36e65377489f9696De70e2477300('ce5f36e6-5377-489f-9696-de70e2477300'),
+  @JsonValue('e9e6e3d3-9f5f-4e9b-8e5f-9f5f4e9b8e5f')
+  e9e6e3d39f5f4e9b8e5f9f5f4e9b8e5f('e9e6e3d3-9f5f-4e9b-8e5f-9f5f4e9b8e5f'),
+  @JsonValue('4ec5ae77-f955-4309-96a5-19cc3c8be71c')
+  value_4ec5ae77F955430996a519cc3c8be71c(
+    '4ec5ae77-f955-4309-96a5-19cc3c8be71c',
+  ),
+  @JsonValue('c1275229-46b2-4e53-a7c4-305513bb1a2a')
+  c127522946b24e53A7c4305513bb1a2a('c1275229-46b2-4e53-a7c4-305513bb1a2a'),
+  @JsonValue('1f841bd9-00be-41a7-96e1-860a18a46105')
+  value_1f841bd900be41a796e1860a18a46105(
+    '1f841bd9-00be-41a7-96e1-860a18a46105',
+  ),
+  @JsonValue('61af3e52-7ef9-4608-823a-39d51e83d1db')
+  value_61af3e527ef94608823a39d51e83d1db(
+    '61af3e52-7ef9-4608-823a-39d51e83d1db',
+  ),
+  @JsonValue('09153d2a-14f4-49a4-be57-5d0f265261b9')
+  value_09153d2a14f449a4Be575d0f265261b9(
+    '09153d2a-14f4-49a4-be57-5d0f265261b9',
+  );
+
+  final String? value;
+
+  const GroupType(this.value);
+}
+
 enum HistoryType {
   @JsonValue(null)
   swaggerGeneratedUnknown(null),
@@ -332,6 +385,36 @@ enum PaymentType {
   const PaymentType(this.value);
 }
 
+enum PlantState {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('en attente')
+  enAttente('en attente'),
+  @JsonValue('rÃ©cupÃ©rÃ©e')
+  rCupRE('rÃ©cupÃ©rÃ©e'),
+  @JsonValue('consommÃ©e')
+  consommE('consommÃ©e');
+
+  final String? value;
+
+  const PlantState(this.value);
+}
+
+enum PropagationMethod {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('bouture')
+  bouture('bouture'),
+  @JsonValue('graine')
+  graine('graine');
+
+  final String? value;
+
+  const PropagationMethod(this.value);
+}
+
 enum RaffleStatusType {
   @JsonValue(null)
   swaggerGeneratedUnknown(null),
@@ -368,6 +451,32 @@ enum Size {
   final String? value;
 
   const Size(this.value);
+}
+
+enum SpeciesType {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('Plantes aromatiques')
+  plantesAromatiques('Plantes aromatiques'),
+  @JsonValue('Plantes potagÃ¨res')
+  plantesPotagRes('Plantes potagÃ¨res'),
+  @JsonValue('Plante d intÃ©rieur')
+  planteDIntRieur('Plante d intÃ©rieur'),
+  @JsonValue('Plantes fruitiÃ¨res')
+  plantesFruitiRes('Plantes fruitiÃ¨res'),
+  @JsonValue('Cactus et succulentes')
+  cactusEtSucculentes('Cactus et succulentes'),
+  @JsonValue('Plantes ornementales')
+  plantesOrnementales('Plantes ornementales'),
+  @JsonValue('Plantes grasses')
+  plantesGrasses('Plantes grasses'),
+  @JsonValue('Autre')
+  autre('Autre');
+
+  final String? value;
+
+  const SpeciesType(this.value);
 }
 
 enum StatusType {
@@ -429,7 +538,9 @@ enum TransactionStatus {
   @JsonValue('canceled')
   canceled('canceled'),
   @JsonValue('refunded')
-  refunded('refunded');
+  refunded('refunded'),
+  @JsonValue('pending')
+  pending('pending');
 
   final String? value;
 
