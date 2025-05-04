@@ -2,7 +2,7 @@ name: myecl
 description: MyECL est l'application des Centraliens de Lyon, conçue par ÉCLAIR
 
 publish_to: "none"
-version: 1.0.2+142
+version: 1.1.2+145
 
 environment:
   sdk: ^3.6.0
@@ -16,7 +16,7 @@ dependencies:
   crypto: ^3.0.2
   cryptography_plus: ^2.0.0
   datetime_picker_formfield: ^2.0.1
-  device_info_plus: ^10.1.2
+  device_info_plus: ^11.4.0
   diacritic: ^0.1.5
   dotenv: ^4.0.1
   either_dart: ^1.0.0
@@ -52,13 +52,13 @@ dependencies:
   local_auth: ^2.3.0
   local_auth_android: ^1.0.46
   local_auth_darwin: ^1.4.1
-  mobile_scanner: ^6.0.2
+  mobile_scanner: ^7.0.0
   mocktail: ^1.0.3
   numberpicker: ^2.1.1
   package_info_plus: ^8.0.0
   path: ^1.8.2
   path_provider: ^2.0.11
-  pdfx: 2.8.0
+  pdfx: ^2.9.1
   rxdart: ^0.28.0
   qlevar_router: ^1.9.0
   qr_flutter: ^4.1.0

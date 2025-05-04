@@ -21,6 +21,7 @@ import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/ph/router.dart';
 import 'package:myecl/purchases/router.dart';
 import 'package:myecl/recommendation/router.dart';
+import 'package:myecl/seed-library/router.dart';
 import 'package:myecl/settings/router.dart';
 import 'package:myecl/raffle/router.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
@@ -98,6 +99,7 @@ class AppRouter {
       RecommendationRouter(ref).route(),
       SettingsRouter(ref).route(),
       VoteRouter(ref).route(),
+      SeedLibraryRouter(ref).route(),
     ];
   }
 }

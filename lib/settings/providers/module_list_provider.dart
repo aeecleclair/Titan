@@ -17,6 +17,7 @@ import 'package:myecl/ph/router.dart';
 import 'package:myecl/purchases/router.dart';
 import 'package:myecl/raffle/router.dart';
 import 'package:myecl/recommendation/router.dart';
+import 'package:myecl/seed-library/router.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -50,6 +51,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     RaffleRouter.module,
     RecommendationRouter.module,
     VoteRouter.module,
+    SeedLibraryRouter.module,
   ];
   ModulesNotifier() : super([]);
 

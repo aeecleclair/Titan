@@ -174,6 +174,40 @@ class AdminRouter {
               ),
             ],
           ),
+          QRoute(
+            path: associationMemberships,
+            builder: () =>
+                association_membership_page.AssociationMembershipsPage(),
+            middleware: [
+              DeferredLoadingMiddleware(
+                association_membership_page.loadLibrary,
+              ),
+            ],
+            children: [
+              QRoute(
+                path: detailAssociationMembership,
+                builder: () => association_membership_detail_page
+                    .AssociationMembershipEditorPage(),
+                middleware: [
+                  DeferredLoadingMiddleware(
+                    association_membership_detail_page.loadLibrary,
+                  ),
+                ],
+                children: [
+                  QRoute(
+                    path: addEditMember,
+                    builder: () => add_edit_user_membership_page
+                        .AddEditUserMembershipPage(),
+                    middleware: [
+                      DeferredLoadingMiddleware(
+                        add_edit_user_membership_page.loadLibrary,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ],
       );
 }

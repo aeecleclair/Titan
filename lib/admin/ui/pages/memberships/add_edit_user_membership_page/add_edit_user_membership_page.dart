@@ -142,6 +142,14 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                   tokenExpireWrapper(
                     ref,
                     () async {
+                      if (DateTime.parse(processDateBack(start.text))
+                          .isAfter(DateTime.parse(processDateBack(end.text)))) {
+                        displayToastWithContext(
+                          TypeMsg.error,
+                          AdminTextConstants.dateError,
+                        );
+                        return;
+                      }
                       if (isEdit) {
                         final value = await associationMembershipMembersNotifier
                             .updateMember(
@@ -160,7 +168,7 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                         } else {
                           displayToastWithContext(
                             TypeMsg.error,
-                            AdminTextConstants.updatingError,
+                            AdminTextConstants.membershipUpdatingError,
                           );
                         }
                       } else {
@@ -185,7 +193,7 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                         } else {
                           displayToastWithContext(
                             TypeMsg.error,
-                            AdminTextConstants.addingError,
+                            AdminTextConstants.membershipAddingError,
                           );
                         }
                       }

@@ -22,6 +22,8 @@ class AdminTextConstants {
   static const String createAssociationMembership = "Créer une adhésion";
   static const String createdAssociationMembership = "Adhésion créée";
   static const String creationError = "Erreur lors de la création";
+  static const String dateError =
+      "La date de début doit être avant la date de fin";
   static const String delete = "Supprimer";
   static const String deleteAssociationMembership = "Supprimer l'adhésion ?";
   static const String deletedAssociationMembership = "Adhésion supprimée";
@@ -50,8 +52,14 @@ class AdminTextConstants {
   static const String loaningGroup = "Groupe de prêt";
   static const String looking = "Recherche";
   static const String manager = "Administrateur de la structure";
+  static const String maximum = "Maximum";
   static const String members = "Membres";
+  static const String membershipAddingError =
+      "Erreur lors de l'ajout (surement dû à une superposition de dates)";
   static const String memberships = "Adhésions";
+  static String membershipUpdatingError =
+      "Erreur lors de la modification (surement dû à une superposition de dates)";
+  static const String minimum = "Minimum";
   static const String modifyModuleVisibility = "Visibilité des modules";
   static const String myEclPay = "MyEclPay";
   static const String name = "Nom";
