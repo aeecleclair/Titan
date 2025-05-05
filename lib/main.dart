@@ -59,7 +59,6 @@ class MyApp extends HookConsumerWidget {
 
     useEffect(
       () {
-        print("Initialisation de l'écoute des liens profonds");
         final appLinks = AppLinks();
 
         Future<void> initDeepLinks() async {
