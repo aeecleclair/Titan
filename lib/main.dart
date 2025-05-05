@@ -78,7 +78,7 @@ class MyApp extends HookConsumerWidget {
               }
             });
           } catch (err) {
-            print("Erreur lors de l'écoute des liens : $err");
+            print("Failed to listen to deep link: $err");
           }
         }
 
