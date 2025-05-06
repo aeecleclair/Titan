@@ -72,8 +72,6 @@ class MyApp extends HookConsumerWidget {
                   newPath,
                   queryParameters: queryParams,
                 );
-                final pathForwarding = ref.read(pathForwardingProvider);
-                print(pathForwarding);
                 QR.toName(newPath);
               }
             });
