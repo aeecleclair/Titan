@@ -37,7 +37,7 @@
 			<string>fr.myecl.titan</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>titan.alpha</string>
+				<string>titan</string>
 			</array>
 		</dict>
 	</array>
