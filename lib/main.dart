@@ -59,7 +59,6 @@ class MyApp extends HookConsumerWidget {
 
     useEffect(
       () {
-        print("Initialisation de l'écoute des liens profonds");
         final appLinks = AppLinks();
 
         Future<void> initDeepLinks() async {
@@ -73,13 +72,11 @@ class MyApp extends HookConsumerWidget {
                   newPath,
                   queryParameters: queryParams,
                 );
-                final pathForwarding = ref.read(pathForwardingProvider);
-                print(pathForwarding);
                 QR.toName(newPath);
               }
             });
           } catch (err) {
-            print("Erreur lors de l'écoute des liens : $err");
+            print("Failed to listen to deep link: $err");
           }
         }
 
