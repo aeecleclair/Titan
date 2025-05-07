@@ -22,6 +22,10 @@ import 'package:myecl/admin/ui/pages/schools/add_school_page/add_school_page.dar
     deferred as add_school_page;
 import 'package:myecl/admin/ui/pages/schools/edit_school_page/edit_school_page.dart'
     deferred as edit_school_page;
+import 'package:myecl/admin/ui/pages/structure_page/structure_page.dart'
+    deferred as structure_page;
+import 'package:myecl/admin/ui/pages/add_edit_structure_page/add_edit_structure_page.dart'
+    deferred as add_edit_structure_page;
 import 'package:myecl/admin/ui/pages/main_page/main_page.dart'
     deferred as main_page;
 import 'package:myecl/tools/middlewares/admin_middleware.dart';
@@ -39,6 +43,8 @@ class AdminRouter {
   static const String schools = '/schools';
   static const String addSchool = '/add_school';
   static const String editSchool = '/edit_school';
+  static const String structures = '/structures';
+  static const String addEditStructure = '/add_edit_structure';
   static const String editModuleVisibility = '/edit_module_visibility';
   static const String associationMemberships = '/association_memberships';
   static const String detailAssociationMembership =
@@ -112,6 +118,58 @@ class AdminRouter {
                 builder: () => edit_school_page.EditSchoolPage(),
                 middleware: [
                   DeferredLoadingMiddleware(edit_school_page.loadLibrary),
+                ],
+              ),
+            ],
+          ),
+          QRoute(
+            path: associationMemberships,
+            builder: () =>
+                association_membership_page.AssociationMembershipsPage(),
+            middleware: [
+              DeferredLoadingMiddleware(
+                association_membership_page.loadLibrary,
+              ),
+            ],
+            children: [
+              QRoute(
+                path: detailAssociationMembership,
+                builder: () => association_membership_detail_page
+                    .AssociationMembershipEditorPage(),
+                middleware: [
+                  DeferredLoadingMiddleware(
+                    association_membership_detail_page.loadLibrary,
+                  ),
+                ],
+                children: [
+                  QRoute(
+                    path: addEditMember,
+                    builder: () => add_edit_user_membership_page
+                        .AddEditUserMembershipPage(),
+                    middleware: [
+                      DeferredLoadingMiddleware(
+                        add_edit_user_membership_page.loadLibrary,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+          QRoute(
+            path: structures,
+            builder: () => structure_page.StructurePage(),
+            middleware: [
+              DeferredLoadingMiddleware(structure_page.loadLibrary),
+            ],
+            children: [
+              QRoute(
+                path: addEditStructure,
+                builder: () => add_edit_structure_page.AddEditStructurePage(),
+                middleware: [
+                  DeferredLoadingMiddleware(
+                    add_edit_structure_page.loadLibrary,
+                  ),
                 ],
               ),
             ],

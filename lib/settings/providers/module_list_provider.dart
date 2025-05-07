@@ -11,6 +11,7 @@ import 'package:collection/collection.dart';
 import 'package:myecl/event/router.dart';
 import 'package:myecl/home/router.dart';
 import 'package:myecl/loan/router.dart';
+import 'package:myecl/paiement/router.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/ph/router.dart';
 import 'package:myecl/purchases/router.dart';
@@ -35,20 +36,21 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
   String dbAllModules = "allModules";
   final eq = const DeepCollectionEquality.unordered();
   List<Module> allModules = [
-    HomeRouter.module,
-    CentralisationRouter.module,
-    PhRouter.module,
-    CinemaRouter.module,
+    AdvertRouter.module,
     AmapRouter.module,
     BookingRouter.module,
-    LoanRouter.module,
-    PhonebookRouter.module,
-    PurchasesRouter.module,
-    RecommendationRouter.module,
-    AdvertRouter.module,
+    CentralisationRouter.module,
+    CinemaRouter.module,
     EventRouter.module,
-    VoteRouter.module,
+    HomeRouter.module,
+    LoanRouter.module,
+    PaymentRouter.module,
+    PhonebookRouter.module,
+    PhRouter.module,
+    PurchasesRouter.module,
     RaffleRouter.module,
+    RecommendationRouter.module,
+    VoteRouter.module,
     SeedLibraryRouter.module,
   ];
   ModulesNotifier() : super([]);

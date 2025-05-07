@@ -64,11 +64,11 @@ class AdminMainPage extends HookConsumerWidget {
             ),
             GestureDetector(
               onTap: () {
-                QR.to(AdminRouter.root + AdminRouter.associationMemberships);
+                QR.to(AdminRouter.root + AdminRouter.structures);
               },
               child: const MenuCardUi(
-                text: AdminTextConstants.memberships,
-                icon: HeroIcons.link,
+                text: AdminTextConstants.myEclPay,
+                icon: HeroIcons.creditCard,
               ),
             ),
           ],

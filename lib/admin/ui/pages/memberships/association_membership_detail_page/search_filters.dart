@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -46,7 +45,7 @@ class SearchFilters extends HookConsumerWidget {
                     style: const TextStyle(fontSize: 18),
                   ),
                   DateEntry(
-                    label: AdminTextConstants.minimum,
+                    label: AdminTextConstants.startDateMinimal,
                     controller: startMinimal,
                     onTap: () => getOnlyDayDate(
                       context,
@@ -57,7 +56,7 @@ class SearchFilters extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 20),
                   DateEntry(
-                    label: AdminTextConstants.maximum,
+                    label: AdminTextConstants.startDateMaximal,
                     controller: startMaximal,
                     onTap: () => getOnlyDayDate(
                       context,
@@ -79,7 +78,7 @@ class SearchFilters extends HookConsumerWidget {
                     style: const TextStyle(fontSize: 18),
                   ),
                   DateEntry(
-                    label: AdminTextConstants.minimum,
+                    label: AdminTextConstants.endDateMinimal,
                     controller: endMinimal,
                     onTap: () => getOnlyDayDate(
                       context,
@@ -90,7 +89,7 @@ class SearchFilters extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 20),
                   DateEntry(
-                    label: AdminTextConstants.maximum,
+                    label: AdminTextConstants.endDateMaximal,
                     controller: endMaximal,
                     onTap: () => getOnlyDayDate(
                       context,
@@ -145,10 +144,10 @@ class SearchFilters extends HookConsumerWidget {
                   ],
                   child: child,
                 ),
-                child: AutoSizeText(
+                child: Text(
                   AdminTextConstants.validateFilters,
-                  maxFontSize: 18,
                   style: TextStyle(
+                    fontSize: 18,
                     fontWeight: FontWeight.w600,
                     color: Color.fromARGB(255, 255, 255, 255),
                   ),
@@ -182,10 +181,10 @@ class SearchFilters extends HookConsumerWidget {
                   ],
                   child: child,
                 ),
-                child: AutoSizeText(
+                child: Text(
                   AdminTextConstants.clearFilters,
-                  maxFontSize: 18,
                   style: TextStyle(
+                    fontSize: 18,
                     fontWeight: FontWeight.w600,
                     color: Color.fromARGB(255, 255, 255, 255),
                   ),

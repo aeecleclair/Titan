@@ -14,7 +14,7 @@ import 'package:myecl/admin/ui/pages/memberships/association_membership_page/ass
 import 'package:myecl/admin/ui/pages/memberships/association_membership_page/association_membership_ui.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/widgets/dialog.dart';
+import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
