@@ -17,13 +17,12 @@ import 'package:myecl/router.dart';
 import 'package:myecl/service/tools/setup.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/plausible/plausible_observer.dart';
-import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/tools/ui/layouts/app_template.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 void main() async {
   await dotenv.load();
-  Repository.host = await getTitanHost();
+  await setHyperionHost();
   QR.setUrlStrategy();
   // We set the default page type to QMaterialPage
   // See https://pub.dev/packages/qlevar_router#page-transition
