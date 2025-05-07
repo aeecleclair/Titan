@@ -142,15 +142,6 @@ class MyApp extends HookConsumerWidget {
       ),
     );
     return popScope;
-
-    // if (kIsWeb) {
-    //   return popScope;
-    // }
-    // return MaterialApp(
-    //   initialRoute: '/',
-    //   debugShowCheckedModeBanner: false,
-    //   home: popScope,
-    // );
   }
 }
 

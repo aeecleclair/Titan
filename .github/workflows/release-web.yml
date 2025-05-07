@@ -92,16 +92,6 @@ jobs:
           cp -f web/Prod/favicon.png web/favicon.png
           cp -f web/Prod/icons/* web/icons/
 
-      - name: Set up deeplink configuration alpha
-        if: needs.extract-version.outputs.isAlpha == 'true'
-        run: |
-          sed -i "s|{{ FLAVOR }}|alpha|g" web/.well-known/apple-app-site-association
-
-      - name: Set up deeplink configuration alpha
-        if: needs.extract-version.outputs.isAlpha == 'true'
-        run: |
-          sed -i "s|{{ FLAVOR }}|prod|g" web/.well-known/apple-app-site-association
-
       - name: Build Alpha 🔧
         if: needs.extract-version.outputs.isAlpha == 'true'
         run: flutter build web --release --dart-define=flavor=alpha

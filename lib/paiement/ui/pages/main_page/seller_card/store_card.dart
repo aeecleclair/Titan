@@ -21,7 +21,6 @@ class StoreCard extends HookConsumerWidget {
     final store = ref.watch(selectedStoreProvider);
     final ongoingTransactionNotifier =
         ref.read(ongoingTransactionProvider.notifier);
-    // final scanNotifier = ref.read(scanProvider.notifier);
     final barcodeNotifier = ref.read(barcodeProvider.notifier);
     final selectedMonthNotifier = ref.watch(selectedMonthProvider.notifier);
     final buttonGradient = [
