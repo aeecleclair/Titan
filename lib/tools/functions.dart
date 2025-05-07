@@ -436,6 +436,8 @@ bool isNotStaff(String email) {
   return !regex.hasMatch(email);
 }
 
+/// getAppFlavor and functions depending on it
+
 String getAppFlavor() {
   if (appFlavor != null) {
     return appFlavor!;
@@ -463,67 +465,6 @@ Plausible? getPlausible() {
   return null;
 }
 
-Future<String> getTitanVersion() async {
-  final String pubspecString = await rootBundle.loadString("pubspec.yaml");
-  final YamlMap pubspec = loadYaml(pubspecString);
-  final String minimalHyperionVersion = pubspec["minimal_hyperion_version"];
-  return minimalHyperionVersion;
-}
-
-Future<String> getTitanHost() async {
-  final String minimalHyperionVersion = await getTitanVersion();
-  final String flavor = getAppFlavor();
-
-  final host = await titanHostIfCompatible(flavor, minimalHyperionVersion);
-  if (host != "") {
-    return host;
-  }
-  if (flavor == "alpha") {
-    throw StateError(
-      "Minimal requirements not met for flavor alpha (current)",
-    );
-  }
-
-  final alphaHost =
-      await titanHostIfCompatible("alpha", minimalHyperionVersion);
-  if (alphaHost != "") {
-    return alphaHost;
-  }
-  throw StateError(
-    "Minimal requirements not met for flavor $flavor (current) then alpha",
-  );
-}
-
-Future<String> titanHostIfCompatible(
-  String flavor,
-  String minimalHyperionVersion,
-) async {
-  final String? host = dotenv.env["${flavor.toUpperCase()}_HOST"];
-  if (host == null || host == "") {
-    throw StateError("Could not retrieve the base URL for the $flavor flavor");
-  }
-  Repository.host = host;
-  final String version =
-      await VersionRepository().getVersion().then((value) => value.version);
-  return isVersionCompatible(version, minimalHyperionVersion) ? host : "";
-}
-
-bool isVersionCompatible(String currentVersion, String minimalVersion) {
-  final [major, minor, patch] =
-      currentVersion.split('.').map(int.parse).toList();
-  final [minimalMajor, minimalMinor, minimalPatch] =
-      minimalVersion.split('.').map(int.parse).toList();
-
-  if (major < minimalMajor ||
-      (major == minimalMajor && minor < minimalMinor) ||
-      (major == minimalMajor &&
-          minor == minimalMinor &&
-          patch < minimalPatch)) {
-    return false;
-  }
-  return true;
-}
-
 String getTitanPackageName() {
   switch (getAppFlavor()) {
     case "dev":
@@ -540,3 +481,68 @@ String getTitanPackageName() {
 String getTitanLogo() {
   return "assets/images/logo_${getAppFlavor()}.png";
 }
+
+/// Start of functions to choose back-end
+
+Future<String> getMinimalHyperionVersion() async {
+  final String pubspecString = await rootBundle.loadString("pubspec.yaml");
+  final YamlMap pubspec = loadYaml(pubspecString);
+  final String minimalHyperionVersion = pubspec["minimal_hyperion_version"];
+  return minimalHyperionVersion;
+}
+
+Future<String> setHyperionAndGetVersion(String flavor) async {
+  final String? host = dotenv.env["${flavor.toUpperCase()}_HOST"];
+  if (host == null || host == "") {
+    throw StateError("Could not retrieve the base URL for the $flavor flavor");
+  }
+  Repository.host = host;
+  final String hyperionVersion =
+      await VersionRepository().getVersion().then((value) => value.version);
+  return hyperionVersion;
+}
+
+bool isVersionCompatible(
+  String currentVersion,
+  String minimalVersion,
+) {
+  final [major, minor, patch] =
+      currentVersion.split('.').map(int.parse).toList();
+  final [minimalMajor, minimalMinor, minimalPatch] =
+      minimalVersion.split('.').map(int.parse).toList();
+  if (major < minimalMajor ||
+      (major == minimalMajor && minor < minimalMinor) ||
+      (major == minimalMajor &&
+          minor == minimalMinor &&
+          patch < minimalPatch)) {
+    return false;
+  }
+  return true;
+}
+
+Future<void> setHyperionHost() async {
+  final String flavor = getAppFlavor();
+  final String minimalHyperionVersion = await getMinimalHyperionVersion();
+  if (isVersionCompatible(
+    await setHyperionAndGetVersion(flavor),
+    minimalHyperionVersion,
+  )) {
+    return;
+  }
+  if (flavor == "alpha") {
+    throw StateError(
+      "Minimal requirements not met for flavor alpha (current)",
+    );
+  }
+  if (isVersionCompatible(
+    await setHyperionAndGetVersion("alpha"),
+    minimalHyperionVersion,
+  )) {
+    return;
+  }
+  throw StateError(
+    "Minimal requirements not met for flavor $flavor (current) then alpha",
+  );
+}
+
+/// End of functions to choose back-end and functions depending on getAppFlavor
