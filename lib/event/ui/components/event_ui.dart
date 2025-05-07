@@ -165,7 +165,12 @@ class EventUi extends ConsumerWidget {
               ),
               const SizedBox(height: 5),
               Text(
-                event.description,
+                event.description
+                        .split("\n")
+                        .sublist(
+                            0, event.description.split("\n").length > 1 ? 2 : 1)
+                        .join("\n") +
+                    (event.description.split("\n").length > 1 ? "..." : ""),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
