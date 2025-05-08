@@ -31,7 +31,7 @@
 			<string>fr.myecl.titan</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>titan</string>
+				<string>$(FLAVOR_URL_SCHEME)</string>
 			</array>
 		</dict>
 	</array>
