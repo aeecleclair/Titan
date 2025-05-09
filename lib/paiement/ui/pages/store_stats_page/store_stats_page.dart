@@ -44,13 +44,13 @@ class StoreStatsPage extends ConsumerWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                StoreTransactionsDetail(
-                  history: sortedByDate,
-                ),
+                SummaryCard(history: sortedByDate),
                 const SizedBox(
                   height: 20,
                 ),
-                SummaryCard(history: sortedByDate),
+                StoreTransactionsDetail(
+                  history: sortedByDate,
+                ),
               ],
             );
           },
