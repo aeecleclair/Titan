@@ -13,12 +13,7 @@ import 'package:myecl/user/providers/user_list_provider.dart';
 
 class SearchResult extends HookConsumerWidget {
   final TextEditingController queryController;
-  final void Function() onChoose;
-  const SearchResult({
-    super.key,
-    required this.queryController,
-    required this.onChoose,
-  });
+  const SearchResult({super.key, required this.queryController});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,8 +36,7 @@ class SearchResult extends HookConsumerWidget {
             .map(
               (simpleUser) => GestureDetector(
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -75,26 +69,13 @@ class SearchResult extends HookConsumerWidget {
                               );
                             }
                           });
-                          onChoose();
                         },
                         waitingColor: const Color.fromARGB(255, 0, 29, 29),
                         builder: (child) => child,
-                        child: Container(
-                          width: 35,
-                          height: 35,
-                          decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 0, 29, 29),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                          ),
-                          child: Center(
-                            child: const HeroIcon(
-                              HeroIcons.plus,
-                              color: Color.fromARGB(255, 0, 29, 29),
-                              size: 18,
-                            ),
-                          ),
+                        child: const HeroIcon(
+                          HeroIcons.plus,
+                          color: Color.fromARGB(255, 0, 29, 29),
+                          size: 18,
                         ),
                       ),
                       const SizedBox(width: 10),
@@ -102,7 +83,7 @@ class SearchResult extends HookConsumerWidget {
                         simpleUser.getName(),
                         style: TextStyle(
                           color: const Color.fromARGB(255, 0, 29, 29),
-                          fontSize: 18,
+                          fontSize: 14,
                           fontWeight: simpleUser.id == newAdmin.id
                               ? FontWeight.bold
                               : FontWeight.normal,
