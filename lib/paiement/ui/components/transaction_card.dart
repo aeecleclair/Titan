@@ -42,9 +42,7 @@ class TransactionCard extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 27,
-              backgroundColor: transaction.type == HistoryType.given
-                  ? const Color(0xfffe807f)
-                  : const Color(0xff017f80),
+              backgroundColor: const Color(0xff017f80),
               child: HeroIcon(
                 icon,
                 color: Colors.white,
@@ -127,11 +125,9 @@ class TransactionCard extends StatelessWidget {
                 color: const Color(0xff204550),
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                decoration:
-                    (transaction.status == TransactionStatus.confirmed ||
-                            transaction.status == TransactionStatus.refunded)
-                        ? TextDecoration.none
-                        : TextDecoration.lineThrough,
+                decoration: transaction.status == TransactionStatus.confirmed
+                    ? TextDecoration.none
+                    : TextDecoration.lineThrough,
                 decorationColor: const Color(0xff204550).withValues(alpha: 0.8),
                 decorationThickness: 2.85,
               ),
