@@ -7,15 +7,23 @@ import 'package:myecl/paiement/class/history.dart';
 class TransactionCard extends StatelessWidget {
   final History transaction;
   final Function()? onTap;
-  const TransactionCard({super.key, required this.transaction, this.onTap});
+  final bool storeView;
+  const TransactionCard({
+    super.key,
+    required this.transaction,
+    this.onTap,
+    this.storeView = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     final formatter = NumberFormat("#,##0.00", "fr_FR");
     final icon = transaction.type == HistoryType.given
-        ? HeroIcons.arrowUpRight
+        ? HeroIcons.qrCode
         : transaction.type == HistoryType.received
-            ? HeroIcons.arrowDownRight
+            ? storeView
+                ? HeroIcons.arrowDownRight
+                : HeroIcons.arrowUturnLeft
             : HeroIcons.creditCard;
 
     Color getTransactionStatusColor(TransactionStatus status) {
@@ -63,12 +71,15 @@ class TransactionCard extends StatelessWidget {
                     children: [
                       Expanded(
                         child: AutoSizeText(
-                          transaction.otherWalletName,
+                          storeView
+                              ? transaction.otherWalletName
+                              : "${transaction.type == HistoryType.received ? "Remboursement - " : ""}${transaction.otherWalletName}",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
                             color: Color(0xff204550),
                             fontSize: 14,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
@@ -112,7 +123,6 @@ class TransactionCard extends StatelessWidget {
                     style: const TextStyle(
                       color: Color(0xff204550),
                       fontSize: 12,
-                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],
