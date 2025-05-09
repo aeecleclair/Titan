@@ -31,7 +31,7 @@ class TransactionCard extends StatelessWidget {
         icon = HeroIcons.arrowUturnLeft;
         break;
       case HistoryType.refund_debited:
-        icon = HeroIcons.arrowUturnLeft;
+        icon = HeroIcons.arrowUturnRight;
         break;
       case HistoryType.transfer:
         icon = HeroIcons.creditCard;
@@ -62,7 +62,8 @@ class TransactionCard extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 27,
-              backgroundColor: transaction.type == HistoryType.given
+              backgroundColor: (transaction.type == HistoryType.given ||
+                      transaction.type == HistoryType.refund_debited)
                   ? const Color(0xfffe807f)
                   : const Color(0xff017f80),
               child: HeroIcon(
