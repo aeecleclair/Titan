@@ -132,10 +132,7 @@ class StoreAdminPage extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 10),
-              SearchResult(
-                queryController: queryController,
-                onChoose: () => isSearching.value = false,
-              ),
+              SearchResult(queryController: queryController),
             ],
           ],
         ),
