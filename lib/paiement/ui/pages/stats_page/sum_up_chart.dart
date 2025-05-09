@@ -23,85 +23,110 @@ class SumUpChart extends HookConsumerWidget {
     final selectedTransactionsNotifier =
         ref.read(selectedTransactionsProvider.notifier);
     final formatter = NumberFormat("#,##0.00", "fr_FR");
-    final Map<HistoryType, List<Color>> colors = {
-      HistoryType.given: [
+    final List<List<Color>> colors = [
+      [
         const Color.fromARGB(255, 1, 127, 128),
         const Color.fromARGB(255, 0, 102, 103),
         const Color.fromARGB(255, 0, 44, 45).withValues(alpha: 0.3),
       ],
-      HistoryType.received: [
+      [
         const Color.fromARGB(255, 4, 84, 84),
         const Color.fromARGB(255, 0, 68, 68),
         const Color.fromARGB(255, 0, 29, 29).withValues(alpha: 0.4),
       ],
-      HistoryType.transfer: [
+      [
         const Color.fromARGB(255, 255, 119, 7),
         const Color.fromARGB(255, 230, 103, 0),
         const Color.fromARGB(255, 97, 44, 0).withValues(alpha: 0.2),
       ],
-    };
-    final Map<HistoryType, Map<String, List<History>>> transactionPerType = {
-      HistoryType.given: {},
-      HistoryType.received: {},
-      HistoryType.transfer: {},
-    };
+    ];
+    final List<History> transfer = [];
+    final Map<String, List<History>> transactionPerStore = {};
 
     return AsyncChild(
       value: history,
       builder: (context, history) {
         final confirmedTransaction = history.where(
           (element) =>
-              element.status == TransactionStatus.confirmed &&
+              (element.status == TransactionStatus.confirmed ||
+                  element.status == TransactionStatus.refunded) &&
               element.creation.year == currentMonth.year &&
               element.creation.month == currentMonth.month,
         );
         for (final transaction in confirmedTransaction) {
-          transactionPerType[transaction.type]![transaction.otherWalletName] = [
-            ...?transactionPerType[transaction.type]![
-                transaction.otherWalletName],
-            transaction,
-          ];
+          if (transaction.type == HistoryType.transfer) {
+            transfer.add(transaction);
+          } else {
+            transactionPerStore[transaction.otherWalletName] = [
+              ...?transactionPerStore[transaction.otherWalletName],
+              transaction,
+            ];
+          }
         }
         final List<PieChartSectionData> chartPart = [];
         final List<String> keys = [];
         final Map<String, List<History>> mappedHistory = {};
-        double total = 0.0;
+        int total = 0;
 
-        for (final type in transactionPerType.keys) {
-          for (final wallet in transactionPerType[type]!.keys) {
-            final l = transactionPerType[type]![wallet]!;
-            mappedHistory[type.name + wallet] = l;
-
-            final totalAmount = l.fold<double>(
-              0,
-              (previousValue, element) => previousValue + element.total / 100,
-            );
-            if (type == HistoryType.given) {
-              total -= totalAmount;
-            } else {
-              total += totalAmount;
-            }
-            keys.add(type.name + wallet);
-            chartPart.add(
-              PieChartSectionData(
-                color: colors[type]![0],
-                value: sqrt(totalAmount),
-                title: '',
-                radius: 60 +
-                    (keys.indexOf(type.name + wallet) == selected.value
-                        ? 15
-                        : 0),
-                badgePositionPercentageOffset: 0.6,
-                badgeWidget: SumUpCard(
-                  amount: '${formatter.format(totalAmount)} €',
-                  color: colors[type]![0],
-                  darkColor: colors[type]![1],
-                  shadowColor: colors[type]![2],
-                  title: wallet,
-                ),
+        if (transfer.isNotEmpty) {
+          final totalAmount = transfer.fold<int>(
+            0,
+            (previousValue, element) => previousValue + element.total,
+          );
+          total += totalAmount;
+          mappedHistory['Transfer'] = transfer;
+          keys.add('Transfer');
+          chartPart.add(
+            PieChartSectionData(
+              color: colors[2][0],
+              value: sqrt(totalAmount / 100),
+              title: '',
+              radius:
+                  60 + (keys.indexOf('Transfer') == selected.value ? 15 : 0),
+              badgePositionPercentageOffset: 0.6,
+              badgeWidget: SumUpCard(
+                amount: '${formatter.format(totalAmount / 100)} €',
+                color: colors[2][0],
+                darkColor: colors[2][1],
+                shadowColor: colors[2][2],
+                title: 'Recharge',
               ),
-            );
-          }
+            ),
+          );
+        }
+
+        for (final (index, wallet) in transactionPerStore.keys.indexed) {
+          final l = transactionPerStore[wallet]!;
+          mappedHistory[wallet] = l;
+
+          final totalAmount = l.fold<int>(
+            0,
+            (previousValue, element) {
+              if (element.type == HistoryType.given) {
+                return previousValue - element.total;
+              }
+              return previousValue + element.total;
+            },
+          );
+          print('Total amount: $totalAmount');
+          total += totalAmount;
+          keys.add(wallet);
+          chartPart.add(
+            PieChartSectionData(
+              color: colors[index % 2][0],
+              value: sqrt((totalAmount / 100).abs()),
+              title: '',
+              radius: 60 + (keys.indexOf(wallet) == selected.value ? 15 : 0),
+              badgePositionPercentageOffset: 0.6,
+              badgeWidget: SumUpCard(
+                amount: '${formatter.format(totalAmount / 100)} €',
+                color: colors[index % 2][0],
+                darkColor: colors[index % 2][1],
+                shadowColor: colors[index % 2][2],
+                title: wallet,
+              ),
+            ),
+          );
         }
 
         return Expanded(
@@ -161,7 +186,7 @@ class SumUpChart extends HookConsumerWidget {
                               height: 5,
                             ),
                             Text(
-                              "${total > 0 ? "+" : ""}${formatter.format(total)} €",
+                              "${total > 0 ? "+" : ""}${formatter.format(total / 100)} €",
                               style: const TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,

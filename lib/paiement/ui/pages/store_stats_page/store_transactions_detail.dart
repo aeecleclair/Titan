@@ -23,25 +23,24 @@ class StoreTransactionsDetail extends ConsumerWidget {
       );
     }
 
-    return Expanded(
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: history
-              .map(
-                (e) => TransactionCard(
-                  transaction: e,
-                  onTap: () => {
-                    if (selectedStore.canCancel &&
-                        e.status == TransactionStatus.confirmed)
-                      {
-                        showCancelModal(e),
-                      },
-                  },
-                ),
-              )
-              .toList(),
-        ),
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Column(
+        children: history
+            .map(
+              (e) => TransactionCard(
+                transaction: e,
+                onTap: () => {
+                  if (selectedStore.canCancel &&
+                      e.status == TransactionStatus.confirmed)
+                    {
+                      showCancelModal(e),
+                    },
+                },
+                storeView: true,
+              ),
+            )
+            .toList(),
       ),
     );
   }
