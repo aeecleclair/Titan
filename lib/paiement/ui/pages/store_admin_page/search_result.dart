@@ -77,13 +77,13 @@ class SearchResult extends HookConsumerWidget {
                           });
                           onChoose();
                         },
-                        waitingColor: const Color.fromARGB(255, 0, 29, 29),
+                        waitingColor: const Color(0xff017f80),
                         builder: (child) => child,
                         child: Container(
                           width: 35,
                           height: 35,
                           decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 0, 29, 29),
+                            color: const Color(0xff017f80),
                             borderRadius: BorderRadius.all(
                               Radius.circular(10),
                             ),
@@ -91,7 +91,7 @@ class SearchResult extends HookConsumerWidget {
                           child: Center(
                             child: const HeroIcon(
                               HeroIcons.plus,
-                              color: Color.fromARGB(255, 0, 29, 29),
+                              color: Colors.white,
                               size: 18,
                             ),
                           ),
@@ -101,7 +101,6 @@ class SearchResult extends HookConsumerWidget {
                       Text(
                         simpleUser.getName(),
                         style: TextStyle(
-                          color: const Color.fromARGB(255, 0, 29, 29),
                           fontSize: 18,
                           fontWeight: simpleUser.id == newAdmin.id
                               ? FontWeight.bold
