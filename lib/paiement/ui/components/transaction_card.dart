@@ -18,13 +18,25 @@ class TransactionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formatter = NumberFormat("#,##0.00", "fr_FR");
-    final icon = transaction.type == HistoryType.given
-        ? HeroIcons.qrCode
-        : transaction.type == HistoryType.received
-            ? storeView
-                ? HeroIcons.arrowDownRight
-                : HeroIcons.arrowUturnLeft
-            : HeroIcons.creditCard;
+    final icon;
+
+    switch (transaction.type) {
+      case HistoryType.given:
+        icon = HeroIcons.qrCode;
+        break;
+      case HistoryType.received:
+        icon = HeroIcons.arrowDownRight;
+        break;
+      case HistoryType.refund_credited:
+        icon = HeroIcons.arrowUturnLeft;
+        break;
+      case HistoryType.refund_debited:
+        icon = HeroIcons.arrowUturnLeft;
+        break;
+      case HistoryType.transfer:
+        icon = HeroIcons.creditCard;
+        break;
+    }
 
     Color getTransactionStatusColor(TransactionStatus status) {
       switch (status) {
