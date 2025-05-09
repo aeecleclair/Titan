@@ -73,7 +73,7 @@ class TransactionCard extends StatelessWidget {
                         child: AutoSizeText(
                           storeView
                               ? transaction.otherWalletName
-                              : "${transaction.type == HistoryType.received ? "Remboursement - " : ""}${transaction.otherWalletName}",
+                              : "${transaction.type == HistoryType.refund_credited || transaction.type == HistoryType.refund_debited ? "Remboursement - " : ""}${transaction.otherWalletName}",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
