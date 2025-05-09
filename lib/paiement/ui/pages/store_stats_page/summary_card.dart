@@ -14,13 +14,14 @@ class SummaryCard extends StatelessWidget {
     int numberTransactions = 0;
 
     for (final transaction in history) {
-      switch (transaction.type) {
-        case HistoryType.given:
-          total -= transaction.total;
+      switch (transaction.status) {
+        case TransactionStatus.confirmed:
+          total += transaction.total;
           numberTransactions++;
           break;
-        case HistoryType.received:
-          total += transaction.total;
+        case TransactionStatus.refunded:
+          total -= transaction.total;
+          numberTransactions++;
           break;
         default:
           break;
