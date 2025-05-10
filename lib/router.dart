@@ -15,6 +15,7 @@ import 'package:myecl/others/ui/loading_page.dart' deferred as loading_page;
 import 'package:myecl/others/ui/no_internet_page.dart'
     deferred as no_internet_page;
 import 'package:myecl/others/ui/no_module.dart' deferred as no_module_page;
+import 'package:myecl/others/ui/rollback_page.dart' deferred as rollback_page;
 import 'package:myecl/others/ui/update_page.dart' deferred as update_page;
 import 'package:myecl/paiement/router.dart';
 import 'package:myecl/phonebook/router.dart';
@@ -39,6 +40,7 @@ class AppRouter {
   static const String update = '/update';
   static const String noInternet = '/no_internet';
   static const String noModule = '/no_module';
+  static const String rollback = '/rollback';
 
   AppRouter(this.ref) {
     routes = [
@@ -76,6 +78,13 @@ class AppRouter {
         builder: () => no_module_page.NoModulePage(),
         middleware: [
           DeferredLoadingMiddleware(no_module_page.loadLibrary),
+        ],
+      ),
+      QRoute(
+        path: rollback,
+        builder: () => rollback_page.RollbackPage(),
+        middleware: [
+          DeferredLoadingMiddleware(rollback_page.loadLibrary),
         ],
       ),
       AdminRouter(ref).route(),
