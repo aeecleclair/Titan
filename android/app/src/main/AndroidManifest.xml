@@ -32,7 +32,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with YOUR_SCHEME://YOUR_HOST -->
-                <data android:scheme="titan" />
+                <data android:scheme="@string/flavor_url_scheme" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

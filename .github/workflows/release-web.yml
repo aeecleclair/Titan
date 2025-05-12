@@ -33,7 +33,7 @@ jobs:
           echo versionName=$versionName >> $GITHUB_OUTPUT
           echo dockertag=$dockertag >> $GITHUB_OUTPUT
 
-  build-and-deploy:
+  build-and-deploy-web:
     name: Release Titan ${{ needs.extract-version.outputs.tag }} Web
     runs-on: ubuntu-latest
     needs: [extract-version]
