@@ -79,9 +79,6 @@ class SellerRightCard extends ConsumerWidget {
       storeSeller.canCancel,
       storeSeller.canManageSellers,
     ];
-    print(
-      "Droits : $sellerRights",
-    );
 
     for (var i = 0; i < sellerRights.length; i++) {
       if (sellerRights[i]) {

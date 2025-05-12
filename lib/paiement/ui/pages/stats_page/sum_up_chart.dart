@@ -108,7 +108,6 @@ class SumUpChart extends HookConsumerWidget {
               return previousValue + element.total;
             },
           );
-          print('Total amount: $totalAmount');
           total += totalAmount;
           keys.add(wallet);
           chartPart.add(
