@@ -40,7 +40,7 @@ Widget getStatusTag(WalletDeviceStatus status) {
           style: TextStyle(
             color: Colors.green,
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: 18,
           ),
         ),
       );
@@ -56,7 +56,7 @@ Widget getStatusTag(WalletDeviceStatus status) {
           style: TextStyle(
             color: Colors.orange,
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: 18,
           ),
         ),
       );
@@ -72,7 +72,7 @@ Widget getStatusTag(WalletDeviceStatus status) {
           style: TextStyle(
             color: Colors.red,
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: 18,
           ),
         ),
       );
