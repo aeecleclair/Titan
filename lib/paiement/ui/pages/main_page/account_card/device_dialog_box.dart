@@ -11,7 +11,8 @@ class Consts {
 }
 
 class DeviceDialogBox extends StatelessWidget {
-  final String title, descriptions, buttonText;
+  final String title, descriptions;
+  final String? buttonText;
   final Function() onClick;
 
   const DeviceDialogBox({
@@ -84,46 +85,48 @@ class DeviceDialogBox extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              onClick.call();
-                              Navigator.of(context).pop();
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width -
-                                  4 * Consts.padding,
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 16,
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    Colors.black87,
-                                    Colors.black,
-                                  ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
+                          if (buttonText != null)
+                            GestureDetector(
+                              onTap: () {
+                                onClick.call();
+                                Navigator.of(context).pop();
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width -
+                                    4 * Consts.padding,
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 16,
                                 ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withValues(alpha: 0.3),
-                                    blurRadius: 2.0,
-                                    offset: const Offset(1.0, 2.0),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  gradient: const LinearGradient(
+                                    colors: [
+                                      Colors.black87,
+                                      Colors.black,
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
                                   ),
-                                ],
-                              ),
-                              child: Center(
-                                child: Text(
-                                  buttonText,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color:
+                                          Colors.black.withValues(alpha: 0.3),
+                                      blurRadius: 2.0,
+                                      offset: const Offset(1.0, 2.0),
+                                    ),
+                                  ],
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    buttonText!,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
                         ],
                       ),
                     ],

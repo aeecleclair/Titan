@@ -11,6 +11,7 @@ import 'package:myecl/paiement/providers/key_service_provider.dart';
 import 'package:myecl/paiement/tools/platform_info.dart';
 import 'package:myecl/paiement/ui/pages/devices_page/add_device_button.dart';
 import 'package:myecl/paiement/ui/pages/devices_page/device_item.dart';
+import 'package:myecl/paiement/ui/pages/main_page/account_card/device_dialog_box.dart';
 import 'package:myecl/paiement/ui/paiement.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -90,9 +91,18 @@ class DevicesPage extends HookConsumerWidget {
                                 await keyService.saveKeyId(value);
                                 await devicesNotifier.getDeviceList();
                                 displayAddDevice.value = false;
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  "Demande prise en compte, consultez votre boite mail",
+                                await showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return DeviceDialogBox(
+                                      title:
+                                          'Demande d\'activation de l\'appareil',
+                                      descriptions:
+                                          "La demande d'activation est prise en compte, veuilliez consulter votre boite mail pour finaliser la démarche",
+                                      buttonText: null,
+                                      onClick: () {},
+                                    );
+                                  },
                                 );
                               }
                             },
