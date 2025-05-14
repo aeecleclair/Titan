@@ -73,7 +73,7 @@ class SellerRightCard extends ConsumerWidget {
       "Administrateur général",
     ];
 
-    final sellerRights = [
+    List<bool> sellerRights = [
       storeSeller.canBank,
       storeSeller.canSeeHistory,
       storeSeller.canCancel,
@@ -178,7 +178,7 @@ class SellerRightCard extends ConsumerWidget {
                                             TypeMsg.msg,
                                             "Droits mis à jour",
                                           );
-                                          Navigator.pop(context);
+                                          sellerRights[i] = !sellerRights[i];
                                         } else {
                                           displayToastWithContext(
                                             TypeMsg.error,
@@ -216,6 +216,7 @@ class SellerRightCard extends ConsumerWidget {
                                         TypeMsg.msg,
                                         "Vendeur supprimé",
                                       );
+                                      Navigator.pop(context);
                                     } else {
                                       displayToastWithContext(
                                         TypeMsg.error,

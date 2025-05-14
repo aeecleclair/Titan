@@ -8,6 +8,7 @@ import 'package:myecl/paiement/class/init_info.dart';
 import 'package:myecl/paiement/providers/fund_amount_provider.dart';
 import 'package:myecl/paiement/providers/funding_url_provider.dart';
 import 'package:myecl/paiement/providers/my_wallet_provider.dart';
+import 'package:myecl/paiement/providers/tos_provider.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:universal_html/html.dart' as html;
@@ -20,11 +21,23 @@ class ConfirmFundButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final fundAmount = ref.watch(fundAmountProvider);
     final fundingUrlNotifier = ref.watch(fundingUrlProvider.notifier);
+    final myWallet = ref.watch(myWalletProvider);
+    final tos = ref.watch(tosProvider);
+    final maxBalanceAmount = tos.maybeWhen(
+      orElse: () => 0,
+      data: (tos) => tos.maxWalletBalance / 100,
+    );
+    final currentAmount = myWallet.maybeWhen(
+      orElse: () => 0,
+      data: (wallet) => wallet.balance / 100,
+    );
 
     final redirectUrl = "titan.alpha://payment";
+    final amountToAdd = double.tryParse(fundAmount.replaceAll(",", ".")) ?? 0;
 
     final enabled = fundAmount.isNotEmpty &&
-        double.parse(fundAmount.replaceAll(',', '.')) > 0;
+        double.parse(fundAmount.replaceAll(',', '.')) >= 1 &&
+        amountToAdd + currentAmount <= maxBalanceAmount;
 
     void displayToastWithContext(TypeMsg type, String message) {
       displayToast(context, type, message);

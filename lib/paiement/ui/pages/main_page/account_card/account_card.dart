@@ -13,6 +13,7 @@ import 'package:myecl/paiement/providers/selected_month_provider.dart';
 import 'package:myecl/paiement/router.dart';
 import 'package:myecl/paiement/tools/platform_info.dart';
 import 'package:myecl/paiement/ui/pages/fund_page/fund_page.dart';
+import 'package:myecl/paiement/ui/pages/main_page/account_card/device_dialog_box.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_card_button.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_card_template.dart';
 import 'package:myecl/paiement/ui/pages/pay_page/pay_page.dart';
@@ -117,13 +118,25 @@ class AccountCard extends HookConsumerWidget {
               }
               final device = await deviceNotifier.getDevice(keyId);
               device.when(
-                data: (device) {
+                data: (device) async {
                   if (device.status == WalletDeviceStatus.active) {
                     showPayModal();
                   } else if (device.status == WalletDeviceStatus.inactive) {
-                    displayToastWithContext(
-                      TypeMsg.error,
-                      "Votre appareil n'est pas activé",
+                    await showDialog(
+                      context: context,
+                      builder: (context) {
+                        return DeviceDialogBox(
+                          title: 'Appareil non activé',
+                          descriptions:
+                              'Votre appareil n\'est pas encore activé. \nPour l\'activer, veuillez vous rendre sur la page des appareils.',
+                          buttonText: 'Accéder à la page',
+                          onClick: () {
+                            QR.to(
+                              PaymentRouter.root + PaymentRouter.devices,
+                            );
+                          },
+                        );
+                      },
                     );
                   } else {
                     displayToastWithContext(
