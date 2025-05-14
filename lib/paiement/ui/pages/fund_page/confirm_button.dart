@@ -36,7 +36,7 @@ class ConfirmFundButton extends ConsumerWidget {
     final amountToAdd = double.tryParse(fundAmount.replaceAll(",", ".")) ?? 0;
 
     final enabled = fundAmount.isNotEmpty &&
-        double.parse(fundAmount.replaceAll(',', '.')) > 100 &&
+        double.parse(fundAmount.replaceAll(',', '.')) >= 1 &&
         amountToAdd + currentAmount <= maxBalanceAmount;
 
     void displayToastWithContext(TypeMsg type, String message) {
