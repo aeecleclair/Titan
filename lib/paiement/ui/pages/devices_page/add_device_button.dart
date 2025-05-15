@@ -10,55 +10,73 @@ class AddDeviceButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraint) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 40),
-          child: ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(25)),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-              child: Container(
-                color: Colors.grey.shade200.withValues(alpha: 0.5),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    WaitingButton(
-                      onTap: onTap,
-                      builder: (child) => SizedBox(
-                        height: constraint.maxHeight - 250,
-                        child: child,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.all(Radius.circular(25)),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+          child: Container(
+            color: Colors.grey.shade200.withValues(alpha: 0.5),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                WaitingButton(
+                  onTap: onTap,
+                  builder: (child) => SizedBox(
+                    height: 70,
+                    width: double.infinity,
+                    child: child,
+                  ),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 20,
                       ),
-                      child: const Column(
+                      Stack(
+                        clipBehavior: Clip.none,
                         children: [
-                          Spacer(flex: 3),
-                          Center(
-                            child: HeroIcon(
-                              HeroIcons.plus,
-                              color: Color.fromARGB(255, 2, 2, 2),
-                              size: 65,
+                          HeroIcon(
+                            HeroIcons.devicePhoneMobile,
+                            color: Color(0xff204550),
+                            size: 30,
+                          ),
+                          Positioned(
+                            right: 2,
+                            top: -3,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color:
+                                    Colors.grey.shade200.withValues(alpha: 0.9),
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              child: HeroIcon(
+                                HeroIcons.plus,
+                                color: Color(0xff204550),
+                                size: 13,
+                              ),
                             ),
                           ),
-                          Spacer(),
-                          Text(
-                            "Ajouter cet appareil",
-                            style: TextStyle(
-                              color: Color(0xff204550),
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Spacer(),
                         ],
                       ),
-                    ),
-                  ],
+                      Spacer(),
+                      Text(
+                        "Ajouter cet appareil",
+                        style: TextStyle(
+                          color: Color(0xff204550),
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Spacer(),
+                    ],
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

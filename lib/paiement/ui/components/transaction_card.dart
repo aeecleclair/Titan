@@ -7,16 +7,36 @@ import 'package:myecl/paiement/class/history.dart';
 class TransactionCard extends StatelessWidget {
   final History transaction;
   final Function()? onTap;
-  const TransactionCard({super.key, required this.transaction, this.onTap});
+  final bool storeView;
+  const TransactionCard({
+    super.key,
+    required this.transaction,
+    this.onTap,
+    this.storeView = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     final formatter = NumberFormat("#,##0.00", "fr_FR");
-    final icon = transaction.type == HistoryType.given
-        ? HeroIcons.arrowUpRight
-        : transaction.type == HistoryType.received
-            ? HeroIcons.arrowDownRight
-            : HeroIcons.creditCard;
+    final icon;
+
+    switch (transaction.type) {
+      case HistoryType.given:
+        icon = HeroIcons.qrCode;
+        break;
+      case HistoryType.received:
+        icon = HeroIcons.arrowDownRight;
+        break;
+      case HistoryType.refund_credited:
+        icon = HeroIcons.arrowUturnLeft;
+        break;
+      case HistoryType.refund_debited:
+        icon = HeroIcons.arrowUturnRight;
+        break;
+      case HistoryType.transfer:
+        icon = HeroIcons.creditCard;
+        break;
+    }
 
     Color getTransactionStatusColor(TransactionStatus status) {
       switch (status) {
@@ -42,7 +62,10 @@ class TransactionCard extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 27,
-              backgroundColor: const Color(0xff017f80),
+              backgroundColor: (transaction.type == HistoryType.given ||
+                      transaction.type == HistoryType.refund_debited)
+                  ? const Color(0xfffe807f)
+                  : const Color(0xff017f80),
               child: HeroIcon(
                 icon,
                 color: Colors.white,
@@ -61,12 +84,15 @@ class TransactionCard extends StatelessWidget {
                     children: [
                       Expanded(
                         child: AutoSizeText(
-                          transaction.otherWalletName,
+                          storeView
+                              ? transaction.otherWalletName
+                              : "${transaction.type == HistoryType.refund_credited || transaction.type == HistoryType.refund_debited ? "Remboursement - " : ""}${transaction.otherWalletName}",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
                             color: Color(0xff204550),
                             fontSize: 14,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
@@ -110,7 +136,6 @@ class TransactionCard extends StatelessWidget {
                     style: const TextStyle(
                       color: Color(0xff204550),
                       fontSize: 12,
-                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],
@@ -125,9 +150,11 @@ class TransactionCard extends StatelessWidget {
                 color: const Color(0xff204550),
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                decoration: transaction.status == TransactionStatus.confirmed
-                    ? TextDecoration.none
-                    : TextDecoration.lineThrough,
+                decoration:
+                    (transaction.status == TransactionStatus.confirmed ||
+                            transaction.status == TransactionStatus.refunded)
+                        ? TextDecoration.none
+                        : TextDecoration.lineThrough,
                 decorationColor: const Color(0xff204550).withValues(alpha: 0.8),
                 decorationThickness: 2.85,
               ),

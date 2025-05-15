@@ -20,66 +20,60 @@ class DeviceItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 40),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
       child: ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(25)),
+        borderRadius: const BorderRadius.all(Radius.circular(15)),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
           child: Container(
             color: Colors.grey.shade200.withValues(alpha: 0.5),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const HeroIcon(
-                  HeroIcons.devicePhoneMobile,
-                  size: 180,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      device.name,
-                      style: const TextStyle(
-                        color: Color(0xff204550),
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    if (device.status != WalletDeviceStatus.revoked) ...[
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      GestureDetector(
-                        onTap: onRevoke,
-                        child: const HeroIcon(
-                          HeroIcons.trash,
-                          size: 25,
-                          color: Color.fromARGB(255, 0, 0, 0),
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-                if (isActual)
-                  const Text(
-                    '(actuel)',
-                    style: TextStyle(
+            child: SizedBox(
+              height: 70,
+              child: Row(
+                children: [
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    device.name,
+                    style: const TextStyle(
                       color: Color(0xff204550),
-                      fontSize: 20,
+                      fontSize: 25,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                const SizedBox(
-                  height: 20,
-                ),
-                getStatusTag(device.status),
-              ],
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  if (isActual)
+                    const Text(
+                      '(actuel)',
+                      style: TextStyle(
+                        color: Color(0xff204550),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  Spacer(),
+                  getStatusTag(device.status),
+                  if (device.status != WalletDeviceStatus.revoked) ...[
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    GestureDetector(
+                      onTap: onRevoke,
+                      child: const HeroIcon(
+                        HeroIcons.trash,
+                        size: 25,
+                        color: Color(0xff204550),
+                      ),
+                    ),
+                  ],
+                  const SizedBox(
+                    width: 20,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
