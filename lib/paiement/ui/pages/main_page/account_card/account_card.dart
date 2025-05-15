@@ -180,7 +180,7 @@ class AccountCard extends HookConsumerWidget {
         MainCardButton(
           colors: buttonGradient,
           icon: HeroIcons.creditCard,
-          title: "Alimenter",
+          title: "Recharger",
           onPressed: () async {
             showFundModal();
           },
