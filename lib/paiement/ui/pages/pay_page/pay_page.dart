@@ -57,7 +57,7 @@ class PayPage extends ConsumerWidget {
               height: 5,
             ),
             Text(
-              'Solde théorique : ${formatter.format(currentAmount - amountToSub)} €',
+              'Solde après paiement : ${formatter.format(currentAmount - amountToSub)} €',
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 15,

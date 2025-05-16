@@ -18,7 +18,7 @@ class TransactionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formatter = NumberFormat("#,##0.00", "fr_FR");
-    final icon;
+    final HeroIcons icon;
 
     switch (transaction.type) {
       case HistoryType.given:

@@ -64,7 +64,7 @@ class FundPage extends ConsumerWidget {
               height: 5,
             ),
             Text(
-              'Solde théorique : ${formatter.format(amountToAdd + currentAmount)} € (max: ${formatter.format(maxBalanceAmount)} €)',
+              'Solde après recharge : ${formatter.format(amountToAdd + currentAmount)} € (max: ${formatter.format(maxBalanceAmount)} €)',
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 15,
