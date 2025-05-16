@@ -57,34 +57,36 @@ class MyApp extends HookConsumerWidget {
     final pathForwardingNotifier = ref.watch(pathForwardingProvider.notifier);
     Future(() => animationNotifier.setController(animationController));
 
-    useEffect(
-      () {
-        final appLinks = AppLinks();
+    if (!kIsWeb) {
+      useEffect(
+        () {
+          final appLinks = AppLinks();
 
-        Future<void> initDeepLinks() async {
-          try {
-            appLinks.uriLinkStream.listen((Uri? uri) {
-              if (uri != null) {
-                final Map<String, String> queryParams = uri.queryParameters;
+          Future<void> initDeepLinks() async {
+            try {
+              appLinks.uriLinkStream.listen((Uri? uri) {
+                if (uri != null) {
+                  final Map<String, String> queryParams = uri.queryParameters;
 
-                final newPath = "/${uri.host}";
-                pathForwardingNotifier.forward(
-                  newPath,
-                  queryParameters: queryParams,
-                );
-                QR.toName(newPath);
-              }
-            });
-          } catch (err) {
-            print("Failed to listen to deep link: $err");
+                  final newPath = "/${uri.host}";
+                  pathForwardingNotifier.forward(
+                    newPath,
+                    queryParameters: queryParams,
+                  );
+                  QR.toName(newPath);
+                }
+              });
+            } catch (err) {
+              print("Failed to listen to deep link: $err");
+            }
           }
-        }
 
-        initDeepLinks();
-        return null;
-      },
-      [],
-    );
+          initDeepLinks();
+          return null;
+        },
+        [],
+      );
+    }
 
     final popScope = PopScope(
       canPop: false,

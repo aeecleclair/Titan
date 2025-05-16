@@ -216,7 +216,9 @@ class SellerRightCard extends ConsumerWidget {
                                         TypeMsg.msg,
                                         "Vendeur supprimé",
                                       );
-                                      Navigator.pop(context);
+                                      if (context.mounted) {
+                                        Navigator.pop(context);
+                                      }
                                     } else {
                                       displayToastWithContext(
                                         TypeMsg.error,
