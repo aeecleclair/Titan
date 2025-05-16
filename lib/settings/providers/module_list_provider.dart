@@ -36,13 +36,13 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
   String dbAllModules = "allModules";
   final eq = const DeepCollectionEquality.unordered();
   List<Module> allModules = [
+    HomeRouter.module,
     AdvertRouter.module,
     AmapRouter.module,
     BookingRouter.module,
     CentralisationRouter.module,
     CinemaRouter.module,
     EventRouter.module,
-    HomeRouter.module,
     LoanRouter.module,
     PaymentRouter.module,
     PhonebookRouter.module,
