@@ -383,6 +383,7 @@ class AddEditEventPage extends HookConsumerWidget {
                         TextEntry(
                           controller: description,
                           label: EventTextConstants.description,
+                          keyboardType: TextInputType.multiline,
                         ),
                         const SizedBox(height: 50),
                         WaitingButton(
