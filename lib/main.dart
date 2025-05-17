@@ -16,6 +16,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/router.dart';
 import 'package:myecl/service/tools/setup.dart';
 import 'package:myecl/tools/functions.dart';
+import 'package:myecl/tools/logs/logger.dart';
 import 'package:myecl/tools/plausible/plausible_observer.dart';
 import 'package:myecl/tools/providers/path_forwarding_provider.dart';
 import 'package:myecl/tools/ui/layouts/app_template.dart';
@@ -34,8 +35,14 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   if (!kIsWeb) {
-    await Firebase.initializeApp();
-    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+    try {
+      await Firebase.initializeApp();
+      FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+    } on FirebaseException catch (e) {
+      Logger().init().then(
+            (logger) => logger.warning("Could not init Firebase: ${e.message}"),
+          );
+    }
   }
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   timeago.setLocaleMessages('fr', timeago.FrMessages());
