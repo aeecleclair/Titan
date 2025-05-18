@@ -32,7 +32,7 @@ jobs:
 
   build-and-deploy-mobile:
     name: Release Titan ${{ needs.extract-version.outputs.tag }} ${{ matrix.name }}
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     needs: [extract-version]
     strategy:
       fail-fast: false
@@ -41,9 +41,9 @@ jobs:
           - target: "appbundle"
             name: "AAB"
             path: build/app/outputs/bundle/*Release/app-*-release.aab
-          - target: "ipa --no-codesign"
-            name: "IPA"
-            path: build/ios/ipa/*.ipa
+          # - target: "ipa --no-codesign"
+          #   name: "IPA"
+          #   path: build/ios/ipa/*.ipa
 
     steps:
       - name: Checkout 🛎️
