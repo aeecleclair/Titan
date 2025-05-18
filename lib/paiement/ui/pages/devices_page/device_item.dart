@@ -28,32 +28,37 @@ class DeviceItem extends ConsumerWidget {
           child: Container(
             color: Colors.grey.shade200.withValues(alpha: 0.5),
             child: SizedBox(
-              height: 70,
+              height: isActual ? 80 : 70,
               child: Row(
                 children: [
                   const SizedBox(
                     width: 20,
                   ),
-                  Text(
-                    device.name,
-                    style: const TextStyle(
-                      color: Color(0xff204550),
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        device.name,
+                        style: const TextStyle(
+                          color: Color(0xff204550),
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      if (isActual)
+                        const Text(
+                          '(cet appareil)',
+                          style: TextStyle(
+                            color: Color(0xff204550),
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                    ],
                   ),
                   const SizedBox(
                     width: 10,
                   ),
-                  if (isActual)
-                    const Text(
-                      '(actuel)',
-                      style: TextStyle(
-                        color: Color(0xff204550),
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
                   Spacer(),
                   getStatusTag(device.status),
                   if (device.status != WalletDeviceStatus.revoked) ...[
